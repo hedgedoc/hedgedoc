@@ -47,12 +47,12 @@ jobs:
     outputs:
       changed: ${{ github.event_name == 'push' || steps.changed.outputs.files }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
         if: github.event_name != 'push'
 
       - name: Check for frontend file changes
         if: github.event_name != 'push'
-        uses: dorny/paths-filter@v2
+        uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50 # v2.11.1
         id: changed
         with:
           filters: |
@@ -72,7 +72,7 @@ jobs:
     steps:
       - name: Checkout repository
         if: needs.changes.outputs.changed == 'true'
-        uses: actions/checkout@v3
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
@@ -108,7 +108,7 @@ jobs:
 
       - name: Mark GitHub deployment as started
         if: needs.changes.outputs.changed == 'true'
-        uses: bobheadxi/deployments@v1.3.0
+        uses: bobheadxi/deployments@9d4477fdaa4120020cd10ab7e97f68c801422e73 # v1.3.0
         id: github-deployment
         with:
           step: start
@@ -129,7 +129,7 @@ jobs:
 
       - name: Mark GitHub deployment as finished
         if: needs.changes.outputs.changed == 'true'
-        uses: bobheadxi/deployments@v1.3.0
+        uses: bobheadxi/deployments@9d4477fdaa4120020cd10ab7e97f68c801422e73 # v1.3.0
         with:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}

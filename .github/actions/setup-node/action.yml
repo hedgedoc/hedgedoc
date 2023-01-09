@@ -19,7 +19,7 @@ runs:
       shell: bash
 
     - name: Cache yarn cache
-      uses: actions/cache@v3
+      uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
       id: yarn-cache
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -28,7 +28,7 @@ runs:
           ${{ runner.os }}-yarn-${{ inputs.NODE_VERSION }}
 
     - name: Set up NodeJS
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
       with:
         node-version: ${{ inputs.NODE_VERSION }}
 
