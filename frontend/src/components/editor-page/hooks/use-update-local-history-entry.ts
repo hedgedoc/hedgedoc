@@ -43,10 +43,11 @@ export const useUpdateLocalHistoryEntry = (): void => {
     if (entry.origin === HistoryEntryOrigin.REMOTE) {
       return
     }
-    entry.title = currentNoteTitle
-    entry.tags = currentNoteTags
-    entry.lastVisitedAt = new Date().toISOString()
-    updateLocalHistoryEntry(id, entry)
+    const updatedEntry = { ...entry }
+    updatedEntry.title = currentNoteTitle
+    updatedEntry.tags = currentNoteTags
+    updatedEntry.lastVisitedAt = new Date().toISOString()
+    updateLocalHistoryEntry(id, updatedEntry)
     lastNoteTitle.current = currentNoteTitle
     lastNoteTags.current = currentNoteTags
   }, [id, userExists, currentNoteTitle, currentNoteTags])
