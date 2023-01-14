@@ -145,7 +145,7 @@ jobs:
 
       - name: Download built frontend
         if: needs.changes.outputs.changed == 'true'
-        uses: actions/download-artifact@2a5974104b6d5dbdb2f9468a3e54da3bdd241578 # master
+        uses: actions/download-artifact@e9ef242655d12993efdcda9058dee2db83a2cb9b # master
         with:
           name: e2e-build
           path: frontend/.next
