@@ -149,7 +149,7 @@
     "copy-webpack-plugin": "6.4.1",
     "css-loader": "5.2.7",
     "emojify.js": "1.1.0",
-    "esbuild-loader": "2.20.0",
+    "esbuild-loader": "2.21.0",
     "escape-html": "1.0.3",
     "eslint": "8.31.0",
     "eslint-config-standard": "17.0.0",
