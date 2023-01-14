@@ -27,9 +27,6 @@ exports[`Note loading boundary shows an error 1`] = `
   </span>
   <span>
     children: 
-    <span>
-      This is a mock for CreateNonExistingNoteHint
-    </span>
   </span>
 </div>
 `;

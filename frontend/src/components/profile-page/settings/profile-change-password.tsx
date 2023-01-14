@@ -4,22 +4,22 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { doLocalPasswordChange } from '../../../api/auth/local'
+import { ErrorToI18nKeyMapper } from '../../../api/common/error-to-i18n-key-mapper'
 import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
 import { CurrentPasswordField } from '../../common/fields/current-password-field'
 import { NewPasswordField } from '../../common/fields/new-password-field'
 import { PasswordAgainField } from '../../common/fields/password-again-field'
-import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 import type { FormEvent } from 'react'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
-import { Button, Card, Form } from 'react-bootstrap'
+import { Alert, Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
+import { useAsyncFn } from 'react-use'
 
 /**
  * Profile page section for changing the password when using internal login.
  */
 export const ProfileChangePassword: React.FC = () => {
   useTranslation()
-  const { showErrorNotification, dispatchUiNotification } = useUiNotifications()
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [newPasswordAgain, setNewPasswordAgain] = useState('')
@@ -30,36 +30,44 @@ export const ProfileChangePassword: React.FC = () => {
   const onChangeNewPassword = useOnInputChange(setNewPassword)
   const onChangeNewPasswordAgain = useOnInputChange(setNewPasswordAgain)
 
+  const [{ error, loading, value: changeSucceeded }, doRequest] = useAsyncFn(async (): Promise<boolean> => {
+    try {
+      await doLocalPasswordChange(oldPassword, newPassword)
+      return true
+    } catch (error) {
+      const foundI18nKey = new ErrorToI18nKeyMapper(error as Error, 'login.auth.error')
+        .withHttpCode(401, 'invalidCredentials')
+        .withBackendErrorName('loginDisabled', 'loginDisabled')
+        .withBackendErrorName('passwordTooWeak', 'passwordTooWeak')
+        .orFallbackI18nKey('other')
+      return Promise.reject(foundI18nKey)
+    } finally {
+      if (formRef.current) {
+        formRef.current.reset()
+      }
+      setOldPassword('')
+      setNewPassword('')
+      setNewPasswordAgain('')
+    }
+  }, [oldPassword, newPassword])
+
   const onSubmitPasswordChange = useCallback(
     (event: FormEvent) => {
       event.preventDefault()
-      doLocalPasswordChange(oldPassword, newPassword)
-        .then(() =>
-          dispatchUiNotification('profile.changePassword.successTitle', 'profile.changePassword.successText', {
-            icon: 'check'
-          })
-        )
-        .catch(showErrorNotification('profile.changePassword.failed'))
-        .finally(() => {
-          if (formRef.current) {
-            formRef.current.reset()
-          }
-          setOldPassword('')
-          setNewPassword('')
-          setNewPasswordAgain('')
-        })
+      void doRequest()
     },
-    [oldPassword, newPassword, showErrorNotification, dispatchUiNotification]
+    [doRequest]
   )
 
   const ready = useMemo(() => {
     return (
+      !loading &&
       oldPassword.trim() !== '' &&
       newPassword.trim() !== '' &&
       newPasswordAgain.trim() !== '' &&
       newPassword === newPasswordAgain
     )
-  }, [oldPassword, newPassword, newPasswordAgain])
+  }, [loading, oldPassword, newPassword, newPasswordAgain])
 
   return (
     <Card className='bg-dark mb-4'>
@@ -71,6 +79,12 @@ export const ProfileChangePassword: React.FC = () => {
           <CurrentPasswordField onChange={onChangeOldPassword} value={oldPassword} />
           <NewPasswordField onChange={onChangeNewPassword} value={newPassword} />
           <PasswordAgainField password={newPassword} onChange={onChangeNewPasswordAgain} value={newPasswordAgain} />
+          <Alert className='small' show={!!error && !loading} variant={'danger'}>
+            <Trans i18nKey={error?.message} />
+          </Alert>
+          <Alert className='small' show={changeSucceeded && !loading} variant={'success'}>
+            <Trans i18nKey={'profile.changePassword.successText'} />
+          </Alert>
 
           <Button type='submit' variant='primary' disabled={!ready}>
             <Trans i18nKey='common.save' />

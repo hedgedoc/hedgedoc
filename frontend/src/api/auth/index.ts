@@ -11,5 +11,5 @@ import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-ap
  * @throws {Error} if logout is not possible.
  */
 export const doLogout = async (): Promise<void> => {
-  await new DeleteApiRequestBuilder('auth/logout').sendRequest()
+  await new DeleteApiRequestBuilder('auth/logout', 'auth').sendRequest()
 }

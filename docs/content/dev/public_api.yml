@@ -828,11 +828,6 @@ components:
         password:
           type: string
           format: password
-    OpenIdLogin:
-      type: object
-      properties:
-        openId:
-          type: string
     ServerStatus:
       type: object
       properties:

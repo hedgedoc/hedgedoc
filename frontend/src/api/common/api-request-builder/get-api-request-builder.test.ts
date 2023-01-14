@@ -3,6 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { ApiError } from '../api-error'
+import type { ApiErrorResponse } from '../api-error-response'
 import { GetApiRequestBuilder } from './get-api-request-builder'
 import { expectFetch } from './test-utils/expect-fetch'
 
@@ -20,7 +22,7 @@ describe('GetApiRequestBuilder', () => {
   describe('sendRequest', () => {
     it('without headers', async () => {
       expectFetch('api/private/test', 200, { method: 'GET' })
-      await new GetApiRequestBuilder<string>('test').sendRequest()
+      await new GetApiRequestBuilder<string>('test', 'test').sendRequest()
     })
 
     it('with single header', async () => {
@@ -30,7 +32,7 @@ describe('GetApiRequestBuilder', () => {
         method: 'GET',
         headers: expectedHeaders
       })
-      await new GetApiRequestBuilder<string>('test').withHeader('test', 'true').sendRequest()
+      await new GetApiRequestBuilder<string>('test', 'test').withHeader('test', 'true').sendRequest()
     })
 
     it('with overriding single header', async () => {
@@ -40,7 +42,7 @@ describe('GetApiRequestBuilder', () => {
         method: 'GET',
         headers: expectedHeaders
       })
-      await new GetApiRequestBuilder<string>('test')
+      await new GetApiRequestBuilder<string>('test', 'test')
         .withHeader('test', 'true')
         .withHeader('test', 'false')
         .sendRequest()
@@ -54,16 +56,11 @@ describe('GetApiRequestBuilder', () => {
         method: 'GET',
         headers: expectedHeaders
       })
-      await new GetApiRequestBuilder<string>('test')
+      await new GetApiRequestBuilder<string>('test', 'test')
         .withHeader('test', 'true')
         .withHeader('test2', 'false')
         .sendRequest()
     })
-  })
-
-  it('sendRequest with expected status code', async () => {
-    expectFetch('api/private/test', 200, { method: 'GET' })
-    await new GetApiRequestBuilder<string>('test').withExpectedStatusCode(200).sendRequest()
   })
 
   describe('sendRequest with custom options', () => {
@@ -72,7 +69,7 @@ describe('GetApiRequestBuilder', () => {
         method: 'GET',
         cache: 'force-cache'
       })
-      await new GetApiRequestBuilder<string>('test')
+      await new GetApiRequestBuilder<string>('test', 'test')
         .withCustomOptions({
           cache: 'force-cache'
         })
@@ -84,7 +81,7 @@ describe('GetApiRequestBuilder', () => {
         method: 'GET',
         cache: 'no-store'
       })
-      await new GetApiRequestBuilder<string>('test')
+      await new GetApiRequestBuilder<string>('test', 'test')
         .withCustomOptions({
           cache: 'force-cache'
         })
@@ -100,7 +97,7 @@ describe('GetApiRequestBuilder', () => {
         cache: 'force-cache',
         integrity: 'test'
       })
-      await new GetApiRequestBuilder<string>('test')
+      await new GetApiRequestBuilder<string>('test', 'test')
         .withCustomOptions({
           cache: 'force-cache',
           integrity: 'test'
@@ -109,37 +106,29 @@ describe('GetApiRequestBuilder', () => {
     })
   })
 
-  describe('sendRequest with custom error map', () => {
-    it('for valid status code', async () => {
-      expectFetch('api/private/test', 200, { method: 'GET' })
-      await new GetApiRequestBuilder<string>('test')
-        .withStatusCodeErrorMapping({
-          400: 'noooooo',
-          401: 'not you!'
-        })
-        .sendRequest()
-    })
-
-    it('for invalid status code 1', async () => {
+  describe('failing sendRequest', () => {
+    it('with bad request without api error name', async () => {
       expectFetch('api/private/test', 400, { method: 'GET' })
-      const request = new GetApiRequestBuilder<string>('test')
-        .withStatusCodeErrorMapping({
-          400: 'noooooo',
-          401: 'not you!'
-        })
-        .sendRequest()
-      await expect(request).rejects.toThrow('noooooo')
+      const request = new GetApiRequestBuilder<string>('test', 'test').sendRequest()
+      await expect(request).rejects.toEqual(new ApiError(400, 'unknown', 'test', 'testExplosion'))
     })
 
-    it('for invalid status code 2', async () => {
-      expectFetch('api/private/test', 401, { method: 'GET' })
-      const request = new GetApiRequestBuilder<string>('test')
-        .withStatusCodeErrorMapping({
-          400: 'noooooo',
-          401: 'not you!'
-        })
-        .sendRequest()
-      await expect(request).rejects.toThrow('not you!')
+    it('with bad request with api error name', async () => {
+      expectFetch('api/private/test', 400, { method: 'GET' }, {
+        message: 'The API has exploded!',
+        error: 'testExplosion'
+      } as ApiErrorResponse)
+      const request = new GetApiRequestBuilder<string>('test', 'test').sendRequest()
+      await expect(request).rejects.toEqual(new ApiError(400, 'testExplosion', 'test', 'testExplosion'))
+    })
+
+    it('with non bad request error', async () => {
+      expectFetch('api/private/test', 401, { method: 'GET' }, {
+        message: 'The API has exploded!',
+        error: 'testExplosion'
+      } as ApiErrorResponse)
+      const request = new GetApiRequestBuilder<string>('test', 'test').sendRequest()
+      await expect(request).rejects.toEqual(new ApiError(401, 'forbidden', 'test', 'testExplosion'))
     })
   })
 })

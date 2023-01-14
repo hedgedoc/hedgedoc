@@ -3,6 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { ApiError } from '../api-error'
+import type { ApiErrorResponse } from '../api-error-response'
 import { DeleteApiRequestBuilder } from './delete-api-request-builder'
 import { expectFetch } from './test-utils/expect-fetch'
 
@@ -19,7 +21,7 @@ describe('DeleteApiRequestBuilder', () => {
   describe('sendRequest without body', () => {
     it('without headers', async () => {
       expectFetch('api/private/test', 204, { method: 'DELETE' })
-      await new DeleteApiRequestBuilder<string, undefined>('test').sendRequest()
+      await new DeleteApiRequestBuilder<string, undefined>('test', 'test').sendRequest()
     })
 
     it('with single header', async () => {
@@ -29,7 +31,7 @@ describe('DeleteApiRequestBuilder', () => {
         method: 'DELETE',
         headers: expectedHeaders
       })
-      await new DeleteApiRequestBuilder<string, undefined>('test').withHeader('test', 'true').sendRequest()
+      await new DeleteApiRequestBuilder<string, undefined>('test', 'test').withHeader('test', 'true').sendRequest()
     })
 
     it('with overriding single header', async () => {
@@ -39,7 +41,7 @@ describe('DeleteApiRequestBuilder', () => {
         method: 'DELETE',
         headers: expectedHeaders
       })
-      await new DeleteApiRequestBuilder<string, undefined>('test')
+      await new DeleteApiRequestBuilder<string, undefined>('test', 'test')
         .withHeader('test', 'true')
         .withHeader('test', 'false')
         .sendRequest()
@@ -53,7 +55,7 @@ describe('DeleteApiRequestBuilder', () => {
         method: 'DELETE',
         headers: expectedHeaders
       })
-      await new DeleteApiRequestBuilder<string, undefined>('test')
+      await new DeleteApiRequestBuilder<string, undefined>('test', 'test')
         .withHeader('test', 'true')
         .withHeader('test2', 'false')
         .sendRequest()
@@ -69,7 +71,7 @@ describe('DeleteApiRequestBuilder', () => {
       headers: expectedHeaders,
       body: '{"test":true,"foo":"bar"}'
     })
-    await new DeleteApiRequestBuilder('test')
+    await new DeleteApiRequestBuilder('test', 'test')
       .withJsonBody({
         test: true,
         foo: 'bar'
@@ -82,12 +84,7 @@ describe('DeleteApiRequestBuilder', () => {
       method: 'DELETE',
       body: 'HedgeDoc'
     })
-    await new DeleteApiRequestBuilder('test').withBody('HedgeDoc').sendRequest()
-  })
-
-  it('sendRequest with expected status code', async () => {
-    expectFetch('api/private/test', 200, { method: 'DELETE' })
-    await new DeleteApiRequestBuilder<string, undefined>('test').withExpectedStatusCode(200).sendRequest()
+    await new DeleteApiRequestBuilder('test', 'test').withBody('HedgeDoc').sendRequest()
   })
 
   describe('sendRequest with custom options', () => {
@@ -96,7 +93,7 @@ describe('DeleteApiRequestBuilder', () => {
         method: 'DELETE',
         cache: 'force-cache'
       })
-      await new DeleteApiRequestBuilder<string, undefined>('test')
+      await new DeleteApiRequestBuilder<string, undefined>('test', 'test')
         .withCustomOptions({
           cache: 'force-cache'
         })
@@ -108,7 +105,7 @@ describe('DeleteApiRequestBuilder', () => {
         method: 'DELETE',
         cache: 'no-store'
       })
-      await new DeleteApiRequestBuilder<string, undefined>('test')
+      await new DeleteApiRequestBuilder<string, undefined>('test', 'test')
         .withCustomOptions({
           cache: 'force-cache'
         })
@@ -124,7 +121,7 @@ describe('DeleteApiRequestBuilder', () => {
         cache: 'force-cache',
         integrity: 'test'
       })
-      await new DeleteApiRequestBuilder<string, undefined>('test')
+      await new DeleteApiRequestBuilder<string, undefined>('test', 'test')
         .withCustomOptions({
           cache: 'force-cache',
           integrity: 'test'
@@ -133,37 +130,29 @@ describe('DeleteApiRequestBuilder', () => {
     })
   })
 
-  describe('sendRequest with custom error map', () => {
-    it('for valid status code', async () => {
-      expectFetch('api/private/test', 204, { method: 'DELETE' })
-      await new DeleteApiRequestBuilder<string, undefined>('test')
-        .withStatusCodeErrorMapping({
-          400: 'noooooo',
-          401: 'not you!'
-        })
-        .sendRequest()
-    })
-
-    it('for invalid status code 1', async () => {
+  describe('failing sendRequest', () => {
+    it('with bad request without api error name', async () => {
       expectFetch('api/private/test', 400, { method: 'DELETE' })
-      const request = new DeleteApiRequestBuilder<string, undefined>('test')
-        .withStatusCodeErrorMapping({
-          400: 'noooooo',
-          401: 'not you!'
-        })
-        .sendRequest()
-      await expect(request).rejects.toThrow('noooooo')
+      const request = new DeleteApiRequestBuilder<string>('test', 'test').sendRequest()
+      await expect(request).rejects.toEqual(new ApiError(400, 'unknown', 'test', 'testExplosion'))
     })
 
-    it('for invalid status code 2', async () => {
-      expectFetch('api/private/test', 401, { method: 'DELETE' })
-      const request = new DeleteApiRequestBuilder<string, undefined>('test')
-        .withStatusCodeErrorMapping({
-          400: 'noooooo',
-          401: 'not you!'
-        })
-        .sendRequest()
-      await expect(request).rejects.toThrow('not you!')
+    it('with bad request with api error name', async () => {
+      expectFetch('api/private/test', 400, { method: 'DELETE' }, {
+        message: 'The API has exploded!',
+        error: 'testExplosion'
+      } as ApiErrorResponse)
+      const request = new DeleteApiRequestBuilder<string>('test', 'test').sendRequest()
+      await expect(request).rejects.toEqual(new ApiError(400, 'testExplosion', 'test', 'testExplosion'))
+    })
+
+    it('with non bad request error', async () => {
+      expectFetch('api/private/test', 401, { method: 'DELETE' }, {
+        message: 'The API has exploded!',
+        error: 'testExplosion'
+      } as ApiErrorResponse)
+      const request = new DeleteApiRequestBuilder<string>('test', 'test').sendRequest()
+      await expect(request).rejects.toEqual(new ApiError(401, 'forbidden', 'test', 'testExplosion'))
     })
   })
 })

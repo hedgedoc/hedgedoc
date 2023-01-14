@@ -15,7 +15,7 @@ import type { AccessToken, AccessTokenWithSecret, CreateAccessTokenDto } from '.
  * @throws {Error} when the api request wasn't successful.
  */
 export const getAccessTokenList = async (): Promise<AccessToken[]> => {
-  const response = await new GetApiRequestBuilder<AccessToken[]>('tokens').sendRequest()
+  const response = await new GetApiRequestBuilder<AccessToken[]>('tokens', 'tokens').sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -28,7 +28,7 @@ export const getAccessTokenList = async (): Promise<AccessToken[]> => {
  * @throws {Error} when the api request wasn't successful.
  */
 export const postNewAccessToken = async (label: string, validUntil: number): Promise<AccessTokenWithSecret> => {
-  const response = await new PostApiRequestBuilder<AccessTokenWithSecret, CreateAccessTokenDto>('tokens')
+  const response = await new PostApiRequestBuilder<AccessTokenWithSecret, CreateAccessTokenDto>('tokens', 'tokens')
     .withJsonBody({
       label,
       validUntil
@@ -44,5 +44,5 @@ export const postNewAccessToken = async (label: string, validUntil: number): Pro
  * @throws {Error} when the api request wasn't successful.
  */
 export const deleteAccessToken = async (keyId: string): Promise<void> => {
-  await new DeleteApiRequestBuilder('tokens/' + keyId).sendRequest()
+  await new DeleteApiRequestBuilder('tokens/' + keyId, 'tokens').sendRequest()
 }

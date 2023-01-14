@@ -32,7 +32,7 @@ export const NoteLoadingBoundary: React.FC<PropsWithChildren> = ({ children }) =
     }
     return (
       <CommonErrorPage titleI18nKey={`${error.message}.title`} descriptionI18nKey={`${error.message}.description`}>
-        <ShowIf condition={error.message === 'api.note.notFound'}>
+        <ShowIf condition={error.message === 'api.error.note.not_found'}>
           <CreateNonExistingNoteHint onNoteCreated={loadNoteFromServer} />
         </ShowIf>
       </CommonErrorPage>

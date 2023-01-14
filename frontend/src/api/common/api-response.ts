@@ -28,6 +28,14 @@ export class ApiResponse<ResponseType> {
     return this.response
   }
 
+  static isSuccessfulResponse(response: Response): boolean {
+    return response.status >= 400
+  }
+
+  isSuccessful(): boolean {
+    return ApiResponse.isSuccessfulResponse(this.response)
+  }
+
   /**
    * Returns the response as parsed JSON. An error will be thrown if the response is not JSON encoded.
    *
@@ -41,14 +49,5 @@ export class ApiResponse<ResponseType> {
     // TODO Responses should better be type validated
     // see https://github.com/hedgedoc/react-client/issues/1219
     return (await this.response.json()) as ResponseType
-  }
-
-  /**
-   * Returns the response as a Blob.
-   *
-   * @return The response body as a blob.
-   */
-  async asBlob(): Promise<Blob> {
-    return await this.response.blob()
   }
 }

@@ -6,7 +6,6 @@
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
 import type { ChangePasswordDto, LoginDto, RegisterDto } from './types'
-import { AuthError, RegisterError } from './types'
 
 /**
  * Requests to do a local login with a provided username and password.
@@ -18,14 +17,10 @@ import { AuthError, RegisterError } from './types'
  * @throws {Error} when the api request wasn't successful.
  */
 export const doLocalLogin = async (username: string, password: string): Promise<void> => {
-  await new PostApiRequestBuilder<void, LoginDto>('auth/local/login')
+  await new PostApiRequestBuilder<void, LoginDto>('auth/local/login', 'auth')
     .withJsonBody({
       username,
       password
-    })
-    .withStatusCodeErrorMapping({
-      400: AuthError.LOGIN_DISABLED,
-      401: AuthError.INVALID_CREDENTIALS
     })
     .sendRequest()
 }
@@ -42,16 +37,11 @@ export const doLocalLogin = async (username: string, password: string): Promise<
  * @throws {Error} when the api request wasn't successful.
  */
 export const doLocalRegister = async (username: string, displayName: string, password: string): Promise<void> => {
-  await new PostApiRequestBuilder<void, RegisterDto>('auth/local')
+  await new PostApiRequestBuilder<void, RegisterDto>('auth/local', 'auth')
     .withJsonBody({
       username,
       displayName,
       password
-    })
-    .withStatusCodeErrorMapping({
-      400: RegisterError.PASSWORD_TOO_WEAK,
-      403: RegisterError.REGISTRATION_DISABLED,
-      409: RegisterError.USERNAME_EXISTING
     })
     .sendRequest()
 }
@@ -64,14 +54,10 @@ export const doLocalRegister = async (username: string, displayName: string, pas
  * @throws {AuthError.LOGIN_DISABLED} when local login is disabled on the backend.
  */
 export const doLocalPasswordChange = async (currentPassword: string, newPassword: string): Promise<void> => {
-  await new PutApiRequestBuilder<void, ChangePasswordDto>('auth/local')
+  await new PutApiRequestBuilder<void, ChangePasswordDto>('auth/local', 'auth')
     .withJsonBody({
       currentPassword,
       newPassword
-    })
-    .withStatusCodeErrorMapping({
-      400: AuthError.LOGIN_DISABLED,
-      401: AuthError.INVALID_CREDENTIALS
     })
     .sendRequest()
 }

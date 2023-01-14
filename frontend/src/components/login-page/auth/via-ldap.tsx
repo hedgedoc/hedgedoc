@@ -4,15 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { doLdapLogin } from '../../../api/auth/ldap'
-import { AuthError as AuthErrorType } from '../../../api/auth/types'
 import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
-import { AuthError } from './auth-error/auth-error'
 import { PasswordField } from './fields/password-field'
 import { UsernameField } from './fields/username-field'
 import { fetchAndSetUser } from './utils'
 import type { FormEvent } from 'react'
 import React, { useCallback, useState } from 'react'
-import { Button, Card, Form } from 'react-bootstrap'
+import { Alert, Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 
 export interface ViaLdapProps {
@@ -28,19 +26,13 @@ export const ViaLdap: React.FC<ViaLdapProps> = ({ providerName, identifier }) =>
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState<AuthErrorType>()
+  const [error, setError] = useState<string>()
 
   const onLoginSubmit = useCallback(
     (event: FormEvent) => {
       doLdapLogin(identifier, username, password)
         .then(() => fetchAndSetUser())
-        .catch((error: Error) => {
-          setError(
-            Object.values(AuthErrorType).includes(error.message as AuthErrorType)
-              ? (error.message as AuthErrorType)
-              : AuthErrorType.OTHER
-          )
-        })
+        .catch((error: Error) => setError(error.message))
       event.preventDefault()
     },
     [username, password, identifier]
@@ -58,7 +50,9 @@ export const ViaLdap: React.FC<ViaLdapProps> = ({ providerName, identifier }) =>
         <Form onSubmit={onLoginSubmit}>
           <UsernameField onChange={onUsernameChange} invalid={!!error} />
           <PasswordField onChange={onPasswordChange} invalid={!!error} />
-          <AuthError error={error} />
+          <Alert className='small' show={!!error} variant='danger'>
+            <Trans i18nKey={error} />
+          </Alert>
 
           <Button type='submit' variant='primary'>
             <Trans i18nKey='login.signIn' />

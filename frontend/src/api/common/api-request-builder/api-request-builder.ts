@@ -3,6 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { ApiError } from '../api-error'
+import type { ApiErrorResponse } from '../api-error-response'
 import { ApiResponse } from '../api-response'
 import { defaultConfig, defaultHeaders } from '../default-config'
 import deepmerge from 'deepmerge'
@@ -14,10 +16,8 @@ import deepmerge from 'deepmerge'
  */
 export abstract class ApiRequestBuilder<ResponseType> {
   private readonly targetUrl: string
-  private overrideExpectedResponseStatus: number | undefined
   private customRequestOptions = defaultConfig
   private customRequestHeaders = new Headers(defaultHeaders)
-  private customStatusCodeErrorMapping: Record<number, string> | undefined
   protected requestBody: BodyInit | undefined
 
   /**
@@ -25,14 +25,11 @@ export abstract class ApiRequestBuilder<ResponseType> {
    *
    * @param endpoint The target endpoint without a leading slash.
    */
-  constructor(endpoint: string) {
+  constructor(endpoint: string, private apiI18nKey: string) {
     this.targetUrl = `api/private/${endpoint}`
   }
 
-  protected async sendRequestAndVerifyResponse(
-    httpMethod: RequestInit['method'],
-    defaultExpectedStatus: number
-  ): Promise<ApiResponse<ResponseType>> {
+  protected async sendRequestAndVerifyResponse(httpMethod: RequestInit['method']): Promise<ApiResponse<ResponseType>> {
     const response = await fetch(this.targetUrl, {
       ...this.customRequestOptions,
       method: httpMethod,
@@ -40,18 +37,17 @@ export abstract class ApiRequestBuilder<ResponseType> {
       body: this.requestBody
     })
 
-    if (this.customStatusCodeErrorMapping && this.customStatusCodeErrorMapping[response.status]) {
-      throw new Error(this.customStatusCodeErrorMapping[response.status])
-    }
-
-    const expectedStatus = this.overrideExpectedResponseStatus
-      ? this.overrideExpectedResponseStatus
-      : defaultExpectedStatus
-    if (response.status !== expectedStatus) {
-      throw new Error(`Expected response status code ${expectedStatus} but received ${response.status}.`)
+    if (response.status >= 400) {
+      const apiErrorResponse = await this.readApiErrorResponseFromBody(response)
+      const statusText = response.status === 400 ? apiErrorResponse?.error ?? 'unknown' : response.statusText
+      throw new ApiError(response.status, statusText, this.apiI18nKey, apiErrorResponse?.error)
     }
 
     return new ApiResponse(response)
+  }
+
+  private async readApiErrorResponseFromBody(response: Response): Promise<ApiErrorResponse | undefined> {
+    return response.json().catch(() => undefined) as Promise<ApiErrorResponse | undefined>
   }
 
   /**
@@ -75,30 +71,6 @@ export abstract class ApiRequestBuilder<ResponseType> {
    */
   withCustomOptions(options: Partial<Omit<RequestInit, 'method' | 'headers' | 'body'>>): this {
     this.customRequestOptions = deepmerge(this.customRequestOptions, options)
-    return this
-  }
-
-  /**
-   * Adds a mapping from response status codes to error messages. An error with the specified message will be thrown
-   * when the status code of the response matches one of the defined ones.
-   *
-   * @param mapping The mapping from response status codes to error messages.
-   * @return The API request instance itself for chaining.
-   */
-  withStatusCodeErrorMapping(mapping: Record<number, string>): this {
-    this.customStatusCodeErrorMapping = mapping
-    return this
-  }
-
-  /**
-   * Sets the expected status code of the response. Can be used to override the default expected status code.
-   * An error will be thrown when the status code of the response does not match the expected one.
-   *
-   * @param expectedCode The expected status code of the response.
-   * @return The API request instance itself for chaining.
-   */
-  withExpectedStatusCode(expectedCode: number): this {
-    this.overrideExpectedResponseStatus = expectedCode
     return this
   }
 
