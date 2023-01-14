@@ -17,6 +17,6 @@ export class GetApiRequestBuilder<ResponseType> extends ApiRequestBuilder<Respon
    * @see ApiRequestBuilder#sendRequest
    */
   sendRequest(): Promise<ApiResponse<ResponseType>> {
-    return this.sendRequestAndVerifyResponse('GET', 200)
+    return this.sendRequestAndVerifyResponse('GET')
   }
 }

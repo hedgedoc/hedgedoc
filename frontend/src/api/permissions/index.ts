@@ -18,7 +18,8 @@ import type { OwnerChangeDto, PermissionSetDto } from './types'
  */
 export const setNoteOwner = async (noteId: string, owner: string): Promise<NotePermissions> => {
   const response = await new PutApiRequestBuilder<NotePermissions, OwnerChangeDto>(
-    `notes/${noteId}/metadata/permissions/owner`
+    `notes/${noteId}/metadata/permissions/owner`,
+    'permission'
   )
     .withJsonBody({
       owner
@@ -42,7 +43,8 @@ export const setUserPermission = async (
   canEdit: boolean
 ): Promise<NotePermissions> => {
   const response = await new PutApiRequestBuilder<NotePermissions, PermissionSetDto>(
-    `notes/${noteId}/metadata/permissions/users/${username}`
+    `notes/${noteId}/metadata/permissions/users/${username}`,
+    'permission'
   )
     .withJsonBody({
       canEdit
@@ -66,7 +68,8 @@ export const setGroupPermission = async (
   canEdit: boolean
 ): Promise<NotePermissions> => {
   const response = await new PutApiRequestBuilder<NotePermissions, PermissionSetDto>(
-    `notes/${noteId}/metadata/permissions/groups/${groupName}`
+    `notes/${noteId}/metadata/permissions/groups/${groupName}`,
+    'permission'
   )
     .withJsonBody({
       canEdit
@@ -85,10 +88,9 @@ export const setGroupPermission = async (
  */
 export const removeUserPermission = async (noteId: string, username: string): Promise<NotePermissions> => {
   const response = await new DeleteApiRequestBuilder<NotePermissions>(
-    `notes/${noteId}/metadata/permissions/users/${username}`
-  )
-    .withExpectedStatusCode(200)
-    .sendRequest()
+    `notes/${noteId}/metadata/permissions/users/${username}`,
+    'permission'
+  ).sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -102,9 +104,8 @@ export const removeUserPermission = async (noteId: string, username: string): Pr
  */
 export const removeGroupPermission = async (noteId: string, groupName: string): Promise<NotePermissions> => {
   const response = await new DeleteApiRequestBuilder<NotePermissions>(
-    `notes/${noteId}/metadata/permissions/groups/${groupName}`
-  )
-    .withExpectedStatusCode(200)
-    .sendRequest()
+    `notes/${noteId}/metadata/permissions/groups/${groupName}`,
+    'permission'
+  ).sendRequest()
   return response.asParsedJsonObject()
 }

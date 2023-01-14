@@ -13,17 +13,6 @@ describe('ApiResponse', () => {
     expect(responseObj.getResponse()).toEqual(mockResponse)
   })
 
-  it('asBlob', async () => {
-    const mockBlob = Mock.of<Blob>()
-    const mockResponse = Mock.of<Response>({
-      blob(): Promise<Blob> {
-        return Promise.resolve(mockBlob)
-      }
-    })
-    const responseObj = new ApiResponse(mockResponse)
-    await expect(responseObj.asBlob()).resolves.toEqual(mockBlob)
-  })
-
   describe('asParsedJsonObject with', () => {
     it('invalid header', async () => {
       const mockHeaders = new Headers()

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { doLocalRegister } from '../api/auth/local'
-import { RegisterError as RegisterErrorType } from '../api/auth/types'
+import type { ApiError } from '../api/common/api-error'
 import { DisplayNameField } from '../components/common/fields/display-name-field'
 import { NewPasswordField } from '../components/common/fields/new-password-field'
 import { PasswordAgainField } from '../components/common/fields/password-again-field'
@@ -13,8 +13,8 @@ import { Redirect } from '../components/common/redirect'
 import { LandingLayout } from '../components/landing-layout/landing-layout'
 import { fetchAndSetUser } from '../components/login-page/auth/utils'
 import { useUiNotifications } from '../components/notifications/ui-notification-boundary'
-import { RegisterError } from '../components/register-page/register-error/register-error'
-import { RegisterInfos } from '../components/register-page/register-infos/register-infos'
+import { RegisterError } from '../components/register-page/register-error'
+import { RegisterInfos } from '../components/register-page/register-infos'
 import { useApplicationState } from '../hooks/common/use-application-state'
 import { useOnInputChange } from '../hooks/common/use-on-input-change'
 import type { NextPage } from 'next'
@@ -37,7 +37,7 @@ export const RegisterPage: NextPage = () => {
   const [displayName, setDisplayName] = useState('')
   const [password, setPassword] = useState('')
   const [passwordAgain, setPasswordAgain] = useState('')
-  const [error, setError] = useState<RegisterErrorType>()
+  const [error, setError] = useState<ApiError>()
 
   const { dispatchUiNotification } = useUiNotifications()
 
@@ -47,13 +47,7 @@ export const RegisterPage: NextPage = () => {
         .then(() => fetchAndSetUser())
         .then(() => dispatchUiNotification('login.register.success.title', 'login.register.success.message', {}))
         .then(() => router.push('/'))
-        .catch((error: Error) => {
-          setError(
-            Object.values(RegisterErrorType).includes(error.message as RegisterErrorType)
-              ? (error.message as RegisterErrorType)
-              : RegisterErrorType.OTHER
-          )
-        })
+        .catch((error: ApiError) => setError(error))
       event.preventDefault()
     },
     [username, displayName, password, dispatchUiNotification, router]
@@ -70,7 +64,7 @@ export const RegisterPage: NextPage = () => {
   }, [username, password, displayName, passwordAgain])
 
   const isWeakPassword = useMemo(() => {
-    return error === RegisterErrorType.PASSWORD_TOO_WEAK
+    return error?.apiErrorName === 'passwordTooWeak'
   }, [error])
 
   const onUsernameChange = useOnInputChange(setUsername)

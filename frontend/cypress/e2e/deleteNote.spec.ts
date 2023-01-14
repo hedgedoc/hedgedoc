@@ -23,6 +23,9 @@ describe('Delete note', () => {
   })
 
   it('displays an error notification if something goes wrong', () => {
+    cy.intercept('DELETE', `api/private/notes/${testNoteId}`, {
+      statusCode: 400
+    })
     cy.getByCypressId('sidebar.deleteNote.button').click()
     cy.getByCypressId('sidebar.deleteNote.modal').should('be.visible')
     cy.getByCypressId('sidebar.deleteNote.modal.noteTitle').should('be.visible').text().should('eq', '')

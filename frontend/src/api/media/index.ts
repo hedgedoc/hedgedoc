@@ -15,7 +15,7 @@ import type { ImageProxyRequestDto, ImageProxyResponse, MediaUpload } from './ty
  * @throws {Error} when the api request wasn't successful.
  */
 export const getProxiedUrl = async (imageUrl: string): Promise<ImageProxyResponse> => {
-  const response = await new PostApiRequestBuilder<ImageProxyResponse, ImageProxyRequestDto>('media/proxy')
+  const response = await new PostApiRequestBuilder<ImageProxyResponse, ImageProxyRequestDto>('media/proxy', 'media')
     .withJsonBody({
       url: imageUrl
     })
@@ -34,7 +34,7 @@ export const getProxiedUrl = async (imageUrl: string): Promise<ImageProxyRespons
 export const uploadFile = async (noteIdOrAlias: string, media: Blob): Promise<MediaUpload> => {
   const postData = new FormData()
   postData.append('file', media)
-  const response = await new PostApiRequestBuilder<MediaUpload, void>('media')
+  const response = await new PostApiRequestBuilder<MediaUpload, void>('media', 'media')
     .withHeader('HedgeDoc-Note', noteIdOrAlias)
     .withBody(postData)
     .sendRequest()
@@ -48,5 +48,5 @@ export const uploadFile = async (noteIdOrAlias: string, media: Blob): Promise<Me
  * @throws {Error} when the api request wasn't successful.
  */
 export const deleteUploadedMedia = async (mediaId: string): Promise<void> => {
-  await new DeleteApiRequestBuilder('media/' + mediaId).sendRequest()
+  await new DeleteApiRequestBuilder('media/' + mediaId, 'media').sendRequest()
 }

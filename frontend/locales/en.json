@@ -545,7 +545,6 @@
       "password": "Password",
       "username": "Username",
       "error": {
-        "openIdLogin": "Invalid OpenID provided",
         "usernamePassword": "Invalid username or password",
         "loginDisabled": "The login is disabled",
         "other": "There was an error logging you in."

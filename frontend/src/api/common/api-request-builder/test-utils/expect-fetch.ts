@@ -14,7 +14,12 @@ import { Mock } from 'ts-mockery'
  * @param requestStatusCode the status code the mocked request should return
  * @param expectedOptions additional options
  */
-export const expectFetch = (expectedUrl: string, requestStatusCode: number, expectedOptions: RequestInit): void => {
+export const expectFetch = (
+  expectedUrl: string,
+  requestStatusCode: number,
+  expectedOptions: RequestInit,
+  responseBody?: unknown
+): void => {
   global.fetch = jest.fn((fetchUrl: RequestInfo | URL, fetchOptions?: RequestInit): Promise<Response> => {
     expect(fetchUrl).toEqual(expectedUrl)
     expect(fetchOptions).toStrictEqual({
@@ -25,8 +30,20 @@ export const expectFetch = (expectedUrl: string, requestStatusCode: number, expe
     })
     return Promise.resolve(
       Mock.of<Response>({
-        status: requestStatusCode
+        status: requestStatusCode,
+        statusText: mapCodeToText(requestStatusCode),
+        json: jest.fn(() => (responseBody ? Promise.resolve(responseBody) : Promise.reject()))
       })
     )
   })
+}
+const mapCodeToText = (code: number): string => {
+  switch (code) {
+    case 400:
+      return 'bad_request'
+    case 401:
+      return 'forbidden'
+    default:
+      return 'unknown_code'
+  }
 }

@@ -21,6 +21,6 @@ export class DeleteApiRequestBuilder<ResponseType = void, RequestBodyType = unkn
    * @see ApiRequestBuilder#sendRequest
    */
   sendRequest(): Promise<ApiResponse<ResponseType>> {
-    return this.sendRequestAndVerifyResponse('DELETE', 204)
+    return this.sendRequestAndVerifyResponse('DELETE')
   }
 }

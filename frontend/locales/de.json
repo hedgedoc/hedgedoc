@@ -192,7 +192,6 @@
             "password": "Passwort",
             "username": "Benutzername",
             "error": {
-                "openIdLogin": "OpenID nicht korrekt",
                 "usernamePassword": "Benutzername oder Passwort nicht korrekt"
             }
         }

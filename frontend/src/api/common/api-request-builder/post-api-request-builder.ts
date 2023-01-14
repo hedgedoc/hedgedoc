@@ -21,6 +21,6 @@ export class PostApiRequestBuilder<ResponseType, RequestBodyType> extends ApiReq
    * @see ApiRequestBuilder#sendRequest
    */
   sendRequest(): Promise<ApiResponse<ResponseType>> {
-    return this.sendRequestAndVerifyResponse('POST', 201)
+    return this.sendRequestAndVerifyResponse('POST')
   }
 }

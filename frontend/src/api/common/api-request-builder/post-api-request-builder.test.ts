@@ -3,6 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { ApiError } from '../api-error'
+import type { ApiErrorResponse } from '../api-error-response'
 import { PostApiRequestBuilder } from './post-api-request-builder'
 import { expectFetch } from './test-utils/expect-fetch'
 
@@ -20,7 +22,7 @@ describe('PostApiRequestBuilder', () => {
   describe('sendRequest without body', () => {
     it('without headers', async () => {
       expectFetch('api/private/test', 201, { method: 'POST' })
-      await new PostApiRequestBuilder<string, undefined>('test').sendRequest()
+      await new PostApiRequestBuilder<string, undefined>('test', 'test').sendRequest()
     })
 
     it('with single header', async () => {
@@ -30,7 +32,7 @@ describe('PostApiRequestBuilder', () => {
         method: 'POST',
         headers: expectedHeaders
       })
-      await new PostApiRequestBuilder<string, undefined>('test').withHeader('test', 'true').sendRequest()
+      await new PostApiRequestBuilder<string, undefined>('test', 'test').withHeader('test', 'true').sendRequest()
     })
 
     it('with overriding single header', async () => {
@@ -40,7 +42,7 @@ describe('PostApiRequestBuilder', () => {
         method: 'POST',
         headers: expectedHeaders
       })
-      await new PostApiRequestBuilder<string, undefined>('test')
+      await new PostApiRequestBuilder<string, undefined>('test', 'test')
         .withHeader('test', 'true')
         .withHeader('test', 'false')
         .sendRequest()
@@ -54,7 +56,7 @@ describe('PostApiRequestBuilder', () => {
         method: 'POST',
         headers: expectedHeaders
       })
-      await new PostApiRequestBuilder<string, undefined>('test')
+      await new PostApiRequestBuilder<string, undefined>('test', 'test')
         .withHeader('test', 'true')
         .withHeader('test2', 'false')
         .sendRequest()
@@ -70,7 +72,7 @@ describe('PostApiRequestBuilder', () => {
       headers: expectedHeaders,
       body: '{"test":true,"foo":"bar"}'
     })
-    await new PostApiRequestBuilder('test')
+    await new PostApiRequestBuilder('test', 'test')
       .withJsonBody({
         test: true,
         foo: 'bar'
@@ -83,12 +85,7 @@ describe('PostApiRequestBuilder', () => {
       method: 'POST',
       body: 'HedgeDoc'
     })
-    await new PostApiRequestBuilder('test').withBody('HedgeDoc').sendRequest()
-  })
-
-  it('sendRequest with expected status code', async () => {
-    expectFetch('api/private/test', 200, { method: 'POST' })
-    await new PostApiRequestBuilder<string, undefined>('test').withExpectedStatusCode(200).sendRequest()
+    await new PostApiRequestBuilder('test', 'test').withBody('HedgeDoc').sendRequest()
   })
 
   describe('sendRequest with custom options', () => {
@@ -97,7 +94,7 @@ describe('PostApiRequestBuilder', () => {
         method: 'POST',
         cache: 'force-cache'
       })
-      await new PostApiRequestBuilder<string, undefined>('test')
+      await new PostApiRequestBuilder<string, undefined>('test', 'test')
         .withCustomOptions({
           cache: 'force-cache'
         })
@@ -109,7 +106,7 @@ describe('PostApiRequestBuilder', () => {
         method: 'POST',
         cache: 'no-store'
       })
-      await new PostApiRequestBuilder<string, undefined>('test')
+      await new PostApiRequestBuilder<string, undefined>('test', 'test')
         .withCustomOptions({
           cache: 'force-cache'
         })
@@ -125,7 +122,7 @@ describe('PostApiRequestBuilder', () => {
         cache: 'force-cache',
         integrity: 'test'
       })
-      await new PostApiRequestBuilder<string, undefined>('test')
+      await new PostApiRequestBuilder<string, undefined>('test', 'test')
         .withCustomOptions({
           cache: 'force-cache',
           integrity: 'test'
@@ -134,37 +131,29 @@ describe('PostApiRequestBuilder', () => {
     })
   })
 
-  describe('sendRequest with custom error map', () => {
-    it('for valid status code', async () => {
-      expectFetch('api/private/test', 201, { method: 'POST' })
-      await new PostApiRequestBuilder<string, undefined>('test')
-        .withStatusCodeErrorMapping({
-          400: 'noooooo',
-          401: 'not you!'
-        })
-        .sendRequest()
-    })
-
-    it('for invalid status code 1', async () => {
+  describe('failing sendRequest', () => {
+    it('with bad request without api error name', async () => {
       expectFetch('api/private/test', 400, { method: 'POST' })
-      const request = new PostApiRequestBuilder<string, undefined>('test')
-        .withStatusCodeErrorMapping({
-          400: 'noooooo',
-          401: 'not you!'
-        })
-        .sendRequest()
-      await expect(request).rejects.toThrow('noooooo')
+      const request = new PostApiRequestBuilder<string, string>('test', 'test').sendRequest()
+      await expect(request).rejects.toEqual(new ApiError(400, 'unknown', 'test', 'testExplosion'))
     })
 
-    it('for invalid status code 2', async () => {
-      expectFetch('api/private/test', 401, { method: 'POST' })
-      const request = new PostApiRequestBuilder<string, undefined>('test')
-        .withStatusCodeErrorMapping({
-          400: 'noooooo',
-          401: 'not you!'
-        })
-        .sendRequest()
-      await expect(request).rejects.toThrow('not you!')
+    it('with bad request with api error name', async () => {
+      expectFetch('api/private/test', 400, { method: 'POST' }, {
+        message: 'The API has exploded!',
+        error: 'testExplosion'
+      } as ApiErrorResponse)
+      const request = new PostApiRequestBuilder<string, string>('test', 'test').sendRequest()
+      await expect(request).rejects.toEqual(new ApiError(400, 'testExplosion', 'test', 'testExplosion'))
+    })
+
+    it('with non bad request error', async () => {
+      expectFetch('api/private/test', 401, { method: 'POST' }, {
+        message: 'The API has exploded!',
+        error: 'testExplosion'
+      } as ApiErrorResponse)
+      const request = new PostApiRequestBuilder<string, string>('test', 'test').sendRequest()
+      await expect(request).rejects.toEqual(new ApiError(401, 'forbidden', 'test', 'testExplosion'))
     })
   })
 })

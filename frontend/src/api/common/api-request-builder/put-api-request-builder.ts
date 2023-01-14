@@ -21,6 +21,6 @@ export class PutApiRequestBuilder<ResponseType, RequestBodyType> extends ApiRequ
    * @see ApiRequestBuilder#sendRequest
    */
   sendRequest(): Promise<ApiResponse<ResponseType>> {
-    return this.sendRequestAndVerifyResponse('PUT', 200)
+    return this.sendRequestAndVerifyResponse('PUT')
   }
 }
