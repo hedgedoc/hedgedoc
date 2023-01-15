@@ -19,6 +19,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
     - `{%pdf https://example.org/example-pdf.pdf %}` -> Embedding removed
 - The use of `sequence` as code block language ([Why?](https://github.com/hedgedoc/react-client/issues/488#issuecomment-683262875))
 - Comma-separated definition of tags in the yaml-frontmatter
+- Fork Awesome Icons will be removed in a future release
 
 ### Removed
 
