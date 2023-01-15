@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -20,6 +20,8 @@ export interface CreateNonExistingNoteHintProps {
 /**
  * Shows a button that creates an empty note with the alias from the current window URL.
  * When the button was clicked it also shows the progress.
+ *
+ * @param onNoteCreated A function that will be called after the note was created.
  */
 export const CreateNonExistingNoteHint: React.FC<CreateNonExistingNoteHintProps> = ({ onNoteCreated }) => {
   useTranslation()
