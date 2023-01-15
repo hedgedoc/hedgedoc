@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -68,6 +68,7 @@ describe('create non existing note hint', () => {
     const onNoteCreatedCallback = jest.fn()
     const view = render(<CreateNonExistingNoteHint onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>)
     await screen.findByTestId('createNoteMessage')
+    await waitForOtherPromisesToFinish()
     expect(onNoteCreatedCallback).not.toBeCalled()
     expect(view.container).toMatchSnapshot()
   })
@@ -83,6 +84,7 @@ describe('create non existing note hint', () => {
     await waitFor(async () => {
       expect(await screen.findByTestId('loadingMessage')).toBeInTheDocument()
     })
+    await waitForOtherPromisesToFinish()
     expect(onNoteCreatedCallback).not.toBeCalled()
     expect(view.container).toMatchSnapshot()
   })
@@ -98,6 +100,7 @@ describe('create non existing note hint', () => {
     await waitFor(async () => {
       expect(await screen.findByTestId('noteCreated')).toBeInTheDocument()
     })
+    await waitForOtherPromisesToFinish()
     expect(onNoteCreatedCallback).toBeCalled()
     expect(view.container).toMatchSnapshot()
   })
@@ -113,6 +116,7 @@ describe('create non existing note hint', () => {
     await waitFor(async () => {
       expect(await screen.findByTestId('failedMessage')).toBeInTheDocument()
     })
+    await waitForOtherPromisesToFinish()
     expect(onNoteCreatedCallback).not.toBeCalled()
     expect(view.container).toMatchSnapshot()
   })
