@@ -222,7 +222,8 @@
       "sequence": "The use of 'sequence' as code block language is deprecated and will be removed in a future release.",
       "shortcode": "The {{shortcode}} short-code is deprecated and will be removed in a future release. Use a single line URL instead.",
       "frontmatter": "The yaml-metadata is invalid.",
-      "frontmatter-tags": "The comma-separated definition of tags in the yaml-metadata is deprecated. Use a yaml-array instead."
+      "frontmatter-tags": "The comma-separated definition of tags in the yaml-metadata is deprecated. Use a yaml-array instead.",
+      "fork-awesome": "Fork Awesome is deprecated and will be removed in future release. Please use the new bootstrap icons instead. See {{link}} for more information."
     },
     "upload": {
       "uploadFile": {

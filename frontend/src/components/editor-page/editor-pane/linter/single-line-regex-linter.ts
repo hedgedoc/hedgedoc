@@ -1,10 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { Linter } from './linter'
-import type { Diagnostic } from '@codemirror/lint'
+import type { Action, Diagnostic } from '@codemirror/lint'
 import type { EditorView } from '@codemirror/view'
 import { t } from 'i18next'
 
@@ -25,7 +25,7 @@ export class SingleLineRegexLinter implements Linter {
   constructor(
     private regex: RegExp,
     private message: string,
-    private replace: (match: string) => string,
+    private replace?: (match: string) => string,
     private actionLabel?: string
   ) {}
 
@@ -52,11 +52,10 @@ export class SingleLineRegexLinter implements Linter {
   }
 
   private createDiagnostic(from: number, found: RegExpExecArray): Diagnostic {
-    const replacedText = this.replace(found[1])
-    return {
-      from: from,
-      to: from + found[0].length,
-      actions: [
+    let actions: Action[] = []
+    if (this.replace !== undefined) {
+      const replacedText = this.replace(found[1])
+      actions = [
         {
           name: t(this.actionLabel ?? 'editor.linter.defaultAction'),
           apply: (view: EditorView, from: number, to: number) => {
@@ -65,7 +64,12 @@ export class SingleLineRegexLinter implements Linter {
             })
           }
         }
-      ],
+      ]
+    }
+    return {
+      from: from,
+      to: from + found[0].length,
+      actions: actions,
       message: this.message,
       severity: 'warning'
     }
