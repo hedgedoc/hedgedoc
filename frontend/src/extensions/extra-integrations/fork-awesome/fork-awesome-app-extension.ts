@@ -8,7 +8,7 @@ import { SingleLineRegexLinter } from '../../../components/editor-page/editor-pa
 import { AppExtension } from '../../base/app-extension'
 import { t } from 'i18next'
 
-export const forkAwesomeRegex = /<i class=["']fa fa-[\w-]+["'](?: aria-hidden=["']true["'])?\/?>(?:<\/i>)?/
+const forkAwesomeRegex = /<i class=["'][\w\s]*fa-[\w-]+[\w\s-]*["'][^>]*\/?>(?:<\/i>)?/
 
 /**
  * Adds support for flow charts to the markdown rendering.

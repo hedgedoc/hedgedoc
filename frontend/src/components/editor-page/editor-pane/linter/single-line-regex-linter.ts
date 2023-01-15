@@ -51,25 +51,28 @@ export class SingleLineRegexLinter implements Linter {
       .map(({ lineStartIndex, regexResult }) => this.createDiagnostic(lineStartIndex, regexResult as RegExpExecArray))
   }
 
-  private createDiagnostic(from: number, found: RegExpExecArray): Diagnostic {
-    let actions: Action[] = []
-    if (this.replace !== undefined) {
-      const replacedText = this.replace(found[1])
-      actions = [
-        {
-          name: t(this.actionLabel ?? 'editor.linter.defaultAction'),
-          apply: (view: EditorView, from: number, to: number) => {
-            view.dispatch({
-              changes: { from, to, insert: replacedText }
-            })
-          }
-        }
-      ]
+  private buildActions(found: RegExpExecArray): Action[] {
+    if (this.replace === undefined) {
+      return []
     }
+    const replacedText = this.replace(found[1])
+    return [
+      {
+        name: t(this.actionLabel ?? 'editor.linter.defaultAction'),
+        apply: (view: EditorView, from: number, to: number) => {
+          view.dispatch({
+            changes: { from, to, insert: replacedText }
+          })
+        }
+      }
+    ]
+  }
+
+  private createDiagnostic(from: number, found: RegExpExecArray): Diagnostic {
     return {
       from: from,
       to: from + found[0].length,
-      actions: actions,
+      actions: this.buildActions(found),
       message: this.message,
       severity: 'warning'
     }
