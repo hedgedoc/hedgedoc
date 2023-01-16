@@ -1916,9 +1916,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/language@npm:6.3.2":
-  version: 6.3.2
-  resolution: "@codemirror/language@npm:6.3.2"
+"@codemirror/language@npm:6.4.0":
+  version: 6.4.0
+  resolution: "@codemirror/language@npm:6.4.0"
   dependencies:
     "@codemirror/state": ^6.0.0
     "@codemirror/view": ^6.0.0
@@ -1926,7 +1926,7 @@ __metadata:
     "@lezer/highlight": ^1.0.0
     "@lezer/lr": ^1.0.0
     style-mod: ^4.0.0
-  checksum: b70ed9b85d0bea79181c86e88a1f5c0bada30680ee1fe6a68efc01bc037c3d14f94a83602fc46cc4b4393589605ef7e986ed5174443502f3365dd61f883894fa
+  checksum: 607072e234db59a9a21eb41b8777b62d68a55ed28298edc4f6aaedfcf52349db1fe3ff3e7747ccfc77f03757bad45ba9a657d59a0e9c67be1231902586dec7a3
   languageName: node
   linkType: hard
 
@@ -2295,7 +2295,7 @@ __metadata:
     "@codemirror/autocomplete": 6.4.0
     "@codemirror/commands": 6.1.3
     "@codemirror/lang-markdown": 6.0.5
-    "@codemirror/language": 6.3.2
+    "@codemirror/language": 6.4.0
     "@codemirror/language-data": 6.1.0
     "@codemirror/lint": 6.1.0
     "@codemirror/state": 6.2.0
