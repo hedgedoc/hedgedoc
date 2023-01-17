@@ -2250,7 +2250,7 @@ __metadata:
     source-map-support: 0.5.21
     sqlite3: 5.1.4
     supertest: 6.3.3
-    ts-jest: 29.0.3
+    ts-jest: 29.0.5
     ts-mockery: 1.2.0
     ts-node: 10.9.1
     tsconfig-paths: 4.1.2
@@ -2280,7 +2280,7 @@ __metadata:
     lib0: ^0.2.51
     microbundle: 0.15.1
     prettier: 2.8.3
-    ts-jest: 29.0.3
+    ts-jest: 29.0.5
     typescript: 4.9.3
     ws: ^8.0.0
     y-protocols: ^1.0.0
@@ -12139,7 +12139,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json5@npm:^2.1.2, json5@npm:^2.2.0, json5@npm:^2.2.1, json5@npm:^2.2.2":
+"json5@npm:^2.1.2, json5@npm:^2.2.0, json5@npm:^2.2.1, json5@npm:^2.2.2, json5@npm:^2.2.3":
   version: 2.2.3
   resolution: "json5@npm:2.2.3"
   bin:
@@ -17221,14 +17221,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:29.0.3":
-  version: 29.0.3
-  resolution: "ts-jest@npm:29.0.3"
+"ts-jest@npm:29.0.5":
+  version: 29.0.5
+  resolution: "ts-jest@npm:29.0.5"
   dependencies:
     bs-logger: 0.x
     fast-json-stable-stringify: 2.x
     jest-util: ^29.0.0
-    json5: ^2.2.1
+    json5: ^2.2.3
     lodash.memoize: 4.x
     make-error: 1.x
     semver: 7.x
@@ -17250,7 +17250,7 @@ __metadata:
       optional: true
   bin:
     ts-jest: cli.js
-  checksum: 541e51776d367fa2279af47f75af94b03e0538f1839ea9983de0f4ad7f188002f6eb1fc72440651d96daa62d25a7bc679a129c14e6ef291277eea9346751d56b
+  checksum: f60f129c2287f4c963d9ee2677132496c5c5a5d39c27ad234199a1140c26318a7d5bda34890ab0e30636ec42a8de28f84487c09e9dcec639c9c67812b3a38373
   languageName: node
   linkType: hard
 
