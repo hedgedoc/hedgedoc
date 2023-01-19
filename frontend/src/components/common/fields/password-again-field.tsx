@@ -19,16 +19,21 @@ interface PasswordAgainFieldProps extends CommonFieldProps {
  * @param value The currently entered retype of the password.
  * @param password The password entered into the password input field.
  */
-export const PasswordAgainField: React.FC<PasswordAgainFieldProps> = ({ onChange, value, password }) => {
+export const PasswordAgainField: React.FC<PasswordAgainFieldProps> = ({
+  onChange,
+  value,
+  password,
+  hasError = false
+}) => {
   const { t } = useTranslation()
 
   const isInvalid = useMemo(() => {
-    return value !== '' && password !== value
-  }, [password, value])
+    return value !== '' && password !== value && hasError
+  }, [password, value, hasError])
 
   const isValid = useMemo(() => {
-    return password !== '' && password === value
-  }, [password, value])
+    return password !== '' && password === value && !hasError
+  }, [password, value, hasError])
 
   return (
     <Form.Group>

@@ -14,7 +14,7 @@ import { Trans, useTranslation } from 'react-i18next'
  * @param onChange Hook that is called when the entered password changes.
  * @param value The currently entered password.
  */
-export const NewPasswordField: React.FC<CommonFieldProps> = ({ onChange, value }) => {
+export const NewPasswordField: React.FC<CommonFieldProps> = ({ onChange, value, hasError = false }) => {
   const { t } = useTranslation()
 
   const isValid = useMemo(() => {
@@ -30,6 +30,7 @@ export const NewPasswordField: React.FC<CommonFieldProps> = ({ onChange, value }
         type='password'
         size='sm'
         isValid={isValid}
+        isInvalid={hasError}
         onChange={onChange}
         placeholder={t('login.auth.password') ?? undefined}
         className='bg-dark text-light'
