@@ -69,6 +69,10 @@ export const RegisterPage: NextPage = () => {
     )
   }, [username, password, displayName, passwordAgain])
 
+  const isWeakPassword = useMemo(() => {
+    return error === RegisterErrorType.PASSWORD_TOO_WEAK
+  }, [error])
+
   const onUsernameChange = useOnInputChange(setUsername)
   const onDisplayNameChange = useOnInputChange(setDisplayName)
   const onPasswordChange = useOnInputChange(setPassword)
@@ -95,8 +99,13 @@ export const RegisterPage: NextPage = () => {
                 <Form onSubmit={doRegisterSubmit}>
                   <UsernameField onChange={onUsernameChange} value={username} />
                   <DisplayNameField onChange={onDisplayNameChange} value={displayName} />
-                  <NewPasswordField onChange={onPasswordChange} value={password} />
-                  <PasswordAgainField password={password} onChange={onPasswordAgainChange} value={passwordAgain} />
+                  <NewPasswordField onChange={onPasswordChange} value={password} hasError={isWeakPassword} />
+                  <PasswordAgainField
+                    password={password}
+                    onChange={onPasswordAgainChange}
+                    value={passwordAgain}
+                    hasError={isWeakPassword}
+                  />
 
                   <RegisterInfos />
 
