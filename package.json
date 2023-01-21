@@ -92,7 +92,7 @@
     "rimraf": "^4.0.0",
     "sanitize-filename": "^1.6.3",
     "scrypt-kdf": "^2.0.1",
-    "sequelize": "^5.21.1",
+    "sequelize": "^6.0.0",
     "shortid": "2.2.16",
     "socket.io": "^2.1.1",
     "sqlite3": "^5.0.8",
