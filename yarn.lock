@@ -9974,10 +9974,10 @@ scrypt-kdf@^2.0.1:
   resolved "https://registry.yarnpkg.com/scrypt-kdf/-/scrypt-kdf-2.0.1.tgz#3355224c52d398331b2cbf2b70a7be26b52c53e6"
   integrity sha512-dMhpgBVJPDWZP5erOCwTjI6oAO9hKhFAjZsdSQ0spaWJYHuA/wFNF2weQQfsyCIk8eNKoLfEDxr3zAtM+gZo0Q==
 
-select2@3.5.2-browserify:
-  version "3.5.2-browserify"
-  resolved "https://registry.yarnpkg.com/select2/-/select2-3.5.2-browserify.tgz#dc4dafda38d67a734e8a97a46f0d3529ae05391d"
-  integrity sha512-Hyzje+ALhhsuS7e40qON9MCEtv5Sk/6BbbewxsyFWSR6rvOBlwp+2ZE5N6+nSDJplfO//tJrUoqcmJxoKGa+Hg==
+select2@4.0.13:
+  version "4.0.13"
+  resolved "https://registry.yarnpkg.com/select2/-/select2-4.0.13.tgz#0dbe377df3f96167c4c1626033e924372d8ef44d"
+  integrity sha512-1JeB87s6oN/TDxQQYCvS5EFoQyvV6eYMZZ0AeA4tdFDYWN3BAGZ8npr17UBFddU0lgAt3H0yjX3X6/ekOj1yjw==
 
 semver@^5.3.0, semver@^5.6.0:
   version "5.7.1"
