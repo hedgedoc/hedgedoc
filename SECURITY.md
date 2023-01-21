@@ -13,26 +13,31 @@ ressources to maintain multiple versions.
 
 ## Reporting a Vulnerability
 
-If you find a vulnerability for [this repository](https://github.com/hedgedoc/hedgedoc), please report it to 
-[@SISheogorath](https://github.com/SISheogorath).
+If you find a vulnerability for [this repository][repo], please report it to 
+[@SISheogorath][sheo].
 
 Please report your findings OpenPGP encrypted. If you are not aware of
-how to use OpenPGP, please refer to [@SISheogorath's OpenPGP page](https://shivering-isles.com/pgpme),
+how to use OpenPGP, please refer to [@SISheogorath's OpenPGP page][openpgp],
 which will take care of the encryption for you.
 
 We'll get back to you as soon as possible. You can expect an answer within
 3 days, in rare cases within a month. If you don't get a reply within a month,
-please reach out for other contact addresses in the [community chat](https://chat.hedgedoc.org).
+please reach out for other contact addresses in the [community chat][community_chat].
 
-When your findings are accepted as a security issue, we'll work an a fix or
+When your findings are accepted as a security issue, we'll work on a fix or
 at least a workaround for the next release. With the release that contained
-the fix, we want to encurage you to publish your findings as you like.
+the fix, we want to encourage you to publish your findings as you like.
 
 We'll also credit you in the release notes.
 
 When your findings are not accepted as a security issue, feel free to write
 a fix yourself and contribute it to HedgeDoc, as well as publish them as you
-like and allow people to make in informed decision about using HedgeDoc.
+like and allow people to make an informed decision about using HedgeDoc.
 
 If you have any further questions, feel free to reach out to the
-[community chat](https://chat.hedgedoc.org) or the mentioned contacts above.
+[community chat][community_chat] or the mentioned contacts above.
+
+[repo](https://github.com/hedgedoc/hedgedoc)
+[sheo](https://github.com/SISheogorath)
+[openpgp](https://shivering-isles.com/pgpme)
+[community_chat](https://chat.hedgedoc.org)
