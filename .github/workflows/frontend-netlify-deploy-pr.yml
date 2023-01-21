@@ -108,7 +108,7 @@ jobs:
 
       - name: Mark GitHub deployment as started
         if: needs.changes.outputs.changed == 'true'
-        uses: bobheadxi/deployments@9d4477fdaa4120020cd10ab7e97f68c801422e73 # v1.3.0
+        uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3 # v1.4.0
         id: github-deployment
         with:
           step: start
@@ -129,7 +129,7 @@ jobs:
 
       - name: Mark GitHub deployment as finished
         if: needs.changes.outputs.changed == 'true'
-        uses: bobheadxi/deployments@9d4477fdaa4120020cd10ab7e97f68c801422e73 # v1.3.0
+        uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3 # v1.4.0
         with:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
