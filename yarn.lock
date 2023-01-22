@@ -2231,7 +2231,7 @@ __metadata:
     jest: 29.3.1
     joi: 17.7.0
     ldapauth-fork: 5.0.5
-    lib0: 0.2.58
+    lib0: 0.2.60
     minio: 7.0.32
     mocked-env: 1.3.5
     mysql: 2.18.1
@@ -12377,6 +12377,15 @@ __metadata:
   dependencies:
     isomorphic.js: ^0.2.4
   checksum: 90136b972af1468e71c6c2f453297e88a7631f4eb8efcedb18125da4c8a53e769c42c512467c8a8b8d164949999bc212a3a9ed710b958b287a913a177ced6847
+  languageName: node
+  linkType: hard
+
+"lib0@npm:0.2.60":
+  version: 0.2.60
+  resolution: "lib0@npm:0.2.60"
+  dependencies:
+    isomorphic.js: ^0.2.4
+  checksum: 7c3d90267b9b6ab10f03328dc342c558d8ccb0a098a665b867c41e55679851f3ae757717a3b61495c7e66eee69d37d54b8df37c9a82842680530355b3fd23b6e
   languageName: node
   linkType: hard
 
