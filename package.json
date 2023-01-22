@@ -21,10 +21,6 @@
     "@codemirror/theme-one-dark": "6.1.0",
     "@types/react": "18.0.27",
     "y-protocols@^1.0.0": "patch:y-protocols@npm%3A1.0.5#./.yarn/patches/y-protocols-npm-1.0.5-af6f64b4df.patch",
-    "y-protocols@1.0.5": "patch:y-protocols@npm%3A1.0.5#./.yarn/patches/y-protocols-npm-1.0.5-af6f64b4df.patch",
-    "lib0@^0.2.51": "patch:lib0@npm%3A0.2.58#./.yarn/patches/lib0-npm-0.2.58-7de44657f5.patch",
-    "lib0@^0.2.49": "patch:lib0@npm%3A0.2.58#./.yarn/patches/lib0-npm-0.2.58-7de44657f5.patch",
-    "lib0@^0.2.42": "patch:lib0@npm%3A0.2.58#./.yarn/patches/lib0-npm-0.2.58-7de44657f5.patch",
-    "lib0@0.2.58": "patch:lib0@npm%3A0.2.58#./.yarn/patches/lib0-npm-0.2.58-7de44657f5.patch"
+    "y-protocols@1.0.5": "patch:y-protocols@npm%3A1.0.5#./.yarn/patches/y-protocols-npm-1.0.5-af6f64b4df.patch"
   }
 }
