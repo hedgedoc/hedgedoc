@@ -105,7 +105,7 @@ jobs:
       - name: Generate Docker metadata
         if: needs.changes.outputs.changed == 'true'
         id: meta
-        uses: docker/metadata-action@57396166ad8aefe6098280995947635806a0e6ea # v4.1.1
+        uses: docker/metadata-action@507c2f2dc502c992ad446e3d7a5dfbe311567a96 # v4.3.0
         with:
           images: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}
           tags: |
