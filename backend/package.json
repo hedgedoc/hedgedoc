@@ -46,7 +46,7 @@
     "@zxcvbn-ts/core": "2.1.0",
     "@zxcvbn-ts/language-common": "2.0.1",
     "@zxcvbn-ts/language-en": "2.1.0",
-    "base32-encode": "1.2.0",
+    "base32-encode": "2.0.0",
     "bcrypt": "5.1.0",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.0",
