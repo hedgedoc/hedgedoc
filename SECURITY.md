@@ -13,12 +13,17 @@ ressources to maintain multiple versions.
 
 ## Reporting a Vulnerability
 
-If you find a vulnerability for [this repository][repo], please report it to 
-[@SISheogorath][sheo].
+Please go to ["Issues" > "New" > "Report a security vulnerability"][report]. This
+allows you to get in direct, but private contact with us. There is some more detailed
+documentation [available by GitHub][github_report_docs].
 
-Please report your findings OpenPGP encrypted. If you are not aware of
-how to use OpenPGP, please refer to [@SISheogorath's OpenPGP page][openpgp],
-which will take care of the encryption for you.
+> **Tip**: In this form, only the title and description are mandatory [so don't
+> worry if you can't fill everything]. […] However, we recommend security
+> researchers provide as much information as possible on the form so that [we]
+> can make an informed decision about the submitted report.  You can adopt the
+> template used by [GitHub's] security researchers from the GitHub Security
+> Lab, which is available on the [github/securitylab
+> repository][best_practice]."
 
 We'll get back to you as soon as possible. You can expect an answer within
 3 days, in rare cases within a month. If you don't get a reply within a month,
@@ -37,7 +42,8 @@ like and allow people to make an informed decision about using HedgeDoc.
 If you have any further questions, feel free to reach out to the
 [community chat][community_chat] or the mentioned contacts above.
 
-[repo](https://github.com/hedgedoc/hedgedoc)
-[sheo](https://github.com/SISheogorath)
-[openpgp](https://shivering-isles.com/pgpme)
-[community_chat](https://chat.hedgedoc.org)
+[repo]: https://github.com/hedgedoc/hedgedoc
+[report]: https://github.com/hedgedoc/hedgedoc/security/advisories/new
+[github_report_docs]: https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing/privately-reporting-a-security-vulnerability#privately-reporting-a-security-vulnerability
+[community_chat]: https://chat.hedgedoc.org
+[best_practice]: https://github.com/github/securitylab/blob/main/docs/report-template.md
