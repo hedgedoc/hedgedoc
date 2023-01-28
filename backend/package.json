@@ -43,7 +43,7 @@
     "@types/minio": "7.0.15",
     "@types/node-fetch": "2.6.2",
     "@types/passport-http-bearer": "1.0.37",
-    "@zxcvbn-ts/core": "2.1.0",
+    "@zxcvbn-ts/core": "2.2.0",
     "@zxcvbn-ts/language-common": "2.0.1",
     "@zxcvbn-ts/language-en": "2.1.0",
     "base32-encode": "1.2.0",
