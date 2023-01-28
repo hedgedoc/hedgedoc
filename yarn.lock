@@ -2198,7 +2198,7 @@ __metadata:
     "@types/ws": 8.5.4
     "@typescript-eslint/eslint-plugin": 5.48.2
     "@typescript-eslint/parser": 5.48.2
-    "@zxcvbn-ts/core": 2.1.0
+    "@zxcvbn-ts/core": 2.2.0
     "@zxcvbn-ts/language-common": 2.0.1
     "@zxcvbn-ts/language-en": 2.1.0
     base32-encode: 1.2.0
@@ -5408,10 +5408,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zxcvbn-ts/core@npm:2.1.0":
-  version: 2.1.0
-  resolution: "@zxcvbn-ts/core@npm:2.1.0"
-  checksum: b5178b0086cbfcf086a5df535e382034418166f6e45322cf5d8b07a89ffadc69db16e0ab9900a3edac2dba752f2ef55e831cf82f4d2e11d90143c4396fadba4e
+"@zxcvbn-ts/core@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@zxcvbn-ts/core@npm:2.2.0"
+  dependencies:
+    fastest-levenshtein: 1.0.16
+  checksum: 232c099ea25006ae43efef6c4f03fccc46f3769b3ed50e9a3745db85b66ceefcb1da6d5eb3ae8b4ad02fcb07783946d1d8f06c9c57e89ed5c37eac9dcce99dc8
   languageName: node
   linkType: hard
 
@@ -9686,6 +9688,13 @@ __metadata:
   bin:
     xml2js: cli.js
   checksum: 73b9c907a424cc2f9b11a8a2f1b7448d936f1db6fa574b85cbe4be9739c2f77d99a827bb27d738a0db0047b20c71a5d663f64937fbdb9c38977fc6cd145221d2
+  languageName: node
+  linkType: hard
+
+"fastest-levenshtein@npm:1.0.16":
+  version: 1.0.16
+  resolution: "fastest-levenshtein@npm:1.0.16"
+  checksum: a78d44285c9e2ae2c25f3ef0f8a73f332c1247b7ea7fb4a191e6bb51aa6ee1ef0dfb3ed113616dcdc7023e18e35a8db41f61c8d88988e877cf510df8edafbc71
   languageName: node
   linkType: hard
 
