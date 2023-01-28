@@ -2395,7 +2395,7 @@ __metadata:
     react-redux: 8.0.5
     react-test-renderer: 18.2.0
     react-use: 17.4.0
-    redux: 4.2.0
+    redux: 4.2.1
     reveal.js: 4.4.0
     sanitize-filename: 1.6.3
     sass: 1.57.1
@@ -15557,7 +15557,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux@npm:4.2.0, redux@npm:^4.2.0":
+"redux@npm:4.2.1":
+  version: 4.2.1
+  resolution: "redux@npm:4.2.1"
+  dependencies:
+    "@babel/runtime": ^7.9.2
+  checksum: f63b9060c3a1d930ae775252bb6e579b42415aee7a23c4114e21a0b4ba7ec12f0ec76936c00f546893f06e139819f0e2855e0d55ebfce34ca9c026241a6950dd
+  languageName: node
+  linkType: hard
+
+"redux@npm:^4.2.0":
   version: 4.2.0
   resolution: "redux@npm:4.2.0"
   dependencies:
