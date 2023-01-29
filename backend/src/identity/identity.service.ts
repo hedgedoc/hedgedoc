@@ -132,7 +132,6 @@ export class IdentityService {
    */
   async createLocalIdentity(user: User, password: string): Promise<Identity> {
     const identity = Identity.create(user, ProviderType.LOCAL, false);
-    await this.checkPasswordStrength(password);
     identity.passwordHash = await hashPassword(password);
     return await this.identityRepository.save(identity);
   }
