@@ -68,7 +68,7 @@ jobs:
 
       - name: Set up Docker Buildx
         if: needs.changes.outputs.changed == 'true'
-        uses: docker/setup-buildx-action@8c0edbc76e98fa90f69d9a2c020dcb50019dc325 # v2.2.1
+        uses: docker/setup-buildx-action@5e716dcfd653738c2d1db099bfba194a84158be4 # v2.3.0
 
       - name: Login to GHCR
         if: github.event_name != 'pull_request' && needs.changes.outputs.changed == 'true'
