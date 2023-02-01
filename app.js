@@ -75,10 +75,8 @@ app.use(morgan('combined', {
 }))
 
 // Register prometheus metrics endpoint
-if (config.observability.exposeMetrics) {
-  app.use(apiMetrics())
-  metrics.setupCustomPrometheusMetrics()
-}
+app.use(apiMetrics())
+metrics.setupCustomPrometheusMetrics()
 
 // socket io
 const io = require('socket.io')(server, { cookie: false })
@@ -228,17 +226,7 @@ app.locals.enableGitHubGist = config.isGitHubEnable
 app.locals.enableGitlabSnippets = config.isGitlabSnippetsEnable
 
 app.use(require('./lib/web/baseRouter'))
-
-if (config.observability.exposeStatus) {
-  app.use(require('./lib/web/statusRouter'))
-} else {
-  // the `/status` route is used by the hedgedoc container's
-  // healtcheck route so keep the endpoint alive
-  app.get('/status', function (req, res, next) {
-    res.sendStatus(200)
-  })
-}
-
+app.use(require('./lib/web/statusRouter'))
 app.use(require('./lib/web/auth'))
 app.use(require('./lib/web/historyRouter'))
 app.use(require('./lib/web/userRouter'))
