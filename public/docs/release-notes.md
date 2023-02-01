@@ -2,9 +2,6 @@
 
 ## UNRELEASED
 
-### Enhancements
-- Allow disabling the /metrics and /status endpoints
-
 ### Bugfixes
 - Fix note titles with special characters producing invalid file names in user export zip file
 
