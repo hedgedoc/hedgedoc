@@ -6,6 +6,7 @@
 import type { AppExtension } from '../base/app-extension'
 import { AbcjsAppExtension } from './abcjs/abcjs-app-extension'
 import { AlertAppExtension } from './alert/alert-app-extension'
+import { AsciinemaAppExtension } from './asciinema/asciinema-app-extension'
 import { BlockquoteAppExtension } from './blockquote/blockquote-app-extension'
 import { CsvTableAppExtension } from './csv/csv-table-app-extension'
 import { FlowchartAppExtension } from './flowchart/flowchart-app-extension'
@@ -36,6 +37,7 @@ export const optionalAppExtensions: AppExtension[] = [
   new GistAppExtension(),
   new GraphvizAppExtension(),
   new KatexAppExtension(),
+  new AsciinemaAppExtension(),
   new LegacyShortcodesAppExtension(),
   new MermaidAppExtension(),
   new PlantumlAppExtension(),
