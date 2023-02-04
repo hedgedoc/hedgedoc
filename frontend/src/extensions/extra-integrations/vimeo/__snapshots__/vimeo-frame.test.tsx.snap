@@ -5,11 +5,10 @@ exports[`VimeoFrame renders a click shield 1`] = `
   <span>
     This is a click shield for 
     <span
-      class="embed-responsive embed-responsive-16by9"
+      class="ratio ratio-16x9 d-inline-block"
     >
       <iframe
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        class="embed-responsive-item"
         src="https://player.vimeo.com/video/validVimeoId?autoplay=1"
         title="vimeo video of validVimeoId"
       />
