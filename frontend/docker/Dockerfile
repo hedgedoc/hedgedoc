@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
 # BUILD
-FROM docker.io/node:18-alpine@sha256:fda98168118e5a8f4269efca4101ee51dd5c75c0fe56d8eb6fad80455c2f5827 AS builder
+FROM docker.io/node:18-alpine@sha256:bc329c7332cffc30c2d4801e38df03cbfa8dcbae2a7a52a449db104794f168a3 AS builder
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ARG BUILD_VERSION=CLIENT_VERSION_MISSING
@@ -36,7 +36,7 @@ RUN rm -rf public/public && \
 RUN yarn build
 
 # RUNNER
-FROM docker.io/node:18-alpine@sha256:fda98168118e5a8f4269efca4101ee51dd5c75c0fe56d8eb6fad80455c2f5827
+FROM docker.io/node:18-alpine@sha256:bc329c7332cffc30c2d4801e38df03cbfa8dcbae2a7a52a449db104794f168a3
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
