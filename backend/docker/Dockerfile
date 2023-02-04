@@ -86,8 +86,15 @@ USER node
 WORKDIR /usr/src/app
 ENV NODE_ENV=production
 
-COPY --chown=node --from=builder /usr/src/app/backend/dist ./
-COPY --chown=node backend/package.json package.json
+COPY --chown=node package.json package.json
 COPY --chown=node --from=prod-dependencies /usr/src/app/node_modules ./node_modules
 
-CMD  ["node", "main.js"]
+COPY --chown=node backend/package.json backend/package.json
+COPY --chown=node --from=builder /usr/src/app/backend/dist backend/dist
+COPY --chown=node backend/public backend/public
+
+COPY --chown=node commons/package.json /usr/src/app/commons/package.json
+COPY --chown=node --from=prod-dependencies /usr/src/app/commons/dist commons/dist
+
+WORKDIR /usr/src/app/backend
+CMD  ["node", "dist/main.js"]

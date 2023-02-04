@@ -43,12 +43,14 @@ ENV NEXT_TELEMETRY_DISABLED=1
 WORKDIR /usr/src/app
 
 COPY --from=builder --chown=node:node /usr/src/app/frontend/.next/standalone ./
-COPY --from=builder --chown=node:node /usr/src/app/frontend/.next/static ./.next/static
-COPY --from=builder /usr/src/app/frontend/next.config.js next.config.js
-COPY --from=builder /usr/src/app/frontend/public ./public
+COPY --from=builder --chown=node:node /usr/src/app/frontend/.next/static ./frontend/.next/static
+COPY --from=builder /usr/src/app/frontend/next.config.js ./frontend/next.config.js
+COPY --from=builder /usr/src/app/frontend/public ./frontend/public
 
 USER node
 
 ENV PORT 3001
 EXPOSE 3001/tcp
-CMD ["node", "frontend/server.js"]
+
+WORKDIR /usr/src/app/frontend
+CMD ["node", "server.js"]
