@@ -20,9 +20,8 @@ export const YouTubeFrame: React.FC<IdProps> = ({ id }) => {
       fallbackPreviewImageUrl={`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`}
       fallbackBackgroundColor={'#ff0000'}
       data-cypress-id={'click-shield-youtube'}>
-      <span className={'embed-responsive embed-responsive-16by9'}>
+      <span className={'ratio ratio-16x9 d-inline-block'}>
         <iframe
-          className='embed-responsive-item'
           title={`youtube video of ${id}`}
           src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1`}
           allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
