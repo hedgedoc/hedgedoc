@@ -43,9 +43,8 @@ export const VimeoFrame: React.FC<IdProps> = ({ id }) => {
       onImageFetch={getPreviewImageLink}
       fallbackBackgroundColor={'#00adef'}
       data-cypress-id={'click-shield-vimeo'}>
-      <span className={'embed-responsive embed-responsive-16by9'}>
+      <span className={'ratio ratio-16x9 d-inline-block'}>
         <iframe
-          className='embed-responsive-item'
           title={`vimeo video of ${id}`}
           src={`https://player.vimeo.com/video/${id}?autoplay=1`}
           allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
