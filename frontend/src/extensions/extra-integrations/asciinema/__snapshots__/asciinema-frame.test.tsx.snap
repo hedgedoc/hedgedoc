@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Asciinema renders a click shield 1`] = `
+<div>
+  <span>
+    This is a click shield for 
+    <span
+      class="ratio ratio-16x9"
+    >
+      <iframe
+        allowfullscreen=""
+        class=""
+        src="https://asciinema.org/a/validAsciinemaId/iframe?autoplay=1"
+        title="asciinema cast validAsciinemaId"
+      />
+    </span>
+  </span>
+</div>
+`;

@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`asciinema markdown extension renders plain asciinema URLs 1`] = `
+<div>
+  <p>
+    <span>
+      this is a mock for the asciinema frame with id 
+      190123709
+    </span>
+  </p>
+  
+
+</div>
+`;
