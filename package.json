@@ -199,7 +199,7 @@
     "url-loader": "4.1.1",
     "velocity-animate": "1.5.2",
     "visibilityjs": "2.0.2",
-    "viz.js": "1.8.2",
+    "viz.js": "2.1.2",
     "webpack": "4.46.0",
     "webpack-cli": "4.10.0",
     "webpack-merge": "5.8.0",
