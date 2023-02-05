@@ -73,7 +73,7 @@ jobs:
 
       - name: Patch base URL
         if: needs.changes.outputs.changed == 'true'
-        run: echo "HD_EDITOR_BASE_URL=\"https://hedgedoc.dev/\"" >> .env.production
+        run: echo "HD_BASE_URL=\"https://hedgedoc.dev/\"" >> .env.production
 
       - name: Build app
         if: needs.changes.outputs.changed == 'true'

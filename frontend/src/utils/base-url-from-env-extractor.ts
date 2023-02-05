@@ -6,6 +6,7 @@
 import type { BaseUrls } from '../components/common/base-url/base-url-context-provider'
 import { Logger } from './logger'
 import { isTestMode } from './test-modes'
+import { MissingTrailingSlashError, parseUrl } from '@hedgedoc/commons'
 import { Optional } from '@mrdrogdrog/optional'
 
 /**
@@ -16,27 +17,22 @@ export class BaseUrlFromEnvExtractor {
   private logger = new Logger('Base URL Configuration')
 
   private extractUrlFromEnvVar(envVarName: string, envVarValue: string | undefined): Optional<URL> {
-    return Optional.ofNullable(envVarValue)
-      .filter((value) => {
-        const endsWithSlash = value.endsWith('/')
-        if (!endsWithSlash) {
-          this.logger.error(`${envVarName} must end with an '/'`)
-        }
-        return endsWithSlash
-      })
-      .map((value) => {
-        try {
-          return new URL(value)
-        } catch (error) {
-          return null
-        }
-      })
+    try {
+      return parseUrl(envVarValue)
+    } catch (error) {
+      if (error instanceof MissingTrailingSlashError) {
+        this.logger.error(`The path in ${envVarName} must end with an '/'`)
+        return Optional.empty()
+      } else {
+        throw error
+      }
+    }
   }
 
   private extractEditorBaseUrlFromEnv(): Optional<URL> {
-    const envValue = this.extractUrlFromEnvVar('HD_EDITOR_BASE_URL', process.env.HD_EDITOR_BASE_URL)
+    const envValue = this.extractUrlFromEnvVar('HD_BASE_URL', process.env.HD_BASE_URL)
     if (envValue.isEmpty()) {
-      this.logger.error("HD_EDITOR_BASE_URL isn't a valid URL!")
+      this.logger.error("HD_BASE_URL isn't a valid URL!")
     }
     return envValue
   }

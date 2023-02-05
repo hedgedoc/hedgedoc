@@ -5,7 +5,7 @@ HedgeDoc can be configured via environment variables either directly or via an `
 The `.env` file should be placed in the root of the project and contains key-value pairs of environment variables and their corresponding value. This can for example look like this:
 
 ```ini
-HD_DOMAIN="http://localhost"
+HD_BASE_URL="http://localhost"
 HD_MEDIA_BACKEND="filesystem"
 HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH="uploads/"
 HD_DATABASE_TYPE="sqlite"
@@ -19,15 +19,15 @@ We also provide an `.env.example` file containing a minimal configuration in the
 
 ## General
 
-| environment variable     | default   | example                     | description                                                                                                                                            |
-|--------------------------|-----------|-----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `HD_DOMAIN`              | -         | `https://md.example.com`    | The URL the HedgeDoc instance runs on.                                                                                                                 |
-| `PORT`                   | 3000      |                             | The port the HedgeDoc instance runs on.                                                                                                                |
-| `HD_RENDERER_BASE_URL`   | HD_DOMAIN |                             | The URL the renderer runs on. If omitted this will be same as `HD_DOMAIN`.                                                                             |
-| `HD_LOGLEVEL`            | warn      |                             | The loglevel that should be used. Options are `error`, `warn`, `info`, `debug` or `trace`.                                                             |
-| `HD_FORBIDDEN_NOTE_IDS`  | -         | `notAllowed,alsoNotAllowed` | A list of note ids (separated by `,`), that are not allowed to be created or requested by anyone.                                                      |
-| `HD_MAX_DOCUMENT_LENGTH` | 100000    |                             | The maximum length of any one document. Changes to this will impact performance for your users.                                                        |
-| `HD_PERSIST_INTERVAL`    | 10        | `0`, `5`, `10`, `20`        | The time interval in **minutes** for the periodic note revision creation during realtime editing. `0` deactivates the periodic note revision creation. |
+| environment variable     | default                | example                     | description                                                                                                                                            |
+|--------------------------|------------------------|-----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `HD_BASE_URL`            | -                      | `https://md.example.com`    | The URL the HedgeDoc instance runs on.                                                                                                                 |
+| `PORT`                   | 3000                   |                             | The port the HedgeDoc instance runs on.                                                                                                                |
+| `HD_RENDERER_BASE_URL`   | Content of HD_BASE_URL |                             | The URL the renderer runs on. If omitted this will be the same as `HD_BASE_URL`.                                                                       |
+| `HD_LOGLEVEL`            | warn                   |                             | The loglevel that should be used. Options are `error`, `warn`, `info`, `debug` or `trace`.                                                             |
+| `HD_FORBIDDEN_NOTE_IDS`  | -                      | `notAllowed,alsoNotAllowed` | A list of note ids (separated by `,`), that are not allowed to be created or requested by anyone.                                                      |
+| `HD_MAX_DOCUMENT_LENGTH` | 100000                 |                             | The maximum length of any one document. Changes to this will impact performance for your users.                                                        |
+| `HD_PERSIST_INTERVAL`    | 10                     | `0`, `5`, `10`, `20`        | The time interval in **minutes** for the periodic note revision creation during realtime editing. `0` deactivates the periodic note revision creation. |
 
 ### Why should I want to run my renderer on a different (sub-)domain?
 

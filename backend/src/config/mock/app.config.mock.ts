@@ -11,7 +11,7 @@ import { Loglevel } from '../loglevel.enum';
 
 export function createDefaultMockAppConfig(): AppConfig {
   return {
-    domain: 'md.example.com',
+    baseUrl: 'md.example.com',
     rendererBaseUrl: 'md-renderer.example.com',
     port: 3000,
     loglevel: Loglevel.ERROR,
