@@ -35,6 +35,13 @@ describe('RealtimeNoteService', () => {
   let clearIntervalSpy: jest.SpyInstance;
   let deleteIntervalSpy: jest.SpyInstance;
 
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+  beforeAll(() => {
+    jest.useFakeTimers();
+  });
+
   function mockGetLatestRevision(latestRevisionExists: boolean) {
     jest
       .spyOn(revisionsService, 'getLatestRevision')
