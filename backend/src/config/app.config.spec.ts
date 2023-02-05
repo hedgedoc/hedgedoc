@@ -9,9 +9,9 @@ import appConfig from './app.config';
 import { Loglevel } from './loglevel.enum';
 
 describe('appConfig', () => {
-  const domain = 'https://example.com';
-  const invalidDomain = 'localhost';
-  const rendererBaseUrl = 'https://render.example.com';
+  const baseUrl = 'https://example.com/';
+  const invalidBaseUrl = 'localhost';
+  const rendererBaseUrl = 'https://render.example.com/';
   const port = 3333;
   const negativePort = -9000;
   const floatPort = 3.14;
@@ -26,7 +26,7 @@ describe('appConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_DOMAIN: domain,
+          HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
           PORT: port.toString(),
           HD_LOGLEVEL: loglevel,
@@ -38,7 +38,7 @@ describe('appConfig', () => {
         },
       );
       const config = appConfig();
-      expect(config.domain).toEqual(domain);
+      expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
       expect(config.port).toEqual(port);
       expect(config.loglevel).toEqual(loglevel);
@@ -50,7 +50,7 @@ describe('appConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_DOMAIN: domain,
+          HD_BASE_URL: baseUrl,
           PORT: port.toString(),
           HD_LOGLEVEL: loglevel,
           HD_PERSIST_INTERVAL: '100',
@@ -61,8 +61,8 @@ describe('appConfig', () => {
         },
       );
       const config = appConfig();
-      expect(config.domain).toEqual(domain);
-      expect(config.rendererBaseUrl).toEqual(domain);
+      expect(config.baseUrl).toEqual(baseUrl);
+      expect(config.rendererBaseUrl).toEqual(baseUrl);
       expect(config.port).toEqual(port);
       expect(config.loglevel).toEqual(loglevel);
       expect(config.persistInterval).toEqual(100);
@@ -73,7 +73,7 @@ describe('appConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_DOMAIN: domain,
+          HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
           HD_LOGLEVEL: loglevel,
           HD_PERSIST_INTERVAL: '100',
@@ -84,7 +84,7 @@ describe('appConfig', () => {
         },
       );
       const config = appConfig();
-      expect(config.domain).toEqual(domain);
+      expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
       expect(config.port).toEqual(3000);
       expect(config.loglevel).toEqual(loglevel);
@@ -96,7 +96,7 @@ describe('appConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_DOMAIN: domain,
+          HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
           PORT: port.toString(),
           HD_PERSIST_INTERVAL: '100',
@@ -107,7 +107,7 @@ describe('appConfig', () => {
         },
       );
       const config = appConfig();
-      expect(config.domain).toEqual(domain);
+      expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
       expect(config.port).toEqual(port);
       expect(config.loglevel).toEqual(Loglevel.WARN);
@@ -119,7 +119,7 @@ describe('appConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_DOMAIN: domain,
+          HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
           HD_LOGLEVEL: loglevel,
           PORT: port.toString(),
@@ -130,7 +130,7 @@ describe('appConfig', () => {
         },
       );
       const config = appConfig();
-      expect(config.domain).toEqual(domain);
+      expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
       expect(config.port).toEqual(port);
       expect(config.loglevel).toEqual(Loglevel.TRACE);
@@ -142,7 +142,7 @@ describe('appConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_DOMAIN: domain,
+          HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
           HD_LOGLEVEL: loglevel,
           PORT: port.toString(),
@@ -154,7 +154,7 @@ describe('appConfig', () => {
         },
       );
       const config = appConfig();
-      expect(config.domain).toEqual(domain);
+      expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
       expect(config.port).toEqual(port);
       expect(config.loglevel).toEqual(Loglevel.TRACE);
@@ -163,11 +163,11 @@ describe('appConfig', () => {
     });
   });
   describe('throws error', () => {
-    it('when given a non-valid HD_DOMAIN', async () => {
+    it('when given a non-valid HD_BASE_URL', async () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_DOMAIN: invalidDomain,
+          HD_BASE_URL: invalidBaseUrl,
           PORT: port.toString(),
           HD_LOGLEVEL: loglevel,
           /* eslint-enable @typescript-eslint/naming-convention */
@@ -176,7 +176,25 @@ describe('appConfig', () => {
           clear: true,
         },
       );
-      expect(() => appConfig()).toThrow('HD_DOMAIN');
+      expect(() => appConfig()).toThrow('HD_BASE_URL');
+      restore();
+    });
+
+    it('when given a base url with path but no trailing slash in HD_BASE_URL', async () => {
+      const restore = mockedEnv(
+        {
+          /* eslint-disable @typescript-eslint/naming-convention */
+          HD_BASE_URL: 'https://example.org/a',
+          HD_LOGLEVEL: loglevel,
+          /* eslint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      expect(() => appConfig()).toThrow(
+        '"HD_BASE_URL" must end with a trailing slash',
+      );
       restore();
     });
 
@@ -184,7 +202,7 @@ describe('appConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_DOMAIN: domain,
+          HD_BASE_URL: baseUrl,
           PORT: negativePort.toString(),
           HD_LOGLEVEL: loglevel,
           /* eslint-enable @typescript-eslint/naming-convention */
@@ -201,7 +219,7 @@ describe('appConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_DOMAIN: domain,
+          HD_BASE_URL: baseUrl,
           PORT: outOfRangePort.toString(),
           HD_LOGLEVEL: loglevel,
           /* eslint-enable @typescript-eslint/naming-convention */
@@ -220,7 +238,7 @@ describe('appConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_DOMAIN: domain,
+          HD_BASE_URL: baseUrl,
           PORT: floatPort.toString(),
           HD_LOGLEVEL: loglevel,
           /* eslint-enable @typescript-eslint/naming-convention */
@@ -237,7 +255,7 @@ describe('appConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_DOMAIN: domain,
+          HD_BASE_URL: baseUrl,
           PORT: invalidPort,
           HD_LOGLEVEL: loglevel,
           /* eslint-enable @typescript-eslint/naming-convention */
@@ -254,7 +272,7 @@ describe('appConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_DOMAIN: domain,
+          HD_BASE_URL: baseUrl,
           PORT: port.toString(),
           HD_LOGLEVEL: invalidLoglevel,
           /* eslint-enable @typescript-eslint/naming-convention */
@@ -271,7 +289,7 @@ describe('appConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_DOMAIN: domain,
+          HD_BASE_URL: baseUrl,
           PORT: port.toString(),
           HD_LOGLEVEL: invalidLoglevel,
           HD_PERSIST_INTERVAL: invalidPersistInterval.toString(),

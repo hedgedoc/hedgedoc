@@ -78,7 +78,7 @@ This only needs to be done once, except if you've changed code in the commons pa
 3. Make sure that you've set `HD_SESSION_SECRET` in your `.env` file. Otherwise, the backend won't start.
    > In dev mode you don't need a secure secret. So use any value. If you want to generate a secure session secret you
    can use e.g. `openssl rand -hex 16 | sed -E 's/(.*)/HD_SESSION_SECRET=\1/' >> .env`.
-4. Make sure that `HD_DOMAIN` in `.env` is set to the domain where Hedgedoc should be available. In local dev
+4. Make sure that `HD_BASE_URL` in `.env` is set to the base url where HedgeDoc should be available. In local dev
    environment this is most likely `http://localhost:8080`.
 5. Start the backend by running `yarn start:dev` for dev mode or `yarn start` for production.
 
@@ -99,7 +99,7 @@ In development mode the app will autoload changes you make to the code.
 ### With local backend
 
 To start the development mode with an actual HedgeDoc backend use `yarn run dev:with-local-backend` instead.
-This task will automatically set `HD_EDITOR_BASE_URL` to `http://localhost:8080`.
+This task will automatically set `HD_BASE_URL` to `http://localhost:8080`.
 
 ### Production mode
 
@@ -107,11 +107,11 @@ Use `yarn build` to build the app in production mode and save it into the `.next
 minimized and optimized for best performance. Don't edit the generated files in the `.next` folder in any way!
 
 You can run the production build using the built-in server with `yarn start`.
-You MUST provide the environment variable `HD_EDITOR_BASE_URL` with protocol, domain and (if needed) subdirectory path (
+You MUST provide the environment variable `HD_BASE_URL` with protocol, domain and (if needed) subdirectory path (
 e.g. `http://localhost:3001/`) so the app knows under which URL the frontend is available in the browser.
 
-If you use the production build then make sure that you set the environment variable `HD_EDITOR_BASE_URL` to the same
-value as `HD_DOMAIN` in the backend.
+If you use the production build then make sure that you set the environment variable `HD_BASE_URL` to the same
+value as `HD_BASE_URL` in the backend.
 
 ### Production mock build
 

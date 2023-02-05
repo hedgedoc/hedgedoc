@@ -3,31 +3,50 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  MissingTrailingSlashError,
+  parseUrl,
+  WrongProtocolError,
+} from '@hedgedoc/commons';
 import { registerAs } from '@nestjs/config';
 import * as Joi from 'joi';
+import { CustomHelpers, ErrorReport } from 'joi';
 
 import { Loglevel } from './loglevel.enum';
 import { buildErrorMessage, parseOptionalNumber } from './utils';
 
 export interface AppConfig {
-  domain: string;
+  baseUrl: string;
   rendererBaseUrl: string;
   port: number;
   loglevel: Loglevel;
   persistInterval: number;
 }
 
+function validateUrlWithTrailingSlash(
+  value: string,
+  helpers: CustomHelpers,
+): string | ErrorReport {
+  try {
+    return parseUrl(value).isPresent() ? value : helpers.error('string.uri');
+  } catch (error) {
+    if (error instanceof MissingTrailingSlashError) {
+      return helpers.error('url.missingTrailingSlash');
+    } else if (error instanceof WrongProtocolError) {
+      return helpers.error('url.wrongProtocol');
+    } else {
+      throw error;
+    }
+  }
+}
+
 const schema = Joi.object({
-  domain: Joi.string()
-    .uri({
-      scheme: /https?/,
-    })
-    .label('HD_DOMAIN'),
+  baseUrl: Joi.string()
+    .custom(validateUrlWithTrailingSlash)
+    .label('HD_BASE_URL'),
   rendererBaseUrl: Joi.string()
-    .uri({
-      scheme: /https?/,
-    })
-    .default(Joi.ref('domain'))
+    .custom(validateUrlWithTrailingSlash)
+    .default(Joi.ref('baseUrl'))
     .optional()
     .label('HD_RENDERER_BASE_URL'),
   port: Joi.number()
@@ -48,12 +67,17 @@ const schema = Joi.object({
     .default(10)
     .optional()
     .label('HD_PERSIST_INTERVAL'),
+}).messages({
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  'url.missingTrailingSlash': '{{#label}} must end with a trailing slash',
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  'url.wrongProtocol': '{{#label}} protocol must be HTTP or HTTPS',
 });
 
 export default registerAs('appConfig', () => {
   const appConfig = schema.validate(
     {
-      domain: process.env.HD_DOMAIN,
+      baseUrl: process.env.HD_BASE_URL,
       rendererBaseUrl: process.env.HD_RENDERER_BASE_URL,
       port: parseOptionalNumber(process.env.PORT),
       loglevel: process.env.HD_LOGLEVEL,

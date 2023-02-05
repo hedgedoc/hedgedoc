@@ -18,7 +18,7 @@ describe('App', () => {
     })
       .overrideProvider(getConfigToken('appConfig'))
       .useValue({
-        domain: 'localhost',
+        baseUrl: 'localhost',
         port: 3333,
       })
       .overrideProvider(getConfigToken('mediaConfig'))

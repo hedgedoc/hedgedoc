@@ -167,7 +167,7 @@ describe('FrontendConfigService', () => {
     ]) {
       it(`works with ${JSON.stringify(authConfigConfigured)}`, async () => {
         const appConfig: AppConfig = {
-          domain: domain,
+          baseUrl: domain,
           rendererBaseUrl: 'https://renderer.example.org',
           port: 3000,
           loglevel: Loglevel.ERROR,
@@ -325,7 +325,7 @@ describe('FrontendConfigService', () => {
           ]) {
             it(`combination #${index} works`, async () => {
               const appConfig: AppConfig = {
-                domain: domain,
+                baseUrl: domain,
                 rendererBaseUrl: 'https://renderer.example.org',
                 port: 3000,
                 loglevel: Loglevel.ERROR,
