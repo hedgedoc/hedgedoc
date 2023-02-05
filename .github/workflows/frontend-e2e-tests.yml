@@ -65,7 +65,7 @@ jobs:
 
       - name: Cache build
         if: needs.changes.outputs.changed == 'true'
-        uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # v3.2.3
+        uses: actions/cache@627f0f41f6904a5b1efbaed9f96d9eb58e92e920 # v3.2.4
         id: build-cache
         with:
           path: frontend/.next
@@ -112,7 +112,7 @@ jobs:
 
       - name: Cache build
         if: needs.changes.outputs.changed == 'true'
-        uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # v3.2.3
+        uses: actions/cache@627f0f41f6904a5b1efbaed9f96d9eb58e92e920 # v3.2.4
         id: build-cache
         with:
           path: frontend/.next
@@ -125,7 +125,7 @@ jobs:
 
       - name: Cache yarn cache
         if: needs.changes.outputs.changed == 'true'
-        uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # v3.2.3
+        uses: actions/cache@627f0f41f6904a5b1efbaed9f96d9eb58e92e920 # v3.2.4
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
