@@ -14,6 +14,7 @@
   "moduleNameMapper" : {
     "^(\\.{1,2}/.*)\\.js$" : "$1"
   },
+  "transformIgnorePatterns": ["<rootDir>/node_modules/"],
   "transform" : {
     "^.+\\.tsx?$" : [
       "ts-jest",
