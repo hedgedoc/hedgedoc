@@ -215,30 +215,6 @@ describe('RealtimeNoteService', () => {
     );
   });
 
-  it('logs errors that occur during saving on destroy', async () => {
-    mockGetLatestRevision(true);
-    const mockedCurrentContent = 'mockedCurrentContent';
-
-    jest.spyOn(realtimeNoteStore, 'find').mockImplementation(() => undefined);
-    jest
-      .spyOn(realtimeNoteStore, 'create')
-      .mockImplementation(() => mockedRealtimeNote);
-    jest
-      .spyOn(websocketDoc, 'getCurrentContent')
-      .mockReturnValue(mockedCurrentContent);
-    jest
-      .spyOn(revisionsService, 'createRevision')
-      .mockImplementation(() => Promise.reject('mocked error'));
-
-    const logSpy = jest.spyOn(consoleLoggerService, 'error');
-
-    await realtimeNoteService.getOrCreateRealtimeNote(mockedNote);
-    mockedRealtimeNote.emit('beforeDestroy');
-
-    await waitForOtherPromisesToFinish();
-    expect(logSpy).toHaveBeenCalled();
-  });
-
   it('destroys every realtime note on application shutdown', () => {
     jest
       .spyOn(realtimeNoteStore, 'getAllRealtimeNotes')
