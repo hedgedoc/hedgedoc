@@ -18,7 +18,7 @@ export const OpengraphHead: React.FC = () => {
     const elements = Object.entries(openGraphData)
       .filter(([, value]) => value && String(value).trim() !== '')
       .map(([key, value]) => <meta property={`og:${key}`} content={value} key={key} />)
-    if (!Object.prototype.hasOwnProperty.call(openGraphData, 'title')) {
+    if (!('title' in openGraphData)) {
       elements.push(<meta property={'og:title'} content={noteTitle} />)
     }
     return elements
