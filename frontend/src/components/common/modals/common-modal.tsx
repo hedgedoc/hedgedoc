@@ -6,12 +6,12 @@
 import type { PropsWithDataCypressId } from '../../../utils/cypress-attribute'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { testId } from '../../../utils/test-id'
-import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
-import type { IconName } from '../fork-awesome/types'
+import { UiIcon } from '../icons/ui-icon'
 import { ShowIf } from '../show-if/show-if'
 import type { PropsWithChildren } from 'react'
 import React, { useMemo } from 'react'
 import { Modal } from 'react-bootstrap'
+import type { Icon } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 export interface ModalVisibilityProps {
@@ -23,7 +23,7 @@ export interface ModalContentProps {
   titleI18nKey?: string
   title?: string
   showCloseButton?: boolean
-  titleIcon?: IconName
+  titleIcon?: Icon
   modalSize?: 'lg' | 'sm' | 'xl'
   additionalClasses?: string
 }
@@ -74,10 +74,7 @@ export const CommonModal: React.FC<PropsWithChildren<CommonModalProps>> = ({
         size={modalSize}>
         <Modal.Header closeButton={!!showCloseButton}>
           <Modal.Title>
-            <ShowIf condition={!!titleIcon}>
-              <ForkAwesomeIcon icon={titleIcon as IconName} />
-              &nbsp;
-            </ShowIf>
+            <UiIcon icon={titleIcon} nbsp={true} />
             {titleElement}
           </Modal.Title>
         </Modal.Header>

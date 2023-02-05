@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { cypressId } from '../../../../../utils/cypress-attribute'
-import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../../../common/icons/ui-icon'
 import { useChangeEditorContentCallback } from '../../../change-content-context/use-change-editor-content-callback'
 import { replaceSelection } from '../formatters/replace-selection'
 import { EmojiPickerPopover } from './emoji-picker-popover'
@@ -13,6 +13,7 @@ import { extractEmojiShortCode } from './extract-emoji-short-code'
 import type { EmojiClickEventDetail } from 'emoji-picker-element/shared'
 import React, { Fragment, useCallback, useRef, useState } from 'react'
 import { Button, Overlay } from 'react-bootstrap'
+import { EmojiSmile as IconEmojiSmile } from 'react-bootstrap-icons'
 import type { OverlayInjectedProps } from 'react-bootstrap/Overlay'
 import { useTranslation } from 'react-i18next'
 
@@ -63,7 +64,7 @@ export const EmojiPickerButton: React.FC = () => {
         title={t('editor.editorToolbar.emoji') ?? undefined}
         disabled={!changeEditorContent}
         ref={buttonRef}>
-        <ForkAwesomeIcon icon='smile-o' />
+        <UiIcon icon={IconEmojiSmile} />
       </Button>
     </Fragment>
   )

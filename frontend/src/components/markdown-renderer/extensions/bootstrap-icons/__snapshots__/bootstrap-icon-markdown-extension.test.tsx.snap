@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`bootstrap icon markdown extension doesn't render invalid icon 1`] = `
+<div>
+  <p />
+  
+
+</div>
+`;
+
+exports[`bootstrap icon markdown extension doesn't render missing icon 1`] = `
+<div>
+  <p>
+    :bi-:
+  </p>
+  
+
+</div>
+`;
+
+exports[`bootstrap icon markdown extension renders correct icon 1`] = `
+<div>
+  <p>
+    <span
+      data-svg-mock="true"
+      data-testid="lazy-bootstrap-icon-alarm"
+      fill="currentColor"
+      height="1em"
+      width="1em"
+    />
+  </p>
+  
+
+</div>
+`;

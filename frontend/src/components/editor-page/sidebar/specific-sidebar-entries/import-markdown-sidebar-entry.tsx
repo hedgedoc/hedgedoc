@@ -10,6 +10,7 @@ import { useChangeEditorContentCallback } from '../../change-content-context/use
 import { SidebarButton } from '../sidebar-button/sidebar-button'
 import { UploadInput } from '../upload-input'
 import React, { Fragment, useCallback, useRef } from 'react'
+import { FileText as IconFileText } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -48,7 +49,7 @@ export const ImportMarkdownSidebarEntry: React.FC = () => {
     <Fragment>
       <SidebarButton
         {...cypressId('menu-import-markdown-button')}
-        icon={'file-text-o'}
+        icon={IconFileText}
         onClick={buttonClick}
         disabled={!changeEditorContent}>
         <Trans i18nKey={'editor.import.file'} />

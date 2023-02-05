@@ -1,12 +1,11 @@
 # HedgeDoc Flavored Markdown
 
-HedgeDoc has its own markdown dialect which supports many features from [CommonMark][commonmark] and [Github Flavored Markdown][gfm]. It also adds some new extensions and is missing some.
+HedgeDoc has its own markdown dialect which supports many features from [CommonMark][commonmark]
+and [Github Flavored Markdown][gfm]. It also adds some new extensions and is missing some.
 
 These tables tell you what exactly we support in HedgeDoc 1.x (HFM 1) and HedgeDoc 2 (HFM 2).
 
-
 ## Typography
-
 
 | Feature       | HFM 1 | HFM 2 |    CommonMark     |        GFM        |
 | ------------- | :---: | :---: | :---------------: | :---------------: |
@@ -36,7 +35,8 @@ These tables tell you what exactly we support in HedgeDoc 1.x (HFM 1) and HedgeD
 | task list                                   |            ☑️             |            ☑️             |            |   ☑️   |
 | defition list                               |            ☑️             |            ☑️             |            |       |
 | emoji                                       | [Unicode 6.1][unicode-6] | [Unicode 13][unicode-13] |            |       |
-| [ForkAwesome][fa]                           | ☑️ with `<i class='fa'>`  |    ☑️ with shortcodes     |            |       |
+| [ForkAwesome][fa]                           | ☑️ with `<i class='fa'>`  |         removed          |            |       |
+| [Bootstrap Icons][bootstrap-icons]          |                          |    ☑️ with shortcodes     |            |       |
 | LaTeX                                       |          ☑️[^mj]          |          ☑️[^kt]          |            |       |
 
 [^highlight]: Code blocks with a given language are rendered using syntax highlighting.
@@ -59,7 +59,6 @@ These tables tell you what exactly we support in HedgeDoc 1.x (HFM 1) and HedgeD
 | image with given size |   ☑️   |   ☑️   | (☑️ with `<img>`) | (☑️ with `<img>`) |
 | table of contents     |   ☑️   |   ☑️   |                  |                  |
 
-
 ## Structural elements
 
 | Feature           |        HFM 1         | HFM 2 |      CommonMark      |         GFM          |
@@ -70,7 +69,9 @@ These tables tell you what exactly we support in HedgeDoc 1.x (HFM 1) and HedgeD
 | Alerts            |          ☑️           |   ☑️   |                      |                      |
 
 ## Embeddings
-HFM 1 includes support for certain embeddings of external content by using the `{%keyword parameter %}` syntax. To increase the readability of the markdown code we decided that HFM 2 should just use plain links if possible.
+
+HFM 1 includes support for certain embeddings of external content by using the `{%keyword parameter %}` syntax. To
+increase the readability of the markdown code we decided that HFM 2 should just use plain links if possible.
 
 | Feature                                             | HFM 1 |          HFM 2          | CommonMark |  GFM  |
 | --------------------------------------------------- | :---: | :---------------------: | :--------: | :---: |
@@ -81,10 +82,13 @@ HFM 1 includes support for certain embeddings of external content by using the `
 | [Speakerdeck][speakerdeck] (`{%speakerdeck ... %}`) |   ☑️   |         removed         |            |       |
 | [GitHub Gist][gist] (`{%gist ... %}`)               |   ☑️   | with plain link[^embed] |            |       |
 
-[^embed]: The special syntax from HFM 1 is deprecated, but will still work in HFM 2. However, a plain link to the content should be used.
+[^embed]: The special syntax from HFM 1 is deprecated, but will still work in HFM 2. However, a plain link to the
+content should be used.
 
 ## HTML
-Besides the basic HTML typography elements (`<p>`, `<a>`, `<b>`, `<ins>`, `<del>`) the following more special HTML elements are supported by some specification.
+
+Besides the basic HTML typography elements (`<p>`, `<a>`, `<b>`, `<ins>`, `<del>`) the following more special HTML
+elements are supported by some specification.
 
 |    Feature    | HedgeDocMark 1 | HedgeDocMark 2 | CommonMark |  GFM  |
 | :-----------: | :------------: | :------------: | :--------: | :---: |
@@ -99,14 +103,27 @@ Besides the basic HTML typography elements (`<p>`, `<a>`, `<b>`, `<ins>`, `<del>
 | `<plaintext>` |                |       ☑️        |     ☑️      |       |
 
 [fa]: https://forkaweso.me/
+
+[bootstrap-icons]: https://icons.getbootstrap.com/
+
 [youtube]: https://www.youtube.com/
+
 [vimeo]: https://vimeo.com/
+
 [slideshare]: https://www.slideshare.net/
+
 [speakerdeck]: https://speakerdeck.com/
+
 [gist]: https://gist.github.com/
+
 [mathjax]: https://www.mathjax.org/
+
 [katex]: https://katex.org/
+
 [gfm]: https://github.github.com/gfm/
+
 [commonmark]: https://spec.commonmark.org/
+
 [unicode-6]: https://unicode.org/versions/Unicode6.1.0/
+
 [unicode-13]: https://unicode.org/versions/Unicode13.0.0/

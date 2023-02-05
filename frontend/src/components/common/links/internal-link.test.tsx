@@ -5,6 +5,7 @@
  */
 import { InternalLink } from './internal-link'
 import { render } from '@testing-library/react'
+import { Heart as IconHeart } from 'react-bootstrap-icons'
 
 describe('InternalLink', () => {
   const href = '/test'
@@ -14,7 +15,7 @@ describe('InternalLink', () => {
     expect(view.container).toMatchSnapshot()
   })
   it('renders an internal link with an icon', () => {
-    const view = render(<InternalLink text={text} href={href} icon={'heart'} />)
+    const view = render(<InternalLink text={text} href={href} icon={IconHeart} />)
     expect(view.container).toMatchSnapshot()
   })
   it('renders an internal link with an id', () => {

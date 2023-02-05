@@ -6,12 +6,13 @@
 import { useBooleanState } from '../../../hooks/common/use-boolean-state'
 import { deleteAllHistoryEntries } from '../../../redux/history/methods'
 import { cypressId } from '../../../utils/cypress-attribute'
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../common/icons/ui-icon'
 import { DeletionModal } from '../../common/modals/deletion-modal'
 import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 import { useSafeRefreshHistoryStateCallback } from './hooks/use-safe-refresh-history-state'
 import React, { Fragment, useCallback } from 'react'
 import { Button } from 'react-bootstrap'
+import { Trash as IconTrash } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -39,7 +40,7 @@ export const ClearHistoryButton: React.FC = () => {
         title={t('landing.history.toolbar.clear') ?? undefined}
         onClick={showModal}
         {...cypressId('history-clear-button')}>
-        <ForkAwesomeIcon icon={'trash'} />
+        <UiIcon icon={IconTrash} />
       </Button>
       <DeletionModal
         onConfirm={onConfirm}

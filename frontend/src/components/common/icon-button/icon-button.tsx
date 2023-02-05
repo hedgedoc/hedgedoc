@@ -5,37 +5,38 @@
  */
 import type { PropsWithDataTestId } from '../../../utils/test-id'
 import { testId } from '../../../utils/test-id'
-import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
-import type { IconName } from '../fork-awesome/types'
+import { UiIcon } from '../icons/ui-icon'
 import { ShowIf } from '../show-if/show-if'
 import styles from './icon-button.module.scss'
 import React from 'react'
 import type { ButtonProps } from 'react-bootstrap'
 import { Button } from 'react-bootstrap'
+import type { Icon } from 'react-bootstrap-icons'
 
 export interface IconButtonProps extends ButtonProps, PropsWithDataTestId {
-  icon: IconName
+  icon: Icon
   onClick?: () => void
   border?: boolean
-  iconFixedWidth?: boolean
+  iconSize?: number | string
 }
 
 /**
- * A generic {@link Button button} with an {@link ForkAwesomeIcon icon} in it.
+ * A generic {@link Button button} with an icon in it.
  *
  * @param icon Which icon should be used
  * @param children The children that will be added as the content of the button.
  * @param iconFixedWidth If the icon should be of fixed width.
  * @param border Should the button have a border.
  * @param className Additional class names added to the button.
+ * @param iconSize Size of the icon
  * @param props Additional props for the button.
  */
 export const IconButton: React.FC<IconButtonProps> = ({
   icon,
   children,
-  iconFixedWidth = false,
   border = false,
   className,
+  iconSize,
   ...props
 }) => {
   return (
@@ -46,7 +47,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
       }`}
       {...testId('icon-button')}>
       <span className={`${styles['icon-part']} d-flex align-items-center`}>
-        <ForkAwesomeIcon icon={icon} fixedWidth={iconFixedWidth} className={'icon'} />
+        <UiIcon size={iconSize} icon={icon} className={'icon'} />
       </span>
       <ShowIf condition={!!children}>
         <span className={`${styles['text-part']} d-flex align-items-center`}>{children}</span>

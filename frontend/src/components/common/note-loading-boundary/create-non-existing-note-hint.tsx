@@ -6,10 +6,13 @@
 import { createNoteWithPrimaryAlias } from '../../../api/notes'
 import { useSingleStringUrlParameter } from '../../../hooks/common/use-single-string-url-parameter'
 import { testId } from '../../../utils/test-id'
-import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../icons/ui-icon'
 import { ShowIf } from '../show-if/show-if'
 import React, { useCallback, useEffect } from 'react'
 import { Alert, Button } from 'react-bootstrap'
+import { ArrowRepeat as IconArrowRepeat } from 'react-bootstrap-icons'
+import { CheckCircle as IconCheckCircle } from 'react-bootstrap-icons'
+import { ExclamationTriangle as IconExclamationTriangle } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 import { useAsyncFn } from 'react-use'
 
@@ -49,21 +52,21 @@ export const CreateNonExistingNoteHint: React.FC<CreateNonExistingNoteHintProps>
   } else if (returnState.value) {
     return (
       <Alert variant={'info'} {...testId('noteCreated')} className={'mt-5'}>
-        <ForkAwesomeIcon icon={'check-circle'} className={'me-2'} />
+        <UiIcon icon={IconCheckCircle} className={'me-2'} />
         <Trans i18nKey={'noteLoadingBoundary.createNote.success'} />
       </Alert>
     )
   } else if (returnState.loading) {
     return (
       <Alert variant={'info'} {...testId('loadingMessage')} className={'mt-5'}>
-        <ForkAwesomeIcon icon={'spinner'} className={'fa-spin me-2'} />
+        <UiIcon icon={IconArrowRepeat} className={'me-2'} spin={true} />
         <Trans i18nKey={'noteLoadingBoundary.createNote.creating'} />
       </Alert>
     )
   } else if (returnState.error !== undefined) {
     return (
       <Alert variant={'danger'} {...testId('failedMessage')} className={'mt-5'}>
-        <ForkAwesomeIcon icon={'exclamation-triangle'} className={'me-1'} />
+        <UiIcon icon={IconExclamationTriangle} className={'me-1'} />
         <Trans i18nKey={'noteLoadingBoundary.createNote.error'} />
       </Alert>
     )
@@ -82,7 +85,7 @@ export const CreateNonExistingNoteHint: React.FC<CreateNonExistingNoteHintProps>
             onClick={onClickHandler}
             {...testId('createNoteButton')}>
             <ShowIf condition={returnState.loading}>
-              <ForkAwesomeIcon icon={'spinner'} className={'fa-spin me-2'} />
+              <UiIcon icon={IconArrowRepeat} className={'me-2'} spin={true} />
             </ShowIf>
             <Trans i18nKey={'noteLoadingBoundary.createNote.create'} />
           </Button>

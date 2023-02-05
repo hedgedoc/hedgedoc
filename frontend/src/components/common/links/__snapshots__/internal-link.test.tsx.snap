@@ -40,9 +40,7 @@ exports[`InternalLink renders an internal link with an icon 1`] = `
     class="text-light"
     href="/test"
   >
-    <i
-      class="fa fa-fw fa-heart  "
-    />
+    BootstrapIconMock_Heart
      
     testText
   </a>

@@ -7,11 +7,14 @@ import { deleteAlias, markAliasAsPrimary } from '../../../../api/alias'
 import type { Alias } from '../../../../api/alias/types'
 import { updateMetadata } from '../../../../redux/note-details/methods'
 import { testId } from '../../../../utils/test-id'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../../common/icons/ui-icon'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import React, { useCallback } from 'react'
 import { Button } from 'react-bootstrap'
+import { StarFill as IconStarFill } from 'react-bootstrap-icons'
+import { Star as IconStar } from 'react-bootstrap-icons'
+import { X as IconX } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 export interface AliasesListEntryProps {
@@ -50,7 +53,7 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
             disabled={true}
             title={t('editor.modal.aliases.isPrimary') ?? undefined}
             {...testId('aliasIsPrimary')}>
-            <ForkAwesomeIcon icon={'star'} />
+            <UiIcon icon={IconStar} />
           </Button>
         </ShowIf>
         <ShowIf condition={!alias.primaryAlias}>
@@ -60,7 +63,7 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
             title={t('editor.modal.aliases.makePrimary') ?? undefined}
             onClick={onMakePrimaryClick}
             {...testId('aliasButtonMakePrimary')}>
-            <ForkAwesomeIcon icon={'star-o'} />
+            <UiIcon icon={IconStarFill} />
           </Button>
         </ShowIf>
         <Button
@@ -69,7 +72,7 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
           title={t('editor.modal.aliases.removeAlias') ?? undefined}
           onClick={onRemoveClick}
           {...testId('aliasButtonRemove')}>
-          <ForkAwesomeIcon icon={'times'} />
+          <UiIcon icon={IconX} />
         </Button>
       </div>
     </li>

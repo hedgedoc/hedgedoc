@@ -5,8 +5,7 @@
  */
 import { cypressId } from '../../utils/cypress-attribute'
 import { Logger } from '../../utils/logger'
-import { ForkAwesomeIcon } from '../common/fork-awesome/fork-awesome-icon'
-import type { IconName } from '../common/fork-awesome/types'
+import { UiIcon } from '../common/icons/ui-icon'
 import { ShowIf } from '../common/show-if/show-if'
 import styles from './notifications.module.scss'
 import type { UiNotification } from './types'
@@ -102,7 +101,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({ notificatio
       <Toast.Header>
         <strong className='me-auto'>
           <ShowIf condition={!!notification.icon}>
-            <ForkAwesomeIcon icon={notification.icon as IconName} fixedWidth={true} className={'me-1'} />
+            <UiIcon icon={notification.icon} className={'me-1'} />
           </ShowIf>
           <Trans i18nKey={notification.titleI18nKey} tOptions={notification.titleI18nOptions} />
         </strong>

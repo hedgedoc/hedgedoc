@@ -7,6 +7,7 @@ import { useApplicationState } from '../../../../hooks/common/use-application-st
 import { NoteInfoLine } from './note-info-line'
 import { UnitalicBoldContent } from './unitalic-bold-content'
 import React from 'react'
+import { People as IconPeople } from 'react-bootstrap-icons'
 import { Trans } from 'react-i18next'
 
 /**
@@ -16,7 +17,7 @@ export const NoteInfoLineContributors: React.FC = () => {
   const contributors = useApplicationState((state) => state.noteDetails.editedBy.length)
 
   return (
-    <NoteInfoLine icon={'users'} size={'2x'}>
+    <NoteInfoLine icon={IconPeople} size={2}>
       <Trans i18nKey={'editor.modal.documentInfo.usersContributed'}>
         <UnitalicBoldContent text={contributors} />
       </Trans>

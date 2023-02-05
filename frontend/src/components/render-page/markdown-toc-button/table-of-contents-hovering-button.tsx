@@ -3,12 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../common/icons/ui-icon'
 import { TableOfContents } from '../../editor-page/table-of-contents/table-of-contents'
 import styles from './markdown-toc-button.module.scss'
 import type { TocAst } from '@hedgedoc/markdown-it-plugins'
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
+import { ListOl as IconListOl } from 'react-bootstrap-icons'
 
 export interface MarkdownTocButtonProps {
   tocAst: TocAst
@@ -26,7 +27,7 @@ export const TableOfContentsHoveringButton: React.FC<MarkdownTocButtonProps> = (
     <div className={styles['markdown-toc-sidebar-button']}>
       <Dropdown drop={'up'}>
         <Dropdown.Toggle id='toc-overlay-button' variant={'secondary'} className={'no-arrow'}>
-          <ForkAwesomeIcon icon={'list-ol'} />
+          <UiIcon icon={IconListOl} />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <div className={'p-2'}>

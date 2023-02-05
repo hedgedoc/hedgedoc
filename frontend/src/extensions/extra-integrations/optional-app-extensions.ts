@@ -10,7 +10,7 @@ import { AsciinemaAppExtension } from './asciinema/asciinema-app-extension'
 import { BlockquoteAppExtension } from './blockquote/blockquote-app-extension'
 import { CsvTableAppExtension } from './csv/csv-table-app-extension'
 import { FlowchartAppExtension } from './flowchart/flowchart-app-extension'
-import { ForkAwesomeAppExtension } from './fork-awesome/fork-awesome-app-extension'
+import { ForkAwesomeHtmlTagAppExtension } from './fork-awesome-html-tag/fork-awesome-html-tag-app-extension'
 import { GistAppExtension } from './gist/gist-app-extension'
 import { GraphvizAppExtension } from './graphviz/graphviz-app-extension'
 import { HighlightedCodeFenceAppExtension } from './highlighted-code-fence/highlighted-code-fence-app-extension'
@@ -48,5 +48,5 @@ export const optionalAppExtensions: AppExtension[] = [
   new YoutubeAppExtension(),
   new TaskListCheckboxAppExtension(),
   new HighlightedCodeFenceAppExtension(),
-  new ForkAwesomeAppExtension()
+  new ForkAwesomeHtmlTagAppExtension()
 ]

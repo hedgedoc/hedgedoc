@@ -1,0 +1,20 @@
+/*!
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+.spin {
+  transform-origin: center center;
+
+  @keyframes rotation {
+    0% {
+      transform: rotateZ(0deg);
+    }
+    100% {
+      transform: rotateZ(360deg);
+    }
+  }
+
+  animation: rotation linear 2s infinite;
+}

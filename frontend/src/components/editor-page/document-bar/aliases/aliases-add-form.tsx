@@ -8,11 +8,12 @@ import { useApplicationState } from '../../../../hooks/common/use-application-st
 import { useOnInputChange } from '../../../../hooks/common/use-on-input-change'
 import { updateMetadata } from '../../../../redux/note-details/methods'
 import { testId } from '../../../../utils/test-id'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../../common/icons/ui-icon'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import type { FormEvent } from 'react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Form, InputGroup } from 'react-bootstrap'
+import { Plus as IconPlus } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 const validAliasRegex = /^[a-z0-9_-]*$/
@@ -63,7 +64,7 @@ export const AliasesAddForm: React.FC = () => {
           disabled={!newAliasValid || newAlias === ''}
           title={t('editor.modal.aliases.addAlias') ?? undefined}
           {...testId('addAliasButton')}>
-          <ForkAwesomeIcon icon={'plus'} />
+          <UiIcon icon={IconPlus} />
         </Button>
       </InputGroup>
     </form>

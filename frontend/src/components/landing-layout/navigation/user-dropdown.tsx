@@ -5,12 +5,14 @@
  */
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { cypressId } from '../../../utils/cypress-attribute'
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../common/icons/ui-icon'
 import { UserAvatar } from '../../common/user-avatar/user-avatar'
 import { SignOutDropdownButton } from './sign-out-dropdown-button'
 import Link from 'next/link'
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
+import { Lightning as IconLightning } from 'react-bootstrap-icons'
+import { Person as IconPerson } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -33,13 +35,13 @@ export const UserDropdown: React.FC = () => {
       <Dropdown.Menu className='text-start'>
         <Link href={'/n/features'} passHref={true}>
           <Dropdown.Item dir='auto' {...cypressId('user-dropdown-features-button')}>
-            <ForkAwesomeIcon icon='bolt' fixedWidth={true} className='mx-2' />
+            <UiIcon icon={IconLightning} className='mx-2' />
             <Trans i18nKey='editor.help.documents.features' />
           </Dropdown.Item>
         </Link>
         <Link href={'/profile'} passHref={true}>
           <Dropdown.Item dir='auto' {...cypressId('user-dropdown-profile-button')}>
-            <ForkAwesomeIcon icon='user' fixedWidth={true} className='mx-2' />
+            <UiIcon icon={IconPerson} className='mx-2' />
             <Trans i18nKey='profile.userProfile' />
           </Dropdown.Item>
         </Link>

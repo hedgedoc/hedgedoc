@@ -13,9 +13,7 @@ exports[`AliasesListEntry renders an AliasesListEntry that is not primary 1`] = 
         title="editor.modal.aliases.makePrimary"
         type="button"
       >
-        <i
-          class="fa  fa-star-o  "
-        />
+        BootstrapIconMock_StarFill
       </button>
       <button
         class="text-danger btn btn-light"
@@ -23,9 +21,7 @@ exports[`AliasesListEntry renders an AliasesListEntry that is not primary 1`] = 
         title="editor.modal.aliases.removeAlias"
         type="button"
       >
-        <i
-          class="fa  fa-times  "
-        />
+        BootstrapIconMock_X
       </button>
     </div>
   </li>
@@ -46,9 +42,7 @@ exports[`AliasesListEntry renders an AliasesListEntry that is primary 1`] = `
         title="editor.modal.aliases.isPrimary"
         type="button"
       >
-        <i
-          class="fa  fa-star  "
-        />
+        BootstrapIconMock_Star
       </button>
       <button
         class="text-danger btn btn-light"
@@ -56,9 +50,7 @@ exports[`AliasesListEntry renders an AliasesListEntry that is primary 1`] = `
         title="editor.modal.aliases.removeAlias"
         type="button"
       >
-        <i
-          class="fa  fa-times  "
-        />
+        BootstrapIconMock_X
       </button>
     </div>
   </li>

@@ -8,6 +8,11 @@ import { TranslatedExternalLink } from '../../../common/links/translated-externa
 import { TranslatedInternalLink } from '../../../common/links/translated-internal-link'
 import React from 'react'
 import { Col, Row } from 'react-bootstrap'
+import { Dot as IconDot } from 'react-bootstrap-icons'
+import { Flag as IconFlag } from 'react-bootstrap-icons'
+import { Hash as IconHash } from 'react-bootstrap-icons'
+import { PeopleFill as IconPeopleFill } from 'react-bootstrap-icons'
+import { Tag as IconTag } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -28,7 +33,7 @@ export const LinksTabContent: React.FC = () => {
               <TranslatedExternalLink
                 i18nKey='editor.help.contacts.community'
                 href={links.community}
-                icon='users'
+                icon={IconPeopleFill}
                 className='text-primary'
               />
             </li>
@@ -37,7 +42,7 @@ export const LinksTabContent: React.FC = () => {
                 i18nKey='editor.help.contacts.meetUsOn'
                 i18nOption={{ service: 'Matrix' }}
                 href={links.chat}
-                icon='hashtag'
+                icon={IconHash}
                 className='text-primary'
               />
             </li>
@@ -45,7 +50,7 @@ export const LinksTabContent: React.FC = () => {
               <TranslatedExternalLink
                 i18nKey='editor.help.contacts.reportIssue'
                 href={links.backendIssues}
-                icon='tag'
+                icon={IconTag}
                 className='text-primary'
               />
             </li>
@@ -53,7 +58,7 @@ export const LinksTabContent: React.FC = () => {
               <TranslatedExternalLink
                 i18nKey='editor.help.contacts.helpTranslating'
                 href={links.translate}
-                icon='language'
+                icon={IconFlag}
                 className='text-primary'
               />
             </li>
@@ -70,7 +75,7 @@ export const LinksTabContent: React.FC = () => {
               <TranslatedInternalLink
                 i18nKey='editor.help.documents.features'
                 href='/n/features'
-                icon='dot-circle-o'
+                icon={IconDot}
                 className='text-primary'
               />
             </li>
@@ -78,7 +83,7 @@ export const LinksTabContent: React.FC = () => {
               <TranslatedInternalLink
                 i18nKey='editor.help.documents.yamlMetadata'
                 href='/n/yaml-metadata'
-                icon='dot-circle-o'
+                icon={IconDot}
                 className='text-primary'
               />
             </li>
@@ -86,7 +91,7 @@ export const LinksTabContent: React.FC = () => {
               <TranslatedInternalLink
                 i18nKey='editor.help.documents.slideExample'
                 href='/n/slide-example'
-                icon='dot-circle-o'
+                icon={IconDot}
                 className='text-primary'
               />
             </li>

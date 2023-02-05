@@ -3,14 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
-import type { IconName } from '../../../common/fork-awesome/types'
+import { UiIcon } from '../../../common/icons/ui-icon'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
+import type { Icon } from 'react-bootstrap-icons'
 
 export interface NoteInfoLineProps {
-  icon: IconName
-  size?: '2x' | '3x' | '4x' | '5x' | undefined
+  icon: Icon
+  size?: 2 | 3 | 4 | 5 | undefined
 }
 
 /**
@@ -24,7 +24,7 @@ export interface NoteInfoLineProps {
 export const NoteInfoLine: React.FC<PropsWithChildren<NoteInfoLineProps>> = ({ icon, size, children }) => {
   return (
     <span className={'d-flex align-items-center'}>
-      <ForkAwesomeIcon icon={icon} size={size} fixedWidth={true} className={'mx-2'} />
+      <UiIcon icon={icon} size={size} className={'mx-2'} />
       <i className={'d-flex align-items-center'}>{children}</i>
     </span>
   )

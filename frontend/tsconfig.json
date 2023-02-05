@@ -1,21 +1,39 @@
 {
-  "compilerOptions": {
-    "target": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "types": ["node", "@testing-library/jest-dom",  "@types/jest"]
+  "compilerOptions" : {
+    "target" : "esnext",
+    "lib" : [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs" : true,
+    "skipLibCheck" : true,
+    "strict" : true,
+    "forceConsistentCasingInFileNames" : true,
+    "noEmit" : true,
+    "esModuleInterop" : true,
+    "module" : "esnext",
+    "moduleResolution" : "node",
+    "resolveJsonModule" : true,
+    "isolatedModules" : true,
+    "jsx" : "preserve",
+    "incremental" : true,
+    "types" : [
+      "node",
+      "@testing-library/jest-dom",
+      "@types/jest"
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "cypress", "cypress.config.ts", ".eslintrc.js"]
+  "include" : [
+    "src/external-types/images/index.d.ts",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude" : [
+    "node_modules",
+    "cypress",
+    "cypress.config.ts",
+    ".eslintrc.js"
+  ]
 }

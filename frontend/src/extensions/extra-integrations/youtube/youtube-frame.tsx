@@ -6,6 +6,7 @@
 import { ClickShield } from '../../../components/markdown-renderer/replace-components/click-shield/click-shield'
 import type { IdProps } from '../../../components/markdown-renderer/replace-components/custom-tag-with-id-component-replacer'
 import React from 'react'
+import { Youtube as IconYoutube } from 'react-bootstrap-icons'
 
 /**
  * Renders a video player embedding for https://youtube.com
@@ -15,7 +16,7 @@ import React from 'react'
 export const YouTubeFrame: React.FC<IdProps> = ({ id }) => {
   return (
     <ClickShield
-      hoverIcon={'youtube-play'}
+      hoverIcon={IconYoutube}
       targetDescription={'YouTube'}
       fallbackPreviewImageUrl={`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`}
       fallbackBackgroundColor={'#ff0000'}

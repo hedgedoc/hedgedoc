@@ -5,6 +5,7 @@
  */
 import { ExternalLink } from './external-link'
 import { render } from '@testing-library/react'
+import { Heart as IconHeart } from 'react-bootstrap-icons'
 
 describe('ExternalLink', () => {
   const href = 'https://example.com'
@@ -14,7 +15,7 @@ describe('ExternalLink', () => {
     expect(view.container).toMatchSnapshot()
   })
   it('renders an external link with an icon', () => {
-    const view = render(<ExternalLink text={text} href={href} icon={'heart'} />)
+    const view = render(<ExternalLink text={text} href={href} icon={IconHeart} />)
     expect(view.container).toMatchSnapshot()
   })
   it('renders an external link with an id', () => {

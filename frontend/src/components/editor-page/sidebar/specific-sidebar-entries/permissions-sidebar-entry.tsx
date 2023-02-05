@@ -8,6 +8,7 @@ import { PermissionModal } from '../../document-bar/permissions/permission-modal
 import { SidebarButton } from '../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../types'
 import React, { Fragment } from 'react'
+import { Lock as IconLock } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -22,7 +23,7 @@ export const PermissionsSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ c
 
   return (
     <Fragment>
-      <SidebarButton hide={hide} className={className} icon={'lock'} onClick={showModal}>
+      <SidebarButton hide={hide} className={className} icon={IconLock} onClick={showModal}>
         <Trans i18nKey={'editor.modal.permissions.title'} />
       </SidebarButton>
       <PermissionModal show={modalVisibility} onHide={closeModal} />

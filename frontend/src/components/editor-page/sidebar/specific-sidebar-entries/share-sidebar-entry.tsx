@@ -8,6 +8,7 @@ import { ShareModal } from '../../document-bar/share/share-modal'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../types'
 import React, { Fragment } from 'react'
+import { Share as IconShare } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -22,7 +23,7 @@ export const ShareSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ classNa
 
   return (
     <Fragment>
-      <SidebarButton hide={hide} className={className} icon={'share'} onClick={showModal}>
+      <SidebarButton hide={hide} className={className} icon={IconShare} onClick={showModal}>
         <Trans i18nKey={'editor.modal.shareLink.title'} />
       </SidebarButton>
       <ShareModal show={modalVisibility} onHide={closeModal} />

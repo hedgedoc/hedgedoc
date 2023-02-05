@@ -88,7 +88,7 @@ If some text is selected it will either put that as the link, if it thinks that 
    inserting `name=$YourName`, a time by inserting `time=$time` or a color by inserting `color=#FFFFFF` in the `[]`.
    Please note that you can only specify one of those per `[]`, but you can use multiple `[]`.
 5. **Emoji Picker**  
-   This button opens the emoji picker, where you can choose an emoji or a fork awesome icon to insert into your note.  
+   This button opens the emoji picker, where you can choose an emoji to insert into your note.  
    ![Emoji Picker](../images/interface/toolbar/emoji.png)
 
 ## Settings

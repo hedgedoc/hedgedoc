@@ -11,9 +11,9 @@ import { t } from 'i18next'
 const forkAwesomeRegex = /<i class=["'][\w\s]*fa-[\w-]+[\w\s-]*["'][^>]*\/?>(?:<\/i>)?/
 
 /**
- * Adds support for flow charts to the markdown rendering.
+ * Adds a linter for the icon html tag.
  */
-export class ForkAwesomeAppExtension extends AppExtension {
+export class ForkAwesomeHtmlTagAppExtension extends AppExtension {
   buildCodeMirrorLinter(): Linter[] {
     return [
       new SingleLineRegexLinter(

@@ -4,18 +4,18 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useBooleanState } from '../../../hooks/common/use-boolean-state'
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
-import type { IconName } from '../../common/fork-awesome/types'
+import { UiIcon } from '../../common/icons/ui-icon'
 import type { DeleteHistoryNoteModalProps } from '../../editor-page/sidebar/delete-note-sidebar-entry/delete-note-modal'
 import { DeleteNoteModal } from '../../editor-page/sidebar/delete-note-sidebar-entry/delete-note-modal'
 import React, { Fragment, useCallback } from 'react'
 import { Dropdown } from 'react-bootstrap'
+import type { Icon } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 export interface DropdownItemWithDeletionModalProps {
   onConfirm: () => void
   itemI18nKey: string
-  modalIcon: IconName
+  modalIcon: Icon
   noteTitle: string
   className?: string
 }
@@ -57,7 +57,7 @@ export const DropdownItemWithDeletionModal: React.FC<
   return (
     <Fragment>
       <Dropdown.Item onClick={showModal} className={className}>
-        <ForkAwesomeIcon icon={modalIcon} fixedWidth={true} className='mx-2' />
+        <UiIcon icon={modalIcon} className='mx-2' />
         <Trans i18nKey={itemI18nKey} />
       </Dropdown.Item>
       <DeleteNoteModal

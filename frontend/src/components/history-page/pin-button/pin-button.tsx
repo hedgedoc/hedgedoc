@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../common/icons/ui-icon'
 import styles from './pin-button.module.scss'
 import React from 'react'
 import { Button } from 'react-bootstrap'
+import { PinFill as IconPinFill } from 'react-bootstrap-icons'
 
 export interface PinButtonProps {
   isPinned: boolean
@@ -32,7 +33,7 @@ export const PinButton: React.FC<PinButtonProps> = ({ isPinned, onPinClick, isDa
       onClick={onPinClick}
       {...cypressId('history-entry-pin-button')}
       {...cypressAttribute('pinned', isPinned ? 'true' : 'false')}>
-      <ForkAwesomeIcon className={styles['fa']} icon='thumb-tack' />
+      <UiIcon icon={IconPinFill} />
     </Button>
   )
 }

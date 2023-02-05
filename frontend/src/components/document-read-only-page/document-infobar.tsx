@@ -10,6 +10,7 @@ import { NoteInfoLineCreated } from '../editor-page/document-bar/note-info/note-
 import { NoteInfoLineUpdated } from '../editor-page/document-bar/note-info/note-info-line-updated'
 import styles from './document-infobar.module.scss'
 import React from 'react'
+import { Pencil as IconPencil } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -35,7 +36,7 @@ export const DocumentInfobar: React.FC = () => {
             <InternalLink
               text={''}
               href={`/n/${noteDetails.primaryAddress}`}
-              icon={'pencil'}
+              icon={IconPencil}
               className={'text-primary text-decoration-none mx-1'}
               title={t('views.readOnly.editNote') ?? undefined}
             />

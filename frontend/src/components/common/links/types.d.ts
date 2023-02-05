@@ -3,12 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { IconName } from '../fork-awesome/fork-awesome-icon'
 import type { TOptionsBase } from 'i18next'
+import type { Icon } from 'react-bootstrap-icons'
 
 interface GeneralLinkProp {
   href: string
-  icon?: IconName
+  icon?: Icon
   id?: string
   className?: string
   title?: string

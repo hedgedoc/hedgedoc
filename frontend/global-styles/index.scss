@@ -10,7 +10,6 @@
 @import '~react-bootstrap-typeahead/css/Typeahead';
 @import "~@fontsource/source-sans-pro/index.css";
 @import "~twemoji-colr-font/twemoji";
-@import '~fork-awesome/css/fork-awesome.min.css';
 @import '~firacode/distr/fira_code';
 @import "typeahead";
 @import "./button-inside";
@@ -77,16 +76,6 @@ body {
 
 .cursor-zoom-out {
   cursor: zoom-out;
-}
-
-.faded-fa {
-  .fa, &::after {
-    opacity: 0.5;
-  }
-
-  &:hover .fa, &:hover::after {
-    opacity: 1;
-  }
 }
 
 .dropup .dropdown-toggle, .dropdown-toggle {

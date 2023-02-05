@@ -5,7 +5,7 @@
  */
 import { cypressId } from '../../../../../utils/cypress-attribute'
 import { Logger } from '../../../../../utils/logger'
-import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../../../common/icons/ui-icon'
 import { ShowIf } from '../../../../common/show-if/show-if'
 import { acceptedMimeTypes } from '../../../../common/upload-image-mimetypes'
 import { useCodeMirrorReference } from '../../../change-content-context/change-content-context'
@@ -15,6 +15,7 @@ import { extractSelectedText } from './extract-selected-text'
 import { Optional } from '@mrdrogdrog/optional'
 import React, { Fragment, useCallback, useRef } from 'react'
 import { Button } from 'react-bootstrap'
+import { Upload as IconUpload } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 const logger = new Logger('Upload image button')
@@ -54,7 +55,7 @@ export const UploadImageButton: React.FC = () => {
         disabled={!codeMirror}
         title={t('editor.editorToolbar.uploadImage') ?? undefined}
         {...cypressId('editor-toolbar-upload-image-button')}>
-        <ForkAwesomeIcon icon={'upload'} />
+        <UiIcon icon={IconUpload} />
       </Button>
       <ShowIf condition={!!codeMirror}>
         <UploadInput

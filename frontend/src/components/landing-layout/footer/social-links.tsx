@@ -6,6 +6,11 @@
 import links from '../../../links.json'
 import { ExternalLink } from '../../common/links/external-link'
 import React from 'react'
+import { Chat as IconChat } from 'react-bootstrap-icons'
+import { Github as IconGithub } from 'react-bootstrap-icons'
+import { Globe as IconGlobe } from 'react-bootstrap-icons'
+import { Mastodon as IconMastodon } from 'react-bootstrap-icons'
+import { People as IconPeople } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -18,11 +23,11 @@ export const SocialLink: React.FC = () => {
       <Trans
         i18nKey='landing.footer.followUs'
         components={[
-          <ExternalLink href={links.githubOrg} icon='github' key={'github'} text='GitHub' />,
-          <ExternalLink href={links.community} icon='users' key={'users'} text='Discourse' />,
-          <ExternalLink href={links.chat} icon='comment' key={'comment'} text='Matrix' />,
-          <ExternalLink href={links.mastodon} icon='mastodon' key={'mastodon'} text='Mastodon' />,
-          <ExternalLink href={links.translate} icon='globe' key={'globe'} text='POEditor' />
+          <ExternalLink href={links.githubOrg} icon={IconGithub} key={'github'} text='GitHub' />,
+          <ExternalLink href={links.community} icon={IconPeople} key={'users'} text='Discourse' />,
+          <ExternalLink href={links.chat} icon={IconChat} key={'comment'} text='Matrix' />,
+          <ExternalLink href={links.mastodon} icon={IconMastodon} key={'mastodon'} text='Mastodon' />,
+          <ExternalLink href={links.translate} icon={IconGlobe} key={'globe'} text='POEditor' />
         ]}
       />
     </p>

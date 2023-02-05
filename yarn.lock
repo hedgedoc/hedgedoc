@@ -2432,7 +2432,6 @@ __metadata:
     fast-deep-equal: 3.1.3
     firacode: 6.2.0
     flowchart.js: 1.17.1
-    fork-awesome: 1.2.0
     highlight.js: 11.7.0
     htmlparser2: 8.0.1
     i18next: 22.4.10
@@ -2463,6 +2462,7 @@ __metadata:
     prettier: 2.8.4
     react: 18.2.0
     react-bootstrap: 2.7.2
+    react-bootstrap-icons: 1.10.2
     react-bootstrap-typeahead: 6.0.0
     react-diff-viewer: 3.1.1
     react-dom: 18.2.0
@@ -10065,13 +10065,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fork-awesome@npm:1.2.0":
-  version: 1.2.0
-  resolution: "fork-awesome@npm:1.2.0"
-  checksum: 473a6452d44020530b4f39d23c87ea3a3bba67390b08b4b9e279b2c79cd17288562403f9d4acdd640c978c7491bf3f3220f5bdbed06221104fee3aa77da84d40
-  languageName: node
-  linkType: hard
-
 "fork-ts-checker-webpack-plugin@npm:7.3.0":
   version: 7.3.0
   resolution: "fork-ts-checker-webpack-plugin@npm:7.3.0"
@@ -15387,6 +15380,17 @@ __metadata:
   bin:
     rc: ./cli.js
   checksum: 2e26e052f8be2abd64e6d1dabfbd7be03f80ec18ccbc49562d31f617d0015fbdbcf0f9eed30346ea6ab789e0fdfe4337f033f8016efdbee0df5354751842080e
+  languageName: node
+  linkType: hard
+
+"react-bootstrap-icons@npm:1.10.2":
+  version: 1.10.2
+  resolution: "react-bootstrap-icons@npm:1.10.2"
+  dependencies:
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ">=16.8.6"
+  checksum: eead5ae023a4b1d880fc1b33101fdd64a13b0411e62c4387c0443662be1c7c65f9c1d6ddcf7dc6ba5ee9f5d6a871f4f6b24073c2080e3a3ad901f1140f46abe4
   languageName: node
   linkType: hard
 

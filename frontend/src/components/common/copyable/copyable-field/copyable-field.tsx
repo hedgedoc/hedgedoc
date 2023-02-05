@@ -5,11 +5,12 @@
  */
 import { isClientSideRendering } from '../../../../utils/is-client-side-rendering'
 import { Logger } from '../../../../utils/logger'
-import { ForkAwesomeIcon } from '../../fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../icons/ui-icon'
 import { ShowIf } from '../../show-if/show-if'
 import { CopyToClipboardButton } from '../copy-to-clipboard-button/copy-to-clipboard-button'
 import React, { useCallback, useMemo } from 'react'
 import { Button, FormControl, InputGroup } from 'react-bootstrap'
+import { Share as IconShare } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 export interface CopyableFieldProps {
@@ -57,7 +58,7 @@ export const CopyableField: React.FC<CopyableFieldProps> = ({ content, shareOrig
       <ShowIf condition={sharingSupported}>
         <InputGroup.Text>
           <Button variant='secondary' title={'Share'} onClick={doShareAction}>
-            <ForkAwesomeIcon icon='share-alt' />
+            <UiIcon icon={IconShare} />
           </Button>
         </InputGroup.Text>
       </ShowIf>

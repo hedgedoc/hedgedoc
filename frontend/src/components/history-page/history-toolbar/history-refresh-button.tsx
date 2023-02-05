@@ -3,10 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../common/icons/ui-icon'
 import { useSafeRefreshHistoryStateCallback } from './hooks/use-safe-refresh-history-state'
 import React from 'react'
 import { Button } from 'react-bootstrap'
+import { ArrowRepeat as IconArrowRepeat } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 /**
@@ -19,7 +20,7 @@ export const HistoryRefreshButton: React.FC = () => {
 
   return (
     <Button variant={'light'} title={t('landing.history.toolbar.refresh') ?? undefined} onClick={refreshHistory}>
-      <ForkAwesomeIcon icon='refresh' />
+      <UiIcon icon={IconArrowRepeat} />
     </Button>
   )
 }

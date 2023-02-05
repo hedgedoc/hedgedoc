@@ -6,6 +6,7 @@
 import { ClickShield } from '../../../components/markdown-renderer/replace-components/click-shield/click-shield'
 import type { IdProps } from '../../../components/markdown-renderer/replace-components/custom-tag-with-id-component-replacer'
 import React from 'react'
+import { Play as IconPlay } from 'react-bootstrap-icons'
 
 /**
  * Renders an embedding for https://asciinema.org
@@ -15,7 +16,7 @@ import React from 'react'
 export const AsciinemaFrame: React.FC<IdProps> = ({ id }) => {
   return (
     <ClickShield
-      hoverIcon={'play'}
+      hoverIcon={IconPlay}
       targetDescription={'asciinema'}
       fallbackPreviewImageUrl={`https://asciinema.org/a/${id}.png`}
       fallbackBackgroundColor={'#d40000'}

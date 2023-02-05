@@ -10,6 +10,7 @@ import { LinksTabContent } from './links-tab-content'
 import { ShortcutTabContent } from './shortcuts-tab-content'
 import React, { useMemo, useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
+import { QuestionCircle as IconQuestionCircle } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 export enum HelpTabStatus {
@@ -47,7 +48,7 @@ export const HelpModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   const modalTitle = useMemo(() => t('editor.documentBar.help') + ' - ' + t(`editor.help.${tab}`), [t, tab])
 
   return (
-    <CommonModal modalSize={'lg'} titleIcon={'question-circle'} show={show} onHide={onHide} title={modalTitle}>
+    <CommonModal modalSize={'lg'} titleIcon={IconQuestionCircle} show={show} onHide={onHide} title={modalTitle}>
       <Modal.Body>
         <nav className='nav nav-tabs'>
           <Button

@@ -11,6 +11,7 @@ import { t } from 'i18next'
 import { DateTime } from 'luxon'
 import type { PropsWithChildren } from 'react'
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react'
+import { ExclamationTriangle as IconExclamationTriangle } from 'react-bootstrap-icons'
 import { v4 as uuid } from 'uuid'
 
 const log = new Logger('Notifications')
@@ -80,7 +81,7 @@ export const UiNotificationBoundary: React.FC<PropsWithChildren> = ({ children }
         log.error(t(messageI18nKey, messageI18nOptions), error)
         void dispatchUiNotification('common.errorOccurred', messageI18nKey, {
           contentI18nOptions: messageI18nOptions,
-          icon: 'exclamation-triangle'
+          icon: IconExclamationTriangle
         })
       },
     [dispatchUiNotification]

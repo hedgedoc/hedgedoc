@@ -148,9 +148,7 @@ exports[`CommonModal render correctly with title icon 1`] = `
       <div
         class="modal-title h4"
       >
-        <i
-          class="fa  fa-heart  "
-        />
+        BootstrapIconMock_Heart
          
         <span />
       </div>

@@ -14,6 +14,7 @@ import { NoteInfoLine } from './note-info-line'
 import { UnitalicBoldContent } from './unitalic-bold-content'
 import type { PropsWithChildren } from 'react'
 import React, { useCallback, useEffect, useState } from 'react'
+import { AlignStart as IconAlignStart } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -38,7 +39,7 @@ export const NoteInfoLineWordCount: React.FC<PropsWithChildren<unknown>> = () =>
   }, [editorToRendererCommunicator, rendererReady])
 
   return (
-    <NoteInfoLine icon={'align-left'} size={'2x'}>
+    <NoteInfoLine icon={IconAlignStart} size={2}>
       <ShowIf condition={wordCount === null}>
         <Trans i18nKey={'common.loading'} />
       </ShowIf>

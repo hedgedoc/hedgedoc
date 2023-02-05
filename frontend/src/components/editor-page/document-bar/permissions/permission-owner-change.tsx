@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useOnInputChange } from '../../../../hooks/common/use-on-input-change'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../../common/icons/ui-icon'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, FormControl, InputGroup } from 'react-bootstrap'
+import { Check as IconCheck } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 export interface PermissionOwnerChangeProps {
@@ -44,7 +45,7 @@ export const PermissionOwnerChange: React.FC<PermissionOwnerChangeProps> = ({ on
         onClick={onClickConfirm}
         className={'ms-2'}
         disabled={confirmButtonDisabled}>
-        <ForkAwesomeIcon icon={'check'} />
+        <UiIcon icon={IconCheck} />
       </Button>
     </InputGroup>
   )

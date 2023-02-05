@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ForkAwesomeIcons } from '../../../common/fork-awesome/fork-awesome-icons'
 import emojiData from 'emoji-picker-element-data/en/emojibase/data.json'
 
 interface EmojiEntry {
@@ -28,15 +27,7 @@ const emojiSkinToneModifierMap = [1, 2, 3, 4, 5].reduce((reduceObject, modifierV
   return reduceObject
 }, {} as ShortCodeMap)
 
-const forkAwesomeIconMap = ForkAwesomeIcons.reduce((reduceObject, icon) => {
-  const shortcode = `fa-${icon}`
-  // noinspection CheckTagEmptyBody
-  reduceObject[shortcode] = `<i class='fa fa-${icon}'></i>`
-  return reduceObject
-}, {} as ShortCodeMap)
-
 export const combinedEmojiData = {
   ...shortCodeMap,
-  ...emojiSkinToneModifierMap,
-  ...forkAwesomeIconMap
+  ...emojiSkinToneModifierMap
 }

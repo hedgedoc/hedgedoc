@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { IconName } from '../common/fork-awesome/types'
 import type { TOptions } from 'i18next'
+import type { Icon } from 'react-bootstrap-icons'
 
 export interface UiNotificationButton {
   label: string
@@ -15,7 +15,7 @@ export interface DispatchOptions {
   titleI18nOptions: TOptions
   contentI18nOptions: TOptions
   durationInSecond: number
-  icon?: IconName
+  icon?: Icon
   buttons: UiNotificationButton[]
 }
 

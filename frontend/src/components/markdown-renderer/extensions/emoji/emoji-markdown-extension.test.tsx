@@ -24,13 +24,6 @@ describe('Emoji Markdown Extension', () => {
     expect(view.container).toMatchSnapshot()
   })
 
-  it('renders a fork awesome code', () => {
-    const view = render(
-      <TestMarkdownRenderer extensions={[new EmojiMarkdownExtension()]} content={':fa-circle-thin:'} />
-    )
-    expect(view.container).toMatchSnapshot()
-  })
-
   it('renders a skin tone code', () => {
     const view = render(<TestMarkdownRenderer extensions={[new EmojiMarkdownExtension()]} content={':skin-tone-3:'} />)
     expect(view.container).toMatchSnapshot()

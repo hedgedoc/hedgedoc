@@ -19,7 +19,6 @@ SPDX-License-Identifier: CC-BY-SA-4.0
     - `{%pdf https://example.org/example-pdf.pdf %}` -> Embedding removed
 - The use of `sequence` as code block language ([Why?](https://github.com/hedgedoc/react-client/issues/488#issuecomment-683262875))
 - Comma-separated definition of tags in the yaml-frontmatter
-- Fork Awesome Icons will be removed in a future release
 
 ### Removed
 
@@ -43,6 +42,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - F9 shortcut to sort lines
 - Highlight.JS language support for `1c` was removed.
 - Support for tag definitions in headings
+- Fork Awesome has been replaced with [Bootstrap Icons](https://icons.getbootstrap.com/)
 
 ### Added
 
@@ -54,9 +54,9 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - HedgeDoc instances can be branded either with a '@ \<custom string\>' or '@ \<custom logo\>' after the HedgeDoc logo and text
 - Images will be loaded via proxy if an image proxy is configured in the backend
 - Asciinema videos may be embedded by pasting the URL of one video into a single line
-- The toolbar includes an emoji and fork-awesome icon picker.
+- The toolbar includes an emoji picker.
 - Collapsible blocks can be added via a toolbar button or via autocompletion of "<details"
-- Added shortcodes for [fork-awesome icons](https://forkaweso.me/Fork-Awesome/icons/) (e.g. `:fa-picture-o:`)
+- Added shortcodes for icons (e.g. `:bi-picture:`)
 - The code button now adds code fences even if the user selected nothing beforehand
 - Code blocks with 'csv' as language render as tables.
 - All images can be clicked to show them in full screen.

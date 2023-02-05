@@ -5,9 +5,7 @@ exports[`Async loading boundary shows a waiting spinner if loading 1`] = `
   <div
     class="m-3 d-flex align-items-center justify-content-center"
   >
-    <i
-      class="fa  fa-spinner fa-spin "
-    />
+    BootstrapIconMock_ArrowRepeat
   </div>
 </div>
 `;

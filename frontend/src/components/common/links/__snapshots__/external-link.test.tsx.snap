@@ -52,9 +52,7 @@ exports[`ExternalLink renders an external link with an icon 1`] = `
     rel="noopener noreferrer"
     target="_blank"
   >
-    <i
-      class="fa fa-fw fa-heart  "
-    />
+    BootstrapIconMock_Heart
      
     testText
   </a>

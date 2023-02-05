@@ -7,6 +7,7 @@ import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
 import { CommonModal } from './common-modal'
 import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
+import { Heart as IconHeart } from 'react-bootstrap-icons'
 
 describe('CommonModal', () => {
   afterAll(() => {
@@ -65,7 +66,7 @@ describe('CommonModal', () => {
 
   it('render correctly with title icon', async () => {
     render(
-      <CommonModal show={true} titleIcon={'heart'}>
+      <CommonModal show={true} titleIcon={IconHeart}>
         testText
       </CommonModal>
     )

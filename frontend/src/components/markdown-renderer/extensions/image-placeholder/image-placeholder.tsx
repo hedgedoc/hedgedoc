@@ -4,13 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { cypressId } from '../../../../utils/cypress-attribute'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../../common/icons/ui-icon'
 import { acceptedMimeTypes } from '../../../common/upload-image-mimetypes'
 import { useOnImageUpload } from './hooks/use-on-image-upload'
 import { usePlaceholderSizeStyle } from './hooks/use-placeholder-size-style'
 import styles from './image-placeholder.module.scss'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { Button } from 'react-bootstrap'
+import { Upload as IconUpload } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 export interface PlaceholderImageFrameProps {
@@ -105,7 +106,7 @@ export const ImagePlaceholder: React.FC<PlaceholderImageFrameProps> = ({
         </div>
       </div>
       <Button size={'sm'} variant={'primary'} onClick={uploadButtonClicked}>
-        <ForkAwesomeIcon icon={'upload'} fixedWidth={true} className='my-2' />
+        <UiIcon icon={IconUpload} className='my-2' />
         <Trans i18nKey={'editor.embeddings.placeholderImage.upload'} className='my-2' />
       </Button>
     </span>

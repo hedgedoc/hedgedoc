@@ -6,11 +6,14 @@
 import { removeGroupPermission, setGroupPermission } from '../../../../api/permissions'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { setNotePermissionsFromServer } from '../../../../redux/note-details/methods'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { IconButton } from '../../../common/icon-button/icon-button'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import { AccessLevel, SpecialGroup } from './types'
 import React, { useCallback, useMemo } from 'react'
-import { Button, ToggleButtonGroup } from 'react-bootstrap'
+import { ToggleButtonGroup } from 'react-bootstrap'
+import { Eye as IconEye } from 'react-bootstrap-icons'
+import { Pencil as IconPencil } from 'react-bootstrap-icons'
+import { SlashCircle as IconSlashCircle } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 export interface PermissionEntrySpecialGroupProps {
@@ -67,24 +70,27 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
       <span>{name}</span>
       <div>
         <ToggleButtonGroup type='radio' name='edit-mode'>
-          <Button
+          <IconButton
+            icon={IconSlashCircle}
             title={t('editor.modal.permissions.denyGroup', { name }) ?? undefined}
             variant={level === AccessLevel.NONE ? 'secondary' : 'outline-secondary'}
-            onClick={onSetEntryDenied}>
-            <ForkAwesomeIcon icon={'ban'} />
-          </Button>
-          <Button
+            onClick={onSetEntryDenied}
+            className={'p-1'}
+          />
+          <IconButton
+            icon={IconEye}
             title={t('editor.modal.permissions.viewOnlyGroup', { name }) ?? undefined}
             variant={level === AccessLevel.READ_ONLY ? 'secondary' : 'outline-secondary'}
-            onClick={onSetEntryReadOnly}>
-            <ForkAwesomeIcon icon={'eye'} />
-          </Button>
-          <Button
+            onClick={onSetEntryReadOnly}
+            className={'p-1'}
+          />
+          <IconButton
+            icon={IconPencil}
             title={t('editor.modal.permissions.editGroup', { name }) ?? undefined}
             variant={level === AccessLevel.WRITEABLE ? 'secondary' : 'outline-secondary'}
-            onClick={() => onSetEntryWriteable}>
-            <ForkAwesomeIcon icon={'pencil'} />
-          </Button>
+            onClick={onSetEntryWriteable}
+            className={'p-1'}
+          />
         </ToggleButtonGroup>
       </div>
     </li>

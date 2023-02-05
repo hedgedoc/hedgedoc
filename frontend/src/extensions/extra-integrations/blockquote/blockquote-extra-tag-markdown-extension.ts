@@ -20,8 +20,8 @@ export class BlockquoteExtraTagMarkdownExtension extends MarkdownRendererExtensi
 
   public configureMarkdownIt(markdownIt: MarkdownIt): void {
     new BlockquoteExtraTagMarkdownItPlugin('color', 'tag').registerRule(markdownIt)
-    new BlockquoteExtraTagMarkdownItPlugin('name', 'user').registerRule(markdownIt)
-    new BlockquoteExtraTagMarkdownItPlugin('time', 'clock-o').registerRule(markdownIt)
+    new BlockquoteExtraTagMarkdownItPlugin('name', 'person').registerRule(markdownIt)
+    new BlockquoteExtraTagMarkdownItPlugin('time', 'clock').registerRule(markdownIt)
   }
 
   public buildReplacers(): ComponentReplacer[] {
