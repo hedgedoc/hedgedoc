@@ -2166,7 +2166,7 @@ __metadata:
     "@nestjs/config": 2.2.0
     "@nestjs/core": 9.2.1
     "@nestjs/event-emitter": 1.3.1
-    "@nestjs/passport": 9.0.0
+    "@nestjs/passport": 9.0.1
     "@nestjs/platform-express": 9.2.1
     "@nestjs/platform-ws": 9.2.1
     "@nestjs/schedule": 2.1.0
@@ -3099,13 +3099,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/passport@npm:9.0.0":
-  version: 9.0.0
-  resolution: "@nestjs/passport@npm:9.0.0"
+"@nestjs/passport@npm:9.0.1":
+  version: 9.0.1
+  resolution: "@nestjs/passport@npm:9.0.1"
   peerDependencies:
     "@nestjs/common": ^8.0.0 || ^9.0.0
     passport: ^0.4.0 || ^0.5.0 || ^0.6.0
-  checksum: 85651ed1f636e9786d5e2ecc5eccf1b9a6bfff4de3e23726e23ab2dac6aa7de6426ac690e2fd9f9efa4c1f1858f73df8e02c3222e26c9fa1915d707dd608403c
+  checksum: d21398247ee1491342e875dd8502ab3762c01daa3792cedbd8e91294991c7667322641701ea90e9f99d48bf27adcd947161ed73e9e800314135aed66df187885
   languageName: node
   linkType: hard
 
