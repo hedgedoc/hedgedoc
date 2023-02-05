@@ -10,6 +10,7 @@ import { SidebarButton } from '../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../types'
 import styles from './pin-note-sidebar-entry.module.css'
 import React, { useCallback, useMemo } from 'react'
+import { Pin as IconPin } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -38,7 +39,7 @@ export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ class
 
   return (
     <SidebarButton
-      icon={'thumb-tack'}
+      icon={IconPin}
       hide={hide}
       onClick={onPinClicked}
       className={`${className ?? ''} ${isPinned ? styles['highlighted'] : ''}`}>

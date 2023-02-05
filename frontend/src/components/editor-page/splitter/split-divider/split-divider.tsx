@@ -4,10 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { testId } from '../../../../utils/test-id'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../../common/icons/ui-icon'
 import styles from './split-divider.module.scss'
 import React from 'react'
 import { Button } from 'react-bootstrap'
+import { ArrowLeftRight as IconArrowLeftRight } from 'react-bootstrap-icons'
+import { ArrowLeft as IconArrowLeft } from 'react-bootstrap-icons'
+import { ArrowRight as IconArrowRight } from 'react-bootstrap-icons'
 
 export enum DividerButtonsShift {
   SHIFT_TO_LEFT = 'shift-left',
@@ -53,13 +56,13 @@ export const SplitDivider: React.FC<SplitDividerProps> = ({
       <div className={`bg-light ${styles['middle']} ${forceOpen ? styles['open'] : ''} ${shiftClass}`}>
         <div className={styles['buttons']}>
           <Button variant={focusLeft ? 'secondary' : 'light'} onClick={onLeftButtonClick}>
-            <ForkAwesomeIcon icon={'arrow-left'} />
+            <UiIcon icon={IconArrowLeft} />
           </Button>
           <span onMouseDown={onGrab} onTouchStart={onGrab} className={styles['grabber']}>
-            <ForkAwesomeIcon icon={'arrows-h'} />
+            <UiIcon icon={IconArrowLeftRight} />
           </span>
           <Button variant={focusRight ? 'secondary' : 'light'} onClick={onRightButtonClick}>
-            <ForkAwesomeIcon icon={'arrow-right'} />
+            <UiIcon icon={IconArrowRight} />
           </Button>
         </div>
       </div>

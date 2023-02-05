@@ -9,6 +9,7 @@ import type { NoteInfoTimeLineProps } from './note-info-time-line'
 import { UnitalicBoldTimeFromNow } from './utils/unitalic-bold-time-from-now'
 import { DateTime } from 'luxon'
 import React, { useMemo } from 'react'
+import { Plus as IconPlus } from 'react-bootstrap-icons'
 import { Trans } from 'react-i18next'
 
 /**
@@ -21,7 +22,7 @@ export const NoteInfoLineCreated: React.FC<NoteInfoTimeLineProps> = ({ size }) =
   const noteCreateDateTime = useMemo(() => DateTime.fromSeconds(noteCreateTime), [noteCreateTime])
 
   return (
-    <NoteInfoLine icon={'plus'} size={size}>
+    <NoteInfoLine icon={IconPlus} size={size}>
       <Trans i18nKey={'editor.modal.documentInfo.created'}>
         <UnitalicBoldTimeFromNow time={noteCreateDateTime} />
       </Trans>

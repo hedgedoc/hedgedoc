@@ -43,8 +43,8 @@
   z-index: 1000;
   position: relative;
   font-size: 3em;
-  height: 240px;
-  width: 203px;
+  height: 5em;
+  width: 5em;
   color: #ffffff;
   text-shadow: 4px 4px 0 #3b4045;
 
@@ -55,10 +55,11 @@
     animation: fill 6s infinite;
     width: 100%;
 
-    &, :global(.fa) {
+    & > * {
       position: absolute;
       bottom: 0;
       left: 0;
+      z-index: 1001;
     }
   }
 }

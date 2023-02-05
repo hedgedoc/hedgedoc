@@ -11,6 +11,7 @@ import styles from './revision-modal.module.scss'
 import { RevisionViewer } from './revision-viewer'
 import React, { useState } from 'react'
 import { Col, Modal, Row } from 'react-bootstrap'
+import { ClockHistory as IconClockHistory } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 /**
@@ -28,7 +29,7 @@ export const RevisionModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) 
       show={show}
       onHide={onHide}
       titleI18nKey={'editor.modal.revision.title'}
-      titleIcon={'history'}
+      titleIcon={IconClockHistory}
       showCloseButton={true}
       modalSize={'xl'}
       additionalClasses={styles['revision-modal']}>

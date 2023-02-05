@@ -6,14 +6,13 @@
 import type { PropsWithDataCypressId } from '../../../../utils/cypress-attribute'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { Logger } from '../../../../utils/logger'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
-import type { IconName } from '../../../common/fork-awesome/types'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { ProxyImageFrame } from '../../extensions/image/proxy-image-frame'
 import styles from './click-shield.module.scss'
 import type { Property } from 'csstype'
 import type { PropsWithChildren } from 'react'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import type { Icon } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 const log = new Logger('OneClickEmbedding')
@@ -21,7 +20,7 @@ const log = new Logger('OneClickEmbedding')
 export interface ClickShieldProps extends PropsWithChildren<PropsWithDataCypressId> {
   onImageFetch?: () => Promise<string>
   fallbackPreviewImageUrl?: string
-  hoverIcon: IconName
+  hoverIcon: Icon
   targetDescription: string
   containerClassName?: string
   fallbackBackgroundColor?: Property.BackgroundColor
@@ -104,6 +103,16 @@ export const ClickShield: React.FC<ClickShieldProps> = ({
 
   const hoverTextTranslationValues = useMemo(() => ({ target: targetDescription }), [targetDescription])
 
+  const icon = useMemo(
+    () =>
+      React.createElement(hoverIcon, {
+        width: '5em',
+        height: '5em',
+        className: 'mb-2'
+      }),
+    [hoverIcon]
+  )
+
   return (
     <span className={containerClassName} {...cypressId(props['data-cypress-id'])}>
       <ShowIf condition={showChildren}>{children}</ShowIf>
@@ -114,7 +123,7 @@ export const ClickShield: React.FC<ClickShieldProps> = ({
             <span className={`${styles['preview-hover-text']}`}>
               <Trans i18nKey={'renderer.clickShield.previewHoverText'} values={hoverTextTranslationValues} />
             </span>
-            <ForkAwesomeIcon icon={hoverIcon} size={'5x'} className={'mb-2'} />
+            {icon}
           </span>
         </span>
       </ShowIf>

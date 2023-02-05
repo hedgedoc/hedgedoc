@@ -5,6 +5,7 @@
  */
 import { DropdownItemWithDeletionModal } from './dropdown-item-with-deletion-modal'
 import React from 'react'
+import { Trash as IconTrash } from 'react-bootstrap-icons'
 
 export interface DeleteNoteItemProps {
   onConfirm: () => void
@@ -22,7 +23,7 @@ export const DeleteNoteItem: React.FC<DeleteNoteItemProps> = ({ noteTitle, onCon
     <DropdownItemWithDeletionModal
       onConfirm={onConfirm}
       itemI18nKey={'landing.history.menu.deleteNote'}
-      modalIcon={'trash'}
+      modalIcon={IconTrash}
       noteTitle={noteTitle}
     />
   )

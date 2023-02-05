@@ -34,6 +34,7 @@ export const CheatsheetTabContent: React.FC = () => {
       `[${t('editor.editorToolbar.link')}](https://example.com)`,
       `![${t('editor.editorToolbar.image')}](/icons/apple-touch-icon.png)`,
       ':smile:',
+      ':bi-bootstrap:',
       `:::info\n${t('editor.help.cheatsheet.exampleAlert')}\n:::`
     ],
     [checked, t]

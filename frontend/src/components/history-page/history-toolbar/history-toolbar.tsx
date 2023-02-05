@@ -6,7 +6,7 @@
 import { HistoryEntryOrigin } from '../../../api/history/types'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { importHistoryEntries, setHistoryEntries } from '../../../redux/history/methods'
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../common/icons/ui-icon'
 import { ShowIf } from '../../common/show-if/show-if'
 import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 import { ClearHistoryButton } from './clear-history-button'
@@ -22,6 +22,7 @@ import { TagSelectionInput } from './tag-selection-input'
 import { useSyncToolbarStateToUrlEffect } from './toolbar-context/use-sync-toolbar-state-to-url-effect'
 import React, { useCallback } from 'react'
 import { Button, Col } from 'react-bootstrap'
+import { CloudUpload as IconCloudUpload } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 export enum ViewStateEnum {
@@ -92,7 +93,7 @@ export const HistoryToolbar: React.FC = () => {
             variant={'light'}
             title={t('landing.history.toolbar.uploadAll') ?? undefined}
             onClick={onUploadAllToRemote}>
-            <ForkAwesomeIcon icon='cloud-upload' />
+            <UiIcon icon={IconCloudUpload} />
           </Button>
         </div>
       </ShowIf>

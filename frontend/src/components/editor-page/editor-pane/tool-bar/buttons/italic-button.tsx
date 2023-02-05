@@ -7,6 +7,7 @@ import type { ContentFormatter } from '../../../change-content-context/change-co
 import { wrapSelection } from '../formatters/wrap-selection'
 import { ToolbarButton } from '../toolbar-button'
 import React, { useCallback } from 'react'
+import { TypeItalic as IconTypeItalic } from 'react-bootstrap-icons'
 
 /**
  * Renders a button to make the selection in the {@link Editor editor} italic.
@@ -15,5 +16,5 @@ export const ItalicButton: React.FC = () => {
   const formatter: ContentFormatter = useCallback(({ currentSelection }) => {
     return wrapSelection(currentSelection, '*', '*')
   }, [])
-  return <ToolbarButton i18nKey={'italic'} iconName={'italic'} formatter={formatter}></ToolbarButton>
+  return <ToolbarButton i18nKey={'italic'} icon={IconTypeItalic} formatter={formatter}></ToolbarButton>
 }

@@ -12,6 +12,7 @@ import type { AccessTokenUpdateProps } from './profile-access-tokens'
 import { DateTime } from 'luxon'
 import React, { useCallback, useMemo } from 'react'
 import { Col, ListGroup, Row } from 'react-bootstrap'
+import { Trash as IconTrash } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 export interface AccessTokenListEntryProps {
@@ -61,7 +62,7 @@ export const AccessTokenListEntry: React.FC<AccessTokenListEntryProps & AccessTo
         <Col className='text-start text-white-50'>{lastUsed}</Col>
         <Col xs='auto'>
           <IconButton
-            icon='trash-o'
+            icon={IconTrash}
             variant='danger'
             onClick={showModal}
             {...cypressId('access-token-delete-button')}

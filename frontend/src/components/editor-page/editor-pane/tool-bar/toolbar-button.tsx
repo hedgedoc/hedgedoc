@@ -4,17 +4,17 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { cypressId } from '../../../../utils/cypress-attribute'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
-import type { IconName } from '../../../common/fork-awesome/types'
+import { UiIcon } from '../../../common/icons/ui-icon'
 import type { ContentFormatter } from '../../change-content-context/change-content-context'
 import { useChangeEditorContentCallback } from '../../change-content-context/use-change-editor-content-callback'
 import React, { useCallback, useMemo } from 'react'
 import { Button } from 'react-bootstrap'
+import type { Icon } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 export interface ToolbarButtonProps {
   i18nKey: string
-  iconName: IconName
+  icon: Icon
   formatter: ContentFormatter
 }
 
@@ -25,7 +25,7 @@ export interface ToolbarButtonProps {
  * @param iconName A fork awesome icon name that is shown in the button
  * @param formatter The formatter function changes the editor content on click
  */
-export const ToolbarButton: React.FC<ToolbarButtonProps> = ({ i18nKey, iconName, formatter }) => {
+export const ToolbarButton: React.FC<ToolbarButtonProps> = ({ i18nKey, icon, formatter }) => {
   const { t } = useTranslation('', { keyPrefix: 'editor.editorToolbar' })
   const changeEditorContent = useChangeEditorContentCallback()
 
@@ -41,7 +41,7 @@ export const ToolbarButton: React.FC<ToolbarButtonProps> = ({ i18nKey, iconName,
       title={title}
       disabled={!changeEditorContent}
       {...cypressId('toolbar.' + i18nKey)}>
-      <ForkAwesomeIcon icon={iconName} />
+      <UiIcon icon={icon} />
     </Button>
   )
 }

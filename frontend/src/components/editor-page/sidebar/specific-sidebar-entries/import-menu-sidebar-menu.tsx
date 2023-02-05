@@ -10,6 +10,11 @@ import type { SpecificSidebarMenuProps } from '../types'
 import { DocumentSidebarMenuSelection } from '../types'
 import { ImportMarkdownSidebarEntry } from './import-markdown-sidebar-entry'
 import React, { Fragment, useCallback } from 'react'
+import { ArrowLeft as IconArrowLeft } from 'react-bootstrap-icons'
+import { Clipboard as IconClipboard } from 'react-bootstrap-icons'
+import { CloudUpload as IconCloudUpload } from 'react-bootstrap-icons'
+import { Git as IconGit } from 'react-bootstrap-icons'
+import { Github as IconGithub } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -33,21 +38,21 @@ export const ImportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   const onClickHandler = useCallback(() => {
     onClick(menuId)
   }, [menuId, onClick])
-
+  //todo: replace git with gitlab
   return (
     <Fragment>
       <SidebarButton
         {...cypressId('menu-import')}
         hide={hide}
-        icon={expand ? 'arrow-left' : 'cloud-upload'}
+        icon={expand ? IconArrowLeft : IconCloudUpload}
         className={className}
         onClick={onClickHandler}>
         <Trans i18nKey={'editor.documentBar.import'} />
       </SidebarButton>
       <SidebarMenu expand={expand}>
-        <SidebarButton icon={'github'}>Gist</SidebarButton>
-        <SidebarButton icon={'gitlab'}>Gitlab Snippet</SidebarButton>
-        <SidebarButton icon={'clipboard'}>
+        <SidebarButton icon={IconGithub}>Gist</SidebarButton>
+        <SidebarButton icon={IconGit}>Gitlab Snippet</SidebarButton>
+        <SidebarButton icon={IconClipboard}>
           <Trans i18nKey={'editor.import.clipboard'} />
         </SidebarButton>
         <ImportMarkdownSidebarEntry />

@@ -33,10 +33,10 @@ export const NoteInfoModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) 
       <Modal.Body>
         <ListGroup>
           <ListGroup.Item>
-            <NoteInfoLineCreated size={'2x'} />
+            <NoteInfoLineCreated size={2} />
           </ListGroup.Item>
           <ListGroup.Item>
-            <NoteInfoLineUpdated size={'2x'} />
+            <NoteInfoLineUpdated size={2} />
           </ListGroup.Item>
           <ListGroup.Item>
             <NoteInfoLineContributors />

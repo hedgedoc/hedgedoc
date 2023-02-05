@@ -3,19 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { IconName } from '../../../components/common/fork-awesome/types'
+import type { BootstrapIconName } from '../../../components/common/icons/bootstrap-icons'
 import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-markdown-extension'
 import { Optional } from '@mrdrogdrog/optional'
 import type MarkdownIt from 'markdown-it/lib'
 import type { RuleInline } from 'markdown-it/lib/parser_inline'
 import type StateInline from 'markdown-it/lib/rules_inline/state_inline'
 import type Token from 'markdown-it/lib/token'
-
-export interface BlockquoteTagOptions {
-  parseSubTags?: boolean
-  valueRegex?: RegExp
-  icon?: IconName
-}
 
 export interface QuoteExtraTagValues {
   labelStartIndex: number
@@ -32,7 +26,7 @@ export interface QuoteExtraTagValues {
 export class BlockquoteExtraTagMarkdownItPlugin {
   private static readonly BlockquoteExtraTagRuleName = 'blockquote_extra_tag'
 
-  constructor(private tagName: string, private icon: IconName) {}
+  constructor(private tagName: string, private icon: BootstrapIconName) {}
 
   /**
    * Registers an inline rule that detects blockquote extra tags and replaces them with blockquote tokens.

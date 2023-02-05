@@ -31,29 +31,33 @@ if (isMockMode) {
  `)
 }
 
+/** @type {import('@svgr/webpack').LoaderOptions} */
+const svgrConfig = {
+  svgoConfig: {
+    plugins: [
+      {
+        name: 'preset-default',
+        params: {
+          overrides: {
+            removeViewBox: false
+          }
+        }
+      }
+    ]
+  }
+}
+
 /** @type {import('next').NextConfig} */
 const rawNextConfig = {
   webpack: (config) => {
+
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
       use: [
         {
           loader: '@svgr/webpack',
-          options: {
-            svgoConfig: {
-              plugins: [
-                {
-                  name: 'preset-default',
-                  params: {
-                    overrides: {
-                      removeViewBox: false
-                    }
-                  }
-                }
-              ]
-            }
-          }
+          options: svgrConfig
         }
       ]
     })

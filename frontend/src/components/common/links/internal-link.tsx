@@ -3,9 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ForkAwesomeIcon } from '../fork-awesome/fork-awesome-icon'
-import type { IconName } from '../fork-awesome/types'
-import { ShowIf } from '../show-if/show-if'
+import { UiIcon } from '../icons/ui-icon'
 import type { LinkWithTextProps } from './types'
 import Link from 'next/link'
 import React from 'react'
@@ -31,10 +29,7 @@ export const InternalLink: React.FC<LinkWithTextProps> = ({
 }) => {
   return (
     <Link href={href} className={className} id={id} title={title}>
-      <ShowIf condition={!!icon}>
-        <ForkAwesomeIcon icon={icon as IconName} fixedWidth={true} />
-        &nbsp;
-      </ShowIf>
+      <UiIcon icon={icon} nbsp={true} />
       {text}
     </Link>
   )

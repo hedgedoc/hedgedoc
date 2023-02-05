@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../common/icons/ui-icon'
 import { EntryMenu } from '../entry-menu/entry-menu'
 import type { HistoryEntryProps, HistoryEventHandlers } from '../history-content/history-content'
 import { PinButton } from '../pin-button/pin-button'
@@ -15,6 +15,7 @@ import { DateTime } from 'luxon'
 import Link from 'next/link'
 import React, { useCallback, useMemo } from 'react'
 import { Badge, Card } from 'react-bootstrap'
+import { Clock as IconClock } from 'react-bootstrap-icons'
 
 /**
  * Renders a history entry as a card.
@@ -73,7 +74,7 @@ export const HistoryCard: React.FC<HistoryEntryProps & HistoryEventHandlers> = (
               </Card.Title>
               <div>
                 <div className='text-black-50 mt-2'>
-                  <ForkAwesomeIcon icon='clock-o' /> {DateTime.fromISO(entry.lastVisitedAt).toRelative()}
+                  <UiIcon icon={IconClock} /> {DateTime.fromISO(entry.lastVisitedAt).toRelative()}
                   <br />
                   {lastVisited}
                 </div>

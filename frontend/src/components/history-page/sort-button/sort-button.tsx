@@ -3,34 +3,17 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { IconName } from '../../common/fork-awesome/types'
 import { IconButton } from '../../common/icon-button/icon-button'
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 import type { ButtonProps } from 'react-bootstrap'
+import { SortAlphaDown as IconSortAlphaDown } from 'react-bootstrap-icons'
+import { SortAlphaUp as IconSortAlphaUp } from 'react-bootstrap-icons'
+import { X as IconX } from 'react-bootstrap-icons'
 
 export enum SortModeEnum {
   up = 1,
   down = -1,
   no = 0
-}
-
-/**
- * Returns the proper icon for the given sorting direction.
- *
- * @param direction The sorting direction for which to get the icon
- * @return The name of the icon fitting to the given sorting direction
- */
-const getIcon = (direction: SortModeEnum): IconName => {
-  switch (direction) {
-    case SortModeEnum.no:
-      return 'sort'
-    case SortModeEnum.up:
-      return 'sort-asc'
-    case SortModeEnum.down:
-      return 'sort-desc'
-    default:
-      return 'sort'
-  }
 }
 
 export interface SortButtonProps extends ButtonProps {
@@ -64,13 +47,24 @@ const toggleDirection = (direction: SortModeEnum) => {
  * @param onDirectionChange Callback that is fired when the sorting direction is changed
  * @param direction The sorting direction that is used
  */
-export const SortButton: React.FC<SortButtonProps> = ({ children, variant, onDirectionChange, direction }) => {
-  const toggleSort = () => {
+export const SortButton: React.FC<SortButtonProps> = ({ children, onDirectionChange, direction }) => {
+  const toggleSort = useCallback(() => {
     onDirectionChange(toggleDirection(direction))
-  }
+  }, [direction, onDirectionChange])
+
+  const icon = useMemo(() => {
+    switch (direction) {
+      case SortModeEnum.down:
+        return IconSortAlphaDown
+      case SortModeEnum.up:
+        return IconSortAlphaUp
+      case SortModeEnum.no:
+        return IconX
+    }
+  }, [direction])
 
   return (
-    <IconButton onClick={toggleSort} variant={variant} icon={getIcon(direction)} border={true}>
+    <IconButton onClick={toggleSort} variant={'light'} icon={icon} iconSize={1.5} border={true}>
       {children}
     </IconButton>
   )

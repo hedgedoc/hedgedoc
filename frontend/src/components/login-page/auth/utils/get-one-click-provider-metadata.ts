@@ -6,12 +6,21 @@
 import type { AuthProvider } from '../../../../api/config/types'
 import { AuthProviderType } from '../../../../api/config/types'
 import { Logger } from '../../../../utils/logger'
-import type { IconName } from '../../../common/fork-awesome/types'
 import styles from '../via-one-click.module.scss'
+import type { Icon } from 'react-bootstrap-icons'
+import { Dropbox as IconDropbox } from 'react-bootstrap-icons'
+import { Exclamation as IconExclamation } from 'react-bootstrap-icons'
+import { Facebook as IconFacebook } from 'react-bootstrap-icons'
+import { Git as IconGit } from 'react-bootstrap-icons'
+import { Github as IconGithub } from 'react-bootstrap-icons'
+import { Google as IconGoogle } from 'react-bootstrap-icons'
+import { People as IconPeople } from 'react-bootstrap-icons'
+import { PersonRolodex as IconPersonRolodex } from 'react-bootstrap-icons'
+import { Twitter as IconTwitter } from 'react-bootstrap-icons'
 
 export interface OneClickMetadata {
   name: string
-  icon: IconName
+  icon: Icon
   className: string
   url: string
 }
@@ -33,56 +42,56 @@ export const getOneClickProviderMetadata = (provider: AuthProvider): OneClickMet
     case AuthProviderType.DROPBOX:
       return {
         name: 'Dropbox',
-        icon: 'dropbox',
+        icon: IconDropbox,
         className: styles['btn-social-dropbox'],
         url: getBackendAuthUrl('dropbox')
       }
     case AuthProviderType.FACEBOOK:
       return {
         name: 'Facebook',
-        icon: 'facebook',
+        icon: IconFacebook,
         className: styles['btn-social-facebook'],
         url: getBackendAuthUrl('facebook')
       }
     case AuthProviderType.GITHUB:
       return {
         name: 'GitHub',
-        icon: 'github',
+        icon: IconGithub,
         className: styles['btn-social-github'],
         url: getBackendAuthUrl('github')
       }
     case AuthProviderType.GITLAB:
       return {
         name: provider.providerName,
-        icon: 'gitlab',
+        icon: IconGit, //TODO: gitlab icon
         className: styles['btn-social-gitlab'],
         url: getBackendAuthUrl(provider.identifier)
       }
     case AuthProviderType.GOOGLE:
       return {
         name: 'Google',
-        icon: 'google',
+        icon: IconGoogle,
         className: styles['btn-social-google'],
         url: getBackendAuthUrl('google')
       }
     case AuthProviderType.OAUTH2:
       return {
         name: provider.providerName,
-        icon: 'address-card',
+        icon: IconPersonRolodex,
         className: 'btn-primary',
         url: getBackendAuthUrl(provider.identifier)
       }
     case AuthProviderType.SAML:
       return {
         name: provider.providerName,
-        icon: 'users',
+        icon: IconPeople,
         className: 'btn-success',
         url: getBackendAuthUrl(provider.identifier)
       }
     case AuthProviderType.TWITTER:
       return {
         name: 'Twitter',
-        icon: 'twitter',
+        icon: IconTwitter,
         className: styles['btn-social-twitter'],
         url: getBackendAuthUrl('twitter')
       }
@@ -90,7 +99,7 @@ export const getOneClickProviderMetadata = (provider: AuthProvider): OneClickMet
       logger.warn('Metadata for one-click-provider does not exist', provider)
       return {
         name: '',
-        icon: 'exclamation',
+        icon: IconExclamation,
         className: '',
         url: '#'
       }

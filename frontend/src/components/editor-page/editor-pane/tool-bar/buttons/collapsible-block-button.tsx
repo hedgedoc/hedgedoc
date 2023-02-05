@@ -8,6 +8,7 @@ import { changeCursorsToWholeLineIfNoToCursor } from '../formatters/utils/change
 import { wrapSelection } from '../formatters/wrap-selection'
 import { ToolbarButton } from '../toolbar-button'
 import React, { useCallback } from 'react'
+import { ArrowsCollapse as IconArrowsCollapse } from 'react-bootstrap-icons'
 
 /**
  * Renders a button to create a spoiler section in the {@link Editor editor}.
@@ -20,7 +21,5 @@ export const CollapsibleBlockButton: React.FC = () => {
       '\n:::\n'
     )
   }, [])
-  return (
-    <ToolbarButton i18nKey={'collapsibleBlock'} iconName={'caret-square-o-down'} formatter={formatter}></ToolbarButton>
-  )
+  return <ToolbarButton i18nKey={'collapsibleBlock'} icon={IconArrowsCollapse} formatter={formatter}></ToolbarButton>
 }

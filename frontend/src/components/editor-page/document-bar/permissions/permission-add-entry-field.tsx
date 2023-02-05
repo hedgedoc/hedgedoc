@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useOnInputChange } from '../../../../hooks/common/use-on-input-change'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../../common/icons/ui-icon'
 import React, { useCallback, useState } from 'react'
 import { Button, FormControl, InputGroup } from 'react-bootstrap'
+import { Plus as IconPlus } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 export interface PermissionAddEntryFieldProps {
@@ -35,7 +36,7 @@ export const PermissionAddEntryField: React.FC<PermissionAddEntryFieldProps> = (
       <InputGroup className={'me-1 mb-1'}>
         <FormControl value={newEntryIdentifier} placeholder={t(i18nKey) ?? undefined} onChange={onChange} />
         <Button variant='light' className={'text-secondary ms-2'} title={t(i18nKey) ?? undefined} onClick={onSubmit}>
-          <ForkAwesomeIcon icon={'plus'} />
+          <UiIcon icon={IconPlus} />
         </Button>
       </InputGroup>
     </li>

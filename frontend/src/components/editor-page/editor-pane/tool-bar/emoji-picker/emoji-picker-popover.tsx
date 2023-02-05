@@ -1,30 +1,21 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import fontStyles from '../../../../../../global-styles/variables.module.scss'
 import { useDarkModeState } from '../../../../../hooks/common/use-dark-mode-state'
-import { ForkAwesomeIcons } from '../../../../common/fork-awesome/fork-awesome-icons'
 import styles from './emoji-picker.module.scss'
-import forkawesomeIcon from './forkawesome.png'
 import { Picker } from 'emoji-picker-element'
-import type { CustomEmoji, EmojiClickEvent, EmojiClickEventDetail } from 'emoji-picker-element/shared'
+import type { EmojiClickEvent, EmojiClickEventDetail } from 'emoji-picker-element/shared'
+import type { PickerConstructorOptions } from 'emoji-picker-element/shared'
 import React, { useEffect, useRef } from 'react'
 import { Popover } from 'react-bootstrap'
 import type { PopoverProps } from 'react-bootstrap/Popover'
 
-const customEmojis: CustomEmoji[] = ForkAwesomeIcons.map((name) => ({
-  name: `fa-${name}`,
-  shortcodes: [`fa-${name.toLowerCase()}`],
-  url: forkawesomeIcon.src,
-  category: 'ForkAwesome'
-}))
-
 const EMOJI_DATA_PATH = '_next/static/js/emoji-data.json'
 
-const emojiPickerConfig = {
-  customEmoji: customEmojis,
+const emojiPickerConfig: PickerConstructorOptions = {
   dataSource: EMOJI_DATA_PATH
 }
 

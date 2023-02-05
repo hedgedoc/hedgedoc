@@ -3,35 +3,26 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { IconName } from '../fork-awesome/types'
 import { IconButton } from './icon-button'
 import { fireEvent, render, screen } from '@testing-library/react'
+import { Heart as IconHeart } from 'react-bootstrap-icons'
 
 describe('IconButton', () => {
-  const icon: IconName = 'heart'
   it('renders heart icon', () => {
-    const view = render(<IconButton icon={icon}>test</IconButton>)
+    const view = render(<IconButton icon={IconHeart}>test</IconButton>)
     expect(view.container).toMatchSnapshot()
   })
   it('renders with border', () => {
     const view = render(
-      <IconButton icon={icon} border={true}>
+      <IconButton icon={IconHeart} border={true}>
         test with border
-      </IconButton>
-    )
-    expect(view.container).toMatchSnapshot()
-  })
-  it('renders with fixed width icon', () => {
-    const view = render(
-      <IconButton icon={icon} iconFixedWidth={true}>
-        test with fixed with icon
       </IconButton>
     )
     expect(view.container).toMatchSnapshot()
   })
   it('renders with additional className', () => {
     const view = render(
-      <IconButton icon={icon} className={'testClass'}>
+      <IconButton icon={IconHeart} className={'testClass'}>
         test with additional className
       </IconButton>
     )
@@ -40,7 +31,7 @@ describe('IconButton', () => {
   it('correctly uses the onClick callback', async () => {
     const onClick = jest.fn()
     const view = render(
-      <IconButton icon={icon} onClick={onClick}>
+      <IconButton icon={IconHeart} onClick={onClick}>
         test with onClick
       </IconButton>
     )

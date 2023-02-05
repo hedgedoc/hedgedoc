@@ -3,9 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../../common/icons/ui-icon'
 import { usePlaceholderSizeStyle } from '../image-placeholder/hooks/use-placeholder-size-style'
 import React from 'react'
+import { GearFill as IconGearFill } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 export interface UploadIndicatingFrameProps {
@@ -30,7 +31,7 @@ export const UploadIndicatingFrame: React.FC<UploadIndicatingFrameProps> = ({ wi
       <span className={'h1 border-bottom-0 my-2'}>
         <Trans i18nKey={'renderer.uploadIndicator.uploadMessage'} />
       </span>
-      <ForkAwesomeIcon icon={'cog'} size={'5x'} fixedWidth={true} className='my-2 fa-spin' />
+      <UiIcon icon={IconGearFill} size={5} className='my-2' spin={true} />
     </span>
   )
 }

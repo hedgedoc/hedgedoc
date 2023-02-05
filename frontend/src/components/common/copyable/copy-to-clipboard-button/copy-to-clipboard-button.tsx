@@ -5,10 +5,11 @@
  */
 import type { PropsWithDataCypressId } from '../../../../utils/cypress-attribute'
 import { cypressId } from '../../../../utils/cypress-attribute'
-import { ForkAwesomeIcon } from '../../fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../icons/ui-icon'
 import { useCopyOverlay } from '../hooks/use-copy-overlay'
 import React, { Fragment, useRef } from 'react'
 import { Button } from 'react-bootstrap'
+import { Files as IconFiles } from 'react-bootstrap-icons'
 import type { Variant } from 'react-bootstrap/types'
 import { useTranslation } from 'react-i18next'
 
@@ -46,7 +47,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButtonProps> = ({
         title={t('renderer.highlightCode.copyCode') ?? undefined}
         onClick={copyToClipboard}
         {...cypressId(props)}>
-        <ForkAwesomeIcon icon='files-o' />
+        <UiIcon icon={IconFiles} />
       </Button>
       {overlayElement}
     </Fragment>

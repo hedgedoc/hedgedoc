@@ -5,6 +5,7 @@
  */
 import { optionalAppExtensions } from '../../../extensions/extra-integrations/optional-app-extensions'
 import type { MarkdownRendererExtension } from '../extensions/base/markdown-renderer-extension'
+import { BootstrapIconMarkdownExtension } from '../extensions/bootstrap-icons/bootstrap-icon-markdown-extension'
 import { DebuggerMarkdownExtension } from '../extensions/debugger-markdown-extension'
 import { EmojiMarkdownExtension } from '../extensions/emoji/emoji-markdown-extension'
 import { GenericSyntaxMarkdownExtension } from '../extensions/generic-syntax-markdown-extension'
@@ -53,6 +54,7 @@ export const useMarkdownExtensions = (
       new UploadIndicatingImageFrameMarkdownExtension(),
       new LinkAdjustmentMarkdownExtension(baseUrl),
       new EmojiMarkdownExtension(),
+      new BootstrapIconMarkdownExtension(),
       new GenericSyntaxMarkdownExtension(),
       new LinkifyFixMarkdownExtension(),
       new DebuggerMarkdownExtension(),

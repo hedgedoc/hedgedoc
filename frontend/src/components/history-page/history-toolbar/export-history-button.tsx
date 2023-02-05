@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { downloadHistory } from '../../../redux/history/methods'
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../common/icons/ui-icon'
 import React from 'react'
 import { Button } from 'react-bootstrap'
+import { Download as IconDownload } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 /**
@@ -17,7 +18,7 @@ export const ExportHistoryButton: React.FC = () => {
 
   return (
     <Button variant={'light'} title={t('landing.history.toolbar.export') ?? undefined} onClick={downloadHistory}>
-      <ForkAwesomeIcon icon='download' />
+      <UiIcon icon={IconDownload} />
     </Button>
   )
 }

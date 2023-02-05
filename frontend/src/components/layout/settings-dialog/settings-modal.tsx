@@ -10,6 +10,7 @@ import { GlobalSettingsTabContent } from './global/global-settings-tab-content'
 import { t } from 'i18next'
 import React from 'react'
 import { Modal, Tab, Tabs } from 'react-bootstrap'
+import { Gear as IconGear } from 'react-bootstrap-icons'
 
 /**
  * Shows global and scope specific settings
@@ -23,7 +24,7 @@ export const SettingsModal: React.FC<CommonModalProps> = ({ show, onHide }) => {
       show={show}
       modalSize={'lg'}
       onHide={onHide}
-      titleIcon={'cog'}
+      titleIcon={IconGear}
       titleI18nKey={'settings.title'}
       showCloseButton={true}>
       <Modal.Body>

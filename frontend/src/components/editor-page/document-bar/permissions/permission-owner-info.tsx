@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../../common/icons/ui-icon'
 import { UserAvatarForUsername } from '../../../common/user-avatar/user-avatar-for-username'
 import React, { Fragment } from 'react'
 import { Button } from 'react-bootstrap'
+import { Pencil as IconPencil } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 export interface PermissionOwnerInfoProps {
@@ -30,7 +31,7 @@ export const PermissionOwnerInfo: React.FC<PermissionOwnerInfoProps> = ({ onEdit
         variant='light'
         title={t('editor.modal.permissions.ownerChange.button') ?? undefined}
         onClick={onEditOwner}>
-        <ForkAwesomeIcon icon={'pencil'} />
+        <UiIcon icon={IconPencil} />
       </Button>
     </Fragment>
   )

@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../hooks/common/use-application-state'
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../common/icons/ui-icon'
 import Link from 'next/link'
 import React from 'react'
 import { Button } from 'react-bootstrap'
+import { FileEarmarkTextFill as IconFileEarmarkTextFill } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 /**
@@ -24,7 +25,7 @@ export const ReadOnlyModeButton: React.FC = () => {
         className='ms-2 text-secondary'
         size='sm'
         variant='outline-light'>
-        <ForkAwesomeIcon icon='file-text-o' />
+        <UiIcon icon={IconFileEarmarkTextFill} />
       </Button>
     </Link>
   )

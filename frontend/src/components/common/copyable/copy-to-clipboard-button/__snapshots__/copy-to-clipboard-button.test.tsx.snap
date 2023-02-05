@@ -7,9 +7,7 @@ exports[`Copy to clipboard button show an error text if clipboard api isn't avai
     title="renderer.highlightCode.copyCode"
     type="button"
   >
-    <i
-      class="fa  fa-files-o  "
-    />
+    BootstrapIconMock_Files
   </button>
 </div>
 `;
@@ -22,9 +20,7 @@ exports[`Copy to clipboard button show an error text if clipboard api isn't avai
     title="renderer.highlightCode.copyCode"
     type="button"
   >
-    <i
-      class="fa  fa-files-o  "
-    />
+    BootstrapIconMock_Files
   </button>
 </div>
 `;
@@ -36,9 +32,7 @@ exports[`Copy to clipboard button shows an error text if writing failed 1`] = `
     title="renderer.highlightCode.copyCode"
     type="button"
   >
-    <i
-      class="fa  fa-files-o  "
-    />
+    BootstrapIconMock_Files
   </button>
 </div>
 `;
@@ -51,9 +45,7 @@ exports[`Copy to clipboard button shows an error text if writing failed 2`] = `
     title="renderer.highlightCode.copyCode"
     type="button"
   >
-    <i
-      class="fa  fa-files-o  "
-    />
+    BootstrapIconMock_Files
   </button>
 </div>
 `;
@@ -65,9 +57,7 @@ exports[`Copy to clipboard button shows an success text if writing succeeded 1`]
     title="renderer.highlightCode.copyCode"
     type="button"
   >
-    <i
-      class="fa  fa-files-o  "
-    />
+    BootstrapIconMock_Files
   </button>
 </div>
 `;
@@ -80,9 +70,7 @@ exports[`Copy to clipboard button shows an success text if writing succeeded 2`]
     title="renderer.highlightCode.copyCode"
     type="button"
   >
-    <i
-      class="fa  fa-files-o  "
-    />
+    BootstrapIconMock_Files
   </button>
 </div>
 `;

@@ -23,6 +23,16 @@ const customJestConfig = {
   testEnvironment: 'jsdom',
   testPathIgnorePatterns: ['/node_modules/', '/cypress/']
 }
-
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
-module.exports = createJestConfig(customJestConfig)
+module.exports = async () => {
+  const nextJestConfig = await createJestConfig(customJestConfig)()
+  return {
+    ...nextJestConfig,
+    moduleNameMapper: {
+      ...nextJestConfig.moduleNameMapper,
+      '^.+\\.(svg)$': '<rootDir>/src/test-utils/svg-mock.tsx',
+      '^react-bootstrap-icons$': '<rootDir>/src/test-utils/bootstrap-icon-mocks.tsx',
+      '^react-bootstrap-icons/dist/icons/.*$': '<rootDir>/src/test-utils/svg-mock.tsx'
+    }
+  }
+}

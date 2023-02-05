@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { cypressId } from '../../../../../utils/cypress-attribute'
-import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../../../common/icons/ui-icon'
 import { useChangeEditorContentCallback } from '../../../change-content-context/use-change-editor-content-callback'
 import { replaceSelection } from '../formatters/replace-selection'
 import { createMarkdownTable } from './create-markdown-table'
@@ -13,6 +13,7 @@ import './table-picker.module.scss'
 import { TableSizePickerPopover } from './table-size-picker-popover'
 import React, { Fragment, useCallback, useMemo, useRef, useState } from 'react'
 import { Button, Overlay } from 'react-bootstrap'
+import { Table as IconTable } from 'react-bootstrap-icons'
 import type { OverlayInjectedProps } from 'react-bootstrap/Overlay'
 import { useTranslation } from 'react-i18next'
 
@@ -77,7 +78,7 @@ export const TablePickerButton: React.FC = () => {
         title={tableTitle}
         ref={button}
         disabled={!changeEditorContent}>
-        <ForkAwesomeIcon icon='table' />
+        <UiIcon icon={IconTable} />
       </Button>
       <Overlay
         target={button.current}

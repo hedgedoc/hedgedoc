@@ -11,6 +11,8 @@ import { DocumentSidebarMenuSelection } from '../types'
 import { UserLine } from '../user-line/user-line'
 import styles from './online-counter.module.scss'
 import React, { Fragment, useCallback, useEffect, useMemo, useRef } from 'react'
+import { ArrowLeft as IconArrowLeft } from 'react-bootstrap-icons'
+import { People as IconPeople } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -68,7 +70,7 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         hide={hide}
         buttonRef={buttonRef}
         onClick={onClickHandler}
-        icon={expand ? 'arrow-left' : 'users'}
+        icon={expand ? IconArrowLeft : IconPeople}
         className={`${styles['online-entry']} ${className ?? ''}`}>
         <Trans i18nKey={'editor.onlineStatus.online'} />
       </SidebarButton>

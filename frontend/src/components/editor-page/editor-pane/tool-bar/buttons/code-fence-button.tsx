@@ -8,6 +8,7 @@ import { changeCursorsToWholeLineIfNoToCursor } from '../formatters/utils/change
 import { wrapSelection } from '../formatters/wrap-selection'
 import { ToolbarButton } from '../toolbar-button'
 import React, { useCallback } from 'react'
+import { Code as IconCode } from 'react-bootstrap-icons'
 
 /**
  * Renders a button to create a code fence in the {@link Editor editor}.
@@ -16,5 +17,5 @@ export const CodeFenceButton: React.FC = () => {
   const formatter: ContentFormatter = useCallback(({ currentSelection, markdownContent }) => {
     return wrapSelection(changeCursorsToWholeLineIfNoToCursor(markdownContent, currentSelection), '```\n', '\n```')
   }, [])
-  return <ToolbarButton i18nKey={'code'} iconName={'code'} formatter={formatter}></ToolbarButton>
+  return <ToolbarButton i18nKey={'code'} icon={IconCode} formatter={formatter}></ToolbarButton>
 }

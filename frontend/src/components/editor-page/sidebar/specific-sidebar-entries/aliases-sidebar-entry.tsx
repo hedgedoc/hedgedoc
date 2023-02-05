@@ -8,6 +8,7 @@ import { AliasesModal } from '../../document-bar/aliases/aliases-modal'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../types'
 import React, { Fragment } from 'react'
+import { Tags as IconTags } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -22,7 +23,7 @@ export const AliasesSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ class
 
   return (
     <Fragment>
-      <SidebarButton hide={hide} className={className} icon={'tags'} onClick={setShowModal}>
+      <SidebarButton hide={hide} className={className} icon={IconTags} onClick={setShowModal}>
         <Trans i18nKey={'editor.modal.aliases.title'} />
       </SidebarButton>
       <AliasesModal show={showModal} onHide={setHideModal} />

@@ -4,11 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { cypressId } from '../../../utils/cypress-attribute'
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../common/icons/ui-icon'
 import { ViewStateEnum } from './history-toolbar'
 import { useHistoryToolbarState } from './toolbar-context/use-history-toolbar-state'
 import React, { useCallback } from 'react'
 import { Button, ToggleButtonGroup } from 'react-bootstrap'
+import { StickyFill as IconStickyFill } from 'react-bootstrap-icons'
+import { Table as IconTable } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 /**
@@ -34,14 +36,14 @@ export const HistoryViewModeToggleButton: React.FC = () => {
         title={t('landing.history.toolbar.cards') ?? undefined}
         variant={historyToolbarState.viewState === ViewStateEnum.CARD ? 'light' : 'outline-light'}
         onClick={() => onViewStateChange(ViewStateEnum.CARD)}>
-        <ForkAwesomeIcon icon={'sticky-note'} className={'fa-fix-line-height'} />
+        <UiIcon icon={IconStickyFill} className={'fa-fix-line-height'} />
       </Button>
       <Button
         {...cypressId('history-mode-table')}
         variant={historyToolbarState.viewState === ViewStateEnum.TABLE ? 'light' : 'outline-light'}
         title={t('landing.history.toolbar.table') ?? undefined}
         onClick={() => onViewStateChange(ViewStateEnum.TABLE)}>
-        <ForkAwesomeIcon icon={'table'} className={'fa-fix-line-height'} />
+        <UiIcon icon={IconTable} className={'fa-fix-line-height'} />
       </Button>
     </ToggleButtonGroup>
   )

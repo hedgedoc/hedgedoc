@@ -7,6 +7,8 @@ import { ClickShield } from '../../replace-components/click-shield/click-shield'
 import type { NativeRenderer, NodeReplacement, SubNodeTransform } from '../../replace-components/component-replacer'
 import { ComponentReplacer, DO_NOT_REPLACE } from '../../replace-components/component-replacer'
 import type { Element } from 'domhandler'
+import React from 'react'
+import { Globe as IconGlobe } from 'react-bootstrap-icons'
 
 /**
  * Capsules <iframe> elements with a click shield.
@@ -19,7 +21,7 @@ export class IframeCapsuleReplacer extends ComponentReplacer {
       DO_NOT_REPLACE
     ) : (
       <ClickShield
-        hoverIcon={'globe'}
+        hoverIcon={IconGlobe}
         targetDescription={node.attribs.src}
         data-cypress-id={'iframe-capsule-click-shield'}>
         {nativeRenderer()}

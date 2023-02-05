@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { RevisionMetadata } from '../../../../api/revisions/types'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../../common/icons/ui-icon'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { UserAvatar } from '../../../common/user-avatar/user-avatar'
 import { WaitSpinner } from '../../../common/wait-spinner/wait-spinner'
@@ -14,6 +14,9 @@ import { getUserDataForRevision } from './utils'
 import { DateTime } from 'luxon'
 import React, { useMemo } from 'react'
 import { ListGroup } from 'react-bootstrap'
+import { Clock as IconClock } from 'react-bootstrap-icons'
+import { FileText as IconFileText } from 'react-bootstrap-icons'
+import { Person as IconPerson } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 import { useAsync } from 'react-use'
 
@@ -57,15 +60,15 @@ export const RevisionListEntry: React.FC<RevisionListEntryProps> = ({ active, on
       action
       className={`${styles['revision-item']} d-flex flex-column`}>
       <span>
-        <ForkAwesomeIcon icon={'clock-o'} className='mx-2' />
+        <UiIcon icon={IconClock} className='mx-2' />
         {revisionCreationTime}
       </span>
       <span>
-        <ForkAwesomeIcon icon={'file-text-o'} className='mx-2' />
+        <UiIcon icon={IconFileText} className='mx-2' />
         <Trans i18nKey={'editor.modal.revision.length'} />: {revision.length}
       </span>
       <span className={'d-flex flex-row my-1 align-items-center'}>
-        <ForkAwesomeIcon icon={'user-o'} className={'mx-2'} />
+        <UiIcon icon={IconPerson} className={'mx-2'} />
         <ShowIf condition={revisionAuthors.loading}>
           <WaitSpinner />
         </ShowIf>

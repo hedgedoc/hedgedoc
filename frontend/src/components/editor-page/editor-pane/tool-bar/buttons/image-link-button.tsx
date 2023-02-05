@@ -7,6 +7,7 @@ import type { ContentFormatter } from '../../../change-content-context/change-co
 import { addLink } from '../formatters/add-link'
 import { ToolbarButton } from '../toolbar-button'
 import React, { useCallback } from 'react'
+import { Image as IconImage } from 'react-bootstrap-icons'
 
 /**
  * Renders a button to insert an image in the {@link Editor editor}.
@@ -15,5 +16,5 @@ export const ImageLinkButton: React.FC = () => {
   const formatter: ContentFormatter = useCallback(({ currentSelection, markdownContent }) => {
     return addLink(markdownContent, currentSelection, '!')
   }, [])
-  return <ToolbarButton i18nKey={'imageLink'} iconName={'picture-o'} formatter={formatter}></ToolbarButton>
+  return <ToolbarButton i18nKey={'imageLink'} icon={IconImage} formatter={formatter}></ToolbarButton>
 }

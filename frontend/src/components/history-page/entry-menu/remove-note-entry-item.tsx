@@ -6,6 +6,7 @@
 import { cypressId } from '../../../utils/cypress-attribute'
 import { DropdownItemWithDeletionModal } from './dropdown-item-with-deletion-modal'
 import React from 'react'
+import { Archive as IconArchive } from 'react-bootstrap-icons'
 
 export interface RemoveNoteEntryItemProps {
   onConfirm: () => void
@@ -24,7 +25,7 @@ export const RemoveNoteEntryItem: React.FC<RemoveNoteEntryItemProps> = ({ noteTi
       onConfirm={onConfirm}
       itemI18nKey={'landing.history.menu.removeEntry'}
       modalButtonI18nKey={'landing.history.modal.removeNote.button'}
-      modalIcon={'archive'}
+      modalIcon={IconArchive}
       modalTitleI18nKey={'landing.history.modal.removeNote.title'}
       modalQuestionI18nKey={'landing.history.modal.removeNote.question'}
       modalWarningI18nKey={'landing.history.modal.removeNote.warning'}

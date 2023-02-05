@@ -9,6 +9,7 @@ import { cypressId } from '../../../../utils/cypress-attribute'
 import { download } from '../../../common/download/download'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
 import React, { useCallback } from 'react'
+import { FileText as IconFileText } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 import sanitize from 'sanitize-filename'
 
@@ -24,7 +25,7 @@ export const ExportMarkdownSidebarEntry: React.FC = () => {
   }, [markdownContent, t])
 
   return (
-    <SidebarButton {...cypressId('menu-export-markdown')} onClick={onClick} icon={'file-text'}>
+    <SidebarButton {...cypressId('menu-export-markdown')} onClick={onClick} icon={IconFileText}>
       <Trans i18nKey={'editor.export.markdown-file'} />
     </SidebarButton>
   )

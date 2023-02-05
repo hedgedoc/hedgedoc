@@ -27,10 +27,7 @@ export const SortByTitleButton: React.FC = () => {
   )
 
   return (
-    <SortButton
-      onDirectionChange={titleSortChanged}
-      direction={historyToolbarState.titleSortDirection}
-      variant={'light'}>
+    <SortButton onDirectionChange={titleSortChanged} direction={historyToolbarState.titleSortDirection}>
       <Trans i18nKey={'landing.history.toolbar.sortByTitle'} />
     </SortButton>
   )

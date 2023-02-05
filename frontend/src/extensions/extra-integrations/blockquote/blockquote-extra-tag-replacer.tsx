@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { ForkAwesomeIconProps } from '../../../components/common/fork-awesome/fork-awesome-icon'
-import { ForkAwesomeIcon } from '../../../components/common/fork-awesome/fork-awesome-icon'
-import { ForkAwesomeIcons } from '../../../components/common/fork-awesome/fork-awesome-icons'
-import type { IconName } from '../../../components/common/fork-awesome/types'
+import type { BootstrapIconName } from '../../../components/common/icons/bootstrap-icons'
+import { isBootstrapIconName } from '../../../components/common/icons/bootstrap-icons'
+import type { LazyBootstrapIconProps } from '../../../components/common/icons/lazy-bootstrap-icon'
+import { LazyBootstrapIcon } from '../../../components/common/icons/lazy-bootstrap-icon'
 import type {
   NodeReplacement,
   SubNodeTransform
@@ -42,15 +42,15 @@ export class BlockquoteExtraTagReplacer extends ComponentReplacer {
   }
 
   /**
-   * Extracts a fork awesome icon name from the node and builds a {@link ForkAwesomeIcon fork awesome icon react element}.
+   * Extracts an icon name from the node and builds a {@link LazyBootstrapIcon icon react element}.
    *
    * @param node The node that holds the "data-icon" attribute.
-   * @return the {@link ForkAwesomeIcon fork awesome icon react element} or {@link undefined} if no icon name was found.
+   * @return the {@link LazyBootstrapIcon icon react element} or {@link undefined} if no icon name was found.
    */
-  private buildIconElement(node: Element): ReactElement<ForkAwesomeIconProps> | undefined {
-    return Optional.ofNullable(node.attribs['data-icon'] as IconName)
-      .filter((iconName) => ForkAwesomeIcons.includes(iconName))
-      .map((iconName) => <ForkAwesomeIcon key='icon' className={'mx-1'} icon={iconName} />)
+  private buildIconElement(node: Element): ReactElement<LazyBootstrapIconProps> | undefined {
+    return Optional.ofNullable(node.attribs['data-icon'] as BootstrapIconName)
+      .filter((iconName) => isBootstrapIconName(iconName))
+      .map((iconName) => <LazyBootstrapIcon key='icon' className={'mx-1'} icon={iconName} />)
       .orElse(undefined)
   }
 }

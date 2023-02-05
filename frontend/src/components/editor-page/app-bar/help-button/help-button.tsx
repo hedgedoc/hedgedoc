@@ -5,10 +5,11 @@
  */
 import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
 import { cypressId } from '../../../../utils/cypress-attribute'
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../../common/icons/ui-icon'
 import { HelpModal } from './help-modal'
 import React, { Fragment } from 'react'
 import { Button } from 'react-bootstrap'
+import { QuestionCircle as IconQuestionCircle } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 /**
@@ -27,7 +28,7 @@ export const HelpButton: React.FC = () => {
         size='sm'
         variant='outline-light'
         onClick={showModal}>
-        <ForkAwesomeIcon icon='question-circle' />
+        <UiIcon icon={IconQuestionCircle} />
       </Button>
       <HelpModal show={modalVisibility} onHide={closeModal} />
     </Fragment>

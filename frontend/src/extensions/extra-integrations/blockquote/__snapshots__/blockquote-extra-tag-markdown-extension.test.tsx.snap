@@ -35,9 +35,7 @@ exports[`blockquote extra tag renders the tag "[color=#abcdef]" correctly 1`] = 
       class="blockquote-extra"
       style="color: rgb(171, 205, 239);"
     >
-      <i
-        class="fa  fa-tag mx-1 "
-      />
+      BootstrapIconMock_Tag
     </span>
   </p>
   
@@ -52,9 +50,7 @@ exports[`blockquote extra tag renders the tag "[color=#dfe]" correctly 1`] = `
       class="blockquote-extra"
       style="color: rgb(221, 255, 238);"
     >
-      <i
-        class="fa  fa-tag mx-1 "
-      />
+      BootstrapIconMock_Tag
     </span>
   </p>
   
@@ -78,9 +74,6 @@ exports[`blockquote extra tag renders the tag "[color=notarealcolor]" correctly 
     <span
       class="blockquote-extra"
     >
-      <i
-        class="fa  fa-tag mx-1 "
-      />
       notarealcolor
     </span>
   </p>
@@ -96,9 +89,7 @@ exports[`blockquote extra tag renders the tag "[color=white]" correctly 1`] = `
       class="blockquote-extra"
       style="color: white;"
     >
-      <i
-        class="fa  fa-tag mx-1 "
-      />
+      BootstrapIconMock_Tag
     </span>
   </p>
   
@@ -142,9 +133,6 @@ exports[`blockquote extra tag renders the tag "[name=giowehg]" correctly 1`] = `
     <span
       class="blockquote-extra"
     >
-      <i
-        class="fa  fa-user mx-1 "
-      />
       giowehg
     </span>
   </p>
@@ -169,9 +157,6 @@ exports[`blockquote extra tag renders the tag "[time=tomorrow]" correctly 1`] = 
     <span
       class="blockquote-extra"
     >
-      <i
-        class="fa  fa-clock-o mx-1 "
-      />
       tomorrow
     </span>
   </p>

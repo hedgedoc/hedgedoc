@@ -6,10 +6,11 @@
 import { doLogout } from '../../../api/auth'
 import { clearUser } from '../../../redux/user/methods'
 import { cypressId } from '../../../utils/cypress-attribute'
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../common/icons/ui-icon'
 import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 import React, { useCallback } from 'react'
 import { Dropdown } from 'react-bootstrap'
+import { BoxArrowRight as IconBoxArrowRight } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -26,7 +27,7 @@ export const SignOutDropdownButton: React.FC = () => {
 
   return (
     <Dropdown.Item dir='auto' onClick={onSignOut} {...cypressId('user-dropdown-sign-out-button')}>
-      <ForkAwesomeIcon icon='sign-out' fixedWidth={true} className='mx-2' />
+      <UiIcon icon={IconBoxArrowRight} className='mx-2' />
       <Trans i18nKey='login.signOut' />
     </Dropdown.Item>
   )

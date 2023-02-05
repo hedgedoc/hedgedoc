@@ -9,6 +9,7 @@ import { NoteInfoModal } from '../../document-bar/note-info/note-info-modal'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../types'
 import React, { Fragment } from 'react'
+import { GraphUp as IconGraphUp } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -26,7 +27,7 @@ export const NoteInfoSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ clas
       <SidebarButton
         hide={hide}
         className={className}
-        icon={'line-chart'}
+        icon={IconGraphUp}
         onClick={showModal}
         {...cypressId('sidebar-btn-document-info')}>
         <Trans i18nKey={'editor.modal.documentInfo.title'} />

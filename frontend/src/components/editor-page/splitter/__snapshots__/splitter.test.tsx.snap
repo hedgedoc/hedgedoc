@@ -29,24 +29,18 @@ exports[`Splitter resize can change size with mouse 1`] = `
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-left  "
-            />
+            BootstrapIconMock_ArrowLeft
           </button>
           <span
             class="grabber"
           >
-            <i
-              class="fa  fa-arrows-h  "
-            />
+            BootstrapIconMock_ArrowLeftRight
           </span>
           <button
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-right  "
-            />
+            BootstrapIconMock_ArrowRight
           </button>
         </div>
       </div>
@@ -94,24 +88,18 @@ exports[`Splitter resize can change size with mouse 2`] = `
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-left  "
-            />
+            BootstrapIconMock_ArrowLeft
           </button>
           <span
             class="grabber"
           >
-            <i
-              class="fa  fa-arrows-h  "
-            />
+            BootstrapIconMock_ArrowLeftRight
           </span>
           <button
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-right  "
-            />
+            BootstrapIconMock_ArrowRight
           </button>
         </div>
       </div>
@@ -159,24 +147,18 @@ exports[`Splitter resize can change size with mouse 3`] = `
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-left  "
-            />
+            BootstrapIconMock_ArrowLeft
           </button>
           <span
             class="grabber"
           >
-            <i
-              class="fa  fa-arrows-h  "
-            />
+            BootstrapIconMock_ArrowLeftRight
           </span>
           <button
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-right  "
-            />
+            BootstrapIconMock_ArrowRight
           </button>
         </div>
       </div>
@@ -224,24 +206,18 @@ exports[`Splitter resize can change size with mouse 4`] = `
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-left  "
-            />
+            BootstrapIconMock_ArrowLeft
           </button>
           <span
             class="grabber"
           >
-            <i
-              class="fa  fa-arrows-h  "
-            />
+            BootstrapIconMock_ArrowLeftRight
           </span>
           <button
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-right  "
-            />
+            BootstrapIconMock_ArrowRight
           </button>
         </div>
       </div>
@@ -289,24 +265,18 @@ exports[`Splitter resize can change size with touch 1`] = `
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-left  "
-            />
+            BootstrapIconMock_ArrowLeft
           </button>
           <span
             class="grabber"
           >
-            <i
-              class="fa  fa-arrows-h  "
-            />
+            BootstrapIconMock_ArrowLeftRight
           </span>
           <button
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-right  "
-            />
+            BootstrapIconMock_ArrowRight
           </button>
         </div>
       </div>
@@ -354,24 +324,18 @@ exports[`Splitter resize can change size with touch 2`] = `
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-left  "
-            />
+            BootstrapIconMock_ArrowLeft
           </button>
           <span
             class="grabber"
           >
-            <i
-              class="fa  fa-arrows-h  "
-            />
+            BootstrapIconMock_ArrowLeftRight
           </span>
           <button
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-right  "
-            />
+            BootstrapIconMock_ArrowRight
           </button>
         </div>
       </div>
@@ -419,24 +383,18 @@ exports[`Splitter resize can change size with touch 3`] = `
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-left  "
-            />
+            BootstrapIconMock_ArrowLeft
           </button>
           <span
             class="grabber"
           >
-            <i
-              class="fa  fa-arrows-h  "
-            />
+            BootstrapIconMock_ArrowLeftRight
           </span>
           <button
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-right  "
-            />
+            BootstrapIconMock_ArrowRight
           </button>
         </div>
       </div>
@@ -484,24 +442,18 @@ exports[`Splitter resize can change size with touch 4`] = `
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-left  "
-            />
+            BootstrapIconMock_ArrowLeft
           </button>
           <span
             class="grabber"
           >
-            <i
-              class="fa  fa-arrows-h  "
-            />
+            BootstrapIconMock_ArrowLeftRight
           </span>
           <button
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-right  "
-            />
+            BootstrapIconMock_ArrowRight
           </button>
         </div>
       </div>
@@ -549,24 +501,18 @@ exports[`Splitter resize can react to shortcuts 1`] = `
             class="btn btn-secondary"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-left  "
-            />
+            BootstrapIconMock_ArrowLeft
           </button>
           <span
             class="grabber"
           >
-            <i
-              class="fa  fa-arrows-h  "
-            />
+            BootstrapIconMock_ArrowLeftRight
           </span>
           <button
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-right  "
-            />
+            BootstrapIconMock_ArrowRight
           </button>
         </div>
       </div>
@@ -614,24 +560,18 @@ exports[`Splitter resize can react to shortcuts 2`] = `
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-left  "
-            />
+            BootstrapIconMock_ArrowLeft
           </button>
           <span
             class="grabber"
           >
-            <i
-              class="fa  fa-arrows-h  "
-            />
+            BootstrapIconMock_ArrowLeftRight
           </span>
           <button
             class="btn btn-secondary"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-right  "
-            />
+            BootstrapIconMock_ArrowRight
           </button>
         </div>
       </div>
@@ -679,24 +619,18 @@ exports[`Splitter resize can react to shortcuts 3`] = `
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-left  "
-            />
+            BootstrapIconMock_ArrowLeft
           </button>
           <span
             class="grabber"
           >
-            <i
-              class="fa  fa-arrows-h  "
-            />
+            BootstrapIconMock_ArrowLeftRight
           </span>
           <button
             class="btn btn-light"
             type="button"
           >
-            <i
-              class="fa  fa-arrow-right  "
-            />
+            BootstrapIconMock_ArrowRight
           </button>
         </div>
       </div>

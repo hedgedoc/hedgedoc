@@ -5,9 +5,7 @@ exports[`AbcFrame renders a music sheet 1`] = `
   <div
     class="m-3 d-flex align-items-center justify-content-center"
   >
-    <i
-      class="fa  fa-spinner fa-spin "
-    />
+    BootstrapIconMock_ArrowRepeat
   </div>
 </div>
 `;
@@ -2358,9 +2356,7 @@ exports[`AbcFrame renders an error if abcjs file can't be loaded 1`] = `
   <div
     class="m-3 d-flex align-items-center justify-content-center"
   >
-    <i
-      class="fa  fa-spinner fa-spin "
-    />
+    BootstrapIconMock_ArrowRepeat
   </div>
 </div>
 `;
@@ -2381,9 +2377,7 @@ exports[`AbcFrame renders an error if abcjs render function crashes 1`] = `
   <div
     class="m-3 d-flex align-items-center justify-content-center"
   >
-    <i
-      class="fa  fa-spinner fa-spin "
-    />
+    BootstrapIconMock_ArrowRepeat
   </div>
 </div>
 `;
@@ -2402,9 +2396,7 @@ exports[`AbcFrame renders an error if abcjs render function crashes 2`] = `
     <div
       class="m-3 d-flex align-items-center justify-content-center"
     >
-      <i
-        class="fa  fa-spinner fa-spin "
-      />
+      BootstrapIconMock_ArrowRepeat
     </div>
   </div>
 </div>

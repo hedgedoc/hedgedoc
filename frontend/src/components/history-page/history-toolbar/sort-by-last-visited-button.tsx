@@ -27,10 +27,7 @@ export const SortByLastVisitedButton: React.FC = () => {
   )
 
   return (
-    <SortButton
-      onDirectionChange={lastVisitedSortChanged}
-      direction={historyToolbarState.lastVisitedSortDirection}
-      variant={'light'}>
+    <SortButton onDirectionChange={lastVisitedSortChanged} direction={historyToolbarState.lastVisitedSortDirection}>
       <Trans i18nKey={'landing.history.toolbar.sortByLastVisited'} />
     </SortButton>
   )

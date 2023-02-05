@@ -10,6 +10,11 @@ import type { SpecificSidebarMenuProps } from '../types'
 import { DocumentSidebarMenuSelection } from '../types'
 import { ExportMarkdownSidebarEntry } from './export-markdown-sidebar-entry'
 import React, { Fragment, useCallback } from 'react'
+import { ArrowLeft as IconArrowLeft } from 'react-bootstrap-icons'
+import { CloudDownload as IconCloudDownload } from 'react-bootstrap-icons'
+import { FileCode as IconFileCode } from 'react-bootstrap-icons'
+import { Git as IconGit } from 'react-bootstrap-icons'
+import { Github as IconGithub } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -33,25 +38,25 @@ export const ExportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   const onClickHandler = useCallback(() => {
     onClick(menuId)
   }, [menuId, onClick])
-
+  //todo: replace git with gitlab icon
   return (
     <Fragment>
       <SidebarButton
         {...cypressId('menu-export')}
         hide={hide}
-        icon={expand ? 'arrow-left' : 'cloud-download'}
+        icon={expand ? IconArrowLeft : IconCloudDownload}
         className={className}
         onClick={onClickHandler}>
         <Trans i18nKey={'editor.documentBar.export'} />
       </SidebarButton>
       <SidebarMenu expand={expand}>
-        <SidebarButton icon={'github'}>Gist</SidebarButton>
-        <SidebarButton icon={'gitlab'}>Gitlab Snippet</SidebarButton>
+        <SidebarButton icon={IconGithub}>Gist</SidebarButton>
+        <SidebarButton icon={IconGit}>Gitlab Snippet</SidebarButton>
 
         <ExportMarkdownSidebarEntry />
 
-        <SidebarButton icon={'file-code-o'}>HTML</SidebarButton>
-        <SidebarButton icon={'file-code-o'}>
+        <SidebarButton icon={IconFileCode}>HTML</SidebarButton>
+        <SidebarButton icon={IconFileCode}>
           <Trans i18nKey='editor.export.rawHtml' />
         </SidebarButton>
       </SidebarMenu>

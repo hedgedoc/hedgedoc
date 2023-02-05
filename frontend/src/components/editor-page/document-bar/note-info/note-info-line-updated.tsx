@@ -11,6 +11,7 @@ import { UnitalicBoldTimeFromNow } from './utils/unitalic-bold-time-from-now'
 import { UnitalicBoldTrans } from './utils/unitalic-bold-trans'
 import { DateTime } from 'luxon'
 import React, { useMemo } from 'react'
+import { Pencil as IconPencil } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -38,7 +39,7 @@ export const NoteInfoLineUpdated: React.FC<NoteInfoTimeLineProps> = ({ size }) =
   }, [noteUpdateUser, size])
 
   return (
-    <NoteInfoLine icon={'pencil'} size={size}>
+    <NoteInfoLine icon={IconPencil} size={size}>
       <Trans i18nKey={'editor.modal.documentInfo.edited'}>
         {userBlock}
         <UnitalicBoldTimeFromNow time={noteUpdateDateTime} />

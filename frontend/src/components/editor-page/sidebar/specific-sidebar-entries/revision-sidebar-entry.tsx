@@ -8,6 +8,7 @@ import { RevisionModal } from '../../document-bar/revisions/revision-modal'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../types'
 import React, { Fragment } from 'react'
+import { ClockHistory as IconClockHistory } from 'react-bootstrap-icons'
 import { Trans } from 'react-i18next'
 
 /**
@@ -21,7 +22,7 @@ export const RevisionSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ clas
 
   return (
     <Fragment>
-      <SidebarButton hide={hide} className={className} icon={'history'} onClick={showModal}>
+      <SidebarButton hide={hide} className={className} icon={IconClockHistory} onClick={showModal}>
         <Trans i18nKey={'editor.modal.revision.title'} />
       </SidebarButton>
       <RevisionModal show={modalVisibility} onHide={closeModal} />

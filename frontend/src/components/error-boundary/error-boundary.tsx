@@ -6,11 +6,12 @@
 import links from '../../links.json'
 import { Logger } from '../../utils/logger'
 import frontendVersion from '../../version.json'
-import { ForkAwesomeIcon } from '../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../common/icons/ui-icon'
 import { ExternalLink } from '../common/links/external-link'
 import type { ErrorInfo, PropsWithChildren, ReactNode } from 'react'
 import React, { Component } from 'react'
 import { Button, Container } from 'react-bootstrap'
+import { ArrowRepeat as IconArrowRepeat } from 'react-bootstrap-icons'
 
 const log = new Logger('ErrorBoundary')
 
@@ -60,7 +61,7 @@ export class ErrorBoundary extends Component<PropsWithChildren<unknown>> {
             />
             &#32; or <ExternalLink text={'contact us on matrix.'} href={links.chat} className={'text-primary'} />
             <Button onClick={() => this.refreshPage()} title={'Reload App'} className={'mt-4'}>
-              <ForkAwesomeIcon icon={'refresh'} />
+              <UiIcon icon={IconArrowRepeat} />
               &nbsp;Reload App
             </Button>
           </div>

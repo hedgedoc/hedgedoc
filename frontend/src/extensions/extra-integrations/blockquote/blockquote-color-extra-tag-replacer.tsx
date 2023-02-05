@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ForkAwesomeIcon } from '../../../components/common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../../components/common/icons/ui-icon'
 import type { NodeReplacement } from '../../../components/markdown-renderer/replace-components/component-replacer'
 import {
   ComponentReplacer,
@@ -15,6 +15,7 @@ import { Optional } from '@mrdrogdrog/optional'
 import type { Element } from 'domhandler'
 import { isText } from 'domhandler'
 import type { Text } from 'domhandler/lib/node'
+import { Tag as IconTag } from 'react-bootstrap-icons'
 
 /**
  * Replaces <blockquote-tag> elements with "color" as label and a valid color as content
@@ -35,7 +36,7 @@ export class BlockquoteColorExtraTagReplacer extends ComponentReplacer {
       .filter((content) => cssColor.test(content))
       .map((color) => (
         <span className={'blockquote-extra'} key={1} style={{ color: color }}>
-          <ForkAwesomeIcon key='icon' className={'mx-1'} icon={'tag'} />
+          <UiIcon icon={IconTag} key='icon' className={'mx-1'} />
         </span>
       ))
       .orElse(DO_NOT_REPLACE)

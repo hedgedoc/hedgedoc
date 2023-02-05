@@ -4,12 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { cypressAttribute, cypressId } from '../../../../../utils/cypress-attribute'
-import { ForkAwesomeIcon } from '../../../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../../../common/icons/ui-icon'
 import { createNumberRangeArray } from '../../../../common/number-range/number-range'
 import styles from './table-picker.module.scss'
 import { TableSizeText } from './table-size-text'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Popover } from 'react-bootstrap'
+import { Table as IconTable } from 'react-bootstrap-icons'
 import type { PopoverProps } from 'react-bootstrap/Popover'
 import { Trans, useTranslation } from 'react-i18next'
 
@@ -79,7 +80,7 @@ export const TableSizePickerPopover = React.forwardRef<HTMLDivElement, TableSize
           </div>
           <div className='d-flex justify-content-center mt-2'>
             <Button {...cypressId('show-custom-table-modal')} className={'text-center'} onClick={onShowCustomSizeModal}>
-              <ForkAwesomeIcon icon='table' />
+              <UiIcon icon={IconTable} />
               &nbsp;
               <Trans i18nKey={'editor.editorToolbar.table.customSize'} />
             </Button>

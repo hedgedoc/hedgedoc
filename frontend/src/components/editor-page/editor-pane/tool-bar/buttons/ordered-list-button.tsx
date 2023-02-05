@@ -7,6 +7,7 @@ import type { ContentFormatter } from '../../../change-content-context/change-co
 import { prependLinesOfSelection } from '../formatters/prepend-lines-of-selection'
 import { ToolbarButton } from '../toolbar-button'
 import React, { useCallback } from 'react'
+import { ListOl as IconListOl } from 'react-bootstrap-icons'
 
 /**
  * Renders a button to insert an ordered list in the {@link Editor editor}.
@@ -19,5 +20,5 @@ export const OrderedListButton: React.FC = () => {
       (line, lineIndexInBlock) => `${lineIndexInBlock + 1}. `
     )
   }, [])
-  return <ToolbarButton i18nKey={'orderedList'} iconName={'list-ol'} formatter={formatter}></ToolbarButton>
+  return <ToolbarButton i18nKey={'orderedList'} icon={IconListOl} formatter={formatter}></ToolbarButton>
 }

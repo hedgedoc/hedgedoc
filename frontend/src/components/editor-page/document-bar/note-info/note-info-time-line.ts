@@ -4,5 +4,5 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 export interface NoteInfoTimeLineProps {
-  size?: '2x' | '3x' | '4x' | '5x'
+  size?: 2 | 3 | 4 | 5
 }

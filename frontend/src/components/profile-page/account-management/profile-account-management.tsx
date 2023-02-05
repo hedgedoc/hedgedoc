@@ -4,10 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useBooleanState } from '../../../hooks/common/use-boolean-state'
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../common/icons/ui-icon'
 import { AccountDeletionModal } from './account-deletion-modal'
 import React, { Fragment } from 'react'
 import { Button, Card, Row } from 'react-bootstrap'
+import { Trash as IconTrash } from 'react-bootstrap-icons'
+import { CloudDownload as IconCloudDownload } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -26,13 +28,13 @@ export const ProfileAccountManagement: React.FC = () => {
           </Card.Title>
           <Row>
             <Button variant='secondary' href={'me/export'} className='mb-2'>
-              <ForkAwesomeIcon icon='cloud-download' fixedWidth={true} className='mx-2' />
+              <UiIcon icon={IconCloudDownload} className='mx-2' />
               <Trans i18nKey='profile.exportUserData' />
             </Button>
           </Row>
           <Row>
             <Button variant='danger' onClick={showModal}>
-              <ForkAwesomeIcon icon='trash' fixedWidth={true} className='mx-2' />
+              <UiIcon icon={IconTrash} className='mx-2' />
               <Trans i18nKey='profile.deleteUser' />
             </Button>
           </Row>

@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { IconButton } from '../../common/icon-button/icon-button'
 import Link from 'next/link'
 import React from 'react'
-import { Button } from 'react-bootstrap'
+import { Plus as IconPlus } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -17,9 +17,9 @@ export const NewNoteButton: React.FC = () => {
 
   return (
     <Link href={'/new'} passHref={true}>
-      <Button className='mx-2' size='sm' variant='primary'>
-        <ForkAwesomeIcon icon='plus' /> <Trans i18nKey='editor.appBar.new' />
-      </Button>
+      <IconButton className='mx-2' iconSize={1.5} icon={IconPlus}>
+        <Trans i18nKey='editor.appBar.new' />
+      </IconButton>
     </Link>
   )
 }

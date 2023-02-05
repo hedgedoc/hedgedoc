@@ -3,8 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ForkAwesomeIcon } from '../../../common/fork-awesome/fork-awesome-icon'
-import type { IconName } from '../../../common/fork-awesome/types'
+import { UiIcon } from '../../../common/icons/ui-icon'
 import { ShowIf } from '../../../common/show-if/show-if'
 import type { SidebarEntryProps } from '../types'
 import styles from './sidebar-button.module.scss'
@@ -40,7 +39,7 @@ export const SidebarButton: React.FC<PropsWithChildren<SidebarEntryProps>> = ({
       {...props}>
       <ShowIf condition={!!icon}>
         <span className={`sidebar-button-icon ${styles['sidebar-icon']}`}>
-          <ForkAwesomeIcon icon={icon as IconName} />
+          <UiIcon icon={icon} />
         </span>
       </ShowIf>
       <span className={styles['sidebar-text']}>{children}</span>

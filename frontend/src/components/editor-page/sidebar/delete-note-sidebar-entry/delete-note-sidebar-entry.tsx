@@ -15,6 +15,7 @@ import { DeleteNoteModal } from './delete-note-modal'
 import { useRouter } from 'next/router'
 import type { PropsWithChildren } from 'react'
 import React, { Fragment, useCallback } from 'react'
+import { Trash as IconTrash } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 const logger = new Logger('note-deletion')
@@ -45,7 +46,7 @@ export const DeleteNoteSidebarEntry: React.FC<PropsWithChildren<SpecificSidebarE
     <Fragment>
       <SidebarButton
         {...cypressId('sidebar.deleteNote.button')}
-        icon={'trash'}
+        icon={IconTrash}
         className={className}
         hide={hide}
         onClick={showModal}>

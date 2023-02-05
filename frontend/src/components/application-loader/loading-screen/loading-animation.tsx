@@ -3,11 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ForkAwesomeIcon } from '../../common/fork-awesome/fork-awesome-icon'
+import { UiIcon } from '../../common/icons/ui-icon'
 import { createNumberRangeArray } from '../../common/number-range/number-range'
 import styles from './animations.module.scss'
 import { IconRow } from './icon-row'
 import React, { useMemo } from 'react'
+import { Pencil as IconPencil } from 'react-bootstrap-icons'
+import { PencilFill as IconPencilFill } from 'react-bootstrap-icons'
 
 export interface HedgeDocLogoProps {
   error: boolean
@@ -25,10 +27,10 @@ export const LoadingAnimation: React.FC<HedgeDocLogoProps> = ({ error }) => {
     <div className={`position-relative ${error ? styles.error : ''}`}>
       <div className={styles.logo}>
         <div>
-          <ForkAwesomeIcon icon={'pencil'} className={styles.background} size={'5x'}></ForkAwesomeIcon>
+          <UiIcon icon={IconPencilFill} className={styles.background} size={5} />
         </div>
         <div className={`${styles.overlay}`}>
-          <ForkAwesomeIcon icon={'pencil'} size={'5x'}></ForkAwesomeIcon>
+          <UiIcon icon={IconPencil} size={5} />
         </div>
       </div>
       <div className={styles.pulse}></div>

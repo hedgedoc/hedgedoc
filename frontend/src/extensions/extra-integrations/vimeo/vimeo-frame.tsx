@@ -6,6 +6,7 @@
 import { ClickShield } from '../../../components/markdown-renderer/replace-components/click-shield/click-shield'
 import type { IdProps } from '../../../components/markdown-renderer/replace-components/custom-tag-with-id-component-replacer'
 import React, { useCallback } from 'react'
+import { Vimeo as IconVimeo } from 'react-bootstrap-icons'
 
 interface VimeoApiResponse {
   // Vimeo uses strange names for their fields. ESLint doesn't like that.
@@ -38,7 +39,7 @@ export const VimeoFrame: React.FC<IdProps> = ({ id }) => {
 
   return (
     <ClickShield
-      hoverIcon={'vimeo-square'}
+      hoverIcon={IconVimeo}
       targetDescription={'Vimeo'}
       onImageFetch={getPreviewImageLink}
       fallbackBackgroundColor={'#00adef'}

@@ -20,9 +20,7 @@ exports[`AliasesAddForm renders the input form 1`] = `
         title="editor.modal.aliases.addAlias"
         type="submit"
       >
-        <i
-          class="fa  fa-plus  "
-        />
+        BootstrapIconMock_Plus
       </button>
     </div>
   </form>

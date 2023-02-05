@@ -9,6 +9,7 @@ import { cypressId } from '../../../utils/cypress-attribute'
 import styles from './gist-frame.module.scss'
 import { useResizeGistFrame } from './use-resize-gist-frame'
 import React, { useCallback } from 'react'
+import { Github as IconGithub } from 'react-bootstrap-icons'
 
 /**
  * This component renders a GitHub Gist by placing the gist URL in an {@link HTMLIFrameElement iframe}.
@@ -28,7 +29,7 @@ export const GistFrame: React.FC<IdProps> = ({ id }) => {
   return (
     <ClickShield
       fallbackBackgroundColor={'#161b22'}
-      hoverIcon={'github'}
+      hoverIcon={IconGithub}
       targetDescription={'GitHub Gist'}
       data-cypress-id={'click-shield-gist'}>
       <iframe
