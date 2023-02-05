@@ -25,3 +25,5 @@ export { encodeServerVersionUpdatedMessage } from './messages/server-version-upd
 export { WebsocketTransporter } from './websocket-transporter.js'
 
 export type { MessageTransporterEvents } from './y-doc-message-transporter.js'
+
+export { waitForOtherPromisesToFinish } from './utils/wait-for-other-promises-to-finish.js'

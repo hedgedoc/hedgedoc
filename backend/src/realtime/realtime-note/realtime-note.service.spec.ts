@@ -17,7 +17,6 @@ import { RealtimeNoteService } from './realtime-note.service';
 import { mockAwareness } from './test-utils/mock-awareness';
 import { mockRealtimeNote } from './test-utils/mock-realtime-note';
 import { mockWebsocketDoc } from './test-utils/mock-websocket-doc';
-import { waitForOtherPromisesToFinish } from './test-utils/wait-for-other-promises-to-finish';
 import { WebsocketDoc } from './websocket-doc';
 
 describe('RealtimeNoteService', () => {
