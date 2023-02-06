@@ -2368,7 +2368,7 @@ __metadata:
     cypress-fill-command: 1.0.2
     d3-graphviz: 5.0.2
     d3-selection: 3.0.0
-    deepmerge: 4.2.2
+    deepmerge: 4.3.0
     diff: 5.1.0
     dom-serializer: 2.0.0
     domhandler: 5.0.3
@@ -8104,14 +8104,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deepmerge@npm:4.2.2":
-  version: 4.2.2
-  resolution: "deepmerge@npm:4.2.2"
-  checksum: a8c43a1ed8d6d1ed2b5bf569fa4c8eb9f0924034baf75d5d406e47e157a451075c4db353efea7b6bcc56ec48116a8ce72fccf867b6e078e7c561904b5897530b
-  languageName: node
-  linkType: hard
-
-"deepmerge@npm:^4.2.2":
+"deepmerge@npm:4.3.0, deepmerge@npm:^4.2.2":
   version: 4.3.0
   resolution: "deepmerge@npm:4.3.0"
   checksum: c7980eb5c5be040b371f1df0d566473875cfabed9f672ccc177b81ba8eee5686ce2478de2f1d0076391621cbe729e5eacda397179a59ef0f68901849647db126
