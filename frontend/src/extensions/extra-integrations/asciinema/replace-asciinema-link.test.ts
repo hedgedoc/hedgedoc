@@ -25,6 +25,12 @@ describe('Replace asciinema link', () => {
     )
   })
 
+  it('will replace a valid URL with appendix', () => {
+    expect(markdownIt.renderInline('https://asciinema.org/a/123981234?a=1')).toBe(
+      `<app-asciinema id='123981234'></app-asciinema>`
+    )
+  })
+
   it("won't replace an URL without path", () => {
     expect(markdownIt.renderInline('https://asciinema.org/123981234')).toBe(`https://asciinema.org/123981234`)
   })
