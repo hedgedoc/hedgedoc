@@ -8,14 +8,7 @@ import { AsciinemaMarkdownExtension } from './asciinema-markdown-extension'
 import type MarkdownIt from 'markdown-it'
 import markdownItRegex from 'markdown-it-regex'
 
-const protocolRegex = /(?:http(?:s)?:\/\/)?/
-const domainRegex = /(?:asciinema\.org\/a\/)/
-const idRegex = /(\d+)/
-const tailRegex = /(?:[./?#].*)?/
-const asciinemaUrlRegex = new RegExp(
-  `^(?:${protocolRegex.source}${domainRegex.source}${idRegex.source}${tailRegex.source})$`,
-  'i'
-)
+const asciinemaUrlRegex = /^https?:\/\/asciinema\.org\/a\/(\d+)(?:\?.*)?$/i
 
 const replaceAsciinemaLink: RegexOptions = {
   name: 'asciinema-link',
