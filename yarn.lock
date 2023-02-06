@@ -2229,7 +2229,7 @@ __metadata:
     "@types/ws": 8.5.4
     "@typescript-eslint/eslint-plugin": 5.50.0
     "@typescript-eslint/parser": 5.50.0
-    "@zxcvbn-ts/core": 2.2.0
+    "@zxcvbn-ts/core": 2.2.1
     "@zxcvbn-ts/language-common": 2.0.1
     "@zxcvbn-ts/language-en": 2.1.0
     base32-encode: 1.2.0
@@ -5411,12 +5411,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zxcvbn-ts/core@npm:2.2.0":
-  version: 2.2.0
-  resolution: "@zxcvbn-ts/core@npm:2.2.0"
+"@zxcvbn-ts/core@npm:2.2.1":
+  version: 2.2.1
+  resolution: "@zxcvbn-ts/core@npm:2.2.1"
   dependencies:
     fastest-levenshtein: 1.0.16
-  checksum: 232c099ea25006ae43efef6c4f03fccc46f3769b3ed50e9a3745db85b66ceefcb1da6d5eb3ae8b4ad02fcb07783946d1d8f06c9c57e89ed5c37eac9dcce99dc8
+  checksum: 972429f83052c79521985151f9ad1b8d05d25d4c578e6a308ad01c27f58fce61b8e0bdb124ae490f6b3d87e2f15a749bba880c7d07841649903d0c669abe663e
   languageName: node
   linkType: hard
 
