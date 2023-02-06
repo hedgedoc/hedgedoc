@@ -7,13 +7,13 @@ import { EventEmitter2 } from 'eventemitter2';
 import { Mock } from 'ts-mockery';
 
 import { Note } from '../../../notes/note.entity';
-import { RealtimeNote } from '../realtime-note';
+import { MapType, RealtimeNote } from '../realtime-note';
 import { WebsocketAwareness } from '../websocket-awareness';
 import { WebsocketDoc } from '../websocket-doc';
 import { mockAwareness } from './mock-awareness';
 import { mockWebsocketDoc } from './mock-websocket-doc';
 
-class MockRealtimeNote extends EventEmitter2 {
+class MockRealtimeNote extends EventEmitter2<MapType> {
   constructor(
     private note: Note,
     private doc: WebsocketDoc,

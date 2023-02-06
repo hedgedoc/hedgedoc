@@ -17,7 +17,7 @@ import {
   MaximumDocumentLengthExceededError,
   NotInDBError,
 } from '../errors/errors';
-import { NoteEvent } from '../events';
+import { NoteEvent, NoteEventMap } from '../events';
 import { Group } from '../groups/group.entity';
 import { GroupsService } from '../groups/groups.service';
 import { HistoryEntry } from '../history/history-entry.entity';
@@ -54,7 +54,7 @@ export class NotesService {
     @Inject(forwardRef(() => AliasService)) private aliasService: AliasService,
     private realtimeNoteService: RealtimeNoteService,
     private realtimeNoteStore: RealtimeNoteStore,
-    private eventEmitter: EventEmitter2,
+    private eventEmitter: EventEmitter2<NoteEventMap>,
   ) {
     this.logger.setContext(NotesService.name);
   }

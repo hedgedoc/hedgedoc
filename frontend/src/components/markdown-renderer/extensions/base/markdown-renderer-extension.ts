@@ -5,7 +5,7 @@
  */
 import type { NodeProcessor } from '../../node-preprocessors/node-processor'
 import type { ComponentReplacer } from '../../replace-components/component-replacer'
-import type EventEmitter2 from 'eventemitter2'
+import type { EventEmitter2 } from 'eventemitter2'
 import type MarkdownIt from 'markdown-it'
 
 /**

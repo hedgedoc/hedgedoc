@@ -5,7 +5,7 @@
  */
 import type { Logger } from '../../../utils/logger'
 import { Optional } from '@mrdrogdrog/optional'
-import EventEmitter2 from 'eventemitter2'
+import { EventEmitter2 } from 'eventemitter2'
 
 /**
  * Error that will be thrown if a message couldn't be sent.

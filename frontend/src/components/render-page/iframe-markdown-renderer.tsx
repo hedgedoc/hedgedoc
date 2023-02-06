@@ -14,7 +14,7 @@ import { useRendererReceiveHandler } from './window-post-message-communicator/ho
 import type { BaseConfiguration } from './window-post-message-communicator/rendering-message'
 import { CommunicationMessageType, RendererType } from './window-post-message-communicator/rendering-message'
 import { countWords } from './word-counter'
-import EventEmitter2 from 'eventemitter2'
+import { EventEmitter2 } from 'eventemitter2'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 /**
@@ -174,10 +174,10 @@ export const IframeMarkdownRenderer: React.FC = () => {
   const extensionEventEmitter = useMemo(() => new EventEmitter2({ wildcard: true }), [])
 
   useEffect(() => {
-    extensionEventEmitter.onAny((event, values) => {
+    extensionEventEmitter.onAny((event: string, values: unknown) => {
       communicator.sendMessageToOtherSide({
         type: CommunicationMessageType.EXTENSION_EVENT,
-        eventName: typeof event === 'object' ? event.join('.') : event,
+        eventName: event,
         payload: values
       })
     })

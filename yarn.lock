@@ -9298,6 +9298,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eventemitter2@patch:eventemitter2@npm%3A6.4.9#./.yarn/patches/eventemitter2-npm-6.4.9-ba37798a18.patch::locator=hedgedoc%40workspace%3A.":
+  version: 6.4.9
+  resolution: "eventemitter2@patch:eventemitter2@npm%3A6.4.9#./.yarn/patches/eventemitter2-npm-6.4.9-ba37798a18.patch::version=6.4.9&hash=7bad23&locator=hedgedoc%40workspace%3A."
+  checksum: 058a7ea1566747b005835f0c1f2348aabd355c819c1d63d4d879a476503f51c5bde93f72796813dcdae066fe6e4535c6415b91c66acaadc53251b54a274c9263
+  languageName: node
+  linkType: hard
+
 "eventemitter3@npm:^4.0.0, eventemitter3@npm:^4.0.4":
   version: 4.0.7
   resolution: "eventemitter3@npm:4.0.7"
