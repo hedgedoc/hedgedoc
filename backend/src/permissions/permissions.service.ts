@@ -14,7 +14,7 @@ import {
 } from '../config/guest_access.enum';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import { PermissionsUpdateInconsistentError } from '../errors/errors';
-import { NoteEvent } from '../events';
+import { NoteEvent, NoteEventMap } from '../events';
 import { Group } from '../groups/group.entity';
 import { GroupsService } from '../groups/groups.service';
 import { SpecialGroup } from '../groups/groups.special';
@@ -36,7 +36,7 @@ export class PermissionsService {
     private readonly logger: ConsoleLoggerService,
     @Inject(noteConfiguration.KEY)
     private noteConfig: NoteConfig,
-    private eventEmitter: EventEmitter2,
+    private eventEmitter: EventEmitter2<NoteEventMap>,
   ) {}
 
   /**

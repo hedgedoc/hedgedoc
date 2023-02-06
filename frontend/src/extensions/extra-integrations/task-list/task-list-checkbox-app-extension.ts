@@ -6,7 +6,7 @@
 import { AppExtension } from '../../base/app-extension'
 import { SetCheckboxInEditor } from './set-checkbox-in-editor'
 import { TaskListMarkdownExtension } from './task-list-markdown-extension'
-import type EventEmitter2 from 'eventemitter2'
+import type { EventEmitter2 } from 'eventemitter2'
 import type React from 'react'
 
 /**

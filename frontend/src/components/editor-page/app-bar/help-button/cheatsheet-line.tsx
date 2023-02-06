@@ -7,7 +7,8 @@ import type { TaskCheckedEventPayload } from '../../../../extensions/extra-integ
 import { TaskListCheckboxAppExtension } from '../../../../extensions/extra-integrations/task-list/task-list-checkbox-app-extension'
 import { WaitSpinner } from '../../../common/wait-spinner/wait-spinner'
 import { eventEmitterContext } from '../../../markdown-renderer/hooks/use-extension-event-emitter'
-import EventEmitter2 from 'eventemitter2'
+import type { Listener } from 'eventemitter2'
+import { EventEmitter2 } from 'eventemitter2'
 import React, { Suspense, useEffect, useMemo } from 'react'
 
 export interface CheatsheetLineProps {
@@ -32,10 +33,13 @@ export const CheatsheetLine: React.FC<CheatsheetLineProps> = ({ markdown, onTask
   const eventEmitter = useMemo(() => new EventEmitter2(), [])
 
   useEffect(() => {
-    const handler = ({ checked }: TaskCheckedEventPayload) => onTaskCheckedChange(checked)
-    eventEmitter.on(TaskListCheckboxAppExtension.EVENT_NAME, handler)
+    const handler = eventEmitter.on(
+      TaskListCheckboxAppExtension.EVENT_NAME,
+      ({ checked }: TaskCheckedEventPayload) => onTaskCheckedChange(checked),
+      { objectify: true }
+    ) as Listener
     return () => {
-      eventEmitter.off(TaskListCheckboxAppExtension.EVENT_NAME, handler)
+      handler.off()
     }
   })
 

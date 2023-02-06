@@ -17,7 +17,7 @@ import type { AsyncState } from 'react-use/lib/useAsyncFn'
 export const useLoadNoteFromServer = (): [AsyncState<boolean>, () => void] => {
   const id = useSingleStringUrlParameter('noteId', undefined)
 
-  return useAsyncFn(async () => {
+  return useAsyncFn(async (): Promise<boolean> => {
     if (id === undefined) {
       throw new Error('Invalid id')
     }

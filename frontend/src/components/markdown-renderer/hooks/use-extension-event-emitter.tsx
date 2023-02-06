@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import EventEmitter2 from 'eventemitter2'
+import { EventEmitter2 } from 'eventemitter2'
 import type { PropsWithChildren } from 'react'
 import React, { createContext, useContext, useEffect, useMemo } from 'react'
 
