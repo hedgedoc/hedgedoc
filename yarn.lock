@@ -2332,7 +2332,7 @@ __metadata:
     copy-webpack-plugin: 11.0.0
     cross-env: 7.0.3
     csstype: 3.1.1
-    cypress: 12.4.1
+    cypress: 12.5.1
     cypress-commands: 3.0.0
     cypress-fill-command: 1.0.2
     d3-graphviz: 5.0.2
@@ -7480,9 +7480,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:12.4.1":
-  version: 12.4.1
-  resolution: "cypress@npm:12.4.1"
+"cypress@npm:12.5.1":
+  version: 12.5.1
+  resolution: "cypress@npm:12.5.1"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -7528,7 +7528,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 92693734e2a2e044effae8319315e2bd66a53e4c590caad36199f8b3b92a56189dcc41cbb2636b8a8a88ac20b91dd899897f873af4b26f106c9ea2e3d47caf35
+  checksum: acea08c933084bbdffe8e0d8f24ecdc3be52731824f09cf2e720c974a153d808f5af1c665d977e46f171e275c590065aeadf729022d1338a6a424e5ec8b119af
   languageName: node
   linkType: hard
 
