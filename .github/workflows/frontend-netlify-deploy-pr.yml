@@ -39,31 +39,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  changes:
-    name: Check for frontend changes
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: read
-    outputs:
-      changed: ${{ github.event_name == 'push' || steps.changed.outputs.files }}
-    steps:
-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
-        if: github.event_name != 'push'
-
-      - name: Check for frontend file changes
-        if: github.event_name != 'push'
-        uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50 # v2.11.1
-        id: changed
-        with:
-          filters: |
-            files:
-              - 'commons/**'
-              - 'frontend/**'
-              - 'yarn.lock'
-              - 'package.json'
-
   deploy:
-    needs: changes
     if: "contains(github.event.pull_request.labels.*.name, 'ci: force deployment') && ((github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork)"
     runs-on: ubuntu-latest
     name: Deploys to netlify
@@ -71,35 +47,28 @@ jobs:
       DEPLOY_URL: "https://${{ github.event.number }}--hedgedoc-ui-test.netlify.app/"
     steps:
       - name: Checkout repository
-        if: needs.changes.outputs.changed == 'true'
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Setup node
-        if: needs.changes.outputs.changed == 'true'
         uses: ./.github/actions/setup-node
         with:
           NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
 
       - name: Patch intro.md to include netlify banner.
-        if: needs.changes.outputs.changed == 'true'
         run: cp netlify/intro.md public/public/intro.md
 
       - name: Patch motd.md to include privacy policy.
-        if: needs.changes.outputs.changed == 'true'
         run: cp netlify/motd.md public/public/motd.md
 
       - name: Patch version.json to include git hash
-        if: needs.changes.outputs.changed == 'true'
         run: jq ".version = \"0.0.0+${GITHUB_SHA:0:8}\"" src/version.json > src/_version.json && mv src/_version.json src/version.json
 
       - name: Patch base URL
-        if: needs.changes.outputs.changed == 'true'
         run: echo "HD_BASE_URL=\"${{ env.DEPLOY_URL }}\"" >> .env.production
 
       - name: Build app
-        if: needs.changes.outputs.changed == 'true'
         run: yarn turbo run build --filter=frontend
         shell: bash
         working-directory: .
@@ -110,11 +79,9 @@ jobs:
           TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
       - name: Remove Next.js cache to avoid it being deployed
-        if: needs.changes.outputs.changed == 'true'
         run: rm -r .next/cache
 
       - name: Mark GitHub deployment as started
-        if: needs.changes.outputs.changed == 'true'
         uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3 # v1.4.0
         id: github-deployment
         with:
@@ -125,17 +92,14 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Install netlify CLI
-        if: needs.changes.outputs.changed == 'true'
         run: "npm install -g netlify-cli@${{ env.NETLIFY_VERSION }}"
 
       - name: Run netlify CLI
-        if: needs.changes.outputs.changed == 'true'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         run: "netlify deploy --build --context deploy-preview --alias \"${{ github.event.number }}\" --json --message \"PR #${{ github.event.number }}\""
 
       - name: Mark GitHub deployment as finished
-        if: needs.changes.outputs.changed == 'true'
         uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3 # v1.4.0
         with:
           step: finish
