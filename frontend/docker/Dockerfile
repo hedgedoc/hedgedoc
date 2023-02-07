@@ -21,7 +21,7 @@ WORKDIR /usr/src/app
 
 COPY --chown=node . .
 RUN --mount=type=cache,sharing=locked,uid=1000,gid=1000,target=/tmp/.yarn \
-    yarn install --immutable && yarn workspaces focus hedgedoc @hedgedoc/backend @hedgedoc/commons
+    yarn install --immutable
 
 ARG TURBO_TEAM
 ARG TURBO_API
