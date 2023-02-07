@@ -67,10 +67,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           context: .
-          build-args:
-            TURBO_TOKEN: "${{ secrets.TURBO_TOKEN }}"
-            TURBO_API: "${{ vars.TURBO_API }}"
-            TURBO_TEAM: "${{ vars.TURBO_TEAM }}"
+          build-args: |
+            TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
+            TURBO_API=${{ vars.TURBO_API }}
+            TURBO_TEAM=${{ vars.TURBO_TEAM }}
 
       - name: Build and push frontend
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671 # v4.0.0
@@ -82,8 +82,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           context: .
-          build-args:
-            BUILD_VERSION: "${{ github.event.head_commit.id }}"
-            TURBO_TOKEN: "${{ secrets.TURBO_TOKEN }}"
-            TURBO_API: "${{ vars.TURBO_API }}"
-            TURBO_TEAM: "${{ vars.TURBO_TEAM }}"
+          build-args: |
+            BUILD_VERSION=${{ github.event.head_commit.id }}
+            TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
+            TURBO_API=${{ vars.TURBO_API }}
+            TURBO_TEAM=${{ vars.TURBO_TEAM }}
