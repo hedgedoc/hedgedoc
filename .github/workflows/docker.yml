@@ -19,25 +19,18 @@ concurrency:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        component: [ 'backend', 'frontend' ]
     steps:
       - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
 
-      - name: Generate Docker metadata for backend
-        id: meta-backend
+      - name: Generate Docker metadata for ${{ matrix.component }}
+        id: meta-data
         uses: docker/metadata-action@507c2f2dc502c992ad446e3d7a5dfbe311567a96 # v4.3.0
         with:
-          images: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}/backend
-          tags: |
-            type=ref,event=branch
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-
-      - name: Generate Docker metadata for frontend
-        id: meta-frontend
-        uses: docker/metadata-action@507c2f2dc502c992ad446e3d7a5dfbe311567a96 # v4.3.0
-        with:
-          images: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}/frontend
+          images: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}/${{ matrix.component }}
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}}
@@ -57,28 +50,13 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push backend
+      - name: Build and push
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671 # v4.0.0
         with:
           push: true
-          file: backend/docker/Dockerfile
-          tags: ${{ steps.meta-backend.outputs.tags }}
-          labels: ${{ steps.meta-backend.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          context: .
-          build-args: |
-            TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
-            TURBO_API=${{ vars.TURBO_API }}
-            TURBO_TEAM=${{ vars.TURBO_TEAM }}
-
-      - name: Build and push frontend
-        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671 # v4.0.0
-        with:
-          push: true
-          file: frontend/docker/Dockerfile
-          tags: ${{ steps.meta-frontend.outputs.tags }}
-          labels: ${{ steps.meta-frontend.outputs.labels }}
+          file: ${{ matrix.component}}/docker/Dockerfile
+          tags: ${{ steps.meta-data.outputs.tags }}
+          labels: ${{ steps.meta-data.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           context: .
