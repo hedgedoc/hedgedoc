@@ -3,8 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MARKDOWN_CONTENT_CHANNEL_NAME } from './use-markdown-content-y-text'
-import { YDocMessageTransporter } from '@hedgedoc/commons'
+import { MARKDOWN_CONTENT_CHANNEL_NAME, YDocMessageTransporter } from '@hedgedoc/commons'
 import type { Awareness } from 'y-protocols/awareness'
 import type { Doc } from 'yjs'
 

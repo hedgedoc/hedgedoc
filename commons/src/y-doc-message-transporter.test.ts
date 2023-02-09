@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { MARKDOWN_CONTENT_CHANNEL_NAME } from './constants/markdown-content-channel-name.js'
 import { encodeDocumentUpdateMessage } from './messages/document-update-message.js'
 import { MessageType } from './messages/message-type.enum.js'
 import { YDocMessageTransporter } from './y-doc-message-transporter.js'
@@ -55,9 +56,9 @@ describe('message transporter', () =>
     const docClient2: Doc = new Doc()
     const dummyAwareness: Awareness = new Awareness(docServer)
 
-    const textServer = docServer.getText('markdownContent')
-    const textClient1 = docClient1.getText('markdownContent')
-    const textClient2 = docClient2.getText('markdownContent')
+    const textServer = docServer.getText(MARKDOWN_CONTENT_CHANNEL_NAME)
+    const textClient1 = docClient1.getText(MARKDOWN_CONTENT_CHANNEL_NAME)
+    const textClient2 = docClient2.getText(MARKDOWN_CONTENT_CHANNEL_NAME)
     textServer.insert(0, 'This is a test note')
 
     textServer.observe(() =>
