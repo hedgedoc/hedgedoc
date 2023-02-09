@@ -2252,7 +2252,7 @@ __metadata:
     jest: 29.4.1
     joi: 17.7.0
     ldapauth-fork: 5.0.5
-    lib0: 0.2.60
+    lib0: 0.2.62
     minio: 7.0.32
     mocked-env: 1.3.5
     mysql: 2.18.1
@@ -2296,16 +2296,16 @@ __metadata:
     eslint-config-prettier: 8.6.0
     eslint-plugin-jest: 27.2.1
     eslint-plugin-prettier: 4.2.1
-    eventemitter2: ^6.4.9
-    isomorphic-ws: ^5.0.0
+    eventemitter2: 6.4.9
+    isomorphic-ws: 5.0.0
     jest: 29.4.1
-    lib0: ^0.2.51
+    lib0: 0.2.62
     microbundle: 0.15.1
     prettier: 2.8.3
     ts-jest: 29.0.5
     typescript: 4.9.5
-    ws: ^8.0.0
-    y-protocols: ^1.0.0
+    ws: 8.12.0
+    y-protocols: 1.0.5
     yjs: 13.5.45
   languageName: unknown
   linkType: soft
@@ -9291,7 +9291,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eventemitter2@npm:6.4.9, eventemitter2@npm:^6.4.9":
+"eventemitter2@npm:6.4.9":
   version: 6.4.9
   resolution: "eventemitter2@npm:6.4.9"
   checksum: be59577c1e1c35509c7ba0e2624335c35bbcfd9485b8a977384c6cc6759341ea1a98d3cb9dbaa5cea4fff9b687e504504e3f9c2cc1674cf3bd8a43a7c74ea3eb
@@ -11309,7 +11309,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"isomorphic-ws@npm:5.0.0, isomorphic-ws@npm:^5.0.0":
+"isomorphic-ws@npm:5.0.0":
   version: 5.0.0
   resolution: "isomorphic-ws@npm:5.0.0"
   peerDependencies:
@@ -12256,12 +12256,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lib0@npm:0.2.60, lib0@npm:^0.2.42, lib0@npm:^0.2.49, lib0@npm:^0.2.51":
-  version: 0.2.60
-  resolution: "lib0@npm:0.2.60"
+"lib0@npm:0.2.62, lib0@npm:^0.2.42, lib0@npm:^0.2.49":
+  version: 0.2.62
+  resolution: "lib0@npm:0.2.62"
   dependencies:
     isomorphic.js: ^0.2.4
-  checksum: 7c3d90267b9b6ab10f03328dc342c558d8ccb0a098a665b867c41e55679851f3ae757717a3b61495c7e66eee69d37d54b8df37c9a82842680530355b3fd23b6e
+  checksum: f85f063b63426a53b703bf0b77f495283b55733ad7ac2dfa29cf693fc5d8264ba0054d38cac4500bb4f9afe148b352a5b15677b9319bf500f9708afa75333867
   languageName: node
   linkType: hard
 
@@ -18679,7 +18679,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:8.12.0, ws@npm:^8.0.0, ws@npm:^8.11.0":
+"ws@npm:8.12.0, ws@npm:^8.11.0":
   version: 8.12.0
   resolution: "ws@npm:8.12.0"
   peerDependencies:
