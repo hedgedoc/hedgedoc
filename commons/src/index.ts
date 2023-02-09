@@ -33,3 +33,5 @@ export {
 export type { MessageTransporterEvents } from './y-doc-message-transporter.js'
 
 export { waitForOtherPromisesToFinish } from './utils/wait-for-other-promises-to-finish.js'
+
+export { MARKDOWN_CONTENT_CHANNEL_NAME } from './constants/markdown-content-channel-name.js'

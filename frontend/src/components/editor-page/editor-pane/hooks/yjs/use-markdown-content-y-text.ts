@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { MARKDOWN_CONTENT_CHANNEL_NAME } from '@hedgedoc/commons'
 import { useMemo } from 'react'
 import type { Doc } from 'yjs'
-import type { YText } from 'yjs/dist/src/types/YText'
-
-export const MARKDOWN_CONTENT_CHANNEL_NAME = 'markdownContent'
+import type { Text as YText } from 'yjs'
 
 /**
  * Extracts the y-text channel that saves the markdown content from the given yDoc.
