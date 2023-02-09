@@ -35,11 +35,11 @@
     "url": "https://github.com/hedgedoc/hedgedoc.git"
   },
   "dependencies": {
-    "eventemitter2": "^6.4.9",
-    "isomorphic-ws": "^5.0.0",
-    "lib0": "^0.2.51",
-    "ws": "^8.0.0",
-    "y-protocols": "^1.0.0",
+    "eventemitter2": "6.4.9",
+    "isomorphic-ws": "5.0.0",
+    "lib0": "0.2.62",
+    "ws": "8.12.0",
+    "y-protocols": "1.0.5",
     "yjs": "13.5.45"
   },
   "devDependencies": {
