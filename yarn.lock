@@ -2202,7 +2202,7 @@ __metadata:
     "@nestjs/platform-ws": 9.3.2
     "@nestjs/schedule": 2.2.0
     "@nestjs/schematics": 9.0.4
-    "@nestjs/swagger": 6.1.4
+    "@nestjs/swagger": 6.2.1
     "@nestjs/testing": 9.3.2
     "@nestjs/typeorm": 9.0.1
     "@nestjs/websockets": 9.3.2
@@ -3158,20 +3158,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/mapped-types@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@nestjs/mapped-types@npm:1.2.0"
+"@nestjs/mapped-types@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@nestjs/mapped-types@npm:1.2.2"
   peerDependencies:
     "@nestjs/common": ^7.0.8 || ^8.0.0 || ^9.0.0
     class-transformer: ^0.2.0 || ^0.3.0 || ^0.4.0 || ^0.5.0
-    class-validator: ^0.11.1 || ^0.12.0 || ^0.13.0
+    class-validator: ^0.11.1 || ^0.12.0 || ^0.13.0 || ^0.14.0
     reflect-metadata: ^0.1.12
   peerDependenciesMeta:
     class-transformer:
       optional: true
     class-validator:
       optional: true
-  checksum: cc625310873c5caf69521bc03c75a6780467f662fd4c8b2402f6e65228268eec1244c131dbf65c81c985680feacee50dae7d3c1f2b7bced7bad79922389aa38f
+  checksum: 85f295a1474c6dd1b6fb07556f744fee138571f3c6a4c5e693c72bddc716aeb8e73c02f8146fb3457e4e4a604559aa6c40985e3fbf1b3aadc0ea04a6970016d1
   languageName: node
   linkType: hard
 
@@ -3244,11 +3244,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/swagger@npm:6.1.4":
-  version: 6.1.4
-  resolution: "@nestjs/swagger@npm:6.1.4"
+"@nestjs/swagger@npm:6.2.1":
+  version: 6.2.1
+  resolution: "@nestjs/swagger@npm:6.2.1"
   dependencies:
-    "@nestjs/mapped-types": 1.2.0
+    "@nestjs/mapped-types": 1.2.2
     js-yaml: 4.1.0
     lodash: 4.17.21
     path-to-regexp: 3.2.0
@@ -3267,7 +3267,7 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: 75ea26c0775e16ee293cfeb0666c9291b84a0b3100f1af79d210733257bebc31e82e5d62a2b0b7ee1acb5cf9dfbcaf98e8ccd118e428a06d220929e6b82d23c2
+  checksum: 505d39dcfac451e7827ca1cb6323ea75d5c6b43b632a6485277fd8fa7e3e2345b9adfa96dd3633a31a1d8b8a89f1c4dd0d3c80a7a7a5347216306c5171a9e128
   languageName: node
   linkType: hard
 
