@@ -32,6 +32,6 @@
     "eventemitter2@6.4.9": "patch:eventemitter2@npm%3A6.4.9#./.yarn/patches/eventemitter2-npm-6.4.9-ba37798a18.patch"
   },
   "devDependencies": {
-    "turbo": "1.6.3"
+    "turbo": "1.7.4"
   }
 }
