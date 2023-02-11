@@ -26,7 +26,7 @@
     "@codemirror/language-data": "6.1.0",
     "@codemirror/lint": "6.1.0",
     "@codemirror/theme-one-dark": "6.1.0",
-    "@types/react": "18.0.27",
+    "@types/react": "18.0.28",
     "y-protocols@^1.0.0": "patch:y-protocols@npm%3A1.0.5#./.yarn/patches/y-protocols-npm-1.0.5-af6f64b4df.patch",
     "y-protocols@1.0.5": "patch:y-protocols@npm%3A1.0.5#./.yarn/patches/y-protocols-npm-1.0.5-af6f64b4df.patch",
     "eventemitter2@6.4.9": "patch:eventemitter2@npm%3A6.4.9#./.yarn/patches/eventemitter2-npm-6.4.9-ba37798a18.patch"
