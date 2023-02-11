@@ -2287,7 +2287,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/commons@workspace:commons"
   dependencies:
-    "@jest/types": 29.4.1
+    "@jest/types": 29.4.2
     "@mrdrogdrog/optional": 1.1.0
     "@types/ws": 8.5.4
     "@typescript-eslint/eslint-plugin": 5.50.0
@@ -2692,6 +2692,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jest/schemas@npm:^29.4.2":
+  version: 29.4.2
+  resolution: "@jest/schemas@npm:29.4.2"
+  dependencies:
+    "@sinclair/typebox": ^0.25.16
+  checksum: 85d9416dce85604400e65ba0b2146fea5ba313612d6d1fa8f39c30bcb42fabd7120193d277327fb10228ea3112f3b83e914bc7ab42137d19a1e1c37093f32363
+  languageName: node
+  linkType: hard
+
 "@jest/source-map@npm:^29.2.0":
   version: 29.2.0
   resolution: "@jest/source-map@npm:29.2.0"
@@ -2750,7 +2759,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/types@npm:29.4.1, @jest/types@npm:^29.4.1":
+"@jest/types@npm:29.4.2":
+  version: 29.4.2
+  resolution: "@jest/types@npm:29.4.2"
+  dependencies:
+    "@jest/schemas": ^29.4.2
+    "@types/istanbul-lib-coverage": ^2.0.0
+    "@types/istanbul-reports": ^3.0.0
+    "@types/node": "*"
+    "@types/yargs": ^17.0.8
+    chalk: ^4.0.0
+  checksum: da2caa2c1d3ce7461167faddf9a4158a4be5c900e44f22db9c370b189c804b7492051c635a8c0c62ac4e41aff3bc6c324a008043e193bc5d6ce7b44aaa449258
+  languageName: node
+  linkType: hard
+
+"@jest/types@npm:^29.4.1":
   version: 29.4.1
   resolution: "@jest/types@npm:29.4.1"
   dependencies:

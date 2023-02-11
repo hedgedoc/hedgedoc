@@ -43,7 +43,7 @@
     "yjs": "13.5.45"
   },
   "devDependencies": {
-    "@jest/types": "29.4.1",
+    "@jest/types": "29.4.2",
     "@mrdrogdrog/optional": "1.1.0",
     "@types/ws": "8.5.4",
     "@typescript-eslint/eslint-plugin": "5.50.0",
