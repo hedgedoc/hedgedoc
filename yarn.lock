@@ -1937,9 +1937,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/language@npm:6.4.0":
-  version: 6.4.0
-  resolution: "@codemirror/language@npm:6.4.0"
+"@codemirror/language@npm:6.5.0":
+  version: 6.5.0
+  resolution: "@codemirror/language@npm:6.5.0"
   dependencies:
     "@codemirror/state": ^6.0.0
     "@codemirror/view": ^6.0.0
@@ -1947,7 +1947,7 @@ __metadata:
     "@lezer/highlight": ^1.0.0
     "@lezer/lr": ^1.0.0
     style-mod: ^4.0.0
-  checksum: 607072e234db59a9a21eb41b8777b62d68a55ed28298edc4f6aaedfcf52349db1fe3ff3e7747ccfc77f03757bad45ba9a657d59a0e9c67be1231902586dec7a3
+  checksum: 8a7fad88641ed7e97eb01a5ffe7484087a7c709fef1717b5b9ab26cb908cf95ae9edb20e2353cc82e4684c5c51dc55c32dc81207cfa4152018dafd86b65bcea8
   languageName: node
   linkType: hard
 
@@ -2001,14 +2001,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/view@npm:6.7.3":
-  version: 6.7.3
-  resolution: "@codemirror/view@npm:6.7.3"
+"@codemirror/view@npm:6.8.1":
+  version: 6.8.1
+  resolution: "@codemirror/view@npm:6.8.1"
   dependencies:
     "@codemirror/state": ^6.1.4
     style-mod: ^4.0.0
     w3c-keyname: ^2.2.4
-  checksum: 37c0458cf45e52a1af9b9bef29108dd84bb91c6818ecad432d89627039d92f6b234b033cf14ecbc1c5b533694127478942fcc9641fdf52b9a1b20eccc018e27c
+  checksum: e645298a5d2ebbf7ad14fa4a1ccfbaafda227349b44578354783066c6e433ed57a395cbc02c7bdd5351064a5be234d625e71f9b5c24803cb24ab399f60855f28
   languageName: node
   linkType: hard
 
@@ -2323,12 +2323,12 @@ __metadata:
     "@codemirror/autocomplete": 6.4.0
     "@codemirror/commands": 6.2.0
     "@codemirror/lang-markdown": 6.0.5
-    "@codemirror/language": 6.4.0
+    "@codemirror/language": 6.5.0
     "@codemirror/language-data": 6.1.0
     "@codemirror/lint": 6.1.0
     "@codemirror/state": 6.2.0
     "@codemirror/theme-one-dark": 6.1.0
-    "@codemirror/view": 6.7.3
+    "@codemirror/view": 6.8.1
     "@fontsource/source-sans-pro": 4.5.11
     "@hedgedoc/commons": "workspace:commons"
     "@hedgedoc/html-to-react": 1.4.5
