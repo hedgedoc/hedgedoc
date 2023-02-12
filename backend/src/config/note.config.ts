@@ -7,9 +7,9 @@ import { registerAs } from '@nestjs/config';
 import * as Joi from 'joi';
 
 import {
-  DefaultAccessPermission,
-  getDefaultAccessPermissionOrdinal,
-} from './default-access-permission.enum';
+  DefaultAccessLevel,
+  getDefaultAccessLevelOrdinal,
+} from './default-access-level.enum';
 import { GuestAccess } from './guest_access.enum';
 import { buildErrorMessage, parseOptionalNumber, toArrayConfig } from './utils';
 
@@ -19,8 +19,8 @@ export interface NoteConfig {
   guestAccess: GuestAccess;
   permissions: {
     default: {
-      everyone: DefaultAccessPermission;
-      loggedIn: DefaultAccessPermission;
+      everyone: DefaultAccessLevel;
+      loggedIn: DefaultAccessLevel;
     };
   };
 }
@@ -45,14 +45,14 @@ const schema = Joi.object<NoteConfig>({
   permissions: {
     default: {
       everyone: Joi.string()
-        .valid(...Object.values(DefaultAccessPermission))
+        .valid(...Object.values(DefaultAccessLevel))
         .optional()
-        .default(DefaultAccessPermission.READ)
+        .default(DefaultAccessLevel.READ)
         .label('HD_PERMISSION_DEFAULT_EVERYONE'),
       loggedIn: Joi.string()
-        .valid(...Object.values(DefaultAccessPermission))
+        .valid(...Object.values(DefaultAccessLevel))
         .optional()
-        .default(DefaultAccessPermission.WRITE)
+        .default(DefaultAccessLevel.WRITE)
         .label('HD_PERMISSION_DEFAULT_LOGGED_IN'),
     },
   },
@@ -74,8 +74,8 @@ function checkLoggedInUsersHaveHigherDefaultPermissionsThanGuests(
   const everyone = config.permissions.default.everyone;
   const loggedIn = config.permissions.default.loggedIn;
   if (
-    getDefaultAccessPermissionOrdinal(everyone) >
-    getDefaultAccessPermissionOrdinal(loggedIn)
+    getDefaultAccessLevelOrdinal(everyone) >
+    getDefaultAccessLevelOrdinal(loggedIn)
   ) {
     throw new Error(
       `'HD_PERMISSION_DEFAULT_EVERYONE' is set to '${everyone}', but 'HD_PERMISSION_DEFAULT_LOGGED_IN' is set to '${loggedIn}'. This gives everyone greater permissions than logged-in users which is not allowed.`,
