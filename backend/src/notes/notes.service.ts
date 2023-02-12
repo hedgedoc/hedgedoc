@@ -9,7 +9,7 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { DefaultAccessPermission } from '../config/default-access-permission.enum';
+import { DefaultAccessLevel } from '../config/default-access-level.enum';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import {
   AlreadyInDBError,
@@ -92,37 +92,51 @@ export class NotesService {
     owner: User | null,
     alias?: string,
   ): Promise<Note> {
+    // Check if new note doesn't violate application constraints
     if (alias) {
       this.checkNoteIdOrAlias(alias);
     }
-    const newNote = Note.create(owner, alias);
     if (noteContent.length > this.noteConfig.maxDocumentLength) {
       throw new MaximumDocumentLengthExceededError();
     }
-    //TODO: Calculate patch
+
+    // We cast to a note early to keep the later code clean
+    const newNote = Note.create(owner, alias) as Note;
     newNote.revisions = Promise.resolve([
-      Revision.create(noteContent, noteContent, newNote as Note) as Revision,
+      //TODO: Calculate patch
+      Revision.create(noteContent, noteContent, newNote) as Revision,
     ]);
+
+    let everyoneAccessLevel;
+
     if (owner) {
+      // When we know an owner, an initial history entry is created
       newNote.historyEntries = Promise.resolve([
-        HistoryEntry.create(owner, newNote as Note) as HistoryEntry,
+        HistoryEntry.create(owner, newNote) as HistoryEntry,
       ]);
+      // Use the default access level from the config
+      everyoneAccessLevel = this.noteConfig.permissions.default.everyone;
+    } else {
+      // If there is no owner, this is an anonymous note
+      // Anonymous notes are always writeable by everyone
+      everyoneAccessLevel = DefaultAccessLevel.WRITE;
     }
 
+    // Create permission object for the 'everyone' group
     const everyonePermission = this.createGroupPermission(
-      newNote as Note,
+      newNote,
       await this.groupsService.getEveryoneGroup(),
-      owner === null
-        ? DefaultAccessPermission.WRITE
-        : this.noteConfig.permissions.default.everyone,
+      everyoneAccessLevel,
     );
 
+    // Create permission object for logged-in users
     const loggedInPermission = this.createGroupPermission(
-      newNote as Note,
+      newNote,
       await this.groupsService.getLoggedInGroup(),
       this.noteConfig.permissions.default.loggedIn,
     );
 
+    // Merge into permissions array
     newNote.groupPermissions = Promise.resolve([
       ...Optional.ofNullable(everyonePermission).wrapInArray(),
       ...Optional.ofNullable(loggedInPermission).wrapInArray(),
@@ -148,15 +162,16 @@ export class NotesService {
   private createGroupPermission(
     note: Note,
     group: Group,
-    permission: DefaultAccessPermission,
+    accessLevel: DefaultAccessLevel,
   ): NoteGroupPermission | null {
-    return permission === DefaultAccessPermission.NONE
-      ? null
-      : NoteGroupPermission.create(
-          group,
-          note,
-          permission === DefaultAccessPermission.WRITE,
-        );
+    if (accessLevel === DefaultAccessLevel.NONE) {
+      return null;
+    }
+    return NoteGroupPermission.create(
+      group,
+      note,
+      accessLevel === DefaultAccessLevel.WRITE,
+    );
   }
 
   /**
