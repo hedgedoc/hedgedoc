@@ -2370,7 +2370,7 @@ __metadata:
     "@types/ws": 8.5.4
     "@typescript-eslint/eslint-plugin": 5.51.0
     "@typescript-eslint/parser": 5.51.0
-    "@uiw/react-codemirror": 4.19.8
+    "@uiw/react-codemirror": 4.19.9
     abcjs: 6.1.8
     bootstrap: 5.2.3
     copy-webpack-plugin: 11.0.0
@@ -5128,9 +5128,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uiw/codemirror-extensions-basic-setup@npm:4.19.8":
-  version: 4.19.8
-  resolution: "@uiw/codemirror-extensions-basic-setup@npm:4.19.8"
+"@uiw/codemirror-extensions-basic-setup@npm:4.19.9":
+  version: 4.19.9
+  resolution: "@uiw/codemirror-extensions-basic-setup@npm:4.19.9"
   dependencies:
     "@codemirror/autocomplete": ^6.0.0
     "@codemirror/commands": ^6.0.0
@@ -5147,19 +5147,19 @@ __metadata:
     "@codemirror/search": ">=6.0.0"
     "@codemirror/state": ">=6.0.0"
     "@codemirror/view": ">=6.0.0"
-  checksum: 97e25959bec437ee51b8cee688532e01655b8136d8b3239c425d1e51d78a574593265e8c01f731898f560f68a95e07f1d3fd72628d79559f4a9e0c02a484d1cb
+  checksum: f248d1623f33b88b61dd75955441d1b5925b2b2c78d595eac1d4603dc31f107d5973d9cff42c3ade4a2493828d679a8908e5dad03a570511e6095d0028089f85
   languageName: node
   linkType: hard
 
-"@uiw/react-codemirror@npm:4.19.8":
-  version: 4.19.8
-  resolution: "@uiw/react-codemirror@npm:4.19.8"
+"@uiw/react-codemirror@npm:4.19.9":
+  version: 4.19.9
+  resolution: "@uiw/react-codemirror@npm:4.19.9"
   dependencies:
     "@babel/runtime": ^7.18.6
     "@codemirror/commands": ^6.1.0
     "@codemirror/state": ^6.1.1
     "@codemirror/theme-one-dark": ^6.0.0
-    "@uiw/codemirror-extensions-basic-setup": 4.19.8
+    "@uiw/codemirror-extensions-basic-setup": 4.19.9
     codemirror: ^6.0.0
   peerDependencies:
     "@babel/runtime": ">=7.11.0"
@@ -5169,7 +5169,7 @@ __metadata:
     codemirror: ">=6.0.0"
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 6f4d3dc890acf915d42020124580ec3b9301675cf6bfa627fa0a5fdd9dffc05e87c79f3e14665df75e68e80391d0070fc0cf05a2692f4401f7105b275bb74d41
+  checksum: ed0d9a7b927df718535bccf553fa7cdabd2cb776f74e6ae75eab0ba321bc60468b5f1b8576a12543729770a11e5438fd4fc925f3f74643985c34a2184c5ae7f6
   languageName: node
   linkType: hard
 
