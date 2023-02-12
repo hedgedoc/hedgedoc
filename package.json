@@ -12,7 +12,8 @@
     "build": "dotenv -- turbo run build",
     "lint": "dotenv -- turbo run lint",
     "format": "dotenv -- turbo run format",
-    "start:dev": "dotenv -- turbo run start:dev"
+    "start:dev": "dotenv -- turbo run start:dev",
+    "test:ci": "dotenv -- turbo run test:ci"
   },
   "packageManager": "yarn@3.4.1",
   "resolutions": {
