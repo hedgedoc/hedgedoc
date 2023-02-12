@@ -9,10 +9,10 @@
     "dev-reverse-proxy"
   ],
   "scripts": {
-    "build": "turbo run build",
-    "lint": "turbo run lint",
-    "format": "turbo run format",
-    "start:dev": "turbo run start:dev"
+    "build": "dotenv -- turbo run build",
+    "lint": "dotenv -- turbo run lint",
+    "format": "dotenv -- turbo run format",
+    "start:dev": "dotenv -- turbo run start:dev"
   },
   "packageManager": "yarn@3.4.1",
   "resolutions": {
@@ -32,6 +32,7 @@
     "eventemitter2@6.4.9": "patch:eventemitter2@npm%3A6.4.9#./.yarn/patches/eventemitter2-npm-6.4.9-ba37798a18.patch"
   },
   "devDependencies": {
+    "dotenv-cli": "7.0.0",
     "turbo": "1.7.4"
   }
 }

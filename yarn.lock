@@ -8387,7 +8387,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv-expand@npm:10.0.0":
+"dotenv-cli@npm:7.0.0":
+  version: 7.0.0
+  resolution: "dotenv-cli@npm:7.0.0"
+  dependencies:
+    cross-spawn: ^7.0.3
+    dotenv: ^16.0.0
+    dotenv-expand: ^10.0.0
+    minimist: ^1.2.6
+  bin:
+    dotenv: cli.js
+  checksum: de4ed19bc08cef509e6bee8bf26df0523e502556abbc732a86f8eee50fc3b3b0b3824803100e39f2d09ef1335b558b9e10d1ba51a4a2338c0ebbae6b5c520b19
+  languageName: node
+  linkType: hard
+
+"dotenv-expand@npm:10.0.0, dotenv-expand@npm:^10.0.0":
   version: 10.0.0
   resolution: "dotenv-expand@npm:10.0.0"
   checksum: 2a38b470efe0abcb1ac8490421a55e1d764dc9440fd220942bce40965074f3fb00b585f4346020cb0f0f219966ee6b4ee5023458b3e2953fe5b3214de1b314ee
@@ -10449,6 +10463,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hedgedoc@workspace:."
   dependencies:
+    dotenv-cli: 7.0.0
     turbo: 1.7.4
   languageName: unknown
   linkType: soft
