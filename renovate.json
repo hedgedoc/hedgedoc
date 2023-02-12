@@ -13,7 +13,6 @@
     "default:automergeDigest",
     ":gitSignOff",
     ":prHourlyLimitNone",
-    ":rebaseStalePrs",
     ":maintainLockFilesWeekly",
     ":automergePatch",
     ":separateMajorReleases"
