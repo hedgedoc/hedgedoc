@@ -21,6 +21,7 @@ backups/
 *.log
 *.sqlite
 .turbo
+.env
 
 
 # Yarn 2 without zero-installs
