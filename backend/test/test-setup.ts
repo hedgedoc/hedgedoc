@@ -236,7 +236,7 @@ export class TestSetupBuilder {
         module: PrivateApiModule,
       },
     ];
-    process.env.HD_DOMAIN =
+    process.env.HD_BASE_URL =
       'https://md-' + testSetupBuilder.testId + '.example.com';
     testSetupBuilder.testingModuleBuilder = Test.createTestingModule({
       imports: [
