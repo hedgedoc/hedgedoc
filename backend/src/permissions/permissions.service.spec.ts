@@ -11,7 +11,7 @@ import { DataSource, EntityManager, Repository } from 'typeorm';
 
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
-import { DefaultAccessPermission } from '../config/default-access-permission.enum';
+import { DefaultAccessLevel } from '../config/default-access-level.enum';
 import { GuestAccess } from '../config/guest_access.enum';
 import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
@@ -271,10 +271,8 @@ describe('PermissionsService', () => {
 
     describe('guest permission', () => {
       beforeEach(() => {
-        noteMockConfig.permissions.default.loggedIn =
-          DefaultAccessPermission.WRITE;
-        noteMockConfig.permissions.default.everyone =
-          DefaultAccessPermission.WRITE;
+        noteMockConfig.permissions.default.loggedIn = DefaultAccessLevel.WRITE;
+        noteMockConfig.permissions.default.everyone = DefaultAccessLevel.WRITE;
       });
       describe('with guest access deny', () => {
         beforeEach(() => {
@@ -353,10 +351,8 @@ describe('PermissionsService', () => {
     });
     describe('guest permission', () => {
       beforeEach(() => {
-        noteMockConfig.permissions.default.loggedIn =
-          DefaultAccessPermission.WRITE;
-        noteMockConfig.permissions.default.everyone =
-          DefaultAccessPermission.WRITE;
+        noteMockConfig.permissions.default.loggedIn = DefaultAccessLevel.WRITE;
+        noteMockConfig.permissions.default.everyone = DefaultAccessLevel.WRITE;
       });
 
       describe('with guest access deny', () => {
@@ -558,7 +554,7 @@ describe('PermissionsService', () => {
    * creates the matrix multiplication of group0 to group4 of createAllNoteGroupPermissions
    */
   function createNoteGroupPermissionsCombinations(
-    everyoneDefaultPermission: DefaultAccessPermission,
+    everyoneDefaultPermission: DefaultAccessLevel,
   ): NoteGroupPermissionWithResultForUser[] {
     // for logged in users
     const noteGroupPermissions = createAllNoteGroupPermissions();
@@ -584,13 +580,11 @@ describe('PermissionsService', () => {
               }
 
               if (group2 !== null) {
-                if (
-                  everyoneDefaultPermission === DefaultAccessPermission.WRITE
-                ) {
+                if (everyoneDefaultPermission === DefaultAccessLevel.WRITE) {
                   writePermission = writePermission || group2.canEdit;
                   readPermission = true;
                 } else if (
-                  everyoneDefaultPermission === DefaultAccessPermission.READ
+                  everyoneDefaultPermission === DefaultAccessLevel.READ
                 ) {
                   readPermission = true;
                 }
@@ -666,7 +660,7 @@ describe('PermissionsService', () => {
 
   describe('check if groups work with', () => {
     const rawPermissions = createNoteGroupPermissionsCombinations(
-      DefaultAccessPermission.WRITE,
+      DefaultAccessLevel.WRITE,
     );
     const permissions = permuteNoteGroupPermissions(rawPermissions);
     let i = 0;
@@ -697,18 +691,14 @@ describe('PermissionsService', () => {
     });
     it('allows creation of notes for guests with permission', () => {
       noteMockConfig.guestAccess = GuestAccess.CREATE;
-      noteMockConfig.permissions.default.loggedIn =
-        DefaultAccessPermission.WRITE;
-      noteMockConfig.permissions.default.everyone =
-        DefaultAccessPermission.WRITE;
+      noteMockConfig.permissions.default.loggedIn = DefaultAccessLevel.WRITE;
+      noteMockConfig.permissions.default.everyone = DefaultAccessLevel.WRITE;
       expect(service.mayCreate(null)).toBeTruthy();
     });
     it('denies creation of notes for guests without permission', () => {
       noteMockConfig.guestAccess = GuestAccess.WRITE;
-      noteMockConfig.permissions.default.loggedIn =
-        DefaultAccessPermission.WRITE;
-      noteMockConfig.permissions.default.everyone =
-        DefaultAccessPermission.WRITE;
+      noteMockConfig.permissions.default.loggedIn = DefaultAccessLevel.WRITE;
+      noteMockConfig.permissions.default.everyone = DefaultAccessLevel.WRITE;
       expect(service.mayCreate(null)).toBeFalsy();
     });
   });

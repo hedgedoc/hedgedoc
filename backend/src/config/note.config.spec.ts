@@ -5,7 +5,7 @@
  */
 import mockedEnv from 'mocked-env';
 
-import { DefaultAccessPermission } from './default-access-permission.enum';
+import { DefaultAccessLevel } from './default-access-level.enum';
 import { GuestAccess } from './guest_access.enum';
 import noteConfig from './note.config';
 
@@ -27,8 +27,8 @@ describe('noteConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
           HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessPermission.READ,
-          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessPermission.READ,
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
+          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.READ,
           HD_GUEST_ACCESS: guestAccess,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -41,10 +41,10 @@ describe('noteConfig', () => {
       expect(config.forbiddenNoteIds).toEqual(forbiddenNoteIds);
       expect(config.maxDocumentLength).toEqual(maxDocumentLength);
       expect(config.permissions.default.everyone).toEqual(
-        DefaultAccessPermission.READ,
+        DefaultAccessLevel.READ,
       );
       expect(config.permissions.default.loggedIn).toEqual(
-        DefaultAccessPermission.READ,
+        DefaultAccessLevel.READ,
       );
       expect(config.guestAccess).toEqual(guestAccess);
       restore();
@@ -55,8 +55,8 @@ describe('noteConfig', () => {
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessPermission.READ,
-          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessPermission.READ,
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
+          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.READ,
           HD_GUEST_ACCESS: guestAccess,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -68,10 +68,10 @@ describe('noteConfig', () => {
       expect(config.forbiddenNoteIds).toHaveLength(0);
       expect(config.maxDocumentLength).toEqual(maxDocumentLength);
       expect(config.permissions.default.everyone).toEqual(
-        DefaultAccessPermission.READ,
+        DefaultAccessLevel.READ,
       );
       expect(config.permissions.default.loggedIn).toEqual(
-        DefaultAccessPermission.READ,
+        DefaultAccessLevel.READ,
       );
       expect(config.guestAccess).toEqual(guestAccess);
       restore();
@@ -83,8 +83,8 @@ describe('noteConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_FORBIDDEN_NOTE_IDS: forbiddenNoteId,
           HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessPermission.READ,
-          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessPermission.READ,
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
+          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.READ,
           HD_GUEST_ACCESS: guestAccess,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -97,10 +97,10 @@ describe('noteConfig', () => {
       expect(config.forbiddenNoteIds[0]).toEqual(forbiddenNoteId);
       expect(config.maxDocumentLength).toEqual(maxDocumentLength);
       expect(config.permissions.default.everyone).toEqual(
-        DefaultAccessPermission.READ,
+        DefaultAccessLevel.READ,
       );
       expect(config.permissions.default.loggedIn).toEqual(
-        DefaultAccessPermission.READ,
+        DefaultAccessLevel.READ,
       );
 
       expect(config.guestAccess).toEqual(guestAccess);
@@ -112,8 +112,8 @@ describe('noteConfig', () => {
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessPermission.READ,
-          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessPermission.READ,
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
+          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.READ,
           HD_GUEST_ACCESS: guestAccess,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -126,10 +126,10 @@ describe('noteConfig', () => {
       expect(config.forbiddenNoteIds).toEqual(forbiddenNoteIds);
       expect(config.maxDocumentLength).toEqual(100000);
       expect(config.permissions.default.everyone).toEqual(
-        DefaultAccessPermission.READ,
+        DefaultAccessLevel.READ,
       );
       expect(config.permissions.default.loggedIn).toEqual(
-        DefaultAccessPermission.READ,
+        DefaultAccessLevel.READ,
       );
 
       expect(config.guestAccess).toEqual(guestAccess);
@@ -142,7 +142,7 @@ describe('noteConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
           HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessPermission.READ,
+          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.READ,
           HD_GUEST_ACCESS: guestAccess,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -155,10 +155,10 @@ describe('noteConfig', () => {
       expect(config.forbiddenNoteIds).toEqual(forbiddenNoteIds);
       expect(config.maxDocumentLength).toEqual(maxDocumentLength);
       expect(config.permissions.default.everyone).toEqual(
-        DefaultAccessPermission.READ,
+        DefaultAccessLevel.READ,
       );
       expect(config.permissions.default.loggedIn).toEqual(
-        DefaultAccessPermission.READ,
+        DefaultAccessLevel.READ,
       );
 
       expect(config.guestAccess).toEqual(guestAccess);
@@ -171,7 +171,7 @@ describe('noteConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
           HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessPermission.READ,
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
           HD_GUEST_ACCESS: guestAccess,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -184,10 +184,10 @@ describe('noteConfig', () => {
       expect(config.forbiddenNoteIds).toEqual(forbiddenNoteIds);
       expect(config.maxDocumentLength).toEqual(maxDocumentLength);
       expect(config.permissions.default.everyone).toEqual(
-        DefaultAccessPermission.READ,
+        DefaultAccessLevel.READ,
       );
       expect(config.permissions.default.loggedIn).toEqual(
-        DefaultAccessPermission.WRITE,
+        DefaultAccessLevel.WRITE,
       );
 
       expect(config.guestAccess).toEqual(guestAccess);
@@ -200,7 +200,7 @@ describe('noteConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
           HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessPermission.READ,
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -212,10 +212,10 @@ describe('noteConfig', () => {
       expect(config.forbiddenNoteIds).toEqual(forbiddenNoteIds);
       expect(config.maxDocumentLength).toEqual(maxDocumentLength);
       expect(config.permissions.default.everyone).toEqual(
-        DefaultAccessPermission.READ,
+        DefaultAccessLevel.READ,
       );
       expect(config.permissions.default.loggedIn).toEqual(
-        DefaultAccessPermission.WRITE,
+        DefaultAccessLevel.WRITE,
       );
 
       expect(config.guestAccess).toEqual(GuestAccess.WRITE);
@@ -230,8 +230,8 @@ describe('noteConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_FORBIDDEN_NOTE_IDS: invalidforbiddenNoteIds.join(' , '),
           HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessPermission.READ,
-          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessPermission.READ,
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
+          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.READ,
           HD_GUEST_ACCESS: guestAccess,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -251,8 +251,8 @@ describe('noteConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
           HD_MAX_DOCUMENT_LENGTH: negativeMaxDocumentLength.toString(),
-          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessPermission.READ,
-          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessPermission.READ,
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
+          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.READ,
           HD_GUEST_ACCESS: guestAccess,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -272,8 +272,8 @@ describe('noteConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
           HD_MAX_DOCUMENT_LENGTH: floatMaxDocumentLength.toString(),
-          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessPermission.READ,
-          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessPermission.READ,
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
+          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.READ,
           HD_GUEST_ACCESS: guestAccess,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -293,8 +293,8 @@ describe('noteConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
           HD_MAX_DOCUMENT_LENGTH: invalidMaxDocumentLength,
-          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessPermission.READ,
-          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessPermission.READ,
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
+          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.READ,
           HD_GUEST_ACCESS: guestAccess,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -315,7 +315,7 @@ describe('noteConfig', () => {
           HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
           HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
           HD_PERMISSION_DEFAULT_EVERYONE: wrongDefaultPermission,
-          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessPermission.READ,
+          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.READ,
           HD_GUEST_ACCESS: guestAccess,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -335,7 +335,7 @@ describe('noteConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
           HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessPermission.READ,
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
           HD_PERMISSION_DEFAULT_LOGGED_IN: wrongDefaultPermission,
           HD_GUEST_ACCESS: guestAccess,
           /* eslint-enable @typescript-eslint/naming-convention */
@@ -356,8 +356,8 @@ describe('noteConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
           HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessPermission.READ,
-          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessPermission.READ,
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
+          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.READ,
           HD_GUEST_ACCESS: wrongDefaultPermission,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -377,8 +377,8 @@ describe('noteConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
           HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessPermission.READ,
-          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessPermission.READ,
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
+          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.READ,
           HD_GUEST_ACCESS: 'deny',
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -398,8 +398,8 @@ describe('noteConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
           HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessPermission.WRITE,
-          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessPermission.READ,
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.WRITE,
+          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.READ,
           HD_GUEST_ACCESS: guestAccess,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -408,7 +408,7 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        `'HD_PERMISSION_DEFAULT_EVERYONE' is set to '${DefaultAccessPermission.WRITE}', but 'HD_PERMISSION_DEFAULT_LOGGED_IN' is set to '${DefaultAccessPermission.READ}'. This gives everyone greater permissions than logged-in users which is not allowed.`,
+        `'HD_PERMISSION_DEFAULT_EVERYONE' is set to '${DefaultAccessLevel.WRITE}', but 'HD_PERMISSION_DEFAULT_LOGGED_IN' is set to '${DefaultAccessLevel.READ}'. This gives everyone greater permissions than logged-in users which is not allowed.`,
       );
       restore();
     });
@@ -419,8 +419,8 @@ describe('noteConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
           HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessPermission.WRITE,
-          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessPermission.NONE,
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.WRITE,
+          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.NONE,
           HD_GUEST_ACCESS: guestAccess,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -429,7 +429,7 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        `'HD_PERMISSION_DEFAULT_EVERYONE' is set to '${DefaultAccessPermission.WRITE}', but 'HD_PERMISSION_DEFAULT_LOGGED_IN' is set to '${DefaultAccessPermission.NONE}'. This gives everyone greater permissions than logged-in users which is not allowed.`,
+        `'HD_PERMISSION_DEFAULT_EVERYONE' is set to '${DefaultAccessLevel.WRITE}', but 'HD_PERMISSION_DEFAULT_LOGGED_IN' is set to '${DefaultAccessLevel.NONE}'. This gives everyone greater permissions than logged-in users which is not allowed.`,
       );
       restore();
     });
@@ -440,8 +440,8 @@ describe('noteConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
           HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessPermission.READ,
-          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessPermission.NONE,
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
+          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.NONE,
           HD_GUEST_ACCESS: guestAccess,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -450,7 +450,7 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        `'HD_PERMISSION_DEFAULT_EVERYONE' is set to '${DefaultAccessPermission.READ}', but 'HD_PERMISSION_DEFAULT_LOGGED_IN' is set to '${DefaultAccessPermission.NONE}'. This gives everyone greater permissions than logged-in users which is not allowed.`,
+        `'HD_PERMISSION_DEFAULT_EVERYONE' is set to '${DefaultAccessLevel.READ}', but 'HD_PERMISSION_DEFAULT_LOGGED_IN' is set to '${DefaultAccessLevel.NONE}'. This gives everyone greater permissions than logged-in users which is not allowed.`,
       );
       restore();
     });

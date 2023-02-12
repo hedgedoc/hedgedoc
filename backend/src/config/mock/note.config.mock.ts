@@ -6,7 +6,7 @@
 import { ConfigFactoryKeyHost, registerAs } from '@nestjs/config';
 import { ConfigFactory } from '@nestjs/config/dist/interfaces';
 
-import { DefaultAccessPermission } from '../default-access-permission.enum';
+import { DefaultAccessLevel } from '../default-access-level.enum';
 import { GuestAccess } from '../guest_access.enum';
 import { NoteConfig } from '../note.config';
 
@@ -16,8 +16,8 @@ export function createDefaultMockNoteConfig(): NoteConfig {
     forbiddenNoteIds: ['forbiddenNoteId'],
     permissions: {
       default: {
-        everyone: DefaultAccessPermission.READ,
-        loggedIn: DefaultAccessPermission.WRITE,
+        everyone: DefaultAccessLevel.READ,
+        loggedIn: DefaultAccessLevel.WRITE,
       },
     },
     guestAccess: GuestAccess.CREATE,

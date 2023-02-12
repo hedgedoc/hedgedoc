@@ -4,21 +4,21 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export enum DefaultAccessPermission {
+export enum DefaultAccessLevel {
   NONE = 'none',
   READ = 'read',
   WRITE = 'write',
 }
 
-export function getDefaultAccessPermissionOrdinal(
-  permission: DefaultAccessPermission,
+export function getDefaultAccessLevelOrdinal(
+  permission: DefaultAccessLevel,
 ): number {
   switch (permission) {
-    case DefaultAccessPermission.NONE:
+    case DefaultAccessLevel.NONE:
       return 0;
-    case DefaultAccessPermission.READ:
+    case DefaultAccessLevel.READ:
       return 1;
-    case DefaultAccessPermission.WRITE:
+    case DefaultAccessLevel.WRITE:
       return 2;
     default:
       throw Error('Unknown permission');

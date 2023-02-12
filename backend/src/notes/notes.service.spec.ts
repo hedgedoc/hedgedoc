@@ -16,7 +16,7 @@ import {
 
 import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
-import { DefaultAccessPermission } from '../config/default-access-permission.enum';
+import { DefaultAccessLevel } from '../config/default-access-level.enum';
 import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
@@ -372,13 +372,13 @@ describe('NotesService', () => {
         const groupPermissions = await newNote.groupPermissions;
         expect(groupPermissions).toHaveLength(2);
         expect(groupPermissions[0].canEdit).toEqual(
-          everyoneDefaultAccessPermission !== DefaultAccessPermission.WRITE,
+          everyoneDefaultAccessPermission !== DefaultAccessLevel.WRITE,
         );
         expect((await groupPermissions[0].group).name).toEqual(
           SpecialGroup.EVERYONE,
         );
         expect(groupPermissions[1].canEdit).toEqual(
-          loggedinDefaultAccessPermission === DefaultAccessPermission.WRITE,
+          loggedinDefaultAccessPermission === DefaultAccessLevel.WRITE,
         );
         expect((await groupPermissions[1].group).name).toEqual(
           SpecialGroup.LOGGED_IN,
@@ -398,13 +398,13 @@ describe('NotesService', () => {
         const groupPermissions = await newNote.groupPermissions;
         expect(groupPermissions).toHaveLength(2);
         expect(groupPermissions[0].canEdit).toEqual(
-          everyoneDefaultAccessPermission === DefaultAccessPermission.WRITE,
+          everyoneDefaultAccessPermission === DefaultAccessLevel.WRITE,
         );
         expect((await groupPermissions[0].group).name).toEqual(
           SpecialGroup.EVERYONE,
         );
         expect(groupPermissions[1].canEdit).toEqual(
-          loggedinDefaultAccessPermission === DefaultAccessPermission.WRITE,
+          loggedinDefaultAccessPermission === DefaultAccessLevel.WRITE,
         );
         expect((await groupPermissions[1].group).name).toEqual(
           SpecialGroup.LOGGED_IN,
@@ -423,13 +423,13 @@ describe('NotesService', () => {
         const groupPermissions = await newNote.groupPermissions;
         expect(groupPermissions).toHaveLength(2);
         expect(groupPermissions[0].canEdit).toEqual(
-          everyoneDefaultAccessPermission !== DefaultAccessPermission.WRITE,
+          everyoneDefaultAccessPermission !== DefaultAccessLevel.WRITE,
         );
         expect((await groupPermissions[0].group).name).toEqual(
           SpecialGroup.EVERYONE,
         );
         expect(groupPermissions[1].canEdit).toEqual(
-          loggedinDefaultAccessPermission === DefaultAccessPermission.WRITE,
+          loggedinDefaultAccessPermission === DefaultAccessLevel.WRITE,
         );
         expect((await groupPermissions[1].group).name).toEqual(
           SpecialGroup.LOGGED_IN,
@@ -449,13 +449,13 @@ describe('NotesService', () => {
         const groupPermissions = await newNote.groupPermissions;
         expect(groupPermissions).toHaveLength(2);
         expect(groupPermissions[0].canEdit).toEqual(
-          everyoneDefaultAccessPermission === DefaultAccessPermission.WRITE,
+          everyoneDefaultAccessPermission === DefaultAccessLevel.WRITE,
         );
         expect((await groupPermissions[0].group).name).toEqual(
           SpecialGroup.EVERYONE,
         );
         expect(groupPermissions[1].canEdit).toEqual(
-          loggedinDefaultAccessPermission === DefaultAccessPermission.WRITE,
+          loggedinDefaultAccessPermission === DefaultAccessLevel.WRITE,
         );
         expect((await groupPermissions[1].group).name).toEqual(
           SpecialGroup.LOGGED_IN,
@@ -479,13 +479,13 @@ describe('NotesService', () => {
           const groupPermissions = await newNote.groupPermissions;
           expect(groupPermissions).toHaveLength(2);
           expect(groupPermissions[0].canEdit).toEqual(
-            everyoneDefaultAccessPermission === DefaultAccessPermission.WRITE,
+            everyoneDefaultAccessPermission === DefaultAccessLevel.WRITE,
           );
           expect((await groupPermissions[0].group).name).toEqual(
             SpecialGroup.EVERYONE,
           );
           expect(groupPermissions[1].canEdit).toEqual(
-            loggedinDefaultAccessPermission === DefaultAccessPermission.WRITE,
+            loggedinDefaultAccessPermission === DefaultAccessLevel.WRITE,
           );
           expect((await groupPermissions[1].group).name).toEqual(
             SpecialGroup.LOGGED_IN,
@@ -500,7 +500,7 @@ describe('NotesService', () => {
         beforeEach(
           () =>
             (noteMockConfig.permissions.default.everyone =
-              DefaultAccessPermission.NONE),
+              DefaultAccessLevel.NONE),
         );
         it('default permissions', async () => {
           mockGroupRepo();
@@ -514,7 +514,7 @@ describe('NotesService', () => {
           const groupPermissions = await newNote.groupPermissions;
           expect(groupPermissions).toHaveLength(1);
           expect(groupPermissions[0].canEdit).toEqual(
-            loggedinDefaultAccessPermission === DefaultAccessPermission.WRITE,
+            loggedinDefaultAccessPermission === DefaultAccessLevel.WRITE,
           );
           expect((await groupPermissions[0].group).name).toEqual(
             SpecialGroup.LOGGED_IN,

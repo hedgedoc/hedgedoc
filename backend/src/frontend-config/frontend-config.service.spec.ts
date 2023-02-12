@@ -10,7 +10,7 @@ import { URL } from 'url';
 import { AppConfig } from '../config/app.config';
 import { AuthConfig } from '../config/auth.config';
 import { CustomizationConfig } from '../config/customization.config';
-import { DefaultAccessPermission } from '../config/default-access-permission.enum';
+import { DefaultAccessLevel } from '../config/default-access-level.enum';
 import { ExternalServicesConfig } from '../config/external-services.config';
 import { GitlabScope, GitlabVersion } from '../config/gitlab.enum';
 import { GuestAccess } from '../config/guest_access.enum';
@@ -197,8 +197,8 @@ describe('FrontendConfigService', () => {
                     guestAccess: GuestAccess.CREATE,
                     permissions: {
                       default: {
-                        everyone: DefaultAccessPermission.READ,
-                        loggedIn: DefaultAccessPermission.WRITE,
+                        everyone: DefaultAccessLevel.READ,
+                        loggedIn: DefaultAccessLevel.WRITE,
                       },
                     },
                   } as NoteConfig;
@@ -360,8 +360,8 @@ describe('FrontendConfigService', () => {
                 guestAccess: GuestAccess.CREATE,
                 permissions: {
                   default: {
-                    everyone: DefaultAccessPermission.READ,
-                    loggedIn: DefaultAccessPermission.WRITE,
+                    everyone: DefaultAccessLevel.READ,
+                    loggedIn: DefaultAccessLevel.WRITE,
                   },
                 },
               };
