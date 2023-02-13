@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`blockquote extra tag renders the tag "> [color=#f00] text" correctly 1`] = `
+<div>
+  <blockquote
+    style="border-left-color: #f00;"
+  >
+    
+
+    <p>
+       text
+    </p>
+    
+
+  </blockquote>
+  
+
+</div>
+`;
+
+exports[`blockquote extra tag renders the tag "[=value]" correctly 1`] = `
+<div>
+  <p>
+    [=value]
+  </p>
+  
+
+</div>
+`;
+
+exports[`blockquote extra tag renders the tag "[color=#abcdef]" correctly 1`] = `
+<div>
+  <p>
+    <span
+      class="blockquote-extra"
+      style="color: rgb(171, 205, 239);"
+    >
+      <i
+        class="fa  fa-tag mx-1 "
+      />
+    </span>
+  </p>
+  
+
+</div>
+`;
+
+exports[`blockquote extra tag renders the tag "[color=#dfe]" correctly 1`] = `
+<div>
+  <p>
+    <span
+      class="blockquote-extra"
+      style="color: rgb(221, 255, 238);"
+    >
+      <i
+        class="fa  fa-tag mx-1 "
+      />
+    </span>
+  </p>
+  
+
+</div>
+`;
+
+exports[`blockquote extra tag renders the tag "[color=]" correctly 1`] = `
+<div>
+  <p>
+    [color=]
+  </p>
+  
+
+</div>
+`;
+
+exports[`blockquote extra tag renders the tag "[color=notarealcolor]" correctly 1`] = `
+<div>
+  <p>
+    <span
+      class="blockquote-extra"
+    >
+      <i
+        class="fa  fa-tag mx-1 "
+      />
+      notarealcolor
+    </span>
+  </p>
+  
+
+</div>
+`;
+
+exports[`blockquote extra tag renders the tag "[color=white]" correctly 1`] = `
+<div>
+  <p>
+    <span
+      class="blockquote-extra"
+      style="color: white;"
+    >
+      <i
+        class="fa  fa-tag mx-1 "
+      />
+    </span>
+  </p>
+  
+
+</div>
+`;
+
+exports[`blockquote extra tag renders the tag "[key=]" correctly 1`] = `
+<div>
+  <p>
+    [key=]
+  </p>
+  
+
+</div>
+`;
+
+exports[`blockquote extra tag renders the tag "[key]" correctly 1`] = `
+<div>
+  <p>
+    [key]
+  </p>
+  
+
+</div>
+`;
+
+exports[`blockquote extra tag renders the tag "[name=]" correctly 1`] = `
+<div>
+  <p>
+    [name=]
+  </p>
+  
+
+</div>
+`;
+
+exports[`blockquote extra tag renders the tag "[name=giowehg]" correctly 1`] = `
+<div>
+  <p>
+    <span
+      class="blockquote-extra"
+    >
+      <i
+        class="fa  fa-user mx-1 "
+      />
+      giowehg
+    </span>
+  </p>
+  
+
+</div>
+`;
+
+exports[`blockquote extra tag renders the tag "[time=]" correctly 1`] = `
+<div>
+  <p>
+    [time=]
+  </p>
+  
+
+</div>
+`;
+
+exports[`blockquote extra tag renders the tag "[time=tomorrow]" correctly 1`] = `
+<div>
+  <p>
+    <span
+      class="blockquote-extra"
+    >
+      <i
+        class="fa  fa-clock-o mx-1 "
+      />
+      tomorrow
+    </span>
+  </p>
+  
+
+</div>
+`;
