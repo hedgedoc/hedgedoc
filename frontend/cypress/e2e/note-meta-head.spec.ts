@@ -24,3 +24,24 @@ describe('Opengraph metadata', () => {
     cy.get('meta[property="og:image"]').should('have.attr', 'content', 'https://dummyimage.com/48')
   })
 })
+
+describe('License frontmatter', () => {
+  beforeEach(() => {
+    cy.visitTestNote()
+  })
+
+  it('sets the link tag if defined and not blank', () => {
+    cy.setCodemirrorContent('---\nlicense: https://example.com\n---')
+    cy.get('link[rel="license"]').should('have.attr', 'href', 'https://example.com')
+  })
+
+  it('does not set the link tag if not defined', () => {
+    cy.setCodemirrorContent('---\ntitle: No license for this note\n---')
+    cy.get('link[rel="license"]').should('not.exist')
+  })
+
+  it('does not set the link tag if defined but blank', () => {
+    cy.setCodemirrorContent('---\nlicense: \n---')
+    cy.get('link[rel="license"]').should('not.exist')
+  })
+})
