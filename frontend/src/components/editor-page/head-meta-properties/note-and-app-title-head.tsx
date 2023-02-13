@@ -1,10 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useAppTitle } from '../../hooks/common/use-app-title'
-import { useNoteTitle } from '../../hooks/common/use-note-title'
+import { useAppTitle } from '../../../hooks/common/use-app-title'
+import { useNoteTitle } from '../../../hooks/common/use-note-title'
 import Head from 'next/head'
 import React, { useMemo } from 'react'
 

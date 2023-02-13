@@ -54,6 +54,7 @@ export const initialState: NoteDetails = {
     newlinesAreBreaks: true,
     GA: '',
     disqus: '',
+    license: '',
     type: NoteType.DOCUMENT,
     opengraph: {},
     slideOptions: initialSlideOptions

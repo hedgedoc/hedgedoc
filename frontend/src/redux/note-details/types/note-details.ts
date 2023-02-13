@@ -42,6 +42,7 @@ export interface NoteFrontmatter {
   newlinesAreBreaks: boolean
   GA: string
   disqus: string
+  license: string
   type: NoteType
   opengraph: OpenGraph
   slideOptions: SlideOptions
