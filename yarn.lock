@@ -2887,23 +2887,23 @@ __metadata:
   linkType: hard
 
 "@lezer/html@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "@lezer/html@npm:1.3.0"
+  version: 1.3.1
+  resolution: "@lezer/html@npm:1.3.1"
   dependencies:
     "@lezer/common": ^1.0.0
     "@lezer/highlight": ^1.0.0
     "@lezer/lr": ^1.0.0
-  checksum: e6efde94614a5b7ebf2713b244a110ef9025369561c7bf42fe6dd8f5877d2ee0c71f894b8b43d1284d23bf429fd3688ec3b6b0c2b8702df366c2b5e5cedc4c19
+  checksum: ac5c4bf9d106699ce7af2d3f0cf720fd62d73f67448ffc7bd24aebe2bba4d4454bd9f0f859013e09dae1d70a66c3e7b83bb34ac9f6f2fa26fb077551403bfe1b
   languageName: node
   linkType: hard
 
 "@lezer/java@npm:^1.0.0":
-  version: 1.0.2
-  resolution: "@lezer/java@npm:1.0.2"
+  version: 1.0.3
+  resolution: "@lezer/java@npm:1.0.3"
   dependencies:
     "@lezer/highlight": ^1.0.0
     "@lezer/lr": ^1.0.0
-  checksum: c1488730ae8ade74675a7e094995659ef2f962826d8de5e7c6c35ad12f03798158dee696d89b6608da1e8f2dcff828496bf4a44eac06dd6c33076c1177d7c9d4
+  checksum: 2fffea6627d130413ffad4e61040267974cca3167d98881b9e5b5e2455530de74a82c234d93603e92a4972fad314671453c49c0a76b0f4547c4617d671fd7b99
   languageName: node
   linkType: hard
 
@@ -4414,21 +4414,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express-session@npm:1.17.6":
+"@types/express-session@npm:1.17.6, @types/express-session@npm:^1.15.5":
   version: 1.17.6
   resolution: "@types/express-session@npm:1.17.6"
   dependencies:
     "@types/express": "*"
   checksum: f5f2201d6b9568d8b9319735a4f6806b5ca144cee450274965aec54bc0a0331ba8bfffc1ad5addadf2e625769e13813a48cb5aea5b166fa05f474a12302dbb38
-  languageName: node
-  linkType: hard
-
-"@types/express-session@npm:^1.15.5":
-  version: 1.17.5
-  resolution: "@types/express-session@npm:1.17.5"
-  dependencies:
-    "@types/express": "*"
-  checksum: f6995f7720a18546bcb10cc707cf8c9c92455eb4319c0c50c57e9b9b10ed20dc379d74d5e4c3323fe4e924238b75e13c97822c9d81a80fa064ddc71654c1059d
   languageName: node
   linkType: hard
 
@@ -6685,9 +6676,9 @@ __metadata:
   linkType: hard
 
 "ci-info@npm:^3.2.0":
-  version: 3.7.1
-  resolution: "ci-info@npm:3.7.1"
-  checksum: 72d93d5101ea1c186511277fbd8d06ae8a6e028cc2fb94361e92bf735b39c5ebd192e8d15a66ff8c4e3ed569f87c2f844e96f90e141b2de5c649f77ec34ff601
+  version: 3.8.0
+  resolution: "ci-info@npm:3.8.0"
+  checksum: d0a4d3160497cae54294974a7246202244fff031b0a6ea20dd57b10ec510aa17399c41a1b0982142c105f3255aff2173e5c0dd7302ee1b2f28ba3debda375098
   languageName: node
   linkType: hard
 
