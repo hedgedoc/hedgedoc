@@ -48,6 +48,7 @@ const parseRawNoteFrontmatter = (rawData: RawNoteFrontmatter): NoteFrontmatter =
     dir: parseTextDirection(rawData),
     opengraph: parseOpenGraph(rawData),
     slideOptions: parseSlideOptions(rawData),
+    license: rawData.license ?? initialState.frontmatter.license,
     tags
   }
 }

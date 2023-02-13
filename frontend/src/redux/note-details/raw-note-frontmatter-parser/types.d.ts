@@ -14,6 +14,7 @@ export interface RawNoteFrontmatter {
   breaks: boolean | undefined
   GA: string | undefined
   disqus: string | undefined
+  license: string | undefined
   type: string | undefined
   slideOptions: { [key: string]: string } | null
   opengraph: { [key: string]: string } | null

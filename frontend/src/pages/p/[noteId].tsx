@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { NoteLoadingBoundary } from '../../components/common/note-loading-boundary/note-loading-boundary'
+import { HeadMetaProperties } from '../../components/editor-page/head-meta-properties/head-meta-properties'
 import { EditorToRendererCommunicatorContextProvider } from '../../components/editor-page/render-context/editor-to-renderer-communicator-context-provider'
-import { NoteAndAppTitleHead } from '../../components/layout/note-and-app-title-head'
 import { SlideShowPageContent } from '../../components/slide-show-page/slide-show-page-content'
 import React from 'react'
 
@@ -15,7 +15,7 @@ import React from 'react'
 export const SlideShowPage: React.FC = () => {
   return (
     <NoteLoadingBoundary>
-      <NoteAndAppTitleHead />
+      <HeadMetaProperties />
       <EditorToRendererCommunicatorContextProvider>
         <SlideShowPageContent />
       </EditorToRendererCommunicatorContextProvider>

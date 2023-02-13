@@ -7,8 +7,8 @@ import { MotdModal } from '../../components/common/motd-modal/motd-modal'
 import { NoteLoadingBoundary } from '../../components/common/note-loading-boundary/note-loading-boundary'
 import { DocumentReadOnlyPageContent } from '../../components/document-read-only-page/document-read-only-page-content'
 import { AppBar, AppBarMode } from '../../components/editor-page/app-bar/app-bar'
+import { HeadMetaProperties } from '../../components/editor-page/head-meta-properties/head-meta-properties'
 import { EditorToRendererCommunicatorContextProvider } from '../../components/editor-page/render-context/editor-to-renderer-communicator-context-provider'
-import { NoteAndAppTitleHead } from '../../components/layout/note-and-app-title-head'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
 import React from 'react'
 
@@ -20,7 +20,7 @@ export const DocumentReadOnlyPage: React.FC = () => {
   return (
     <EditorToRendererCommunicatorContextProvider>
       <NoteLoadingBoundary>
-        <NoteAndAppTitleHead />
+        <HeadMetaProperties />
         <MotdModal />
         <div className={'d-flex flex-column mvh-100 bg-light'}>
           <AppBar mode={AppBarMode.BASIC} />
