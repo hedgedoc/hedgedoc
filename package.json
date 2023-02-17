@@ -27,6 +27,7 @@
     "body-parser": "^1.15.2",
     "chance": "^1.0.4",
     "cheerio": "^0.22.0",
+    "clean-webpack-plugin": "^4.0.0",
     "compression": "^1.6.2",
     "connect-flash": "^0.1.1",
     "connect-session-sequelize": "^7.1.2",
