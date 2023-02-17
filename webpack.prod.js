@@ -17,6 +17,7 @@ module.exports = [
       minimizer: [
         new EsbuildPlugin({
           target: 'es2015',
+          format: "cjs",
           exclude: ['MathJax/extensions/a11y/mathmaps']
         })
       ],
@@ -31,7 +32,8 @@ module.exports = [
     optimization: {
       minimizer: [
         new EsbuildPlugin({
-          target: 'es2015'
+          target: 'es2015',
+          format: "cjs"
         }),
         new OptimizeCSSAssetsPlugin({})
       ]
