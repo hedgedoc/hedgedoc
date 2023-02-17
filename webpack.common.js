@@ -3,6 +3,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 
 // Fix possible nofile-issues
 const fs = require('fs')
@@ -12,6 +13,7 @@ gracefulFs.gracefulify(fs)
 module.exports = {
   name: 'app',
   plugins: [
+    new CleanWebpackPlugin(),
     new webpack.ProvidePlugin({
       Visibility: 'visibilityjs',
       Cookies: 'js-cookie',
