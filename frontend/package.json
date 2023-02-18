@@ -143,7 +143,7 @@
     "@types/markdown-it-plantuml": "1.4.1",
     "@types/node": "18.13.0",
     "@types/react": "18.0.28",
-    "@types/react-dom": "18.0.10",
+    "@types/react-dom": "18.0.11",
     "@types/sass": "1.43.1",
     "@types/testing-library__jest-dom": "5.14.5",
     "@types/uuid": "9.0.0",
