@@ -85,6 +85,7 @@ describe('build state from set note data from server', () => {
         tags: [],
         robots: '',
         lang: 'en',
+        license: '',
         dir: NoteTextDirection.LTR,
         newlinesAreBreaks: true,
         GA: '',
