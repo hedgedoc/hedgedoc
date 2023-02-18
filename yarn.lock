@@ -2284,7 +2284,7 @@ __metadata:
     tsconfig-paths: 4.1.2
     typeorm: 0.3.7
     typescript: 4.9.5
-    ws: 8.12.0
+    ws: 8.12.1
     y-protocols: 1.0.5
     yjs: 13.5.46
   languageName: unknown
@@ -2311,7 +2311,7 @@ __metadata:
     prettier: 2.8.4
     ts-jest: 29.0.5
     typescript: 4.9.5
-    ws: 8.12.0
+    ws: 8.12.1
     y-protocols: 1.0.5
     yjs: 13.5.46
   languageName: unknown
@@ -2397,7 +2397,7 @@ __metadata:
     eslint-plugin-node: 11.1.0
     eslint-plugin-prettier: 4.2.1
     eslint-plugin-promise: 6.1.1
-    eslint-plugin-testing-library: 5.10.1
+    eslint-plugin-testing-library: 5.10.2
     eventemitter2: 6.4.9
     fast-deep-equal: 3.1.3
     firacode: 6.2.0
@@ -2432,7 +2432,7 @@ __metadata:
     next: 13.1.6
     prettier: 2.8.4
     react: 18.2.0
-    react-bootstrap: 2.7.1
+    react-bootstrap: 2.7.2
     react-bootstrap-typeahead: 6.0.0
     react-diff-viewer: 3.1.1
     react-dom: 18.2.0
@@ -2456,7 +2456,7 @@ __metadata:
     vega-embed: 6.21.0
     vega-lite: 5.6.0
     words-count: 2.0.2
-    ws: 8.12.0
+    ws: 8.12.1
     y-codemirror.next: 0.3.2
     y-protocols: 1.0.5
     yjs: 13.5.46
@@ -9110,14 +9110,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-testing-library@npm:5.10.1":
-  version: 5.10.1
-  resolution: "eslint-plugin-testing-library@npm:5.10.1"
+"eslint-plugin-testing-library@npm:5.10.2":
+  version: 5.10.2
+  resolution: "eslint-plugin-testing-library@npm:5.10.2"
   dependencies:
     "@typescript-eslint/utils": ^5.43.0
   peerDependencies:
     eslint: ^7.5.0 || ^8.0.0
-  checksum: fbc24ce8cbd03bee283ae520f023bd52f10d21fb25bd66c5a09a0e0ad17997bae559450438ce0b4fcc38b4e14b6802f18482c41d2bc72bf1a8e1a12a91766572
+  checksum: 3b2b330e62f4a6dc438050006f0d0c97605f6861828b153271dc6d2fafb1e60f4e86fbaa8166c7afd452e3b6cad39413738fd4c8e2eb2def1915c678154676da
   languageName: node
   linkType: hard
 
@@ -15118,9 +15118,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-bootstrap@npm:2.7.1":
-  version: 2.7.1
-  resolution: "react-bootstrap@npm:2.7.1"
+"react-bootstrap@npm:2.7.2":
+  version: 2.7.2
+  resolution: "react-bootstrap@npm:2.7.2"
   dependencies:
     "@babel/runtime": ^7.17.2
     "@restart/hooks": ^0.4.6
@@ -15141,7 +15141,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 1acc5eba7ff54dffd9950bb1ae52e4eb32fd52b5306b4932a2cefd8dab946f23478f67a1edff61acad5ab12c3b0dbf3204bf881c55f9207247b10f9b48e159d4
+  checksum: 656c0c5e44cadf8037a387b489e3928342d71ecd6b3b1aae80e7dc367d88cbe64af0cbba656f07391b9d4a22779a93bb2ff87682de6e5b3ff3e660293e17d27a
   languageName: node
   linkType: hard
 
@@ -18744,6 +18744,21 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: 818ff3f8749c172a95a114cceb8b89cedd27e43a82d65c7ad0f7882b1e96a2ee6709e3746a903c3fa88beec0c8bae9a9fcd75f20858b32a166dfb7519316a5d7
+  languageName: node
+  linkType: hard
+
+"ws@npm:8.12.1":
+  version: 8.12.1
+  resolution: "ws@npm:8.12.1"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ">=5.0.2"
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: 97301c1c4d838fc81bd413f370f75c12aabe44527b31323b761eab3043a9ecb7e32ffd668548382c9a6a5ad3a1c3a9249608e8338e6b939f2f9540f1e21970b5
   languageName: node
   linkType: hard
 
