@@ -58,7 +58,7 @@ jobs:
           tags: ${{ steps.meta-data.outputs.tags }}
           labels: ${{ steps.meta-data.outputs.labels }}
           cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-to: type=gha
           context: .
           build-args: |
             BUILD_VERSION=${{ github.event.head_commit.id }}
