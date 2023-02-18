@@ -814,10 +814,10 @@ abbrev@^2.0.0:
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-2.0.0.tgz#cf59829b8b4f03f89dda2771cb7f3653828c89bf"
   integrity sha512-6/mh1E2u2YgEsCHdY0Yx5oW+61gZU+1vXaoiHHrpKeuRNNgFvS+/jrwHiQhB5apAf5oB7UB7E19ol2R2LKH8hQ==
 
-abcjs@6.1.8:
-  version "6.1.8"
-  resolved "https://registry.yarnpkg.com/abcjs/-/abcjs-6.1.8.tgz#829ed70a44b64e6c65d9dbd212523f47c6d5dba2"
-  integrity sha512-8NTkcNIqKINfZ9Zq5y6fiImX5ptSeLLk2PA8tJ4P4VtZg9ht7bUvftJFZmaQNrX4n/3NGtWZ4+NRNTcEN+sKpg==
+abcjs@6.1.9:
+  version "6.1.9"
+  resolved "https://registry.yarnpkg.com/abcjs/-/abcjs-6.1.9.tgz#2258a44e65e60b4b70750233aea3921e2bc2f7df"
+  integrity sha512-vzGQeMQhn7c6mHNWLuT8TxXq/H7eoDjR0egSSiAC49l0L8jqGvEfeunq2AuqAmezjx5GI/Kd01WI327jw2pxog==
 
 abstract-logging@^2.0.0:
   version "2.0.1"
