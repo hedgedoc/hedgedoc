@@ -1733,9 +1733,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/autocomplete@npm:6.4.0":
-  version: 6.4.0
-  resolution: "@codemirror/autocomplete@npm:6.4.0"
+"@codemirror/autocomplete@npm:6.4.2":
+  version: 6.4.2
+  resolution: "@codemirror/autocomplete@npm:6.4.2"
   dependencies:
     "@codemirror/language": ^6.0.0
     "@codemirror/state": ^6.0.0
@@ -1746,19 +1746,19 @@ __metadata:
     "@codemirror/state": ^6.0.0
     "@codemirror/view": ^6.0.0
     "@lezer/common": ^1.0.0
-  checksum: 3470fee01da60d3d71b8b4f8728629c0f0441e704b8b828592f98c000d75fdb2c9077727e82685626cf45b95cadbc0c1a03968261df2f0cfb4162418b5f4dd1f
+  checksum: c6cc4edb1c412153e6f6f27926674d7f1d386d1f30d6d4f60c5b52bfa0105870b0c70449b69891937bcf082340d8b0fa6d1f9f28f5eb60adc2974ed4c73aadc1
   languageName: node
   linkType: hard
 
-"@codemirror/commands@npm:6.2.0":
-  version: 6.2.0
-  resolution: "@codemirror/commands@npm:6.2.0"
+"@codemirror/commands@npm:6.2.1":
+  version: 6.2.1
+  resolution: "@codemirror/commands@npm:6.2.1"
   dependencies:
     "@codemirror/language": ^6.0.0
     "@codemirror/state": ^6.2.0
     "@codemirror/view": ^6.0.0
     "@lezer/common": ^1.0.0
-  checksum: 13475fcd348335b4c31e563cbe83b98fdaa99218da882e3fbe6bad66841c55a69030e4a1a5f475ba2607db194d3b43b91e38fd088f9f4196b1ed4eac5b523909
+  checksum: 216308c57745e86bdd9cbbecc8fa6d8302c340674c3f1837894f1eeb12a91d47adeb24a1d1d76faf05f7630f6dd80b9dad974ff23f017370ebdc5329b2204262
   languageName: node
   linkType: hard
 
@@ -1967,14 +1967,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/lint@npm:6.1.0":
-  version: 6.1.0
-  resolution: "@codemirror/lint@npm:6.1.0"
+"@codemirror/lint@npm:6.1.1":
+  version: 6.1.1
+  resolution: "@codemirror/lint@npm:6.1.1"
   dependencies:
     "@codemirror/state": ^6.0.0
     "@codemirror/view": ^6.0.0
     crelt: ^1.0.5
-  checksum: 1b5179c2c18e0eb96c68b47cd6832053a6aab80d6126cc250876fa848418c537417f0656cd6f442a0e5858830546fdef6bdcbb7b9773d92989795b52c7646011
+  checksum: f58374c8c759b4bf8a9074a170d639d55e6cda105c422fb09251aac4b97dacdc7ca9e43a2bc57d45586c5326e5f332f28fef4a2bb47ff16c4a81ea6e07308e9d
   languageName: node
   linkType: hard
 
@@ -1996,15 +1996,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/theme-one-dark@npm:6.1.0":
-  version: 6.1.0
-  resolution: "@codemirror/theme-one-dark@npm:6.1.0"
+"@codemirror/theme-one-dark@npm:6.1.1":
+  version: 6.1.1
+  resolution: "@codemirror/theme-one-dark@npm:6.1.1"
   dependencies:
     "@codemirror/language": ^6.0.0
     "@codemirror/state": ^6.0.0
     "@codemirror/view": ^6.0.0
     "@lezer/highlight": ^1.0.0
-  checksum: 7454742006f0ea23ed36b1c8e232d55bd1cdf6cd3c9b5ad7f7212a4b5fe7907eecaeb1d908fed2022c2ca5d667176c93e9f071c939d54449cfe740dc028a16d8
+  checksum: e314033c77732deb6eddb44d5e43d134842dd4e174f0525161f90edb0fd4fa93e482710b7371e3ed573645b8e0c402d518d5cdae41867546cd7e2ccee8da455e
   languageName: node
   linkType: hard
 
@@ -2327,14 +2327,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/frontend@workspace:frontend"
   dependencies:
-    "@codemirror/autocomplete": 6.4.0
-    "@codemirror/commands": 6.2.0
+    "@codemirror/autocomplete": 6.4.2
+    "@codemirror/commands": 6.2.1
     "@codemirror/lang-markdown": 6.0.5
     "@codemirror/language": 6.5.0
     "@codemirror/language-data": 6.1.0
-    "@codemirror/lint": 6.1.0
+    "@codemirror/lint": 6.1.1
     "@codemirror/state": 6.2.0
-    "@codemirror/theme-one-dark": 6.1.0
+    "@codemirror/theme-one-dark": 6.1.1
     "@codemirror/view": 6.8.1
     "@fontsource/source-sans-pro": 4.5.11
     "@hedgedoc/commons": "workspace:commons"
