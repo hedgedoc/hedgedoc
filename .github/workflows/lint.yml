@@ -1,0 +1,32 @@
+name: Lint
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint files
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      - name: Setup node
+        uses: ./.github/actions/setup-node
+        with:
+          NODEJS_VERSION: '16'
+
+      - name: Run ESLint
+        run: yarn run eslint
+
+      - name: Lint markdown files
+        run: yarn run markdownlint
+
+      - name: Lint shell scripts with shellcheck
+        run: shellcheck bin/heroku bin/setup
+
+      - name: Lint JSON files
+        run: sudo apt install -y jq && yarn run jsonlint
