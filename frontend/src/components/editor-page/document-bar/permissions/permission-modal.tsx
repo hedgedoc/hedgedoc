@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -19,7 +19,7 @@ import { Modal } from 'react-bootstrap'
  */
 export const PermissionModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   return (
-    <CommonModal show={show} onHide={onHide} showCloseButton={true} title={'editor.modal.permissions.title'}>
+    <CommonModal show={show} onHide={onHide} showCloseButton={true} titleI18nKey={'editor.modal.permissions.title'}>
       <Modal.Body>
         <PermissionSectionOwner />
         <PermissionSectionUsers />

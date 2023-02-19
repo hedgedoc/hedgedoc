@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -42,7 +42,7 @@ export const AccountDeletionModal: React.FC<ModalVisibilityProps> = ({ show, onH
   }, [dispatchUiNotification, onHide, showErrorNotification])
 
   return (
-    <CommonModal show={show} title={'profile.modal.deleteUser.message'} onHide={onHide} showCloseButton={true}>
+    <CommonModal show={show} titleI18nKey={'profile.modal.deleteUser.message'} onHide={onHide} showCloseButton={true}>
       <Modal.Body>
         <Trans i18nKey='profile.modal.deleteUser.subMessage' />
       </Modal.Body>

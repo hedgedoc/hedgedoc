@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -27,7 +27,7 @@ export const ShareModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => 
   const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
 
   return (
-    <CommonModal show={show} onHide={onHide} showCloseButton={true} title={'editor.modal.shareLink.title'}>
+    <CommonModal show={show} onHide={onHide} showCloseButton={true} titleI18nKey={'editor.modal.shareLink.title'}>
       <Modal.Body>
         <Trans i18nKey={'editor.modal.shareLink.editorDescription'} />
         <CopyableField content={`${baseUrl}n/${noteIdentifier}`} shareOriginUrl={`${baseUrl}n/${noteIdentifier}`} />

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -65,7 +65,7 @@ export const CustomTableSizeModal: React.FC<CustomTableSizeModalProps> = ({ show
     <CommonModal
       show={showModal}
       onHide={onDismiss}
-      title={'editor.editorToolbar.table.customSize'}
+      titleI18nKey={'editor.editorToolbar.table.customSize'}
       showCloseButton={true}
       titleIcon={'table'}
       {...cypressId('custom-table-size-modal')}>

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -27,7 +27,7 @@ export const RevisionModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) 
     <CommonModal
       show={show}
       onHide={onHide}
-      title={'editor.modal.revision.title'}
+      titleI18nKey={'editor.modal.revision.title'}
       titleIcon={'history'}
       showCloseButton={true}
       modalSize={'xl'}

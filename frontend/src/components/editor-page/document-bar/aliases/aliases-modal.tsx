@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -21,7 +21,7 @@ export const AliasesModal: React.FC<CommonModalProps> = ({ show, onHide }) => {
   useTranslation()
 
   return (
-    <CommonModal show={show} onHide={onHide} title={'editor.modal.aliases.title'} showCloseButton={true}>
+    <CommonModal show={show} onHide={onHide} titleI18nKey={'editor.modal.aliases.title'} showCloseButton={true}>
       <Modal.Body>
         <p>
           <Trans i18nKey={'editor.modal.aliases.explanation'} />

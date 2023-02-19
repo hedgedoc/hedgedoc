@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -47,13 +47,7 @@ export const HelpModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   const modalTitle = useMemo(() => t('editor.documentBar.help') + ' - ' + t(`editor.help.${tab}`), [t, tab])
 
   return (
-    <CommonModal
-      modalSize={'lg'}
-      titleIcon={'question-circle'}
-      show={show}
-      onHide={onHide}
-      title={modalTitle}
-      titleIsI18nKey={false}>
+    <CommonModal modalSize={'lg'} titleIcon={'question-circle'} show={show} onHide={onHide} title={modalTitle}>
       <Modal.Body>
         <nav className='nav nav-tabs'>
           <Button

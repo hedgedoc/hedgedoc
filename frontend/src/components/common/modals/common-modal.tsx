@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -20,8 +20,8 @@ export interface ModalVisibilityProps {
 }
 
 export interface ModalContentProps {
+  titleI18nKey?: string
   title?: string
-  titleIsI18nKey?: boolean
   showCloseButton?: boolean
   titleIcon?: IconName
   modalSize?: 'lg' | 'sm' | 'xl'
@@ -47,20 +47,20 @@ export type CommonModalProps = PropsWithDataCypressId & ModalVisibilityProps & M
 export const CommonModal: React.FC<PropsWithChildren<CommonModalProps>> = ({
   show,
   onHide,
+  titleI18nKey,
   title,
   showCloseButton,
   titleIcon,
   additionalClasses,
   modalSize,
   children,
-  titleIsI18nKey = true,
   ...props
 }) => {
   useTranslation()
 
   const titleElement = useMemo(() => {
-    return titleIsI18nKey ? <Trans i18nKey={title} /> : <span>{title}</span>
-  }, [title, titleIsI18nKey])
+    return titleI18nKey !== undefined ? <Trans i18nKey={titleI18nKey} /> : <span>{title}</span>
+  }, [titleI18nKey, title])
 
   return (
     <ShowIf condition={show}>

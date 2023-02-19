@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -24,7 +24,7 @@ export const SettingsModal: React.FC<CommonModalProps> = ({ show, onHide }) => {
       modalSize={'lg'}
       onHide={onHide}
       titleIcon={'cog'}
-      title={'settings.title'}
+      titleI18nKey={'settings.title'}
       showCloseButton={true}>
       <Modal.Body>
         <Tabs navbar={false} variant={'pills'} defaultActiveKey={'global'}>

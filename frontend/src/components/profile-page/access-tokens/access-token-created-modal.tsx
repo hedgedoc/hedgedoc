@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -32,7 +32,7 @@ export const AccessTokenCreatedModal: React.FC<AccessTokenCreatedModalProps> = (
     <CommonModal
       show={show}
       onHide={onHide}
-      title='profile.modal.addedAccessToken.title'
+      titleI18nKey='profile.modal.addedAccessToken.title'
       {...cypressId('access-token-modal-add')}>
       <Modal.Body>
         <Trans

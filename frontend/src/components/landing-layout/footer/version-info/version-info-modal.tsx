@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -41,7 +41,7 @@ export const VersionInfoModal: React.FC<CommonModalProps> = ({ onHide, show }) =
       show={show}
       onHide={onHide}
       showCloseButton={true}
-      title={'landing.versionInfo.title'}>
+      titleI18nKey={'landing.versionInfo.title'}>
       <Modal.Body>
         <Row>
           <VersionInfoModalColumn

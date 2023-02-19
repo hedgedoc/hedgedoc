@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -49,7 +49,10 @@ export const MotdModal: React.FC = () => {
   }
 
   return (
-    <CommonModal show={!!lines && !loading && !error && !dismissed} title={'motd.title'} {...cypressId('motd-modal')}>
+    <CommonModal
+      show={!!lines && !loading && !error && !dismissed}
+      titleI18nKey={'motd.title'}
+      {...cypressId('motd-modal')}>
       <Modal.Body className={'bg-light'}>
         <EditorToRendererCommunicatorContextProvider>
           <RenderIframe
