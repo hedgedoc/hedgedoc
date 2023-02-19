@@ -1,0 +1,43 @@
+name: Build & run tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.job }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['14', '16']
+    name: Node ${{ matrix.node }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      - name: Setup Node
+        uses: ./.github/actions/setup-node
+        with:
+          NODEJS_VERSION: ${{ matrix.node }}
+
+      - name: Build project
+        run: yarn run build
+
+      - name: Run tests
+        run: yarn run mocha-suite
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        if: github.ref == 'refs/heads/master' && matrix.node-version == '16'
+        with:
+          name: Prebuild with Node.js ${{ matrix.node-version }}
+          path: |
+            **
+            !.git
+            !node_modules
