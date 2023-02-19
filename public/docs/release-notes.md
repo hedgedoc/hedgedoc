@@ -1,6 +1,6 @@
 # Release Notes
 
-## UNRELEASED
+## <i class="fa fa-tag"></i> 1.9.7 <i class="fa fa-calendar-o"></i> 2023-02-19
 
 ### Bugfixes
 - Fix note titles with special characters producing invalid file names in user export zip file
