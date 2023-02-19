@@ -90,6 +90,7 @@ extra_css:
   - theme/styles/roboto.css
 
 plugins:
+  - search
   - redirects:
       redirect_maps:
         'setup/docker-linuxserver.md': 'setup/community.md'
