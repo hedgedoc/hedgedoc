@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -26,7 +26,7 @@ export const MaxLengthWarningModal: React.FC<ModalVisibilityProps> = ({ show, on
       {...cypressId('limitReachedModal')}
       show={show}
       onHide={onHide}
-      title={'editor.error.limitReached.title'}
+      titleI18nKey={'editor.error.limitReached.title'}
       showCloseButton={true}>
       <Modal.Body>
         <Trans i18nKey={'editor.error.limitReached.description'} values={{ maxDocumentLength }} />

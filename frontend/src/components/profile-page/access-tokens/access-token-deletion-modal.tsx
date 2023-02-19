@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -49,7 +49,7 @@ export const AccessTokenDeletionModal: React.FC<AccessTokenDeletionModalProps> =
     <CommonModal
       show={show}
       onHide={onHide}
-      title={'profile.modal.deleteAccessToken.title'}
+      titleI18nKey={'profile.modal.deleteAccessToken.title'}
       {...cypressId('access-token-modal-delete')}>
       <Modal.Body>
         <Trans i18nKey='profile.modal.deleteAccessToken.message' values={{ label: token.label }} />

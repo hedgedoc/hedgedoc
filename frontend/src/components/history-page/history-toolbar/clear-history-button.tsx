@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -46,7 +46,7 @@ export const ClearHistoryButton: React.FC = () => {
         deletionButtonI18nKey={'landing.history.toolbar.clear'}
         show={modalVisibility}
         onHide={closeModal}
-        title={'landing.history.modal.clearHistory.title'}>
+        titleI18nKey={'landing.history.modal.clearHistory.title'}>
         <h5>
           <Trans i18nKey={'landing.history.modal.clearHistory.question'} />
         </h5>

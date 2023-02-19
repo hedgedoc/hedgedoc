@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -53,7 +53,7 @@ export const DeleteNoteModal: React.FC<DeleteNoteModalProps & DeleteHistoryNoteM
       deletionButtonI18nKey={modalButtonI18nKey ?? 'editor.modal.deleteNote.button'}
       show={show}
       onHide={onHide}
-      title={modalTitleI18nKey ?? 'editor.modal.deleteNote.title'}>
+      titleI18nKey={modalTitleI18nKey ?? 'editor.modal.deleteNote.title'}>
       <h5>
         <Trans i18nKey={modalQuestionI18nKey ?? 'editor.modal.deleteNote.question'} />
       </h5>

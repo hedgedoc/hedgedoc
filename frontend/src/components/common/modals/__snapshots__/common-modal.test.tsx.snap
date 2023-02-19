@@ -15,7 +15,9 @@ exports[`CommonModal render correctly in size lg 1`] = `
     >
       <div
         class="modal-title h4"
-      />
+      >
+        <span />
+      </div>
     </div>
     testText
   </div>
@@ -35,7 +37,9 @@ exports[`CommonModal render correctly in size sm 1`] = `
     >
       <div
         class="modal-title h4"
-      />
+      >
+        <span />
+      </div>
     </div>
     testText
   </div>
@@ -55,7 +59,9 @@ exports[`CommonModal render correctly in size xl 1`] = `
     >
       <div
         class="modal-title h4"
-      />
+      >
+        <span />
+      </div>
     </div>
     testText
   </div>
@@ -75,7 +81,9 @@ exports[`CommonModal render correctly with additionalClasses 1`] = `
     >
       <div
         class="modal-title h4"
-      />
+      >
+        <span />
+      </div>
     </div>
     testText
   </div>
@@ -144,6 +152,7 @@ exports[`CommonModal render correctly with title icon 1`] = `
           class="fa  fa-heart  "
         />
          
+        <span />
       </div>
     </div>
     testText
@@ -164,7 +173,9 @@ exports[`CommonModal renders correctly and calls onHide, when close button is cl
     >
       <div
         class="modal-title h4"
-      />
+      >
+        <span />
+      </div>
       <button
         aria-label="Close"
         class="btn-close"

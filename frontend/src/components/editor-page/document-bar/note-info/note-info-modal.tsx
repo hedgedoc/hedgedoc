@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -28,7 +28,7 @@ export const NoteInfoModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) 
       show={show}
       onHide={onHide}
       showCloseButton={true}
-      title={'editor.modal.documentInfo.title'}
+      titleI18nKey={'editor.modal.documentInfo.title'}
       {...cypressId('document-info-modal')}>
       <Modal.Body>
         <ListGroup>

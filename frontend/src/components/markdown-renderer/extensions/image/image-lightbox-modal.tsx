@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -32,8 +32,7 @@ export const ImageLightboxModal: React.FC<ImageLightboxModalProps> = ({ show, on
       onHide={onHide}
       showCloseButton={true}
       additionalClasses={styles.lightbox}
-      title={alt ?? title ?? ''}
-      titleIsI18nKey={false}>
+      title={title ?? alt ?? ''}>
       <ProxyImageFrame alt={alt} src={src} title={title} className={'w-100 cursor-zoom-out'} onClick={onHide} />
     </CommonModal>
   )

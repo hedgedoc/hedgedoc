@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -32,7 +32,7 @@ export interface DeletionModalProps extends CommonModalProps {
 export const DeletionModal: React.FC<PropsWithChildren<DeletionModalProps>> = ({
   show,
   onHide,
-  title,
+  titleI18nKey,
   onConfirm,
   deletionButtonI18nKey,
   titleIcon,
@@ -42,7 +42,13 @@ export const DeletionModal: React.FC<PropsWithChildren<DeletionModalProps>> = ({
   useTranslation()
 
   return (
-    <CommonModal show={show} onHide={onHide} title={title} titleIcon={titleIcon} showCloseButton={true} {...props}>
+    <CommonModal
+      show={show}
+      onHide={onHide}
+      titleI18nKey={titleI18nKey}
+      titleIcon={titleIcon}
+      showCloseButton={true}
+      {...props}>
       <Modal.Body className='text-dark'>{children}</Modal.Body>
       <Modal.Footer>
         <Button {...cypressId('deletionModal.confirmButton')} variant='danger' onClick={onConfirm}>

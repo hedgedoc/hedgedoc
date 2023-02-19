@@ -13,7 +13,9 @@ exports[`DeletionModal renders correctly with deletionButtonI18nKey 1`] = `
     >
       <div
         class="modal-title h4"
-      />
+      >
+        <span />
+      </div>
       <button
         aria-label="Close"
         class="btn-close"
