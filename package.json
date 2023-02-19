@@ -146,7 +146,7 @@
     "babel-runtime": "6.26.0",
     "bootstrap": "3.4.1",
     "bootstrap-validator": "0.11.9",
-    "codemirror": "git+https://github.com/hedgedoc/CodeMirror.git",
+    "codemirror": "git+https://github.com/hedgedoc/CodeMirror.git#hedgedoc/1.9.7",
     "copy-webpack-plugin": "6.4.1",
     "css-loader": "5.2.7",
     "emojify.js": "1.1.0",

@@ -2594,9 +2594,9 @@ cls-bluebird@^2.1.0:
     is-bluebird "^1.0.2"
     shimmer "^1.1.0"
 
-"codemirror@git+https://github.com/hedgedoc/CodeMirror.git":
-  version "5.65.9"
-  resolved "git+https://github.com/hedgedoc/CodeMirror.git#951b3d94bb5ad9ac7b44642adbe595e843390506"
+"codemirror@git+https://github.com/hedgedoc/CodeMirror.git#hedgedoc/1.9.7":
+  version "5.65.11"
+  resolved "git+https://github.com/hedgedoc/CodeMirror.git#3bf02f877d7f707557db12a4a0882ce20b79e491"
 
 collection-visit@^1.0.0:
   version "1.0.0"
