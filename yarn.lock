@@ -2453,8 +2453,8 @@ __metadata:
     typescript: 4.9.5
     uuid: 9.0.0
     vega: 5.22.1
-    vega-embed: 6.21.0
-    vega-lite: 5.6.0
+    vega-embed: 6.21.3
+    vega-lite: 5.6.1
     words-count: 2.0.2
     ws: 8.12.1
     y-codemirror.next: 0.3.2
@@ -17448,7 +17448,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.5.0, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.2.0, tslib@npm:^2.3.1, tslib@npm:^2.4.0, tslib@npm:^2.5.0":
+"tslib@npm:2.5.0, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.2.0, tslib@npm:^2.3.1, tslib@npm:^2.4.0, tslib@npm:^2.5.0, tslib@npm:~2.5.0":
   version: 2.5.0
   resolution: "tslib@npm:2.5.0"
   checksum: ae3ed5f9ce29932d049908ebfdf21b3a003a85653a9a140d614da6b767a93ef94f460e52c3d787f0e4f383546981713f165037dc2274df212ea9f8a4541004e1
@@ -17459,13 +17459,6 @@ __metadata:
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
-  languageName: node
-  linkType: hard
-
-"tslib@npm:~2.4.0":
-  version: 2.4.1
-  resolution: "tslib@npm:2.4.1"
-  checksum: 19480d6e0313292bd6505d4efe096a6b31c70e21cf08b5febf4da62e95c265c8f571f7b36fcc3d1a17e068032f59c269fab3459d6cd3ed6949eafecf64315fca
   languageName: node
   linkType: hard
 
@@ -18074,23 +18067,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-embed@npm:6.21.0":
-  version: 6.21.0
-  resolution: "vega-embed@npm:6.21.0"
+"vega-embed@npm:6.21.3":
+  version: 6.21.3
+  resolution: "vega-embed@npm:6.21.3"
   dependencies:
     fast-json-patch: ^3.1.1
     json-stringify-pretty-compact: ^3.0.0
-    semver: ^7.3.7
-    tslib: ^2.4.0
+    semver: ^7.3.8
+    tslib: ^2.5.0
     vega-interpreter: ^1.0.4
     vega-schema-url-parser: ^2.2.0
-    vega-themes: ^2.10.0
-    vega-tooltip: ^0.28.0
+    vega-themes: ^2.12.1
+    vega-tooltip: ^0.30.1
     yallist: "*"
   peerDependencies:
     vega: ^5.21.0
     vega-lite: "*"
-  checksum: dc4634f92906c8499ae94b9c3690c10b50060b1ea8538103412dc57a3930ea35d7f402ec40f0785250e469f6471fbfbc4f8eb6c0479fbb87fed00368112c5058
+  checksum: e1c40e2111916760dd806cb562b09f5028c2ab941af0469e929d5df436c651a730ebe9aa6fcaed3461196f18c96ff94a5c590adc0a7cb50f33d4c9ef78096417
   languageName: node
   linkType: hard
 
@@ -18213,20 +18206,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-lite@npm:5.6.0":
-  version: 5.6.0
-  resolution: "vega-lite@npm:5.6.0"
+"vega-lite@npm:5.6.1":
+  version: 5.6.1
+  resolution: "vega-lite@npm:5.6.1"
   dependencies:
     "@types/clone": ~2.1.1
     clone: ~2.1.2
     fast-deep-equal: ~3.1.3
     fast-json-stable-stringify: ~2.1.0
     json-stringify-pretty-compact: ~3.0.0
-    tslib: ~2.4.0
+    tslib: ~2.5.0
     vega-event-selector: ~3.0.0
     vega-expression: ~5.0.0
     vega-util: ~1.17.0
-    yargs: ~17.6.0
+    yargs: ~17.6.2
   peerDependencies:
     vega: ^5.22.0
   bin:
@@ -18234,7 +18227,7 @@ __metadata:
     vl2png: bin/vl2png
     vl2svg: bin/vl2svg
     vl2vg: bin/vl2vg
-  checksum: 5cc92eb00f62f3f9cbceb8bed89209ba5eb380acff8578b022f8fedefad9e422e7839a1e051e981891d1e350fff12c3d50b47af2dcdf03a5fca7ff27ab212667
+  checksum: a06cbd0531cc71a7aeacae3ffde936a80d3cf58ff5942fb89f3544a7b5e0e055f00069dd51950cd09d667f0eefbeb12c7dccb64dd43cbb23b9eff2be1a990979
   languageName: node
   linkType: hard
 
@@ -18350,13 +18343,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-themes@npm:^2.10.0":
-  version: 2.12.0
-  resolution: "vega-themes@npm:2.12.0"
+"vega-themes@npm:^2.12.1":
+  version: 2.12.1
+  resolution: "vega-themes@npm:2.12.1"
   peerDependencies:
     vega: "*"
     vega-lite: "*"
-  checksum: b8d3e4ff68e4a1db0d80b42c722b6753144f6acf833e4c93b5cfd840b77c8004ff816db9ded5f9ef7023a0d594c4aacf61034974142fb50d889247e4a045999d
+  checksum: 2ef22dc8e25c579b27d94d41df0058660a14fbf2d68ce53da08f7e6cc0afdf6cde020b92fddd1a00fbc286e6a95d8d4813a6828c6a9ad8b4a3b5aa000e0db418
   languageName: node
   linkType: hard
 
@@ -18371,12 +18364,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-tooltip@npm:^0.28.0":
-  version: 0.28.0
-  resolution: "vega-tooltip@npm:0.28.0"
+"vega-tooltip@npm:^0.30.1":
+  version: 0.30.1
+  resolution: "vega-tooltip@npm:0.30.1"
   dependencies:
     vega-util: ^1.17.0
-  checksum: 9610f64b51b2d84b6371c0f9d214ddefa9921d3c555c6c70ab1600ae00222f4cfc5759a910bc3aa0f0a21b9bbd2bd6bfbf5206ec32ddb82d065722768d702edd
+  checksum: 427dd60459334716af3c7f13ed5dde1b9643d512b68e1e7ef750f6675f1305e48cce3e57469dc83300d7289035dd3f30953dca541dde98063c4f0937fab60acb
   languageName: node
   linkType: hard
 
@@ -18996,7 +18989,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:17.6.2, yargs@npm:^17.3.1, yargs@npm:^17.5.1, yargs@npm:~17.6.0":
+"yargs@npm:17.6.2, yargs@npm:^17.3.1, yargs@npm:^17.5.1, yargs@npm:~17.6.2":
   version: 17.6.2
   resolution: "yargs@npm:17.6.2"
   dependencies:
