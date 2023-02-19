@@ -4,6 +4,7 @@
 
 ### Bugfixes
 - Fix note titles with special characters producing invalid file names in user export zip file
+- Fix night-mode toggle not working when page is loaded with night-mode enabled
 
 ## <i class="fa fa-tag"></i> 1.9.6 <i class="fa fa-calendar-o"></i> 2022-11-06
 
