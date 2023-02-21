@@ -54,7 +54,8 @@ export const RevisionListEntry: React.FC<RevisionListEntryProps> = ({ active, on
     <ListGroup.Item
       active={active}
       onClick={onSelect}
-      className={`user-select-none ${styles['revision-item']} d-flex flex-column`}>
+      action
+      className={`${styles['revision-item']} d-flex flex-column`}>
       <span>
         <ForkAwesomeIcon icon={'clock-o'} className='mx-2' />
         {revisionCreationTime}
