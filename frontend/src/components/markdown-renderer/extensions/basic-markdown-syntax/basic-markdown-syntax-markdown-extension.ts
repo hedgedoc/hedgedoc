@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MarkdownRendererExtension } from './base/markdown-renderer-extension'
+import { MarkdownRendererExtension } from '../base/markdown-renderer-extension'
 import { imageSize } from '@hedgedoc/markdown-it-plugins'
 import type MarkdownIt from 'markdown-it'
 import abbreviation from 'markdown-it-abbr'
@@ -17,7 +17,7 @@ import superscript from 'markdown-it-sup'
 /**
  * Adds some common markdown syntaxes to the markdown rendering.
  */
-export class GenericSyntaxMarkdownExtension extends MarkdownRendererExtension {
+export class BasicMarkdownSyntaxMarkdownExtension extends MarkdownRendererExtension {
   public configureMarkdownIt(markdownIt: MarkdownIt): void {
     abbreviation(markdownIt)
     definitionList(markdownIt)

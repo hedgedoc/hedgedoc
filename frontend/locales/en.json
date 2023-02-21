@@ -267,13 +267,6 @@
         "features": "Features",
         "yamlMetadata": "YAML Metadata",
         "slideExample": "Slide Example"
-      },
-      "cheatsheet": {
-        "title": "Cheatsheet",
-        "example": "Example",
-        "syntax": "Syntax",
-        "exampleAlert": "This is an alert area.",
-        "highlightedText": "Highlight"
       }
     },
     "onlineStatus": {
@@ -628,6 +621,256 @@
       "language": {
         "label": "Language",
         "help": "The primary user interface language"
+      }
+    }
+  },
+  "cheatsheet": {
+    "button": "Open Cheatsheet",
+    "modal":{
+      "title": "Cheatsheet",
+      "headlines": {
+        "description": "Description",
+        "exampleInput": "Example Input",
+        "exampleOutput": "Example Output",
+        "selectTopic": "Select Topic",
+        "readMoreLink": "Read More"
+      }
+    },
+    "categories": {
+      "basic": "Basics",
+      "other": "Other",
+      "embedding": "Embedding",
+      "charts": "Charts & Diagrams"
+    },
+    "basics": {
+      "formatting": {
+        "title": "Formatting",
+        "basic": {
+          "title": "Basic",
+          "description": "These are the basic markdown formatting rules.",
+          "example": "**Bold**\n__Bold__\n\n*Italic*\n_Italic_\n\n++Underline++\n~~Strikethrough~~\n\nSub~script~~\n\nSuper^script^\n\n==Marked=="
+        },
+        "abbreviation": {
+          "title": "Abbreviation",
+          "description":"",
+          "example": "*[HTML]: Hyper Text Markup Language\n*[W3C]:  World Wide Web Consortium\nThe HTML specification\nis maintained by the W3C."
+        },
+        "footnote": {
+          "title": "Footnotes",
+          "description": "",
+          "example": "Here is a footnote reference,[^1] and another.[^longnote]\n\n[^1]: Here is the footnote.\n\n[^longnote]: Here's one with multiple blocks.\n\n    Subsequent paragraphs are indented to show that they\nbelong to the previous footnote."
+        }
+      },
+      "headlines": {
+        "title": "Headlines",
+        "hashtag": {
+          "title": "Hashtag",
+          "description": "",
+          "example": "# Headline 1\n\n## Headline 2\n\n### Headline 3\n\n#### Headline 4\n\n##### Headline 5\n\n###### Headline 6"
+        },
+        "equal": {
+          "title": "Equal",
+          "description": "An alternative form to define the first headline is to append a line of only equal-signs.",
+          "example": "Headline 1\n=========="
+        }
+      },
+      "code": {
+        "title": "Code",
+        "inline": {
+          "title": "Inline",
+          "description": "You can define an inline code block by wrapping it in backticks.",
+          "example": "This is `code`."
+        },
+        "block": {
+          "title": "Block",
+          "description": "You can define a code block by putting a line of three backticks before and after the code part.",
+          "example": "```\nthis is a code block\n```"
+        }
+      },
+      "lists": {
+        "title": "Lists",
+        "unordered": {
+          "title": "Unordered",
+          "description": "",
+          "example": "- A\n- B\n- C\n\n* A\n* B\n* C"
+        },
+        "ordered": {
+          "title": "Ordered",
+          "description": "",
+          "example": "1. A\n2. B\n3. C\n\n100. A\n101. B\n102. C"
+        }
+      },
+      "images": {
+        "title": "Images",
+        "basic": {
+          "title": "Basic",
+          "description": "",
+          "example": "![Image](/icons/apple-touch-icon.png)"
+        },
+        "size": {
+          "title": "Size",
+          "description": "",
+          "example": "![Image](/icons/apple-touch-icon.png =100x50)\n\n![Image](/icons/apple-touch-icon.png =60x)\n\n![Image](/icons/apple-touch-icon.png =x50)"
+        }
+      },
+      "links": {
+        "title": "Links",
+        "description": "",
+        "example": "[Example link!](https://example.org)\n\nhttps://example.org"
+      }
+    },
+    "abcjs": {
+      "title": "abcjs",
+      "description": "You can render music sheets with abcjs by using music standard notation in a codeblock with `abc` as language.",
+      "example": "```abc\nX:1\nT:Speed the Plough\nM:4/4\nC:Trad.\nK:G\n|:GABc dedB|dedB dedB|c2ec B2dB|c2A2 A2BA|\nGABc dedB|dedB dedB|c2ec B2dB|A2F2 G4:|\n|:g2gf gdBd|g2f2 e2d2|c2ec B2dB|c2A2 A2df|\ng2gf g2Bd|g2f2 e2d2|c2ec B2dB|A2F2 G4:|\n```"
+    },
+    "alert": {
+      "title": "Alert boxes",
+      "description": "Use alert boxes to bring extra attention to parts of your document.",
+      "example": ":::success\nThis is a success\n:::\n\n:::danger\nThis is a danger\n:::\n\n:::warning\nThis is a warning\n:::\n\n:::info\nThis is a info\n:::"
+    },
+    "blockquoteTags": {
+      "name": {
+        "title": "Name",
+        "description": "Use name tags to indicate who wrote a specific quote e.g. if you're commenting on the text.",
+        "example": "> Imagination is more important than knowledge.\n> [name=Albert Einstein]"
+      },
+      "color": {
+        "title": "Color",
+        "description": "Use color tags to tint the border of the quote.",
+        "example": "> This is the default color\n\n> This is red! [color=red]\n\n> This is blue! [color=#0000ff]"
+      },
+      "time": {
+        "title": "Time",
+        "description": "Use time tags to specify when a time stamp",
+        "example": "The password is: changeme\n\n> Please change it ASAP [time=2020-03-05]"
+      },
+      "title": "Blockquote Tags",
+      "description": "Use name, time or color tags to specify your blockquotes. Color tags modify the border color.",
+      "example": "> [name=Max] Named quote\n\n> [time=today] Time quote\n\n> [color=red] quote\n\n> [name=Max] [color=green] [time=today] Combined quote"
+    },
+    "bootstrapIcon": {
+      "title": "Bootstrap Icons",
+      "description": "You can use bootstrap icons in your document by putting the name of an icon between colons but prefixed with `bi-`. A listing of all bootstrap icons can be found on their website.",
+      "example": ":bi-music-note-beamed::bi-music-note-beamed::bi-music-note-beamed:\nAround the :bi-globe-americas:\nAround the :bi-globe-asia-australia:\nAround the :bi-globe-central-south-asia:\nAround the :bi-globe-europe-africa:"
+    },
+    "emoji": {
+      "title": "Emojis",
+      "description": "You can add colored emojis by either placing the unicode character or by using a shortcode. HedgeDoc supports every emoji that Twemoji supports. You can also use the emoji picker in the editor toolbar.",
+      "example": "I :heart: :hedgehog:"
+    },
+    "csv": {
+      "title" : "CSV",
+      "table" : {
+        "title": "Table",
+        "description" : "You can render a CSV text as table by using a code block with `csv` as language. You must specify the delimiter.",
+        "example" : "```csv delimiter=;\nUsername; Identifier;First name;Last name\n\"booker12; rbooker\";9012;Rachel;Booker\ngrey07;2070;Laura;Grey\njohnson81;4081;Craig;Johnson\njenkins46;9346;Mary;Jenkins\nsmith79;5079;Jamie;Smith\n```"
+      },
+      "header": {
+        "title": "Header",
+        "description": "By adding the header keyword you can define that the first line is used as table header",
+        "example": "```csv delimiter=; header\nUsername; Identifier;First name;Last name\n\"booker12; rbooker\";9012;Rachel;Booker\ngrey07;2070;Laura;Grey\njohnson81;4081;Craig;Johnson\njenkins46;9346;Mary;Jenkins\nsmith79;5079;Jamie;Smith\n```"
+      }
+    },
+    "flowchart": {
+      "title": "flowchart.js",
+      "description": "Render flowcharts diagrams using flowchart.js by using a code block with `flow` as language.",
+      "example": "```flow\nst=>start: Start\ne=>end: End\nop=>operation: My Operation\nop2=>operation: lalala\ncond=>condition: Yes or No?\n\nst->op->op2->cond\ncond(yes)->e\ncond(no)->op2\n```"
+    },
+    "gist": {
+      "title": "GitHub Gist",
+      "description": "Embed GitHub Gists by placing a gist URL on a single line.",
+      "example": "# This is my gist\nhttps://gist.github.com/schacon/1\nThis is just the link to a gist: https://gist.github.com/schacon/1\n[Using the link tag will also not trigger the embedding](https://gist.github.com/schacon/1)"
+    },
+    "graphviz": {
+      "title": "GraphViz",
+      "description": "Render GraphViz diagrams by using the DOT language in a code block with `graphviz` as language.",
+      "example": "```graphviz\ngraph {\n  a -- b\n  a -- b\n  b -- a [color=blue]\n}\n```"
+    },
+    "katex": {
+      "title": "KaTeX",
+      "description": "You can render LaTeX mathematical expressions using KaTeX by encapsulating them in dollar signs.",
+      "example": "The *Gamma function* satisfying $\\Gamma(n) = (n-1)!\\quad\\forall n\\in\\mathbb N$ is via the Euler integral\n\n$$\nx = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.\n$$\n\n$$\n\\Gamma(z) = \\int_0^\\infty t^{z-1}e^{-t}dt\\,.\n$$"
+    },
+    "asciinema": {
+      "title": "Asciinema",
+      "description": "Embed an Asciinema video by placing the URL in a single line.",
+      "example": "https://asciinema.org/a/117928\n"
+    },
+    "mermaid": {
+      "title": "Mermaid",
+      "description": "Render diagrams and charts using mermaid.js by adding a code block with the language `mermaid`",
+      "example": "```mermaid\ngantt\n  title A Gantt Diagram\n\n  section Section\n  A task: a1, 2014-01-01, 30d\n  Another task: after a1, 20d\n\n  section Another\n  Task in sec: 2014-01-12, 12d\n  Another task: 24d\n```"
+    },
+    "imagePlaceholder": {
+      "title": "Image Placeholder",
+      "description": "You can use image placeholders to indicate spots where images should be placed. To do this use an image link with `https://` as URL. You can upload the actual image directly from the renderer. Placeholders also support size definition, alt text and title.",
+      "example": "![This is a placeholder image](https://)"
+    },
+    "iframeCapsule": {
+      "title": "Iframe capsule",
+      "description": "To protect viewers every iframe has to be activated explicitly. Before this, no information is fetched. Adding additional privileges using the sandbox attribute is not allowed.",
+      "example": "<iframe src=\"https://example.org/\"></iframe>"
+    },
+    "plantuml": {
+      "title": "PlantUML",
+      "description": "Render diagrams and charts using PlantUML by adding a code block with the language `plantuml`. PlantUML diagrams are not rendered in your browser like the other charts, but by an external server.",
+      "example": "```plantuml\n@startuml\nparticipant Alice\nparticipant \"The **Famous** Bob\" as Bob\n\nAlice -> Bob : hello --there--\n... Some ~~long delay~~ ...\nBob -> Alice : ok\nnote left\n  This is **bold**\n  This is //italics//\n  This is \"\"monospaced\"\"\n  This is --stroked--\n  This is __underlined__\n  This is ~~waved~~\nend note\n\nAlice -> Bob : A //well formatted// message\nnote right of Alice\n This is <back:cadetblue><size:18>displayed</size></back>\n __left of__ Alice.\nend note\nnote left of Bob\n <u:red>This</u> is <color #118888>displayed</color>\n **<color purple>left of</color> <s:red>Alice</strike> Bob**.\nend note\nnote over Alice, Bob\n <w:#FF33FF>This is hosted</w> by <img sourceforge.jpg>\nend note\n@enduml\n```"
+    },
+    "spoiler": {
+      "title": "Spoiler",
+      "description": "Hide information by using a spoiler tag.",
+      "example": ":::spoiler This spoiler contains a surprise.\nSURPRISE!\n:::"
+    },
+    "toc": {
+      "title": "Table Of Contents",
+      "basic": {
+        "title": "Basic",
+        "description": "Add a table of contents that is automatically generated using your headlines by adding `[toc]` into a single line.",
+        "example": "[toc]\n\n# This is a first headline\n\n## This is a second headline"
+      },
+      "levelLimit": {
+        "title": "Level limits",
+        "description": "You can limit the levels of the headlines the TOC should show",
+        "example": "[toc:2:3]\n\n# This is a first headline\n\n## This is a second headline\n\n### This is a third headline\n\n#### This is a fourth headline"
+      }
+    },
+    "vegaLite": {
+      "title": "Vega Lite",
+      "description": "Render diagrams and charts using vega lite by adding a code block with the language `vega-lite`",
+      "example": "```vega-lite\n{\n  \"$schema\": \"https://vega.github.io/schema/vega-lite/v5.json\",\n  \"description\": \"Reproducing http://robslink.com/SAS/democd91/pyramid_pie.htm\",\n  \"data\": {\n    \"values\": [\n      {\"category\": \"Sky\", \"value\": 75, \"order\": 3},\n      {\"category\": \"Shady side of a pyramid\", \"value\": 10, \"order\": 1},\n      {\"category\": \"Sunny side of a pyramid\", \"value\": 15, \"order\": 2}\n    ]\n  },\n  \"mark\": {\"type\": \"arc\", \"outerRadius\": 80},\n  \"encoding\": {\n    \"theta\": {\n      \"field\": \"value\", \"type\": \"quantitative\",\n      \"scale\": {\"range\": [2.35619449, 8.639379797]},\n      \"stack\": true\n    },\n    \"color\": {\n      \"field\": \"category\", \"type\": \"nominal\",\n      \"scale\": {\n        \"domain\": [\"Sky\", \"Shady side of a pyramid\", \"Sunny side of a pyramid\"],\n        \"range\": [\"#416D9D\", \"#674028\", \"#DEAC58\"]\n      },\n      \"legend\": {\n        \"orient\": \"none\",\n        \"title\": null,\n        \"columns\": 1,\n        \"legendX\": 200,\n        \"legendY\": 80\n      }\n    },\n    \"order\": {\n      \"field\": \"order\"\n    }\n  },\n  \"view\": {\"stroke\": null}\n}\n```"
+    },
+    "vimeo": {
+      "title": "Vimeo",
+      "description": "Embed a Vimeo video by placing the URL in a single line.",
+      "example": "https://vimeo.com/23237102"
+    },
+    "youtube": {
+      "title": "YouTube",
+      "description": "Embed a YouTube video by placing the URL in a single line.",
+      "example": "https://www.youtube.com/watch?v=YE7VzlLtp-4"
+    },
+    "taskList": {
+      "title": "Task Lists",
+      "description": "You can turn any listing into a task list by adding brackets. The checkboxes in the rendering change the markdown content if clicked.",
+      "example": "- [ ] ToDos\n  - [X] Buy some salad\n  - [ ] Brush teeth\n  - [x] Drink some water\n  - [ ] **Click my box** and see the source code, if you're allowed to edit!\n"
+    },
+    "codeHighlighting": {
+      "title": "Code Highlighting",
+      "language": {
+        "title": "Language",
+        "description": "Specify a language after the start tag of a code block to activate code highlighting.",
+        "example": "```js\nvar s = \"JavaScript syntax highlighting\";\nalert(s);\nfunction $initHighlight(block, cls) {\n  try {\n    if (cls.search(/\\bno\\-highlight\\b/) != -1)\n      return process(block, true, 0x0F) +\n             ' class=\"\"';\n  } catch (e) {\n    /* handle exception */\n  }\n  for (var i = 0 / 2; i < classes.length; i++) {\n    if (checkCondition(classes[i]) === undefined)\n      return /\\d+[\\s/]/g;\n  }\n}\n```"
+      },
+      "lineWrapping": {
+        "title": "Line wrapping",
+        "description": "Set an exclamation mark to activate line wrapping",
+        "example": "```text\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n```\n\n```text!\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n```"
+      },
+      "lineNumbers": {
+        "title": "Line numbers",
+        "description": "Set a equals sign after the language to show line numbers. You can specify a start line number after the equal sign or a plus to continue the line numbers from the last code block.",
+        "example": "```markdown=12\nline1\n```\n```markdown=+\nline2\n```\n```markdown=\nline3\n```"
       }
     }
   }

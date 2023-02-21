@@ -5,7 +5,6 @@
  */
 import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
-import { CheatsheetTabContent } from './cheatsheet-tab-content'
 import { LinksTabContent } from './links-tab-content'
 import { ShortcutTabContent } from './shortcuts-tab-content'
 import React, { useMemo, useState } from 'react'
@@ -14,7 +13,6 @@ import { QuestionCircle as IconQuestionCircle } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 export enum HelpTabStatus {
-  Cheatsheet = 'cheatsheet.title',
   Shortcuts = 'shortcuts.title',
   Links = 'links.title'
 }
@@ -31,13 +29,11 @@ export enum HelpTabStatus {
  * @param onHide A callback when the modal should be closed again
  */
 export const HelpModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
-  const [tab, setTab] = useState<HelpTabStatus>(HelpTabStatus.Cheatsheet)
+  const [tab, setTab] = useState<HelpTabStatus>(HelpTabStatus.Shortcuts)
   const { t } = useTranslation()
 
   const tabContent = useMemo(() => {
     switch (tab) {
-      case HelpTabStatus.Cheatsheet:
-        return <CheatsheetTabContent />
       case HelpTabStatus.Shortcuts:
         return <ShortcutTabContent />
       case HelpTabStatus.Links:
@@ -48,15 +44,9 @@ export const HelpModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   const modalTitle = useMemo(() => t('editor.documentBar.help') + ' - ' + t(`editor.help.${tab}`), [t, tab])
 
   return (
-    <CommonModal modalSize={'lg'} titleIcon={IconQuestionCircle} show={show} onHide={onHide} title={modalTitle}>
+    <CommonModal modalSize={'xl'} titleIcon={IconQuestionCircle} show={show} onHide={onHide} title={modalTitle}>
       <Modal.Body>
         <nav className='nav nav-tabs'>
-          <Button
-            variant={'light'}
-            className={`nav-link nav-item ${tab === HelpTabStatus.Cheatsheet ? 'active' : ''}`}
-            onClick={() => setTab(HelpTabStatus.Cheatsheet)}>
-            <Trans i18nKey={'editor.help.cheatsheet.title'} />
-          </Button>
           <Button
             variant={'light'}
             className={`nav-link nav-item ${tab === HelpTabStatus.Shortcuts ? 'active' : ''}`}

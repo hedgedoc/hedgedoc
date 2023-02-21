@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { CheatsheetExtension } from '../../../components/editor-page/cheatsheet/cheatsheet-extension'
 import type { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
 import { AppExtension } from '../../base/app-extension'
 import { SpoilerMarkdownExtension } from './spoiler-markdown-extension'
@@ -15,5 +16,9 @@ import { SpoilerMarkdownExtension } from './spoiler-markdown-extension'
 export class SpoilerAppExtension extends AppExtension {
   buildMarkdownRendererExtensions(): MarkdownRendererExtension[] {
     return [new SpoilerMarkdownExtension()]
+  }
+
+  buildCheatsheetExtensions(): CheatsheetExtension[] {
+    return [{ i18nKey: 'spoiler' }]
   }
 }

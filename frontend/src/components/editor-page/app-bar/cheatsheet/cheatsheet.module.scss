@@ -7,3 +7,9 @@
 .table-cheatsheet > tr > td {
   vertical-align: middle !important;
 }
+
+.sticky {
+  position: sticky;
+  top: 1rem;
+  bottom: 1rem;
+}

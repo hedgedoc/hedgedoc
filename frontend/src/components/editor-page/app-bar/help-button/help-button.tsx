@@ -5,12 +5,11 @@
  */
 import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
 import { cypressId } from '../../../../utils/cypress-attribute'
-import { UiIcon } from '../../../common/icons/ui-icon'
+import { IconButton } from '../../../common/icon-button/icon-button'
 import { HelpModal } from './help-modal'
 import React, { Fragment } from 'react'
-import { Button } from 'react-bootstrap'
 import { QuestionCircle as IconQuestionCircle } from 'react-bootstrap-icons'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 
 /**
  * Renders the button to open the {@link HelpModal}.
@@ -21,15 +20,16 @@ export const HelpButton: React.FC = () => {
 
   return (
     <Fragment>
-      <Button
+      <IconButton
+        icon={IconQuestionCircle}
         {...cypressId('editor-help-button')}
         title={t('editor.documentBar.help') ?? undefined}
-        className='ms-2 text-secondary'
+        className='ms-2'
         size='sm'
-        variant='outline-light'
+        variant='outline-dark'
         onClick={showModal}>
-        <UiIcon icon={IconQuestionCircle} />
-      </Button>
+        <Trans i18nKey={'editor.documentBar.help'}></Trans>
+      </IconButton>
       <HelpModal show={modalVisibility} onHide={closeModal} />
     </Fragment>
   )
