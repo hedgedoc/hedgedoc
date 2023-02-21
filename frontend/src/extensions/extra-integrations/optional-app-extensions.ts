@@ -3,6 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { BasicMarkdownSyntaxAppExtension } from '../../components/markdown-renderer/extensions/basic-markdown-syntax/basic-markdown-syntax-app-extension'
+import { BootstrapIconAppExtension } from '../../components/markdown-renderer/extensions/bootstrap-icons/bootstrap-icon-app-extension'
+import { EmojiAppExtension } from '../../components/markdown-renderer/extensions/emoji/emoji-app-extension'
+import { IframeCapsuleAppExtension } from '../../components/markdown-renderer/extensions/iframe-capsule/iframe-capsule-app-extension'
+import { ImagePlaceholderAppExtension } from '../../components/markdown-renderer/extensions/image-placeholder/image-placeholder-app-extension'
+import { TableOfContentsAppExtension } from '../../components/markdown-renderer/extensions/table-of-contents/table-of-contents-app-extension'
 import type { AppExtension } from '../base/app-extension'
 import { AbcjsAppExtension } from './abcjs/abcjs-app-extension'
 import { AlertAppExtension } from './alert/alert-app-extension'
@@ -48,5 +54,11 @@ export const optionalAppExtensions: AppExtension[] = [
   new YoutubeAppExtension(),
   new TaskListCheckboxAppExtension(),
   new HighlightedCodeFenceAppExtension(),
-  new ForkAwesomeHtmlTagAppExtension()
+  new ForkAwesomeHtmlTagAppExtension(),
+  new BootstrapIconAppExtension(),
+  new EmojiAppExtension(),
+  new TableOfContentsAppExtension(),
+  new ImagePlaceholderAppExtension(),
+  new IframeCapsuleAppExtension(),
+  new BasicMarkdownSyntaxAppExtension()
 ]

@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { CheatsheetExtension } from '../../../components/editor-page/cheatsheet/cheatsheet-extension'
 import type { Linter } from '../../../components/editor-page/editor-pane/linter/linter'
 import { SingleLineRegexLinter } from '../../../components/editor-page/editor-pane/linter/single-line-regex-linter'
 import type { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
@@ -27,5 +28,9 @@ export class VimeoAppExtension extends AppExtension {
         (match: string) => `https://player.vimeo.com/video/${match}`
       )
     ]
+  }
+
+  buildCheatsheetExtensions(): CheatsheetExtension[] {
+    return [{ i18nKey: 'vimeo', categoryI18nKey: 'embedding', readMoreUrl: new URL('https://vimeo.com/') }]
   }
 }

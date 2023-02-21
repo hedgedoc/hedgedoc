@@ -10,6 +10,7 @@ import { ShowIf } from '../../common/show-if/show-if'
 import { SignInButton } from '../../landing-layout/navigation/sign-in-button'
 import { UserDropdown } from '../../landing-layout/navigation/user-dropdown'
 import { SettingsButton } from '../../layout/settings-dialog/settings-button'
+import { CheatsheetButton } from './cheatsheet/cheatsheet-button'
 import { HelpButton } from './help-button/help-button'
 import { NavbarBranding } from './navbar-branding'
 import { ReadOnlyModeButton } from './read-only-mode-button'
@@ -47,6 +48,7 @@ export const AppBar: React.FC<AppBarProps> = ({ mode }) => {
             <ReadOnlyModeButton />
           </ShowIf>
           <HelpButton />
+          <CheatsheetButton />
         </ShowIf>
       </Nav>
       <Nav className='d-flex gap-2 align-items-center text-secondary justify-content-end'>

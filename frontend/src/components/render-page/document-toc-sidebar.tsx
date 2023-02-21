@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ShowIf } from '../common/show-if/show-if'
-import { TableOfContentsMarkdownExtension } from '../markdown-renderer/extensions/table-of-contents-markdown-extension'
+import { TableOfContentsMarkdownExtension } from '../markdown-renderer/extensions/table-of-contents/table-of-contents-markdown-extension'
 import { useExtensionEventEmitterHandler } from '../markdown-renderer/hooks/use-extension-event-emitter'
 import styles from './markdown-document.module.scss'
 import { WidthBasedTableOfContents } from './width-based-table-of-contents'

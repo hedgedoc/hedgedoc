@@ -1,20 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { optionalAppExtensions } from '../../../extensions/extra-integrations/optional-app-extensions'
 import type { MarkdownRendererExtension } from '../extensions/base/markdown-renderer-extension'
-import { BootstrapIconMarkdownExtension } from '../extensions/bootstrap-icons/bootstrap-icon-markdown-extension'
 import { DebuggerMarkdownExtension } from '../extensions/debugger-markdown-extension'
-import { EmojiMarkdownExtension } from '../extensions/emoji/emoji-markdown-extension'
-import { GenericSyntaxMarkdownExtension } from '../extensions/generic-syntax-markdown-extension'
-import { IframeCapsuleMarkdownExtension } from '../extensions/iframe-capsule/iframe-capsule-markdown-extension'
-import { ImagePlaceholderMarkdownExtension } from '../extensions/image-placeholder/image-placeholder-markdown-extension'
 import { ProxyImageMarkdownExtension } from '../extensions/image/proxy-image-markdown-extension'
 import { LinkAdjustmentMarkdownExtension } from '../extensions/link-replacer/link-adjustment-markdown-extension'
 import { LinkifyFixMarkdownExtension } from '../extensions/linkify-fix/linkify-fix-markdown-extension'
-import { TableOfContentsMarkdownExtension } from '../extensions/table-of-contents-markdown-extension'
 import { UploadIndicatingImageFrameMarkdownExtension } from '../extensions/upload-indicating-image-frame/upload-indicating-image-frame-markdown-extension'
 import { useExtensionEventEmitter } from './use-extension-event-emitter'
 import { useMemo } from 'react'
@@ -35,14 +29,8 @@ export const useMarkdownExtensions = (
     return [
       ...optionalAppExtensions.flatMap((extension) => extension.buildMarkdownRendererExtensions(extensionEventEmitter)),
       ...additionalExtensions,
-      new TableOfContentsMarkdownExtension(),
-      new IframeCapsuleMarkdownExtension(),
-      new ImagePlaceholderMarkdownExtension(),
       new UploadIndicatingImageFrameMarkdownExtension(),
       new LinkAdjustmentMarkdownExtension(baseUrl),
-      new EmojiMarkdownExtension(),
-      new BootstrapIconMarkdownExtension(),
-      new GenericSyntaxMarkdownExtension(),
       new LinkifyFixMarkdownExtension(),
       new DebuggerMarkdownExtension(),
       new ProxyImageMarkdownExtension()

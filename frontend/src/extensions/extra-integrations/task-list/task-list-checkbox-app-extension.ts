@@ -3,7 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { CheatsheetExtension } from '../../../components/editor-page/cheatsheet/cheatsheet-extension'
 import { AppExtension } from '../../base/app-extension'
+import { SetCheckboxInCheatsheet } from './set-checkbox-in-cheatsheet'
 import { SetCheckboxInEditor } from './set-checkbox-in-editor'
 import { TaskListMarkdownExtension } from './task-list-markdown-extension'
 import type { EventEmitter2 } from 'eventemitter2'
@@ -21,5 +23,9 @@ export class TaskListCheckboxAppExtension extends AppExtension {
 
   buildEditorExtensionComponent(): React.FC {
     return SetCheckboxInEditor
+  }
+
+  buildCheatsheetExtensions(): CheatsheetExtension[] {
+    return [{ i18nKey: 'taskList', cheatsheetExtensionComponent: SetCheckboxInCheatsheet }]
   }
 }

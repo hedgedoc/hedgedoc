@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { HtmlToReact } from '../../../components/common/html-to-react/html-to-react'
 import { testId } from '../../../utils/test-id'
-import convertHtmlToReact from '@hedgedoc/html-to-react'
-import { sanitize } from 'dompurify'
 import KaTeX from 'katex'
 import 'katex/dist/katex.min.css'
 import React, { useMemo } from 'react'
@@ -26,10 +25,12 @@ export const KatexFrame: React.FC<KatexFrameProps> = ({ expression, block = fals
   const dom = useMemo(() => {
     try {
       const katexHtml = KaTeX.renderToString(expression, {
-        displayMode: block === true,
+        displayMode: block,
         throwOnError: true
       })
-      return convertHtmlToReact(sanitize(katexHtml, { ADD_TAGS: ['semantics', 'annotation'] }))
+      return (
+        <HtmlToReact htmlCode={katexHtml} domPurifyConfig={{ ADD_TAGS: ['semantics', 'annotation'] }}></HtmlToReact>
+      )
     } catch (error) {
       return (
         <Alert className={block ? '' : 'd-inline-block'} variant={'danger'}>
