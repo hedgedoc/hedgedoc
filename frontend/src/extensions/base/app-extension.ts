@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { CheatsheetExtension } from '../../components/editor-page/cheatsheet/cheatsheet-extension'
 import type { Linter } from '../../components/editor-page/editor-pane/linter/linter'
 import type { MarkdownRendererExtension } from '../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
 import type { EventEmitter2 } from 'eventemitter2'
@@ -21,5 +22,9 @@ export abstract class AppExtension {
 
   public buildEditorExtensionComponent(): React.FC {
     return Fragment
+  }
+
+  public buildCheatsheetExtensions(): CheatsheetExtension[] {
+    return []
   }
 }
