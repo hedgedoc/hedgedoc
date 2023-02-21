@@ -37,6 +37,12 @@ FROM base
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
+LABEL org.opencontainers.image.title='HedgeDoc production frontend image'
+LABEL org.opencontainers.image.url='https://hedgedoc.org'
+LABEL org.opencontainers.image.source='https://github.com/hedgedoc/hedgedoc'
+LABEL org.opencontainers.image.documentation='https://github.com/hedgedoc/hedgedoc/blob/develop/docs/content/dev/docker.md'
+LABEL org.opencontainers.image.licenses='AGPL-3.0'
+
 WORKDIR /usr/src/app
 
 COPY --from=builder --chown=node:node /usr/src/app/frontend/.next/standalone ./
