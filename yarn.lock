@@ -119,9 +119,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@azure/core-http@npm:^2.0.0":
-  version: 2.3.1
-  resolution: "@azure/core-http@npm:2.3.1"
+"@azure/core-http@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@azure/core-http@npm:3.0.0"
   dependencies:
     "@azure/abort-controller": ^1.0.0
     "@azure/core-auth": ^1.3.0
@@ -133,12 +133,11 @@ __metadata:
     form-data: ^4.0.0
     node-fetch: ^2.6.7
     process: ^0.11.10
-    tough-cookie: ^4.0.0
     tslib: ^2.2.0
     tunnel: ^0.0.6
     uuid: ^8.3.0
     xml2js: ^0.4.19
-  checksum: 8c5753cd17d4a66feab47b97b98e7e5b083e276f6e2950ef81a3b3d91a8a45d619704b04ef2a1d224019524728306d39516a8d47af1ca6512f73089acaaa5757
+  checksum: 9b6885a60a8fdac924cc9544e09d66757ff4ed51ed20ce3c279321e684e21c295c091ad9d45477e02baae5255e3a92c5fbb2ac46687d261d66488c294b32846f
   languageName: node
   linkType: hard
 
@@ -191,19 +190,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@azure/storage-blob@npm:12.12.0":
-  version: 12.12.0
-  resolution: "@azure/storage-blob@npm:12.12.0"
+"@azure/storage-blob@npm:12.13.0":
+  version: 12.13.0
+  resolution: "@azure/storage-blob@npm:12.13.0"
   dependencies:
     "@azure/abort-controller": ^1.0.0
-    "@azure/core-http": ^2.0.0
+    "@azure/core-http": ^3.0.0
     "@azure/core-lro": ^2.2.0
     "@azure/core-paging": ^1.1.1
     "@azure/core-tracing": 1.0.0-preview.13
     "@azure/logger": ^1.0.0
     events: ^3.0.0
     tslib: ^2.2.0
-  checksum: bb7f6514a251f8ec337718088b8c9ba80e27b34c786b7fb380fdca19eb3735a0da917dcfcdacef27d0eb256d007a37f89f3d6b08c55405cbcc04685f2a51da3b
+  checksum: 1509b8904eb46937b76f9acc04e9e0c39e8e9219a3bc3f5c006df7eb4d29ff2ed0ebbecc875f9372b5a349639e79123b30bbfb407864cfe91633dd6871a9bd99
   languageName: node
   linkType: hard
 
@@ -2196,7 +2195,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/backend@workspace:backend"
   dependencies:
-    "@azure/storage-blob": 12.12.0
+    "@azure/storage-blob": 12.13.0
     "@hedgedoc/commons": "workspace:commons"
     "@mrdrogdrog/optional": 1.1.0
     "@nestjs/cli": 9.2.0
@@ -17467,7 +17466,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tough-cookie@npm:^4.0.0, tough-cookie@npm:^4.1.2":
+"tough-cookie@npm:^4.1.2":
   version: 4.1.2
   resolution: "tough-cookie@npm:4.1.2"
   dependencies:
