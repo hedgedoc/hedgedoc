@@ -78,7 +78,7 @@
     "htmlparser2": "8.0.1",
     "i18next": "22.4.10",
     "i18next-browser-languagedetector": "7.0.1",
-    "i18next-resources-to-backend": "1.1.1",
+    "i18next-resources-to-backend": "1.1.2",
     "isomorphic-ws": "5.0.0",
     "js-yaml": "4.1.0",
     "katex": "0.16.4",
