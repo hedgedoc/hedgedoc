@@ -2386,7 +2386,7 @@ __metadata:
     dom-serializer: 2.0.0
     domhandler: 5.0.3
     dompurify: 3.0.0
-    emoji-picker-element: 1.15.1
+    emoji-picker-element: 1.16.0
     emoji-picker-element-data: 1.3.0
     eslint: 8.34.0
     eslint-config-next: 13.1.6
@@ -8701,10 +8701,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"emoji-picker-element@npm:1.15.1":
-  version: 1.15.1
-  resolution: "emoji-picker-element@npm:1.15.1"
-  checksum: 1f262d7e0abad45da2d4233fd5a00a57ffad9a4753dd4e14a270aea25d8e5f1342d962cf0ee050d155bfb94d0f3608753ae2cf5afbf2af044ec03e3c781aa7b7
+"emoji-picker-element@npm:1.16.0":
+  version: 1.16.0
+  resolution: "emoji-picker-element@npm:1.16.0"
+  checksum: b7c3c3a7faef823f75895d877237dd421c3a884c15d7604c0902356a69a478ed416c3d8ce6f5e28a7d8c55144c8f1f1f1588d7733f928626e4d4329bf1239c43
   languageName: node
   linkType: hard
 
