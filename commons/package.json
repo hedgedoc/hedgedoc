@@ -37,7 +37,7 @@
   "dependencies": {
     "eventemitter2": "6.4.9",
     "isomorphic-ws": "5.0.0",
-    "lib0": "0.2.62",
+    "lib0": "0.2.63",
     "ws": "8.12.1",
     "y-protocols": "1.0.5",
     "yjs": "13.5.46"
