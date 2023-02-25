@@ -2436,7 +2436,7 @@ __metadata:
     htmlparser2: 8.0.1
     i18next: 22.4.10
     i18next-browser-languagedetector: 7.0.1
-    i18next-resources-to-backend: 1.1.1
+    i18next-resources-to-backend: 1.1.2
     isomorphic-ws: 5.0.0
     jest: 29.4.3
     jest-environment-jsdom: 29.4.3
@@ -10905,12 +10905,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next-resources-to-backend@npm:1.1.1":
-  version: 1.1.1
-  resolution: "i18next-resources-to-backend@npm:1.1.1"
+"i18next-resources-to-backend@npm:1.1.2":
+  version: 1.1.2
+  resolution: "i18next-resources-to-backend@npm:1.1.2"
   dependencies:
     "@babel/runtime": ^7.20.6
-  checksum: d842ed0bef35b9460d0cbea254e0f918f74d496d9db161f071b4b682cf77ef9ded507a1c47aa48b9dd6d8db29bff94eb099005abe3dceec6a203d78182b2f153
+  checksum: 7bd3f4b67578a44c6b3b43efebff6172a0638cc5919c20f9511cff44c4fd91bf239cadc57562f539d19d7f843ca91b96033ccae0519da56c8e234f18c133eeff
   languageName: node
   linkType: hard
 
