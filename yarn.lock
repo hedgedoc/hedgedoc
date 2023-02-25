@@ -2176,49 +2176,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hapi/address@npm:^5.1.0":
+"@hapi/hoek@npm:^9.0.0":
+  version: 9.3.0
+  resolution: "@hapi/hoek@npm:9.3.0"
+  checksum: 4771c7a776242c3c022b168046af4e324d116a9d2e1d60631ee64f474c6e38d1bb07092d898bf95c7bc5d334c5582798a1456321b2e53ca817d4e7c88bc25b43
+  languageName: node
+  linkType: hard
+
+"@hapi/topo@npm:^5.0.0":
   version: 5.1.0
-  resolution: "@hapi/address@npm:5.1.0"
+  resolution: "@hapi/topo@npm:5.1.0"
   dependencies:
-    "@hapi/hoek": ^11.0.2
-  checksum: f4b4839db422cf062de12085a83d13fbb71554ced43599433b3adaa55cd5c14d3b4450b1abaf043a4edc0ed0878a2101a5d0dd40b07015b8053b76b559425bc1
-  languageName: node
-  linkType: hard
-
-"@hapi/formula@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "@hapi/formula@npm:3.0.2"
-  checksum: a774d8133e4cfc7059a1196f1233ba4ed204ac9a6835db476eb94b301555038ba2511664b5e941df3b6e973759e8c0ddf76124e1c04716a48b7ffeedb070d288
-  languageName: node
-  linkType: hard
-
-"@hapi/hoek@npm:^11.0.2":
-  version: 11.0.2
-  resolution: "@hapi/hoek@npm:11.0.2"
-  checksum: 02e5d5d030f2c81180b43c380e6445558d1cb463c8db957c2d50e11dff83687a0ff4539a88530338e2bab1924bb8cdc7896eeb48ebf32199f89e178591d8b0b1
-  languageName: node
-  linkType: hard
-
-"@hapi/pinpoint@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@hapi/pinpoint@npm:2.0.1"
-  checksum: 8a1bb399f7cf48948669fdc80dff83892ed56eb62eee2cca128fc8b0683733b16e274b395eddfae6154a698aa57c66a3905ceaa3119c59de29751d4601831057
-  languageName: node
-  linkType: hard
-
-"@hapi/tlds@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@hapi/tlds@npm:1.0.1"
-  checksum: 202d09a348c4e138631c424864f03b85bed2e29913036d930c0d67df6dc7f782284ad151d2d6c310bec20340d809e214aa6b274f12eccd9c353886bf9f0a66fd
-  languageName: node
-  linkType: hard
-
-"@hapi/topo@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "@hapi/topo@npm:6.0.1"
-  dependencies:
-    "@hapi/hoek": ^11.0.2
-  checksum: 724fb90742b8191745ccb274eb94076dbd8b0cdf699998c8759aabe286fc97a33f33ff566596a0c67cc7c5415f83d8fda0eed18d69f52d68dccf285311c81cab
+    "@hapi/hoek": ^9.0.0
+  checksum: 604dfd5dde76d5c334bd03f9001fce69c7ce529883acf92da96f4fe7e51221bf5e5110e964caca287a6a616ba027c071748ab636ff178ad750547fba611d6014
   languageName: node
   linkType: hard
 
@@ -2287,7 +2257,7 @@ __metadata:
     file-type: 16.5.4
     http-proxy-middleware: 2.0.6
     jest: 29.4.3
-    joi: 17.8.1
+    joi: 17.8.3
     ldapauth-fork: 5.0.5
     lib0: 0.2.62
     minio: 7.0.32
@@ -3813,6 +3783,29 @@ __metadata:
   version: 1.2.0
   resolution: "@rushstack/eslint-patch@npm:1.2.0"
   checksum: faa749faae0e83c26ae9eb00ad36a897ac78f3cf27da8e8ff21c00bcf7973b598d823d8f2b3957ef66079288bcf577f94df831eae2d65f3f68d8ca32f18b6aff
+  languageName: node
+  linkType: hard
+
+"@sideway/address@npm:^4.1.3":
+  version: 4.1.4
+  resolution: "@sideway/address@npm:4.1.4"
+  dependencies:
+    "@hapi/hoek": ^9.0.0
+  checksum: b9fca2a93ac2c975ba12e0a6d97853832fb1f4fb02393015e012b47fa916a75ca95102d77214b2a29a2784740df2407951af8c5dde054824c65577fd293c4cdb
+  languageName: node
+  linkType: hard
+
+"@sideway/formula@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@sideway/formula@npm:3.0.1"
+  checksum: e4beeebc9dbe2ff4ef0def15cec0165e00d1612e3d7cea0bc9ce5175c3263fc2c818b679bd558957f49400ee7be9d4e5ac90487e1625b4932e15c4aa7919c57a
+  languageName: node
+  linkType: hard
+
+"@sideway/pinpoint@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@sideway/pinpoint@npm:2.0.0"
+  checksum: 0f4491e5897fcf5bf02c46f5c359c56a314e90ba243f42f0c100437935daa2488f20482f0f77186bd6bf43345095a95d8143ecf8b1f4d876a7bc0806aba9c3d2
   languageName: node
   linkType: hard
 
@@ -12215,17 +12208,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"joi@npm:17.8.1":
-  version: 17.8.1
-  resolution: "joi@npm:17.8.1"
+"joi@npm:17.8.3":
+  version: 17.8.3
+  resolution: "joi@npm:17.8.3"
   dependencies:
-    "@hapi/address": ^5.1.0
-    "@hapi/formula": ^3.0.2
-    "@hapi/hoek": ^11.0.2
-    "@hapi/pinpoint": ^2.0.1
-    "@hapi/tlds": ^1.0.1
-    "@hapi/topo": ^6.0.1
-  checksum: 918cca486cad072921b3bc35e2eb9e620fb9cd243c2627686cac463db2ea1237dfa64a8861cd1ce7531d4b6c660c23c58b496ea5a6b9a095d4148095ed7ff05a
+    "@hapi/hoek": ^9.0.0
+    "@hapi/topo": ^5.0.0
+    "@sideway/address": ^4.1.3
+    "@sideway/formula": ^3.0.1
+    "@sideway/pinpoint": ^2.0.0
+  checksum: d93ea768740fc447d19a3340734af8062a53616bfe61d117992632f5064c0abe7ca495a29747317a4f6cd655839507a0e3c9daa90f4f14a7e57a5ad653c43714
   languageName: node
   linkType: hard
 
