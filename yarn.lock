@@ -2403,7 +2403,7 @@ __metadata:
     markdown-it-regex: 0.2.0
     markdown-it-sub: 1.0.0
     markdown-it-sup: 1.0.0
-    mermaid: 9.4.0
+    mermaid: 10.0.0
     next: 13.2.1
     prettier: 2.8.4
     react: 18.2.0
@@ -8072,7 +8072,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3@npm:^7.0.0, d3@npm:^7.8.2":
+"d3@npm:^7.4.0, d3@npm:^7.8.2":
   version: 7.8.2
   resolution: "d3@npm:7.8.2"
   dependencies:
@@ -13111,26 +13111,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mermaid@npm:9.4.0":
-  version: 9.4.0
-  resolution: "mermaid@npm:9.4.0"
+"mermaid@npm:10.0.0":
+  version: 10.0.0
+  resolution: "mermaid@npm:10.0.0"
   dependencies:
     "@braintree/sanitize-url": ^6.0.0
     cytoscape: ^3.23.0
     cytoscape-cose-bilkent: ^4.1.0
     cytoscape-fcose: ^2.1.0
-    d3: ^7.0.0
+    d3: ^7.4.0
     dagre-d3-es: 7.0.8
     dompurify: 2.4.3
     elkjs: ^0.8.2
     khroma: ^2.0.0
     lodash-es: ^4.17.21
-    moment: ^2.29.4
+    moment-mini: ^2.29.4
     non-layered-tidy-tree-layout: ^2.0.2
     stylis: ^4.1.2
     ts-dedent: ^2.2.0
     uuid: ^9.0.0
-  checksum: 78d85ee33c2214b2a89392afa92c4580193b354d5f181d3bc6583da9fae9f427ef851d947b3efbe43ab0bb585ae96ff5ec6f3460a6ae1d0c80d2eb9002493f5e
+    web-worker: ^1.2.0
+  checksum: 23ee71ab0c5259e7c96787d25d4513a8f8abe8a7d4e03e186382496037ced48b5b4e33dd3bede60765833a19bc1899824fdd10c20a3ff22626a814294426cf04
   languageName: node
   linkType: hard
 
@@ -13465,10 +13466,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment@npm:^2.29.4":
+"moment-mini@npm:^2.29.4":
   version: 2.29.4
-  resolution: "moment@npm:2.29.4"
-  checksum: 0ec3f9c2bcba38dc2451b1daed5daded747f17610b92427bebe1d08d48d8b7bdd8d9197500b072d14e326dd0ccf3e326b9e3d07c5895d3d49e39b6803b76e80e
+  resolution: "moment-mini@npm:2.29.4"
+  checksum: 5d386872d04202c36653442a65f0e06a4e33cf3b25cef4e9df17877a8e76e93f218a1dfd4ccc0946c228815a4e1e53d79ae340de82791ffce90007769eb85120
   languageName: node
   linkType: hard
 
@@ -18781,6 +18782,13 @@ __metadata:
     "@zxing/text-encoding":
       optional: true
   checksum: 2234a2b122f41006ce07859b3c0bf2e18f46144fda2907d5db0b571b76aa5c26977c646100ad9c00d2f8a4f6f2b848bc02147845d8c447ab365ec4eff376338d
+  languageName: node
+  linkType: hard
+
+"web-worker@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "web-worker@npm:1.2.0"
+  checksum: 1bb28348ddcf9b2e7c62c5fd02e49a84098795856cd905456de957271bba288e9618941cf69d8960f0a7ae81f5dfb74b427c0634be47ec69e3e955c4ec5213be
   languageName: node
   linkType: hard
 
