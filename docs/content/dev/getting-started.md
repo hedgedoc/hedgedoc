@@ -19,23 +19,24 @@ recommend caddy and the provided configuration.
    git clone https://github.com/hedgedoc/hedgedoc.git
    cd hedgedoc
    ```
-2. Install Node.js (at least Node 14, we recommend Node 18) and [Yarn](https://yarnpkg.com/getting-started/install)
-3. Install Caddy (select one of the two options)
+2. Install Node.js. You need at least Node 16, but we recommend Node 18.
+3. Install [Yarn](https://yarnpkg.com/getting-started/install)
+4. Install Caddy (select one of the two options)
    - [Download](https://caddyserver.com/) and place the `caddy` binary in `hedgedoc/dev-reverse-proxy`. Ensure it is executable with `chmod +x caddy`. Users of macOS may need to run `xattr -d com.apple.quarantine ./caddy` to lift the quarantine for executables from the internet. 
    - Install Caddy using your package manager
-4. Install the dependencies in repo root directory with `yarn install`
-5. Goto `hedgedoc/backend` directory with `cd backend`
-6. Create the `.env` config file by copying the example: `cp .env.example .env`
-7. Add a value to `HD_SESSION_SECRET` in the .env file. This can be any string, which has to be a secure password for production but can be set to simple string for debug purpose.
-8. Execute the following lines
+5. Install the dependencies in repo root directory with `yarn install`
+6. Goto `hedgedoc/backend` directory with `cd backend`
+7. Create the `.env` config file by copying the example: `cp .env.example .env`
+8. Add a value to `HD_SESSION_SECRET` in the .env file. This can be any string, which has to be a secure password for production but can be set to simple string for debug purpose.
+9. Execute the following lines
     ```shell
     echo "HD_AUTH_LOCAL_ENABLE_LOGIN=true" >> .env
     echo "HD_AUTH_LOCAL_ENABLE_REGISTER=true" >> .env
     ```
-9. Go back into the root directory with `cd ..`
-10. Run `yarn start:dev`
+10. Go back into the root directory with `cd ..`
+11. Run `yarn start:dev`
     > This will execute the backend, frontend and reverse proxy at once
-11. Use your browser to go to <http://localhost:8080>
+12. Use your browser to go to <http://localhost:8080>
 
 ## More detailed development setup
 The following sections describe a more detailed setup of all components.
@@ -44,7 +45,7 @@ The following sections describe a more detailed setup of all components.
 
 If you want to run HedgeDoc in dev mode some preconditions have to be met.
 
-1. Make sure that NodeJS is installed. You need at least Node 14 (we recommend Node 18).
+1. Make sure that Node.js is installed. You need at least Node 16, but we recommend Node 18.
 2. Make sure that [Yarn](https://yarnpkg.com/) is installed.
 3. Clone this repo (e.g. `git clone https://github.com/hedgedoc/hedgedoc.git hedgedoc`)
 4. Go into the cloned directory
