@@ -17,9 +17,9 @@ const log = new Logger('MermaidChart')
 
 let mermaidInitialized = false
 
-const loadMermaid = async (): Promise<typeof import('mermaid')> => {
+const loadMermaid = async (): Promise<typeof import('mermaid')['default']> => {
   try {
-    return import(/* webpackChunkName: "mermaid" */ 'mermaid')
+    return (await import(/* webpackChunkName: "mermaid" */ 'mermaid')).default
   } catch (error) {
     log.error('Error while loading mermaid', error)
     throw new Error('Error while loading mermaid')
@@ -43,7 +43,7 @@ export const MermaidChart: React.FC<CodeProps> = ({ code }) => {
     const mermaid = await loadMermaid()
 
     if (!mermaidInitialized) {
-      mermaid.default.initialize({ startOnLoad: false })
+      mermaid.initialize({ startOnLoad: false, securityLevel: 'sandbox' })
       mermaidInitialized = true
     }
 
@@ -51,14 +51,14 @@ export const MermaidChart: React.FC<CodeProps> = ({ code }) => {
       if (!diagramContainer.current) {
         return
       }
-      mermaid.default.parse(code)
+      await mermaid.parse(code)
       delete diagramContainer.current.dataset.processed
       diagramContainer.current.textContent = code
-      await mermaid.default.init(undefined, diagramContainer.current)
+      await mermaid.init(undefined, diagramContainer.current)
     } catch (error) {
       const message = (error as Error).message
       log.error(error)
-      diagramContainer.current?.querySelectorAll('svg').forEach((child) => child.remove())
+      diagramContainer.current?.querySelectorAll('iframe').forEach((child) => child.remove())
       throw new Error(message ?? t('renderer.mermaid.unknownError'))
     }
   }, [code, t])
@@ -70,7 +70,7 @@ export const MermaidChart: React.FC<CodeProps> = ({ code }) => {
       </ShowIf>
       <div
         {...cypressId('mermaid-frame')}
-        className={`text-center ${styles['mermaid']} text-black`}
+        className={`text-center ${styles['mermaid']} bg-dark text-black`}
         ref={diagramContainer}
       />
     </Fragment>
