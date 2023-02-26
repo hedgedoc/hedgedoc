@@ -2207,7 +2207,7 @@ __metadata:
     "@types/express": 4.17.17
     "@types/express-session": 1.17.6
     "@types/jest": 29.4.0
-    "@types/minio": 7.0.15
+    "@types/minio": 7.0.16
     "@types/mysql": 2.15.21
     "@types/node": 18.14.1
     "@types/node-fetch": 2.6.2
@@ -4688,12 +4688,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/minio@npm:7.0.15":
-  version: 7.0.15
-  resolution: "@types/minio@npm:7.0.15"
+"@types/minio@npm:7.0.16":
+  version: 7.0.16
+  resolution: "@types/minio@npm:7.0.16"
   dependencies:
     "@types/node": "*"
-  checksum: ff4f7e8608d38d437bd6a9019211184874b0e5acaadd5a8eae0416efd8d788016b06d55f9b3c659533bd58ef3782737e54807fd0bf2a4410a007ed4f44ab64bb
+  checksum: a324cfefcaef20fbb0444465558ba689884f3d3e6f1ead9b24131a9f3db3faba81940f1af74d95d881da4e3efcef5e8ba44baf5aa434b5e699e5c40f3f98ded9
   languageName: node
   linkType: hard
 
