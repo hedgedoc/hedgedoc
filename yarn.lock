@@ -182,6 +182,11 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
 
+"@hedgedoc/codemirror-5@5.65.12":
+  version "5.65.12"
+  resolved "https://registry.yarnpkg.com/@hedgedoc/codemirror-5/-/codemirror-5-5.65.12.tgz#86ac7a79b05964b2b8f504144e35654720a49ef6"
+  integrity sha512-t86sQMXQZMPy75xbhhqZpRKUx3E3Mp4FdRzVrY0CO8BSSgiAg+RpfMFmCJYLFf4voTetsVberq2q7/GfDaYkzw==
+
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.8.tgz#03595ac2075a4dc0f191cc2131de14fbd7d410b9"
@@ -2617,11 +2622,6 @@ cls-bluebird@^2.1.0:
   dependencies:
     is-bluebird "^1.0.2"
     shimmer "^1.1.0"
-
-"codemirror@git+https://github.com/hedgedoc/CodeMirror.git":
-  version "5.65.12"
-  uid "64922b591f46d784169cae67ea8938b10254bc0e"
-  resolved "git+https://github.com/hedgedoc/CodeMirror.git#64922b591f46d784169cae67ea8938b10254bc0e"
 
 collection-visit@^1.0.0:
   version "1.0.0"
