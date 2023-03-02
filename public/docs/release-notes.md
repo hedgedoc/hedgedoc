@@ -1,5 +1,10 @@
 # Release Notes
 
+## UNRELEASED
+
+### Enhancements
+- Extend boolean environment variable parsing with other positive answers and case insensitivity.
+
 ## <i class="fa fa-tag"></i> 1.9.7 <i class="fa fa-calendar-o"></i> 2023-02-19
 
 ### Bugfixes
