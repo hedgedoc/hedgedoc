@@ -16,7 +16,7 @@ FROM docker.io/node:19-alpine@sha256:667dc6ed8fc6623ccd21cb5fa355c90f848daaf5d6d
 RUN apk add --no-cache tini
 ENTRYPOINT ["tini", "--"]
 
-ENV YARN_CACHE_FOLDER /tmp/.yarn
+ENV YARN_CACHE_FOLDER=/tmp/.yarn
 
 ## Stage 1: Code with all dependencies
 FROM base as code-with-deps
