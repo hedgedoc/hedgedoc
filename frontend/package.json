@@ -42,7 +42,7 @@
     "@codemirror/lang-markdown": "6.1.0",
     "@codemirror/language": "6.6.0",
     "@codemirror/language-data": "6.1.0",
-    "@codemirror/lint": "6.1.1",
+    "@codemirror/lint": "6.2.0",
     "@codemirror/state": "6.2.0",
     "@codemirror/theme-one-dark": "6.1.1",
     "@codemirror/view": "6.9.1",
