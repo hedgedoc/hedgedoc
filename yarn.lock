@@ -1935,14 +1935,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/lint@npm:6.1.1":
-  version: 6.1.1
-  resolution: "@codemirror/lint@npm:6.1.1"
+"@codemirror/lint@npm:6.2.0":
+  version: 6.2.0
+  resolution: "@codemirror/lint@npm:6.2.0"
   dependencies:
     "@codemirror/state": ^6.0.0
     "@codemirror/view": ^6.0.0
     crelt: ^1.0.5
-  checksum: f58374c8c759b4bf8a9074a170d639d55e6cda105c422fb09251aac4b97dacdc7ca9e43a2bc57d45586c5326e5f332f28fef4a2bb47ff16c4a81ea6e07308e9d
+  checksum: b97e55a07bca9f7e357e495853ba189ae0ff7dfe7e7ae445d7a0d6c6926ec792c7f5c6b6c13a1f137fd9fedf44a6624e9d500f76d0d46a3c3e9d19c2cda9d28a
   languageName: node
   linkType: hard
 
@@ -2307,7 +2307,7 @@ __metadata:
     "@codemirror/lang-markdown": 6.1.0
     "@codemirror/language": 6.6.0
     "@codemirror/language-data": 6.1.0
-    "@codemirror/lint": 6.1.1
+    "@codemirror/lint": 6.2.0
     "@codemirror/state": 6.2.0
     "@codemirror/theme-one-dark": 6.1.1
     "@codemirror/view": 6.9.1
