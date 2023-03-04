@@ -2402,7 +2402,7 @@ __metadata:
     markdown-it-regex: 0.2.0
     markdown-it-sub: 1.0.0
     markdown-it-sup: 1.0.0
-    mermaid: 10.0.0
+    mermaid: 10.0.2
     next: 13.2.3
     prettier: 2.8.4
     react: 18.2.0
@@ -7996,13 +7996,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dagre-d3-es@npm:7.0.8":
-  version: 7.0.8
-  resolution: "dagre-d3-es@npm:7.0.8"
+"dagre-d3-es@npm:7.0.9":
+  version: 7.0.9
+  resolution: "dagre-d3-es@npm:7.0.9"
   dependencies:
     d3: ^7.8.2
     lodash-es: ^4.17.21
-  checksum: affc5d630420c60619bd03a83b6ef6cd36fc832cc9e48ce01ad530f646efb6136ac17c60d0425e13e52f2aa0479bcbe83fb2b4511f88dad29290ba54fb18a918
+  checksum: 5f24ad9558e84066e70cfa6979320d93079979ac8b0a3b033e5330742aeeba74e205f66794ab6e0a82354b061a4e29c10a291590d7b2cf82b5780fab5443f5ba
   languageName: node
   linkType: hard
 
@@ -8040,7 +8040,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.10.4":
+"dayjs@npm:^1.10.4, dayjs@npm:^1.11.7":
   version: 1.11.7
   resolution: "dayjs@npm:1.11.7"
   checksum: 5003a7c1dd9ed51385beb658231c3548700b82d3548c0cfbe549d85f2d08e90e972510282b7506941452c58d32136d6362f009c77ca55381a09c704e9f177ebb
@@ -12897,27 +12897,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mermaid@npm:10.0.0":
-  version: 10.0.0
-  resolution: "mermaid@npm:10.0.0"
+"mermaid@npm:10.0.2":
+  version: 10.0.2
+  resolution: "mermaid@npm:10.0.2"
   dependencies:
     "@braintree/sanitize-url": ^6.0.0
     cytoscape: ^3.23.0
     cytoscape-cose-bilkent: ^4.1.0
     cytoscape-fcose: ^2.1.0
     d3: ^7.4.0
-    dagre-d3-es: 7.0.8
+    dagre-d3-es: 7.0.9
+    dayjs: ^1.11.7
     dompurify: 2.4.3
     elkjs: ^0.8.2
     khroma: ^2.0.0
     lodash-es: ^4.17.21
-    moment-mini: ^2.29.4
     non-layered-tidy-tree-layout: ^2.0.2
     stylis: ^4.1.2
     ts-dedent: ^2.2.0
     uuid: ^9.0.0
     web-worker: ^1.2.0
-  checksum: 23ee71ab0c5259e7c96787d25d4513a8f8abe8a7d4e03e186382496037ced48b5b4e33dd3bede60765833a19bc1899824fdd10c20a3ff22626a814294426cf04
+  checksum: 930e8509ba928b3598dcd7f7512e4d60c0d252a95fa7bd4f5c2cdf055409febc75d71909419151301f64012e699dd964419c50200808aff1770cc4014ece82c6
   languageName: node
   linkType: hard
 
@@ -13249,13 +13249,6 @@ __metadata:
     lazy-ass: 1.6.0
     ramda: 0.27.1
   checksum: e66c97659276bc70cc65218aac19b8f8693727263b1a0fb7e82ee1804dc5359fec3aca60090576c41ec5f14e8477d5388072155dd6758f46fa338b313d482606
-  languageName: node
-  linkType: hard
-
-"moment-mini@npm:^2.29.4":
-  version: 2.29.4
-  resolution: "moment-mini@npm:2.29.4"
-  checksum: 5d386872d04202c36653442a65f0e06a4e33cf3b25cef4e9df17877a8e76e93f218a1dfd4ccc0946c228815a4e1e53d79ae340de82791ffce90007769eb85120
   languageName: node
   linkType: hard
 
