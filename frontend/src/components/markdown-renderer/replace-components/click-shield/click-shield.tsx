@@ -120,7 +120,7 @@ export const ClickShield: React.FC<ClickShieldProps> = ({
         <span className={`${styles['click-shield']} d-inline-block ratio ratio-16x9`} onClick={doShowChildren}>
           {previewBackground}
           <span className={`${styles['preview-hover']}`}>
-            <span className={`${styles['preview-hover-text']}`}>
+            <span>
               <Trans i18nKey={'renderer.clickShield.previewHoverText'} values={hoverTextTranslationValues} />
             </span>
             {icon}
