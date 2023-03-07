@@ -49,6 +49,9 @@
   text-shadow: 4px 4px 0 #3b4045;
 
   .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
     color: rgb(181, 31, 8);
     height: 0;
     overflow: hidden;
