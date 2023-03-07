@@ -5,6 +5,7 @@
 ### Enhancements
 - Extend boolean environment variable parsing with other positive answers and case insensitivity.
 - Allow setting of `documentMaxLength` via `CMD_DOCUMENT_MAX_LENGTH` environment variable.
+- Add dedicated healthcheck endpoint at /_health that is less resource intensive than /status.
 
 ## <i class="fa fa-tag"></i> 1.9.7 <i class="fa fa-calendar-o"></i> 2023-02-19
 
