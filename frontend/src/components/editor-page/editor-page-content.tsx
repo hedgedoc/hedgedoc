@@ -130,14 +130,13 @@ export const EditorPageContent: React.FC = () => {
         <HeadMetaProperties />
         <MotdModal />
         <div className={'d-flex flex-column vh-100'}>
-          <AppBar mode={AppBarMode.EDITOR} />
           <div className={'flex-fill d-flex h-100 w-100 overflow-hidden flex-row'}>
+            <Sidebar />
             <Splitter
               left={leftPane}
               right={rightPane}
               additionalContainerClassName={'overflow-hidden position-relative'}
             />
-            <Sidebar />
           </div>
         </div>
       </ExtensionEventEmitterProvider>

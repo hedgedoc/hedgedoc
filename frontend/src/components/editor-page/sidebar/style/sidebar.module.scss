@@ -9,23 +9,25 @@
 
   flex: 0 0 $height;
   position: relative;
+  border-right: solid 1px white;
 
   .sidebar-inner {
-    height: 100%;
+    border-right: solid 1px white;
+    height: calc(100% - 50px);
     display: flex;
     overflow-y: auto;
     flex-direction: column;
     position: absolute;
     z-index: 999;
     width: $menu-width;
-    top: 0;
-    left: 0;
+    top: $height;
+    left: (-$menu-width + $height) + 1px;
     transition: left 0.3s;
     box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
 
     &:hover, &.show {
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-      left: (-$menu-width + $height);
+      left: 0;
     }
 
     background: var(--bs-light);

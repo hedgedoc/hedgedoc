@@ -3,6 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import LogoColor from '../../common/hedge-doc-logo/logo_color.svg'
+import LogoColorVertical from '../../common/hedge-doc-logo/logo_text_color_vertical.svg'
 import { DeleteNoteSidebarEntry } from './delete-note-sidebar-entry/delete-note-sidebar-entry'
 import { AliasesSidebarEntry } from './specific-sidebar-entries/aliases-sidebar-entry'
 import { ExportMenuSidebarMenu } from './specific-sidebar-entries/export-menu-sidebar-menu'
@@ -41,6 +43,7 @@ export const Sidebar: React.FC = () => {
 
   return (
     <div className={styles['slide-sidebar']}>
+      <LogoColor height={'40px'} width={'40px'} className={'p-2'}></LogoColor>
       <div ref={sideBarRef} className={`${styles['sidebar-inner']} ${selectionIsNotNone ? styles['show'] : ''}`}>
         <UsersOnlineSidebarMenu
           menuId={DocumentSidebarMenuSelection.USERS_ONLINE}
