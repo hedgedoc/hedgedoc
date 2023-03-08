@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { AuthProvider, AuthProviderWithCustomName } from '../../../api/config/types'
-import { SocialLinkButton } from './social-link-button/social-link-button'
+import { IconButton } from '../../common/icon-button/icon-button'
 import { getOneClickProviderMetadata } from './utils/get-one-click-provider-metadata'
 import React, { useMemo } from 'react'
 
@@ -22,8 +22,8 @@ export const ViaOneClick: React.FC<ViaOneClickProps> = ({ provider }) => {
   const text = (provider as AuthProviderWithCustomName).providerName || name
 
   return (
-    <SocialLinkButton backgroundClass={className} icon={icon} href={url} title={text}>
+    <IconButton className={className} icon={icon} href={url} title={text} border={true}>
       {text}
-    </SocialLinkButton>
+    </IconButton>
   )
 }

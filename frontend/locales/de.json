@@ -3,6 +3,9 @@
         "slogan": "Der beste Weg, Notizen zu schreiben und teilen.",
         "title": "Gemeinschaftliche Markdown Notizen"
     },
+    "navigation": {
+      "newNote": "Neue Notiz"
+    },
     "landing": {
         "intro": {
             "exploreFeatures": "Alle Funktionen",

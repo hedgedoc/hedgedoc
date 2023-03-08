@@ -5,13 +5,12 @@
  */
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { cypressId } from '../../../../utils/cypress-attribute'
+import { NewNoteButton } from '../../../common/new-note-button/new-note-button'
 import { SettingsButton } from '../../../layout/settings-dialog/settings-button'
-import { NewGuestNoteButton } from '../new-guest-note-button'
-import { NewUserNoteButton } from '../new-user-note-button'
 import { SignInButton } from '../sign-in-button'
 import { UserDropdown } from '../user-dropdown'
 import { HeaderNavLink } from './header-nav-link'
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Navbar } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 
@@ -32,23 +31,10 @@ const HeaderBar: React.FC = () => {
           <Trans i18nKey='landing.navigation.history' />
         </HeaderNavLink>
       </div>
-      <div className='d-inline-flex'>
-        <SettingsButton className={'p-1 mx-2'} variant={'outline-light'} />
-        {!userExists ? (
-          <Fragment>
-            <span className={'mx-1 d-flex'}>
-              <NewGuestNoteButton />
-            </span>
-            <SignInButton size='sm' />
-          </Fragment>
-        ) : (
-          <Fragment>
-            <span className={'mx-1 d-flex'}>
-              <NewUserNoteButton />
-            </span>
-            <UserDropdown />
-          </Fragment>
-        )}
+      <div className='d-inline-flex gap-2'>
+        <SettingsButton variant={'outline-light'} />
+        <NewNoteButton />
+        {!userExists ? <SignInButton size='sm' /> : <UserDropdown />}
       </div>
     </Navbar>
   )
