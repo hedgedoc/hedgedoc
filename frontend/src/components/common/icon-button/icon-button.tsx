@@ -42,15 +42,15 @@ export const IconButton: React.FC<IconButtonProps> = ({
   return (
     <Button
       {...props}
-      className={`${styles['btn-icon']} p-0 d-inline-flex align-items-stretch ${border ? styles['with-border'] : ''} ${
+      className={`${styles['btn-icon']} d-inline-flex align-items-stretch ${border ? styles['with-border'] : ''} ${
         className ?? ''
       }`}
       {...testId('icon-button')}>
-      <span className={`${styles['icon-part']} d-flex align-items-center`}>
+      <span className={`${styles['icon-part']}`}>
         <UiIcon size={iconSize} icon={icon} className={'icon'} />
       </span>
       <ShowIf condition={!!children}>
-        <span className={`${styles['text-part']} d-flex align-items-center`}>{children}</span>
+        <span className={`${styles['text-part']}`}>{children}</span>
       </ShowIf>
     </Button>
   )
