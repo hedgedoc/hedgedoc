@@ -13,6 +13,7 @@ import type { ScrollProps } from '../synced-scroll/scroll-props'
 import styles from './extended-codemirror/codemirror.module.scss'
 import { useCodeMirrorFileInsertExtension } from './hooks/code-mirror-extensions/use-code-mirror-file-insert-extension'
 import { useCodeMirrorScrollWatchExtension } from './hooks/code-mirror-extensions/use-code-mirror-scroll-watch-extension'
+import { useCodeMirrorSpellCheckExtension } from './hooks/code-mirror-extensions/use-code-mirror-spell-check-extension'
 import { useOnImageUploadFromRenderer } from './hooks/image-upload-from-renderer/use-on-image-upload-from-renderer'
 import { useCodeMirrorTablePasteExtension } from './hooks/table-paste/use-code-mirror-table-paste-extension'
 import { useApplyScrollState } from './hooks/use-apply-scroll-state'
@@ -59,6 +60,7 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
   const editorScrollExtension = useCodeMirrorScrollWatchExtension(onScroll)
   const tablePasteExtensions = useCodeMirrorTablePasteExtension()
   const fileInsertExtension = useCodeMirrorFileInsertExtension()
+  const spellCheckExtension = useCodeMirrorSpellCheckExtension()
   const cursorActivityExtension = useCursorActivityCallback()
 
   const codeMirrorRef = useCodeMirrorReference()
@@ -84,7 +86,6 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
   const yjsExtension = useCodeMirrorYjsExtension(yText, awareness)
   const [firstEditorUpdateExtension, firstUpdateHappened] = useOnFirstEditorUpdateExtension()
   useInsertNoteContentIntoYTextInMockModeEffect(firstUpdateHappened, websocketConnection)
-  const spellCheck = useApplicationState((state) => state.editorConfig.spellCheck)
   const linter = useLinter()
 
   const extensions = useMemo(
@@ -104,7 +105,7 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
       updateViewContext,
       yjsExtension,
       firstEditorUpdateExtension,
-      EditorView.contentAttributes.of({ spellcheck: String(spellCheck) })
+      spellCheckExtension
     ],
     [
       linter,
@@ -115,7 +116,7 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
       updateViewContext,
       yjsExtension,
       firstEditorUpdateExtension,
-      spellCheck
+      spellCheckExtension
     ]
   )
 
