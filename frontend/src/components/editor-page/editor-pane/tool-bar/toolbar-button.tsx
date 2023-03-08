@@ -5,7 +5,7 @@
  */
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { UiIcon } from '../../../common/icons/ui-icon'
-import type { ContentFormatter } from '../../change-content-context/change-content-context'
+import type { ContentFormatter } from '../../change-content-context/use-change-editor-content-callback'
 import { useChangeEditorContentCallback } from '../../change-content-context/use-change-editor-content-callback'
 import React, { useCallback, useMemo } from 'react'
 import { Button } from 'react-bootstrap'

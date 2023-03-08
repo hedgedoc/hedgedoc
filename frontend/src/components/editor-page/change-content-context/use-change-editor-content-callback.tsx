@@ -3,12 +3,17 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { ContentEdits } from '../editor-pane/tool-bar/formatters/types/changes'
 import type { CursorSelection } from '../editor-pane/tool-bar/formatters/types/cursor-selection'
-import type { ContentFormatter } from './change-content-context'
-import { useCodeMirrorReference } from './change-content-context'
+import { useCodemirrorReferenceContext } from './codemirror-reference-context'
 import type { EditorView } from '@codemirror/view'
 import { Optional } from '@mrdrogdrog/optional'
 import { useMemo } from 'react'
+
+export type ContentFormatter = (parameters: {
+  currentSelection: CursorSelection
+  markdownContent: string
+}) => [ContentEdits, CursorSelection | undefined]
 
 /**
  * Changes the content of the given CodeMirror view using the given formatter function.
@@ -33,7 +38,7 @@ export const changeEditorContent = (view: EditorView, formatter: ContentFormatte
  * @see changeEditorContent
  */
 export const useChangeEditorContentCallback = () => {
-  const codeMirrorRef = useCodeMirrorReference()
+  const [codeMirrorRef] = useCodemirrorReferenceContext()
   return useMemo(() => {
     if (codeMirrorRef) {
       return (callback: ContentFormatter) => changeEditorContent(codeMirrorRef, callback)

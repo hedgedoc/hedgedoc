@@ -8,7 +8,7 @@ import { Logger } from '../../../../../utils/logger'
 import { UiIcon } from '../../../../common/icons/ui-icon'
 import { ShowIf } from '../../../../common/show-if/show-if'
 import { acceptedMimeTypes } from '../../../../common/upload-image-mimetypes'
-import { useCodeMirrorReference } from '../../../change-content-context/change-content-context'
+import { useCodemirrorReferenceContext } from '../../../change-content-context/codemirror-reference-context'
 import { UploadInput } from '../../../sidebar/upload-input'
 import { useHandleUpload } from '../../hooks/use-handle-upload'
 import { extractSelectedText } from './extract-selected-text'
@@ -30,7 +30,7 @@ export const UploadImageButton: React.FC = () => {
     clickRef.current?.()
   }, [])
 
-  const codeMirror = useCodeMirrorReference()
+  const [codeMirror] = useCodemirrorReferenceContext()
   const handleUpload = useHandleUpload()
 
   const onUploadImage = useCallback(

@@ -8,7 +8,6 @@ import { useBaseUrl, ORIGIN } from '../../../hooks/common/use-base-url'
 import { useDarkModeState } from '../../../hooks/common/use-dark-mode-state'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { findLanguageByCodeBlockName } from '../../markdown-renderer/extensions/base/code-block-markdown-extension/find-language-by-code-block-name'
-import { useCodeMirrorReference, useSetCodeMirrorReference } from '../change-content-context/change-content-context'
 import type { ScrollProps } from '../synced-scroll/scroll-props'
 import styles from './extended-codemirror/codemirror.module.scss'
 import { useCodeMirrorFileInsertExtension } from './hooks/code-mirror-extensions/use-code-mirror-file-insert-extension'
@@ -17,6 +16,7 @@ import { useOnImageUploadFromRenderer } from './hooks/image-upload-from-renderer
 import { useCodeMirrorTablePasteExtension } from './hooks/table-paste/use-code-mirror-table-paste-extension'
 import { useApplyScrollState } from './hooks/use-apply-scroll-state'
 import { useCursorActivityCallback } from './hooks/use-cursor-activity-callback'
+import { useUpdateCodeMirrorReference } from './hooks/use-update-code-mirror-reference'
 import { useAwareness } from './hooks/yjs/use-awareness'
 import { useBindYTextToRedux } from './hooks/yjs/use-bind-y-text-to-redux'
 import { useCodeMirrorYjsExtension } from './hooks/yjs/use-code-mirror-yjs-extension'
@@ -61,16 +61,7 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
   const fileInsertExtension = useCodeMirrorFileInsertExtension()
   const cursorActivityExtension = useCursorActivityCallback()
 
-  const codeMirrorRef = useCodeMirrorReference()
-  const setCodeMirrorReference = useSetCodeMirrorReference()
-
-  const updateViewContext = useMemo(() => {
-    return EditorView.updateListener.of((update) => {
-      if (codeMirrorRef !== update.view) {
-        setCodeMirrorReference(update.view)
-      }
-    })
-  }, [codeMirrorRef, setCodeMirrorReference])
+  const updateViewContextExtension = useUpdateCodeMirrorReference()
 
   const yDoc = useYDoc()
   const awareness = useAwareness(yDoc)
@@ -101,7 +92,7 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
       fileInsertExtension,
       autocompletion(),
       cursorActivityExtension,
-      updateViewContext,
+      updateViewContextExtension,
       yjsExtension,
       firstEditorUpdateExtension,
       EditorView.contentAttributes.of({ spellcheck: String(spellCheck) })
@@ -112,7 +103,7 @@ export const EditorPane: React.FC<ScrollProps> = ({ scrollState, onScroll, onMak
       tablePasteExtensions,
       fileInsertExtension,
       cursorActivityExtension,
-      updateViewContext,
+      updateViewContextExtension,
       yjsExtension,
       firstEditorUpdateExtension,
       spellCheck

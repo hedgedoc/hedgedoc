@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { ContentFormatter } from '../../../change-content-context/change-content-context'
+import type { ContentFormatter } from '../../../change-content-context/use-change-editor-content-callback'
 import { addLink } from '../formatters/add-link'
 import { ToolbarButton } from '../toolbar-button'
 import React, { useCallback } from 'react'
