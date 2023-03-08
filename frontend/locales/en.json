@@ -8,6 +8,9 @@
     "title": "Test",
     "content": "It works!"
   },
+  "navigation": {
+    "newNote": "New Note"
+  },
   "renderer": {
     "highlightCode": {
       "copyCode": "Copy code to clipboard"

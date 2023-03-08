@@ -5,13 +5,13 @@
  */
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { NoteType } from '../../../redux/note-details/types/note-details'
+import { NewNoteButton } from '../../common/new-note-button/new-note-button'
 import { ShowIf } from '../../common/show-if/show-if'
 import { SignInButton } from '../../landing-layout/navigation/sign-in-button'
 import { UserDropdown } from '../../landing-layout/navigation/user-dropdown'
 import { SettingsButton } from '../../layout/settings-dialog/settings-button'
 import { HelpButton } from './help-button/help-button'
 import { NavbarBranding } from './navbar-branding'
-import { NewNoteButton } from './new-note-button'
 import { ReadOnlyModeButton } from './read-only-mode-button'
 import { SlideModeButton } from './slide-mode-button'
 import React from 'react'
@@ -49,8 +49,8 @@ export const AppBar: React.FC<AppBarProps> = ({ mode }) => {
           <HelpButton />
         </ShowIf>
       </Nav>
-      <Nav className='d-flex align-items-center text-secondary justify-content-end'>
-        <SettingsButton className={'p-1 mx-2'} variant={'outline-dark'} />
+      <Nav className='d-flex gap-2 align-items-center text-secondary justify-content-end'>
+        <SettingsButton variant={'outline-dark'} />
         <NewNoteButton />
         <ShowIf condition={!userExists}>
           <SignInButton size={'sm'} />

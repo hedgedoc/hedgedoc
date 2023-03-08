@@ -21,8 +21,8 @@ describe('Languages', () => {
 
   it('language changes affect the UI', () => {
     cy.getByCypressId('language-picker').select('English')
-    cy.getByCypressId('new-note-button').find('span').contains('New note')
+    cy.getByCypressId('new-note-button').contains('New Note')
     cy.getByCypressId('language-picker').select('Deutsch')
-    cy.getByCypressId('new-note-button').find('span').contains('Neue Notiz')
+    cy.getByCypressId('new-note-button').contains('Neue Notiz')
   })
 })
