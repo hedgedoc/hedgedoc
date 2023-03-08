@@ -3,17 +3,17 @@
 exports[`IconButton correctly uses the onClick callback 1`] = `
 <div>
   <button
-    class="btn-icon p-0 d-inline-flex align-items-stretch   btn btn-primary"
+    class="btn-icon d-inline-flex align-items-stretch   btn btn-primary"
     data-testid="icon-button"
     type="button"
   >
     <span
-      class="icon-part d-flex align-items-center"
+      class="icon-part"
     >
       BootstrapIconMock_Heart
     </span>
     <span
-      class="text-part d-flex align-items-center"
+      class="text-part"
     >
       test with onClick
     </span>
@@ -24,17 +24,17 @@ exports[`IconButton correctly uses the onClick callback 1`] = `
 exports[`IconButton renders heart icon 1`] = `
 <div>
   <button
-    class="btn-icon p-0 d-inline-flex align-items-stretch   btn btn-primary"
+    class="btn-icon d-inline-flex align-items-stretch   btn btn-primary"
     data-testid="icon-button"
     type="button"
   >
     <span
-      class="icon-part d-flex align-items-center"
+      class="icon-part"
     >
       BootstrapIconMock_Heart
     </span>
     <span
-      class="text-part d-flex align-items-center"
+      class="text-part"
     >
       test
     </span>
@@ -45,17 +45,17 @@ exports[`IconButton renders heart icon 1`] = `
 exports[`IconButton renders with additional className 1`] = `
 <div>
   <button
-    class="btn-icon p-0 d-inline-flex align-items-stretch  testClass btn btn-primary"
+    class="btn-icon d-inline-flex align-items-stretch  testClass btn btn-primary"
     data-testid="icon-button"
     type="button"
   >
     <span
-      class="icon-part d-flex align-items-center"
+      class="icon-part"
     >
       BootstrapIconMock_Heart
     </span>
     <span
-      class="text-part d-flex align-items-center"
+      class="text-part"
     >
       test with additional className
     </span>
@@ -66,17 +66,17 @@ exports[`IconButton renders with additional className 1`] = `
 exports[`IconButton renders with border 1`] = `
 <div>
   <button
-    class="btn-icon p-0 d-inline-flex align-items-stretch with-border  btn btn-primary"
+    class="btn-icon d-inline-flex align-items-stretch with-border  btn btn-primary"
     data-testid="icon-button"
     type="button"
   >
     <span
-      class="icon-part d-flex align-items-center"
+      class="icon-part"
     >
       BootstrapIconMock_Heart
     </span>
     <span
-      class="text-part d-flex align-items-center"
+      class="text-part"
     >
       test with border
     </span>
