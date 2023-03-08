@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Logger } from '../../../../utils/logger'
-import { useCodeMirrorReference } from '../../change-content-context/change-content-context'
+import { useCodemirrorReferenceContext } from '../../change-content-context/codemirror-reference-context'
 import type { ScrollState } from '../../synced-scroll/scroll-props'
 import { EditorView } from '@codemirror/view'
 import equal from 'fast-deep-equal'
@@ -37,7 +37,7 @@ const applyScrollState = (view: EditorView, scrollState: ScrollState): void => {
  */
 export const useApplyScrollState = (scrollState?: ScrollState): void => {
   const lastScrollPosition = useRef<ScrollState>()
-  const codeMirrorRef = useCodeMirrorReference()
+  const [codeMirrorRef] = useCodemirrorReferenceContext()
 
   useEffect(() => {
     const view = codeMirrorRef

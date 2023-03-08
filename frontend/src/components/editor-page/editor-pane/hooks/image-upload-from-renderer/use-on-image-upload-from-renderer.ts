@@ -8,7 +8,7 @@ import { Logger } from '../../../../../utils/logger'
 import { useEditorReceiveHandler } from '../../../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
 import type { ImageUploadMessage } from '../../../../render-page/window-post-message-communicator/rendering-message'
 import { CommunicationMessageType } from '../../../../render-page/window-post-message-communicator/rendering-message'
-import { useCodeMirrorReference } from '../../../change-content-context/change-content-context'
+import { useCodemirrorReferenceContext } from '../../../change-content-context/codemirror-reference-context'
 import type { CursorSelection } from '../../tool-bar/formatters/types/cursor-selection'
 import { useHandleUpload } from '../use-handle-upload'
 import { findRegexMatchInText } from './find-regex-match-in-text'
@@ -22,7 +22,7 @@ const imageWithPlaceholderLinkRegex = /!\[([^\]]*)]\(https:\/\/([^)]*)\)/g
  * Receives {@link CommunicationMessageType.IMAGE_UPLOAD image upload events} via iframe communication and processes the attached uploads.
  */
 export const useOnImageUploadFromRenderer = (): void => {
-  const codeMirrorReference = useCodeMirrorReference()
+  const [codeMirrorReference] = useCodemirrorReferenceContext()
   const handleUpload = useHandleUpload()
 
   useEditorReceiveHandler(
