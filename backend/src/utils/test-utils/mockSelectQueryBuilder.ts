@@ -12,7 +12,7 @@ import { ObjectLiteral, Repository, SelectQueryBuilder } from 'typeorm';
  * @param returnValue The entity to return
  * @return The mocked query builder
  */
-export function mockSelectQueryBuilder<T>(
+export function mockSelectQueryBuilder<T extends ObjectLiteral>(
   returnValue: T | null,
 ): SelectQueryBuilder<T> {
   const mockedQueryBuilder: SelectQueryBuilder<T> = Mock.of<
