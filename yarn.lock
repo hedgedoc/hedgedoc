@@ -2445,7 +2445,7 @@ __metadata:
     twemoji-colr-font: 14.0.2
     typescript: 4.9.5
     uuid: 9.0.0
-    vega: 5.23.0
+    vega: 5.24.0
     vega-embed: 6.21.3
     vega-lite: 5.6.1
     words-count: 2.0.2
@@ -18348,14 +18348,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-force@npm:~4.1.1":
-  version: 4.1.1
-  resolution: "vega-force@npm:4.1.1"
+"vega-force@npm:~4.2.0":
+  version: 4.2.0
+  resolution: "vega-force@npm:4.2.0"
   dependencies:
     d3-force: ^3.0.0
     vega-dataflow: ^5.7.5
     vega-util: ^1.17.1
-  checksum: 50bfdfd2e3e4f98ad0088cead041cbe2e62300f4a427ab26647a186239b752c86f4552a08134ec6137356a819605abcfd604b979ffee7307a9aae0a486b03556
+  checksum: 8a371ca8d0892bc3e932cc279bbf54fe8b88e2b384c42f8df9877c801191953f3ee3e2f516f675a69ecb052ed081232dfb3438989620e8ad5c2a316ccee60277
   languageName: node
   linkType: hard
 
@@ -18618,15 +18618,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-typings@npm:~0.23.0":
-  version: 0.23.0
-  resolution: "vega-typings@npm:0.23.0"
+"vega-typings@npm:~0.24.0":
+  version: 0.24.0
+  resolution: "vega-typings@npm:0.24.0"
   dependencies:
     "@types/geojson": ^7946.0.10
     vega-event-selector: ^3.0.1
     vega-expression: ^5.0.1
     vega-util: ^1.17.1
-  checksum: 4f55ad548c5c767958a113d83ebf01ae073a10eef3b9abfeed2a24809fac4d8eb693a2c4d4684b39a0513ed9a52aec30fd80e9568b4e7aef2a85f18a554630c5
+  checksum: 430dc0a95d0d07f00e82829d1c3a81efdf6512476ed53bc263bf98f1c0e1bdb780d0125609360d386af287a79467c21069d9f14f5eec12999602f937799c6b5c
   languageName: node
   linkType: hard
 
@@ -18688,16 +18688,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega@npm:5.23.0":
-  version: 5.23.0
-  resolution: "vega@npm:5.23.0"
+"vega@npm:5.24.0":
+  version: 5.24.0
+  resolution: "vega@npm:5.24.0"
   dependencies:
     vega-crossfilter: ~4.1.1
     vega-dataflow: ~5.7.5
     vega-encode: ~4.9.1
     vega-event-selector: ~3.0.1
     vega-expression: ~5.0.1
-    vega-force: ~4.1.1
+    vega-force: ~4.2.0
     vega-format: ~1.1.1
     vega-functions: ~5.13.1
     vega-geo: ~4.4.1
@@ -18713,13 +18713,13 @@ __metadata:
     vega-statistics: ~1.8.1
     vega-time: ~2.1.1
     vega-transforms: ~4.10.1
-    vega-typings: ~0.23.0
+    vega-typings: ~0.24.0
     vega-util: ~1.17.1
     vega-view: ~5.11.1
     vega-view-transforms: ~4.5.9
     vega-voronoi: ~4.2.1
     vega-wordcloud: ~4.1.4
-  checksum: 6ee2961f44a68cb57e0e349373e4f069b02df2b6128472fb83eb3baaaa0ffb8a0b06a84f40585ffbb2c5f93cfd3745eed7a907759529a05d457e70dcaa45341a
+  checksum: 974ef09d56cb768a6f31dae80856e9c5a22cc2dbe79d73ded95b3743539f7d9981759cc9e214f939489d632faf9b69bad079a4d5bc53439c685e809b14d7a7a1
   languageName: node
   linkType: hard
 
