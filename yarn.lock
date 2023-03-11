@@ -2261,7 +2261,7 @@ __metadata:
     typescript: 4.9.5
     ws: 8.12.1
     y-protocols: 1.0.5
-    yjs: 13.5.48
+    yjs: 13.5.50
   languageName: unknown
   linkType: soft
 
@@ -2288,7 +2288,7 @@ __metadata:
     typescript: 4.9.5
     ws: 8.12.1
     y-protocols: 1.0.5
-    yjs: 13.5.48
+    yjs: 13.5.50
   languageName: unknown
   linkType: soft
 
@@ -2434,7 +2434,7 @@ __metadata:
     ws: 8.12.1
     y-codemirror.next: 0.3.2
     y-protocols: 1.0.5
-    yjs: 13.5.48
+    yjs: 13.5.50
   languageName: unknown
   linkType: soft
 
@@ -19156,12 +19156,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yjs@npm:13.5.48":
-  version: 13.5.48
-  resolution: "yjs@npm:13.5.48"
+"yjs@npm:13.5.50":
+  version: 13.5.50
+  resolution: "yjs@npm:13.5.50"
   dependencies:
     lib0: ^0.2.49
-  checksum: f9acd3469a8a2005b1b50fb5eed733c7c19dbb18ac75e226969bfe7a7b6dabe2a8a0de1eca28875d4b37e76d3c006be49f2cfa6db906163b73c4c99d4cd9012b
+  checksum: 1c636eadcb4191adec1b31819c8f97f90f3d9f5300856f612ec0b7313ac1ed867810c8dc16b39ddc1bba73abe247b1d2ceae70699589a384318c0b0f3dd14124
   languageName: node
   linkType: hard
 
