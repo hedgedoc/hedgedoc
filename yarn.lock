@@ -2248,7 +2248,7 @@ __metadata:
     prettier: 2.8.4
     raw-body: 2.5.2
     reflect-metadata: 0.1.13
-    rimraf: 4.3.0
+    rimraf: 4.3.1
     rxjs: 7.8.0
     source-map-support: 0.5.21
     sqlite3: 5.1.4
@@ -15833,14 +15833,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rimraf@npm:4.3.0":
-  version: 4.3.0
-  resolution: "rimraf@npm:4.3.0"
+"rimraf@npm:4.3.1":
+  version: 4.3.1
+  resolution: "rimraf@npm:4.3.1"
   dependencies:
     glob: ^9.2.0
   bin:
     rimraf: dist/cjs/src/bin.js
-  checksum: 48498f1eeb9b6b848605d93fa79e7bf3c57bb47807500ee636848dc0fd3b69b6b532f1ce9d4e46c4feeb4c3ff0e8ab85cd177cbbbd65f635f8bc8cb88aee151c
+  checksum: d5893862a1e96cde610599ae76e338a709252667408d38bffa07cd24891a840a95957c4bb7178a9b0d3b6141e3b1bea20b9ba4b4f99d8c9edc492723e7b125ec
   languageName: node
   linkType: hard
 
