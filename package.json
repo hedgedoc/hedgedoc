@@ -33,7 +33,7 @@
     "eventemitter2@6.4.9": "patch:eventemitter2@npm%3A6.4.9#./.yarn/patches/eventemitter2-npm-6.4.9-ba37798a18.patch"
   },
   "devDependencies": {
-    "dotenv-cli": "7.0.0",
+    "dotenv-cli": "7.1.0",
     "turbo": "1.8.3"
   }
 }
