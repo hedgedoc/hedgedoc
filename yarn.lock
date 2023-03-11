@@ -335,6 +335,11 @@
   resolved "https://registry.yarnpkg.com/@passport-next/passport-strategy/-/passport-strategy-1.1.0.tgz#4c0df069e2ec9262791b9ef1e23320c1d73bdb74"
   integrity sha512-2KhFjtPueJG6xVj2HnqXt9BlANOfYCVLyu+pXYjPGBDT8yk+vQwc/6tsceIj+mayKcoxMau2JimggXRPHgoc8w==
 
+"@stencil/core@^2.18.0":
+  version "2.22.2"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-2.22.2.tgz#f518b6bfae85352c72cd07fcaf2f2b61e0581fd9"
+  integrity sha512-r+vbxsGNcBaV1VDOYW25lv4QfXTlNoIb5GpUX7rZ+cr59yqYCZC5tlV+IzX6YgHKW62ulCc9M3RYtTfHtNbNNw==
+
 "@tokenizer/token@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@tokenizer/token/-/token-0.3.0.tgz#fe98a93fe789247e998c75e74e9c7c63217aa276"
@@ -5750,10 +5755,12 @@ invariant@^2.2.2:
   dependencies:
     loose-envify "^1.0.0"
 
-ionicons@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/ionicons/-/ionicons-2.0.1.tgz#ca398113293ea870244f538f0aabbd4b5b209a3e"
-  integrity sha512-ySWjaL3PxB4JFMvr7/02sByWM7TQv1mrvRYFvUwFcVEEHEK/RKEP6MFhcnTmKhoPM6Ih6s5wH003fkVk1wiXLQ==
+ionicons@7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/ionicons/-/ionicons-7.0.0.tgz#7597e4954a00facac928809cde162d80d3d9427d"
+  integrity sha512-5G9gBxaUfJm0aAr/Kg5Eb/d7d+pMC65yiHjlkGATLrHSZgAzlc9l6ho0dCSdfq3wGef2QiZeNsvyChPVggfXwQ==
+  dependencies:
+    "@stencil/core" "^2.18.0"
 
 ip@^2.0.0:
   version "2.0.0"
