@@ -2277,7 +2277,7 @@ __metadata:
     tsconfig-paths: 4.1.2
     typeorm: 0.3.7
     typescript: 4.9.5
-    ws: 8.12.1
+    ws: 8.13.0
     y-protocols: 1.0.5
     yjs: 13.5.50
   languageName: unknown
@@ -2304,7 +2304,7 @@ __metadata:
     prettier: 2.8.4
     ts-jest: 29.0.5
     typescript: 4.9.5
-    ws: 8.12.1
+    ws: 8.13.0
     y-protocols: 1.0.5
     yjs: 13.5.50
   languageName: unknown
@@ -2449,7 +2449,7 @@ __metadata:
     vega-embed: 6.21.3
     vega-lite: 5.6.1
     words-count: 2.0.2
-    ws: 8.12.1
+    ws: 8.13.0
     y-codemirror.next: 0.3.2
     y-protocols: 1.0.5
     yjs: 13.5.50
@@ -2759,21 +2759,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/types@npm:29.5.0, @jest/types@npm:^29.4.3":
-  version: 29.5.0
-  resolution: "@jest/types@npm:29.5.0"
-  dependencies:
-    "@jest/schemas": ^29.4.3
-    "@types/istanbul-lib-coverage": ^2.0.0
-    "@types/istanbul-reports": ^3.0.0
-    "@types/node": "*"
-    "@types/yargs": ^17.0.8
-    chalk: ^4.0.0
-  checksum: 1811f94b19cf8a9460a289c4f056796cfc373480e0492692a6125a553cd1a63824bd846d7bb78820b7b6f758f6dd3c2d4558293bb676d541b2fa59c70fdf9d39
-  languageName: node
-  linkType: hard
-
-"@jest/types@npm:^29.5.0":
+"@jest/types@npm:29.5.0, @jest/types@npm:^29.4.3, @jest/types@npm:^29.5.0":
   version: 29.5.0
   resolution: "@jest/types@npm:29.5.0"
   dependencies:
@@ -19092,6 +19078,21 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: 97301c1c4d838fc81bd413f370f75c12aabe44527b31323b761eab3043a9ecb7e32ffd668548382c9a6a5ad3a1c3a9249608e8338e6b939f2f9540f1e21970b5
+  languageName: node
+  linkType: hard
+
+"ws@npm:8.13.0":
+  version: 8.13.0
+  resolution: "ws@npm:8.13.0"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ">=5.0.2"
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: 53e991bbf928faf5dc6efac9b8eb9ab6497c69feeb94f963d648b7a3530a720b19ec2e0ec037344257e05a4f35bd9ad04d9de6f289615ffb133282031b18c61c
   languageName: node
   linkType: hard
 
