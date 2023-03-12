@@ -54,7 +54,18 @@ All mentioned fields are extracted from the note content by the backend on save 
   
 `version` specifies if a note is an old HedgeDoc 1 note, or a new HedgeDoc 2 note. This is mainly used to redirect old notes form <https://md.example.org/noteid> to <https://md.example.org/n/noteid>.
 
-### Conversion of HedgeDoc 1 notes
+## Deleting Notes
+
+- The owner of a note may delete it.
+    - By default, this also removes all revisions and all files that were uploaded to that note.
+    - The owner may choose to skip deleting associated uploads, leaving them without a note.
+    - The frontend should show a list of all uploads that will be affected
+      and provide a method of skipping deletion.
+- The owner of a note may delete all revisions. This effectively purges the edit
+  history of a note.
+
+
+## Conversion of HedgeDoc 1 notes
 
 First we want to define some terms of the HedgeDoc 1 notes:
 
