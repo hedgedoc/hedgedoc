@@ -1,7 +1,6 @@
 {
   "extends": [
     "config:base",
-    "schedule:weekends",
     "group:definitelyTyped",
     "group:socketio",
     "group:linters",
