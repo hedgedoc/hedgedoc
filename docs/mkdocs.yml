@@ -24,7 +24,7 @@ nav:
     - Design Documents:
       - Notes: dev/notes.md
       - 'User Profiles & Authentication': dev/design_docs/user_profiles.md
-      - Configuration: dev/config.md
+      - Configuration: dev/design_docs/config.md
     - 'Writing Docs': dev/documentation.md
   - FAQ: https://hedgedoc.org/faq
 markdown_extensions:

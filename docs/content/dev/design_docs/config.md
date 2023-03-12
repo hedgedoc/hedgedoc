@@ -1,10 +1,12 @@
 # Config
 
-The configuration of HedgeDoc is handled entirely by environment variables. Most of these variables are prefixed with `HD_` (for HedgeDoc).
+!!! info "Design Document"
+    This is a design document, explaining the design and vision for a HedgeDoc 2
+    feature. It is not a user guide and may or may not be fully implemented.
 
-## Configuring HedgeDoc for development
-
-NestJS - the framework we use - is reading the variables from the environment and also from the `.env` file in the root of the project. To make it easy to get the project started we included an example `.env` file in the root of this project called `.env.example`.
+The configuration of HedgeDoc 2 is handled entirely by environment variables.
+Most of these variables are prefixed with `HD_` (for HedgeDoc).
+NestJS - the framework we use - is reading the variables from the environment and also from the `.env` file in the root of the project.
 
 ## How the config code works
 
