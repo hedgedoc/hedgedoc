@@ -52,7 +52,7 @@ export class Identity {
 
   /**
    * If the identity should be used as the sync source.
-   * See [authentication doc](../../docs/content/dev/authentication.md) for clarification
+   * See [authentication doc](../../docs/content/dev/user_profiles.md) for clarification
    */
   @Column()
   syncSource: boolean;
