@@ -22,6 +22,7 @@ nav:
   - Development:
     - '2.0 Development': dev/2.0.md
     - Design Documents:
+      - API Authentication: dev/design_docs/api_auth.md
       - Notes: dev/design_docs/notes.md
       - 'User Profiles & Authentication': dev/design_docs/user_profiles.md
       - Configuration: dev/design_docs/config.md
