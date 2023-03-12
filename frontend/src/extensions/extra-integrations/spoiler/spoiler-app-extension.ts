@@ -4,9 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { CheatsheetExtension } from '../../../components/editor-page/cheatsheet/cheatsheet-extension'
+import { basicCompletion } from '../../../components/editor-page/editor-pane/autocompletions/basic-completion'
 import type { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
 import { AppExtension } from '../../base/app-extension'
 import { SpoilerMarkdownExtension } from './spoiler-markdown-extension'
+import type { CompletionSource } from '@codemirror/autocomplete'
+import { t } from 'i18next'
+
+const spoilerRegex = /(?:^|\s):(?::|::|::\w+)?/
 
 /**
  * Adds support for html spoiler tags.
@@ -20,5 +25,11 @@ export class SpoilerAppExtension extends AppExtension {
 
   buildCheatsheetExtensions(): CheatsheetExtension[] {
     return [{ i18nKey: 'spoiler' }]
+  }
+
+  buildAutocompletion(): CompletionSource[] {
+    return [
+      basicCompletion(spoilerRegex, ':::spoiler Label text\n\n:::', t('editor.autocompletions.spoiler') ?? undefined)
+    ]
   }
 }

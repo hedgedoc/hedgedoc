@@ -373,6 +373,22 @@
       "clipboard": "Clipboard",
       "file": "Markdown file"
     },
+    "autocompletions": {
+      "link": "Link",
+      "icon": "Icon",
+      "emoji": "Emoji",
+      "image": "Image",
+      "imageWithDimensions": "Image with dimensions",
+      "toc": "Table of contents",
+      "successBox": "Success box",
+      "infoBox": "Info box",
+      "warningBox": "Warning box",
+      "errorBox": "Error box",
+      "tagName": "Name tag",
+      "tagColor": "Color tag",
+      "tagTime": "Time tag",
+      "spoiler": "Spoiler"
+    },
     "modal": {
       "snippetImport": {
         "title": "Import from Snippet",
