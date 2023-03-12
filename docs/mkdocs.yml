@@ -8,23 +8,24 @@ edit_uri: https://github.com/hedgedoc/hedgedoc/edit/master/docs/content/
 nav:
   - Home: index.md
   - Configuration:
-      - Configuration: config/index.md
-      - Media:
-        - Azure: config/media/azure.md
-        - Filesystem: config/media/filesystem.md
-        - imgur: config/media/imgur.md
-        - S3: config/media/s3.md
-        - WebDAV: config/media/webdav.md
+    - Configuration: config/index.md
+    - Media:
+      - Azure: config/media/azure.md
+      - Filesystem: config/media/filesystem.md
+      - imgur: config/media/imgur.md
+      - S3: config/media/s3.md
+      - WebDAV: config/media/webdav.md
   - Interface:
-      Toolbar: interface/toolbar.md
+    - Toolbar: interface/toolbar.md
   - References:
-      'HedgeDoc Flavored Markdown': references/hfm.md
-  - Developer:
-      - '2.0 Development': dev/2.0.md
+    - 'HedgeDoc Flavored Markdown': references/hfm.md
+  - Development:
+    - '2.0 Development': dev/2.0.md
+    - Design Documents:
       - Notes: dev/notes.md
-      - 'User Profiles & Authentication': dev/authentication.md
+      - 'User Profiles & Authentication': dev/user_profiles.md
       - Configuration: dev/config.md
-      - 'Documentation': dev/documentation.md
+    - 'Writing Docs': dev/documentation.md
   - FAQ: https://hedgedoc.org/faq
 markdown_extensions:
   - toc:
