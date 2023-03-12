@@ -1,4 +1,4 @@
-# Build
+# Building Docker images
 
 To build docker images of the backend or frontend use the following commands.
 Make sure that you have installed the [Docker BuildKit Plugin](https://docs.docker.com/build/install-buildx/) and
