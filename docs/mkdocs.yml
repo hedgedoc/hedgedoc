@@ -20,13 +20,15 @@ nav:
   - References:
     - 'HedgeDoc Flavored Markdown': references/hfm.md
   - Development:
+    - Getting Started: dev/getting-started.md
+    - Frontend: dev/setup/frontend.md
     - '2.0 Development': dev/2.0.md
     - Design Documents:
       - API Authentication: dev/design_docs/api_auth.md
+      - Configuration: dev/design_docs/config.md
       - Events: dev/design_docs/events.md
       - Notes: dev/design_docs/notes.md
       - 'User Profiles & Authentication': dev/design_docs/user_profiles.md
-      - Configuration: dev/design_docs/config.md
     - 'Writing Docs': dev/documentation.md
   - FAQ: https://hedgedoc.org/faq
 markdown_extensions:
