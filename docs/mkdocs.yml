@@ -23,13 +23,14 @@ nav:
     - Getting Started: dev/getting-started.md
     - Frontend: dev/setup/frontend.md
     - Development Notes: dev/dev_notes.md
+    - Docker: dev/docker.md
+    - Writing Docs: dev/documentation.md
     - Design Documents:
       - API Authentication: dev/design_docs/api_auth.md
       - Configuration: dev/design_docs/config.md
       - Events: dev/design_docs/events.md
       - Notes: dev/design_docs/notes.md
       - 'User Profiles & Authentication': dev/design_docs/user_profiles.md
-    - 'Writing Docs': dev/documentation.md
   - FAQ: https://hedgedoc.org/faq
 markdown_extensions:
   - toc:
