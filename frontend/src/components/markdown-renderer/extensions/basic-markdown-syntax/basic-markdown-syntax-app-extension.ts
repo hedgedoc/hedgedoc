@@ -5,8 +5,11 @@
  */
 import { AppExtension } from '../../../../extensions/base/app-extension'
 import type { CheatsheetExtension } from '../../../editor-page/cheatsheet/cheatsheet-extension'
+import { basicCompletion } from '../../../editor-page/editor-pane/autocompletions/basic-completion'
 import type { MarkdownRendererExtension } from '../base/markdown-renderer-extension'
 import { BasicMarkdownSyntaxMarkdownExtension } from './basic-markdown-syntax-markdown-extension'
+import type { CompletionSource } from '@codemirror/autocomplete'
+import { t } from 'i18next'
 
 export class BasicMarkdownSyntaxAppExtension extends AppExtension {
   buildMarkdownRendererExtensions(): MarkdownRendererExtension[] {
@@ -59,5 +62,9 @@ export class BasicMarkdownSyntaxAppExtension extends AppExtension {
         categoryI18nKey: 'basic'
       }
     ]
+  }
+
+  buildAutocompletion(): CompletionSource[] {
+    return [basicCompletion(/(^|\s)\[/, '[](https://)', t('editor.autocompletions.link') ?? undefined)]
   }
 }

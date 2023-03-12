@@ -4,9 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { CheatsheetExtension } from '../../../components/editor-page/cheatsheet/cheatsheet-extension'
+import {
+  basicCompletion,
+  codeFenceRegex
+} from '../../../components/editor-page/editor-pane/autocompletions/basic-completion'
 import type { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
 import { AppExtension } from '../../base/app-extension'
 import { CsvTableMarkdownExtension } from './csv-table-markdown-extension'
+import type { CompletionSource } from '@codemirror/autocomplete'
 
 /**
  * Adds support for csv tables to the markdown rendering.
@@ -18,5 +23,9 @@ export class CsvTableAppExtension extends AppExtension {
 
   buildCheatsheetExtensions(): CheatsheetExtension[] {
     return [{ i18nKey: 'csv', entries: [{ i18nKey: 'table' }, { i18nKey: 'header' }] }]
+  }
+
+  buildAutocompletion(): CompletionSource[] {
+    return [basicCompletion(codeFenceRegex, '```csv delimiter=;\n\n```')]
   }
 }

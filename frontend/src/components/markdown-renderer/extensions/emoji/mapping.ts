@@ -31,3 +31,5 @@ export const combinedEmojiData = {
   ...shortCodeMap,
   ...emojiSkinToneModifierMap
 }
+
+export const emojiShortcodes = Object.keys(combinedEmojiData)
