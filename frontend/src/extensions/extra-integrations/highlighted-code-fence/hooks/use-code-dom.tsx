@@ -3,11 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import convertHtmlToReact from '@hedgedoc/html-to-react'
-import { sanitize } from 'dompurify'
+import { HtmlToReact } from '../../../../components/common/html-to-react/html-to-react'
 import type { HLJSApi } from 'highlight.js'
 import type { ReactElement } from 'react'
-import React, { Fragment, useMemo } from 'react'
+import React, { useMemo } from 'react'
 
 /**
  * Highlights the given code using highlight.js. If the language wasn't recognized then it won't be highlighted.
@@ -38,7 +37,7 @@ export const useCodeDom = (code: string, hljs: HLJSApi | undefined, language?: s
  * @return the code represented as react elements
  */
 const createHtmlLinesToReactDOM = (code: string[]): ReactElement[] => {
-  return code.map((line, lineIndex) => <Fragment key={lineIndex}>{convertHtmlToReact(sanitize(line))}</Fragment>)
+  return code.map((line, lineIndex) => <HtmlToReact htmlCode={line} key={lineIndex} />)
 }
 
 /**

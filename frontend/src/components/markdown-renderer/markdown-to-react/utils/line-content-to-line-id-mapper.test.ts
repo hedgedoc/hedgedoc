@@ -3,13 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { LineIdMapper } from './line-id-mapper'
+import { LineContentToLineIdMapper } from './line-content-to-line-id-mapper'
 
 describe('line id mapper', () => {
-  let lineIdMapper: LineIdMapper
+  let lineIdMapper: LineContentToLineIdMapper
 
   beforeEach(() => {
-    lineIdMapper = new LineIdMapper()
+    lineIdMapper = new LineContentToLineIdMapper()
   })
 
   it('should be case sensitive', () => {

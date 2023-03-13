@@ -5,7 +5,7 @@
  */
 import { StoreProvider } from '../../../redux/store-provider'
 import type { MarkdownRendererExtension } from '../extensions/base/markdown-renderer-extension'
-import { useConvertMarkdownToReactDom } from '../hooks/use-convert-markdown-to-react-dom'
+import { MarkdownToReact } from '../markdown-to-react/markdown-to-react'
 import React, { useMemo } from 'react'
 
 export interface SimpleMarkdownRendererProps {
@@ -21,7 +21,14 @@ export interface SimpleMarkdownRendererProps {
  */
 export const TestMarkdownRenderer: React.FC<SimpleMarkdownRendererProps> = ({ content, extensions }) => {
   const lines = useMemo(() => content.split('\n'), [content])
-  const dom = useConvertMarkdownToReactDom(lines, extensions, true, false)
-
-  return <StoreProvider>{dom}</StoreProvider>
+  return (
+    <StoreProvider>
+      <MarkdownToReact
+        markdownContentLines={lines}
+        markdownRenderExtensions={extensions}
+        newlinesAreBreaks={true}
+        allowHtml={false}
+      />
+    </StoreProvider>
+  )
 }

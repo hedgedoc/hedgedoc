@@ -7,11 +7,11 @@ import type { SlideOptions } from '../../redux/note-details/types/slide-show-opt
 import type { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
 import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
 import { RevealMarkdownExtension } from './extensions/reveal/reveal-markdown-extension'
-import { useConvertMarkdownToReactDom } from './hooks/use-convert-markdown-to-react-dom'
 import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
 import { useMarkdownExtensions } from './hooks/use-markdown-extensions'
 import { REVEAL_STATUS, useReveal } from './hooks/use-reveal'
 import { LoadingSlide } from './loading-slide'
+import { MarkdownToReact } from './markdown-to-react/markdown-to-react'
 import React, { useEffect, useMemo, useRef } from 'react'
 
 export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererProps {
@@ -25,10 +25,7 @@ export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererPr
  * @param markdownContentLines The markdown lines
  * @param onFirstHeadingChange The callback to call if the first heading changes.
  * @param onLineMarkerPositionChanged The callback to call with changed {@link LineMarkers}
- * @param onTaskCheckedChange The callback to call if a task is checked or unchecked.
- * @param onTocChange The callback to call if the toc changes.
  * @param baseUrl The base url of the renderer
- * @param onImageClick The callback to call if a image is clicked
  * @param newlinesAreBreaks If newlines are rendered as breaks or not
  * @param slideOptions The {@link SlideOptions} to use
  */
@@ -44,11 +41,9 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps 
 
   const extensions = useMarkdownExtensions(
     baseUrl,
-    undefined,
     useMemo(() => [new RevealMarkdownExtension()], [])
   )
 
-  const markdownReactDom = useConvertMarkdownToReactDom(markdownContentLines, extensions, newlinesAreBreaks, true)
   const revealStatus = useReveal(markdownContentLines, slideOptions)
 
   const extractFirstHeadline = useExtractFirstHeadline(markdownBodyRef, onFirstHeadingChange)
@@ -59,8 +54,18 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps 
   }, [extractFirstHeadline, markdownContentLines, revealStatus])
 
   const slideShowDOM = useMemo(
-    () => (revealStatus === REVEAL_STATUS.INITIALISED ? markdownReactDom : <LoadingSlide />),
-    [markdownReactDom, revealStatus]
+    () =>
+      revealStatus === REVEAL_STATUS.INITIALISED ? (
+        <MarkdownToReact
+          markdownContentLines={markdownContentLines}
+          markdownRenderExtensions={extensions}
+          allowHtml={true}
+          newlinesAreBreaks={newlinesAreBreaks}
+        />
+      ) : (
+        <LoadingSlide />
+      ),
+    [extensions, markdownContentLines, newlinesAreBreaks, revealStatus]
   )
 
   return (

@@ -9,6 +9,9 @@ export interface LineWithId {
   id: number
 }
 
+/**
+ * Defines the line number of a line marker and its absolute scroll position on the page.
+ */
 export interface LineMarkerPosition {
   line: number
   position: number

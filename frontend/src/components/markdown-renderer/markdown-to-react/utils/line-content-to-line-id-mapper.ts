@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { LineWithId } from '../extensions/linemarker/types'
+import type { LineWithId } from '../../extensions/linemarker/types'
 import type { ArrayChange } from 'diff'
 import { diffArrays } from 'diff'
 
@@ -14,7 +14,7 @@ type LineChange = ArrayChange<NewLine | LineWithId>
  * Calculates ids for every line in a given text and memorized the state of the last given text.
  * It also assigns ids for new lines on every update.
  */
-export class LineIdMapper {
+export class LineContentToLineIdMapper {
   private lastLines: LineWithId[] = []
   private lastUsedLineId = 0
 
@@ -58,7 +58,11 @@ export class LineIdMapper {
    */
   private convertChangesToLinesWithIds(changes: LineChange[]): LineWithId[] {
     return changes
-      .filter((change) => LineIdMapper.changeIsNotChangingLines(change) || LineIdMapper.changeIsAddingLines(change))
+      .filter(
+        (change) =>
+          LineContentToLineIdMapper.changeIsNotChangingLines(change) ||
+          LineContentToLineIdMapper.changeIsAddingLines(change)
+      )
       .reduce(
         (previousLineKeys, currentChange) => [...previousLineKeys, ...this.convertChangeToLinesWithIds(currentChange)],
         [] as LineWithId[]
@@ -94,7 +98,7 @@ export class LineIdMapper {
    * @return The created or reused {@link LineWithId lines with ids}
    */
   private convertChangeToLinesWithIds(change: LineChange): LineWithId[] {
-    if (LineIdMapper.changeIsAddingLines(change)) {
+    if (LineContentToLineIdMapper.changeIsAddingLines(change)) {
       return change.value.map((line) => {
         this.lastUsedLineId += 1
         return { line: line, id: this.lastUsedLineId }
