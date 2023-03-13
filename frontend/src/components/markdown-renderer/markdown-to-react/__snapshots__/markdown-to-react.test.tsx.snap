@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`markdown to react can render html if allowed 1`] = `
+<div>
+  <p>
+    <span>
+      test
+    </span>
+  </p>
+  
+
+</div>
+`;
+
+exports[`markdown to react can render markdown with newlines as line breaks 1`] = `
+<div>
+  <h1>
+    This is a headline
+  </h1>
+  
+
+  <p>
+    This is content
+    <br />
+    
+This Too
+  </p>
+  
+
+</div>
+`;
+
+exports[`markdown to react will use markdown render extensions 1`] = `
+<div>
+  <p>
+    &lt;span&gt;test&lt;/span&gt;
+  </p>
+  
+
+  <span>
+    configure
+  </span>
+  <span>
+    post
+  </span>
+  <span>
+    NodeProcessor! 
+  </span>
+  <span
+    data-children="true"
+  >
+     
+    node processor children
+     
+  </span>
+  <span
+    data-native="true"
+  >
+     
+    <nodeprocessor>
+      node processor children
+    </nodeprocessor>
+     
+  </span>
+</div>
+`;
+
+exports[`markdown to react won't render html if forbidden 1`] = `
+<div>
+  <p>
+    &lt;span&gt;test&lt;/span&gt;
+  </p>
+  
+
+</div>
+`;
+
+exports[`markdown to react won't render markdown with newlines as line breaks if forbidden 1`] = `
+<div>
+  <h1>
+    This is a headline
+  </h1>
+  
+
+  <p>
+    This is content
+This Too
+  </p>
+  
+
+</div>
+`;

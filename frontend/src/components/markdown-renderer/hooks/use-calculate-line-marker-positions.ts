@@ -52,13 +52,11 @@ const calculateLineMarkerPositions = (
  * @param documentElement A reference to the rendered document.
  * @param lineMarkers A list of {@link LineMarkers}
  * @param onLineMarkerPositionChanged The callback to call if the {@link LineMarkerPosition line marker positions} change e.g. by rendering or resizing.
- * @param offset The optional offset
  */
 export const useCalculateLineMarkerPosition = (
   documentElement: RefObject<HTMLDivElement>,
-  lineMarkers?: LineMarkers[],
-  onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void,
-  offset?: number
+  lineMarkers: LineMarkers[] | undefined,
+  onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void
 ): void => {
   const lastLineMarkerPositions = useRef<LineMarkerPosition[]>()
 
@@ -67,13 +65,17 @@ export const useCalculateLineMarkerPosition = (
       return
     }
 
-    const newLines = calculateLineMarkerPositions(documentElement.current, lineMarkers, offset)
+    const newLines = calculateLineMarkerPositions(
+      documentElement.current,
+      lineMarkers,
+      documentElement.current.offsetTop ?? 0
+    )
 
     if (!equal(newLines, lastLineMarkerPositions)) {
       lastLineMarkerPositions.current = newLines
       onLineMarkerPositionChanged(newLines)
     }
-  }, [documentElement, lineMarkers, offset, onLineMarkerPositionChanged])
+  }, [documentElement, lineMarkers, onLineMarkerPositionChanged])
 
   useEffect(() => {
     calculateNewLineMarkerPositions()

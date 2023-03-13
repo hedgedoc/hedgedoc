@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HTML to React renders basic html correctly 1`] = `
+<div>
+  <p>
+    This is a test 
+    <b>
+      sentence
+    </b>
+  </p>
+</div>
+`;
+
+exports[`HTML to React will forward the DomPurify settings 1`] = `
+<div>
+  <test-tag>
+    Test!
+  </test-tag>
+</div>
+`;
+
+exports[`HTML to React will forward the parser options 1`] = `
+<div>
+  <p>
+    Hijacked!
+  </p>
+</div>
+`;
+
+exports[`HTML to React won't render script tags 1`] = `<div />`;

@@ -15,10 +15,6 @@ import type MarkdownIt from 'markdown-it/lib'
 export class ImagePlaceholderMarkdownExtension extends MarkdownRendererExtension {
   public static readonly PLACEHOLDER_URL = 'https://'
 
-  constructor() {
-    super()
-  }
-
   configureMarkdownIt(markdownIt: MarkdownIt): void {
     addLineToPlaceholderImageTags(markdownIt)
   }

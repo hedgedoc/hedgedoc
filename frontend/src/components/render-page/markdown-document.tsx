@@ -72,7 +72,7 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
   const newlinesAreBreaks = useApplicationState((state) => state.noteDetails.frontmatter.newlinesAreBreaks)
 
   const contentLineCount = useMemo(() => markdownContentLines.length, [markdownContentLines])
-  const [onLineMarkerPositionChanged, onUserScroll] = useDocumentSyncScrolling(
+  const [recalculateLineMarkers, onUserScroll] = useDocumentSyncScrolling(
     internalDocumentRenderPaneRef,
     rendererRef,
     contentLineCount,
@@ -95,7 +95,7 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
           className={`mb-3 ${additionalRendererClasses ?? ''}`}
           markdownContentLines={markdownContentLines}
           onFirstHeadingChange={onFirstHeadingChange}
-          onLineMarkerPositionChanged={onLineMarkerPositionChanged}
+          onLineMarkerPositionChanged={recalculateLineMarkers}
           baseUrl={baseUrl}
           newlinesAreBreaks={newlinesAreBreaks}
         />

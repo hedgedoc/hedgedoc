@@ -31,7 +31,7 @@ export const useDocumentSyncScrolling = (
 ): [(lineMarkers: LineMarkerPosition[]) => void, React.UIEventHandler<HTMLElement>] => {
   const [lineMarks, setLineMarks] = useState<LineMarkerPosition[]>()
 
-  const onLineMarkerPositionChanged = useCallback(
+  const recalculateLineMarkerPositions = useCallback(
     (linkMarkerPositions: LineMarkerPosition[]) => {
       if (!outerContainerRef.current || !rendererRef.current) {
         return
@@ -51,5 +51,5 @@ export const useDocumentSyncScrolling = (
   const onUserScroll = useOnUserScroll(lineMarks, outerContainerRef, onScroll)
   useScrollToLineMark(scrollState, lineMarks, numberOfLines, outerContainerRef)
 
-  return useMemo(() => [onLineMarkerPositionChanged, onUserScroll], [onLineMarkerPositionChanged, onUserScroll])
+  return useMemo(() => [recalculateLineMarkerPositions, onUserScroll], [recalculateLineMarkerPositions, onUserScroll])
 }

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { MarkdownRendererExtension } from '../extensions/base/markdown-renderer-extension'
+import type { MarkdownRendererExtension } from '../../extensions/base/markdown-renderer-extension'
 import MarkdownIt from 'markdown-it/lib'
 import { useMemo } from 'react'
 

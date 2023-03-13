@@ -20,10 +20,6 @@ import type Token from 'markdown-it/lib/token'
  * @see https://plantuml.com
  */
 export class PlantumlMarkdownExtension extends MarkdownRendererExtension {
-  constructor() {
-    super()
-  }
-
   private plantumlError(markdownIt: MarkdownIt): void {
     const defaultRenderer: Renderer.RenderRule = markdownIt.renderer.rules.fence || (() => '')
     markdownIt.renderer.rules.fence = (tokens: Token[], idx: number, options: Options, env, slf: Renderer) => {

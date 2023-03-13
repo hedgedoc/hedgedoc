@@ -12,43 +12,30 @@ import { GenericSyntaxMarkdownExtension } from '../extensions/generic-syntax-mar
 import { IframeCapsuleMarkdownExtension } from '../extensions/iframe-capsule/iframe-capsule-markdown-extension'
 import { ImagePlaceholderMarkdownExtension } from '../extensions/image-placeholder/image-placeholder-markdown-extension'
 import { ProxyImageMarkdownExtension } from '../extensions/image/proxy-image-markdown-extension'
-import type { LineMarkers } from '../extensions/linemarker/add-line-marker-markdown-it-plugin'
-import { LinemarkerMarkdownExtension } from '../extensions/linemarker/linemarker-markdown-extension'
 import { LinkAdjustmentMarkdownExtension } from '../extensions/link-replacer/link-adjustment-markdown-extension'
 import { LinkifyFixMarkdownExtension } from '../extensions/linkify-fix/linkify-fix-markdown-extension'
 import { TableOfContentsMarkdownExtension } from '../extensions/table-of-contents-markdown-extension'
 import { UploadIndicatingImageFrameMarkdownExtension } from '../extensions/upload-indicating-image-frame/upload-indicating-image-frame-markdown-extension'
 import { useExtensionEventEmitter } from './use-extension-event-emitter'
-import type { MutableRefObject } from 'react'
 import { useMemo } from 'react'
-
-const optionalMarkdownRendererExtensions = optionalAppExtensions.flatMap((value) =>
-  value.buildMarkdownRendererExtensions()
-)
 
 /**
  * Provides a list of {@link MarkdownRendererExtension markdown extensions} that is a combination of the common extensions and the given additional.
  *
  * @param baseUrl The base url for the {@link LinkAdjustmentMarkdownExtension}
- * @param currentLineMarkers A {@link MutableRefObject reference} to {@link LineMarkers} for the {@link LinemarkerMarkdownExtension}
  * @param additionalExtensions The additional extensions that should be included in the list
  * @return The created list of markdown extensions
  */
 export const useMarkdownExtensions = (
   baseUrl: string,
-  currentLineMarkers: MutableRefObject<LineMarkers[] | undefined> | undefined,
   additionalExtensions: MarkdownRendererExtension[]
 ): MarkdownRendererExtension[] => {
   const extensionEventEmitter = useExtensionEventEmitter()
-  //replace with global list
   return useMemo(() => {
     return [
-      ...optionalMarkdownRendererExtensions,
+      ...optionalAppExtensions.flatMap((extension) => extension.buildMarkdownRendererExtensions(extensionEventEmitter)),
       ...additionalExtensions,
-      new TableOfContentsMarkdownExtension(extensionEventEmitter),
-      new LinemarkerMarkdownExtension(
-        currentLineMarkers ? (lineMarkers) => (currentLineMarkers.current = lineMarkers) : undefined
-      ),
+      new TableOfContentsMarkdownExtension(),
       new IframeCapsuleMarkdownExtension(),
       new ImagePlaceholderMarkdownExtension(),
       new UploadIndicatingImageFrameMarkdownExtension(),
@@ -60,5 +47,5 @@ export const useMarkdownExtensions = (
       new DebuggerMarkdownExtension(),
       new ProxyImageMarkdownExtension()
     ]
-  }, [additionalExtensions, baseUrl, currentLineMarkers, extensionEventEmitter])
+  }, [additionalExtensions, baseUrl, extensionEventEmitter])
 }

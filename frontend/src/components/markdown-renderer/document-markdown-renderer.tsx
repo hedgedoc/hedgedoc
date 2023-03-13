@@ -7,11 +7,12 @@ import { cypressId } from '../../utils/cypress-attribute'
 import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
 import { HeadlineAnchorsMarkdownExtension } from './extensions/headline-anchors-markdown-extension'
 import type { LineMarkers } from './extensions/linemarker/add-line-marker-markdown-it-plugin'
+import { LinemarkerMarkdownExtension } from './extensions/linemarker/linemarker-markdown-extension'
 import type { LineMarkerPosition } from './extensions/linemarker/types'
-import { useConvertMarkdownToReactDom } from './hooks/use-convert-markdown-to-react-dom'
+import { useCalculateLineMarkerPosition } from './hooks/use-calculate-line-marker-positions'
 import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
 import { useMarkdownExtensions } from './hooks/use-markdown-extensions'
-import { useCalculateLineMarkerPosition } from './utils/calculate-line-marker-positions'
+import { MarkdownToReact } from './markdown-to-react/markdown-to-react'
 import React, { useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -27,9 +28,7 @@ export interface DocumentMarkdownRendererProps extends CommonMarkdownRendererPro
  * @param onFirstHeadingChange The callback to call if the first heading changes.
  * @param onLineMarkerPositionChanged The callback to call with changed {@link LineMarkers}
  * @param onTaskCheckedChange The callback to call if a task is checked or unchecked.
- * @param onTocChange The callback to call if the toc changes.
  * @param baseUrl The base url of the renderer
- * @param onImageClick The callback to call if a image is clicked
  * @param outerContainerRef A reference for the outer container
  * @param newlinesAreBreaks If newlines are rendered as breaks or not
  */
@@ -47,19 +46,17 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
 
   const extensions = useMarkdownExtensions(
     baseUrl,
-    currentLineMarkers,
-    useMemo(() => [new HeadlineAnchorsMarkdownExtension()], [])
+    useMemo(
+      () => [
+        new HeadlineAnchorsMarkdownExtension(),
+        new LinemarkerMarkdownExtension((values) => (currentLineMarkers.current = values))
+      ],
+      []
+    )
   )
-
-  const markdownReactDom = useConvertMarkdownToReactDom(markdownContentLines, extensions, newlinesAreBreaks, true)
 
   useTranslation()
-  useCalculateLineMarkerPosition(
-    markdownBodyRef,
-    currentLineMarkers.current,
-    onLineMarkerPositionChanged,
-    markdownBodyRef.current?.offsetTop ?? 0
-  )
+  useCalculateLineMarkerPosition(markdownBodyRef, currentLineMarkers.current, onLineMarkerPositionChanged)
   const extractFirstHeadline = useExtractFirstHeadline(markdownBodyRef, onFirstHeadingChange)
   useEffect(() => {
     extractFirstHeadline()
@@ -72,7 +69,12 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
         ref={markdownBodyRef}
         data-word-count-target={true}
         className={`${className ?? ''} markdown-body w-100 d-flex flex-column align-items-center`}>
-        {markdownReactDom}
+        <MarkdownToReact
+          markdownContentLines={markdownContentLines}
+          markdownRenderExtensions={extensions}
+          newlinesAreBreaks={newlinesAreBreaks}
+          allowHtml={true}
+        />
       </div>
     </div>
   )
