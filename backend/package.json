@@ -72,7 +72,7 @@
     "reflect-metadata": "0.1.13",
     "rimraf": "4.4.0",
     "rxjs": "7.8.0",
-    "sqlite3": "5.1.4",
+    "sqlite3": "5.1.5",
     "typeorm": "0.3.7",
     "ws": "8.13.0",
     "y-protocols": "1.0.5",
