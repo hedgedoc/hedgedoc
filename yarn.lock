@@ -2331,7 +2331,7 @@ __metadata:
     "@codemirror/view": 6.9.2
     "@fontsource/source-sans-pro": 4.5.11
     "@hedgedoc/commons": "workspace:commons"
-    "@hedgedoc/html-to-react": 1.4.5
+    "@hedgedoc/html-to-react": 1.4.6
     "@hedgedoc/markdown-it-plugins": 2.0.0
     "@mrdrogdrog/optional": 1.1.0
     "@next/bundle-analyzer": 13.2.4
@@ -2456,16 +2456,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hedgedoc/html-to-react@npm:1.4.5":
-  version: 1.4.5
-  resolution: "@hedgedoc/html-to-react@npm:1.4.5"
+"@hedgedoc/html-to-react@npm:1.4.6":
+  version: 1.4.6
+  resolution: "@hedgedoc/html-to-react@npm:1.4.6"
   dependencies:
     domelementtype: ^2.3.0
     domhandler: ^5.0.3
     htmlparser2: ^8.0.0
   peerDependencies:
     react: ">=16.0"
-  checksum: a2584c77ff6ce2de200041484fea85dc6f96f483bbbc2e084fb4aa3efa4b8a6acb1bbe3f6fb7c71495f30e759fbbe1eb39a8a28e2bc67fb994e0e154c44624dd
+  checksum: c1a3f66685934d58d9d6061824607049db2c9c66927141f0eb508b57a4bec67ed07c944103384630315574a1b13ef2862198ec3d985fc7bf07a082714abf3bd5
   languageName: node
   linkType: hard
 
