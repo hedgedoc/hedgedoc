@@ -2252,7 +2252,7 @@ __metadata:
     jest: 29.5.0
     joi: 17.8.4
     ldapauth-fork: 5.0.5
-    lib0: 0.2.66
+    lib0: 0.2.67
     minio: 7.0.32
     mocked-env: 1.3.5
     mysql: 2.18.1
@@ -2299,7 +2299,7 @@ __metadata:
     eventemitter2: 6.4.9
     isomorphic-ws: 5.0.0
     jest: 29.5.0
-    lib0: 0.2.66
+    lib0: 0.2.67
     microbundle: 0.15.1
     prettier: 2.8.4
     ts-jest: 29.0.5
@@ -12470,7 +12470,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lib0@npm:0.2.66, lib0@npm:^0.2.42, lib0@npm:^0.2.49":
+"lib0@npm:0.2.67":
+  version: 0.2.67
+  resolution: "lib0@npm:0.2.67"
+  dependencies:
+    isomorphic.js: ^0.2.4
+  bin:
+    0gentesthtml: bin/gentesthtml.js
+  checksum: 9b931424d06a2af9a960b73506c6d1048afbb51ac587a1c5ce0a5c99c71d184ed9cf3bcea2ecada5b74179bd104fdc7d23939930058a29c5e12d413e11e78c61
+  languageName: node
+  linkType: hard
+
+"lib0@npm:^0.2.42, lib0@npm:^0.2.49":
   version: 0.2.66
   resolution: "lib0@npm:0.2.66"
   dependencies:
