@@ -12485,13 +12485,14 @@ __metadata:
   linkType: hard
 
 "lib0@npm:^0.2.49":
-  version: 0.2.67
-  resolution: "lib0@npm:0.2.67"
+  version: 0.2.68
+  resolution: "lib0@npm:0.2.68"
   dependencies:
     isomorphic.js: ^0.2.4
   bin:
     0gentesthtml: bin/gentesthtml.js
-  checksum: 9b931424d06a2af9a960b73506c6d1048afbb51ac587a1c5ce0a5c99c71d184ed9cf3bcea2ecada5b74179bd104fdc7d23939930058a29c5e12d413e11e78c61
+    0serve: bin/0serve.js
+  checksum: 5c49215b4c637e3b60fa1aec55f96d0c9da025e936e5eb8dce518bb999519401fad210f2d9861a0679debf9df94d34cbbdbbf4dff57547dacdb7f79fd9af8af2
   languageName: node
   linkType: hard
 
