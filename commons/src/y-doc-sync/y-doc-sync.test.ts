@@ -3,17 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MARKDOWN_CONTENT_CHANNEL_NAME } from '../constants/markdown-content-channel-name.js'
-import {
-  ConnectionState,
-  MessageTransporter
-} from '../message-transporters/message-transporter.js'
-import { MessageType } from '../message-transporters/message.js'
-import { Message } from '../message-transporters/message.js'
-import { YDocSyncClient } from './y-doc-sync-client.js'
-import { YDocSyncTestServer } from './y-doc-sync-test-server.js'
-import { describe, expect, it } from '@jest/globals'
-import { Doc } from 'yjs'
+import { MARKDOWN_CONTENT_CHANNEL_NAME } from '../constants/markdown-content-channel-name.js';
+import { Message, MessageType } from '../message-transporters/message.js';
+import { InMemoryConnectionMessageTransporter } from "./in-memory-connection-message.transporter.js";
+import { YDocSyncClient } from './y-doc-sync-client.js';
+import { YDocSyncTestServer } from './y-doc-sync-test-server.js';
+import { describe, expect, it } from '@jest/globals';
+import { Doc } from 'yjs';
+
 
 describe('message transporter', () => {
   it('server client communication', async () => {
@@ -163,42 +160,3 @@ describe('message transporter', () => {
     docClient2.destroy()
   })
 })
-
-class InMemoryConnectionMessageTransporter extends MessageTransporter {
-  private otherSide: InMemoryConnectionMessageTransporter | undefined
-
-  constructor(private name: string) {
-    super()
-  }
-
-  public connect(other: InMemoryConnectionMessageTransporter): void {
-    this.otherSide = other
-    other.otherSide = this
-    this.onConnected()
-    other.onConnected()
-  }
-
-  public disconnect(): void {
-    this.onDisconnecting()
-
-    if (this.otherSide) {
-      this.otherSide.onDisconnecting()
-      this.otherSide.otherSide = undefined
-      this.otherSide = undefined
-    }
-  }
-
-  sendMessage(content: Message<MessageType>): void {
-    if (this.otherSide === undefined) {
-      throw new Error('Disconnected')
-    }
-    console.debug(`${this.name}`, 'Sending', content)
-    this.otherSide?.receiveMessage(content)
-  }
-
-  getConnectionState(): ConnectionState {
-    return this.otherSide !== undefined
-      ? ConnectionState.CONNECTED
-      : ConnectionState.DISCONNECT
-  }
-}
