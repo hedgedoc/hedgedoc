@@ -16,6 +16,7 @@ import WebSocket from 'isomorphic-ws'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
 const logger = new Logger('websocket connection')
+const WEBSOCKET_RECONNECT_INTERVAL = 3000
 
 /**
  * Creates a {@link WebsocketTransporter websocket message transporter} that handles the realtime communication with the backend.
@@ -54,7 +55,7 @@ export const useRealtimeConnection = (): MessageTransporter => {
     } else {
       setTimeout(() => {
         establishWebsocketConnection()
-      }, 3000)
+      }, WEBSOCKET_RECONNECT_INTERVAL)
     }
   }, [establishWebsocketConnection, isConnected])
 

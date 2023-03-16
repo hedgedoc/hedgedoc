@@ -6,12 +6,19 @@
 import { Facet } from '@codemirror/state'
 import type { Text as YText } from 'yjs'
 
-export class YTextSyncPluginConfig {
-  public static syncPluginConfigFacet = Facet.define<YTextSyncPluginConfig, YTextSyncPluginConfig>({
-    combine(inputs) {
-      return inputs[inputs.length - 1]
-    }
-  })
+/**
+ * Provides the latest given {@link YTextSyncPluginConfig} for a codemirror instance.
+ */
+export const yTextSyncPluginConfigFacet = Facet.define<YTextSyncPluginConfig, YTextSyncPluginConfig>({
+  combine(inputs) {
+    return inputs[inputs.length - 1]
+  }
+})
 
-  constructor(public readonly yText: YText, public readonly onPluginLoaded: () => void) {}
+/**
+ * Describes the configuration of a {@link YTextSyncPlugin} instance.
+ */
+export interface YTextSyncPluginConfig {
+  readonly yText: YText
+  readonly onPluginLoaded: () => void
 }

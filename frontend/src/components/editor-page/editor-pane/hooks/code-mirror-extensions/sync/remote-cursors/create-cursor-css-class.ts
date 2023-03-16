@@ -6,5 +6,5 @@
 import styles from './cursor-colors.module.scss'
 
 export const createCursorCssClass = (styleIndex: number): string => {
-  return styles[`cursor-${styleIndex}`]
+  return styles[`cursor-${Math.max(Math.min(styleIndex, 7), 0)}`]
 }

@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { YTextSyncPluginConfig } from './y-text-sync-plugin-config'
+import type { YTextSyncPluginConfig } from './y-text-sync-plugin-config'
+import { yTextSyncPluginConfigFacet } from './y-text-sync-plugin-config'
 import type { ChangeSpec, Transaction } from '@codemirror/state'
 import { Annotation } from '@codemirror/state'
 import type { EditorView, PluginValue } from '@codemirror/view'
@@ -13,13 +14,16 @@ import type { Transaction as YTransaction, YTextEvent } from 'yjs'
 
 const syncAnnotation = Annotation.define()
 
+/**
+ * Synchronizes the content of a codemirror with a {@link YText y.js text channel}.
+ */
 export class YTextSyncPlugin implements PluginValue {
   private readonly conf: YTextSyncPluginConfig
   private readonly yText: YText
   private readonly observer: YTextSyncPlugin['onYTextUpdate']
 
   constructor(private view: EditorView) {
-    this.conf = view.state.facet<YTextSyncPluginConfig>(YTextSyncPluginConfig.syncPluginConfigFacet)
+    this.conf = view.state.facet<YTextSyncPluginConfig>(yTextSyncPluginConfigFacet)
     this.yText = this.conf.yText
     this.observer = this.onYTextUpdate.bind(this)
     this.yText.observe(this.observer)

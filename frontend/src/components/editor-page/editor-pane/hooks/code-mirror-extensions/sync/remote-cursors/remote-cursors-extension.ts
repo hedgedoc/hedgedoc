@@ -13,30 +13,41 @@ import { layer, RectangleMarker } from '@codemirror/view'
 import { Optional } from '@mrdrogdrog/optional'
 import equal from 'fast-deep-equal'
 
-export interface Cursor {
+export interface RemoteCursor {
   name: string
   from: number
   to?: number
   styleIndex: number
 }
 
-export const remoteCursorUpdateEffect = StateEffect.define<Cursor[]>()
+/**
+ * Used to provide a new set of {@link RemoteCursor remote cursors} to a codemirror state.
+ */
+export const remoteCursorUpdateEffect = StateEffect.define<RemoteCursor[]>()
 
-const remoteCursorStateField = StateField.define<Cursor[]>({
-  compare(a: Cursor[], b: Cursor[]): boolean {
+/**
+ * Saves the currently visible {@link RemoteCursor remote cursors}
+ * and saves new cursors if a transaction with an {@link remoteCursorUpdateEffect update effect} has been dispatched.
+ */
+const remoteCursorStateField = StateField.define<RemoteCursor[]>({
+  compare(a: RemoteCursor[], b: RemoteCursor[]): boolean {
     return equal(a, b)
   },
-  create(): Cursor[] {
+  create(): RemoteCursor[] {
     return []
   },
-  update(value: Cursor[], transaction: Transaction): Cursor[] {
+  update(currentValue: RemoteCursor[], transaction: Transaction): RemoteCursor[] {
     return Optional.ofNullable(transaction.effects.find((effect) => effect.is(remoteCursorUpdateEffect)))
-      .map((remoteCursor) => remoteCursor.value as Cursor[])
-      .orElse(value)
+      .map((remoteCursor) => remoteCursor.value as RemoteCursor[])
+      .orElse(currentValue)
   }
 })
 
-const update = (update: ViewUpdate): boolean => {
+/**
+ * Checks if the given {@link ViewUpdate view update} should trigger a rerender of remote cursor components.
+ * @param update The update to check
+ */
+const isRemoteCursorUpdate = (update: ViewUpdate): boolean => {
   const effect = update.transactions
     .flatMap((transaction) => transaction.effects)
     .filter((effect) => effect.is(remoteCursorUpdateEffect))
@@ -44,11 +55,15 @@ const update = (update: ViewUpdate): boolean => {
   return update.docChanged || update.viewportChanged || effect.length > 0
 }
 
-function createCursorLayer() {
-  return layer({
+/**
+ * Creates the codemirror extension that renders the remote cursor selection layer.
+ * @return The created codemirror extension
+ */
+const createCursorLayer = (): Extension =>
+  layer({
     above: true,
     class: styles.cursorLayer,
-    update: update,
+    update: isRemoteCursorUpdate,
     markers: (view) => {
       return view.state.field(remoteCursorStateField).flatMap((remoteCursor) => {
         const selectionRange = EditorSelection.cursor(remoteCursor.from)
@@ -56,13 +71,16 @@ function createCursorLayer() {
       })
     }
   })
-}
 
-function createSelectionLayer() {
-  return layer({
+/**
+ * Creates the codemirror extension that renders the blinking remote cursor layer.
+ * @return The created codemirror extension
+ */
+const createSelectionLayer = (): Extension =>
+  layer({
     above: false,
     class: styles.selectionLayer,
-    update: update,
+    update: isRemoteCursorUpdate,
     markers: (view) => {
       return view.state
         .field(remoteCursorStateField)
@@ -77,8 +95,11 @@ function createSelectionLayer() {
         })
     }
   })
-}
 
+/**
+ * Bundles all extensions that are needed for the remote cursor display.
+ * @return The created codemirror extensions
+ */
 export const remoteCursorsExtension = (): Extension => {
   return [remoteCursorStateField.extension, createCursorLayer(), createSelectionLayer()]
 }

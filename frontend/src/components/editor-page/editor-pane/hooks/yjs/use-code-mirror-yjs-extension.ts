@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { YTextSyncPlugin } from '../code-mirror-extensions/sync/document-sync/y-text-sync-plugin'
-import { YTextSyncPluginConfig } from '../code-mirror-extensions/sync/document-sync/y-text-sync-plugin-config'
+import { yTextSyncPluginConfigFacet } from '../code-mirror-extensions/sync/document-sync/y-text-sync-plugin-config'
 import { remoteCursorsExtension } from '../code-mirror-extensions/sync/remote-cursors/remote-cursors-extension'
 import type { Extension } from '@codemirror/state'
 import { ViewPlugin } from '@codemirror/view'
@@ -22,7 +22,7 @@ export const useCodeMirrorYjsExtension = (yText: YText): [Extension, boolean] =>
 
   const plugins = useMemo(() => {
     return [
-      YTextSyncPluginConfig.syncPluginConfigFacet.of(new YTextSyncPluginConfig(yText, () => setPluginLoaded(true))),
+      yTextSyncPluginConfigFacet.of({ yText, onPluginLoaded: () => setPluginLoaded(true) }),
       ViewPlugin.fromClass(YTextSyncPlugin),
       remoteCursorsExtension()
     ]

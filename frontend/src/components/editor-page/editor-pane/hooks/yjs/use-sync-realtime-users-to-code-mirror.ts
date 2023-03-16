@@ -5,10 +5,13 @@
  */
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import { useCodemirrorReferenceContext } from '../../../change-content-context/codemirror-reference-context'
-import type { Cursor } from '../code-mirror-extensions/sync/remote-cursors/remote-cursors-extension'
+import type { RemoteCursor } from '../code-mirror-extensions/sync/remote-cursors/remote-cursors-extension'
 import { remoteCursorUpdateEffect } from '../code-mirror-extensions/sync/remote-cursors/remote-cursors-extension'
 import { useEffect } from 'react'
 
+/**
+ * Reads realtime user information from the global application state and sends them as updates into the codemirror.
+ */
 export const useSyncRealtimeUsersToCodeMirror = () => {
   const realtimeUsers = useApplicationState((state) => state.realtimeStatus.onlineUsers)
   const [codeMirrorRef] = useCodemirrorReferenceContext()
@@ -21,7 +24,7 @@ export const useSyncRealtimeUsersToCodeMirror = () => {
           to: value.cursor.to,
           name: value.username,
           styleIndex: value.styleIndex
-        } as Cursor)
+        } as RemoteCursor)
     )
     codeMirrorRef?.dispatch({
       effects: [remoteCursorUpdateEffect.of(remoteCursors)]
