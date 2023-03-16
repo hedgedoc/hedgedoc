@@ -13,7 +13,7 @@ type EventEmittingTaskListCheckboxProps = Omit<TaskListProps, 'onTaskCheckedChan
 
 export interface TaskCheckedEventPayload {
   lineInMarkdown: number
-  checked: boolean
+  newCheckedState: boolean
 }
 
 /**
@@ -25,7 +25,10 @@ export const EventEmittingTaskListCheckbox: React.FC<EventEmittingTaskListCheckb
   const emitter = useExtensionEventEmitter()
   const sendEvent: TaskCheckedChangeHandler = useCallback(
     (lineInMarkdown: number, checked: boolean) => {
-      emitter?.emit(TaskListCheckboxAppExtension.EVENT_NAME, { lineInMarkdown, checked } as TaskCheckedEventPayload)
+      emitter?.emit(TaskListCheckboxAppExtension.EVENT_NAME, {
+        lineInMarkdown,
+        newCheckedState: checked
+      } as TaskCheckedEventPayload)
     },
     [emitter]
   )

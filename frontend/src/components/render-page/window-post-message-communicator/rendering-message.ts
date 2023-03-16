@@ -129,9 +129,8 @@ export type RendererToEditorMessageType =
 
 export enum RendererType {
   DOCUMENT = 'document',
-  INTRO = 'intro',
-  SLIDESHOW = 'slideshow',
-  MOTD = 'motd'
+  SIMPLE = 'simple',
+  SLIDESHOW = 'slideshow'
 }
 
 export interface BaseConfiguration {

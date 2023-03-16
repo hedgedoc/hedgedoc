@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { CheatsheetExtension } from '../../../components/editor-page/cheatsheet/cheatsheet-extension'
 import type { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
 import { AppExtension } from '../../base/app-extension'
 import { KatexMarkdownExtension } from './katex-markdown-extension'
@@ -15,5 +16,9 @@ import { KatexMarkdownExtension } from './katex-markdown-extension'
 export class KatexAppExtension extends AppExtension {
   buildMarkdownRendererExtensions(): MarkdownRendererExtension[] {
     return [new KatexMarkdownExtension()]
+  }
+
+  buildCheatsheetExtensions(): CheatsheetExtension[] {
+    return [{ i18nKey: 'katex', readMoreUrl: new URL('https://katex.org/') }]
   }
 }

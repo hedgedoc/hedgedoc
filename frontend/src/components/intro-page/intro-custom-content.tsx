@@ -30,7 +30,7 @@ export const IntroCustomContent: React.FC = () => {
       <RenderIframe
         frameClasses={'w-100 overflow-y-hidden'}
         markdownContentLines={value as string[]}
-        rendererType={RendererType.INTRO}
+        rendererType={RendererType.SIMPLE}
         forcedDarkMode={true}
         adaptFrameHeightToContent={true}
       />

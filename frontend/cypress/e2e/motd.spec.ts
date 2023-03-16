@@ -22,8 +22,8 @@ describe('Motd', () => {
       statusCode: 200,
       headers: { 'Last-Modified': MOCK_LAST_MODIFIED }
     })
-    cy.visitHome()
-    cy.getMotdBody().should('contain.html', motdMockHtml)
+    cy.visitHistory()
+    cy.getSimpleRendererBody().should('contain.html', motdMockHtml)
     cy.getByCypressId('motd-dismiss')
       .click()
       .then(() => {

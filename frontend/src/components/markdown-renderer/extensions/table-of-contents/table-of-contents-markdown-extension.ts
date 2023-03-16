@@ -1,10 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { tocSlugify } from '../../editor-page/table-of-contents/toc-slugify'
-import { MarkdownRendererExtension } from './base/markdown-renderer-extension'
+import { tocSlugify } from '../../../editor-page/table-of-contents/toc-slugify'
+import { MarkdownRendererExtension } from '../base/markdown-renderer-extension'
 import type { TocAst } from '@hedgedoc/markdown-it-plugins'
 import { toc } from '@hedgedoc/markdown-it-plugins'
 import equal from 'fast-deep-equal'
