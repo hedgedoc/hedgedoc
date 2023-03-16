@@ -10,6 +10,12 @@ import type { MessageTransporter } from '@hedgedoc/commons'
 import { MessageType } from '@hedgedoc/commons'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
+/**
+ * Provides a codemirror extension that reacts to local cursor updates and send them to the backend as remote cursor update.
+ *
+ * @param messageTransporter the {@link MessageTransporter} that should be used to transmit the remote cursor updates
+ * @return The codemirror extension that watches the cursor updates
+ */
 export const useSendRemoteCursor = (messageTransporter: MessageTransporter): Extension => {
   const [currentCursor, setCurrentCursor] = useState<SelectionRange>()
 

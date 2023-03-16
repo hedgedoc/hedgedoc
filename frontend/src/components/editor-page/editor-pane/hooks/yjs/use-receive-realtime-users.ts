@@ -10,7 +10,12 @@ import { MessageType } from '@hedgedoc/commons'
 import type { Listener } from 'eventemitter2'
 import { useEffect } from 'react'
 
-export const useReceiveRealtimeUsers = (messageTransporter: MessageTransporter) => {
+/**
+ * Waits for remote cursor updates that are sent from the backend and saves them in the global application state.
+ *
+ * @param messageTransporter the {@link MessageTransporter} that should be used to receive the remote cursor updates
+ */
+export const useReceiveRealtimeUsers = (messageTransporter: MessageTransporter): void => {
   const isConnected = useApplicationState((state) => state.realtimeStatus.isConnected)
 
   useEffect(() => {
