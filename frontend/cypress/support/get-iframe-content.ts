@@ -13,9 +13,7 @@ declare namespace Cypress {
 
     getMarkdownBody(): Chainable<Element>
 
-    getIntroBody(): Chainable<Element>
-
-    getMotdBody(): Chainable<Element>
+    getSimpleRendererBody(): Chainable<Element>
   }
 }
 
@@ -39,10 +37,6 @@ Cypress.Commands.add('getMarkdownBody', () => {
   return cy.getIframeBody(RendererType.DOCUMENT).findByCypressId('markdown-body')
 })
 
-Cypress.Commands.add('getIntroBody', () => {
-  return cy.getIframeBody(RendererType.INTRO).findByCypressId('markdown-body')
-})
-
-Cypress.Commands.add('getMotdBody', () => {
-  return cy.getIframeBody(RendererType.MOTD).findByCypressId('markdown-body')
+Cypress.Commands.add('getSimpleRendererBody', () => {
+  return cy.getIframeBody(RendererType.SIMPLE).findByCypressId('markdown-body')
 })

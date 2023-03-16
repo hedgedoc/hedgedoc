@@ -13,7 +13,7 @@ describe('Intro page', () => {
 
   describe('customizable content', () => {
     it('fetches and shows the correct intro page content', () => {
-      cy.getIntroBody().contains('test content')
+      cy.getSimpleRendererBody().contains('test content')
     })
 
     it("won't show anything if no content was found", () => {
