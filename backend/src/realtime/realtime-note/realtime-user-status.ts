@@ -46,7 +46,7 @@ export class RealtimeUserStatus {
       MessageType.REALTIME_USER_SINGLE_UPDATE,
       (message) => {
         this.realtimeUser.cursor = message.payload;
-        this.sendRealtimeUserStatusUpdateEvent();
+        this.sendRealtimeUserStatusUpdateEvent(connection);
       },
       { objectify: true },
     ) as Listener;
@@ -54,7 +54,7 @@ export class RealtimeUserStatus {
     const transporterRequestMessageListener = connection.getTransporter().on(
       MessageType.REALTIME_USER_STATE_REQUEST,
       () => {
-        this.sendRealtimeUserStatusUpdateEvent();
+        this.sendUpdateToClient(connection);
       },
       { objectify: true },
     ) as Listener;
@@ -63,7 +63,7 @@ export class RealtimeUserStatus {
       'clientRemoved',
       (client: RealtimeConnection) => {
         if (client === connection) {
-          this.sendRealtimeUserStatusUpdateEvent();
+          this.sendRealtimeUserStatusUpdateEvent(connection);
         }
       },
       {
@@ -78,20 +78,23 @@ export class RealtimeUserStatus {
     });
   }
 
-  private sendRealtimeUserStatusUpdateEvent(): void {
+  private sendRealtimeUserStatusUpdateEvent(exceptClient: RealtimeConnection): void {
     this.connection
       .getRealtimeNote()
       .getConnections()
-      .forEach((client) => {
-        const payload = this.collectAllConnectionsExcept(client).map(
-          (client) => client.getRealtimeUserState().realtimeUser,
-        );
+      .filter(connection => connection !== exceptClient)
+      .forEach(this.sendUpdateToClient.bind(this));
+  }
 
-        client.getTransporter().sendMessage({
-          type: MessageType.REALTIME_USER_STATE_SET,
-          payload,
-        });
-      });
+  private sendUpdateToClient(client: RealtimeConnection): void {
+    const payload = this.collectAllConnectionsExcept(client).map(
+      (client) => client.getRealtimeUserState().realtimeUser,
+    );
+
+    client.getTransporter().sendMessage({
+      type: MessageType.REALTIME_USER_STATE_SET,
+      payload,
+    });
   }
 
   private collectAllConnectionsExcept(

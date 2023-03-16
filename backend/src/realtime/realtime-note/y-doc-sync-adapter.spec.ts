@@ -21,19 +21,18 @@ describe('y-doc-sync-adapter', () => {
     );
 
     const client1 = mockConnection(realtimeNote);
+    realtimeNote.addClient(client1);
     const client2 = mockConnection(realtimeNote);
+    realtimeNote.addClient(client2);
     const client3 = mockConnection(realtimeNote);
+    realtimeNote.addClient(client3);
     const client4 = mockConnection(realtimeNote);
+    realtimeNote.addClient(client4);
 
     const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
     const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
     const sendMessage3Spy = jest.spyOn(client3.getTransporter(), 'sendMessage');
     const sendMessage4Spy = jest.spyOn(client4.getTransporter(), 'sendMessage');
-
-    realtimeNote.addClient(client1);
-    realtimeNote.addClient(client2);
-    realtimeNote.addClient(client3);
-    realtimeNote.addClient(client4);
 
     jest.spyOn(client2.getSyncAdapter(), 'isSynced').mockReturnValue(false);
 

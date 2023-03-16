@@ -9,6 +9,7 @@ import { Mock } from 'ts-mockery';
 import { User } from '../../../users/user.entity';
 import { RealtimeConnection } from '../realtime-connection';
 import { RealtimeNote } from '../realtime-note';
+import { RealtimeUserStatus } from '../realtime-user-status';
 import { YDocSyncAdapter } from '../y-doc-sync-adapter';
 
 /**
@@ -24,12 +25,18 @@ export function mockConnection(
 ): RealtimeConnection {
   const transporter = new MockedBackendMessageTransporter('');
   const yDocSyncAdapter = new YDocSyncAdapter(realtimeNote, transporter);
+  let realtimeUserState: RealtimeUserStatus;
 
-  return Mock.of<RealtimeConnection>({
+  const connection = Mock.of<RealtimeConnection>({
     getUser: jest.fn(() => Mock.of<User>({ username: 'mockedUser' })),
     getUsername: jest.fn(() => username),
     getSyncAdapter: jest.fn(() => yDocSyncAdapter),
     getTransporter: jest.fn(() => transporter),
     getRealtimeNote: jest.fn(() => realtimeNote),
+    getRealtimeUserState: jest.fn(() => realtimeUserState),
   });
+
+  realtimeUserState = new RealtimeUserStatus(username, connection);
+
+  return connection;
 }
