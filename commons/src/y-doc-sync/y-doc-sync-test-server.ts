@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { YDocSync } from '@hedgedoc/commons'
+import { YDocSync } from './y-doc-sync.js'
 
 export class YDocSyncTestServer extends YDocSync {
   protected afterConnect(): void {
