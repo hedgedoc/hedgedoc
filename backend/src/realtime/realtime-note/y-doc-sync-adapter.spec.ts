@@ -3,15 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  Message,
-  MessageType,
-} from '@hedgedoc/commons';
+import { Message, MessageType } from '@hedgedoc/commons';
 import { Mock } from 'ts-mockery';
 
 import { Note } from '../../notes/note.entity';
 import { RealtimeNote } from './realtime-note';
-import { mockConnection } from './test-utils/mock-connection';
+import { MockConnectionBuilder } from './test-utils/mock-connection';
 
 describe('y-doc-sync-adapter', () => {
   it('distributes y-doc updates to all clients', async () => {
@@ -20,14 +17,18 @@ describe('y-doc-sync-adapter', () => {
       'nothing',
     );
 
-    const client1 = mockConnection(realtimeNote);
-    realtimeNote.addClient(client1);
-    const client2 = mockConnection(realtimeNote);
-    realtimeNote.addClient(client2);
-    const client3 = mockConnection(realtimeNote);
-    realtimeNote.addClient(client3);
-    const client4 = mockConnection(realtimeNote);
-    realtimeNote.addClient(client4);
+    const client1 = new MockConnectionBuilder(realtimeNote)
+      .withSyncAdapter()
+      .build();
+    const client2 = new MockConnectionBuilder(realtimeNote)
+      .withSyncAdapter()
+      .build();
+    const client3 = new MockConnectionBuilder(realtimeNote)
+      .withSyncAdapter()
+      .build();
+    const client4 = new MockConnectionBuilder(realtimeNote)
+      .withSyncAdapter()
+      .build();
 
     const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
     const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');

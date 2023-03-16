@@ -8,7 +8,7 @@ import { Mock } from 'ts-mockery';
 
 import { Note } from '../../notes/note.entity';
 import { RealtimeNote } from './realtime-note';
-import { mockConnection } from './test-utils/mock-connection';
+import { MockConnectionBuilder } from './test-utils/mock-connection';
 
 describe('realtime user status', () => {
   it('can answer a state request', () => {
@@ -16,12 +16,18 @@ describe('realtime user status', () => {
       Mock.of<Note>({ id: 9876 }),
       'mockedContent',
     );
-    const client1 = mockConnection(realtimeNote, 'mock1');
-    realtimeNote.addClient(client1);
-    const client2 = mockConnection(realtimeNote, 'mock2');
-    realtimeNote.addClient(client2);
-    const client3 = mockConnection(realtimeNote, 'mock3');
-    realtimeNote.addClient(client3);
+    const client1 = new MockConnectionBuilder(realtimeNote)
+      .withRealtimeUserState()
+      .withUsername('mock1')
+      .build();
+    const client2 = new MockConnectionBuilder(realtimeNote)
+      .withRealtimeUserState()
+      .withUsername('mock2')
+      .build();
+    const client3 = new MockConnectionBuilder(realtimeNote)
+      .withRealtimeUserState()
+      .withUsername('mock3')
+      .build();
 
     const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
     const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
@@ -65,12 +71,18 @@ describe('realtime user status', () => {
       Mock.of<Note>({ id: 9876 }),
       'mockedContent',
     );
-    const client1 = mockConnection(realtimeNote, 'mock1');
-    realtimeNote.addClient(client1);
-    const client2 = mockConnection(realtimeNote, 'mock2');
-    realtimeNote.addClient(client2);
-    const client3 = mockConnection(realtimeNote, 'mock3');
-    realtimeNote.addClient(client3);
+    const client1 = new MockConnectionBuilder(realtimeNote)
+      .withRealtimeUserState()
+      .withUsername('mock1')
+      .build();
+    const client2 = new MockConnectionBuilder(realtimeNote)
+      .withRealtimeUserState()
+      .withUsername('mock2')
+      .build();
+    const client3 = new MockConnectionBuilder(realtimeNote)
+      .withRealtimeUserState()
+      .withUsername('mock3')
+      .build();
 
     const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
     const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');

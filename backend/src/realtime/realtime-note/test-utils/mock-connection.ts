@@ -12,31 +12,51 @@ import { RealtimeNote } from '../realtime-note';
 import { RealtimeUserStatus } from '../realtime-user-status';
 import { YDocSyncAdapter } from '../y-doc-sync-adapter';
 
-/**
- * Provides a partial mock for {@link RealtimeConnection}.
- *
- * @param realtimeNote the {@link RealtimeNote realtime note} that belongs to the connection.
- * @param username optional username for the user
- * @return the mocked connection
- */
-export function mockConnection(
-  realtimeNote: RealtimeNote,
-  username = 'mocked user',
-): RealtimeConnection {
-  const transporter = new MockedBackendMessageTransporter('');
-  const yDocSyncAdapter = new YDocSyncAdapter(realtimeNote, transporter);
-  let realtimeUserState: RealtimeUserStatus;
+export class MockConnectionBuilder {
+  private username = 'mock';
+  private includeSyncAdapter = false;
+  private includeRealtimeUserState = false;
 
-  const connection = Mock.of<RealtimeConnection>({
-    getUser: jest.fn(() => Mock.of<User>({ username: 'mockedUser' })),
-    getUsername: jest.fn(() => username),
-    getSyncAdapter: jest.fn(() => yDocSyncAdapter),
-    getTransporter: jest.fn(() => transporter),
-    getRealtimeNote: jest.fn(() => realtimeNote),
-    getRealtimeUserState: jest.fn(() => realtimeUserState),
-  });
+  constructor(private readonly realtimeNote: RealtimeNote) {}
 
-  realtimeUserState = new RealtimeUserStatus(username, connection);
+  public withUsername(username: string): this {
+    this.username = username;
+    return this;
+  }
 
-  return connection;
+  public withRealtimeUserState(): this {
+    this.includeRealtimeUserState = true;
+    return this;
+  }
+
+  public withSyncAdapter(): this {
+    this.includeSyncAdapter = true;
+    return this;
+  }
+
+  public build(): RealtimeConnection {
+    const transporter = new MockedBackendMessageTransporter('');
+    const yDocSyncAdapter: YDocSyncAdapter = this.includeSyncAdapter
+      ? new YDocSyncAdapter(this.realtimeNote, transporter)
+      : Mock.of<YDocSyncAdapter>({});
+
+    let realtimeUserState: RealtimeUserStatus = Mock.of<RealtimeUserStatus>();
+
+    const connection = Mock.of<RealtimeConnection>({
+      getUser: jest.fn(() => Mock.of<User>({ username: this.username })),
+      getUsername: jest.fn(() => this.username),
+      getSyncAdapter: jest.fn(() => yDocSyncAdapter),
+      getTransporter: jest.fn(() => transporter),
+      getRealtimeUserState: () => realtimeUserState,
+      getRealtimeNote: () => this.realtimeNote,
+    });
+
+    if (this.includeRealtimeUserState) {
+      realtimeUserState = new RealtimeUserStatus(this.username, connection);
+    }
+
+    this.realtimeNote.addClient(connection);
+
+    return connection;
+  }
 }

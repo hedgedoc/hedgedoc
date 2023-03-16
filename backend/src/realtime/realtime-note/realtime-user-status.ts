@@ -78,11 +78,13 @@ export class RealtimeUserStatus {
     });
   }
 
-  private sendRealtimeUserStatusUpdateEvent(exceptClient: RealtimeConnection): void {
+  private sendRealtimeUserStatusUpdateEvent(
+    exceptClient: RealtimeConnection,
+  ): void {
     this.connection
       .getRealtimeNote()
       .getConnections()
-      .filter(connection => connection !== exceptClient)
+      .filter((connection) => connection !== exceptClient)
       .forEach(this.sendUpdateToClient.bind(this));
   }
 
