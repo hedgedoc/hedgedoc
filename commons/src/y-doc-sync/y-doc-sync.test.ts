@@ -11,7 +11,7 @@ import {
 import { MessageType } from '../message-transporters/message.js'
 import { Message } from '../message-transporters/message.js'
 import { YDocSyncClient } from './y-doc-sync-client.js'
-import { YDocSyncServer } from './y-doc-sync-server.js'
+import { YDocSyncTestServer } from './y-doc-sync-test-server.js'
 import { describe, expect, it } from '@jest/globals'
 import { Doc } from 'yjs'
 
@@ -103,11 +103,11 @@ describe('message transporter', () => {
 
     const yDocSyncAdapter1 = new YDocSyncClient(docClient1, transporterClient1)
     const yDocSyncAdapter2 = new YDocSyncClient(docClient2, transporterClient2)
-    const yDocSyncAdapterServerTo1 = new YDocSyncServer(
+    const yDocSyncAdapterServerTo1 = new YDocSyncTestServer(
       docServer,
       transporterServerTo1
     )
-    const yDocSyncAdapterServerTo2 = new YDocSyncServer(
+    const yDocSyncAdapterServerTo2 = new YDocSyncTestServer(
       docServer,
       transporterServerTo2
     )
