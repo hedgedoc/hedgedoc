@@ -57,7 +57,7 @@ export const MotdModal: React.FC = () => {
         <EditorToRendererCommunicatorContextProvider>
           <RenderIframe
             frameClasses={'w-100'}
-            rendererType={RendererType.MOTD}
+            rendererType={RendererType.SIMPLE}
             markdownContentLines={lines as string[]}
             adaptFrameHeightToContent={true}
           />

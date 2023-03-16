@@ -146,8 +146,7 @@ export const IframeMarkdownRenderer: React.FC = () => {
             slideOptions={slideOptions}
           />
         )
-      case RendererType.MOTD:
-      case RendererType.INTRO:
+      case RendererType.SIMPLE:
         return (
           <MarkdownDocument
             additionalOuterContainerClasses={'vh-100 bg-light overflow-y-hidden'}

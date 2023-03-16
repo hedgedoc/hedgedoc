@@ -20,7 +20,7 @@ exports[`motd modal renders a modal if a motd was fetched and can dismiss it 1`]
           data-testid="motd-renderer"
         >
           This is a mock implementation of a iframe renderer. Props: 
-          {"frameClasses":"w-100","rendererType":"motd","markdownContentLines":["very important mock text!"],"adaptFrameHeightToContent":true}
+          {"frameClasses":"w-100","rendererType":"simple","markdownContentLines":["very important mock text!"],"adaptFrameHeightToContent":true}
         </span>
       </div>
       <div
