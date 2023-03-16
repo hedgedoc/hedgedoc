@@ -18,7 +18,7 @@ import { useCallback, useEffect, useMemo, useRef } from 'react'
 const logger = new Logger('websocket connection')
 
 /**
- * Creates a {@link WebsocketTransporter websocket message transporter } that handles the realtime communication with the backend.
+ * Creates a {@link WebsocketTransporter websocket message transporter} that handles the realtime communication with the backend.
  *
  * @return the created connection handler
  */
