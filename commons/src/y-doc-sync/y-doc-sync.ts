@@ -72,7 +72,7 @@ export abstract class YDocSync {
   }
 
   protected afterConnect(): void {
-    //
+    //empty on purpose
   }
 
   public requestDocumentState(): void {

@@ -161,8 +161,6 @@ describe('message transporter', () => {
     docServer.destroy()
     docClient1.destroy()
     docClient2.destroy()
-
-    console.log('asd')
   })
 })
 
