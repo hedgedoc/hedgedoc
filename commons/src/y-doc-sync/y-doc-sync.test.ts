@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MARKDOWN_CONTENT_CHANNEL_NAME } from '../constants/markdown-content-channel-name.js';
-import { Message, MessageType } from '../message-transporters/message.js';
-import { InMemoryConnectionMessageTransporter } from "./in-memory-connection-message.transporter.js";
-import { YDocSyncClient } from './y-doc-sync-client.js';
-import { YDocSyncTestServer } from './y-doc-sync-test-server.js';
-import { describe, expect, it } from '@jest/globals';
-import { Doc } from 'yjs';
-
+import { MARKDOWN_CONTENT_CHANNEL_NAME } from '../constants/markdown-content-channel-name.js'
+import { Message, MessageType } from '../message-transporters/message.js'
+import { InMemoryConnectionMessageTransporter } from './in-memory-connection-message.transporter.js'
+import { YDocSyncClient } from './y-doc-sync-client.js'
+import { YDocSyncTestServer } from './y-doc-sync-test-server.js'
+import { describe, expect, it } from '@jest/globals'
+import { Doc } from 'yjs'
 
 describe('message transporter', () => {
   it('server client communication', async () => {
