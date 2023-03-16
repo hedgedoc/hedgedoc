@@ -141,5 +141,5 @@
       "github-actions"
     ]
   },
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@3.5.0"
 }
