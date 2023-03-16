@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { MessageTransporter } from '@hedgedoc/commons';
-import { YDocSyncServer } from '@hedgedoc/commons';
 import { Logger } from '@nestjs/common';
 
 import { User } from '../../users/user.entity';
 import { RealtimeNote } from './realtime-note';
 import { RealtimeUserStatus } from './realtime-user-status';
+import { YDocSyncAdapter } from './y-doc-sync-adapter';
 
 /**
  * Manages the connection to a specific client.
@@ -17,7 +17,7 @@ import { RealtimeUserStatus } from './realtime-user-status';
 export class RealtimeConnection {
   protected readonly logger = new Logger(RealtimeConnection.name);
   private readonly transporter: MessageTransporter;
-  private readonly yDocSyncAdapter: YDocSyncServer;
+  private readonly yDocSyncAdapter: YDocSyncAdapter;
   private readonly realtimeUserState: RealtimeUserStatus;
 
   /**
@@ -39,10 +39,7 @@ export class RealtimeConnection {
       realtimeNote.removeClient(this);
     });
 
-    this.yDocSyncAdapter = new YDocSyncServer(
-      realtimeNote.getDoc(),
-      this.transporter,
-    );
+    this.yDocSyncAdapter = new YDocSyncAdapter(realtimeNote, this.transporter);
     this.realtimeUserState = new RealtimeUserStatus(user?.displayName, this);
   }
 
@@ -58,7 +55,7 @@ export class RealtimeConnection {
     return this.user;
   }
 
-  public getSyncAdapter(): YDocSyncServer {
+  public getSyncAdapter(): YDocSyncAdapter {
     return this.yDocSyncAdapter;
   }
 

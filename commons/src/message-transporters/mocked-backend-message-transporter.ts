@@ -10,6 +10,7 @@ import { Doc, encodeStateAsUpdate } from 'yjs'
 
 /**
  * A mocked connection that doesn't send or receive any data and is instantly ready.
+ * The only exception is the note content state request that is answered with the given initial content.
  */
 export class MockedBackendMessageTransporter extends MessageTransporter {
   private doc: Doc = new Doc()

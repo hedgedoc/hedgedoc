@@ -32,32 +32,10 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   constructor(private readonly note: Note, initialContent: string) {
     super();
     this.logger = new Logger(`${RealtimeNote.name} ${note.id}`);
-    this.doc = this.createYDoc(initialContent);
+    this.doc = new ExtendedDoc(initialContent);
     this.logger.debug(
       `New realtime session for note ${note.id} created. Length of initial content: ${initialContent.length} characters`,
     );
-  }
-
-  /**
-   * Adds the given content to the start of the document.
-   *
-   * @param initialContent the content to add
-   */
-  private createYDoc(initialContent: string): ExtendedDoc {
-    const doc: ExtendedDoc = new ExtendedDoc(initialContent);
-    doc.on('update', (update: Uint8Array, origin: unknown) => {
-      const message: Message<MessageType.NOTE_CONTENT_UPDATE> = {
-        type: MessageType.NOTE_CONTENT_UPDATE,
-        payload: Array.from(update),
-      };
-
-      this.clients.forEach((client) => {
-        if (client.getSyncAdapter().isSynced() && origin !== client) {
-          client.getTransporter().sendMessage(message);
-        }
-      });
-    });
-    return doc;
   }
 
   /**

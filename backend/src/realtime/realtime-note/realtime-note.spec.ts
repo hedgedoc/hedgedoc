@@ -75,39 +75,6 @@ describe('realtime note', () => {
     expect(() => sut.destroy()).toThrow();
   });
 
-  it('distributes y-doc updates to all clients', () => {
-    const sut = new RealtimeNote(mockedNote, 'nothing');
-
-    const client1 = mockConnection(sut);
-    const client2 = mockConnection(sut);
-    const client3 = mockConnection(sut);
-    const client4 = mockConnection(sut);
-
-    const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
-    const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
-    const sendMessage3Spy = jest.spyOn(client3.getTransporter(), 'sendMessage');
-    const sendMessage4Spy = jest.spyOn(client4.getTransporter(), 'sendMessage');
-
-    sut.addClient(client1);
-    sut.addClient(client2);
-    sut.addClient(client3);
-    sut.addClient(client4);
-
-    jest.spyOn(client2.getSyncAdapter(), 'isSynced').mockReturnValue(false);
-
-    sut.getDoc().emit('update', [new Uint8Array([0, 1, 2, 3, 4]), client1]);
-
-    const expectedMessage: Message<MessageType.NOTE_CONTENT_UPDATE> = {
-      payload: [0, 1, 2, 3, 4],
-      type: MessageType.NOTE_CONTENT_UPDATE,
-    };
-
-    expect(sendMessage1Spy).toHaveBeenCalledTimes(0);
-    expect(sendMessage2Spy).toHaveBeenCalledTimes(0);
-    expect(sendMessage3Spy).toHaveBeenCalledWith(expectedMessage);
-    expect(sendMessage4Spy).toHaveBeenCalledWith(expectedMessage);
-  });
-
   it('announcePermissionChange to all clients', () => {
     const sut = new RealtimeNote(mockedNote, 'nothing');
 
