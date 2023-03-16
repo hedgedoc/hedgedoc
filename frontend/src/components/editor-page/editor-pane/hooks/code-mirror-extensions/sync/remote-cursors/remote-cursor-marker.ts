@@ -9,6 +9,9 @@ import type { SelectionRange } from '@codemirror/state'
 import type { LayerMarker, EditorView } from '@codemirror/view'
 import { Direction } from '@codemirror/view'
 
+/**
+ * Renders a blinking cursor to indicate the cursor of another user.
+ */
 export class RemoteCursorMarker implements LayerMarker {
   constructor(
     private left: number,
