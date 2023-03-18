@@ -16,6 +16,7 @@ import { ConnectionState, MessageType } from '@hedgedoc/commons'
 import { Optional } from '@mrdrogdrog/optional'
 import type { Listener } from 'eventemitter2'
 import equal from 'fast-deep-equal'
+import { useMemo } from 'react'
 
 export interface RemoteCursor {
   name: string
@@ -104,14 +105,16 @@ const createSelectionLayer = (): Extension =>
  * Bundles all extensions that are needed for the remote cursor display.
  * @return The created codemirror extensions
  */
-export const remoteCursorsExtension = (messageTransporter: MessageTransporter): Extension => {
-  return [
-    remoteCursorStateField.extension,
-    createCursorLayer(),
-    createSelectionLayer(),
-    createReceiveCursorExtension(messageTransporter),
-    createSendCursorExtension(messageTransporter)
-  ]
+export const useCodeMirrorRemoteCursorsExtension = (messageTransporter: MessageTransporter): Extension => {
+  return useMemo(() => {
+    return [
+      remoteCursorStateField.extension,
+      createCursorLayer(),
+      createSelectionLayer(),
+      createReceiveCursorExtension(messageTransporter),
+      createSendCursorExtension(messageTransporter)
+    ]
+  }, [messageTransporter])
 }
 
 const createSendCursorExtension = (messageTransporter: MessageTransporter): Extension => {

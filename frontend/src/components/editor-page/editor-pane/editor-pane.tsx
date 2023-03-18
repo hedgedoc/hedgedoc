@@ -10,7 +10,7 @@ import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { findLanguageByCodeBlockName } from '../../markdown-renderer/extensions/base/code-block-markdown-extension/find-language-by-code-block-name'
 import type { ScrollProps } from '../synced-scroll/scroll-props'
 import styles from './extended-codemirror/codemirror.module.scss'
-import { remoteCursorsExtension } from './hooks/code-mirror-extensions/sync/remote-cursors/remote-cursors-extension'
+import { useCodeMirrorRemoteCursorsExtension } from './hooks/code-mirror-extensions/sync/remote-cursors/remote-cursors-extension'
 import { useCodeMirrorFileInsertExtension } from './hooks/code-mirror-extensions/use-code-mirror-file-insert-extension'
 import { useCodeMirrorScrollWatchExtension } from './hooks/code-mirror-extensions/use-code-mirror-scroll-watch-extension'
 import { useCodeMirrorSpellCheckExtension } from './hooks/code-mirror-extensions/use-code-mirror-spell-check-extension'
@@ -18,7 +18,6 @@ import { useOnImageUploadFromRenderer } from './hooks/image-upload-from-renderer
 import { useCodeMirrorTablePasteExtension } from './hooks/table-paste/use-code-mirror-table-paste-extension'
 import { useApplyScrollState } from './hooks/use-apply-scroll-state'
 import { useCursorActivityCallback } from './hooks/use-cursor-activity-callback'
-import { useSendRemoteCursor } from './hooks/use-send-remote-cursor'
 import { useUpdateCodeMirrorReference } from './hooks/use-update-code-mirror-reference'
 import { useBindYTextToRedux } from './hooks/yjs/use-bind-y-text-to-redux'
 import { useCodeMirrorYjsExtension } from './hooks/yjs/use-code-mirror-yjs-extension'
@@ -27,7 +26,6 @@ import { useOnMetadataUpdated } from './hooks/yjs/use-on-metadata-updated'
 import { useOnNoteDeleted } from './hooks/yjs/use-on-note-deleted'
 import { useRealtimeConnection } from './hooks/yjs/use-realtime-connection'
 import { useReceiveRealtimeUsers } from './hooks/yjs/use-receive-realtime-users'
-import { useSyncRealtimeUsersToCodeMirror } from './hooks/yjs/use-sync-realtime-users-to-code-mirror'
 import { useYDoc } from './hooks/yjs/use-y-doc'
 import { useYDocSyncClient } from './hooks/yjs/use-y-doc-sync-client'
 import { useLinter } from './linter/linter'
@@ -67,9 +65,9 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
   const spellCheckExtension = useCodeMirrorSpellCheckExtension()
   const cursorActivityExtension = useCursorActivityCallback()
   const updateViewContextExtension = useUpdateCodeMirrorReference()
-  const [yjsExtension, pluginLoaded] = useCodeMirrorYjsExtension(yText, messageTransporter)
+  const [yjsExtension, pluginLoaded] = useCodeMirrorYjsExtension(yText)
 
-  const re = useMemo(() => remoteCursorsExtension(messageTransporter), [messageTransporter])
+  const remoteCursorsExtension = useCodeMirrorRemoteCursorsExtension(messageTransporter)
 
   const linterExtension = useLinter()
   const syncAdapter = useYDocSyncClient(messageTransporter, yDoc)
@@ -93,7 +91,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
         base: markdownLanguage,
         codeLanguages: (input) => findLanguageByCodeBlockName(languages, input)
       }),
-      re,
+      remoteCursorsExtension,
       EditorView.lineWrapping,
       editorScrollExtension,
       tablePasteExtensions,
@@ -106,6 +104,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
     ],
     [
       linterExtension,
+      remoteCursorsExtension,
       editorScrollExtension,
       tablePasteExtensions,
       fileInsertExtension,
