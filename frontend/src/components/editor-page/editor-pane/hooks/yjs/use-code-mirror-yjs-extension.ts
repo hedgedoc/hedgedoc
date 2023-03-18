@@ -8,6 +8,7 @@ import { yTextSyncPluginConfigFacet } from '../code-mirror-extensions/sync/docum
 import { remoteCursorsExtension } from '../code-mirror-extensions/sync/remote-cursors/remote-cursors-extension'
 import type { Extension } from '@codemirror/state'
 import { ViewPlugin } from '@codemirror/view'
+import { MessageTransporter } from '@hedgedoc/commons'
 import { useMemo, useState } from 'react'
 import type { Text as YText } from 'yjs'
 
@@ -23,8 +24,7 @@ export const useCodeMirrorYjsExtension = (yText: YText): [Extension, boolean] =>
   const plugins = useMemo(() => {
     return [
       yTextSyncPluginConfigFacet.of({ yText, onPluginLoaded: () => setPluginLoaded(true) }),
-      ViewPlugin.fromClass(YTextSyncPlugin),
-      remoteCursorsExtension()
+      ViewPlugin.fromClass(YTextSyncPlugin)
     ]
   }, [yText])
 

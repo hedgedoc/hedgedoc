@@ -3,14 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { CursorSelection } from '../../../../tool-bar/formatters/types/cursor-selection'
 import { createCursorCssClass } from './create-cursor-css-class'
 import { RemoteCursorMarker } from './remote-cursor-marker'
 import styles from './style.module.scss'
 import type { Extension, Transaction } from '@codemirror/state'
 import { EditorSelection, StateEffect, StateField } from '@codemirror/state'
-import type { ViewUpdate } from '@codemirror/view'
-import { layer, RectangleMarker } from '@codemirror/view'
+import type { PluginValue, ViewUpdate } from '@codemirror/view'
+import { EditorView, layer, RectangleMarker, ViewPlugin } from '@codemirror/view'
+import type { MessageTransporter } from '@hedgedoc/commons'
+import { ConnectionState, MessageType } from '@hedgedoc/commons'
 import { Optional } from '@mrdrogdrog/optional'
+import type { Listener } from 'eventemitter2'
 import equal from 'fast-deep-equal'
 
 export interface RemoteCursor {
@@ -100,6 +104,73 @@ const createSelectionLayer = (): Extension =>
  * Bundles all extensions that are needed for the remote cursor display.
  * @return The created codemirror extensions
  */
-export const remoteCursorsExtension = (): Extension => {
-  return [remoteCursorStateField.extension, createCursorLayer(), createSelectionLayer()]
+export const remoteCursorsExtension = (messageTransporter: MessageTransporter): Extension => {
+  return [
+    remoteCursorStateField.extension,
+    createCursorLayer(),
+    createSelectionLayer(),
+    createReceiveCursorExtension(messageTransporter),
+    createSendCursorExtension(messageTransporter)
+  ]
+}
+
+const createSendCursorExtension = (messageTransporter: MessageTransporter): Extension => {
+  let currentCursor: CursorSelection | undefined = undefined
+
+  const sendCursor = () => {
+    if (messageTransporter.getConnectionState() !== ConnectionState.CONNECTED || currentCursor === undefined) {
+      return
+    }
+    messageTransporter.sendMessage({
+      type: MessageType.REALTIME_USER_SINGLE_UPDATE,
+      payload: {
+        from: currentCursor.from ?? 0,
+        to: currentCursor?.to
+      }
+    })
+  }
+
+  const extension = EditorView.updateListener.of((update) => {
+    if (!update.selectionSet && !update.focusChanged && !update.docChanged) {
+      return
+    }
+    currentCursor = update.state.selection.main
+    sendCursor()
+  })
+
+  messageTransporter.on('connected', () => {
+    sendCursor()
+  })
+
+  return extension
+}
+
+const createReceiveCursorExtension = (messageTransporter: MessageTransporter): Extension => {
+  return ViewPlugin.define((view) => new ReceiveRemoteCursorExtension(view, messageTransporter))
+}
+
+class ReceiveRemoteCursorExtension implements PluginValue {
+  private readonly listener: Listener
+
+  constructor(view: EditorView, messageTransporter: MessageTransporter) {
+    this.listener = messageTransporter.on(
+      MessageType.REALTIME_USER_STATE_SET,
+      ({ payload }) => {
+        const cursors: RemoteCursor[] = payload.map((user) => ({
+          from: user.cursor.from,
+          to: user.cursor.to,
+          name: user.username,
+          styleIndex: user.styleIndex
+        }))
+        view.dispatch({
+          effects: [remoteCursorUpdateEffect.of(cursors)]
+        })
+      },
+      { objectify: true }
+    ) as Listener
+  }
+
+  destroy() {
+    this.listener.off()
+  }
 }

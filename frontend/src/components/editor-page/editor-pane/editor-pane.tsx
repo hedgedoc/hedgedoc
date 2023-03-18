@@ -10,6 +10,7 @@ import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { findLanguageByCodeBlockName } from '../../markdown-renderer/extensions/base/code-block-markdown-extension/find-language-by-code-block-name'
 import type { ScrollProps } from '../synced-scroll/scroll-props'
 import styles from './extended-codemirror/codemirror.module.scss'
+import { remoteCursorsExtension } from './hooks/code-mirror-extensions/sync/remote-cursors/remote-cursors-extension'
 import { useCodeMirrorFileInsertExtension } from './hooks/code-mirror-extensions/use-code-mirror-file-insert-extension'
 import { useCodeMirrorScrollWatchExtension } from './hooks/code-mirror-extensions/use-code-mirror-scroll-watch-extension'
 import { useCodeMirrorSpellCheckExtension } from './hooks/code-mirror-extensions/use-code-mirror-spell-check-extension'
@@ -57,19 +58,20 @@ export type EditorPaneProps = ScrollProps
 export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, onMakeScrollSource }) => {
   useApplyScrollState(scrollState)
 
+  const messageTransporter = useRealtimeConnection()
   const yDoc = useYDoc()
   const yText = useMarkdownContentYText(yDoc)
-
   const editorScrollExtension = useCodeMirrorScrollWatchExtension(onScroll)
   const tablePasteExtensions = useCodeMirrorTablePasteExtension()
   const fileInsertExtension = useCodeMirrorFileInsertExtension()
   const spellCheckExtension = useCodeMirrorSpellCheckExtension()
   const cursorActivityExtension = useCursorActivityCallback()
   const updateViewContextExtension = useUpdateCodeMirrorReference()
-  const [yjsExtension, pluginLoaded] = useCodeMirrorYjsExtension(yText)
-  const linterExtension = useLinter()
+  const [yjsExtension, pluginLoaded] = useCodeMirrorYjsExtension(yText, messageTransporter)
 
-  const messageTransporter = useRealtimeConnection()
+  const re = useMemo(() => remoteCursorsExtension(messageTransporter), [messageTransporter])
+
+  const linterExtension = useLinter()
   const syncAdapter = useYDocSyncClient(messageTransporter, yDoc)
 
   useOnMetadataUpdated(messageTransporter)
@@ -81,10 +83,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
   }, [messageTransporter, pluginLoaded, syncAdapter])
 
   useBindYTextToRedux(yText)
-
   useReceiveRealtimeUsers(messageTransporter)
-  const cursorSelectionExtension = useSendRemoteCursor(messageTransporter)
-  useSyncRealtimeUsersToCodeMirror()
 
   const extensions = useMemo(
     () => [
@@ -94,9 +93,9 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
         base: markdownLanguage,
         codeLanguages: (input) => findLanguageByCodeBlockName(languages, input)
       }),
+      re,
       EditorView.lineWrapping,
       editorScrollExtension,
-      cursorSelectionExtension,
       tablePasteExtensions,
       fileInsertExtension,
       autocompletion(),
@@ -108,7 +107,6 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
     [
       linterExtension,
       editorScrollExtension,
-      cursorSelectionExtension,
       tablePasteExtensions,
       fileInsertExtension,
       cursorActivityExtension,
