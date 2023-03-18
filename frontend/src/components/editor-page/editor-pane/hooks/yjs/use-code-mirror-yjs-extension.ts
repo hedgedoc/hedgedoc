@@ -5,10 +5,8 @@
  */
 import { YTextSyncPlugin } from '../code-mirror-extensions/sync/document-sync/y-text-sync-plugin'
 import { yTextSyncPluginConfigFacet } from '../code-mirror-extensions/sync/document-sync/y-text-sync-plugin-config'
-import { remoteCursorsExtension } from '../code-mirror-extensions/sync/remote-cursors/remote-cursors-extension'
 import type { Extension } from '@codemirror/state'
 import { ViewPlugin } from '@codemirror/view'
-import { MessageTransporter } from '@hedgedoc/commons'
 import { useMemo, useState } from 'react'
 import type { Text as YText } from 'yjs'
 
