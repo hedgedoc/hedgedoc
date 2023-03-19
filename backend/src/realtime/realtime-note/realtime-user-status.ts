@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MessageType, RealtimeUser } from '@hedgedoc/commons';
+import { ConnectionState, MessageType, RealtimeUser } from '@hedgedoc/commons';
 import { Listener } from 'eventemitter2';
 
 import { RealtimeConnection } from './realtime-connection';
@@ -84,7 +84,12 @@ export class RealtimeUserStatus {
     this.connection
       .getRealtimeNote()
       .getConnections()
-      .filter((connection) => connection !== exceptClient)
+      .filter(
+        (connection) =>
+          connection !== exceptClient &&
+          connection.getTransporter().getConnectionState() ===
+            ConnectionState.CONNECTED,
+      )
       .forEach(this.sendUpdateToClient.bind(this));
   }
 
