@@ -18,6 +18,6 @@ import type { Text as YText } from 'yjs'
  */
 export const useCodeMirrorYjsExtension = (yText: YText, syncAdapter: YDocSyncClient): Extension => {
   return useMemo(() => {
-    return [ViewPlugin.define((view) => new YTextSyncPlugin(view, yText, syncAdapter.syncAsSoonAsPossible.bind(this)))]
+    return [ViewPlugin.define((view) => new YTextSyncPlugin(view, yText, () => syncAdapter.syncAsSoonAsPossible()))]
   }, [syncAdapter, yText])
 }
