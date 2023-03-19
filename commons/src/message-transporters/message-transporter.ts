@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MessagePayloads, MessageType } from './message.js';
-import { Message } from './message.js';
-import { EventEmitter2, Listener } from 'eventemitter2';
-
+import { MessagePayloads, MessageType } from './message.js'
+import { Message } from './message.js'
+import { EventEmitter2, Listener } from 'eventemitter2'
 
 export type MessageEvents = MessageType | 'connected' | 'disconnected'
 

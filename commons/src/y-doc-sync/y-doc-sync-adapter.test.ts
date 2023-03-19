@@ -97,8 +97,14 @@ describe('message transporter', () => {
       }
     })
 
-    const yDocSyncAdapter1 = new YDocSyncClientAdapter(docClient1, transporterClient1)
-    const yDocSyncAdapter2 = new YDocSyncClientAdapter(docClient2, transporterClient2)
+    const yDocSyncAdapter1 = new YDocSyncClientAdapter(
+      docClient1,
+      transporterClient1
+    )
+    const yDocSyncAdapter2 = new YDocSyncClientAdapter(
+      docClient2,
+      transporterClient2
+    )
     const yDocSyncAdapterServerTo1 = new YDocSyncServerAdapter(
       docServer,
       transporterServerTo1

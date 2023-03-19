@@ -31,10 +31,7 @@ export class YDocSyncAdapter extends YDocSyncServerAdapter {
     });
   }
 
-  private processDocUpdate(
-    update: Uint8Array,
-    origin: unknown,
-  ): void {
+  private processDocUpdate(update: Uint8Array, origin: unknown): void {
     if (!this.isSynced()) {
       return;
     }

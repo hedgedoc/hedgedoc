@@ -69,7 +69,7 @@ export abstract class YDocSyncAdapter {
 
   protected requestDocumentState(): void {
     this.messageTransporter.sendMessage({
-        type: MessageType.NOTE_CONTENT_STATE_REQUEST,
+      type: MessageType.NOTE_CONTENT_STATE_REQUEST,
       payload: Array.from(encodeStateVector(this.doc))
     })
   }
