@@ -14,7 +14,7 @@ export const useYDocSyncClient = (messageTransporter: MessageTransporter, yDoc: 
   const syncAdapter = useMemo(() => new YDocSyncClient(yDoc, messageTransporter), [messageTransporter, yDoc])
 
   useEffect(() => {
-    const onceSyncedListener = syncAdapter.asSoonAsConnected(() => setRealtimeSyncedState(true))
+    const onceSyncedListener = syncAdapter.doAsSoonAsSynced(() => setRealtimeSyncedState(true))
     const desyncedListener = syncAdapter.eventEmitter.on('desynced', () => setRealtimeSyncedState(false), {
       objectify: true
     }) as Listener

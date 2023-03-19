@@ -21,10 +21,10 @@ export abstract class YDocSync {
     protected readonly messageTransporter: MessageTransporter
   ) {
     this.bindDocumentSyncMessageEvents(doc)
-    this.messageTransporter.asSoonAsConnected(() => this.afterConnect())
+    this.messageTransporter.doAsSoonAsConnected(() => this.afterConnect())
   }
 
-  public asSoonAsConnected(callback: () => void): Listener | undefined {
+  public doAsSoonAsSynced(callback: () => void): Listener | undefined {
     if (this.isSynced()) {
       callback()
     } else {
@@ -75,7 +75,7 @@ export abstract class YDocSync {
     //empty on purpose
   }
 
-  public requestDocumentState(): void {
+  protected requestDocumentState(): void {
     this.messageTransporter.sendMessage({
       type: MessageType.NOTE_CONTENT_STATE_REQUEST,
       payload: Array.from(encodeStateVector(this.doc))

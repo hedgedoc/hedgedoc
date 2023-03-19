@@ -109,25 +109,25 @@ describe('message transporter', () => {
     )
 
     const waitForClient1Sync = new Promise<void>((resolve) => {
-      yDocSyncAdapter1.asSoonAsConnected(() => {
+      yDocSyncAdapter1.doAsSoonAsSynced(() => {
         console.debug('client 1 received the first sync')
         resolve()
       })
     })
     const waitForClient2Sync = new Promise<void>((resolve) => {
-      yDocSyncAdapter2.asSoonAsConnected(() => {
+      yDocSyncAdapter2.doAsSoonAsSynced(() => {
         console.debug('client 2 received the first sync')
         resolve()
       })
     })
     const waitForServerTo11Sync = new Promise<void>((resolve) => {
-      yDocSyncAdapterServerTo1.asSoonAsConnected(() => {
+      yDocSyncAdapterServerTo1.doAsSoonAsSynced(() => {
         console.debug('server 1 received the first sync')
         resolve()
       })
     })
     const waitForServerTo21Sync = new Promise<void>((resolve) => {
-      yDocSyncAdapterServerTo2.asSoonAsConnected(() => {
+      yDocSyncAdapterServerTo2.doAsSoonAsSynced(() => {
         console.debug('server 2 received the first sync')
         resolve()
       })
@@ -135,9 +135,9 @@ describe('message transporter', () => {
 
     transporterClient1.connect(transporterServerTo1)
     transporterClient2.connect(transporterServerTo2)
-
-    yDocSyncAdapter1.requestDocumentState()
-    yDocSyncAdapter2.requestDocumentState()
+    
+    yDocSyncAdapter1.syncAsSoonAsPossible()
+    yDocSyncAdapter2.syncAsSoonAsPossible()
 
     await Promise.all([
       waitForClient1Sync,

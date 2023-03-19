@@ -65,20 +65,16 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
   const spellCheckExtension = useCodeMirrorSpellCheckExtension()
   const cursorActivityExtension = useCursorActivityCallback()
   const updateViewContextExtension = useUpdateCodeMirrorReference()
-  const [yjsExtension, pluginLoaded] = useCodeMirrorYjsExtension(yText)
 
   const remoteCursorsExtension = useCodeMirrorRemoteCursorsExtension(messageTransporter)
 
   const linterExtension = useLinter()
+
   const syncAdapter = useYDocSyncClient(messageTransporter, yDoc)
+  const yjsExtension = useCodeMirrorYjsExtension(yText, syncAdapter)
 
   useOnMetadataUpdated(messageTransporter)
   useOnNoteDeleted(messageTransporter)
-  useEffect(() => {
-    if (pluginLoaded) {
-      messageTransporter.asSoonAsConnected(() => syncAdapter.requestDocumentState())
-    }
-  }, [messageTransporter, pluginLoaded, syncAdapter])
 
   useBindYTextToRedux(yText)
   useReceiveRealtimeUsers(messageTransporter)

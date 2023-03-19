@@ -18,24 +18,20 @@ const syncAnnotation = Annotation.define()
  * Synchronizes the content of a codemirror with a {@link YText y.js text channel}.
  */
 export class YTextSyncPlugin implements PluginValue {
-  private readonly conf: YTextSyncPluginConfig
-  private readonly yText: YText
   private readonly observer: YTextSyncPlugin['onYTextUpdate']
 
-  constructor(private view: EditorView) {
-    this.conf = view.state.facet<YTextSyncPluginConfig>(yTextSyncPluginConfigFacet)
-    this.yText = this.conf.yText
+  constructor(private view: EditorView, private readonly yText: YText, pluginLoaded: () => void) {
     this.observer = this.onYTextUpdate.bind(this)
     this.yText.observe(this.observer)
-    this.conf.onPluginLoaded()
+    pluginLoaded()
   }
 
   private onYTextUpdate(event: YTextEvent, transaction: YTransaction): void {
-    if (transaction.origin === this.conf) {
+    if (transaction.origin === this) {
       return
     }
     const changes = this.calculateChanges(event)
-    this.view.dispatch({ changes, annotations: [syncAnnotation.of(this.conf)] })
+    this.view.dispatch({ changes, annotations: [syncAnnotation.of(this)] })
   }
 
   private calculateChanges(event: YTextEvent): ChangeSpec[] {
@@ -61,7 +57,7 @@ export class YTextSyncPlugin implements PluginValue {
       return
     }
     update.transactions
-      .filter((transaction) => transaction.annotation(syncAnnotation) !== this.conf)
+      .filter((transaction) => transaction.annotation(syncAnnotation) !== this)
       .forEach((transaction) => this.applyTransaction(transaction))
   }
 
@@ -78,7 +74,7 @@ export class YTextSyncPlugin implements PluginValue {
         }
         positionAdjustment += insertText.length - (toA - fromA)
       })
-    }, this.conf)
+    }, this)
   }
 
   public destroy(): void {

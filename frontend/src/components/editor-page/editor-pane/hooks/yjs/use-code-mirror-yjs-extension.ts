@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { YTextSyncPlugin } from '../code-mirror-extensions/sync/document-sync/y-text-sync-plugin'
-import { yTextSyncPluginConfigFacet } from '../code-mirror-extensions/sync/document-sync/y-text-sync-plugin-config'
 import type { Extension } from '@codemirror/state'
 import { ViewPlugin } from '@codemirror/view'
-import { useMemo, useState } from 'react'
+import { MessageTransporter, YDocSyncClient } from '@hedgedoc/commons'
+import { useMemo } from 'react'
 import type { Text as YText } from 'yjs'
 
 /**
@@ -16,15 +16,8 @@ import type { Text as YText } from 'yjs'
  * @param yText The source and target for the editor content
  * @return the created extension
  */
-export const useCodeMirrorYjsExtension = (yText: YText): [Extension, boolean] => {
-  const [pluginLoaded, setPluginLoaded] = useState(false)
-
-  const plugins = useMemo(() => {
-    return [
-      yTextSyncPluginConfigFacet.of({ yText, onPluginLoaded: () => setPluginLoaded(true) }),
-      ViewPlugin.fromClass(YTextSyncPlugin)
-    ]
-  }, [yText])
-
-  return [plugins, pluginLoaded]
+export const useCodeMirrorYjsExtension = (yText: YText, syncAdapter: YDocSyncClient): Extension => {
+  return useMemo(() => {
+    return [ViewPlugin.define((view) => new YTextSyncPlugin(view, yText, syncAdapter.syncAsSoonAsPossible.bind(this)))]
+  }, [syncAdapter, yText])
 }
