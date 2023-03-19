@@ -11,7 +11,7 @@ import { applyUpdate, Doc, encodeStateAsUpdate, encodeStateVector } from 'yjs'
 
 type EventMap = Record<'synced' | 'desynced', () => void>
 
-export abstract class YDocSync {
+export abstract class YDocSyncAdapter {
   private synced = false
 
   public readonly eventEmitter = new EventEmitter2<EventMap>()
@@ -21,24 +21,22 @@ export abstract class YDocSync {
     protected readonly messageTransporter: MessageTransporter
   ) {
     this.bindDocumentSyncMessageEvents(doc)
-    this.messageTransporter.doAsSoonAsConnected(() => this.afterConnect())
   }
 
   public doAsSoonAsSynced(callback: () => void): Listener | undefined {
     if (this.isSynced()) {
       callback()
-    } else {
-      return this.eventEmitter.once('synced', callback, {
-        objectify: true
-      }) as Listener
     }
+    return this.eventEmitter.on('synced', callback, {
+      objectify: true
+    }) as Listener
   }
 
   public isSynced(): boolean {
     return this.synced
   }
 
-  protected bindDocumentSyncMessageEvents(doc: Doc) {
+  protected bindDocumentSyncMessageEvents(doc: Doc): void {
     this.messageTransporter.on(
       MessageType.NOTE_CONTENT_STATE_REQUEST,
       (payload) => {
@@ -55,8 +53,6 @@ export abstract class YDocSync {
       applyUpdate(doc, new Uint8Array(payload.payload), this)
     })
 
-    doc.on('destroy', () => this.messageTransporter.disconnect())
-
     this.messageTransporter.on('disconnected', () => {
       this.synced = false
       this.eventEmitter.emit('desynced')
@@ -71,13 +67,9 @@ export abstract class YDocSync {
     this.eventEmitter.emit('synced')
   }
 
-  protected afterConnect(): void {
-    //empty on purpose
-  }
-
   protected requestDocumentState(): void {
     this.messageTransporter.sendMessage({
-      type: MessageType.NOTE_CONTENT_STATE_REQUEST,
+        type: MessageType.NOTE_CONTENT_STATE_REQUEST,
       payload: Array.from(encodeStateVector(this.doc))
     })
   }

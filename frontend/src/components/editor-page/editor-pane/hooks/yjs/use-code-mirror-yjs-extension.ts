@@ -6,7 +6,7 @@
 import { YTextSyncPlugin } from '../code-mirror-extensions/sync/document-sync/y-text-sync-plugin'
 import type { Extension } from '@codemirror/state'
 import { ViewPlugin } from '@codemirror/view'
-import type { YDocSyncClient } from '@hedgedoc/commons'
+import type { YDocSyncClientAdapter } from '@hedgedoc/commons'
 import { useMemo } from 'react'
 import type { Text as YText } from 'yjs'
 
@@ -17,8 +17,8 @@ import type { Text as YText } from 'yjs'
  * @param syncAdapter The sync adapter that processes the communication for content synchronisation.
  * @return the created extension
  */
-export const useCodeMirrorYjsExtension = (yText: YText, syncAdapter: YDocSyncClient): Extension => {
+export const useCodeMirrorYjsExtension = (yText: YText, syncAdapter: YDocSyncClientAdapter): Extension => {
   return useMemo(() => {
-    return [ViewPlugin.define((view) => new YTextSyncPlugin(view, yText, () => syncAdapter.syncAsSoonAsPossible()))]
+    return [ViewPlugin.define((view) => new YTextSyncPlugin(view, yText, () => syncAdapter.enableSync()))]
   }, [syncAdapter, yText])
 }

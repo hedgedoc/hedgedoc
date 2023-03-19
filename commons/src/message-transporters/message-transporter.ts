@@ -3,9 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MessagePayloads, MessageType } from './message.js'
-import { Message } from './message.js'
-import { EventEmitter2, Listener } from 'eventemitter2'
+import { MessagePayloads, MessageType } from './message.js';
+import { Message } from './message.js';
+import { EventEmitter2, Listener } from 'eventemitter2';
+
 
 export type MessageEvents = MessageType | 'connected' | 'disconnected'
 
@@ -40,11 +41,18 @@ export abstract class MessageTransporter extends EventEmitter2<MessageEventPaylo
     this.emit('disconnected')
   }
 
-  public doAsSoonAsConnected(callback: () => void): Listener | undefined {
+  public doOnceAsSoonAsConnected(callback: () => void): Listener | undefined {
     if (this.getConnectionState() === ConnectionState.CONNECTED) {
       callback()
     } else {
-      return this.on('connected', callback, { objectify: true }) as Listener
+      return this.once('connected', callback, { objectify: true }) as Listener
     }
+  }
+
+  public doAsSoonAsConnected(callback: () => void): Listener | undefined {
+    if (this.getConnectionState() === ConnectionState.CONNECTED) {
+      callback()
+    }
+    return this.on('connected', callback, { objectify: true }) as Listener
   }
 }

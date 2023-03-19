@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { RemoteCursor, remoteCursorUpdateEffect } from './cursor-layers-extensions'
+import type { RemoteCursor } from './cursor-layers-extensions'
+import { remoteCursorUpdateEffect } from './cursor-layers-extensions'
 import type { EditorView, PluginValue } from '@codemirror/view'
 import type { MessageTransporter } from '@hedgedoc/commons'
 import { MessageType } from '@hedgedoc/commons'

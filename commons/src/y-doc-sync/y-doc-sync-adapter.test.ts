@@ -6,8 +6,8 @@
 import { MARKDOWN_CONTENT_CHANNEL_NAME } from '../constants/markdown-content-channel-name.js'
 import { Message, MessageType } from '../message-transporters/message.js'
 import { InMemoryConnectionMessageTransporter } from './in-memory-connection-message.transporter.js'
-import { YDocSyncClient } from './y-doc-sync-client.js'
-import { YDocSyncTestServer } from './y-doc-sync-test-server.js'
+import { YDocSyncClientAdapter } from './y-doc-sync-client-adapter.js'
+import { YDocSyncServerAdapter } from './y-doc-sync-server-adapter.js'
 import { describe, expect, it } from '@jest/globals'
 import { Doc } from 'yjs'
 
@@ -97,13 +97,13 @@ describe('message transporter', () => {
       }
     })
 
-    const yDocSyncAdapter1 = new YDocSyncClient(docClient1, transporterClient1)
-    const yDocSyncAdapter2 = new YDocSyncClient(docClient2, transporterClient2)
-    const yDocSyncAdapterServerTo1 = new YDocSyncTestServer(
+    const yDocSyncAdapter1 = new YDocSyncClientAdapter(docClient1, transporterClient1)
+    const yDocSyncAdapter2 = new YDocSyncClientAdapter(docClient2, transporterClient2)
+    const yDocSyncAdapterServerTo1 = new YDocSyncServerAdapter(
       docServer,
       transporterServerTo1
     )
-    const yDocSyncAdapterServerTo2 = new YDocSyncTestServer(
+    const yDocSyncAdapterServerTo2 = new YDocSyncServerAdapter(
       docServer,
       transporterServerTo2
     )
@@ -135,9 +135,9 @@ describe('message transporter', () => {
 
     transporterClient1.connect(transporterServerTo1)
     transporterClient2.connect(transporterServerTo2)
-    
-    yDocSyncAdapter1.syncAsSoonAsPossible()
-    yDocSyncAdapter2.syncAsSoonAsPossible()
+
+    yDocSyncAdapter1.enableSync()
+    yDocSyncAdapter2.enableSync()
 
     await Promise.all([
       waitForClient1Sync,

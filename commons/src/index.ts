@@ -18,8 +18,9 @@ export {
   WrongProtocolError
 } from './utils/errors.js'
 
-export * from './y-doc-sync/y-doc-sync-client.js'
-export * from './y-doc-sync/y-doc-sync.js'
+export * from './y-doc-sync/y-doc-sync-client-adapter.js'
+export * from './y-doc-sync/y-doc-sync-server-adapter.js'
+export * from './y-doc-sync/y-doc-sync-adapter.js'
 
 export { waitForOtherPromisesToFinish } from './utils/wait-for-other-promises-to-finish.js'
 

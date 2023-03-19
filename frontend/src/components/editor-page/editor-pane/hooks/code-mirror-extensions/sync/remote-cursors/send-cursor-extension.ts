@@ -8,6 +8,9 @@ import type { EditorView, PluginValue, ViewUpdate } from '@codemirror/view'
 import type { MessageTransporter } from '@hedgedoc/commons'
 import { ConnectionState, MessageType } from '@hedgedoc/commons'
 
+/**
+ *
+ */
 export class SendCursorExtension implements PluginValue {
   private lastCursor: SelectionRange | undefined
 
