@@ -90,7 +90,8 @@ const rawNextConfig = {
   swcMinify: false, //Otherwise emoji picker is minified incorrectly
   experimental: {
     outputFileTracingRoot: path.join(__dirname, '../')
-  }
+  },
+  productionBrowserSourceMaps: true
 }
 const completeNextConfig = withBundleAnalyzer(rawNextConfig)
 
