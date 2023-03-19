@@ -42,7 +42,8 @@ export class YDocSyncAdapter extends YDocSync {
     };
 
     realtimeNote.getConnections().forEach((client) => {
-      if (client.getSyncAdapter().isSynced() && origin !== client) {
+      const syncAdapter = client.getSyncAdapter();
+      if (syncAdapter.isSynced() && origin !== syncAdapter) {
         client.getTransporter().sendMessage(message);
       }
     });
