@@ -28,8 +28,7 @@ export class YTextSyncPlugin implements PluginValue {
     if (transaction.origin === this) {
       return
     }
-    const changes = this.calculateChanges(event)
-    this.view.dispatch({ changes, annotations: [syncAnnotation.of(this)] })
+    this.view.dispatch({ changes: this.calculateChanges(event), annotations: [syncAnnotation.of(this)] })
   }
 
   private calculateChanges(event: YTextEvent): ChangeSpec[] {
