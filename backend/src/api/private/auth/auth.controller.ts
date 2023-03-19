@@ -26,6 +26,7 @@ import { RegisterDto } from '../../../identity/local/register.dto';
 import { UpdatePasswordDto } from '../../../identity/local/update-password.dto';
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
+import { SessionState } from '../../../session/session.service';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
 import { LoginEnabledGuard } from '../../utils/login-enabled.guard';
@@ -34,10 +35,7 @@ import { RegistrationEnabledGuard } from '../../utils/registration-enabled.guard
 import { RequestUser } from '../../utils/request-user.decorator';
 
 type RequestWithSession = Request & {
-  session: {
-    authProvider: string;
-    user: string;
-  };
+  session: SessionState;
 };
 
 @ApiTags('auth')
@@ -65,7 +63,7 @@ export class AuthController {
     );
     // ToDo: Figure out how to rollback user if anything with this calls goes wrong
     await this.identityService.createLocalIdentity(user, registerDto.password);
-    request.session.user = registerDto.username;
+    request.session.username = registerDto.username;
     request.session.authProvider = 'local';
   }
 
@@ -96,7 +94,7 @@ export class AuthController {
     @Body() loginDto: LoginDto,
   ): void {
     // There is no further testing needed as we only get to this point if LocalAuthGuard was successful
-    request.session.user = loginDto.username;
+    request.session.username = loginDto.username;
     request.session.authProvider = 'local';
   }
 
@@ -110,7 +108,7 @@ export class AuthController {
     @Body() loginDto: LdapLoginDto,
   ): void {
     // There is no further testing needed as we only get to this point if LocalAuthGuard was successful
-    request.session.user = loginDto.username;
+    request.session.username = loginDto.username;
     request.session.authProvider = 'ldap';
   }
 
