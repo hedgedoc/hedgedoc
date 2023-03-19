@@ -7,7 +7,9 @@ import { YTextSyncPlugin } from '../code-mirror-extensions/sync/document-sync/y-
 import type { Extension } from '@codemirror/state'
 import { ViewPlugin } from '@codemirror/view'
 import type { YDocSyncClientAdapter } from '@hedgedoc/commons'
-import { useMemo } from 'react'
+import { MessageTransporter, MessageType } from '@hedgedoc/commons'
+import { Listener } from 'eventemitter2'
+import { useEffect, useMemo, useState } from 'react'
 import type { Text as YText } from 'yjs'
 
 /**
@@ -18,7 +20,38 @@ import type { Text as YText } from 'yjs'
  * @return the created extension
  */
 export const useCodeMirrorYjsExtension = (yText: YText, syncAdapter: YDocSyncClientAdapter): Extension => {
+  const [editorReady, setEditorReady] = useState(false)
+  const [communicationReady, setCommunicationReady] = useState(false)
+
+  useEffect(() => {
+    const serverReadyMessageListener = syncAdapter.getMessageTransporter().on(
+      MessageType.SERVER_READY,
+      () => {
+        setCommunicationReady(true)
+      },
+      { objectify: true }
+    ) as Listener
+    const disconnectedListener = syncAdapter.getMessageTransporter().on(
+      'disconnected',
+      () => {
+        setCommunicationReady(false)
+      },
+      { objectify: true }
+    ) as Listener
+
+    return () => {
+      serverReadyMessageListener.off()
+      disconnectedListener.off()
+    }
+  }, [syncAdapter])
+
+  useEffect(() => {
+    if (editorReady && communicationReady) {
+      syncAdapter.requestDocumentState()
+    }
+  }, [communicationReady, editorReady, syncAdapter])
+
   return useMemo(() => {
-    return [ViewPlugin.define((view) => new YTextSyncPlugin(view, yText, () => syncAdapter.enableSync()))]
-  }, [syncAdapter, yText])
+    return [ViewPlugin.define((view) => new YTextSyncPlugin(view, yText, () => setEditorReady(true)))]
+  }, [yText])
 }

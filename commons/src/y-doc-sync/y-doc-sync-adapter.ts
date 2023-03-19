@@ -32,6 +32,10 @@ export abstract class YDocSyncAdapter {
     }) as Listener
   }
 
+  public getMessageTransporter(): MessageTransporter {
+    return this.messageTransporter
+  }
+
   public isSynced(): boolean {
     return this.synced
   }
@@ -67,7 +71,7 @@ export abstract class YDocSyncAdapter {
     this.eventEmitter.emit('synced')
   }
 
-  protected requestDocumentState(): void {
+  public requestDocumentState(): void {
     this.messageTransporter.sendMessage({
       type: MessageType.NOTE_CONTENT_STATE_REQUEST,
       payload: Array.from(encodeStateVector(this.doc))

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { WebsocketTransporter } from '@hedgedoc/commons';
+import { MessageType, WebsocketTransporter } from '@hedgedoc/commons';
 import { OnGatewayConnection, WebSocketGateway } from '@nestjs/websockets';
 import { IncomingMessage } from 'http';
 import WebSocket from 'ws';
@@ -85,6 +85,10 @@ export class WebsocketGateway implements OnGatewayConnection {
       websocketTransporter.setWebsocket(clientSocket);
 
       realtimeNote.addClient(connection);
+
+      websocketTransporter.sendMessage({
+        type: MessageType.SERVER_READY,
+      });
     } catch (error: unknown) {
       this.logger.error(
         `Error occurred while initializing: ${(error as Error).message}`,
