@@ -40,8 +40,12 @@ export abstract class MessageTransporter extends EventEmitter2<MessageEventPaylo
     this.emit('disconnected')
   }
 
+  public isConnected(): boolean {
+    return this.getConnectionState() === ConnectionState.CONNECTED
+  }
+
   public doOnceAsSoonAsConnected(callback: () => void): Listener | undefined {
-    if (this.getConnectionState() === ConnectionState.CONNECTED) {
+    if (this.isConnected()) {
       callback()
     } else {
       return this.once('connected', callback, { objectify: true }) as Listener
@@ -49,7 +53,7 @@ export abstract class MessageTransporter extends EventEmitter2<MessageEventPaylo
   }
 
   public doAsSoonAsConnected(callback: () => void): Listener | undefined {
-    if (this.getConnectionState() === ConnectionState.CONNECTED) {
+    if (this.isConnected()) {
       callback()
     }
     return this.on('connected', callback, { objectify: true }) as Listener

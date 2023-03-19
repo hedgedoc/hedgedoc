@@ -46,7 +46,7 @@ export const useCodeMirrorYjsExtension = (yText: YText, syncAdapter: YDocSyncCli
   }, [syncAdapter])
 
   useEffect(() => {
-    if (editorReady && communicationReady) {
+    if (editorReady && communicationReady && syncAdapter.getMessageTransporter().isConnected()) {
       syncAdapter.requestDocumentState()
     }
   }, [communicationReady, editorReady, syncAdapter])

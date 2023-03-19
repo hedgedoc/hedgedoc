@@ -6,7 +6,7 @@
 import type { SelectionRange } from '@codemirror/state'
 import type { EditorView, PluginValue, ViewUpdate } from '@codemirror/view'
 import type { MessageTransporter } from '@hedgedoc/commons'
-import { ConnectionState, MessageType } from '@hedgedoc/commons'
+import { MessageType } from '@hedgedoc/commons'
 
 /**
  *
@@ -29,7 +29,7 @@ export class SendCursorExtension implements PluginValue {
 
   private sendCursor(currentCursor: SelectionRange | undefined) {
     if (
-      this.messageTransporter.getConnectionState() !== ConnectionState.CONNECTED ||
+      !this.messageTransporter.isConnected() ||
       currentCursor === undefined ||
       (this.lastCursor?.to === currentCursor?.to && this.lastCursor?.from === currentCursor?.from)
     ) {
