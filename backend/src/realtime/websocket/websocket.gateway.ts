@@ -110,6 +110,9 @@ export class WebsocketGateway implements OnGatewayConnection {
     const username = await this.sessionService.fetchUsernameForSessionId(
       sessionId.get(),
     );
+    if (username === undefined) {
+      return null;
+    }
     return await this.userService.getUserByUsername(username);
   }
 }

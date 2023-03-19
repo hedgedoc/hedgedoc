@@ -22,7 +22,7 @@ import { HEDGEDOC_SESSION } from '../utils/session';
 
 export interface SessionState {
   cookie: unknown;
-  user: string;
+  username?: string;
   authProvider: string;
 }
 
@@ -58,10 +58,10 @@ export class SessionService {
    * @param sessionId The session id for which the owning user should be found
    * @return A Promise that either resolves with the username or rejects with an error
    */
-  fetchUsernameForSessionId(sessionId: string): Promise<string> {
+  fetchUsernameForSessionId(sessionId: string): Promise<string | undefined> {
     return new Promise((resolve, reject) => {
       this.typeormStore.get(sessionId, (error?: Error, result?: SessionState) =>
-        error || !result ? reject(error) : resolve(result.user),
+        error || !result ? reject(error) : resolve(result.username),
       );
     });
   }

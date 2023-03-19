@@ -36,7 +36,7 @@ describe('SessionService', () => {
     jest.resetModules();
     jest.restoreAllMocks();
     const mockedExistingSession = Mock.of<SessionState>({
-      user: mockUsername,
+      username: mockUsername,
     });
     mockedTypeormStore = Mock.of<TypeormStore>({
       connect: jest.fn(() => mockedTypeormStore),

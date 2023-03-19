@@ -10,6 +10,8 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 
+import { SessionState } from '../../session/session.service';
+
 /**
  * Extracts the auth provider identifier from a session inside a request
  *
@@ -19,9 +21,7 @@ import { Request } from 'express';
 export const SessionAuthProvider = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
     const request: Request & {
-      session: {
-        authProvider: string;
-      };
+      session: SessionState;
     } = ctx.switchToHttp().getRequest();
     if (!request.session?.authProvider) {
       // We should have an auth provider here, otherwise something is wrong
