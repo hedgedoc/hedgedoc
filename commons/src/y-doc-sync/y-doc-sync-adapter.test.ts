@@ -50,7 +50,6 @@ describe('message transporter', () => {
     transporterClient2.on(MessageType.NOTE_CONTENT_UPDATE, () =>
       console.debug('Received NOTE_CONTENT_UPDATE from server to client 2')
     )
-
     transporterServerTo1.on(MessageType.NOTE_CONTENT_STATE_REQUEST, () =>
       console.debug('Received NOTE_CONTENT_REQUEST from client 1 to server')
     )
@@ -142,8 +141,8 @@ describe('message transporter', () => {
     transporterClient1.connect(transporterServerTo1)
     transporterClient2.connect(transporterServerTo2)
 
-    yDocSyncAdapter1.enableSync()
-    yDocSyncAdapter2.enableSync()
+    yDocSyncAdapter1.requestDocumentState()
+    yDocSyncAdapter2.requestDocumentState()
 
     await Promise.all([
       waitForClient1Sync,

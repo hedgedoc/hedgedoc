@@ -29,10 +29,4 @@ export class YDocSyncClientAdapter extends YDocSyncAdapter {
       this.markAsSynced()
     })
   }
-
-  public enableSync() {
-    this.messageTransporter.doAsSoonAsConnected(() =>
-      this.requestDocumentState()
-    )
-  }
 }
