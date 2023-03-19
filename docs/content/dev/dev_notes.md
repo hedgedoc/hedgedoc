@@ -1,9 +1,11 @@
 # Development Notes
+
 This document collects notes and decisions taken during the development of HedgeDoc 2.0.
 It should be converted to a properly structured documentation, but having unstructured docs
 is better than having no docs.
 
 ## Supported databases
+
 We intend to officially support and test these databases:
 
 - SQLite (for development and smaller instances)
@@ -11,6 +13,7 @@ We intend to officially support and test these databases:
 - MariaDB
 
 ## Special Groups
+
 The software provides two special groups which have no explicit users:
 
 - `everyone` (Describing that everyone who wants to access a note can do if it is enabled in the config.)

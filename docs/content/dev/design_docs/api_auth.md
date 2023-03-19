@@ -5,6 +5,7 @@ This is a design document, explaining the design and vision for a HedgeDoc 2
 feature. It is not a user guide and may or may not be fully implemented.
 
 ## Public API
+
 All requests to the public API require authentication using a [bearer token](https://datatracker.ietf.org/doc/html/rfc6750).
 
 This token can be generated using the profile page in the frontend
@@ -20,6 +21,7 @@ A SHA-512 hash of the secret is stored in the database. To validate tokens, the 
 secret and checks it against the stored hash for the provided identifier.
 
 #### Choosing a hash function
+
 Unfortunately, there does not seem to be any explicit documentation about our exact use-case.
 Most docs describe classic password-saving scenarios and recommend bcrypt, scrypt or argon2.
 These hashing functions are slow to stop brute-force or dictionary attacks, which would expose the original,
@@ -38,7 +40,7 @@ SHA-512 (or alternatively SHA3) fits this use-case.
 ## Private API
 
 The private API uses a session cookie to authenticate the user.
-Sessions are handled using passport.js.
+Sessions are handled using [passport.js](https://www.passportjs.org/).
 
 The backend hands out a new session token after the user has successfully authenticated
 using one of the supported authentication methods:
