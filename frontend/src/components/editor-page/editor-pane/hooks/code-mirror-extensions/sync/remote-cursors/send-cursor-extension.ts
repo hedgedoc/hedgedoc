@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { SelectionRange } from '@codemirror/state'
-import { EditorView, PluginValue, ViewUpdate } from '@codemirror/view'
-import { ConnectionState, MessageTransporter, MessageType } from '@hedgedoc/commons'
+import type { SelectionRange } from '@codemirror/state'
+import type { EditorView, PluginValue, ViewUpdate } from '@codemirror/view'
+import type { MessageTransporter } from '@hedgedoc/commons'
+import { ConnectionState, MessageType } from '@hedgedoc/commons'
 
 export class SendCursorExtension implements PluginValue {
   private lastCursor: SelectionRange | undefined

@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import { RemoteCursor, remoteCursorUpdateEffect } from './remote-cursors-extension'
-import { EditorView, PluginValue } from '@codemirror/view'
-import { MessageTransporter, MessageType } from '@hedgedoc/commons'
-import { Listener } from 'eventemitter2'
+import { RemoteCursor, remoteCursorUpdateEffect } from './cursor-layers-extensions'
+import type { EditorView, PluginValue } from '@codemirror/view'
+import type { MessageTransporter } from '@hedgedoc/commons'
+import { MessageType } from '@hedgedoc/commons'
+import type { Listener } from 'eventemitter2'
 
 export class ReceiveRemoteCursorExtension implements PluginValue {
   private readonly listener: Listener

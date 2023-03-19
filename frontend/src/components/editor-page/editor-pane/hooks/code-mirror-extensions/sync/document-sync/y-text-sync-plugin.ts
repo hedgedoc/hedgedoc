@@ -3,8 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { YTextSyncPluginConfig } from './y-text-sync-plugin-config'
-import { yTextSyncPluginConfigFacet } from './y-text-sync-plugin-config'
 import type { ChangeSpec, Transaction } from '@codemirror/state'
 import { Annotation } from '@codemirror/state'
 import type { EditorView, PluginValue } from '@codemirror/view'

@@ -10,9 +10,9 @@ import {
 } from './sync/remote-cursors/cursor-layers-extensions'
 import { ReceiveRemoteCursorExtension } from './sync/remote-cursors/receive-remote-cursor-extension'
 import { SendCursorExtension } from './sync/remote-cursors/send-cursor-extension'
-import { Extension } from '@codemirror/state'
+import type { Extension } from '@codemirror/state'
 import { ViewPlugin } from '@codemirror/view'
-import { MessageTransporter } from '@hedgedoc/commons'
+import type { MessageTransporter } from '@hedgedoc/commons'
 import { useMemo } from 'react'
 
 /**

@@ -3,18 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { createCursorCssClass } from './create-cursor-css-class';
-import { ReceiveRemoteCursorExtension } from './receive-remote-cursor-extension';
-import { RemoteCursorMarker } from './remote-cursor-marker';
-import { SendCursorExtension } from './send-cursor-extension';
-import styles from './style.module.scss';
-import type { Extension, Transaction } from '@codemirror/state';
-import { EditorSelection, StateEffect, StateField } from '@codemirror/state';
-import type { ViewUpdate } from '@codemirror/view';
-import { layer, RectangleMarker } from '@codemirror/view';
-import { Optional } from '@mrdrogdrog/optional';
-import equal from 'fast-deep-equal';
-
+import { createCursorCssClass } from './create-cursor-css-class'
+import { RemoteCursorMarker } from './remote-cursor-marker'
+import styles from './style.module.scss'
+import type { Extension, Transaction } from '@codemirror/state'
+import { EditorSelection, StateEffect, StateField } from '@codemirror/state'
+import type { ViewUpdate } from '@codemirror/view'
+import { layer, RectangleMarker } from '@codemirror/view'
+import { Optional } from '@mrdrogdrog/optional'
+import equal from 'fast-deep-equal'
 
 export interface RemoteCursor {
   name: string
