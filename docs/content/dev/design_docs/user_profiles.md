@@ -34,6 +34,7 @@ is automatically set as sync source and cannot be changed by the user.
 This effectively pins the account to this provider.
 
 ## Example: Corporate LDAP
+
 The administrator wants to allow users to log in via the corporate LDAP
 and Google. Login must only be possible for users present in LDAP and 
 all users must be displayed as they are in the LDAP.
@@ -52,6 +53,7 @@ the 'add a new login method' feature in their profile page to link their
 Google account and use it to login afterwards.
 
 ## Example: Username Conflict
+
 HedgeDoc is configured with two auth providers.
 
 - A user logs in using auth provider A.
@@ -68,6 +70,7 @@ HedgeDoc is configured with two auth providers.
 ### Handling of sync sources and username conflicts
 
 #### Global sync sources
+
 If at the time of logging in with auth provider A, *only* A is configured as a *global* sync source,
 the backend cannot automatically create a user with another username.
 
