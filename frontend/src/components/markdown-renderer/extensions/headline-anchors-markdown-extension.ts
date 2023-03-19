@@ -14,7 +14,7 @@ export class HeadlineAnchorsMarkdownExtension extends MarkdownRendererExtension 
   public configureMarkdownIt(markdownIt: MarkdownIt): void {
     anchor(markdownIt, {
       permalink: anchor.permalink.ariaHidden({
-        symbol: '<i class="fa fa-link"></i>',
+        symbol: '🔗',
         class: 'heading-anchor text-dark',
         renderHref: (slug: string): string => `#${slug}`,
         placement: 'before'
