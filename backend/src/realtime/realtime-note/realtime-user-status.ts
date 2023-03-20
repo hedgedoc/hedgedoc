@@ -24,7 +24,7 @@ export class RealtimeUserStatus {
   }
 
   private createInitialRealtimeUserState(
-    displayName: string | undefined,
+    displayName: string,
     realtimeNote: RealtimeNote,
   ): RealtimeUser {
     return {

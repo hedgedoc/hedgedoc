@@ -7,6 +7,7 @@ import { MessageTransporter } from '@hedgedoc/commons';
 import { Logger } from '@nestjs/common';
 
 import { User } from '../../users/user.entity';
+import { generateRandomName } from './random-word-lists/name-randomizer';
 import { RealtimeNote } from './realtime-note';
 import { RealtimeUserStatus } from './realtime-user-status';
 import { YDocSyncAdapter } from './y-doc-sync-adapter';
@@ -19,6 +20,8 @@ export class RealtimeConnection {
   private readonly transporter: MessageTransporter;
   private readonly yDocSyncAdapter: YDocSyncAdapter;
   private readonly realtimeUserState: RealtimeUserStatus;
+
+  private displayName: string;
 
   /**
    * Instantiates the connection wrapper.
@@ -33,12 +36,12 @@ export class RealtimeConnection {
     private user: User | null,
     private realtimeNote: RealtimeNote,
   ) {
+    this.displayName = user?.displayName ?? generateRandomName();
     this.transporter = messageTransporter;
 
     this.transporter.on('disconnected', () => {
       realtimeNote.removeClient(this);
     });
-
     this.yDocSyncAdapter = new YDocSyncAdapter(realtimeNote, this.transporter);
     this.realtimeUserState = new RealtimeUserStatus(
       this.getDisplayName(),
@@ -63,7 +66,7 @@ export class RealtimeConnection {
   }
 
   public getDisplayName(): string {
-    return this.getUser()?.username ?? 'Guest'; //TODO: Add generation of random guest names
+    return this.displayName;
   }
 
   public getRealtimeNote(): RealtimeNote {
