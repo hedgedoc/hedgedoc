@@ -87,7 +87,7 @@ export class RealtimeUserStatus {
   }
 
   private sendCompleteStateToClient(client: RealtimeConnection): void {
-    if (!client.getTransporter().isConnected()) {
+    if (!client.getTransporter().isReady()) {
       return;
     }
     const payload = this.collectAllConnectionsExcept(client).map(

@@ -32,6 +32,12 @@ export class MockedBackendMessageTransporter extends MessageTransporter {
     this.onDisconnecting()
   }
 
+  sendReady() {
+    this.receiveMessage({
+      type: MessageType.SERVER_READY
+    })
+  }
+
   sendMessage<M extends MessageType>(content: Message<M>) {
     if (content.type === MessageType.NOTE_CONTENT_STATE_REQUEST) {
       setTimeout(() => {

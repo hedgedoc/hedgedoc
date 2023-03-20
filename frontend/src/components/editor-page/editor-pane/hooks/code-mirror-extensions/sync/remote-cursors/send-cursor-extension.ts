@@ -15,7 +15,7 @@ export class SendCursorExtension implements PluginValue {
   private lastCursor: SelectionRange | undefined
 
   constructor(private view: EditorView, private messageTransporter: MessageTransporter) {
-    messageTransporter.doAsSoonAsConnected(() => {
+    messageTransporter.doAsSoonAsReady(() => {
       this.sendCursor(this.lastCursor)
     })
   }
@@ -29,7 +29,7 @@ export class SendCursorExtension implements PluginValue {
 
   private sendCursor(currentCursor: SelectionRange | undefined) {
     if (
-      !this.messageTransporter.isConnected() ||
+      !this.messageTransporter.isReady() ||
       currentCursor === undefined ||
       (this.lastCursor?.to === currentCursor?.to && this.lastCursor?.from === currentCursor?.from)
     ) {

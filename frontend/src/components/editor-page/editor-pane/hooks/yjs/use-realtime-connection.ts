@@ -10,7 +10,7 @@ import { Logger } from '../../../../../utils/logger'
 import { isMockMode } from '../../../../../utils/test-modes'
 import { useWebsocketUrl } from './use-websocket-url'
 import type { MessageTransporter } from '@hedgedoc/commons'
-import { MockedBackendMessageTransporter, WebsocketTransporter } from '@hedgedoc/commons'
+import { MessageType, MockedBackendMessageTransporter, WebsocketTransporter } from '@hedgedoc/commons'
 import type { Listener } from 'eventemitter2'
 import WebSocket from 'isomorphic-ws'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
@@ -68,7 +68,7 @@ export const useRealtimeConnection = (): MessageTransporter => {
       }, WEBSOCKET_RECONNECT_INTERVAL)
       reconnectInterval.current = interval
 
-      messageTransporter.doOnceAsSoonAsConnected(() => {
+      messageTransporter.doOnceAsSoonAsReady(() => {
         clearInterval(interval)
         reconnectInterval.current = undefined
       })

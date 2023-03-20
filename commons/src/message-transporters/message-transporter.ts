@@ -3,8 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MessagePayloads, MessageType } from './message.js'
-import { Message } from './message.js'
+import { Message, MessagePayloads, MessageType } from './message.js'
 import { EventEmitter2, Listener } from 'eventemitter2'
 
 export type MessageEvents = MessageType | 'connected' | 'disconnected'
@@ -22,10 +21,21 @@ export enum ConnectionState {
 }
 
 export abstract class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
+  private readyMessageReceived = false
+
   public abstract sendMessage<M extends MessageType>(content: Message<M>): void
 
   protected receiveMessage<L extends MessageType>(message: Message<L>): void {
+    if (message.type === MessageType.SERVER_READY) {
+      this.readyMessageReceived = true
+    }
     this.emit(message.type, message)
+  }
+
+  public sendReady(): void {
+    this.sendMessage({
+      type: MessageType.SERVER_READY
+    })
   }
 
   public abstract disconnect(): void
@@ -37,6 +47,7 @@ export abstract class MessageTransporter extends EventEmitter2<MessageEventPaylo
   }
 
   protected onDisconnecting(): void {
+    this.readyMessageReceived = false
     this.emit('disconnected')
   }
 
@@ -44,18 +55,24 @@ export abstract class MessageTransporter extends EventEmitter2<MessageEventPaylo
     return this.getConnectionState() === ConnectionState.CONNECTED
   }
 
-  public doOnceAsSoonAsConnected(callback: () => void): Listener | undefined {
-    if (this.isConnected()) {
+  public isReady(): boolean {
+    return this.readyMessageReceived
+  }
+
+  public doOnceAsSoonAsReady(callback: () => void): Listener | undefined {
+    if (this.readyMessageReceived) {
       callback()
     } else {
-      return this.once('connected', callback, { objectify: true }) as Listener
+      return this.once(MessageType.SERVER_READY, callback, { objectify: true }) as Listener
     }
   }
 
-  public doAsSoonAsConnected(callback: () => void): Listener | undefined {
-    if (this.isConnected()) {
+  public doAsSoonAsReady(callback: () => void): Listener {
+    if (this.readyMessageReceived) {
       callback()
     }
-    return this.on('connected', callback, { objectify: true }) as Listener
+    return this.on(MessageType.SERVER_READY, callback, {
+      objectify: true
+    }) as Listener
   }
 }

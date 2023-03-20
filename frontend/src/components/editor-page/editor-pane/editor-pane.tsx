@@ -39,7 +39,7 @@ import { lintGutter } from '@codemirror/lint'
 import { oneDark } from '@codemirror/theme-one-dark'
 import { EditorView } from '@codemirror/view'
 import ReactCodeMirror from '@uiw/react-codemirror'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export type EditorPaneProps = ScrollProps
@@ -123,6 +123,10 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
   const darkModeActivated = useDarkModeState()
   const editorOrigin = useBaseUrl(ORIGIN.EDITOR)
   const isSynced = useApplicationState((state) => state.realtimeStatus.isSynced)
+
+  useEffect(() => {
+    messageTransporter.sendReady()
+  }, [messageTransporter])
 
   return (
     <div
