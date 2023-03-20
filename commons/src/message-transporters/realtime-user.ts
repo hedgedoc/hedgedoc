@@ -5,7 +5,7 @@
  */
 
 export interface RealtimeUser {
-  username: string
+  displayName: string
   active: boolean
   styleIndex: number
   cursor: RemoteCursor

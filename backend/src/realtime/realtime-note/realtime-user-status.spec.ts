@@ -113,7 +113,7 @@ describe('realtime user status', () => {
             to: newTo,
           },
           styleIndex: 0,
-          username: 'mock1',
+          displayName: 'mock1',
         },
         {
           active: true,
@@ -122,7 +122,7 @@ describe('realtime user status', () => {
             to: 0,
           },
           styleIndex: 2,
-          username: 'mock3',
+          displayName: 'mock3',
         },
       ],
     };
@@ -137,7 +137,7 @@ describe('realtime user status', () => {
             to: newTo,
           },
           styleIndex: 0,
-          username: 'mock1',
+          displayName: 'mock1',
         },
         {
           active: true,
@@ -146,7 +146,7 @@ describe('realtime user status', () => {
             to: 0,
           },
           styleIndex: 1,
-          username: 'mock2',
+          displayName: 'mock2',
         },
       ],
     };

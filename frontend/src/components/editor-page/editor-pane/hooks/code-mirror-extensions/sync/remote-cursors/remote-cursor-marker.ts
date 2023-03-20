@@ -49,7 +49,7 @@ export class RemoteCursorMarker implements LayerMarker {
   public static createCursor(
     view: EditorView,
     position: SelectionRange,
-    name: string,
+    displayName: string,
     styleIndex: number
   ): RemoteCursorMarker[] {
     const absolutePosition = view.coordsAtPos(position.head, position.assoc || 1)
@@ -65,7 +65,7 @@ export class RemoteCursorMarker implements LayerMarker {
         absolutePosition.left - baseLeft,
         absolutePosition.top - baseTop,
         absolutePosition.bottom - absolutePosition.top,
-        name,
+        displayName,
         styleIndex
       )
     ]

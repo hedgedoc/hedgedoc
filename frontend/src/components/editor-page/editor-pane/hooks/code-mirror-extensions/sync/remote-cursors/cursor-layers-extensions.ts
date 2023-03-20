@@ -14,7 +14,7 @@ import { Optional } from '@mrdrogdrog/optional'
 import equal from 'fast-deep-equal'
 
 export interface RemoteCursor {
-  name: string
+  displayName: string
   from: number
   to?: number
   styleIndex: number
@@ -67,7 +67,7 @@ export const createCursorLayer = (): Extension =>
     markers: (view) => {
       return view.state.field(remoteCursorStateField).flatMap((remoteCursor) => {
         const selectionRange = EditorSelection.cursor(remoteCursor.from)
-        return RemoteCursorMarker.createCursor(view, selectionRange, remoteCursor.name, remoteCursor.styleIndex)
+        return RemoteCursorMarker.createCursor(view, selectionRange, remoteCursor.displayName, remoteCursor.styleIndex)
       })
     }
   })

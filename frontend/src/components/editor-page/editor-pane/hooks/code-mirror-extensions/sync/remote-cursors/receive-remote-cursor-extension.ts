@@ -23,7 +23,7 @@ export class ReceiveRemoteCursorExtension implements PluginValue {
         const cursors: RemoteCursor[] = payload.map((user) => ({
           from: user.cursor.from,
           to: user.cursor.to,
-          name: user.username,
+          displayName: user.displayName,
           styleIndex: user.styleIndex
         }))
         view.dispatch({

@@ -28,7 +28,7 @@ export class RealtimeUserStatus {
     realtimeNote: RealtimeNote,
   ): RealtimeUser {
     return {
-      username: displayName,
+      displayName: displayName,
       active: true,
       styleIndex: this.findLeastUsedStyleIndex(
         this.createStyleIndexToCountMap(realtimeNote),
