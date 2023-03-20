@@ -81,19 +81,15 @@ export class RealtimeUserStatus {
   private sendRealtimeUserStatusUpdateEvent(
     exceptClient: RealtimeConnection,
   ): void {
-    this.connection
-      .getRealtimeNote()
-      .getConnections()
-      .filter(
-        (connection) =>
-          connection !== exceptClient &&
-          connection.getTransporter().getConnectionState() ===
-            ConnectionState.CONNECTED,
-      )
-      .forEach(this.sendUpdateToClient.bind(this));
+    this.collectAllConnectionsExcept(exceptClient).forEach(
+      this.sendUpdateToClient.bind(this),
+    );
   }
 
   private sendUpdateToClient(client: RealtimeConnection): void {
+    if (!client.getTransporter().isConnected()) {
+      return;
+    }
     const payload = this.collectAllConnectionsExcept(client).map(
       (client) => client.getRealtimeUserState().realtimeUser,
     );
@@ -110,7 +106,7 @@ export class RealtimeUserStatus {
     return this.connection
       .getRealtimeNote()
       .getConnections()
-      .filter((client2) => client2 !== exceptClient);
+      .filter((client) => client !== exceptClient);
   }
 
   private generateGuestName(): string {

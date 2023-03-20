@@ -41,7 +41,7 @@ describe('RealtimeNoteService', () => {
     jest
       .spyOn(revisionsService, 'getLatestRevision')
       .mockImplementation((note: Note) =>
-        note === note && latestRevisionExists
+        note.id === mockedNoteId && latestRevisionExists
           ? Promise.resolve(
               Mock.of<Revision>({
                 content: mockedContent,
