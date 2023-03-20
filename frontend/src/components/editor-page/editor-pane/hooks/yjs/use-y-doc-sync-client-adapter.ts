@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { setRealtimeSyncedState } from '../../../../../redux/realtime/methods';
-import { Logger } from '../../../../../utils/logger';
-import type { MessageTransporter } from '@hedgedoc/commons';
-import { YDocSyncClientAdapter } from '@hedgedoc/commons';
-import type { Listener } from 'eventemitter2';
-import { useEffect, useMemo } from 'react';
-import type { Doc } from 'yjs';
-
+import { setRealtimeSyncedState } from '../../../../../redux/realtime/methods'
+import { Logger } from '../../../../../utils/logger'
+import type { MessageTransporter } from '@hedgedoc/commons'
+import { YDocSyncClientAdapter } from '@hedgedoc/commons'
+import type { Listener } from 'eventemitter2'
+import { useEffect, useMemo } from 'react'
+import type { Doc } from 'yjs'
 
 const logger = new Logger('useYDocSyncClient')
 
