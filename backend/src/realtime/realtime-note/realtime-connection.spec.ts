@@ -11,8 +11,11 @@ import { Mock } from 'ts-mockery';
 
 import { Note } from '../../notes/note.entity';
 import { User } from '../../users/user.entity';
+import * as NameRandomizerModule from './random-word-lists/name-randomizer';
 import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';
+
+jest.mock('./random-word-lists/name-randomizer');
 
 describe('websocket connection', () => {
   let mockedRealtimeNote: RealtimeNote;
@@ -58,7 +61,7 @@ describe('websocket connection', () => {
   });
 
   it('returns the correct username', () => {
-    const mockedUserWithUsername = Mock.of<User>({ username: 'MockUser' });
+    const mockedUserWithUsername = Mock.of<User>({ displayName: 'MockUser' });
 
     const sut = new RealtimeConnection(
       mockedMessageTransporter,
@@ -70,12 +73,18 @@ describe('websocket connection', () => {
   });
 
   it('returns a fallback if no username has been set', () => {
+    const randomName = 'I am a random name';
+
+    jest
+      .spyOn(NameRandomizerModule, 'generateRandomName')
+      .mockReturnValue(randomName);
+
     const sut = new RealtimeConnection(
       mockedMessageTransporter,
       mockedUser,
       mockedRealtimeNote,
     );
 
-    expect(sut.getDisplayName()).toBe('Guest');
+    expect(sut.getDisplayName()).toBe(randomName);
   });
 });
