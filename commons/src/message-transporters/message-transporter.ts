@@ -63,7 +63,9 @@ export abstract class MessageTransporter extends EventEmitter2<MessageEventPaylo
     if (this.readyMessageReceived) {
       callback()
     } else {
-      return this.once(MessageType.SERVER_READY, callback, { objectify: true }) as Listener
+      return this.once(MessageType.SERVER_READY, callback, {
+        objectify: true
+      }) as Listener
     }
   }
 
@@ -72,6 +74,15 @@ export abstract class MessageTransporter extends EventEmitter2<MessageEventPaylo
       callback()
     }
     return this.on(MessageType.SERVER_READY, callback, {
+      objectify: true
+    }) as Listener
+  }
+
+  public doAsSoonAsConnected(callback: () => void): Listener {
+    if (this.isConnected()) {
+      callback()
+    }
+    return this.on('connected', callback, {
       objectify: true
     }) as Listener
   }
