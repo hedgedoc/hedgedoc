@@ -7,7 +7,6 @@ import { YTextSyncPlugin } from '../code-mirror-extensions/sync/document-sync/y-
 import type { Extension } from '@codemirror/state'
 import { ViewPlugin } from '@codemirror/view'
 import type { YDocSyncClientAdapter } from '@hedgedoc/commons'
-import { MessageType } from '@hedgedoc/commons'
 import type { Listener } from 'eventemitter2'
 import { useEffect, useMemo, useState } from 'react'
 import type { Text as YText } from 'yjs'
