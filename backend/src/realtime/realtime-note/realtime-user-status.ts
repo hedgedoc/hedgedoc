@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ConnectionState, MessageType, RealtimeUser } from '@hedgedoc/commons';
+import { MessageType, RealtimeUser } from '@hedgedoc/commons';
 import { Listener } from 'eventemitter2';
 
 import { RealtimeConnection } from './realtime-connection';

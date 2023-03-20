@@ -39,7 +39,10 @@ describe('y-doc-sync-adapter', () => {
 
     realtimeNote
       .getDoc()
-      .emit('update', [new Uint8Array([0, 1, 2, 3, 4]), client1.getSyncAdapter()]);
+      .emit('update', [
+        new Uint8Array([0, 1, 2, 3, 4]),
+        client1.getSyncAdapter(),
+      ]);
 
     const expectedMessage: Message<MessageType.NOTE_CONTENT_UPDATE> = {
       payload: [0, 1, 2, 3, 4],
@@ -55,7 +58,10 @@ describe('y-doc-sync-adapter', () => {
 
     realtimeNote
       .getDoc()
-      .emit('update', [new Uint8Array([0, 1, 2, 3, 4]), client1.getSyncAdapter()]);
+      .emit('update', [
+        new Uint8Array([0, 1, 2, 3, 4]),
+        client1.getSyncAdapter(),
+      ]);
 
     expect(sendMessage1Spy).toHaveBeenCalledTimes(0);
     expect(sendMessage2Spy).toHaveBeenCalledTimes(0);
@@ -66,7 +72,10 @@ describe('y-doc-sync-adapter', () => {
 
     realtimeNote
       .getDoc()
-      .emit('update', [new Uint8Array([0, 1, 2, 3, 4]), client1.getSyncAdapter()]);
+      .emit('update', [
+        new Uint8Array([0, 1, 2, 3, 4]),
+        client1.getSyncAdapter(),
+      ]);
 
     expect(sendMessage1Spy).toHaveBeenCalledTimes(0);
     expect(sendMessage2Spy).toHaveBeenNthCalledWith(1, expectedMessage);
