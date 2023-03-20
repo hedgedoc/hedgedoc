@@ -33,6 +33,10 @@ describe('realtime user status', () => {
     const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
     const sendMessage3Spy = jest.spyOn(client3.getTransporter(), 'sendMessage');
 
+    client1.getTransporter().sendReady();
+    client2.getTransporter().sendReady();
+    client3.getTransporter().sendReady();
+
     expect(sendMessage1Spy).toHaveBeenCalledTimes(0);
     expect(sendMessage2Spy).toHaveBeenCalledTimes(0);
     expect(sendMessage3Spy).toHaveBeenCalledTimes(0);
@@ -87,6 +91,10 @@ describe('realtime user status', () => {
     const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
     const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
     const sendMessage3Spy = jest.spyOn(client3.getTransporter(), 'sendMessage');
+
+    client1.getTransporter().sendReady();
+    client2.getTransporter().sendReady();
+    client3.getTransporter().sendReady();
 
     expect(sendMessage1Spy).toHaveBeenCalledTimes(0);
     expect(sendMessage2Spy).toHaveBeenCalledTimes(0);
