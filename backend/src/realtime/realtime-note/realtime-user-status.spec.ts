@@ -49,7 +49,7 @@ describe('realtime user status', () => {
             to: 0,
           },
           styleIndex: 1,
-          username: 'mock2',
+          displayName: 'mock2',
         },
         {
           active: true,
@@ -58,7 +58,7 @@ describe('realtime user status', () => {
             to: 0,
           },
           styleIndex: 2,
-          username: 'mock3',
+          displayName: 'mock3',
         },
       ],
     });

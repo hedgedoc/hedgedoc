@@ -43,7 +43,9 @@ export class MockConnectionBuilder {
     let realtimeUserState: RealtimeUserStatus = Mock.of<RealtimeUserStatus>();
 
     const connection = Mock.of<RealtimeConnection>({
-      getUser: jest.fn(() => Mock.of<User>({ username: this.username })),
+      getUser: jest.fn(() =>
+        Mock.of<User>({ displayName: this.username, username: this.username }),
+      ),
       getDisplayName: jest.fn(() => this.username),
       getSyncAdapter: jest.fn(() => yDocSyncAdapter),
       getTransporter: jest.fn(() => transporter),
