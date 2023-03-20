@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import lists from './list.json';
+import lists from './random-words.json';
 
 /**
  * Generates a random names based on an adjective and a noun.
