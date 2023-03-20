@@ -14,9 +14,7 @@ import { useCallback, useEffect, useMemo, useRef } from 'react'
  * @return the plain text content
  */
 const extractInnerText = (node: ChildNode | null): string => {
-  if (!node) {
-    return ''
-  } else if (isKatexMathMlElement(node)) {
+  if (!node || isKatexMathMlElement(node) || isHeadlineLinkElement(node)) {
     return ''
   } else if (node.childNodes && node.childNodes.length > 0) {
     return extractInnerTextFromChildren(node)
@@ -32,6 +30,12 @@ const extractInnerText = (node: ChildNode | null): string => {
  * @param node The node that might be a katex mathml element
  */
 const isKatexMathMlElement = (node: ChildNode): boolean => (node as HTMLElement).classList?.contains('katex-mathml')
+
+/**
+ * Determines if the given {@link ChildNode node} is the link icon of a heading.
+ * @param node The node to check
+ */
+const isHeadlineLinkElement = (node: ChildNode): boolean => (node as HTMLElement).classList?.contains('heading-anchor')
 
 /**
  * Extracts the text content of the children of the given {@link ChildNode node}.
