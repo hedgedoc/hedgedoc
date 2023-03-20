@@ -23,12 +23,9 @@ export const useCodeMirrorYjsExtension = (yText: YText, syncAdapter: YDocSyncCli
   const [communicationReady, setCommunicationReady] = useState(false)
 
   useEffect(() => {
-    const serverReadyMessageListener = syncAdapter.getMessageTransporter().doAsSoonAsReady(
-      () => {
-        setCommunicationReady(true)
-      },
-      { objectify: true }
-    )
+    const serverReadyMessageListener = syncAdapter.getMessageTransporter().doAsSoonAsReady(() => {
+      setCommunicationReady(true)
+    })
     const disconnectedListener = syncAdapter.getMessageTransporter().on(
       'disconnected',
       () => {

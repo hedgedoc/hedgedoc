@@ -125,7 +125,10 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
   const isSynced = useApplicationState((state) => state.realtimeStatus.isSynced)
 
   useEffect(() => {
-    messageTransporter.doAsSoonAsConnected(() => messageTransporter.sendReady())
+    const listener = messageTransporter.doAsSoonAsConnected(() => messageTransporter.sendReady())
+    return () => {
+      listener.off()
+    }
   }, [messageTransporter])
 
   return (

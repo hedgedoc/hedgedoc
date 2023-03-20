@@ -7,17 +7,23 @@ import type { SelectionRange } from '@codemirror/state'
 import type { EditorView, PluginValue, ViewUpdate } from '@codemirror/view'
 import type { MessageTransporter } from '@hedgedoc/commons'
 import { MessageType } from '@hedgedoc/commons'
+import type { Listener } from 'eventemitter2'
 
 /**
  * Sends the main cursor of a codemirror to the backend using a given {@link MessageTransporter}.
  */
 export class SendCursorExtension implements PluginValue {
   private lastCursor: SelectionRange | undefined
+  private listener: Listener
 
   constructor(private view: EditorView, private messageTransporter: MessageTransporter) {
-    messageTransporter.doAsSoonAsReady(() => {
+    this.listener = messageTransporter.doAsSoonAsReady(() => {
       this.sendCursor(this.lastCursor)
     })
+  }
+
+  destroy() {
+    this.listener.off()
   }
 
   update(update: ViewUpdate) {

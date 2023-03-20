@@ -53,7 +53,7 @@ export const useRealtimeConnection = (): MessageTransporter => {
   const isConnected = useApplicationState((state) => state.realtimeStatus.isConnected)
   const firstConnect = useRef(true)
 
-  const reconnectInterval = useRef<NodeJS.Timer | undefined>(undefined)
+  const reconnectTimeout = useRef<number | undefined>(undefined)
 
   useEffect(() => {
     if (isConnected) {
@@ -63,25 +63,28 @@ export const useRealtimeConnection = (): MessageTransporter => {
       establishWebsocketConnection()
       firstConnect.current = false
     } else {
-      const interval = setTimeout(() => {
+      reconnectTimeout.current = window.setTimeout(() => {
         establishWebsocketConnection()
       }, WEBSOCKET_RECONNECT_INTERVAL)
-      reconnectInterval.current = interval
-
-      messageTransporter.doOnceAsSoonAsReady(() => {
-        clearInterval(interval)
-        reconnectInterval.current = undefined
-      })
     }
   }, [establishWebsocketConnection, isConnected, messageTransporter])
 
   useEffect(() => {
+    const readyListener = messageTransporter.doAsSoonAsReady(() => {
+      const timerId = reconnectTimeout.current
+      if (timerId !== undefined) {
+        window.clearTimeout(timerId)
+      }
+      reconnectTimeout.current = undefined
+    })
+
     messageTransporter.on('connected', () => logger.debug(`Connected`))
     messageTransporter.on('disconnected', () => logger.debug(`Disconnected`))
 
     return () => {
-      const interval = reconnectInterval.current
-      interval && clearInterval(interval)
+      const interval = reconnectTimeout.current
+      interval && window.clearTimeout(interval)
+      readyListener.off()
     }
   }, [messageTransporter])
 

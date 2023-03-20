@@ -34,7 +34,7 @@ export class MockedBackendMessageTransporter extends MessageTransporter {
 
   sendReady() {
     this.receiveMessage({
-      type: MessageType.SERVER_READY
+      type: MessageType.READY
     })
   }
 
