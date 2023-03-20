@@ -5,6 +5,11 @@
  */
 import lists from './list.json';
 
+/**
+ * Generates a random names based on an adjective and a noun.
+ *
+ * @return the generated name
+ */
 export function generateRandomName(): string {
   const adjective = generateRandomWord(lists.adjectives);
   const things = generateRandomWord(lists.items);
