@@ -55,7 +55,11 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
       return realtimeUsers.map((realtimeUser) => {
         return (
           <SidebarButton key={realtimeUser.styleIndex}>
-            <UserLine username={realtimeUser.displayName} color={realtimeUser.styleIndex} active={realtimeUser.active} />
+            <UserLine
+              username={realtimeUser.displayName}
+              color={realtimeUser.styleIndex}
+              active={realtimeUser.active}
+            />
           </SidebarButton>
         )
       })
