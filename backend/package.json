@@ -56,7 +56,7 @@
     "diff": "5.1.0",
     "express-session": "1.17.3",
     "file-type": "16.5.4",
-    "joi": "17.8.4",
+    "joi": "17.9.0",
     "ldapauth-fork": "5.0.5",
     "minio": "7.0.32",
     "mysql": "2.18.1",
