@@ -66,7 +66,7 @@ describe('websocket connection', () => {
       mockedRealtimeNote,
     );
 
-    expect(sut.getUsername()).toBe('MockUser');
+    expect(sut.getDisplayName()).toBe('MockUser');
   });
 
   it('returns a fallback if no username has been set', () => {
@@ -76,6 +76,6 @@ describe('websocket connection', () => {
       mockedRealtimeNote,
     );
 
-    expect(sut.getUsername()).toBe('Guest');
+    expect(sut.getDisplayName()).toBe('Guest');
   });
 });

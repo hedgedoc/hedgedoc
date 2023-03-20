@@ -27,7 +27,7 @@ import { useOnNoteDeleted } from './hooks/yjs/use-on-note-deleted'
 import { useRealtimeConnection } from './hooks/yjs/use-realtime-connection'
 import { useReceiveRealtimeUsers } from './hooks/yjs/use-receive-realtime-users'
 import { useYDoc } from './hooks/yjs/use-y-doc'
-import { useYDocSyncClient } from './hooks/yjs/use-y-doc-sync-client'
+import { useYDocSyncClientAdapter } from './hooks/yjs/use-y-doc-sync-client-adapter'
 import { useLinter } from './linter/linter'
 import { MaxLengthWarning } from './max-length-warning/max-length-warning'
 import { StatusBar } from './status-bar/status-bar'
@@ -70,7 +70,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
 
   const linterExtension = useLinter()
 
-  const syncAdapter = useYDocSyncClient(messageTransporter, yDoc)
+  const syncAdapter = useYDocSyncClientAdapter(messageTransporter, yDoc)
   const yjsExtension = useCodeMirrorYjsExtension(yText, syncAdapter)
 
   useOnMetadataUpdated(messageTransporter)

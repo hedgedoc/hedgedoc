@@ -10,6 +10,9 @@ import type { MessageTransporter } from '@hedgedoc/commons'
 import { MessageType } from '@hedgedoc/commons'
 import type { Listener } from 'eventemitter2'
 
+/**
+ * Listens for remote cursor state messages from the backend and dispatches them into the codemirror.
+ */
 export class ReceiveRemoteCursorExtension implements PluginValue {
   private readonly listener: Listener
 

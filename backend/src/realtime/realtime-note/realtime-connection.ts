@@ -40,7 +40,10 @@ export class RealtimeConnection {
     });
 
     this.yDocSyncAdapter = new YDocSyncAdapter(realtimeNote, this.transporter);
-    this.realtimeUserState = new RealtimeUserStatus(user?.displayName, this);
+    this.realtimeUserState = new RealtimeUserStatus(
+      this.getDisplayName(),
+      this,
+    );
   }
 
   public getRealtimeUserState(): RealtimeUserStatus {
@@ -59,8 +62,8 @@ export class RealtimeConnection {
     return this.yDocSyncAdapter;
   }
 
-  public getUsername(): string {
-    return this.getUser()?.username ?? 'Guest';
+  public getDisplayName(): string {
+    return this.getUser()?.username ?? 'Guest'; //TODO: Add generation of random guest names
   }
 
   public getRealtimeNote(): RealtimeNote {

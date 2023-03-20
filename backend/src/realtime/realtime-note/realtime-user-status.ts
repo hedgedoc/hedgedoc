@@ -9,13 +9,13 @@ import { Listener } from 'eventemitter2';
 import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';
 
+/**
+ * Saves the current realtime status of a specific client and sends updates of changes to other clients.
+ */
 export class RealtimeUserStatus {
   private readonly realtimeUser: RealtimeUser;
 
-  constructor(
-    displayName: string | undefined,
-    private connection: RealtimeConnection,
-  ) {
+  constructor(displayName: string, private connection: RealtimeConnection) {
     this.realtimeUser = this.createInitialRealtimeUserState(
       displayName,
       connection.getRealtimeNote(),
@@ -28,7 +28,7 @@ export class RealtimeUserStatus {
     realtimeNote: RealtimeNote,
   ): RealtimeUser {
     return {
-      username: displayName ?? this.generateGuestName(),
+      username: displayName,
       active: true,
       styleIndex: this.findLeastUsedStyleIndex(
         this.createStyleIndexToCountMap(realtimeNote),
@@ -54,7 +54,7 @@ export class RealtimeUserStatus {
     const transporterRequestMessageListener = connection.getTransporter().on(
       MessageType.REALTIME_USER_STATE_REQUEST,
       () => {
-        this.sendUpdateToClient(connection);
+        this.sendCompleteStateToClient(connection);
       },
       { objectify: true },
     ) as Listener;
@@ -82,11 +82,11 @@ export class RealtimeUserStatus {
     exceptClient: RealtimeConnection,
   ): void {
     this.collectAllConnectionsExcept(exceptClient).forEach(
-      this.sendUpdateToClient.bind(this),
+      this.sendCompleteStateToClient.bind(this),
     );
   }
 
-  private sendUpdateToClient(client: RealtimeConnection): void {
+  private sendCompleteStateToClient(client: RealtimeConnection): void {
     if (!client.getTransporter().isConnected()) {
       return;
     }
@@ -107,10 +107,6 @@ export class RealtimeUserStatus {
       .getRealtimeNote()
       .getConnections()
       .filter((client) => client !== exceptClient);
-  }
-
-  private generateGuestName(): string {
-    return 'unknown';
   }
 
   private findLeastUsedStyleIndex(map: Map<number, number>): number {

@@ -47,7 +47,7 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
    */
   public addClient(client: RealtimeConnection): void {
     this.clients.add(client);
-    this.logger.debug(`User '${client.getUsername()}' connected`);
+    this.logger.debug(`User '${client.getDisplayName()}' connected`);
     this.emit('clientAdded', client);
   }
 
@@ -59,7 +59,7 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   public removeClient(client: RealtimeConnection): void {
     this.clients.delete(client);
     this.logger.debug(
-      `User '${client.getUsername()}' disconnected. ${
+      `User '${client.getDisplayName()}' disconnected. ${
         this.clients.size
       } clients left.`,
     );

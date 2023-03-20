@@ -9,7 +9,7 @@ import type { MessageTransporter } from '@hedgedoc/commons'
 import { MessageType } from '@hedgedoc/commons'
 
 /**
- *
+ * Sends the main cursor of a codemirror to the backend using a given {@link MessageTransporter}.
  */
 export class SendCursorExtension implements PluginValue {
   private lastCursor: SelectionRange | undefined

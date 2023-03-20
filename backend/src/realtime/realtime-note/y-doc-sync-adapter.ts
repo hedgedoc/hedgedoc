@@ -13,6 +13,9 @@ import { Doc } from 'yjs';
 
 import { RealtimeNote } from './realtime-note';
 
+/**
+ * Synchronizes the document content of a {@link RealtimeNote} with a client.
+ */
 export class YDocSyncAdapter extends YDocSyncServerAdapter {
   constructor(
     private readonly realtimeNote: RealtimeNote,
