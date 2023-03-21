@@ -10,10 +10,10 @@ import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { findLanguageByCodeBlockName } from '../../markdown-renderer/extensions/base/code-block-markdown-extension/find-language-by-code-block-name'
 import type { ScrollProps } from '../synced-scroll/scroll-props'
 import styles from './extended-codemirror/codemirror.module.scss'
-import { useCodeMirrorFileInsertExtension } from './hooks/code-mirror-extensions/use-code-mirror-file-insert-extension'
-import { useCodeMirrorRemoteCursorsExtension } from './hooks/code-mirror-extensions/use-code-mirror-remote-cursor-extensions'
-import { useCodeMirrorScrollWatchExtension } from './hooks/code-mirror-extensions/use-code-mirror-scroll-watch-extension'
-import { useCodeMirrorSpellCheckExtension } from './hooks/code-mirror-extensions/use-code-mirror-spell-check-extension'
+import { useCodeMirrorFileInsertExtension } from './hooks/codemirror-extensions/use-code-mirror-file-insert-extension'
+import { useCodeMirrorRemoteCursorsExtension } from './hooks/codemirror-extensions/use-code-mirror-remote-cursor-extensions'
+import { useCodeMirrorScrollWatchExtension } from './hooks/codemirror-extensions/use-code-mirror-scroll-watch-extension'
+import { useCodeMirrorSpellCheckExtension } from './hooks/codemirror-extensions/use-code-mirror-spell-check-extension'
 import { useOnImageUploadFromRenderer } from './hooks/image-upload-from-renderer/use-on-image-upload-from-renderer'
 import { useCodeMirrorTablePasteExtension } from './hooks/table-paste/use-code-mirror-table-paste-extension'
 import { useApplyScrollState } from './hooks/use-apply-scroll-state'
@@ -57,7 +57,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
   useApplyScrollState(scrollState)
 
   const messageTransporter = useRealtimeConnection()
-  const yDoc = useYDoc()
+  const yDoc = useYDoc(messageTransporter)
   const yText = useMarkdownContentYText(yDoc)
   const editorScrollExtension = useCodeMirrorScrollWatchExtension(onScroll)
   const tablePasteExtensions = useCodeMirrorTablePasteExtension()

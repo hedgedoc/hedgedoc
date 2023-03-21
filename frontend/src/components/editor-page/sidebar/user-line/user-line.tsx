@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { UserAvatarForUsername } from '../../../common/user-avatar/user-avatar-for-username'
-import { createCursorCssClass } from '../../editor-pane/hooks/code-mirror-extensions/sync/remote-cursors/create-cursor-css-class'
+import { createCursorCssClass } from '../../editor-pane/codemirror-extensions/remote-cursors/create-cursor-css-class'
 import { ActiveIndicator } from '../users-online-sidebar-menu/active-indicator'
 import styles from './user-line.module.scss'
 import React from 'react'

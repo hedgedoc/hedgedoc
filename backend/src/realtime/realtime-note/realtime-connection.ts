@@ -41,10 +41,8 @@ export class RealtimeConnection {
     this.transporter.on('disconnected', () => {
       realtimeNote.removeClient(this);
     });
-    this.yDocSyncAdapter = new YDocSyncServerAdapter(
-      realtimeNote.getDoc(),
-      this.transporter,
-    );
+    this.yDocSyncAdapter = new YDocSyncServerAdapter(this.transporter);
+    this.yDocSyncAdapter.setYDoc(realtimeNote.getDoc());
     this.realtimeUserState = new RealtimeUserStatus(
       this.getDisplayName(),
       this,

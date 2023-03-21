@@ -5,11 +5,10 @@
  */
 import { MessageType } from '../message-transporters/message.js'
 import { YDocSyncAdapter } from './y-doc-sync-adapter.js'
-import type { Doc } from 'yjs'
 
 export class YDocSyncClientAdapter extends YDocSyncAdapter {
-  protected bindDocumentSyncMessageEvents(doc: Doc) {
-    super.bindDocumentSyncMessageEvents(doc)
+  protected bindDocumentSyncMessageEvents() {
+    super.bindDocumentSyncMessageEvents()
 
     this.messageTransporter.on(MessageType.NOTE_CONTENT_UPDATE, () => {
       this.markAsSynced()

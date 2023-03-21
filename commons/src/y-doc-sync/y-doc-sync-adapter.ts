@@ -15,15 +15,13 @@ export abstract class YDocSyncAdapter {
   private synced = false
 
   public readonly eventEmitter = new EventEmitter2<EventMap>()
+  protected doc: Doc | undefined
 
-  constructor(
-    protected readonly doc: Doc,
-    protected readonly messageTransporter: MessageTransporter
-  ) {
-    this.bindDocumentSyncMessageEvents(doc)
+  constructor(protected readonly messageTransporter: MessageTransporter) {
+    this.bindDocumentSyncMessageEvents()
   }
 
-  public doAsSoonAsSynced(callback: () => void): Listener | undefined {
+  public doAsSoonAsSynced(callback: () => void): Listener {
     if (this.isSynced()) {
       callback()
     }
@@ -40,31 +38,67 @@ export abstract class YDocSyncAdapter {
     return this.synced
   }
 
-  protected bindDocumentSyncMessageEvents(doc: Doc): void {
-    this.messageTransporter.on(
-      MessageType.NOTE_CONTENT_STATE_REQUEST,
-      (payload) => {
-        this.messageTransporter.sendMessage({
-          type: MessageType.NOTE_CONTENT_UPDATE,
-          payload: Array.from(
-            encodeStateAsUpdate(doc, new Uint8Array(payload.payload))
-          )
-        })
-      }
-    )
+  private destroyYDocUpdateCallback: undefined | (() => void)
+  private destroyEventListenerCallback: undefined | (() => void)
 
-    this.messageTransporter.on(MessageType.NOTE_CONTENT_UPDATE, (payload) => {
-      applyUpdate(doc, new Uint8Array(payload.payload), this)
-    })
+  public setYDoc(doc: Doc | undefined): void {
+    this.doc = doc
 
+    this.destroyYDocUpdateCallback?.()
+    if (!doc) {
+      return
+    }
     const yDocUpdateCallback = this.processDocUpdate.bind(this)
     doc.on('update', yDocUpdateCallback)
+    this.destroyYDocUpdateCallback = () => doc.off('update', yDocUpdateCallback)
+  }
 
-    this.messageTransporter.on('disconnected', () => {
-      this.synced = false
-      this.eventEmitter.emit('desynced')
-      doc.off('update', yDocUpdateCallback)
-    })
+  public destroy(): void {
+    this.destroyYDocUpdateCallback?.()
+    this.destroyEventListenerCallback?.()
+  }
+
+  protected bindDocumentSyncMessageEvents(): void {
+    const stateRequestListener = this.messageTransporter.on(
+      MessageType.NOTE_CONTENT_STATE_REQUEST,
+      (payload) => {
+        if (this.doc) {
+          this.messageTransporter.sendMessage({
+            type: MessageType.NOTE_CONTENT_UPDATE,
+            payload: Array.from(
+              encodeStateAsUpdate(this.doc, new Uint8Array(payload.payload))
+            )
+          })
+        }
+      },
+      { objectify: true }
+    ) as Listener
+
+    const disconnectedListener = this.messageTransporter.on(
+      'disconnected',
+      () => {
+        this.synced = false
+        this.eventEmitter.emit('desynced')
+        this.destroy()
+      },
+      { objectify: true }
+    ) as Listener
+
+    const noteContentUpdateListener = this.messageTransporter.on(
+      MessageType.NOTE_CONTENT_UPDATE,
+      (payload) => {
+        if (this.doc) {
+          applyUpdate(this.doc, new Uint8Array(payload.payload), this)
+        }
+      },
+      { objectify: true }
+    ) as Listener
+
+    this.destroyEventListenerCallback = () => {
+      stateRequestListener.off()
+      disconnectedListener.off()
+      noteContentUpdateListener.off()
+    }
   }
 
   private processDocUpdate(update: Uint8Array, origin: unknown): void {
@@ -88,9 +122,11 @@ export abstract class YDocSyncAdapter {
   }
 
   public requestDocumentState(): void {
-    this.messageTransporter.sendMessage({
-      type: MessageType.NOTE_CONTENT_STATE_REQUEST,
-      payload: Array.from(encodeStateVector(this.doc))
-    })
+    if (this.doc) {
+      this.messageTransporter.sendMessage({
+        type: MessageType.NOTE_CONTENT_STATE_REQUEST,
+        payload: Array.from(encodeStateVector(this.doc))
+      })
+    }
   }
 }

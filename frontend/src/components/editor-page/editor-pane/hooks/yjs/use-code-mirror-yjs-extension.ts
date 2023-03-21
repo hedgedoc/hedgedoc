@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { YTextSyncPlugin } from '../code-mirror-extensions/sync/document-sync/y-text-sync-plugin'
+import { YTextSyncPlugin } from '../../codemirror-extensions/document-sync/y-text-sync-plugin'
 import type { Extension } from '@codemirror/state'
 import { ViewPlugin } from '@codemirror/view'
 import type { YDocSyncClientAdapter } from '@hedgedoc/commons'
@@ -18,7 +18,7 @@ import type { Text as YText } from 'yjs'
  * @param syncAdapter The sync adapter that processes the communication for content synchronisation.
  * @return the created extension
  */
-export const useCodeMirrorYjsExtension = (yText: YText, syncAdapter: YDocSyncClientAdapter): Extension => {
+export const useCodeMirrorYjsExtension = (yText: YText | undefined, syncAdapter: YDocSyncClientAdapter): Extension => {
   const [editorReady, setEditorReady] = useState(false)
   const [communicationReady, setCommunicationReady] = useState(false)
 
@@ -41,12 +41,13 @@ export const useCodeMirrorYjsExtension = (yText: YText, syncAdapter: YDocSyncCli
   }, [syncAdapter])
 
   useEffect(() => {
-    if (editorReady && communicationReady && syncAdapter.getMessageTransporter().isConnected()) {
+    if (editorReady && communicationReady && yText && syncAdapter.getMessageTransporter().isConnected()) {
       syncAdapter.requestDocumentState()
     }
-  }, [communicationReady, editorReady, syncAdapter])
+  }, [communicationReady, editorReady, syncAdapter, yText])
 
-  return useMemo(() => {
-    return [ViewPlugin.define((view) => new YTextSyncPlugin(view, yText, () => setEditorReady(true)))]
-  }, [yText])
+  return useMemo(
+    () => (yText ? [ViewPlugin.define((view) => new YTextSyncPlugin(view, yText, () => setEditorReady(true)))] : []),
+    [yText]
+  )
 }

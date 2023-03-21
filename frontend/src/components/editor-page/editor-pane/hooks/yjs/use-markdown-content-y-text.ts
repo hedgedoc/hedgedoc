@@ -14,6 +14,6 @@ import type { Text as YText } from 'yjs'
  * @param yDoc The yjs document from which the yText should be extracted
  * @return the extracted yText channel
  */
-export const useMarkdownContentYText = (yDoc: Doc): YText => {
-  return useMemo(() => yDoc.getText(MARKDOWN_CONTENT_CHANNEL_NAME), [yDoc])
+export const useMarkdownContentYText = (yDoc: Doc | undefined): YText | undefined => {
+  return useMemo(() => yDoc?.getText(MARKDOWN_CONTENT_CHANNEL_NAME), [yDoc])
 }

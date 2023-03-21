@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useEffect, useMemo } from 'react'
+import type { MessageTransporter } from '@hedgedoc/commons'
+import { useEffect, useState } from 'react'
 import { Doc } from 'yjs'
 
 /**
@@ -11,8 +12,19 @@ import { Doc } from 'yjs'
  *
  * @return The created {@link Doc y-doc}
  */
-export const useYDoc = (): Doc => {
-  const yDoc = useMemo(() => new Doc(), [])
-  useEffect(() => () => yDoc.destroy(), [yDoc])
+export const useYDoc = (messageTransporter: MessageTransporter): Doc | undefined => {
+  const [yDoc, setYDoc] = useState<Doc>()
+
+  useEffect(() => {
+    messageTransporter.on('connected', () => {
+      setYDoc(new Doc())
+    })
+    messageTransporter.on('disconnected', () => {
+      setYDoc(undefined)
+    })
+  }, [messageTransporter])
+
+  useEffect(() => () => yDoc?.destroy(), [yDoc])
+
   return yDoc
 }

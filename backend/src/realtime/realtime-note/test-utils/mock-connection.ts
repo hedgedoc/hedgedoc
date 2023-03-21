@@ -31,23 +31,14 @@ export class MockConnectionBuilder {
     return this;
   }
 
-  public withSyncAdapter(): this {
-    this.includeSyncAdapter = true;
-    return this;
-  }
-
   public build(): RealtimeConnection {
     const transporter = new MockedBackendMessageTransporter('');
-    const yDocSyncAdapter: YDocSyncServerAdapter = this.includeSyncAdapter
-      ? new YDocSyncServerAdapter(this.realtimeNote.getDoc(), transporter)
-      : Mock.of<YDocSyncServerAdapter>({});
-
     let realtimeUserState: RealtimeUserStatus = Mock.of<RealtimeUserStatus>();
 
     const connection = Mock.of<RealtimeConnection>({
       getUser: jest.fn(() => Mock.of<User>({ username: this.username })),
       getDisplayName: jest.fn(() => this.username),
-      getSyncAdapter: jest.fn(() => yDocSyncAdapter),
+      getSyncAdapter: jest.fn(() => Mock.of<YDocSyncServerAdapter>({})),
       getTransporter: jest.fn(() => transporter),
       getRealtimeUserState: () => realtimeUserState,
       getRealtimeNote: () => this.realtimeNote,

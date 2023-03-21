@@ -7,9 +7,9 @@ import {
   createCursorLayer,
   createSelectionLayer,
   remoteCursorStateField
-} from './sync/remote-cursors/cursor-layers-extensions'
-import { ReceiveRemoteCursorExtension } from './sync/remote-cursors/receive-remote-cursor-extension'
-import { SendCursorExtension } from './sync/remote-cursors/send-cursor-extension'
+} from '../../codemirror-extensions/remote-cursors/cursor-layers-extensions'
+import { ReceiveRemoteCursorExtension } from '../../codemirror-extensions/remote-cursors/receive-remote-cursor-extension'
+import { SendCursorExtension } from '../../codemirror-extensions/remote-cursors/send-cursor-extension'
 import type { Extension } from '@codemirror/state'
 import { ViewPlugin } from '@codemirror/view'
 import type { MessageTransporter } from '@hedgedoc/commons'

@@ -17,6 +17,7 @@ const syncAnnotation = Annotation.define()
  */
 export class YTextSyncPlugin implements PluginValue {
   private readonly observer: YTextSyncPlugin['onYTextUpdate']
+  private firstUpdate = true
 
   constructor(private view: EditorView, private readonly yText: YText, pluginLoaded: () => void) {
     this.observer = this.onYTextUpdate.bind(this)
@@ -46,7 +47,15 @@ export class YTextSyncPlugin implements PluginValue {
       },
       [[], 0] as [ChangeSpec[], number]
     )
-    return changes
+    return this.addDeleteAllChanges(changes)
+  }
+
+  private addDeleteAllChanges(changes: ChangeSpec[]): ChangeSpec[] {
+    if (this.firstUpdate) {
+      return [{ from: 0, to: this.view.state.doc.length, insert: '' }, ...changes]
+    } else {
+      return changes
+    }
   }
 
   public update(update: ViewUpdate): void {

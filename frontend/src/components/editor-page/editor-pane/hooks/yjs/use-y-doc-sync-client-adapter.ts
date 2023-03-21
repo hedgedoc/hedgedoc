@@ -20,8 +20,15 @@ const logger = new Logger('useYDocSyncClient')
  * @param yDoc The {@link Doc y-doc} that should be synchronized
  * @return the created adapter
  */
-export const useYDocSyncClientAdapter = (messageTransporter: MessageTransporter, yDoc: Doc): YDocSyncClientAdapter => {
-  const syncAdapter = useMemo(() => new YDocSyncClientAdapter(yDoc, messageTransporter), [messageTransporter, yDoc])
+export const useYDocSyncClientAdapter = (
+  messageTransporter: MessageTransporter,
+  yDoc: Doc | undefined
+): YDocSyncClientAdapter => {
+  const syncAdapter = useMemo(() => new YDocSyncClientAdapter(messageTransporter), [messageTransporter])
+
+  useEffect(() => {
+    syncAdapter.setYDoc(yDoc)
+  }, [syncAdapter, yDoc])
 
   useEffect(() => {
     const onceSyncedListener = syncAdapter.doAsSoonAsSynced(() => {
@@ -40,7 +47,7 @@ export const useYDocSyncClientAdapter = (messageTransporter: MessageTransporter,
     ) as Listener
 
     return () => {
-      onceSyncedListener?.off()
+      onceSyncedListener.off()
       desyncedListener.off()
     }
   }, [messageTransporter, syncAdapter])
