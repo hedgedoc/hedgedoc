@@ -39,7 +39,7 @@ export class MockConnectionBuilder {
   public build(): RealtimeConnection {
     const transporter = new MockedBackendMessageTransporter('');
     const yDocSyncAdapter: YDocSyncServerAdapter = this.includeSyncAdapter
-      ? new YDocSyncServerAdapter(this.realtimeNote, transporter)
+      ? new YDocSyncServerAdapter(this.realtimeNote.getDoc(), transporter)
       : Mock.of<YDocSyncServerAdapter>({});
 
     let realtimeUserState: RealtimeUserStatus = Mock.of<RealtimeUserStatus>();

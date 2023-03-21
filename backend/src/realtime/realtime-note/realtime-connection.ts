@@ -42,7 +42,7 @@ export class RealtimeConnection {
       realtimeNote.removeClient(this);
     });
     this.yDocSyncAdapter = new YDocSyncServerAdapter(
-      realtimeNote,
+      realtimeNote.getDoc(),
       this.transporter,
     );
     this.realtimeUserState = new RealtimeUserStatus(
