@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import { YTextSyncPlugin } from '../../codemirror-extensions/document-sync/y-text-sync-plugin'
 import type { Extension } from '@codemirror/state'
 import { ViewPlugin } from '@codemirror/view'
 import type { YDocSyncClientAdapter } from '@hedgedoc/commons'
-import type { Listener } from 'eventemitter2'
 import { useEffect, useMemo, useState } from 'react'
 import type { Text as YText } from 'yjs'
 
@@ -20,31 +20,14 @@ import type { Text as YText } from 'yjs'
  */
 export const useCodeMirrorYjsExtension = (yText: YText | undefined, syncAdapter: YDocSyncClientAdapter): Extension => {
   const [editorReady, setEditorReady] = useState(false)
-  const [communicationReady, setCommunicationReady] = useState(false)
+  const synchronized = useApplicationState((state) => state.realtimeStatus.isSynced)
+  const connected = useApplicationState((state) => state.realtimeStatus.isConnected)
 
   useEffect(() => {
-    const serverReadyMessageListener = syncAdapter.getMessageTransporter().doAsSoonAsReady(() => {
-      setCommunicationReady(true)
-    })
-    const disconnectedListener = syncAdapter.getMessageTransporter().on(
-      'disconnected',
-      () => {
-        setCommunicationReady(false)
-      },
-      { objectify: true }
-    ) as Listener
-
-    return () => {
-      serverReadyMessageListener.off()
-      disconnectedListener.off()
-    }
-  }, [syncAdapter])
-
-  useEffect(() => {
-    if (editorReady && communicationReady && yText && syncAdapter.getMessageTransporter().isConnected()) {
+    if (editorReady && connected && !synchronized && yText) {
       syncAdapter.requestDocumentState()
     }
-  }, [communicationReady, editorReady, syncAdapter, yText])
+  }, [connected, editorReady, syncAdapter, synchronized, yText])
 
   return useMemo(
     () => (yText ? [ViewPlugin.define((view) => new YTextSyncPlugin(view, yText, () => setEditorReady(true)))] : []),

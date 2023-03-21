@@ -16,7 +16,7 @@ export const useYDoc = (messageTransporter: MessageTransporter): Doc | undefined
   const [yDoc, setYDoc] = useState<Doc>()
 
   useEffect(() => {
-    messageTransporter.on('connected', () => {
+    messageTransporter.doAsSoonAsConnected(() => {
       setYDoc(new Doc())
     })
     messageTransporter.on('disconnected', () => {

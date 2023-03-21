@@ -11,6 +11,9 @@ import { applyUpdate, Doc, encodeStateAsUpdate, encodeStateVector } from 'yjs'
 
 type EventMap = Record<'synced' | 'desynced', () => void>
 
+/**
+ * Sends and processes messages that are used to first-synchronize and update a {@link Doc y-doc}.
+ */
 export abstract class YDocSyncAdapter {
   public readonly eventEmitter = new EventEmitter2<EventMap>()
 
@@ -24,6 +27,13 @@ export abstract class YDocSyncAdapter {
     this.bindDocumentSyncMessageEvents()
   }
 
+  /**
+   * Executes the given callback as soon as the sync adapter has synchronized the y-doc.
+   * If the y-doc has already been synchronized then the callback is executed immediately.
+   *
+   * @param callback the callback to execute
+   * @return The event listener that waits for the sync event
+   */
   public doAsSoonAsSynced(callback: () => void): Listener {
     if (this.isSynced()) {
       callback()
@@ -41,6 +51,11 @@ export abstract class YDocSyncAdapter {
     return this.synced
   }
 
+  /**
+   * Sets the {@link Doc y-doc} that should be synchronized.
+   *
+   * @param doc the doc to synchronize.
+   */
   public setYDoc(doc: Doc | undefined): void {
     this.doc = doc
 
@@ -51,6 +66,7 @@ export abstract class YDocSyncAdapter {
     const yDocUpdateCallback = this.processDocUpdate.bind(this)
     doc.on('update', yDocUpdateCallback)
     this.destroyYDocUpdateCallback = () => doc.off('update', yDocUpdateCallback)
+    this.eventEmitter.emit('desynced')
   }
 
   public destroy(): void {
