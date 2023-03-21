@@ -3,14 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MockedBackendMessageTransporter } from '@hedgedoc/commons';
+import {
+  MockedBackendMessageTransporter,
+  YDocSyncServerAdapter,
+} from '@hedgedoc/commons';
 import { Mock } from 'ts-mockery';
 
 import { User } from '../../../users/user.entity';
 import { RealtimeConnection } from '../realtime-connection';
 import { RealtimeNote } from '../realtime-note';
 import { RealtimeUserStatus } from '../realtime-user-status';
-import { YDocSyncAdapter } from '../y-doc-sync-adapter';
 
 export class MockConnectionBuilder {
   private username = 'mock';
@@ -36,9 +38,9 @@ export class MockConnectionBuilder {
 
   public build(): RealtimeConnection {
     const transporter = new MockedBackendMessageTransporter('');
-    const yDocSyncAdapter: YDocSyncAdapter = this.includeSyncAdapter
-      ? new YDocSyncAdapter(this.realtimeNote, transporter)
-      : Mock.of<YDocSyncAdapter>({});
+    const yDocSyncAdapter: YDocSyncServerAdapter = this.includeSyncAdapter
+      ? new YDocSyncServerAdapter(this.realtimeNote, transporter)
+      : Mock.of<YDocSyncServerAdapter>({});
 
     let realtimeUserState: RealtimeUserStatus = Mock.of<RealtimeUserStatus>();
 

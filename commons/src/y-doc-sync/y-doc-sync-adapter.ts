@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { MessageTransporter } from '../message-transporters/message-transporter.js'
-import { MessageType } from '../message-transporters/message.js'
+import { Message, MessageType } from '../message-transporters/message.js'
 import { Listener } from 'eventemitter2'
 import { EventEmitter2 } from 'eventemitter2'
 import { applyUpdate, Doc, encodeStateAsUpdate, encodeStateVector } from 'yjs'
@@ -57,10 +57,26 @@ export abstract class YDocSyncAdapter {
       applyUpdate(doc, new Uint8Array(payload.payload), this)
     })
 
+    const yDocUpdateCallback = this.processDocUpdate.bind(this)
+    doc.on('update', yDocUpdateCallback)
+
     this.messageTransporter.on('disconnected', () => {
       this.synced = false
       this.eventEmitter.emit('desynced')
+      doc.off('update', yDocUpdateCallback)
     })
+  }
+
+  private processDocUpdate(update: Uint8Array, origin: unknown): void {
+    if (!this.isSynced() || origin === this) {
+      return
+    }
+    const message: Message<MessageType.NOTE_CONTENT_UPDATE> = {
+      type: MessageType.NOTE_CONTENT_UPDATE,
+      payload: Array.from(update)
+    }
+
+    this.messageTransporter.sendMessage(message)
   }
 
   protected markAsSynced(): void {
