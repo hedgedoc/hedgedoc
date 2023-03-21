@@ -96,22 +96,21 @@ describe('message transporter', () => {
       }
     })
 
-    const yDocSyncAdapter1 = new YDocSyncClientAdapter(
-      docClient1,
-      transporterClient1
-    )
-    const yDocSyncAdapter2 = new YDocSyncClientAdapter(
-      docClient2,
-      transporterClient2
-    )
+    const yDocSyncAdapter1 = new YDocSyncClientAdapter(transporterClient1)
+    yDocSyncAdapter1.setYDoc(docClient1)
+
+    const yDocSyncAdapter2 = new YDocSyncClientAdapter(transporterClient2)
+    yDocSyncAdapter2.setYDoc(docClient2)
+
     const yDocSyncAdapterServerTo1 = new YDocSyncServerAdapter(
-      docServer,
       transporterServerTo1
     )
+    yDocSyncAdapterServerTo1.setYDoc(docServer)
+
     const yDocSyncAdapterServerTo2 = new YDocSyncServerAdapter(
-      docServer,
       transporterServerTo2
     )
+    yDocSyncAdapterServerTo2.setYDoc(docServer)
 
     const waitForClient1Sync = new Promise<void>((resolve) => {
       yDocSyncAdapter1.doAsSoonAsSynced(() => {
