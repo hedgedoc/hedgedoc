@@ -12,10 +12,13 @@ import { applyUpdate, Doc, encodeStateAsUpdate, encodeStateVector } from 'yjs'
 type EventMap = Record<'synced' | 'desynced', () => void>
 
 export abstract class YDocSyncAdapter {
-  private synced = false
-
   public readonly eventEmitter = new EventEmitter2<EventMap>()
+
   protected doc: Doc | undefined
+
+  private destroyYDocUpdateCallback: undefined | (() => void)
+  private destroyEventListenerCallback: undefined | (() => void)
+  private synced = false
 
   constructor(protected readonly messageTransporter: MessageTransporter) {
     this.bindDocumentSyncMessageEvents()
@@ -37,9 +40,6 @@ export abstract class YDocSyncAdapter {
   public isSynced(): boolean {
     return this.synced
   }
-
-  private destroyYDocUpdateCallback: undefined | (() => void)
-  private destroyEventListenerCallback: undefined | (() => void)
 
   public setYDoc(doc: Doc | undefined): void {
     this.doc = doc
