@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MessageType } from '@hedgedoc/commons';
+import { MessageType, RealtimeDoc } from '@hedgedoc/commons';
+import * as hedgedocCommonsModule from '@hedgedoc/commons';
 import { Mock } from 'ts-mockery';
 
 import { Note } from '../../notes/note.entity';
-import * as extendedDocModule from './extended-doc';
-import { ExtendedDoc } from './extended-doc';
 import { RealtimeNote } from './realtime-note';
 import { MockConnectionBuilder } from './test-utils/mock-connection';
 
@@ -41,9 +40,9 @@ describe('realtime note', () => {
 
   it('creates a y-doc', () => {
     const initialContent = 'nothing';
-    const mockedDoc = new ExtendedDoc(initialContent);
+    const mockedDoc = new RealtimeDoc(initialContent);
     const docSpy = jest
-      .spyOn(extendedDocModule, 'ExtendedDoc')
+      .spyOn(hedgedocCommonsModule, 'RealtimeDoc')
       .mockReturnValue(mockedDoc);
     const sut = new RealtimeNote(mockedNote, initialContent);
     expect(docSpy).toHaveBeenCalledWith(initialContent);

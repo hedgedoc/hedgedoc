@@ -3,25 +3,22 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MARKDOWN_CONTENT_CHANNEL_NAME } from '../constants/markdown-content-channel-name.js'
 import { Message, MessageType } from '../message-transporters/message.js'
 import { InMemoryConnectionMessageTransporter } from './in-memory-connection-message.transporter.js'
+import { RealtimeDoc } from './realtime-doc.js'
 import { YDocSyncClientAdapter } from './y-doc-sync-client-adapter.js'
 import { YDocSyncServerAdapter } from './y-doc-sync-server-adapter.js'
 import { describe, expect, it } from '@jest/globals'
-import { Doc } from 'yjs'
 
 describe('message transporter', () => {
   it('server client communication', async () => {
-    const docServer: Doc = new Doc()
-    const docClient1: Doc = new Doc()
-    const docClient2: Doc = new Doc()
+    const docServer: RealtimeDoc = new RealtimeDoc('This is a test note')
+    const docClient1: RealtimeDoc = new RealtimeDoc()
+    const docClient2: RealtimeDoc = new RealtimeDoc()
 
-    const textServer = docServer.getText(MARKDOWN_CONTENT_CHANNEL_NAME)
-    const textClient1 = docClient1.getText(MARKDOWN_CONTENT_CHANNEL_NAME)
-    const textClient2 = docClient2.getText(MARKDOWN_CONTENT_CHANNEL_NAME)
-
-    textServer.insert(0, 'This is a test note')
+    const textServer = docServer.getMarkdownContentChannel()
+    const textClient1 = docClient1.getMarkdownContentChannel()
+    const textClient2 = docClient2.getMarkdownContentChannel()
 
     textServer.observe(() =>
       console.debug('textServer', new Date(), textServer.toString())

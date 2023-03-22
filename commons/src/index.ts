@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export * from './constants/markdown-content-channel-name.js'
-
 export * from './message-transporters/mocked-backend-message-transporter.js'
 export * from './message-transporters/message.js'
 export * from './message-transporters/message-transporter.js'
@@ -24,4 +22,4 @@ export * from './y-doc-sync/y-doc-sync-adapter.js'
 
 export { waitForOtherPromisesToFinish } from './utils/wait-for-other-promises-to-finish.js'
 
-export { MARKDOWN_CONTENT_CHANNEL_NAME } from './constants/markdown-content-channel-name.js'
+export { RealtimeDoc } from './y-doc-sync/realtime-doc'

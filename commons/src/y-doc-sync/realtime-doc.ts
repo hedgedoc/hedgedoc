@@ -1,15 +1,17 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MARKDOWN_CONTENT_CHANNEL_NAME } from '@hedgedoc/commons';
-import { Doc } from 'yjs';
+import { Doc } from 'yjs'
+import { Text as YText } from 'yjs'
+
+const MARKDOWN_CONTENT_CHANNEL_NAME = 'markdownContent'
 
 /**
  * This is the implementation of {@link Doc YDoc} which includes additional handlers for message sending and receiving.
  */
-export class ExtendedDoc extends Doc {
+export class RealtimeDoc extends Doc {
   /**
    * Creates a new WebsocketDoc instance.
    *
@@ -18,9 +20,15 @@ export class ExtendedDoc extends Doc {
    *
    * @param initialContent - the initial content of the {@link Doc YDoc}
    */
-  constructor(initialContent: string) {
-    super();
-    this.getText(MARKDOWN_CONTENT_CHANNEL_NAME).insert(0, initialContent);
+  constructor(initialContent?: string) {
+    super()
+    if (initialContent) {
+      this.getMarkdownContentChannel().insert(0, initialContent)
+    }
+  }
+
+  public getMarkdownContentChannel(): YText {
+    return this.getText(MARKDOWN_CONTENT_CHANNEL_NAME)
   }
 
   /**
@@ -31,6 +39,6 @@ export class ExtendedDoc extends Doc {
    * @return The current note content.
    */
   public getCurrentContent(): string {
-    return this.getText(MARKDOWN_CONTENT_CHANNEL_NAME).toString();
+    return this.getMarkdownContentChannel().toString()
   }
 }

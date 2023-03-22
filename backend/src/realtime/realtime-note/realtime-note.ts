@@ -3,12 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Message, MessageType } from '@hedgedoc/commons';
+import { Message, MessageType, RealtimeDoc } from '@hedgedoc/commons';
 import { Logger } from '@nestjs/common';
 import { EventEmitter2, EventMap } from 'eventemitter2';
 
 import { Note } from '../../notes/note.entity';
-import { ExtendedDoc } from './extended-doc';
 import { RealtimeConnection } from './realtime-connection';
 
 export interface RealtimeNoteEventMap extends EventMap {
@@ -25,14 +24,14 @@ export interface RealtimeNoteEventMap extends EventMap {
  */
 export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   protected logger: Logger;
-  private readonly doc: ExtendedDoc;
+  private readonly doc: RealtimeDoc;
   private readonly clients = new Set<RealtimeConnection>();
   private isClosing = false;
 
   constructor(private readonly note: Note, initialContent: string) {
     super();
     this.logger = new Logger(`${RealtimeNote.name} ${note.id}`);
-    this.doc = new ExtendedDoc(initialContent);
+    this.doc = new RealtimeDoc(initialContent);
     this.logger.debug(
       `New realtime session for note ${note.id} created. Length of initial content: ${initialContent.length} characters`,
     );
@@ -109,7 +108,7 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
    *
    * @return the {@link Doc YDoc} of the note
    */
-  public getDoc(): ExtendedDoc {
+  public getDoc(): RealtimeDoc {
     return this.doc;
   }
 

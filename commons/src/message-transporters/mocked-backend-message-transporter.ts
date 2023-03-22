@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MARKDOWN_CONTENT_CHANNEL_NAME } from '../constants/markdown-content-channel-name.js'
+import { RealtimeDoc } from '../y-doc-sync/realtime-doc.js'
 import { ConnectionState, MessageTransporter } from './message-transporter.js'
 import { Message, MessageType } from './message.js'
 import { Doc, encodeStateAsUpdate } from 'yjs'
@@ -13,13 +13,13 @@ import { Doc, encodeStateAsUpdate } from 'yjs'
  * The only exception is the note content state request that is answered with the given initial content.
  */
 export class MockedBackendMessageTransporter extends MessageTransporter {
-  private doc: Doc = new Doc()
+  private readonly doc: Doc
 
   private connected = true
 
   constructor(initialContent: string) {
     super()
-    this.doc.getText(MARKDOWN_CONTENT_CHANNEL_NAME).insert(0, initialContent)
+    this.doc = new RealtimeDoc(initialContent)
 
     this.onConnected()
   }
