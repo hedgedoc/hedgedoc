@@ -30,6 +30,9 @@
     "README.md",
     "dist/**"
   ],
+  "browserslist": [
+    "node> 12"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/hedgedoc/hedgedoc.git"

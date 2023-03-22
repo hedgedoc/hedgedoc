@@ -11,6 +11,8 @@ import { Note } from '../../notes/note.entity';
 import { RealtimeNote } from './realtime-note';
 import { MockConnectionBuilder } from './test-utils/mock-connection';
 
+jest.mock('@hedgedoc/commons');
+
 describe('realtime note', () => {
   let mockedNote: Note;
 
