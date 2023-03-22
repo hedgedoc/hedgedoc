@@ -41,7 +41,7 @@
     "eventemitter2": "6.4.9",
     "isomorphic-ws": "5.0.0",
     "ws": "8.13.0",
-    "yjs": "13.5.50"
+    "yjs": "13.5.51"
   },
   "devDependencies": {
     "@jest/types": "29.5.0",
