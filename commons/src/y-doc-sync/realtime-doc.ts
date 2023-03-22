@@ -13,10 +13,9 @@ const MARKDOWN_CONTENT_CHANNEL_NAME = 'markdownContent'
  */
 export class RealtimeDoc extends Doc {
   /**
-   * Creates a new WebsocketDoc instance.
+   * Creates a new instance.
    *
-   * The new instance is filled with the given initial content and an event listener will be registered to handle
-   * updates to the doc.
+   * The new instance is filled with the given initial content.
    *
    * @param initialContent - the initial content of the {@link Doc YDoc}
    */
@@ -27,6 +26,11 @@ export class RealtimeDoc extends Doc {
     }
   }
 
+  /**
+   * Extracts the {@link YText text channel} that contains the markdown code.
+   *
+   * @return The markdown channel
+   */
   public getMarkdownContentChannel(): YText {
     return this.getText(MARKDOWN_CONTENT_CHANNEL_NAME)
   }
