@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { WebsocketTransporter } from '@hedgedoc/commons';
 import { OnGatewayConnection, WebSocketGateway } from '@nestjs/websockets';
 import { IncomingMessage } from 'http';
 import WebSocket from 'ws';
@@ -13,8 +14,8 @@ import { PermissionsService } from '../../permissions/permissions.service';
 import { SessionService } from '../../session/session.service';
 import { User } from '../../users/user.entity';
 import { UsersService } from '../../users/users.service';
+import { RealtimeConnection } from '../realtime-note/realtime-connection';
 import { RealtimeNoteService } from '../realtime-note/realtime-note.service';
-import { WebsocketConnection } from '../realtime-note/websocket-connection';
 import { extractNoteIdFromRequestUrl } from './utils/extract-note-id-from-request-url';
 
 /**
@@ -75,13 +76,17 @@ export class WebsocketGateway implements OnGatewayConnection {
       const realtimeNote =
         await this.realtimeNoteService.getOrCreateRealtimeNote(note);
 
-      const connection = new WebsocketConnection(
-        clientSocket,
+      const websocketTransporter = new WebsocketTransporter();
+      const connection = new RealtimeConnection(
+        websocketTransporter,
         user,
         realtimeNote,
       );
+      websocketTransporter.setWebsocket(clientSocket);
 
       realtimeNote.addClient(connection);
+
+      websocketTransporter.sendReady();
     } catch (error: unknown) {
       this.logger.error(
         `Error occurred while initializing: ${(error as Error).message}`,

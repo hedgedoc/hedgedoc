@@ -6,8 +6,9 @@
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import { Logger } from '../../../../../utils/logger'
 import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
-import type { YDocMessageTransporter } from '@hedgedoc/commons'
+import type { MessageTransporter } from '@hedgedoc/commons'
 import { MessageType } from '@hedgedoc/commons'
+import type { Listener } from 'eventemitter2'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect } from 'react'
 
@@ -18,7 +19,7 @@ const logger = new Logger('UseOnNoteDeleted')
  *
  * @param websocketConnection The websocket connection that emits the deletion event
  */
-export const useOnNoteDeleted = (websocketConnection: YDocMessageTransporter): void => {
+export const useOnNoteDeleted = (websocketConnection: MessageTransporter): void => {
   const router = useRouter()
   const noteTitle = useApplicationState((state) => state.noteDetails.title)
   const { dispatchUiNotification } = useUiNotifications()
@@ -35,9 +36,11 @@ export const useOnNoteDeleted = (websocketConnection: YDocMessageTransporter): v
   }, [router, noteTitle, dispatchUiNotification])
 
   useEffect(() => {
-    websocketConnection.on(String(MessageType.DOCUMENT_DELETED), noteDeletedHandler)
+    const listener = websocketConnection.on(MessageType.DOCUMENT_DELETED, noteDeletedHandler, {
+      objectify: true
+    }) as Listener
     return () => {
-      websocketConnection.off(String(MessageType.DOCUMENT_DELETED), noteDeletedHandler)
+      listener.off()
     }
-  })
+  }, [noteDeletedHandler, websocketConnection])
 }

@@ -14,17 +14,12 @@ import { RevisionsService } from '../../revisions/revisions.service';
 import { RealtimeNote } from './realtime-note';
 import { RealtimeNoteStore } from './realtime-note-store';
 import { RealtimeNoteService } from './realtime-note.service';
-import { mockAwareness } from './test-utils/mock-awareness';
-import { mockRealtimeNote } from './test-utils/mock-realtime-note';
-import { mockWebsocketDoc } from './test-utils/mock-websocket-doc';
-import { WebsocketDoc } from './websocket-doc';
 
 describe('RealtimeNoteService', () => {
   const mockedContent = 'mockedContent';
   const mockedNoteId = 4711;
-  let websocketDoc: WebsocketDoc;
-  let mockedNote: Note;
-  let mockedRealtimeNote: RealtimeNote;
+  let note: Note;
+  let realtimeNote: RealtimeNote;
   let realtimeNoteService: RealtimeNoteService;
   let revisionsService: RevisionsService;
   let realtimeNoteStore: RealtimeNoteStore;
@@ -46,7 +41,7 @@ describe('RealtimeNoteService', () => {
     jest
       .spyOn(revisionsService, 'getLatestRevision')
       .mockImplementation((note: Note) =>
-        note === mockedNote && latestRevisionExists
+        note.id === mockedNoteId && latestRevisionExists
           ? Promise.resolve(
               Mock.of<Revision>({
                 content: mockedContent,
@@ -60,13 +55,8 @@ describe('RealtimeNoteService', () => {
     jest.resetAllMocks();
     jest.resetModules();
 
-    websocketDoc = mockWebsocketDoc();
-    mockedNote = Mock.of<Note>({ id: mockedNoteId });
-    mockedRealtimeNote = mockRealtimeNote(
-      mockedNote,
-      websocketDoc,
-      mockAwareness(),
-    );
+    note = Mock.of<Note>({ id: mockedNoteId });
+    realtimeNote = new RealtimeNote(note, mockedContent);
 
     revisionsService = Mock.of<RevisionsService>({
       getLatestRevision: jest.fn(),
@@ -108,18 +98,15 @@ describe('RealtimeNoteService', () => {
     jest.spyOn(realtimeNoteStore, 'find').mockImplementation(() => undefined);
     jest
       .spyOn(realtimeNoteStore, 'create')
-      .mockImplementation(() => mockedRealtimeNote);
+      .mockImplementation(() => realtimeNote);
     mockedAppConfig.persistInterval = 0;
 
     await expect(
-      realtimeNoteService.getOrCreateRealtimeNote(mockedNote),
-    ).resolves.toBe(mockedRealtimeNote);
+      realtimeNoteService.getOrCreateRealtimeNote(note),
+    ).resolves.toBe(realtimeNote);
 
     expect(realtimeNoteStore.find).toHaveBeenCalledWith(mockedNoteId);
-    expect(realtimeNoteStore.create).toHaveBeenCalledWith(
-      mockedNote,
-      mockedContent,
-    );
+    expect(realtimeNoteStore.create).toHaveBeenCalledWith(note, mockedContent);
     expect(setIntervalSpy).not.toHaveBeenCalled();
   });
 
@@ -129,10 +116,10 @@ describe('RealtimeNoteService', () => {
       jest.spyOn(realtimeNoteStore, 'find').mockImplementation(() => undefined);
       jest
         .spyOn(realtimeNoteStore, 'create')
-        .mockImplementation(() => mockedRealtimeNote);
+        .mockImplementation(() => realtimeNote);
       mockedAppConfig.persistInterval = 10;
 
-      await realtimeNoteService.getOrCreateRealtimeNote(mockedNote);
+      await realtimeNoteService.getOrCreateRealtimeNote(note);
 
       expect(setIntervalSpy).toHaveBeenCalledWith(
         expect.any(Function),
@@ -146,11 +133,11 @@ describe('RealtimeNoteService', () => {
       jest.spyOn(realtimeNoteStore, 'find').mockImplementation(() => undefined);
       jest
         .spyOn(realtimeNoteStore, 'create')
-        .mockImplementation(() => mockedRealtimeNote);
+        .mockImplementation(() => realtimeNote);
       mockedAppConfig.persistInterval = 10;
 
-      await realtimeNoteService.getOrCreateRealtimeNote(mockedNote);
-      mockedRealtimeNote.emit('destroy');
+      await realtimeNoteService.getOrCreateRealtimeNote(note);
+      realtimeNote.emit('destroy');
       expect(deleteIntervalSpy).toHaveBeenCalled();
       expect(clearIntervalSpy).toHaveBeenCalled();
     });
@@ -162,7 +149,7 @@ describe('RealtimeNoteService', () => {
     jest.spyOn(realtimeNoteStore, 'find').mockImplementation(() => undefined);
 
     await expect(
-      realtimeNoteService.getOrCreateRealtimeNote(mockedNote),
+      realtimeNoteService.getOrCreateRealtimeNote(note),
     ).rejects.toBe(`Revision for note mockedNoteId not found.`);
     expect(realtimeNoteStore.create).not.toHaveBeenCalled();
     expect(realtimeNoteStore.find).toHaveBeenCalledWith(mockedNoteId);
@@ -174,53 +161,46 @@ describe('RealtimeNoteService', () => {
     jest.spyOn(realtimeNoteStore, 'find').mockImplementation(() => undefined);
     jest
       .spyOn(realtimeNoteStore, 'create')
-      .mockImplementation(() => mockedRealtimeNote);
+      .mockImplementation(() => realtimeNote);
 
     await expect(
-      realtimeNoteService.getOrCreateRealtimeNote(mockedNote),
-    ).resolves.toBe(mockedRealtimeNote);
+      realtimeNoteService.getOrCreateRealtimeNote(note),
+    ).resolves.toBe(realtimeNote);
 
     jest
       .spyOn(realtimeNoteStore, 'find')
-      .mockImplementation(() => mockedRealtimeNote);
+      .mockImplementation(() => realtimeNote);
 
     await expect(
-      realtimeNoteService.getOrCreateRealtimeNote(mockedNote),
-    ).resolves.toBe(mockedRealtimeNote);
+      realtimeNoteService.getOrCreateRealtimeNote(note),
+    ).resolves.toBe(realtimeNote);
     expect(realtimeNoteStore.create).toHaveBeenCalledTimes(1);
   });
 
   it('saves a realtime note if it gets destroyed', async () => {
     mockGetLatestRevision(true);
-    const mockedCurrentContent = 'mockedCurrentContent';
 
     jest.spyOn(realtimeNoteStore, 'find').mockImplementation(() => undefined);
     jest
       .spyOn(realtimeNoteStore, 'create')
-      .mockImplementation(() => mockedRealtimeNote);
-    jest
-      .spyOn(websocketDoc, 'getCurrentContent')
-      .mockReturnValue(mockedCurrentContent);
+      .mockImplementation(() => realtimeNote);
 
-    await realtimeNoteService.getOrCreateRealtimeNote(mockedNote);
+    await realtimeNoteService.getOrCreateRealtimeNote(note);
 
     const createRevisionSpy = jest
       .spyOn(revisionsService, 'createRevision')
       .mockImplementation(() => Promise.resolve(Mock.of<Revision>()));
 
-    mockedRealtimeNote.emit('beforeDestroy');
-    expect(createRevisionSpy).toHaveBeenCalledWith(
-      mockedNote,
-      mockedCurrentContent,
-    );
+    realtimeNote.emit('beforeDestroy');
+    expect(createRevisionSpy).toHaveBeenCalledWith(note, mockedContent);
   });
 
   it('destroys every realtime note on application shutdown', () => {
     jest
       .spyOn(realtimeNoteStore, 'getAllRealtimeNotes')
-      .mockReturnValue([mockedRealtimeNote]);
+      .mockReturnValue([realtimeNote]);
 
-    const destroySpy = jest.spyOn(mockedRealtimeNote, 'destroy');
+    const destroySpy = jest.spyOn(realtimeNote, 'destroy');
 
     realtimeNoteService.beforeApplicationShutdown();
 

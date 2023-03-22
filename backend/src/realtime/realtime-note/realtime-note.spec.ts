@@ -3,39 +3,20 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  encodeDocumentDeletedMessage,
-  encodeMetadataUpdatedMessage,
-} from '@hedgedoc/commons';
+import { MessageType, RealtimeDoc } from '@hedgedoc/commons';
+import * as hedgedocCommonsModule from '@hedgedoc/commons';
 import { Mock } from 'ts-mockery';
 
 import { Note } from '../../notes/note.entity';
 import { RealtimeNote } from './realtime-note';
-import { mockAwareness } from './test-utils/mock-awareness';
-import { mockConnection } from './test-utils/mock-connection';
-import { mockWebsocketDoc } from './test-utils/mock-websocket-doc';
-import * as websocketAwarenessModule from './websocket-awareness';
-import { WebsocketAwareness } from './websocket-awareness';
-import * as websocketDocModule from './websocket-doc';
-import { WebsocketDoc } from './websocket-doc';
+import { MockConnectionBuilder } from './test-utils/mock-connection';
+
+jest.mock('@hedgedoc/commons');
 
 describe('realtime note', () => {
-  let mockedDoc: WebsocketDoc;
-  let mockedAwareness: WebsocketAwareness;
   let mockedNote: Note;
 
   beforeEach(() => {
-    jest.resetAllMocks();
-    jest.resetModules();
-    mockedDoc = mockWebsocketDoc();
-    mockedAwareness = mockAwareness();
-    jest
-      .spyOn(websocketDocModule, 'WebsocketDoc')
-      .mockImplementation(() => mockedDoc);
-    jest
-      .spyOn(websocketAwarenessModule, 'WebsocketAwareness')
-      .mockImplementation(() => mockedAwareness);
-
     mockedNote = Mock.of<Note>({ id: 4711 });
   });
 
@@ -51,8 +32,7 @@ describe('realtime note', () => {
 
   it('can connect and disconnect clients', () => {
     const sut = new RealtimeNote(mockedNote, 'nothing');
-    const client1 = mockConnection(true);
-    sut.addClient(client1);
+    const client1 = new MockConnectionBuilder(sut).build();
     expect(sut.getConnections()).toStrictEqual([client1]);
     expect(sut.hasConnections()).toBeTruthy();
     sut.removeClient(client1);
@@ -60,19 +40,22 @@ describe('realtime note', () => {
     expect(sut.hasConnections()).toBeFalsy();
   });
 
-  it('creates a y-doc and y-awareness', () => {
-    const sut = new RealtimeNote(mockedNote, 'nothing');
-    expect(sut.getYDoc()).toBe(mockedDoc);
-    expect(sut.getAwareness()).toBe(mockedAwareness);
+  it('creates a y-doc', () => {
+    const initialContent = 'nothing';
+    const mockedDoc = new RealtimeDoc(initialContent);
+    const docSpy = jest
+      .spyOn(hedgedocCommonsModule, 'RealtimeDoc')
+      .mockReturnValue(mockedDoc);
+    const sut = new RealtimeNote(mockedNote, initialContent);
+    expect(docSpy).toHaveBeenCalledWith(initialContent);
+    expect(sut.getRealtimeDoc()).toBe(mockedDoc);
   });
 
-  it('destroys y-doc and y-awareness on self-destruction', () => {
+  it('destroys y-doc on self-destruction', () => {
     const sut = new RealtimeNote(mockedNote, 'nothing');
-    const docDestroy = jest.spyOn(mockedDoc, 'destroy');
-    const awarenessDestroy = jest.spyOn(mockedAwareness, 'destroy');
+    const docDestroy = jest.spyOn(sut.getRealtimeDoc(), 'destroy');
     sut.destroy();
     expect(docDestroy).toHaveBeenCalled();
-    expect(awarenessDestroy).toHaveBeenCalled();
   });
 
   it('emits destroy event on destruction', async () => {
@@ -94,33 +77,38 @@ describe('realtime note', () => {
 
   it('announcePermissionChange to all clients', () => {
     const sut = new RealtimeNote(mockedNote, 'nothing');
-    const client1 = mockConnection(true);
-    sut.addClient(client1);
-    const client2 = mockConnection(true);
-    sut.addClient(client2);
-    const metadataMessage = encodeMetadataUpdatedMessage();
+
+    const client1 = new MockConnectionBuilder(sut).build();
+    const client2 = new MockConnectionBuilder(sut).build();
+
+    const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
+    const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
+
+    const metadataMessage = { type: MessageType.METADATA_UPDATED };
     sut.announcePermissionChange();
-    expect(client1.send).toHaveBeenCalledWith(metadataMessage);
-    expect(client2.send).toHaveBeenCalledWith(metadataMessage);
+    expect(sendMessage1Spy).toHaveBeenCalledWith(metadataMessage);
+    expect(sendMessage2Spy).toHaveBeenCalledWith(metadataMessage);
     sut.removeClient(client2);
     sut.announcePermissionChange();
-    expect(client1.send).toHaveBeenCalledTimes(2);
-    expect(client2.send).toHaveBeenCalledTimes(1);
+    expect(sendMessage1Spy).toHaveBeenCalledTimes(2);
+    expect(sendMessage2Spy).toHaveBeenCalledTimes(1);
   });
 
   it('announceNoteDeletion to all clients', () => {
     const sut = new RealtimeNote(mockedNote, 'nothing');
-    const client1 = mockConnection(true);
-    sut.addClient(client1);
-    const client2 = mockConnection(true);
-    sut.addClient(client2);
-    const deletedMessage = encodeDocumentDeletedMessage();
+    const client1 = new MockConnectionBuilder(sut).build();
+    const client2 = new MockConnectionBuilder(sut).build();
+
+    const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
+    const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
+
+    const deletedMessage = { type: MessageType.DOCUMENT_DELETED };
     sut.announceNoteDeletion();
-    expect(client1.send).toHaveBeenCalledWith(deletedMessage);
-    expect(client2.send).toHaveBeenCalledWith(deletedMessage);
+    expect(sendMessage1Spy).toHaveBeenCalledWith(deletedMessage);
+    expect(sendMessage2Spy).toHaveBeenCalledWith(deletedMessage);
     sut.removeClient(client2);
     sut.announceNoteDeletion();
-    expect(client1.send).toHaveBeenCalledTimes(2);
-    expect(client2.send).toHaveBeenCalledTimes(1);
+    expect(sendMessage1Spy).toHaveBeenNthCalledWith(2, deletedMessage);
+    expect(sendMessage2Spy).toHaveBeenNthCalledWith(1, deletedMessage);
   });
 });
