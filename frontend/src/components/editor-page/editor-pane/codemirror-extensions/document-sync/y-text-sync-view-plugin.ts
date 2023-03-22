@@ -15,8 +15,8 @@ const syncAnnotation = Annotation.define()
 /**
  * Synchronizes the content of a codemirror with a {@link YText y.js text channel}.
  */
-export class YTextSyncPlugin implements PluginValue {
-  private readonly observer: YTextSyncPlugin['onYTextUpdate']
+export class YTextSyncViewPlugin implements PluginValue {
+  private readonly observer: YTextSyncViewPlugin['onYTextUpdate']
   private firstUpdate = true
 
   constructor(private view: EditorView, private readonly yText: YText, pluginLoaded: () => void) {

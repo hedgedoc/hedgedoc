@@ -8,8 +8,8 @@ import {
   createSelectionLayer,
   remoteCursorStateField
 } from '../../codemirror-extensions/remote-cursors/cursor-layers-extensions'
-import { ReceiveRemoteCursorExtension } from '../../codemirror-extensions/remote-cursors/receive-remote-cursor-extension'
-import { SendCursorExtension } from '../../codemirror-extensions/remote-cursors/send-cursor-extension'
+import { ReceiveRemoteCursorViewPlugin } from '../../codemirror-extensions/remote-cursors/receive-remote-cursor-view-plugin'
+import { SendCursorViewPlugin } from '../../codemirror-extensions/remote-cursors/send-cursor-view-plugin'
 import type { Extension } from '@codemirror/state'
 import { ViewPlugin } from '@codemirror/view'
 import type { MessageTransporter } from '@hedgedoc/commons'
@@ -25,8 +25,8 @@ export const useCodeMirrorRemoteCursorsExtension = (messageTransporter: MessageT
       remoteCursorStateField.extension,
       createCursorLayer(),
       createSelectionLayer(),
-      ViewPlugin.define((view) => new ReceiveRemoteCursorExtension(view, messageTransporter)),
-      ViewPlugin.define((view) => new SendCursorExtension(view, messageTransporter))
+      ViewPlugin.define((view) => new ReceiveRemoteCursorViewPlugin(view, messageTransporter)),
+      ViewPlugin.define((view) => new SendCursorViewPlugin(view, messageTransporter))
     ],
     [messageTransporter]
   )

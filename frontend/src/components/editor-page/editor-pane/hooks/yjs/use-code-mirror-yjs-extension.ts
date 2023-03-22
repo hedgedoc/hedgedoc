@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
-import { YTextSyncPlugin } from '../../codemirror-extensions/document-sync/y-text-sync-plugin'
+import { YTextSyncViewPlugin } from '../../codemirror-extensions/document-sync/y-text-sync-view-plugin'
 import type { Extension } from '@codemirror/state'
 import { ViewPlugin } from '@codemirror/view'
 import type { YDocSyncClientAdapter } from '@hedgedoc/commons'
@@ -30,7 +30,8 @@ export const useCodeMirrorYjsExtension = (yText: YText | undefined, syncAdapter:
   }, [connected, editorReady, syncAdapter, synchronized, yText])
 
   return useMemo(
-    () => (yText ? [ViewPlugin.define((view) => new YTextSyncPlugin(view, yText, () => setEditorReady(true)))] : []),
+    () =>
+      yText ? [ViewPlugin.define((view) => new YTextSyncViewPlugin(view, yText, () => setEditorReady(true)))] : [],
     [yText]
   )
 }

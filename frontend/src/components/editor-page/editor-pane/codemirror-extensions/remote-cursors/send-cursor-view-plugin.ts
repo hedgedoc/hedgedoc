@@ -12,7 +12,7 @@ import type { Listener } from 'eventemitter2'
 /**
  * Sends the main cursor of a codemirror to the backend using a given {@link MessageTransporter}.
  */
-export class SendCursorExtension implements PluginValue {
+export class SendCursorViewPlugin implements PluginValue {
   private lastCursor: SelectionRange | undefined
   private listener: Listener
 

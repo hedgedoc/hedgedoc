@@ -13,7 +13,7 @@ import type { Listener } from 'eventemitter2'
 /**
  * Listens for remote cursor state messages from the backend and dispatches them into the codemirror.
  */
-export class ReceiveRemoteCursorExtension implements PluginValue {
+export class ReceiveRemoteCursorViewPlugin implements PluginValue {
   private readonly listener: Listener
 
   constructor(view: EditorView, messageTransporter: MessageTransporter) {
