@@ -9,9 +9,6 @@ import { Note } from '../../notes/note.entity';
 import * as realtimeNoteModule from './realtime-note';
 import { RealtimeNote } from './realtime-note';
 import { RealtimeNoteStore } from './realtime-note-store';
-import { mockRealtimeNote } from './test-utils/mock-realtime-note';
-import { WebsocketAwareness } from './websocket-awareness';
-import { WebsocketDoc } from './websocket-doc';
 
 describe('RealtimeNoteStore', () => {
   let realtimeNoteStore: RealtimeNoteStore;
@@ -22,20 +19,19 @@ describe('RealtimeNoteStore', () => {
   const mockedNoteId = 4711;
 
   beforeEach(async () => {
-    jest.resetAllMocks();
-    jest.resetModules();
-
     realtimeNoteStore = new RealtimeNoteStore();
 
     mockedNote = Mock.of<Note>({ id: mockedNoteId });
-    mockedRealtimeNote = mockRealtimeNote(
-      mockedNote,
-      Mock.of<WebsocketDoc>(),
-      Mock.of<WebsocketAwareness>(),
-    );
+    mockedRealtimeNote = new RealtimeNote(mockedNote, '');
     realtimeNoteConstructorSpy = jest
       .spyOn(realtimeNoteModule, 'RealtimeNote')
       .mockReturnValue(mockedRealtimeNote);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+    jest.resetAllMocks();
+    jest.resetModules();
   });
 
   it("can create a new realtime note if it doesn't exist yet", () => {

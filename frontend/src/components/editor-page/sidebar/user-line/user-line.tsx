@@ -3,16 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { ActiveIndicatorStatus } from '../../../../redux/realtime/types'
 import { UserAvatarForUsername } from '../../../common/user-avatar/user-avatar-for-username'
+import { createCursorCssClass } from '../../editor-pane/codemirror-extensions/remote-cursors/create-cursor-css-class'
 import { ActiveIndicator } from '../users-online-sidebar-menu/active-indicator'
 import styles from './user-line.module.scss'
 import React from 'react'
 
 export interface UserLineProps {
   username: string | null
-  color: string
-  status: ActiveIndicatorStatus
+  active: boolean
+  color: number
 }
 
 /**
@@ -22,19 +22,20 @@ export interface UserLineProps {
  * @param color The color of the user's edits.
  * @param status The user's current online status.
  */
-export const UserLine: React.FC<UserLineProps> = ({ username, color, status }) => {
+export const UserLine: React.FC<UserLineProps> = ({ username, active, color }) => {
   return (
     <div className={'d-flex align-items-center h-100 w-100'}>
       <div
-        className={`d-inline-flex align-items-bottom ${styles['user-line-color-indicator']}`}
-        style={{ borderLeftColor: color }}
+        className={`d-inline-flex align-items-bottom ${styles['user-line-color-indicator']} ${createCursorCssClass(
+          color
+        )}`}
       />
       <UserAvatarForUsername
         username={username}
         additionalClasses={'flex-fill overflow-hidden px-2 text-nowrap w-100'}
       />
       <div className={styles['active-indicator-container']}>
-        <ActiveIndicator status={status} />
+        <ActiveIndicator active={active} />
       </div>
     </div>
   )

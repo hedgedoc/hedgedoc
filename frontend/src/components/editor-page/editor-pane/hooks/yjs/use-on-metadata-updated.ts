@@ -4,24 +4,23 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { updateMetadata } from '../../../../../redux/note-details/methods'
-import type { YDocMessageTransporter } from '@hedgedoc/commons'
+import type { MessageTransporter } from '@hedgedoc/commons'
 import { MessageType } from '@hedgedoc/commons'
-import { useCallback, useEffect } from 'react'
+import type { Listener } from 'eventemitter2'
+import { useEffect } from 'react'
 
 /**
  * Hook that updates the metadata if the server announced an update of the metadata.
  *
  * @param websocketConnection The websocket connection that emits the metadata changed event
  */
-export const useOnMetadataUpdated = (websocketConnection: YDocMessageTransporter): void => {
-  const updateMetadataHandler = useCallback(async () => {
-    await updateMetadata()
-  }, [])
-
+export const useOnMetadataUpdated = (websocketConnection: MessageTransporter): void => {
   useEffect(() => {
-    websocketConnection.on(String(MessageType.METADATA_UPDATED), () => void updateMetadataHandler())
+    const listener = websocketConnection.on(MessageType.METADATA_UPDATED, () => void updateMetadata(), {
+      objectify: true
+    }) as Listener
     return () => {
-      websocketConnection.off(String(MessageType.METADATA_UPDATED), () => void updateMetadataHandler())
+      listener.off()
     }
-  })
+  }, [websocketConnection])
 }

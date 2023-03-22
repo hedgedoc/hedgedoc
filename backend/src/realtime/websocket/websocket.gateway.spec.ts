@@ -40,15 +40,15 @@ import { Session } from '../../users/session.entity';
 import { User } from '../../users/user.entity';
 import { UsersModule } from '../../users/users.module';
 import { UsersService } from '../../users/users.service';
+import * as websocketConnectionModule from '../realtime-note/realtime-connection';
+import { RealtimeConnection } from '../realtime-note/realtime-connection';
 import { RealtimeNote } from '../realtime-note/realtime-note';
 import { RealtimeNoteModule } from '../realtime-note/realtime-note.module';
 import { RealtimeNoteService } from '../realtime-note/realtime-note.service';
-import * as websocketConnectionModule from '../realtime-note/websocket-connection';
-import { WebsocketConnection } from '../realtime-note/websocket-connection';
 import * as extractNoteIdFromRequestUrlModule from './utils/extract-note-id-from-request-url';
 import { WebsocketGateway } from './websocket.gateway';
 
-import SpyInstance = jest.SpyInstance;
+jest.mock('@hedgedoc/commons');
 
 describe('Websocket gateway', () => {
   let gateway: WebsocketGateway;
@@ -57,10 +57,10 @@ describe('Websocket gateway', () => {
   let notesService: NotesService;
   let realtimeNoteService: RealtimeNoteService;
   let permissionsService: PermissionsService;
-  let mockedWebsocketConnection: WebsocketConnection;
+  let mockedWebsocketConnection: RealtimeConnection;
   let mockedWebsocket: WebSocket;
-  let mockedWebsocketCloseSpy: SpyInstance;
-  let addClientSpy: SpyInstance;
+  let mockedWebsocketCloseSpy: jest.SpyInstance;
+  let addClientSpy: jest.SpyInstance;
 
   const mockedValidSessionCookie = 'mockedValidSessionCookie';
   const mockedSessionIdWithUser = 'mockedSessionIdWithUser';
@@ -231,9 +231,9 @@ describe('Websocket gateway', () => {
       .spyOn(realtimeNoteService, 'getOrCreateRealtimeNote')
       .mockReturnValue(Promise.resolve(mockedRealtimeNote));
 
-    mockedWebsocketConnection = Mock.of<WebsocketConnection>();
+    mockedWebsocketConnection = Mock.of<RealtimeConnection>();
     jest
-      .spyOn(websocketConnectionModule, 'WebsocketConnection')
+      .spyOn(websocketConnectionModule, 'RealtimeConnection')
       .mockReturnValue(mockedWebsocketConnection);
 
     mockedWebsocket = Mock.of<WebSocket>({

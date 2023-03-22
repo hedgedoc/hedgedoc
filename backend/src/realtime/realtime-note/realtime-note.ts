@@ -3,52 +3,51 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  encodeDocumentDeletedMessage,
-  encodeMetadataUpdatedMessage,
-} from '@hedgedoc/commons';
+import { Message, MessageType, RealtimeDoc } from '@hedgedoc/commons';
 import { Logger } from '@nestjs/common';
 import { EventEmitter2, EventMap } from 'eventemitter2';
-import { Awareness } from 'y-protocols/awareness';
 
 import { Note } from '../../notes/note.entity';
-import { WebsocketAwareness } from './websocket-awareness';
-import { WebsocketConnection } from './websocket-connection';
-import { WebsocketDoc } from './websocket-doc';
+import { RealtimeConnection } from './realtime-connection';
 
-export interface MapType extends EventMap {
+export interface RealtimeNoteEventMap extends EventMap {
   destroy: () => void;
   beforeDestroy: () => void;
+  clientAdded: (client: RealtimeConnection) => void;
+  clientRemoved: (client: RealtimeConnection) => void;
+
+  yDocUpdate: (update: number[], origin: unknown) => void;
 }
 
 /**
  * Represents a note currently being edited by a number of clients.
  */
-export class RealtimeNote extends EventEmitter2<MapType> {
+export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   protected logger: Logger;
-  private readonly websocketDoc: WebsocketDoc;
-  private readonly websocketAwareness: WebsocketAwareness;
-  private readonly clients = new Set<WebsocketConnection>();
+  private readonly doc: RealtimeDoc;
+  private readonly clients = new Set<RealtimeConnection>();
   private isClosing = false;
 
   constructor(private readonly note: Note, initialContent: string) {
     super();
     this.logger = new Logger(`${RealtimeNote.name} ${note.id}`);
-    this.websocketDoc = new WebsocketDoc(this, initialContent);
-    this.websocketAwareness = new WebsocketAwareness(this);
-    this.logger.debug(`New realtime session for note ${note.id} created.`);
+    this.doc = new RealtimeDoc(initialContent);
+    this.logger.debug(
+      `New realtime session for note ${note.id} created. Length of initial content: ${initialContent.length} characters`,
+    );
   }
 
   /**
    * Connects a new client to the note.
    *
-   * For this purpose a {@link WebsocketConnection} is created and added to the client map.
+   * For this purpose a {@link RealtimeConnection} is created and added to the client map.
    *
    * @param client the websocket connection to the client
    */
-  public addClient(client: WebsocketConnection): void {
+  public addClient(client: RealtimeConnection): void {
     this.clients.add(client);
-    this.logger.debug(`User '${client.getUsername()}' connected`);
+    this.logger.debug(`User '${client.getDisplayName()}' connected`);
+    this.emit('clientAdded', client);
   }
 
   /**
@@ -56,13 +55,14 @@ export class RealtimeNote extends EventEmitter2<MapType> {
    *
    * @param {WebSocket} client The websocket client that disconnects.
    */
-  public removeClient(client: WebsocketConnection): void {
+  public removeClient(client: RealtimeConnection): void {
     this.clients.delete(client);
     this.logger.debug(
-      `User '${client.getUsername()}' disconnected. ${
+      `User '${client.getDisplayName()}' disconnected. ${
         this.clients.size
       } clients left.`,
     );
+    this.emit('clientRemoved', client);
     if (!this.hasConnections() && !this.isClosing) {
       this.destroy();
     }
@@ -80,9 +80,8 @@ export class RealtimeNote extends EventEmitter2<MapType> {
     this.logger.debug('Destroying realtime note.');
     this.emit('beforeDestroy');
     this.isClosing = true;
-    this.websocketDoc.destroy();
-    this.websocketAwareness.destroy();
-    this.clients.forEach((value) => value.disconnect());
+    this.doc.destroy();
+    this.clients.forEach((value) => value.getTransporter().disconnect());
     this.emit('destroy');
   }
 
@@ -96,30 +95,21 @@ export class RealtimeNote extends EventEmitter2<MapType> {
   }
 
   /**
-   * Returns all {@link WebsocketConnection WebsocketConnections} currently hold by this note.
+   * Returns all {@link RealtimeConnection WebsocketConnections} currently hold by this note.
    *
-   * @return an array of {@link WebsocketConnection WebsocketConnections}
+   * @return an array of {@link RealtimeConnection WebsocketConnections}
    */
-  public getConnections(): WebsocketConnection[] {
+  public getConnections(): RealtimeConnection[] {
     return [...this.clients];
   }
 
   /**
-   * Get the {@link Doc YDoc} of the note.
+   * Get the {@link RealtimeDoc realtime note} of the note.
    *
-   * @return the {@link Doc YDoc} of the note
+   * @return the {@link RealtimeDoc realtime note} of the note
    */
-  public getYDoc(): WebsocketDoc {
-    return this.websocketDoc;
-  }
-
-  /**
-   * Get the {@link Awareness YAwareness} of the note.
-   *
-   * @return the {@link Awareness YAwareness} of the note
-   */
-  public getAwareness(): Awareness {
-    return this.websocketAwareness;
+  public getRealtimeDoc(): RealtimeDoc {
+    return this.doc;
   }
 
   /**
@@ -135,14 +125,14 @@ export class RealtimeNote extends EventEmitter2<MapType> {
    * Announce to all clients that the permissions of the note have been changed.
    */
   public announcePermissionChange(): void {
-    this.sendToAllClients(encodeMetadataUpdatedMessage());
+    this.sendToAllClients({ type: MessageType.METADATA_UPDATED });
   }
 
   /**
    * Announce to all clients that the note has been deleted.
    */
   public announceNoteDeletion(): void {
-    this.sendToAllClients(encodeDocumentDeletedMessage());
+    this.sendToAllClients({ type: MessageType.DOCUMENT_DELETED });
   }
 
   /**
@@ -150,9 +140,9 @@ export class RealtimeNote extends EventEmitter2<MapType> {
    *
    * @param {Uint8Array} content The binary message to broadcast
    */
-  private sendToAllClients(content: Uint8Array): void {
+  private sendToAllClients(content: Message<MessageType>): void {
     this.getConnections().forEach((connection) => {
-      connection.send(content);
+      connection.getTransporter().sendMessage(content);
     });
   }
 }

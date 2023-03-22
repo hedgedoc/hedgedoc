@@ -12,8 +12,11 @@ import type { YText } from 'yjs/dist/src/types/YText'
  *
  * @param yText The source text
  */
-export const useBindYTextToRedux = (yText: YText): void => {
+export const useBindYTextToRedux = (yText: YText | undefined): void => {
   useEffect(() => {
+    if (!yText) {
+      return
+    }
     const yTextCallback = () => setNoteContent(yText.toString())
     yText.observe(yTextCallback)
     return () => yText.unobserve(yTextCallback)

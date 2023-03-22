@@ -3,32 +3,45 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { buildStateFromAddUser } from './reducers/build-state-from-add-user'
-import { buildStateFromRemoveUser } from './reducers/build-state-from-remove-user'
-import type { RealtimeActions, RealtimeState } from './types'
-import { RealtimeActionType } from './types'
+import type { RealtimeStatusActions, RealtimeStatus } from './types'
+import { RealtimeStatusActionType } from './types'
 import type { Reducer } from 'redux'
 
-const initialState: RealtimeState = {
-  users: []
+const initialState: RealtimeStatus = {
+  isSynced: false,
+  isConnected: false,
+  onlineUsers: []
 }
 
 /**
- * Applies {@link RealtimeReducer realtime actions} to the global application state.
+ * Applies {@link RealtimeStatusReducer realtime actions} to the global application state.
  *
  * @param state the current state
  * @param action the action that should get applied
  * @return The new changed state
  */
-export const RealtimeReducer: Reducer<RealtimeState, RealtimeActions> = (
+export const RealtimeStatusReducer: Reducer<RealtimeStatus, RealtimeStatusActions> = (
   state = initialState,
-  action: RealtimeActions
+  action: RealtimeStatusActions
 ) => {
   switch (action.type) {
-    case RealtimeActionType.ADD_ONLINE_USER:
-      return buildStateFromAddUser(state, action.clientId, action.user)
-    case RealtimeActionType.REMOVE_ONLINE_USER:
-      return buildStateFromRemoveUser(state, action.clientId)
+    case RealtimeStatusActionType.SET_REALTIME_USERS:
+      return {
+        ...state,
+        onlineUsers: action.users
+      }
+    case RealtimeStatusActionType.SET_REALTIME_CONNECTION_STATUS:
+      return {
+        ...state,
+        isConnected: action.isConnected
+      }
+    case RealtimeStatusActionType.SET_REALTIME_SYNCED_STATUS:
+      return {
+        ...state,
+        isSynced: action.isSynced
+      }
+    case RealtimeStatusActionType.RESET_REALTIME_STATUS:
+      return initialState
     default:
       return state
   }

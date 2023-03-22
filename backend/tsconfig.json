@@ -11,6 +11,7 @@
     "baseUrl": "./",
     "incremental": true,
     "strict": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "resolveJsonModule": true
   }
 }

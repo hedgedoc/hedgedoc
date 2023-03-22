@@ -583,6 +583,9 @@
       "text": "You were redirected to the history page, because the note you just edited was deleted."
     }
   },
+  "realtime": {
+    "reconnect": "Reconnecting to HedgeDoc…"
+  },
   "settings": {
     "title": "Settings",
     "editor": {

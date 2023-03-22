@@ -5,7 +5,7 @@
  */
 
 .user-line-color-indicator {
-  border-left: 3px solid;
+  border-left: 3px solid var(--color);
   min-height: 30px;
   height: 100%;
   flex: 0 0 3px;
