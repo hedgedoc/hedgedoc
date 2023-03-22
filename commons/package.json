@@ -40,7 +40,7 @@
     "lib0": "0.2.72",
     "ws": "8.13.0",
     "y-protocols": "1.0.5",
-    "yjs": "13.5.50"
+    "yjs": "13.5.51"
   },
   "devDependencies": {
     "@jest/types": "29.5.0",
