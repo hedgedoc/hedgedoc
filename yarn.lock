@@ -2280,7 +2280,7 @@ __metadata:
     typescript: 5.0.2
     ws: 8.13.0
     y-protocols: 1.0.5
-    yjs: 13.5.50
+    yjs: 13.5.51
   languageName: unknown
   linkType: soft
 
@@ -2307,7 +2307,7 @@ __metadata:
     typescript: 5.0.2
     ws: 8.13.0
     y-protocols: 1.0.5
-    yjs: 13.5.50
+    yjs: 13.5.51
   languageName: unknown
   linkType: soft
 
@@ -2453,7 +2453,7 @@ __metadata:
     ws: 8.13.0
     y-codemirror.next: 0.3.2
     y-protocols: 1.0.5
-    yjs: 13.5.50
+    yjs: 13.5.51
   languageName: unknown
   linkType: soft
 
@@ -12461,7 +12461,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lib0@npm:0.2.72":
+"lib0@npm:0.2.72, lib0@npm:^0.2.72":
   version: 0.2.72
   resolution: "lib0@npm:0.2.72"
   dependencies:
@@ -12473,7 +12473,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lib0@npm:^0.2.42, lib0@npm:^0.2.49":
+"lib0@npm:^0.2.42":
   version: 0.2.69
   resolution: "lib0@npm:0.2.69"
   dependencies:
@@ -19223,12 +19223,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yjs@npm:13.5.50":
-  version: 13.5.50
-  resolution: "yjs@npm:13.5.50"
+"yjs@npm:13.5.51":
+  version: 13.5.51
+  resolution: "yjs@npm:13.5.51"
   dependencies:
-    lib0: ^0.2.49
-  checksum: 1c636eadcb4191adec1b31819c8f97f90f3d9f5300856f612ec0b7313ac1ed867810c8dc16b39ddc1bba73abe247b1d2ceae70699589a384318c0b0f3dd14124
+    lib0: ^0.2.72
+  checksum: 4dea7a4c71163fd64f24cc153c25af641cefed7c7aadbc7e0973e2f35398635a58b5da4a45f8e10e0fc4331cde517869ac626e6b449d66766fc61d12e81b06f7
   languageName: node
   linkType: hard
 
