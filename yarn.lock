@@ -12455,7 +12455,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lib0@npm:^0.2.49":
+"lib0@npm:^0.2.72":
   version: 0.2.72
   resolution: "lib0@npm:0.2.72"
   dependencies:
