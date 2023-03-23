@@ -2397,7 +2397,7 @@ __metadata:
     firacode: 6.2.0
     flowchart.js: 1.17.1
     highlight.js: 11.7.0
-    htmlparser2: 8.0.1
+    htmlparser2: 8.0.2
     i18next: 22.4.13
     i18next-browser-languagedetector: 7.0.1
     i18next-resources-to-backend: 1.1.3
@@ -10696,7 +10696,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"htmlparser2@npm:8.0.1, htmlparser2@npm:^8.0.0":
+"htmlparser2@npm:8.0.2":
+  version: 8.0.2
+  resolution: "htmlparser2@npm:8.0.2"
+  dependencies:
+    domelementtype: ^2.3.0
+    domhandler: ^5.0.3
+    domutils: ^3.0.1
+    entities: ^4.4.0
+  checksum: 29167a0f9282f181da8a6d0311b76820c8a59bc9e3c87009e21968264c2987d2723d6fde5a964d4b7b6cba663fca96ffb373c06d8223a85f52a6089ced942700
+  languageName: node
+  linkType: hard
+
+"htmlparser2@npm:^8.0.0":
   version: 8.0.1
   resolution: "htmlparser2@npm:8.0.1"
   dependencies:
