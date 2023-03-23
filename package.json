@@ -147,7 +147,7 @@
     "bootstrap": "3.4.1",
     "bootstrap-validator": "0.11.9",
     "@hedgedoc/codemirror-5": "5.65.12",
-    "copy-webpack-plugin": "6.4.1",
+    "copy-webpack-plugin": "11.0.0",
     "css-loader": "5.2.7",
     "emojify.js": "1.1.0",
     "esbuild-loader": "3.0.1",
