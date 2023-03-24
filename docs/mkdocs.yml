@@ -1,4 +1,4 @@
-site_name: HedgeDoc
+site_name: HedgeDoc 2
 site_url: https://docs.hedgedoc.org
 repo_url: https://github.com/hedgedoc/hedgedoc
 site_description: 'HedgeDoc Documentation'
@@ -7,6 +7,8 @@ docs_dir: content
 edit_uri: https://github.com/hedgedoc/hedgedoc/edit/master/docs/content/
 nav:
   - Home: index.md
+  - Installation:
+      - Getting Started: setup/getting_started.md
   - Configuration:
     - Configuration: config/index.md
     - Media:
