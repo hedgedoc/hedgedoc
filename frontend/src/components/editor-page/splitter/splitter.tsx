@@ -135,7 +135,11 @@ export const Splitter: React.FC<SplitterProps> = ({ additionalContainerClassName
   useKeyboardShortcuts(setRelativeSplitValue)
 
   return (
-    <div ref={splitContainer} className={`flex-fill flex-row d-flex ${additionalContainerClassName || ''}`}>
+    <div
+      ref={splitContainer}
+      className={`flex-fill flex-row d-flex ${additionalContainerClassName || ''}${
+        resizingInProgress ? ' ' + styles.resizing : ''
+      }`}>
       <ShowIf condition={resizingInProgress}>
         <div
           className={styles['move-overlay']}

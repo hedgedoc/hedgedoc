@@ -14,6 +14,12 @@
   flex-direction: column;
 }
 
+.resizing {
+  .left, .right {
+    user-select: none;
+  }
+}
+
 .move-overlay {
   position: absolute;
   height: 100%;
