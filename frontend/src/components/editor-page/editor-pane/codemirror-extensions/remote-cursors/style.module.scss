@@ -6,33 +6,51 @@
 
 .cursorLayer {
   --color: #868686;
+
   .cursor {
     border-left: 2px solid var(--color);
     box-sizing: content-box;
+
+    & {
+      @import "../../../../../../global-styles/variables.module.scss";
+      font-family: $font-family-base;
+    }
+
     &:hover {
       &:before {
         opacity: 1
       }
     }
+
     &:before {
       content: var(--name);
       font-size: 0.8em;
       background: var(--color);
       position: absolute;
-      top: -1.2em;
-      right: 2px;
+      bottom: 1.5em;
       color: white;
-      padding: 2px 5px;
-      height: 20px;
+      padding: 0 5px;
       opacity: 0;
       transition: opacity 0.1s;
       white-space: nowrap;
+      left: -2px;
+    }
+
+    &.down:before {
+      bottom: auto;
+      top: 1.5em;
+    }
+
+    &.right:before {
+      left: auto;
+      right: 0;
     }
   }
 }
 
 .selectionLayer {
   --color: #868686;
+
   .cursor {
     background-color: var(--color);
     opacity: 0.5;
