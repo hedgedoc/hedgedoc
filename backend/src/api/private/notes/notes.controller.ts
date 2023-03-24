@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -17,7 +17,6 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { TokenAuthGuard } from '../../../auth/token.strategy';
 import { NotInDBError } from '../../../errors/errors';
 import { GroupsService } from '../../../groups/groups.service';
 import { HistoryService } from '../../../history/history.service';
@@ -197,9 +196,11 @@ export class NotesController {
     );
   }
 
+  @Put(':noteIdOrAlias/metadata/permissions/users/:userName')
+  @OpenApi(200, 403, 404)
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   async setUserPermission(
     @RequestUser() user: User,
     @RequestNote() note: Note,
@@ -217,7 +218,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Delete(':noteIdOrAlias/metadata/permissions/users/:userName')
   async removeUserPermission(
     @RequestUser() user: User,
@@ -243,7 +244,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Put(':noteIdOrAlias/metadata/permissions/groups/:groupName')
   async setGroupPermission(
     @RequestUser() user: User,
@@ -262,7 +263,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Delete(':noteIdOrAlias/metadata/permissions/groups/:groupName')
   async removeGroupPermission(
     @RequestUser() user: User,
@@ -279,7 +280,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
+  @UseGuards(PermissionsGuard)
   @Put(':noteIdOrAlias/metadata/permissions/owner')
   async changeOwner(
     @RequestUser() user: User,
