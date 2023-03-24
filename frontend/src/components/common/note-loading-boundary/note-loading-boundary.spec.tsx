@@ -7,11 +7,13 @@ import { ApiError } from '../../../api/common/api-error'
 import * as getNoteModule from '../../../api/notes'
 import type { Note } from '../../../api/notes/types'
 import * as LoadingScreenModule from '../../../components/application-loader/loading-screen/loading-screen'
+import * as useApplicationStateModule from '../../../hooks/common/use-application-state'
 import * as useSingleStringUrlParameterModule from '../../../hooks/common/use-single-string-url-parameter'
 import * as setNoteDataFromServerModule from '../../../redux/note-details/methods'
 import { testId } from '../../../utils/test-id'
 import * as CommonErrorPageModule from '../../error-pages/common-error-page'
 import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
+import * as useUiNotificationsModule from '../../notifications/ui-notification-boundary'
 import * as CreateNonExistingNoteHintModule from './create-non-existing-note-hint'
 import { NoteLoadingBoundary } from './note-loading-boundary'
 import { render, screen } from '@testing-library/react'
@@ -19,13 +21,20 @@ import { Fragment } from 'react'
 import { Mock } from 'ts-mockery'
 
 jest.mock('../../../hooks/common/use-single-string-url-parameter')
+jest.mock('../../../hooks/common/use-application-state')
 jest.mock('../../../api/notes')
 jest.mock('../../../redux/note-details/methods')
 jest.mock('../../error-pages/common-error-page', () => ({
   CommonErrorPage: jest.fn()
 }))
 jest.mock('../../../components/application-loader/loading-screen/loading-screen')
+jest.mock('../../notifications/ui-notification-boundary')
 jest.mock('./create-non-existing-note-hint')
+jest.mock('next/router', () => ({
+  useRouter: () => ({
+    push: jest.fn()
+  })
+}))
 
 describe('Note loading boundary', () => {
   const mockedNoteId = 'mockedNoteId'
@@ -37,6 +46,7 @@ describe('Note loading boundary', () => {
 
   beforeEach(async () => {
     await mockI18n()
+    jest.spyOn(useApplicationStateModule, 'useApplicationState').mockReturnValue(mockedNoteId)
     jest.spyOn(CreateNonExistingNoteHintModule, 'CreateNonExistingNoteHint').mockImplementation(() => {
       return (
         <Fragment>
@@ -64,6 +74,11 @@ describe('Note loading boundary', () => {
           </Fragment>
         )
       })
+    jest.spyOn(useUiNotificationsModule, 'useUiNotifications').mockReturnValue({
+      showErrorNotification: jest.fn(),
+      dismissNotification: jest.fn(),
+      dispatchUiNotification: jest.fn()
+    })
     mockGetNoteIdQueryParameter()
   })
 
