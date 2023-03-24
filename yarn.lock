@@ -2264,7 +2264,7 @@ __metadata:
     passport-http-bearer: 1.0.1
     passport-local: 1.0.0
     pg: 8.10.0
-    prettier: 2.8.6
+    prettier: 2.8.7
     raw-body: 2.5.2
     reflect-metadata: 0.1.13
     rimraf: 4.4.1
@@ -2302,7 +2302,7 @@ __metadata:
     jest: 29.5.0
     lib0: 0.2.73
     microbundle: 0.15.1
-    prettier: 2.8.6
+    prettier: 2.8.7
     ts-jest: 29.0.5
     typescript: 5.0.2
     ws: 8.13.0
@@ -2423,7 +2423,7 @@ __metadata:
     markdown-it-sup: 1.0.0
     mermaid: 10.0.2
     next: 13.2.4
-    prettier: 2.8.6
+    prettier: 2.8.7
     react: 18.2.0
     react-bootstrap: 2.7.2
     react-bootstrap-icons: 1.10.2
@@ -15008,12 +15008,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:2.8.6":
-  version: 2.8.6
-  resolution: "prettier@npm:2.8.6"
+"prettier@npm:2.8.7":
+  version: 2.8.7
+  resolution: "prettier@npm:2.8.7"
   bin:
     prettier: bin-prettier.js
-  checksum: 8ac94fa67aec0e65743ea15ebf954ef2f1e52638abd129dc04e8b49e8bb3224c0233c98df6b5c98efd31bd2a43866590486559438ee4ead09dc81be389068572
+  checksum: fdc8f2616f099f5f0d685907f4449a70595a0fc1d081a88919604375989e0d5e9168d6121d8cc6861f21990b31665828e00472544d785d5940ea08a17660c3a6
   languageName: node
   linkType: hard
 
