@@ -45,9 +45,15 @@ If the renderer is provided by another domain, it's way harder to manipulate Hed
 
 ## Authentication
 
+!!! info
+    HedgeDoc 2 does not yet support all authentication backends from HedgeDoc 1.
+    You can follow [this issue](https://github.com/hedgedoc/hedgedoc/issues/1006) for details.
+
 ### Local
 
-HedgeDoc provides local accounts, handled internally. This feature only provides basic functionality, so for most environments we recommend using an external authentication mechanism. This also enables more secure authentication like 2FA or WebAuthn.
+HedgeDoc provides local accounts, handled internally. This feature only provides basic functionality,
+so for most environments we recommend using an external authentication mechanism, which also enable
+more secure authentication like 2FA or WebAuthn.
 
 | environment variable                      | default | example                 | description                                                                           |
 |-------------------------------------------|---------|-------------------------|---------------------------------------------------------------------------------------|
@@ -55,7 +61,7 @@ HedgeDoc provides local accounts, handled internally. This feature only provides
 | `HD_AUTH_LOCAL_ENABLE_REGISTER`           | `false` | `true`, `false`         | This makes it possible to register new local accounts in HedgeDoc.                    |
 | `HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH` | `2`     | `0`, `1`, `2`, `3`, `4` | The minimum [zxcvbn-ts][zxcvbn-ts-score] password score, that passwords need to have. |
 
-**password score ([zxcvbn-ts][zxcvbn-ts-score])**
+**Password score ([zxcvbn-ts][zxcvbn-ts-score])**
 
 | score | meaning                                                           | minimum number of guesses required (approximated) |
 |:-----:|-------------------------------------------------------------------|---------------------------------------------------|
@@ -82,6 +88,7 @@ HedgeDoc provides local accounts, handled internally. This feature only provides
 ## Database
 
 We officially support and test these databases:
+
 - SQLite (for development and smaller instances)
 - PostgreSQL
 - MariaDB
@@ -113,4 +120,4 @@ There are a couple of different backends that can be used to host your images fo
 - [WebDAV](media/webdav.md)
 
 
-[zxcvbn-ts-score][https://zxcvbn-ts.github.io/zxcvbn/guide/getting-started/#output]
+[zxcvbn-ts-score]: https://zxcvbn-ts.github.io/zxcvbn/guide/getting-started/#output
