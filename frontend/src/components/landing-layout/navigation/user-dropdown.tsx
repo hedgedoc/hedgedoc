@@ -6,7 +6,7 @@
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { UiIcon } from '../../common/icons/ui-icon'
-import { UserAvatar } from '../../common/user-avatar/user-avatar'
+import { UserAvatarForUser } from '../../common/user-avatar/user-avatar-for-user'
 import { SignOutDropdownButton } from './sign-out-dropdown-button'
 import Link from 'next/link'
 import React from 'react'
@@ -29,7 +29,7 @@ export const UserDropdown: React.FC = () => {
   return (
     <Dropdown align={'end'}>
       <Dropdown.Toggle size='sm' variant='dark' {...cypressId('user-dropdown')} className={'d-flex align-items-center'}>
-        <UserAvatar user={user} />
+        <UserAvatarForUser user={user} />
       </Dropdown.Toggle>
 
       <Dropdown.Menu className='text-start'>

@@ -9,7 +9,7 @@ import { getUser } from '../../../../api/users'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { setNotePermissionsFromServer } from '../../../../redux/note-details/methods'
 import { ShowIf } from '../../../common/show-if/show-if'
-import { UserAvatar } from '../../../common/user-avatar/user-avatar'
+import { UserAvatarForUser } from '../../../common/user-avatar/user-avatar-for-user'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import { PermissionEntryButtons, PermissionType } from './permission-entry-buttons'
 import { AccessLevel } from './types'
@@ -58,13 +58,13 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps> = ({ entry 
   }, [entry.username])
 
   if (!value) {
-    return null
+    return <></>
   }
 
   return (
     <ShowIf condition={!loading && !error}>
       <li className={'list-group-item d-flex flex-row justify-content-between align-items-center'}>
-        <UserAvatar user={value} />
+        <UserAvatarForUser user={value} />
         <PermissionEntryButtons
           type={PermissionType.USER}
           currentSetting={entry.canEdit ? AccessLevel.WRITEABLE : AccessLevel.READ_ONLY}

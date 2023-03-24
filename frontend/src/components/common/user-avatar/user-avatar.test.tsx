@@ -5,7 +5,7 @@
  */
 import type { UserInfo } from '../../../api/users/types'
 import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
-import { UserAvatar } from './user-avatar'
+import { UserAvatarForUser } from './user-avatar-for-user'
 import { render } from '@testing-library/react'
 
 describe('UserAvatar', () => {
@@ -20,25 +20,25 @@ describe('UserAvatar', () => {
   })
 
   it('renders the user avatar correctly', () => {
-    const view = render(<UserAvatar user={user} />)
+    const view = render(<UserAvatarForUser user={user} />)
     expect(view.container).toMatchSnapshot()
   })
   describe('renders the user avatar in size', () => {
     it('sm', () => {
-      const view = render(<UserAvatar user={user} size={'sm'} />)
+      const view = render(<UserAvatarForUser user={user} size={'sm'} />)
       expect(view.container).toMatchSnapshot()
     })
     it('lg', () => {
-      const view = render(<UserAvatar user={user} size={'lg'} />)
+      const view = render(<UserAvatarForUser user={user} size={'lg'} />)
       expect(view.container).toMatchSnapshot()
     })
   })
   it('adds additionalClasses props to wrapping span', () => {
-    const view = render(<UserAvatar user={user} additionalClasses={'testClass'} />)
+    const view = render(<UserAvatarForUser user={user} additionalClasses={'testClass'} />)
     expect(view.container).toMatchSnapshot()
   })
   it('does not show names if showName prop is false', () => {
-    const view = render(<UserAvatar user={user} showName={false} />)
+    const view = render(<UserAvatarForUser user={user} showName={false} />)
     expect(view.container).toMatchSnapshot()
   })
 })

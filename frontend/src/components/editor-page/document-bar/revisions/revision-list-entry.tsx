@@ -6,7 +6,7 @@
 import type { RevisionMetadata } from '../../../../api/revisions/types'
 import { UiIcon } from '../../../common/icons/ui-icon'
 import { ShowIf } from '../../../common/show-if/show-if'
-import { UserAvatar } from '../../../common/user-avatar/user-avatar'
+import { UserAvatarForUser } from '../../../common/user-avatar/user-avatar-for-user'
 import { WaitSpinner } from '../../../common/wait-spinner/wait-spinner'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import styles from './revision-list-entry.module.scss'
@@ -45,7 +45,7 @@ export const RevisionListEntry: React.FC<RevisionListEntryProps> = ({ active, on
     try {
       const authorDetails = await getUserDataForRevision(revision.authorUsernames)
       return authorDetails.map((author) => (
-        <UserAvatar user={author} key={author.username} showName={false} additionalClasses={'mx-1'} />
+        <UserAvatarForUser user={author} key={author.username} showName={false} additionalClasses={'mx-1'} />
       ))
     } catch (error) {
       showErrorNotification('editor.modal.revision.errorUser')(error as Error)

@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { UserInfo } from '../../../api/users/types'
 import { ShowIf } from '../show-if/show-if'
 import defaultAvatar from './default-avatar.png'
 import styles from './user-avatar.module.scss'
@@ -16,7 +15,8 @@ export interface UserAvatarProps {
   size?: 'sm' | 'lg'
   additionalClasses?: string
   showName?: boolean
-  user: UserInfo
+  photoUrl?: string
+  displayName: string
 }
 
 /**
@@ -27,7 +27,13 @@ export interface UserAvatarProps {
  * @param additionalClasses Additional CSS classes that will be added to the container.
  * @param showName true when the name should be displayed alongside the image, false otherwise. Defaults to true.
  */
-export const UserAvatar: React.FC<UserAvatarProps> = ({ user, size, additionalClasses = '', showName = true }) => {
+export const UserAvatar: React.FC<UserAvatarProps> = ({
+  photoUrl,
+  displayName,
+  size,
+  additionalClasses = '',
+  showName = true
+}) => {
   const { t } = useTranslation()
 
   const imageSize = useMemo(() => {
@@ -42,18 +48,18 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({ user, size, additionalCl
   }, [size])
 
   const avatarUrl = useMemo(() => {
-    return user.photo !== '' ? user.photo : defaultAvatar.src
-  }, [user.photo])
+    return photoUrl || defaultAvatar.src
+  }, [photoUrl])
 
-  const imgDescription = useMemo(() => t('common.avatarOf', { name: user.displayName }), [t, user])
+  const imgDescription = useMemo(() => t('common.avatarOf', { name: displayName }), [t, displayName])
 
   const tooltip = useCallback(
-    (props: OverlayInjectedProps) => (
-      <Tooltip id={user.displayName} {...props}>
-        {user.displayName}
+    (overlayInjectedProps: OverlayInjectedProps) => (
+      <Tooltip id={displayName} {...overlayInjectedProps}>
+        {displayName}
       </Tooltip>
     ),
-    [user]
+    [displayName]
   )
 
   return (
@@ -69,7 +75,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({ user, size, additionalCl
       />
       <ShowIf condition={showName}>
         <OverlayTrigger overlay={tooltip}>
-          <span className={`ms-2 me-1 ${styles['user-line-name']}`}>{user.displayName}</span>
+          <span className={`ms-2 me-1 ${styles['user-line-name']}`}>{displayName}</span>
         </OverlayTrigger>
       </ShowIf>
     </span>
