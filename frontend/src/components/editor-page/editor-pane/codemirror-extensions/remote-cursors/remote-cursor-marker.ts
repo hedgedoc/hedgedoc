@@ -18,7 +18,8 @@ export class RemoteCursorMarker implements LayerMarker {
     private top: number,
     private height: number,
     private name: string,
-    private styleIndex: number
+    private styleIndex: number,
+    private viewWidth: number
   ) {}
 
   draw(): HTMLElement {
@@ -37,7 +38,11 @@ export class RemoteCursorMarker implements LayerMarker {
     element.style.top = `${this.top}px`
     element.style.height = `${this.height}px`
     element.style.setProperty('--name', `"${this.name}"`)
-    element.className = `${styles.cursor} ${createCursorCssClass(this.styleIndex)}`
+    const cursorOnRightSide = this.left > this.viewWidth / 2
+    const cursorOnDownSide = this.top < 20
+    element.className = `${styles.cursor} ${createCursorCssClass(this.styleIndex)} ${
+      cursorOnRightSide ? styles.right : ''
+    } ${cursorOnDownSide ? styles.down : ''}`
   }
 
   eq(other: RemoteCursorMarker): boolean {
@@ -66,7 +71,8 @@ export class RemoteCursorMarker implements LayerMarker {
         absolutePosition.top - baseTop,
         absolutePosition.bottom - absolutePosition.top,
         displayName,
-        styleIndex
+        styleIndex,
+        rect.width
       )
     ]
   }
