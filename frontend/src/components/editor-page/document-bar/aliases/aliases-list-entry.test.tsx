@@ -1,11 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import * as AliasModule from '../../../../api/alias'
 import type { Alias } from '../../../../api/alias/types'
 import * as NoteDetailsReduxModule from '../../../../redux/note-details/methods'
+import { mockNoteOwnership } from '../../../../test-utils/note-ownership'
 import { mockI18n } from '../../../markdown-renderer/test-utils/mock-i18n'
 import * as useUiNotificationsModule from '../../../notifications/ui-notification-boundary'
 import { AliasesListEntry } from './aliases-list-entry'
@@ -15,6 +16,8 @@ import React from 'react'
 jest.mock('../../../../api/alias')
 jest.mock('../../../../redux/note-details/methods')
 jest.mock('../../../notifications/ui-notification-boundary')
+// This needs to be mocked here in addition to note-ownership.ts, because jest doesn't work otherwise
+jest.mock('../../../../hooks/common/use-application-state')
 
 const deletePromise = Promise.resolve()
 const markAsPrimaryPromise = Promise.resolve({ name: 'mock', primaryAlias: true, noteId: 'mock' })
@@ -32,12 +35,13 @@ describe('AliasesListEntry', () => {
     })
   })
 
-  afterAll(() => {
+  afterEach(() => {
     jest.resetAllMocks()
     jest.resetModules()
   })
 
   it('renders an AliasesListEntry that is primary', async () => {
+    mockNoteOwnership('test', 'test')
     const testAlias: Alias = {
       name: 'test-primary',
       primaryAlias: true,
@@ -54,7 +58,19 @@ describe('AliasesListEntry', () => {
     expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
   })
 
+  it("disables button in AliasesListEntry if it's primary", () => {
+    mockNoteOwnership('test2', 'test')
+    const testAlias: Alias = {
+      name: 'test-primary',
+      primaryAlias: true,
+      noteId: 'test-note-id'
+    }
+    const view = render(<AliasesListEntry alias={testAlias} />)
+    expect(view.container).toMatchSnapshot()
+  })
+
   it('renders an AliasesListEntry that is not primary', async () => {
+    mockNoteOwnership('test', 'test')
     const testAlias: Alias = {
       name: 'test-non-primary',
       primaryAlias: false,
@@ -76,5 +92,16 @@ describe('AliasesListEntry', () => {
     expect(AliasModule.markAliasAsPrimary).toBeCalledWith(testAlias.name)
     await markAsPrimaryPromise
     expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
+  })
+
+  it("disables button in AliasesListEntry if it's not primary", () => {
+    mockNoteOwnership('test2', 'test')
+    const testAlias: Alias = {
+      name: 'test-primary',
+      primaryAlias: false,
+      noteId: 'test-note-id'
+    }
+    const view = render(<AliasesListEntry alias={testAlias} />)
+    expect(view.container).toMatchSnapshot()
   })
 })
