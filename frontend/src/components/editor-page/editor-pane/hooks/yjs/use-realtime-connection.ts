@@ -95,7 +95,7 @@ export const useRealtimeConnection = (): MessageTransporter => {
   }, [messageTransporter])
 
   useEffect(() => {
-    const connectedListener = messageTransporter.doAsSoonAsConnected(() => setRealtimeConnectionState(true))
+    const connectedListener = messageTransporter.doAsSoonAsReady(() => setRealtimeConnectionState(true))
     const disconnectedListener = messageTransporter.on('disconnected', () => setRealtimeConnectionState(false), {
       objectify: true
     }) as Listener

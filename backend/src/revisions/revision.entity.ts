@@ -48,6 +48,9 @@ export class Revision {
   @Column()
   length: number;
 
+  @Column('simple-array', { nullable: true })
+  yjsStateVector: null | number[];
+
   /**
    * Date at which the revision was created.
    */
@@ -74,6 +77,7 @@ export class Revision {
     content: string,
     patch: string,
     note: Note,
+    yjsStateVector?: number[],
   ): Omit<Revision, 'id' | 'createdAt'> {
     const newRevision = new Revision();
     newRevision.patch = patch;
@@ -81,6 +85,7 @@ export class Revision {
     newRevision.length = content.length;
     newRevision.note = Promise.resolve(note);
     newRevision.edits = Promise.resolve([]);
+    newRevision.yjsStateVector = yjsStateVector ?? null;
     return newRevision;
   }
 }

@@ -41,6 +41,23 @@ describe('RealtimeNoteStore', () => {
     expect(realtimeNoteConstructorSpy).toHaveBeenCalledWith(
       mockedNote,
       mockedContent,
+      undefined,
+    );
+    expect(realtimeNoteStore.find(mockedNoteId)).toBe(mockedRealtimeNote);
+    expect(realtimeNoteStore.getAllRealtimeNotes()).toStrictEqual([
+      mockedRealtimeNote,
+    ]);
+  });
+
+  it("can create a new realtime note with a yjs state if it doesn't exist yet", () => {
+    const initialYjsState = [1, 2, 3];
+    expect(
+      realtimeNoteStore.create(mockedNote, mockedContent, initialYjsState),
+    ).toBe(mockedRealtimeNote);
+    expect(realtimeNoteConstructorSpy).toHaveBeenCalledWith(
+      mockedNote,
+      mockedContent,
+      initialYjsState,
     );
     expect(realtimeNoteStore.find(mockedNoteId)).toBe(mockedRealtimeNote);
     expect(realtimeNoteStore.getAllRealtimeNotes()).toStrictEqual([

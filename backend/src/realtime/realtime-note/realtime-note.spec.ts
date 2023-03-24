@@ -4,14 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { MessageType, RealtimeDoc } from '@hedgedoc/commons';
-import * as hedgedocCommonsModule from '@hedgedoc/commons';
 import { Mock } from 'ts-mockery';
 
 import { Note } from '../../notes/note.entity';
 import { RealtimeNote } from './realtime-note';
 import { MockConnectionBuilder } from './test-utils/mock-connection';
-
-jest.mock('@hedgedoc/commons');
 
 describe('realtime note', () => {
   let mockedNote: Note;
@@ -40,18 +37,13 @@ describe('realtime note', () => {
     expect(sut.hasConnections()).toBeFalsy();
   });
 
-  it('creates a y-doc', () => {
+  it('creates a realtime doc', () => {
     const initialContent = 'nothing';
-    const mockedDoc = new RealtimeDoc(initialContent);
-    const docSpy = jest
-      .spyOn(hedgedocCommonsModule, 'RealtimeDoc')
-      .mockReturnValue(mockedDoc);
     const sut = new RealtimeNote(mockedNote, initialContent);
-    expect(docSpy).toHaveBeenCalledWith(initialContent);
-    expect(sut.getRealtimeDoc()).toBe(mockedDoc);
+    expect(sut.getRealtimeDoc() instanceof RealtimeDoc).toBeTruthy();
   });
 
-  it('destroys y-doc on self-destruction', () => {
+  it('destroys realtime doc on self-destruction', () => {
     const sut = new RealtimeNote(mockedNote, 'nothing');
     const docDestroy = jest.spyOn(sut.getRealtimeDoc(), 'destroy');
     sut.destroy();

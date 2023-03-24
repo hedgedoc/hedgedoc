@@ -21,12 +21,11 @@ import { useCursorActivityCallback } from './hooks/use-cursor-activity-callback'
 import { useUpdateCodeMirrorReference } from './hooks/use-update-code-mirror-reference'
 import { useBindYTextToRedux } from './hooks/yjs/use-bind-y-text-to-redux'
 import { useCodeMirrorYjsExtension } from './hooks/yjs/use-code-mirror-yjs-extension'
-import { useMarkdownContentYText } from './hooks/yjs/use-markdown-content-y-text'
 import { useOnMetadataUpdated } from './hooks/yjs/use-on-metadata-updated'
 import { useOnNoteDeleted } from './hooks/yjs/use-on-note-deleted'
 import { useRealtimeConnection } from './hooks/yjs/use-realtime-connection'
+import { useRealtimeDoc } from './hooks/yjs/use-realtime-doc'
 import { useReceiveRealtimeUsers } from './hooks/yjs/use-receive-realtime-users'
-import { useYDoc } from './hooks/yjs/use-y-doc'
 import { useYDocSyncClientAdapter } from './hooks/yjs/use-y-doc-sync-client-adapter'
 import { useLinter } from './linter/linter'
 import { MaxLengthWarning } from './max-length-warning/max-length-warning'
@@ -57,8 +56,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
   useApplyScrollState(scrollState)
 
   const messageTransporter = useRealtimeConnection()
-  const yDoc = useYDoc(messageTransporter)
-  const yText = useMarkdownContentYText(yDoc)
+  const realtimeDoc = useRealtimeDoc()
   const editorScrollExtension = useCodeMirrorScrollWatchExtension(onScroll)
   const tablePasteExtensions = useCodeMirrorTablePasteExtension()
   const fileInsertExtension = useCodeMirrorFileInsertExtension()
@@ -70,13 +68,13 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
 
   const linterExtension = useLinter()
 
-  const syncAdapter = useYDocSyncClientAdapter(messageTransporter, yDoc)
-  const yjsExtension = useCodeMirrorYjsExtension(yText, syncAdapter)
+  const syncAdapter = useYDocSyncClientAdapter(messageTransporter, realtimeDoc)
+  const yjsExtension = useCodeMirrorYjsExtension(realtimeDoc, syncAdapter)
 
   useOnMetadataUpdated(messageTransporter)
   useOnNoteDeleted(messageTransporter)
 
-  useBindYTextToRedux(yText)
+  useBindYTextToRedux(realtimeDoc)
   useReceiveRealtimeUsers(messageTransporter)
 
   const extensions = useMemo(

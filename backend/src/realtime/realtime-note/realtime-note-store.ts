@@ -16,15 +16,24 @@ export class RealtimeNoteStore {
    * Creates a new {@link RealtimeNote} for the given {@link Note} and memorizes it.
    *
    * @param note The note for which the realtime note should be created
-   * @param initialContent The initial content for the realtime note
+   * @param initialTextContent the initial text content of realtime doc
+   * @param initialYjsState the initial yjs state. If provided this will be used instead of the text content
    * @throws Error if there is already an realtime note for the given note.
    * @return The created realtime note
    */
-  public create(note: Note, initialContent: string): RealtimeNote {
+  public create(
+    note: Note,
+    initialTextContent: string,
+    initialYjsState?: number[],
+  ): RealtimeNote {
     if (this.noteIdToRealtimeNote.has(note.id)) {
       throw new Error(`Realtime note for note ${note.id} already exists.`);
     }
-    const realtimeNote = new RealtimeNote(note, initialContent);
+    const realtimeNote = new RealtimeNote(
+      note,
+      initialTextContent,
+      initialYjsState,
+    );
     realtimeNote.on('destroy', () => {
       this.noteIdToRealtimeNote.delete(note.id);
     });

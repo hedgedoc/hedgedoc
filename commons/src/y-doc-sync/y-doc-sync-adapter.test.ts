@@ -68,10 +68,10 @@ describe('message transporter', () => {
       console.debug('s>2 is connected')
     )
 
-    docServer.on('update', (update: Uint8Array, origin: unknown) => {
+    docServer.on('update', (update: number[], origin: unknown) => {
       const message: Message<MessageType.NOTE_CONTENT_UPDATE> = {
         type: MessageType.NOTE_CONTENT_UPDATE,
-        payload: Array.from(update)
+        payload: update
       }
       if (origin !== transporterServerTo1) {
         console.debug('YDoc on Server updated. Sending to Client 1')
@@ -82,32 +82,35 @@ describe('message transporter', () => {
         transporterServerTo2.sendMessage(message)
       }
     })
-    docClient1.on('update', (update: Uint8Array, origin: unknown) => {
+    docClient1.on('update', (update: number[], origin: unknown) => {
       if (origin !== transporterClient1) {
         console.debug('YDoc on client 1 updated. Sending to Server')
       }
     })
-    docClient2.on('update', (update: Uint8Array, origin: unknown) => {
+    docClient2.on('update', (update: number[], origin: unknown) => {
       if (origin !== transporterClient2) {
         console.debug('YDoc on client 2 updated. Sending to Server')
       }
     })
 
-    const yDocSyncAdapter1 = new YDocSyncClientAdapter(transporterClient1)
-    yDocSyncAdapter1.setYDoc(docClient1)
-
-    const yDocSyncAdapter2 = new YDocSyncClientAdapter(transporterClient2)
-    yDocSyncAdapter2.setYDoc(docClient2)
+    const yDocSyncAdapter1 = new YDocSyncClientAdapter(
+      transporterClient1,
+      docClient1
+    )
+    const yDocSyncAdapter2 = new YDocSyncClientAdapter(
+      transporterClient2,
+      docClient2
+    )
 
     const yDocSyncAdapterServerTo1 = new YDocSyncServerAdapter(
-      transporterServerTo1
+      transporterServerTo1,
+      docServer
     )
-    yDocSyncAdapterServerTo1.setYDoc(docServer)
 
     const yDocSyncAdapterServerTo2 = new YDocSyncServerAdapter(
-      transporterServerTo2
+      transporterServerTo2,
+      docServer
     )
-    yDocSyncAdapterServerTo2.setYDoc(docServer)
 
     const waitForClient1Sync = new Promise<void>((resolve) => {
       yDocSyncAdapter1.doAsSoonAsSynced(() => {
