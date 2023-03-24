@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,7 @@ import { setNotePermissionsFromServer } from '../../../../redux/note-details/met
 import { ShowIf } from '../../../common/show-if/show-if'
 import { UserAvatarForUser } from '../../../common/user-avatar/user-avatar-for-user'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
+import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionEntryButtons, PermissionType } from './permission-entry-buttons'
 import { AccessLevel } from './types'
 import React, { useCallback } from 'react'
@@ -24,8 +25,12 @@ export interface PermissionEntryUserProps {
  * Permission entry for a user that can be set to read-only or writeable and can be removed.
  *
  * @param entry The permission entry.
+ * @param disabled If the user is not the owner, functionality is disabled.
  */
-export const PermissionEntryUser: React.FC<PermissionEntryUserProps> = ({ entry }) => {
+export const PermissionEntryUser: React.FC<PermissionEntryUserProps & PermissionDisabledProps> = ({
+  entry,
+  disabled
+}) => {
   const noteId = useApplicationState((state) => state.noteDetails.primaryAddress)
   const { showErrorNotification } = useUiNotifications()
 
@@ -72,6 +77,7 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps> = ({ entry 
           onSetReadOnly={onSetEntryReadOnly}
           onSetWriteable={onSetEntryWriteable}
           onRemove={onRemoveEntry}
+          disabled={disabled}
         />
       </li>
     </ShowIf>

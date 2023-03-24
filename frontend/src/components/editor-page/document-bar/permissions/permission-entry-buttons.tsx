@@ -1,9 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { UiIcon } from '../../../common/icons/ui-icon'
+import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { AccessLevel } from './types'
 import React, { useMemo } from 'react'
 import { Button, ToggleButtonGroup } from 'react-bootstrap'
@@ -41,14 +42,16 @@ export interface PermissionEntryButtonsProps {
  * @param onSetReadOnly Callback that is fired when the entry is changed to read-only permission.
  * @param onSetWriteable Callback that is fired when the entry is changed to writeable permission.
  * @param onRemove Callback that is fired when the entry is removed.
+ * @param disabled If the user is not the owner, functionality is disabled.
  */
-export const PermissionEntryButtons: React.FC<PermissionEntryButtonsProps> = ({
+export const PermissionEntryButtons: React.FC<PermissionEntryButtonsProps & PermissionDisabledProps> = ({
   name,
   type,
   currentSetting,
   onSetReadOnly,
   onSetWriteable,
-  onRemove
+  onRemove,
+  disabled
 }) => {
   const { t } = useTranslation()
 
@@ -74,18 +77,21 @@ export const PermissionEntryButtons: React.FC<PermissionEntryButtonsProps> = ({
       <Button
         variant='light'
         className={'text-danger me-2'}
+        disabled={disabled}
         title={t(i18nKeys.remove, { name }) ?? undefined}
         onClick={onRemove}>
         <UiIcon icon={IconX} />
       </Button>
       <ToggleButtonGroup type='radio' name='edit-mode' value={currentSetting}>
         <Button
+          disabled={disabled}
           title={t(i18nKeys.setReadOnly, { name }) ?? undefined}
           variant={currentSetting === AccessLevel.READ_ONLY ? 'secondary' : 'outline-secondary'}
           onClick={onSetReadOnly}>
           <UiIcon icon={IconEye} />
         </Button>
         <Button
+          disabled={disabled}
           title={t(i18nKeys.setWriteable, { name }) ?? undefined}
           variant={currentSetting === AccessLevel.WRITEABLE ? 'secondary' : 'outline-secondary'}
           onClick={onSetWriteable}>

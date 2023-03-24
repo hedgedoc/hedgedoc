@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useIsOwner } from '../../../../hooks/common/use-is-owner'
 import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { PermissionSectionOwner } from './permission-section-owner'
@@ -18,12 +19,13 @@ import { Modal } from 'react-bootstrap'
  * @param onHide Callback that is fired when the modal is about to be closed.
  */
 export const PermissionModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
+  const isOwner = useIsOwner()
   return (
     <CommonModal show={show} onHide={onHide} showCloseButton={true} titleI18nKey={'editor.modal.permissions.title'}>
       <Modal.Body>
-        <PermissionSectionOwner />
-        <PermissionSectionUsers />
-        <PermissionSectionSpecialGroups />
+        <PermissionSectionOwner disabled={!isOwner} />
+        <PermissionSectionUsers disabled={!isOwner} />
+        <PermissionSectionSpecialGroups disabled={!isOwner} />
       </Modal.Body>
     </CommonModal>
   )
