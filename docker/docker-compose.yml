@@ -1,0 +1,38 @@
+# SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+# SPDX-License-Identifier: AGPL-3.0-only
+---
+services:
+  backend:
+    image: ghcr.io/hedgedoc/hedgedoc/backend:develop
+    volumes:
+      - $PWD/.env:/usr/src/app/backend/.env
+      - hedgedoc_uploads:/usr/src/app/backend/uploads
+
+  frontend:
+    image: ghcr.io/hedgedoc/hedgedoc/frontend:develop
+    environment:
+      HD_BASE_URL: "${HD_BASE_URL}"
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: "${HD_DATABASE_USER}"
+      POSTGRES_PASSWORD: "${HD_DATABASE_PASS}"
+      POSTGRES_DB: "${HD_DATABASE_NAME}"
+
+  proxy:
+    image: caddy:latest
+    restart: unless-stopped
+    environment:
+      HD_BASE_URL: "${HD_BASE_URL}"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - $PWD/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+
+volumes:
+  hedgedoc_uploads:
+  caddy_data:
