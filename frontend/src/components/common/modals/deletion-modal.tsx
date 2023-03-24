@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useIsOwner } from '../../../hooks/common/use-is-owner'
 import { cypressId } from '../../../utils/cypress-attribute'
 import type { CommonModalProps } from './common-modal'
 import { CommonModal } from './common-modal'
@@ -40,6 +41,7 @@ export const DeletionModal: React.FC<PropsWithChildren<DeletionModalProps>> = ({
   ...props
 }) => {
   useTranslation()
+  const isOwner = useIsOwner()
 
   return (
     <CommonModal
@@ -51,7 +53,7 @@ export const DeletionModal: React.FC<PropsWithChildren<DeletionModalProps>> = ({
       {...props}>
       <Modal.Body className='text-dark'>{children}</Modal.Body>
       <Modal.Footer>
-        <Button {...cypressId('deletionModal.confirmButton')} variant='danger' onClick={onConfirm}>
+        <Button {...cypressId('deletionModal.confirmButton')} variant='danger' onClick={onConfirm} disabled={!isOwner}>
           <Trans i18nKey={deletionButtonI18nKey} />
         </Button>
       </Modal.Footer>
