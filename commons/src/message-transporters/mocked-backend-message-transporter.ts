@@ -6,14 +6,13 @@
 import { RealtimeDoc } from '../y-doc-sync/realtime-doc.js'
 import { ConnectionState, MessageTransporter } from './message-transporter.js'
 import { Message, MessageType } from './message.js'
-import { Doc, encodeStateAsUpdate } from 'yjs'
 
 /**
  * A mocked connection that doesn't send or receive any data and is instantly ready.
  * The only exception is the note content state request that is answered with the given initial content.
  */
 export class MockedBackendMessageTransporter extends MessageTransporter {
-  private readonly doc: Doc
+  private readonly doc: RealtimeDoc
 
   private connected = true
 
@@ -41,10 +40,10 @@ export class MockedBackendMessageTransporter extends MessageTransporter {
   sendMessage<M extends MessageType>(content: Message<M>) {
     if (content.type === MessageType.NOTE_CONTENT_STATE_REQUEST) {
       setTimeout(() => {
-        const payload = Array.from(
-          encodeStateAsUpdate(this.doc, new Uint8Array(content.payload))
-        )
-        this.receiveMessage({ type: MessageType.NOTE_CONTENT_UPDATE, payload })
+        this.receiveMessage({
+          type: MessageType.NOTE_CONTENT_UPDATE,
+          payload: this.doc.encodeStateAsUpdate(content.payload)
+        })
       }, 10)
     }
   }

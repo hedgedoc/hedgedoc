@@ -8,30 +8,33 @@ import { YTextSyncViewPlugin } from '../../codemirror-extensions/document-sync/y
 import type { Extension } from '@codemirror/state'
 import { ViewPlugin } from '@codemirror/view'
 import type { YDocSyncClientAdapter } from '@hedgedoc/commons'
+import type { RealtimeDoc } from '@hedgedoc/commons'
 import { useEffect, useMemo, useState } from 'react'
-import type { Text as YText } from 'yjs'
 
 /**
  * Creates a {@link Extension code mirror extension} that synchronizes an editor with the given {@link YText ytext}.
  *
- * @param yText The source and target for the editor content
+ * @param doc The {@link RealtimeDoc realtime doc} that contains the markdown content text channel
  * @param syncAdapter The sync adapter that processes the communication for content synchronisation.
  * @return the created extension
  */
-export const useCodeMirrorYjsExtension = (yText: YText | undefined, syncAdapter: YDocSyncClientAdapter): Extension => {
+export const useCodeMirrorYjsExtension = (doc: RealtimeDoc, syncAdapter: YDocSyncClientAdapter): Extension => {
   const [editorReady, setEditorReady] = useState(false)
   const synchronized = useApplicationState((state) => state.realtimeStatus.isSynced)
   const connected = useApplicationState((state) => state.realtimeStatus.isConnected)
 
   useEffect(() => {
-    if (editorReady && connected && !synchronized && yText) {
+    if (editorReady && connected && !synchronized) {
       syncAdapter.requestDocumentState()
     }
-  }, [connected, editorReady, syncAdapter, synchronized, yText])
+  }, [connected, editorReady, syncAdapter, synchronized])
 
   return useMemo(
-    () =>
-      yText ? [ViewPlugin.define((view) => new YTextSyncViewPlugin(view, yText, () => setEditorReady(true)))] : [],
-    [yText]
+    () => [
+      ViewPlugin.define(
+        (view) => new YTextSyncViewPlugin(view, doc.getMarkdownContentChannel(), () => setEditorReady(true))
+      )
+    ],
+    [doc]
   )
 }

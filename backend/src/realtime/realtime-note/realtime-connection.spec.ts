@@ -27,11 +27,7 @@ jest.mock(
     ({
       ...jest.requireActual('@hedgedoc/commons'),
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      YDocSyncServerAdapter: jest.fn(() =>
-        Mock.of<YDocSyncServerAdapter>({
-          setYDoc: jest.fn(),
-        }),
-      ),
+      YDocSyncServerAdapter: jest.fn(() => Mock.of<YDocSyncServerAdapter>({})),
     } as Record<string, unknown>),
 );
 
@@ -86,9 +82,7 @@ describe('websocket connection', () => {
   });
 
   it('returns the correct sync adapter', () => {
-    const yDocSyncServerAdapter = Mock.of<YDocSyncServerAdapter>({
-      setYDoc: jest.fn(),
-    });
+    const yDocSyncServerAdapter = Mock.of<YDocSyncServerAdapter>({});
     jest
       .spyOn(HedgeDocCommonsModule, 'YDocSyncServerAdapter')
       .mockImplementation(() => yDocSyncServerAdapter);

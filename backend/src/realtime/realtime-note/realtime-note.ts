@@ -28,12 +28,17 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   private readonly clients = new Set<RealtimeConnection>();
   private isClosing = false;
 
-  constructor(private readonly note: Note, initialContent: string) {
+  constructor(
+    private readonly note: Note,
+    initialTextContent: string,
+    initialYjsState?: number[],
+  ) {
     super();
     this.logger = new Logger(`${RealtimeNote.name} ${note.id}`);
-    this.doc = new RealtimeDoc(initialContent);
+    this.doc = new RealtimeDoc(initialTextContent, initialYjsState);
+    const length = this.doc.getCurrentContent().length;
     this.logger.debug(
-      `New realtime session for note ${note.id} created. Length of initial content: ${initialContent.length} characters`,
+      `New realtime session for note ${note.id} created. Length of initial content: ${length} characters`,
     );
   }
 

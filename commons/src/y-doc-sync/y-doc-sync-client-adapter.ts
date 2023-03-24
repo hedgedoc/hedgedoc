@@ -5,13 +5,23 @@
  */
 import { MessageType } from '../message-transporters/message.js'
 import { YDocSyncAdapter } from './y-doc-sync-adapter.js'
+import { Listener } from 'eventemitter2'
 
 export class YDocSyncClientAdapter extends YDocSyncAdapter {
   protected bindDocumentSyncMessageEvents() {
-    super.bindDocumentSyncMessageEvents()
+    const destroyCallback = super.bindDocumentSyncMessageEvents()
 
-    this.messageTransporter.on(MessageType.NOTE_CONTENT_UPDATE, () => {
-      this.markAsSynced()
-    })
+    const noteContentUpdateListener = this.messageTransporter.on(
+      MessageType.NOTE_CONTENT_UPDATE,
+      () => {
+        this.markAsSynced()
+      },
+      { objectify: true }
+    ) as Listener
+
+    return () => {
+      destroyCallback()
+      noteContentUpdateListener.off()
+    }
   }
 }

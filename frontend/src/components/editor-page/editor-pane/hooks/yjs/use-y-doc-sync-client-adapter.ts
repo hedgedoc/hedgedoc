@@ -5,11 +5,10 @@
  */
 import { setRealtimeSyncedState } from '../../../../../redux/realtime/methods'
 import { Logger } from '../../../../../utils/logger'
-import type { MessageTransporter } from '@hedgedoc/commons'
+import type { MessageTransporter, RealtimeDoc } from '@hedgedoc/commons'
 import { YDocSyncClientAdapter } from '@hedgedoc/commons'
 import type { Listener } from 'eventemitter2'
 import { useEffect, useMemo } from 'react'
-import type { Doc } from 'yjs'
 
 const logger = new Logger('useYDocSyncClient')
 
@@ -17,18 +16,14 @@ const logger = new Logger('useYDocSyncClient')
  * Creates a {@link YDocSyncClientAdapter} and mirrors its sync state to the global application state.
  *
  * @param messageTransporter The {@link MessageTransporter message transporter} that sends and receives messages for the synchronisation
- * @param yDoc The {@link Doc y-doc} that should be synchronized
+ * @param doc The {@link RealtimeDoc realtime doc} that should be synchronized
  * @return the created adapter
  */
 export const useYDocSyncClientAdapter = (
   messageTransporter: MessageTransporter,
-  yDoc: Doc | undefined
+  doc: RealtimeDoc
 ): YDocSyncClientAdapter => {
-  const syncAdapter = useMemo(() => new YDocSyncClientAdapter(messageTransporter), [messageTransporter])
-
-  useEffect(() => {
-    syncAdapter.setYDoc(yDoc)
-  }, [syncAdapter, yDoc])
+  const syncAdapter = useMemo(() => new YDocSyncClientAdapter(messageTransporter, doc), [doc, messageTransporter])
 
   useEffect(() => {
     const onceSyncedListener = syncAdapter.doAsSoonAsSynced(() => {

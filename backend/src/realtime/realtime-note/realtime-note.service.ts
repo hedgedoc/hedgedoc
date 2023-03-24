@@ -43,6 +43,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
       .createRevision(
         realtimeNote.getNote(),
         realtimeNote.getRealtimeDoc().getCurrentContent(),
+        realtimeNote.getRealtimeDoc().encodeStateAsUpdate(),
       )
       .catch((reason) => this.logger.error(reason));
   }
@@ -68,9 +69,12 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
    * @return The created realtime note
    */
   private async createNewRealtimeNote(note: Note): Promise<RealtimeNote> {
-    const initialContent = (await this.revisionsService.getLatestRevision(note))
-      .content;
-    const realtimeNote = this.realtimeNoteStore.create(note, initialContent);
+    const lastRevision = await this.revisionsService.getLatestRevision(note);
+    const realtimeNote = this.realtimeNoteStore.create(
+      note,
+      lastRevision.content,
+      lastRevision.yjsStateVector ?? undefined,
+    );
     realtimeNote.on('beforeDestroy', () => {
       this.saveRealtimeNote(realtimeNote);
     });

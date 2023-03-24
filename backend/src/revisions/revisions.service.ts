@@ -145,6 +145,7 @@ export class RevisionsService {
   async createRevision(
     note: Note,
     newContent: string,
+    yjsStateVector?: number[],
   ): Promise<Revision | undefined> {
     // TODO: Save metadata
     const latestRevision = await this.getLatestRevision(note);
@@ -157,7 +158,7 @@ export class RevisionsService {
       latestRevision.content,
       newContent,
     );
-    const revision = Revision.create(newContent, patch, note);
+    const revision = Revision.create(newContent, patch, note, yjsStateVector);
     return await this.revisionRepository.save(revision);
   }
 }
