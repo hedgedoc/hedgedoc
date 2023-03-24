@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,6 +10,7 @@ import type { SpecificSidebarMenuProps } from '../types'
 import { DocumentSidebarMenuSelection } from '../types'
 import { UserLine } from '../user-line/user-line'
 import styles from './online-counter.module.scss'
+import { OwnUserLine } from './own-user-line'
 import React, { Fragment, useCallback, useEffect, useMemo, useRef } from 'react'
 import { ArrowLeft as IconArrowLeft } from 'react-bootstrap-icons'
 import { People as IconPeople } from 'react-bootstrap-icons'
@@ -35,7 +36,7 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   useTranslation()
 
   useEffect(() => {
-    buttonRef.current?.style.setProperty('--users-online', `"${realtimeUsers.length}"`)
+    buttonRef.current?.style.setProperty('--users-online', `"${realtimeUsers.length + 1}"`)
   }, [realtimeUsers])
 
   const hide = selectedMenuId !== DocumentSidebarMenuSelection.NONE && selectedMenuId !== menuId
@@ -44,17 +45,11 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
 
   const onlineUserElements = useMemo(() => {
     if (realtimeUsers.length === 0) {
-      return (
-        <SidebarButton>
-          <span className={'ms-3'}>
-            <Trans i18nKey={'editor.onlineStatus.noUsers'}></Trans>
-          </span>
-        </SidebarButton>
-      )
+      return null
     } else {
-      return realtimeUsers.map((realtimeUser) => {
+      return realtimeUsers.map((realtimeUser, index) => {
         return (
-          <SidebarButton key={realtimeUser.styleIndex}>
+          <SidebarButton key={index}>
             <UserLine
               displayName={realtimeUser.displayName}
               username={realtimeUser.username}
@@ -77,7 +72,10 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         className={`${styles['online-entry']} ${className ?? ''}`}>
         <Trans i18nKey={'editor.onlineStatus.online'} />
       </SidebarButton>
-      <SidebarMenu expand={expand}>{onlineUserElements}</SidebarMenu>
+      <SidebarMenu expand={expand}>
+        <OwnUserLine />
+        {onlineUserElements}
+      </SidebarMenu>
     </Fragment>
   )
 }
