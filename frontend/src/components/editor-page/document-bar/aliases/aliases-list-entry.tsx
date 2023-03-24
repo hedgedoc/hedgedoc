@@ -1,10 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { deleteAlias, markAliasAsPrimary } from '../../../../api/alias'
 import type { Alias } from '../../../../api/alias/types'
+import { useIsOwner } from '../../../../hooks/common/use-is-owner'
 import { updateMetadata } from '../../../../redux/note-details/methods'
 import { testId } from '../../../../utils/test-id'
 import { UiIcon } from '../../../common/icons/ui-icon'
@@ -29,6 +30,7 @@ export interface AliasesListEntryProps {
 export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => {
   const { t } = useTranslation()
   const { showErrorNotification } = useUiNotifications()
+  const isOwner = useIsOwner()
 
   const onRemoveClick = useCallback(() => {
     deleteAlias(alias.name)
@@ -60,6 +62,7 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
           <Button
             className={'me-2'}
             variant='light'
+            disabled={!isOwner}
             title={t('editor.modal.aliases.makePrimary') ?? undefined}
             onClick={onMakePrimaryClick}
             {...testId('aliasButtonMakePrimary')}>
@@ -69,6 +72,7 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
         <Button
           variant='light'
           className={'text-danger'}
+          disabled={!isOwner}
           title={t('editor.modal.aliases.removeAlias') ?? undefined}
           onClick={onRemoveClick}
           {...testId('aliasButtonRemove')}>

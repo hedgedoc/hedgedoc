@@ -1,10 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { addAlias } from '../../../../api/alias'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useIsOwner } from '../../../../hooks/common/use-is-owner'
 import { useOnInputChange } from '../../../../hooks/common/use-on-input-change'
 import { updateMetadata } from '../../../../redux/note-details/methods'
 import { testId } from '../../../../utils/test-id'
@@ -25,6 +26,7 @@ export const AliasesAddForm: React.FC = () => {
   const { t } = useTranslation()
   const { showErrorNotification } = useUiNotifications()
   const noteId = useApplicationState((state) => state.noteDetails.id)
+  const isOwner = useIsOwner()
   const [newAlias, setNewAlias] = useState('')
 
   const onAddAlias = useCallback(
@@ -54,6 +56,7 @@ export const AliasesAddForm: React.FC = () => {
           placeholder={t('editor.modal.aliases.addAlias') ?? undefined}
           onChange={onNewAliasInputChange}
           isInvalid={!newAliasValid}
+          disabled={!isOwner}
           required={true}
           {...testId('addAliasInput')}
         />
@@ -61,7 +64,7 @@ export const AliasesAddForm: React.FC = () => {
           type={'submit'}
           variant='light'
           className={'text-secondary ms-2'}
-          disabled={!newAliasValid || newAlias === ''}
+          disabled={!isOwner || !newAliasValid || newAlias === ''}
           title={t('editor.modal.aliases.addAlias') ?? undefined}
           {...testId('addAliasButton')}>
           <UiIcon icon={IconPlus} />
