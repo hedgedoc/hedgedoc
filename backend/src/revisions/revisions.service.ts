@@ -6,7 +6,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { createPatch } from 'diff';
-import { Equal, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
@@ -49,7 +49,7 @@ export class RevisionsService {
   async purgeRevisions(note: Note): Promise<Revision[]> {
     const revisions = await this.revisionRepository.find({
       where: {
-        note: Equal(note),
+        note: { id: note.id },
       },
     });
     const latestRevision = await this.getLatestRevision(note);
@@ -65,7 +65,7 @@ export class RevisionsService {
     const revision = await this.revisionRepository.findOne({
       where: {
         id: revisionId,
-        note: Equal(note),
+        note: { id: note.id },
       },
     });
     if (revision === null) {
@@ -79,7 +79,7 @@ export class RevisionsService {
   async getLatestRevision(note: Note): Promise<Revision> {
     const revision = await this.revisionRepository.findOne({
       where: {
-        note: Equal(note),
+        note: { id: note.id },
       },
       order: {
         createdAt: 'DESC',
