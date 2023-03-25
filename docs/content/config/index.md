@@ -2,27 +2,33 @@ HedgeDoc can be configured via environment variables either directly or via an `
 
 ## The `.env` file
 
-The `.env` file should be placed in the root of the project and contains key-value pairs of environment variables and their corresponding value. This can for example look like this:
+The `.env` file should be placed in the root of the project and contains key-value pairs of
+environment variables and their corresponding value. This can for example look like this:
 
 ```ini
-HD_BASE_URL="http://localhost"
-HD_MEDIA_BACKEND="filesystem"
-HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH="uploads/"
+HD_BASE_URL="http://localhost:8080"
+HD_SESSION_SECRET="session_secret"
 HD_DATABASE_TYPE="sqlite"
 HD_DATABASE_NAME="./hedgedoc.sqlite"
+HD_MEDIA_BACKEND="filesystem"
+HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH="uploads/"
 ```
 
-We also provide an `.env.example` file containing a minimal configuration in the root of the project. This should help you to write your own configuration.
+We also provide an `.env.example` file containing a minimal configuration in the root of the project.
+This should help you to write your own configuration.
 
 !!! warning  
-    The minimal configuration provided in `.env.example` is exactly that: minimal. It will let you start HedgeDoc, but it is **not** meant to be used in production without prior changes.
+    The minimal configuration provided in `.env.example` is exactly that: minimal.  
+    It will let you start HedgeDoc for local development,
+    but it is **not** meant to be used in production without prior changes.
 
 ## General
 
 | environment variable     | default                | example                     | description                                                                                                                                            |
 |--------------------------|------------------------|-----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `HD_BASE_URL`            | -                      | `https://md.example.com`    | The URL the HedgeDoc instance runs on.                                                                                                                 |
-| `PORT`                   | 3000                   |                             | The port the HedgeDoc instance runs on.                                                                                                                |
+| `HD_BASE_URL`            | -                      | `https://md.example.com`    | The URL the HedgeDoc instance is accessed with, like it is entered in the browser                                                                      |
+| `HD_BACKEND_PORT`        | 3000                   |                             | The port the backend process listens on.                                                                                                               |
+| `HD_FRONTEND_PORT`       | 3001                   |                             | The port the frontend process listens on.                                                                                                              |
 | `HD_RENDERER_BASE_URL`   | Content of HD_BASE_URL |                             | The URL the renderer runs on. If omitted this will be the same as `HD_BASE_URL`.                                                                       |
 | `HD_LOGLEVEL`            | warn                   |                             | The loglevel that should be used. Options are `error`, `warn`, `info`, `debug` or `trace`.                                                             |
 | `HD_FORBIDDEN_NOTE_IDS`  | -                      | `notAllowed,alsoNotAllowed` | A list of note ids (separated by `,`), that are not allowed to be created or requested by anyone.                                                      |
@@ -31,7 +37,10 @@ We also provide an `.env.example` file containing a minimal configuration in the
 
 ### Why should I want to run my renderer on a different (sub-)domain?
 
-If the renderer is provided by another domain, it's way harder to manipulate HedgeDoc or steal credentials from the rendered note content, because renderer and editor are more isolated. This increases the security of the software and greatly mitigates [XSS attacks](https://en.wikipedia.org/wiki/Cross-site_scripting). However, you can run HedgeDoc without this extra security, but we recommend using it if possible.
+If the renderer is provided by another domain, it's way harder to manipulate HedgeDoc or
+steal credentials from the rendered note content, because renderer and editor are more isolated.
+This increases the security of the software and greatly mitigates [XSS attacks](https://en.wikipedia.org/wiki/Cross-site_scripting).
+However, you can run HedgeDoc without this extra security, but we recommend using it if possible.
 
 ## Notes
 

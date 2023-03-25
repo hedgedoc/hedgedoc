@@ -55,7 +55,7 @@ const schema = Joi.object({
     .default(3000)
     .max(65535)
     .optional()
-    .label('PORT'),
+    .label('HD_BACKEND_PORT'),
   loglevel: Joi.string()
     .valid(...Object.values(Loglevel))
     .default(Loglevel.WARN)
@@ -79,7 +79,7 @@ export default registerAs('appConfig', () => {
     {
       baseUrl: process.env.HD_BASE_URL,
       rendererBaseUrl: process.env.HD_RENDERER_BASE_URL,
-      port: parseOptionalNumber(process.env.PORT),
+      port: parseOptionalNumber(process.env.HD_BACKEND_PORT),
       loglevel: process.env.HD_LOGLEVEL,
       persistInterval: process.env.HD_PERSIST_INTERVAL,
     },
