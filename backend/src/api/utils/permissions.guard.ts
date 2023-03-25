@@ -16,6 +16,8 @@ import { CompleteRequest } from './request.type';
 /**
  * This guards controller methods from access, if the user has not the appropriate permissions.
  * The permissions are set via the {@link Permissions} decorator in addition to this guard.
+ * If the check permission is not CREATE the method needs to extract the noteIdOrAlias from
+ * request.params['noteIdOrAlias'] or request.headers['hedgedoc-note'] to check if the user has the permission.
  */
 @Injectable()
 export class PermissionsGuard implements CanActivate {
@@ -46,9 +48,11 @@ export class PermissionsGuard implements CanActivate {
     if (permissions[0] === Permission.CREATE) {
       return this.permissionsService.mayCreate(user);
     }
-    // Get the note from the parameter noteIdOrAlias
-    // Attention: This gets the note an additional time if used in conjunction with GetNoteInterceptor
-    const noteIdOrAlias = request.params['noteIdOrAlias'];
+    // Get the note from the parameter noteIdOrAlias or the http header hedgedoc-note
+    // Attention: This gets the note an additional time if used in conjunction with GetNoteInterceptor or NoteHeaderInterceptor
+    let noteIdOrAlias = request.params['noteIdOrAlias'];
+    if (noteIdOrAlias === undefined)
+      noteIdOrAlias = request.headers['hedgedoc-note'] as string;
     const note = await getNote(this.noteService, noteIdOrAlias);
     switch (permissions[0]) {
       case Permission.READ:

@@ -28,9 +28,9 @@ export class MediaUpload {
   note: Promise<Note | null>;
 
   @ManyToOne((_) => User, (user) => user.mediaUploads, {
-    nullable: false,
+    nullable: true,
   })
-  user: Promise<User>;
+  user: Promise<User | null>;
 
   @Column({
     nullable: false,
@@ -65,7 +65,7 @@ export class MediaUpload {
   public static create(
     id: string,
     note: Note,
-    user: User,
+    user: User | null,
     extension: string,
     backendType: BackendType,
     fileUrl: string,

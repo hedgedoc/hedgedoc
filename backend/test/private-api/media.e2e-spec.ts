@@ -123,32 +123,77 @@ describe('Media', () => {
     });
   });
 
-  it('DELETE /media/{filename}', async () => {
-    // upload a file with the default test user
-    const testNote = await testSetup.notesService.createNote(
-      'test content',
-      null,
-      'test_delete_media',
-    );
-    const testImage = await fs.readFile('test/private-api/fixtures/test.png');
-    const upload = await testSetup.mediaService.saveFile(
-      testImage,
-      user,
-      testNote,
-    );
-    const filename = upload.fileUrl.split('/').pop() || '';
+  describe('DELETE /media/{filename}', () => {
+    it('deleting user is owner of file', async () => {
+      // upload a file with the default test user
+      const testNote = await testSetup.notesService.createNote(
+        'test content',
+        null,
+        'test_delete_media_file',
+      );
+      const testImage = await fs.readFile('test/private-api/fixtures/test.png');
+      const upload = await testSetup.mediaService.saveFile(
+        testImage,
+        user,
+        testNote,
+      );
+      const filename = upload.fileUrl.split('/').pop() || '';
 
-    // login with a different user;
-    const agent2 = request.agent(testSetup.app.getHttpServer());
-    await agent2
-      .post('/api/private/auth/local/login')
-      .send({ username: username2, password: password2 })
-      .expect(201);
+      // login with a different user;
+      const agent2 = request.agent(testSetup.app.getHttpServer());
+      await agent2
+        .post('/api/private/auth/local/login')
+        .send({ username: username2, password: password2 })
+        .expect(201);
 
-    // try to delete upload with second user
-    await agent2.delete('/api/private/media/' + filename).expect(403);
+      // try to delete upload with second user
+      await agent2.delete('/api/private/media/' + filename).expect(403);
 
-    // delete upload for real
-    await agent.delete('/api/private/media/' + filename).expect(204);
+      await agent.get('/uploads/' + filename).expect(200);
+
+      // delete upload for real
+      await agent.delete('/api/private/media/' + filename).expect(204);
+
+      // Test if file is really deleted
+      await agent.get('/uploads/' + filename).expect(404);
+    });
+    it('deleting user is owner of note', async () => {
+      // upload a file with the default test user
+      const testNote = await testSetup.notesService.createNote(
+        'test content',
+        await testSetup.userService.getUserByUsername(username2),
+        'test_delete_media_note',
+      );
+      const testImage = await fs.readFile('test/private-api/fixtures/test.png');
+      const upload = await testSetup.mediaService.saveFile(
+        testImage,
+        null,
+        testNote,
+      );
+      const filename = upload.fileUrl.split('/').pop() || '';
+
+      // login with a different user;
+      const agent2 = request.agent(testSetup.app.getHttpServer());
+      await agent2
+        .post('/api/private/auth/local/login')
+        .send({ username: username2, password: password2 })
+        .expect(201);
+
+      const agentGuest = request.agent(testSetup.app.getHttpServer());
+
+      // try to delete upload with second user
+      await agent.delete('/api/private/media/' + filename).expect(403);
+
+      await agent.get('/uploads/' + filename).expect(200);
+
+      await agentGuest.delete('/api/private/media/' + filename).expect(401);
+
+      await agent.get('/uploads/' + filename).expect(200);
+      // delete upload for real
+      await agent2.delete('/api/private/media/' + filename).expect(204);
+
+      // Test if file is really deleted
+      await agent.get('/uploads/' + filename).expect(404);
+    });
   });
 });
