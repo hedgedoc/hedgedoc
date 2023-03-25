@@ -10,7 +10,11 @@ import type { Reducer } from 'redux'
 const initialState: RealtimeStatus = {
   isSynced: false,
   isConnected: false,
-  onlineUsers: []
+  onlineUsers: [],
+  ownUser: {
+    displayName: '',
+    styleIndex: 0
+  }
 }
 
 /**
@@ -28,7 +32,8 @@ export const RealtimeStatusReducer: Reducer<RealtimeStatus, RealtimeStatusAction
     case RealtimeStatusActionType.SET_REALTIME_USERS:
       return {
         ...state,
-        onlineUsers: action.users
+        onlineUsers: action.users,
+        ownUser: action.ownUser
       }
     case RealtimeStatusActionType.SET_REALTIME_CONNECTION_STATUS:
       return {

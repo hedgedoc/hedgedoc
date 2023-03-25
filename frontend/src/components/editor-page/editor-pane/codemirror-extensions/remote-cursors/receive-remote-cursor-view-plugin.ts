@@ -20,7 +20,7 @@ export class ReceiveRemoteCursorViewPlugin implements PluginValue {
     this.listener = messageTransporter.on(
       MessageType.REALTIME_USER_STATE_SET,
       ({ payload }) => {
-        const cursors: RemoteCursor[] = payload.map((user) => ({
+        const cursors: RemoteCursor[] = payload.users.map((user) => ({
           from: user.cursor.from,
           to: user.cursor.to,
           displayName: user.displayName,

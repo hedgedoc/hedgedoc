@@ -94,13 +94,21 @@ export class RealtimeUserStatusAdapter {
   }
 
   private sendCompleteStateToClient(client: RealtimeConnection): void {
-    const payload = this.collectAllConnectionsExcept(client).map(
+    const realtimeUsers = this.collectAllConnectionsExcept(client).map(
       (client) => client.getRealtimeUserStateAdapter().realtimeUser,
     );
 
     client.getTransporter().sendMessage({
       type: MessageType.REALTIME_USER_STATE_SET,
-      payload,
+      payload: {
+        users: realtimeUsers,
+        ownUser: {
+          displayName:
+            client.getRealtimeUserStateAdapter().realtimeUser.displayName,
+          styleIndex:
+            client.getRealtimeUserStateAdapter().realtimeUser.styleIndex,
+        },
+      },
     });
   }
 
