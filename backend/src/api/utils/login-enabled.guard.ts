@@ -3,14 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  BadRequestException,
-  CanActivate,
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { CanActivate, Inject, Injectable } from '@nestjs/common';
 
 import authConfiguration, { AuthConfig } from '../../config/auth.config';
+import { FeatureDisabledError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 
 @Injectable()
@@ -26,7 +22,7 @@ export class LoginEnabledGuard implements CanActivate {
   canActivate(): boolean {
     if (!this.authConfig.local.enableLogin) {
       this.logger.debug('Local auth is disabled.', 'canActivate');
-      throw new BadRequestException('Local auth is disabled.');
+      throw new FeatureDisabledError('Local auth is disabled.');
     }
     return true;
   }

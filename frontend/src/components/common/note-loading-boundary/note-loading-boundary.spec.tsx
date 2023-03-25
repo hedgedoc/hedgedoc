@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { ApiError } from '../../../api/common/api-error'
 import * as getNoteModule from '../../../api/notes'
 import type { Note } from '../../../api/notes/types'
 import * as LoadingScreenModule from '../../../components/application-loader/loading-screen/loading-screen'
@@ -87,7 +88,7 @@ describe('Note loading boundary', () => {
     jest.spyOn(getNoteModule, 'getNote').mockImplementation((id) => {
       expect(id).toBe(mockedNoteId)
       return new Promise((resolve, reject) => {
-        setTimeout(() => reject(new Error('api.note.notFound')), 0)
+        setTimeout(() => reject(new ApiError(404, undefined, undefined)), 0)
       })
     })
   }

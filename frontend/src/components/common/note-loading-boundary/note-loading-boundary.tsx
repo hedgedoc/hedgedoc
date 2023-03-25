@@ -3,6 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { ApiError } from '../../../api/common/api-error'
+import { ErrorToI18nKeyMapper } from '../../../api/common/error-to-i18n-key-mapper'
 import { LoadingScreen } from '../../application-loader/loading-screen/loading-screen'
 import { CommonErrorPage } from '../../error-pages/common-error-page'
 import { CustomAsyncLoadingBoundary } from '../async-loading-boundary/custom-async-loading-boundary'
@@ -28,11 +30,18 @@ export const NoteLoadingBoundary: React.FC<PropsWithChildren> = ({ children }) =
 
   const errorComponent = useMemo(() => {
     if (error === undefined) {
-      return <></>
+      return null
     }
+    const errorI18nKeyPrefix = new ErrorToI18nKeyMapper(error, 'noteLoadingBoundary.error')
+      .withHttpCode(404, 'notFound')
+      .withHttpCode(403, 'forbidden')
+      .withHttpCode(401, 'forbidden')
+      .orFallbackI18nKey('other')
     return (
-      <CommonErrorPage titleI18nKey={`${error.message}.title`} descriptionI18nKey={`${error.message}.description`}>
-        <ShowIf condition={error.message === 'api.error.note.not_found'}>
+      <CommonErrorPage
+        titleI18nKey={`${errorI18nKeyPrefix}.title`}
+        descriptionI18nKey={`${errorI18nKeyPrefix}.description`}>
+        <ShowIf condition={error instanceof ApiError && error.statusCode === 404}>
           <CreateNonExistingNoteHint onNoteCreated={loadNoteFromServer} />
         </ShowIf>
       </CommonErrorPage>

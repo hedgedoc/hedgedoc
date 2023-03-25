@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { doLocalLogin } from '../../../api/auth/local'
+import { ErrorToI18nKeyMapper } from '../../../api/common/error-to-i18n-key-mapper'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
 import { ShowIf } from '../../common/show-if/show-if'
@@ -30,7 +31,14 @@ export const ViaLocal: React.FC = () => {
     (event: FormEvent) => {
       doLocalLogin(username, password)
         .then(() => fetchAndSetUser())
-        .catch((error: Error) => setError(error.message))
+        .catch((error: Error) => {
+          const errorI18nKey = new ErrorToI18nKeyMapper(error, 'login.auth.error')
+            .withHttpCode(404, 'usernamePassword')
+            .withHttpCode(401, 'usernamePassword')
+            .withBackendErrorName('FeatureDisabledError', 'loginDisabled')
+            .orFallbackI18nKey('other')
+          setError(errorI18nKey)
+        })
       event.preventDefault()
     },
     [username, password]
@@ -45,25 +53,23 @@ export const ViaLocal: React.FC = () => {
         <Card.Title>
           <Trans i18nKey='login.signInVia' values={{ service: t('login.auth.username') }} />
         </Card.Title>
-        <Form onSubmit={onLoginSubmit}>
+        <Form onSubmit={onLoginSubmit} className={'d-flex gap-3 flex-column'}>
           <UsernameField onChange={onUsernameChange} invalid={!!error} />
           <PasswordField onChange={onPasswordChange} invalid={!!error} />
           <Alert className='small' show={!!error} variant='danger'>
             <Trans i18nKey={error} />
           </Alert>
-
-          <div className='flex flex-row' dir='auto'>
-            <Button type='submit' variant='primary' className='mx-2'>
-              <Trans i18nKey='login.signIn' />
-            </Button>
-            <ShowIf condition={allowRegister}>
-              <Link href={'/register'} passHref={true}>
-                <Button type='button' variant='secondary' className='mx-2'>
-                  <Trans i18nKey='login.register.title' />
-                </Button>
-              </Link>
-            </ShowIf>
-          </div>
+          <Button type='submit' variant='primary'>
+            <Trans i18nKey='login.signIn' />
+          </Button>
+          <ShowIf condition={allowRegister}>
+            <Trans i18nKey={'login.register.question'} />
+            <Link href={'/register'} passHref={true}>
+              <Button type='button' variant='secondary' className={'d-block w-100'}>
+                <Trans i18nKey='login.register.title' />
+              </Button>
+            </Link>
+          </ShowIf>
         </Form>
       </Card.Body>
     </Card>

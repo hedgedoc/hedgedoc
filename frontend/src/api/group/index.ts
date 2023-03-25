@@ -14,6 +14,6 @@ import type { GroupInfo } from './types'
  * @throws {Error} when the api request wasn't successful.
  */
 export const getGroup = async (groupName: string): Promise<GroupInfo> => {
-  const response = await new GetApiRequestBuilder<GroupInfo>('groups/' + groupName, 'group').sendRequest()
+  const response = await new GetApiRequestBuilder<GroupInfo>('groups/' + groupName).sendRequest()
   return response.asParsedJsonObject()
 }

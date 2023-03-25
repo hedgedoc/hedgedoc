@@ -37,8 +37,8 @@ export const ProfileChangePassword: React.FC = () => {
     } catch (error) {
       const foundI18nKey = new ErrorToI18nKeyMapper(error as Error, 'login.auth.error')
         .withHttpCode(401, 'invalidCredentials')
-        .withBackendErrorName('loginDisabled', 'loginDisabled')
-        .withBackendErrorName('passwordTooWeak', 'passwordTooWeak')
+        .withBackendErrorName('FeatureDisabledError', 'loginDisabled')
+        .withBackendErrorName('PasswordTooWeakError', 'passwordTooWeak')
         .orFallbackI18nKey('other')
       return Promise.reject(foundI18nKey)
     } finally {

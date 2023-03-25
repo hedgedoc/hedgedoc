@@ -54,17 +54,11 @@ export const RegisterPage: NextPage = () => {
   )
 
   const ready = useMemo(() => {
-    return (
-      username.trim() !== '' &&
-      displayName.trim() !== '' &&
-      password.trim() !== '' &&
-      password.length >= 8 &&
-      password === passwordAgain
-    )
+    return username.trim() !== '' && displayName.trim() !== '' && password.trim() !== '' && password === passwordAgain
   }, [username, password, displayName, passwordAgain])
 
   const isWeakPassword = useMemo(() => {
-    return error?.apiErrorName === 'passwordTooWeak'
+    return error?.backendErrorName === 'PasswordTooWeakError'
   }, [error])
 
   const onUsernameChange = useOnInputChange(setUsername)
@@ -90,7 +84,7 @@ export const RegisterPage: NextPage = () => {
           <Col lg={6}>
             <Card className='bg-dark mb-4 text-start'>
               <Card.Body>
-                <Form onSubmit={doRegisterSubmit}>
+                <Form onSubmit={doRegisterSubmit} className={'d-flex flex-column gap-3'}>
                   <UsernameField onChange={onUsernameChange} value={username} />
                   <DisplayNameField onChange={onDisplayNameChange} value={displayName} />
                   <NewPasswordField onChange={onPasswordChange} value={password} hasError={isWeakPassword} />
@@ -106,9 +100,9 @@ export const RegisterPage: NextPage = () => {
                   <Button variant='primary' type='submit' disabled={!ready}>
                     <Trans i18nKey='login.register.title' />
                   </Button>
-                </Form>
 
-                <RegisterError error={error} />
+                  <RegisterError error={error} />
+                </Form>
               </Card.Body>
             </Card>
           </Col>

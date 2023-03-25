@@ -25,7 +25,7 @@ describe('Auth', () => {
   let displayName: string;
   let password: string;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().build();
     await testSetup.app.init();
 
@@ -34,7 +34,7 @@ describe('Auth', () => {
     password = 'test_password';
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     // Yes, this is a bad hack, but there is a race somewhere and I have
     // no idea how to fix it.
     await new Promise((resolve) => {
@@ -193,7 +193,7 @@ describe('Auth', () => {
           .set('Content-Type', 'application/json')
           .set('Cookie', cookie)
           .send(JSON.stringify(changePasswordDto))
-          .expect(400);
+          .expect(403);
         // enable login again
         testSetup.configService.get('authConfig').local.enableLogin = true;
         // new password doesn't work for login

@@ -15,7 +15,7 @@ import type { LoginDto } from './types'
  * @throws {Error} when the api request wasn't successfull
  */
 export const doLdapLogin = async (provider: string, username: string, password: string): Promise<void> => {
-  await new PostApiRequestBuilder<void, LoginDto>('auth/ldap/' + provider, 'auth')
+  await new PostApiRequestBuilder<void, LoginDto>('auth/ldap/' + provider)
     .withJsonBody({
       username: username,
       password: password

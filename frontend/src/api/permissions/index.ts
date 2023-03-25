@@ -18,8 +18,7 @@ import type { OwnerChangeDto, PermissionSetDto } from './types'
  */
 export const setNoteOwner = async (noteId: string, owner: string): Promise<NotePermissions> => {
   const response = await new PutApiRequestBuilder<NotePermissions, OwnerChangeDto>(
-    `notes/${noteId}/metadata/permissions/owner`,
-    'permission'
+    `notes/${noteId}/metadata/permissions/owner`
   )
     .withJsonBody({
       owner
@@ -43,8 +42,7 @@ export const setUserPermission = async (
   canEdit: boolean
 ): Promise<NotePermissions> => {
   const response = await new PutApiRequestBuilder<NotePermissions, PermissionSetDto>(
-    `notes/${noteId}/metadata/permissions/users/${username}`,
-    'permission'
+    `notes/${noteId}/metadata/permissions/users/${username}`
   )
     .withJsonBody({
       canEdit
@@ -68,8 +66,7 @@ export const setGroupPermission = async (
   canEdit: boolean
 ): Promise<NotePermissions> => {
   const response = await new PutApiRequestBuilder<NotePermissions, PermissionSetDto>(
-    `notes/${noteId}/metadata/permissions/groups/${groupName}`,
-    'permission'
+    `notes/${noteId}/metadata/permissions/groups/${groupName}`
   )
     .withJsonBody({
       canEdit
@@ -88,8 +85,7 @@ export const setGroupPermission = async (
  */
 export const removeUserPermission = async (noteId: string, username: string): Promise<NotePermissions> => {
   const response = await new DeleteApiRequestBuilder<NotePermissions>(
-    `notes/${noteId}/metadata/permissions/users/${username}`,
-    'permission'
+    `notes/${noteId}/metadata/permissions/users/${username}`
   ).sendRequest()
   return response.asParsedJsonObject()
 }
@@ -104,8 +100,7 @@ export const removeUserPermission = async (noteId: string, username: string): Pr
  */
 export const removeGroupPermission = async (noteId: string, groupName: string): Promise<NotePermissions> => {
   const response = await new DeleteApiRequestBuilder<NotePermissions>(
-    `notes/${noteId}/metadata/permissions/groups/${groupName}`,
-    'permission'
+    `notes/${noteId}/metadata/permissions/groups/${groupName}`
   ).sendRequest()
   return response.asParsedJsonObject()
 }

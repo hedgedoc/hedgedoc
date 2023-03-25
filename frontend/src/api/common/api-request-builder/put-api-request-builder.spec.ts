@@ -22,7 +22,7 @@ describe('PutApiRequestBuilder', () => {
   describe('sendRequest without body', () => {
     it('without headers', async () => {
       expectFetch('api/private/test', 200, { method: 'PUT' })
-      await new PutApiRequestBuilder<string, undefined>('test', 'test').sendRequest()
+      await new PutApiRequestBuilder<string, undefined>('test').sendRequest()
     })
 
     it('with single header', async () => {
@@ -32,7 +32,7 @@ describe('PutApiRequestBuilder', () => {
         method: 'PUT',
         headers: expectedHeaders
       })
-      await new PutApiRequestBuilder<string, undefined>('test', 'test').withHeader('test', 'true').sendRequest()
+      await new PutApiRequestBuilder<string, undefined>('test').withHeader('test', 'true').sendRequest()
     })
 
     it('with overriding single header', async () => {
@@ -42,7 +42,7 @@ describe('PutApiRequestBuilder', () => {
         method: 'PUT',
         headers: expectedHeaders
       })
-      await new PutApiRequestBuilder<string, undefined>('test', 'test')
+      await new PutApiRequestBuilder<string, undefined>('test')
         .withHeader('test', 'true')
         .withHeader('test', 'false')
         .sendRequest()
@@ -56,7 +56,7 @@ describe('PutApiRequestBuilder', () => {
         method: 'PUT',
         headers: expectedHeaders
       })
-      await new PutApiRequestBuilder<string, undefined>('test', 'test')
+      await new PutApiRequestBuilder<string, undefined>('test')
         .withHeader('test', 'true')
         .withHeader('test2', 'false')
         .sendRequest()
@@ -72,7 +72,7 @@ describe('PutApiRequestBuilder', () => {
       headers: expectedHeaders,
       body: '{"test":true,"foo":"bar"}'
     })
-    await new PutApiRequestBuilder('test', 'test')
+    await new PutApiRequestBuilder('test')
       .withJsonBody({
         test: true,
         foo: 'bar'
@@ -85,7 +85,7 @@ describe('PutApiRequestBuilder', () => {
       method: 'PUT',
       body: 'HedgeDoc'
     })
-    await new PutApiRequestBuilder('test', 'test').withBody('HedgeDoc').sendRequest()
+    await new PutApiRequestBuilder('test').withBody('HedgeDoc').sendRequest()
   })
 
   describe('sendRequest with custom options', () => {
@@ -94,7 +94,7 @@ describe('PutApiRequestBuilder', () => {
         method: 'PUT',
         cache: 'force-cache'
       })
-      await new PutApiRequestBuilder<string, undefined>('test', 'test')
+      await new PutApiRequestBuilder<string, undefined>('test')
         .withCustomOptions({
           cache: 'force-cache'
         })
@@ -106,7 +106,7 @@ describe('PutApiRequestBuilder', () => {
         method: 'PUT',
         cache: 'no-store'
       })
-      await new PutApiRequestBuilder<string, undefined>('test', 'test')
+      await new PutApiRequestBuilder<string, undefined>('test')
         .withCustomOptions({
           cache: 'force-cache'
         })
@@ -122,7 +122,7 @@ describe('PutApiRequestBuilder', () => {
         cache: 'force-cache',
         integrity: 'test'
       })
-      await new PutApiRequestBuilder<string, undefined>('test', 'test')
+      await new PutApiRequestBuilder<string, undefined>('test')
         .withCustomOptions({
           cache: 'force-cache',
           integrity: 'test'
@@ -132,28 +132,28 @@ describe('PutApiRequestBuilder', () => {
   })
 
   describe('failing sendRequest', () => {
-    it('with bad request without api error name', async () => {
+    it('without backend provided error name or error message', async () => {
       expectFetch('api/private/test', 400, { method: 'PUT' })
-      const request = new PutApiRequestBuilder<string, string>('test', 'test').sendRequest()
-      await expect(request).rejects.toEqual(new ApiError(400, 'unknown', 'test', 'testExplosion'))
+      const request = new PutApiRequestBuilder<string, undefined>('test').sendRequest()
+      await expect(request).rejects.toEqual(new ApiError(400, undefined, undefined))
     })
 
-    it('with bad request with api error name', async () => {
+    it('with backend error name and error message', async () => {
       expectFetch('api/private/test', 400, { method: 'PUT' }, {
         message: 'The API has exploded!',
-        error: 'testExplosion'
+        name: 'testExplosion'
       } as ApiErrorResponse)
-      const request = new PutApiRequestBuilder<string, string>('test', 'test').sendRequest()
-      await expect(request).rejects.toEqual(new ApiError(400, 'testExplosion', 'test', 'testExplosion'))
+      const request = new PutApiRequestBuilder<string, undefined>('test').sendRequest()
+      await expect(request).rejects.toEqual(new ApiError(400, 'testExplosion', 'The API has exploded!'))
     })
 
-    it('with non bad request error', async () => {
+    it('with another status code than 400', async () => {
       expectFetch('api/private/test', 401, { method: 'PUT' }, {
         message: 'The API has exploded!',
-        error: 'testExplosion'
+        name: 'testExplosion'
       } as ApiErrorResponse)
-      const request = new PutApiRequestBuilder<string, string>('test', 'test').sendRequest()
-      await expect(request).rejects.toEqual(new ApiError(401, 'forbidden', 'test', 'testExplosion'))
+      const request = new PutApiRequestBuilder<string, undefined>('test').sendRequest()
+      await expect(request).rejects.toEqual(new ApiError(401, 'testExplosion', 'The API has exploded!'))
     })
   })
 })

@@ -5,6 +5,9 @@
  */
 import { ApiError } from './api-error'
 
+/**
+ * Maps an error to an i18n key.
+ */
 export class ErrorToI18nKeyMapper {
   private foundI18nKey: string | undefined = undefined
 
@@ -21,7 +24,7 @@ export class ErrorToI18nKeyMapper {
     if (
       this.foundI18nKey === undefined &&
       this.apiError instanceof ApiError &&
-      this.apiError.apiErrorName === errorName
+      this.apiError.backendErrorName === errorName
     ) {
       this.foundI18nKey = i18nKey
     }
@@ -35,12 +38,10 @@ export class ErrorToI18nKeyMapper {
     return this
   }
 
-  public orFallbackI18nKey(fallback?: string): typeof fallback {
-    const foundValue = this.foundI18nKey ?? fallback
-    if (foundValue !== undefined && this.i18nNamespace !== undefined) {
-      return `${this.i18nNamespace}.${foundValue}`
-    } else {
-      return foundValue
+  public orFallbackI18nKey<T extends string | undefined = string>(fallback: T): string | T {
+    if (!this.foundI18nKey) {
+      return fallback
     }
+    return this.i18nNamespace ? `${this.i18nNamespace}.${this.foundI18nKey}` : this.foundI18nKey
   }
 }

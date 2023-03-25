@@ -16,7 +16,7 @@ import type { ChangeDisplayNameDto, LoginUserInfo } from './types'
  * @throws {Error} when the user is not signed-in.
  */
 export const getMe = async (): Promise<LoginUserInfo> => {
-  const response = await new GetApiRequestBuilder<LoginUserInfo>('me', 'me').sendRequest()
+  const response = await new GetApiRequestBuilder<LoginUserInfo>('me').sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -26,7 +26,7 @@ export const getMe = async (): Promise<LoginUserInfo> => {
  * @throws {Error} when the api request wasn't successful.
  */
 export const deleteUser = async (): Promise<void> => {
-  await new DeleteApiRequestBuilder('me', 'me').sendRequest()
+  await new DeleteApiRequestBuilder('me').sendRequest()
 }
 
 /**
@@ -36,7 +36,7 @@ export const deleteUser = async (): Promise<void> => {
  * @throws {Error} when the api request wasn't successful.
  */
 export const updateDisplayName = async (displayName: string): Promise<void> => {
-  await new PostApiRequestBuilder<void, ChangeDisplayNameDto>('me/profile', 'me')
+  await new PostApiRequestBuilder<void, ChangeDisplayNameDto>('me/profile')
     .withJsonBody({
       displayName
     })
@@ -50,6 +50,6 @@ export const updateDisplayName = async (displayName: string): Promise<void> => {
  * @throws {Error} when the api request wasn't successful.
  */
 export const getMyMedia = async (): Promise<MediaUpload[]> => {
-  const response = await new GetApiRequestBuilder<MediaUpload[]>('me/media', 'me').sendRequest()
+  const response = await new GetApiRequestBuilder<MediaUpload[]>('me/media').sendRequest()
   return response.asParsedJsonObject()
 }

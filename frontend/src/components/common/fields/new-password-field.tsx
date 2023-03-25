@@ -18,7 +18,7 @@ export const NewPasswordField: React.FC<CommonFieldProps> = ({ onChange, value, 
   const { t } = useTranslation()
 
   const isValid = useMemo(() => {
-    return value.trim() !== '' && value.length >= 8
+    return value.trim() !== ''
   }, [value])
 
   return (
@@ -34,7 +34,6 @@ export const NewPasswordField: React.FC<CommonFieldProps> = ({ onChange, value, 
         onChange={onChange}
         placeholder={t('login.auth.password') ?? undefined}
         className='bg-dark text-light'
-        minLength={8}
         autoComplete='new-password'
         required
       />
