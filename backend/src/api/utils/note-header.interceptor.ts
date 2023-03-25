@@ -9,11 +9,10 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
-import { Request } from 'express';
 import { Observable } from 'rxjs';
 
-import { Note } from '../../notes/note.entity';
 import { NotesService } from '../../notes/notes.service';
+import { CompleteRequest } from './request.type';
 
 /**
  * Saves the note identified by the `HedgeDoc-Note` header
@@ -27,9 +26,7 @@ export class NoteHeaderInterceptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler,
   ): Promise<Observable<T>> {
-    const request: Request & {
-      note: Note;
-    } = context.switchToHttp().getRequest();
+    const request: CompleteRequest = context.switchToHttp().getRequest();
     const noteId: string = request.headers['hedgedoc-note'] as string;
     request.note = await this.noteService.getNoteByIdOrAlias(noteId);
     return next.handle();

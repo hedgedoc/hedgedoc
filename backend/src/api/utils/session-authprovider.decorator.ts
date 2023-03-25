@@ -8,9 +8,8 @@ import {
   ExecutionContext,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { Request } from 'express';
 
-import { SessionState } from '../../session/session.service';
+import { CompleteRequest } from './request.type';
 
 /**
  * Extracts the auth provider identifier from a session inside a request
@@ -20,9 +19,7 @@ import { SessionState } from '../../session/session.service';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const SessionAuthProvider = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
-    const request: Request & {
-      session: SessionState;
-    } = ctx.switchToHttp().getRequest();
+    const request: CompleteRequest = ctx.switchToHttp().getRequest();
     if (!request.session?.authProvider) {
       // We should have an auth provider here, otherwise something is wrong
       throw new InternalServerErrorException(

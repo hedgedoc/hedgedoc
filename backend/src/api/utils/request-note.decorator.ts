@@ -8,9 +8,8 @@ import {
   ExecutionContext,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { Request } from 'express';
 
-import { Note } from '../../notes/note.entity';
+import { CompleteRequest } from './request.type';
 
 /**
  * Extracts the {@link Note} object from a request
@@ -20,7 +19,7 @@ import { Note } from '../../notes/note.entity';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const RequestNote = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
-    const request: Request & { note: Note } = ctx.switchToHttp().getRequest();
+    const request: CompleteRequest = ctx.switchToHttp().getRequest();
     if (!request.note) {
       // We should have a note here, otherwise something is wrong
       throw new InternalServerErrorException(

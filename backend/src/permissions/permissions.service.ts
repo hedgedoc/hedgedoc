@@ -79,7 +79,7 @@ export class PermissionsService {
    * @return if the user is allowed to create notes
    */
   public mayCreate(user: User | null): boolean {
-    return user !== null || this.noteConfig.guestAccess === GuestAccess.CREATE;
+    return !!user || this.noteConfig.guestAccess === GuestAccess.CREATE;
   }
 
   async isOwner(user: User | null, note: Note): Promise<boolean> {

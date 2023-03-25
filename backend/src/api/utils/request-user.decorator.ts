@@ -8,9 +8,8 @@ import {
   ExecutionContext,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Request } from 'express';
 
-import { User } from '../../users/user.entity';
+import { CompleteRequest } from './request.type';
 
 type RequestUserParameter = {
   guestsAllowed: boolean;
@@ -29,9 +28,7 @@ export const RequestUser = createParamDecorator(
     data: RequestUserParameter = { guestsAllowed: false },
     ctx: ExecutionContext,
   ) => {
-    const request: Request & { user: User | null } = ctx
-      .switchToHttp()
-      .getRequest();
+    const request: CompleteRequest = ctx.switchToHttp().getRequest();
     if (!request.user) {
       if (data.guestsAllowed) {
         return null;

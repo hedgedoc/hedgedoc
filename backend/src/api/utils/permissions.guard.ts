@@ -5,14 +5,13 @@
  */
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Request } from 'express';
 
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { NotesService } from '../../notes/notes.service';
 import { Permission } from '../../permissions/permissions.enum';
 import { PermissionsService } from '../../permissions/permissions.service';
-import { User } from '../../users/user.entity';
 import { getNote } from './get-note.interceptor';
+import { CompleteRequest } from './request.type';
 
 /**
  * This guards controller methods from access, if the user has not the appropriate permissions.
@@ -41,10 +40,8 @@ export class PermissionsGuard implements CanActivate {
       );
       return false;
     }
-    const request: Request & { user: User } = context
-      .switchToHttp()
-      .getRequest();
-    const user = request.user;
+    const request: CompleteRequest = context.switchToHttp().getRequest();
+    const user = request.user ?? null;
     // handle CREATE permissions, as this does not need any note
     if (permissions[0] === Permission.CREATE) {
       return this.permissionsService.mayCreate(user);

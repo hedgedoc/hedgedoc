@@ -11,12 +11,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 
+import { CompleteRequest } from '../api/utils/request.type';
 import { GuestAccess } from '../config/guest_access.enum';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { SessionState } from '../session/session.service';
-import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 
 /**
@@ -39,10 +38,7 @@ export class SessionGuard implements CanActivate {
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request: Request & {
-      session?: SessionState;
-      user?: User;
-    } = context.switchToHttp().getRequest();
+    const request: CompleteRequest = context.switchToHttp().getRequest();
     const username = request.session?.username;
     if (!username) {
       if (this.noteConfig.guestAccess !== GuestAccess.DENY && request.session) {
