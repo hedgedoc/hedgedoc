@@ -7,10 +7,10 @@ import type { CommonModalProps } from '../../common/modals/common-modal'
 import { CommonModal } from '../../common/modals/common-modal'
 import { EditorSettingsTabContent } from './editor/editor-settings-tab-content'
 import { GlobalSettingsTabContent } from './global/global-settings-tab-content'
-import { t } from 'i18next'
 import React from 'react'
 import { Modal, Tab, Tabs } from 'react-bootstrap'
 import { Gear as IconGear } from 'react-bootstrap-icons'
+import { useTranslation } from 'react-i18next'
 
 /**
  * Shows global and scope specific settings
@@ -19,6 +19,8 @@ import { Gear as IconGear } from 'react-bootstrap-icons'
  * @param onHide callback that is executed if the modal should be closed
  */
 export const SettingsModal: React.FC<CommonModalProps> = ({ show, onHide }) => {
+  const { t } = useTranslation()
+
   return (
     <CommonModal
       show={show}
