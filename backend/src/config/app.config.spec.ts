@@ -28,7 +28,7 @@ describe('appConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
-          PORT: port.toString(),
+          HD_BACKEND_PORT: port.toString(),
           HD_LOGLEVEL: loglevel,
           HD_PERSIST_INTERVAL: '100',
           /* eslint-enable @typescript-eslint/naming-convention */
@@ -51,7 +51,7 @@ describe('appConfig', () => {
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
-          PORT: port.toString(),
+          HD_BACKEND_PORT: port.toString(),
           HD_LOGLEVEL: loglevel,
           HD_PERSIST_INTERVAL: '100',
           /* eslint-enable @typescript-eslint/naming-convention */
@@ -98,7 +98,7 @@ describe('appConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
-          PORT: port.toString(),
+          HD_BACKEND_PORT: port.toString(),
           HD_PERSIST_INTERVAL: '100',
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -122,7 +122,7 @@ describe('appConfig', () => {
           HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
           HD_LOGLEVEL: loglevel,
-          PORT: port.toString(),
+          HD_BACKEND_PORT: port.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -145,7 +145,7 @@ describe('appConfig', () => {
           HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
           HD_LOGLEVEL: loglevel,
-          PORT: port.toString(),
+          HD_BACKEND_PORT: port.toString(),
           HD_PERSIST_INTERVAL: '0',
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -168,7 +168,7 @@ describe('appConfig', () => {
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: invalidBaseUrl,
-          PORT: port.toString(),
+          HD_BACKEND_PORT: port.toString(),
           HD_LOGLEVEL: loglevel,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -203,24 +203,7 @@ describe('appConfig', () => {
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
-          PORT: negativePort.toString(),
-          HD_LOGLEVEL: loglevel,
-          /* eslint-enable @typescript-eslint/naming-convention */
-        },
-        {
-          clear: true,
-        },
-      );
-      expect(() => appConfig()).toThrow('"PORT" must be a positive number');
-      restore();
-    });
-
-    it('when given a out-of-range PORT', async () => {
-      const restore = mockedEnv(
-        {
-          /* eslint-disable @typescript-eslint/naming-convention */
-          HD_BASE_URL: baseUrl,
-          PORT: outOfRangePort.toString(),
+          HD_BACKEND_PORT: negativePort.toString(),
           HD_LOGLEVEL: loglevel,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -229,7 +212,26 @@ describe('appConfig', () => {
         },
       );
       expect(() => appConfig()).toThrow(
-        '"PORT" must be less than or equal to 65535',
+        '"HD_BACKEND_PORT" must be a positive number',
+      );
+      restore();
+    });
+
+    it('when given a out-of-range PORT', async () => {
+      const restore = mockedEnv(
+        {
+          /* eslint-disable @typescript-eslint/naming-convention */
+          HD_BASE_URL: baseUrl,
+          HD_BACKEND_PORT: outOfRangePort.toString(),
+          HD_LOGLEVEL: loglevel,
+          /* eslint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      expect(() => appConfig()).toThrow(
+        '"HD_BACKEND_PORT" must be less than or equal to 65535',
       );
       restore();
     });
@@ -239,7 +241,7 @@ describe('appConfig', () => {
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
-          PORT: floatPort.toString(),
+          HD_BACKEND_PORT: floatPort.toString(),
           HD_LOGLEVEL: loglevel,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -247,7 +249,7 @@ describe('appConfig', () => {
           clear: true,
         },
       );
-      expect(() => appConfig()).toThrow('"PORT" must be an integer');
+      expect(() => appConfig()).toThrow('"HD_BACKEND_PORT" must be an integer');
       restore();
     });
 
@@ -256,7 +258,7 @@ describe('appConfig', () => {
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
-          PORT: invalidPort,
+          HD_BACKEND_PORT: invalidPort,
           HD_LOGLEVEL: loglevel,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -264,7 +266,7 @@ describe('appConfig', () => {
           clear: true,
         },
       );
-      expect(() => appConfig()).toThrow('"PORT" must be a number');
+      expect(() => appConfig()).toThrow('"HD_BACKEND_PORT" must be a number');
       restore();
     });
 
@@ -273,7 +275,7 @@ describe('appConfig', () => {
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
-          PORT: port.toString(),
+          HD_BACKEND_PORT: port.toString(),
           HD_LOGLEVEL: invalidLoglevel,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -290,7 +292,7 @@ describe('appConfig', () => {
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
-          PORT: port.toString(),
+          HD_BACKEND_PORT: port.toString(),
           HD_LOGLEVEL: invalidLoglevel,
           HD_PERSIST_INTERVAL: invalidPersistInterval.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
