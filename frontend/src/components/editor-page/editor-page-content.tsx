@@ -17,10 +17,10 @@ import { EditorPane } from './editor-pane/editor-pane'
 import { useComponentsFromAppExtensions } from './editor-pane/hooks/use-components-from-app-extensions'
 import { HeadMetaProperties } from './head-meta-properties/head-meta-properties'
 import { useUpdateLocalHistoryEntry } from './hooks/use-update-local-history-entry'
+import { RealtimeConnectionAlert } from './realtime-connection-alert/realtime-connection-alert'
 import { Sidebar } from './sidebar/sidebar'
 import { Splitter } from './splitter/splitter'
 import type { DualScrollState, ScrollState } from './synced-scroll/scroll-props'
-import { RealtimeConnectionModal } from './websocket-connection-modal/realtime-connection-modal'
 import equal from 'fast-deep-equal'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -129,9 +129,9 @@ export const EditorPageContent: React.FC = () => {
         <CommunicatorImageLightbox />
         <HeadMetaProperties />
         <MotdModal />
-        <RealtimeConnectionModal />
         <div className={'d-flex flex-column vh-100'}>
           <AppBar mode={AppBarMode.EDITOR} />
+          <RealtimeConnectionAlert />
           <div className={'flex-fill d-flex h-100 w-100 overflow-hidden flex-row'}>
             <Splitter
               left={leftPane}

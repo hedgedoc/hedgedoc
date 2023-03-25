@@ -600,7 +600,7 @@
     }
   },
   "realtime": {
-    "reconnect": "Reconnecting to HedgeDoc…"
+    "connecting": "Connecting to realtime collaboration server…"
   },
   "settings": {
     "title": "Settings",
