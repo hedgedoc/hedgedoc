@@ -112,7 +112,7 @@
     "reveal.js": "4.4.0",
     "sanitize-filename": "1.6.3",
     "sass": "1.60.0",
-    "sharp": "0.31.3",
+    "sharp": "0.32.0",
     "tlds": "1.238.0",
     "twemoji-colr-font": "14.0.2",
     "uuid": "9.0.0",
