@@ -21,7 +21,12 @@ export const useReceiveRealtimeUsers = (messageTransporter: MessageTransporter):
   useEffect(() => {
     const listener = messageTransporter.on(
       MessageType.REALTIME_USER_STATE_SET,
-      (payload) => setRealtimeUsers(payload.payload),
+      (message) =>
+        setRealtimeUsers(
+          message.payload.users,
+          message.payload.ownUser.styleIndex,
+          message.payload.ownUser.displayName
+        ),
       { objectify: true }
     ) as Listener
 

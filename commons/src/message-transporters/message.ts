@@ -22,7 +22,13 @@ export enum MessageType {
 export interface MessagePayloads {
   [MessageType.NOTE_CONTENT_STATE_REQUEST]: number[]
   [MessageType.NOTE_CONTENT_UPDATE]: number[]
-  [MessageType.REALTIME_USER_STATE_SET]: RealtimeUser[]
+  [MessageType.REALTIME_USER_STATE_SET]: {
+    users: RealtimeUser[]
+    ownUser: {
+      displayName: string
+      styleIndex: number
+    }
+  }
   [MessageType.REALTIME_USER_SINGLE_UPDATE]: RemoteCursor
 }
 

@@ -11,10 +11,14 @@ import type { RealtimeUser } from '@hedgedoc/commons'
 /**
  * Dispatches an event to add a user
  */
-export const setRealtimeUsers = (users: RealtimeUser[]): void => {
+export const setRealtimeUsers = (users: RealtimeUser[], ownStyleIndex: number, ownDisplayName: string): void => {
   const action: SetRealtimeUsersAction = {
     type: RealtimeStatusActionType.SET_REALTIME_USERS,
-    users
+    users,
+    ownUser: {
+      styleIndex: ownStyleIndex,
+      displayName: ownDisplayName
+    }
   }
   store.dispatch(action)
 }

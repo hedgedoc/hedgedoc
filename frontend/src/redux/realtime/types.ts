@@ -16,6 +16,10 @@ export enum RealtimeStatusActionType {
 export interface SetRealtimeUsersAction extends Action<RealtimeStatusActionType> {
   type: RealtimeStatusActionType.SET_REALTIME_USERS
   users: RealtimeUser[]
+  ownUser: {
+    styleIndex: number
+    displayName: string
+  }
 }
 
 export interface SetRealtimeConnectionStatusAction extends Action<RealtimeStatusActionType> {
@@ -36,6 +40,10 @@ export interface RealtimeStatus {
   onlineUsers: RealtimeUser[]
   isConnected: boolean
   isSynced: boolean
+  ownUser: {
+    displayName: string
+    styleIndex: number
+  }
 }
 
 export type RealtimeStatusActions =

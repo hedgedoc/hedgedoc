@@ -77,28 +77,34 @@ describe('realtime user status adapter', () => {
 
     const expectedMessage1: Message<MessageType.REALTIME_USER_STATE_SET> = {
       type: MessageType.REALTIME_USER_STATE_SET,
-      payload: [
-        {
-          active: true,
-          cursor: {
-            from: 0,
-            to: 0,
-          },
-          styleIndex: 1,
-          username: username2,
-          displayName: username2,
+      payload: {
+        ownUser: {
+          styleIndex: 0,
+          displayName: username1,
         },
-        {
-          active: true,
-          cursor: {
-            from: 0,
-            to: 0,
+        users: [
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: 1,
+            username: username2,
+            displayName: username2,
           },
-          styleIndex: 2,
-          username: username3,
-          displayName: username3,
-        },
-      ],
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: 2,
+            username: username3,
+            displayName: username3,
+          },
+        ],
+      },
     };
     expect(sendMessage1Spy).toHaveBeenNthCalledWith(1, expectedMessage1);
     expect(sendMessage2Spy).toHaveBeenCalledTimes(0);
@@ -125,54 +131,66 @@ describe('realtime user status adapter', () => {
 
     const expectedMessage2: Message<MessageType.REALTIME_USER_STATE_SET> = {
       type: MessageType.REALTIME_USER_STATE_SET,
-      payload: [
-        {
-          active: true,
-          cursor: {
-            from: newFrom,
-            to: newTo,
-          },
-          styleIndex: 0,
-          username: username1,
-          displayName: username1,
+      payload: {
+        ownUser: {
+          styleIndex: 1,
+          displayName: username2,
         },
-        {
-          active: true,
-          cursor: {
-            from: 0,
-            to: 0,
+        users: [
+          {
+            active: true,
+            cursor: {
+              from: newFrom,
+              to: newTo,
+            },
+            styleIndex: 0,
+            username: username1,
+            displayName: username1,
           },
-          styleIndex: 2,
-          username: username3,
-          displayName: username3,
-        },
-      ],
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: 2,
+            username: username3,
+            displayName: username3,
+          },
+        ],
+      },
     };
 
     const expectedMessage3: Message<MessageType.REALTIME_USER_STATE_SET> = {
       type: MessageType.REALTIME_USER_STATE_SET,
-      payload: [
-        {
-          active: true,
-          cursor: {
-            from: newFrom,
-            to: newTo,
-          },
-          styleIndex: 0,
-          username: username1,
-          displayName: username1,
+      payload: {
+        ownUser: {
+          styleIndex: 2,
+          displayName: username3,
         },
-        {
-          active: true,
-          cursor: {
-            from: 0,
-            to: 0,
+        users: [
+          {
+            active: true,
+            cursor: {
+              from: newFrom,
+              to: newTo,
+            },
+            styleIndex: 0,
+            username: username1,
+            displayName: username1,
           },
-          styleIndex: 1,
-          username: username2,
-          displayName: username2,
-        },
-      ],
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: 1,
+            username: username2,
+            displayName: username2,
+          },
+        ],
+      },
     };
 
     expect(sendMessage1Spy).toHaveBeenCalledTimes(0);
@@ -191,34 +209,46 @@ describe('realtime user status adapter', () => {
 
     const expectedMessage1: Message<MessageType.REALTIME_USER_STATE_SET> = {
       type: MessageType.REALTIME_USER_STATE_SET,
-      payload: [
-        {
-          active: true,
-          cursor: {
-            from: 0,
-            to: 0,
-          },
-          styleIndex: 2,
-          username: username3,
-          displayName: username3,
+      payload: {
+        ownUser: {
+          styleIndex: 0,
+          displayName: username1,
         },
-      ],
+        users: [
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: 2,
+            username: username3,
+            displayName: username3,
+          },
+        ],
+      },
     };
 
     const expectedMessage3: Message<MessageType.REALTIME_USER_STATE_SET> = {
       type: MessageType.REALTIME_USER_STATE_SET,
-      payload: [
-        {
-          active: true,
-          cursor: {
-            from: 0,
-            to: 0,
-          },
-          styleIndex: 0,
-          username: username1,
-          displayName: username1,
+      payload: {
+        ownUser: {
+          styleIndex: 2,
+          displayName: username3,
         },
-      ],
+        users: [
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: 0,
+            username: username1,
+            displayName: username1,
+          },
+        ],
+      },
     };
 
     expect(sendMessage1Spy).toHaveBeenNthCalledWith(1, expectedMessage1);
