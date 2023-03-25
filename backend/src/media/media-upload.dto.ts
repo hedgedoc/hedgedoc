@@ -42,5 +42,5 @@ export class MediaUploadDto extends BaseDto {
    */
   @IsString()
   @ApiProperty()
-  username: string;
+  username: string | null;
 }

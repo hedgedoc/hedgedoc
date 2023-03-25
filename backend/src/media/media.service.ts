@@ -78,13 +78,20 @@ export class MediaService {
    */
   async saveFile(
     fileBuffer: Buffer,
-    user: User,
+    user: User | null,
     note: Note,
   ): Promise<MediaUpload> {
-    this.logger.debug(
-      `Saving file for note '${note.id}' and user '${user.username}'`,
-      'saveFile',
-    );
+    if (user) {
+      this.logger.debug(
+        `Saving file for note '${note.id}' and user '${user.username}'`,
+        'saveFile',
+      );
+    } else {
+      this.logger.debug(
+        `Saving file for note '${note.id}' and not logged in user`,
+        'saveFile',
+      );
+    }
     const fileTypeResult = await FileType.fromBuffer(fileBuffer);
     if (!fileTypeResult) {
       throw new ClientError('Could not detect file type.');
@@ -223,11 +230,12 @@ export class MediaService {
   }
 
   async toMediaUploadDto(mediaUpload: MediaUpload): Promise<MediaUploadDto> {
+    const user = await mediaUpload.user;
     return {
       url: mediaUpload.fileUrl,
       notePublicId: (await mediaUpload.note)?.publicId ?? null,
       createdAt: mediaUpload.createdAt,
-      username: (await mediaUpload.user).username,
+      username: user?.username ?? null,
     };
   }
 }
