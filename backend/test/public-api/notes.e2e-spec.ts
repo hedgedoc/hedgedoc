@@ -58,13 +58,13 @@ describe('Notes', () => {
 
   describe('GET /notes/{note}', () => {
     it('works with an existing note', async () => {
-      // check if we can succefully get a note that exists
+      // check if we can successfully get a note that exists
       const response = await request(testSetup.app.getHttpServer())
         .get('/api/v2/notes/testAlias1')
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
         .expect(200);
-      expect(response.body.content).toEqual(content);
+      expect(response.body.content).toEqual('Test Note 1');
     });
     it('fails with an non-existing note', async () => {
       // check if a missing note correctly returns 404
