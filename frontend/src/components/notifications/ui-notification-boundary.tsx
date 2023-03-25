@@ -7,11 +7,11 @@ import { Logger } from '../../utils/logger'
 import type { DispatchOptions, UiNotification } from './types'
 import { UiNotifications } from './ui-notifications'
 import type { TOptions } from 'i18next'
-import { t } from 'i18next'
 import { DateTime } from 'luxon'
 import type { PropsWithChildren } from 'react'
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react'
 import { ExclamationTriangle as IconExclamationTriangle } from 'react-bootstrap-icons'
+import { useTranslation } from 'react-i18next'
 import { v4 as uuid } from 'uuid'
 
 const log = new Logger('Notifications')
@@ -48,6 +48,7 @@ const uiNotificationContext = createContext<UiNotificationContext | undefined>(u
  * @param children The children that receive the context
  */
 export const UiNotificationBoundary: React.FC<PropsWithChildren> = ({ children }) => {
+  const { t } = useTranslation()
   const [uiNotifications, setUiNotifications] = useState<UiNotification[]>([])
 
   const dispatchUiNotification = useCallback(
@@ -84,7 +85,7 @@ export const UiNotificationBoundary: React.FC<PropsWithChildren> = ({ children }
           icon: IconExclamationTriangle
         })
       },
-    [dispatchUiNotification]
+    [dispatchUiNotification, t]
   )
 
   const dismissNotification = useCallback((notificationUuid: string): void => {

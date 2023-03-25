@@ -13,8 +13,8 @@ import { replaceInContent } from '../tool-bar/formatters/replace-in-content'
 import { replaceSelection } from '../tool-bar/formatters/replace-selection'
 import type { CursorSelection } from '../tool-bar/formatters/types/cursor-selection'
 import type { EditorView } from '@codemirror/view'
-import { t } from 'i18next'
 import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 
 /**
  * @param view the codemirror instance that is used to insert the Markdown code
@@ -35,6 +35,7 @@ type handleUploadSignature = (
  * Provides a callback that uploads a given file and inserts the correct Markdown code into the current editor.
  */
 export const useHandleUpload = (): handleUploadSignature => {
+  const { t } = useTranslation()
   const { showErrorNotification } = useUiNotifications()
 
   return useCallback(
@@ -70,6 +71,6 @@ export const useHandleUpload = (): handleUploadSignature => {
           ])
         })
     },
-    [showErrorNotification]
+    [showErrorNotification, t]
   )
 }
