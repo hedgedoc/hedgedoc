@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -22,7 +22,7 @@ beforeEach(() => {
       createTime: '2021-04-24T09:27:51.000Z',
       editedBy: [],
       permissions: {
-        owner: null,
+        owner: 'mock',
         sharedToUsers: [],
         sharedToGroups: []
       }
