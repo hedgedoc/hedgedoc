@@ -25,7 +25,7 @@ export abstract class ApiRequestBuilder<ResponseType> {
    *
    * @param endpoint The target endpoint without a leading slash.
    */
-  constructor(endpoint: string, private apiI18nKey: string) {
+  constructor(endpoint: string) {
     this.targetUrl = `api/private/${endpoint}`
   }
 
@@ -38,9 +38,8 @@ export abstract class ApiRequestBuilder<ResponseType> {
     })
 
     if (response.status >= 400) {
-      const apiErrorResponse = await this.readApiErrorResponseFromBody(response)
-      const statusText = response.status === 400 ? apiErrorResponse?.error ?? 'unknown' : response.statusText
-      throw new ApiError(response.status, statusText, this.apiI18nKey, apiErrorResponse?.error)
+      const backendError = await this.readApiErrorResponseFromBody(response)
+      throw new ApiError(response.status, backendError?.name, backendError?.message)
     }
 
     return new ApiResponse(response)

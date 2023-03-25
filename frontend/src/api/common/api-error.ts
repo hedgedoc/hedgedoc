@@ -7,10 +7,9 @@
 export class ApiError extends Error {
   constructor(
     public readonly statusCode: number,
-    statusText: string,
-    i18nNamespace: string,
-    public readonly apiErrorName: string | undefined
+    public readonly backendErrorName: string | undefined,
+    public readonly backendErrorMessage: string | undefined
   ) {
-    super(`api.error.${i18nNamespace}.${statusText}`)
+    super()
   }
 }

@@ -17,7 +17,7 @@ import type { ChangePasswordDto, LoginDto, RegisterDto } from './types'
  * @throws {Error} when the api request wasn't successful.
  */
 export const doLocalLogin = async (username: string, password: string): Promise<void> => {
-  await new PostApiRequestBuilder<void, LoginDto>('auth/local/login', 'auth')
+  await new PostApiRequestBuilder<void, LoginDto>('auth/local/login')
     .withJsonBody({
       username,
       password
@@ -37,7 +37,7 @@ export const doLocalLogin = async (username: string, password: string): Promise<
  * @throws {Error} when the api request wasn't successful.
  */
 export const doLocalRegister = async (username: string, displayName: string, password: string): Promise<void> => {
-  await new PostApiRequestBuilder<void, RegisterDto>('auth/local', 'auth')
+  await new PostApiRequestBuilder<void, RegisterDto>('auth/local')
     .withJsonBody({
       username,
       displayName,
@@ -54,7 +54,7 @@ export const doLocalRegister = async (username: string, displayName: string, pas
  * @throws {AuthError.LOGIN_DISABLED} when local login is disabled on the backend.
  */
 export const doLocalPasswordChange = async (currentPassword: string, newPassword: string): Promise<void> => {
-  await new PutApiRequestBuilder<void, ChangePasswordDto>('auth/local', 'auth')
+  await new PutApiRequestBuilder<void, ChangePasswordDto>('auth/local')
     .withJsonBody({
       currentPassword,
       newPassword

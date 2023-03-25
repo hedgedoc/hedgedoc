@@ -13,6 +13,6 @@ import type { Config } from './types'
  * @throws {Error} when the api request wasn't successful.
  */
 export const getConfig = async (): Promise<Config> => {
-  const response = await new GetApiRequestBuilder<Config>('config', 'config').sendRequest()
+  const response = await new GetApiRequestBuilder<Config>('config').sendRequest()
   return response.asParsedJsonObject()
 }

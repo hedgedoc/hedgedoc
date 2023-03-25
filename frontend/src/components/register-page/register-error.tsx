@@ -21,8 +21,8 @@ export const RegisterError: React.FC<RegisterErrorProps> = ({ error }) => {
     }
     return new ErrorToI18nKeyMapper(error, 'login.register.error')
       .withHttpCode(409, 'usernameExisting')
-      .withBackendErrorName('registrationDisabled', 'registrationDisabled')
-      .withBackendErrorName('passwordTooWeak', 'passwordTooWeak')
+      .withBackendErrorName('FeatureDisabledError', 'registrationDisabled')
+      .withBackendErrorName('PasswordTooWeakError', 'passwordTooWeak')
       .orFallbackI18nKey('other')
   }, [error])
 

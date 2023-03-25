@@ -43,10 +43,8 @@
       "creating": "Creating note...",
       "error": "Note couldn't be created.",
       "success": "Note has been created."
-    }
-  },
-  "api": {
-    "note": {
+    },
+    "error": {
       "notFound": {
         "title": "Note not found",
         "description": "The requested note doesn't exist."
@@ -563,10 +561,11 @@
       }
     },
     "register": {
+      "question": "No account yet?",
       "title": "Register",
       "passwordAgain": "Password (again)",
       "usernameInfo": "The username is your unique identifier for login.",
-      "passwordInfo": "Choose a unique and secure password. It must contain at least 8 characters.",
+      "passwordInfo": "Choose a unique and secure password.",
       "infoTermsPrivacy": "With the registration of my user account I agree to the following terms:",
       "success": {
         "title": "Successfully registered",

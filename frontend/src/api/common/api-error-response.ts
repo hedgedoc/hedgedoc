@@ -6,5 +6,5 @@
 
 export interface ApiErrorResponse {
   message: string
-  error: string
+  name: string
 }

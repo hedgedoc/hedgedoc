@@ -17,7 +17,7 @@ import type { Alias, NewAliasDto, PrimaryAliasDto } from './types'
  * @throws {Error} when the api request wasn't successfull
  */
 export const addAlias = async (noteIdOrAlias: string, newAlias: string): Promise<Alias> => {
-  const response = await new PostApiRequestBuilder<Alias, NewAliasDto>('alias', 'alias')
+  const response = await new PostApiRequestBuilder<Alias, NewAliasDto>('alias')
     .withJsonBody({
       noteIdOrAlias,
       newAlias
@@ -35,7 +35,7 @@ export const addAlias = async (noteIdOrAlias: string, newAlias: string): Promise
  * @throws {Error} when the api request wasn't successfull
  */
 export const markAliasAsPrimary = async (alias: string): Promise<Alias> => {
-  const response = await new PutApiRequestBuilder<Alias, PrimaryAliasDto>('alias/' + alias, 'alias')
+  const response = await new PutApiRequestBuilder<Alias, PrimaryAliasDto>('alias/' + alias)
     .withJsonBody({
       primaryAlias: true
     })
@@ -50,5 +50,5 @@ export const markAliasAsPrimary = async (alias: string): Promise<Alias> => {
  * @throws {Error} when the api request wasn't successful.
  */
 export const deleteAlias = async (alias: string): Promise<void> => {
-  await new DeleteApiRequestBuilder('alias/' + alias, 'alias').sendRequest()
+  await new DeleteApiRequestBuilder('alias/' + alias).sendRequest()
 }

@@ -14,6 +14,6 @@ import type { UserInfo } from './types'
  * @throws {Error} when the api request wasn't successful.
  */
 export const getUser = async (username: string): Promise<UserInfo> => {
-  const response = await new GetApiRequestBuilder<UserInfo>('users/' + username, 'users').sendRequest()
+  const response = await new GetApiRequestBuilder<UserInfo>('users/' + username).sendRequest()
   return response.asParsedJsonObject()
 }

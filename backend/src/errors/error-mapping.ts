@@ -77,7 +77,7 @@ const mapOfHedgeDocErrorsToHttpErrors: Map<string, HttpExceptionConstructor> =
       (object): HttpException => new PayloadTooLargeException(object),
     ],
     [
-      'RegistrationDisabledError',
+      'FeatureDisabledError',
       (object): HttpException => new ForbiddenException(object),
     ],
   ]);

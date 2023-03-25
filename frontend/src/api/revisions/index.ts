@@ -17,8 +17,7 @@ import type { RevisionDetails, RevisionMetadata } from './types'
  */
 export const getRevision = async (noteId: string, revisionId: number): Promise<RevisionDetails> => {
   const response = await new GetApiRequestBuilder<RevisionDetails>(
-    `notes/${noteId}/revisions/${revisionId}`,
-    'revisions'
+    `notes/${noteId}/revisions/${revisionId}`
   ).sendRequest()
   return response.asParsedJsonObject()
 }
@@ -31,10 +30,7 @@ export const getRevision = async (noteId: string, revisionId: number): Promise<R
  * @throws {Error} when the api request wasn't successful.
  */
 export const getAllRevisions = async (noteId: string): Promise<RevisionMetadata[]> => {
-  const response = await new GetApiRequestBuilder<RevisionMetadata[]>(
-    `notes/${noteId}/revisions`,
-    'revisions'
-  ).sendRequest()
+  const response = await new GetApiRequestBuilder<RevisionMetadata[]>(`notes/${noteId}/revisions`).sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -45,5 +41,5 @@ export const getAllRevisions = async (noteId: string): Promise<RevisionMetadata[
  * @throws {Error} when the api request wasn't successful.
  */
 export const deleteRevisionsForNote = async (noteIdOrAlias: string): Promise<void> => {
-  await new DeleteApiRequestBuilder(`notes/${noteIdOrAlias}/revisions`, 'revisions').sendRequest()
+  await new DeleteApiRequestBuilder(`notes/${noteIdOrAlias}/revisions`).sendRequest()
 }

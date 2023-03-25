@@ -60,6 +60,6 @@ export class MaximumDocumentLengthExceededError extends Error {
   name = 'MaximumDocumentLengthExceededError';
 }
 
-export class RegistrationDisabledError extends Error {
-  name = 'RegistrationDisabledError';
+export class FeatureDisabledError extends Error {
+  name = 'FeatureDisabledError';
 }

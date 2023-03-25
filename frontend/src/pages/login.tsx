@@ -60,7 +60,7 @@ export const LoginPage: React.FC = () => {
   return (
     <LandingLayout>
       <div className='my-3'>
-        <Row className='h-100 flex justify-content-center'>
+        <Row className='h-100 d-flex justify-content-center'>
           <ShowIf condition={ldapProviders.length > 0 || localLoginEnabled}>
             <Col xs={12} sm={10} lg={4}>
               <ShowIf condition={localLoginEnabled}>

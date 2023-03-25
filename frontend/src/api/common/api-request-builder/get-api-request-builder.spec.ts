@@ -22,7 +22,7 @@ describe('GetApiRequestBuilder', () => {
   describe('sendRequest', () => {
     it('without headers', async () => {
       expectFetch('api/private/test', 200, { method: 'GET' })
-      await new GetApiRequestBuilder<string>('test', 'test').sendRequest()
+      await new GetApiRequestBuilder<string>('test').sendRequest()
     })
 
     it('with single header', async () => {
@@ -32,7 +32,7 @@ describe('GetApiRequestBuilder', () => {
         method: 'GET',
         headers: expectedHeaders
       })
-      await new GetApiRequestBuilder<string>('test', 'test').withHeader('test', 'true').sendRequest()
+      await new GetApiRequestBuilder<string>('test').withHeader('test', 'true').sendRequest()
     })
 
     it('with overriding single header', async () => {
@@ -42,7 +42,7 @@ describe('GetApiRequestBuilder', () => {
         method: 'GET',
         headers: expectedHeaders
       })
-      await new GetApiRequestBuilder<string>('test', 'test')
+      await new GetApiRequestBuilder<string>('test')
         .withHeader('test', 'true')
         .withHeader('test', 'false')
         .sendRequest()
@@ -56,7 +56,7 @@ describe('GetApiRequestBuilder', () => {
         method: 'GET',
         headers: expectedHeaders
       })
-      await new GetApiRequestBuilder<string>('test', 'test')
+      await new GetApiRequestBuilder<string>('test')
         .withHeader('test', 'true')
         .withHeader('test2', 'false')
         .sendRequest()
@@ -69,7 +69,7 @@ describe('GetApiRequestBuilder', () => {
         method: 'GET',
         cache: 'force-cache'
       })
-      await new GetApiRequestBuilder<string>('test', 'test')
+      await new GetApiRequestBuilder<string>('test')
         .withCustomOptions({
           cache: 'force-cache'
         })
@@ -81,7 +81,7 @@ describe('GetApiRequestBuilder', () => {
         method: 'GET',
         cache: 'no-store'
       })
-      await new GetApiRequestBuilder<string>('test', 'test')
+      await new GetApiRequestBuilder<string>('test')
         .withCustomOptions({
           cache: 'force-cache'
         })
@@ -97,7 +97,7 @@ describe('GetApiRequestBuilder', () => {
         cache: 'force-cache',
         integrity: 'test'
       })
-      await new GetApiRequestBuilder<string>('test', 'test')
+      await new GetApiRequestBuilder<string>('test')
         .withCustomOptions({
           cache: 'force-cache',
           integrity: 'test'
@@ -107,28 +107,28 @@ describe('GetApiRequestBuilder', () => {
   })
 
   describe('failing sendRequest', () => {
-    it('with bad request without api error name', async () => {
+    it('without backend provided error name or error message', async () => {
       expectFetch('api/private/test', 400, { method: 'GET' })
-      const request = new GetApiRequestBuilder<string>('test', 'test').sendRequest()
-      await expect(request).rejects.toEqual(new ApiError(400, 'unknown', 'test', 'testExplosion'))
+      const request = new GetApiRequestBuilder<string>('test').sendRequest()
+      await expect(request).rejects.toEqual(new ApiError(400, undefined, undefined))
     })
 
-    it('with bad request with api error name', async () => {
+    it('with backend error name and error message', async () => {
       expectFetch('api/private/test', 400, { method: 'GET' }, {
         message: 'The API has exploded!',
-        error: 'testExplosion'
+        name: 'testExplosion'
       } as ApiErrorResponse)
-      const request = new GetApiRequestBuilder<string>('test', 'test').sendRequest()
-      await expect(request).rejects.toEqual(new ApiError(400, 'testExplosion', 'test', 'testExplosion'))
+      const request = new GetApiRequestBuilder<string>('test').sendRequest()
+      await expect(request).rejects.toEqual(new ApiError(400, 'testExplosion', 'The API has exploded!'))
     })
 
-    it('with non bad request error', async () => {
+    it('with another status code than 400', async () => {
       expectFetch('api/private/test', 401, { method: 'GET' }, {
         message: 'The API has exploded!',
-        error: 'testExplosion'
+        name: 'testExplosion'
       } as ApiErrorResponse)
-      const request = new GetApiRequestBuilder<string>('test', 'test').sendRequest()
-      await expect(request).rejects.toEqual(new ApiError(401, 'forbidden', 'test', 'testExplosion'))
+      const request = new GetApiRequestBuilder<string>('test').sendRequest()
+      await expect(request).rejects.toEqual(new ApiError(401, 'testExplosion', 'The API has exploded!'))
     })
   })
 })

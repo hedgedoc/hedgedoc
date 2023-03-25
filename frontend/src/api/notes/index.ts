@@ -17,7 +17,7 @@ import type { Note, NoteDeletionOptions, NoteMetadata } from './types'
  * @throws {Error} when the api request wasn't successful.
  */
 export const getNote = async (noteIdOrAlias: string): Promise<Note> => {
-  const response = await new GetApiRequestBuilder<Note>('notes/' + noteIdOrAlias, 'note').sendRequest()
+  const response = await new GetApiRequestBuilder<Note>('notes/' + noteIdOrAlias).sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -28,7 +28,7 @@ export const getNote = async (noteIdOrAlias: string): Promise<Note> => {
  * @return Metadata of the specified note.
  */
 export const getNoteMetadata = async (noteIdOrAlias: string): Promise<NoteMetadata> => {
-  const response = await new GetApiRequestBuilder<NoteMetadata>(`notes/${noteIdOrAlias}/metadata`, 'note').sendRequest()
+  const response = await new GetApiRequestBuilder<NoteMetadata>(`notes/${noteIdOrAlias}/metadata`).sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -40,7 +40,7 @@ export const getNoteMetadata = async (noteIdOrAlias: string): Promise<NoteMetada
  * @throws {Error} when the api request wasn't successful.
  */
 export const getMediaForNote = async (noteIdOrAlias: string): Promise<MediaUpload[]> => {
-  const response = await new GetApiRequestBuilder<MediaUpload[]>(`notes/${noteIdOrAlias}/media`, 'note').sendRequest()
+  const response = await new GetApiRequestBuilder<MediaUpload[]>(`notes/${noteIdOrAlias}/media`).sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -52,7 +52,7 @@ export const getMediaForNote = async (noteIdOrAlias: string): Promise<MediaUploa
  * @throws {Error} when the api request wasn't successful.
  */
 export const createNote = async (markdown: string): Promise<Note> => {
-  const response = await new PostApiRequestBuilder<Note, void>('notes', 'note')
+  const response = await new PostApiRequestBuilder<Note, void>('notes')
     .withHeader('Content-Type', 'text/markdown')
     .withBody(markdown)
     .sendRequest()
@@ -68,7 +68,7 @@ export const createNote = async (markdown: string): Promise<Note> => {
  * @throws {Error} when the api request wasn't successful.
  */
 export const createNoteWithPrimaryAlias = async (markdown: string, primaryAlias: string): Promise<Note> => {
-  const response = await new PostApiRequestBuilder<Note, void>('notes/' + primaryAlias, 'note')
+  const response = await new PostApiRequestBuilder<Note, void>('notes/' + primaryAlias)
     .withHeader('Content-Type', 'text/markdown')
     .withBody(markdown)
     .sendRequest()
@@ -82,7 +82,7 @@ export const createNoteWithPrimaryAlias = async (markdown: string, primaryAlias:
  * @throws {Error} when the api request wasn't successful.
  */
 export const deleteNote = async (noteIdOrAlias: string): Promise<void> => {
-  await new DeleteApiRequestBuilder<void, NoteDeletionOptions>('notes/' + noteIdOrAlias, 'note')
+  await new DeleteApiRequestBuilder<void, NoteDeletionOptions>('notes/' + noteIdOrAlias)
     .withJsonBody({
       keepMedia: false
       // TODO Ask whether the user wants to keep the media uploaded to the note.
