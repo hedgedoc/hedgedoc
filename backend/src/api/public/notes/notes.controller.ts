@@ -101,7 +101,6 @@ export class NotesController {
   }
 
   @Permissions(Permission.CREATE)
-  @UseGuards(PermissionsGuard)
   @Post(':noteAlias')
   @OpenApi(
     {
@@ -233,7 +232,6 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.READ)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Get(':noteIdOrAlias/metadata/permissions')
   @OpenApi(
     {
@@ -253,7 +251,6 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Put(':noteIdOrAlias/metadata/permissions/users/:userName')
   @OpenApi(
     {
@@ -281,7 +278,6 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Delete(':noteIdOrAlias/metadata/permissions/users/:userName')
   @OpenApi(
     {
@@ -316,7 +312,6 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Put(':noteIdOrAlias/metadata/permissions/groups/:groupName')
   @OpenApi(
     {
@@ -344,7 +339,6 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Delete(':noteIdOrAlias/metadata/permissions/groups/:groupName')
   @OpenApi(
     {
@@ -370,7 +364,6 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(TokenAuthGuard, PermissionsGuard)
   @Put(':noteIdOrAlias/metadata/permissions/owner')
   @OpenApi(
     {
