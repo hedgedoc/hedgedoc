@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`realtime connection alert will show if not synced 1`] = `
+<div>
+  <div
+    class="fade m-0 rounded-0 alert alert-warning show"
+    role="alert"
+  >
+    realtime.connecting
+    BootstrapIconMock_ArrowRepeat
+  </div>
+</div>
+`;
+
+exports[`realtime connection alert won't show if synced 1`] = `<div />`;
