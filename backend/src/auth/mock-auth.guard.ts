@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ExecutionContext, Injectable } from '@nestjs/common';
-import { Request } from 'express';
 
+import { CompleteRequest } from '../api/utils/request.type';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 
@@ -16,7 +16,7 @@ export class MockAuthGuard {
   constructor(private usersService: UsersService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const req: Request = context.switchToHttp().getRequest();
+    const req: CompleteRequest = context.switchToHttp().getRequest();
     if (!this.user) {
       // this assures that we can create the user 'hardcoded', if we need them before any calls are made or
       // create them on the fly when the first call to the api is made
