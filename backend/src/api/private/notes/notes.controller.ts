@@ -250,7 +250,7 @@ export class NotesController {
     @RequestUser() user: User,
     @RequestNote() note: Note,
     @Param('groupName') groupName: string,
-    @Body() canEdit: boolean,
+    @Body('canEdit') canEdit: boolean,
   ): Promise<NotePermissionsDto> {
     const permissionGroup = await this.groupService.getGroupByName(groupName);
     const returnedNote = await this.permissionService.setGroupPermission(
