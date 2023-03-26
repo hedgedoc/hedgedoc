@@ -30,6 +30,7 @@ import { MediaService } from '../../../media/media.service';
 import { MulterFile } from '../../../media/multer-file.interface';
 import { Note } from '../../../notes/note.entity';
 import { Permission } from '../../../permissions/permissions.enum';
+import { PermissionsService } from '../../../permissions/permissions.service';
 import { User } from '../../../users/user.entity';
 import { NoteHeaderInterceptor } from '../../utils/note-header.interceptor';
 import { OpenApi } from '../../utils/openapi.decorator';
@@ -47,6 +48,7 @@ export class MediaController {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private mediaService: MediaService,
+    private permissionsService: PermissionsService,
   ) {
     this.logger.setContext(MediaController.name);
   }
@@ -113,12 +115,11 @@ export class MediaController {
     @Param('filename') filename: string,
   ): Promise<void> {
     const mediaUpload = await this.mediaService.findUploadByFilename(filename);
-    const mediaUploadOwner = await mediaUpload.user;
-    const mediaUploadNote = await mediaUpload.note;
-    const mediaUploadNoteOwner = await mediaUploadNote?.owner;
     if (
-      mediaUploadOwner?.id === user.id ||
-      user.id === mediaUploadNoteOwner?.id
+      await this.permissionsService.checkMediaDeletePermission(
+        user,
+        mediaUpload,
+      )
     ) {
       this.logger.debug(
         `Deleting '${filename}' for user '${user.username}'`,
@@ -130,10 +131,11 @@ export class MediaController {
         `${user.username} tried to delete '${filename}', but is not the owner of upload or connected note`,
         'deleteMedia',
       );
+      const mediaUploadNote = await mediaUpload.note;
       throw new PermissionError(
         `Neither file '${filename}' nor note '${
           mediaUploadNote?.id ?? 'unknown'
-        }'is not owned by '${user.username}'`,
+        }'is owned by '${user.username}'`,
       );
     }
   }
