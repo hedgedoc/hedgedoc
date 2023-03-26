@@ -1,9 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { FrontmatterExtractionResult } from './types'
+import type { FrontmatterExtractionResult } from './types.js'
 
 const FRONTMATTER_BEGIN_REGEX = /^-{3,}$/
 const FRONTMATTER_END_REGEX = /^(?:-{3,}|\.{3,})$/
@@ -18,14 +18,19 @@ const FRONTMATTER_END_REGEX = /^(?:-{3,}|\.{3,})$/
  *         { frontmatterLines }   if a block was found, this property contains the number of lines to skip from the
  *                                given multiline string for retrieving the non-frontmatter content.
  */
-export const extractFrontmatter = (lines: string[]): FrontmatterExtractionResult => {
+export const extractFrontmatter = (
+  lines: string[]
+): FrontmatterExtractionResult => {
   if (lines.length < 2 || !FRONTMATTER_BEGIN_REGEX.test(lines[0])) {
     return {
       isPresent: false
     }
   }
   for (let i = 1; i < lines.length; i++) {
-    if (lines[i].length === lines[0].length && FRONTMATTER_END_REGEX.test(lines[i])) {
+    if (
+      lines[i].length === lines[0].length &&
+      FRONTMATTER_END_REGEX.test(lines[i])
+    ) {
       return {
         isPresent: true,
         rawText: lines.slice(1, i).join('\n'),

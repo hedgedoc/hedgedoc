@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { NoteDetails } from './types/note-details'
-import { NoteTextDirection, NoteType } from './types/note-details'
-import type { SlideOptions } from './types/slide-show-options'
+import { NoteTextDirection, NoteType } from '@hedgedoc/commons'
+import type { SlideOptions } from '@hedgedoc/commons'
 
 export const initialSlideOptions: SlideOptions = {
   transition: 'zoom',

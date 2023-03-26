@@ -18,8 +18,9 @@
     "rootDir": "./src",
     "allowJs": true,
     "declarationMap":true,
-    "sourceMap": true
+    "sourceMap": true,
+    "typeRoots": ["./types"]
   },
-  "include": ["./src"],
+  "include": ["./src", "./types"],
   "exclude": ["./dist"]
 }

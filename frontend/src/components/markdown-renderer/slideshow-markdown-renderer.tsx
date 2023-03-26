@@ -1,9 +1,8 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { SlideOptions } from '../../redux/note-details/types/slide-show-options'
 import type { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
 import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
 import { RevealMarkdownExtension } from './extensions/reveal/reveal-markdown-extension'
@@ -12,6 +11,7 @@ import { useMarkdownExtensions } from './hooks/use-markdown-extensions'
 import { REVEAL_STATUS, useReveal } from './hooks/use-reveal'
 import { LoadingSlide } from './loading-slide'
 import { MarkdownToReact } from './markdown-to-react/markdown-to-react'
+import type { SlideOptions } from '@hedgedoc/commons'
 import React, { useEffect, useMemo, useRef } from 'react'
 
 export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererProps {
