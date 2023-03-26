@@ -5,14 +5,13 @@
  */
 import { ConnectionState, MessageTransporter } from './message-transporter.js'
 import { Message, MessageType } from './message.js'
-import WebSocket, { CloseEvent, ErrorEvent, MessageEvent } from 'isomorphic-ws'
+import WebSocket, { MessageEvent } from 'isomorphic-ws'
 
 export class WebsocketTransporter extends MessageTransporter {
   private websocket: WebSocket | undefined
 
   private messageCallback: undefined | ((event: MessageEvent) => void)
-  private errorCallback: undefined | ((event: ErrorEvent) => void)
-  private closeCallback: undefined | ((event: CloseEvent) => void)
+  private closeCallback: undefined | (() => void)
 
   constructor() {
     super()
@@ -41,10 +40,8 @@ export class WebsocketTransporter extends MessageTransporter {
       if (this.messageCallback) {
         this.websocket.removeEventListener('message', this.messageCallback)
       }
-      if (this.errorCallback) {
-        this.websocket.removeEventListener('error', this.errorCallback)
-      }
       if (this.closeCallback) {
+        this.websocket.removeEventListener('error', this.closeCallback)
         this.websocket.removeEventListener('close', this.closeCallback)
       }
     }
@@ -52,11 +49,10 @@ export class WebsocketTransporter extends MessageTransporter {
 
   private bindWebsocketEvents(websocket: WebSocket) {
     this.messageCallback = this.processMessageEvent.bind(this)
-    this.errorCallback = this.disconnect.bind(this)
     this.closeCallback = this.onDisconnecting.bind(this)
 
     websocket.addEventListener('message', this.messageCallback)
-    websocket.addEventListener('error', this.errorCallback)
+    websocket.addEventListener('error', this.closeCallback)
     websocket.addEventListener('close', this.closeCallback)
   }
 
@@ -70,6 +66,11 @@ export class WebsocketTransporter extends MessageTransporter {
 
   public disconnect(): void {
     this.websocket?.close()
+  }
+
+  protected onDisconnecting() {
+    this.undbindEventsFromPreviousWebsocket()
+    super.onDisconnecting()
   }
 
   public sendMessage(content: Message<MessageType>): void {
