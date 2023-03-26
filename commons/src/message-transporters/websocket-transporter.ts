@@ -28,7 +28,7 @@ export class WebsocketTransporter extends MessageTransporter {
     this.websocket = websocket
     this.bindWebsocketEvents(websocket)
 
-    if (this.websocket.readyState === WebSocket.OPEN) {
+    if (this.isConnected()) {
       this.onConnected()
     } else {
       this.websocket.addEventListener('open', this.onConnected.bind(this))
@@ -69,13 +69,26 @@ export class WebsocketTransporter extends MessageTransporter {
   }
 
   protected onDisconnecting() {
+    if (this.websocket === undefined) {
+      return
+    }
     this.undbindEventsFromPreviousWebsocket()
+    this.websocket = undefined
     super.onDisconnecting()
   }
 
   public sendMessage(content: Message<MessageType>): void {
-    if (this.websocket?.readyState !== WebSocket.OPEN) {
-      throw new Error("Can't send message over non-open socket")
+    if (!this.isConnected()) {
+      this.onDisconnecting()
+      console.debug(
+        "Can't send message over closed connection. Triggering onDisconencted event. Message that couldn't be sent was",
+        content
+      )
+      return
+    }
+
+    if (this.websocket === undefined) {
+      throw new Error('websocket transporter has no websocket connection')
     }
 
     try {
