@@ -9,7 +9,7 @@ import { setNotePermissionsFromServer } from '../../../../redux/note-details/met
 import { IconButton } from '../../../common/icon-button/icon-button'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
-import { AccessLevel, SpecialGroup } from './types'
+import { AccessLevel, SpecialGroup } from '@hedgedoc/commons'
 import React, { useCallback, useMemo } from 'react'
 import { ToggleButtonGroup } from 'react-bootstrap'
 import { Eye as IconEye } from 'react-bootstrap-icons'

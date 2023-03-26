@@ -1,12 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
-import type { NotePermissions } from '../notes/types'
 import type { OwnerChangeDto, PermissionSetDto } from './types'
+import type { NotePermissions } from '@hedgedoc/commons'
 
 /**
  * Sets the owner of a note.

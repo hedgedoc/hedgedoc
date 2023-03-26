@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { store } from '..'
 import { getNoteMetadata } from '../../api/notes'
-import type { Note, NotePermissions } from '../../api/notes/types'
+import type { Note } from '../../api/notes/types'
 import type { CursorSelection } from '../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
 import type {
   SetNoteDetailsFromServerAction,
@@ -16,6 +16,7 @@ import type {
   UpdateNoteTitleByFirstHeadingAction
 } from './types'
 import { NoteDetailsActionType } from './types'
+import type { NotePermissions } from '@hedgedoc/commons'
 
 /**
  * Sets the content of the current note, extracts and parses the frontmatter and extracts the markdown content part.

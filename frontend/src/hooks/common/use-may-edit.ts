@@ -5,17 +5,17 @@
  */
 import { useApplicationState } from './use-application-state'
 import type { NotePermissions } from '@hedgedoc/commons'
-import { userIsOwner } from '@hedgedoc/commons'
+import { userCanEdit } from '@hedgedoc/commons'
 import { useMemo } from 'react'
 
 /**
- * Determines if the current user is the owner of the current note.
+ * Determines if the current user is allowed to write to this note.
  *
- * @return True, if the current user is owner.
+ * @return True, if the current user is allowed to write.
  */
-export const useIsOwner = (): boolean => {
+export const useMayEdit = (): boolean => {
   const me: string | undefined = useApplicationState((state) => state.user?.username)
   const permissions: NotePermissions = useApplicationState((state) => state.noteDetails.permissions)
 
-  return useMemo(() => userIsOwner(permissions, me), [permissions, me])
+  return useMemo(() => userCanEdit(permissions, me), [permissions, me])
 }

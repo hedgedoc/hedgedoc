@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import * as AliasModule from '../../../../api/alias'
-import * as useApplicationStateModule from '../../../../hooks/common/use-application-state'
 import * as NoteDetailsReduxModule from '../../../../redux/note-details/methods'
+import type { NoteDetails } from '../../../../redux/note-details/types/note-details'
+import { mockNoteOwnership } from '../../../../test-utils/note-ownership'
 import { mockI18n } from '../../../markdown-renderer/test-utils/mock-i18n'
 import * as useUiNotificationsModule from '../../../notifications/ui-notification-boundary'
 import { AliasesAddForm } from './aliases-add-form'
@@ -25,12 +26,12 @@ describe('AliasesAddForm', () => {
     await mockI18n()
     jest.spyOn(AliasModule, 'addAlias').mockImplementation(() => addPromise)
     jest.spyOn(NoteDetailsReduxModule, 'updateMetadata').mockImplementation(() => Promise.resolve())
-    jest.spyOn(useApplicationStateModule, 'useApplicationState').mockReturnValue('mock-note')
     jest.spyOn(useUiNotificationsModule, 'useUiNotifications').mockReturnValue({
       showErrorNotification: jest.fn(),
       dismissNotification: jest.fn(),
       dispatchUiNotification: jest.fn()
     })
+    mockNoteOwnership('test', 'test', { noteDetails: { id: 'mock-note' } as NoteDetails })
   })
 
   afterAll(() => {

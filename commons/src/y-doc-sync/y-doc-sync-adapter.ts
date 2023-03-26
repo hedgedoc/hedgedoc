@@ -28,7 +28,7 @@ export abstract class YDocSyncAdapter {
     this.yDocUpdateListener = doc.on(
       'update',
       (update, origin) => {
-        this.processDocUpdate(update, origin)
+        this.distributeDocUpdate(update, origin)
       },
       {
         objectify: true
@@ -92,7 +92,7 @@ export abstract class YDocSyncAdapter {
 
     const noteContentUpdateListener = this.messageTransporter.on(
       MessageType.NOTE_CONTENT_UPDATE,
-      (payload) => this.doc.applyUpdate(payload.payload, this),
+      (payload) => this.applyIncomingUpdatePayload(payload.payload),
       { objectify: true }
     ) as Listener
 
@@ -103,7 +103,11 @@ export abstract class YDocSyncAdapter {
     }
   }
 
-  private processDocUpdate(update: number[], origin: unknown): void {
+  protected applyIncomingUpdatePayload(update: number[]): void {
+    this.doc.applyUpdate(update, this)
+  }
+
+  private distributeDocUpdate(update: number[], origin: unknown): void {
     if (!this.isSynced() || origin === this) {
       return
     }

@@ -7,7 +7,7 @@ import { useApplicationState } from '../../../../hooks/common/use-application-st
 import { useIsOwner } from '../../../../hooks/common/use-is-owner'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionEntrySpecialGroup } from './permission-entry-special-group'
-import { AccessLevel, SpecialGroup } from './types'
+import { AccessLevel, SpecialGroup } from '@hedgedoc/commons'
 import React, { Fragment, useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 

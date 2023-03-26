@@ -6,6 +6,7 @@
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { ORIGIN, useBaseUrl } from '../../../hooks/common/use-base-url'
 import { useDarkModeState } from '../../../hooks/common/use-dark-mode-state'
+import { useMayEdit } from '../../../hooks/common/use-may-edit'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { findLanguageByCodeBlockName } from '../../markdown-renderer/extensions/base/code-block-markdown-extension/find-language-by-code-block-name'
 import type { ScrollProps } from '../synced-scroll/scroll-props'
@@ -130,6 +131,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
   const darkModeActivated = useDarkModeState()
   const editorOrigin = useBaseUrl(ORIGIN.EDITOR)
   const isSynced = useApplicationState((state) => state.realtimeStatus.isSynced)
+  const mayEdit = useMayEdit()
 
   useEffect(() => {
     const listener = messageTransporter.doAsSoonAsConnected(() => messageTransporter.sendReady())
@@ -144,11 +146,11 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
       onTouchStart={onMakeScrollSource}
       onMouseEnter={onMakeScrollSource}
       {...cypressId('editor-pane')}
-      {...cypressAttribute('editor-ready', String(updateViewContextExtension !== null && isSynced))}>
+      {...cypressAttribute('editor-ready', String(updateViewContextExtension !== null && isSynced && mayEdit))}>
       <MaxLengthWarning />
       <ToolBar />
       <ReactCodeMirror
-        editable={updateViewContextExtension !== null && isSynced}
+        editable={updateViewContextExtension !== null && isSynced && mayEdit}
         placeholder={t('editor.placeholder', { host: editorOrigin }) ?? ''}
         extensions={extensions}
         width={'100%'}
