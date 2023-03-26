@@ -54,14 +54,10 @@ export class PermissionsGuard implements CanActivate {
     if (noteIdOrAlias === undefined)
       noteIdOrAlias = request.headers['hedgedoc-note'] as string;
     const note = await getNote(this.noteService, noteIdOrAlias);
-    switch (permissions[0]) {
-      case Permission.READ:
-        return await this.permissionsService.mayRead(user, note);
-      case Permission.WRITE:
-        return await this.permissionsService.mayWrite(user, note);
-      case Permission.OWNER:
-        return await this.permissionsService.isOwner(user, note);
-    }
-    return false;
+    return await this.permissionsService.checkPermissionOnNote(
+      permissions[0],
+      user,
+      note,
+    );
   }
 }
