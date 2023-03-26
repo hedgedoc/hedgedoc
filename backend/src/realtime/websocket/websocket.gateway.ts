@@ -1,9 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { WebsocketTransporter } from '@hedgedoc/commons';
+import {
+  NotePermissions,
+  userCanEdit,
+  WebsocketTransporter,
+} from '@hedgedoc/commons';
 import { OnGatewayConnection, WebSocketGateway } from '@nestjs/websockets';
 import { IncomingMessage } from 'http';
 import WebSocket from 'ws';
@@ -77,10 +81,16 @@ export class WebsocketGateway implements OnGatewayConnection {
         await this.realtimeNoteService.getOrCreateRealtimeNote(note);
 
       const websocketTransporter = new WebsocketTransporter();
+      const permissions = await this.noteService.toNotePermissionsDto(note);
+      const acceptEdits: boolean = userCanEdit(
+        permissions as NotePermissions,
+        user?.username,
+      );
       const connection = new RealtimeConnection(
         websocketTransporter,
         user,
         realtimeNote,
+        acceptEdits,
       );
       websocketTransporter.setWebsocket(clientSocket);
 

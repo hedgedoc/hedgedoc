@@ -7,15 +7,22 @@ import * as useApplicationStateModule from '../hooks/common/use-application-stat
 import type { ApplicationState } from '../redux/application-state'
 
 jest.mock('../hooks/common/use-application-state')
-export const mockNoteOwnership = (ownUsername: string, noteOwner: string) => {
+export const mockNoteOwnership = (
+  ownUsername: string,
+  noteOwner: string,
+  additionalState?: Partial<ApplicationState>
+) => {
   jest.spyOn(useApplicationStateModule, 'useApplicationState').mockImplementation((fn) => {
     return fn({
+      ...additionalState,
       noteDetails: {
+        ...additionalState?.noteDetails,
         permissions: {
           owner: noteOwner
         }
       },
       user: {
+        ...additionalState?.user,
         username: ownUsername
       }
     } as ApplicationState)

@@ -1,0 +1,51 @@
+/*
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+import { NotePermissions, SpecialGroup } from './permissions.types.js'
+
+/**
+ * Checks if the given user is the owner of a note.
+ *
+ * @param permissions The permissions of the note to check
+ * @param user The username of the user
+ * @return True if the user is the owner of the note
+ */
+export const userIsOwner = (
+  permissions: NotePermissions,
+  user?: string
+): boolean => {
+  return !!user && permissions.owner === user
+}
+
+/**
+ * Checks if the given user may edit a note.
+ *
+ * @param permissions The permissions of the note to check
+ * @param user The username of the user
+ * @return True if the user has the permission to edit the note
+ */
+export const userCanEdit = (
+  permissions: NotePermissions,
+  user?: string
+): boolean => {
+  const isOwner = userIsOwner(permissions, user)
+  const mayWriteViaUserPermission = permissions.sharedToUsers.some(
+    (value) => value.canEdit && value.username === user
+  )
+  const mayWriteViaGroupPermission =
+    !!user &&
+    permissions.sharedToGroups.some(
+      (value) => value.groupName === SpecialGroup.LOGGED_IN && value.canEdit
+    )
+  const everyoneMayWriteViaGroupPermission = permissions.sharedToGroups.some(
+    (value) => value.groupName === SpecialGroup.EVERYONE && value.canEdit
+  )
+  return (
+    isOwner ||
+    mayWriteViaUserPermission ||
+    mayWriteViaGroupPermission ||
+    everyoneMayWriteViaGroupPermission
+  )
+}

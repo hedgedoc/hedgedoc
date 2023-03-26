@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -28,12 +28,14 @@ export class RealtimeConnection {
    * @param messageTransporter The message transporter that handles the communication with the client.
    * @param user The user of the client
    * @param realtimeNote The {@link RealtimeNote} that the client connected to.
+   * @param acceptEdits If edits by this connection should be accepted.
    * @throws Error if the socket is not open
    */
   constructor(
     messageTransporter: MessageTransporter,
     private user: User | null,
     private realtimeNote: RealtimeNote,
+    private acceptEdits: boolean,
   ) {
     this.displayName = user?.displayName ?? generateRandomName();
     this.transporter = messageTransporter;
@@ -44,6 +46,7 @@ export class RealtimeConnection {
     this.yDocSyncAdapter = new YDocSyncServerAdapter(
       this.transporter,
       realtimeNote.getRealtimeDoc(),
+      acceptEdits,
     );
     this.realtimeUserStateAdapter = new RealtimeUserStatusAdapter(
       this.user?.username ?? null,

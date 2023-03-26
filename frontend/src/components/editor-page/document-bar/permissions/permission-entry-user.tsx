@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { NoteUserPermissionEntry } from '../../../../api/notes/types'
 import { removeUserPermission, setUserPermission } from '../../../../api/permissions'
 import { getUser } from '../../../../api/users'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
@@ -13,7 +12,8 @@ import { UserAvatarForUser } from '../../../common/user-avatar/user-avatar-for-u
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionEntryButtons, PermissionType } from './permission-entry-buttons'
-import { AccessLevel } from './types'
+import type { NoteUserPermissionEntry } from '@hedgedoc/commons'
+import { AccessLevel } from '@hedgedoc/commons'
 import React, { useCallback } from 'react'
 import { useAsync } from 'react-use'
 

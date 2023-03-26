@@ -1,9 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { Alias } from '../alias/types'
+import type { NotePermissions } from '@hedgedoc/commons'
 
 export interface Note {
   content: string
@@ -33,22 +34,6 @@ export interface NoteEdit {
   endPos: number
   createdAt: string
   updatedAt: string
-}
-
-export interface NotePermissions {
-  owner: string | null
-  sharedToUsers: NoteUserPermissionEntry[]
-  sharedToGroups: NoteGroupPermissionEntry[]
-}
-
-export interface NoteUserPermissionEntry {
-  username: string
-  canEdit: boolean
-}
-
-export interface NoteGroupPermissionEntry {
-  groupName: string
-  canEdit: boolean
 }
 
 export interface NoteDeletionOptions {

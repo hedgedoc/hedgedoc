@@ -1,10 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { Note, NoteMetadata, NotePermissions } from '../../api/notes/types'
+import type { Note, NoteMetadata } from '../../api/notes/types'
 import type { CursorSelection } from '../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
+import type { NotePermissions } from '@hedgedoc/commons'
 import type { Action } from 'redux'
 
 export enum NoteDetailsActionType {

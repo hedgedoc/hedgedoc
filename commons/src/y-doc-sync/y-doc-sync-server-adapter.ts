@@ -10,9 +10,17 @@ import { YDocSyncAdapter } from './y-doc-sync-adapter.js'
 export class YDocSyncServerAdapter extends YDocSyncAdapter {
   constructor(
     readonly messageTransporter: MessageTransporter,
-    readonly doc: RealtimeDoc
+    readonly doc: RealtimeDoc,
+    readonly acceptEdits: boolean
   ) {
     super(messageTransporter, doc)
     this.markAsSynced()
+  }
+
+  protected applyIncomingUpdatePayload(update: number[]): void {
+    if (!this.acceptEdits) {
+      return
+    }
+    super.applyIncomingUpdatePayload(update)
   }
 }

@@ -5,7 +5,7 @@
  */
 import { UiIcon } from '../../../common/icons/ui-icon'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
-import { AccessLevel } from './types'
+import { AccessLevel } from '@hedgedoc/commons'
 import React, { useMemo } from 'react'
 import { Button, ToggleButtonGroup } from 'react-bootstrap'
 import { Eye as IconEye } from 'react-bootstrap-icons'

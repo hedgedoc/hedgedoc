@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -195,8 +195,18 @@ describe('Websocket gateway', () => {
         }
       });
 
-    const mockedNote = Mock.of<Note>({ id: 4711 });
-    const mockedGuestNote = Mock.of<Note>({ id: 1235 });
+    const mockedNote = Mock.of<Note>({
+      id: 4711,
+      owner: Promise.resolve(mockUser),
+      userPermissions: Promise.resolve([]),
+      groupPermissions: Promise.resolve([]),
+    });
+    const mockedGuestNote = Mock.of<Note>({
+      id: 1235,
+      owner: Promise.resolve(null),
+      userPermissions: Promise.resolve([]),
+      groupPermissions: Promise.resolve([]),
+    });
     jest
       .spyOn(notesService, 'getNoteByIdOrAlias')
       .mockImplementation((noteId: string) => {

@@ -104,12 +104,14 @@ describe('message transporter', () => {
 
     const yDocSyncAdapterServerTo1 = new YDocSyncServerAdapter(
       transporterServerTo1,
-      docServer
+      docServer,
+      true
     )
 
     const yDocSyncAdapterServerTo2 = new YDocSyncServerAdapter(
       transporterServerTo2,
-      docServer
+      docServer,
+      true
     )
 
     const waitForClient1Sync = new Promise<void>((resolve) => {

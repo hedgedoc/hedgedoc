@@ -15,6 +15,8 @@ export {
   MissingTrailingSlashError,
   WrongProtocolError
 } from './utils/errors.js'
+export * from './utils/permissions.js'
+export * from './utils/permissions.types.js'
 
 export * from './y-doc-sync/y-doc-sync-client-adapter.js'
 export * from './y-doc-sync/y-doc-sync-server-adapter.js'

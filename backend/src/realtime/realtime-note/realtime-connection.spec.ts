@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -53,6 +53,7 @@ describe('websocket connection', () => {
       mockedMessageTransporter,
       mockedUser,
       mockedRealtimeNote,
+      true,
     );
     expect(sut.getTransporter()).toBe(mockedMessageTransporter);
   });
@@ -62,6 +63,7 @@ describe('websocket connection', () => {
       mockedMessageTransporter,
       mockedUser,
       mockedRealtimeNote,
+      true,
     );
     expect(sut.getRealtimeNote()).toBe(mockedRealtimeNote);
   });
@@ -76,6 +78,7 @@ describe('websocket connection', () => {
       mockedMessageTransporter,
       mockedUser,
       mockedRealtimeNote,
+      true,
     );
 
     expect(sut.getRealtimeUserStateAdapter()).toBe(realtimeUserStatus);
@@ -91,6 +94,7 @@ describe('websocket connection', () => {
       mockedMessageTransporter,
       mockedUser,
       mockedRealtimeNote,
+      true,
     );
 
     expect(sut.getSyncAdapter()).toBe(yDocSyncServerAdapter);
@@ -101,6 +105,7 @@ describe('websocket connection', () => {
       mockedMessageTransporter,
       mockedUser,
       mockedRealtimeNote,
+      true,
     );
 
     const removeClientSpy = jest.spyOn(mockedRealtimeNote, 'removeClient');
@@ -115,6 +120,7 @@ describe('websocket connection', () => {
       mockedMessageTransporter,
       mockedUser,
       mockedRealtimeNote,
+      true,
     );
 
     expect(sut.getUser()).toBe(mockedUser);
@@ -127,6 +133,7 @@ describe('websocket connection', () => {
       mockedMessageTransporter,
       mockedUserWithUsername,
       mockedRealtimeNote,
+      true,
     );
 
     expect(sut.getDisplayName()).toBe('MockUser');
@@ -143,6 +150,7 @@ describe('websocket connection', () => {
       mockedMessageTransporter,
       mockedUser,
       mockedRealtimeNote,
+      true,
     );
 
     expect(sut.getDisplayName()).toBe(randomName);
