@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { useIsOwner } from '../../../../hooks/common/use-is-owner'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionEntrySpecialGroup } from './permission-entry-special-group'
 import { AccessLevel, SpecialGroup } from '@hedgedoc/commons'
@@ -18,7 +18,7 @@ import { Trans, useTranslation } from 'react-i18next'
  */
 export const PermissionSectionSpecialGroups: React.FC<PermissionDisabledProps> = ({ disabled }) => {
   useTranslation()
-  const groupPermissions = useApplicationState((state) => state.noteDetails.permissions.sharedToGroups)
+  const groupPermissions = useNoteDetails().permissions.sharedToGroups
   const isOwner = useIsOwner()
 
   const specialGroupEntries = useMemo(() => {

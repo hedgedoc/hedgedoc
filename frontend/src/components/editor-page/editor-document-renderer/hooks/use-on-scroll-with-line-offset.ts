@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { getGlobalState } from '../../../../redux'
-import type { ScrollState } from '../../synced-scroll/scroll-props'
-import type { ScrollCallback } from '../../synced-scroll/scroll-props'
+import type { ScrollCallback, ScrollState } from '../../synced-scroll/scroll-props'
 import { useMemo } from 'react'
 
 /**
@@ -22,7 +21,7 @@ export const useOnScrollWithLineOffset = (onScroll: ScrollCallback | undefined):
       return (scrollState: ScrollState) => {
         onScroll({
           firstLineInView:
-            scrollState.firstLineInView + getGlobalState().noteDetails.frontmatterRendererInfo.lineOffset,
+            scrollState.firstLineInView + (getGlobalState().noteDetails?.frontmatterRendererInfo.lineOffset ?? 0),
           scrolledPercentage: scrollState.scrolledPercentage
         })
       }

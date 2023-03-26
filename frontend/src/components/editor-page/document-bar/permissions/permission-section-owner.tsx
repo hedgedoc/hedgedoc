@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { setNoteOwner } from '../../../../api/permissions'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { setNotePermissionsFromServer } from '../../../../redux/note-details/methods'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
@@ -19,7 +19,7 @@ import { Trans } from 'react-i18next'
  * @param disabled If the user is not the owner, functionality is disabled.
  */
 export const PermissionSectionOwner: React.FC<PermissionDisabledProps> = ({ disabled }) => {
-  const noteId = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const noteId = useNoteDetails().primaryAddress
   const [changeOwner, setChangeOwner] = useState(false)
   const { showErrorNotification } = useUiNotifications()
 

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { removeGroupPermission, setGroupPermission } from '../../../../api/permissions'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { setNotePermissionsFromServer } from '../../../../redux/note-details/methods'
 import { IconButton } from '../../../common/icon-button/icon-button'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
@@ -12,9 +12,7 @@ import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { AccessLevel, SpecialGroup } from '@hedgedoc/commons'
 import React, { useCallback, useMemo } from 'react'
 import { ToggleButtonGroup } from 'react-bootstrap'
-import { Eye as IconEye } from 'react-bootstrap-icons'
-import { Pencil as IconPencil } from 'react-bootstrap-icons'
-import { SlashCircle as IconSlashCircle } from 'react-bootstrap-icons'
+import { Eye as IconEye, Pencil as IconPencil, SlashCircle as IconSlashCircle } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 export interface PermissionEntrySpecialGroupProps {
@@ -34,7 +32,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
   type,
   disabled
 }) => {
-  const noteId = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const noteId = useNoteDetails().primaryAddress
   const { t } = useTranslation()
   const { showErrorNotification } = useUiNotifications()
 

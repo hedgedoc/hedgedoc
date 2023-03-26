@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { useBaseUrl } from '../../../../hooks/common/use-base-url'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { CopyableField } from '../../../common/copyable/copyable-field/copyable-field'
 import React, { useMemo } from 'react'
 
@@ -24,7 +24,7 @@ export interface LinkFieldProps {
  */
 export const NoteUrlField: React.FC<LinkFieldProps> = ({ type }) => {
   const baseUrl = useBaseUrl()
-  const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const noteIdentifier = useNoteDetails().primaryAddress
 
   const url = useMemo(() => {
     const url = new URL(baseUrl)

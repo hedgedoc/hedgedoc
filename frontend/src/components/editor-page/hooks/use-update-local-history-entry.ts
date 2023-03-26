@@ -6,6 +6,7 @@
 import type { HistoryEntryWithOrigin } from '../../../api/history/types'
 import { HistoryEntryOrigin } from '../../../api/history/types'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../hooks/common/use-note-details'
 import { getGlobalState } from '../../../redux'
 import { updateLocalHistoryEntry } from '../../../redux/history/methods'
 import equal from 'fast-deep-equal'
@@ -16,10 +17,10 @@ import { useEffect, useRef } from 'react'
  * The entry is updated when the title or tags of the note change.
  */
 export const useUpdateLocalHistoryEntry = (): void => {
-  const id = useApplicationState((state) => state.noteDetails.id)
+  const id = useNoteDetails().id
   const userExists = useApplicationState((state) => !!state.user)
-  const currentNoteTitle = useApplicationState((state) => state.noteDetails.title)
-  const currentNoteTags = useApplicationState((state) => state.noteDetails.frontmatter.tags)
+  const currentNoteTitle = useNoteDetails().title
+  const currentNoteTags = useNoteDetails().frontmatter.tags
 
   const lastNoteTitle = useRef('')
   const lastNoteTags = useRef<string[]>([])

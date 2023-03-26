@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import type { ScrollState } from '../../synced-scroll/scroll-props'
 import { useMemo } from 'react'
 
@@ -14,7 +14,7 @@ import { useMemo } from 'react'
  * @return the adjusted scroll state without the line offset
  */
 export const useScrollStateWithoutLineOffset = (scrollState: ScrollState | undefined): ScrollState | undefined => {
-  const lineOffset = useApplicationState((state) => state.noteDetails.frontmatterRendererInfo.lineOffset)
+  const lineOffset = useNoteDetails().frontmatterRendererInfo.lineOffset
   return useMemo(() => {
     return scrollState === undefined
       ? undefined

@@ -4,9 +4,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { CursorSelection } from '../../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
-import type { NoteDetails } from '../types/note-details'
+import type { OptionalNoteDetails } from '../types'
 
-export const buildStateFromUpdateCursorPosition = (state: NoteDetails, selection: CursorSelection): NoteDetails => {
+export const buildStateFromUpdateCursorPosition = (
+  state: OptionalNoteDetails,
+  selection: CursorSelection
+): OptionalNoteDetails => {
+  if (state === null) {
+    return null
+  }
   const correctedSelection = isFromAfterTo(selection)
     ? {
         to: selection.from,

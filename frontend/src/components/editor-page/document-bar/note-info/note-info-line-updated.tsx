@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { UserAvatarForUsername } from '../../../common/user-avatar/user-avatar-for-username'
 import { NoteInfoLine } from './note-info-line'
 import type { NoteInfoTimeLineProps } from './note-info-time-line'
@@ -21,9 +21,9 @@ import { Trans, useTranslation } from 'react-i18next'
  */
 export const NoteInfoLineUpdated: React.FC<NoteInfoTimeLineProps> = ({ size }) => {
   useTranslation()
-  const noteUpdateTime = useApplicationState((state) => state.noteDetails.updatedAt)
+  const noteUpdateTime = useNoteDetails().updatedAt
   const noteUpdateDateTime = useMemo(() => DateTime.fromSeconds(noteUpdateTime), [noteUpdateTime])
-  const noteUpdateUser = useApplicationState((state) => state.noteDetails.updateUsername)
+  const noteUpdateUser = useNoteDetails().updateUsername
 
   const userBlock = useMemo(() => {
     if (!noteUpdateUser) {

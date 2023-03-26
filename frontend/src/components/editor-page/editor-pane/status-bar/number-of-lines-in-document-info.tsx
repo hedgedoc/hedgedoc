@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import React, { useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
@@ -13,7 +13,7 @@ import { Trans, useTranslation } from 'react-i18next'
 export const NumberOfLinesInDocumentInfo: React.FC = () => {
   useTranslation()
 
-  const linesInDocument = useApplicationState((state) => state.noteDetails.markdownContent.lines.length)
+  const linesInDocument = useNoteDetails().markdownContent.lines.length
   const translationOptions = useMemo(() => ({ lines: linesInDocument }), [linesInDocument])
 
   return (

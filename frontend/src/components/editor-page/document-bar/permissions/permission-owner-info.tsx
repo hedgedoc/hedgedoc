@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { UiIcon } from '../../../common/icons/ui-icon'
 import { UserAvatarForUsername } from '../../../common/user-avatar/user-avatar-for-username'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
@@ -27,7 +27,7 @@ export const PermissionOwnerInfo: React.FC<PermissionOwnerInfoProps & Permission
   disabled
 }) => {
   const { t } = useTranslation()
-  const noteOwner = useApplicationState((state) => state.noteDetails.permissions.owner)
+  const noteOwner = useNoteDetails().permissions.owner
 
   return (
     <Fragment>

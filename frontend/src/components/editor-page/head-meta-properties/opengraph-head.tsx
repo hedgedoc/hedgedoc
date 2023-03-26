@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../hooks/common/use-note-details'
 import { useNoteTitle } from '../../../hooks/common/use-note-title'
 import Head from 'next/head'
 import React, { useMemo } from 'react'
@@ -13,7 +13,7 @@ import React, { useMemo } from 'react'
  */
 export const OpengraphHead: React.FC = () => {
   const noteTitle = useNoteTitle()
-  const openGraphData = useApplicationState((state) => state.noteDetails.frontmatter.opengraph)
+  const openGraphData = useNoteDetails().frontmatter.opengraph
   const openGraphMetaElements = useMemo(() => {
     const elements = Object.entries(openGraphData)
       .filter(([, value]) => value && String(value).trim() !== '')

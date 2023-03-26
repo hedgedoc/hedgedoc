@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../hooks/common/use-note-details'
 import { useTrimmedNoteMarkdownContentWithoutFrontmatter } from '../../../hooks/common/use-trimmed-note-markdown-content-without-frontmatter'
 import { setRendererStatus } from '../../../redux/renderer-status/methods'
 import { RendererType } from '../../render-page/window-post-message-communicator/rendering-message'
@@ -28,7 +28,7 @@ export type EditorDocumentRendererProps = Omit<
  */
 export const EditorDocumentRenderer: React.FC<EditorDocumentRendererProps> = ({ scrollState, onScroll, ...props }) => {
   const trimmedContentLines = useTrimmedNoteMarkdownContentWithoutFrontmatter()
-  const noteType: NoteType = useApplicationState((state) => state.noteDetails.frontmatter.type)
+  const noteType: NoteType = useNoteDetails().frontmatter.type
   const adjustedOnScroll = useOnScrollWithLineOffset(onScroll)
   const adjustedScrollState = useScrollStateWithoutLineOffset(scrollState)
 

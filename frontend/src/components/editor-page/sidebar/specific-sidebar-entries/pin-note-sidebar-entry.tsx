@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { toggleHistoryEntryPinning } from '../../../../redux/history/methods'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
@@ -21,7 +22,7 @@ import { Trans, useTranslation } from 'react-i18next'
  */
 export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
   useTranslation()
-  const id = useApplicationState((state) => state.noteDetails.id)
+  const id = useNoteDetails().id
   const history = useApplicationState((state) => state.history)
   const { showErrorNotification } = useUiNotifications()
 

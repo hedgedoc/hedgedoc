@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from './use-application-state'
+import { useNoteDetails } from './use-note-details'
 
 /**
  * Extracts the markdown content of the current note from the global application state.
@@ -11,5 +11,5 @@ import { useApplicationState } from './use-application-state'
  * @return The markdown content of the note
  */
 export const useNoteMarkdownContent = (): string => {
-  return useApplicationState((state) => state.noteDetails.markdownContent.plain)
+  return useNoteDetails().markdownContent.plain
 }

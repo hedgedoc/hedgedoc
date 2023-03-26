@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../hooks/common/use-note-details'
 import { InternalLink } from '../common/links/internal-link'
 import { ShowIf } from '../common/show-if/show-if'
 import { NoteInfoLineCreated } from '../editor-page/document-bar/note-info/note-info-line-created'
@@ -18,7 +18,7 @@ import { Trans, useTranslation } from 'react-i18next'
  */
 export const DocumentInfobar: React.FC = () => {
   const { t } = useTranslation()
-  const noteDetails = useApplicationState((state) => state.noteDetails)
+  const noteDetails = useNoteDetails()
 
   // TODO Check permissions ("writability") of note and show edit link depending on that.
   return (

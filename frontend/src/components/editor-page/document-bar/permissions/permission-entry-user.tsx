@@ -5,7 +5,7 @@
  */
 import { removeUserPermission, setUserPermission } from '../../../../api/permissions'
 import { getUser } from '../../../../api/users'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { setNotePermissionsFromServer } from '../../../../redux/note-details/methods'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { UserAvatarForUser } from '../../../common/user-avatar/user-avatar-for-user'
@@ -31,7 +31,7 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
   entry,
   disabled
 }) => {
-  const noteId = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const noteId = useNoteDetails().primaryAddress
   const { showErrorNotification } = useUiNotifications()
 
   const onRemoveEntry = useCallback(() => {

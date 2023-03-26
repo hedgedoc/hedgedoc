@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { getAllRevisions } from '../../../../api/revisions'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { AsyncLoadingBoundary } from '../../../common/async-loading-boundary/async-loading-boundary'
 import { RevisionListEntry } from './revision-list-entry'
 import { DateTime } from 'luxon'
@@ -24,7 +24,7 @@ export interface RevisionListProps {
  * @param onRevisionSelect Callback that is executed when a list entry is selected
  */
 export const RevisionList: React.FC<RevisionListProps> = ({ selectedRevisionId, onRevisionSelect }) => {
-  const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const noteIdentifier = useNoteDetails().primaryAddress
 
   const {
     value: revisions,

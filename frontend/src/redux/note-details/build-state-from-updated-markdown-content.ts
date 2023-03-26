@@ -6,6 +6,7 @@
 import { calculateLineStartIndexes } from './calculate-line-start-indexes'
 import { initialState } from './initial-state'
 import { createNoteFrontmatterFromYaml } from './raw-note-frontmatter-parser/parser'
+import type { OptionalNoteDetails } from './types'
 import type { NoteDetails } from './types/note-details'
 import { extractFrontmatter, generateNoteTitle } from '@hedgedoc/commons'
 import type { PresentFrontmatterExtractionResult } from '@hedgedoc/commons'
@@ -16,7 +17,13 @@ import type { PresentFrontmatterExtractionResult } from '@hedgedoc/commons'
  * @param markdownContent The new note markdown content consisting of the frontmatter and markdown part.
  * @return An updated {@link NoteDetails} state.
  */
-export const buildStateFromUpdatedMarkdownContent = (state: NoteDetails, markdownContent: string): NoteDetails => {
+export const buildStateFromUpdatedMarkdownContent = (
+  state: OptionalNoteDetails,
+  markdownContent: string
+): OptionalNoteDetails => {
+  if (state === null) {
+    return state
+  }
   return buildStateFromMarkdownContentAndLines(state, markdownContent, markdownContent.split('\n'))
 }
 

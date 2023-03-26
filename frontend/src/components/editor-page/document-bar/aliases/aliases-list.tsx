@@ -3,8 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import type { ApplicationState } from '../../../../redux/application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { AliasesListEntry } from './aliases-list-entry'
 import React, { Fragment, useMemo } from 'react'
 
@@ -12,7 +11,7 @@ import React, { Fragment, useMemo } from 'react'
  * Renders the list of aliases.
  */
 export const AliasesList: React.FC = () => {
-  const aliases = useApplicationState((state: ApplicationState) => state.noteDetails.aliases)
+  const aliases = useNoteDetails().aliases
 
   const aliasesDom = useMemo(() => {
     return aliases

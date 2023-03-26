@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { NoteDetails } from '../types/note-details'
+import type { OptionalNoteDetails } from '../types'
 import type { NotePermissions } from '@hedgedoc/commons'
 
 /**
@@ -12,9 +12,12 @@ import type { NotePermissions } from '@hedgedoc/commons'
  * @param serverPermissions The updated NotePermissions data.
  */
 export const buildStateFromServerPermissions = (
-  state: NoteDetails,
+  state: OptionalNoteDetails,
   serverPermissions: NotePermissions
-): NoteDetails => {
+): OptionalNoteDetails => {
+  if (state === null) {
+    return null
+  }
   return {
     ...state,
     permissions: serverPermissions

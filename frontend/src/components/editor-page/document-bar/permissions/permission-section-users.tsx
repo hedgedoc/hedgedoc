@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { setUserPermission } from '../../../../api/permissions'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { setNotePermissionsFromServer } from '../../../../redux/note-details/methods'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import { PermissionAddEntryField } from './permission-add-entry-field'
@@ -20,8 +20,8 @@ import { Trans, useTranslation } from 'react-i18next'
  */
 export const PermissionSectionUsers: React.FC<PermissionDisabledProps> = ({ disabled }) => {
   useTranslation()
-  const userPermissions = useApplicationState((state) => state.noteDetails.permissions.sharedToUsers)
-  const noteId = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const userPermissions = useNoteDetails().permissions.sharedToUsers
+  const noteId = useNoteDetails().primaryAddress
   const { showErrorNotification } = useUiNotifications()
 
   const userEntries = useMemo(() => {

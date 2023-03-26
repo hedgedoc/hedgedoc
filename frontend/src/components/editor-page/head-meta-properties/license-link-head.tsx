@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../hooks/common/use-note-details'
 import Head from 'next/head'
 import React, { useMemo } from 'react'
 
@@ -11,7 +11,7 @@ import React, { useMemo } from 'react'
  * Renders the license link tag if a license is set in the frontmatter.
  */
 export const LicenseLinkHead: React.FC = () => {
-  const license = useApplicationState((state) => state.noteDetails.frontmatter.license)
+  const license = useNoteDetails().frontmatter.license
 
   const optionalLinkElement = useMemo(() => {
     if (!license || license.trim() === '') {

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { useMemo } from 'react'
 
 export interface LineBasedPosition {
@@ -24,8 +24,8 @@ const calculateLineBasedPosition = (absolutePosition: number, lineStartIndexes: 
  * Returns the line+character based position of the to-cursor, if available.
  */
 export const useLineBasedToPosition = (): LineBasedPosition | undefined => {
-  const lineStartIndexes = useApplicationState((state) => state.noteDetails.markdownContent.lineStartIndexes)
-  const selection = useApplicationState((state) => state.noteDetails.selection)
+  const lineStartIndexes = useNoteDetails().markdownContent.lineStartIndexes
+  const selection = useNoteDetails().selection
 
   return useMemo(() => {
     const to = selection.to
@@ -40,8 +40,8 @@ export const useLineBasedToPosition = (): LineBasedPosition | undefined => {
  * Returns the line+character based position of the from-cursor.
  */
 export const useLineBasedFromPosition = (): LineBasedPosition => {
-  const lineStartIndexes = useApplicationState((state) => state.noteDetails.markdownContent.lineStartIndexes)
-  const selection = useApplicationState((state) => state.noteDetails.selection)
+  const lineStartIndexes = useNoteDetails().markdownContent.lineStartIndexes
+  const selection = useNoteDetails().selection
 
   return useMemo(() => {
     return calculateLineBasedPosition(selection.from, lineStartIndexes)

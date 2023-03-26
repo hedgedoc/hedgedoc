@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { getRevision } from '../../../../api/revisions'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { useDarkModeState } from '../../../../hooks/common/use-dark-mode-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { AsyncLoadingBoundary } from '../../../common/async-loading-boundary/async-loading-boundary'
 import { invertUnifiedPatch } from './invert-unified-patch'
 import { Optional } from '@mrdrogdrog/optional'
@@ -25,7 +25,7 @@ export interface RevisionViewerProps {
  * @param allRevisions List of metadata for all available revisions.
  */
 export const RevisionViewer: React.FC<RevisionViewerProps> = ({ selectedRevisionId }) => {
-  const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const noteIdentifier = useNoteDetails().primaryAddress
   const darkModeEnabled = useDarkModeState()
 
   const { value, error, loading } = useAsync(async () => {

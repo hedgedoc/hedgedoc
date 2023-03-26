@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { deleteNote } from '../../../../api/notes'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { Logger } from '../../../../utils/logger'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
@@ -29,7 +29,7 @@ const logger = new Logger('note-deletion')
 export const DeleteNoteSidebarEntry: React.FC<PropsWithChildren<SpecificSidebarEntryProps>> = ({ hide, className }) => {
   useTranslation()
   const router = useRouter()
-  const noteId = useApplicationState((state) => state.noteDetails.id)
+  const noteId = useNoteDetails().id
   const [modalVisibility, showModal, closeModal] = useBooleanState()
   const { showErrorNotification } = useUiNotifications()
 

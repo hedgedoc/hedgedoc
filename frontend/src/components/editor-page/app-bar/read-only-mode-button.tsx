@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../hooks/common/use-note-details'
 import { UiIcon } from '../../common/icons/ui-icon'
 import Link from 'next/link'
 import React from 'react'
@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next'
  */
 export const ReadOnlyModeButton: React.FC = () => {
   const { t } = useTranslation()
-  const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const noteIdentifier = useNoteDetails().primaryAddress
 
   return (
     <Link href={`/s/${noteIdentifier}`} target='_blank'>

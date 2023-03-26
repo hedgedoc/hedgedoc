@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { NoteMetadata } from '../../../api/notes/types'
-import type { NoteDetails } from '../types/note-details'
+import type { OptionalNoteDetails } from '../types'
 import { DateTime } from 'luxon'
 
 /**
@@ -13,7 +13,13 @@ import { DateTime } from 'luxon'
  * @param noteMetadata The updated metadata from the API.
  * @return An updated {@link NoteDetails} redux state.
  */
-export const buildStateFromMetadataUpdate = (state: NoteDetails, noteMetadata: NoteMetadata): NoteDetails => {
+export const buildStateFromMetadataUpdate = (
+  state: OptionalNoteDetails,
+  noteMetadata: NoteMetadata
+): OptionalNoteDetails => {
+  if (state === null) {
+    return null
+  }
   return {
     ...state,
     updateUsername: noteMetadata.updateUsername,

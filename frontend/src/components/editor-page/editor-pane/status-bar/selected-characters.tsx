@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { SeparatorDash } from './separator-dash'
 import React, { Fragment, useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
@@ -14,7 +14,7 @@ import { Trans, useTranslation } from 'react-i18next'
 export const SelectedCharacters: React.FC = () => {
   useTranslation()
 
-  const selection = useApplicationState((state) => state.noteDetails.selection)
+  const selection = useNoteDetails().selection
   const count = useMemo(
     () => (selection.to === undefined ? undefined : selection.to - selection.from),
     [selection.from, selection.to]

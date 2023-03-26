@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { NoteInfoLine } from './note-info-line'
 import type { NoteInfoTimeLineProps } from './note-info-time-line'
 import { UnitalicBoldTimeFromNow } from './utils/unitalic-bold-time-from-now'
@@ -18,7 +18,7 @@ import { Trans } from 'react-i18next'
  * @param size The size in which the line should be displayed.
  */
 export const NoteInfoLineCreated: React.FC<NoteInfoTimeLineProps> = ({ size }) => {
-  const noteCreateTime = useApplicationState((state) => state.noteDetails.createdAt)
+  const noteCreateTime = useNoteDetails().createdAt
   const noteCreateDateTime = useMemo(() => DateTime.fromSeconds(noteCreateTime), [noteCreateTime])
 
   return (

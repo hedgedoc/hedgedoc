@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { useFrontendConfig } from '../../../common/frontend-config-context/use-frontend-config'
 import React, { useMemo } from 'react'
@@ -16,7 +16,7 @@ export const RemainingCharactersInfo: React.FC = () => {
   const { t } = useTranslation()
 
   const maxDocumentLength = useFrontendConfig().maxDocumentLength
-  const contentLength = useApplicationState((state) => state.noteDetails.markdownContent.plain.length)
+  const contentLength = useNoteDetails().markdownContent.plain.length
   const remainingCharacters = useMemo(() => maxDocumentLength - contentLength, [contentLength, maxDocumentLength])
 
   const remainingCharactersClass = useMemo(() => {

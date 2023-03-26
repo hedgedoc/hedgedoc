@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import { useBaseUrl } from '../../../../../hooks/common/use-base-url'
+import { useNoteDetails } from '../../../../../hooks/common/use-note-details'
 import { isMockMode } from '../../../../../utils/test-modes'
 import { useMemo } from 'react'
 
@@ -14,7 +14,7 @@ const LOCAL_FALLBACK_URL = 'ws://localhost:8080/realtime/'
  * Provides the URL for the realtime endpoint.
  */
 export const useWebsocketUrl = (): URL | undefined => {
-  const noteId = useApplicationState((state) => state.noteDetails.id)
+  const noteId = useNoteDetails().id
   const baseUrl = useBaseUrl()
 
   const websocketUrl = useMemo(() => {

@@ -28,7 +28,7 @@ export const useRealtimeConnection = (): MessageTransporter => {
   const messageTransporter = useMemo(() => {
     if (isMockMode) {
       logger.debug('Creating Loopback connection...')
-      return new MockedBackendMessageTransporter(getGlobalState().noteDetails.markdownContent.plain)
+      return new MockedBackendMessageTransporter(getGlobalState().noteDetails?.markdownContent.plain ?? '')
     } else {
       logger.debug('Creating Websocket connection...')
       return new WebsocketTransporter()

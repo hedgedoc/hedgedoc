@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { NoteDetails } from '../types/note-details'
+import type { OptionalNoteDetails } from '../types'
 import { generateNoteTitle } from '@hedgedoc/commons'
 
 /**
@@ -12,7 +12,13 @@ import { generateNoteTitle } from '@hedgedoc/commons'
  * @param firstHeading The first heading of the document. Should be {@link undefined} if there is no such heading.
  * @return An updated {@link NoteDetails} redux state.
  */
-export const buildStateFromFirstHeadingUpdate = (state: NoteDetails, firstHeading?: string): NoteDetails => {
+export const buildStateFromFirstHeadingUpdate = (
+  state: OptionalNoteDetails,
+  firstHeading?: string
+): OptionalNoteDetails => {
+  if (state === null) {
+    return null
+  }
   return {
     ...state,
     firstHeading: firstHeading,

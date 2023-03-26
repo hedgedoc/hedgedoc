@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../hooks/common/use-note-details'
 import { NewNoteButton } from '../../common/new-note-button/new-note-button'
 import { ShowIf } from '../../common/show-if/show-if'
 import { SignInButton } from '../../landing-layout/navigation/sign-in-button'
@@ -34,17 +35,17 @@ export interface AppBarProps {
  */
 export const AppBar: React.FC<AppBarProps> = ({ mode }) => {
   const userExists = useApplicationState((state) => !!state.user)
-  const noteFrontmatter = useApplicationState((state) => state.noteDetails.frontmatter)
+  const noteFrontmatter = useNoteDetails()
 
   return (
     <Navbar expand={true} className={'bg-light px-3'}>
       <Nav className='me-auto d-flex align-items-center'>
         <NavbarBranding />
         <ShowIf condition={mode === AppBarMode.EDITOR}>
-          <ShowIf condition={noteFrontmatter.type === NoteType.SLIDE}>
+          <ShowIf condition={noteFrontmatter.frontmatter.type === NoteType.SLIDE}>
             <SlideModeButton />
           </ShowIf>
-          <ShowIf condition={noteFrontmatter.type !== NoteType.SLIDE}>
+          <ShowIf condition={noteFrontmatter.frontmatter.type !== NoteType.SLIDE}>
             <ReadOnlyModeButton />
           </ShowIf>
           <HelpButton />

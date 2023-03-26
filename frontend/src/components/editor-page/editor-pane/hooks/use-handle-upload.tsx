@@ -50,11 +50,14 @@ export const useHandleUpload = (): handleUploadSignature => {
         : t('editor.upload.uploadFile.withoutDescription', { fileName: file.name })
 
       const uploadPlaceholder = `![${uploadFileInfo}](upload-${randomId}${additionalUrlText ?? ''})`
-      const noteId = getGlobalState().noteDetails.id
+      const noteDetails = getGlobalState().noteDetails
+      if (noteDetails === null) {
+        throw new Error('no note details')
+      }
       changeContent(({ currentSelection }) => {
         return replaceSelection(cursorSelection ?? currentSelection, uploadPlaceholder, false)
       })
-      uploadFile(noteId, file)
+      uploadFile(noteDetails.id, file)
         .then(({ url }) => {
           const replacement = `![${description ?? file.name ?? ''}](${url}${additionalUrlText ?? ''})`
           changeContent(({ markdownContent }) => [

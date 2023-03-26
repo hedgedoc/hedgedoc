@@ -6,7 +6,7 @@
 import { useChangeEditorContentCallback } from '../../../components/editor-page/change-content-context/use-change-editor-content-callback'
 import type { ContentEdits } from '../../../components/editor-page/editor-pane/tool-bar/formatters/types/changes'
 import { useExtensionEventEmitterHandler } from '../../../components/markdown-renderer/hooks/use-extension-event-emitter'
-import { store } from '../../../redux'
+import { getGlobalState } from '../../../redux'
 import { createCheckboxContent } from './create-checkbox-content'
 import type { TaskCheckedEventPayload } from './event-emitting-task-list-checkbox'
 import { findCheckBox } from './find-check-box'
@@ -32,7 +32,11 @@ export const useSetCheckboxInEditor = () => {
   return useCallback(
     ({ lineInMarkdown, newCheckedState }: TaskCheckedEventPayload): void => {
       changeEditorContent?.(({ markdownContent }) => {
-        const correctedLineIndex = lineInMarkdown + store.getState().noteDetails.frontmatterRendererInfo.lineOffset
+        const noteDetails = getGlobalState().noteDetails
+        if (noteDetails === null) {
+          throw new Error('no note details!')
+        }
+        const correctedLineIndex = lineInMarkdown + noteDetails.frontmatterRendererInfo.lineOffset
         const edits = findCheckBox(markdownContent, correctedLineIndex)
           .map(([startIndex, endIndex]) => createCheckboxContentEdit(startIndex, endIndex, newCheckedState))
           .orElse([])

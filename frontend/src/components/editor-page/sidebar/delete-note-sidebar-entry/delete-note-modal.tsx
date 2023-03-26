@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { DeletionModal } from '../../../common/modals/deletion-modal'
@@ -44,7 +44,7 @@ export const DeleteNoteModal: React.FC<DeleteNoteModalProps & DeleteHistoryNoteM
   modalWarningI18nKey,
   modalButtonI18nKey
 }) => {
-  const noteTitle = useApplicationState((state) => state.noteDetails.title)
+  const noteTitle = useNoteDetails().title
 
   return (
     <DeletionModal

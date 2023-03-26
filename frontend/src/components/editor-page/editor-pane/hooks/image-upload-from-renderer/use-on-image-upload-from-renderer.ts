@@ -45,7 +45,7 @@ export const useOnImageUploadFromRenderer = (): void => {
             const file = new File([blob], fileName, { type: blob.type })
             const { cursorSelection, alt, title } = Optional.ofNullable(lineIndex)
               .flatMap((actualLineIndex) => {
-                const lineOffset = getGlobalState().noteDetails.frontmatterRendererInfo.lineOffset
+                const lineOffset = getGlobalState().noteDetails?.frontmatterRendererInfo.lineOffset ?? 0
                 return findPlaceholderInMarkdownContent(actualLineIndex + lineOffset, placeholderIndexInLine)
               })
               .orElse({} as ExtractResult)
@@ -73,6 +73,9 @@ export interface ExtractResult {
  */
 const findPlaceholderInMarkdownContent = (lineIndex: number, replacementIndexInLine = 0): Optional<ExtractResult> => {
   const noteDetails = getGlobalState().noteDetails
+  if (noteDetails === null) {
+    throw new Error('no note details')
+  }
   const currentMarkdownContentLines = noteDetails.markdownContent.lines
   return Optional.ofNullable(noteDetails.markdownContent.lineStartIndexes[lineIndex]).map((startIndexOfLine) =>
     findImagePlaceholderInLine(currentMarkdownContentLines[lineIndex], startIndexOfLine, replacementIndexInLine)

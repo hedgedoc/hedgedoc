@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
@@ -21,7 +21,7 @@ import { Trans, useTranslation } from 'react-i18next'
  */
 export const ShareModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   useTranslation()
-  const noteFrontmatter = useApplicationState((state) => state.noteDetails.frontmatter)
+  const noteFrontmatter = useNoteDetails().frontmatter
 
   return (
     <CommonModal show={show} onHide={onHide} showCloseButton={true} titleI18nKey={'editor.modal.shareLink.title'}>

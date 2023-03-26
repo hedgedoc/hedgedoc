@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { getRevision } from '../../../../api/revisions'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import { downloadRevision } from './utils'
@@ -28,7 +28,7 @@ export const RevisionModalFooter: React.FC<RevisionModalFooterProps & Pick<Modal
   onHide
 }) => {
   useTranslation()
-  const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const noteIdentifier = useNoteDetails().primaryAddress
   const { showErrorNotification } = useUiNotifications()
 
   const onRevertToRevision = useCallback(() => {

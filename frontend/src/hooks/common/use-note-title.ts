@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from './use-application-state'
+import { useNoteDetails } from './use-note-details'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next'
 export const useNoteTitle = (): string => {
   const { t } = useTranslation()
   const untitledNote = useMemo(() => t('editor.untitledNote'), [t])
-  const noteTitle = useApplicationState((state) => state.noteDetails.title)
+  const noteTitle = useNoteDetails().title
 
   return useMemo(() => (noteTitle === '' ? untitledNote : noteTitle), [noteTitle, untitledNote])
 }

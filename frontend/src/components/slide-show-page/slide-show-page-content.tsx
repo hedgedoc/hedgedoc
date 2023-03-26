@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../hooks/common/use-note-details'
 import { useTrimmedNoteMarkdownContentWithoutFrontmatter } from '../../hooks/common/use-trimmed-note-markdown-content-without-frontmatter'
 import { setRendererStatus } from '../../redux/renderer-status/methods'
 import { RenderIframe } from '../editor-page/renderer-pane/render-iframe'
@@ -22,7 +23,7 @@ export const SlideShowPageContent: React.FC = () => {
   const markdownContentLines = useTrimmedNoteMarkdownContentWithoutFrontmatter()
   useTranslation()
 
-  const slideOptions = useApplicationState((state) => state.noteDetails.frontmatter.slideOptions)
+  const slideOptions = useNoteDetails().frontmatter.slideOptions
   const rendererReady = useApplicationState((state) => state.rendererStatus.rendererReady)
   useSendToRenderer(
     useMemo(

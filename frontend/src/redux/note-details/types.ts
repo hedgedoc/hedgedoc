@@ -5,6 +5,7 @@
  */
 import type { Note, NoteMetadata } from '../../api/notes/types'
 import type { CursorSelection } from '../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
+import type { NoteDetails } from './types/note-details'
 import type { NotePermissions } from '@hedgedoc/commons'
 import type { Action } from 'redux'
 
@@ -69,3 +70,5 @@ export interface UpdateMetadataAction extends Action<NoteDetailsActionType> {
   type: NoteDetailsActionType.UPDATE_METADATA
   updatedMetadata: NoteMetadata
 }
+
+export type OptionalNoteDetails = NoteDetails | null

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { DarkModePreference } from '../../../../redux/dark-mode/types'
 import { useSendToRenderer } from '../../../render-page/window-post-message-communicator/hooks/use-send-to-renderer'
 import { CommunicationMessageType } from '../../../render-page/window-post-message-communicator/rendering-message'
@@ -20,7 +21,7 @@ export const useSendAdditionalConfigurationToRenderer = (
   forcedDarkMode: DarkModePreference = DarkModePreference.AUTO
 ): void => {
   const darkModePreference = useApplicationState((state) => state.darkMode.darkModePreference)
-  const newlinesAreBreaks = useApplicationState((state) => state.noteDetails.frontmatter.newlinesAreBreaks)
+  const newlinesAreBreaks = useNoteDetails().frontmatter.newlinesAreBreaks
 
   const darkMode = useMemo(() => {
     return forcedDarkMode === DarkModePreference.AUTO ? darkModePreference : forcedDarkMode

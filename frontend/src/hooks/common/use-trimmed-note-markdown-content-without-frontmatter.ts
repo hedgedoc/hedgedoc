@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useFrontendConfig } from '../../components/common/frontend-config-context/use-frontend-config'
-import { useApplicationState } from './use-application-state'
+import { useNoteDetails } from './use-note-details'
 import { useMemo } from 'react'
 
 /**
@@ -14,19 +14,17 @@ import { useMemo } from 'react'
  */
 export const useTrimmedNoteMarkdownContentWithoutFrontmatter = (): string[] => {
   const maxLength = useFrontendConfig().maxDocumentLength
-  const markdownContent = useApplicationState((state) => ({
-    lines: state.noteDetails.markdownContent.lines,
-    content: state.noteDetails.markdownContent.plain
-  }))
-  const lineOffset = useApplicationState((state) => state.noteDetails.frontmatterRendererInfo.lineOffset)
+  const lines = useNoteDetails().markdownContent.lines
+  const content = useNoteDetails().markdownContent.plain
+  const lineOffset = useNoteDetails().frontmatterRendererInfo.lineOffset
 
   const trimmedLines = useMemo(() => {
-    if (markdownContent.content.length > maxLength) {
-      return markdownContent.content.slice(0, maxLength).split('\n')
+    if (content.length > maxLength) {
+      return content.slice(0, maxLength).split('\n')
     } else {
-      return markdownContent.lines
+      return lines
     }
-  }, [markdownContent, maxLength])
+  }, [content, lines, maxLength])
 
   return useMemo(() => {
     return trimmedLines.slice(lineOffset)

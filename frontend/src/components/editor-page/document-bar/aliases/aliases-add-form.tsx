@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { addAlias } from '../../../../api/alias'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { useIsOwner } from '../../../../hooks/common/use-is-owner'
+import { useNoteDetails } from '../../../../hooks/common/use-note-details'
 import { useOnInputChange } from '../../../../hooks/common/use-on-input-change'
 import { updateMetadata } from '../../../../redux/note-details/methods'
 import { testId } from '../../../../utils/test-id'
@@ -25,7 +25,7 @@ const validAliasRegex = /^[a-z0-9_-]*$/
 export const AliasesAddForm: React.FC = () => {
   const { t } = useTranslation()
   const { showErrorNotification } = useUiNotifications()
-  const noteId = useApplicationState((state) => state.noteDetails.id)
+  const noteId = useNoteDetails().id
   const isOwner = useIsOwner()
   const [newAlias, setNewAlias] = useState('')
 
