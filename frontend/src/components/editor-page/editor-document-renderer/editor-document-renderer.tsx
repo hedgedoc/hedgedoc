@@ -5,13 +5,13 @@
  */
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { useTrimmedNoteMarkdownContentWithoutFrontmatter } from '../../../hooks/common/use-trimmed-note-markdown-content-without-frontmatter'
-import { NoteType } from '../../../redux/note-details/types/note-details'
 import { setRendererStatus } from '../../../redux/renderer-status/methods'
 import { RendererType } from '../../render-page/window-post-message-communicator/rendering-message'
 import type { RenderIframeProps } from '../renderer-pane/render-iframe'
 import { RenderIframe } from '../renderer-pane/render-iframe'
 import { useOnScrollWithLineOffset } from './hooks/use-on-scroll-with-line-offset'
 import { useScrollStateWithoutLineOffset } from './hooks/use-scroll-state-without-line-offset'
+import { NoteType } from '@hedgedoc/commons'
 import React from 'react'
 
 export type EditorDocumentRendererProps = Omit<

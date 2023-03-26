@@ -5,6 +5,7 @@
  */
 import { MissingTrailingSlashError, WrongProtocolError } from './errors.js'
 import { parseUrl } from './parse-url.js'
+import { describe, expect, it } from '@jest/globals'
 
 describe('validate url', () => {
   it("doesn't accept non-urls", () => {
