@@ -19,7 +19,7 @@ You will have to accept the TLS warning in your browser the first time the page 
     instance for testing with your friends.
 
 For a production setup, first set a unique session secret with
-`sed -i "s/session_secret/$(pwgen -s 64)/" .env`.
+`sed -i "s/change_me_in_production/$(pwgen -s 64)/" .env`.
 
 Then open the `.env` file and edit `HD_BASE_URL`. It needs to contain the full URL of your instance,
 like it will be entered in the browser. If you enter a URL starting with `https://`, Caddy will
