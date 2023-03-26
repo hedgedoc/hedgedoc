@@ -42,6 +42,10 @@ steal credentials from the rendered note content, because renderer and editor ar
 This increases the security of the software and greatly mitigates [XSS attacks](https://en.wikipedia.org/wiki/Cross-site_scripting).
 However, you can run HedgeDoc without this extra security, but we recommend using it if possible.
 
+!!! note
+    When you want to use a separate domain for `HD_RENDERER_BASE_URL`, your reverse proxy config needs
+    to be adjusted to direct requests for this domain to the frontend.
+
 ## Notes
 
 | environment variable                     | default | example                           | description                                                                                                                                                                          |
