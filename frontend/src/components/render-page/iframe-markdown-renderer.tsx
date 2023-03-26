@@ -1,10 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { setDarkModePreference } from '../../redux/dark-mode/methods'
-import type { SlideOptions } from '../../redux/note-details/types/slide-show-options'
 import { useRendererToEditorCommunicator } from '../editor-page/render-context/renderer-to-editor-communicator-context-provider'
 import type { ScrollState } from '../editor-page/synced-scroll/scroll-props'
 import { eventEmitterContext } from '../markdown-renderer/hooks/use-extension-event-emitter'
@@ -14,6 +13,7 @@ import { useRendererReceiveHandler } from './window-post-message-communicator/ho
 import type { BaseConfiguration } from './window-post-message-communicator/rendering-message'
 import { CommunicationMessageType, RendererType } from './window-post-message-communicator/rendering-message'
 import { countWords } from './word-counter'
+import type { SlideOptions } from '@hedgedoc/commons/src/title-extraction/types/slide-show-options'
 import { EventEmitter2 } from 'eventemitter2'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 

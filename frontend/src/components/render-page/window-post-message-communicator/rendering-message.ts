@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { DarkModePreference } from '../../../redux/dark-mode/types'
-import type { SlideOptions } from '../../../redux/note-details/types/slide-show-options'
 import type { ScrollState } from '../../editor-page/synced-scroll/scroll-props'
+import type { SlideOptions } from '@hedgedoc/commons'
 
 export enum CommunicationMessageType {
   SET_MARKDOWN_CONTENT = 'SET_MARKDOWN_CONTENT',

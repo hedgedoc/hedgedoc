@@ -3,8 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { extractFrontmatter } from './extractor'
-import type { PresentFrontmatterExtractionResult } from './types'
+import { extractFrontmatter } from './extractor.js'
+import type { PresentFrontmatterExtractionResult } from './types.js'
+import { describe, expect, it } from '@jest/globals'
 
 describe('frontmatter extraction', () => {
   describe('isPresent property', () => {
@@ -29,7 +30,13 @@ describe('frontmatter extraction', () => {
       expect(extraction.isPresent).toBe(false)
     })
     it('is false when note has no ending marker for frontmatter', () => {
-      const testNote = ['---', 'this is not frontmatter', 'because', 'there is no', 'end marker']
+      const testNote = [
+        '---',
+        'this is not frontmatter',
+        'because',
+        'there is no',
+        'end marker'
+      ]
       const extraction = extractFrontmatter(testNote)
       expect(extraction.isPresent).toBe(false)
     })
@@ -58,22 +65,30 @@ describe('frontmatter extraction', () => {
   describe('lineOffset property', () => {
     it('is correct for single line frontmatter without content', () => {
       const testNote = ['---', 'single line frontmatter', '...']
-      const extraction = extractFrontmatter(testNote) as PresentFrontmatterExtractionResult
+      const extraction = extractFrontmatter(
+        testNote
+      ) as PresentFrontmatterExtractionResult
       expect(extraction.lineOffset).toEqual(3)
     })
     it('is correct for single line frontmatter with content', () => {
       const testNote = ['---', 'single line frontmatter', '...', 'content']
-      const extraction = extractFrontmatter(testNote) as PresentFrontmatterExtractionResult
+      const extraction = extractFrontmatter(
+        testNote
+      ) as PresentFrontmatterExtractionResult
       expect(extraction.lineOffset).toEqual(3)
     })
     it('is correct for multi-line frontmatter without content', () => {
       const testNote = ['---', 'abc', '123', 'def', '...']
-      const extraction = extractFrontmatter(testNote) as PresentFrontmatterExtractionResult
+      const extraction = extractFrontmatter(
+        testNote
+      ) as PresentFrontmatterExtractionResult
       expect(extraction.lineOffset).toEqual(5)
     })
     it('is correct for multi-line frontmatter with content', () => {
       const testNote = ['---', 'abc', '123', 'def', '...', 'content']
-      const extraction = extractFrontmatter(testNote) as PresentFrontmatterExtractionResult
+      const extraction = extractFrontmatter(
+        testNote
+      ) as PresentFrontmatterExtractionResult
       expect(extraction.lineOffset).toEqual(5)
     })
   })
@@ -81,12 +96,16 @@ describe('frontmatter extraction', () => {
   describe('rawText property', () => {
     it('contains single-line frontmatter text', () => {
       const testNote = ['---', 'single-line', '...', 'content']
-      const extraction = extractFrontmatter(testNote) as PresentFrontmatterExtractionResult
+      const extraction = extractFrontmatter(
+        testNote
+      ) as PresentFrontmatterExtractionResult
       expect(extraction.rawText).toEqual('single-line')
     })
     it('contains multi-line frontmatter text', () => {
       const testNote = ['---', 'multi', 'line', '...', 'content']
-      const extraction = extractFrontmatter(testNote) as PresentFrontmatterExtractionResult
+      const extraction = extractFrontmatter(
+        testNote
+      ) as PresentFrontmatterExtractionResult
       expect(extraction.rawText).toEqual('multi\nline')
     })
   })

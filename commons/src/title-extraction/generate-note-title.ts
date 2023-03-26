@@ -1,9 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { NoteFrontmatter } from './types/note-details'
+import type { NoteFrontmatter } from './types/frontmatter.js'
 
 /**
  * Generates the note title from the given frontmatter or the first heading in the markdown content.
@@ -12,7 +12,10 @@ import type { NoteFrontmatter } from './types/note-details'
  * @param firstHeading The first heading in the markdown content
  * @return The title from the frontmatter or, if no title is present in the frontmatter, the first heading.
  */
-export const generateNoteTitle = (frontmatter: NoteFrontmatter, firstHeading?: string): string => {
+export const generateNoteTitle = (
+  frontmatter: NoteFrontmatter,
+  firstHeading?: string
+): string => {
   if (frontmatter?.title && frontmatter?.title !== '') {
     return frontmatter.title.trim()
   } else if (

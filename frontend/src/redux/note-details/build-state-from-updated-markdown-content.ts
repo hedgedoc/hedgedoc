@@ -1,15 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { calculateLineStartIndexes } from './calculate-line-start-indexes'
-import { extractFrontmatter } from './frontmatter-extractor/extractor'
-import type { PresentFrontmatterExtractionResult } from './frontmatter-extractor/types'
-import { generateNoteTitle } from './generate-note-title'
 import { initialState } from './initial-state'
 import { createNoteFrontmatterFromYaml } from './raw-note-frontmatter-parser/parser'
 import type { NoteDetails } from './types/note-details'
+import { extractFrontmatter, generateNoteTitle } from '@hedgedoc/commons'
+import type { PresentFrontmatterExtractionResult } from '@hedgedoc/commons'
 
 /**
  * Copies a {@link NoteDetails} but with another markdown content.

@@ -1,13 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { extractFrontmatter } from '../../../../redux/note-details/frontmatter-extractor/extractor'
 import type { RawNoteFrontmatter } from '../../../../redux/note-details/raw-note-frontmatter-parser/types'
 import type { Linter } from './linter'
 import type { Diagnostic } from '@codemirror/lint'
 import type { EditorView } from '@codemirror/view'
+import { extractFrontmatter } from '@hedgedoc/commons'
 import { t } from 'i18next'
 import { load } from 'js-yaml'
 

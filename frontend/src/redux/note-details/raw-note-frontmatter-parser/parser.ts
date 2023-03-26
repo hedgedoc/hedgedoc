@@ -1,14 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { initialSlideOptions, initialState } from '../initial-state'
-import { ISO6391 } from '../types/iso6391'
-import type { Iso6391Language, NoteFrontmatter, OpenGraph } from '../types/note-details'
-import { NoteTextDirection, NoteType } from '../types/note-details'
-import type { SlideOptions } from '../types/slide-show-options'
 import type { RawNoteFrontmatter } from './types'
+import type { Iso6391Language, NoteFrontmatter, OpenGraph, SlideOptions } from '@hedgedoc/commons'
+import { ISO6391, NoteTextDirection, NoteType } from '@hedgedoc/commons'
 import { load } from 'js-yaml'
 
 /**

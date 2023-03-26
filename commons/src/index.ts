@@ -22,4 +22,11 @@ export * from './y-doc-sync/y-doc-sync-adapter.js'
 
 export { waitForOtherPromisesToFinish } from './utils/wait-for-other-promises-to-finish.js'
 
-export { RealtimeDoc } from './y-doc-sync/realtime-doc'
+export { RealtimeDoc } from './y-doc-sync/realtime-doc.js'
+
+export * from './title-extraction/frontmatter-extractor/extractor.js'
+export * from './title-extraction/frontmatter-extractor/types.js'
+export * from './title-extraction/generate-note-title.js'
+export * from './title-extraction/types/iso6391.js'
+export * from './title-extraction/types/frontmatter.js'
+export * from './title-extraction/types/slide-show-options.js'

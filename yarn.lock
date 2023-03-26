@@ -2300,6 +2300,7 @@ __metadata:
     jest: 29.5.0
     microbundle: 0.15.1
     prettier: 2.8.7
+    reveal.js: 4.4.0
     ts-jest: 29.0.5
     typescript: 5.0.2
     ws: 8.13.0
