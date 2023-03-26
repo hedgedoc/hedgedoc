@@ -25,7 +25,7 @@ describe('Auth', () => {
   let displayName: string;
   let password: string;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     testSetup = await TestSetupBuilder.create().build();
     await testSetup.app.init();
 
@@ -34,7 +34,7 @@ describe('Auth', () => {
     password = 'test_password';
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     // Yes, this is a bad hack, but there is a race somewhere and I have
     // no idea how to fix it.
     await new Promise((resolve) => {
@@ -70,18 +70,22 @@ describe('Auth', () => {
     });
     describe('fails', () => {
       it('when the user already exits', async () => {
-        const username2 = 'already_existing';
-        await testSetup.userService.createUser(username2, displayName);
+        const conflictingUserName = 'already_existing';
+        const conflictingUser = await testSetup.userService.createUser(
+          conflictingUserName,
+          displayName,
+        );
         const registrationDto: RegisterDto = {
           displayName: displayName,
           password: password,
-          username: username2,
+          username: conflictingUserName,
         };
         await request(testSetup.app.getHttpServer())
           .post('/api/private/auth/local')
           .set('Content-Type', 'application/json')
           .send(JSON.stringify(registrationDto))
           .expect(409);
+        await testSetup.userService.deleteUser(conflictingUser);
       });
       it('when registration is disabled', async () => {
         testSetup.configService.get('authConfig').local.enableRegister = false;
@@ -98,7 +102,7 @@ describe('Auth', () => {
         testSetup.configService.get('authConfig').local.enableRegister = true;
       });
     });
-    it('correctly deletes a user if the PasswordTooWeakError is encountered', async () => {
+    it('does not create a user if the PasswordTooWeakError is encountered', async () => {
       const registrationDto: RegisterDto = {
         displayName: displayName,
         password: 'test1234',
