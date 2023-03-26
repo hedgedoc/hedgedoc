@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../hooks/common/use-application-state'
-import { NoteType } from '../../../redux/note-details/types/note-details'
 import { NewNoteButton } from '../../common/new-note-button/new-note-button'
 import { ShowIf } from '../../common/show-if/show-if'
 import { SignInButton } from '../../landing-layout/navigation/sign-in-button'
@@ -15,6 +14,7 @@ import { HelpButton } from './help-button/help-button'
 import { NavbarBranding } from './navbar-branding'
 import { ReadOnlyModeButton } from './read-only-mode-button'
 import { SlideModeButton } from './slide-mode-button'
+import { NoteType } from '@hedgedoc/commons'
 import React from 'react'
 import { Nav, Navbar } from 'react-bootstrap'
 

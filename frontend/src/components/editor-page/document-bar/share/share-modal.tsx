@@ -5,11 +5,11 @@
  */
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { useBaseUrl } from '../../../../hooks/common/use-base-url'
-import { NoteType } from '../../../../redux/note-details/types/note-details'
 import { CopyableField } from '../../../common/copyable/copyable-field/copyable-field'
 import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
+import { NoteType } from '@hedgedoc/commons'
 import React from 'react'
 import { Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
