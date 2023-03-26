@@ -236,14 +236,12 @@ export class PermissionsService {
     canEdit: boolean,
   ): Promise<Note> {
     const permissions = await note.userPermissions;
-    let permissionIndex = 0;
-    const permission = permissions.find(async (value, index) => {
-      permissionIndex = index;
-      return (await value.user).id == permissionUser.id;
-    });
-    if (permission != undefined) {
+    const permission = await this.findPermissionForUser(
+      permissions,
+      permissionUser,
+    );
+    if (permission !== undefined) {
       permission.canEdit = canEdit;
-      permissions[permissionIndex] = permission;
     } else {
       const noteUserPermission = NoteUserPermission.create(
         permissionUser,
@@ -254,6 +252,18 @@ export class PermissionsService {
     }
     this.notifyOthers(note.id);
     return await this.noteRepository.save(note);
+  }
+
+  private async findPermissionForUser(
+    permissions: NoteUserPermission[],
+    user: User,
+  ): Promise<NoteUserPermission | undefined> {
+    for (const permission of permissions) {
+      if ((await permission.user).id == user.id) {
+        return permission;
+      }
+    }
+    return undefined;
   }
 
   /**
@@ -294,14 +304,12 @@ export class PermissionsService {
       'setGroupPermission',
     );
     const permissions = await note.groupPermissions;
-    let permissionIndex = 0;
-    const permission = permissions.find(async (value, index) => {
-      permissionIndex = index;
-      return (await value.group).id == permissionGroup.id;
-    });
-    if (permission != undefined) {
+    const permission = await this.findPermissionForGroup(
+      permissions,
+      permissionGroup,
+    );
+    if (permission !== undefined) {
       permission.canEdit = canEdit;
-      permissions[permissionIndex] = permission;
     } else {
       this.logger.debug(
         `Permission does not exist yet, creating new one.`,
@@ -316,6 +324,18 @@ export class PermissionsService {
     }
     this.notifyOthers(note.id);
     return await this.noteRepository.save(note);
+  }
+
+  private async findPermissionForGroup(
+    permissions: NoteGroupPermission[],
+    group: Group,
+  ): Promise<NoteGroupPermission | undefined> {
+    for (const permission of permissions) {
+      if ((await permission.group).id == group.id) {
+        return permission;
+      }
+    }
+    return undefined;
   }
 
   /**
