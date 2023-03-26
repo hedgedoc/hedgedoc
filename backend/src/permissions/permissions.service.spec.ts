@@ -28,6 +28,7 @@ import { GroupsModule } from '../groups/groups.module';
 import { SpecialGroup } from '../groups/groups.special';
 import { Identity } from '../identity/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
+import { MediaUpload } from '../media/media-upload.entity';
 import { Alias } from '../notes/alias.entity';
 import {
   NoteGroupPermissionUpdateDto,
@@ -43,6 +44,7 @@ import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { NoteGroupPermission } from './note-group-permission.entity';
 import { NoteUserPermission } from './note-user-permission.entity';
+import { Permission } from './permissions.enum';
 import { PermissionsModule } from './permissions.module';
 import { PermissionsService } from './permissions.service';
 
@@ -733,6 +735,96 @@ describe('PermissionsService', () => {
     });
     it('for negative case', async () => {
       expect(await service.isOwner(user1, notes[1])).toBeFalsy();
+    });
+  });
+
+  describe('checkMediaDeletePermission', () => {
+    describe('accepts', () => {
+      it('for media owner', async () => {
+        const mediaUpload = {} as MediaUpload;
+        mediaUpload.note = Promise.resolve(notes[1]);
+        mediaUpload.user = Promise.resolve(user1);
+        expect(
+          service.checkMediaDeletePermission(user1, mediaUpload),
+        ).toBeTruthy();
+      });
+      it('for note owner', async () => {
+        const mediaUpload = {} as MediaUpload;
+        mediaUpload.note = Promise.resolve(notes[1]);
+        mediaUpload.user = Promise.resolve(user1);
+        expect(
+          service.checkMediaDeletePermission(user2, mediaUpload),
+        ).toBeTruthy();
+      });
+    });
+    describe('denies', () => {
+      it('for not owner', async () => {
+        const user3 = {} as User;
+        user3.id = 3;
+        const mediaUpload = {} as MediaUpload;
+        mediaUpload.note = Promise.resolve(notes[1]);
+        mediaUpload.user = Promise.resolve(user1);
+        expect(
+          await service.checkMediaDeletePermission(user3, mediaUpload),
+        ).toBeFalsy();
+      });
+    });
+  });
+
+  describe('checkPermissionOnNote', () => {
+    describe('accepts', () => {
+      it('with mayRead', async () => {
+        jest.spyOn(service, 'mayRead').mockImplementationOnce(async () => {
+          return true;
+        });
+        expect(
+          await service.checkPermissionOnNote(Permission.READ, user1, notes[0]),
+        ).toBeTruthy();
+      });
+      it('with mayWrite', async () => {
+        jest.spyOn(service, 'mayWrite').mockImplementationOnce(async () => {
+          return true;
+        });
+        expect(
+          await service.checkPermissionOnNote(
+            Permission.WRITE,
+            user1,
+            notes[0],
+          ),
+        ).toBeTruthy();
+      });
+      it('with isOwner', async () => {
+        jest.spyOn(service, 'isOwner').mockImplementationOnce(async () => {
+          return true;
+        });
+        expect(
+          await service.checkPermissionOnNote(
+            Permission.OWNER,
+            user1,
+            notes[0],
+          ),
+        ).toBeTruthy();
+      });
+    });
+    describe('denies', () => {
+      it('with no permission', async () => {
+        jest.spyOn(service, 'mayRead').mockImplementationOnce(async () => {
+          return false;
+        });
+        jest.spyOn(service, 'mayWrite').mockImplementationOnce(async () => {
+          return false;
+        });
+        jest.spyOn(service, 'isOwner').mockImplementationOnce(async () => {
+          return false;
+        });
+        expect(
+          await service.checkPermissionOnNote(
+            Permission.OWNER,
+            user1,
+            notes[0],
+          ),
+        ).toBeFalsy();
+      });
     });
   });
 
