@@ -7,7 +7,7 @@ environment variables and their corresponding value. This can for example look l
 
 ```ini
 HD_BASE_URL="http://localhost:8080"
-HD_SESSION_SECRET="session_secret"
+HD_SESSION_SECRET="change_me_in_production"
 HD_DATABASE_TYPE="sqlite"
 HD_DATABASE_NAME="./hedgedoc.sqlite"
 HD_MEDIA_BACKEND="filesystem"
