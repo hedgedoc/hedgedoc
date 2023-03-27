@@ -3,7 +3,7 @@
 ---
 services:
   backend:
-    image: ghcr.io/hedgedoc/hedgedoc/backend:develop@sha256:99021b94266183bf76d821c5b47a67a76897f27d9893a4967ba67992a32041fb
+    image: ghcr.io/hedgedoc/hedgedoc/backend:develop@sha256:eaf43eb2348d48f0a5746cfa995a8f149b1a3dc14173c15967b92c4bd2105def
     volumes:
       - $PWD/.env:/usr/src/app/backend/.env
       - hedgedoc_uploads:/usr/src/app/backend/uploads
