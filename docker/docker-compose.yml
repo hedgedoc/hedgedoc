@@ -9,7 +9,7 @@ services:
       - hedgedoc_uploads:/usr/src/app/backend/uploads
 
   frontend:
-    image: ghcr.io/hedgedoc/hedgedoc/frontend:develop@sha256:7919d960595cce9a9ff7d505e3ccd977577e615857d7946aa7477ab0302699db
+    image: ghcr.io/hedgedoc/hedgedoc/frontend:develop@sha256:746b12ecbed444e0321ab02e0275a837c76b32ff39c2ac17e784a8b85bdbc18c
     environment:
       HD_BASE_URL: "${HD_BASE_URL}"
 
