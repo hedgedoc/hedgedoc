@@ -50,7 +50,7 @@ export class PermissionsService {
    * @return if the user has the specified permission on the note
    */
   public async checkPermissionOnNote(
-    desiredPermission: Permission,
+    desiredPermission: Exclude<Permission, Permission.CREATE>,
     user: User | null,
     note: Note,
   ): Promise<boolean> {
