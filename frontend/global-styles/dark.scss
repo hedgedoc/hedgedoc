@@ -23,4 +23,8 @@ body.dark {
   --#{$prefix}body-bg: #{$body-bg};
 
   @import "colors-only-bootstrap/bootstrap";
+
+  .btn-close {
+    filter: invert(1);
+  }
 }
