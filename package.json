@@ -27,7 +27,7 @@
     "@codemirror/language-data": "6.1.0",
     "@codemirror/lint": "6.2.0",
     "@codemirror/theme-one-dark": "6.1.1",
-    "@types/react": "18.0.29",
+    "@types/react": "18.0.30",
     "eventemitter2@6.4.9": "patch:eventemitter2@npm%3A6.4.9#./.yarn/patches/eventemitter2-npm-6.4.9-ba37798a18.patch"
   },
   "devDependencies": {

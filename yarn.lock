@@ -2353,7 +2353,7 @@ __metadata:
     "@types/markdown-it-container": 2.0.5
     "@types/markdown-it-plantuml": 1.4.1
     "@types/node": 18.15.10
-    "@types/react": 18.0.29
+    "@types/react": 18.0.30
     "@types/react-dom": 18.0.11
     "@types/sass": 1.43.1
     "@types/testing-library__jest-dom": 5.14.5
@@ -4836,14 +4836,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.0.29":
-  version: 18.0.29
-  resolution: "@types/react@npm:18.0.29"
+"@types/react@npm:18.0.30":
+  version: 18.0.30
+  resolution: "@types/react@npm:18.0.30"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 75f56f81d80a1c15ee3fcd2039bdc5f7a70f49cf69827ee0fc8beece9809b234f245dd62552e91018d8f25792986bd513b44caf054554d5c5eb979a5f9460214
+  checksum: 3ca13fd10a1ee92826e37cd8c2fe563bff65d4bdb3ff53f632bc46c8fba2e94e24247b4b77ce957677a54e592299782e1235f7a3dfcfea327cb3213ddc98e968
   languageName: node
   linkType: hard
 
