@@ -10,13 +10,13 @@ import { CategoryAccordion } from './category-accordion'
 import { CheatsheetEntryPane } from './cheatsheet-entry-pane'
 import { TopicSelection } from './topic-selection'
 import React, { useCallback, useMemo, useState } from 'react'
-import { Col, ListGroup, Modal, Row } from 'react-bootstrap'
+import { Col, ListGroup, Row } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
 
 /**
  * Renders the tab content for the cheatsheet.
  */
-export const CheatsheetModalBody: React.FC = () => {
+export const CheatsheetContent: React.FC = () => {
   const [selectedExtension, setSelectedExtension] = useState<CheatsheetExtension>()
   const [selectedEntry, setSelectedEntry] = useState<CheatsheetEntry>()
 
@@ -31,35 +31,29 @@ export const CheatsheetModalBody: React.FC = () => {
   )
 
   return (
-    <Modal.Body>
-      <Row className={`mt-2`}>
-        <Col xs={3}>
-          <CategoryAccordion
-            extensions={extensions}
-            selectedEntry={selectedExtension}
-            onStateChange={changeExtension}
+    <Row className={`mt-2`}>
+      <Col xs={3}>
+        <CategoryAccordion extensions={extensions} selectedEntry={selectedExtension} onStateChange={changeExtension} />
+      </Col>
+      <Col xs={9}>
+        <ListGroup>
+          <TopicSelection
+            extension={selectedExtension}
+            selectedEntry={selectedEntry}
+            setSelectedEntry={setSelectedEntry}
           />
-        </Col>
-        <Col xs={9}>
-          <ListGroup>
-            <TopicSelection
-              extension={selectedExtension}
-              selectedEntry={selectedEntry}
-              setSelectedEntry={setSelectedEntry}
+          {selectedEntry !== undefined ? (
+            <CheatsheetEntryPane
+              rootI18nKey={isCheatsheetGroup(selectedExtension) ? selectedExtension.i18nKey : undefined}
+              extension={selectedEntry}
             />
-            {selectedEntry !== undefined ? (
-              <CheatsheetEntryPane
-                rootI18nKey={isCheatsheetGroup(selectedExtension) ? selectedExtension.i18nKey : undefined}
-                extension={selectedEntry}
-              />
-            ) : (
-              <span>
-                <Trans i18nKey={'cheatsheet.modal.noSelection'}></Trans>
-              </span>
-            )}
-          </ListGroup>
-        </Col>
-      </Row>
-    </Modal.Body>
+          ) : (
+            <span>
+              <Trans i18nKey={'cheatsheet.modal.noSelection'}></Trans>
+            </span>
+          )}
+        </ListGroup>
+      </Col>
+    </Row>
   )
 }

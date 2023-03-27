@@ -645,6 +645,7 @@
   "cheatsheet": {
     "button": "Open Cheatsheet",
     "modal":{
+      "popup": "Open in new tab",
       "title": "Cheatsheet",
       "headlines": {
         "description": "Description",
