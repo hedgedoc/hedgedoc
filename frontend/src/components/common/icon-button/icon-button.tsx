@@ -15,7 +15,6 @@ import type { Icon } from 'react-bootstrap-icons'
 
 export interface IconButtonProps extends ButtonProps, PropsWithDataTestId {
   icon: Icon
-  onClick?: () => void
   border?: boolean
   iconSize?: number | string
 }

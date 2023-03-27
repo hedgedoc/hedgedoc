@@ -8,8 +8,8 @@ import { cypressId } from '../../../utils/cypress-attribute'
 import { testId } from '../../../utils/test-id'
 import { UiIcon } from '../icons/ui-icon'
 import { ShowIf } from '../show-if/show-if'
-import type { PropsWithChildren } from 'react'
-import React, { useMemo } from 'react'
+import type { PropsWithChildren, ReactElement } from 'react'
+import React, { Fragment, useMemo } from 'react'
 import { Modal } from 'react-bootstrap'
 import type { Icon } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
@@ -26,6 +26,7 @@ export interface ModalContentProps {
   titleIcon?: Icon
   modalSize?: 'lg' | 'sm' | 'xl'
   additionalClasses?: string
+  additionalTitleElement?: ReactElement
 }
 
 export type CommonModalProps = PropsWithDataCypressId & ModalVisibilityProps & ModalContentProps
@@ -42,6 +43,7 @@ export type CommonModalProps = PropsWithDataCypressId & ModalVisibilityProps & M
  * @param modalSize The modal size
  * @param children The children to render into the modal.
  * @param titleIsI18nKey If the title is a i18n key and should be used as such
+ * @param additionalTitleElement additional optional element that should be shown in the header
  * @param props Additional props directly given to the modal
  */
 export const CommonModal: React.FC<PropsWithChildren<CommonModalProps>> = ({
@@ -54,6 +56,7 @@ export const CommonModal: React.FC<PropsWithChildren<CommonModalProps>> = ({
   additionalClasses,
   modalSize,
   children,
+  additionalTitleElement,
   ...props
 }) => {
   useTranslation()
@@ -77,6 +80,7 @@ export const CommonModal: React.FC<PropsWithChildren<CommonModalProps>> = ({
             <UiIcon icon={titleIcon} nbsp={true} />
             {titleElement}
           </Modal.Title>
+          {additionalTitleElement ?? <Fragment />}
         </Modal.Header>
         {children}
       </Modal>
