@@ -5,6 +5,7 @@
  */
 import { useAppTitle } from '../../../hooks/common/use-app-title'
 import { useNoteTitle } from '../../../hooks/common/use-note-title'
+import { useHasMarkdownContentBeenChangedInBackground } from './hooks/use-has-markdown-content-been-changed-in-background'
 import Head from 'next/head'
 import React, { useMemo } from 'react'
 
@@ -14,10 +15,11 @@ import React, { useMemo } from 'react'
 export const NoteAndAppTitleHead: React.FC = () => {
   const noteTitle = useNoteTitle()
   const appTitle = useAppTitle()
+  const showDot = useHasMarkdownContentBeenChangedInBackground()
 
   const noteAndAppTitle = useMemo(() => {
-    return noteTitle + ' - ' + appTitle
-  }, [appTitle, noteTitle])
+    return (showDot ? '(•) ' : '') + noteTitle + ' - ' + appTitle
+  }, [appTitle, noteTitle, showDot])
 
   return (
     <Head>
