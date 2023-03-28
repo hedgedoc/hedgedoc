@@ -28,6 +28,7 @@ import { useOnNoteDeleted } from './hooks/yjs/use-on-note-deleted'
 import { useRealtimeConnection } from './hooks/yjs/use-realtime-connection'
 import { useRealtimeDoc } from './hooks/yjs/use-realtime-doc'
 import { useReceiveRealtimeUsers } from './hooks/yjs/use-receive-realtime-users'
+import { useSendRealtimeActivity } from './hooks/yjs/use-send-realtime-activity'
 import { useYDocSyncClientAdapter } from './hooks/yjs/use-y-doc-sync-client-adapter'
 import { useLinter } from './linter/linter'
 import { MaxLengthWarning } from './max-length-warning/max-length-warning'
@@ -82,6 +83,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
 
   useBindYTextToRedux(realtimeDoc)
   useReceiveRealtimeUsers(messageTransporter)
+  useSendRealtimeActivity(messageTransporter)
 
   const extensions = useMemo(
     () => [

@@ -16,5 +16,9 @@ export interface ActiveIndicatorProps {
  * @param status The state of the indicator to render
  */
 export const ActiveIndicator: React.FC<ActiveIndicatorProps> = ({ active }) => {
-  return <span className={`${styles['activeIndicator']} ${active ? styles.active : styles.inactive}`} />
+  return (
+    <div className={styles['active-indicator-container']}>
+      <span className={`${styles['activeIndicator']} ${active ? styles.active : styles.inactive}`} />
+    </div>
+  )
 }
