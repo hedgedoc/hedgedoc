@@ -18,7 +18,7 @@ export const OwnUserLine: React.FC = () => {
 
   return (
     <SidebarButton>
-      <UserLine displayName={ownDisplayname} username={ownUsername} color={ownStyleIndex} active={true} />
+      <UserLine displayName={ownDisplayname} username={ownUsername} color={ownStyleIndex} active={true} own={true} />
     </SidebarButton>
   )
 }

@@ -9,22 +9,28 @@ import { createCursorCssClass } from '../../editor-pane/codemirror-extensions/re
 import { ActiveIndicator } from '../users-online-sidebar-menu/active-indicator'
 import styles from './user-line.module.scss'
 import React, { useMemo } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
 export interface UserLineProps {
   username: string | null
   displayName: string
   active: boolean
+  own?: boolean
   color: number
 }
 
 /**
  * Represents a user in the realtime activity status.
  *
- * @param username The name of the user to show.
- * @param color The color of the user's edits.
- * @param status The user's current online status.
+ * @param username The username of the user to show
+ * @param color The color of the user's edits
+ * @param status The user's current online status
+ * @param displayName The actual name that should be displayed
+ * @param own defines if this user line renders the own user or another one
  */
-export const UserLine: React.FC<UserLineProps> = ({ username, displayName, active, color }) => {
+export const UserLine: React.FC<UserLineProps> = ({ username, displayName, active, own = false, color }) => {
+  useTranslation()
+
   const avatar = useMemo(() => {
     if (username) {
       return (
@@ -48,9 +54,13 @@ export const UserLine: React.FC<UserLineProps> = ({ username, displayName, activ
         )}`}
       />
       {avatar}
-      <div className={styles['active-indicator-container']}>
+      {own ? (
+        <span className={'px-1'}>
+          <Trans i18nKey={'editor.onlineStatus.you'}></Trans>
+        </span>
+      ) : (
         <ActiveIndicator active={active} />
-      </div>
+      )}
     </div>
   )
 }

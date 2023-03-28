@@ -269,7 +269,7 @@
     },
     "onlineStatus": {
       "online": "Online",
-      "noUsers": "No users online"
+      "you": "(You)"
     },
     "error": {
       "locked": {
