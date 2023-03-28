@@ -3,25 +3,25 @@
 ---
 services:
   backend:
-    image: ghcr.io/hedgedoc/hedgedoc/backend:develop
+    image: ghcr.io/hedgedoc/hedgedoc/backend:develop@sha256:32eb5048a49d9a90f93e04fd8568f1499a337d507fe77dfbcdc78ef82df29789
     volumes:
       - $PWD/.env:/usr/src/app/backend/.env
       - hedgedoc_uploads:/usr/src/app/backend/uploads
 
   frontend:
-    image: ghcr.io/hedgedoc/hedgedoc/frontend:develop
+    image: ghcr.io/hedgedoc/hedgedoc/frontend:develop@sha256:bb9a438e53e91d04305bfcf7e164b4ba52dca51f4d05f7f6ee469662017d1f7d
     environment:
       HD_BASE_URL: "${HD_BASE_URL}"
 
   db:
-    image: postgres:15
+    image: postgres:15@sha256:5a90725b3751c2c7ac311c9384dfc1a8f6e41823e341fb1dceed96a11677303a
     environment:
       POSTGRES_USER: "${HD_DATABASE_USER}"
       POSTGRES_PASSWORD: "${HD_DATABASE_PASS}"
       POSTGRES_DB: "${HD_DATABASE_NAME}"
 
   proxy:
-    image: caddy:latest
+    image: caddy:latest@sha256:20bbfcf569bdcbca76a8df356877600d12331fef823c3e6ad6faa192d5668304
     restart: unless-stopped
     environment:
       HD_BASE_URL: "${HD_BASE_URL}"
