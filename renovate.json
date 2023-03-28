@@ -24,7 +24,7 @@
     "type: maintenance"
   ],
   "ignorePaths": [
-    "docker/docker_compose.yml"
+    "docker/docker-compose.yml"
   ],
   "packageRules": [
     {
