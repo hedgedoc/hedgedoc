@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -19,6 +19,7 @@ import { useOnImageUploadFromRenderer } from './hooks/image-upload-from-renderer
 import { useCodeMirrorTablePasteExtension } from './hooks/table-paste/use-code-mirror-table-paste-extension'
 import { useApplyScrollState } from './hooks/use-apply-scroll-state'
 import { useCursorActivityCallback } from './hooks/use-cursor-activity-callback'
+import { useDisconnectOnUserLoginStatusChange } from './hooks/use-disconnect-on-user-login-status-change'
 import { useUpdateCodeMirrorReference } from './hooks/use-update-code-mirror-reference'
 import { useBindYTextToRedux } from './hooks/yjs/use-bind-y-text-to-redux'
 import { useCodeMirrorYjsExtension } from './hooks/yjs/use-code-mirror-yjs-extension'
@@ -56,6 +57,9 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
   useApplyScrollState(scrollState)
 
   const messageTransporter = useRealtimeConnection()
+
+  useDisconnectOnUserLoginStatusChange(messageTransporter)
+
   const realtimeDoc = useRealtimeDoc()
   const editorScrollExtension = useCodeMirrorScrollWatchExtension(onScroll)
   const tablePasteExtensions = useCodeMirrorTablePasteExtension()
