@@ -1731,6 +1731,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@codemirror/lang-angular@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@codemirror/lang-angular@npm:0.1.0"
+  dependencies:
+    "@codemirror/lang-html": ^6.0.0
+    "@codemirror/lang-javascript": ^6.1.2
+    "@codemirror/language": ^6.0.0
+    "@lezer/common": ^1.0.0
+    "@lezer/highlight": ^1.0.0
+  checksum: 7a815c6bc46207cb0d76133a4632328ce7db1f461261f4e9c1617beab4edb6023a0ea0b1334d88d8e62cf2c5e98240572b47a1a9e6365640a92cb3827e3b8e6c
+  languageName: node
+  linkType: hard
+
 "@codemirror/lang-cpp@npm:^6.0.0":
   version: 6.0.2
   resolution: "@codemirror/lang-cpp@npm:6.0.2"
@@ -1780,7 +1793,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/lang-javascript@npm:^6.0.0":
+"@codemirror/lang-javascript@npm:^6.0.0, @codemirror/lang-javascript@npm:^6.1.2":
   version: 6.1.4
   resolution: "@codemirror/lang-javascript@npm:6.1.4"
   dependencies:
@@ -1866,6 +1879,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@codemirror/lang-vue@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@codemirror/lang-vue@npm:0.1.1"
+  dependencies:
+    "@codemirror/lang-html": ^6.0.0
+    "@codemirror/lang-javascript": ^6.1.2
+    "@codemirror/language": ^6.0.0
+    "@lezer/common": ^1.0.0
+    "@lezer/highlight": ^1.0.0
+    "@lezer/lr": ^1.3.1
+  checksum: bacada6222410f0253a1a8f0b3fb2d7b1f89fe5c65f547e5da1f5592d9739d43bf36a445c2a0dbd1cf26a61a588e03452b613723f03f0a9d1d0bd98e775dd7ba
+  languageName: node
+  linkType: hard
+
 "@codemirror/lang-wast@npm:^6.0.0":
   version: 6.0.1
   resolution: "@codemirror/lang-wast@npm:6.0.1"
@@ -1890,10 +1917,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/language-data@npm:6.1.0":
-  version: 6.1.0
-  resolution: "@codemirror/language-data@npm:6.1.0"
+"@codemirror/language-data@npm:6.2.0":
+  version: 6.2.0
+  resolution: "@codemirror/language-data@npm:6.2.0"
   dependencies:
+    "@codemirror/lang-angular": ^0.1.0
     "@codemirror/lang-cpp": ^6.0.0
     "@codemirror/lang-css": ^6.0.0
     "@codemirror/lang-html": ^6.0.0
@@ -1905,11 +1933,12 @@ __metadata:
     "@codemirror/lang-python": ^6.0.0
     "@codemirror/lang-rust": ^6.0.0
     "@codemirror/lang-sql": ^6.0.0
+    "@codemirror/lang-vue": ^0.1.1
     "@codemirror/lang-wast": ^6.0.0
     "@codemirror/lang-xml": ^6.0.0
     "@codemirror/language": ^6.0.0
     "@codemirror/legacy-modes": ^6.1.0
-  checksum: 785ac3025b67c7968f3036642b69822992c401a0e008ba7ef35dae698356f1973803395601589bac3c98a1db92d3f3fcd292675843bf9db8999a72d95ee60e27
+  checksum: 6e54f8ce572875b3f9dca82e56c9155d7033341a924de8444a47797067b02a51296678b05ef223e0b6782af50571a850a66156b0670b6e59dc6078844ba32de2
   languageName: node
   linkType: hard
 
@@ -2322,7 +2351,7 @@ __metadata:
     "@codemirror/commands": 6.2.2
     "@codemirror/lang-markdown": 6.1.0
     "@codemirror/language": 6.6.0
-    "@codemirror/language-data": 6.1.0
+    "@codemirror/language-data": 6.2.0
     "@codemirror/lint": 6.2.0
     "@codemirror/state": 6.2.0
     "@codemirror/theme-one-dark": 6.1.1
@@ -2916,7 +2945,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lezer/lr@npm:^1.0.0, @lezer/lr@npm:^1.1.0, @lezer/lr@npm:^1.3.0":
+"@lezer/lr@npm:^1.0.0, @lezer/lr@npm:^1.1.0, @lezer/lr@npm:^1.3.0, @lezer/lr@npm:^1.3.1":
   version: 1.3.3
   resolution: "@lezer/lr@npm:1.3.3"
   dependencies:

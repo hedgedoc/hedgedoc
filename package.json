@@ -24,7 +24,7 @@
     "@codemirror/language": "6.6.0",
     "@codemirror/commands": "6.2.2",
     "@codemirror/lang-markdown": "6.1.0",
-    "@codemirror/language-data": "6.1.0",
+    "@codemirror/language-data": "6.2.0",
     "@codemirror/lint": "6.2.0",
     "@codemirror/theme-one-dark": "6.1.1",
     "@types/react": "18.0.30",
