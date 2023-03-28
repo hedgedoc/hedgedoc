@@ -18,3 +18,11 @@
     background-color: #d20000;
   }
 }
+
+.active-indicator-container {
+  height: 100%;
+  display: flex;
+  flex: 0 0 20px;
+  align-items: center;
+  justify-content: center;
+}

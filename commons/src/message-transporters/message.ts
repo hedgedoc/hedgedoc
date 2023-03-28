@@ -16,6 +16,8 @@ export enum MessageType {
   REALTIME_USER_STATE_SET = 'REALTIME_USER_STATE_SET',
   REALTIME_USER_SINGLE_UPDATE = 'REALTIME_USER_SINGLE_UPDATE',
   REALTIME_USER_STATE_REQUEST = 'REALTIME_USER_STATE_REQUEST',
+  REALTIME_USER_SET_ACTIVITY = 'REALTIME_USER_SET_ACTIVITY',
+
   READY = 'READY'
 }
 
@@ -30,6 +32,10 @@ export interface MessagePayloads {
     }
   }
   [MessageType.REALTIME_USER_SINGLE_UPDATE]: RemoteCursor
+
+  [MessageType.REALTIME_USER_SET_ACTIVITY]: {
+    active: boolean
+  }
 }
 
 export type Message<T extends MessageType> = T extends keyof MessagePayloads

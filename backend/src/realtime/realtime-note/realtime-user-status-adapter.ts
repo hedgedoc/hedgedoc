@@ -78,10 +78,23 @@ export class RealtimeUserStatusAdapter {
       },
     ) as Listener;
 
+    const realtimeUserSetActivityListener = connection.getTransporter().on(
+      MessageType.REALTIME_USER_SET_ACTIVITY,
+      (message) => {
+        if (this.realtimeUser.active === message.payload.active) {
+          return;
+        }
+        this.realtimeUser.active = message.payload.active;
+        this.sendRealtimeUserStatusUpdateEvent(connection);
+      },
+      { objectify: true },
+    ) as Listener;
+
     connection.getTransporter().on('disconnected', () => {
       transporterMessagesListener.off();
       transporterRequestMessageListener.off();
       clientRemoveListener.off();
+      realtimeUserSetActivityListener.off();
     });
   }
 
