@@ -2424,7 +2424,7 @@ __metadata:
     react: 18.2.0
     react-bootstrap: 2.7.2
     react-bootstrap-icons: 1.10.2
-    react-bootstrap-typeahead: 6.0.2
+    react-bootstrap-typeahead: 6.1.0
     react-diff-viewer: 3.1.1
     react-dom: 18.2.0
     react-i18next: 12.2.0
@@ -15416,9 +15416,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-bootstrap-typeahead@npm:6.0.2":
-  version: 6.0.2
-  resolution: "react-bootstrap-typeahead@npm:6.0.2"
+"react-bootstrap-typeahead@npm:6.1.0":
+  version: 6.1.0
+  resolution: "react-bootstrap-typeahead@npm:6.1.0"
   dependencies:
     "@babel/runtime": ^7.14.6
     "@popperjs/core": ^2.10.2
@@ -15435,7 +15435,7 @@ __metadata:
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 52f59f4ec794705be493bc0712c819ae2fa758d7d034f90e31fa07f8f8689928ad4f512c8dd275ec9324c1359a57b32d4108be652836a1c1b91b7ded6a5cde20
+  checksum: 7a15d608ed8dfc308834c2b9be313bf58d6f1ab373e92e611848b2d4159706b1633b461539faa954d97aba4f6ceb3eaff7d9d8aa5414e7eea0ae41bd0a625048
   languageName: node
   linkType: hard
 
