@@ -23,6 +23,9 @@
   "labels": [
     "type: maintenance"
   ],
+  "ignorePaths": [
+    "docker/docker_compose.yml"
+  ],
   "packageRules": [
     {
       "groupName": "NestJS packages",
