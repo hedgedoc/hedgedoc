@@ -3,7 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { WebsocketTransporter } from '@hedgedoc/commons';
+import {
+  CborMessageEncoder,
+  JsonMessageEncoder,
+  WebsocketTransporter,
+} from '@hedgedoc/commons';
 import { OnGatewayConnection, WebSocketGateway } from '@nestjs/websockets';
 import { IncomingMessage } from 'http';
 import WebSocket from 'ws';
@@ -76,7 +80,12 @@ export class WebsocketGateway implements OnGatewayConnection {
       const realtimeNote =
         await this.realtimeNoteService.getOrCreateRealtimeNote(note);
 
-      const websocketTransporter = new WebsocketTransporter();
+      const messageEncoder =
+        process.env.NODE_ENV === 'development'
+          ? new JsonMessageEncoder()
+          : new CborMessageEncoder();
+
+      const websocketTransporter = new WebsocketTransporter(messageEncoder);
       const connection = new RealtimeConnection(
         websocketTransporter,
         user,

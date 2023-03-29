@@ -10,6 +10,10 @@ export * from './message-transporters/message-transporter.js'
 export * from './message-transporters/realtime-user.js'
 export * from './message-transporters/websocket-transporter.js'
 
+export * from './message-encoders/message-encoder.js'
+export * from './message-encoders/cbor-message-encoder.js'
+export * from './message-encoders/json-message-encoder.js'
+
 export { parseUrl } from './utils/parse-url.js'
 export {
   MissingTrailingSlashError,

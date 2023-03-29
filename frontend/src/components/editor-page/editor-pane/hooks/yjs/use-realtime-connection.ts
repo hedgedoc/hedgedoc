@@ -7,10 +7,15 @@ import { useApplicationState } from '../../../../../hooks/common/use-application
 import { getGlobalState } from '../../../../../redux'
 import { setRealtimeConnectionState } from '../../../../../redux/realtime/methods'
 import { Logger } from '../../../../../utils/logger'
-import { isMockMode } from '../../../../../utils/test-modes'
+import { isMockMode, isDevMode } from '../../../../../utils/test-modes'
 import { useWebsocketUrl } from './use-websocket-url'
 import type { MessageTransporter } from '@hedgedoc/commons'
-import { MockedBackendMessageTransporter, WebsocketTransporter } from '@hedgedoc/commons'
+import {
+  CborMessageEncoder,
+  JsonMessageEncoder,
+  MockedBackendMessageTransporter,
+  WebsocketTransporter
+} from '@hedgedoc/commons'
 import type { Listener } from 'eventemitter2'
 import WebSocket from 'isomorphic-ws'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
@@ -31,7 +36,8 @@ export const useRealtimeConnection = (): MessageTransporter => {
       return new MockedBackendMessageTransporter(getGlobalState().noteDetails.markdownContent.plain)
     } else {
       logger.debug('Creating Websocket connection...')
-      return new WebsocketTransporter()
+      const encoder = isDevMode ? new JsonMessageEncoder() : new CborMessageEncoder()
+      return new WebsocketTransporter(encoder)
     }
   }, [])
 
@@ -39,6 +45,7 @@ export const useRealtimeConnection = (): MessageTransporter => {
     if (messageTransporter instanceof WebsocketTransporter && websocketUrl) {
       logger.debug(`Connecting to ${websocketUrl.toString()}`)
       const socket = new WebSocket(websocketUrl)
+      socket.binaryType = 'arraybuffer'
       socket.addEventListener('error', () => {
         setTimeout(() => {
           establishWebsocketConnection()

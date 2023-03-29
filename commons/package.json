@@ -38,6 +38,7 @@
     "url": "https://github.com/hedgedoc/hedgedoc.git"
   },
   "dependencies": {
+    "cbor-x": "1.5.1",
     "eventemitter2": "6.4.9",
     "isomorphic-ws": "5.0.0",
     "reveal.js": "4.4.0",

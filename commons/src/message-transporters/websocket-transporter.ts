@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { MessageEncoder } from '../message-encoders/message-encoder.js'
 import { ConnectionState, MessageTransporter } from './message-transporter.js'
 import { Message, MessageType } from './message.js'
 import WebSocket, { MessageEvent } from 'isomorphic-ws'
@@ -13,7 +14,7 @@ export class WebsocketTransporter extends MessageTransporter {
   private messageCallback: undefined | ((event: MessageEvent) => void)
   private closeCallback: undefined | (() => void)
 
-  constructor() {
+  constructor(private readonly encoder: MessageEncoder) {
     super()
   }
 
@@ -57,10 +58,7 @@ export class WebsocketTransporter extends MessageTransporter {
   }
 
   private processMessageEvent(event: MessageEvent): void {
-    if (typeof event.data !== 'string') {
-      return
-    }
-    const message = JSON.parse(event.data) as Message<MessageType>
+    const message = this.encoder.decode(event.data)
     this.receiveMessage(message)
   }
 
@@ -92,7 +90,8 @@ export class WebsocketTransporter extends MessageTransporter {
     }
 
     try {
-      this.websocket.send(JSON.stringify(content))
+      const encoded = this.encoder.encode(content)
+      this.websocket.send(encoded)
     } catch (error: unknown) {
       this.disconnect()
       throw error
