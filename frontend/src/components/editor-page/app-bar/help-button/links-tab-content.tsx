@@ -73,14 +73,6 @@ export const LinksTabContent: React.FC = () => {
           <ul className='list-unstyled'>
             <li>
               <TranslatedInternalLink
-                i18nKey='editor.help.documents.features'
-                href='/n/features'
-                icon={IconDot}
-                className='text-primary'
-              />
-            </li>
-            <li>
-              <TranslatedInternalLink
                 i18nKey='editor.help.documents.yamlMetadata'
                 href='/n/yaml-metadata'
                 icon={IconDot}

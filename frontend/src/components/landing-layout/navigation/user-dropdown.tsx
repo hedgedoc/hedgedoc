@@ -11,7 +11,6 @@ import { SignOutDropdownButton } from './sign-out-dropdown-button'
 import Link from 'next/link'
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
-import { Lightning as IconLightning } from 'react-bootstrap-icons'
 import { Person as IconPerson } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
@@ -33,12 +32,6 @@ export const UserDropdown: React.FC = () => {
       </Dropdown.Toggle>
 
       <Dropdown.Menu className='text-start'>
-        <Link href={'/n/features'} passHref={true} legacyBehavior={true}>
-          <Dropdown.Item dir='auto' {...cypressId('user-dropdown-features-button')}>
-            <UiIcon icon={IconLightning} className='mx-2' />
-            <Trans i18nKey='editor.help.documents.features' />
-          </Dropdown.Item>
-        </Link>
         <Link href={'/profile'} passHref={true} legacyBehavior={true}>
           <Dropdown.Item dir='auto' {...cypressId('user-dropdown-profile-button')}>
             <UiIcon icon={IconPerson} className='mx-2' />
