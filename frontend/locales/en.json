@@ -57,7 +57,6 @@
   },
   "landing": {
     "intro": {
-      "exploreFeatures": "Explore all features",
       "markdownWhileLoading": "Loading...",
       "markdownLoadingError": "Error while fetching intro content"
     },
@@ -262,7 +261,6 @@
       },
       "documents": {
         "title": "Documents",
-        "features": "Features",
         "yamlMetadata": "YAML Metadata",
         "slideExample": "Slide Example"
       }

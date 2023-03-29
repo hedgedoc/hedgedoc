@@ -26,17 +26,6 @@ describe('Intro page', () => {
     })
   })
 
-  describe('features button', () => {
-    it('is hidden when logged in', () => {
-      cy.getByCypressId('features-button').should('not.exist')
-    })
-
-    it('is visible when logged out', () => {
-      cy.logout()
-      cy.getByCypressId('features-button').should('exist')
-    })
-  })
-
   describe('sign in button', () => {
     it('is hidden when logged in', () => {
       cy.getByCypressId('sign-in-button').should('not.exist')
