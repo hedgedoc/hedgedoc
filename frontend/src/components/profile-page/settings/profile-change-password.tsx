@@ -36,11 +36,11 @@ export const ProfileChangePassword: React.FC = () => {
       return true
     } catch (error) {
       const foundI18nKey = new ErrorToI18nKeyMapper(error as Error, 'login.auth.error')
-        .withHttpCode(401, 'invalidCredentials')
+        .withHttpCode(401, 'usernamePassword')
         .withBackendErrorName('FeatureDisabledError', 'loginDisabled')
-        .withBackendErrorName('PasswordTooWeakError', 'passwordTooWeak')
+        .withBackendErrorName('PasswordTooWeakError', 'login.register.error.passwordTooWeak', true)
         .orFallbackI18nKey('other')
-      return Promise.reject(foundI18nKey)
+      return Promise.reject(new Error(foundI18nKey))
     } finally {
       if (formRef.current) {
         formRef.current.reset()
@@ -79,14 +79,13 @@ export const ProfileChangePassword: React.FC = () => {
           <CurrentPasswordField onChange={onChangeOldPassword} value={oldPassword} />
           <NewPasswordField onChange={onChangeNewPassword} value={newPassword} />
           <PasswordAgainField password={newPassword} onChange={onChangeNewPasswordAgain} value={newPasswordAgain} />
-          <Alert className='small' show={!!error && !loading} variant={'danger'}>
+          <Alert className='small my-3' show={!!error && !loading} variant={'danger'}>
             <Trans i18nKey={error?.message} />
           </Alert>
-          <Alert className='small' show={changeSucceeded && !loading} variant={'success'}>
+          <Alert className='small my-3' show={!error && !loading && Boolean(changeSucceeded)} variant={'success'}>
             <Trans i18nKey={'profile.changePassword.successText'} />
           </Alert>
-
-          <Button type='submit' variant='primary' disabled={!ready}>
+          <Button type='submit' variant='primary' disabled={!ready} className={'mt-3'}>
             <Trans i18nKey='common.save' />
           </Button>
         </Form>
