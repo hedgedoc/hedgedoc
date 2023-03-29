@@ -51,7 +51,7 @@ export const RevisionListEntry: React.FC<RevisionListEntryProps> = ({ active, on
       showErrorNotification('editor.modal.revision.errorUser')(error as Error)
       return null
     }
-  }, [])
+  }, [showErrorNotification, revision])
 
   return (
     <ListGroup.Item
@@ -73,6 +73,12 @@ export const RevisionListEntry: React.FC<RevisionListEntryProps> = ({ active, on
           <WaitSpinner />
         </ShowIf>
         <ShowIf condition={!revisionAuthors.error && !revisionAuthors.loading}>{revisionAuthors.value}</ShowIf>
+        <ShowIf condition={revision.authorUsernames.length > 0 && revision.anonymousAuthorCount > 0}>
+          <span className={'mx-1'}>+</span>
+        </ShowIf>
+        <ShowIf condition={revision.anonymousAuthorCount > 0}>
+          <Trans i18nKey={'editor.modal.revision.guests'} values={{ count: revision.anonymousAuthorCount }} />
+        </ShowIf>
       </span>
     </ListGroup.Item>
   )
