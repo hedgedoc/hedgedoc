@@ -40,7 +40,7 @@
     "@nestjs/websockets": "9.3.12",
     "@types/bcrypt": "5.0.0",
     "@types/cron": "2.0.1",
-    "@types/minio": "7.0.17",
+    "@types/minio": "7.0.18",
     "@types/node-fetch": "2.6.3",
     "@types/passport-http-bearer": "1.0.37",
     "@zxcvbn-ts/core": "2.2.1",
