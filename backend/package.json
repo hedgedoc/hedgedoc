@@ -113,7 +113,7 @@
     "ts-jest": "29.0.5",
     "ts-mockery": "1.2.0",
     "ts-node": "10.9.1",
-    "tsconfig-paths": "4.1.2",
+    "tsconfig-paths": "4.2.0",
     "typescript": "5.0.2"
   },
   "jest": {
