@@ -7,12 +7,13 @@ import type { BackendVersion } from '../../../../api/config/types'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import links from '../../../../links.json'
 import { cypressId } from '../../../../utils/cypress-attribute'
-import frontendVersion from '../../../../version.json'
+import { CopyableField } from '../../../common/copyable/copyable-field/copyable-field'
+import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
 import type { CommonModalProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
-import { VersionInfoModalColumn } from './version-info-modal-column'
+import { ShowIf } from '../../../common/show-if/show-if'
 import React, { useMemo } from 'react'
-import { Modal, Row } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 
 /**
  * Renders a modal with the version information.
@@ -39,24 +40,27 @@ export const VersionInfoModal: React.FC<CommonModalProps> = ({ onHide, show }) =
     <CommonModal
       {...cypressId('version-modal')}
       show={show}
+      modalSize={'sm'}
       onHide={onHide}
       showCloseButton={true}
       titleI18nKey={'landing.versionInfo.title'}>
       <Modal.Body>
-        <Row>
-          <VersionInfoModalColumn
-            titleI18nKey={'landing.versionInfo.serverVersion'}
-            version={backendVersion}
-            issueTrackerLink={links.backendIssues}
-            sourceCodeLink={links.backendSourceCode}
+        <h5>HedgeDoc</h5>
+        <CopyableField content={backendVersion} />
+        <ShowIf condition={!!links.sourceCode}>
+          <TranslatedExternalLink
+            i18nKey={'landing.versionInfo.sourceCode'}
+            className={'btn btn-sm btn-primary d-block mb-2'}
+            href={links.sourceCode}
           />
-          <VersionInfoModalColumn
-            titleI18nKey={'landing.versionInfo.clientVersion'}
-            version={frontendVersion.version}
-            issueTrackerLink={frontendVersion.issueTrackerUrl}
-            sourceCodeLink={frontendVersion.sourceCodeUrl}
+        </ShowIf>
+        <ShowIf condition={!!links.issues}>
+          <TranslatedExternalLink
+            i18nKey={'landing.versionInfo.issueTracker'}
+            className={'btn btn-sm btn-primary d-block mb-2'}
+            href={links.issues}
           />
-        </Row>
+        </ShowIf>
       </Modal.Body>
     </CommonModal>
   )

@@ -49,7 +49,7 @@ export const LinksTabContent: React.FC = () => {
             <li>
               <TranslatedExternalLink
                 i18nKey='editor.help.contacts.reportIssue'
-                href={links.backendIssues}
+                href={links.issues}
                 icon={IconTag}
                 className='text-primary'
               />

@@ -157,8 +157,6 @@
       "issueTracker": "Found a bug? Fill an issue!",
       "sourceCode": "Read the source code",
       "versionInfo": "Version info",
-      "serverVersion": "Server version",
-      "clientVersion": "Client version",
       "title": "You are using"
     }
   },

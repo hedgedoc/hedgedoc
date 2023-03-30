@@ -62,9 +62,6 @@ jobs:
       - name: Patch motd.md to include privacy policy.
         run: cp netlify/motd.md public/public/motd.md
 
-      - name: Patch version.json to include git hash
-        run: jq ".version = \"0.0.0+${GITHUB_SHA:0:8}\"" src/version.json > src/_version.json && mv src/_version.json src/version.json
-
       - name: Patch base URL
         run: echo "HD_BASE_URL=\"${{ env.DEPLOY_URL }}\"" >> .env.production
 
