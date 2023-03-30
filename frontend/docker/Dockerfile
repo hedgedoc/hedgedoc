@@ -13,7 +13,6 @@ FROM base AS builder
 RUN apk add --no-cache libc6-compat
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-ARG BUILD_VERSION=CLIENT_VERSION_MISSING
 
 ENV YARN_CACHE_FOLDER=/tmp/.yarn
 USER node
@@ -29,7 +28,6 @@ ARG TURBO_TOKEN
 
 RUN rm -rf frontend/public/public
 RUN rm -rf frontend/src/pages/api
-RUN sed -i "s/CLIENT_VERSION_MISSING/${BUILD_VERSION}/" frontend/src/version.json
 RUN yarn turbo run build --filter=frontend --no-cache --no-daemon
 
 # RUNNER
