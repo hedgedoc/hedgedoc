@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useMayEdit } from '../../../../../hooks/common/use-may-edit'
 import {
   createCursorLayer,
   createSelectionLayer,
@@ -19,14 +20,16 @@ import { useMemo } from 'react'
  * Bundles all extensions that are needed for the remote cursor display.
  * @return The created codemirror extensions
  */
-export const useCodeMirrorRemoteCursorsExtension = (messageTransporter: MessageTransporter): Extension =>
-  useMemo(
+export const useCodeMirrorRemoteCursorsExtension = (messageTransporter: MessageTransporter): Extension => {
+  const mayEdit = useMayEdit()
+  return useMemo(
     () => [
       remoteCursorStateField.extension,
       createCursorLayer(),
       createSelectionLayer(),
       ViewPlugin.define((view) => new ReceiveRemoteCursorViewPlugin(view, messageTransporter)),
-      ViewPlugin.define((view) => new SendCursorViewPlugin(view, messageTransporter))
+      ViewPlugin.define((view) => new SendCursorViewPlugin(view, messageTransporter, mayEdit))
     ],
-    [messageTransporter]
+    [mayEdit, messageTransporter]
   )
+}

@@ -14,16 +14,18 @@ import type { Listener } from 'eventemitter2'
  */
 export class SendCursorViewPlugin implements PluginValue {
   private lastCursor: SelectionRange | undefined
-  private listener: Listener
+  private listener?: Listener
 
-  constructor(private view: EditorView, private messageTransporter: MessageTransporter) {
-    this.listener = messageTransporter.doAsSoonAsReady(() => {
-      this.sendCursor(this.lastCursor)
-    })
+  constructor(private view: EditorView, private messageTransporter: MessageTransporter, private mayEdit: boolean) {
+    if (mayEdit) {
+      this.listener = messageTransporter.doAsSoonAsReady(() => {
+        this.sendCursor(this.lastCursor)
+      })
+    }
   }
 
   destroy() {
-    this.listener.off()
+    this.listener?.off()
   }
 
   update(update: ViewUpdate) {
@@ -37,7 +39,8 @@ export class SendCursorViewPlugin implements PluginValue {
     if (
       !this.messageTransporter.isReady() ||
       currentCursor === undefined ||
-      (this.lastCursor?.to === currentCursor?.to && this.lastCursor?.from === currentCursor?.from)
+      (this.lastCursor?.to === currentCursor?.to && this.lastCursor?.from === currentCursor?.from) ||
+      !this.mayEdit
     ) {
       return
     }
