@@ -8,6 +8,7 @@ import { clearUser } from '../../../redux/user/methods'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { UiIcon } from '../../common/icons/ui-icon'
 import { useUiNotifications } from '../../notifications/ui-notification-boundary'
+import { useRouter } from 'next/router'
 import React, { useCallback } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { BoxArrowRight as IconBoxArrowRight } from 'react-bootstrap-icons'
@@ -19,11 +20,14 @@ import { Trans, useTranslation } from 'react-i18next'
 export const SignOutDropdownButton: React.FC = () => {
   useTranslation()
   const { showErrorNotification } = useUiNotifications()
+  const router = useRouter()
 
   const onSignOut = useCallback(() => {
     clearUser()
-    doLogout().catch(showErrorNotification('login.logoutFailed'))
-  }, [showErrorNotification])
+    doLogout()
+      .then(() => router.push('/login'))
+      .catch(showErrorNotification('login.logoutFailed'))
+  }, [showErrorNotification, router])
 
   return (
     <Dropdown.Item dir='auto' onClick={onSignOut} {...cypressId('user-dropdown-sign-out-button')}>
