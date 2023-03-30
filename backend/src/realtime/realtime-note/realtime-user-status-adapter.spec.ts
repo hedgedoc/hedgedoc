@@ -21,17 +21,20 @@ describe('realtime user status adapter', () => {
   let clientLoggedIn2: RealtimeConnection;
   let clientGuest: RealtimeConnection;
   let clientNotReady: RealtimeConnection;
+  let clientDecline: RealtimeConnection;
 
   let clientLoggedIn1SendMessageSpy: SendMessageSpy;
   let clientLoggedIn2SendMessageSpy: SendMessageSpy;
   let clientGuestSendMessageSpy: SendMessageSpy;
   let clientNotReadySendMessageSpy: SendMessageSpy;
+  let clientDeclineSendMessageSpy: SendMessageSpy;
 
   let realtimeNote: RealtimeNote;
 
   const clientLoggedIn1Username = 'logged.in1';
   const clientLoggedIn2Username = 'logged.in2';
   const clientNotReadyUsername = 'not.ready';
+  const clientDeclineUsername = 'read.only';
 
   const guestDisplayName = 'Virtuous Mockingbird';
 
@@ -45,30 +48,36 @@ describe('realtime user status adapter', () => {
       'mockedContent',
     );
     clientLoggedIn1 = new MockConnectionBuilder(realtimeNote)
-      .withRealtimeUserStatus()
+      .withAcceptingRealtimeUserStatus()
       .withLoggedInUser(clientLoggedIn1Username)
       .build();
     clientLoggedIn2 = new MockConnectionBuilder(realtimeNote)
-      .withRealtimeUserStatus()
+      .withAcceptingRealtimeUserStatus()
       .withLoggedInUser(clientLoggedIn2Username)
       .build();
     clientGuest = new MockConnectionBuilder(realtimeNote)
-      .withRealtimeUserStatus()
+      .withAcceptingRealtimeUserStatus()
       .withGuestUser(guestDisplayName)
       .build();
     clientNotReady = new MockConnectionBuilder(realtimeNote)
-      .withRealtimeUserStatus()
+      .withAcceptingRealtimeUserStatus()
       .withLoggedInUser(clientNotReadyUsername)
+      .build();
+    clientDecline = new MockConnectionBuilder(realtimeNote)
+      .withDecliningRealtimeUserStatus()
+      .withLoggedInUser(clientDeclineUsername)
       .build();
 
     clientLoggedIn1SendMessageSpy = spyOnSendMessage(clientLoggedIn1);
     clientLoggedIn2SendMessageSpy = spyOnSendMessage(clientLoggedIn2);
     clientGuestSendMessageSpy = spyOnSendMessage(clientGuest);
     clientNotReadySendMessageSpy = spyOnSendMessage(clientNotReady);
+    clientDeclineSendMessageSpy = spyOnSendMessage(clientDecline);
 
     clientLoggedIn1.getTransporter().sendReady();
     clientLoggedIn2.getTransporter().sendReady();
     clientGuest.getTransporter().sendReady();
+    clientDecline.getTransporter().sendReady();
   });
 
   it('can answer a state request', () => {
@@ -76,6 +85,7 @@ describe('realtime user status adapter', () => {
     expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(0);
 
     clientLoggedIn1
       .getTransporter()
@@ -119,6 +129,7 @@ describe('realtime user status adapter', () => {
     expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(0);
   });
 
   it('can save an cursor update', () => {
@@ -126,6 +137,7 @@ describe('realtime user status adapter', () => {
     expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(0);
 
     const newFrom = Math.floor(Math.random() * 100);
     const newTo = Math.floor(Math.random() * 100);
@@ -214,6 +226,7 @@ describe('realtime user status adapter', () => {
       expectedMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(1);
   });
 
   it('will inform other clients about removed client', () => {
@@ -221,6 +234,7 @@ describe('realtime user status adapter', () => {
     expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(0);
 
     clientLoggedIn2.getTransporter().disconnect();
 
@@ -278,6 +292,7 @@ describe('realtime user status adapter', () => {
       expectedMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(1);
   });
 
   it('will inform other clients about inactivity and reactivity', () => {
@@ -285,6 +300,7 @@ describe('realtime user status adapter', () => {
     expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(0);
 
     clientLoggedIn1
       .getTransporter()
@@ -371,6 +387,7 @@ describe('realtime user status adapter', () => {
       expectedInactivityMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(1);
 
     clientLoggedIn1
       .getTransporter()
@@ -391,6 +408,7 @@ describe('realtime user status adapter', () => {
       expectedInactivityMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(1);
 
     clientLoggedIn1
       .getTransporter()
@@ -477,6 +495,7 @@ describe('realtime user status adapter', () => {
       expectedReactivityMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(2);
 
     clientLoggedIn1
       .getTransporter()
@@ -497,5 +516,30 @@ describe('realtime user status adapter', () => {
       expectedReactivityMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(2);
+  });
+
+  it('will ignore updates from read only clients', () => {
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(0);
+
+    clientDecline
+      .getTransporter()
+      .emit(MessageType.REALTIME_USER_SINGLE_UPDATE, {
+        type: MessageType.REALTIME_USER_SINGLE_UPDATE,
+        payload: {
+          from: 0,
+          to: 1234,
+        },
+      });
+
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(0);
   });
 });

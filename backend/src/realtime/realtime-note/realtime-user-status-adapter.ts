@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MessageType, RealtimeUser } from '@hedgedoc/commons';
+import { Message, MessageType, RealtimeUser } from '@hedgedoc/commons';
 import { Listener } from 'eventemitter2';
 
 import { RealtimeConnection } from './realtime-connection';
@@ -19,6 +19,7 @@ export class RealtimeUserStatusAdapter {
     username: string | null,
     displayName: string,
     private connection: RealtimeConnection,
+    private acceptCursorUpdate: boolean,
   ) {
     this.realtimeUser = this.createInitialRealtimeUserState(
       username,
@@ -51,13 +52,14 @@ export class RealtimeUserStatusAdapter {
     const realtimeNote = connection.getRealtimeNote();
     const transporterMessagesListener = connection.getTransporter().on(
       MessageType.REALTIME_USER_SINGLE_UPDATE,
-      (message) => {
-        this.realtimeUser.cursor = message.payload;
-        this.sendRealtimeUserStatusUpdateEvent(connection);
+      (message: Message<MessageType.REALTIME_USER_SINGLE_UPDATE>) => {
+        if (this.isAcceptingCursorUpdates()) {
+          this.realtimeUser.cursor = message.payload;
+          this.sendRealtimeUserStatusUpdateEvent(connection);
+        }
       },
       { objectify: true },
     ) as Listener;
-
     const transporterRequestMessageListener = connection.getTransporter().on(
       MessageType.REALTIME_USER_STATE_REQUEST,
       () => {
@@ -80,8 +82,11 @@ export class RealtimeUserStatusAdapter {
 
     const realtimeUserSetActivityListener = connection.getTransporter().on(
       MessageType.REALTIME_USER_SET_ACTIVITY,
-      (message) => {
-        if (this.realtimeUser.active === message.payload.active) {
+      (message: Message<MessageType.REALTIME_USER_SET_ACTIVITY>) => {
+        if (
+          !this.isAcceptingCursorUpdates() ||
+          this.realtimeUser.active === message.payload.active
+        ) {
           return;
         }
         this.realtimeUser.active = message.payload.active;
@@ -91,7 +96,7 @@ export class RealtimeUserStatusAdapter {
     ) as Listener;
 
     connection.getTransporter().on('disconnected', () => {
-      transporterMessagesListener.off();
+      transporterMessagesListener?.off();
       transporterRequestMessageListener.off();
       clientRemoveListener.off();
       realtimeUserSetActivityListener.off();
@@ -106,23 +111,30 @@ export class RealtimeUserStatusAdapter {
     );
   }
 
-  private sendCompleteStateToClient(client: RealtimeConnection): void {
-    const realtimeUsers = this.collectAllConnectionsExcept(client).map(
-      (client) => client.getRealtimeUserStateAdapter().realtimeUser,
-    );
+  private sendCompleteStateToClient(receivingClient: RealtimeConnection): void {
+    const realtimeUser =
+      receivingClient.getRealtimeUserStateAdapter().realtimeUser;
+    const realtimeUsers = this.collectAllConnectionsExcept(receivingClient)
+      .filter((client) =>
+        client.getRealtimeUserStateAdapter().isAcceptingCursorUpdates(),
+      )
+      .map((client) => client.getRealtimeUserStateAdapter().realtimeUser)
+      .filter((realtimeUser) => realtimeUser !== null);
 
-    client.getTransporter().sendMessage({
+    receivingClient.getTransporter().sendMessage({
       type: MessageType.REALTIME_USER_STATE_SET,
       payload: {
         users: realtimeUsers,
         ownUser: {
-          displayName:
-            client.getRealtimeUserStateAdapter().realtimeUser.displayName,
-          styleIndex:
-            client.getRealtimeUserStateAdapter().realtimeUser.styleIndex,
+          displayName: realtimeUser.displayName,
+          styleIndex: realtimeUser.styleIndex,
         },
       },
     });
+  }
+
+  private isAcceptingCursorUpdates(): boolean {
+    return this.acceptCursorUpdate;
   }
 
   private collectAllConnectionsExcept(
@@ -157,11 +169,13 @@ export class RealtimeUserStatusAdapter {
       .getConnections()
       .map(
         (connection) =>
-          connection.getRealtimeUserStateAdapter().realtimeUser.styleIndex,
+          connection.getRealtimeUserStateAdapter().realtimeUser?.styleIndex,
       )
       .reduce((map, styleIndex) => {
-        const count = (map.get(styleIndex) ?? 0) + 1;
-        map.set(styleIndex, count);
+        if (styleIndex !== undefined) {
+          const count = (map.get(styleIndex) ?? 0) + 1;
+          map.set(styleIndex, count);
+        }
         return map;
       }, new Map<number, number>());
   }

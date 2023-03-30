@@ -14,6 +14,12 @@ import { RealtimeConnection } from '../realtime-connection';
 import { RealtimeNote } from '../realtime-note';
 import { RealtimeUserStatusAdapter } from '../realtime-user-status-adapter';
 
+enum RealtimeUserState {
+  WITHOUT,
+  WITH_READWRITE,
+  WITH_READONLY,
+}
+
 const MOCK_FALLBACK_USERNAME = 'mock';
 
 /**
@@ -22,7 +28,8 @@ const MOCK_FALLBACK_USERNAME = 'mock';
 export class MockConnectionBuilder {
   private username: string | null;
   private displayName: string | undefined;
-  private includeRealtimeUserStatus = false;
+  private includeRealtimeUserStatus: RealtimeUserState =
+    RealtimeUserState.WITHOUT;
 
   constructor(private readonly realtimeNote: RealtimeNote) {}
 
@@ -50,10 +57,18 @@ export class MockConnectionBuilder {
   }
 
   /**
-   * Defines that the connection should contain a {@link RealtimeUserStatusAdapter}.
+   * Defines that the connection should contain a {@link RealtimeUserStatusAdapter} that is accepting cursor updates.
    */
-  public withRealtimeUserStatus(): this {
-    this.includeRealtimeUserStatus = true;
+  public withAcceptingRealtimeUserStatus(): this {
+    this.includeRealtimeUserStatus = RealtimeUserState.WITH_READWRITE;
+    return this;
+  }
+
+  /**
+   * Defines that the connection should contain a {@link RealtimeUserStatusAdapter} that is declining cursor updates.
+   */
+  public withDecliningRealtimeUserStatus(): this {
+    this.includeRealtimeUserStatus = RealtimeUserState.WITH_READONLY;
     return this;
   }
 
@@ -92,11 +107,12 @@ export class MockConnectionBuilder {
       this.realtimeNote.removeClient(connection),
     );
 
-    if (this.includeRealtimeUserStatus) {
+    if (this.includeRealtimeUserStatus !== RealtimeUserState.WITHOUT) {
       realtimeUserStateAdapter = new RealtimeUserStatusAdapter(
         this.username ?? null,
         displayName,
         connection,
+        this.includeRealtimeUserStatus === RealtimeUserState.WITH_READWRITE,
       );
     }
 
