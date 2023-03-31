@@ -15,7 +15,8 @@
         "^build"
       ],
       "outputs": [
-        ".next/**"
+        ".next/**",
+        "!.next/cache/**"
       ],
       "env": [
         "NODEJS_VERSION"
@@ -39,7 +40,8 @@
         "^build"
       ],
       "outputs": [
-        ".next/**"
+        ".next/**",
+        "!.next/cache/**"
       ],
       "env": [
         "NODEJS_VERSION"
