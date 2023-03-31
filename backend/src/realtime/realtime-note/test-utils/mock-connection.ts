@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,31 +14,75 @@ import { RealtimeConnection } from '../realtime-connection';
 import { RealtimeNote } from '../realtime-note';
 import { RealtimeUserStatusAdapter } from '../realtime-user-status-adapter';
 
+const MOCK_FALLBACK_USERNAME = 'mock';
+
+/**
+ * Creates a mocked {@link RealtimeConnection realtime connection}.
+ */
 export class MockConnectionBuilder {
-  private username = 'mock';
-  private includeRealtimeUserState = false;
+  private username: string | null;
+  private displayName: string | undefined;
+  private includeRealtimeUserStatus = false;
 
   constructor(private readonly realtimeNote: RealtimeNote) {}
 
-  public withUsername(username: string): this {
-    this.username = username;
+  /**
+   * Defines that the user who belongs to the connection is a guest.
+   *
+   * @param displayName the display name of the guest user
+   */
+  public withGuestUser(displayName: string): this {
+    this.username = null;
+    this.displayName = displayName;
     return this;
   }
 
-  public withRealtimeUserState(): this {
-    this.includeRealtimeUserState = true;
+  /**
+   * Defines that the user who belongs to this connection is a logged-in user.
+   *
+   * @param username the username of the mocked user. If this value is omitted then the builder will user a {@link MOCK_FALLBACK_USERNAME fallback}.
+   */
+  public withLoggedInUser(username?: string): this {
+    const newUsername = username ?? MOCK_FALLBACK_USERNAME;
+    this.username = newUsername;
+    this.displayName = newUsername;
     return this;
   }
 
+  /**
+   * Defines that the connection should contain a {@link RealtimeUserStatusAdapter}.
+   */
+  public withRealtimeUserStatus(): this {
+    this.includeRealtimeUserStatus = true;
+    return this;
+  }
+
+  /**
+   * Creates a new connection based on the given configuration.
+   *
+   * @return {RealtimeConnection} The constructed mocked connection
+   * @throws Error if neither withGuestUser nor withLoggedInUser has been called.
+   */
   public build(): RealtimeConnection {
+    const displayName = this.deriveDisplayName();
+
     const transporter = new MockedBackendMessageTransporter('');
     let realtimeUserStateAdapter: RealtimeUserStatusAdapter =
-      Mock.of<RealtimeUserStatusAdapter>();
+      Mock.of<RealtimeUserStatusAdapter>({});
+
+    const mockUser =
+      this.username === null
+        ? null
+        : Mock.of<User>({
+            username: this.username,
+            displayName: this.displayName,
+          });
+    const yDocSyncServerAdapter = Mock.of<YDocSyncServerAdapter>({});
 
     const connection = Mock.of<RealtimeConnection>({
-      getUser: jest.fn(() => Mock.of<User>({ username: this.username })),
-      getDisplayName: jest.fn(() => this.username),
-      getSyncAdapter: jest.fn(() => Mock.of<YDocSyncServerAdapter>({})),
+      getUser: jest.fn(() => mockUser),
+      getDisplayName: jest.fn(() => displayName),
+      getSyncAdapter: jest.fn(() => yDocSyncServerAdapter),
       getTransporter: jest.fn(() => transporter),
       getRealtimeUserStateAdapter: () => realtimeUserStateAdapter,
       getRealtimeNote: () => this.realtimeNote,
@@ -48,10 +92,10 @@ export class MockConnectionBuilder {
       this.realtimeNote.removeClient(connection),
     );
 
-    if (this.includeRealtimeUserState) {
+    if (this.includeRealtimeUserStatus) {
       realtimeUserStateAdapter = new RealtimeUserStatusAdapter(
-        this.username,
-        this.username,
+        this.username ?? null,
+        displayName,
         connection,
       );
     }
@@ -59,5 +103,15 @@ export class MockConnectionBuilder {
     this.realtimeNote.addClient(connection);
 
     return connection;
+  }
+
+  private deriveDisplayName(): string {
+    if (this.displayName === undefined) {
+      throw new Error(
+        'Neither withGuestUser nor withLoggedInUser has been called.',
+      );
+    }
+
+    return this.displayName;
   }
 }

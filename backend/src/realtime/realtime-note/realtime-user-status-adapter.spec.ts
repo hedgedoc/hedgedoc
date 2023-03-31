@@ -17,70 +17,76 @@ type SendMessageSpy = jest.SpyInstance<
 >;
 
 describe('realtime user status adapter', () => {
-  let client1: RealtimeConnection;
-  let client2: RealtimeConnection;
-  let client3: RealtimeConnection;
-  let client4: RealtimeConnection;
+  let clientLoggedIn1: RealtimeConnection;
+  let clientLoggedIn2: RealtimeConnection;
+  let clientGuest: RealtimeConnection;
+  let clientNotReady: RealtimeConnection;
 
-  let sendMessage1Spy: SendMessageSpy;
-  let sendMessage2Spy: SendMessageSpy;
-  let sendMessage3Spy: SendMessageSpy;
-  let sendMessage4Spy: SendMessageSpy;
+  let clientLoggedIn1SendMessageSpy: SendMessageSpy;
+  let clientLoggedIn2SendMessageSpy: SendMessageSpy;
+  let clientGuestSendMessageSpy: SendMessageSpy;
+  let clientNotReadySendMessageSpy: SendMessageSpy;
 
   let realtimeNote: RealtimeNote;
 
-  const username1 = 'mock1';
-  const username2 = 'mock2';
-  const username3 = 'mock3';
-  const username4 = 'mock4';
+  const clientLoggedIn1Username = 'logged.in1';
+  const clientLoggedIn2Username = 'logged.in2';
+  const clientNotReadyUsername = 'not.ready';
+
+  const guestDisplayName = 'Virtuous Mockingbird';
+
+  function spyOnSendMessage(connection: RealtimeConnection): jest.SpyInstance {
+    return jest.spyOn(connection.getTransporter(), 'sendMessage');
+  }
 
   beforeEach(() => {
     realtimeNote = new RealtimeNote(
       Mock.of<Note>({ id: 9876 }),
       'mockedContent',
     );
-    client1 = new MockConnectionBuilder(realtimeNote)
-      .withRealtimeUserState()
-      .withUsername(username1)
+    clientLoggedIn1 = new MockConnectionBuilder(realtimeNote)
+      .withRealtimeUserStatus()
+      .withLoggedInUser(clientLoggedIn1Username)
       .build();
-    client2 = new MockConnectionBuilder(realtimeNote)
-      .withRealtimeUserState()
-      .withUsername(username2)
+    clientLoggedIn2 = new MockConnectionBuilder(realtimeNote)
+      .withRealtimeUserStatus()
+      .withLoggedInUser(clientLoggedIn2Username)
       .build();
-    client3 = new MockConnectionBuilder(realtimeNote)
-      .withRealtimeUserState()
-      .withUsername(username3)
+    clientGuest = new MockConnectionBuilder(realtimeNote)
+      .withRealtimeUserStatus()
+      .withGuestUser(guestDisplayName)
       .build();
-    client4 = new MockConnectionBuilder(realtimeNote)
-      .withRealtimeUserState()
-      .withUsername(username4)
+    clientNotReady = new MockConnectionBuilder(realtimeNote)
+      .withRealtimeUserStatus()
+      .withLoggedInUser(clientNotReadyUsername)
       .build();
 
-    sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
-    sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
-    sendMessage3Spy = jest.spyOn(client3.getTransporter(), 'sendMessage');
-    sendMessage4Spy = jest.spyOn(client4.getTransporter(), 'sendMessage');
+    clientLoggedIn1SendMessageSpy = spyOnSendMessage(clientLoggedIn1);
+    clientLoggedIn2SendMessageSpy = spyOnSendMessage(clientLoggedIn2);
+    clientGuestSendMessageSpy = spyOnSendMessage(clientGuest);
+    clientNotReadySendMessageSpy = spyOnSendMessage(clientNotReady);
 
-    client1.getTransporter().sendReady();
-    client2.getTransporter().sendReady();
-    client3.getTransporter().sendReady();
-    //client 4 shouldn't be ready on purpose
+    clientLoggedIn1.getTransporter().sendReady();
+    clientLoggedIn2.getTransporter().sendReady();
+    clientGuest.getTransporter().sendReady();
   });
 
   it('can answer a state request', () => {
-    expect(sendMessage1Spy).toHaveBeenCalledTimes(0);
-    expect(sendMessage2Spy).toHaveBeenCalledTimes(0);
-    expect(sendMessage3Spy).toHaveBeenCalledTimes(0);
-    expect(sendMessage4Spy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
 
-    client1.getTransporter().emit(MessageType.REALTIME_USER_STATE_REQUEST);
+    clientLoggedIn1
+      .getTransporter()
+      .emit(MessageType.REALTIME_USER_STATE_REQUEST);
 
     const expectedMessage1: Message<MessageType.REALTIME_USER_STATE_SET> = {
       type: MessageType.REALTIME_USER_STATE_SET,
       payload: {
         ownUser: {
           styleIndex: 0,
-          displayName: username1,
+          displayName: clientLoggedIn1Username,
         },
         users: [
           {
@@ -90,8 +96,8 @@ describe('realtime user status adapter', () => {
               to: 0,
             },
             styleIndex: 1,
-            username: username2,
-            displayName: username2,
+            username: clientLoggedIn2Username,
+            displayName: clientLoggedIn2Username,
           },
           {
             active: true,
@@ -100,41 +106,46 @@ describe('realtime user status adapter', () => {
               to: 0,
             },
             styleIndex: 2,
-            username: username3,
-            displayName: username3,
+            username: null,
+            displayName: guestDisplayName,
           },
         ],
       },
     };
-    expect(sendMessage1Spy).toHaveBeenNthCalledWith(1, expectedMessage1);
-    expect(sendMessage2Spy).toHaveBeenCalledTimes(0);
-    expect(sendMessage3Spy).toHaveBeenCalledTimes(0);
-    expect(sendMessage4Spy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedMessage1,
+    );
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
   });
 
   it('can save an cursor update', () => {
-    expect(sendMessage1Spy).toHaveBeenCalledTimes(0);
-    expect(sendMessage2Spy).toHaveBeenCalledTimes(0);
-    expect(sendMessage3Spy).toHaveBeenCalledTimes(0);
-    expect(sendMessage4Spy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
 
     const newFrom = Math.floor(Math.random() * 100);
     const newTo = Math.floor(Math.random() * 100);
 
-    client1.getTransporter().emit(MessageType.REALTIME_USER_SINGLE_UPDATE, {
-      type: MessageType.REALTIME_USER_SINGLE_UPDATE,
-      payload: {
-        from: newFrom,
-        to: newTo,
-      },
-    });
+    clientLoggedIn1
+      .getTransporter()
+      .emit(MessageType.REALTIME_USER_SINGLE_UPDATE, {
+        type: MessageType.REALTIME_USER_SINGLE_UPDATE,
+        payload: {
+          from: newFrom,
+          to: newTo,
+        },
+      });
 
     const expectedMessage2: Message<MessageType.REALTIME_USER_STATE_SET> = {
       type: MessageType.REALTIME_USER_STATE_SET,
       payload: {
         ownUser: {
           styleIndex: 1,
-          displayName: username2,
+          displayName: clientLoggedIn2Username,
         },
         users: [
           {
@@ -144,8 +155,8 @@ describe('realtime user status adapter', () => {
               to: newTo,
             },
             styleIndex: 0,
-            username: username1,
-            displayName: username1,
+            username: clientLoggedIn1Username,
+            displayName: clientLoggedIn1Username,
           },
           {
             active: true,
@@ -154,8 +165,8 @@ describe('realtime user status adapter', () => {
               to: 0,
             },
             styleIndex: 2,
-            username: username3,
-            displayName: username3,
+            username: null,
+            displayName: guestDisplayName,
           },
         ],
       },
@@ -166,7 +177,7 @@ describe('realtime user status adapter', () => {
       payload: {
         ownUser: {
           styleIndex: 2,
-          displayName: username3,
+          displayName: guestDisplayName,
         },
         users: [
           {
@@ -176,8 +187,8 @@ describe('realtime user status adapter', () => {
               to: newTo,
             },
             styleIndex: 0,
-            username: username1,
-            displayName: username1,
+            username: clientLoggedIn1Username,
+            displayName: clientLoggedIn1Username,
           },
           {
             active: true,
@@ -186,33 +197,39 @@ describe('realtime user status adapter', () => {
               to: 0,
             },
             styleIndex: 1,
-            username: username2,
-            displayName: username2,
+            username: clientLoggedIn2Username,
+            displayName: clientLoggedIn2Username,
           },
         ],
       },
     };
 
-    expect(sendMessage1Spy).toHaveBeenCalledTimes(0);
-    expect(sendMessage2Spy).toHaveBeenNthCalledWith(1, expectedMessage2);
-    expect(sendMessage3Spy).toHaveBeenNthCalledWith(1, expectedMessage3);
-    expect(sendMessage4Spy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedMessage2,
+    );
+    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedMessage3,
+    );
+    expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
   });
 
   it('will inform other clients about removed client', () => {
-    expect(sendMessage1Spy).toHaveBeenCalledTimes(0);
-    expect(sendMessage2Spy).toHaveBeenCalledTimes(0);
-    expect(sendMessage3Spy).toHaveBeenCalledTimes(0);
-    expect(sendMessage4Spy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
 
-    client2.getTransporter().disconnect();
+    clientLoggedIn2.getTransporter().disconnect();
 
     const expectedMessage1: Message<MessageType.REALTIME_USER_STATE_SET> = {
       type: MessageType.REALTIME_USER_STATE_SET,
       payload: {
         ownUser: {
           styleIndex: 0,
-          displayName: username1,
+          displayName: clientLoggedIn1Username,
         },
         users: [
           {
@@ -222,8 +239,8 @@ describe('realtime user status adapter', () => {
               to: 0,
             },
             styleIndex: 2,
-            username: username3,
-            displayName: username3,
+            username: null,
+            displayName: guestDisplayName,
           },
         ],
       },
@@ -234,7 +251,7 @@ describe('realtime user status adapter', () => {
       payload: {
         ownUser: {
           styleIndex: 2,
-          displayName: username3,
+          displayName: guestDisplayName,
         },
         users: [
           {
@@ -244,16 +261,22 @@ describe('realtime user status adapter', () => {
               to: 0,
             },
             styleIndex: 0,
-            username: username1,
-            displayName: username1,
+            username: clientLoggedIn1Username,
+            displayName: clientLoggedIn1Username,
           },
         ],
       },
     };
 
-    expect(sendMessage1Spy).toHaveBeenNthCalledWith(1, expectedMessage1);
-    expect(sendMessage2Spy).toHaveBeenCalledTimes(0);
-    expect(sendMessage3Spy).toHaveBeenNthCalledWith(1, expectedMessage3);
-    expect(sendMessage4Spy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedMessage1,
+    );
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedMessage3,
+    );
+    expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
   });
 });
