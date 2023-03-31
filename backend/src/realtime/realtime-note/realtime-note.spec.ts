@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -29,7 +29,7 @@ describe('realtime note', () => {
 
   it('can connect and disconnect clients', () => {
     const sut = new RealtimeNote(mockedNote, 'nothing');
-    const client1 = new MockConnectionBuilder(sut).build();
+    const client1 = new MockConnectionBuilder(sut).withLoggedInUser().build();
     expect(sut.getConnections()).toStrictEqual([client1]);
     expect(sut.hasConnections()).toBeTruthy();
     sut.removeClient(client1);
@@ -70,8 +70,8 @@ describe('realtime note', () => {
   it('announcePermissionChange to all clients', () => {
     const sut = new RealtimeNote(mockedNote, 'nothing');
 
-    const client1 = new MockConnectionBuilder(sut).build();
-    const client2 = new MockConnectionBuilder(sut).build();
+    const client1 = new MockConnectionBuilder(sut).withLoggedInUser().build();
+    const client2 = new MockConnectionBuilder(sut).withLoggedInUser().build();
 
     const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
     const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
@@ -88,8 +88,8 @@ describe('realtime note', () => {
 
   it('announceNoteDeletion to all clients', () => {
     const sut = new RealtimeNote(mockedNote, 'nothing');
-    const client1 = new MockConnectionBuilder(sut).build();
-    const client2 = new MockConnectionBuilder(sut).build();
+    const client1 = new MockConnectionBuilder(sut).withLoggedInUser().build();
+    const client2 = new MockConnectionBuilder(sut).withLoggedInUser().build();
 
     const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
     const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
