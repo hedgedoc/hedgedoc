@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -41,6 +41,11 @@ export const MarkdownBody = createParamDecorator(
   },
   [
     (target, key): void => {
+      if (key === undefined) {
+        throw new Error(
+          `Could not enhance param decorator for target ${target.toString()} because key is undefined`,
+        );
+      }
       const ownPropertyDescriptor = Object.getOwnPropertyDescriptor(
         target,
         key,
