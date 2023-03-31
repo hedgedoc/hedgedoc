@@ -35,7 +35,7 @@
     "@nestjs/platform-express": "9.3.12",
     "@nestjs/platform-ws": "9.3.12",
     "@nestjs/schedule": "2.2.0",
-    "@nestjs/swagger": "6.2.1",
+    "@nestjs/swagger": "6.3.0",
     "@nestjs/typeorm": "9.0.1",
     "@nestjs/websockets": "9.3.12",
     "@types/bcrypt": "5.0.0",
@@ -78,7 +78,7 @@
   },
   "devDependencies": {
     "@nestjs/cli": "9.3.0",
-    "@nestjs/schematics": "9.0.4",
+    "@nestjs/schematics": "9.1.0",
     "@nestjs/testing": "9.3.12",
     "@trivago/prettier-plugin-sort-imports": "4.1.1",
     "@tsconfig/node18": "1.0.1",
