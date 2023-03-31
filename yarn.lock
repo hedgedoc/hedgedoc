@@ -2231,8 +2231,8 @@ __metadata:
     "@nestjs/platform-express": 9.3.12
     "@nestjs/platform-ws": 9.3.12
     "@nestjs/schedule": 2.2.0
-    "@nestjs/schematics": 9.0.4
-    "@nestjs/swagger": 6.2.1
+    "@nestjs/schematics": 9.1.0
+    "@nestjs/swagger": 6.3.0
     "@nestjs/testing": 9.3.12
     "@nestjs/typeorm": 9.0.1
     "@nestjs/websockets": 9.3.12
@@ -3221,7 +3221,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/schematics@npm:9.0.4, @nestjs/schematics@npm:^9.0.4":
+"@nestjs/schematics@npm:9.1.0":
+  version: 9.1.0
+  resolution: "@nestjs/schematics@npm:9.1.0"
+  dependencies:
+    "@angular-devkit/core": 15.2.4
+    "@angular-devkit/schematics": 15.2.4
+    jsonc-parser: 3.2.0
+    pluralize: 8.0.0
+  peerDependencies:
+    typescript: ">=4.3.5"
+  checksum: aaf4ee87ce3e71d0b5707722563cd536e94db5634f208afdf84a64dfd3651085597ab20e5cc2102f93d2e591b475d82d5778c5fba4f6d23574fefc817992e960
+  languageName: node
+  linkType: hard
+
+"@nestjs/schematics@npm:^9.0.4":
   version: 9.0.4
   resolution: "@nestjs/schematics@npm:9.0.4"
   dependencies:
@@ -3236,15 +3250,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/swagger@npm:6.2.1":
-  version: 6.2.1
-  resolution: "@nestjs/swagger@npm:6.2.1"
+"@nestjs/swagger@npm:6.3.0":
+  version: 6.3.0
+  resolution: "@nestjs/swagger@npm:6.3.0"
   dependencies:
     "@nestjs/mapped-types": 1.2.2
     js-yaml: 4.1.0
     lodash: 4.17.21
     path-to-regexp: 3.2.0
-    swagger-ui-dist: 4.15.5
+    swagger-ui-dist: 4.18.2
   peerDependencies:
     "@fastify/static": ^6.0.0
     "@nestjs/common": ^9.0.0
@@ -3259,7 +3273,7 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: 505d39dcfac451e7827ca1cb6323ea75d5c6b43b632a6485277fd8fa7e3e2345b9adfa96dd3633a31a1d8b8a89f1c4dd0d3c80a7a7a5347216306c5171a9e128
+  checksum: 33aa9fb622b79b99d25fce1838011d41f519a5bd108e76e3952e5c8b417d21a0d635294978326ba1737824500b0178af7f1054a1d3f16df1c73804b9ae5dff41
   languageName: node
   linkType: hard
 
@@ -17276,10 +17290,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swagger-ui-dist@npm:4.15.5":
-  version: 4.15.5
-  resolution: "swagger-ui-dist@npm:4.15.5"
-  checksum: b032ecc1245e10729d0fb0fc681fc61115a78925b9410fe0fa5fe025a0a3e7d1505dacc3b5d7d2355835d118162843ad9a754a810010a4bbf65ef71466e40512
+"swagger-ui-dist@npm:4.18.2":
+  version: 4.18.2
+  resolution: "swagger-ui-dist@npm:4.18.2"
+  checksum: 3d3e801104af53a58662303aa82df81510cece64a28422e6de02b5d22eb5f6a354f3c3ab80d12f72442e0ec8cbae9122767d7f8476c4d4a21d5353163bc659a7
   languageName: node
   linkType: hard
 
