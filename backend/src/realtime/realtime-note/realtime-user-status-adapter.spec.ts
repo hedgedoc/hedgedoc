@@ -279,4 +279,223 @@ describe('realtime user status adapter', () => {
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
   });
+
+  it('will inform other clients about inactivity and reactivity', () => {
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+
+    clientLoggedIn1
+      .getTransporter()
+      .emit(MessageType.REALTIME_USER_SET_ACTIVITY, {
+        type: MessageType.REALTIME_USER_SET_ACTIVITY,
+        payload: {
+          active: false,
+        },
+      });
+
+    const expectedInactivityMessage2: Message<MessageType.REALTIME_USER_STATE_SET> =
+      {
+        type: MessageType.REALTIME_USER_STATE_SET,
+        payload: {
+          ownUser: {
+            styleIndex: 1,
+            displayName: clientLoggedIn2Username,
+          },
+          users: [
+            {
+              active: false,
+              cursor: {
+                from: 0,
+                to: 0,
+              },
+              styleIndex: 0,
+              username: clientLoggedIn1Username,
+              displayName: clientLoggedIn1Username,
+            },
+            {
+              active: true,
+              cursor: {
+                from: 0,
+                to: 0,
+              },
+              styleIndex: 2,
+              username: null,
+              displayName: 'Virtuous Mockingbird',
+            },
+          ],
+        },
+      };
+
+    const expectedInactivityMessage3: Message<MessageType.REALTIME_USER_STATE_SET> =
+      {
+        type: MessageType.REALTIME_USER_STATE_SET,
+        payload: {
+          ownUser: {
+            styleIndex: 2,
+            displayName: 'Virtuous Mockingbird',
+          },
+          users: [
+            {
+              active: false,
+              cursor: {
+                from: 0,
+                to: 0,
+              },
+              styleIndex: 0,
+              username: clientLoggedIn1Username,
+              displayName: clientLoggedIn1Username,
+            },
+            {
+              active: true,
+              cursor: {
+                from: 0,
+                to: 0,
+              },
+              styleIndex: 1,
+              username: clientLoggedIn2Username,
+              displayName: clientLoggedIn2Username,
+            },
+          ],
+        },
+      };
+
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedInactivityMessage2,
+    );
+    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedInactivityMessage3,
+    );
+    expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+
+    clientLoggedIn1
+      .getTransporter()
+      .emit(MessageType.REALTIME_USER_SET_ACTIVITY, {
+        type: MessageType.REALTIME_USER_SET_ACTIVITY,
+        payload: {
+          active: false,
+        },
+      });
+
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedInactivityMessage2,
+    );
+    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedInactivityMessage3,
+    );
+    expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+
+    clientLoggedIn1
+      .getTransporter()
+      .emit(MessageType.REALTIME_USER_SET_ACTIVITY, {
+        type: MessageType.REALTIME_USER_SET_ACTIVITY,
+        payload: {
+          active: true,
+        },
+      });
+
+    const expectedReactivityMessage2: Message<MessageType.REALTIME_USER_STATE_SET> =
+      {
+        type: MessageType.REALTIME_USER_STATE_SET,
+        payload: {
+          ownUser: {
+            styleIndex: 1,
+            displayName: clientLoggedIn2Username,
+          },
+          users: [
+            {
+              active: true,
+              cursor: {
+                from: 0,
+                to: 0,
+              },
+              styleIndex: 0,
+              username: clientLoggedIn1Username,
+              displayName: clientLoggedIn1Username,
+            },
+            {
+              active: true,
+              cursor: {
+                from: 0,
+                to: 0,
+              },
+              styleIndex: 2,
+              username: null,
+              displayName: 'Virtuous Mockingbird',
+            },
+          ],
+        },
+      };
+
+    const expectedReactivityMessage3: Message<MessageType.REALTIME_USER_STATE_SET> =
+      {
+        type: MessageType.REALTIME_USER_STATE_SET,
+        payload: {
+          ownUser: {
+            styleIndex: 2,
+            displayName: 'Virtuous Mockingbird',
+          },
+          users: [
+            {
+              active: true,
+              cursor: {
+                from: 0,
+                to: 0,
+              },
+              styleIndex: 0,
+              username: clientLoggedIn1Username,
+              displayName: clientLoggedIn1Username,
+            },
+            {
+              active: true,
+              cursor: {
+                from: 0,
+                to: 0,
+              },
+              styleIndex: 1,
+              username: clientLoggedIn2Username,
+              displayName: clientLoggedIn2Username,
+            },
+          ],
+        },
+      };
+
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedReactivityMessage2,
+    );
+    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedReactivityMessage3,
+    );
+    expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+
+    clientLoggedIn1
+      .getTransporter()
+      .emit(MessageType.REALTIME_USER_SET_ACTIVITY, {
+        type: MessageType.REALTIME_USER_SET_ACTIVITY,
+        payload: {
+          active: true,
+        },
+      });
+
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedReactivityMessage2,
+    );
+    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedReactivityMessage3,
+    );
+    expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
+  });
 });
