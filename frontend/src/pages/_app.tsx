@@ -13,9 +13,12 @@ import { BaseHead } from '../components/layout/base-head'
 import { UiNotificationBoundary } from '../components/notifications/ui-notification-boundary'
 import { StoreProvider } from '../redux/store-provider'
 import { BaseUrlFromEnvExtractor } from '../utils/base-url-from-env-extractor'
+import { configureLuxon } from '../utils/configure-luxon'
 import { ExpectedOriginBoundary } from '../utils/uri-origin-boundary'
 import type { AppInitialProps, AppProps } from 'next/app'
 import React from 'react'
+
+configureLuxon()
 
 interface AppPageProps {
   baseUrls: BaseUrls | undefined
