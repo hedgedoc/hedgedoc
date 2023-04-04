@@ -2418,7 +2418,7 @@ __metadata:
     markdown-it-regex: 0.2.0
     markdown-it-sub: 1.0.0
     markdown-it-sup: 1.0.0
-    mermaid: 10.0.2
+    mermaid: 10.1.0
     next: 13.2.4
     prettier: 2.8.7
     react: 18.2.0
@@ -2836,6 +2836,18 @@ __metadata:
   version: 3.4.0
   resolution: "@juggle/resize-observer@npm:3.4.0"
   checksum: 2505028c05cc2e17639fcad06218b1c4b60f932a4ebb4b41ab546ef8c157031ae377e3f560903801f6d01706dbefd4943b6c4704bf19ed86dfa1c62f1473a570
+  languageName: node
+  linkType: hard
+
+"@khanacademy/simple-markdown@npm:^0.8.6":
+  version: 0.8.6
+  resolution: "@khanacademy/simple-markdown@npm:0.8.6"
+  dependencies:
+    "@types/react": ">=16.0.0"
+  peerDependencies:
+    react: 16.14.0
+    react-dom: 16.14.0
+  checksum: 19f4c79f6648813f9fba922fc8d0e3175eaafe345b8647fe835477528ed13e680c150a4e1a687fa208972ebceaea9dff6066c83de753eb26a8eaec769efe5c07
   languageName: node
   linkType: hard
 
@@ -8179,13 +8191,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dagre-d3-es@npm:7.0.9":
-  version: 7.0.9
-  resolution: "dagre-d3-es@npm:7.0.9"
+"dagre-d3-es@npm:7.0.10":
+  version: 7.0.10
+  resolution: "dagre-d3-es@npm:7.0.10"
   dependencies:
     d3: ^7.8.2
     lodash-es: ^4.17.21
-  checksum: 5f24ad9558e84066e70cfa6979320d93079979ac8b0a3b033e5330742aeeba74e205f66794ab6e0a82354b061a4e29c10a291590d7b2cf82b5780fab5443f5ba
+  checksum: 25194e80dfad48db0dc2e0a273a7c9fcbfdc4cf993b219eaa1e0e0ce0cbb8c63be42fa2aa0c5f9bf9b324c34b8b2e300bb2a1606d5ae35c2de00f9c4ac317d8e
   languageName: node
   linkType: hard
 
@@ -8575,10 +8587,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:2.4.3":
-  version: 2.4.3
-  resolution: "dompurify@npm:2.4.3"
-  checksum: b440981f2a38cada2085759cc3d1e2f94571afc34343d011a8a6aa1ad91ae6abf651adbfa4994b0e2283f0ce81f7891cdb04b67d0b234c8d190cb70e9691f026
+"dompurify@npm:2.4.5":
+  version: 2.4.5
+  resolution: "dompurify@npm:2.4.5"
+  checksum: d6d3c3b320f15cdb5b26aa1902c3275a3ab2c3705a9df4420bb94691d7c4df67959ec7b91e486c308320791b0ee000456f042734c45d76721e61c2768eac706e
   languageName: node
   linkType: hard
 
@@ -13063,18 +13075,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mermaid@npm:10.0.2":
-  version: 10.0.2
-  resolution: "mermaid@npm:10.0.2"
+"mermaid@npm:10.1.0":
+  version: 10.1.0
+  resolution: "mermaid@npm:10.1.0"
   dependencies:
     "@braintree/sanitize-url": ^6.0.0
+    "@khanacademy/simple-markdown": ^0.8.6
     cytoscape: ^3.23.0
     cytoscape-cose-bilkent: ^4.1.0
     cytoscape-fcose: ^2.1.0
     d3: ^7.4.0
-    dagre-d3-es: 7.0.9
+    dagre-d3-es: 7.0.10
     dayjs: ^1.11.7
-    dompurify: 2.4.3
+    dompurify: 2.4.5
     elkjs: ^0.8.2
     khroma: ^2.0.0
     lodash-es: ^4.17.21
@@ -13083,7 +13096,7 @@ __metadata:
     ts-dedent: ^2.2.0
     uuid: ^9.0.0
     web-worker: ^1.2.0
-  checksum: 930e8509ba928b3598dcd7f7512e4d60c0d252a95fa7bd4f5c2cdf055409febc75d71909419151301f64012e699dd964419c50200808aff1770cc4014ece82c6
+  checksum: d38c72aee917948491e782aac885ac0c71eb5f51f904a6d4bf1ceeb97d502b77da41524ee04de6cd1b0f9b645ad8853319f5ac60a7cce248de2484c2fd616b8e
   languageName: node
   linkType: hard
 
