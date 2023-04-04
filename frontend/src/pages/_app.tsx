@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,14 +14,16 @@ import { UiNotificationBoundary } from '../components/notifications/ui-notificat
 import { StoreProvider } from '../redux/store-provider'
 import { BaseUrlFromEnvExtractor } from '../utils/base-url-from-env-extractor'
 import { configureLuxon } from '../utils/configure-luxon'
-import { ExpectedOriginBoundary } from '../utils/uri-origin-boundary'
-import type { AppInitialProps, AppProps } from 'next/app'
+import { determineCurrentOrigin } from '../utils/determine-current-origin'
+import { ExpectedOriginBoundary } from '../utils/expected-origin-boundary'
+import type { AppContext, AppInitialProps, AppProps } from 'next/app'
 import React from 'react'
 
 configureLuxon()
 
 interface AppPageProps {
   baseUrls: BaseUrls | undefined
+  currentOrigin: string | undefined
 }
 
 /**
@@ -31,8 +33,8 @@ interface AppPageProps {
 function HedgeDocApp({ Component, pageProps }: AppProps<AppPageProps>) {
   return (
     <BaseUrlContextProvider baseUrls={pageProps.baseUrls}>
-      <StoreProvider>
-        <ExpectedOriginBoundary>
+      <ExpectedOriginBoundary currentOrigin={pageProps.currentOrigin}>
+        <StoreProvider>
           <BaseHead />
           <ApplicationLoader>
             <ErrorBoundary>
@@ -41,20 +43,22 @@ function HedgeDocApp({ Component, pageProps }: AppProps<AppPageProps>) {
               </UiNotificationBoundary>
             </ErrorBoundary>
           </ApplicationLoader>
-        </ExpectedOriginBoundary>
-      </StoreProvider>
+        </StoreProvider>
+      </ExpectedOriginBoundary>
     </BaseUrlContextProvider>
   )
 }
 
-const baseUrlFromEnvExtractor: BaseUrlFromEnvExtractor = new BaseUrlFromEnvExtractor()
+const baseUrlFromEnvExtractor = new BaseUrlFromEnvExtractor()
 
-HedgeDocApp.getInitialProps = (): AppInitialProps<AppPageProps> => {
+HedgeDocApp.getInitialProps = ({ ctx }: AppContext): AppInitialProps<AppPageProps> => {
   const baseUrls = baseUrlFromEnvExtractor.extractBaseUrls().orElse(undefined)
+  const currentOrigin = determineCurrentOrigin(ctx)
 
   return {
     pageProps: {
-      baseUrls
+      baseUrls,
+      currentOrigin
     }
   }
 }
