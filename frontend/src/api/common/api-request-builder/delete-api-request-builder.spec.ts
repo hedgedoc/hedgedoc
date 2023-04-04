@@ -18,6 +18,12 @@ describe('DeleteApiRequestBuilder', () => {
   afterAll(() => {
     global.fetch = originalFetch
   })
+
+  it('uses the custom base url as prefix', async () => {
+    expectFetch('https://example.org/api/private/test', 200, { method: 'DELETE' })
+    await new DeleteApiRequestBuilder<string>('test', 'https://example.org/').sendRequest()
+  })
+
   describe('sendRequest without body', () => {
     it('without headers', async () => {
       expectFetch('api/private/test', 204, { method: 'DELETE' })

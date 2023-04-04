@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -23,10 +23,11 @@ export abstract class ApiRequestBuilder<ResponseType> {
   /**
    * Initializes a new API call with the default request options.
    *
-   * @param endpoint The target endpoint without a leading slash.
+   * @param endpoint The target endpoint without a leading slash
+   * @param baseUrl An optional base URL that is used for the endpoint
    */
-  constructor(endpoint: string) {
-    this.targetUrl = `api/private/${endpoint}`
+  constructor(endpoint: string, baseUrl?: string) {
+    this.targetUrl = `${baseUrl ?? ''}api/private/${endpoint}`
   }
 
   protected async sendRequestAndVerifyResponse(httpMethod: RequestInit['method']): Promise<ApiResponse<ResponseType>> {

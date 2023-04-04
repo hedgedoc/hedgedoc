@@ -19,6 +19,11 @@ describe('PostApiRequestBuilder', () => {
     global.fetch = originalFetch
   })
 
+  it('uses the custom base url as prefix', async () => {
+    expectFetch('https://example.org/api/private/test', 200, { method: 'POST' })
+    await new PostApiRequestBuilder<string, undefined>('test', 'https://example.org/').sendRequest()
+  })
+
   describe('sendRequest without body', () => {
     it('without headers', async () => {
       expectFetch('api/private/test', 201, { method: 'POST' })
