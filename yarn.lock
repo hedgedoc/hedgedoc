@@ -2344,16 +2344,16 @@ __metadata:
     "@testing-library/user-event": 14.4.3
     "@types/d3-graphviz": 2.6.7
     "@types/diff": 5.0.3
-    "@types/dompurify": 3.0.0
+    "@types/dompurify": 3.0.1
     "@types/jest": 29.5.0
     "@types/js-yaml": 4.0.5
     "@types/katex": 0.16.0
-    "@types/luxon": 3.2.0
+    "@types/luxon": 3.2.2
     "@types/markdown-it": 12.2.3
     "@types/markdown-it-container": 2.0.5
     "@types/markdown-it-plantuml": 1.4.1
     "@types/node": 18.15.11
-    "@types/react": 18.0.32
+    "@types/react": 18.0.33
     "@types/react-dom": 18.0.11
     "@types/sass": 1.43.1
     "@types/testing-library__jest-dom": 5.14.5
@@ -4356,12 +4356,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/dompurify@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@types/dompurify@npm:3.0.0"
+"@types/dompurify@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@types/dompurify@npm:3.0.1"
   dependencies:
+    "@types/jsdom": "*"
     "@types/trusted-types": "*"
-  checksum: a0fdd7a1df1173da0d33bc47f24d2bea09440c8126b19d1d0d01c356d444905facb45a0ae2c6c216c1af9a7f07778d90535791d148228c84e53e942a3a568350
+  checksum: d4bf881845ac1f4619622b62945f0fda876e6c09d4c958bc7f3a84c4307f7258b9a15e334ae08c7ac5ecfcd0656415328df29d3fb737e9bce2849feaf180c6ab
   languageName: node
   linkType: hard
 
@@ -4536,6 +4537,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/jsdom@npm:*":
+  version: 21.1.1
+  resolution: "@types/jsdom@npm:21.1.1"
+  dependencies:
+    "@types/node": "*"
+    "@types/tough-cookie": "*"
+    parse5: ^7.0.0
+  checksum: 7450d6e23aa31b837a1682f0e59b06838aacca85c9d030035f40e21d559169c773aee5cee9244f23c3004b78f7064f0c540ceb808d2f187deb3140f2b0449dee
+  languageName: node
+  linkType: hard
+
 "@types/jsdom@npm:^20.0.0":
   version: 20.0.1
   resolution: "@types/jsdom@npm:20.0.1"
@@ -4616,10 +4628,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/luxon@npm:*, @types/luxon@npm:3.2.0":
+"@types/luxon@npm:*":
   version: 3.2.0
   resolution: "@types/luxon@npm:3.2.0"
   checksum: 051bfbf841c6ce98728df6538342ce4aaddfcf0ec6e8b473e0195dcfc3ba6b1fe4b3ce17f2ba6d25344f41cb70032c1debe96da9e384e5f6e639665c1e6d368c
+  languageName: node
+  linkType: hard
+
+"@types/luxon@npm:3.2.2":
+  version: 3.2.2
+  resolution: "@types/luxon@npm:3.2.2"
+  checksum: aa9955b85091bd5e1d7128e9fae4cd6d0b3ba0e17f887cde559c848a6ab2f726024c3514e30a3b86648f7bf031376bca6e957e17fe4f0578af2ba084f98967bd
   languageName: node
   linkType: hard
 
@@ -4812,14 +4831,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.0.32":
-  version: 18.0.32
-  resolution: "@types/react@npm:18.0.32"
+"@types/react@npm:18.0.33":
+  version: 18.0.33
+  resolution: "@types/react@npm:18.0.33"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: c8dbce83c455e520e75f3649988f46100e3a3c0bf7241281ea5bd9067a0368290f0d7c6102e12e6ec9d649134b29a3ef4c421f376ec5aa06ed78cbdd8c144b4c
+  checksum: 4fbd2b2b6a26378bdfde121081a6406ec2d39e4ba87ea5f6897ab7bb2198713165e6fd703ad4ed7ba1d4f23ef54a4c9f108f3105c7ed8e136411ee6bdebc5669
   languageName: node
   linkType: hard
 
