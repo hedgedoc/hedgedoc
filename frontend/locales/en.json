@@ -45,6 +45,7 @@
       "success": "Note has been created."
     },
     "error": {
+      "redirecting": "An error occurred while redirecting you to the primary address of this note",
       "notFound": {
         "title": "Note not found",
         "description": "The requested note doesn't exist."
