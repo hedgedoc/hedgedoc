@@ -1,10 +1,11 @@
 /*
- SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
-
- SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { AuthProviderWithCustomName } from '../api/config/types'
 import { AuthProviderType } from '../api/config/types'
+import { useFrontendConfig } from '../components/common/frontend-config-context/use-frontend-config'
 import { RedirectBack } from '../components/common/redirect-back'
 import { ShowIf } from '../components/common/show-if/show-if'
 import { LandingLayout } from '../components/landing-layout/landing-layout'
@@ -23,7 +24,7 @@ import { Trans, useTranslation } from 'react-i18next'
  */
 export const LoginPage: React.FC = () => {
   useTranslation()
-  const authProviders = useApplicationState((state) => state.config.authProviders)
+  const authProviders = useFrontendConfig().authProviders
   const userLoggedIn = useApplicationState((state) => !!state.user)
 
   const ldapProviders = useMemo(() => {

@@ -1,8 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useFrontendConfig } from '../../components/common/frontend-config-context/use-frontend-config'
 import { useApplicationState } from './use-application-state'
 import { useMemo } from 'react'
 
@@ -12,7 +13,7 @@ import { useMemo } from 'react'
  * @return The array of markdown content lines
  */
 export const useTrimmedNoteMarkdownContentWithoutFrontmatter = (): string[] => {
-  const maxLength = useApplicationState((state) => state.config.maxDocumentLength)
+  const maxLength = useFrontendConfig().maxDocumentLength
   const markdownContent = useApplicationState((state) => ({
     lines: state.noteDetails.markdownContent.lines,
     content: state.noteDetails.markdownContent.plain

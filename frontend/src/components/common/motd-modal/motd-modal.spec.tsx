@@ -22,7 +22,7 @@ jest.mock('../../../hooks/common/use-base-url')
 
 describe('motd modal', () => {
   beforeAll(async () => {
-    jest.spyOn(UseBaseUrlModule, 'useBaseUrl').mockImplementation(() => 'https://example.org')
+    jest.spyOn(UseBaseUrlModule, 'useBaseUrl').mockImplementation(() => new URL('https://example.org'))
     await mockI18n()
   })
 

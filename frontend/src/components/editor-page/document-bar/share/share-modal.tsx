@@ -4,11 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import { useBaseUrl } from '../../../../hooks/common/use-base-url'
-import { CopyableField } from '../../../common/copyable/copyable-field/copyable-field'
 import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { ShowIf } from '../../../common/show-if/show-if'
+import { LinkType, NoteUrlField } from './note-url-field'
 import { NoteType } from '@hedgedoc/commons'
 import React from 'react'
 import { Modal } from 'react-bootstrap'
@@ -23,21 +22,19 @@ import { Trans, useTranslation } from 'react-i18next'
 export const ShareModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   useTranslation()
   const noteFrontmatter = useApplicationState((state) => state.noteDetails.frontmatter)
-  const baseUrl = useBaseUrl()
-  const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
 
   return (
     <CommonModal show={show} onHide={onHide} showCloseButton={true} titleI18nKey={'editor.modal.shareLink.title'}>
       <Modal.Body>
         <Trans i18nKey={'editor.modal.shareLink.editorDescription'} />
-        <CopyableField content={`${baseUrl}n/${noteIdentifier}`} shareOriginUrl={`${baseUrl}n/${noteIdentifier}`} />
+        <NoteUrlField type={LinkType.EDITOR} />
         <ShowIf condition={noteFrontmatter.type === NoteType.SLIDE}>
           <Trans i18nKey={'editor.modal.shareLink.slidesDescription'} />
-          <CopyableField content={`${baseUrl}p/${noteIdentifier}`} shareOriginUrl={`${baseUrl}p/${noteIdentifier}`} />
+          <NoteUrlField type={LinkType.SLIDESHOW} />
         </ShowIf>
         <ShowIf condition={noteFrontmatter.type === NoteType.DOCUMENT}>
           <Trans i18nKey={'editor.modal.shareLink.viewOnlyDescription'} />
-          <CopyableField content={`${baseUrl}s/${noteIdentifier}`} shareOriginUrl={`${baseUrl}s/${noteIdentifier}`} />
+          <NoteUrlField type={LinkType.DOCUMENT} />
         </ShowIf>
       </Modal.Body>
     </CommonModal>

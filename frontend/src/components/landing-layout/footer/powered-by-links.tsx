@@ -1,15 +1,15 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../hooks/common/use-application-state'
 import links from '../../../links.json'
+import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
 import { ExternalLink } from '../../common/links/external-link'
 import { TranslatedExternalLink } from '../../common/links/translated-external-link'
 import { TranslatedInternalLink } from '../../common/links/translated-internal-link'
 import { VersionInfoLink } from './version-info/version-info-link'
-import React, { Fragment } from 'react'
+import React, { Fragment, useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
@@ -18,8 +18,11 @@ import { Trans, useTranslation } from 'react-i18next'
 export const PoweredByLinks: React.FC = () => {
   useTranslation()
 
-  const specialUrls: [string, string][] = useApplicationState((state) =>
-    Object.entries(state.config.specialUrls).map(([i18nkey, url]) => [i18nkey, String(url)])
+  const rawSpecialUrls = useFrontendConfig().specialUrls
+
+  const specialUrls = useMemo(
+    () => Object.entries(rawSpecialUrls).map(([i18nkey, url]) => [i18nkey, String(url)]),
+    [rawSpecialUrls]
   )
 
   return (

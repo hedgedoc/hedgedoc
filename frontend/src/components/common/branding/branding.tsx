@@ -1,9 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { useFrontendConfig } from '../frontend-config-context/use-frontend-config'
 import { ShowIf } from '../show-if/show-if'
 import styles from './branding.module.scss'
 import React, { useMemo } from 'react'
@@ -21,7 +21,7 @@ export interface BrandingProps {
  * @param delimiter If the delimiter between the HedgeDoc logo and the branding should be shown.
  */
 export const Branding: React.FC<BrandingProps> = ({ inline = false, delimiter = true }) => {
-  const branding = useApplicationState((state) => state.config.branding)
+  const branding = useFrontendConfig().branding
   const showBranding = !!branding.name || !!branding.logo
 
   const brandingDom = useMemo(() => {

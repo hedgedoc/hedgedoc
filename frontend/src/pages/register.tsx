@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,6 +9,7 @@ import { DisplayNameField } from '../components/common/fields/display-name-field
 import { NewPasswordField } from '../components/common/fields/new-password-field'
 import { PasswordAgainField } from '../components/common/fields/password-again-field'
 import { UsernameField } from '../components/common/fields/username-field'
+import { useFrontendConfig } from '../components/common/frontend-config-context/use-frontend-config'
 import { Redirect } from '../components/common/redirect'
 import { LandingLayout } from '../components/landing-layout/landing-layout'
 import { fetchAndSetUser } from '../components/login-page/auth/utils'
@@ -30,7 +31,7 @@ import { Trans, useTranslation } from 'react-i18next'
 export const RegisterPage: NextPage = () => {
   useTranslation()
   const router = useRouter()
-  const allowRegister = useApplicationState((state) => state.config.allowRegister)
+  const allowRegister = useFrontendConfig().allowRegister
   const userExists = useApplicationState((state) => !!state.user)
 
   const [username, setUsername] = useState('')

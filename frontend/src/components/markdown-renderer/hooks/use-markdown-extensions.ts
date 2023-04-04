@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { optionalAppExtensions } from '../../../extensions/extra-integrations/optional-app-extensions'
+import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
 import type { MarkdownRendererExtension } from '../extensions/base/markdown-renderer-extension'
 import { DebuggerMarkdownExtension } from '../extensions/debugger-markdown-extension'
 import { ProxyImageMarkdownExtension } from '../extensions/image/proxy-image-markdown-extension'
@@ -25,9 +26,15 @@ export const useMarkdownExtensions = (
   additionalExtensions: MarkdownRendererExtension[]
 ): MarkdownRendererExtension[] => {
   const extensionEventEmitter = useExtensionEventEmitter()
+  const frontendConfig = useFrontendConfig()
   return useMemo(() => {
     return [
-      ...optionalAppExtensions.flatMap((extension) => extension.buildMarkdownRendererExtensions(extensionEventEmitter)),
+      ...optionalAppExtensions.flatMap((extension) =>
+        extension.buildMarkdownRendererExtensions({
+          frontendConfig: frontendConfig,
+          eventEmitter: extensionEventEmitter
+        })
+      ),
       ...additionalExtensions,
       new UploadIndicatingImageFrameMarkdownExtension(),
       new LinkAdjustmentMarkdownExtension(baseUrl),
@@ -35,5 +42,5 @@ export const useMarkdownExtensions = (
       new DebuggerMarkdownExtension(),
       new ProxyImageMarkdownExtension()
     ]
-  }, [additionalExtensions, baseUrl, extensionEventEmitter])
+  }, [additionalExtensions, baseUrl, extensionEventEmitter, frontendConfig])
 }

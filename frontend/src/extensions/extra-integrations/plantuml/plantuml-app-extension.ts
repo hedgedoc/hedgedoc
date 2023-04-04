@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,6 +9,7 @@ import {
   codeFenceRegex
 } from '../../../components/editor-page/editor-pane/autocompletions/basic-completion'
 import type { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
+import type { MarkdownRendererExtensionOptions } from '../../base/app-extension'
 import { AppExtension } from '../../base/app-extension'
 import { PlantumlMarkdownExtension } from './plantuml-markdown-extension'
 import type { CompletionSource } from '@codemirror/autocomplete'
@@ -19,8 +20,8 @@ import type { CompletionSource } from '@codemirror/autocomplete'
  * @see https://plantuml.com
  */
 export class PlantumlAppExtension extends AppExtension {
-  buildMarkdownRendererExtensions(): MarkdownRendererExtension[] {
-    return [new PlantumlMarkdownExtension()]
+  buildMarkdownRendererExtensions(options: MarkdownRendererExtensionOptions): MarkdownRendererExtension[] {
+    return [new PlantumlMarkdownExtension(options.frontendConfig.plantumlServer)]
   }
 
   buildCheatsheetExtensions(): CheatsheetExtension[] {

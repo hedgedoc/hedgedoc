@@ -1,10 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { cypressId } from '../../../../utils/cypress-attribute'
+import { useFrontendConfig } from '../../../common/frontend-config-context/use-frontend-config'
 import React, { useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
@@ -14,7 +15,7 @@ import { Trans, useTranslation } from 'react-i18next'
 export const RemainingCharactersInfo: React.FC = () => {
   const { t } = useTranslation()
 
-  const maxDocumentLength = useApplicationState((state) => state.config.maxDocumentLength)
+  const maxDocumentLength = useFrontendConfig().maxDocumentLength
   const contentLength = useApplicationState((state) => state.noteDetails.markdownContent.plain.length)
   const remainingCharacters = useMemo(() => maxDocumentLength - contentLength, [contentLength, maxDocumentLength])
 

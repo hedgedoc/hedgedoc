@@ -1,14 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { CheatsheetExtension } from '../../../components/editor-page/cheatsheet/cheatsheet-extension'
+import type { MarkdownRendererExtensionOptions } from '../../base/app-extension'
 import { AppExtension } from '../../base/app-extension'
 import { SetCheckboxInCheatsheet } from './set-checkbox-in-cheatsheet'
 import { SetCheckboxInEditor } from './set-checkbox-in-editor'
 import { TaskListMarkdownExtension } from './task-list-markdown-extension'
-import type { EventEmitter2 } from 'eventemitter2'
 import type React from 'react'
 
 /**
@@ -17,8 +17,8 @@ import type React from 'react'
 export class TaskListCheckboxAppExtension extends AppExtension {
   public static readonly EVENT_NAME = 'TaskListCheckbox'
 
-  buildMarkdownRendererExtensions(eventEmitter: EventEmitter2): TaskListMarkdownExtension[] {
-    return [new TaskListMarkdownExtension(eventEmitter)]
+  buildMarkdownRendererExtensions(options: MarkdownRendererExtensionOptions): TaskListMarkdownExtension[] {
+    return [new TaskListMarkdownExtension(options.eventEmitter)]
   }
 
   buildEditorExtensionComponent(): React.FC {

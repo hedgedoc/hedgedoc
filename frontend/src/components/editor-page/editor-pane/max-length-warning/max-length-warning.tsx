@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
 import { useNoteMarkdownContent } from '../../../../hooks/common/use-note-markdown-content'
+import { useFrontendConfig } from '../../../common/frontend-config-context/use-frontend-config'
 import { MaxLengthWarningModal } from './max-length-warning-modal'
 import React, { useEffect, useRef } from 'react'
 
@@ -15,7 +15,7 @@ import React, { useEffect, useRef } from 'react'
 export const MaxLengthWarning: React.FC = () => {
   const [modalVisibility, showModal, closeModal] = useBooleanState()
   const maxLengthWarningAlreadyShown = useRef(false)
-  const maxDocumentLength = useApplicationState((state) => state.config.maxDocumentLength)
+  const maxDocumentLength = useFrontendConfig().maxDocumentLength
   const markdownContent = useNoteMarkdownContent()
 
   useEffect(() => {
