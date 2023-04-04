@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,7 +14,7 @@ import { Optional } from '@mrdrogdrog/optional'
  */
 export class BaseUrlFromEnvExtractor {
   private baseUrls: Optional<BaseUrls> | undefined
-  private logger = new Logger('Base URL Configuration')
+  private readonly logger = new Logger('Base URL Configuration')
 
   private extractUrlFromEnvVar(envVarName: string, envVarValue: string | undefined): Optional<URL> {
     try {
