@@ -2348,7 +2348,7 @@ __metadata:
     "@types/jest": 29.5.0
     "@types/js-yaml": 4.0.5
     "@types/katex": 0.16.0
-    "@types/luxon": 3.2.2
+    "@types/luxon": 3.3.0
     "@types/markdown-it": 12.2.3
     "@types/markdown-it-container": 2.0.5
     "@types/markdown-it-plantuml": 1.4.1
@@ -4647,10 +4647,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/luxon@npm:3.2.2":
-  version: 3.2.2
-  resolution: "@types/luxon@npm:3.2.2"
-  checksum: aa9955b85091bd5e1d7128e9fae4cd6d0b3ba0e17f887cde559c848a6ab2f726024c3514e30a3b86648f7bf031376bca6e957e17fe4f0578af2ba084f98967bd
+"@types/luxon@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@types/luxon@npm:3.3.0"
+  checksum: f7e3a89fc3ca404fbc3ea538653ed6860bc28f570a8c4d6d24449b89b9b553b7d6ad6cc94a9e129c5b8c9a2b97f0c365b3017f811e59c4a859a9c219a1c918e0
   languageName: node
   linkType: hard
 
