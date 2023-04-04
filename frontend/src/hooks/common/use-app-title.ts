@@ -1,9 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from './use-application-state'
+import { useFrontendConfig } from '../../components/common/frontend-config-context/use-frontend-config'
 import { useMemo } from 'react'
 
 /**
@@ -12,7 +12,7 @@ import { useMemo } from 'react'
  * @return The app title with branding.
  */
 export const useAppTitle = (): string => {
-  const brandingName = useApplicationState((state) => state.config.branding.name)
+  const brandingName = useFrontendConfig().branding.name
 
   return useMemo(() => {
     return 'HedgeDoc' + (brandingName ? ` @ ${brandingName}` : '')

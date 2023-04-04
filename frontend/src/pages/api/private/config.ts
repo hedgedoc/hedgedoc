@@ -1,15 +1,15 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { Config } from '../../../api/config/types'
+import type { FrontendConfig } from '../../../api/config/types'
 import { AuthProviderType } from '../../../api/config/types'
 import { HttpMethod, respondToMatchingRequest } from '../../../handler-utils/respond-to-matching-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
-  respondToMatchingRequest<Config>(HttpMethod.GET, req, res, {
+  respondToMatchingRequest<FrontendConfig>(HttpMethod.GET, req, res, {
     allowAnonymous: true,
     allowRegister: true,
     authProviders: [

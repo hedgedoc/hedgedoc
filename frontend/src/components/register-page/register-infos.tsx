@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../hooks/common/use-application-state'
+import { useFrontendConfig } from '../common/frontend-config-context/use-frontend-config'
 import { TranslatedExternalLink } from '../common/links/translated-external-link'
 import { ShowIf } from '../common/show-if/show-if'
 import React from 'react'
@@ -14,7 +14,7 @@ import { Trans, useTranslation } from 'react-i18next'
  */
 export const RegisterInfos: React.FC = () => {
   useTranslation()
-  const specialUrls = useApplicationState((state) => state.config.specialUrls)
+  const specialUrls = useFrontendConfig().specialUrls
 
   return (
     <ShowIf condition={!!specialUrls.termsOfUse || !!specialUrls.privacy}>

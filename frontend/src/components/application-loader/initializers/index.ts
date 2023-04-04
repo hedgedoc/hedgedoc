@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,7 +7,6 @@ import { refreshHistoryState } from '../../../redux/history/methods'
 import { Logger } from '../../../utils/logger'
 import { isDevMode, isTestMode } from '../../../utils/test-modes'
 import { fetchAndSetUser } from '../../login-page/auth/utils'
-import { fetchFrontendConfig } from './fetch-frontend-config'
 import { loadDarkMode } from './load-dark-mode'
 import { setUpI18n } from './setupI18n'
 
@@ -54,10 +53,6 @@ export const createSetUpTaskList = (): InitTask[] => {
     {
       name: 'Load Translations',
       task: setUpI18n
-    },
-    {
-      name: 'Load config',
-      task: fetchFrontendConfig
     },
     {
       name: 'Fetch user information',

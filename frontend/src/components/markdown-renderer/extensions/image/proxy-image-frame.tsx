@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { getProxiedUrl } from '../../../../api/media'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { Logger } from '../../../../utils/logger'
+import { useFrontendConfig } from '../../../common/frontend-config-context/use-frontend-config'
 import React, { useEffect, useState } from 'react'
 
 const log = new Logger('ProxyImageFrame')
@@ -20,7 +20,7 @@ const log = new Logger('ProxyImageFrame')
  */
 export const ProxyImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ src, title, alt, ...props }) => {
   const [imageUrl, setImageUrl] = useState('')
-  const imageProxyEnabled = useApplicationState((state) => state.config.useImageProxy)
+  const imageProxyEnabled = useFrontendConfig().useImageProxy
 
   useEffect(() => {
     if (!imageProxyEnabled || !src) {

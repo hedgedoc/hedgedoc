@@ -1,12 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { doLocalLogin } from '../../../api/auth/local'
 import { ErrorToI18nKeyMapper } from '../../../api/common/error-to-i18n-key-mapper'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
+import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
 import { ShowIf } from '../../common/show-if/show-if'
 import { PasswordField } from './fields/password-field'
 import { UsernameField } from './fields/username-field'
@@ -25,7 +25,7 @@ export const ViaLocal: React.FC = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string>()
-  const allowRegister = useApplicationState((state) => state.config.allowRegister)
+  const allowRegister = useFrontendConfig().allowRegister
 
   const onLoginSubmit = useCallback(
     (event: FormEvent) => {

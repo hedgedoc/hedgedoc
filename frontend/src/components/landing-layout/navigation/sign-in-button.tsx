@@ -1,10 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { cypressId } from '../../../utils/cypress-attribute'
+import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
 import { ShowIf } from '../../common/show-if/show-if'
 import { filterOneClickProviders } from '../../login-page/auth/utils'
 import { getOneClickProviderMetadata } from '../../login-page/auth/utils/get-one-click-provider-metadata'
@@ -25,7 +25,7 @@ export type SignInButtonProps = Omit<ButtonProps, 'href'>
  */
 export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props }) => {
   const { t } = useTranslation()
-  const authProviders = useApplicationState((state) => state.config.authProviders)
+  const authProviders = useFrontendConfig().authProviders
 
   const loginLink = useMemo(() => {
     const oneClickProviders = authProviders.filter(filterOneClickProviders)

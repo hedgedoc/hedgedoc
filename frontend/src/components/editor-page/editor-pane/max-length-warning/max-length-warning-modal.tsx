@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { cypressId } from '../../../../utils/cypress-attribute'
+import { useFrontendConfig } from '../../../common/frontend-config-context/use-frontend-config'
 import type { ModalVisibilityProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
 import React from 'react'
@@ -19,7 +19,7 @@ import { Trans, useTranslation } from 'react-i18next'
  */
 export const MaxLengthWarningModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   useTranslation()
-  const maxDocumentLength = useApplicationState((state) => state.config.maxDocumentLength)
+  const maxDocumentLength = useFrontendConfig().maxDocumentLength
 
   return (
     <CommonModal

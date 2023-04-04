@@ -1,11 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
 import type { ComponentReplacer } from '../../../components/markdown-renderer/replace-components/component-replacer'
-import { getGlobalState } from '../../../redux'
 import { PlantumlNotConfiguredComponentReplacer } from './plantuml-not-configured-component-replacer'
 import { Optional } from '@mrdrogdrog/optional'
 import type MarkdownIt from 'markdown-it'
@@ -20,6 +19,10 @@ import type Token from 'markdown-it/lib/token'
  * @see https://plantuml.com
  */
 export class PlantumlMarkdownExtension extends MarkdownRendererExtension {
+  constructor(private plantumlServerUrl: string | undefined) {
+    super()
+  }
+
   private plantumlError(markdownIt: MarkdownIt): void {
     const defaultRenderer: Renderer.RenderRule = markdownIt.renderer.rules.fence || (() => '')
     markdownIt.renderer.rules.fence = (tokens: Token[], idx: number, options: Options, env, slf: Renderer) => {
@@ -30,7 +33,7 @@ export class PlantumlMarkdownExtension extends MarkdownRendererExtension {
   }
 
   public configureMarkdownIt(markdownIt: MarkdownIt): void {
-    Optional.ofNullable(getGlobalState().config.plantumlServer)
+    Optional.ofNullable(this.plantumlServerUrl)
       .map((plantumlServer) =>
         plantuml(markdownIt, {
           openMarker: '```plantuml',

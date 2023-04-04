@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { BackendVersion } from '../../../../api/config/types'
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import links from '../../../../links.json'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { CopyableField } from '../../../common/copyable/copyable-field/copyable-field'
+import { useFrontendConfig } from '../../../common/frontend-config-context/use-frontend-config'
 import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
 import type { CommonModalProps } from '../../../common/modals/common-modal'
 import { CommonModal } from '../../../common/modals/common-modal'
@@ -22,7 +22,7 @@ import { Modal } from 'react-bootstrap'
  * @param show If the modal should be shown.
  */
 export const VersionInfoModal: React.FC<CommonModalProps> = ({ onHide, show }) => {
-  const serverVersion: BackendVersion = useApplicationState((state) => state.config.version)
+  const serverVersion: BackendVersion = useFrontendConfig().version
   const backendVersion = useMemo(() => {
     const version = `${serverVersion.major}.${serverVersion.minor}.${serverVersion.patch}`
 

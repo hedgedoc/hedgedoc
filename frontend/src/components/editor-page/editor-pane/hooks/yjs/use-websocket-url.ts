@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -22,7 +22,7 @@ export const useWebsocketUrl = (): URL | undefined => {
       return LOCAL_FALLBACK_URL
     }
     try {
-      const backendBaseUrlParsed = new URL(baseUrl, window.location.toString())
+      const backendBaseUrlParsed = new URL(baseUrl)
       backendBaseUrlParsed.protocol = backendBaseUrlParsed.protocol === 'https:' ? 'wss:' : 'ws:'
       backendBaseUrlParsed.pathname += 'realtime'
       return backendBaseUrlParsed.toString()
