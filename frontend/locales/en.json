@@ -622,7 +622,7 @@
       "label": "Global",
       "darkMode": {
         "label": "Dark mode",
-        "help": "Enforces the (de)activation of the dark mode for the app or lets the browser decide.",
+        "help": "Enforces the use of the dark mode for the app or lets the browser decide.",
         "dark": {
           "tooltip": "Switch to dark mode",
           "label": "Dark"
