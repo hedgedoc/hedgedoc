@@ -47,7 +47,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
       }
     },
     editedByAtPosition: []
-  })
+  } as Note)
 }
 
 export default handler

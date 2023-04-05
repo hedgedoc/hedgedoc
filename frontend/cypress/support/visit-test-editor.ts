@@ -3,6 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { Note } from '../../src/api/notes/types'
+
 export const testNoteId = 'test'
 
 beforeEach(() => {
@@ -10,16 +12,22 @@ beforeEach(() => {
     content: '',
     metadata: {
       id: testNoteId,
-      alias: ['mock-note'],
-      primaryAlias: 'mock-note',
+      aliases: [
+        {
+          name: 'mock-note',
+          primaryAlias: true,
+          noteId: testNoteId
+        }
+      ],
+      primaryAddress: 'mock-note',
       title: 'Mock Note',
       description: 'Mocked note for testing',
       tags: ['test', 'mock', 'cypress'],
-      updateTime: '2021-04-24T09:27:51.000Z',
-      updateUser: null,
+      updatedAt: '2021-04-24T09:27:51.000Z',
+      updateUsername: null,
       viewCount: 0,
       version: 2,
-      createTime: '2021-04-24T09:27:51.000Z',
+      createdAt: '2021-04-24T09:27:51.000Z',
       editedBy: [],
       permissions: {
         owner: 'mock',
@@ -28,5 +36,5 @@ beforeEach(() => {
       }
     },
     editedByAtPosition: []
-  })
+  } as Note)
 })
