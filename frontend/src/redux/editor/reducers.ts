@@ -12,7 +12,8 @@ const initialState: EditorConfig = {
   ligatures: true,
   syncScroll: true,
   smartPaste: true,
-  spellCheck: false
+  spellCheck: false,
+  lineWrapping: true
 }
 
 const getInitialState = (): EditorConfig => {
@@ -50,6 +51,13 @@ export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (
       newState = {
         ...state,
         spellCheck: action.spellCheck
+      }
+      saveToLocalStorage(newState)
+      return newState
+    case EditorConfigActionType.SET_LINE_WRAPPING:
+      newState = {
+        ...state,
+        lineWrapping: action.lineWrapping
       }
       saveToLocalStorage(newState)
       return newState

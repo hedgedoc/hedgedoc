@@ -5,6 +5,7 @@
  */
 import { SettingLine } from '../utils/setting-line'
 import { LigatureSettingButtonGroup } from './ligature-setting-button-group'
+import { LineWrappingSettingButtonGroup } from './line-wrapping-setting-button-group'
 import { SmartPasteSettingButtonGroup } from './smart-paste-setting-button-group'
 import { SyncScrollSettingButtonGroup } from './sync-scroll-setting-button-group'
 import React from 'react'
@@ -27,6 +28,9 @@ export const EditorSettingsTabContent: React.FC = () => {
       </SettingLine>
       <SettingLine i18nKey={'editor.syncScroll'}>
         <SyncScrollSettingButtonGroup />
+      </SettingLine>
+      <SettingLine i18nKey={'editor.lineWrapping'}>
+        <LineWrappingSettingButtonGroup />
       </SettingLine>
     </ListGroup>
   )

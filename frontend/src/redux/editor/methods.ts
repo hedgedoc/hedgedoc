@@ -8,6 +8,7 @@ import { Logger } from '../../utils/logger'
 import type {
   EditorConfig,
   SetEditorLigaturesAction,
+  SetEditorLineWrappingAction,
   SetEditorSmartPasteAction,
   SetEditorSyncScrollAction
 } from './types'
@@ -40,6 +41,14 @@ export const setEditorSyncScroll = (syncScroll: boolean): void => {
   const action: SetEditorSyncScrollAction = {
     type: EditorConfigActionType.SET_SYNC_SCROLL,
     syncScroll
+  }
+  store.dispatch(action)
+}
+
+export const setEditorLineWrapping = (lineWrapping: boolean): void => {
+  const action: SetEditorLineWrappingAction = {
+    type: EditorConfigActionType.SET_LINE_WRAPPING,
+    lineWrapping
   }
   store.dispatch(action)
 }

@@ -612,6 +612,10 @@
       "syncScroll": {
         "label": "Sync Scrolling",
         "help": "Synchronizes the scroll state of editor and rendering view."
+      },
+      "lineWrapping": {
+        "label": "Line Wrapping",
+        "help": "Breaks long lines so they're visible without scrolling."
       }
     },
     "global": {
