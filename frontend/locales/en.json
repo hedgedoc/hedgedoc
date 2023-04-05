@@ -603,7 +603,7 @@
       "label": "Editor",
       "ligatures": {
         "label": "Ligatures",
-        "help": "(De)Activates support for ligatures in the editor."
+        "help": "Renders special character sequences as one symbol."
       },
       "smartPaste": {
         "label": "Smart Paste",
