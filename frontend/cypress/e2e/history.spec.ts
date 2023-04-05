@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { HistoryEntry } from '../../src/api/history/types'
 
 describe('History', () => {
   describe('History Mode', () => {
@@ -29,10 +30,10 @@ describe('History', () => {
             {
               identifier: 'cypress',
               title: 'Features',
-              lastVisited: '2020-05-16T22:26:56.547Z',
+              lastVisitedAt: '2020-05-16T22:26:56.547Z',
               pinStatus: false,
               tags: []
-            }
+            } as HistoryEntry
           ]
         })
         cy.visitHistory()
@@ -56,10 +57,10 @@ describe('History', () => {
             {
               identifier: 'cypress-no-title',
               title: '',
-              lastVisited: '2020-05-16T22:26:56.547Z',
+              lastVisitedAt: '2020-05-16T22:26:56.547Z',
               pinStatus: false,
               tags: []
-            }
+            } as HistoryEntry
           ]
         })
         cy.visitHistory()
