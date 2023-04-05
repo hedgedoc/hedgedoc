@@ -5,6 +5,7 @@
  */
 import { ApiError } from '../../../api/common/api-error'
 import { ErrorToI18nKeyMapper } from '../../../api/common/error-to-i18n-key-mapper'
+import { Logger } from '../../../utils/logger'
 import { LoadingScreen } from '../../application-loader/loading-screen/loading-screen'
 import { CommonErrorPage } from '../../error-pages/common-error-page'
 import { CustomAsyncLoadingBoundary } from '../async-loading-boundary/custom-async-loading-boundary'
@@ -13,6 +14,8 @@ import { CreateNonExistingNoteHint } from './create-non-existing-note-hint'
 import { useLoadNoteFromServer } from './hooks/use-load-note-from-server'
 import type { PropsWithChildren } from 'react'
 import React, { useEffect, useMemo } from 'react'
+
+const logger = new Logger('NoteLoadingBoundary')
 
 /**
  * Loads the note identified by the note-id in the URL.
@@ -37,6 +40,7 @@ export const NoteLoadingBoundary: React.FC<PropsWithChildren> = ({ children }) =
       .withHttpCode(403, 'forbidden')
       .withHttpCode(401, 'forbidden')
       .orFallbackI18nKey('other')
+    logger.error(error)
     return (
       <CommonErrorPage
         titleI18nKey={`${errorI18nKeyPrefix}.title`}
