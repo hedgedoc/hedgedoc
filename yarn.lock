@@ -8623,9 +8623,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv-cli@npm:7.1.0":
-  version: 7.1.0
-  resolution: "dotenv-cli@npm:7.1.0"
+"dotenv-cli@npm:7.2.1":
+  version: 7.2.1
+  resolution: "dotenv-cli@npm:7.2.1"
   dependencies:
     cross-spawn: ^7.0.3
     dotenv: ^16.0.0
@@ -8633,7 +8633,7 @@ __metadata:
     minimist: ^1.2.6
   bin:
     dotenv: cli.js
-  checksum: aa4e967061477a181d61e837246d79bc2c65fd6c664d4dbeda04d42283c3a8fb685163b1f3cf2474df97fae4429d5040f1ec6ea9d19e1ed092d4885469e54983
+  checksum: 8ca27fd44ba261b974a0342ec831a714fa1cb6d6e98d4b5db8e94f111951af1fb129a64d007264b1901337c43a8ef877071f1836b6992944fd6970c16367aee0
   languageName: node
   linkType: hard
 
@@ -10687,7 +10687,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hedgedoc@workspace:."
   dependencies:
-    dotenv-cli: 7.1.0
+    dotenv-cli: 7.2.1
     turbo: 1.8.8
   languageName: unknown
   linkType: soft
