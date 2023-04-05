@@ -9,6 +9,7 @@ export enum EditorConfigActionType {
   SET_EDITOR_VIEW_MODE = 'editor/view-mode/set',
   SET_SYNC_SCROLL = 'editor/syncScroll/set',
   SET_LIGATURES = 'editor/preferences/setLigatures',
+  SET_LINE_WRAPPING = 'editor/preferences/setLineWrapping',
   SET_SMART_PASTE = 'editor/preferences/setSmartPaste',
   SET_SPELL_CHECK = 'editor/preferences/setSpellCheck'
 }
@@ -18,13 +19,20 @@ export interface EditorConfig {
   ligatures: boolean
   smartPaste: boolean
   spellCheck: boolean
+  lineWrapping: boolean
 }
 
 export type EditorConfigActions =
   | SetEditorSyncScrollAction
   | SetEditorLigaturesAction
   | SetEditorSmartPasteAction
+  | SetEditorLineWrappingAction
   | SetSpellCheckAction
+
+export interface SetEditorLineWrappingAction extends Action<EditorConfigActionType> {
+  type: EditorConfigActionType.SET_LINE_WRAPPING
+  lineWrapping: boolean
+}
 
 export interface SetEditorSyncScrollAction extends Action<EditorConfigActionType> {
   type: EditorConfigActionType.SET_SYNC_SCROLL

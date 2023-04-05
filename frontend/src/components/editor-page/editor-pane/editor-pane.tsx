@@ -12,6 +12,7 @@ import type { ScrollProps } from '../synced-scroll/scroll-props'
 import styles from './extended-codemirror/codemirror.module.scss'
 import { useCodeMirrorAutocompletionsExtension } from './hooks/codemirror-extensions/use-code-mirror-autocompletions-extension'
 import { useCodeMirrorFileInsertExtension } from './hooks/codemirror-extensions/use-code-mirror-file-insert-extension'
+import { useCodeMirrorLineWrappingExtension } from './hooks/codemirror-extensions/use-code-mirror-line-wrapping-extension'
 import { useCodeMirrorRemoteCursorsExtension } from './hooks/codemirror-extensions/use-code-mirror-remote-cursor-extensions'
 import { useCodeMirrorScrollWatchExtension } from './hooks/codemirror-extensions/use-code-mirror-scroll-watch-extension'
 import { useCodeMirrorSpellCheckExtension } from './hooks/codemirror-extensions/use-code-mirror-spell-check-extension'
@@ -38,7 +39,6 @@ import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { languages } from '@codemirror/language-data'
 import { lintGutter } from '@codemirror/lint'
 import { oneDark } from '@codemirror/theme-one-dark'
-import { EditorView } from '@codemirror/view'
 import ReactCodeMirror from '@uiw/react-codemirror'
 import React, { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -66,6 +66,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
   const tablePasteExtensions = useCodeMirrorTablePasteExtension()
   const fileInsertExtension = useCodeMirrorFileInsertExtension()
   const spellCheckExtension = useCodeMirrorSpellCheckExtension()
+  const lineWrappingExtension = useCodeMirrorLineWrappingExtension()
   const cursorActivityExtension = useCursorActivityCallback()
   const autoCompletionExtension = useCodeMirrorAutocompletionsExtension()
 
@@ -94,7 +95,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
         codeLanguages: (input) => findLanguageByCodeBlockName(languages, input)
       }),
       remoteCursorsExtension,
-      EditorView.lineWrapping,
+      lineWrappingExtension,
       editorScrollExtension,
       tablePasteExtensions,
       fileInsertExtension,
@@ -114,7 +115,8 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
       cursorActivityExtension,
       updateViewContextExtension,
       yjsExtension,
-      spellCheckExtension
+      spellCheckExtension,
+      lineWrappingExtension
     ]
   )
 
