@@ -74,26 +74,13 @@ describe('PermissionsService', () => {
      * array and the overrideProvider call, as otherwise we have two instances
      * and the mock of createQueryBuilder replaces the wrong one
      * **/
-    userRepo = new Repository<User>(
-      '',
-      new EntityManager(
-        new DataSource({
-          type: 'sqlite',
-          database: ':memory:',
-        }),
-      ),
-      undefined,
-    );
-    noteRepo = new Repository<Note>(
-      '',
-      new EntityManager(
-        new DataSource({
-          type: 'sqlite',
-          database: ':memory:',
-        }),
-      ),
-      undefined,
-    );
+    userRepo = Mock.of<Repository<User>>({
+      save: async (entry: Note) => entry,
+      findOne: jest.fn(),
+    });
+    noteRepo = Mock.of<Repository<Note>>({
+      save: async (entry: Note) => entry,
+    });
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PermissionsService,
@@ -725,13 +712,6 @@ describe('PermissionsService', () => {
     ) as Group;
     const note = Note.create(user) as Note;
     it('emits PERMISSION_CHANGE event', async () => {
-      jest
-        .spyOn(noteRepo, 'save')
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        .mockImplementationOnce(async (entry: Note) => {
-          return entry;
-        });
       const mockedEventEmitter = jest
         .spyOn(eventEmitter, 'emit')
         .mockImplementationOnce((event) => {
@@ -747,13 +727,7 @@ describe('PermissionsService', () => {
     });
     describe('works', () => {
       it('with empty GroupPermissions and with empty UserPermissions', async () => {
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         const savedNote = await service.updateNotePermissions(note, {
           sharedToUsers: [],
           sharedToGroups: [],
@@ -762,13 +736,7 @@ describe('PermissionsService', () => {
         expect(await savedNote.groupPermissions).toHaveLength(0);
       });
       it('with empty GroupPermissions and with new UserPermissions', async () => {
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
         const savedNote = await service.updateNotePermissions(note, {
           sharedToUsers: [userPermissionUpdate],
@@ -793,13 +761,7 @@ describe('PermissionsService', () => {
             canEdit: !userPermissionUpdate.canEdit,
           },
         ]);
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
         const savedNote = await service.updateNotePermissions(note, {
           sharedToUsers: [userPermissionUpdate],
@@ -815,13 +777,7 @@ describe('PermissionsService', () => {
         expect(await savedNote.groupPermissions).toHaveLength(0);
       });
       it('with new GroupPermissions and with empty UserPermissions', async () => {
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
         const savedNote = await service.updateNotePermissions(note, {
           sharedToUsers: [],
@@ -836,13 +792,7 @@ describe('PermissionsService', () => {
         );
       });
       it('with new GroupPermissions and with new UserPermissions', async () => {
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
         const savedNote = await service.updateNotePermissions(note, {
@@ -872,13 +822,7 @@ describe('PermissionsService', () => {
             canEdit: !userPermissionUpdate.canEdit,
           },
         ]);
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
         const savedNote = await service.updateNotePermissions(
@@ -912,13 +856,7 @@ describe('PermissionsService', () => {
           },
         ]);
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         const savedNote = await service.updateNotePermissions(
           noteWithPreexistingPermissions,
           {
@@ -944,13 +882,7 @@ describe('PermissionsService', () => {
             canEdit: !groupPermissionUpdate.canEdit,
           },
         ]);
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
         const savedNote = await service.updateNotePermissions(
@@ -991,13 +923,7 @@ describe('PermissionsService', () => {
             canEdit: !userPermissionUpdate.canEdit,
           },
         ]);
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
         const savedNote = await service.updateNotePermissions(
@@ -1053,13 +979,6 @@ describe('PermissionsService', () => {
 
   describe('setUserPermission', () => {
     it('emits PERMISSION_CHANGE event', async () => {
-      jest
-        .spyOn(noteRepo, 'save')
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        .mockImplementationOnce(async (entry: Note) => {
-          return entry;
-        });
       const note = Note.create(null) as Note;
       const user = User.create('test', 'Testy') as User;
       const mockedEventEmitter = jest
@@ -1074,13 +993,7 @@ describe('PermissionsService', () => {
     });
     describe('works', () => {
       it('with user not added before and editable', async () => {
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         const note = Note.create(null) as Note;
         const user = User.create('test', 'Testy') as User;
         const resultNote = await service.setUserPermission(note, user, true);
@@ -1090,13 +1003,7 @@ describe('PermissionsService', () => {
         );
       });
       it('with user not added before and not editable', async () => {
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         const note = Note.create(null) as Note;
         const user = User.create('test', 'Testy') as User;
         const resultNote = await service.setUserPermission(note, user, false);
@@ -1106,13 +1013,7 @@ describe('PermissionsService', () => {
         );
       });
       it('with user added before and editable', async () => {
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         const note = Note.create(null) as Note;
         const user = User.create('test', 'Testy') as User;
         note.userPermissions = Promise.resolve([
@@ -1126,13 +1027,7 @@ describe('PermissionsService', () => {
         );
       });
       it('with user added before and not editable', async () => {
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         const note = Note.create(null) as Note;
         const user = User.create('test', 'Testy') as User;
         note.userPermissions = Promise.resolve([
@@ -1149,13 +1044,6 @@ describe('PermissionsService', () => {
 
   describe('removeUserPermission', () => {
     it('emits PERMISSION_CHANGE event', async () => {
-      jest
-        .spyOn(noteRepo, 'save')
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        .mockImplementationOnce(async (entry: Note) => {
-          return entry;
-        });
       const note = Note.create(null) as Note;
       const user = User.create('test', 'Testy') as User;
       note.userPermissions = Promise.resolve([
@@ -1173,13 +1061,7 @@ describe('PermissionsService', () => {
     });
     describe('works', () => {
       it('with user added before and editable', async () => {
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         const note = Note.create(null) as Note;
         const user = User.create('test', 'Testy') as User;
         note.userPermissions = Promise.resolve([
@@ -1190,13 +1072,7 @@ describe('PermissionsService', () => {
         expect((await resultNote.userPermissions).length).toStrictEqual(0);
       });
       it('with user not added before and not editable', async () => {
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         const note = Note.create(null) as Note;
         const user = User.create('test', 'Testy') as User;
         note.userPermissions = Promise.resolve([
@@ -1210,13 +1086,6 @@ describe('PermissionsService', () => {
 
   describe('setGroupPermission', () => {
     it('emits PERMISSION_CHANGE event', async () => {
-      jest
-        .spyOn(noteRepo, 'save')
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        .mockImplementationOnce(async (entry: Note) => {
-          return entry;
-        });
       const note = Note.create(null) as Note;
       const group = Group.create('test', 'Testy', false) as Group;
       const mockedEventEmitter = jest
@@ -1231,13 +1100,7 @@ describe('PermissionsService', () => {
     });
     describe('works', () => {
       it('with group not added before and editable', async () => {
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         const note = Note.create(null) as Note;
         const group = Group.create('test', 'Testy', false) as Group;
         const resultNote = await service.setGroupPermission(note, group, true);
@@ -1251,13 +1114,7 @@ describe('PermissionsService', () => {
         );
       });
       it('with group not added before and not editable', async () => {
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         const note = Note.create(null) as Note;
         const group = Group.create('test', 'Testy', false) as Group;
         const resultNote = await service.setGroupPermission(note, group, false);
@@ -1271,13 +1128,7 @@ describe('PermissionsService', () => {
         );
       });
       it('with group added before and editable', async () => {
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         const note = Note.create(null) as Note;
         const group = Group.create('test', 'Testy', false) as Group;
         note.groupPermissions = Promise.resolve([
@@ -1295,13 +1146,7 @@ describe('PermissionsService', () => {
         );
       });
       it('with group added before and not editable', async () => {
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         const note = Note.create(null) as Note;
         const group = Group.create('test', 'Testy', false) as Group;
         note.groupPermissions = Promise.resolve([
@@ -1322,13 +1167,6 @@ describe('PermissionsService', () => {
 
   describe('removeGroupPermission', () => {
     it('emits PERMISSION_CHANGE event', async () => {
-      jest
-        .spyOn(noteRepo, 'save')
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        .mockImplementationOnce(async (entry: Note) => {
-          return entry;
-        });
       const note = Note.create(null) as Note;
       const group = Group.create('test', 'Testy', false) as Group;
       note.groupPermissions = Promise.resolve([
@@ -1346,13 +1184,7 @@ describe('PermissionsService', () => {
     });
     describe('works', () => {
       it('with user added before and editable', async () => {
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         const note = Note.create(null) as Note;
         const group = Group.create('test', 'Testy', false) as Group;
         note.groupPermissions = Promise.resolve([
@@ -1363,13 +1195,7 @@ describe('PermissionsService', () => {
         expect((await resultNote.groupPermissions).length).toStrictEqual(0);
       });
       it('with user not added before and not editable', async () => {
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementationOnce(async (entry: Note) => {
-            return entry;
-          });
+
         const note = Note.create(null) as Note;
         const group = Group.create('test', 'Testy', false) as Group;
         note.groupPermissions = Promise.resolve([
@@ -1385,13 +1211,7 @@ describe('PermissionsService', () => {
     it('works', async () => {
       const note = Note.create(null) as Note;
       const user = User.create('test', 'Testy') as User;
-      jest
-        .spyOn(noteRepo, 'save')
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        .mockImplementationOnce(async (entry: Note) => {
-          return entry;
-        });
+
       const resultNote = await service.changeOwner(note, user);
       expect(await resultNote.owner).toStrictEqual(user);
     });
