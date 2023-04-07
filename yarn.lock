@@ -2361,7 +2361,7 @@ __metadata:
     "@types/ws": 8.5.4
     "@typescript-eslint/eslint-plugin": 5.57.1
     "@typescript-eslint/parser": 5.57.1
-    "@uiw/react-codemirror": 4.19.11
+    "@uiw/react-codemirror": 4.19.14
     abcjs: 6.2.0
     bootstrap: 5.2.3
     copy-webpack-plugin: 11.0.0
@@ -5212,9 +5212,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uiw/codemirror-extensions-basic-setup@npm:4.19.11":
-  version: 4.19.11
-  resolution: "@uiw/codemirror-extensions-basic-setup@npm:4.19.11"
+"@uiw/codemirror-extensions-basic-setup@npm:4.19.14":
+  version: 4.19.14
+  resolution: "@uiw/codemirror-extensions-basic-setup@npm:4.19.14"
   dependencies:
     "@codemirror/autocomplete": ^6.0.0
     "@codemirror/commands": ^6.0.0
@@ -5231,19 +5231,19 @@ __metadata:
     "@codemirror/search": ">=6.0.0"
     "@codemirror/state": ">=6.0.0"
     "@codemirror/view": ">=6.0.0"
-  checksum: c7bc3498ace8efa29492674ed94feb3c6d941f389302696136c1509ab5e3b55e590ca9887a7883b7e4972cee921d7120d9af7f78354094ccb341a72656ad8ac9
+  checksum: 716a2a853063f0ceca6e0fe65a7fe14af5141ed76682eacbf8e6bc480ecc62cd6f8f1107387261d84f5106cf989ad38fcf3bbb8abb8e0f7d17ed98c084f24d78
   languageName: node
   linkType: hard
 
-"@uiw/react-codemirror@npm:4.19.11":
-  version: 4.19.11
-  resolution: "@uiw/react-codemirror@npm:4.19.11"
+"@uiw/react-codemirror@npm:4.19.14":
+  version: 4.19.14
+  resolution: "@uiw/react-codemirror@npm:4.19.14"
   dependencies:
     "@babel/runtime": ^7.18.6
     "@codemirror/commands": ^6.1.0
     "@codemirror/state": ^6.1.1
     "@codemirror/theme-one-dark": ^6.0.0
-    "@uiw/codemirror-extensions-basic-setup": 4.19.11
+    "@uiw/codemirror-extensions-basic-setup": 4.19.14
     codemirror: ^6.0.0
   peerDependencies:
     "@babel/runtime": ">=7.11.0"
@@ -5253,7 +5253,7 @@ __metadata:
     codemirror: ">=6.0.0"
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 5ff4c7d021b565bc578d0fce2f4b6761b8d55024fa3190288435d287028cc8770b8fe5b4b103a64c452eaf26ab88c8bfd25819782a4b4d7dcfd4361765e307ff
+  checksum: e8f099d62b06f5d86fc78530caed48f15e248a7b07c8482fd96967b22c9feebfbe7a0d9be008bc1b36d80ea43d55060542579d1c84380e9e67c222d1f2d2286c
   languageName: node
   linkType: hard
 
