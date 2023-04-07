@@ -6,6 +6,7 @@
 import { BasicMarkdownSyntaxAppExtension } from '../../components/markdown-renderer/extensions/basic-markdown-syntax/basic-markdown-syntax-app-extension'
 import { BootstrapIconAppExtension } from '../../components/markdown-renderer/extensions/bootstrap-icons/bootstrap-icon-app-extension'
 import { EmojiAppExtension } from '../../components/markdown-renderer/extensions/emoji/emoji-app-extension'
+import { ExtractFirstHeadlineAppExtension } from '../../components/markdown-renderer/extensions/extract-first-headline/extract-first-headline-app-extension'
 import { IframeCapsuleAppExtension } from '../../components/markdown-renderer/extensions/iframe-capsule/iframe-capsule-app-extension'
 import { ImagePlaceholderAppExtension } from '../../components/markdown-renderer/extensions/image-placeholder/image-placeholder-app-extension'
 import { TableOfContentsAppExtension } from '../../components/markdown-renderer/extensions/table-of-contents/table-of-contents-app-extension'
@@ -60,5 +61,6 @@ export const optionalAppExtensions: AppExtension[] = [
   new TableOfContentsAppExtension(),
   new ImagePlaceholderAppExtension(),
   new IframeCapsuleAppExtension(),
-  new BasicMarkdownSyntaxAppExtension()
+  new BasicMarkdownSyntaxAppExtension(),
+  new ExtractFirstHeadlineAppExtension()
 ]

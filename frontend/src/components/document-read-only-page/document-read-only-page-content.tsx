@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useTrimmedNoteMarkdownContentWithoutFrontmatter } from '../../hooks/common/use-trimmed-note-markdown-content-without-frontmatter'
-import { updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
 import { setRendererStatus } from '../../redux/renderer-status/methods'
 import { RenderIframe } from '../editor-page/renderer-pane/render-iframe'
 import { RendererType } from '../render-page/window-post-message-communicator/rendering-message'
@@ -27,7 +26,6 @@ export const DocumentReadOnlyPageContent: React.FC = () => {
       <RenderIframe
         frameClasses={'flex-fill h-100 w-100'}
         markdownContentLines={markdownContentLines}
-        onFirstHeadingChange={updateNoteTitleByFirstHeading}
         rendererType={RendererType.DOCUMENT}
         onRendererStatusChange={setRendererStatus}
       />

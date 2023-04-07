@@ -14,7 +14,6 @@ import type { MutableRefObject } from 'react'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 
 export interface RendererProps extends ScrollProps {
-  onFirstHeadingChange?: (firstHeading: string | undefined) => void
   documentRenderPaneRef?: MutableRefObject<HTMLDivElement | null>
   markdownContentLines: string[]
   onHeightChange?: (height: number) => void
@@ -32,12 +31,9 @@ export interface MarkdownDocumentProps extends RendererProps {
  *
  * @param additionalOuterContainerClasses Additional classes given to the outer container directly
  * @param additionalRendererClasses Additional classes given {@link DocumentMarkdownRenderer} directly
- * @param onFirstHeadingChange The callback to call when the first heading changes.
  * @param onMakeScrollSource The callback to call if a change of the scroll source is requested-
- * @param onTaskCheckedChange The callback to call if a task get's checked or unchecked.
  * @param baseUrl The base url for the renderer
  * @param markdownContentLines The current content of the markdown document.
- * @param onImageClick The callback to call if an image is clicked.
  * @param onScroll The callback to call if the renderer is scrolling.
  * @param scrollState The current {@link ScrollState}
  * @param onHeightChange The callback to call if the height of the document changes
@@ -47,7 +43,6 @@ export interface MarkdownDocumentProps extends RendererProps {
 export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
   additionalOuterContainerClasses,
   additionalRendererClasses,
-  onFirstHeadingChange,
   onMakeScrollSource,
   baseUrl,
   markdownContentLines,
@@ -94,7 +89,6 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
           outerContainerRef={rendererRef}
           className={`mb-3 ${additionalRendererClasses ?? ''}`}
           markdownContentLines={markdownContentLines}
-          onFirstHeadingChange={onFirstHeadingChange}
           onLineMarkerPositionChanged={recalculateLineMarkers}
           baseUrl={baseUrl}
           newlinesAreBreaks={newlinesAreBreaks}

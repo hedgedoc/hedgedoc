@@ -74,7 +74,7 @@ describe('Document Title', () => {
     it('katex code looks right', () => {
       cy.setCodemirrorContent(`# $\\alpha$-foo`)
       cy.getIframeBody().find('h1').should('contain', 'α')
-      cy.title().should('eq', `α-foo - HedgeDoc @ ${branding.name}`)
+      cy.title().should('eq', `\\alpha-foo - HedgeDoc @ ${branding.name}`)
     })
   })
 })

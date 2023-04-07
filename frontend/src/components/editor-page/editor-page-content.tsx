@@ -5,7 +5,6 @@
  */
 import { useApplicationState } from '../../hooks/common/use-application-state'
 import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
-import { updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
 import { Logger } from '../../utils/logger'
 import { MotdModal } from '../common/motd-modal/motd-modal'
 import { CommunicatorImageLightbox } from '../markdown-renderer/extensions/image/communicator-image-lightbox'
@@ -112,7 +111,6 @@ export const EditorPageContent: React.FC = () => {
       <EditorDocumentRenderer
         frameClasses={'h-100 w-100'}
         onMakeScrollSource={setRendererToScrollSource}
-        onFirstHeadingChange={updateNoteTitleByFirstHeading}
         onScroll={onMarkdownRendererScroll}
         scrollState={scrollState.rendererScrollState}
       />
