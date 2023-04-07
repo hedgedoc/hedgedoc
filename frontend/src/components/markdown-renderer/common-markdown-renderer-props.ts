@@ -6,7 +6,6 @@
 import type { Ref } from 'react'
 
 export interface CommonMarkdownRendererProps {
-  onFirstHeadingChange?: (firstHeading: string | undefined) => void
   baseUrl: string
   outerContainerRef?: Ref<HTMLDivElement>
   newlinesAreBreaks?: boolean

@@ -5,7 +5,6 @@
  */
 import { useApplicationState } from '../../hooks/common/use-application-state'
 import { useTrimmedNoteMarkdownContentWithoutFrontmatter } from '../../hooks/common/use-trimmed-note-markdown-content-without-frontmatter'
-import { updateNoteTitleByFirstHeading } from '../../redux/note-details/methods'
 import { setRendererStatus } from '../../redux/renderer-status/methods'
 import { RenderIframe } from '../editor-page/renderer-pane/render-iframe'
 import { useSendToRenderer } from '../render-page/window-post-message-communicator/hooks/use-send-to-renderer'
@@ -42,7 +41,6 @@ export const SlideShowPageContent: React.FC = () => {
         frameClasses={'h-100 w-100'}
         markdownContentLines={markdownContentLines}
         rendererType={RendererType.SLIDESHOW}
-        onFirstHeadingChange={updateNoteTitleByFirstHeading}
         onRendererStatusChange={setRendererStatus}
       />
     </div>

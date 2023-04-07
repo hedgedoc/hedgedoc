@@ -73,16 +73,6 @@ export const IframeMarkdownRenderer: React.FC = () => {
     }, [communicator])
   )
 
-  const onFirstHeadingChange = useCallback(
-    (firstHeading?: string) => {
-      communicator.sendMessageToOtherSide({
-        type: CommunicationMessageType.ON_FIRST_HEADING_CHANGE,
-        firstHeading
-      })
-    },
-    [communicator]
-  )
-
   const onMakeScrollSource = useCallback(() => {
     sendScrolling.current = true
     communicator.sendMessageToOtherSide({
@@ -128,7 +118,6 @@ export const IframeMarkdownRenderer: React.FC = () => {
           <MarkdownDocument
             additionalOuterContainerClasses={'vh-100 bg-light'}
             markdownContentLines={markdownContentLines}
-            onFirstHeadingChange={onFirstHeadingChange}
             onMakeScrollSource={onMakeScrollSource}
             scrollState={scrollState}
             onScroll={onScroll}
@@ -141,7 +130,6 @@ export const IframeMarkdownRenderer: React.FC = () => {
           <SlideshowMarkdownRenderer
             markdownContentLines={markdownContentLines}
             baseUrl={baseConfiguration.baseUrl}
-            onFirstHeadingChange={onFirstHeadingChange}
             scrollState={scrollState}
             slideOptions={slideOptions}
           />
@@ -159,16 +147,7 @@ export const IframeMarkdownRenderer: React.FC = () => {
       default:
         return null
     }
-  }, [
-    baseConfiguration,
-    markdownContentLines,
-    onFirstHeadingChange,
-    onHeightChange,
-    onMakeScrollSource,
-    onScroll,
-    scrollState,
-    slideOptions
-  ])
+  }, [baseConfiguration, markdownContentLines, onHeightChange, onMakeScrollSource, onScroll, scrollState, slideOptions])
 
   const extensionEventEmitter = useMemo(() => new EventEmitter2({ wildcard: true }), [])
 

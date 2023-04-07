@@ -6,13 +6,12 @@
 import type { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
 import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
 import { RevealMarkdownExtension } from './extensions/reveal/reveal-markdown-extension'
-import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
 import { useMarkdownExtensions } from './hooks/use-markdown-extensions'
 import { REVEAL_STATUS, useReveal } from './hooks/use-reveal'
 import { LoadingSlide } from './loading-slide'
 import { MarkdownToReact } from './markdown-to-react/markdown-to-react'
 import type { SlideOptions } from '@hedgedoc/commons'
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 
 export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererProps {
   slideOptions?: SlideOptions
@@ -23,8 +22,6 @@ export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererPr
  *
  * @param className Additional class names directly given to the div
  * @param markdownContentLines The markdown lines
- * @param onFirstHeadingChange The callback to call if the first heading changes.
- * @param onLineMarkerPositionChanged The callback to call with changed {@link LineMarkers}
  * @param baseUrl The base url of the renderer
  * @param newlinesAreBreaks If newlines are rendered as breaks or not
  * @param slideOptions The {@link SlideOptions} to use
@@ -32,7 +29,6 @@ export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererPr
 export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps & ScrollProps> = ({
   className,
   markdownContentLines,
-  onFirstHeadingChange,
   baseUrl,
   newlinesAreBreaks,
   slideOptions
@@ -45,13 +41,6 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps 
   )
 
   const revealStatus = useReveal(markdownContentLines, slideOptions)
-
-  const extractFirstHeadline = useExtractFirstHeadline(markdownBodyRef, onFirstHeadingChange)
-  useEffect(() => {
-    if (revealStatus === REVEAL_STATUS.INITIALISED) {
-      extractFirstHeadline()
-    }
-  }, [extractFirstHeadline, markdownContentLines, revealStatus])
 
   const slideShowDOM = useMemo(
     () =>
