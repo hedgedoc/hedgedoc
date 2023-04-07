@@ -11,7 +11,6 @@ export enum CommunicationMessageType {
   SET_MARKDOWN_CONTENT = 'SET_MARKDOWN_CONTENT',
   RENDERER_READY = 'RENDERER_READY',
   SET_DARKMODE = 'SET_DARKMODE',
-  ON_FIRST_HEADING_CHANGE = 'ON_FIRST_HEADING_CHANGE',
   ENABLE_RENDERER_SCROLL_SOURCE = 'ENABLE_RENDERER_SCROLL_SOURCE',
   DISABLE_RENDERER_SCROLL_SOURCE = 'DISABLE_RENDERER_SCROLL_SOURCE',
   SET_SCROLL_STATE = 'SET_SCROLL_STATE',
@@ -72,11 +71,6 @@ export interface SetScrollStateMessage {
   scrollState: ScrollState
 }
 
-export interface OnFirstHeadingChangeMessage {
-  type: CommunicationMessageType.ON_FIRST_HEADING_CHANGE
-  firstHeading: string | undefined
-}
-
 export interface SetSlideOptionsMessage {
   type: CommunicationMessageType.SET_SLIDE_OPTIONS
   slideOptions: SlideOptions
@@ -101,7 +95,6 @@ export type CommunicationMessages =
   | GetWordCountMessage
   | SetMarkdownContentMessage
   | SetScrollStateMessage
-  | OnFirstHeadingChangeMessage
   | SetSlideOptionsMessage
   | OnHeightChangeMessage
   | OnWordCountCalculatedMessage
@@ -120,7 +113,6 @@ export type EditorToRendererMessageType =
 export type RendererToEditorMessageType =
   | CommunicationMessageType.RENDERER_READY
   | CommunicationMessageType.ENABLE_RENDERER_SCROLL_SOURCE
-  | CommunicationMessageType.ON_FIRST_HEADING_CHANGE
   | CommunicationMessageType.SET_SCROLL_STATE
   | CommunicationMessageType.ON_HEIGHT_CHANGE
   | CommunicationMessageType.ON_WORD_COUNT_CALCULATED

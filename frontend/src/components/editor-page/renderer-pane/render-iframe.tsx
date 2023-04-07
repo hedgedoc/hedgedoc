@@ -13,7 +13,6 @@ import type { RendererProps } from '../../render-page/markdown-document'
 import { useEditorReceiveHandler } from '../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
 import type {
   ExtensionEvent,
-  OnFirstHeadingChangeMessage,
   OnHeightChangeMessage,
   RendererType,
   SetScrollStateMessage
@@ -45,7 +44,6 @@ const log = new Logger('RenderIframe')
  * @param markdownContentLines Array of lines of the markdown content
  * @param onTaskCheckedChange Callback that is fired when a task-list item in the iframe is checked
  * @param scrollState The current {@link ScrollState}
- * @param onFirstHeadingChange Callback that is fired when the first heading of the note changes
  * @param onScroll Callback that is fired when the user scrolls in the iframe
  * @param onMakeScrollSource Callback that is fired when the renderer requests to be set as the current scroll source
  * @param frameClasses CSS classes that should be applied to the iframe
@@ -57,7 +55,6 @@ const log = new Logger('RenderIframe')
 export const RenderIframe: React.FC<RenderIframeProps> = ({
   markdownContentLines,
   scrollState,
-  onFirstHeadingChange,
   onScroll,
   onMakeScrollSource,
   frameClasses,
@@ -91,14 +88,6 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   useEffect(() => {
     onRendererStatusChange?.(rendererReady)
   }, [onRendererStatusChange, rendererReady])
-
-  useEditorReceiveHandler(
-    CommunicationMessageType.ON_FIRST_HEADING_CHANGE,
-    useCallback(
-      (values: OnFirstHeadingChangeMessage) => onFirstHeadingChange?.(values.firstHeading),
-      [onFirstHeadingChange]
-    )
-  )
 
   useEditorReceiveHandler(
     CommunicationMessageType.ENABLE_RENDERER_SCROLL_SOURCE,

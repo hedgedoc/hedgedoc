@@ -10,10 +10,9 @@ import type { LineMarkers } from './extensions/linemarker/add-line-marker-markdo
 import { LinemarkerMarkdownExtension } from './extensions/linemarker/linemarker-markdown-extension'
 import type { LineMarkerPosition } from './extensions/linemarker/types'
 import { useCalculateLineMarkerPosition } from './hooks/use-calculate-line-marker-positions'
-import { useExtractFirstHeadline } from './hooks/use-extract-first-headline'
 import { useMarkdownExtensions } from './hooks/use-markdown-extensions'
 import { MarkdownToReact } from './markdown-to-react/markdown-to-react'
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export interface DocumentMarkdownRendererProps extends CommonMarkdownRendererProps {
@@ -25,9 +24,7 @@ export interface DocumentMarkdownRendererProps extends CommonMarkdownRendererPro
  *
  * @param className Additional class names directly given to the div
  * @param markdownContentLines The markdown lines
- * @param onFirstHeadingChange The callback to call if the first heading changes.
  * @param onLineMarkerPositionChanged The callback to call with changed {@link LineMarkers}
- * @param onTaskCheckedChange The callback to call if a task is checked or unchecked.
  * @param baseUrl The base url of the renderer
  * @param outerContainerRef A reference for the outer container
  * @param newlinesAreBreaks If newlines are rendered as breaks or not
@@ -35,7 +32,6 @@ export interface DocumentMarkdownRendererProps extends CommonMarkdownRendererPro
 export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> = ({
   className,
   markdownContentLines,
-  onFirstHeadingChange,
   onLineMarkerPositionChanged,
   baseUrl,
   outerContainerRef,
@@ -57,10 +53,6 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
 
   useTranslation()
   useCalculateLineMarkerPosition(markdownBodyRef, currentLineMarkers.current, onLineMarkerPositionChanged)
-  const extractFirstHeadline = useExtractFirstHeadline(markdownBodyRef, onFirstHeadingChange)
-  useEffect(() => {
-    extractFirstHeadline()
-  }, [extractFirstHeadline, markdownContentLines])
 
   return (
     <div ref={outerContainerRef} className={`position-relative`}>
