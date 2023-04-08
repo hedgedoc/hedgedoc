@@ -28,6 +28,9 @@ export const useMarkdownExtensions = (
   const extensionEventEmitter = useExtensionEventEmitter()
   const frontendConfig = useFrontendConfig()
   return useMemo(() => {
+    if (!extensionEventEmitter) {
+      throw new Error("can't build markdown render extensions without event emitter.")
+    }
     return [
       ...optionalAppExtensions.flatMap((extension) =>
         extension.buildMarkdownRendererExtensions({

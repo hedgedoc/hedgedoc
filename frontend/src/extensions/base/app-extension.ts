@@ -14,7 +14,7 @@ import { Fragment } from 'react'
 
 export interface MarkdownRendererExtensionOptions {
   frontendConfig: FrontendConfig
-  eventEmitter?: EventEmitter2
+  eventEmitter: EventEmitter2
 }
 
 export abstract class AppExtension {
