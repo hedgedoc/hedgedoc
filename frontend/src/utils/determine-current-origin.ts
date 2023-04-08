@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { isClientSideRendering } from './is-client-side-rendering'
+import { Optional } from '@mrdrogdrog/optional'
+import type { IncomingHttpHeaders } from 'http'
 import type { NextPageContext } from 'next'
 
 /**
@@ -18,16 +20,21 @@ export const determineCurrentOrigin = (context: NextPageContext): string | undef
   if (isClientSideRendering()) {
     return window.location.origin
   }
-  const headers = context.req?.headers
-  if (headers === undefined) {
-    return undefined
-  }
+  return Optional.ofNullable(context.req?.headers)
+    .flatMap((headers) => buildOriginFromHeaders(headers))
+    .orElse(undefined)
+}
 
-  const protocol = headers['x-forwarded-proto'] ?? 'http'
-  const host = headers['x-forwarded-host'] ?? headers['host']
-  if (host === undefined) {
-    return undefined
-  }
+const buildOriginFromHeaders = (headers: IncomingHttpHeaders) => {
+  const rawHost = headers['x-forwarded-host'] ?? headers['host']
+  return extractFirstValue(rawHost).map((host) => {
+    const protocol = extractFirstValue(headers['x-forwarded-proto']).orElse('http')
+    return `${protocol}://${host}`
+  })
+}
 
-  return `${protocol as string}://${host as string}`
+const extractFirstValue = (rawValue: string | string[] | undefined): Optional<string> => {
+  return Optional.ofNullable(rawValue)
+    .map((value) => (typeof value === 'string' ? value : value[0]))
+    .map((value) => value.split(',')[0])
 }
