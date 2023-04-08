@@ -32,3 +32,5 @@ export * from './title-extraction/generate-note-title.js'
 export * from './title-extraction/types/iso6391.js'
 export * from './title-extraction/types/frontmatter.js'
 export * from './title-extraction/types/slide-show-options.js'
+
+export { extractFirstHeading } from './title-extraction/extract-first-heading.js'
