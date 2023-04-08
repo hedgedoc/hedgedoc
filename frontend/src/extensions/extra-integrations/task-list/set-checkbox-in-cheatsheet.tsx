@@ -10,22 +10,29 @@ import type { TaskCheckedEventPayload } from './event-emitting-task-list-checkbo
 import { findCheckBox } from './find-check-box'
 import { TaskListCheckboxAppExtension } from './task-list-checkbox-app-extension'
 import type React from 'react'
+import { useCallback } from 'react'
 
 /**
  * Receives task-checkbox-change events and modify the current editor content.
  */
 export const SetCheckboxInCheatsheet: React.FC<CheatsheetExtensionComponentProps> = ({ setContent }) => {
-  useExtensionEventEmitterHandler(TaskListCheckboxAppExtension.EVENT_NAME, (event: TaskCheckedEventPayload) => {
-    setContent((previousContent) => {
-      return findCheckBox(previousContent, event.lineInMarkdown)
-        .map(
-          ([startIndex, endIndex]) =>
-            previousContent.slice(0, startIndex) +
-            createCheckboxContent(event.newCheckedState) +
-            previousContent.slice(endIndex)
+  useExtensionEventEmitterHandler(
+    TaskListCheckboxAppExtension.EVENT_NAME,
+    useCallback(
+      (event: TaskCheckedEventPayload) => {
+        setContent((previousContent) =>
+          findCheckBox(previousContent, event.lineInMarkdown)
+            .map(
+              ([startIndex, endIndex]) =>
+                previousContent.slice(0, startIndex) +
+                createCheckboxContent(event.newCheckedState) +
+                previousContent.slice(endIndex)
+            )
+            .orElse(previousContent)
         )
-        .orElse(previousContent)
-    })
-  })
+      },
+      [setContent]
+    )
+  )
   return null
 }
