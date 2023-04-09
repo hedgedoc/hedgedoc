@@ -2276,7 +2276,7 @@ __metadata:
     ts-mockery: 1.2.0
     ts-node: 10.9.1
     tsconfig-paths: 4.2.0
-    typeorm: 0.3.13
+    typeorm: 0.3.14
     typescript: 5.0.4
     ws: 8.13.0
     yjs: 13.5.52
@@ -17794,9 +17794,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typeorm@npm:0.3.13":
-  version: 0.3.13
-  resolution: "typeorm@npm:0.3.13"
+"typeorm@npm:0.3.14":
+  version: 0.3.14
+  resolution: "typeorm@npm:0.3.14"
   dependencies:
     "@sqltools/formatter": ^1.2.5
     app-root-path: ^3.1.0
@@ -17806,13 +17806,11 @@ __metadata:
     debug: ^4.3.4
     dotenv: ^16.0.3
     glob: ^8.1.0
-    js-yaml: ^4.1.0
     mkdirp: ^2.1.3
     reflect-metadata: ^0.1.13
     sha.js: ^2.4.11
     tslib: ^2.5.0
     uuid: ^9.0.0
-    xml2js: ^0.4.23
     yargs: ^17.6.2
   peerDependencies:
     "@google-cloud/spanner": ^5.18.0
@@ -17871,7 +17869,7 @@ __metadata:
     typeorm: cli.js
     typeorm-ts-node-commonjs: cli-ts-node-commonjs.js
     typeorm-ts-node-esm: cli-ts-node-esm.js
-  checksum: 086b7598323a44540992f9b8a904d8750880d63dd6506ac284318af9c365a106650e31af1dd590423e5ea3858f5d411a2cc3059b74cd7eec068e480127f9058d
+  checksum: bbbef95275265ceab30bc0286579236c6d96fe77912e7999b9b22f43a227175385c9aa39b64c1ac9c6bf4f5ec2c63de1c5dc7f15292071a8b79e287bb81a5d10
   languageName: node
   linkType: hard
 
@@ -19041,7 +19039,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xml2js@npm:^0.4.15, xml2js@npm:^0.4.19, xml2js@npm:^0.4.23":
+"xml2js@npm:^0.4.15, xml2js@npm:^0.4.19":
   version: 0.4.23
   resolution: "xml2js@npm:0.4.23"
   dependencies:
