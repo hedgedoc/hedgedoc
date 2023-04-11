@@ -77,7 +77,8 @@ export const CheatsheetEntryPane: React.FC<CheatsheetRendererProps> = ({ extensi
             frameClasses={'w-100'}
             adaptFrameHeightToContent={true}
             rendererType={RendererType.SIMPLE}
-            markdownContentLines={lines}></RenderIframe>
+            markdownContentLines={lines}
+          />
         </ListGroupItem>
       </ExtensionEventEmitterProvider>
     </EditorToRendererCommunicatorContextProvider>
