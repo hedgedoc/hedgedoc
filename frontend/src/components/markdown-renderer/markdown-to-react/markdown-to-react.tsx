@@ -21,12 +21,13 @@ export interface MarkdownToReactProps {
 }
 
 /**
- * Renders Markdown code.
+ * Renders Markdown code as DOM
  *
  * @param markdownContentLines The Markdown code lines that should be rendered
  * @param additionalMarkdownExtensions A list of {@link MarkdownRendererExtension markdown extensions} that should be used
  * @param newlinesAreBreaks Defines if the alternative break mode of markdown it should be used
  * @param allowHtml Defines if html is allowed in markdown
+ * @see https://markdown-it.github.io/
  */
 export const MarkdownToReact: React.FC<MarkdownToReactProps> = ({
   markdownContentLines,
