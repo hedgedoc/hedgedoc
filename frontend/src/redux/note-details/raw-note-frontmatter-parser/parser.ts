@@ -38,7 +38,7 @@ const parseRawNoteFrontmatter = (rawData: RawNoteFrontmatter): NoteFrontmatter =
     title: rawData.title ?? initialState.frontmatter.title,
     description: rawData.description ?? initialState.frontmatter.description,
     robots: rawData.robots ?? initialState.frontmatter.robots,
-    newlinesAreBreaks: rawData.breaks ?? initialState.frontmatter.newlinesAreBreaks,
+    newlinesAreBreaks: parseBoolean(rawData.breaks) ?? initialState.frontmatter.newlinesAreBreaks,
     GA: rawData.GA ?? initialState.frontmatter.GA,
     disqus: rawData.disqus ?? initialState.frontmatter.disqus,
     lang: parseLanguage(rawData),

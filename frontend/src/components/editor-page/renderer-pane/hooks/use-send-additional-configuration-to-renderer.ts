@@ -20,6 +20,7 @@ export const useSendAdditionalConfigurationToRenderer = (
   forcedDarkMode: DarkModePreference = DarkModePreference.AUTO
 ): void => {
   const darkModePreference = useApplicationState((state) => state.darkMode.darkModePreference)
+  const newlinesAreBreaks = useApplicationState((state) => state.noteDetails.frontmatter.newlinesAreBreaks)
 
   const darkMode = useMemo(() => {
     return forcedDarkMode === DarkModePreference.AUTO ? darkModePreference : forcedDarkMode
@@ -29,9 +30,10 @@ export const useSendAdditionalConfigurationToRenderer = (
     useMemo(
       () => ({
         type: CommunicationMessageType.SET_ADDITIONAL_CONFIGURATION,
-        darkModePreference: darkMode
+        darkModePreference: darkMode,
+        newLinesAreBreaks: newlinesAreBreaks
       }),
-      [darkMode]
+      [darkMode, newlinesAreBreaks]
     ),
     rendererReady
   )
