@@ -10,16 +10,17 @@ import { isTestMode } from '../../../utils/test-modes'
 import { ShowIf } from '../../common/show-if/show-if'
 import { WaitSpinner } from '../../common/wait-spinner/wait-spinner'
 import { useExtensionEventEmitter } from '../../markdown-renderer/hooks/use-extension-event-emitter'
-import type { RendererProps } from '../../render-page/markdown-document'
+import type { CommonMarkdownRendererProps } from '../../render-page/renderers/common-markdown-renderer-props'
 import { useEditorReceiveHandler } from '../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
 import type {
   ExtensionEvent,
   OnHeightChangeMessage,
-  RendererType,
   SetScrollStateMessage
 } from '../../render-page/window-post-message-communicator/rendering-message'
+import type { RendererType } from '../../render-page/window-post-message-communicator/rendering-message'
 import { CommunicationMessageType } from '../../render-page/window-post-message-communicator/rendering-message'
 import { useEditorToRendererCommunicator } from '../render-context/editor-to-renderer-communicator-context-provider'
+import type { ScrollProps } from '../synced-scroll/scroll-props'
 import { useEffectOnRenderTypeChange } from './hooks/use-effect-on-render-type-change'
 import { useForceRenderPageUrlOnIframeLoadCallback } from './hooks/use-force-render-page-url-on-iframe-load-callback'
 import { useSendAdditionalConfigurationToRenderer } from './hooks/use-send-additional-configuration-to-renderer'
@@ -27,7 +28,7 @@ import { useSendMarkdownToRenderer } from './hooks/use-send-markdown-to-renderer
 import { useSendScrollState } from './hooks/use-send-scroll-state'
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-export interface RenderIframeProps extends RendererProps {
+export interface RenderIframeProps extends Omit<CommonMarkdownRendererProps & ScrollProps, 'baseUrl'> {
   rendererType: RendererType
   forcedDarkMode?: DarkModePreference
   frameClasses?: string
@@ -90,11 +91,6 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
     onRendererStatusChange?.(rendererReady)
   }, [onRendererStatusChange, rendererReady])
 
-  useEditorReceiveHandler(
-    CommunicationMessageType.ENABLE_RENDERER_SCROLL_SOURCE,
-    useCallback(() => onMakeScrollSource?.(), [onMakeScrollSource])
-  )
-
   const eventEmitter = useExtensionEventEmitter()
 
   useEditorReceiveHandler(
@@ -147,11 +143,15 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   useEffectOnRenderTypeChange(rendererType, onIframeLoad)
   useSendAdditionalConfigurationToRenderer(rendererReady, forcedDarkMode)
   useSendMarkdownToRenderer(markdownContentLines, rendererReady)
-  useSendScrollState(scrollState, rendererReady)
 
+  useSendScrollState(scrollState, rendererReady)
   useEditorReceiveHandler(
     CommunicationMessageType.SET_SCROLL_STATE,
     useCallback((values: SetScrollStateMessage) => onScroll?.(values.scrollState), [onScroll])
+  )
+  useEditorReceiveHandler(
+    CommunicationMessageType.ENABLE_RENDERER_SCROLL_SOURCE,
+    useCallback(() => onMakeScrollSource?.(), [onMakeScrollSource])
   )
 
   return (
