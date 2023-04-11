@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { DarkModePreference } from '../../../../redux/dark-mode/types'
 import { useSendToRenderer } from '../../../render-page/window-post-message-communicator/hooks/use-send-to-renderer'
 import { CommunicationMessageType } from '../../../render-page/window-post-message-communicator/rendering-message'
 import { useMemo } from 'react'
@@ -14,16 +15,23 @@ import { useMemo } from 'react'
  * @param forcedDarkMode Overwrites the value from the global application states if set.
  * @param rendererReady Defines if the target renderer is ready
  */
-export const useSendDarkModeStatusToRenderer = (forcedDarkMode: boolean | undefined, rendererReady: boolean): void => {
+export const useSendDarkModeStatusToRenderer = (
+  rendererReady: boolean,
+  forcedDarkMode: DarkModePreference = DarkModePreference.AUTO
+): void => {
   const darkModePreference = useApplicationState((state) => state.darkMode.darkModePreference)
+
+  const darkMode = useMemo(() => {
+    return forcedDarkMode === DarkModePreference.AUTO ? darkModePreference : forcedDarkMode
+  }, [darkModePreference, forcedDarkMode])
 
   useSendToRenderer(
     useMemo(
       () => ({
         type: CommunicationMessageType.SET_DARKMODE,
-        preference: darkModePreference
+        preference: darkMode
       }),
-      [darkModePreference]
+      [darkMode]
     ),
     rendererReady
   )
