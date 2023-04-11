@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
-import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
 import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
+import { mockI18n } from '../../../test-utils/mock-i18n'
 import * as CsvTableModule from '../csv/csv-table'
 import { CsvTableMarkdownExtension } from './csv-table-markdown-extension'
 import { render } from '@testing-library/react'

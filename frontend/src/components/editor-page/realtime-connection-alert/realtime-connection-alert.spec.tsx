@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import * as UseApplicationStateModule from '../../../hooks/common/use-application-state'
-import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
+import { mockI18n } from '../../../test-utils/mock-i18n'
 import { RealtimeConnectionAlert } from './realtime-connection-alert'
 import { render } from '@testing-library/react'
 

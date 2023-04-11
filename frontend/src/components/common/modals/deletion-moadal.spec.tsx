@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { mockI18n } from '../../../test-utils/mock-i18n'
 import { mockNoteOwnership } from '../../../test-utils/note-ownership'
-import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
 import { DeletionModal } from './deletion-modal'
 import { render, screen } from '@testing-library/react'
 

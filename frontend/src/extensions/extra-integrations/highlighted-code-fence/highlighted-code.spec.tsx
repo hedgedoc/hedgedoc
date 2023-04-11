@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
+import { mockI18n } from '../../../test-utils/mock-i18n'
 import HighlightedCode from './highlighted-code'
 import { render, screen } from '@testing-library/react'
 
