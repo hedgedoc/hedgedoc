@@ -25,6 +25,7 @@ export const IframeMarkdownRenderer: React.FC = () => {
   const [scrollState, setScrollState] = useState<ScrollState>({ firstLineInView: 1, scrolledPercentage: 0 })
   const [baseConfiguration, setBaseConfiguration] = useState<BaseConfiguration | undefined>(undefined)
   const [slideOptions, setSlideOptions] = useState<SlideOptions>()
+  const [newLinesAreBreaks, setNewLinesAreBreaks] = useState<boolean>(true)
 
   const communicator = useRendererToEditorCommunicator()
 
@@ -54,7 +55,10 @@ export const IframeMarkdownRenderer: React.FC = () => {
 
   useRendererReceiveHandler(
     CommunicationMessageType.SET_ADDITIONAL_CONFIGURATION,
-    useCallback((values) => setDarkModePreference(values.darkModePreference), [])
+    useCallback((values) => {
+      setNewLinesAreBreaks(values.newLinesAreBreaks)
+      setDarkModePreference(values.darkModePreference)
+    }, [])
   )
 
   useRendererReceiveHandler(
@@ -123,6 +127,7 @@ export const IframeMarkdownRenderer: React.FC = () => {
             onScroll={onScroll}
             baseUrl={baseConfiguration.baseUrl}
             onHeightChange={onHeightChange}
+            newLinesAreBreaks={newLinesAreBreaks}
           />
         )
       case RendererType.SLIDESHOW:
@@ -132,6 +137,7 @@ export const IframeMarkdownRenderer: React.FC = () => {
             baseUrl={baseConfiguration.baseUrl}
             scrollState={scrollState}
             slideOptions={slideOptions}
+            newlinesAreBreaks={newLinesAreBreaks}
           />
         )
       case RendererType.SIMPLE:
@@ -142,12 +148,22 @@ export const IframeMarkdownRenderer: React.FC = () => {
             baseUrl={baseConfiguration.baseUrl}
             disableToc={true}
             onHeightChange={onHeightChange}
+            newLinesAreBreaks={newLinesAreBreaks}
           />
         )
       default:
         return null
     }
-  }, [baseConfiguration, markdownContentLines, onHeightChange, onMakeScrollSource, onScroll, scrollState, slideOptions])
+  }, [
+    baseConfiguration,
+    markdownContentLines,
+    newLinesAreBreaks,
+    onHeightChange,
+    onMakeScrollSource,
+    onScroll,
+    scrollState,
+    slideOptions
+  ])
 
   const extensionEventEmitter = useMemo(() => new EventEmitter2({ wildcard: true }), [])
 
