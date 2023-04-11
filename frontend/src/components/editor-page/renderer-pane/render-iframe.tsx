@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { DarkModePreference } from '../../../redux/dark-mode/types'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { Logger } from '../../../utils/logger'
 import { isTestMode } from '../../../utils/test-modes'
@@ -28,7 +29,7 @@ import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } fr
 
 export interface RenderIframeProps extends RendererProps {
   rendererType: RendererType
-  forcedDarkMode?: boolean
+  forcedDarkMode?: DarkModePreference
   frameClasses?: string
   onRendererStatusChange?: undefined | ((rendererReady: boolean) => void)
   adaptFrameHeightToContent?: boolean
@@ -144,7 +145,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   )
 
   useEffectOnRenderTypeChange(rendererType, onIframeLoad)
-  useSendDarkModeStatusToRenderer(forcedDarkMode, rendererReady)
+  useSendDarkModeStatusToRenderer(rendererReady, forcedDarkMode)
   useSendMarkdownToRenderer(markdownContentLines, rendererReady)
   useSendScrollState(scrollState, rendererReady)
 

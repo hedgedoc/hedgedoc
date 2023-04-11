@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { DarkModePreference } from '../../redux/dark-mode/types'
 import { Logger } from '../../utils/logger'
 import { AsyncLoadingBoundary } from '../common/async-loading-boundary/async-loading-boundary'
 import { RenderIframe } from '../editor-page/renderer-pane/render-iframe'
@@ -31,7 +32,7 @@ export const IntroCustomContent: React.FC = () => {
         frameClasses={'w-100 overflow-y-hidden'}
         markdownContentLines={value as string[]}
         rendererType={RendererType.SIMPLE}
-        forcedDarkMode={true}
+        forcedDarkMode={DarkModePreference.DARK}
         adaptFrameHeightToContent={true}
       />
     </AsyncLoadingBoundary>
