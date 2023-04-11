@@ -10,7 +10,7 @@ import type { NextPage } from 'next'
 import React from 'react'
 
 /**
- * Renders the actual markdown renderer that receives the content and meta data via iframe communication.
+ * Renders the actual markdown renderer that receives the content and metadata via iframe communication.
  */
 export const RenderPage: NextPage = () => {
   useApplyDarkMode()
