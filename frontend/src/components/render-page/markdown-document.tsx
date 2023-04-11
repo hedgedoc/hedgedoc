@@ -24,6 +24,7 @@ export interface MarkdownDocumentProps extends RendererProps {
   additionalRendererClasses?: string
   disableToc?: boolean
   baseUrl: string
+  newLinesAreBreaks?: boolean
 }
 
 /**
@@ -38,6 +39,7 @@ export interface MarkdownDocumentProps extends RendererProps {
  * @param scrollState The current {@link ScrollState}
  * @param onHeightChange The callback to call if the height of the document changes
  * @param disableToc If the table of contents should be disabled.
+ * @param newLinesAreBreaks Defines if the provided markdown content should treat new lines as breaks
  * @see https://markdown-it.github.io/
  */
 export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
@@ -49,7 +51,8 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
   onScroll,
   scrollState,
   onHeightChange,
-  disableToc
+  disableToc,
+  newLinesAreBreaks
 }) => {
   const rendererRef = useRef<HTMLDivElement | null>(null)
   const [rendererSize, setRendererSize] = useState<DOMRectReadOnly>()
@@ -63,8 +66,6 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
   useResizeObserver(internalDocumentRenderPaneRef.current, (entry) =>
     setInternalDocumentRenderPaneSize(entry.contentRect)
   )
-
-  const newlinesAreBreaks = useApplicationState((state) => state.noteDetails.frontmatter.newlinesAreBreaks)
 
   const contentLineCount = useMemo(() => markdownContentLines.length, [markdownContentLines])
   const [recalculateLineMarkers, onUserScroll] = useDocumentSyncScrolling(
@@ -91,7 +92,7 @@ export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
           markdownContentLines={markdownContentLines}
           onLineMarkerPositionChanged={recalculateLineMarkers}
           baseUrl={baseUrl}
-          newlinesAreBreaks={newlinesAreBreaks}
+          newlinesAreBreaks={newLinesAreBreaks}
         />
       </div>
       <DocumentTocSidebar

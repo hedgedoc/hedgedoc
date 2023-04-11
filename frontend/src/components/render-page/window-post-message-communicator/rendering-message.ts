@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { DarkModePreference } from '../../../redux/dark-mode/types';
-import type { ScrollState } from '../../editor-page/synced-scroll/scroll-props';
-import type { SlideOptions } from '@hedgedoc/commons';
-
+import type { DarkModePreference } from '../../../redux/dark-mode/types'
+import type { ScrollState } from '../../editor-page/synced-scroll/scroll-props'
+import type { SlideOptions } from '@hedgedoc/commons'
 
 export enum CommunicationMessageType {
   SET_MARKDOWN_CONTENT = 'SET_MARKDOWN_CONTENT',
@@ -31,6 +30,7 @@ export interface NoPayloadMessage<TYPE extends CommunicationMessageType> {
 export interface SetAdditionalConfigurationMessage {
   type: CommunicationMessageType.SET_ADDITIONAL_CONFIGURATION
   darkModePreference: DarkModePreference
+  newLinesAreBreaks: boolean
 }
 
 export interface ExtensionEvent {
