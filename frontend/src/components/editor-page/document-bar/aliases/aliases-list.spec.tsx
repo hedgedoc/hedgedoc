@@ -5,7 +5,7 @@
  */
 import type { Alias } from '../../../../api/alias/types'
 import * as useApplicationStateModule from '../../../../hooks/common/use-application-state'
-import { mockI18n } from '../../../markdown-renderer/test-utils/mock-i18n'
+import { mockI18n } from '../../../../test-utils/mock-i18n'
 import { AliasesList } from './aliases-list'
 import * as AliasesListEntryModule from './aliases-list-entry'
 import type { AliasesListEntryProps } from './aliases-list-entry'

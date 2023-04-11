@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { IdProps } from '../../../components/markdown-renderer/replace-components/custom-tag-with-id-component-replacer'
-import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
 import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
+import { mockI18n } from '../../../test-utils/mock-i18n'
 import * as YouTubeFrameModule from './youtube-frame'
 import { YoutubeMarkdownExtension } from './youtube-markdown-extension'
 import { render } from '@testing-library/react'

@@ -6,7 +6,7 @@
 import * as createNoteWithPrimaryAliasModule from '../../../api/notes'
 import type { Note, NoteMetadata } from '../../../api/notes/types'
 import * as useSingleStringUrlParameterModule from '../../../hooks/common/use-single-string-url-parameter'
-import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
+import { mockI18n } from '../../../test-utils/mock-i18n'
 import { CreateNonExistingNoteHint } from './create-non-existing-note-hint'
 import { waitForOtherPromisesToFinish } from '@hedgedoc/commons'
 import { act, render, screen, waitFor } from '@testing-library/react'
