@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { RendererToEditorCommunicatorContextProvider } from '../components/editor-page/render-context/renderer-to-editor-communicator-context-provider'
-import { IframeMarkdownRenderer } from '../components/render-page/iframe-markdown-renderer'
+import { RenderPageContent } from '../components/render-page/render-page-content'
 import { useApplyDarkMode } from '../hooks/common/use-apply-dark-mode'
 import type { NextPage } from 'next'
 import React from 'react'
@@ -17,7 +17,7 @@ export const RenderPage: NextPage = () => {
 
   return (
     <RendererToEditorCommunicatorContextProvider>
-      <IframeMarkdownRenderer />
+      <RenderPageContent />
     </RendererToEditorCommunicatorContextProvider>
   )
 }
