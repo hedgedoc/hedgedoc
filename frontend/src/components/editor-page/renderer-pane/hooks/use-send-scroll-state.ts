@@ -3,32 +3,29 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { useSendToRenderer } from '../../../render-page/window-post-message-communicator/hooks/use-send-to-renderer'
 import { CommunicationMessageType } from '../../../render-page/window-post-message-communicator/rendering-message'
-import { useEditorToRendererCommunicator } from '../../render-context/editor-to-renderer-communicator-context-provider'
 import type { ScrollState } from '../../synced-scroll/scroll-props'
 import equal from 'fast-deep-equal'
-import { useEffect, useRef } from 'react'
+import { useMemo, useRef } from 'react'
 
 /**
  * Sends the given {@link ScrollState scroll state} to the renderer if the content changed.
  *
  * @param scrollState The scroll state to send
+ * @param rendererReady Defines if the target renderer is ready
  */
-export const useSendScrollState = (scrollState: ScrollState | undefined): void => {
-  const iframeCommunicator = useEditorToRendererCommunicator()
+export const useSendScrollState = (scrollState: ScrollState | undefined, rendererReady: boolean): void => {
   const oldScrollState = useRef<ScrollState | undefined>(undefined)
-  const rendererReady = useApplicationState((state) => state.rendererStatus.rendererReady)
 
-  useEffect(() => {
-    if (
-      iframeCommunicator.isCommunicationEnabled() &&
-      rendererReady &&
-      scrollState &&
-      !equal(scrollState, oldScrollState.current)
-    ) {
+  useSendToRenderer(
+    useMemo(() => {
+      if (!scrollState || equal(scrollState, oldScrollState.current)) {
+        return
+      }
       oldScrollState.current = scrollState
-      iframeCommunicator.sendMessageToOtherSide({ type: CommunicationMessageType.SET_SCROLL_STATE, scrollState })
-    }
-  }, [iframeCommunicator, rendererReady, scrollState])
+      return { type: CommunicationMessageType.SET_SCROLL_STATE, scrollState }
+    }, [scrollState]),
+    rendererReady
+  )
 }
