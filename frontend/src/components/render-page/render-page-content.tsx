@@ -20,7 +20,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 /**
  * Wraps the markdown rendering in an iframe.
  */
-export const IframeMarkdownRenderer: React.FC = () => {
+export const RenderPageContent: React.FC = () => {
   const [markdownContentLines, setMarkdownContentLines] = useState<string[]>([])
   const [scrollState, setScrollState] = useState<ScrollState>({ firstLineInView: 1, scrolledPercentage: 0 })
   const [baseConfiguration, setBaseConfiguration] = useState<BaseConfiguration | undefined>(undefined)
