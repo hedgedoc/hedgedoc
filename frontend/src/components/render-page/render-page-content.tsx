@@ -7,13 +7,14 @@ import { setDarkModePreference } from '../../redux/dark-mode/methods'
 import { useRendererToEditorCommunicator } from '../editor-page/render-context/renderer-to-editor-communicator-context-provider'
 import type { ScrollState } from '../editor-page/synced-scroll/scroll-props'
 import { eventEmitterContext } from '../markdown-renderer/hooks/use-extension-event-emitter'
-import { SlideshowMarkdownRenderer } from '../markdown-renderer/slideshow-markdown-renderer'
-import { MarkdownDocument } from './markdown-document'
+import { DocumentMarkdownRenderer } from './renderers/document/document-markdown-renderer'
+import { SimpleMarkdownRenderer } from './renderers/simple/simple-markdown-renderer'
+import { SlideshowMarkdownRenderer } from './renderers/slideshow/slideshow-markdown-renderer'
 import { useRendererReceiveHandler } from './window-post-message-communicator/hooks/use-renderer-receive-handler'
 import type { BaseConfiguration } from './window-post-message-communicator/rendering-message'
 import { CommunicationMessageType, RendererType } from './window-post-message-communicator/rendering-message'
 import { countWords } from './word-counter'
-import type { SlideOptions } from '@hedgedoc/commons/src/title-extraction/types/slide-show-options'
+import type { SlideOptions } from '@hedgedoc/commons'
 import { EventEmitter2 } from 'eventemitter2'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
@@ -24,12 +25,10 @@ export const RenderPageContent: React.FC = () => {
   const [markdownContentLines, setMarkdownContentLines] = useState<string[]>([])
   const [scrollState, setScrollState] = useState<ScrollState>({ firstLineInView: 1, scrolledPercentage: 0 })
   const [baseConfiguration, setBaseConfiguration] = useState<BaseConfiguration | undefined>(undefined)
-  const [slideOptions, setSlideOptions] = useState<SlideOptions>()
-  const [newLinesAreBreaks, setNewLinesAreBreaks] = useState<boolean>(true)
-
   const communicator = useRendererToEditorCommunicator()
-
   const sendScrolling = useRef<boolean>(false)
+  const [newLinesAreBreaks, setNewLinesAreBreaks] = useState<boolean>(true)
+  const [slideOptions, setSlideOptions] = useState<SlideOptions>()
 
   useRendererReceiveHandler(
     CommunicationMessageType.SET_SLIDE_OPTIONS,
@@ -119,8 +118,7 @@ export const RenderPageContent: React.FC = () => {
     switch (baseConfiguration.rendererType) {
       case RendererType.DOCUMENT:
         return (
-          <MarkdownDocument
-            additionalOuterContainerClasses={'vh-100 bg-light'}
+          <DocumentMarkdownRenderer
             markdownContentLines={markdownContentLines}
             onMakeScrollSource={onMakeScrollSource}
             scrollState={scrollState}
@@ -135,20 +133,17 @@ export const RenderPageContent: React.FC = () => {
           <SlideshowMarkdownRenderer
             markdownContentLines={markdownContentLines}
             baseUrl={baseConfiguration.baseUrl}
-            scrollState={scrollState}
+            newLinesAreBreaks={newLinesAreBreaks}
             slideOptions={slideOptions}
-            newlinesAreBreaks={newLinesAreBreaks}
           />
         )
       case RendererType.SIMPLE:
         return (
-          <MarkdownDocument
-            additionalOuterContainerClasses={'vh-100 bg-light overflow-y-hidden'}
+          <SimpleMarkdownRenderer
             markdownContentLines={markdownContentLines}
             baseUrl={baseConfiguration.baseUrl}
-            disableToc={true}
-            onHeightChange={onHeightChange}
             newLinesAreBreaks={newLinesAreBreaks}
+            onHeightChange={onHeightChange}
           />
         )
       default:
