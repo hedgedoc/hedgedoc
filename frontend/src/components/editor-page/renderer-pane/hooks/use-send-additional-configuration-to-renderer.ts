@@ -10,12 +10,12 @@ import { CommunicationMessageType } from '../../../render-page/window-post-messa
 import { useMemo } from 'react'
 
 /**
- * Sends the current dark mode setting to the renderer.
+ * Sends additional configuration options (dark mode, line break, etc.) to the renderer.
  *
- * @param forcedDarkMode Overwrites the value from the global application states if set.
  * @param rendererReady Defines if the target renderer is ready
+ * @param forcedDarkMode Overwrites the value from the global application states if set.
  */
-export const useSendDarkModeStatusToRenderer = (
+export const useSendAdditionalConfigurationToRenderer = (
   rendererReady: boolean,
   forcedDarkMode: DarkModePreference = DarkModePreference.AUTO
 ): void => {
@@ -28,8 +28,8 @@ export const useSendDarkModeStatusToRenderer = (
   useSendToRenderer(
     useMemo(
       () => ({
-        type: CommunicationMessageType.SET_DARKMODE,
-        preference: darkMode
+        type: CommunicationMessageType.SET_ADDITIONAL_CONFIGURATION,
+        darkModePreference: darkMode
       }),
       [darkMode]
     ),

@@ -22,7 +22,7 @@ import { CommunicationMessageType } from '../../render-page/window-post-message-
 import { useEditorToRendererCommunicator } from '../render-context/editor-to-renderer-communicator-context-provider'
 import { useEffectOnRenderTypeChange } from './hooks/use-effect-on-render-type-change'
 import { useForceRenderPageUrlOnIframeLoadCallback } from './hooks/use-force-render-page-url-on-iframe-load-callback'
-import { useSendDarkModeStatusToRenderer } from './hooks/use-send-dark-mode-status-to-renderer'
+import { useSendAdditionalConfigurationToRenderer } from './hooks/use-send-additional-configuration-to-renderer'
 import { useSendMarkdownToRenderer } from './hooks/use-send-markdown-to-renderer'
 import { useSendScrollState } from './hooks/use-send-scroll-state'
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -145,7 +145,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   )
 
   useEffectOnRenderTypeChange(rendererType, onIframeLoad)
-  useSendDarkModeStatusToRenderer(rendererReady, forcedDarkMode)
+  useSendAdditionalConfigurationToRenderer(rendererReady, forcedDarkMode)
   useSendMarkdownToRenderer(markdownContentLines, rendererReady)
   useSendScrollState(scrollState, rendererReady)
 
