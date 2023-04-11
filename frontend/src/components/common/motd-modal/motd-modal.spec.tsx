@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import * as UseBaseUrlModule from '../../../hooks/common/use-base-url'
+import { mockI18n } from '../../../test-utils/mock-i18n'
 import { testId } from '../../../utils/test-id'
 import * as RenderIframeModule from '../../editor-page/renderer-pane/render-iframe'
-import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
 import type { CommonModalProps } from '../modals/common-modal'
 import * as CommonModalModule from '../modals/common-modal'
 import * as fetchMotdModule from './fetch-motd'
@@ -22,7 +22,7 @@ jest.mock('../../../hooks/common/use-base-url')
 
 describe('motd modal', () => {
   beforeAll(async () => {
-    jest.spyOn(UseBaseUrlModule, 'useBaseUrl').mockImplementation(() => new URL('https://example.org'))
+    jest.spyOn(UseBaseUrlModule, 'useBaseUrl').mockImplementation(() => 'https://example.org')
     await mockI18n()
   })
 

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { UserInfo } from '../../../api/users/types'
-import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
+import { mockI18n } from '../../../test-utils/mock-i18n'
 import { UserAvatarForUser } from './user-avatar-for-user'
 import { render } from '@testing-library/react'
 

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { mockI18n } from '../../test-utils/mock-i18n'
+import { mockI18n } from '../../../../test-utils/mock-i18n'
 import { TestMarkdownRenderer } from '../../test-utils/test-markdown-renderer'
 import { LinkifyFixMarkdownExtension } from './linkify-fix-markdown-extension'
 import { render } from '@testing-library/react'
