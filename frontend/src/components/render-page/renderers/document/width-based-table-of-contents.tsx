@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { TableOfContents } from '../editor-page/table-of-contents/table-of-contents'
-import { TableOfContentsHoveringButton } from './markdown-toc-button/table-of-contents-hovering-button'
+import { TableOfContents } from '../../../editor-page/table-of-contents/table-of-contents'
+import { TableOfContentsHoveringButton } from '../../markdown-toc-button/table-of-contents-hovering-button'
 import type { TocAst } from '@hedgedoc/markdown-it-plugins'
 import React from 'react'
 

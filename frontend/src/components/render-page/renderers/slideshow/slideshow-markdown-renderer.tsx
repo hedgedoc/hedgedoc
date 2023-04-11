@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { ScrollProps } from '../editor-page/synced-scroll/scroll-props'
-import type { CommonMarkdownRendererProps } from './common-markdown-renderer-props'
-import { RevealMarkdownExtension } from './extensions/reveal/reveal-markdown-extension'
-import { useMarkdownExtensions } from './hooks/use-markdown-extensions'
-import { REVEAL_STATUS, useReveal } from './hooks/use-reveal'
+import { RevealMarkdownExtension } from '../../../markdown-renderer/extensions/reveal/reveal-markdown-extension'
+import { useMarkdownExtensions } from '../../../markdown-renderer/hooks/use-markdown-extensions'
+import { REVEAL_STATUS, useReveal } from '../../../markdown-renderer/hooks/use-reveal'
+import { MarkdownToReact } from '../../../markdown-renderer/markdown-to-react/markdown-to-react'
+import type { CommonMarkdownRendererProps } from '../common-markdown-renderer-props'
 import { LoadingSlide } from './loading-slide'
-import { MarkdownToReact } from './markdown-to-react/markdown-to-react'
 import type { SlideOptions } from '@hedgedoc/commons'
 import React, { useMemo, useRef } from 'react'
 
@@ -23,14 +22,12 @@ export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererPr
  * @param className Additional class names directly given to the div
  * @param markdownContentLines The markdown lines
  * @param baseUrl The base url of the renderer
- * @param newlinesAreBreaks If newlines are rendered as breaks or not
- * @param slideOptions The {@link SlideOptions} to use
+ * @param newLinesAreBreaks If newlines are rendered as breaks or not
  */
-export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps & ScrollProps> = ({
-  className,
+export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps> = ({
   markdownContentLines,
   baseUrl,
-  newlinesAreBreaks,
+  newLinesAreBreaks,
   slideOptions
 }) => {
   const markdownBodyRef = useRef<HTMLDivElement>(null)
@@ -49,17 +46,17 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps 
           markdownContentLines={markdownContentLines}
           markdownRenderExtensions={extensions}
           allowHtml={true}
-          newlinesAreBreaks={newlinesAreBreaks}
+          newlinesAreBreaks={newLinesAreBreaks}
         />
       ) : (
         <LoadingSlide />
       ),
-    [extensions, markdownContentLines, newlinesAreBreaks, revealStatus]
+    [extensions, markdownContentLines, newLinesAreBreaks, revealStatus]
   )
 
   return (
     <div className={'reveal'}>
-      <div ref={markdownBodyRef} className={`${className ?? ''} slides`}>
+      <div ref={markdownBodyRef} className={`slides`}>
         {slideShowDOM}
       </div>
     </div>
