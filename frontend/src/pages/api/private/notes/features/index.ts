@@ -41,6 +41,10 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
         sharedToGroups: [
           {
             groupName: '_LOGGED_IN',
+            canEdit: true
+          },
+          {
+            groupName: '_EVERYONE',
             canEdit: false
           }
         ]
