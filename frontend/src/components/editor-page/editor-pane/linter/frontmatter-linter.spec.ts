@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { mockI18n } from '../../../markdown-renderer/test-utils/mock-i18n'
+import { mockI18n } from '../../../../test-utils/mock-i18n'
 import { FrontmatterLinter } from './frontmatter-linter'
 import { mockEditorView } from './single-line-regex-linter.spec'
 import type { Diagnostic } from '@codemirror/lint'

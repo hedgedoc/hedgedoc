@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { mockI18n } from '../../../../test-utils/mock-i18n'
 import type { CommonModalProps } from '../../../common/modals/common-modal'
 import * as CommonModalModule from '../../../common/modals/common-modal'
-import { mockI18n } from '../../../markdown-renderer/test-utils/mock-i18n'
 import * as useUiNotificationsModule from '../../../notifications/ui-notification-boundary'
 import * as AliasesAddFormModule from './aliases-add-form'
 import * as AliasesListModule from './aliases-list'

@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { mockI18n } from '../../../components/markdown-renderer/test-utils/mock-i18n'
 import { StoreProvider } from '../../../redux/store-provider'
+import { mockI18n } from '../../../test-utils/mock-i18n'
 import { FlowChart } from './flowchart'
 import * as useMediaQuery from '@restart/hooks/useMediaQuery'
 import { render, screen } from '@testing-library/react'

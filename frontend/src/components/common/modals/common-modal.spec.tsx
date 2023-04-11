@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { mockI18n } from '../../markdown-renderer/test-utils/mock-i18n'
+import { mockI18n } from '../../../test-utils/mock-i18n'
 import { CommonModal } from './common-modal'
 import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
