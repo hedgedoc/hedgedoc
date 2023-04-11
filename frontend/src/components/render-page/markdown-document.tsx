@@ -28,7 +28,7 @@ export interface MarkdownDocumentProps extends RendererProps {
 }
 
 /**
- * Renders a markdown document and handles scrolling, yaml metadata and a floating table of contents.
+ * Renders a Markdown document and handles scrolling, yaml metadata and a floating table of contents.
  *
  * @param additionalOuterContainerClasses Additional classes given to the outer container directly
  * @param additionalRendererClasses Additional classes given {@link DocumentMarkdownRenderer} directly
@@ -40,7 +40,6 @@ export interface MarkdownDocumentProps extends RendererProps {
  * @param onHeightChange The callback to call if the height of the document changes
  * @param disableToc If the table of contents should be disabled.
  * @param newLinesAreBreaks Defines if the provided markdown content should treat new lines as breaks
- * @see https://markdown-it.github.io/
  */
 export const MarkdownDocument: React.FC<MarkdownDocumentProps> = ({
   additionalOuterContainerClasses,
