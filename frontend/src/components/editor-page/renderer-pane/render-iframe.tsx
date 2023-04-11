@@ -146,8 +146,7 @@ export const RenderIframe: React.FC<RenderIframeProps> = ({
   useEffectOnRenderTypeChange(rendererType, onIframeLoad)
   useSendDarkModeStatusToRenderer(forcedDarkMode, rendererReady)
   useSendMarkdownToRenderer(markdownContentLines, rendererReady)
-
-  useSendScrollState(scrollState)
+  useSendScrollState(scrollState, rendererReady)
 
   useEditorReceiveHandler(
     CommunicationMessageType.SET_SCROLL_STATE,
