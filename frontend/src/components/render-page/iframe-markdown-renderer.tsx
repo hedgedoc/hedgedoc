@@ -53,8 +53,8 @@ export const IframeMarkdownRenderer: React.FC = () => {
   )
 
   useRendererReceiveHandler(
-    CommunicationMessageType.SET_DARKMODE,
-    useCallback((values) => setDarkModePreference(values.preference), [])
+    CommunicationMessageType.SET_ADDITIONAL_CONFIGURATION,
+    useCallback((values) => setDarkModePreference(values.darkModePreference), [])
   )
 
   useRendererReceiveHandler(

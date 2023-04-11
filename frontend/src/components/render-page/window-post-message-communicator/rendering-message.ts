@@ -3,14 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { DarkModePreference } from '../../../redux/dark-mode/types'
-import type { ScrollState } from '../../editor-page/synced-scroll/scroll-props'
-import type { SlideOptions } from '@hedgedoc/commons'
+import type { DarkModePreference } from '../../../redux/dark-mode/types';
+import type { ScrollState } from '../../editor-page/synced-scroll/scroll-props';
+import type { SlideOptions } from '@hedgedoc/commons';
+
 
 export enum CommunicationMessageType {
   SET_MARKDOWN_CONTENT = 'SET_MARKDOWN_CONTENT',
   RENDERER_READY = 'RENDERER_READY',
-  SET_DARKMODE = 'SET_DARKMODE',
+  SET_ADDITIONAL_CONFIGURATION = 'SET_ADDITIONAL_CONFIGURATION',
   ENABLE_RENDERER_SCROLL_SOURCE = 'ENABLE_RENDERER_SCROLL_SOURCE',
   DISABLE_RENDERER_SCROLL_SOURCE = 'DISABLE_RENDERER_SCROLL_SOURCE',
   SET_SCROLL_STATE = 'SET_SCROLL_STATE',
@@ -27,9 +28,9 @@ export interface NoPayloadMessage<TYPE extends CommunicationMessageType> {
   type: TYPE
 }
 
-export interface SetDarkModeMessage {
-  type: CommunicationMessageType.SET_DARKMODE
-  preference: DarkModePreference
+export interface SetAdditionalConfigurationMessage {
+  type: CommunicationMessageType.SET_ADDITIONAL_CONFIGURATION
+  darkModePreference: DarkModePreference
 }
 
 export interface ExtensionEvent {
@@ -90,7 +91,7 @@ export type CommunicationMessages =
   | NoPayloadMessage<CommunicationMessageType.RENDERER_READY>
   | NoPayloadMessage<CommunicationMessageType.ENABLE_RENDERER_SCROLL_SOURCE>
   | NoPayloadMessage<CommunicationMessageType.DISABLE_RENDERER_SCROLL_SOURCE>
-  | SetDarkModeMessage
+  | SetAdditionalConfigurationMessage
   | SetBaseUrlMessage
   | GetWordCountMessage
   | SetMarkdownContentMessage
@@ -103,7 +104,7 @@ export type CommunicationMessages =
 
 export type EditorToRendererMessageType =
   | CommunicationMessageType.SET_MARKDOWN_CONTENT
-  | CommunicationMessageType.SET_DARKMODE
+  | CommunicationMessageType.SET_ADDITIONAL_CONFIGURATION
   | CommunicationMessageType.SET_SCROLL_STATE
   | CommunicationMessageType.SET_BASE_CONFIGURATION
   | CommunicationMessageType.GET_WORD_COUNT
