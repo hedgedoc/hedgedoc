@@ -40,7 +40,7 @@ export const KatexFrame: React.FC<KatexFrameProps> = ({ expression, block = fals
     }
   }, [block, expression])
 
-  return block ? <div {...testId('katex-block')}>{dom}</div> : <span {...testId('katex-inline')}>{dom}</span>
+  return block ? <p {...testId('katex-block')}>{dom}</p> : <span {...testId('katex-inline')}>{dom}</span>
 }
 
 export default KatexFrame
