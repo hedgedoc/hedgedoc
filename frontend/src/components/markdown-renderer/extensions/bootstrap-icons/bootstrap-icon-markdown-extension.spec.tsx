@@ -24,7 +24,7 @@ describe('bootstrap icon markdown extension', () => {
 
   it("doesn't render invalid icon", () => {
     const view = render(
-      <TestMarkdownRenderer extensions={[new BootstrapIconMarkdownExtension()]} content={':bi-123:'} />
+      <TestMarkdownRenderer extensions={[new BootstrapIconMarkdownExtension()]} content={':bi-INVALIDICONNAME:'} />
     )
     expect(view.container).toMatchSnapshot()
   })
