@@ -22,21 +22,13 @@ recommend caddy and the provided configuration.
 2. Install Node.js. You need at least Node 16, but we recommend Node 18.
 3. Install [Yarn](https://yarnpkg.com/getting-started/install)
 4. Install Caddy (select one of the two options)
-   - [Download](https://caddyserver.com/) and place the `caddy` binary in `hedgedoc/dev-reverse-proxy`. Ensure it is executable with `chmod +x caddy`. Users of macOS may need to run `xattr -d com.apple.quarantine ./caddy` to lift the quarantine for executables from the internet. 
+   - [Download](https://caddyserver.com/) and place the `caddy` binary in `dev-reverse-proxy`. Ensure it is executable with `chmod +x caddy`. Users of macOS may need to run `xattr -d com.apple.quarantine ./caddy` to lift the quarantine for executables from the internet. 
    - Install Caddy using your package manager
 5. Install the dependencies in repo root directory with `yarn install`
-6. Goto `hedgedoc/backend` directory with `cd backend`
-7. Create the `.env` config file by copying the example: `cp .env.example .env`
-8. Add a value to `HD_SESSION_SECRET` in the .env file. This can be any string, which has to be a secure password for production but can be set to simple string for debug purpose.
-9. Execute the following lines
-    ```shell
-    echo "HD_AUTH_LOCAL_ENABLE_LOGIN=true" >> .env
-    echo "HD_AUTH_LOCAL_ENABLE_REGISTER=true" >> .env
-    ```
-10. Go back into the root directory with `cd ..`
-11. Run `yarn start:dev`
+6. Create the `.env` config file by copying the example: `cp .env.example .env`
+7. Run `yarn start:dev`
     > This will execute the backend, frontend and reverse proxy at once
-12. Use your browser to go to <http://localhost:8080>
+8. Use your browser to go to <http://localhost:8080>. This may take a while because everything is compiled on the fly.
 
 ## More detailed development setup
 The following sections describe a more detailed setup of all components.
@@ -59,6 +51,18 @@ Execute this command ONLY there. There is no need to execute the install-command
 It's important to use [Yarn](https://yarnpkg.com/). We don't support `npm` or any other package manager and using anything
 else than Yarn won't work.
 
+## Create the configuration
+HedgeDoc 2 is configured using environment variables.
+For development, we recommend creating an `.env` file.
+
+1. Create an `.env` file. We recommend to use the example file by running `cp .env.example .env`
+   You can modify this file according to the [configuration documentation](../config/index.md).
+2. Make sure that you've set `HD_SESSION_SECRET` in your `.env` file. Otherwise, the backend won't start.
+   > In dev mode you don't need a secure secret. So use any value. If you want to generate a secure session secret you
+   can use e.g. `openssl rand -hex 16 | sed -E 's/(.*)/HD_SESSION_SECRET=\1/' >> .env`.
+3. Make sure that `HD_BASE_URL` in `.env` is set to the base url where HedgeDoc should be available. In local dev
+   environment this is most likely `http://localhost:8080`.
+
 ## Build the `commons` package
 
 Some code is shared by backend and frontend. This code lives in the `commons package and needs to be built so
@@ -73,14 +77,7 @@ This only needs to be done once, except if you've changed code in the commons pa
 **Note:** The backend can be mocked instead of starting it for real. This is useful, if you just want to work on the frontend. See the "Mocked backend" section below.
 
 1. Go into the `backend` directory.
-2. Create an environment file. We recommend to use the example file by running `cp .env.example .env`
-   You can modify this file according to the [configuration documentation](../config/index.md).
-3. Make sure that you've set `HD_SESSION_SECRET` in your `.env` file. Otherwise, the backend won't start.
-   > In dev mode you don't need a secure secret. So use any value. If you want to generate a secure session secret you
-   can use e.g. `openssl rand -hex 16 | sed -E 's/(.*)/HD_SESSION_SECRET=\1/' >> .env`.
-4. Make sure that `HD_BASE_URL` in `.env` is set to the base url where HedgeDoc should be available. In local dev
-   environment this is most likely `http://localhost:8080`.
-5. Start the backend by running `yarn start:dev` for dev mode or `yarn start` for production.
+2. Start the backend by running `yarn start:dev` for dev mode or `yarn start` for production.
 
 ## Setting up the frontend
 
@@ -91,11 +88,11 @@ A special configuration isn't necessary but keep in mind that you execute all co
 
 ### Mocked backend
 
-To start the development mode, run `yarn start:dev:mock` .
 This task will run the frontend in mock-mode, meaning instead of running a real backend, the frontend mocks the backend.
 This way you can work on frontend functionality without starting up the full development environment.
+The downside of this method is that you can't save notes and that realtime collaboration features are not available.
+To start the development mode, run `yarn start:dev:mock`.
 The app should run now and be available under [http://localhost:3001](http://localhost:3001) in your browser.
-In development mode the app will autoload changes you make to the code.
 
 ### With local backend
 
