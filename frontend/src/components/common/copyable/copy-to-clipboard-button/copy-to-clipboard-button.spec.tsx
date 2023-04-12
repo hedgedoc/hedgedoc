@@ -6,40 +6,36 @@
 import { mockI18n } from '../../../markdown-renderer/test-utils/mock-i18n'
 import { CopyToClipboardButton } from './copy-to-clipboard-button'
 import { act, render, screen } from '@testing-library/react'
+import React from 'react'
 import * as uuidModule from 'uuid'
 
 jest.mock('uuid')
 
 describe('Copy to clipboard button', () => {
   const copyContent = 'Copy McCopy Content. Electric Copyloo'
-  const copyToClipboardButton = <CopyToClipboardButton content={copyContent} />
   const uuidMock = '35a35a31-c259-48c4-b75a-8da99859dcdb' // https://xkcd.com/221/
   const overlayId = `copied_${uuidMock}`
+  let originalClipboard: Clipboard
 
-  const mockClipboard = async (copyIsSuccessful: boolean, testFunction: () => Promise<void>) => {
-    const originalClipboard = window.navigator.clipboard
-    const writeTextMock = jest.fn().mockImplementation(() => (copyIsSuccessful ? Promise.resolve() : Promise.reject()))
+  beforeAll(async () => {
+    await mockI18n()
+    originalClipboard = window.navigator.clipboard
+    jest.spyOn(uuidModule, 'v4').mockReturnValue(uuidMock)
+  })
+
+  afterAll(() => {
     Object.assign(global.navigator, {
-      clipboard: {
-        writeText: writeTextMock
-      }
+      clipboard: originalClipboard
     })
-
-    try {
-      await testFunction()
-      expect(writeTextMock).toHaveBeenCalledWith(copyContent)
-    } finally {
-      Object.assign(global.navigator, {
-        clipboard: originalClipboard
-      })
-    }
-  }
+    jest.resetAllMocks()
+    jest.resetModules()
+  })
 
   const testButton = async (expectSuccess: boolean) => {
-    const view = render(copyToClipboardButton)
+    const view = render(<CopyToClipboardButton content={copyContent} />)
     expect(view.container).toMatchSnapshot()
     const button = await screen.findByTitle('renderer.highlightCode.copyCode')
-    await act<void>(() => {
+    act(() => {
       button.click()
     })
     const tooltip = await screen.findByRole('tooltip')
@@ -48,17 +44,35 @@ describe('Copy to clipboard button', () => {
     expect(view.container).toMatchSnapshot()
   }
 
-  beforeAll(async () => {
-    await mockI18n()
-    jest.spyOn(uuidModule, 'v4').mockReturnValue(uuidMock)
+  const mockClipboard = (copyIsSuccessful: boolean): jest.Mock => {
+    const writeTextToClipboardSpy = jest.fn(() =>
+      copyIsSuccessful ? Promise.resolve() : Promise.reject('mocked clipboard failed')
+    )
+    Object.assign(global.navigator, {
+      clipboard: {
+        writeText: writeTextToClipboardSpy
+      }
+    })
+    return writeTextToClipboardSpy
+  }
+
+  it('shows an success text if writing succeeded', async () => {
+    const writeTextToClipboardSpy = mockClipboard(true)
+    await testButton(true)
+    expect(writeTextToClipboardSpy).toHaveBeenCalledWith(copyContent)
   })
 
-  afterAll(() => {
-    jest.resetAllMocks()
-    jest.resetModules()
+  it('shows an error text if writing failed', async () => {
+    const writeTextToClipboardSpy = mockClipboard(false)
+    await testButton(false)
+    expect(writeTextToClipboardSpy).toHaveBeenCalledWith(copyContent)
   })
 
-  it('shows an success text if writing succeeded', () => mockClipboard(true, () => testButton(true)))
-  it('shows an error text if writing failed', () => mockClipboard(false, () => testButton(false)))
-  it("show an error text if clipboard api isn't available", () => testButton(false))
+  it("show an error text if clipboard api isn't available", async () => {
+    Object.assign(global.navigator, {
+      clipboard: undefined
+    })
+
+    await testButton(false)
+  })
 })
