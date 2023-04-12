@@ -2,6 +2,11 @@
 
 exports[`blockquote extra tag renders the tag "> [color=#f00] text" correctly 1`] = `
 <div>
+  <p>
+    blockquote
+  </p>
+  
+
   <blockquote
     style="border-left-color: #f00;"
   >
@@ -21,6 +26,11 @@ exports[`blockquote extra tag renders the tag "> [color=#f00] text" correctly 1`
 exports[`blockquote extra tag renders the tag "[=value]" correctly 1`] = `
 <div>
   <p>
+    blockquote
+  </p>
+  
+
+  <p>
     [=value]
   </p>
   
@@ -30,6 +40,11 @@ exports[`blockquote extra tag renders the tag "[=value]" correctly 1`] = `
 
 exports[`blockquote extra tag renders the tag "[color=#abcdef]" correctly 1`] = `
 <div>
+  <p>
+    blockquote
+  </p>
+  
+
   <p>
     <span
       class="blockquote-extra"
@@ -46,6 +61,11 @@ exports[`blockquote extra tag renders the tag "[color=#abcdef]" correctly 1`] = 
 exports[`blockquote extra tag renders the tag "[color=#dfe]" correctly 1`] = `
 <div>
   <p>
+    blockquote
+  </p>
+  
+
+  <p>
     <span
       class="blockquote-extra"
       style="color: rgb(221, 255, 238);"
@@ -61,6 +81,11 @@ exports[`blockquote extra tag renders the tag "[color=#dfe]" correctly 1`] = `
 exports[`blockquote extra tag renders the tag "[color=]" correctly 1`] = `
 <div>
   <p>
+    blockquote
+  </p>
+  
+
+  <p>
     [color=]
   </p>
   
@@ -70,6 +95,11 @@ exports[`blockquote extra tag renders the tag "[color=]" correctly 1`] = `
 
 exports[`blockquote extra tag renders the tag "[color=notarealcolor]" correctly 1`] = `
 <div>
+  <p>
+    blockquote
+  </p>
+  
+
   <p>
     <span
       class="blockquote-extra"
@@ -84,6 +114,11 @@ exports[`blockquote extra tag renders the tag "[color=notarealcolor]" correctly 
 
 exports[`blockquote extra tag renders the tag "[color=white]" correctly 1`] = `
 <div>
+  <p>
+    blockquote
+  </p>
+  
+
   <p>
     <span
       class="blockquote-extra"
@@ -100,6 +135,11 @@ exports[`blockquote extra tag renders the tag "[color=white]" correctly 1`] = `
 exports[`blockquote extra tag renders the tag "[key=]" correctly 1`] = `
 <div>
   <p>
+    blockquote
+  </p>
+  
+
+  <p>
     [key=]
   </p>
   
@@ -109,6 +149,11 @@ exports[`blockquote extra tag renders the tag "[key=]" correctly 1`] = `
 
 exports[`blockquote extra tag renders the tag "[key]" correctly 1`] = `
 <div>
+  <p>
+    blockquote
+  </p>
+  
+
   <p>
     [key]
   </p>
@@ -120,6 +165,11 @@ exports[`blockquote extra tag renders the tag "[key]" correctly 1`] = `
 exports[`blockquote extra tag renders the tag "[name=]" correctly 1`] = `
 <div>
   <p>
+    blockquote
+  </p>
+  
+
+  <p>
     [name=]
   </p>
   
@@ -129,6 +179,11 @@ exports[`blockquote extra tag renders the tag "[name=]" correctly 1`] = `
 
 exports[`blockquote extra tag renders the tag "[name=giowehg]" correctly 1`] = `
 <div>
+  <p>
+    blockquote
+  </p>
+  
+
   <p>
     <span
       class="blockquote-extra"
@@ -144,6 +199,11 @@ exports[`blockquote extra tag renders the tag "[name=giowehg]" correctly 1`] = `
 exports[`blockquote extra tag renders the tag "[time=]" correctly 1`] = `
 <div>
   <p>
+    blockquote
+  </p>
+  
+
+  <p>
     [time=]
   </p>
   
@@ -153,6 +213,11 @@ exports[`blockquote extra tag renders the tag "[time=]" correctly 1`] = `
 
 exports[`blockquote extra tag renders the tag "[time=tomorrow]" correctly 1`] = `
 <div>
+  <p>
+    blockquote
+  </p>
+  
+
   <p>
     <span
       class="blockquote-extra"
