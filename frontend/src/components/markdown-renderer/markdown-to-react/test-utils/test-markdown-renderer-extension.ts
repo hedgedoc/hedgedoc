@@ -28,7 +28,7 @@ export class TestMarkdownRendererExtension extends MarkdownRendererExtension {
   }
 
   buildTagNameAllowList(): string[] {
-    return ['nodeProcessor']
+    return ['node-processor']
   }
 
   configureMarkdownItPost(markdownIt: MarkdownIt) {

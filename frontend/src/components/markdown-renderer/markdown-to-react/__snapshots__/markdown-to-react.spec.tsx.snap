@@ -57,9 +57,9 @@ exports[`markdown to react will use markdown render extensions 1`] = `
     data-native="true"
   >
      
-    <nodeprocessor>
+    <node-processor>
       node processor children
-    </nodeprocessor>
+    </node-processor>
      
   </span>
 </div>
