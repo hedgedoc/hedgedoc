@@ -34,7 +34,7 @@ describe('HTML to React', () => {
         parserOptions={{
           transform: () => {
             transformerVisited = true
-            return <p>Hijacked!</p>
+            return <p key={1}>Hijacked!</p>
           },
           preprocessNodes: (document) => {
             preprocessNodesVisited = true
