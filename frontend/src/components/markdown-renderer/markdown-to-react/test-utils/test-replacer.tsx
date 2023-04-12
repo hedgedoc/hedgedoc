@@ -10,7 +10,7 @@ import React, { Fragment } from 'react'
 
 export class TestReplacer extends ComponentReplacer {
   replace(node: Element, subNodeTransform: SubNodeTransform, nativeRenderer: NativeRenderer): NodeReplacement {
-    return node.tagName === 'nodeProcessor' ? (
+    return node.tagName === 'node-processor' ? (
       <Fragment>
         <span>NodeProcessor! </span>
         <span data-children={true}> {node.childNodes.map(subNodeTransform)} </span>

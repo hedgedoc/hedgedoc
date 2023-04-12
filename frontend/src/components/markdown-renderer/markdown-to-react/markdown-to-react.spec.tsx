@@ -6,8 +6,6 @@
 import { MarkdownToReact } from './markdown-to-react'
 import { TestMarkdownRendererExtension } from './test-utils/test-markdown-renderer-extension'
 import { render } from '@testing-library/react'
-import type { EventMap } from 'eventemitter2'
-import { EventEmitter2 } from 'eventemitter2'
 
 describe('markdown to react', () => {
   it('can render markdown with newlines as line breaks', () => {
@@ -60,7 +58,7 @@ describe('markdown to react', () => {
     const view = render(
       <MarkdownToReact
         markdownContentLines={['<span>test</span>']}
-        markdownRenderExtensions={[new TestMarkdownRendererExtension(new EventEmitter2<EventMap>())]}
+        markdownRenderExtensions={[new TestMarkdownRendererExtension()]}
         newlinesAreBreaks={true}
         allowHtml={false}
       />
