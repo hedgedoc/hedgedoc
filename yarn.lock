@@ -19218,6 +19218,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"yjs@patch:yjs@npm%3A13.5.52#./.yarn/patches/yjs-npm-13.5.52-a5c64d9068.patch::locator=hedgedoc%40workspace%3A.":
+  version: 13.5.52
+  resolution: "yjs@patch:yjs@npm%3A13.5.52#./.yarn/patches/yjs-npm-13.5.52-a5c64d9068.patch::version=13.5.52&hash=e7d95b&locator=hedgedoc%40workspace%3A."
+  dependencies:
+    lib0: ^0.2.72
+  checksum: d65bf903e8369607d8d3633ac3b155bf10c751c4a36d9613f78510d1e5d25a271bb2b8d503c803f62f7c0f17e0f219681e4d3a2337a07227298be6fee1f9e0a1
+  languageName: node
+  linkType: hard
+
 "yn@npm:3.1.1":
   version: 3.1.1
   resolution: "yn@npm:3.1.1"
