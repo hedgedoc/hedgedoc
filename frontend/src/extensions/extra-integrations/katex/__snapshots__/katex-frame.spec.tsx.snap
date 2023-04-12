@@ -2,7 +2,7 @@
 
 exports[`katex frame renders a valid latex expression as explicit block 1`] = `
 <div>
-  <div
+  <p
     data-testid="katex-block"
   >
     <span>
@@ -10,21 +10,21 @@ exports[`katex frame renders a valid latex expression as explicit block 1`] = `
     </span>
     
 
-    <ul>
+    <span>
       
   
-      <li>
+      <span>
         tex: \\int_0^\\infty x^2 dx
-      </li>
+      </span>
       
   
-      <li>
+      <span>
         block: true
-      </li>
+      </span>
       
 
-    </ul>
-  </div>
+    </span>
+  </p>
 </div>
 `;
 
@@ -38,20 +38,20 @@ exports[`katex frame renders a valid latex expression as explicit inline 1`] = `
     </span>
     
 
-    <ul>
+    <span>
       
   
-      <li>
+      <span>
         tex: \\int_0^\\infty x^2 dx
-      </li>
+      </span>
       
   
-      <li>
+      <span>
         block: false
-      </li>
+      </span>
       
 
-    </ul>
+    </span>
   </span>
 </div>
 `;
@@ -66,27 +66,27 @@ exports[`katex frame renders a valid latex expression as implicit inline 1`] = `
     </span>
     
 
-    <ul>
+    <span>
       
   
-      <li>
+      <span>
         tex: \\int_0^\\infty x^2 dx
-      </li>
+      </span>
       
   
-      <li>
+      <span>
         block: false
-      </li>
+      </span>
       
 
-    </ul>
+    </span>
   </span>
 </div>
 `;
 
 exports[`katex frame renders an error for an invalid latex expression as explicit block 1`] = `
 <div>
-  <div
+  <p
     data-testid="katex-block"
   >
     <div
@@ -95,7 +95,7 @@ exports[`katex frame renders an error for an invalid latex expression as explici
     >
       mocked parseerror
     </div>
-  </div>
+  </p>
 </div>
 `;
 
