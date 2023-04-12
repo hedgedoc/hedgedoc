@@ -21,10 +21,10 @@ describe('KaTeX markdown extensions', () => {
   beforeEach(() => {
     jest.spyOn(KatexDefault, 'renderToString').mockImplementation(
       (tex: string, options?: KatexOptions) => `<span>This is a mock for lib katex with this parameters:</span>
-<ul>
-  <li>tex: ${tex}</li>
-  <li>block: ${String(options?.displayMode)}</li>
-</ul>`
+<span>
+  <span>tex: ${tex}</span>
+  <span>block: ${String(options?.displayMode)}</span>
+</span>`
     )
   })
 

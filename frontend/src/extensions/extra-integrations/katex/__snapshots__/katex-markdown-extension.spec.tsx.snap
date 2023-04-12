@@ -2,7 +2,7 @@
 
 exports[`KaTeX markdown extensions renders a valid block LaTeX expression in a single line 1`] = `
 <div>
-  <div
+  <p
     data-testid="katex-block"
   >
     <span>
@@ -10,21 +10,21 @@ exports[`KaTeX markdown extensions renders a valid block LaTeX expression in a s
     </span>
     
 
-    <ul>
+    <span>
       
   
-      <li>
+      <span>
         tex: \\alpha
-      </li>
+      </span>
       
   
-      <li>
+      <span>
         block: true
-      </li>
+      </span>
       
 
-    </ul>
-  </div>
+    </span>
+  </p>
   
 
 </div>
@@ -32,7 +32,7 @@ exports[`KaTeX markdown extensions renders a valid block LaTeX expression in a s
 
 exports[`KaTeX markdown extensions renders a valid block LaTeX expression in multi line 1`] = `
 <div>
-  <div
+  <p
     data-testid="katex-block"
   >
     <span>
@@ -40,23 +40,23 @@ exports[`KaTeX markdown extensions renders a valid block LaTeX expression in mul
     </span>
     
 
-    <ul>
+    <span>
       
   
-      <li>
+      <span>
         tex: 
 \\alpha
 
-      </li>
+      </span>
       
   
-      <li>
+      <span>
         block: true
-      </li>
+      </span>
       
 
-    </ul>
-  </div>
+    </span>
+  </p>
   
 
 </div>
@@ -73,20 +73,20 @@ exports[`KaTeX markdown extensions renders a valid inline LaTeX expression 1`] =
       </span>
       
 
-      <ul>
+      <span>
         
   
-        <li>
+        <span>
           tex: \\alpha
-        </li>
+        </span>
         
   
-        <li>
+        <span>
           block: false
-        </li>
+        </span>
         
 
-      </ul>
+      </span>
     </span>
   </p>
   
