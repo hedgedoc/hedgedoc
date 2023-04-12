@@ -5,11 +5,11 @@
  */
 import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
 import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-markdown-extension'
-import { render } from '@testing-library/react'
+import { screen, render } from '@testing-library/react'
 import React from 'react'
 
 describe('blockquote extra tag', () => {
-  ;[
+  it.each([
     '[color=white]',
     '[color=#dfe]',
     '[color=notarealcolor]',
@@ -23,12 +23,14 @@ describe('blockquote extra tag', () => {
     '[key=]',
     '[=value]',
     '> [color=#f00] text'
-  ].forEach((content) => {
-    it(`renders the tag "${content}" correctly`, () => {
-      const view = render(
-        <TestMarkdownRenderer extensions={[new BlockquoteExtraTagMarkdownExtension()]} content={content} />
-      )
-      expect(view.container).toMatchSnapshot()
-    })
+  ])(`renders the tag "%s" correctly`, async (content) => {
+    const view = render(
+      <TestMarkdownRenderer
+        extensions={[new BlockquoteExtraTagMarkdownExtension()]}
+        content={'blockquote\n\n' + content}
+      />
+    )
+    await screen.findByText('blockquote')
+    expect(view.container).toMatchSnapshot()
   })
 })
