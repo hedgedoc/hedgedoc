@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { optionalAppExtensions } from '../../../extensions/extra-integrations/optional-app-extensions'
+import { allAppExtensions } from '../../../extensions/extra-integrations/all-app-extensions'
 import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
 import type { MarkdownRendererExtension } from '../extensions/base/markdown-renderer-extension'
 import { DebuggerMarkdownExtension } from '../extensions/debugger-markdown-extension'
@@ -32,7 +32,7 @@ export const useMarkdownExtensions = (
       throw new Error("can't build markdown render extensions without event emitter.")
     }
     return [
-      ...optionalAppExtensions.flatMap((extension) =>
+      ...allAppExtensions.flatMap((extension) =>
         extension.buildMarkdownRendererExtensions({
           frontendConfig: frontendConfig,
           eventEmitter: extensionEventEmitter
