@@ -5,6 +5,7 @@
  */
 import type { MarkdownRendererExtensionOptions } from '../../../../extensions/base/app-extension'
 import { AppExtension } from '../../../../extensions/base/app-extension'
+import { RendererType } from '../../../render-page/window-post-message-communicator/rendering-message'
 import type { MarkdownRendererExtension } from '../base/markdown-renderer-extension'
 import { ExtractFirstHeadlineEditorExtension } from './extract-first-headline-editor-extension'
 import { ExtractFirstHeadlineMarkdownExtension } from './extract-first-headline-markdown-extension'
@@ -14,6 +15,9 @@ import { ExtractFirstHeadlineMarkdownExtension } from './extract-first-headline-
  */
 export class ExtractFirstHeadlineAppExtension extends AppExtension {
   buildMarkdownRendererExtensions(options: MarkdownRendererExtensionOptions): MarkdownRendererExtension[] {
+    if (options.rendererType === RendererType.SIMPLE) {
+      return []
+    }
     return [new ExtractFirstHeadlineMarkdownExtension(options.eventEmitter)]
   }
 
