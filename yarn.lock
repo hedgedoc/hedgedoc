@@ -1674,9 +1674,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/autocomplete@npm:6.4.2":
-  version: 6.4.2
-  resolution: "@codemirror/autocomplete@npm:6.4.2"
+"@codemirror/autocomplete@npm:6.5.0":
+  version: 6.5.0
+  resolution: "@codemirror/autocomplete@npm:6.5.0"
   dependencies:
     "@codemirror/language": ^6.0.0
     "@codemirror/state": ^6.0.0
@@ -1687,7 +1687,7 @@ __metadata:
     "@codemirror/state": ^6.0.0
     "@codemirror/view": ^6.0.0
     "@lezer/common": ^1.0.0
-  checksum: c6cc4edb1c412153e6f6f27926674d7f1d386d1f30d6d4f60c5b52bfa0105870b0c70449b69891937bcf082340d8b0fa6d1f9f28f5eb60adc2974ed4c73aadc1
+  checksum: c3b86dfcfbcfd87da53167f2544aec0b718851f43d3471cc777914c9aa0e89e96e51849b27caa132bb4d6589177138c147e1311e2193293f7be23d5200cf4c77
   languageName: node
   linkType: hard
 
@@ -2319,7 +2319,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/frontend@workspace:frontend"
   dependencies:
-    "@codemirror/autocomplete": 6.4.2
+    "@codemirror/autocomplete": 6.5.0
     "@codemirror/commands": 6.2.2
     "@codemirror/lang-markdown": 6.1.1
     "@codemirror/language": 6.6.0
