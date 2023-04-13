@@ -5,6 +5,7 @@
  */
 import { allAppExtensions } from '../../../extensions/extra-integrations/all-app-extensions'
 import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
+import type { RendererType } from '../../render-page/window-post-message-communicator/rendering-message'
 import type { MarkdownRendererExtension } from '../extensions/base/markdown-renderer-extension'
 import { DebuggerMarkdownExtension } from '../extensions/debugger-markdown-extension'
 import { ProxyImageMarkdownExtension } from '../extensions/image/proxy-image-markdown-extension'
@@ -18,11 +19,13 @@ import { useMemo } from 'react'
  * Provides a list of {@link MarkdownRendererExtension markdown extensions} that is a combination of the common extensions and the given additional.
  *
  * @param baseUrl The base url for the {@link LinkAdjustmentMarkdownExtension}
+ * @param rendererType The type of the renderer that uses the extensions
  * @param additionalExtensions The additional extensions that should be included in the list
  * @return The created list of markdown extensions
  */
 export const useMarkdownExtensions = (
   baseUrl: string,
+  rendererType: RendererType,
   additionalExtensions: MarkdownRendererExtension[]
 ): MarkdownRendererExtension[] => {
   const extensionEventEmitter = useExtensionEventEmitter()
@@ -35,7 +38,8 @@ export const useMarkdownExtensions = (
       ...allAppExtensions.flatMap((extension) =>
         extension.buildMarkdownRendererExtensions({
           frontendConfig: frontendConfig,
-          eventEmitter: extensionEventEmitter
+          eventEmitter: extensionEventEmitter,
+          rendererType
         })
       ),
       ...additionalExtensions,
@@ -45,5 +49,5 @@ export const useMarkdownExtensions = (
       new DebuggerMarkdownExtension(),
       new ProxyImageMarkdownExtension()
     ]
-  }, [additionalExtensions, baseUrl, extensionEventEmitter, frontendConfig])
+  }, [additionalExtensions, baseUrl, extensionEventEmitter, frontendConfig, rendererType])
 }
