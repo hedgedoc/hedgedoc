@@ -7,6 +7,7 @@ import type { FrontendConfig } from '../../api/config/types'
 import type { CheatsheetExtension } from '../../components/editor-page/cheatsheet/cheatsheet-extension'
 import type { Linter } from '../../components/editor-page/editor-pane/linter/linter'
 import type { MarkdownRendererExtension } from '../../components/markdown-renderer/extensions/base/markdown-renderer-extension'
+import type { RendererType } from '../../components/render-page/window-post-message-communicator/rendering-message'
 import type { CompletionSource } from '@codemirror/autocomplete'
 import type { EventEmitter2 } from 'eventemitter2'
 import type React from 'react'
@@ -15,6 +16,7 @@ import { Fragment } from 'react'
 export interface MarkdownRendererExtensionOptions {
   frontendConfig: FrontendConfig
   eventEmitter: EventEmitter2
+  rendererType: RendererType
 }
 
 export abstract class AppExtension {

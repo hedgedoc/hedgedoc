@@ -6,6 +6,7 @@
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { useMarkdownExtensions } from '../../../markdown-renderer/hooks/use-markdown-extensions'
 import { MarkdownToReact } from '../../../markdown-renderer/markdown-to-react/markdown-to-react'
+import { RendererType } from '../../window-post-message-communicator/rendering-message'
 import type { CommonMarkdownRendererProps, HeightChangeRendererProps } from '../common-markdown-renderer-props'
 import useResizeObserver from '@react-hook/resize-observer'
 import React, { useEffect, useRef, useState } from 'react'
@@ -32,7 +33,7 @@ export const SimpleMarkdownRenderer: React.FC<SimpleMarkdownRendererProps> = ({
     setRendererSize(entry.contentRect)
   })
   useEffect(() => onHeightChange?.((rendererSize?.height ?? 0) + 1), [rendererSize, onHeightChange])
-  const extensions = useMarkdownExtensions(baseUrl, [])
+  const extensions = useMarkdownExtensions(baseUrl, RendererType.SIMPLE, [])
 
   return (
     <div className={`vh-100 bg-transparent overflow-y-hidden`}>
