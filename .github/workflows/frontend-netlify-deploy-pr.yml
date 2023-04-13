@@ -27,7 +27,7 @@ permissions:
   deployments: write
 
 env:
-  NETLIFY_VERSION: 12.0.11
+  NETLIFY_VERSION: 13.2.2
   NODEJS_VERSION: 18
 
 defaults:
