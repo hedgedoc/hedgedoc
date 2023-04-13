@@ -28,6 +28,7 @@ permissions:
 
 env:
   NETLIFY_VERSION: 13.2.2
+  NETLIFY_NEXTJS_PLUGIN_VERSION: 4.33.0
   NODEJS_VERSION: 18
 
 defaults:
@@ -89,7 +90,7 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Install netlify CLI
-        run: "npm install -g netlify-cli@${{ env.NETLIFY_VERSION }}"
+        run: "yarn add --dev netlify-cli@${{ env.NETLIFY_VERSION }} @netlify/plugin-nextjs@${{ env.NETLIFY_NEXTJS_PLUGIN_VERSION }}"
 
       - name: Run netlify CLI
         env:
