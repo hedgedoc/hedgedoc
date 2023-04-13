@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { optionalAppExtensions } from '../../../../extensions/extra-integrations/optional-app-extensions'
+import { allAppExtensions } from '../../../../extensions/extra-integrations/all-app-extensions'
 import type { ReactElement } from 'react'
 import React, { Fragment, useMemo } from 'react'
 
@@ -14,7 +14,7 @@ export const useComponentsFromAppExtensions = (): ReactElement => {
   return useMemo(() => {
     return (
       <Fragment key={'app-extensions'}>
-        {optionalAppExtensions.map((extension, index) =>
+        {allAppExtensions.map((extension, index) =>
           React.createElement(extension.buildEditorExtensionComponent(), { key: index })
         )}
       </Fragment>
