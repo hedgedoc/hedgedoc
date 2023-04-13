@@ -32,27 +32,31 @@ import { VegaLiteAppExtension } from './vega-lite/vega-lite-app-extension'
 import { VimeoAppExtension } from './vimeo/vimeo-app-extension'
 import { YoutubeAppExtension } from './youtube/youtube-app-extension'
 
-/**
- * This array defines additional app extensions that are used in the editor, read only page and slideshow.
- */
-export const optionalAppExtensions: AppExtension[] = [
+const thirdPartyIntegrationAppExtensions: AppExtension[] = [
   new AbcjsAppExtension(),
-  new AlertAppExtension(),
-  new BlockquoteAppExtension(),
-  new CsvTableAppExtension(),
   new FlowchartAppExtension(),
   new GistAppExtension(),
   new GraphvizAppExtension(),
   new KatexAppExtension(),
   new AsciinemaAppExtension(),
-  new LegacyShortcodesAppExtension(),
   new MermaidAppExtension(),
   new PlantumlAppExtension(),
-  new LegacySequenceDiagramAppExtension(),
-  new SpoilerAppExtension(),
   new VegaLiteAppExtension(),
   new VimeoAppExtension(),
-  new YoutubeAppExtension(),
+  new YoutubeAppExtension()
+]
+
+/**
+ * This array defines additional app extensions that are used in the editor, read only page and slideshow.
+ */
+export const optionalAppExtensions: AppExtension[] = [
+  ...thirdPartyIntegrationAppExtensions,
+  new AlertAppExtension(),
+  new BlockquoteAppExtension(),
+  new CsvTableAppExtension(),
+  new LegacyShortcodesAppExtension(),
+  new LegacySequenceDiagramAppExtension(),
+  new SpoilerAppExtension(),
   new TaskListCheckboxAppExtension(),
   new HighlightedCodeFenceAppExtension(),
   new ForkAwesomeHtmlTagAppExtension(),
