@@ -7,6 +7,7 @@ import { RevealMarkdownExtension } from '../../../markdown-renderer/extensions/r
 import { useMarkdownExtensions } from '../../../markdown-renderer/hooks/use-markdown-extensions'
 import { REVEAL_STATUS, useReveal } from '../../../markdown-renderer/hooks/use-reveal'
 import { MarkdownToReact } from '../../../markdown-renderer/markdown-to-react/markdown-to-react'
+import { RendererType } from '../../window-post-message-communicator/rendering-message'
 import type { CommonMarkdownRendererProps } from '../common-markdown-renderer-props'
 import { LoadingSlide } from './loading-slide'
 import type { SlideOptions } from '@hedgedoc/commons'
@@ -34,6 +35,7 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps>
 
   const extensions = useMarkdownExtensions(
     baseUrl,
+    RendererType.SLIDESHOW,
     useMemo(() => [new RevealMarkdownExtension()], [])
   )
 

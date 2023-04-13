@@ -12,6 +12,7 @@ import { useCalculateLineMarkerPosition } from '../../../markdown-renderer/hooks
 import { useMarkdownExtensions } from '../../../markdown-renderer/hooks/use-markdown-extensions'
 import { MarkdownToReact } from '../../../markdown-renderer/markdown-to-react/markdown-to-react'
 import { useDocumentSyncScrolling } from '../../hooks/sync-scroll/use-document-sync-scrolling'
+import { RendererType } from '../../window-post-message-communicator/rendering-message'
 import type { CommonMarkdownRendererProps, HeightChangeRendererProps } from '../common-markdown-renderer-props'
 import { DocumentTocSidebar } from './document-toc-sidebar'
 import styles from './markdown-document.module.scss'
@@ -67,6 +68,7 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
 
   const extensions = useMarkdownExtensions(
     baseUrl,
+    RendererType.DOCUMENT,
     useMemo(
       () => [
         new HeadlineAnchorsMarkdownExtension(),
