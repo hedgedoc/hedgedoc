@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { optionalAppExtensions } from '../../../../../extensions/extra-integrations/optional-app-extensions'
+import { allAppExtensions } from '../../../../../extensions/extra-integrations/all-app-extensions'
 import { autocompletion } from '@codemirror/autocomplete'
 import type { Extension } from '@codemirror/state'
 import { useMemo } from 'react'
@@ -14,7 +14,7 @@ import { useMemo } from 'react'
 export const useCodeMirrorAutocompletionsExtension = (): Extension => {
   return useMemo(() => {
     return autocompletion({
-      override: optionalAppExtensions.flatMap((extension) => extension.buildAutocompletion())
+      override: allAppExtensions.flatMap((extension) => extension.buildAutocompletion())
     })
   }, [])
 }

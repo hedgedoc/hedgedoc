@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { optionalAppExtensions } from '../../../../extensions/extra-integrations/optional-app-extensions'
+import { allAppExtensions } from '../../../../extensions/extra-integrations/all-app-extensions'
 import { useDarkModeState } from '../../../../hooks/common/use-dark-mode-state'
 import { FrontmatterLinter } from './frontmatter-linter'
 import type { Diagnostic } from '@codemirror/lint'
@@ -23,7 +23,7 @@ export interface Linter {
 
 const createLinterExtension = () =>
   linter((view) =>
-    optionalAppExtensions
+    allAppExtensions
       .flatMap((extension) => extension.buildCodeMirrorLinter())
       .concat(new FrontmatterLinter())
       .flatMap((aLinter) => aLinter.lint(view))
