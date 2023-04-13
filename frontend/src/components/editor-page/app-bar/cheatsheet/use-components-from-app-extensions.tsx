@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { optionalAppExtensions } from '../../../../extensions/extra-integrations/optional-app-extensions'
+import { allAppExtensions } from '../../../../extensions/extra-integrations/all-app-extensions'
 import type { CheatsheetExtensionComponentProps } from '../../cheatsheet/cheatsheet-extension'
 import { isCheatsheetGroup } from '../../cheatsheet/cheatsheet-extension'
 import type { ReactElement } from 'react'
@@ -18,7 +18,7 @@ export const useComponentsFromAppExtensions = (
   return useMemo(() => {
     return (
       <Fragment key={'app-extensions'}>
-        {optionalAppExtensions
+        {allAppExtensions
           .flatMap((extension) => extension.buildCheatsheetExtensions())
           .flatMap((extension) => (isCheatsheetGroup(extension) ? extension.entries : extension))
           .map((extension) => {

@@ -49,7 +49,7 @@ const thirdPartyIntegrationAppExtensions: AppExtension[] = [
 /**
  * This array defines additional app extensions that are used in the editor, read only page and slideshow.
  */
-export const optionalAppExtensions: AppExtension[] = [
+export const allAppExtensions: AppExtension[] = [
   ...thirdPartyIntegrationAppExtensions,
   new AlertAppExtension(),
   new BlockquoteAppExtension(),

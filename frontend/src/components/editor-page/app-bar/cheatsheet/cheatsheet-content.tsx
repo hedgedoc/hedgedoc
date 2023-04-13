@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { optionalAppExtensions } from '../../../../extensions/extra-integrations/optional-app-extensions'
+import { allAppExtensions } from '../../../../extensions/extra-integrations/all-app-extensions'
 import type { CheatsheetEntry, CheatsheetExtension } from '../../cheatsheet/cheatsheet-extension'
 import { isCheatsheetGroup } from '../../cheatsheet/cheatsheet-extension'
 import { CategoryAccordion } from './category-accordion'
@@ -26,7 +26,7 @@ export const CheatsheetContent: React.FC = () => {
   }, [])
 
   const extensions = useMemo(
-    () => optionalAppExtensions.flatMap((extension) => extension.buildCheatsheetExtensions()),
+    () => allAppExtensions.flatMap((extension) => extension.buildCheatsheetExtensions()),
     []
   )
 
