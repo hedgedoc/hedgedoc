@@ -81,8 +81,8 @@
   "regexManagers": [
     {
       "fileMatch": [
-        ".github/workflows/deploy-main.yml$",
-        ".github/workflows/deploy-pr.yml$"
+        ".github/workflows/frontend-netlify-deploy-main.yml$",
+        ".github/workflows/frontend-netlify-deploy-pr.yml$"
       ],
       "matchStrings": [
         "NETLIFY_VERSION=(?<currentValue>.*?)\\n"
