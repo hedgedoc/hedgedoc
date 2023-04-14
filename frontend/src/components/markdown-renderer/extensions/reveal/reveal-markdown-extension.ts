@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { NodeProcessor } from '../../node-preprocessors/node-processor'
-import { MarkdownRendererExtension } from '../base/markdown-renderer-extension'
+import { MarkdownRendererExtension } from '../_base-classes/markdown-renderer-extension'
 import { RevealCommentCommandNodePreprocessor } from './process-reveal-comment-nodes'
 import { addSlideSectionsMarkdownItPlugin } from './reveal-sections'
 import type MarkdownIt from 'markdown-it'

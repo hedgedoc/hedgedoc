@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { allAppExtensions } from '../../../../extensions/extra-integrations/all-app-extensions'
+import { allAppExtensions } from '../../../../extensions/all-app-extensions'
 import { useDarkModeState } from '../../../../hooks/common/use-dark-mode-state'
 import { FrontmatterLinter } from './frontmatter-linter'
 import type { Diagnostic } from '@codemirror/lint'

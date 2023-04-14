@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { allAppExtensions } from '../../../extensions/extra-integrations/all-app-extensions'
+import { allAppExtensions } from '../../../extensions/all-app-extensions'
 import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
 import type { RendererType } from '../../render-page/window-post-message-communicator/rendering-message'
-import type { MarkdownRendererExtension } from '../extensions/base/markdown-renderer-extension'
+import type { MarkdownRendererExtension } from '../extensions/_base-classes/markdown-renderer-extension'
 import { DebuggerMarkdownExtension } from '../extensions/debugger-markdown-extension'
 import { ProxyImageMarkdownExtension } from '../extensions/image/proxy-image-markdown-extension'
 import { LinkAdjustmentMarkdownExtension } from '../extensions/link-replacer/link-adjustment-markdown-extension'

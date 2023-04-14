@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MarkdownRendererExtension } from '../../extensions/base/markdown-renderer-extension'
+import { MarkdownRendererExtension } from '../../extensions/_base-classes/markdown-renderer-extension'
 import type { NodeProcessor } from '../../node-preprocessors/node-processor'
 import type { ComponentReplacer } from '../../replace-components/component-replacer'
 import { TestNodeProcessor } from './test-node-processor'

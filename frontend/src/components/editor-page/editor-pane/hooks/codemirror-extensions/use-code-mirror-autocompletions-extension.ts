@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { allAppExtensions } from '../../../../../extensions/extra-integrations/all-app-extensions'
+import { allAppExtensions } from '../../../../../extensions/all-app-extensions'
 import { autocompletion } from '@codemirror/autocomplete'
 import type { Extension } from '@codemirror/state'
 import { useMemo } from 'react'

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import HighlightedCode from '../../../../extensions/extra-integrations/highlighted-code-fence/highlighted-code'
+import HighlightedCode from '../../../common/highlighted-code/highlighted-code'
 import { HtmlToReact } from '../../../common/html-to-react/html-to-react'
 import { ExtensionEventEmitterProvider } from '../../../markdown-renderer/hooks/use-extension-event-emitter'
 import { RendererType } from '../../../render-page/window-post-message-communicator/rendering-message'
