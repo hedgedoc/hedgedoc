@@ -5,7 +5,7 @@
  */
 import { Logger } from '../../../utils/logger'
 import { isDevMode } from '../../../utils/test-modes'
-import { MarkdownRendererExtension } from './base/markdown-renderer-extension'
+import { MarkdownRendererExtension } from './_base-classes/markdown-renderer-extension'
 import type MarkdownIt from 'markdown-it'
 
 const log = new Logger('DebuggerMarkdownExtension')

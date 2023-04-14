@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { StoreProvider } from '../../../redux/store-provider'
-import type { MarkdownRendererExtension } from '../extensions/base/markdown-renderer-extension'
+import type { MarkdownRendererExtension } from '../extensions/_base-classes/markdown-renderer-extension'
 import { MarkdownToReact } from '../markdown-to-react/markdown-to-react'
 import React, { useMemo } from 'react'
 

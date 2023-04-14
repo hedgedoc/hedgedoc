@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { allAppExtensions } from '../../../../extensions/extra-integrations/all-app-extensions'
+import { allAppExtensions } from '../../../../extensions/all-app-extensions'
 import type { CheatsheetEntry, CheatsheetExtension } from '../../cheatsheet/cheatsheet-extension'
 import { isCheatsheetGroup } from '../../cheatsheet/cheatsheet-extension'
 import { CategoryAccordion } from './category-accordion'
@@ -25,10 +25,7 @@ export const CheatsheetContent: React.FC = () => {
     setSelectedEntry(isCheatsheetGroup(value) ? value.entries[0] : value)
   }, [])
 
-  const extensions = useMemo(
-    () => allAppExtensions.flatMap((extension) => extension.buildCheatsheetExtensions()),
-    []
-  )
+  const extensions = useMemo(() => allAppExtensions.flatMap((extension) => extension.buildCheatsheetExtensions()), [])
 
   return (
     <Row className={`mt-2`}>

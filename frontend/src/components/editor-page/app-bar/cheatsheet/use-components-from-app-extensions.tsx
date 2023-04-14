@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { allAppExtensions } from '../../../../extensions/extra-integrations/all-app-extensions'
+import { allAppExtensions } from '../../../../extensions/all-app-extensions'
 import type { CheatsheetExtensionComponentProps } from '../../cheatsheet/cheatsheet-extension'
 import { isCheatsheetGroup } from '../../cheatsheet/cheatsheet-extension'
 import type { ReactElement } from 'react'

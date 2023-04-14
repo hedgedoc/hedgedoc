@@ -5,7 +5,6 @@
  */
 import { cypressId } from '../../../../utils/cypress-attribute'
 import type { ScrollProps } from '../../../editor-page/synced-scroll/scroll-props'
-import { HeadlineAnchorsMarkdownExtension } from '../../../markdown-renderer/extensions/headline-anchors-markdown-extension'
 import type { LineMarkers } from '../../../markdown-renderer/extensions/linemarker/add-line-marker-markdown-it-plugin'
 import { LinemarkerMarkdownExtension } from '../../../markdown-renderer/extensions/linemarker/linemarker-markdown-extension'
 import { useCalculateLineMarkerPosition } from '../../../markdown-renderer/hooks/use-calculate-line-marker-positions'
@@ -69,13 +68,7 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
   const extensions = useMarkdownExtensions(
     baseUrl,
     RendererType.DOCUMENT,
-    useMemo(
-      () => [
-        new HeadlineAnchorsMarkdownExtension(),
-        new LinemarkerMarkdownExtension((values) => (currentLineMarkers.current = values))
-      ],
-      []
-    )
+    useMemo(() => [new LinemarkerMarkdownExtension((values) => (currentLineMarkers.current = values))], [])
   )
   useCalculateLineMarkerPosition(markdownBodyRef, currentLineMarkers.current, recalculateLineMarkers)
 
