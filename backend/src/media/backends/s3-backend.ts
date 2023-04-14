@@ -73,8 +73,10 @@ export class S3Backend implements MediaBackend {
 
   private getUrl(fileName: string): string {
     const url = new URL(this.config.endPoint);
-    const port = url.port !== '' ? `:${url.port}` : '';
-    const bucket = this.config.bucket;
-    return `${url.protocol}//${url.hostname}${port}${url.pathname}${bucket}/${fileName}`;
+    if (!url.pathname.endsWith('/')) {
+      url.pathname += '/';
+    }
+    url.pathname += `${this.config.bucket}/${fileName}`;
+    return url.toString();
   }
 }
