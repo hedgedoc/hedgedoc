@@ -29,13 +29,12 @@ export class S3Backend implements MediaBackend {
       this.config = mediaConfig.backend.s3;
       const url = new URL(this.config.endPoint);
       const secure = url.protocol === 'https:'; // url.protocol contains a trailing ':'
-      const endpoint = `${url.hostname}${url.pathname}`;
       let port = parseInt(url.port);
       if (isNaN(port)) {
         port = secure ? 443 : 80;
       }
       this.client = new Client({
-        endPoint: endpoint.substr(0, endpoint.length - 1), // remove trailing '/'
+        endPoint: url.hostname,
         port: port,
         useSSL: secure,
         accessKey: this.config.accessKeyId,
