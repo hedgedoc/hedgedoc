@@ -2408,7 +2408,7 @@ __metadata:
     diff: 5.1.0
     dom-serializer: 2.0.0
     domhandler: 5.0.3
-    dompurify: 3.0.1
+    dompurify: 3.0.2
     emoji-picker-element: 1.16.0
     emoji-picker-element-data: 1.3.0
     eslint: 8.38.0
@@ -8501,10 +8501,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:3.0.1":
-  version: 3.0.1
-  resolution: "dompurify@npm:3.0.1"
-  checksum: 19447e6d96415a8ad3a67bc9c76ffe671eb31cf7c1e0a538cbe5037c8b8b03afe144d64cf96c6e0f7fe63b83721a33b5b913394d20a85e96550e42e31f7c086b
+"dompurify@npm:3.0.2":
+  version: 3.0.2
+  resolution: "dompurify@npm:3.0.2"
+  checksum: 768c3bb2f139ce1e1a53faf81aae6abe03e24d0b043e2fda0b70e91ef15bb1df854a35e82d8c519adfe5b81c24bfdad3e0b1085534bfbf427137cb742406c47f
   languageName: node
   linkType: hard
 
