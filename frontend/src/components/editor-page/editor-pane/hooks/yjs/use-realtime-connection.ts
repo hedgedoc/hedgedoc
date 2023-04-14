@@ -94,6 +94,8 @@ export const useRealtimeConnection = (): MessageTransporter => {
     return () => window.removeEventListener('beforeunload', disconnectCallback)
   }, [messageTransporter])
 
+  useEffect(() => () => messageTransporter.disconnect(), [messageTransporter])
+
   useEffect(() => {
     const connectedListener = messageTransporter.doAsSoonAsReady(() => setRealtimeConnectionState(true))
     const disconnectedListener = messageTransporter.on('disconnected', () => setRealtimeConnectionState(false), {
