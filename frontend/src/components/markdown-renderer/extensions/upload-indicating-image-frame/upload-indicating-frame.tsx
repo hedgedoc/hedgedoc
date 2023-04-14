@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { usePlaceholderSizeStyle } from '../../../../extensions/essential-app-extensions/image-placeholder/hooks/use-placeholder-size-style'
 import { UiIcon } from '../../../common/icons/ui-icon'
-import { usePlaceholderSizeStyle } from '../image-placeholder/hooks/use-placeholder-size-style'
 import React from 'react'
 import { GearFill as IconGearFill } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
