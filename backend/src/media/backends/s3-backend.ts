@@ -25,22 +25,24 @@ export class S3Backend implements MediaBackend {
     private mediaConfig: MediaConfig,
   ) {
     this.logger.setContext(S3Backend.name);
-    if (mediaConfig.backend.use === BackendType.S3) {
-      this.config = mediaConfig.backend.s3;
-      const url = new URL(this.config.endPoint);
-      const secure = url.protocol === 'https:'; // url.protocol contains a trailing ':'
-      let port = parseInt(url.port);
-      if (isNaN(port)) {
-        port = secure ? 443 : 80;
-      }
-      this.client = new Client({
-        endPoint: url.hostname,
-        port: port,
-        useSSL: secure,
-        accessKey: this.config.accessKeyId,
-        secretKey: this.config.secretAccessKey,
-      });
+    if (mediaConfig.backend.use !== BackendType.S3) {
+      return;
     }
+    this.config = mediaConfig.backend.s3;
+    const url = new URL(this.config.endPoint);
+    const isSecure = url.protocol === 'https:';
+    this.client = new Client({
+      endPoint: url.hostname,
+      port: this.determinePort(url),
+      useSSL: isSecure,
+      accessKey: this.config.accessKeyId,
+      secretKey: this.config.secretAccessKey,
+    });
+  }
+
+  private determinePort(url: URL): number | undefined {
+    const port = parseInt(url.port);
+    return isNaN(port) ? undefined : port;
   }
 
   async saveFile(
