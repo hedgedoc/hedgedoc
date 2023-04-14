@@ -15,7 +15,7 @@ describe('mediaConfig', () => {
   const accessKeyId = 'accessKeyId';
   const secretAccessKey = 'secretAccessKey';
   const bucket = 'bucket';
-  const endPoint = 'endPoint';
+  const endPoint = 'https://endPoint';
   // Azure
   const azureConnectionString = 'connectionString';
   const container = 'container';
@@ -228,6 +228,46 @@ describe('mediaConfig', () => {
         );
         expect(() => mediaConfig()).toThrow(
           '"HD_MEDIA_BACKEND_S3_ENDPOINT" is required',
+        );
+        restore();
+      });
+      it('when HD_MEDIA_BACKEND_S3_ENDPOINT is not an URI', async () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            HD_MEDIA_BACKEND: BackendType.S3,
+            HD_MEDIA_BACKEND_S3_ACCESS_KEY: accessKeyId,
+            HD_MEDIA_BACKEND_S3_SECRET_KEY: secretAccessKey,
+            HD_MEDIA_BACKEND_S3_BUCKET: bucket,
+            HD_MEDIA_BACKEND_S3_ENDPOINT: 'wrong-uri',
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        expect(() => mediaConfig()).toThrow(
+          '"HD_MEDIA_BACKEND_S3_ENDPOINT" must be a valid uri with a scheme matching the ^https? pattern',
+        );
+        restore();
+      });
+      it('when HD_MEDIA_BACKEND_S3_ENDPOINT is an URI with a non-http(s) protocol', async () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            HD_MEDIA_BACKEND: BackendType.S3,
+            HD_MEDIA_BACKEND_S3_ACCESS_KEY: accessKeyId,
+            HD_MEDIA_BACKEND_S3_SECRET_KEY: secretAccessKey,
+            HD_MEDIA_BACKEND_S3_BUCKET: bucket,
+            HD_MEDIA_BACKEND_S3_ENDPOINT: 'ftps://example.org',
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        expect(() => mediaConfig()).toThrow(
+          '"HD_MEDIA_BACKEND_S3_ENDPOINT" must be a valid uri with a scheme matching the ^https? pattern',
         );
         restore();
       });
