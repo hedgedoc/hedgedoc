@@ -2,6 +2,9 @@
 
 ## UNRELEASED
 
+**Please note:** This release dropped support for Node 14, which is end-of-life since May 2023.
+You now need Node 16 to run HedgeDoc. We don't support more recent versions of Node.
+
 ### Enhancements
 - Extend boolean environment variable parsing with other positive answers and case insensitivity.
 - Allow setting of `documentMaxLength` via `CMD_DOCUMENT_MAX_LENGTH` environment variable.
