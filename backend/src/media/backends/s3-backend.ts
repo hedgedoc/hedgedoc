@@ -59,7 +59,7 @@ export class S3Backend implements MediaBackend {
     }
   }
 
-  async deleteFile(fileName: string, _: BackendData): Promise<void> {
+  async deleteFile(fileName: string): Promise<void> {
     try {
       await this.client.removeObject(this.config.bucket, fileName);
       const url = this.getUrl(fileName);
