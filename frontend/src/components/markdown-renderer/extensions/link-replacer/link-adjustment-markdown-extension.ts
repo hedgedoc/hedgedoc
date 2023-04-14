@@ -5,7 +5,7 @@
  */
 import type { NodeProcessor } from '../../node-preprocessors/node-processor'
 import type { ComponentReplacer } from '../../replace-components/component-replacer'
-import { MarkdownRendererExtension } from '../base/markdown-renderer-extension'
+import { MarkdownRendererExtension } from '../_base-classes/markdown-renderer-extension'
 import { AnchorNodePreprocessor } from './anchor-node-preprocessor'
 import { JumpAnchorReplacer } from './jump-anchor-replacer'
 

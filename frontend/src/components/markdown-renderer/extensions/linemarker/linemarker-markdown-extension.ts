@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { ComponentReplacer } from '../../replace-components/component-replacer'
-import { MarkdownRendererExtension } from '../base/markdown-renderer-extension'
+import { MarkdownRendererExtension } from '../_base-classes/markdown-renderer-extension'
 import type { LineMarkers } from './add-line-marker-markdown-it-plugin'
 import { addLineMarkerMarkdownItPlugin } from './add-line-marker-markdown-it-plugin'
 import { LinemarkerReplacer } from './linemarker-replacer'
