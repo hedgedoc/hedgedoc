@@ -19,7 +19,7 @@
   "resolutions": {
     "domhandler": "5.0.3",
     "@codemirror/state": "6.2.0",
-    "@codemirror/autocomplete": "6.5.0",
+    "@codemirror/autocomplete": "6.5.1",
     "@codemirror/view": "6.9.4",
     "@codemirror/language": "6.6.0",
     "@codemirror/commands": "6.2.2",
