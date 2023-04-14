@@ -56,7 +56,7 @@ const mediaSchema = Joi.object({
         accessKeyId: Joi.string().label('HD_MEDIA_BACKEND_S3_ACCESS_KEY'),
         secretAccessKey: Joi.string().label('HD_MEDIA_BACKEND_S3_SECRET_KEY'),
         bucket: Joi.string().label('HD_MEDIA_BACKEND_S3_BUCKET'),
-        endPoint: Joi.string().label('HD_MEDIA_BACKEND_S3_ENDPOINT'),
+        endPoint: Joi.string().uri().label('HD_MEDIA_BACKEND_S3_ENDPOINT'),
       }),
       otherwise: Joi.optional(),
     }),
