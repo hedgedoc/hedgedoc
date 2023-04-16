@@ -1,13 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../hooks/common/use-application-state'
 import { InternalLink } from '../common/links/internal-link'
 import { ShowIf } from '../common/show-if/show-if'
-import { NoteInfoLineCreated } from '../editor-page/document-bar/note-info/note-info-line-created'
-import { NoteInfoLineUpdated } from '../editor-page/document-bar/note-info/note-info-line-updated'
+import { NoteInfoLineCreated } from '../editor-page/sidebar/specific-sidebar-entries/note-info-sidebar-entry/note-info-modal/note-info-line-created'
+import { NoteInfoLineUpdated } from '../editor-page/sidebar/specific-sidebar-entries/note-info-sidebar-entry/note-info-modal/note-info-line-updated'
 import styles from './document-infobar.module.scss'
 import React from 'react'
 import { Pencil as IconPencil } from 'react-bootstrap-icons'
