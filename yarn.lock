@@ -1920,9 +1920,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/language-data@npm:6.2.0":
-  version: 6.2.0
-  resolution: "@codemirror/language-data@npm:6.2.0"
+"@codemirror/language-data@npm:6.2.1":
+  version: 6.2.1
+  resolution: "@codemirror/language-data@npm:6.2.1"
   dependencies:
     "@codemirror/lang-angular": ^0.1.0
     "@codemirror/lang-cpp": ^6.0.0
@@ -1941,7 +1941,7 @@ __metadata:
     "@codemirror/lang-xml": ^6.0.0
     "@codemirror/language": ^6.0.0
     "@codemirror/legacy-modes": ^6.1.0
-  checksum: 6e54f8ce572875b3f9dca82e56c9155d7033341a924de8444a47797067b02a51296678b05ef223e0b6782af50571a850a66156b0670b6e59dc6078844ba32de2
+  checksum: 4e8ecb84878f9687db3c738ccdf12dbf01849597281a4df07cf8f7ca1ca4e3ffe272fd984322ca3a86dfb81df0daf3841f1152534bf15646c26bd99c5ec32088
   languageName: node
   linkType: hard
 
@@ -2354,7 +2354,7 @@ __metadata:
     "@codemirror/commands": 6.2.2
     "@codemirror/lang-markdown": 6.1.1
     "@codemirror/language": 6.6.0
-    "@codemirror/language-data": 6.2.0
+    "@codemirror/language-data": 6.2.1
     "@codemirror/lint": 6.2.1
     "@codemirror/state": 6.2.0
     "@codemirror/theme-one-dark": 6.1.1
