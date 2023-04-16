@@ -10,18 +10,20 @@ import { useEditorReceiveHandler } from '../../../../../render-page/window-post-
 import type { OnWordCountCalculatedMessage } from '../../../../../render-page/window-post-message-communicator/rendering-message'
 import { CommunicationMessageType } from '../../../../../render-page/window-post-message-communicator/rendering-message'
 import { useEditorToRendererCommunicator } from '../../../../render-context/editor-to-renderer-communicator-context-provider'
-import { NoteInfoLine } from './note-info-line'
-import { UnitalicBoldContent } from './unitalic-bold-content'
-import type { PropsWithChildren } from 'react'
+import { SidebarMenuInfoEntry } from '../../../sidebar-menu-info-entry/sidebar-menu-info-entry'
 import React, { useCallback, useEffect, useState } from 'react'
 import { AlignStart as IconAlignStart } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
+
+interface NoteInfoLineWordCountProps {
+  visible: boolean
+}
 
 /**
  * Creates a new info line for the document information dialog that holds the
  * word count of the note, based on counting in the rendered output.
  */
-export const NoteInfoLineWordCount: React.FC<PropsWithChildren<unknown>> = () => {
+export const NoteInfoLineWordCount: React.FC<NoteInfoLineWordCountProps> = ({ visible }) => {
   useTranslation()
   const editorToRendererCommunicator = useEditorToRendererCommunicator()
   const [wordCount, setWordCount] = useState<number | null>(null)
@@ -33,21 +35,19 @@ export const NoteInfoLineWordCount: React.FC<PropsWithChildren<unknown>> = () =>
 
   const rendererReady = useApplicationState((state) => state.rendererStatus.rendererReady)
   useEffect(() => {
-    if (rendererReady) {
+    if (rendererReady && visible) {
       editorToRendererCommunicator.sendMessageToOtherSide({ type: CommunicationMessageType.GET_WORD_COUNT })
     }
-  }, [editorToRendererCommunicator, rendererReady])
+  }, [editorToRendererCommunicator, rendererReady, visible])
 
   return (
-    <NoteInfoLine icon={IconAlignStart} size={2}>
+    <SidebarMenuInfoEntry titleI18nKey={'editor.noteInfo.wordCount'} icon={IconAlignStart}>
       <ShowIf condition={wordCount === null}>
         <Trans i18nKey={'common.loading'} />
       </ShowIf>
       <ShowIf condition={wordCount !== null}>
-        <Trans i18nKey={'editor.modal.documentInfo.words'}>
-          <UnitalicBoldContent text={wordCount ?? ''} {...cypressId('document-info-word-count')} />
-        </Trans>
+        <span {...cypressId('document-info-word-count')}>{wordCount}</span>
       </ShowIf>
-    </NoteInfoLine>
+    </SidebarMenuInfoEntry>
   )
 }
