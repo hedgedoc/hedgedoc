@@ -411,7 +411,8 @@
         "error": "An error occurred while fetching the revisions of this note.",
         "errorUser": "An error occurred while fetching the user information for this revision.",
         "length": "Length",
-        "download": "Download selected revision"
+        "download": "Download selected revision",
+        "guestCount": "Anonymous authors or guests"
       },
       "clipboardImport": {
         "title": "Import from clipboard",
