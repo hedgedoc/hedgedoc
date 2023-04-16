@@ -41,7 +41,7 @@
     "@codemirror/commands": "6.2.2",
     "@codemirror/lang-markdown": "6.1.1",
     "@codemirror/language": "6.6.0",
-    "@codemirror/language-data": "6.2.0",
+    "@codemirror/language-data": "6.2.1",
     "@codemirror/lint": "6.2.1",
     "@codemirror/state": "6.2.0",
     "@codemirror/theme-one-dark": "6.1.1",
