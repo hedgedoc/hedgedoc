@@ -4,11 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
-import { NoteInfoLine } from './note-info-line'
-import { UnitalicBoldContent } from './unitalic-bold-content'
+import { SidebarMenuInfoEntry } from '../../../sidebar-menu-info-entry/sidebar-menu-info-entry'
 import React from 'react'
 import { People as IconPeople } from 'react-bootstrap-icons'
-import { Trans } from 'react-i18next'
 
 /**
  * Renders an info line about the number of contributors for the note.
@@ -17,10 +15,8 @@ export const NoteInfoLineContributors: React.FC = () => {
   const contributors = useApplicationState((state) => state.noteDetails.editedBy.length)
 
   return (
-    <NoteInfoLine icon={IconPeople} size={2}>
-      <Trans i18nKey={'editor.modal.documentInfo.usersContributed'}>
-        <UnitalicBoldContent text={contributors} />
-      </Trans>
-    </NoteInfoLine>
+    <SidebarMenuInfoEntry titleI18nKey={'editor.noteInfo.contributors'} icon={IconPeople}>
+      {contributors}
+    </SidebarMenuInfoEntry>
   )
 }

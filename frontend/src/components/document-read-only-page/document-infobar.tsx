@@ -6,8 +6,8 @@
 import { useApplicationState } from '../../hooks/common/use-application-state'
 import { InternalLink } from '../common/links/internal-link'
 import { ShowIf } from '../common/show-if/show-if'
-import { NoteInfoLineCreated } from '../editor-page/sidebar/specific-sidebar-entries/note-info-sidebar-entry/note-info-modal/note-info-line-created'
-import { NoteInfoLineUpdated } from '../editor-page/sidebar/specific-sidebar-entries/note-info-sidebar-entry/note-info-modal/note-info-line-updated'
+import { NoteInfoLineCreatedAt } from '../editor-page/sidebar/specific-sidebar-entries/note-info-sidebar-menu/note-info-line/note-info-line-created-at'
+import { NoteInfoLineUpdatedBy } from '../editor-page/sidebar/specific-sidebar-entries/note-info-sidebar-menu/note-info-line/note-info-line-updated-by'
 import styles from './document-infobar.module.scss'
 import React from 'react'
 import { Pencil as IconPencil } from 'react-bootstrap-icons'
@@ -26,8 +26,8 @@ export const DocumentInfobar: React.FC = () => {
       <div className={'col-md'}>&nbsp;</div>
       <div className={'d-flex flex-fill'}>
         <div className={'d-flex flex-column'}>
-          <NoteInfoLineCreated />
-          <NoteInfoLineUpdated />
+          <NoteInfoLineCreatedAt />
+          <NoteInfoLineUpdatedBy />
           <hr />
         </div>
         <span className={'ms-auto'}>

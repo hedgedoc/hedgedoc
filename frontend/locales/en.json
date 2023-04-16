@@ -383,19 +383,19 @@
       "tagTime": "Time tag",
       "spoiler": "Spoiler"
     },
+    "noteInfo": {
+      "title": "Note info",
+      "created": "Note created",
+      "lastUpdated": "Last updated",
+      "lastUpdatedBy": "Last updated by",
+      "contributors": "Count of contributors",
+      "wordCount": "Count of words"
+    },
     "modal": {
       "snippetImport": {
         "title": "Import from Snippet",
         "selectProject": "Select From Available Projects",
         "selectSnippet": "Select From Available Snippets"
-      },
-      "documentInfo": {
-        "title": "Document info",
-        "created": "This note was created <0></0>",
-        "edited": "<0></0> was the last editor <1></1>",
-        "usersContributed": "<0></0> users contributed to this document",
-        "revisions": "<0></0> revisions are saved",
-        "words": "<0></0> words in document"
       },
       "gistImport": {
         "title": "Import from Gist",
@@ -645,7 +645,7 @@
   },
   "cheatsheet": {
     "button": "Open Cheatsheet",
-    "modal":{
+    "modal": {
       "popup": "Open in new tab",
       "title": "Cheatsheet",
       "headlines": {
@@ -778,11 +778,11 @@
       "example": "I :heart: :hedgehog:"
     },
     "csv": {
-      "title" : "CSV",
-      "table" : {
+      "title": "CSV",
+      "table": {
         "title": "Table",
-        "description" : "You can render a CSV text as table by using a code block with `csv` as language. You must specify the delimiter.",
-        "example" : "```csv delimiter=;\nUsername; Identifier;First name;Last name\n\"booker12; rbooker\";9012;Rachel;Booker\ngrey07;2070;Laura;Grey\njohnson81;4081;Craig;Johnson\njenkins46;9346;Mary;Jenkins\nsmith79;5079;Jamie;Smith\n```"
+        "description": "You can render a CSV text as table by using a code block with `csv` as language. You must specify the delimiter.",
+        "example": "```csv delimiter=;\nUsername; Identifier;First name;Last name\n\"booker12; rbooker\";9012;Rachel;Booker\ngrey07;2070;Laura;Grey\njohnson81;4081;Craig;Johnson\njenkins46;9346;Mary;Jenkins\nsmith79;5079;Jamie;Smith\n```"
       },
       "header": {
         "title": "Header",

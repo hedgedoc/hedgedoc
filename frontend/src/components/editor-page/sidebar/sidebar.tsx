@@ -7,7 +7,7 @@ import { AliasesSidebarEntry } from './specific-sidebar-entries/aliases-sidebar-
 import { DeleteNoteSidebarEntry } from './specific-sidebar-entries/delete-note-sidebar-entry/delete-note-sidebar-entry'
 import { ExportMenuSidebarMenu } from './specific-sidebar-entries/export-menu-sidebar-menu'
 import { ImportMenuSidebarMenu } from './specific-sidebar-entries/import-menu-sidebar-menu'
-import { NoteInfoSidebarEntry } from './specific-sidebar-entries/note-info-sidebar-entry/note-info-sidebar-entry'
+import { NoteInfoSidebarMenu } from './specific-sidebar-entries/note-info-sidebar-menu/note-info-sidebar-menu'
 import { PermissionsSidebarEntry } from './specific-sidebar-entries/permissions-sidebar-entry/permissions-sidebar-entry'
 import { PinNoteSidebarEntry } from './specific-sidebar-entries/pin-note-sidebar-entry/pin-note-sidebar-entry'
 import { RevisionSidebarEntry } from './specific-sidebar-entries/revisions-sidebar-entry/revision-sidebar-entry'
@@ -47,7 +47,11 @@ export const Sidebar: React.FC = () => {
           selectedMenuId={selectedMenu}
           onClick={toggleValue}
         />
-        <NoteInfoSidebarEntry hide={selectionIsNotNone} />
+        <NoteInfoSidebarMenu
+          menuId={DocumentSidebarMenuSelection.NOTE_INFO}
+          selectedMenuId={selectedMenu}
+          onClick={toggleValue}
+        />
         <RevisionSidebarEntry hide={selectionIsNotNone} />
         <PermissionsSidebarEntry hide={selectionIsNotNone} />
         <AliasesSidebarEntry hide={selectionIsNotNone} />
