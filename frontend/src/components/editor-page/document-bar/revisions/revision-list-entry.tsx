@@ -17,6 +17,7 @@ import { ListGroup } from 'react-bootstrap'
 import { Clock as IconClock } from 'react-bootstrap-icons'
 import { FileText as IconFileText } from 'react-bootstrap-icons'
 import { Person as IconPerson } from 'react-bootstrap-icons'
+import { PersonPlus as IconPersonPlus } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 import { useAsync } from 'react-use'
 
@@ -73,6 +74,10 @@ export const RevisionListEntry: React.FC<RevisionListEntryProps> = ({ active, on
           <WaitSpinner />
         </ShowIf>
         <ShowIf condition={!revisionAuthors.error && !revisionAuthors.loading}>{revisionAuthors.value}</ShowIf>
+      </span>
+      <span>
+        <UiIcon icon={IconPersonPlus} className='mx-2' />
+        <Trans i18nKey={'editor.modal.revision.guestCount'} />: {revision.anonymousAuthorCount}
       </span>
     </ListGroup.Item>
   )
