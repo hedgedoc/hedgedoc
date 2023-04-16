@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,8 +8,8 @@ import { Logger } from '../../../../../utils/logger'
 import { UiIcon } from '../../../../common/icons/ui-icon'
 import { ShowIf } from '../../../../common/show-if/show-if'
 import { acceptedMimeTypes } from '../../../../common/upload-image-mimetypes'
+import { UploadInput } from '../../../../common/upload-input'
 import { useCodemirrorReferenceContext } from '../../../change-content-context/codemirror-reference-context'
-import { UploadInput } from '../../../sidebar/upload-input'
 import { useHandleUpload } from '../../hooks/use-handle-upload'
 import { extractSelectedText } from './extract-selected-text'
 import { Optional } from '@mrdrogdrog/optional'

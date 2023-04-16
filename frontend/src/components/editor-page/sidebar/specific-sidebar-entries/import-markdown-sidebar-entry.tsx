@@ -1,14 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { FileContentFormat, readFile } from '../../../../utils/read-file'
 import { ShowIf } from '../../../common/show-if/show-if'
+import { UploadInput } from '../../../common/upload-input'
 import { useChangeEditorContentCallback } from '../../change-content-context/use-change-editor-content-callback'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
-import { UploadInput } from '../upload-input'
 import React, { Fragment, useCallback, useRef } from 'react'
 import { FileText as IconFileText } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'

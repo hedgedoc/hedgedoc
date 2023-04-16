@@ -1,20 +1,20 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { DeleteNoteSidebarEntry } from './delete-note-sidebar-entry/delete-note-sidebar-entry'
-import { AliasesSidebarEntry } from './specific-sidebar-entries/aliases-sidebar-entry'
+import { AliasesSidebarEntry } from './specific-sidebar-entries/aliases-sidebar-entry/aliases-sidebar-entry'
+import { DeleteNoteSidebarEntry } from './specific-sidebar-entries/delete-note-sidebar-entry/delete-note-sidebar-entry'
 import { ExportMenuSidebarMenu } from './specific-sidebar-entries/export-menu-sidebar-menu'
 import { ImportMenuSidebarMenu } from './specific-sidebar-entries/import-menu-sidebar-menu'
-import { NoteInfoSidebarEntry } from './specific-sidebar-entries/note-info-sidebar-entry'
-import { PermissionsSidebarEntry } from './specific-sidebar-entries/permissions-sidebar-entry'
-import { PinNoteSidebarEntry } from './specific-sidebar-entries/pin-note-sidebar-entry'
-import { RevisionSidebarEntry } from './specific-sidebar-entries/revision-sidebar-entry'
-import { ShareSidebarEntry } from './specific-sidebar-entries/share-sidebar-entry'
+import { NoteInfoSidebarEntry } from './specific-sidebar-entries/note-info-sidebar-entry/note-info-sidebar-entry'
+import { PermissionsSidebarEntry } from './specific-sidebar-entries/permissions-sidebar-entry/permissions-sidebar-entry'
+import { PinNoteSidebarEntry } from './specific-sidebar-entries/pin-note-sidebar-entry/pin-note-sidebar-entry'
+import { RevisionSidebarEntry } from './specific-sidebar-entries/revisions-sidebar-entry/revision-sidebar-entry'
+import { ShareNoteSidebarEntry } from './specific-sidebar-entries/share-note-sidebar-entry/share-note-sidebar-entry'
+import { UsersOnlineSidebarMenu } from './specific-sidebar-entries/users-online-sidebar-menu/users-online-sidebar-menu'
 import styles from './style/sidebar.module.scss'
 import { DocumentSidebarMenuSelection } from './types'
-import { UsersOnlineSidebarMenu } from './users-online-sidebar-menu/users-online-sidebar-menu'
 import React, { useCallback, useRef, useState } from 'react'
 import { useClickAway } from 'react-use'
 
@@ -61,7 +61,7 @@ export const Sidebar: React.FC = () => {
           selectedMenuId={selectedMenu}
           onClick={toggleValue}
         />
-        <ShareSidebarEntry hide={selectionIsNotNone} />
+        <ShareNoteSidebarEntry hide={selectionIsNotNone} />
         <DeleteNoteSidebarEntry hide={selectionIsNotNone} />
         <PinNoteSidebarEntry hide={selectionIsNotNone} />
       </div>

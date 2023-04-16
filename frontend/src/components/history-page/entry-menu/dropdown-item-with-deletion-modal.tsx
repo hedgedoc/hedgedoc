@@ -1,12 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useBooleanState } from '../../../hooks/common/use-boolean-state'
 import { UiIcon } from '../../common/icons/ui-icon'
-import type { DeleteHistoryNoteModalProps } from '../../editor-page/sidebar/delete-note-sidebar-entry/delete-note-modal'
-import { DeleteNoteModal } from '../../editor-page/sidebar/delete-note-sidebar-entry/delete-note-modal'
+import type { DeleteHistoryNoteModalProps } from '../../editor-page/sidebar/specific-sidebar-entries/delete-note-sidebar-entry/delete-note-modal'
+import { DeleteNoteModal } from '../../editor-page/sidebar/specific-sidebar-entries/delete-note-sidebar-entry/delete-note-modal'
 import React, { Fragment, useCallback } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import type { Icon } from 'react-bootstrap-icons'

@@ -1,0 +1,22 @@
+/*!
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+.user-line-color-indicator {
+  border-left: 3px solid var(--color);
+  min-height: 30px;
+  height: 100%;
+  flex: 0 0 3px;
+}
+
+.user-avatar {
+  flex: 0 0 20px;
+}
+
+.user-line-name {
+  text-overflow: ellipsis;
+  flex: 1 1 0;
+  overflow: hidden;
+}
