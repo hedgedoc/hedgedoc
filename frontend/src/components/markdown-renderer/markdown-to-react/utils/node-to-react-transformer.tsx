@@ -54,7 +54,7 @@ export class NodeToReactTransformer {
   }
 
   /**
-   * Converts the given {@link Node} to a react element.
+   * Converts the given {@link Node} to a React element.
    *
    * @param node The {@link Node DOM node} that should be translated.
    * @param index The index of the node within its parents child list.
@@ -67,7 +67,7 @@ export class NodeToReactTransformer {
   }
 
   /**
-   * Translates the given {@link Element} to a react element.
+   * Translates the given {@link Element} to a React element.
    *
    * @param element The {@link Element DOM element} that should be translated.
    * @param index The index of the element within its parents child list.
@@ -132,7 +132,7 @@ export class NodeToReactTransformer {
 
   /**
    * Extracts the start and end line indexes that are saved in a line marker element
-   * and describe in which line, in the markdown code, the node before the marker ends
+   * and describe in which line, in the Markdown code, the node before the marker ends
    * and which the node after the marker starts.
    *
    * @param lineMarker The line marker that saves a start and end line index.
@@ -159,10 +159,10 @@ export class NodeToReactTransformer {
   }
 
   /**
-   * Converts markdown it line indexes to internal line indexes.
+   * Converts markdown-it line indexes to internal line indexes.
    * The differences are:
    *   - Markdown it starts to count at 1, but we start at 0
-   *   - Line indexes in markdown it are start(inclusive) to end(exclusive). But we need start(inclusive) to end(inclusive).
+   *   - Line indexes in markdown-it are start(inclusive) to end(exclusive). But we need start(inclusive) to end(inclusive).
    *
    * @param startLineIndex The start line index from markdown it
    * @param endLineIndex The end line index from markdown it
