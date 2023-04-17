@@ -31,7 +31,19 @@ export class NodeToReactTransformer {
   }
 
   public setReplacers(replacers: ComponentReplacer[]): void {
-    this.replacers = replacers
+    this.replacers = new Array(...replacers).sort(this.compareReplacers.bind(this))
+  }
+
+  private compareReplacers(replacerA: ComponentReplacer, replacerB: ComponentReplacer): number {
+    const priorityA = replacerA.getPriority()
+    const priorityB = replacerB.getPriority()
+    if (priorityA === priorityB) {
+      return 0
+    } else if (priorityA < priorityB) {
+      return -1
+    } else {
+      return 1
+    }
   }
 
   /**
