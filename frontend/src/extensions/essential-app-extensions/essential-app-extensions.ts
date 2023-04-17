@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { LegacySequenceDiagramAppExtension } from '../external-lib-app-extensions/sequence-diagram/legacy-sequence-diagram-app-extension'
 import { AlertAppExtension } from './alert/alert-app-extension'
 import { BasicMarkdownSyntaxAppExtension } from './basic-markdown-syntax/basic-markdown-syntax-app-extension'
 import { BlockquoteAppExtension } from './blockquote/blockquote-app-extension'
@@ -39,5 +40,6 @@ export const essentialAppExtensions = [
   new SpoilerAppExtension(),
   new TableOfContentsAppExtension(),
   new TaskListCheckboxAppExtension(),
-  new HeadlineAnchorsAppExtension()
+  new HeadlineAnchorsAppExtension(),
+  new LegacySequenceDiagramAppExtension()
 ]
