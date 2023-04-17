@@ -2395,7 +2395,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": 5.58.0
     "@typescript-eslint/parser": 5.58.0
     "@uiw/react-codemirror": 4.19.16
-    abcjs: 6.2.1
+    abcjs: 6.2.2
     bootstrap: 5.2.3
     copy-webpack-plugin: 11.0.0
     cross-env: 7.0.3
@@ -5416,10 +5416,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"abcjs@npm:6.2.1":
-  version: 6.2.1
-  resolution: "abcjs@npm:6.2.1"
-  checksum: c12526ec5a296180e531ea6bdbc583aaaf59e282d0e21ed347571d085e604ed0473df6fcff4f5f03c69d225d9ca74e11c7aefb22165916d7dd7b0ce781060e16
+"abcjs@npm:6.2.2":
+  version: 6.2.2
+  resolution: "abcjs@npm:6.2.2"
+  checksum: ed67d0e013af4b0ba0f212e9e411d373d8e5b41e3b1307174903b7c22d173557d189fde6a53b0c4bb4cd7a8a6c45b17b345913bb5ffa6fecf05e96a15d15dc9b
   languageName: node
   linkType: hard
 
