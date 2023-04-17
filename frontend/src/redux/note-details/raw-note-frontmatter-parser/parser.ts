@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { initialSlideOptions, initialState } from '../initial-state'
-import type { RawNoteFrontmatter } from './types'
+import { RawNoteFrontmatter } from './types'
 import type { Iso6391Language, NoteFrontmatter, OpenGraph, SlideOptions } from '@hedgedoc/commons'
 import { ISO6391, NoteTextDirection, NoteType } from '@hedgedoc/commons'
 import { load } from 'js-yaml'
+import Joi from 'joi'
 
 /**
  * Creates a new frontmatter metadata instance based on a raw yaml string.
@@ -16,8 +17,8 @@ import { load } from 'js-yaml'
  * @return Frontmatter metadata instance containing the parsed properties from the yaml content.
  */
 export const createNoteFrontmatterFromYaml = (rawYaml: string): NoteFrontmatter => {
-  const rawNoteFrontmatter = load(rawYaml) as RawNoteFrontmatter
-  return parseRawNoteFrontmatter(rawNoteFrontmatter)
+  const rawNoteFrontmatter = load(rawYaml)
+  return parseRawNoteFrontmatter(validateRawNoteFrontmatter(rawNoteFrontmatter))
 }
 
 /**
@@ -49,6 +50,40 @@ const parseRawNoteFrontmatter = (rawData: RawNoteFrontmatter): NoteFrontmatter =
     license: rawData.license ?? initialState.frontmatter.license,
     tags
   }
+}
+
+/**
+ * Schema for the {@link RawNoteFrontmatter} for runtime validation.
+ */
+const RawNoteFrontmatterSchema = Joi.object({
+  title: Joi.string().optional().allow(null),
+  description: Joi.string().optional(),
+  tags: Joi.alternatives(Joi.string(), Joi.number(), Joi.array().items(Joi.string())).optional(),
+  robots: Joi.string().optional(),
+  lang: Joi.string().optional(),
+  dir: Joi.string().optional(),
+  breaks: Joi.boolean().optional(),
+  GA: Joi.string().optional(),
+  disqus: Joi.string().optional(),
+  license: Joi.string().optional(),
+  type: Joi.string().optional(),
+  slideOptions: Joi.object().allow(null).pattern(/.*/, Joi.string().allow('')),
+  opengraph: Joi.object().allow(null).pattern(/.*/, Joi.string().allow(''))
+})
+
+/**
+ * Validates the given raw data against the {@link RawNoteFrontmatterSchema}.
+ * 
+ * @param rawData The raw data to validate.
+ * @returns The validated raw data.
+ * @throws Error when the validation fails.
+ */
+const validateRawNoteFrontmatter = (rawData: unknown): RawNoteFrontmatter => {
+  const validation = RawNoteFrontmatterSchema.validate(rawData)
+  if (validation.error) {
+    throw new Error(validation.error.message)
+  }
+  return validation.value as RawNoteFrontmatter
 }
 
 /**
