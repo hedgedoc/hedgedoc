@@ -4,11 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import HighlightedCode from '../../../components/common/highlighted-code/highlighted-code'
+import type { NodeReplacement } from '../../../components/markdown-renderer/replace-components/component-replacer'
 import {
   ComponentReplacer,
-  DO_NOT_REPLACE
+  DO_NOT_REPLACE,
+  ReplacerPriority
 } from '../../../components/markdown-renderer/replace-components/component-replacer'
-import type { NodeReplacement } from '../../../components/markdown-renderer/replace-components/component-replacer'
 import type { Element } from 'domhandler'
 import React from 'react'
 
@@ -55,5 +56,9 @@ export class HighlightedCodeReplacer extends ComponentReplacer {
 
   reset() {
     this.lastLineNumber = 0
+  }
+
+  getPriority(): ReplacerPriority {
+    return ReplacerPriority.LOWER
   }
 }

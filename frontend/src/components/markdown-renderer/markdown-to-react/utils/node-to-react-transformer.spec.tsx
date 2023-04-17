@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { NodeReplacement } from '../../replace-components/component-replacer'
-import { ComponentReplacer, DO_NOT_REPLACE } from '../../replace-components/component-replacer'
+import { ComponentReplacer, DO_NOT_REPLACE, ReplacerPriority } from '../../replace-components/component-replacer'
 import { NodeToReactTransformer } from './node-to-react-transformer'
 import { Element } from 'domhandler'
 import type { ReactElement, ReactHTMLElement } from 'react'
@@ -35,6 +35,56 @@ describe('node to react transformer', () => {
       ])
       const translation = nodeToReactTransformer.translateNodeToReactElement(defaultTestSpanElement, 1) as ReactElement
       expect(translation).toEqual(null)
+    })
+
+    it('will prioritize a high priority replacer over a normal priority replacer', () => {
+      nodeToReactTransformer.setReplacers([
+        new (class extends ComponentReplacer {
+          getPriority(): ReplacerPriority {
+            return ReplacerPriority.NORMAL
+          }
+
+          replace(): NodeReplacement {
+            return <span>Replacer O</span>
+          }
+        })(),
+        new (class extends ComponentReplacer {
+          getPriority(): ReplacerPriority {
+            return ReplacerPriority.HIGHER
+          }
+
+          replace(): NodeReplacement {
+            return <span>Replacer X</span>
+          }
+        })()
+      ])
+      const translation = nodeToReactTransformer.translateNodeToReactElement(defaultTestSpanElement, 1) as ReactElement
+      expect(translation).toMatchSnapshot()
+    })
+
+    it('will prioritize a normal priority replacer over a low priority replacer', () => {
+      nodeToReactTransformer.setReplacers([
+        new (class extends ComponentReplacer {
+          getPriority(): ReplacerPriority {
+            return ReplacerPriority.LOWER
+          }
+
+          replace(): NodeReplacement {
+            return <span>Replacer M</span>
+          }
+        })(),
+        new (class extends ComponentReplacer {
+          getPriority(): ReplacerPriority {
+            return ReplacerPriority.NORMAL
+          }
+
+          replace(): NodeReplacement {
+            return <span>Replacer Y</span>
+          }
+        })()
+      ])
+      const translation = nodeToReactTransformer.translateNodeToReactElement(defaultTestSpanElement, 1) as ReactElement
+      expect(translation).toMatchSnapshot()
     })
 
     it('can translate an element with no matching replacer', () => {

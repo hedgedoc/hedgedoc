@@ -17,6 +17,12 @@ export const DO_NOT_REPLACE = Symbol()
 
 export type NodeReplacement = ValidReactDomElement | typeof DO_NOT_REPLACE
 
+export enum ReplacerPriority {
+  LOWER = 1,
+  NORMAL = 0,
+  HIGHER = -1
+}
+
 /**
  * Base class for all component replacers.
  * Component replacers detect structures in the HTML DOM from markdown it
@@ -65,4 +71,13 @@ export abstract class ComponentReplacer {
     subNodeTransform: SubNodeTransform,
     nativeRenderer: NativeRenderer
   ): NodeReplacement
+
+  /**
+   * Defines that a replacer should be preferred more or less than other replacers.
+   *
+   * @return the replacer priority that gets compared to others.
+   */
+  public getPriority(): ReplacerPriority {
+    return ReplacerPriority.NORMAL
+  }
 }
