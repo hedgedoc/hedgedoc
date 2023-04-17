@@ -6,6 +6,10 @@
 import { createNoteFrontmatterFromYaml } from './parser'
 
 describe('yaml frontmatter', () => {
+  it('should parse an empty title', () => {
+    const noteFrontmatter = createNoteFrontmatterFromYaml('title:')
+    expect(noteFrontmatter.title).toEqual('')
+  })
   it('should parse "title"', () => {
     const noteFrontmatter = createNoteFrontmatterFromYaml('title: test')
     expect(noteFrontmatter.title).toEqual('test')

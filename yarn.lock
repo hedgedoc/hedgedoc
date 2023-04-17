@@ -2393,6 +2393,7 @@ __metadata:
     "@types/diff": 5.0.3
     "@types/dompurify": 3.0.2
     "@types/jest": 29.5.1
+    "@types/joi": ^17.2.3
     "@types/js-yaml": 4.0.5
     "@types/katex": 0.16.0
     "@types/luxon": 3.3.0
@@ -2448,6 +2449,7 @@ __metadata:
     isomorphic-ws: 5.0.0
     jest: 29.5.0
     jest-environment-jsdom: 29.5.0
+    joi: ^17.9.1
     js-yaml: 4.1.0
     katex: 0.16.6
     luxon: 3.3.0
@@ -4573,6 +4575,15 @@ __metadata:
     expect: ^29.0.0
     pretty-format: ^29.0.0
   checksum: 0a22491dec86333c0e92b897be2c809c922a7b2b0aa5604ac369810d6b2360908b4a3f2c6892e8a237a54fa1f10ecefe0e823ec5fcb7915195af4dfe88d2197e
+  languageName: node
+  linkType: hard
+
+"@types/joi@npm:^17.2.3":
+  version: 17.2.3
+  resolution: "@types/joi@npm:17.2.3"
+  dependencies:
+    joi: "*"
+  checksum: f26d0132b4e16d667176a0dce52a013fce1557a9d7a7b68c67e1bdb1ca470a221e638f2ad4566ca8fcfad544ca0845f6e241b3e86cb387ffee07910bad1147bb
   languageName: node
   linkType: hard
 
@@ -12222,7 +12233,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"joi@npm:17.9.2":
+"joi@npm:*, joi@npm:17.9.1, joi@npm:^17.9.2":
   version: 17.9.2
   resolution: "joi@npm:17.9.2"
   dependencies:
