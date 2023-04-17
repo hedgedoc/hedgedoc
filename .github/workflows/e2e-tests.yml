@@ -163,6 +163,7 @@ jobs:
         run: yarn turbo run build:test --filter=frontend
         shell: bash
         env:
+          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
           TURBO_API: ${{ vars.TURBO_API }}
           TURBO_TEAM: ${{ vars.TURBO_TEAM }}
@@ -180,6 +181,7 @@ jobs:
         run: yarn turbo run test:e2e:ci --filter=frontend
         shell: bash
         env:
+          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
