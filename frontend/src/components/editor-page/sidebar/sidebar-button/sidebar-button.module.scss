@@ -1,29 +1,29 @@
-/*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+/*!
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 .sidebar-button {
-  @import '../style/variables.scss';
-
-  height: $height;
-  flex: 0 0 $height;
+  height: var(--sidebar-entry-height);
+  flex: 0 0 var(--sidebar-entry-height);
   width: 100%;
   display: flex;
   align-items: center;
-  border: solid 1px rgba(0, 0, 0, 0.15);
+  border: solid 1px var(--sidebar-separator-color);
+  border-left: none;
   user-select: none;
   cursor: pointer;
   background: transparent;
   padding: 0;
   transition: height 0.2s, flex-basis 0.2s;
   overflow: hidden;
+  color: var(--bs-dark);
 
   &.hide {
     flex-basis: 0;
-    height: 0px;
-    border-width: 0px;
+    height: 0;
+    border-width: 0;
 
     .sidebar-icon {
       opacity: 0;
@@ -37,13 +37,13 @@
   .sidebar-icon {
     transition: opacity 0.2s;
     opacity: 1;
-    height: $height;
-    width: $height;
+    height: var(--sidebar-entry-height);
+    width: var(--sidebar-entry-height);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    flex: 0 0 40px;
+    flex: 0 0 var(--sidebar-entry-height);
   }
 
   .sidebar-text {
@@ -57,27 +57,20 @@
     width: 0;
   }
 
-  @mixin colors {
-    color: var(--bs-dark);
-
-    &.sidebar-button-primary {
-      color: var(--bs-light);
-      background: var(--bs-primary);
-
-      &:hover {
-        color: var(--bs-primary);
-        background:  var(--bs-light);
-      }
-    }
+  &.sidebar-button-primary {
+    color: var(--bs-light);
+    background: var(--bs-primary);
 
     &:hover {
-      color: var(--bs-light);
-      background:  var(--bs-primary);
+      color: var(--bs-primary);
+      background: var(--bs-light);
     }
   }
 
-  $entry-hover-bg: darken(black, 10%);
-  @include colors;
+  &:hover {
+    color: var(--bs-light);
+    background: var(--bs-primary);
+  }
 }
 
 

@@ -1,13 +1,19 @@
-/*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+/*!
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 .slide-sidebar {
-  @import "./variables.scss";
+  --sidebar-entry-height: 44px;
+  --sidebar-menu-width: 280px;
+  --sidebar-separator-color: rgba(0, 0, 0, 0.15);
 
-  flex: 0 0 $height;
+  :global(body.dark) & {
+    --sidebar-separator-color: rgba(255, 255, 255, 0.2);
+  }
+
+  flex: 0 0 var(--sidebar-entry-height);
   position: relative;
 
   .sidebar-inner {
@@ -17,15 +23,16 @@
     flex-direction: column;
     position: absolute;
     z-index: 999;
-    width: $menu-width;
+    width: var(--sidebar-menu-width);
     top: 0;
     left: 0;
     transition: left 0.3s;
     box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+    border-left: solid 1px var(--sidebar-separator-color);
 
     &:hover, &.show {
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-      left: (-$menu-width + $height);
+      left: calc(0px - var(--sidebar-menu-width) + var(--sidebar-entry-height));
     }
 
     background: var(--bs-light);
