@@ -132,9 +132,20 @@ jobs:
         run: yarn turbo run build:test --filter=frontend
         shell: bash
         env:
+          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
           TURBO_API: ${{ vars.TURBO_API }}
           TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+      - name: Compress build
+        run: tar --exclude='frontend/.next/cache' --exclude='frontend/.next/standalone' --zstd -cf frontend-e2e-build.tar.zst frontend/.next/
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend-e2e-build
+          retention-days: 1
+          path: frontend-e2e-build.tar.zst
 
   frontend-cypress:
     if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
@@ -148,25 +159,26 @@ jobs:
       matrix:
         containers: [ 1, 2, 3 ]
     steps:
+      - name: Install jq and zstd
+        run: apt-get update && apt-get install -y jq zstd
+
       - name: Check out repo
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        with:
+          ref: ${{ env.HEAD_COMMIT_HASH }}
 
       - name: Setup node
         uses: ./.github/actions/setup-node
         with:
           NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
 
-      - name: Install jq
-        run: apt-get update && apt-get install -y jq
+      - name: Download build
+        uses: actions/download-artifact@v3
+        with:
+          name: frontend-e2e-build
 
-      - name: Build test production build
-        run: yarn turbo run build:test --filter=frontend
-        shell: bash
-        env:
-          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-          TURBO_API: ${{ vars.TURBO_API }}
-          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+      - name: Decompress build
+        run: tar -xf frontend-e2e-build.tar.zst
 
       - name: Run server
         working-directory: frontend/
@@ -181,7 +193,6 @@ jobs:
         run: yarn turbo run test:e2e:ci --filter=frontend
         shell: bash
         env:
-          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
