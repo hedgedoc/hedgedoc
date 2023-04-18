@@ -28,7 +28,7 @@ jobs:
 
       - name: Generate Docker metadata for ${{ matrix.component }}
         id: meta-data
-        uses: docker/metadata-action@507c2f2dc502c992ad446e3d7a5dfbe311567a96 # v4.3.0
+        uses: docker/metadata-action@c4ee3adeed93b1fa6a762f209fb01608c1a22f1e # v4.4.0
         with:
           images: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}/${{ matrix.component }}
           tags: |
