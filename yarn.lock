@@ -2435,7 +2435,7 @@ __metadata:
     jest: 29.5.0
     jest-environment-jsdom: 29.5.0
     js-yaml: 4.1.0
-    katex: 0.16.4
+    katex: 0.16.6
     luxon: 3.3.0
     markdown-it: 13.0.1
     markdown-it-abbr: 1.0.4
@@ -7044,7 +7044,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^8.0.0":
+"commander@npm:^8.3.0":
   version: 8.3.0
   resolution: "commander@npm:8.3.0"
   checksum: 0f82321821fc27b83bd409510bb9deeebcfa799ff0bf5d102128b500b7af22872c0c92cb6a0ebc5a4cf19c6b550fba9cedfa7329d18c6442a625f851377bacf0
@@ -12311,14 +12311,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"katex@npm:0.16.4":
-  version: 0.16.4
-  resolution: "katex@npm:0.16.4"
+"katex@npm:0.16.6":
+  version: 0.16.6
+  resolution: "katex@npm:0.16.6"
   dependencies:
-    commander: ^8.0.0
+    commander: ^8.3.0
   bin:
     katex: cli.js
-  checksum: 94eaf1fbd8365792308527695c09baa6d2d84e2d0170e4af44fb12be3ed403fb3430caff2410117f2f1a9dfdb329f61ab9611d97e645d9c89ee60940698a45cc
+  checksum: 2f80060746049882979a078004ce0236e2e8f24fb41a82e4d1d2e4aef7abe10e7388235188b47ae231366c73960a79303e0c3f45447a2bbc10471c8c91bb61e5
   languageName: node
   linkType: hard
 
