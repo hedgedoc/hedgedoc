@@ -40,27 +40,27 @@ export const VersionInfoModal: React.FC<CommonModalProps> = ({ onHide, show }) =
     <CommonModal
       {...cypressId('version-modal')}
       show={show}
-      modalSize={'sm'}
       onHide={onHide}
       showCloseButton={true}
       titleI18nKey={'landing.versionInfo.title'}>
       <Modal.Body>
-        <h5>HedgeDoc</h5>
         <CopyableField content={backendVersion} />
-        <ShowIf condition={!!links.sourceCode}>
-          <TranslatedExternalLink
-            i18nKey={'landing.versionInfo.sourceCode'}
-            className={'btn btn-sm btn-primary d-block mb-2'}
-            href={links.sourceCode}
-          />
-        </ShowIf>
-        <ShowIf condition={!!links.issues}>
-          <TranslatedExternalLink
-            i18nKey={'landing.versionInfo.issueTracker'}
-            className={'btn btn-sm btn-primary d-block mb-2'}
-            href={links.issues}
-          />
-        </ShowIf>
+        <div className='d-flex justify-content-between mt-3'>
+          <ShowIf condition={!!links.sourceCode}>
+            <TranslatedExternalLink
+              i18nKey={'landing.versionInfo.sourceCode'}
+              className={'btn btn-primary d-block mb-2'}
+              href={links.sourceCode}
+            />
+          </ShowIf>
+          <ShowIf condition={!!links.issues}>
+            <TranslatedExternalLink
+              i18nKey={'landing.versionInfo.issueTracker'}
+              className={'btn btn-primary d-block mb-2'}
+              href={links.issues}
+            />
+          </ShowIf>
+        </div>
       </Modal.Body>
     </CommonModal>
   )
