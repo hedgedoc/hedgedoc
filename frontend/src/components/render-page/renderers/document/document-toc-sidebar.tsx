@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { TableOfContentsMarkdownExtension } from '../../../../extensions/essential-app-extensions/table-of-contents/table-of-contents-markdown-extension'
+import { ShowIf } from '../../../common/show-if/show-if'
 import { useExtensionEventEmitterHandler } from '../../../markdown-renderer/hooks/use-extension-event-emitter'
 import styles from './markdown-document.module.scss'
 import { WidthBasedTableOfContents } from './width-based-table-of-contents'
@@ -20,7 +21,9 @@ export const DocumentTocSidebar: React.FC<DocumentTocSidebarProps> = ({ width, b
   useExtensionEventEmitterHandler(TableOfContentsMarkdownExtension.EVENT_NAME, setTocAst)
   return (
     <div className={`${styles['markdown-document-side']} pt-4`}>
-      <WidthBasedTableOfContents tocAst={tocAst as TocAst} baseUrl={baseUrl} width={width} />
+      <ShowIf condition={!!tocAst}>
+        <WidthBasedTableOfContents tocAst={tocAst as TocAst} baseUrl={baseUrl} width={width} />
+      </ShowIf>
     </div>
   )
 }
