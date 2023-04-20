@@ -30,18 +30,6 @@ body {
   background-color: $dark;
 }
 
-#__next {
-  height: 100vh;
-}
-
-html {
-  height: 100%;
-}
-
-body {
-  min-height: 100%;
-}
-
 *:focus {
   outline: 0 !important;
 }

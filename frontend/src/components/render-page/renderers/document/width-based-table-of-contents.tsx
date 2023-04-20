@@ -26,7 +26,7 @@ const MAX_WIDTH_FOR_BUTTON_VISIBILITY = 1100
  */
 export const WidthBasedTableOfContents: React.FC<DocumentExternalTocProps> = ({ tocAst, width, baseUrl }) => {
   if (width >= MAX_WIDTH_FOR_BUTTON_VISIBILITY) {
-    return <TableOfContents ast={tocAst} className={'sticky'} baseUrl={baseUrl} />
+    return <TableOfContents ast={tocAst} baseUrl={baseUrl} />
   } else {
     return <TableOfContentsHoveringButton tocAst={tocAst} baseUrl={baseUrl} />
   }
