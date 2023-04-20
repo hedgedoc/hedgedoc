@@ -2252,7 +2252,7 @@ __metadata:
     "@types/jest": 29.5.1
     "@types/minio": 7.0.18
     "@types/mysql": 2.15.21
-    "@types/node": 18.15.11
+    "@types/node": 18.15.12
     "@types/node-fetch": 2.6.3
     "@types/passport-http-bearer": 1.0.37
     "@types/passport-local": 1.0.35
@@ -2377,7 +2377,7 @@ __metadata:
     "@testing-library/user-event": 14.4.3
     "@types/d3-graphviz": 2.6.7
     "@types/diff": 5.0.3
-    "@types/dompurify": 3.0.1
+    "@types/dompurify": 3.0.2
     "@types/jest": 29.5.1
     "@types/js-yaml": 4.0.5
     "@types/katex": 0.16.0
@@ -2385,7 +2385,7 @@ __metadata:
     "@types/markdown-it": 12.2.3
     "@types/markdown-it-container": 2.0.5
     "@types/markdown-it-plantuml": 1.4.1
-    "@types/node": 18.15.11
+    "@types/node": 18.15.12
     "@types/react": 18.0.37
     "@types/react-dom": 18.0.11
     "@types/sass": 1.43.1
@@ -4377,13 +4377,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/dompurify@npm:3.0.1":
-  version: 3.0.1
-  resolution: "@types/dompurify@npm:3.0.1"
+"@types/dompurify@npm:3.0.2":
+  version: 3.0.2
+  resolution: "@types/dompurify@npm:3.0.2"
   dependencies:
-    "@types/jsdom": "*"
     "@types/trusted-types": "*"
-  checksum: d4bf881845ac1f4619622b62945f0fda876e6c09d4c958bc7f3a84c4307f7258b9a15e334ae08c7ac5ecfcd0656415328df29d3fb737e9bce2849feaf180c6ab
+  checksum: dc017e16a46bcc77086af7d4dc5d2bf4102f16bf1a11b2937e90380da50e77716a2a608ff52990b1293250fefc2ad7593a1378fe07e3a7e21f200d702f0a7878
   languageName: node
   linkType: hard
 
@@ -4561,17 +4560,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jsdom@npm:*":
-  version: 21.1.1
-  resolution: "@types/jsdom@npm:21.1.1"
-  dependencies:
-    "@types/node": "*"
-    "@types/tough-cookie": "*"
-    parse5: ^7.0.0
-  checksum: 7450d6e23aa31b837a1682f0e59b06838aacca85c9d030035f40e21d559169c773aee5cee9244f23c3004b78f7064f0c540ceb808d2f187deb3140f2b0449dee
-  languageName: node
-  linkType: hard
-
 "@types/jsdom@npm:^20.0.0":
   version: 20.0.1
   resolution: "@types/jsdom@npm:20.0.1"
@@ -4729,10 +4717,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:18.15.11":
+"@types/node@npm:*":
   version: 18.15.11
   resolution: "@types/node@npm:18.15.11"
   checksum: 977b4ad04708897ff0eb049ecf82246d210939c82461922d20f7d2dcfd81bbc661582ba3af28869210f7e8b1934529dcd46bff7d448551400f9d48b9d3bddec3
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:18.15.12":
+  version: 18.15.12
+  resolution: "@types/node@npm:18.15.12"
+  checksum: dff7596db8d0a18bcd8da542dc62ed4377cba39546ff53baaa06d106f1482bc3e4e5e03644f5d1e3cef0904ffbe8ebbc244b2b0851f8025ab2a3959ee0ace58f
   languageName: node
   linkType: hard
 
