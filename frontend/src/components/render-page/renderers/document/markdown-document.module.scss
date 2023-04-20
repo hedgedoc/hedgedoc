@@ -13,6 +13,9 @@
   flex-direction: row;
 
   .markdown-document-side {
+    position: sticky;
+    top: 0;
+    bottom: 0;
     flex: 1 0 0;
   }
 
