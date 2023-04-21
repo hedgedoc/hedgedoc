@@ -77,7 +77,7 @@
     "yjs": "13.5.53"
   },
   "devDependencies": {
-    "@nestjs/cli": "9.4.0",
+    "@nestjs/cli": "9.4.1",
     "@nestjs/schematics": "9.1.0",
     "@nestjs/testing": "9.4.0",
     "@trivago/prettier-plugin-sort-imports": "4.1.1",
