@@ -2324,7 +2324,7 @@ __metadata:
     typeorm: 0.3.15
     typescript: 5.0.4
     ws: 8.13.0
-    yjs: 13.5.53
+    yjs: 13.6.0
   languageName: unknown
   linkType: soft
 
@@ -2351,7 +2351,7 @@ __metadata:
     ts-jest: 29.1.0
     typescript: 5.0.4
     ws: 8.13.0
-    yjs: 13.5.53
+    yjs: 13.6.0
   languageName: unknown
   linkType: soft
 
@@ -2495,7 +2495,7 @@ __metadata:
     vega-lite: 5.7.1
     words-count: 2.0.2
     ws: 8.13.0
-    yjs: 13.5.53
+    yjs: 13.6.0
   languageName: unknown
   linkType: soft
 
@@ -12553,15 +12553,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lib0@npm:^0.2.72":
-  version: 0.2.73
-  resolution: "lib0@npm:0.2.73"
+"lib0@npm:^0.2.74":
+  version: 0.2.74
+  resolution: "lib0@npm:0.2.74"
   dependencies:
     isomorphic.js: ^0.2.4
   bin:
     0gentesthtml: bin/gentesthtml.js
     0serve: bin/0serve.js
-  checksum: a9a73513ef6e91a47602ae650483eed7a8f803c512dbea3e08ef1162bd63b463230c6cdcac4ca40d01925b24218398aa3fc3c16692227384eaa326968a220815
+  checksum: a468fc2f8d231bdcb305f04706d0e568ad53a0aa968aaf3d1769fcfbf326a5b158e98d86c0aa8edf26b3223cb60687480f15cfc0d07c681333f9d9d55dd7c802
   languageName: node
   linkType: hard
 
@@ -19321,12 +19321,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yjs@npm:13.5.53":
-  version: 13.5.53
-  resolution: "yjs@npm:13.5.53"
+"yjs@npm:13.6.0":
+  version: 13.6.0
+  resolution: "yjs@npm:13.6.0"
   dependencies:
-    lib0: ^0.2.72
-  checksum: be04e185d694c0c9de93d15d710d2789587226928dc2e66638ad8c075d825cced96727b43d5c50800ac4ec16120d08a273fa538116f751d48653365877e54422
+    lib0: ^0.2.74
+  checksum: 54bd3b0c8a8dc5724044356c8015210f9840b7ac46c8d87d66a0cc5f5bf669298d45324942681ad01ea22c7a4de6a29aa22180d63596e18734bc90335ced982f
   languageName: node
   linkType: hard
 
