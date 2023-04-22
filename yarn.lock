@@ -6252,10 +6252,10 @@ jquery@3.6.4, "jquery@>=1.8.0 <4.0.0":
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.4.tgz#ba065c188142100be4833699852bf7c24dc0252f"
   integrity sha512-v28EW9DWDFpzcD9O5iyJXg3R3+q+mET5JhnjJzQUZMHOv67bpSIHq81GEYpPNZHG+XXHsfSme3nxp/hndKEcsQ==
 
-js-cookie@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-3.0.1.tgz#9e39b4c6c2f56563708d7d31f6f5f21873a92414"
-  integrity sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw==
+js-cookie@3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-3.0.4.tgz#9ae3c5f6eb34d2292d76e0579fabfe7c872e1fae"
+  integrity sha512-tlu5VGqPFMP5eBefnmszCFZkPXG2n527NRN9XdNtN6FZ5n/0e98TdDm8BOz290OIIsxtXb9XTJjfqE6gVhOHQw==
 
 js-sdsl@^4.1.4:
   version "4.4.0"
