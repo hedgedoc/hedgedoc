@@ -43,7 +43,7 @@
     "isomorphic-ws": "5.0.0",
     "reveal.js": "4.5.0",
     "ws": "8.13.0",
-    "yjs": "13.5.53"
+    "yjs": "13.6.0"
   },
   "devDependencies": {
     "@jest/types": "29.5.0",
