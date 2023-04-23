@@ -93,17 +93,10 @@ export class MediaController {
     if (file === undefined) {
       throw new BadRequestException('Request does not contain a file');
     }
-    if (user) {
-      this.logger.debug(
-        `Received filename '${file.originalname}' for note '${note.publicId}' from user '${user.username}'`,
-        'uploadMedia',
-      );
-    } else {
-      this.logger.debug(
-        `Received filename '${file.originalname}' for note '${note.publicId}' from not logged in user`,
-        'uploadMedia',
-      );
-    }
+    this.logger.debug(
+      `Received filename '${file.originalname}' for note '${note.publicId}' from user '${user.username}'`,
+      'uploadMedia',
+    );
     const upload = await this.mediaService.saveFile(file.buffer, user, note);
     return await this.mediaService.toMediaUploadDto(upload);
   }
@@ -134,7 +127,7 @@ export class MediaController {
       const mediaUploadNote = await mediaUpload.note;
       throw new PermissionError(
         `Neither file '${filename}' nor note '${
-          mediaUploadNote?.id ?? 'unknown'
+          mediaUploadNote?.publicId ?? 'unknown'
         }'is owned by '${user.username}'`,
       );
     }
