@@ -88,12 +88,12 @@ export class MediaController {
     }
     if (user) {
       this.logger.debug(
-        `Received filename '${file.originalname}' for note '${note.id}' from user '${user.username}'`,
+        `Received filename '${file.originalname}' for note '${note.publicId}' from user '${user.username}'`,
         'uploadMedia',
       );
     } else {
       this.logger.debug(
-        `Received filename '${file.originalname}' for note '${note.id}' from not logged in user`,
+        `Received filename '${file.originalname}' for note '${note.publicId}' from not logged in user`,
         'uploadMedia',
       );
     }
@@ -127,7 +127,7 @@ export class MediaController {
       const mediaUploadNote = await mediaUpload.note;
       throw new PermissionError(
         `Neither file '${filename}' nor note '${
-          mediaUploadNote?.id ?? 'unknown'
+          mediaUploadNote?.publicId ?? 'unknown'
         }'is owned by '${user.username}'`,
       );
     }
