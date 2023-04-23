@@ -63,21 +63,44 @@ describe('Media', () => {
   });
 
   describe('POST /media', () => {
-    it('works', async () => {
-      const uploadResponse = await agent
-        .post('/api/private/media')
-        .attach('file', 'test/private-api/fixtures/test.png')
-        .set('HedgeDoc-Note', 'test_upload_media')
-        .expect('Content-Type', /json/)
-        .expect(201);
-      const path: string = uploadResponse.body.url;
-      const testImage = await fs.readFile('test/private-api/fixtures/test.png');
-      const downloadResponse = await agent.get(path);
-      expect(downloadResponse.body).toEqual(testImage);
-      // Remove /uploads/ from path as we just need the filename.
-      const fileName = path.replace('/uploads/', '');
-      // delete the file afterwards
-      await fs.unlink(join(uploadPath, fileName));
+    describe('works', () => {
+      it('with user', async () => {
+        const uploadResponse = await agent
+          .post('/api/private/media')
+          .attach('file', 'test/private-api/fixtures/test.png')
+          .set('HedgeDoc-Note', 'test_upload_media')
+          .expect('Content-Type', /json/)
+          .expect(201);
+        const path: string = uploadResponse.body.url;
+        const testImage = await fs.readFile(
+          'test/private-api/fixtures/test.png',
+        );
+        const downloadResponse = await agent.get(path);
+        expect(downloadResponse.body).toEqual(testImage);
+        // Remove /uploads/ from path as we just need the filename.
+        const fileName = path.replace('/uploads/', '');
+        // delete the file afterwards
+        await fs.unlink(join(uploadPath, fileName));
+      });
+      it('without user', async () => {
+        const agent = request.agent(testSetup.app.getHttpServer());
+        const uploadResponse = await agent
+          .post('/api/private/media')
+          .attach('file', 'test/private-api/fixtures/test.png')
+          .set('HedgeDoc-Note', 'test_upload_media')
+          .expect('Content-Type', /json/)
+          .expect(201);
+        const path: string = uploadResponse.body.url;
+        const testImage = await fs.readFile(
+          'test/private-api/fixtures/test.png',
+        );
+        const downloadResponse = await agent.get(path);
+        expect(downloadResponse.body).toEqual(testImage);
+        // Remove /uploads/ from path as we just need the filename.
+        const fileName = path.replace('/uploads/', '');
+        // delete the file afterwards
+        await fs.unlink(join(uploadPath, fileName));
+      });
     });
     describe('fails:', () => {
       beforeEach(async () => {

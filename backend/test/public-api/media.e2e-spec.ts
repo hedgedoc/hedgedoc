@@ -93,6 +93,15 @@ describe('Media', () => {
           .expect('Content-Type', /json/)
           .expect(500);
       });
+      it('no file uploaded', async () => {
+        await request(testSetup.app.getHttpServer())
+          .post('/api/v2/media')
+          .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
+          .set('HedgeDoc-Note', 'testAlias1')
+          .expect('Content-Type', /json/)
+          .expect(400);
+      });
+
       afterEach(async () => {
         await ensureDeleted(uploadPath);
       });
