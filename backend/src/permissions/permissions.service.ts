@@ -62,7 +62,6 @@ export class PermissionsService {
       case Permission.OWNER:
         return await this.isOwner(user, note);
     }
-    return false;
   }
 
   public async checkMediaDeletePermission(
