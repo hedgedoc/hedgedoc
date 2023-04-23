@@ -16,7 +16,8 @@ import WebSocket from 'isomorphic-ws'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
 const logger = new Logger('websocket connection')
-const WEBSOCKET_RECONNECT_INTERVAL = 3000
+const WEBSOCKET_RECONNECT_INTERVAL = 2000
+const WEBSOCKET_RECONNECT_MAX_DURATION = 5000
 
 /**
  * Creates a {@link WebsocketTransporter websocket message transporter} that handles the realtime communication with the backend.
@@ -35,14 +36,18 @@ export const useRealtimeConnection = (): MessageTransporter => {
     }
   }, [])
 
+  const reconnectCount = useRef(0)
+
   const establishWebsocketConnection = useCallback(() => {
     if (messageTransporter instanceof WebsocketTransporter && websocketUrl) {
       logger.debug(`Connecting to ${websocketUrl.toString()}`)
       const socket = new WebSocket(websocketUrl)
       socket.addEventListener('error', () => {
+        const timeout = WEBSOCKET_RECONNECT_INTERVAL + reconnectCount.current * 1000 + Math.random() * 1000
         setTimeout(() => {
+          reconnectCount.current += 1
           establishWebsocketConnection()
-        }, WEBSOCKET_RECONNECT_INTERVAL)
+        }, Math.max(timeout, WEBSOCKET_RECONNECT_MAX_DURATION))
       })
       socket.addEventListener('open', () => {
         messageTransporter.setWebsocket(socket)
@@ -51,39 +56,23 @@ export const useRealtimeConnection = (): MessageTransporter => {
   }, [messageTransporter, websocketUrl])
 
   const isConnected = useApplicationState((state) => state.realtimeStatus.isConnected)
-  const firstConnect = useRef(true)
-
-  const reconnectTimeout = useRef<number | undefined>(undefined)
 
   useEffect(() => {
-    if (isConnected) {
+    if (isConnected || reconnectCount.current > 0) {
       return
     }
-    if (firstConnect.current) {
-      establishWebsocketConnection()
-      firstConnect.current = false
-    } else {
-      reconnectTimeout.current = window.setTimeout(() => {
-        establishWebsocketConnection()
-      }, WEBSOCKET_RECONNECT_INTERVAL)
-    }
-  }, [establishWebsocketConnection, isConnected, messageTransporter])
+    establishWebsocketConnection()
+  }, [establishWebsocketConnection, isConnected])
 
   useEffect(() => {
     const readyListener = messageTransporter.doAsSoonAsReady(() => {
-      const timerId = reconnectTimeout.current
-      if (timerId !== undefined) {
-        window.clearTimeout(timerId)
-      }
-      reconnectTimeout.current = undefined
+      reconnectCount.current = 0
     })
 
     messageTransporter.on('connected', () => logger.debug(`Connected`))
     messageTransporter.on('disconnected', () => logger.debug(`Disconnected`))
 
     return () => {
-      const interval = reconnectTimeout.current
-      interval && window.clearTimeout(interval)
       readyListener.off()
     }
   }, [messageTransporter])
