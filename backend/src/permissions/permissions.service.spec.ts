@@ -171,6 +171,23 @@ describe('PermissionsService', () => {
     eventEmitter = module.get<EventEmitter2>(EventEmitter2);
   });
 
+  function mockMayReadTrue(): void {
+    jest.spyOn(service, 'mayRead').mockImplementationOnce(async () => {
+      return true;
+    });
+  }
+
+  function mockMayWriteTrue(): void {
+    jest.spyOn(service, 'mayWrite').mockImplementationOnce(async () => {
+      return true;
+    });
+  }
+
+  function mockIsOwner(isOwner: boolean): void {
+    jest.spyOn(service, 'isOwner').mockImplementationOnce(async () => {
+      return isOwner;
+    });
+  }
   beforeEach(() => {
     mockNoteRepo(noteRepo);
     eventEmitterEmitSpy = mockedEventEmitter(eventEmitter);
@@ -774,17 +791,13 @@ describe('PermissionsService', () => {
   describe('checkPermissionOnNote', () => {
     describe('accepts', () => {
       it('with mayRead', async () => {
-        jest.spyOn(service, 'mayRead').mockImplementationOnce(async () => {
-          return true;
-        });
+        mockMayReadTrue();
         expect(
           await service.checkPermissionOnNote(Permission.READ, user1, notes[0]),
         ).toBeTruthy();
       });
       it('with mayWrite', async () => {
-        jest.spyOn(service, 'mayWrite').mockImplementationOnce(async () => {
-          return true;
-        });
+        mockMayWriteTrue();
         expect(
           await service.checkPermissionOnNote(
             Permission.WRITE,
@@ -794,9 +807,7 @@ describe('PermissionsService', () => {
         ).toBeTruthy();
       });
       it('with isOwner', async () => {
-        jest.spyOn(service, 'isOwner').mockImplementationOnce(async () => {
-          return true;
-        });
+        mockIsOwner(true);
         expect(
           await service.checkPermissionOnNote(
             Permission.OWNER,
@@ -808,15 +819,9 @@ describe('PermissionsService', () => {
     });
     describe('denies', () => {
       it('with no permission', async () => {
-        jest.spyOn(service, 'mayRead').mockImplementationOnce(async () => {
-          return false;
-        });
-        jest.spyOn(service, 'mayWrite').mockImplementationOnce(async () => {
-          return false;
-        });
-        jest.spyOn(service, 'isOwner').mockImplementationOnce(async () => {
-          return false;
-        });
+        mockMayReadTrue();
+        mockMayWriteTrue();
+        mockIsOwner(false);
         expect(
           await service.checkPermissionOnNote(
             Permission.OWNER,
