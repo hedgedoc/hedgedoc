@@ -9,14 +9,17 @@ import { DocumentReadOnlyPageContent } from '../../components/document-read-only
 import { AppBar, AppBarMode } from '../../components/editor-page/app-bar/app-bar'
 import { HeadMetaProperties } from '../../components/editor-page/head-meta-properties/head-meta-properties'
 import { EditorToRendererCommunicatorContextProvider } from '../../components/editor-page/render-context/editor-to-renderer-communicator-context-provider'
-import { useApplyDarkMode } from '../../hooks/dark-mode/use-apply-dark-mode'
+import { useApplyDarkModeStyle } from '../../hooks/dark-mode/use-apply-dark-mode-style'
+import { useSaveDarkModePreferenceToLocalStorage } from '../../hooks/dark-mode/use-save-dark-mode-preference-to-local-storage'
 import React from 'react'
 
 /**
  * Renders a page that contains only the rendered document without an editor or realtime updates.
  */
 export const DocumentReadOnlyPage: React.FC = () => {
-  useApplyDarkMode()
+  useApplyDarkModeStyle()
+  useSaveDarkModePreferenceToLocalStorage()
+
   return (
     <EditorToRendererCommunicatorContextProvider>
       <NoteLoadingBoundary>
