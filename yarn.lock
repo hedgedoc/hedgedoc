@@ -19399,6 +19399,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"yjs@patch:yjs@npm%3A13.6.0#./.yarn/patches/yjs-remove-import-warning-in-test.patch::locator=hedgedoc%40workspace%3A.":
+  version: 13.6.0
+  resolution: "yjs@patch:yjs@npm%3A13.6.0#./.yarn/patches/yjs-remove-import-warning-in-test.patch::version=13.6.0&hash=e7d95b&locator=hedgedoc%40workspace%3A."
+  dependencies:
+    lib0: ^0.2.74
+  checksum: d721ea4bcdda5a7aed34a8011aa80b24b474e82213854f3a5ce84c2f15c248e0d0fe0950a42ab4d311c72d2c5d2b79943a0de817ae0f73251d7b05c5b8bd6c06
+  languageName: node
+  linkType: hard
+
 "yn@npm:3.1.1":
   version: 3.1.1
   resolution: "yn@npm:3.1.1"
