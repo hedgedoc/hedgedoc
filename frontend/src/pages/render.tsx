@@ -5,7 +5,7 @@
  */
 import { RendererToEditorCommunicatorContextProvider } from '../components/editor-page/render-context/renderer-to-editor-communicator-context-provider'
 import { RenderPageContent } from '../components/render-page/render-page-content'
-import { useApplyDarkMode } from '../hooks/common/use-apply-dark-mode'
+import { useApplyDarkMode } from '../hooks/dark-mode/use-apply-dark-mode'
 import type { NextPage } from 'next'
 import React from 'react'
 

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../hooks/common/use-application-state'
-import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
+import { useApplyDarkMode } from '../../hooks/dark-mode/use-apply-dark-mode'
 import { Logger } from '../../utils/logger'
 import { MotdModal } from '../common/motd-modal/motd-modal'
 import { CommunicatorImageLightbox } from '../markdown-renderer/extensions/image/communicator-image-lightbox'

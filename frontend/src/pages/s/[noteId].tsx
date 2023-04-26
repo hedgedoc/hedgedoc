@@ -9,7 +9,7 @@ import { DocumentReadOnlyPageContent } from '../../components/document-read-only
 import { AppBar, AppBarMode } from '../../components/editor-page/app-bar/app-bar'
 import { HeadMetaProperties } from '../../components/editor-page/head-meta-properties/head-meta-properties'
 import { EditorToRendererCommunicatorContextProvider } from '../../components/editor-page/render-context/editor-to-renderer-communicator-context-provider'
-import { useApplyDarkMode } from '../../hooks/common/use-apply-dark-mode'
+import { useApplyDarkMode } from '../../hooks/dark-mode/use-apply-dark-mode'
 import React from 'react'
 
 /**
