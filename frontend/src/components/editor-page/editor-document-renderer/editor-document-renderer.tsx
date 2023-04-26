@@ -6,8 +6,8 @@
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { useTrimmedNoteMarkdownContentWithoutFrontmatter } from '../../../hooks/common/use-trimmed-note-markdown-content-without-frontmatter'
 import { setRendererStatus } from '../../../redux/renderer-status/methods'
-import type { RenderIframeProps } from '../../common/render-iframe/render-iframe'
-import { RenderIframe } from '../../common/render-iframe/render-iframe'
+import type { RendererIframeProps } from '../../common/renderer-iframe/renderer-iframe'
+import { RendererIframe } from '../../common/renderer-iframe/renderer-iframe'
 import { RendererType } from '../../render-page/window-post-message-communicator/rendering-message'
 import { useOnScrollWithLineOffset } from './hooks/use-on-scroll-with-line-offset'
 import { useScrollStateWithoutLineOffset } from './hooks/use-scroll-state-without-line-offset'
@@ -15,7 +15,7 @@ import { NoteType } from '@hedgedoc/commons'
 import React from 'react'
 
 export type EditorDocumentRendererProps = Omit<
-  RenderIframeProps,
+  RendererIframeProps,
   'markdownContentLines' | 'rendererType' | 'onTaskCheckedChange'
 >
 
@@ -24,7 +24,7 @@ export type EditorDocumentRendererProps = Omit<
  *
  * @param scrollState The {@link ScrollState} that should be sent to the renderer
  * @param onScroll A callback that is executed when the view in the rendered is scrolled
- * @param props Every property from the {@link RenderIframe} except the markdown content
+ * @param props Every property from the {@link RendererIframe} except the markdown content
  */
 export const EditorDocumentRenderer: React.FC<EditorDocumentRendererProps> = ({ scrollState, onScroll, ...props }) => {
   const trimmedContentLines = useTrimmedNoteMarkdownContentWithoutFrontmatter()
@@ -33,7 +33,7 @@ export const EditorDocumentRenderer: React.FC<EditorDocumentRendererProps> = ({ 
   const adjustedScrollState = useScrollStateWithoutLineOffset(scrollState)
 
   return (
-    <RenderIframe
+    <RendererIframe
       {...props}
       onScroll={adjustedOnScroll}
       scrollState={adjustedScrollState}
