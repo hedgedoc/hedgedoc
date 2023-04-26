@@ -16,8 +16,3 @@ export interface ScrollState {
   firstLineInView: number
   scrolledPercentage: number
 }
-
-export interface DualScrollState {
-  editorScrollState: ScrollState
-  rendererScrollState: ScrollState
-}
