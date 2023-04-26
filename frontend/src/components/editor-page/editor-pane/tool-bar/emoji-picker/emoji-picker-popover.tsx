@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import fontStyles from '../../../../../../global-styles/variables.module.scss'
-import { useDarkModeState } from '../../../../../hooks/common/use-dark-mode-state'
+import { useDarkModeState } from '../../../../../hooks/dark-mode/use-dark-mode-state'
 import styles from './emoji-picker.module.scss'
 import { Picker } from 'emoji-picker-element'
 import type { EmojiClickEvent, EmojiClickEventDetail } from 'emoji-picker-element/shared'

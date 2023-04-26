@@ -1,10 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { DarkModePreference } from '../../redux/dark-mode/types'
-import { useApplicationState } from './use-application-state'
+import { useApplicationState } from '../common/use-application-state'
 import useMediaQuery from '@restart/hooks/useMediaQuery'
 
 /**

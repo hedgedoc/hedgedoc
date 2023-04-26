@@ -5,8 +5,8 @@
  */
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { ORIGIN, useBaseUrl } from '../../../hooks/common/use-base-url'
-import { useDarkModeState } from '../../../hooks/common/use-dark-mode-state'
 import { useMayEdit } from '../../../hooks/common/use-may-edit'
+import { useDarkModeState } from '../../../hooks/dark-mode/use-dark-mode-state'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { findLanguageByCodeBlockName } from '../../markdown-renderer/extensions/_base-classes/code-block-markdown-extension/find-language-by-code-block-name'
 import type { ScrollProps } from '../synced-scroll/scroll-props'

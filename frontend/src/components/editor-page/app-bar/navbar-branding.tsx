@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useDarkModeState } from '../../../hooks/common/use-dark-mode-state'
+import { useDarkModeState } from '../../../hooks/dark-mode/use-dark-mode-state'
 import { Branding } from '../../common/branding/branding'
 import {
   HedgeDocLogoSize,

@@ -5,7 +5,7 @@
  */
 import { getRevision } from '../../../../../../api/revisions'
 import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
-import { useDarkModeState } from '../../../../../../hooks/common/use-dark-mode-state'
+import { useDarkModeState } from '../../../../../../hooks/dark-mode/use-dark-mode-state'
 import { AsyncLoadingBoundary } from '../../../../../common/async-loading-boundary/async-loading-boundary'
 import { invertUnifiedPatch } from './invert-unified-patch'
 import { Optional } from '@mrdrogdrog/optional'
