@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../hooks/common/use-application-state'
-import { useApplyDarkMode } from '../../hooks/dark-mode/use-apply-dark-mode'
+import { useApplyDarkModeStyle } from '../../hooks/dark-mode/use-apply-dark-mode-style'
+import { useSaveDarkModePreferenceToLocalStorage } from '../../hooks/dark-mode/use-save-dark-mode-preference-to-local-storage'
 import { Logger } from '../../utils/logger'
 import { MotdModal } from '../common/motd-modal/motd-modal'
 import { CommunicatorImageLightbox } from '../markdown-renderer/extensions/image/communicator-image-lightbox'
@@ -78,7 +79,8 @@ export const EditorPageContent: React.FC = () => {
     [editorSyncScroll]
   )
 
-  useApplyDarkMode()
+  useApplyDarkModeStyle()
+  useSaveDarkModePreferenceToLocalStorage()
   useUpdateLocalHistoryEntry()
 
   const setRendererToScrollSource = useCallback(() => {

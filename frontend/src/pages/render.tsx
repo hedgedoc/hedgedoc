@@ -5,7 +5,7 @@
  */
 import { RendererToEditorCommunicatorContextProvider } from '../components/editor-page/render-context/renderer-to-editor-communicator-context-provider'
 import { RenderPageContent } from '../components/render-page/render-page-content'
-import { useApplyDarkMode } from '../hooks/dark-mode/use-apply-dark-mode'
+import { useApplyDarkModeStyle } from '../hooks/dark-mode/use-apply-dark-mode-style'
 import type { NextPage } from 'next'
 import React from 'react'
 
@@ -13,7 +13,7 @@ import React from 'react'
  * Renders the actual markdown renderer that receives the content and metadata via iframe communication.
  */
 export const RenderPage: NextPage = () => {
-  useApplyDarkMode()
+  useApplyDarkModeStyle()
 
   return (
     <RendererToEditorCommunicatorContextProvider>
