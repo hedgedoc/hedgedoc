@@ -28,7 +28,7 @@ import { useSendMarkdownToRenderer } from './hooks/use-send-markdown-to-renderer
 import { useSendScrollState } from './hooks/use-send-scroll-state'
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-export interface RenderIframeProps extends Omit<CommonMarkdownRendererProps & ScrollProps, 'baseUrl'> {
+export interface RendererIframeProps extends Omit<CommonMarkdownRendererProps & ScrollProps, 'baseUrl'> {
   rendererType: RendererType
   forcedDarkMode?: DarkModePreference
   frameClasses?: string
@@ -36,7 +36,7 @@ export interface RenderIframeProps extends Omit<CommonMarkdownRendererProps & Sc
   adaptFrameHeightToContent?: boolean
 }
 
-const log = new Logger('RenderIframe')
+const log = new Logger('RendererIframe')
 
 /**
  * Renders the iframe for the HTML-rendering of the markdown content.
@@ -54,7 +54,7 @@ const log = new Logger('RenderIframe')
  * @param adaptFrameHeightToContent If set, the iframe height will be adjusted to the content height
  * @param onRendererStatusChange Callback that is fired when the renderer in the iframe is ready
  */
-export const RenderIframe: React.FC<RenderIframeProps> = ({
+export const RendererIframe: React.FC<RendererIframeProps> = ({
   markdownContentLines,
   scrollState,
   onScroll,

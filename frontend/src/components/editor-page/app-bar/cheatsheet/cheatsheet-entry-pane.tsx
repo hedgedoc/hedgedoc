@@ -5,7 +5,7 @@
  */
 import HighlightedCode from '../../../common/highlighted-code/highlighted-code'
 import { HtmlToReact } from '../../../common/html-to-react/html-to-react'
-import { RenderIframe } from '../../../common/render-iframe/render-iframe'
+import { RendererIframe } from '../../../common/renderer-iframe/renderer-iframe'
 import { ExtensionEventEmitterProvider } from '../../../markdown-renderer/hooks/use-extension-event-emitter'
 import { RendererType } from '../../../render-page/window-post-message-communicator/rendering-message'
 import type { CheatsheetEntry } from '../../cheatsheet/cheatsheet-extension'
@@ -73,7 +73,7 @@ export const CheatsheetEntryPane: React.FC<CheatsheetRendererProps> = ({ extensi
           <h4>
             <Trans i18nKey={'cheatsheet.modal.headlines.exampleOutput'} />
           </h4>
-          <RenderIframe
+          <RendererIframe
             frameClasses={'w-100'}
             adaptFrameHeightToContent={true}
             rendererType={RendererType.SIMPLE}

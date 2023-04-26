@@ -9,7 +9,7 @@ import { testId } from '../../../utils/test-id'
 import { EditorToRendererCommunicatorContextProvider } from '../../editor-page/render-context/editor-to-renderer-communicator-context-provider'
 import { RendererType } from '../../render-page/window-post-message-communicator/rendering-message'
 import { CommonModal } from '../modals/common-modal'
-import { RenderIframe } from '../render-iframe/render-iframe'
+import { RendererIframe } from '../renderer-iframe/renderer-iframe'
 import { fetchMotd, MOTD_LOCAL_STORAGE_KEY } from './fetch-motd'
 import React, { useCallback, useMemo, useEffect, useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
@@ -55,7 +55,7 @@ export const MotdModal: React.FC = () => {
       {...cypressId('motd-modal')}>
       <Modal.Body className={'bg-light'}>
         <EditorToRendererCommunicatorContextProvider>
-          <RenderIframe
+          <RendererIframe
             frameClasses={'w-100'}
             rendererType={RendererType.SIMPLE}
             markdownContentLines={lines as string[]}

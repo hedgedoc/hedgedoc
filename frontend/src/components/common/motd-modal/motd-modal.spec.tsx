@@ -6,9 +6,9 @@
 import * as UseBaseUrlModule from '../../../hooks/common/use-base-url'
 import { mockI18n } from '../../../test-utils/mock-i18n'
 import { testId } from '../../../utils/test-id'
-import * as RenderIframeModule from '../../common/render-iframe/render-iframe'
 import type { CommonModalProps } from '../modals/common-modal'
 import * as CommonModalModule from '../modals/common-modal'
+import * as RendererIframeModule from '../renderer-iframe/renderer-iframe'
 import * as fetchMotdModule from './fetch-motd'
 import { MotdModal } from './motd-modal'
 import { act, render, screen } from '@testing-library/react'
@@ -17,7 +17,7 @@ import React from 'react'
 
 jest.mock('./fetch-motd')
 jest.mock('../modals/common-modal')
-jest.mock('../../common/render-iframe/render-iframe')
+jest.mock('../renderer-iframe/renderer-iframe')
 jest.mock('../../../hooks/common/use-base-url')
 
 describe('motd modal', () => {
@@ -39,7 +39,7 @@ describe('motd modal', () => {
         </span>
       )
     }) as React.FC<PropsWithChildren<CommonModalProps>>)
-    jest.spyOn(RenderIframeModule, 'RenderIframe').mockImplementation((props) => {
+    jest.spyOn(RendererIframeModule, 'RendererIframe').mockImplementation((props) => {
       return (
         <span {...testId('motd-renderer')}>
           This is a mock implementation of a iframe renderer. Props: {JSON.stringify(props)}
