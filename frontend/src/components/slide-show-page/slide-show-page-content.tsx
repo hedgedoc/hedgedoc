@@ -6,7 +6,7 @@
 import { useApplicationState } from '../../hooks/common/use-application-state'
 import { useTrimmedNoteMarkdownContentWithoutFrontmatter } from '../../hooks/common/use-trimmed-note-markdown-content-without-frontmatter'
 import { setRendererStatus } from '../../redux/renderer-status/methods'
-import { RenderIframe } from '../editor-page/renderer-pane/render-iframe'
+import { RenderIframe } from '../common/render-iframe/render-iframe'
 import { useSendToRenderer } from '../render-page/window-post-message-communicator/hooks/use-send-to-renderer'
 import {
   CommunicationMessageType,

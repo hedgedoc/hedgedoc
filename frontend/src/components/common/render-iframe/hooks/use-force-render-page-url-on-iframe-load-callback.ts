@@ -5,7 +5,7 @@
  */
 import { ORIGIN, useBaseUrl } from '../../../../hooks/common/use-base-url'
 import { Logger } from '../../../../utils/logger'
-import { useEditorToRendererCommunicator } from '../../render-context/editor-to-renderer-communicator-context-provider'
+import { useEditorToRendererCommunicator } from '../../../editor-page/render-context/editor-to-renderer-communicator-context-provider'
 import type { RefObject } from 'react'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
