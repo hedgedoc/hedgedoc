@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { initialSlideOptions, initialState } from '../initial-state'
-import { RawNoteFrontmatter } from './types'
+import type { RawNoteFrontmatter } from './types'
 import type { Iso6391Language, NoteFrontmatter, OpenGraph, SlideOptions } from '@hedgedoc/commons'
 import { ISO6391, NoteTextDirection, NoteType } from '@hedgedoc/commons'
-import { load } from 'js-yaml'
 import Joi from 'joi'
+import { load } from 'js-yaml'
 
 /**
  * Creates a new frontmatter metadata instance based on a raw yaml string.
@@ -77,12 +77,15 @@ const RawNoteFrontmatterSchema = Joi.object<RawNoteFrontmatter>({
   opengraph: Joi.object<OpenGraph>({
     title: Joi.string().optional(),
     image: Joi.string().optional()
-  }).optional().allow(null).unknown(true)
+  })
+    .optional()
+    .allow(null)
+    .unknown(true)
 }).optional()
 
 /**
  * Validates the given raw data against the {@link RawNoteFrontmatterSchema}.
- * 
+ *
  * @param rawData The raw data to validate.
  * @returns The validated raw data.
  * @throws Error when the validation fails.
