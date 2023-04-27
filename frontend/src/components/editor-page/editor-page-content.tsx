@@ -12,12 +12,12 @@ import { CommunicatorImageLightbox } from '../markdown-renderer/extensions/image
 import { ExtensionEventEmitterProvider } from '../markdown-renderer/hooks/use-extension-event-emitter'
 import { AppBar, AppBarMode } from './app-bar/app-bar'
 import { ChangeEditorContentContextProvider } from './change-content-context/codemirror-reference-context'
-import { EditorDocumentRenderer } from './editor-document-renderer/editor-document-renderer'
 import { EditorPane } from './editor-pane/editor-pane'
 import { useComponentsFromAppExtensions } from './editor-pane/hooks/use-components-from-app-extensions'
 import { HeadMetaProperties } from './head-meta-properties/head-meta-properties'
 import { useUpdateLocalHistoryEntry } from './hooks/use-update-local-history-entry'
 import { RealtimeConnectionAlert } from './realtime-connection-alert/realtime-connection-alert'
+import { RendererPane } from './renderer-pane/renderer-pane'
 import { Sidebar } from './sidebar/sidebar'
 import { Splitter } from './splitter/splitter'
 import type { DualScrollState, ScrollState } from './synced-scroll/scroll-props'
@@ -110,7 +110,7 @@ export const EditorPageContent: React.FC = () => {
 
   const rightPane = useMemo(
     () => (
-      <EditorDocumentRenderer
+      <RendererPane
         frameClasses={'h-100 w-100'}
         onMakeScrollSource={setRendererToScrollSource}
         onScroll={onMarkdownRendererScroll}
