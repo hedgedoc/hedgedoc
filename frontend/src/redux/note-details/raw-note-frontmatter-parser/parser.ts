@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { initialSlideOptions, initialState } from '../initial-state'
-import type { RawNoteFrontmatter } from './types'
+import { RawNoteFrontmatter } from './types'
 import type { Iso6391Language, NoteFrontmatter, OpenGraph, SlideOptions } from '@hedgedoc/commons'
 import { ISO6391, NoteTextDirection, NoteType } from '@hedgedoc/commons'
-import Joi from 'joi'
 import { load } from 'js-yaml'
+import Joi from 'joi'
 
 /**
  * Creates a new frontmatter metadata instance based on a raw yaml string.
@@ -17,7 +17,7 @@ import { load } from 'js-yaml'
  * @return Frontmatter metadata instance containing the parsed properties from the yaml content.
  */
 export const createNoteFrontmatterFromYaml = (rawYaml: string): NoteFrontmatter => {
-  const rawNoteFrontmatter = load(rawYaml) as RawNoteFrontmatter
+  const rawNoteFrontmatter = load(rawYaml)
   return parseRawNoteFrontmatter(validateRawNoteFrontmatter(rawNoteFrontmatter))
 }
 
@@ -55,7 +55,7 @@ const parseRawNoteFrontmatter = (rawData: RawNoteFrontmatter): NoteFrontmatter =
 /**
  * Schema for the {@link RawNoteFrontmatter} for runtime validation.
  */
-const RawNoteFrontmatterSchema = Joi.object({
+const RawNoteFrontmatterSchema = Joi.object<RawNoteFrontmatter>({
   title: Joi.string().optional().allow(null),
   description: Joi.string().optional(),
   tags: Joi.alternatives(Joi.string(), Joi.number(), Joi.array().items(Joi.string())).optional(),
@@ -67,13 +67,22 @@ const RawNoteFrontmatterSchema = Joi.object({
   disqus: Joi.string().optional(),
   license: Joi.string().optional(),
   type: Joi.string().optional(),
-  slideOptions: Joi.object().allow(null).pattern(/.*/, Joi.string().allow('')),
-  opengraph: Joi.object().allow(null).pattern(/.*/, Joi.string().allow(''))
-})
+  slideOptions: Joi.object<SlideOptions>({
+    autoSlide: Joi.number().optional(),
+    autoSlideStoppable: Joi.boolean().optional(),
+    transition: Joi.string().optional(),
+    backgroundTransition: Joi.string(),
+    slideNumber: Joi.alternatives(Joi.string(), Joi.boolean()).optional()
+  }).optional(),
+  opengraph: Joi.object<OpenGraph>({
+    title: Joi.string().optional(),
+    image: Joi.string().optional()
+  }).optional().allow(null).unknown(true)
+}).optional()
 
 /**
  * Validates the given raw data against the {@link RawNoteFrontmatterSchema}.
- *
+ * 
  * @param rawData The raw data to validate.
  * @returns The validated raw data.
  * @throws Error when the validation fails.
@@ -81,9 +90,9 @@ const RawNoteFrontmatterSchema = Joi.object({
 const validateRawNoteFrontmatter = (rawData: unknown): RawNoteFrontmatter => {
   const validation = RawNoteFrontmatterSchema.validate(rawData)
   if (validation.error) {
-    throw new Error(validation.error.message)
+    throw validation.error
   }
-  return validation.value as RawNoteFrontmatter
+  return validation.value
 }
 
 /**
