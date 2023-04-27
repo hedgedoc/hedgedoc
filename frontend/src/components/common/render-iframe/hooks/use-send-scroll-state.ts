@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { ScrollState } from '../../../editor-page/synced-scroll/scroll-props'
 import { useSendToRenderer } from '../../../render-page/window-post-message-communicator/hooks/use-send-to-renderer'
 import { CommunicationMessageType } from '../../../render-page/window-post-message-communicator/rendering-message'
-import type { ScrollState } from '../../synced-scroll/scroll-props'
 import equal from 'fast-deep-equal'
 import { useMemo, useRef } from 'react'
 

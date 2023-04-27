@@ -6,7 +6,7 @@
 import { DarkModePreference } from '../../redux/dark-mode/types'
 import { Logger } from '../../utils/logger'
 import { AsyncLoadingBoundary } from '../common/async-loading-boundary/async-loading-boundary'
-import { RenderIframe } from '../editor-page/renderer-pane/render-iframe'
+import { RenderIframe } from '../common/render-iframe/render-iframe'
 import { RendererType } from '../render-page/window-post-message-communicator/rendering-message'
 import { fetchFrontPageContent } from './requests'
 import React, { useEffect } from 'react'

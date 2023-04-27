@@ -5,7 +5,7 @@
  */
 import { useTrimmedNoteMarkdownContentWithoutFrontmatter } from '../../hooks/common/use-trimmed-note-markdown-content-without-frontmatter'
 import { setRendererStatus } from '../../redux/renderer-status/methods'
-import { RenderIframe } from '../editor-page/renderer-pane/render-iframe'
+import { RenderIframe } from '../common/render-iframe/render-iframe'
 import { RendererType } from '../render-page/window-post-message-communicator/rendering-message'
 import { DocumentInfobar } from './document-infobar'
 import React, { Fragment } from 'react'

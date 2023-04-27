@@ -5,11 +5,11 @@
  */
 import HighlightedCode from '../../../common/highlighted-code/highlighted-code'
 import { HtmlToReact } from '../../../common/html-to-react/html-to-react'
+import { RenderIframe } from '../../../common/render-iframe/render-iframe'
 import { ExtensionEventEmitterProvider } from '../../../markdown-renderer/hooks/use-extension-event-emitter'
 import { RendererType } from '../../../render-page/window-post-message-communicator/rendering-message'
 import type { CheatsheetEntry } from '../../cheatsheet/cheatsheet-extension'
 import { EditorToRendererCommunicatorContextProvider } from '../../render-context/editor-to-renderer-communicator-context-provider'
-import { RenderIframe } from '../../renderer-pane/render-iframe'
 import { ReadMoreLinkItem } from './read-more-link-item'
 import { useComponentsFromAppExtensions } from './use-components-from-app-extensions'
 import MarkdownIt from 'markdown-it'
