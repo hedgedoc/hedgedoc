@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,7 +14,7 @@ import { useScrollStateWithoutLineOffset } from './hooks/use-scroll-state-withou
 import { NoteType } from '@hedgedoc/commons'
 import React from 'react'
 
-export type EditorDocumentRendererProps = Omit<
+export type RendererPaneProps = Omit<
   RendererIframeProps,
   'markdownContentLines' | 'rendererType' | 'onTaskCheckedChange'
 >
@@ -26,7 +26,7 @@ export type EditorDocumentRendererProps = Omit<
  * @param onScroll A callback that is executed when the view in the rendered is scrolled
  * @param props Every property from the {@link RendererIframe} except the markdown content
  */
-export const EditorDocumentRenderer: React.FC<EditorDocumentRendererProps> = ({ scrollState, onScroll, ...props }) => {
+export const RendererPane: React.FC<RendererPaneProps> = ({ scrollState, onScroll, ...props }) => {
   const trimmedContentLines = useTrimmedNoteMarkdownContentWithoutFrontmatter()
   const noteType: NoteType = useApplicationState((state) => state.noteDetails.frontmatter.type)
   const adjustedOnScroll = useOnScrollWithLineOffset(onScroll)
