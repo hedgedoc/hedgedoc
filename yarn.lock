@@ -7470,10 +7470,10 @@ minimist@^1.0.0, minimist@^1.2.0, minimist@^1.2.6:
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.8.tgz#c1a464e7693302e082a075cee0c057741ac4772c"
   integrity sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==
 
-minio@7.0.33:
-  version "7.0.33"
-  resolved "https://registry.yarnpkg.com/minio/-/minio-7.0.33.tgz#9de07f4dd176bfa11fa159a4bf36ef4edd4af917"
-  integrity sha512-8wXGH98nZiLPe2xZhMV7UJ+48L1UlhgekxgpUhJWMO1h24TvZ0wUjtIt9e7DfNACopXh1spL8iuDQD7Lrq8Upw==
+minio@7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/minio/-/minio-7.1.0.tgz#1eff6caff24cdd6bcadfc1b78186b273e99a1f30"
+  integrity sha512-AgT23/TaViYieZiFofoCakidPmHiv3ag6/YiX1/hFdowbzMNr2dT2Ido3qWEThjn2Y252VH5i9OVUb+9wevZFA==
   dependencies:
     async "^3.1.0"
     block-stream2 "^2.0.0"
@@ -7491,7 +7491,7 @@ minio@7.0.33:
     through2 "^3.0.1"
     web-encoding "^1.1.5"
     xml "^1.0.0"
-    xml2js "^0.4.15"
+    xml2js "^0.5.0"
 
 minipass-collect@^1.0.2:
   version "1.0.2"
@@ -11936,7 +11936,7 @@ xml-encryption@^2.0.0:
     escape-html "^1.0.3"
     xpath "0.0.32"
 
-xml2js@0.5.0:
+xml2js@0.5.0, xml2js@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.5.0.tgz#d9440631fbb2ed800203fad106f2724f62c493b7"
   integrity sha512-drPFnkQJik/O+uPKpqSgr22mpuFHqKdbS835iAQrUC73L2F5WkboIRd63ai/2Yg6I1jzifPFKH2NTK+cfglkIA==
@@ -11944,7 +11944,7 @@ xml2js@0.5.0:
     sax ">=0.6.0"
     xmlbuilder "~11.0.0"
 
-xml2js@^0.4.15, xml2js@^0.4.23:
+xml2js@^0.4.23:
   version "0.4.23"
   resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.4.23.tgz#a0c69516752421eb2ac758ee4d4ccf58843eac66"
   integrity sha512-ySPiMjM0+pLDftHgXY4By0uswI3SPKLDw/i3UXbnO8M/p28zqexCUoPmQFrYD+/1BzhGJSs2i1ERWKJAtiLrug==
