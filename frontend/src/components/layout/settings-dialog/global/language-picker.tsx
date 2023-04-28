@@ -5,6 +5,7 @@
  */
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { Logger } from '../../../../utils/logger'
+import { testId } from '../../../../utils/test-id'
 import { availableLanguages } from './available-languages'
 import { LanguageOption } from './language-option'
 import React, { useCallback, useMemo } from 'react'
@@ -59,6 +60,7 @@ export const LanguagePicker: React.FC = () => {
       className='w-auto'
       value={languageCode}
       onChange={onChangeLang}
+      {...testId('language-picker')}
       {...cypressId('language-picker')}>
       {languageOptions}
     </Form.Select>

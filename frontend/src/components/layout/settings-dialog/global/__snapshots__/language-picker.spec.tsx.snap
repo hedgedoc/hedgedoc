@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`language picker renders all languages 1`] = `
+<div>
+  <select
+    as="select"
+    class="w-auto form-select"
+    data-testid="language-picker"
+  >
+    <option
+      value="de"
+    >
+      Deutsch
+    </option>
+    <option
+      value="en"
+    >
+      English
+    </option>
+  </select>
+</div>
+`;
