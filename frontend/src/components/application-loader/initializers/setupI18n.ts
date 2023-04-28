@@ -36,5 +36,6 @@ export const setUpI18n = async (): Promise<void> => {
       }
     })
 
+  i18n.on('languageChanged', (language) => (Settings.defaultLocale = language))
   Settings.defaultLocale = i18n.language
 }
