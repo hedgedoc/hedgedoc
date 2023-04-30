@@ -32,7 +32,7 @@ const IntroPage: NextPage = () => {
             <Trans i18nKey='app.slogan' />
           </p>
           <div className={'mb-5'}>
-            <CustomBranding delimiter={false} />
+            <CustomBranding />
           </div>
           <CoverButtons />
           <IntroCustomContent />
