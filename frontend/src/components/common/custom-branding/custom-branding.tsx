@@ -20,7 +20,7 @@ export interface BrandingProps {
  * @param inline If the logo should be using the inline-size or the regular-size css class.
  * @param delimiter If the delimiter between the HedgeDoc logo and the branding should be shown.
  */
-export const Branding: React.FC<BrandingProps> = ({ inline = false, delimiter = true }) => {
+export const CustomBranding: React.FC<BrandingProps> = ({ inline = false, delimiter = true }) => {
   const branding = useFrontendConfig().branding
   const showBranding = !!branding.name || !!branding.logo
 

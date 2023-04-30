@@ -1,9 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Branding } from '../components/common/branding/branding'
+import { CustomBranding } from '../components/common/custom-branding/custom-branding'
 import {
   HedgeDocLogoSize,
   HedgeDocLogoType,
@@ -32,7 +32,7 @@ const IntroPage: NextPage = () => {
             <Trans i18nKey='app.slogan' />
           </p>
           <div className={'mb-5'}>
-            <Branding delimiter={false} />
+            <CustomBranding delimiter={false} />
           </div>
           <CoverButtons />
           <IntroCustomContent />
