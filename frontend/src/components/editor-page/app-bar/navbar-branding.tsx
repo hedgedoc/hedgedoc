@@ -1,10 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useDarkModeState } from '../../../hooks/dark-mode/use-dark-mode-state'
-import { Branding } from '../../common/branding/branding'
+import { CustomBranding } from '../../common/custom-branding/custom-branding'
 import {
   HedgeDocLogoSize,
   HedgeDocLogoType,
@@ -27,7 +27,7 @@ export const NavbarBranding: React.FC = () => {
           logoType={darkModeActivated ? HedgeDocLogoType.WB_HORIZONTAL : HedgeDocLogoType.BW_HORIZONTAL}
           size={HedgeDocLogoSize.SMALL}
         />
-        <Branding inline={true} />
+        <CustomBranding inline={true} />
       </Link>
     </Navbar.Brand>
   )
