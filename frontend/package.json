@@ -153,7 +153,7 @@
     "cypress-commands": "3.0.0",
     "cypress-fill-command": "1.0.2",
     "eslint": "8.39.0",
-    "eslint-config-next": "13.3.2",
+    "eslint-config-next": "13.3.4",
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-chai-friendly": "0.7.2",
     "eslint-plugin-cypress": "2.13.3",
