@@ -2486,7 +2486,7 @@ __metadata:
     uuid: 9.0.0
     vega: 5.25.0
     vega-embed: 6.22.1
-    vega-lite: 5.7.1
+    vega-lite: 5.8.0
     words-count: 2.0.2
     ws: 8.13.0
     yjs: 13.6.0
@@ -18390,7 +18390,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-event-selector@npm:^3.0.1, vega-event-selector@npm:~3.0.0, vega-event-selector@npm:~3.0.1":
+"vega-event-selector@npm:^3.0.1, vega-event-selector@npm:~3.0.1":
   version: 3.0.1
   resolution: "vega-event-selector@npm:3.0.1"
   checksum: 66d09b5800a19a9b0c75f28811b140a1a2e70e84be6d6f87c568cdbce6e17c8e195f130f4e3de5d6dc737142d1f46f4fe7645177e154582cc8ba27c6845b54e8
@@ -18404,16 +18404,6 @@ __metadata:
     "@types/estree": ^1.0.0
     vega-util: ^1.17.1
   checksum: 0355ebb6edd8f2ccc2dcf277a29b42b13f971725443212ce8a64cb8a02049f75f0add7ca9afcd3bc6744b93be791b526e7f983d9080d5052e9b0ca55bd488ae5
-  languageName: node
-  linkType: hard
-
-"vega-expression@npm:~5.0.0":
-  version: 5.0.1
-  resolution: "vega-expression@npm:5.0.1"
-  dependencies:
-    "@types/estree": ^1.0.0
-    vega-util: ^1.17.1
-  checksum: 396e950209a98a3fb1e28ba554f179c07aaeac7d11cfac9298a2af0b98456d69ec6573ecc7f21eff6f9f95bbfa8c59a1093d25e8ce586d0c0c589c230784db17
   languageName: node
   linkType: hard
 
@@ -18506,9 +18496,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-lite@npm:5.7.1":
-  version: 5.7.1
-  resolution: "vega-lite@npm:5.7.1"
+"vega-lite@npm:5.8.0":
+  version: 5.8.0
+  resolution: "vega-lite@npm:5.8.0"
   dependencies:
     "@types/clone": ~2.1.1
     clone: ~2.1.2
@@ -18516,10 +18506,10 @@ __metadata:
     fast-json-stable-stringify: ~2.1.0
     json-stringify-pretty-compact: ~3.0.0
     tslib: ~2.5.0
-    vega-event-selector: ~3.0.0
-    vega-expression: ~5.0.0
-    vega-util: ~1.17.0
-    yargs: ~17.7.0
+    vega-event-selector: ~3.0.1
+    vega-expression: ~5.1.0
+    vega-util: ~1.17.2
+    yargs: ~17.7.1
   peerDependencies:
     vega: ^5.24.0
   bin:
@@ -18527,7 +18517,7 @@ __metadata:
     vl2png: bin/vl2png
     vl2svg: bin/vl2svg
     vl2vg: bin/vl2vg
-  checksum: e420be0c5791bbded62d75d01dc191cb6263a6ef3fe92104a12fa8bf105ae4c6f17579a92b0dba3191b80670a984f1b4e7e75218a4b59faca153cd60b6e147e1
+  checksum: 7606f66136530d288f6d8e8b4d35acd2488cd0983b144007312d36c626314868ea738bfefa247141084c3d843d18b1bb3b2f826781e2f5fe038161caac31bf51
   languageName: node
   linkType: hard
 
@@ -18699,7 +18689,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-util@npm:^1.15.2, vega-util@npm:^1.17.1, vega-util@npm:~1.17.0, vega-util@npm:~1.17.2":
+"vega-util@npm:^1.15.2, vega-util@npm:^1.17.1, vega-util@npm:~1.17.2":
   version: 1.17.2
   resolution: "vega-util@npm:1.17.2"
   checksum: 5d681cb1a6ffda7af1b74df7c1c46a32f1d874daef54f9c9c65c7d7c7bfc4271dc6d9b1c1c7a853b14eb6e4cc8ec811b0132cd3ea25fa85259eac92e1b4f07fa
@@ -19282,7 +19272,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^17.3.1, yargs@npm:^17.5.1, yargs@npm:^17.6.2, yargs@npm:~17.7.0":
+"yargs@npm:^17.3.1, yargs@npm:^17.5.1, yargs@npm:^17.6.2, yargs@npm:~17.7.1":
   version: 17.7.2
   resolution: "yargs@npm:17.7.2"
   dependencies:
