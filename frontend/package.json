@@ -37,7 +37,7 @@
     ]
   },
   "dependencies": {
-    "@codemirror/autocomplete": "6.6.0",
+    "@codemirror/autocomplete": "6.6.1",
     "@codemirror/commands": "6.2.4",
     "@codemirror/lang-markdown": "6.1.1",
     "@codemirror/language": "6.6.0",
