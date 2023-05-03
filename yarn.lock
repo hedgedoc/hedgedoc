@@ -6864,9 +6864,9 @@ map-visit@^1.0.0:
     object-visit "^1.0.0"
 
 mariadb@^3.0.2:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/mariadb/-/mariadb-3.1.1.tgz#aa8b9f9dafd74a8636168f1211b285cb1e738a9e"
-  integrity sha512-Y5tu9pQr8uZs63FATr7ldODXn8N2aIFlAg/rp6kRTohgQiJfdl9DNGu9PXRTYdY4JgF5mT2ASD81Jdo5kfGYzg==
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/mariadb/-/mariadb-3.1.2.tgz#96f9f6c3f280a3a3c37b56ff7974400edbb88bda"
+  integrity sha512-ILlC54fkXkvizTJZC1uP7f/REBxuu1k+OWzpiIITIEdS+dGIjFe/Ob3EW9KrdtBa38l3z+odz6elva0RG/y5og==
   dependencies:
     "@types/geojson" "^7946.0.10"
     "@types/node" "^17.0.45"
