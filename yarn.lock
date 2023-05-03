@@ -2407,8 +2407,8 @@ __metadata:
     "@types/markdown-it-container": 2.0.5
     "@types/markdown-it-plantuml": 1.4.1
     "@types/node": 18.16.3
-    "@types/react": 18.2.1
-    "@types/react-dom": 18.2.2
+    "@types/react": 18.2.2
+    "@types/react-dom": 18.2.3
     "@types/sass": 1.43.1
     "@types/testing-library__jest-dom": 5.14.5
     "@types/uuid": 9.0.1
@@ -4863,12 +4863,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.2.2":
-  version: 18.2.2
-  resolution: "@types/react-dom@npm:18.2.2"
+"@types/react-dom@npm:18.2.3":
+  version: 18.2.3
+  resolution: "@types/react-dom@npm:18.2.3"
   dependencies:
     "@types/react": "*"
-  checksum: 261d8a47c886a1b80b48506fd77d9a4efb5511a603abc9a5c190f64005a2e7904f2b2ec28ee224b120d154c43d55ba7ae8300867bf85e95c1b82831828e04407
+  checksum: 33520610ee36765dbee62bd7d4a448598f0dec6d3ba94a05ff066e239ae536d739cb3bc2cd5269884f57293a3983ce614182844c4489b6e3350015eb5a08dcc7
   languageName: node
   linkType: hard
 
@@ -4890,14 +4890,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.1":
-  version: 18.2.1
-  resolution: "@types/react@npm:18.2.1"
+"@types/react@npm:18.2.2":
+  version: 18.2.2
+  resolution: "@types/react@npm:18.2.2"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: a957e767fa087c7b63274d286d3a6ee2b9ec070159170346995abc5fddcd351a015770eb8452ba7974ded932b379f869b093dbadcbfa786a0a851fb5be581296
+  checksum: 6534fecbf898c772d0c140e7c4806cfa28095445ba5de3fbf71aec0542723a6dd994c30dce76280382f24cbef64c902b8cd5d6449b8c1062139dcac26c0d9693
   languageName: node
   linkType: hard
 
