@@ -205,7 +205,7 @@ export class NotesController {
     @RequestUser() user: User,
     @RequestNote() note: Note,
     @Param('userName') username: string,
-    @Body() canEdit: boolean,
+    @Body('canEdit') canEdit: boolean,
   ): Promise<NotePermissionsDto> {
     const permissionUser = await this.userService.getUserByUsername(username);
     const returnedNote = await this.permissionService.setUserPermission(
@@ -285,7 +285,7 @@ export class NotesController {
   async changeOwner(
     @RequestUser() user: User,
     @RequestNote() note: Note,
-    @Body() newOwner: string,
+    @Body('newOwner') newOwner: string,
   ): Promise<NoteDto> {
     const owner = await this.userService.getUserByUsername(newOwner);
     return await this.noteService.toNoteDto(

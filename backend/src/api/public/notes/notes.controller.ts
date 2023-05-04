@@ -384,7 +384,7 @@ export class NotesController {
   async changeOwner(
     @RequestUser() user: User,
     @RequestNote() note: Note,
-    @Body() newOwner: string,
+    @Body('newOwner') newOwner: string,
   ): Promise<NoteDto> {
     const owner = await this.userService.getUserByUsername(newOwner);
     return await this.noteService.toNoteDto(

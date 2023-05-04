@@ -12,16 +12,16 @@ import type { NotePermissions } from '@hedgedoc/commons'
  * Sets the owner of a note.
  *
  * @param noteId The id of the note.
- * @param owner The username of the new owner.
+ * @param newOwner The username of the new owner.
  * @return The updated {@link NotePermissions}.
  * @throws {Error} when the api request wasn't successful.
  */
-export const setNoteOwner = async (noteId: string, owner: string): Promise<NotePermissions> => {
+export const setNoteOwner = async (noteId: string, newOwner: string): Promise<NotePermissions> => {
   const response = await new PutApiRequestBuilder<NotePermissions, OwnerChangeDto>(
     `notes/${noteId}/metadata/permissions/owner`
   )
     .withJsonBody({
-      owner
+      newOwner
     })
     .sendRequest()
   return response.asParsedJsonObject()
