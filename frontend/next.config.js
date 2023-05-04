@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-const { isMockMode, isTestMode } = require('./src/utils/test-modes')
+const { isMockMode, isTestMode, isProductionMode} = require('./src/utils/test-modes')
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -86,7 +86,7 @@ const rawNextConfig = {
       }
     ])
   },
-  output: 'standalone',
+  output: isProductionMode ? 'standalone' : undefined,
   swcMinify: false, //Otherwise emoji picker is minified incorrectly
   experimental: {
     outputFileTracingRoot: path.join(__dirname, '../')
