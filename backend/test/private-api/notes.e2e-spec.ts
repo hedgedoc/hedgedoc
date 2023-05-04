@@ -8,14 +8,16 @@ import { join } from 'path';
 import request from 'supertest';
 
 import { NotInDBError } from '../../src/errors/errors';
+import { Group } from '../../src/groups/group.entity';
 import { User } from '../../src/users/user.entity';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Notes', () => {
   let testSetup: TestSetup;
 
-  let user: User;
+  let user1: User;
   let user2: User;
+  let group1: Group;
   let content: string;
   let forbiddenNoteId: string;
   let uploadPath: string;
@@ -35,11 +37,15 @@ describe('Notes', () => {
     const password1 = 'AHardcodedStrongP@ssword123';
     const username2 = 'hardcoded2';
     const password2 = 'AHardcodedStrongP@ssword12';
+    const groupname1 = 'groupname1';
 
-    user = await testSetup.userService.createUser(username1, 'Testy');
-    await testSetup.identityService.createLocalIdentity(user, password1);
+    user1 = await testSetup.userService.createUser(username1, 'Testy');
+    await testSetup.identityService.createLocalIdentity(user1, password1);
     user2 = await testSetup.userService.createUser(username2, 'Max Mustermann');
     await testSetup.identityService.createLocalIdentity(user2, password2);
+
+    group1 = await testSetup.groupService.createGroup(groupname1, 'Group 1');
+
     content = 'This is a test note.';
     testImage = await fs.readFile('test/public-api/fixtures/test.png');
 
@@ -75,7 +81,7 @@ describe('Notes', () => {
   describe('GET /notes/{note}', () => {
     it('works with an existing note', async () => {
       // check if we can succefully get a note that exists
-      await testSetup.notesService.createNote(content, user, 'test1');
+      await testSetup.notesService.createNote(content, user1, 'test1');
       const response = await agent
         .get('/api/private/notes/test1')
         .expect('Content-Type', /json/)
@@ -147,10 +153,10 @@ describe('Notes', () => {
         const noteId = 'test3';
         const note = await testSetup.notesService.createNote(
           content,
-          user,
+          user1,
           noteId,
         );
-        await testSetup.mediaService.saveFile(testImage, user, note);
+        await testSetup.mediaService.saveFile(testImage, user1, note);
         await agent
           .delete(`/api/private/notes/${noteId}`)
           .set('Content-Type', 'application/json')
@@ -164,7 +170,7 @@ describe('Notes', () => {
           new NotInDBError(`Note with id/alias '${noteId}' not found.`),
         );
         expect(
-          await testSetup.mediaService.listUploadsByUser(user),
+          await testSetup.mediaService.listUploadsByUser(user1),
         ).toHaveLength(0);
         await fs.rmdir(uploadPath);
       });
@@ -172,12 +178,12 @@ describe('Notes', () => {
         const noteId = 'test3a';
         const note = await testSetup.notesService.createNote(
           content,
-          user,
+          user1,
           noteId,
         );
         const upload = await testSetup.mediaService.saveFile(
           testImage,
-          user,
+          user1,
           note,
         );
         await agent
@@ -193,7 +199,7 @@ describe('Notes', () => {
           new NotInDBError(`Note with id/alias '${noteId}' not found.`),
         );
         expect(
-          await testSetup.mediaService.listUploadsByUser(user),
+          await testSetup.mediaService.listUploadsByUser(user1),
         ).toHaveLength(1);
         // Remove /upload/ from path as we just need the filename.
         const fileName = upload.fileUrl.replace('/uploads/', '');
@@ -213,7 +219,7 @@ describe('Notes', () => {
   describe('GET /notes/{note}/metadata', () => {
     it('returns complete metadata object', async () => {
       const noteAlias = 'metadata_test_note';
-      await testSetup.notesService.createNote(content, user, noteAlias);
+      await testSetup.notesService.createNote(content, user1, noteAlias);
       const metadata = await agent
         .get(`/api/private/notes/${noteAlias}/metadata`)
         .expect('Content-Type', /json/)
@@ -255,7 +261,7 @@ describe('Notes', () => {
       // create a note
       const note = await testSetup.notesService.createNote(
         content,
-        user,
+        user1,
         noteAlias,
       );
       // save the creation time
@@ -277,10 +283,10 @@ describe('Notes', () => {
 
   describe('GET /notes/{note}/revisions', () => {
     it('works with existing alias', async () => {
-      await testSetup.notesService.createNote(content, user, 'test4');
+      await testSetup.notesService.createNote(content, user1, 'test4');
       // create a second note to check for a regression, where typeorm always returned
       // all revisions in the database
-      await testSetup.notesService.createNote(content, user, 'test4a');
+      await testSetup.notesService.createNote(content, user1, 'test4a');
       const response = await agent
         .get('/api/private/notes/test4/revisions')
         .expect('Content-Type', /json/)
@@ -308,7 +314,7 @@ describe('Notes', () => {
       const noteId = 'test8';
       const note = await testSetup.notesService.createNote(
         content,
-        user,
+        user1,
         noteId,
       );
       await testSetup.notesService.updateNote(note, 'update');
@@ -345,7 +351,7 @@ describe('Notes', () => {
     it('works with an existing alias', async () => {
       const note = await testSetup.notesService.createNote(
         content,
-        user,
+        user1,
         'test5',
       );
       const revision = await testSetup.revisionsService.getLatestRevision(note);
@@ -375,12 +381,12 @@ describe('Notes', () => {
       const extraAlias = 'test7';
       const note1 = await testSetup.notesService.createNote(
         content,
-        user,
+        user1,
         alias,
       );
       const note2 = await testSetup.notesService.createNote(
         content,
-        user,
+        user1,
         extraAlias,
       );
       const response = await agent
@@ -392,12 +398,12 @@ describe('Notes', () => {
       const testImage = await fs.readFile('test/private-api/fixtures/test.png');
       const upload0 = await testSetup.mediaService.saveFile(
         testImage,
-        user,
+        user1,
         note1,
       );
       const upload1 = await testSetup.mediaService.saveFile(
         testImage,
-        user,
+        user1,
         note2,
       );
 
@@ -438,6 +444,223 @@ describe('Notes', () => {
         .get(`/api/private/notes/${alias}/media/`)
         .expect('Content-Type', /json/)
         .expect(403);
+    });
+  });
+
+  describe('permissions', () => {
+    const user1NoteAlias = 'user1NoteAlias';
+    const user2NoteAlias = 'user2NoteAlias';
+
+    beforeAll(async () => {
+      await testSetup.notesService.createNote(
+        'This is a test note.',
+        user1,
+        user1NoteAlias,
+      );
+      await testSetup.notesService.createNote(
+        'This is a test note.',
+        user2,
+        user2NoteAlias,
+      );
+    });
+
+    describe('users', () => {
+      describe('PUT /notes/{note}/metadata/permissions/users/{userName}', () => {
+        it('fails, when note does not exist', async () => {
+          await agent
+            .put(
+              `/api/private/notes/notExisting/metadata/permissions/users/${user1.username}`,
+            )
+            .expect('Content-Type', /json/)
+            .expect(404);
+        });
+
+        it('fails, when user is not the owner', async () => {
+          await agent
+            .put(
+              `/api/private/notes/${user2NoteAlias}/metadata/permissions/users/${user1.username}`,
+            )
+            .expect('Content-Type', /json/)
+            .expect(403);
+        });
+
+        it("doesn't do anything if the user is the owner", async () => {
+          const note = await testSetup.notesService.getNoteByIdOrAlias(
+            user1NoteAlias,
+          );
+          await testSetup.permissionsService.removeUserPermission(note, user2);
+
+          const response = await agent
+            .put(
+              `/api/private/notes/${user1NoteAlias}/metadata/permissions/users/${user1.username}`,
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .send({ canEdit: true });
+          expect(response.body.sharedToUsers).toHaveLength(0);
+        });
+
+        it.each([true, false])('works with edit set to %s', async (canEdit) => {
+          const response = await agent
+            .put(
+              `/api/private/notes/${user1NoteAlias}/metadata/permissions/users/${user2.username}`,
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .send({ canEdit: canEdit });
+          expect(response.body.sharedToUsers[0].canEdit).toBe(canEdit);
+          expect(response.body.sharedToUsers[0].username).toBe(user2.username);
+        });
+      });
+
+      describe('DELETE /notes/{note}/metadata/permissions/users/{userName}', () => {
+        it('fails, when note does not exist', async () => {
+          await agent
+            .delete(
+              `/api/private/notes/notExisting/metadata/permissions/users/${user1.username}`,
+            )
+            .expect('Content-Type', /json/)
+            .expect(404);
+        });
+
+        it('fails, when user is not the owner', async () => {
+          await agent
+            .delete(
+              `/api/private/notes/${user2NoteAlias}/metadata/permissions/users/${user1.username}`,
+            )
+            .expect('Content-Type', /json/)
+            .expect(403);
+        });
+
+        it('works', async () => {
+          const note = await testSetup.notesService.getNoteByIdOrAlias(
+            user1NoteAlias,
+          );
+          await testSetup.permissionsService.setUserPermission(
+            note,
+            user2,
+            false,
+          );
+
+          const response = await agent
+            .delete(
+              `/api/private/notes/${user1NoteAlias}/metadata/permissions/users/${user2.username}`,
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .send({ canEdit: true });
+          expect(response.body.sharedToUsers).toHaveLength(0);
+        });
+      });
+    });
+
+    describe('groups', () => {
+      describe('PUT /notes/{note}/metadata/permissions/groups/{groupName}', () => {
+        it('fails, when note does not exist', async () => {
+          await agent
+            .put(
+              `/api/private/notes/notExisting/metadata/permissions/groups/${user1.username}`,
+            )
+            .expect('Content-Type', /json/)
+            .expect(404);
+        });
+
+        it('fails, when user is not the owner', async () => {
+          await agent
+            .put(
+              `/api/private/notes/${user2NoteAlias}/metadata/permissions/groups/${group1.name}`,
+            )
+            .expect('Content-Type', /json/)
+            .expect(403);
+        });
+
+        it.each([true, false])('works with edit set to %s', async (canEdit) => {
+          const response = await agent
+            .put(
+              `/api/private/notes/${user1NoteAlias}/metadata/permissions/groups/${group1.name}`,
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .send({ canEdit: canEdit });
+          expect(response.body.sharedToGroups[2].canEdit).toBe(canEdit);
+          expect(response.body.sharedToGroups[2].groupName).toBe(group1.name);
+        });
+      });
+
+      describe('DELETE /notes/{note}/metadata/permissions/groups/{groupName}', () => {
+        it('fails, when note does not exist', async () => {
+          await agent
+            .delete(
+              `/api/private/notes/notExisting/metadata/permissions/groups/${group1.name}`,
+            )
+            .expect('Content-Type', /json/)
+            .expect(404);
+        });
+
+        it('fails, when user is not the owner', async () => {
+          await agent
+            .delete(
+              `/api/private/notes/${user2NoteAlias}/metadata/permissions/groups/${group1.name}`,
+            )
+            .expect('Content-Type', /json/)
+            .expect(403);
+        });
+
+        it('works', async () => {
+          const note = await testSetup.notesService.getNoteByIdOrAlias(
+            user1NoteAlias,
+          );
+          await testSetup.permissionsService.setGroupPermission(
+            note,
+            group1,
+            false,
+          );
+
+          const response = await agent
+            .delete(
+              `/api/private/notes/${user1NoteAlias}/metadata/permissions/groups/${group1.name}`,
+            )
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .send({ canEdit: true });
+          expect(response.body.sharedToGroups).toHaveLength(2);
+        });
+      });
+    });
+
+    describe('owner', () => {
+      describe('PUT /notes/{note}/metadata/permissions/owner', () => {
+        it('fails, when note does not exist', async () => {
+          await agent
+            .put(`/api/private/notes/notExisting/metadata/permissions/owner`)
+            .expect('Content-Type', /json/)
+            .expect(404);
+        });
+
+        it('fails, when user is not the owner', async () => {
+          await agent
+            .put(
+              `/api/private/notes/${user2NoteAlias}/metadata/permissions/owner`,
+            )
+            .expect('Content-Type', /json/)
+            .expect(403);
+        });
+
+        it('works', async () => {
+          const alias = 'noteForNewOwner';
+          await testSetup.notesService.createNote(
+            "I'll get a new owner!",
+            user1,
+            alias,
+          );
+          const response = await agent
+            .put(`/api/private/notes/${alias}/metadata/permissions/owner`)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .send({ newOwner: user2.username });
+          expect(response.body.metadata.permissions.owner).toBe(user2.username);
+        });
+      });
     });
   });
 });
