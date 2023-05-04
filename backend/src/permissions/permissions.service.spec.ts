@@ -1015,6 +1015,13 @@ describe('PermissionsService', () => {
       expect(eventEmitterEmitSpy).toHaveBeenCalled();
     });
     describe('works', () => {
+      it('with user not added if owner', async () => {
+        const user = User.create('test', 'Testy') as User;
+        const note = Note.create(user) as Note;
+        const resultNote = await service.setUserPermission(note, user, true);
+        expect(await resultNote.userPermissions).toHaveLength(0);
+      });
+
       it('with user not added before and editable', async () => {
         const note = Note.create(null) as Note;
         const user = User.create('test', 'Testy') as User;

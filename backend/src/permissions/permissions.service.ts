@@ -235,6 +235,9 @@ export class PermissionsService {
     permissionUser: User,
     canEdit: boolean,
   ): Promise<Note> {
+    if (await this.isOwner(permissionUser, note)) {
+      return note;
+    }
     const permissions = await note.userPermissions;
     const permission = await this.findPermissionForUser(
       permissions,
