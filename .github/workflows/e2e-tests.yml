@@ -159,8 +159,8 @@ jobs:
       matrix:
         containers: [ 1, 2, 3 ]
     steps:
-      - name: Install jq and zstd
-        run: apt-get update && apt-get install -y jq zstd
+      - name: Install additional packages
+        run: apt-get update && apt-get install -y jq zstd screen
 
       - name: Check out repo
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
@@ -182,12 +182,12 @@ jobs:
 
       - name: Run server
         working-directory: frontend/
-        run: yarn start:ci &
+        run: (screen -dmS server -L yarn start:ci) && sleep 3 && (tail -f screenlog.0 &)
         env:
           NODE_ENV: test
 
       - name: Wait for server
-        run: "sleep 3 && curl --max-time 120 http://127.0.0.1:3001/"
+        run: "curl -L --max-time 120 http://127.0.0.1:3001/"
 
       - name: Run cypress
         run: yarn turbo run test:e2e:ci --filter=frontend
