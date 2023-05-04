@@ -2331,7 +2331,7 @@ __metadata:
     typeorm: 0.3.15
     typescript: 5.0.4
     ws: 8.13.0
-    yjs: 13.6.0
+    yjs: 13.6.1
   languageName: unknown
   linkType: soft
 
@@ -2358,7 +2358,7 @@ __metadata:
     ts-jest: 29.1.0
     typescript: 5.0.4
     ws: 8.13.0
-    yjs: 13.6.0
+    yjs: 13.6.1
   languageName: unknown
   linkType: soft
 
@@ -2502,7 +2502,7 @@ __metadata:
     vega-lite: 5.8.0
     words-count: 2.0.2
     ws: 8.13.0
-    yjs: 13.6.0
+    yjs: 13.6.1
   languageName: unknown
   linkType: soft
 
@@ -19399,21 +19399,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yjs@npm:13.6.0":
-  version: 13.6.0
-  resolution: "yjs@npm:13.6.0"
+"yjs@npm:13.6.1":
+  version: 13.6.1
+  resolution: "yjs@npm:13.6.1"
   dependencies:
     lib0: ^0.2.74
-  checksum: 54bd3b0c8a8dc5724044356c8015210f9840b7ac46c8d87d66a0cc5f5bf669298d45324942681ad01ea22c7a4de6a29aa22180d63596e18734bc90335ced982f
-  languageName: node
-  linkType: hard
-
-"yjs@patch:yjs@npm%3A13.6.0#./.yarn/patches/yjs-remove-import-warning-in-test.patch::locator=hedgedoc%40workspace%3A.":
-  version: 13.6.0
-  resolution: "yjs@patch:yjs@npm%3A13.6.0#./.yarn/patches/yjs-remove-import-warning-in-test.patch::version=13.6.0&hash=e7d95b&locator=hedgedoc%40workspace%3A."
-  dependencies:
-    lib0: ^0.2.74
-  checksum: d721ea4bcdda5a7aed34a8011aa80b24b474e82213854f3a5ce84c2f15c248e0d0fe0950a42ab4d311c72d2c5d2b79943a0de817ae0f73251d7b05c5b8bd6c06
+  checksum: bf18ed3f53b4baed61363461b2567cf841f27c326ae107736bb46239fb7273d9d0ef71ea83ae792e96e406d074218d6666f2909a680214b940ada39b58545336
   languageName: node
   linkType: hard
 
