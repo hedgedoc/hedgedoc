@@ -2408,7 +2408,7 @@ __metadata:
     "@types/markdown-it-plantuml": 1.4.1
     "@types/node": 18.16.4
     "@types/react": 18.2.5
-    "@types/react-dom": 18.2.3
+    "@types/react-dom": 18.2.4
     "@types/sass": 1.43.1
     "@types/testing-library__jest-dom": 5.14.5
     "@types/uuid": 9.0.1
@@ -4870,12 +4870,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.2.3":
-  version: 18.2.3
-  resolution: "@types/react-dom@npm:18.2.3"
+"@types/react-dom@npm:18.2.4":
+  version: 18.2.4
+  resolution: "@types/react-dom@npm:18.2.4"
   dependencies:
     "@types/react": "*"
-  checksum: 33520610ee36765dbee62bd7d4a448598f0dec6d3ba94a05ff066e239ae536d739cb3bc2cd5269884f57293a3983ce614182844c4489b6e3350015eb5a08dcc7
+  checksum: 8301f35cf1cbfec8c723e9477aecf87774e3c168bd457d353b23c45064737213d3e8008b067c6767b7b08e4f2b3823ee239242a6c225fc91e7f8725ef8734124
   languageName: node
   linkType: hard
 
