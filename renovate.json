@@ -76,6 +76,12 @@
       "matchPackagePatterns": [
         "^@testing-library/"
       ]
+    },
+    {
+      "groupName": "zxcvbn-ts",
+      "matchPackagePatterns": [
+        "^@zxcvbn-ts/"
+      ]
     }
   ],
   "regexManagers": [
