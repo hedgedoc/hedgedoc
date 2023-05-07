@@ -5,9 +5,20 @@
  */
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { zxcvbnAsync, zxcvbnOptions } from '@zxcvbn-ts/core';
-import zxcvbnCommonPackage from '@zxcvbn-ts/language-common';
-import zxcvbnEnPackage from '@zxcvbn-ts/language-en';
+import {
+  OptionsGraph,
+  OptionsType,
+  zxcvbnAsync,
+  zxcvbnOptions,
+} from '@zxcvbn-ts/core';
+import {
+  adjacencyGraphs,
+  dictionary as zxcvbnCommonDictionary,
+} from '@zxcvbn-ts/language-common';
+import {
+  dictionary as zxcvbnEnDictionary,
+  translations as zxcvbnEnTranslations,
+} from '@zxcvbn-ts/language-en';
 import { Repository } from 'typeorm';
 
 import authConfiguration, { AuthConfig } from '../config/auth.config';
@@ -34,13 +45,13 @@ export class IdentityService {
     private authConfig: AuthConfig,
   ) {
     this.logger.setContext(IdentityService.name);
-    const options = {
+    const options: OptionsType = {
       dictionary: {
-        ...zxcvbnCommonPackage.dictionary,
-        ...zxcvbnEnPackage.dictionary,
+        ...zxcvbnCommonDictionary,
+        ...zxcvbnEnDictionary,
       },
-      graphs: zxcvbnCommonPackage.adjacencyGraphs,
-      translations: zxcvbnEnPackage.translations,
+      graphs: adjacencyGraphs as OptionsGraph,
+      translations: zxcvbnEnTranslations,
     };
     zxcvbnOptions.setOptions(options);
   }
