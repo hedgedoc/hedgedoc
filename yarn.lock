@@ -2284,7 +2284,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": 5.59.2
     "@typescript-eslint/parser": 5.59.2
     "@zxcvbn-ts/core": 2.2.1
-    "@zxcvbn-ts/language-common": 2.0.1
+    "@zxcvbn-ts/language-common": 3.0.0
     "@zxcvbn-ts/language-en": 3.0.0
     base32-encode: 1.2.0
     bcrypt: 5.1.0
@@ -5530,10 +5530,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zxcvbn-ts/language-common@npm:2.0.1":
-  version: 2.0.1
-  resolution: "@zxcvbn-ts/language-common@npm:2.0.1"
-  checksum: 75bbda3b4f453f977c0f1457aa5e4bbb3e4065ef0e0ec1ab5e5270544ab88d9962d32493ae6ad2dbd847cb50e723e60e42fc0f62100d979029c4bed8b7a3c189
+"@zxcvbn-ts/language-common@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@zxcvbn-ts/language-common@npm:3.0.0"
+  checksum: 6c39aea4ada0f7051ed11fb8d49ec487acc0ff627f56a2b31ae517db68790e5c44e8213cd7670cdbbf157a37658d9e53b425fdce154ff1dfd8da9113aa23a5be
   languageName: node
   linkType: hard
 
