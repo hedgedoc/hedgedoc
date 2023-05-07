@@ -18,7 +18,7 @@ export const NoteAndAppTitleHead: React.FC = () => {
   const showDot = useHasMarkdownContentBeenChangedInBackground()
 
   const noteAndAppTitle = useMemo(() => {
-    return (showDot ? '(•) ' : '') + noteTitle + ' - ' + appTitle
+    return (showDot ? '• ' : '') + noteTitle + ' - ' + appTitle
   }, [appTitle, noteTitle, showDot])
 
   return (
