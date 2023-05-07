@@ -44,7 +44,7 @@
     "@types/node-fetch": "2.6.3",
     "@types/passport-http-bearer": "1.0.37",
     "@zxcvbn-ts/core": "3.0.0",
-    "@zxcvbn-ts/language-common": "2.0.1",
+    "@zxcvbn-ts/language-common": "3.0.0",
     "@zxcvbn-ts/language-en": "3.0.0",
     "base32-encode": "1.2.0",
     "bcrypt": "5.1.0",
