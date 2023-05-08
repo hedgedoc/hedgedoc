@@ -35,7 +35,7 @@ export class RealtimeConnection {
     messageTransporter: MessageTransporter,
     private user: User | null,
     private realtimeNote: RealtimeNote,
-    private acceptEdits: boolean,
+    public acceptEdits: boolean,
   ) {
     this.displayName = user?.displayName ?? generateRandomName();
     this.transporter = messageTransporter;

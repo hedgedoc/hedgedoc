@@ -84,21 +84,27 @@ describe('websocket connection', () => {
     expect(sut.getRealtimeUserStateAdapter()).toBe(realtimeUserStatus);
   });
 
-  it('returns the correct sync adapter', () => {
-    const yDocSyncServerAdapter = Mock.of<YDocSyncServerAdapter>({});
-    jest
-      .spyOn(HedgeDocCommonsModule, 'YDocSyncServerAdapter')
-      .mockImplementation(() => yDocSyncServerAdapter);
+  it.each([true, false])(
+    'creates a sync adapter with acceptEdits %s',
+    (acceptEdits) => {
+      const yDocSyncServerAdapter = Mock.of<YDocSyncServerAdapter>({});
+      jest
+        .spyOn(HedgeDocCommonsModule, 'YDocSyncServerAdapter')
+        .mockImplementation((messageTransporter, doc, acceptEditsProvider) => {
+          expect((acceptEditsProvider as () => boolean)()).toBe(acceptEdits);
+          return yDocSyncServerAdapter;
+        });
 
-    const sut = new RealtimeConnection(
-      mockedMessageTransporter,
-      mockedUser,
-      mockedRealtimeNote,
-      true,
-    );
+      const sut = new RealtimeConnection(
+        mockedMessageTransporter,
+        mockedUser,
+        mockedRealtimeNote,
+        acceptEdits,
+      );
 
-    expect(sut.getSyncAdapter()).toBe(yDocSyncServerAdapter);
-  });
+      expect(sut.getSyncAdapter()).toBe(yDocSyncServerAdapter);
+    },
+  );
 
   it('removes the client from the note on transporter disconnect', () => {
     const sut = new RealtimeConnection(
