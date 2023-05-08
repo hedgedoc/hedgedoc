@@ -41,10 +41,12 @@ export class RealtimeUserStatusAdapter {
       styleIndex: this.findLeastUsedStyleIndex(
         this.createStyleIndexToCountMap(realtimeNote),
       ),
-      cursor: {
-        from: 0,
-        to: 0,
-      },
+      cursor: !this.acceptCursorUpdateProvider()
+        ? null
+        : {
+            from: 0,
+            to: 0,
+          },
     };
   }
 
@@ -53,10 +55,10 @@ export class RealtimeUserStatusAdapter {
     const transporterMessagesListener = connection.getTransporter().on(
       MessageType.REALTIME_USER_SINGLE_UPDATE,
       (message: Message<MessageType.REALTIME_USER_SINGLE_UPDATE>) => {
-        if (this.acceptCursorUpdateProvider()) {
-          this.realtimeUser.cursor = message.payload;
-          this.sendRealtimeUserStatusUpdateEvent(connection);
-        }
+        this.realtimeUser.cursor = this.acceptCursorUpdateProvider()
+          ? message.payload
+          : null;
+        this.sendRealtimeUserStatusUpdateEvent(connection);
       },
       { objectify: true },
     ) as Listener;
@@ -83,10 +85,7 @@ export class RealtimeUserStatusAdapter {
     const realtimeUserSetActivityListener = connection.getTransporter().on(
       MessageType.REALTIME_USER_SET_ACTIVITY,
       (message: Message<MessageType.REALTIME_USER_SET_ACTIVITY>) => {
-        if (
-          !this.acceptCursorUpdateProvider() ||
-          this.realtimeUser.active === message.payload.active
-        ) {
+        if (this.realtimeUser.active === message.payload.active) {
           return;
         }
         this.realtimeUser.active = message.payload.active;
@@ -115,9 +114,6 @@ export class RealtimeUserStatusAdapter {
     const realtimeUser =
       receivingClient.getRealtimeUserStateAdapter().realtimeUser;
     const realtimeUsers = this.collectAllConnectionsExcept(receivingClient)
-      .filter((client) =>
-        client.getRealtimeUserStateAdapter().acceptCursorUpdateProvider(),
-      )
       .map((client) => client.getRealtimeUserStateAdapter().realtimeUser)
       .filter((realtimeUser) => realtimeUser !== null);
 

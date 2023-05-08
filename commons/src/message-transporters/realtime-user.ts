@@ -9,7 +9,7 @@ export interface RealtimeUser {
   username: string | null
   active: boolean
   styleIndex: number
-  cursor: RemoteCursor
+  cursor: RemoteCursor | null
 }
 
 export interface RemoteCursor {
