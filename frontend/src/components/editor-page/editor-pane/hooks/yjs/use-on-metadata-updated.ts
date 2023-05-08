@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { updateMetadata } from '../../../../../redux/note-details/methods'
+import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
 import type { MessageTransporter } from '@hedgedoc/commons'
 import { MessageType } from '@hedgedoc/commons'
 import type { Listener } from 'eventemitter2'
@@ -15,12 +16,20 @@ import { useEffect } from 'react'
  * @param websocketConnection The websocket connection that emits the metadata changed event
  */
 export const useOnMetadataUpdated = (websocketConnection: MessageTransporter): void => {
+  const { showErrorNotification } = useUiNotifications()
+
   useEffect(() => {
-    const listener = websocketConnection.on(MessageType.METADATA_UPDATED, () => void updateMetadata(), {
-      objectify: true
-    }) as Listener
+    const listener = websocketConnection.on(
+      MessageType.METADATA_UPDATED,
+      () => {
+        updateMetadata().catch(showErrorNotification('common.errorWhileLoading', { name: 'note metadata refresh' }))
+      },
+      {
+        objectify: true
+      }
+    ) as Listener
     return () => {
       listener.off()
     }
-  }, [websocketConnection])
+  }, [showErrorNotification, websocketConnection])
 }
