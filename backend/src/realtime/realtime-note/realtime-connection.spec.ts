@@ -43,7 +43,7 @@ describe('websocket connection', () => {
     mockedMessageTransporter = new MockedBackendMessageTransporter('');
   });
 
-  afterAll(() => {
+  afterEach(() => {
     jest.resetAllMocks();
     jest.resetModules();
   });
