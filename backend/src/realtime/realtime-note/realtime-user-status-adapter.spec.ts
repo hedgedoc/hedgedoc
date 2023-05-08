@@ -119,6 +119,13 @@ describe('realtime user status adapter', () => {
             username: null,
             displayName: guestDisplayName,
           },
+          {
+            active: true,
+            cursor: null,
+            displayName: clientDeclineUsername,
+            styleIndex: 4,
+            username: clientDeclineUsername,
+          },
         ],
       },
     };
@@ -180,6 +187,13 @@ describe('realtime user status adapter', () => {
             username: null,
             displayName: guestDisplayName,
           },
+          {
+            active: true,
+            cursor: null,
+            displayName: clientDeclineUsername,
+            styleIndex: 4,
+            username: clientDeclineUsername,
+          },
         ],
       },
     };
@@ -212,6 +226,55 @@ describe('realtime user status adapter', () => {
             username: clientLoggedIn2Username,
             displayName: clientLoggedIn2Username,
           },
+          {
+            active: true,
+            cursor: null,
+            displayName: clientDeclineUsername,
+            styleIndex: 4,
+            username: clientDeclineUsername,
+          },
+        ],
+      },
+    };
+
+    const expectedMessage5: Message<MessageType.REALTIME_USER_STATE_SET> = {
+      type: MessageType.REALTIME_USER_STATE_SET,
+      payload: {
+        ownUser: {
+          displayName: clientDeclineUsername,
+          styleIndex: 4,
+        },
+        users: [
+          {
+            active: true,
+            cursor: {
+              from: newFrom,
+              to: newTo,
+            },
+            styleIndex: 0,
+            username: clientLoggedIn1Username,
+            displayName: clientLoggedIn1Username,
+          },
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: 1,
+            username: clientLoggedIn2Username,
+            displayName: clientLoggedIn2Username,
+          },
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            displayName: guestDisplayName,
+            styleIndex: 2,
+            username: null,
+          },
         ],
       },
     };
@@ -226,7 +289,10 @@ describe('realtime user status adapter', () => {
       expectedMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(1);
+    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedMessage5,
+    );
   });
 
   it('will inform other clients about removed client', () => {
@@ -256,6 +322,13 @@ describe('realtime user status adapter', () => {
             username: null,
             displayName: guestDisplayName,
           },
+          {
+            active: true,
+            cursor: null,
+            displayName: clientDeclineUsername,
+            styleIndex: 4,
+            username: clientDeclineUsername,
+          },
         ],
       },
     };
@@ -278,6 +351,45 @@ describe('realtime user status adapter', () => {
             username: clientLoggedIn1Username,
             displayName: clientLoggedIn1Username,
           },
+          {
+            active: true,
+            cursor: null,
+            displayName: clientDeclineUsername,
+            styleIndex: 4,
+            username: clientDeclineUsername,
+          },
+        ],
+      },
+    };
+
+    const expectedMessage5: Message<MessageType.REALTIME_USER_STATE_SET> = {
+      type: MessageType.REALTIME_USER_STATE_SET,
+      payload: {
+        ownUser: {
+          displayName: clientDeclineUsername,
+          styleIndex: 4,
+        },
+        users: [
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: 0,
+            username: clientLoggedIn1Username,
+            displayName: clientLoggedIn1Username,
+          },
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            displayName: guestDisplayName,
+            styleIndex: 2,
+            username: null,
+          },
         ],
       },
     };
@@ -292,7 +404,10 @@ describe('realtime user status adapter', () => {
       expectedMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(1);
+    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedMessage5,
+    );
   });
 
   it('will inform other clients about inactivity and reactivity', () => {
@@ -338,7 +453,14 @@ describe('realtime user status adapter', () => {
               },
               styleIndex: 2,
               username: null,
-              displayName: 'Virtuous Mockingbird',
+              displayName: guestDisplayName,
+            },
+            {
+              active: true,
+              cursor: null,
+              displayName: clientDeclineUsername,
+              styleIndex: 4,
+              username: clientDeclineUsername,
             },
           ],
         },
@@ -350,7 +472,7 @@ describe('realtime user status adapter', () => {
         payload: {
           ownUser: {
             styleIndex: 2,
-            displayName: 'Virtuous Mockingbird',
+            displayName: guestDisplayName,
           },
           users: [
             {
@@ -373,6 +495,56 @@ describe('realtime user status adapter', () => {
               username: clientLoggedIn2Username,
               displayName: clientLoggedIn2Username,
             },
+            {
+              active: true,
+              cursor: null,
+              displayName: clientDeclineUsername,
+              styleIndex: 4,
+              username: clientDeclineUsername,
+            },
+          ],
+        },
+      };
+
+    const expectedInactivityMessage5: Message<MessageType.REALTIME_USER_STATE_SET> =
+      {
+        type: MessageType.REALTIME_USER_STATE_SET,
+        payload: {
+          ownUser: {
+            styleIndex: 4,
+            displayName: clientDeclineUsername,
+          },
+          users: [
+            {
+              active: false,
+              cursor: {
+                from: 0,
+                to: 0,
+              },
+              styleIndex: 0,
+              username: clientLoggedIn1Username,
+              displayName: clientLoggedIn1Username,
+            },
+            {
+              active: true,
+              cursor: {
+                from: 0,
+                to: 0,
+              },
+              styleIndex: 1,
+              username: clientLoggedIn2Username,
+              displayName: clientLoggedIn2Username,
+            },
+            {
+              active: true,
+              cursor: {
+                from: 0,
+                to: 0,
+              },
+              displayName: guestDisplayName,
+              styleIndex: 2,
+              username: null,
+            },
           ],
         },
       };
@@ -387,7 +559,10 @@ describe('realtime user status adapter', () => {
       expectedInactivityMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(1);
+    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedInactivityMessage5,
+    );
 
     clientLoggedIn1
       .getTransporter()
@@ -408,7 +583,10 @@ describe('realtime user status adapter', () => {
       expectedInactivityMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(1);
+    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedInactivityMessage5,
+    );
 
     clientLoggedIn1
       .getTransporter()
@@ -446,7 +624,14 @@ describe('realtime user status adapter', () => {
               },
               styleIndex: 2,
               username: null,
-              displayName: 'Virtuous Mockingbird',
+              displayName: guestDisplayName,
+            },
+            {
+              active: true,
+              cursor: null,
+              displayName: clientDeclineUsername,
+              styleIndex: 4,
+              username: clientDeclineUsername,
             },
           ],
         },
@@ -458,7 +643,7 @@ describe('realtime user status adapter', () => {
         payload: {
           ownUser: {
             styleIndex: 2,
-            displayName: 'Virtuous Mockingbird',
+            displayName: guestDisplayName,
           },
           users: [
             {
@@ -481,6 +666,56 @@ describe('realtime user status adapter', () => {
               username: clientLoggedIn2Username,
               displayName: clientLoggedIn2Username,
             },
+            {
+              active: true,
+              cursor: null,
+              displayName: clientDeclineUsername,
+              styleIndex: 4,
+              username: clientDeclineUsername,
+            },
+          ],
+        },
+      };
+
+    const expectedReactivityMessage5: Message<MessageType.REALTIME_USER_STATE_SET> =
+      {
+        type: MessageType.REALTIME_USER_STATE_SET,
+        payload: {
+          ownUser: {
+            styleIndex: 4,
+            displayName: clientDeclineUsername,
+          },
+          users: [
+            {
+              active: true,
+              cursor: {
+                from: 0,
+                to: 0,
+              },
+              styleIndex: 0,
+              username: clientLoggedIn1Username,
+              displayName: clientLoggedIn1Username,
+            },
+            {
+              active: true,
+              cursor: {
+                from: 0,
+                to: 0,
+              },
+              styleIndex: 1,
+              username: clientLoggedIn2Username,
+              displayName: clientLoggedIn2Username,
+            },
+            {
+              active: true,
+              cursor: {
+                from: 0,
+                to: 0,
+              },
+              displayName: guestDisplayName,
+              styleIndex: 2,
+              username: null,
+            },
           ],
         },
       };
@@ -495,7 +730,10 @@ describe('realtime user status adapter', () => {
       expectedReactivityMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(2);
+    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedReactivityMessage5,
+    );
 
     clientLoggedIn1
       .getTransporter()
@@ -516,30 +754,9 @@ describe('realtime user status adapter', () => {
       expectedReactivityMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(2);
-  });
-
-  it('will ignore updates from read only clients', () => {
-    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(0);
-
-    clientDecline
-      .getTransporter()
-      .emit(MessageType.REALTIME_USER_SINGLE_UPDATE, {
-        type: MessageType.REALTIME_USER_SINGLE_UPDATE,
-        payload: {
-          from: 0,
-          to: 1234,
-        },
-      });
-
-    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
+      1,
+      expectedReactivityMessage5,
+    );
   });
 });
