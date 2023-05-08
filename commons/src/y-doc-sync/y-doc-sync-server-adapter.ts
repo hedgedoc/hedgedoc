@@ -11,14 +11,14 @@ export class YDocSyncServerAdapter extends YDocSyncAdapter {
   constructor(
     readonly messageTransporter: MessageTransporter,
     readonly doc: RealtimeDoc,
-    readonly acceptEdits: boolean
+    private readonly acceptEditsProvider: () => boolean
   ) {
     super(messageTransporter, doc)
     this.markAsSynced()
   }
 
   protected applyIncomingUpdatePayload(update: number[]): void {
-    if (!this.acceptEdits) {
+    if (!this.acceptEditsProvider()) {
       return
     }
     super.applyIncomingUpdatePayload(update)
