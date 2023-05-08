@@ -19,8 +19,7 @@ export class RealtimeConnection {
   private readonly transporter: MessageTransporter;
   private readonly yDocSyncAdapter: YDocSyncServerAdapter;
   private readonly realtimeUserStateAdapter: RealtimeUserStatusAdapter;
-
-  private displayName: string;
+  private readonly displayName: string;
 
   /**
    * Instantiates the connection wrapper.
