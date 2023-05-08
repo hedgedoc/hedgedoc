@@ -46,7 +46,7 @@ export class RealtimeConnection {
     this.yDocSyncAdapter = new YDocSyncServerAdapter(
       this.transporter,
       realtimeNote.getRealtimeDoc(),
-      acceptEdits,
+      () => acceptEdits,
     );
     this.realtimeUserStateAdapter = new RealtimeUserStatusAdapter(
       this.user?.username ?? null,
