@@ -19,7 +19,7 @@ export class RealtimeUserStatusAdapter {
     username: string | null,
     displayName: string,
     private connection: RealtimeConnection,
-    private acceptCursorUpdate: boolean,
+    private acceptCursorUpdateProvider: () => boolean,
   ) {
     this.realtimeUser = this.createInitialRealtimeUserState(
       username,
@@ -53,7 +53,7 @@ export class RealtimeUserStatusAdapter {
     const transporterMessagesListener = connection.getTransporter().on(
       MessageType.REALTIME_USER_SINGLE_UPDATE,
       (message: Message<MessageType.REALTIME_USER_SINGLE_UPDATE>) => {
-        if (this.isAcceptingCursorUpdates()) {
+        if (this.acceptCursorUpdateProvider()) {
           this.realtimeUser.cursor = message.payload;
           this.sendRealtimeUserStatusUpdateEvent(connection);
         }
@@ -84,7 +84,7 @@ export class RealtimeUserStatusAdapter {
       MessageType.REALTIME_USER_SET_ACTIVITY,
       (message: Message<MessageType.REALTIME_USER_SET_ACTIVITY>) => {
         if (
-          !this.isAcceptingCursorUpdates() ||
+          !this.acceptCursorUpdateProvider() ||
           this.realtimeUser.active === message.payload.active
         ) {
           return;
@@ -116,7 +116,7 @@ export class RealtimeUserStatusAdapter {
       receivingClient.getRealtimeUserStateAdapter().realtimeUser;
     const realtimeUsers = this.collectAllConnectionsExcept(receivingClient)
       .filter((client) =>
-        client.getRealtimeUserStateAdapter().isAcceptingCursorUpdates(),
+        client.getRealtimeUserStateAdapter().acceptCursorUpdateProvider(),
       )
       .map((client) => client.getRealtimeUserStateAdapter().realtimeUser)
       .filter((realtimeUser) => realtimeUser !== null);
@@ -131,10 +131,6 @@ export class RealtimeUserStatusAdapter {
         },
       },
     });
-  }
-
-  private isAcceptingCursorUpdates(): boolean {
-    return this.acceptCursorUpdate;
   }
 
   private collectAllConnectionsExcept(
