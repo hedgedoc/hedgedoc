@@ -2310,7 +2310,7 @@ __metadata:
     mocked-env: 1.3.5
     mysql: 2.18.1
     nest-router: 1.0.9
-    node-fetch: 2.6.10
+    node-fetch: 2.6.11
     passport: 0.6.0
     passport-custom: 1.1.1
     passport-http-bearer: 1.0.1
@@ -13977,9 +13977,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:2.6.10":
-  version: 2.6.10
-  resolution: "node-fetch@npm:2.6.10"
+"node-fetch@npm:2.6.11":
+  version: 2.6.11
+  resolution: "node-fetch@npm:2.6.11"
   dependencies:
     whatwg-url: ^5.0.0
   peerDependencies:
@@ -13987,7 +13987,7 @@ __metadata:
   peerDependenciesMeta:
     encoding:
       optional: true
-  checksum: 9250e5266ccb4cc43e0ba5a4e23447d65f207a445d8f968420ef5f135cb9db3f03e527647a3762c1ba06872cbd13640e572d9eea63ba6754e936a6e824ed85a3
+  checksum: 249d0666a9497553384d46b5ab296ba223521ac88fed4d8a17d6ee6c2efb0fc890f3e8091cafe7f9fba8151a5b8d925db2671543b3409a56c3cd522b468b47b3
   languageName: node
   linkType: hard
 
