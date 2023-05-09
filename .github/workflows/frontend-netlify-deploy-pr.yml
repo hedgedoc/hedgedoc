@@ -29,7 +29,7 @@ permissions:
 env:
   NETLIFY_VERSION: 13.2.2
   NETLIFY_NEXTJS_PLUGIN_VERSION: 4.33.0
-  NODEJS_VERSION: 18
+  NODEJS_VERSION: 20
 
 defaults:
   run:
