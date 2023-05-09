@@ -36,9 +36,15 @@ describe('websocket connection', () => {
   let mockedUser: User;
   let mockedMessageTransporter: MessageTransporter;
 
+  const mockedUserName = 'mockedUserName';
+  const mockedDisplayName = 'mockedDisplayName';
+
   beforeEach(() => {
     mockedRealtimeNote = new RealtimeNote(Mock.of<Note>({}), '');
-    mockedUser = Mock.of<User>({});
+    mockedUser = Mock.of<User>({
+      username: mockedUserName,
+      displayName: mockedDisplayName,
+    });
 
     mockedMessageTransporter = new MockedBackendMessageTransporter('');
   });
@@ -72,10 +78,15 @@ describe('websocket connection', () => {
     'returns the correct realtime user status with acceptEdits %s',
     (acceptEdits) => {
       const realtimeUserStatus = Mock.of<RealtimeUserStatusAdapter>();
+      let usedConnection: RealtimeConnection | undefined = undefined;
+
       jest
         .spyOn(RealtimeUserStatusModule, 'RealtimeUserStatusAdapter')
         .mockImplementation(
           (username, displayName, connection, acceptCursorUpdateProvider) => {
+            expect(username).toBe(mockedUserName);
+            expect(displayName).toBe(mockedDisplayName);
+            usedConnection = connection;
             expect(acceptCursorUpdateProvider()).toBe(acceptEdits);
             return realtimeUserStatus;
           },
@@ -88,6 +99,7 @@ describe('websocket connection', () => {
         acceptEdits,
       );
 
+      expect(usedConnection).toBe(sut);
       expect(sut.getRealtimeUserStateAdapter()).toBe(realtimeUserStatus);
     },
   );
@@ -99,7 +111,9 @@ describe('websocket connection', () => {
       jest
         .spyOn(HedgeDocCommonsModule, 'YDocSyncServerAdapter')
         .mockImplementation((messageTransporter, doc, acceptEditsProvider) => {
+          expect(messageTransporter).toBe(mockedMessageTransporter);
           expect(acceptEditsProvider()).toBe(acceptEdits);
+          expect(doc).toBe(mockedRealtimeNote.getRealtimeDoc());
           return yDocSyncServerAdapter;
         });
 
@@ -153,12 +167,14 @@ describe('websocket connection', () => {
     expect(sut.getDisplayName()).toBe('MockUser');
   });
 
-  it('returns a fallback if no username has been set', () => {
+  it('returns a random fallback display name if the provided user has no display name', () => {
     const randomName = 'I am a random name';
 
     jest
       .spyOn(NameRandomizerModule, 'generateRandomName')
       .mockReturnValue(randomName);
+
+    mockedUser = Mock.of<User>({});
 
     const sut = new RealtimeConnection(
       mockedMessageTransporter,
