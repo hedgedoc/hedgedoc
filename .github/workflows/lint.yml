@@ -11,7 +11,7 @@ on:
     branches: [ develop ]
 
 env:
-  NODEJS_VERSION: 18
+  NODEJS_VERSION: 20
 
 jobs:
   lint:
