@@ -51,7 +51,7 @@ export class RealtimeConnection {
       this.user?.username ?? null,
       this.getDisplayName(),
       this,
-      acceptEdits,
+      () => acceptEdits,
     );
   }
 

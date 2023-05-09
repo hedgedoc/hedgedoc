@@ -112,7 +112,8 @@ export class MockConnectionBuilder {
         this.username ?? null,
         displayName,
         connection,
-        this.includeRealtimeUserStatus === RealtimeUserState.WITH_READWRITE,
+        () =>
+          this.includeRealtimeUserStatus === RealtimeUserState.WITH_READWRITE,
       );
     }
 

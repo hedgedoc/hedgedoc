@@ -68,21 +68,29 @@ describe('websocket connection', () => {
     expect(sut.getRealtimeNote()).toBe(mockedRealtimeNote);
   });
 
-  it('returns the correct realtime user status', () => {
-    const realtimeUserStatus = Mock.of<RealtimeUserStatusAdapter>();
-    jest
-      .spyOn(RealtimeUserStatusModule, 'RealtimeUserStatusAdapter')
-      .mockImplementation(() => realtimeUserStatus);
+  it.each([true, false])(
+    'returns the correct realtime user status with acceptEdits %s',
+    (acceptEdits) => {
+      const realtimeUserStatus = Mock.of<RealtimeUserStatusAdapter>();
+      jest
+        .spyOn(RealtimeUserStatusModule, 'RealtimeUserStatusAdapter')
+        .mockImplementation(
+          (username, displayName, connection, acceptCursorUpdateProvider) => {
+            expect(acceptCursorUpdateProvider()).toBe(acceptEdits);
+            return realtimeUserStatus;
+          },
+        );
 
-    const sut = new RealtimeConnection(
-      mockedMessageTransporter,
-      mockedUser,
-      mockedRealtimeNote,
-      true,
-    );
+      const sut = new RealtimeConnection(
+        mockedMessageTransporter,
+        mockedUser,
+        mockedRealtimeNote,
+        acceptEdits,
+      );
 
-    expect(sut.getRealtimeUserStateAdapter()).toBe(realtimeUserStatus);
-  });
+      expect(sut.getRealtimeUserStateAdapter()).toBe(realtimeUserStatus);
+    },
+  );
 
   it.each([true, false])(
     'creates a sync adapter with acceptEdits %s',
@@ -91,7 +99,7 @@ describe('websocket connection', () => {
       jest
         .spyOn(HedgeDocCommonsModule, 'YDocSyncServerAdapter')
         .mockImplementation((messageTransporter, doc, acceptEditsProvider) => {
-          expect((acceptEditsProvider as () => boolean)()).toBe(acceptEdits);
+          expect(acceptEditsProvider()).toBe(acceptEdits);
           return yDocSyncServerAdapter;
         });
 
