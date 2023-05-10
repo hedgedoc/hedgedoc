@@ -3,16 +3,22 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { SpecialGroup } from '@hedgedoc/commons';
 import { Optional } from '@mrdrogdrog/optional';
 import { BeforeApplicationShutdown, Inject, Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { SchedulerRegistry } from '@nestjs/schedule';
+import { Group } from 'src/groups/group.entity';
+import { NoteGroupPermission } from 'src/permissions/note-group-permission.entity';
+import { NoteUserPermission } from 'src/permissions/note-user-permission.entity';
 
 import appConfiguration, { AppConfig } from '../../config/app.config';
 import { NoteEvent } from '../../events';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { Note } from '../../notes/note.entity';
+import { notePermissionEventPayload } from '../../permissions/permissions.service';
 import { RevisionsService } from '../../revisions/revisions.service';
+import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';
 import { RealtimeNoteStore } from './realtime-note-store';
 
@@ -109,11 +115,97 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
   }
 
   @OnEvent(NoteEvent.PERMISSION_CHANGE)
-  public handleNotePermissionChanged(noteId: Note['id']): void {
+  public async handleNotePermissionChanged(
+    noteId: Note['id'],
+    permission: notePermissionEventPayload,
+  ) {
     const realtimeNote = this.realtimeNoteStore.find(noteId);
     if (realtimeNote) {
       realtimeNote.announcePermissionChange();
     }
+
+    const allConnections = realtimeNote?.getConnections();
+    if (!allConnections) return;
+
+    //update all user's connections acceptEdit permission
+    if (permission.userPermission) {
+      await this.updateUserConnectionAccpetEdit(
+        permission.userPermission,
+        allConnections,
+      );
+    }
+    const groupPermissions = await this.getUserGroupPermission(permission);
+
+    //remove all anonymous users, if __everyone groupPermission is not set
+    if (!groupPermissions[SpecialGroup.EVERYONE]) {
+      const allAnonymousUsers = this.getAllAnonymousUsers(allConnections);
+      allAnonymousUsers?.forEach(this.removeConnection);
+    } else {
+      //update canEdit
+      for (const connection of allConnections) {
+        connection.acceptEdits =
+          groupPermissions[SpecialGroup.EVERYONE].canEdit;
+      }
+    }
+  }
+
+  private async getUserGroupPermission(permission: notePermissionEventPayload) {
+    //if permission usernames can edit setAll usernames connection canEdit
+    const groupPermissions: Record<SpecialGroup, NoteGroupPermission | null> = {
+      [SpecialGroup.EVERYONE]: null,
+      [SpecialGroup.LOGGED_IN]: null,
+    };
+
+    for (const groupPermission of permission.groupPermission) {
+      const group = await groupPermission.group;
+      if (group.name === SpecialGroup.EVERYONE) {
+        groupPermissions[SpecialGroup.EVERYONE] = groupPermission;
+      } else {
+        groupPermissions[SpecialGroup.LOGGED_IN] = groupPermission;
+      }
+    }
+    return groupPermissions;
+  }
+
+  private async updateUserConnectionAccpetEdit(
+    userPermission: NoteUserPermission[],
+    connections: RealtimeConnection[],
+  ) {
+    const allUserConnection = this.getAllUser(connections);
+    if (!allUserConnection?.length) return;
+
+    for (const userConnection of allUserConnection) {
+      const user = userConnection.getUser();
+      if (user?.username)
+        userConnection.acceptEdits = await this.getUserAcceptEdit(
+          userPermission,
+          user?.username,
+        );
+    }
+  }
+  private async getUserAcceptEdit(
+    permission: NoteUserPermission[],
+    username: string,
+  ) {
+    let userCanEdit = false;
+    for (const userPermission of permission) {
+      const user = await userPermission.user;
+      if (user.username === username) {
+        userCanEdit = userPermission.canEdit;
+      }
+    }
+    return userCanEdit;
+  }
+
+  private getAllUser(connections: RealtimeConnection[]) {
+    return connections.filter((connection) => Boolean(connection.getUser()));
+  }
+  private getAllAnonymousUsers(connections: RealtimeConnection[]) {
+    return connections.filter((connection) => !Boolean(connection.getUser()));
+  }
+
+  private removeConnection(connection: RealtimeConnection) {
+    connection.getTransporter().disconnect();
   }
 
   @OnEvent(NoteEvent.DELETION)

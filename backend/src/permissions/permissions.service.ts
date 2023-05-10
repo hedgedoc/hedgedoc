@@ -29,6 +29,11 @@ import { NoteGroupPermission } from './note-group-permission.entity';
 import { NoteUserPermission } from './note-user-permission.entity';
 import { Permission } from './permissions.enum';
 
+export type notePermissionEventPayload = {
+  userPermission: NoteUserPermission[];
+  groupPermission: NoteGroupPermission[];
+};
+
 @Injectable()
 export class PermissionsService {
   constructor(
@@ -191,8 +196,11 @@ export class PermissionsService {
     return false;
   }
 
-  private notifyOthers(noteId: Note['id']): void {
-    this.eventEmitter.emit(NoteEvent.PERMISSION_CHANGE, noteId);
+  private notifyOthers(
+    noteId: Note['id'],
+    permission: notePermissionEventPayload,
+  ): void {
+    this.eventEmitter.emit(NoteEvent.PERMISSION_CHANGE, noteId, permission);
   }
 
   /**
@@ -256,7 +264,10 @@ export class PermissionsService {
       createdPermission.note = Promise.resolve(note);
       (await note.groupPermissions).push(createdPermission);
     }
-    this.notifyOthers(note.id);
+    this.notifyOthers(note.id, {
+      userPermission: await note.userPermissions,
+      groupPermission: await note.groupPermissions,
+    });
     return await this.noteRepository.save(note);
   }
 
@@ -291,7 +302,10 @@ export class PermissionsService {
       );
       (await note.userPermissions).push(noteUserPermission);
     }
-    this.notifyOthers(note.id);
+    this.notifyOthers(note.id, {
+      userPermission: await note.userPermissions,
+      groupPermission: await note.groupPermissions,
+    });
     return await this.noteRepository.save(note);
   }
 
@@ -323,7 +337,10 @@ export class PermissionsService {
       }
     }
     note.userPermissions = Promise.resolve(newPermissions);
-    this.notifyOthers(note.id);
+    this.notifyOthers(note.id, {
+      userPermission: newPermissions,
+      groupPermission: await note.groupPermissions,
+    });
     return await this.noteRepository.save(note);
   }
 
@@ -363,7 +380,12 @@ export class PermissionsService {
       );
       (await note.groupPermissions).push(noteGroupPermission);
     }
-    this.notifyOthers(note.id);
+
+    this.notifyOthers(note.id, {
+      groupPermission: await note.groupPermissions,
+      userPermission: await note.userPermissions,
+    });
+
     return await this.noteRepository.save(note);
   }
 
@@ -398,7 +420,19 @@ export class PermissionsService {
       }
     }
     note.groupPermissions = Promise.resolve(newPermissions);
-    this.notifyOthers(note.id);
+
+    const newPermissionGroupNames = [];
+
+    for (const group of newPermissions) {
+      const groupName = (await group.group).name;
+      newPermissionGroupNames.push(groupName);
+    }
+
+    this.notifyOthers(note.id, {
+      userPermission: await note.userPermissions,
+      groupPermission: await note.groupPermissions,
+    });
+
     return await this.noteRepository.save(note);
   }
 
@@ -411,7 +445,10 @@ export class PermissionsService {
    */
   async changeOwner(note: Note, owner: User): Promise<Note> {
     note.owner = Promise.resolve(owner);
-    this.notifyOthers(note.id);
+    this.notifyOthers(note.id, {
+      userPermission: await note.userPermissions,
+      groupPermission: await note.groupPermissions,
+    });
     return await this.noteRepository.save(note);
   }
 }
