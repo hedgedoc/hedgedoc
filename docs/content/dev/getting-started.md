@@ -19,7 +19,7 @@ recommend caddy and the provided configuration.
    git clone https://github.com/hedgedoc/hedgedoc.git
    cd hedgedoc
    ```
-2. Install Node.js. You need at least Node 16, but we recommend Node 18.
+2. Install Node.js. You need at least Node 16, but we recommend Node 20.
 3. Install [Yarn](https://yarnpkg.com/getting-started/install)
 4. Install Caddy (select one of the two options)
    - [Download](https://caddyserver.com/) and place the `caddy` binary in `dev-reverse-proxy`. Ensure it is executable with `chmod +x caddy`. Users of macOS may need to run `xattr -d com.apple.quarantine ./caddy` to lift the quarantine for executables from the internet. 

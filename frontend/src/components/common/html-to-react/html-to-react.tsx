@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { ParserOptions } from '@hedgedoc/html-to-react'
-import convertHtmlToReact from '@hedgedoc/html-to-react'
+import { convertHtmlToReact } from '@hedgedoc/html-to-react'
 import type DOMPurify from 'dompurify'
 import { sanitize } from 'dompurify'
 import React, { Fragment, useMemo } from 'react'

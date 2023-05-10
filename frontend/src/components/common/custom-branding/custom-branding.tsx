@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useFrontendConfig } from '../frontend-config-context/use-frontend-config'
 import styles from './branding.module.scss'
+import { useBrandingDetails } from './use-branding-details'
 import React from 'react'
 
 export interface BrandingProps {
@@ -19,9 +19,9 @@ export interface BrandingProps {
  * @param delimiter If the delimiter between the HedgeDoc logo and the branding should be shown.
  */
 export const CustomBranding: React.FC<BrandingProps> = ({ inline = false }) => {
-  const branding = useFrontendConfig().branding
+  const branding = useBrandingDetails()
 
-  if (!branding.name && !branding.logo) {
+  if (!branding) {
     return null
   } else if (branding.logo) {
     return (
