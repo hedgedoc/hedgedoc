@@ -2383,7 +2383,7 @@ __metadata:
     "@codemirror/view": 6.11.1
     "@fontsource/source-sans-pro": 4.5.11
     "@hedgedoc/commons": "workspace:commons"
-    "@hedgedoc/html-to-react": 1.4.6
+    "@hedgedoc/html-to-react": 2.0.0
     "@hedgedoc/markdown-it-plugins": 2.0.0
     "@mrdrogdrog/optional": 1.1.0
     "@next/bundle-analyzer": 13.4.1
@@ -2506,16 +2506,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hedgedoc/html-to-react@npm:1.4.6":
-  version: 1.4.6
-  resolution: "@hedgedoc/html-to-react@npm:1.4.6"
+"@hedgedoc/html-to-react@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@hedgedoc/html-to-react@npm:2.0.0"
   dependencies:
     domelementtype: ^2.3.0
     domhandler: ^5.0.3
-    htmlparser2: ^8.0.0
+    htmlparser2: ^9.0.0
   peerDependencies:
     react: ">=16.0"
-  checksum: c1a3f66685934d58d9d6061824607049db2c9c66927141f0eb508b57a4bec67ed07c944103384630315574a1b13ef2862198ec3d985fc7bf07a082714abf3bd5
+  checksum: 9685e6280dc7fd12857d1a334ceb9e0558cac3e49232a4553d2bd4c77f40614b8b2ab3d5d102ba928e0a202846e647b8206e485f91d7685f18172132798079fc
   languageName: node
   linkType: hard
 
@@ -10961,7 +10961,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"htmlparser2@npm:9.0.0":
+"htmlparser2@npm:9.0.0, htmlparser2@npm:^9.0.0":
   version: 9.0.0
   resolution: "htmlparser2@npm:9.0.0"
   dependencies:
@@ -10970,18 +10970,6 @@ __metadata:
     domutils: ^3.1.0
     entities: ^4.5.0
   checksum: a234c3add821cae8308ca61ce4b8ad3e88af83cf9c3c2003059adc89c46a06ffc39cc2a92b39af8d16c3705e1055df6769d80877acb6529983867f0d7e74098d
-  languageName: node
-  linkType: hard
-
-"htmlparser2@npm:^8.0.0":
-  version: 8.0.2
-  resolution: "htmlparser2@npm:8.0.2"
-  dependencies:
-    domelementtype: ^2.3.0
-    domhandler: ^5.0.3
-    domutils: ^3.0.1
-    entities: ^4.4.0
-  checksum: 29167a0f9282f181da8a6d0311b76820c8a59bc9e3c87009e21968264c2987d2723d6fde5a964d4b7b6cba663fca96ffb373c06d8223a85f52a6089ced942700
   languageName: node
   linkType: hard
 
