@@ -14,6 +14,7 @@ import WebSocket from 'ws';
 
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { NotesService } from '../../notes/notes.service';
+import { NotePermission } from '../../permissions/note-permission.enum';
 import { PermissionsService } from '../../permissions/permissions.service';
 import { SessionService } from '../../session/session.service';
 import { User } from '../../users/user.entity';
@@ -59,7 +60,11 @@ export class WebsocketGateway implements OnGatewayConnection {
 
       const username = user?.username ?? 'guest';
 
-      if (!(await this.permissionsService.mayRead(user, note))) {
+      const notePermission = await this.permissionsService.determinePermission(
+        user,
+        note,
+      );
+      if (notePermission < NotePermission.READ) {
         //TODO: [mrdrogdrog] inform client about reason of disconnect.
         this.logger.log(
           `Access denied to note '${note.id}' for user '${username}'`,

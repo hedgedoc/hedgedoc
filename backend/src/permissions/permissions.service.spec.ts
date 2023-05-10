@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Mock } from 'ts-mockery';
 import { DataSource, EntityManager, Repository } from 'typeorm';
 
 import { AuthToken } from '../auth/auth-token.entity';
@@ -25,7 +26,7 @@ import { PermissionsUpdateInconsistentError } from '../errors/errors';
 import { eventModuleConfig, NoteEvent } from '../events';
 import { Group } from '../groups/group.entity';
 import { GroupsModule } from '../groups/groups.module';
-import { SpecialGroup } from '../groups/groups.special';
+import { GroupsService } from '../groups/groups.service';
 import { Identity } from '../identity/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
 import { MediaUpload } from '../media/media-upload.entity';
@@ -43,10 +44,32 @@ import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { NoteGroupPermission } from './note-group-permission.entity';
+import {
+  getNotePermissionDisplayName,
+  NotePermission,
+} from './note-permission.enum';
 import { NoteUserPermission } from './note-user-permission.entity';
 import { PermissionsModule } from './permissions.module';
 import { PermissionsService } from './permissions.service';
-import { RequiredPermission } from './required-permission.enum';
+import { convertGuestAccessToNotePermission } from './utils/convert-guest-access-to-note-permission';
+import * as FindHighestNotePermissionByGroupModule from './utils/find-highest-note-permission-by-group';
+import * as FindHighestNotePermissionByUserModule from './utils/find-highest-note-permission-by-user';
+
+jest.mock(
+  './utils/find-highest-note-permission-by-user',
+  () =>
+    jest.requireActual(
+      './utils/find-highest-note-permission-by-user',
+    ) as unknown,
+);
+
+jest.mock(
+  './utils/find-highest-note-permission-by-group',
+  () =>
+    jest.requireActual(
+      './utils/find-highest-note-permission-by-group',
+    ) as unknown,
+);
 
 function mockedEventEmitter(eventEmitter: EventEmitter2) {
   return jest.spyOn(eventEmitter, 'emit').mockImplementationOnce((event) => {
@@ -67,7 +90,7 @@ function mockNoteRepo(noteRepo: Repository<Note>) {
 
 describe('PermissionsService', () => {
   let service: PermissionsService;
-  let notes: Note[];
+  let groupService: GroupsService;
   let noteRepo: Repository<Note>;
   let userRepo: Repository<User>;
   let groupRepo: Repository<Group>;
@@ -165,568 +188,40 @@ describe('PermissionsService', () => {
       .useValue({})
       .compile();
     service = module.get<PermissionsService>(PermissionsService);
-    notes = await createNoteUserPermissionNotes();
+    groupService = module.get<GroupsService>(GroupsService);
     groupRepo = module.get<Repository<Group>>(getRepositoryToken(Group));
     noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));
     eventEmitter = module.get<EventEmitter2>(EventEmitter2);
   });
 
-  function mockMayReadTrue(): void {
-    jest.spyOn(service, 'mayRead').mockImplementationOnce(async () => {
-      return true;
-    });
-  }
-
-  function mockMayWriteTrue(): void {
-    jest.spyOn(service, 'mayWrite').mockImplementationOnce(async () => {
-      return true;
-    });
-  }
-
-  function mockIsOwner(isOwner: boolean): void {
-    jest.spyOn(service, 'isOwner').mockImplementationOnce(async () => {
-      return isOwner;
-    });
-  }
-
   beforeEach(() => {
     mockNoteRepo(noteRepo);
     eventEmitterEmitSpy = mockedEventEmitter(eventEmitter);
   });
+
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.resetModules();
+    jest.restoreAllMocks();
   });
 
   // The two users we test with:
-  const user2 = {} as User;
-  user2.id = 2;
-  const user1 = {} as User;
-  user1.id = 1;
+  const user1 = Mock.of<User>({ id: 1 });
+  const user2 = Mock.of<User>({ id: 2 });
+
+  function mockNote(
+    owner: User,
+    userPermissions: NoteUserPermission[] = [],
+    groupPermissions: NoteGroupPermission[] = [],
+  ): Note {
+    return Mock.of<Note>({
+      owner: Promise.resolve(owner),
+      userPermissions: Promise.resolve(userPermissions),
+      groupPermissions: Promise.resolve(groupPermissions),
+    });
+  }
 
   it('should be defined', () => {
     expect(service).toBeDefined();
-  });
-
-  function createNote(owner: User): Note {
-    const note = {} as Note;
-    note.userPermissions = Promise.resolve([]);
-    note.groupPermissions = Promise.resolve([]);
-    note.owner = Promise.resolve(owner);
-    return note;
-  }
-
-  /*
-   * Creates the permission objects for UserPermission for two users with write and with out write permission
-   */
-  async function createNoteUserPermissionNotes(): Promise<Note[]> {
-    const note0 = createNote(user1);
-    const note1 = createNote(user2);
-    const note2 = createNote(user2);
-    const note3 = createNote(user2);
-    const note4 = createNote(user2);
-    const note5 = createNote(user2);
-    const note6 = createNote(user2);
-    const note7 = createNote(user2);
-    const noteUserPermission1 = {} as NoteUserPermission;
-    noteUserPermission1.user = Promise.resolve(user1);
-    const noteUserPermission2 = {} as NoteUserPermission;
-    noteUserPermission2.user = Promise.resolve(user2);
-    const noteUserPermission3 = {} as NoteUserPermission;
-    noteUserPermission3.user = Promise.resolve(user1);
-    noteUserPermission3.canEdit = true;
-    const noteUserPermission4 = {} as NoteUserPermission;
-    noteUserPermission4.user = Promise.resolve(user2);
-    noteUserPermission4.canEdit = true;
-
-    (await note1.userPermissions).push(noteUserPermission1);
-
-    (await note2.userPermissions).push(noteUserPermission1);
-    (await note2.userPermissions).push(noteUserPermission2);
-
-    (await note3.userPermissions).push(noteUserPermission2);
-    (await note3.userPermissions).push(noteUserPermission1);
-
-    (await note4.userPermissions).push(noteUserPermission3);
-
-    (await note5.userPermissions).push(noteUserPermission3);
-    (await note5.userPermissions).push(noteUserPermission4);
-
-    (await note6.userPermissions).push(noteUserPermission4);
-    (await note6.userPermissions).push(noteUserPermission3);
-
-    (await note7.userPermissions).push(noteUserPermission2);
-
-    const everybody = {} as Group;
-    everybody.name = SpecialGroup.EVERYONE;
-    everybody.special = true;
-
-    const noteEverybodyNone = createNote(user1);
-    noteEverybodyNone.groupPermissions = Promise.resolve([]);
-
-    const noteEverybodyRead = createNote(user1);
-    const noteGroupPermissionRead = {} as NoteGroupPermission;
-    noteGroupPermissionRead.group = Promise.resolve(everybody);
-    noteGroupPermissionRead.canEdit = false;
-    noteGroupPermissionRead.note = Promise.resolve(noteEverybodyRead);
-    noteEverybodyRead.groupPermissions = Promise.resolve([
-      noteGroupPermissionRead,
-    ]);
-
-    const noteEverybodyWrite = createNote(user1);
-    const noteGroupPermissionWrite = {} as NoteGroupPermission;
-    noteGroupPermissionWrite.group = Promise.resolve(everybody);
-    noteGroupPermissionWrite.canEdit = true;
-    noteGroupPermissionWrite.note = Promise.resolve(noteEverybodyWrite);
-    noteEverybodyWrite.groupPermissions = Promise.resolve([
-      noteGroupPermissionWrite,
-    ]);
-
-    return [
-      note0,
-      note1,
-      note2,
-      note3,
-      note4,
-      note5,
-      note6,
-      note7,
-      noteEverybodyRead,
-      noteEverybodyWrite,
-      noteEverybodyNone,
-    ];
-  }
-
-  describe('mayRead works with', () => {
-    it('Owner', async () => {
-      expect(await service.mayRead(user1, notes[0])).toBeTruthy();
-      expect(await service.mayRead(user1, notes[7])).toBeFalsy();
-    });
-    it('userPermission read', async () => {
-      expect(await service.mayRead(user1, notes[1])).toBeTruthy();
-      expect(await service.mayRead(user1, notes[2])).toBeTruthy();
-      expect(await service.mayRead(user1, notes[3])).toBeTruthy();
-    });
-    it('userPermission write', async () => {
-      expect(await service.mayRead(user1, notes[4])).toBeTruthy();
-      expect(await service.mayRead(user1, notes[5])).toBeTruthy();
-      expect(await service.mayRead(user1, notes[6])).toBeTruthy();
-      expect(await service.mayRead(user1, notes[7])).toBeFalsy();
-    });
-
-    describe('guest permission', () => {
-      beforeEach(() => {
-        noteMockConfig.permissions.default.loggedIn = DefaultAccessLevel.WRITE;
-        noteMockConfig.permissions.default.everyone = DefaultAccessLevel.WRITE;
-      });
-      describe('with guest access deny', () => {
-        beforeEach(() => {
-          noteMockConfig.guestAccess = GuestAccess.DENY;
-        });
-        it('guest permission none', async () => {
-          expect(await service.mayRead(null, notes[10])).toBeFalsy();
-        });
-        it('guest permission read', async () => {
-          expect(await service.mayRead(null, notes[8])).toBeFalsy();
-        });
-        it('guest permission write', async () => {
-          expect(await service.mayRead(null, notes[9])).toBeFalsy();
-        });
-      });
-      describe('with guest access read', () => {
-        beforeEach(() => {
-          noteMockConfig.guestAccess = GuestAccess.READ;
-        });
-        it('guest permission none', async () => {
-          expect(await service.mayRead(null, notes[10])).toBeFalsy();
-        });
-        it('guest permission read', async () => {
-          expect(await service.mayRead(null, notes[8])).toBeTruthy();
-        });
-        it('guest permission write', async () => {
-          expect(await service.mayRead(null, notes[9])).toBeTruthy();
-        });
-      });
-      describe('with guest access write', () => {
-        beforeEach(() => {
-          noteMockConfig.guestAccess = GuestAccess.WRITE;
-        });
-        it('guest permission none', async () => {
-          expect(await service.mayRead(null, notes[10])).toBeFalsy();
-        });
-        it('guest permission read', async () => {
-          expect(await service.mayRead(null, notes[8])).toBeTruthy();
-        });
-        it('guest permission write', async () => {
-          expect(await service.mayRead(null, notes[9])).toBeTruthy();
-        });
-      });
-      describe('with guest access create', () => {
-        beforeEach(() => {
-          noteMockConfig.guestAccess = GuestAccess.CREATE;
-        });
-        it('guest permission none', async () => {
-          expect(await service.mayRead(null, notes[10])).toBeFalsy();
-        });
-        it('guest permission read', async () => {
-          expect(await service.mayRead(null, notes[8])).toBeTruthy();
-        });
-        it('guest permission write', async () => {
-          expect(await service.mayRead(null, notes[9])).toBeTruthy();
-        });
-      });
-    });
-  });
-
-  describe('mayWrite works with', () => {
-    it('Owner', async () => {
-      expect(await service.mayWrite(user1, notes[0])).toBeTruthy();
-      expect(await service.mayWrite(user1, notes[7])).toBeFalsy();
-    });
-    it('userPermission read', async () => {
-      expect(await service.mayWrite(user1, notes[1])).toBeFalsy();
-      expect(await service.mayWrite(user1, notes[2])).toBeFalsy();
-      expect(await service.mayWrite(user1, notes[3])).toBeFalsy();
-    });
-    it('userPermission write', async () => {
-      expect(await service.mayWrite(user1, notes[4])).toBeTruthy();
-      expect(await service.mayWrite(user1, notes[5])).toBeTruthy();
-      expect(await service.mayWrite(user1, notes[6])).toBeTruthy();
-      expect(await service.mayWrite(user1, notes[7])).toBeFalsy();
-    });
-    describe('guest permission', () => {
-      beforeEach(() => {
-        noteMockConfig.permissions.default.loggedIn = DefaultAccessLevel.WRITE;
-        noteMockConfig.permissions.default.everyone = DefaultAccessLevel.WRITE;
-      });
-
-      describe('with guest access deny', () => {
-        beforeEach(() => {
-          noteMockConfig.guestAccess = GuestAccess.DENY;
-        });
-        it('guest permission none', async () => {
-          expect(await service.mayWrite(null, notes[10])).toBeFalsy();
-        });
-        it('guest permission read', async () => {
-          expect(await service.mayWrite(null, notes[8])).toBeFalsy();
-        });
-        it('guest permission write', async () => {
-          expect(await service.mayWrite(null, notes[9])).toBeFalsy();
-        });
-      });
-
-      describe('with guest access read', () => {
-        beforeEach(() => {
-          noteMockConfig.guestAccess = GuestAccess.READ;
-        });
-        it('guest permission none', async () => {
-          expect(await service.mayWrite(null, notes[10])).toBeFalsy();
-        });
-        it('guest permission read', async () => {
-          expect(await service.mayWrite(null, notes[8])).toBeFalsy();
-        });
-        it('guest permission write', async () => {
-          expect(await service.mayWrite(null, notes[9])).toBeFalsy();
-        });
-      });
-
-      describe('with guest access write', () => {
-        beforeEach(() => {
-          noteMockConfig.guestAccess = GuestAccess.WRITE;
-        });
-        it('guest permission none', async () => {
-          expect(await service.mayWrite(null, notes[10])).toBeFalsy();
-        });
-        it('guest permission read', async () => {
-          expect(await service.mayWrite(null, notes[8])).toBeFalsy();
-        });
-        it('guest permission write', async () => {
-          expect(await service.mayWrite(null, notes[9])).toBeTruthy();
-        });
-      });
-
-      describe('with guest access create', () => {
-        beforeEach(() => {
-          noteMockConfig.guestAccess = GuestAccess.CREATE;
-        });
-        it('guest permission none', async () => {
-          expect(await service.mayWrite(null, notes[10])).toBeFalsy();
-        });
-        it('guest permission read', async () => {
-          expect(await service.mayWrite(null, notes[8])).toBeFalsy();
-        });
-        it('guest permission write', async () => {
-          expect(await service.mayWrite(null, notes[9])).toBeTruthy();
-        });
-      });
-    });
-  });
-
-  /*
-   * Helper Object that arranges a list of GroupPermissions and if they allow a user to read or write a particular note.
-   */
-  class NoteGroupPermissionWithResultForUser {
-    permissions: NoteGroupPermission[];
-    allowsRead: boolean;
-    allowsWrite: boolean;
-  }
-
-  /*
-   * Setup function to create all the groups we use in the tests.
-   */
-  function createGroups(): { [id: string]: Group } {
-    const result: { [id: string]: Group } = {};
-
-    result[SpecialGroup.EVERYONE] = Group.create(
-      SpecialGroup.EVERYONE,
-      SpecialGroup.EVERYONE,
-      true,
-    ) as Group;
-
-    result[SpecialGroup.LOGGED_IN] = Group.create(
-      SpecialGroup.LOGGED_IN,
-      SpecialGroup.LOGGED_IN,
-      true,
-    ) as Group;
-
-    const user1group = Group.create('user1group', 'user1group', false) as Group;
-    user1group.members = Promise.resolve([user1]);
-    result['user1group'] = user1group;
-
-    const user2group = Group.create('user2group', 'user2group', false) as Group;
-    user2group.members = Promise.resolve([user2]);
-    result['user2group'] = user2group;
-
-    const user1and2group = Group.create(
-      'user1and2group',
-      'user1and2group',
-      false,
-    ) as Group;
-    user1and2group.members = Promise.resolve([user1, user2]);
-    result['user1and2group'] = user1and2group;
-
-    const user2and1group = Group.create(
-      'user2and1group',
-      'user2and1group',
-      false,
-    ) as Group;
-    user2and1group.members = Promise.resolve([user2, user1]);
-    result['user2and1group'] = user2and1group;
-
-    return result;
-  }
-
-  /*
-   * Create all GroupPermissions: For each group two GroupPermissions are created one with read permission and one with write permission.
-   */
-  function createAllNoteGroupPermissions(): (NoteGroupPermission | null)[][] {
-    const groups = createGroups();
-
-    /*
-     * Helper function for creating GroupPermissions
-     */
-    function createNoteGroupPermission(
-      group: Group,
-      write: boolean,
-    ): NoteGroupPermission {
-      return NoteGroupPermission.create(group, {} as Note, write);
-    }
-
-    const everybodyRead = createNoteGroupPermission(
-      groups[SpecialGroup.EVERYONE],
-      false,
-    );
-    const everybodyWrite = createNoteGroupPermission(
-      groups[SpecialGroup.EVERYONE],
-      true,
-    );
-
-    const loggedInRead = createNoteGroupPermission(
-      groups[SpecialGroup.LOGGED_IN],
-      false,
-    );
-    const loggedInWrite = createNoteGroupPermission(
-      groups[SpecialGroup.LOGGED_IN],
-      true,
-    );
-
-    const user1groupRead = createNoteGroupPermission(
-      groups['user1group'],
-      false,
-    );
-    const user1groupWrite = createNoteGroupPermission(
-      groups['user1group'],
-      true,
-    );
-
-    const user2groupRead = createNoteGroupPermission(
-      groups['user2group'],
-      false,
-    );
-    const user2groupWrite = createNoteGroupPermission(
-      groups['user2group'],
-      true,
-    );
-
-    const user1and2groupRead = createNoteGroupPermission(
-      groups['user1and2group'],
-      false,
-    );
-    const user1and2groupWrite = createNoteGroupPermission(
-      groups['user1and2group'],
-      true,
-    );
-
-    const user2and1groupRead = createNoteGroupPermission(
-      groups['user2and1group'],
-      false,
-    );
-    const user2and1groupWrite = createNoteGroupPermission(
-      groups['user2and1group'],
-      true,
-    );
-
-    return [
-      [user1groupRead, user1and2groupRead, user2and1groupRead, null], // group0: allow user1 to read via group
-      [user2and1groupWrite, user1and2groupWrite, user1groupWrite, null], // group1: allow user1 to write via group
-      [everybodyRead, everybodyWrite, null], // group2: permissions of the special group everybody
-      [loggedInRead, loggedInWrite, null], // group3: permissions of the special group loggedIn
-      [user2groupWrite, user2groupRead, null], // group4: don't allow user1 to read or write via group
-    ];
-  }
-
-  /*
-   * creates the matrix multiplication of group0 to group4 of createAllNoteGroupPermissions
-   */
-  function createNoteGroupPermissionsCombinations(
-    everyoneDefaultPermission: DefaultAccessLevel,
-  ): NoteGroupPermissionWithResultForUser[] {
-    // for logged in users
-    const noteGroupPermissions = createAllNoteGroupPermissions();
-    const result: NoteGroupPermissionWithResultForUser[] = [];
-    for (const group0 of noteGroupPermissions[0]) {
-      for (const group1 of noteGroupPermissions[1]) {
-        for (const group2 of noteGroupPermissions[2]) {
-          for (const group3 of noteGroupPermissions[3]) {
-            for (const group4 of noteGroupPermissions[4]) {
-              const insert: NoteGroupPermission[] = [];
-              let readPermission = false;
-              let writePermission = false;
-              if (group0 !== null) {
-                // user1 in ReadGroups
-                readPermission = true;
-                insert.push(group0);
-              }
-              if (group1 !== null) {
-                // user1 in WriteGroups
-                readPermission = true;
-                writePermission = true;
-                insert.push(group1);
-              }
-
-              if (group2 !== null) {
-                if (everyoneDefaultPermission === DefaultAccessLevel.WRITE) {
-                  writePermission = writePermission || group2.canEdit;
-                  readPermission = true;
-                } else if (
-                  everyoneDefaultPermission === DefaultAccessLevel.READ
-                ) {
-                  readPermission = true;
-                }
-                insert.push(group2);
-              }
-              if (group3 !== null) {
-                // loggedIn users
-                readPermission = true;
-                writePermission = writePermission || group3.canEdit;
-                insert.push(group3);
-              }
-              if (group4 !== null) {
-                // user not in group
-                insert.push(group4);
-              }
-              result.push({
-                permissions: insert,
-                allowsRead: readPermission,
-                allowsWrite: writePermission,
-              });
-            }
-          }
-        }
-      }
-    }
-    return result;
-  }
-
-  // inspired by https://stackoverflow.com/questions/9960908/permutations-in-javascript
-  function permutator(
-    inputArr: NoteGroupPermission[],
-  ): NoteGroupPermission[][] {
-    const results: NoteGroupPermission[][] = [];
-
-    function permute(
-      arr: NoteGroupPermission[],
-      memo: NoteGroupPermission[],
-    ): NoteGroupPermission[][] {
-      let cur: NoteGroupPermission[];
-
-      for (let i = 0; i < arr.length; i++) {
-        cur = arr.splice(i, 1);
-        if (arr.length === 0) {
-          results.push(memo.concat(cur));
-        }
-        permute(arr.slice(), memo.concat(cur));
-        arr.splice(i, 0, cur[0]);
-      }
-
-      return results;
-    }
-
-    return permute(inputArr, []);
-  }
-
-  // takes each set of permissions from createNoteGroupPermissionsCombinations, permute them and add them to the list
-  function permuteNoteGroupPermissions(
-    noteGroupPermissions: NoteGroupPermissionWithResultForUser[],
-  ): NoteGroupPermissionWithResultForUser[] {
-    const result: NoteGroupPermissionWithResultForUser[] = [];
-    for (const permission of noteGroupPermissions) {
-      const permutations = permutator(permission.permissions);
-      for (const permutation of permutations) {
-        result.push({
-          permissions: permutation,
-          allowsRead: permission.allowsRead,
-          allowsWrite: permission.allowsWrite,
-        });
-      }
-    }
-    return result;
-  }
-
-  describe('check if groups work with', () => {
-    const rawPermissions = createNoteGroupPermissionsCombinations(
-      DefaultAccessLevel.WRITE,
-    );
-    const permissions = permuteNoteGroupPermissions(rawPermissions);
-    let i = 0;
-    for (const permission of permissions) {
-      const note = createNote(user2);
-      note.groupPermissions = Promise.resolve(permission.permissions);
-      let permissionString = '';
-      for (const perm of permission.permissions) {
-        permissionString += ` ${perm.id}:${String(perm.canEdit)}`;
-      }
-      it(`mayWrite - test #${i}:${permissionString}`, async () => {
-        expect(await service.mayWrite(user1, note)).toEqual(
-          permission.allowsWrite,
-        );
-      });
-      it(`mayRead - test #${i}:${permissionString}`, async () => {
-        expect(await service.mayRead(user1, note)).toEqual(
-          permission.allowsRead,
-        );
-      });
-      i++;
-    }
   });
 
   describe('mayCreate', () => {
@@ -747,20 +242,33 @@ describe('PermissionsService', () => {
     });
   });
 
-  describe('isOwner works', () => {
-    it('for positive case', async () => {
-      expect(await service.isOwner(user1, notes[0])).toBeTruthy();
+  describe('isOwner', () => {
+    it('works correctly if user is owner', async () => {
+      const note = mockNote(user1);
+      expect(await service.isOwner(user1, note)).toBeTruthy();
     });
-    it('for negative case', async () => {
-      expect(await service.isOwner(user1, notes[1])).toBeFalsy();
+    it("works correctly if user isn't the owner", async () => {
+      const note = mockNote(user2);
+      expect(await service.isOwner(user1, note)).toBeFalsy();
+    });
+    it('works correctly if no user is provided', async () => {
+      const note = mockNote(user2);
+      expect(await service.isOwner(null, note)).toBeFalsy();
     });
   });
 
   describe('checkMediaDeletePermission', () => {
+    const noteUserPermission1 = Mock.of<NoteUserPermission>({
+      user: Promise.resolve(user1),
+      canEdit: false,
+    });
+
+    const noteOfUser2 = mockNote(user2, [noteUserPermission1]);
+
     describe('accepts', () => {
       it('for media owner', async () => {
         const mediaUpload = {} as MediaUpload;
-        mediaUpload.note = Promise.resolve(notes[1]);
+        mediaUpload.note = Promise.resolve(noteOfUser2);
         mediaUpload.user = Promise.resolve(user1);
         expect(
           service.checkMediaDeletePermission(user1, mediaUpload),
@@ -768,7 +276,7 @@ describe('PermissionsService', () => {
       });
       it('for note owner', async () => {
         const mediaUpload = {} as MediaUpload;
-        mediaUpload.note = Promise.resolve(notes[1]);
+        mediaUpload.note = Promise.resolve(noteOfUser2);
         mediaUpload.user = Promise.resolve(user1);
         expect(
           service.checkMediaDeletePermission(user2, mediaUpload),
@@ -777,10 +285,9 @@ describe('PermissionsService', () => {
     });
     describe('denies', () => {
       it('for not owner', async () => {
-        const user3 = {} as User;
-        user3.id = 3;
-        const mediaUpload = {} as MediaUpload;
-        mediaUpload.note = Promise.resolve(notes[1]);
+        const user3 = Mock.of<User>({ id: 3 });
+        const mediaUpload = Mock.of<MediaUpload>();
+        mediaUpload.note = Promise.resolve(noteOfUser2);
         mediaUpload.user = Promise.resolve(user1);
         expect(
           await service.checkMediaDeletePermission(user3, mediaUpload),
@@ -789,51 +296,166 @@ describe('PermissionsService', () => {
     });
   });
 
-  describe('checkPermissionOnNote', () => {
-    describe('accepts', () => {
-      it('with mayRead', async () => {
-        mockMayReadTrue();
-        expect(
-          await service.checkPermissionOnNote(
-            RequiredPermission.READ,
-            user1,
-            notes[0],
-          ),
-        ).toBeTruthy();
+  describe('determinePermission', () => {
+    const everyoneGroup = Mock.of<Group>({ id: 99 });
+    const loggedInGroup = Mock.of<Group>({ id: 98 });
+
+    beforeEach(() => {
+      jest
+        .spyOn(groupService, 'getEveryoneGroup')
+        .mockImplementation(() => Promise.resolve(everyoneGroup));
+      jest
+        .spyOn(groupService, 'getLoggedInGroup')
+        .mockImplementation(() => Promise.resolve(loggedInGroup));
+    });
+
+    describe('with guest user', () => {
+      const loggedInReadPermission = Mock.of<NoteGroupPermission>({
+        canEdit: false,
+        group: Promise.resolve(loggedInGroup),
       });
-      it('with mayWrite', async () => {
-        mockMayWriteTrue();
-        expect(
-          await service.checkPermissionOnNote(
-            RequiredPermission.WRITE,
-            user1,
-            notes[0],
-          ),
-        ).toBeTruthy();
+
+      it(`with no everyone permission will deny`, async () => {
+        const note = mockNote(user1, [], [loggedInReadPermission]);
+        const foundPermission = await service.determinePermission(null, note);
+        expect(foundPermission).toBe(NotePermission.DENY);
       });
-      it('with isOwner', async () => {
-        mockIsOwner(true);
-        expect(
-          await service.checkPermissionOnNote(
-            RequiredPermission.OWNER,
-            user1,
-            notes[0],
-          ),
-        ).toBeTruthy();
+
+      describe.each([
+        GuestAccess.DENY,
+        GuestAccess.READ,
+        GuestAccess.WRITE,
+        GuestAccess.CREATE,
+      ])('with configured guest access %s', (guestAccess) => {
+        beforeEach(() => {
+          noteMockConfig.guestAccess = guestAccess;
+        });
+
+        const guestAccessNotePermission =
+          convertGuestAccessToNotePermission(guestAccess);
+
+        describe.each([false, true])(
+          'with everybody group permission with edit set to %s',
+          (canEdit) => {
+            const editPermission = canEdit
+              ? NotePermission.WRITE
+              : NotePermission.READ;
+            const expectedLimitedPermission =
+              guestAccessNotePermission >= editPermission
+                ? editPermission
+                : guestAccessNotePermission;
+
+            const permissionDisplayName = getNotePermissionDisplayName(
+              expectedLimitedPermission,
+            );
+            it(`will ${permissionDisplayName}`, async () => {
+              const everybodyPermission = Mock.of<NoteGroupPermission>({
+                group: Promise.resolve(everyoneGroup),
+                canEdit: canEdit,
+              });
+
+              const note = mockNote(
+                user1,
+                [],
+                [everybodyPermission, loggedInReadPermission],
+              );
+
+              const foundPermission = await service.determinePermission(
+                null,
+                note,
+              );
+              expect(foundPermission).toBe(expectedLimitedPermission);
+            });
+          },
+        );
       });
     });
-    describe('denies', () => {
-      it('with no permission', async () => {
-        mockMayReadTrue();
-        mockMayWriteTrue();
-        mockIsOwner(false);
-        expect(
-          await service.checkPermissionOnNote(
-            RequiredPermission.OWNER,
+
+    describe('with logged in user', () => {
+      describe('as owner will be OWNER permission', () => {
+        it('without other permissions', async () => {
+          const note = mockNote(user1);
+
+          const foundPermission = await service.determinePermission(
             user1,
-            notes[0],
-          ),
-        ).toBeFalsy();
+            note,
+          );
+
+          expect(foundPermission).toBe(NotePermission.OWNER);
+        });
+        it('with other lower permissions', async () => {
+          const userPermission = Mock.of<NoteUserPermission>({
+            user: Promise.resolve(user1),
+            canEdit: true,
+          });
+
+          const group1 = Mock.of<Group>({
+            name: 'mockGroup',
+            id: 99,
+            members: Promise.resolve([user1]),
+          });
+
+          const groupPermission = Mock.of<NoteGroupPermission>({
+            group: Promise.resolve(group1),
+            canEdit: true,
+          });
+
+          const note = mockNote(user1, [userPermission], [groupPermission]);
+
+          const foundPermission = await service.determinePermission(
+            user1,
+            note,
+          );
+
+          expect(foundPermission).toBe(NotePermission.OWNER);
+        });
+      });
+      describe('as non owner', () => {
+        it('with user permission higher than group permission', async () => {
+          jest
+            .spyOn(
+              FindHighestNotePermissionByUserModule,
+              'findHighestNotePermissionByUser',
+            )
+            .mockReturnValue(Promise.resolve(NotePermission.DENY));
+          jest
+            .spyOn(
+              FindHighestNotePermissionByGroupModule,
+              'findHighestNotePermissionByGroup',
+            )
+            .mockReturnValue(Promise.resolve(NotePermission.WRITE));
+
+          const note = mockNote(user2);
+
+          const foundPermission = await service.determinePermission(
+            user1,
+            note,
+          );
+          expect(foundPermission).toBe(NotePermission.WRITE);
+        });
+
+        it('with group permission higher than user permission', async () => {
+          jest
+            .spyOn(
+              FindHighestNotePermissionByUserModule,
+              'findHighestNotePermissionByUser',
+            )
+            .mockReturnValue(Promise.resolve(NotePermission.WRITE));
+          jest
+            .spyOn(
+              FindHighestNotePermissionByGroupModule,
+              'findHighestNotePermissionByGroup',
+            )
+            .mockReturnValue(Promise.resolve(NotePermission.DENY));
+
+          const note = mockNote(user2);
+
+          const foundPermission = await service.determinePermission(
+            user1,
+            note,
+          );
+          expect(foundPermission).toBe(NotePermission.WRITE);
+        });
       });
     });
   });
@@ -1183,24 +805,49 @@ describe('PermissionsService', () => {
       expect(eventEmitterEmitSpy).toHaveBeenCalled();
     });
     describe('works', () => {
-      it('with user added before and editable', async () => {
-        const note = Note.create(null) as Note;
-        const user = User.create('test', 'Testy') as User;
-        note.userPermissions = Promise.resolve([
-          NoteUserPermission.create(user, note, true),
-        ]);
+      const note = Note.create(null) as Note;
+      const user1 = Mock.of<User>({ id: 1 });
+      const user2 = Mock.of<User>({ id: 2 });
 
-        const resultNote = await service.removeUserPermission(note, user);
-        expect((await resultNote.userPermissions).length).toStrictEqual(0);
-      });
-      it('with user not added before and not editable', async () => {
-        const note = Note.create(null) as Note;
-        const user = User.create('test', 'Testy') as User;
+      it('with user added before and editable', async () => {
+        const noteUserPermission1 = NoteUserPermission.create(
+          user1,
+          note,
+          true,
+        );
+        const noteUserPermission2 = NoteUserPermission.create(
+          user2,
+          note,
+          true,
+        );
         note.userPermissions = Promise.resolve([
-          NoteUserPermission.create(user, note, false),
+          noteUserPermission1,
+          noteUserPermission2,
         ]);
-        const resultNote = await service.removeUserPermission(note, user);
-        expect((await resultNote.userPermissions).length).toStrictEqual(0);
+        const resultNote = await service.removeUserPermission(note, user1);
+        expect(await resultNote.userPermissions).toStrictEqual([
+          noteUserPermission2,
+        ]);
+      });
+      it('with user added before and not editable', async () => {
+        const noteUserPermission1 = NoteUserPermission.create(
+          user1,
+          note,
+          false,
+        );
+        const noteUserPermission2 = NoteUserPermission.create(
+          user2,
+          note,
+          false,
+        );
+        note.userPermissions = Promise.resolve([
+          noteUserPermission1,
+          noteUserPermission2,
+        ]);
+        const resultNote = await service.removeUserPermission(note, user1);
+        expect(await resultNote.userPermissions).toStrictEqual([
+          noteUserPermission2,
+        ]);
       });
     });
   });
@@ -1290,24 +937,50 @@ describe('PermissionsService', () => {
       expect(eventEmitterEmitSpy).toHaveBeenCalled();
     });
     describe('works', () => {
-      it('with user added before and editable', async () => {
-        const note = Note.create(null) as Note;
-        const group = Group.create('test', 'Testy', false) as Group;
+      const note = Note.create(null) as Note;
+      const group1 = Mock.of<Group>({ id: 1 });
+      const group2 = Mock.of<Group>({ id: 2 });
+
+      it('with editable group', async () => {
+        const noteGroupPermission1 = NoteGroupPermission.create(
+          group1,
+          note,
+          true,
+        );
+        const noteGroupPermission2 = NoteGroupPermission.create(
+          group2,
+          note,
+          true,
+        );
         note.groupPermissions = Promise.resolve([
-          NoteGroupPermission.create(group, note, true),
+          noteGroupPermission1,
+          noteGroupPermission2,
         ]);
 
-        const resultNote = await service.removeGroupPermission(note, group);
-        expect((await resultNote.groupPermissions).length).toStrictEqual(0);
-      });
-      it('with user not added before and not editable', async () => {
-        const note = Note.create(null) as Note;
-        const group = Group.create('test', 'Testy', false) as Group;
-        note.groupPermissions = Promise.resolve([
-          NoteGroupPermission.create(group, note, false),
+        const resultNote = await service.removeGroupPermission(note, group1);
+        expect(await resultNote.groupPermissions).toStrictEqual([
+          noteGroupPermission2,
         ]);
-        const resultNote = await service.removeGroupPermission(note, group);
-        expect((await resultNote.groupPermissions).length).toStrictEqual(0);
+      });
+      it('with not editable group', async () => {
+        const noteGroupPermission1 = NoteGroupPermission.create(
+          group1,
+          note,
+          false,
+        );
+        const noteGroupPermission2 = NoteGroupPermission.create(
+          group2,
+          note,
+          false,
+        );
+        note.groupPermissions = Promise.resolve([
+          noteGroupPermission1,
+          noteGroupPermission2,
+        ]);
+        const resultNote = await service.removeGroupPermission(note, group1);
+        expect(await resultNote.groupPermissions).toStrictEqual([
+          noteGroupPermission2,
+        ]);
       });
     });
   });
