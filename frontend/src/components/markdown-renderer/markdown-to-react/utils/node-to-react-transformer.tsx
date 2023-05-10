@@ -11,7 +11,7 @@ import type {
   ValidReactDomElement
 } from '../../replace-components/component-replacer'
 import { DO_NOT_REPLACE } from '../../replace-components/component-replacer'
-import { convertNodeToReactElement } from '@hedgedoc/html-to-react/dist/convertNodeToReactElement'
+import { convertNodeToReactElement } from '@hedgedoc/html-to-react'
 import { Optional } from '@mrdrogdrog/optional'
 import type { Element, Node } from 'domhandler'
 import { isTag } from 'domhandler'
