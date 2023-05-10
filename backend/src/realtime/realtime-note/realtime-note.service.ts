@@ -12,6 +12,7 @@ import appConfiguration, { AppConfig } from '../../config/app.config';
 import { NoteEvent } from '../../events';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { Note } from '../../notes/note.entity';
+import { NotePermission } from '../../permissions/note-permission.enum';
 import { PermissionsService } from '../../permissions/permissions.service';
 import { RevisionsService } from '../../revisions/revisions.service';
 import { RealtimeConnection } from './realtime-connection';
@@ -126,22 +127,16 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
     note: Note,
   ): Promise<void> {
     for (const connection of connections) {
-      if (await this.connectionCanRead(connection, note)) {
-        connection.acceptEdits = await this.permissionService.mayWrite(
-          connection.getUser(),
-          note,
-        );
-      } else {
+      const permission = await this.permissionService.determinePermission(
+        connection.getUser(),
+        note,
+      );
+      if (permission === NotePermission.DENY) {
         connection.getTransporter().disconnect();
+      } else {
+        connection.acceptEdits = permission > NotePermission.READ;
       }
     }
-  }
-
-  private async connectionCanRead(
-    connection: RealtimeConnection,
-    note: Note,
-  ): Promise<boolean> {
-    return await this.permissionService.mayRead(connection.getUser(), note);
   }
 
   @OnEvent(NoteEvent.DELETION)

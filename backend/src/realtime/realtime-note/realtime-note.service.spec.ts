@@ -9,6 +9,7 @@ import { Mock } from 'ts-mockery';
 import { AppConfig } from '../../config/app.config';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { Note } from '../../notes/note.entity';
+import { NotePermission } from '../../permissions/note-permission.enum';
 import { PermissionsService } from '../../permissions/permissions.service';
 import { Revision } from '../../revisions/revision.entity';
 import { RevisionsService } from '../../revisions/revisions.service';
@@ -91,9 +92,15 @@ describe('RealtimeNoteService', () => {
 
     mockedAppConfig = Mock.of<AppConfig>({ persistInterval: 0 });
     mockedPermissionService = Mock.of<PermissionsService>({
-      mayRead: async (user: User) =>
-        [readWriteUsername, onlyReadUsername].includes(user?.username),
-      mayWrite: async (user: User) => user?.username === readWriteUsername,
+      determinePermission: async (user: User | null) => {
+        if (user?.username === readWriteUsername) {
+          return NotePermission.WRITE;
+        } else if (user?.username === onlyReadUsername) {
+          return NotePermission.READ;
+        } else {
+          return NotePermission.DENY;
+        }
+      },
     });
 
     const schedulerRegistry = Mock.of<SchedulerRegistry>({

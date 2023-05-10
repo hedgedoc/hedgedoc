@@ -10,6 +10,7 @@ import { extractNoteFromRequest } from '../api/utils/extract-note-from-request';
 import { CompleteRequest } from '../api/utils/request.type';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { NotesService } from '../notes/notes.service';
+import { NotePermission } from './note-permission.enum';
 import { PermissionsService } from './permissions.service';
 import { PERMISSION_METADATA_KEY } from './require-permission.decorator';
 import { RequiredPermission } from './required-permission.enum';
@@ -32,24 +33,18 @@ export class PermissionsGuard implements CanActivate {
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const permission = this.reflector.get<RequiredPermission>(
-      PERMISSION_METADATA_KEY,
-      context.getHandler(),
-    );
-    // If no permissions are set this is probably an error and this guard should not let the request pass
-    if (!permission) {
-      this.logger.error(
-        'Could not find permission metadata. This should never happen. If you see this, please open an issue at https://github.com/hedgedoc/hedgedoc/issues',
-      );
+    const requiredAccessLevel = this.extractRequiredPermission(context);
+    if (requiredAccessLevel === undefined) {
       return false;
     }
     const request: CompleteRequest = context.switchToHttp().getRequest();
     const user = request.user ?? null;
-    // handle CREATE permissions, as this does not need any note
-    if (permission === RequiredPermission.CREATE) {
+
+    // handle CREATE requiredAccessLevel, as this does not need any note
+    if (requiredAccessLevel === RequiredPermission.CREATE) {
       return this.permissionsService.mayCreate(user);
     }
-    // Attention: This gets the note an additional time if used in conjunction with GetNoteInterceptor or NoteHeaderInterceptor
+
     const note = await extractNoteFromRequest(request, this.noteService);
     if (note === undefined) {
       this.logger.error(
@@ -57,10 +52,41 @@ export class PermissionsGuard implements CanActivate {
       );
       return false;
     }
-    return await this.permissionsService.checkPermissionOnNote(
-      permission,
-      user,
-      note,
+
+    return this.isNotePermissionFulfillingRequiredAccessLevel(
+      requiredAccessLevel,
+      await this.permissionsService.determinePermission(user, note),
     );
+  }
+
+  private extractRequiredPermission(
+    context: ExecutionContext,
+  ): RequiredPermission | undefined {
+    const requiredPermission = this.reflector.get<RequiredPermission>(
+      PERMISSION_METADATA_KEY,
+      context.getHandler(),
+    );
+    // If no requiredPermission are set this is probably an error and this guard should not let the request pass
+    if (!requiredPermission) {
+      this.logger.error(
+        'Could not find requiredPermission metadata. This should never happen. If you see this, please open an issue at https://github.com/hedgedoc/hedgedoc/issues',
+      );
+      return undefined;
+    }
+    return requiredPermission;
+  }
+
+  private isNotePermissionFulfillingRequiredAccessLevel(
+    requiredAccessLevel: Exclude<RequiredPermission, RequiredPermission.CREATE>,
+    actualNotePermission: NotePermission,
+  ): boolean {
+    switch (requiredAccessLevel) {
+      case RequiredPermission.READ:
+        return actualNotePermission >= NotePermission.READ;
+      case RequiredPermission.WRITE:
+        return actualNotePermission >= NotePermission.WRITE;
+      case RequiredPermission.OWNER:
+        return actualNotePermission >= NotePermission.OWNER;
+    }
   }
 }
