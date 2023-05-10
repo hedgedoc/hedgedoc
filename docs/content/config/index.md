@@ -74,7 +74,9 @@ more secure authentication like 2FA or WebAuthn.
 | `HD_AUTH_LOCAL_ENABLE_REGISTER`           | `false` | `true`, `false`         | This makes it possible to register new local accounts in HedgeDoc.                    |
 | `HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH` | `2`     | `0`, `1`, `2`, `3`, `4` | The minimum [zxcvbn-ts][zxcvbn-ts-score] password score, that passwords need to have. |
 
-#### Password score ([zxcvbn-ts][zxcvbn-ts-score])
+#### Password score
+
+The password score is calculated with [zxcvbn-ts][zxcvbn-ts-score].
 
 | score | meaning                                                           | minimum number of guesses required (approximated) |
 |:-----:|-------------------------------------------------------------------|---------------------------------------------------|
@@ -89,20 +91,20 @@ more secure authentication like 2FA or WebAuthn.
 HedgeDoc can use an LDAP server to authenticate users. As HedgeDoc supports multiple LDAP servers, you first need to tell HedgeDoc the servers you want to configure (`HD_AUTH_LDAPS`), and then you need to provide a few variables for those LDAP servers depending on how you want to use them.
 Each of those variables will contain the given name for this LDAP server. For example if you named your ldap server `MY_LDAP` all variables for this server will start with `HD_AUTH_LDAP_MY_LDAP`.
 
-| environment variable                       | default              | example                                            | description                                                                                             |
-|--------------------------------------------|----------------------|----------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| `HD_AUTH_LDAPS`                            | -                    | `MY_LDAP`                                          | A list of LDAP servers HedgeDoc should use, comma-seperated.                                            |
-| `HD_AUTH_LDAP_$NAME_PROVIDER_NAME`         | `LDAP`               | `My LDAP`                                          | The name for the ldap server `$NAME`, that is shown in the UI of HegdeDoc.                              |
-| `HD_AUTH_LDAP_$NAME_URL`                   | -                    | `https://ldap.example.com`                         | The url with which the LDAP server `$NAME` can be accessed.                                             |
-| `HD_AUTH_LDAP_$NAME_SEARCH_BASE`           | -                    | `ou=users,dc=ldap,dc=example,dc=com`               | Where the user accounts are saved on the ldap server `$NAME`.                                           |
-| `HD_AUTH_LDAP_$NAME_SEARCH_FILTER`         | `(uid={{username}})` | `(&(uid={{username}})(objectClass=inetOrgPerson))` | Which user accounts should be accessible from the ldap server `$NAME`.                                  |
-| `HD_AUTH_LDAP_$NAME_SEARCH_ATTRIBUTES`     | -                    | `username,cn`                                      | A comma-seperated list of attributes that the search filter from the ldap server `$NAME` should access. |
-| `HD_AUTH_LDAP_$NAME_USERID_FIELD`          | `uid`                | `uid`, `uidNumber`, `sAMAccountName`               | Which field of the user account should be used as an id for the ldap server `$NAME`.                    |
-| `HD_AUTH_LDAP_$NAME_DISPLAY_NAME_FIELD`    | `displayName`        | `displayName`, `name`, `cn`                        | Which field of the user account should be used as the display name for the ldap server `$NAME`.         |
-| `HD_AUTH_LDAP_$NAME_PROFILE_PICTURE_FIELD` | `jpegPhoto`          | `jpegPhoto`, `thumbnailPhoto`                      | Which field of the user account should be used as the user image for the ldap server `$NAME`.           |
-| `HD_AUTH_LDAP_$NAME_BIND_DN`               | -                    | `cn=admin,dc=ldap,dc=example,dc=com`               | With which dn the ldap server `$NAME` should be accessed.                                               |
-| `HD_AUTH_LDAP_$NAME_BIND_CREDENTIALS`      | -                    | `MyLdapPassword`                                   | The corresponding credential to access the ldap server `$NAME`.                                         |
-| `HD_AUTH_LDAP_$NAME_TLS_CERT_PATHS`        | -                    | `ldap-ca.pem`                                      | A comma-seperated list of TLS certificates for the ldap server `$NAME`.                                 |
+| environment variable                       | default              | example                                            | description                                                                                                     |
+|--------------------------------------------|----------------------|----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
+| `HD_AUTH_LDAPS`                            | -                    | `MY_LDAP`                                          | A comma-seperated list of LDAP servers HedgeDoc should use.                                                     |
+| `HD_AUTH_LDAP_$NAME_PROVIDER_NAME`         | `LDAP`               | `My LDAP`                                          | The name for the ldap server `$NAME`, that is shown in the UI of HegdeDoc.                                      |
+| `HD_AUTH_LDAP_$NAME_URL`                   | -                    | `https://ldap.example.com`                         | The url with which the LDAP server `$NAME` can be accessed.                                                     |
+| `HD_AUTH_LDAP_$NAME_SEARCH_BASE`           | -                    | `ou=users,dc=ldap,dc=example,dc=com`               | The ldap search base which contains the user accounts on the ldap server `$NAME`.                               |
+| `HD_AUTH_LDAP_$NAME_SEARCH_FILTER`         | `(uid={{username}})` | `(&(uid={{username}})(objectClass=inetOrgPerson))` | A ldap search filter that filters the users that should have access on the ldap server `$NAME`.                 |
+| `HD_AUTH_LDAP_$NAME_SEARCH_ATTRIBUTES`     | -                    | `username,cn`                                      | A comma-seperated list of attributes that the search filter from the ldap server `$NAME` should access.         |
+| `HD_AUTH_LDAP_$NAME_USERID_FIELD`          | `uid`                | `uid`, `uidNumber`, `sAMAccountName`               | Which field of the user account should be used as an id for the user on the ldap server `$NAME`.                |
+| `HD_AUTH_LDAP_$NAME_DISPLAY_NAME_FIELD`    | `displayName`        | `displayName`, `name`, `cn`                        | Which field of the user account should be used as the display name for the user on the the ldap server `$NAME`. |
+| `HD_AUTH_LDAP_$NAME_PROFILE_PICTURE_FIELD` | `jpegPhoto`          | `jpegPhoto`, `thumbnailPhoto`                      | Which field of the user account should be used as the user image for the user on the the ldap server `$NAME`.   |
+| `HD_AUTH_LDAP_$NAME_BIND_DN`               | -                    | `cn=admin,dc=ldap,dc=example,dc=com`               | The dn to access the ldap server `$NAME`.                                                                       |
+| `HD_AUTH_LDAP_$NAME_BIND_CREDENTIALS`      | -                    | `MyLdapPassword`                                   | The credential to access the ldap server `$NAME`.                                                               |
+| `HD_AUTH_LDAP_$NAME_TLS_CERT_PATHS`        | -                    | `ldap-ca.pem`                                      | A comma-seperated list of TLS certificates for the ldap server `$NAME`.                                         |
 
 **ToDo:** Add other authentication methods.
 
