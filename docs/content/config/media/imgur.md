@@ -1,8 +1,8 @@
 # Imgur
 
 !!! warning "Imgur saves anonymous images for only 6 month"
-Imgur will delete images not associated with any account 6 month after the last access. This means that if you use imgur as your image backend, you may lose images uploaded by you or your users.
-See this [FAQ entry](https://help.imgur.com/hc/en-us/articles/14415587638029-Imgur-Terms-of-Service-Update-April-19-2023-)
+    Imgur will delete images not associated with any account 6 month after the last access. This means that if you use imgur as your image backend, you may lose images uploaded by you or your users.
+    See this [FAQ entry](https://help.imgur.com/hc/en-us/articles/14415587638029-Imgur-Terms-of-Service-Update-April-19-2023-)
 
 You can use [Imgur](https://imgur.com) to handle your image uploads in HedgeDoc.
 
