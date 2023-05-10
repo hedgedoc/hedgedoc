@@ -53,8 +53,8 @@ However, you can run HedgeDoc without this extra security, but we recommend usin
 | `HD_FORBIDDEN_NOTE_IDS`                  | -       | `notAllowed, alsoNotAllowed`      | A list of note ids (separated by `,`), that are not allowed to be created or requested by anyone.                                                                                    |
 | `HD_MAX_DOCUMENT_LENGTH`                 | 100000  |                                   | The maximum length of any one document. Changes to this will impact performance for your users.                                                                                      |
 | `HD_GUEST_ACCESS`                        | `write` | `deny`, `read`, `write`, `create` | Defines the maximum access level for guest users to the instance. If guest access is set lower than the "everyone" permission of a note then the note permission will be overridden. |
-| `HD_PERMISSION_LOGGED_IN_DEFAULT_ACCESS` | `write` | `none, read, write`               | The default permission for the "logged-in" group that is set on new notes.                                                                                                           |
-| `HD_PERMISSION_EVERYONE_DEFAULT_ACCESS`  | `read`  | `none, read, write`               | The default permission for the "everyone" group (logged-in & guest users), that is set on new notes created by logged-in users. Notes created by guests always set this to "write".  |
+| `HD_PERMISSION_LOGGED_IN_DEFAULT_ACCESS` | `write` | `none`, `read`, `write`           | The default permission for the "logged-in" group that is set on new notes.                                                                                                           |
+| `HD_PERMISSION_EVERYONE_DEFAULT_ACCESS`  | `read`  | `none`, `read`, `write`           | The default permission for the "everyone" group (logged-in & guest users), that is set on new notes created by logged-in users. Notes created by guests always set this to "write".  |
 
 ## Authentication
 
@@ -74,7 +74,7 @@ more secure authentication like 2FA or WebAuthn.
 | `HD_AUTH_LOCAL_ENABLE_REGISTER`           | `false` | `true`, `false`         | This makes it possible to register new local accounts in HedgeDoc.                    |
 | `HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH` | `2`     | `0`, `1`, `2`, `3`, `4` | The minimum [zxcvbn-ts][zxcvbn-ts-score] password score, that passwords need to have. |
 
-**Password score ([zxcvbn-ts][zxcvbn-ts-score])**
+#### Password score ([zxcvbn-ts][zxcvbn-ts-score])
 
 | score | meaning                                                           | minimum number of guesses required (approximated) |
 |:-----:|-------------------------------------------------------------------|---------------------------------------------------|
@@ -83,6 +83,26 @@ more secure authentication like 2FA or WebAuthn.
 |   2   | `too guessable` and `very guessable` passwords are disallowed     | 1.000.000                                         |
 |   3   | `safely unguessable` and `very unguessable` passwords are allowed | 100.000.000                                       |
 |   4   | Only `very unguessable` passwords are allowed                     | 10.000.000.000                                    |
+
+### LDAP
+
+HedgeDoc can use an LDAP server to authenticate users. As HedgeDoc supports multiple LDAP servers, you first need to tell HedgeDoc the servers you want to configure (`HD_AUTH_LDAPS`), and then you need to provide a few variables for those LDAP servers depending on how you want to use them.
+Each of those variables will contain the given name for this LDAP server. For example if you named your ldap server `MY_LDAP` all variables for this server will start with `HD_AUTH_LDAP_MY_LDAP`.
+
+| environment variable                       | default              | example                                            | description                                                                                             |
+|--------------------------------------------|----------------------|----------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| `HD_AUTH_LDAPS`                            | -                    | `MY_LDAP`                                          | A list of LDAP servers HedgeDoc should use, comma-seperated.                                            |
+| `HD_AUTH_LDAP_$NAME_PROVIDER_NAME`         | `LDAP`               | `My LDAP`                                          | The name for the ldap server `$NAME`, that is shown in the UI of HegdeDoc.                              |
+| `HD_AUTH_LDAP_$NAME_URL`                   | -                    | `https://ldap.example.com`                         | The url with which the LDAP server `$NAME` can be accessed.                                             |
+| `HD_AUTH_LDAP_$NAME_SEARCH_BASE`           | -                    | `ou=users,dc=ldap,dc=example,dc=com`               | Where the user accounts are saved on the ldap server `$NAME`.                                           |
+| `HD_AUTH_LDAP_$NAME_SEARCH_FILTER`         | `(uid={{username}})` | `(&(uid={{username}})(objectClass=inetOrgPerson))` | Which user accounts should be accessible from the ldap server `$NAME`.                                  |
+| `HD_AUTH_LDAP_$NAME_SEARCH_ATTRIBUTES`     | -                    | `username,cn`                                      | A comma-seperated list of attributes that the search filter from the ldap server `$NAME` should access. |
+| `HD_AUTH_LDAP_$NAME_USERID_FIELD`          | `uid`                | `uid`, `uidNumber`, `sAMAccountName`               | Which field of the user account should be used as an id for the ldap server `$NAME`.                    |
+| `HD_AUTH_LDAP_$NAME_DISPLAY_NAME_FIELD`    | `displayName`        | `displayName`, `name`, `cn`                        | Which field of the user account should be used as the display name for the ldap server `$NAME`.         |
+| `HD_AUTH_LDAP_$NAME_PROFILE_PICTURE_FIELD` | `jpegPhoto`          | `jpegPhoto`, `thumbnailPhoto`                      | Which field of the user account should be used as the user image for the ldap server `$NAME`.           |
+| `HD_AUTH_LDAP_$NAME_BIND_DN`               | -                    | `cn=admin,dc=ldap,dc=example,dc=com`               | With which dn the ldap server `$NAME` should be accessed.                                               |
+| `HD_AUTH_LDAP_$NAME_BIND_CREDENTIALS`      | -                    | `MyLdapPassword`                                   | The corresponding credential to access the ldap server `$NAME`.                                         |
+| `HD_AUTH_LDAP_$NAME_TLS_CERT_PATHS`        | -                    | `ldap-ca.pem`                                      | A comma-seperated list of TLS certificates for the ldap server `$NAME`.                                 |
 
 **ToDo:** Add other authentication methods.
 
