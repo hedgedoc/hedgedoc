@@ -10,7 +10,7 @@ import {
   HedgeDocLogoType,
   HedgeDocLogoWithText
 } from '../../common/hedge-doc-logo/hedge-doc-logo-with-text'
-import styles from './branding.module.scss'
+import { BrandingSeparatorDash } from './branding-separator-dash'
 import Link from 'next/link'
 import React from 'react'
 import { Navbar } from 'react-bootstrap'
@@ -28,9 +28,8 @@ export const NavbarBranding: React.FC = () => {
           logoType={darkModeActivated ? HedgeDocLogoType.WB_HORIZONTAL : HedgeDocLogoType.BW_HORIZONTAL}
           size={HedgeDocLogoSize.SMALL}
         />
-        <span className={styles['branding-separator']}>
-          <CustomBranding inline={true} />
-        </span>
+        <BrandingSeparatorDash />
+        <CustomBranding inline={true} />
       </Link>
     </Navbar.Brand>
   )
