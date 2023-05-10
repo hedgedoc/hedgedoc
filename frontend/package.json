@@ -48,7 +48,7 @@
     "@codemirror/view": "6.11.1",
     "@fontsource/source-sans-pro": "4.5.11",
     "@hedgedoc/commons": "workspace:commons",
-    "@hedgedoc/html-to-react": "1.4.6",
+    "@hedgedoc/html-to-react": "2.0.0",
     "@hedgedoc/markdown-it-plugins": "2.0.0",
     "@mrdrogdrog/optional": "1.1.0",
     "@react-hook/resize-observer": "1.2.6",
