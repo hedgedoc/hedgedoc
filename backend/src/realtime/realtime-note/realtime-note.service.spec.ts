@@ -9,11 +9,15 @@ import { Mock } from 'ts-mockery';
 import { AppConfig } from '../../config/app.config';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { Note } from '../../notes/note.entity';
+import { PermissionsService } from '../../permissions/permissions.service';
 import { Revision } from '../../revisions/revision.entity';
 import { RevisionsService } from '../../revisions/revisions.service';
+import { User } from '../../users/user.entity';
+import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';
 import { RealtimeNoteStore } from './realtime-note-store';
 import { RealtimeNoteService } from './realtime-note.service';
+import { MockConnectionBuilder } from './test-utils/mock-connection';
 
 describe('RealtimeNoteService', () => {
   const mockedContent = 'mockedContent';
@@ -24,12 +28,20 @@ describe('RealtimeNoteService', () => {
   let realtimeNoteService: RealtimeNoteService;
   let revisionsService: RevisionsService;
   let realtimeNoteStore: RealtimeNoteStore;
+  let mockedPermissionService: PermissionsService;
   let consoleLoggerService: ConsoleLoggerService;
   let mockedAppConfig: AppConfig;
   let addIntervalSpy: jest.SpyInstance;
   let setIntervalSpy: jest.SpyInstance;
   let clearIntervalSpy: jest.SpyInstance;
+  let clientWithReadWrite: RealtimeConnection;
+  let clientWithRead: RealtimeConnection;
+  let clientWithoutReadWrite: RealtimeConnection;
   let deleteIntervalSpy: jest.SpyInstance;
+
+  const readWriteUsername = 'canReadWriteUser';
+  const onlyReadUsername = 'canOnlyReadUser';
+  const noAccessUsername = 'noReadWriteUser';
 
   afterAll(() => {
     jest.useRealTimers();
@@ -78,6 +90,11 @@ describe('RealtimeNoteService', () => {
     });
 
     mockedAppConfig = Mock.of<AppConfig>({ persistInterval: 0 });
+    mockedPermissionService = Mock.of<PermissionsService>({
+      mayRead: async (user: User) =>
+        [readWriteUsername, onlyReadUsername].includes(user?.username),
+      mayWrite: async (user: User) => user?.username === readWriteUsername,
+    });
 
     const schedulerRegistry = Mock.of<SchedulerRegistry>({
       addInterval: jest.fn(),
@@ -89,13 +106,65 @@ describe('RealtimeNoteService', () => {
     setIntervalSpy = jest.spyOn(global, 'setInterval');
     clearIntervalSpy = jest.spyOn(global, 'clearInterval');
 
+    clientWithReadWrite = new MockConnectionBuilder(realtimeNote)
+      .withAcceptingRealtimeUserStatus()
+      .withLoggedInUser(readWriteUsername)
+      .build();
+
+    clientWithRead = new MockConnectionBuilder(realtimeNote)
+      .withDecliningRealtimeUserStatus()
+      .withLoggedInUser(onlyReadUsername)
+      .build();
+
+    clientWithoutReadWrite = new MockConnectionBuilder(realtimeNote)
+      .withDecliningRealtimeUserStatus()
+      .withGuestUser(noAccessUsername)
+      .build();
+
     realtimeNoteService = new RealtimeNoteService(
       revisionsService,
       consoleLoggerService,
       realtimeNoteStore,
       schedulerRegistry,
       mockedAppConfig,
+      mockedPermissionService,
     );
+  });
+
+  describe('handleNotePermissionChanged', () => {
+    beforeEach(() => {
+      jest.spyOn(realtimeNoteStore, 'find').mockImplementation(() => {
+        return realtimeNote;
+      });
+    });
+    it('should not remove the connection with read and write access', async () => {
+      const loggedUserTransporter = clientWithReadWrite.getTransporter();
+
+      jest.spyOn(loggedUserTransporter, 'disconnect');
+
+      await realtimeNoteService.handleNotePermissionChanged(note);
+
+      expect(loggedUserTransporter.disconnect).toHaveBeenCalledTimes(0);
+    });
+
+    it('should close the connection for removed connection', async () => {
+      const guestUserTransporter = clientWithoutReadWrite.getTransporter();
+      jest.spyOn(guestUserTransporter, 'disconnect');
+
+      await realtimeNoteService.handleNotePermissionChanged(note);
+
+      expect(guestUserTransporter.disconnect).toHaveBeenCalledTimes(1);
+    });
+
+    it('should change acceptEdits to true', async () => {
+      await realtimeNoteService.handleNotePermissionChanged(note);
+      expect(clientWithReadWrite.acceptEdits).toBeTruthy();
+    });
+    it('should change acceptEdits to false', async () => {
+      clientWithRead.acceptEdits = true;
+      await realtimeNoteService.handleNotePermissionChanged(note);
+      expect(clientWithRead.acceptEdits).toBeFalsy();
+    });
   });
 
   it("creates a new realtime note if it doesn't exist yet", async () => {
