@@ -12,7 +12,9 @@ import appConfiguration, { AppConfig } from '../../config/app.config';
 import { NoteEvent } from '../../events';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { Note } from '../../notes/note.entity';
+import { PermissionsService } from '../../permissions/permissions.service';
 import { RevisionsService } from '../../revisions/revisions.service';
+import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';
 import { RealtimeNoteStore } from './realtime-note-store';
 
@@ -25,6 +27,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
     private schedulerRegistry: SchedulerRegistry,
     @Inject(appConfiguration.KEY)
     private appConfig: AppConfig,
+    private permissionService: PermissionsService,
   ) {}
 
   beforeApplicationShutdown(): void {
@@ -109,11 +112,36 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
   }
 
   @OnEvent(NoteEvent.PERMISSION_CHANGE)
-  public handleNotePermissionChanged(noteId: Note['id']): void {
-    const realtimeNote = this.realtimeNoteStore.find(noteId);
-    if (realtimeNote) {
-      realtimeNote.announcePermissionChange();
+  public async handleNotePermissionChanged(note: Note): Promise<void> {
+    const realtimeNote = this.realtimeNoteStore.find(note.id);
+    if (!realtimeNote) return;
+
+    realtimeNote.announcePermissionChange();
+    const allConnections = realtimeNote.getConnections();
+    await this.updateOrCloseConnection(allConnections, note);
+  }
+
+  private async updateOrCloseConnection(
+    connections: RealtimeConnection[],
+    note: Note,
+  ): Promise<void> {
+    for (const connection of connections) {
+      if (await this.connectionCanRead(connection, note)) {
+        connection.acceptEdits = await this.permissionService.mayWrite(
+          connection.getUser(),
+          note,
+        );
+      } else {
+        connection.getTransporter().disconnect();
+      }
     }
+  }
+
+  private async connectionCanRead(
+    connection: RealtimeConnection,
+    note: Note,
+  ): Promise<boolean> {
+    return await this.permissionService.mayRead(connection.getUser(), note);
   }
 
   @OnEvent(NoteEvent.DELETION)

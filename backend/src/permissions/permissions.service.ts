@@ -191,8 +191,8 @@ export class PermissionsService {
     return false;
   }
 
-  private notifyOthers(noteId: Note['id']): void {
-    this.eventEmitter.emit(NoteEvent.PERMISSION_CHANGE, noteId);
+  private notifyOthers(note: Note): void {
+    this.eventEmitter.emit(NoteEvent.PERMISSION_CHANGE, note);
   }
 
   /**
@@ -256,7 +256,7 @@ export class PermissionsService {
       createdPermission.note = Promise.resolve(note);
       (await note.groupPermissions).push(createdPermission);
     }
-    this.notifyOthers(note.id);
+    this.notifyOthers(note);
     return await this.noteRepository.save(note);
   }
 
@@ -291,7 +291,7 @@ export class PermissionsService {
       );
       (await note.userPermissions).push(noteUserPermission);
     }
-    this.notifyOthers(note.id);
+    this.notifyOthers(note);
     return await this.noteRepository.save(note);
   }
 
@@ -323,7 +323,7 @@ export class PermissionsService {
       }
     }
     note.userPermissions = Promise.resolve(newPermissions);
-    this.notifyOthers(note.id);
+    this.notifyOthers(note);
     return await this.noteRepository.save(note);
   }
 
@@ -363,7 +363,7 @@ export class PermissionsService {
       );
       (await note.groupPermissions).push(noteGroupPermission);
     }
-    this.notifyOthers(note.id);
+    this.notifyOthers(note);
     return await this.noteRepository.save(note);
   }
 
@@ -398,7 +398,7 @@ export class PermissionsService {
       }
     }
     note.groupPermissions = Promise.resolve(newPermissions);
-    this.notifyOthers(note.id);
+    this.notifyOthers(note);
     return await this.noteRepository.save(note);
   }
 
@@ -411,7 +411,7 @@ export class PermissionsService {
    */
   async changeOwner(note: Note, owner: User): Promise<Note> {
     note.owner = Promise.resolve(owner);
-    this.notifyOthers(note.id);
+    this.notifyOthers(note);
     return await this.noteRepository.save(note);
   }
 }
