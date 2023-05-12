@@ -11,12 +11,12 @@ import {
   Scope,
 } from '@nestjs/common';
 import { isObject } from '@nestjs/common/utils/shared.utils';
+import { blue, cyanBright, green, magentaBright, red, yellow } from 'cli-color';
 
 import appConfiguration, { AppConfig } from '../config/app.config';
 import { Loglevel } from '../config/loglevel.enum';
 import { needToLog } from '../config/utils';
 
-import clc = require('cli-color');
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions;
 
 @Injectable({ scope: Scope.TRANSIENT })
@@ -44,7 +44,7 @@ export class ConsoleLoggerService implements LoggerService {
   error(message: unknown, trace = '', functionContext?: string): void {
     this.printMessage(
       message,
-      clc.red,
+      red,
       this.makeContextString(functionContext),
       false,
     );
@@ -55,7 +55,7 @@ export class ConsoleLoggerService implements LoggerService {
     if (needToLog(this.appConfig.loglevel, Loglevel.INFO)) {
       this.printMessage(
         message,
-        clc.green,
+        green,
         this.makeContextString(functionContext),
         false,
       );
@@ -66,7 +66,7 @@ export class ConsoleLoggerService implements LoggerService {
     if (needToLog(this.appConfig.loglevel, Loglevel.WARN)) {
       this.printMessage(
         message,
-        clc.yellow,
+        yellow,
         this.makeContextString(functionContext),
         false,
       );
@@ -77,7 +77,7 @@ export class ConsoleLoggerService implements LoggerService {
     if (needToLog(this.appConfig.loglevel, Loglevel.DEBUG)) {
       this.printMessage(
         message,
-        clc.magentaBright,
+        magentaBright,
         this.makeContextString(functionContext),
         false,
       );
@@ -88,7 +88,7 @@ export class ConsoleLoggerService implements LoggerService {
     if (needToLog(this.appConfig.loglevel, Loglevel.TRACE)) {
       this.printMessage(
         message,
-        clc.cyanBright,
+        cyanBright,
         this.makeContextString(functionContext),
         false,
       );
@@ -155,7 +155,7 @@ export class ConsoleLoggerService implements LoggerService {
       localeStringOptions,
     );
 
-    const contextMessage = context ? clc.blue(`[${context}] `) : '';
+    const contextMessage = context ? blue(`[${context}] `) : '';
     const timestampDiff = this.updateAndGetTimestampDiff(isTimeDiffEnabled);
 
     process.stdout.write(
@@ -166,7 +166,7 @@ export class ConsoleLoggerService implements LoggerService {
   private updateAndGetTimestampDiff(isTimeDiffEnabled?: boolean): string {
     const includeTimestamp = this.lastTimestamp && isTimeDiffEnabled;
     const result = includeTimestamp
-      ? clc.yellow(` +${Date.now() - this.lastTimestamp}ms`)
+      ? yellow(` +${Date.now() - this.lastTimestamp}ms`)
       : '';
     this.lastTimestamp = Date.now();
     return result;
