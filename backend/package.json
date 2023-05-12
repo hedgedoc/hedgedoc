@@ -81,7 +81,7 @@
     "@nestjs/schematics": "9.1.0",
     "@nestjs/testing": "9.4.0",
     "@trivago/prettier-plugin-sort-imports": "4.1.1",
-    "@tsconfig/node18": "2.0.0",
+    "@tsconfig/node18": "2.0.1",
     "@types/cli-color": "2.0.2",
     "@types/cookie": "0.5.1",
     "@types/cookie-signature": "1.1.0",
