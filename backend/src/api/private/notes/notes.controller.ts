@@ -200,7 +200,6 @@ export class NotesController {
   @OpenApi(200, 403, 404)
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(PermissionsGuard)
   async setUserPermission(
     @RequestUser() user: User,
     @RequestNote() note: Note,
@@ -218,7 +217,6 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(PermissionsGuard)
   @Delete(':noteIdOrAlias/metadata/permissions/users/:userName')
   async removeUserPermission(
     @RequestUser() user: User,
@@ -244,7 +242,6 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(PermissionsGuard)
   @Put(':noteIdOrAlias/metadata/permissions/groups/:groupName')
   async setGroupPermission(
     @RequestUser() user: User,
@@ -280,7 +277,6 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @Permissions(Permission.OWNER)
-  @UseGuards(PermissionsGuard)
   @Put(':noteIdOrAlias/metadata/permissions/owner')
   async changeOwner(
     @RequestUser() user: User,
