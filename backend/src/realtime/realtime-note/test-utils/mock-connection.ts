@@ -10,6 +10,7 @@ import {
 import { Mock } from 'ts-mockery';
 
 import { User } from '../../../users/user.entity';
+import { Username } from '../../../utils/username';
 import { RealtimeConnection } from '../realtime-connection';
 import { RealtimeNote } from '../realtime-note';
 import { RealtimeUserStatusAdapter } from '../realtime-user-status-adapter';
@@ -20,13 +21,13 @@ enum RealtimeUserState {
   WITH_READONLY,
 }
 
-const MOCK_FALLBACK_USERNAME = 'mock';
+const MOCK_FALLBACK_USERNAME: Username = 'mock';
 
 /**
  * Creates a mocked {@link RealtimeConnection realtime connection}.
  */
 export class MockConnectionBuilder {
-  private username: string | null;
+  private username: Username | null;
   private displayName: string | undefined;
   private includeRealtimeUserStatus: RealtimeUserState =
     RealtimeUserState.WITHOUT;
@@ -49,7 +50,7 @@ export class MockConnectionBuilder {
    *
    * @param username the username of the mocked user. If this value is omitted then the builder will user a {@link MOCK_FALLBACK_USERNAME fallback}.
    */
-  public withLoggedInUser(username?: string): this {
+  public withLoggedInUser(username?: Username): this {
     const newUsername = username ?? MOCK_FALLBACK_USERNAME;
     this.username = newUsername;
     this.displayName = newUsername;

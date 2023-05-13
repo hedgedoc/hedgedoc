@@ -1,12 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsLowercase, IsString } from 'class-validator';
 
 import { BaseDto } from '../utils/base.dto.';
+import { Username } from '../utils/username';
 
 export class UserInfoDto extends BaseDto {
   /**
@@ -14,8 +15,9 @@ export class UserInfoDto extends BaseDto {
    * @example "john.smith"
    */
   @IsString()
+  @IsLowercase()
   @ApiProperty()
-  username: string;
+  username: Username;
 
   /**
    * The display name

@@ -1,13 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsDate, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsLowercase, IsOptional, IsString } from 'class-validator';
 
 import { BaseDto } from '../utils/base.dto.';
+import { Username } from '../utils/username';
 
 export class MediaUploadDto extends BaseDto {
   /**
@@ -41,6 +42,7 @@ export class MediaUploadDto extends BaseDto {
    * @example "testuser5"
    */
   @IsString()
+  @IsLowercase()
   @ApiProperty()
-  username: string | null;
+  username: Username | null;
 }

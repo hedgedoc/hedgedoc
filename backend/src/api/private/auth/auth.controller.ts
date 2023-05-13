@@ -29,6 +29,7 @@ import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { SessionState } from '../../../session/session.service';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
+import { makeUsernameLowercase } from '../../../utils/username';
 import { LoginEnabledGuard } from '../../utils/login-enabled.guard';
 import { OpenApi } from '../../utils/openapi.decorator';
 import { RegistrationEnabledGuard } from '../../utils/registration-enabled.guard';
@@ -107,8 +108,8 @@ export class AuthController {
     @Param('ldapIdentifier') ldapIdentifier: string,
     @Body() loginDto: LdapLoginDto,
   ): void {
-    // There is no further testing needed as we only get to this point if LocalAuthGuard was successful
-    request.session.username = loginDto.username;
+    // There is no further testing needed as we only get to this point if LdapAuthGuard was successful
+    request.session.username = makeUsernameLowercase(loginDto.username);
     request.session.authProvider = 'ldap';
   }
 

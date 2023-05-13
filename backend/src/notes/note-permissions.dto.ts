@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,20 +8,23 @@ import { Type } from 'class-transformer';
 import {
   IsArray,
   IsBoolean,
+  IsLowercase,
   IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
 
 import { BaseDto } from '../utils/base.dto.';
+import { Username } from '../utils/username';
 
 export class NoteUserPermissionEntryDto extends BaseDto {
   /**
    * Username of the User this permission applies to
    */
   @IsString()
+  @IsLowercase()
   @ApiProperty()
-  username: string;
+  username: Username;
 
   /**
    * True if the user is allowed to edit the note
@@ -38,8 +41,9 @@ export class NoteUserPermissionUpdateDto {
    * @example "john.smith"
    */
   @IsString()
+  @IsLowercase()
   @ApiProperty()
-  username: string;
+  username: Username;
 
   /**
    * True if the user should be allowed to edit the note

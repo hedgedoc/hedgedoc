@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 
 import { AlreadyInDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { Username } from '../utils/username';
 import {
   FullUserInfoDto,
   UserInfoDto,
@@ -29,12 +30,12 @@ export class UsersService {
   /**
    * @async
    * Create a new user with a given username and displayName
-   * @param username - the username the new user shall have
-   * @param displayName - the display name the new user shall have
+   * @param {Username} username - the username the new user shall have
+   * @param {string} displayName - the display name the new user shall have
    * @return {User} the user
    * @throws {AlreadyInDBError} the username is already taken.
    */
-  async createUser(username: string, displayName: string): Promise<User> {
+  async createUser(username: Username, displayName: string): Promise<User> {
     const user = User.create(username, displayName);
     try {
       return await this.userRepository.save(user);
@@ -77,12 +78,12 @@ export class UsersService {
   /**
    * @async
    * Get the user specified by the username
-   * @param {string} username the username by which the user is specified
+   * @param {Username} username the username by which the user is specified
    * @param {UserRelationEnum[]} [withRelations=[]] if the returned user object should contain certain relations
    * @return {User} the specified user
    */
   async getUserByUsername(
-    username: string,
+    username: Username,
     withRelations: UserRelationEnum[] = [],
   ): Promise<User> {
     const user = await this.userRepository.findOne({

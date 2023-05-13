@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -22,6 +22,7 @@ import authConfiguration, {
 import { NotInDBError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { UsersService } from '../../users/users.service';
+import { makeUsernameLowercase } from '../../utils/username';
 import { Identity } from '../identity.entity';
 import { IdentityService } from '../identity.service';
 import { ProviderType } from '../provider-type.enum';
@@ -85,7 +86,7 @@ export class LdapStrategy extends PassportStrategy(Strategy, 'ldap') {
    */
   private loginWithLDAP(
     ldapConfig: LDAPConfig,
-    username: string,
+    username: string, // This is not of type Username, because LDAP server may use mixed case usernames
     password: string,
     doneCallBack: VerifiedCallback,
   ): void {
@@ -146,7 +147,7 @@ export class LdapStrategy extends PassportStrategy(Strategy, 'ldap') {
     userId: string,
     ldapConfig: LDAPConfig,
     user: Record<string, string>,
-    username: string,
+    username: string, // This is not of type Username, because LDAP server may use mixed case usernames
   ): void {
     this.identityService
       .getIdentityFromUserIdAndProviderType(userId, ProviderType.LDAP)
@@ -162,8 +163,9 @@ export class LdapStrategy extends PassportStrategy(Strategy, 'ldap') {
       .catch(async (error) => {
         if (error instanceof NotInDBError) {
           // The user/identity does not yet exist
+          const usernameLowercase = makeUsernameLowercase(username); // This ensures ldap user can be given permission via usernames
           const newUser = await this.usersService.createUser(
-            username,
+            usernameLowercase,
             // if there is no displayName we use the username
             user[ldapConfig.displayNameField] ?? username,
           );
