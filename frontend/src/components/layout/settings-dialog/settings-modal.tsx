@@ -30,7 +30,7 @@ export const SettingsModal: React.FC<CommonModalProps> = ({ show, onHide }) => {
       titleI18nKey={'settings.title'}
       showCloseButton={true}>
       <Modal.Body>
-        <Tabs navbar={false} variant={'pills'} defaultActiveKey={'global'}>
+        <Tabs navbar={false} variant={'tabs'} defaultActiveKey={'global'}>
           <Tab title={t('settings.global.label')} eventKey={'global'}>
             <GlobalSettingsTabContent />
           </Tab>
