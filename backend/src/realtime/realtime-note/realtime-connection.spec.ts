@@ -13,6 +13,7 @@ import { Mock } from 'ts-mockery';
 
 import { Note } from '../../notes/note.entity';
 import { User } from '../../users/user.entity';
+import { Username } from '../../utils/username';
 import * as NameRandomizerModule from './random-word-lists/name-randomizer';
 import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';
@@ -39,7 +40,7 @@ describe('websocket connection', () => {
   let mockedUser: User;
   let mockedMessageTransporter: MessageTransporter;
 
-  const mockedUserName = 'mockedUserName';
+  const mockedUserName: Username = 'mocked-user-name';
   const mockedDisplayName = 'mockedDisplayName';
 
   beforeEach(() => {

@@ -16,12 +16,13 @@ import { RegisterDto } from '../../src/identity/local/register.dto';
 import { UpdatePasswordDto } from '../../src/identity/local/update-password.dto';
 import { UserRelationEnum } from '../../src/users/user-relation.enum';
 import { checkPassword } from '../../src/utils/password';
+import { Username } from '../../src/utils/username';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Auth', () => {
   let testSetup: TestSetup;
 
-  let username: string;
+  let username: Username;
   let displayName: string;
   let password: string;
 

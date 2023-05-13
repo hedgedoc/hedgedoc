@@ -1,13 +1,16 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { IsString } from 'class-validator';
+import { IsLowercase, IsString } from 'class-validator';
+
+import { Username } from '../../utils/username';
 
 export class RegisterDto {
   @IsString()
-  username: string;
+  @IsLowercase()
+  username: Username;
 
   @IsString()
   displayName: string;

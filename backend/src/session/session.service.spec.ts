@@ -28,7 +28,7 @@ describe('SessionService', () => {
   let authConfigMock: AuthConfig;
   let typeormStoreConstructorMock: jest.SpyInstance;
   const mockedExistingSessionId = 'mockedExistingSessionId';
-  const mockUsername = 'mockUser';
+  const mockUsername = 'mock-user';
   const mockSecret = 'mockSecret';
   let sessionService: SessionService;
 

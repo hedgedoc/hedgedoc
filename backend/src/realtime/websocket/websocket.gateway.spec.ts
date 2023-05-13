@@ -41,6 +41,7 @@ import { Session } from '../../users/session.entity';
 import { User } from '../../users/user.entity';
 import { UsersModule } from '../../users/users.module';
 import { UsersService } from '../../users/users.service';
+import { Username } from '../../utils/username';
 import * as websocketConnectionModule from '../realtime-note/realtime-connection';
 import { RealtimeConnection } from '../realtime-note/realtime-connection';
 import { RealtimeNote } from '../realtime-note/realtime-note';
@@ -165,7 +166,7 @@ describe('Websocket gateway', () => {
           ),
       );
 
-    const mockUsername = 'mockUsername';
+    const mockUsername: Username = 'mock-username';
     jest
       .spyOn(sessionService, 'fetchUsernameForSessionId')
       .mockImplementation((sessionId: string) =>

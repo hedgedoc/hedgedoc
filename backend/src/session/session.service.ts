@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -19,10 +19,11 @@ import databaseConfiguration, {
 } from '../config/database.config';
 import { Session } from '../users/session.entity';
 import { HEDGEDOC_SESSION } from '../utils/session';
+import { Username } from '../utils/username';
 
 export interface SessionState {
   cookie: unknown;
-  username?: string;
+  username?: Username;
   authProvider: string;
 }
 
@@ -58,10 +59,10 @@ export class SessionService {
    * @param sessionId The session id for which the owning user should be found
    * @return A Promise that either resolves with the username or rejects with an error
    */
-  fetchUsernameForSessionId(sessionId: string): Promise<string | undefined> {
+  fetchUsernameForSessionId(sessionId: string): Promise<Username | undefined> {
     return new Promise((resolve, reject) => {
       this.typeormStore.get(sessionId, (error?: Error, result?: SessionState) =>
-        error || !result ? reject(error) : resolve(result.username),
+        error || !result ? reject(error) : resolve(result.username as Username),
       );
     });
   }

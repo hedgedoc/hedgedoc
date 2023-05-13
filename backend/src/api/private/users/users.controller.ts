@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,6 +9,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { UserInfoDto } from '../../../users/user-info.dto';
 import { UsersService } from '../../../users/users.service';
+import { Username } from '../../../utils/username';
 import { OpenApi } from '../../utils/openapi.decorator';
 
 @ApiTags('users')
@@ -23,7 +24,7 @@ export class UsersController {
 
   @Get(':username')
   @OpenApi(200)
-  async getUser(@Param('username') username: string): Promise<UserInfoDto> {
+  async getUser(@Param('username') username: Username): Promise<UserInfoDto> {
     return this.userService.toUserDto(
       await this.userService.getUserByUsername(username),
     );

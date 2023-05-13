@@ -40,9 +40,9 @@ describe('RealtimeNoteService', () => {
   let clientWithoutReadWrite: RealtimeConnection;
   let deleteIntervalSpy: jest.SpyInstance;
 
-  const readWriteUsername = 'canReadWriteUser';
-  const onlyReadUsername = 'canOnlyReadUser';
-  const noAccessUsername = 'noReadWriteUser';
+  const readWriteUsername = 'can-read-write-user';
+  const onlyReadUsername = 'can-only-read-user';
+  const noAccessUsername = 'no-read-write-user';
 
   afterAll(() => {
     jest.useRealTimers();

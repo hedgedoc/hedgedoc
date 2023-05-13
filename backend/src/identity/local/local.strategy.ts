@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,7 @@ import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { UserRelationEnum } from '../../users/user-relation.enum';
 import { User } from '../../users/user.entity';
 import { UsersService } from '../../users/users.service';
+import { Username } from '../../utils/username';
 import { IdentityService } from '../identity.service';
 
 @Injectable()
@@ -31,7 +32,7 @@ export class LocalStrategy extends PassportStrategy(Strategy, 'local') {
     logger.setContext(LocalStrategy.name);
   }
 
-  async validate(username: string, password: string): Promise<User> {
+  async validate(username: Username, password: string): Promise<User> {
     try {
       const user = await this.userService.getUserByUsername(username, [
         UserRelationEnum.IDENTITIES,
