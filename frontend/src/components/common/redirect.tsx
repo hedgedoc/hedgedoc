@@ -11,6 +11,7 @@ import React, { useEffect } from 'react'
 
 export interface RedirectProps {
   to: string
+  replace?: boolean
 }
 
 const logger = new Logger('Redirect')
@@ -19,15 +20,16 @@ const logger = new Logger('Redirect')
  * Redirects the user to another URL. Can be external or internal.
  *
  * @param to The target URL
+ * @param replace Defines if the current browser history entry should be replaced or not
  */
-export const Redirect: React.FC<RedirectProps> = ({ to }) => {
+export const Redirect: React.FC<RedirectProps> = ({ to, replace }) => {
   const router = useRouter()
 
   useEffect(() => {
-    router?.push(to).catch((error: Error) => {
+    ;(replace ? router.replace(to) : router.push(to)).catch((error: Error) => {
       logger.error(`Error while redirecting to ${to}`, error)
     })
-  })
+  }, [replace, router, to])
 
   return (
     <span {...testId('redirect')}>
