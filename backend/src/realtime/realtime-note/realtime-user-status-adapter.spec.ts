@@ -3,33 +3,31 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Message, MessageTransporter, MessageType } from '@hedgedoc/commons';
-import { Mock } from 'ts-mockery';
+import {
+  Message,
+  MessageType,
+  MockedBackendMessageTransporter,
+} from '@hedgedoc/commons';
 
-import { Note } from '../../notes/note.entity';
-import { RealtimeConnection } from './realtime-connection';
-import { RealtimeNote } from './realtime-note';
-import { MockConnectionBuilder } from './test-utils/mock-connection';
+import { RealtimeUserStatusAdapter } from './realtime-user-status-adapter';
 
 type SendMessageSpy = jest.SpyInstance<
   void,
-  [Required<MessageTransporter['sendMessage']>]
+  [Required<MockedBackendMessageTransporter['sendMessage']>]
 >;
 
 describe('realtime user status adapter', () => {
-  let clientLoggedIn1: RealtimeConnection;
-  let clientLoggedIn2: RealtimeConnection;
-  let clientGuest: RealtimeConnection;
-  let clientNotReady: RealtimeConnection;
-  let clientDecline: RealtimeConnection;
+  let clientLoggedIn1: RealtimeUserStatusAdapter | undefined;
+  let clientLoggedIn2: RealtimeUserStatusAdapter | undefined;
+  let clientGuest: RealtimeUserStatusAdapter | undefined;
+  let clientNotReady: RealtimeUserStatusAdapter | undefined;
+  let clientDecline: RealtimeUserStatusAdapter | undefined;
 
   let clientLoggedIn1SendMessageSpy: SendMessageSpy;
   let clientLoggedIn2SendMessageSpy: SendMessageSpy;
   let clientGuestSendMessageSpy: SendMessageSpy;
   let clientNotReadySendMessageSpy: SendMessageSpy;
   let clientDeclineSendMessageSpy: SendMessageSpy;
-
-  let realtimeNote: RealtimeNote;
 
   const clientLoggedIn1Username = 'logged.in1';
   const clientLoggedIn2Username = 'logged.in2';
@@ -38,46 +36,96 @@ describe('realtime user status adapter', () => {
 
   const guestDisplayName = 'Virtuous Mockingbird';
 
-  function spyOnSendMessage(connection: RealtimeConnection): jest.SpyInstance {
-    return jest.spyOn(connection.getTransporter(), 'sendMessage');
-  }
+  let messageTransporterLoggedIn1: MockedBackendMessageTransporter;
+  let messageTransporterLoggedIn2: MockedBackendMessageTransporter;
+  let messageTransporterGuest: MockedBackendMessageTransporter;
+  let messageTransporterNotReady: MockedBackendMessageTransporter;
+  let messageTransporterDecline: MockedBackendMessageTransporter;
 
   beforeEach(() => {
-    realtimeNote = new RealtimeNote(
-      Mock.of<Note>({ id: 9876 }),
-      'mockedContent',
+    clientLoggedIn1 = undefined;
+    clientLoggedIn2 = undefined;
+    clientGuest = undefined;
+    clientNotReady = undefined;
+    clientDecline = undefined;
+
+    messageTransporterLoggedIn1 = new MockedBackendMessageTransporter('');
+    messageTransporterLoggedIn2 = new MockedBackendMessageTransporter('');
+    messageTransporterGuest = new MockedBackendMessageTransporter('');
+    messageTransporterNotReady = new MockedBackendMessageTransporter('');
+    messageTransporterDecline = new MockedBackendMessageTransporter('');
+
+    function otherAdapterCollector(): RealtimeUserStatusAdapter[] {
+      return [
+        clientLoggedIn1,
+        clientLoggedIn2,
+        clientGuest,
+        clientNotReady,
+        clientDecline,
+      ].filter((value) => value !== undefined) as RealtimeUserStatusAdapter[];
+    }
+
+    clientLoggedIn1 = new RealtimeUserStatusAdapter(
+      clientLoggedIn1Username,
+      clientLoggedIn1Username,
+      otherAdapterCollector,
+      messageTransporterLoggedIn1,
+      () => true,
     );
-    clientLoggedIn1 = new MockConnectionBuilder(realtimeNote)
-      .withAcceptingRealtimeUserStatus()
-      .withLoggedInUser(clientLoggedIn1Username)
-      .build();
-    clientLoggedIn2 = new MockConnectionBuilder(realtimeNote)
-      .withAcceptingRealtimeUserStatus()
-      .withLoggedInUser(clientLoggedIn2Username)
-      .build();
-    clientGuest = new MockConnectionBuilder(realtimeNote)
-      .withAcceptingRealtimeUserStatus()
-      .withGuestUser(guestDisplayName)
-      .build();
-    clientNotReady = new MockConnectionBuilder(realtimeNote)
-      .withAcceptingRealtimeUserStatus()
-      .withLoggedInUser(clientNotReadyUsername)
-      .build();
-    clientDecline = new MockConnectionBuilder(realtimeNote)
-      .withDecliningRealtimeUserStatus()
-      .withLoggedInUser(clientDeclineUsername)
-      .build();
+    clientLoggedIn2 = new RealtimeUserStatusAdapter(
+      clientLoggedIn2Username,
+      clientLoggedIn2Username,
+      otherAdapterCollector,
+      messageTransporterLoggedIn2,
+      () => true,
+    );
+    clientGuest = new RealtimeUserStatusAdapter(
+      null,
+      guestDisplayName,
+      otherAdapterCollector,
+      messageTransporterGuest,
+      () => true,
+    );
+    clientNotReady = new RealtimeUserStatusAdapter(
+      clientNotReadyUsername,
+      clientNotReadyUsername,
+      otherAdapterCollector,
+      messageTransporterNotReady,
+      () => true,
+    );
+    clientDecline = new RealtimeUserStatusAdapter(
+      clientDeclineUsername,
+      clientDeclineUsername,
+      otherAdapterCollector,
+      messageTransporterDecline,
+      () => false,
+    );
 
-    clientLoggedIn1SendMessageSpy = spyOnSendMessage(clientLoggedIn1);
-    clientLoggedIn2SendMessageSpy = spyOnSendMessage(clientLoggedIn2);
-    clientGuestSendMessageSpy = spyOnSendMessage(clientGuest);
-    clientNotReadySendMessageSpy = spyOnSendMessage(clientNotReady);
-    clientDeclineSendMessageSpy = spyOnSendMessage(clientDecline);
+    clientLoggedIn1SendMessageSpy = jest.spyOn(
+      messageTransporterLoggedIn1,
+      'sendMessage',
+    );
+    clientLoggedIn2SendMessageSpy = jest.spyOn(
+      messageTransporterLoggedIn2,
+      'sendMessage',
+    );
+    clientGuestSendMessageSpy = jest.spyOn(
+      messageTransporterGuest,
+      'sendMessage',
+    );
+    clientNotReadySendMessageSpy = jest.spyOn(
+      messageTransporterNotReady,
+      'sendMessage',
+    );
+    clientDeclineSendMessageSpy = jest.spyOn(
+      messageTransporterDecline,
+      'sendMessage',
+    );
 
-    clientLoggedIn1.getTransporter().sendReady();
-    clientLoggedIn2.getTransporter().sendReady();
-    clientGuest.getTransporter().sendReady();
-    clientDecline.getTransporter().sendReady();
+    messageTransporterLoggedIn1.sendReady();
+    messageTransporterLoggedIn2.sendReady();
+    messageTransporterGuest.sendReady();
+    messageTransporterDecline.sendReady();
   });
 
   it('can answer a state request', () => {
@@ -87,9 +135,7 @@ describe('realtime user status adapter', () => {
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(0);
 
-    clientLoggedIn1
-      .getTransporter()
-      .emit(MessageType.REALTIME_USER_STATE_REQUEST);
+    messageTransporterLoggedIn1.emit(MessageType.REALTIME_USER_STATE_REQUEST);
 
     const expectedMessage1: Message<MessageType.REALTIME_USER_STATE_SET> = {
       type: MessageType.REALTIME_USER_STATE_SET,
@@ -149,15 +195,13 @@ describe('realtime user status adapter', () => {
     const newFrom = Math.floor(Math.random() * 100);
     const newTo = Math.floor(Math.random() * 100);
 
-    clientLoggedIn1
-      .getTransporter()
-      .emit(MessageType.REALTIME_USER_SINGLE_UPDATE, {
-        type: MessageType.REALTIME_USER_SINGLE_UPDATE,
-        payload: {
-          from: newFrom,
-          to: newTo,
-        },
-      });
+    messageTransporterLoggedIn1.emit(MessageType.REALTIME_USER_SINGLE_UPDATE, {
+      type: MessageType.REALTIME_USER_SINGLE_UPDATE,
+      payload: {
+        from: newFrom,
+        to: newTo,
+      },
+    });
 
     const expectedMessage2: Message<MessageType.REALTIME_USER_STATE_SET> = {
       type: MessageType.REALTIME_USER_STATE_SET,
@@ -302,7 +346,7 @@ describe('realtime user status adapter', () => {
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(0);
 
-    clientLoggedIn2.getTransporter().disconnect();
+    messageTransporterLoggedIn2.disconnect();
 
     const expectedMessage1: Message<MessageType.REALTIME_USER_STATE_SET> = {
       type: MessageType.REALTIME_USER_STATE_SET,
@@ -417,14 +461,12 @@ describe('realtime user status adapter', () => {
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(0);
 
-    clientLoggedIn1
-      .getTransporter()
-      .emit(MessageType.REALTIME_USER_SET_ACTIVITY, {
-        type: MessageType.REALTIME_USER_SET_ACTIVITY,
-        payload: {
-          active: false,
-        },
-      });
+    messageTransporterLoggedIn1.emit(MessageType.REALTIME_USER_SET_ACTIVITY, {
+      type: MessageType.REALTIME_USER_SET_ACTIVITY,
+      payload: {
+        active: false,
+      },
+    });
 
     const expectedInactivityMessage2: Message<MessageType.REALTIME_USER_STATE_SET> =
       {
@@ -564,14 +606,12 @@ describe('realtime user status adapter', () => {
       expectedInactivityMessage5,
     );
 
-    clientLoggedIn1
-      .getTransporter()
-      .emit(MessageType.REALTIME_USER_SET_ACTIVITY, {
-        type: MessageType.REALTIME_USER_SET_ACTIVITY,
-        payload: {
-          active: false,
-        },
-      });
+    messageTransporterLoggedIn1.emit(MessageType.REALTIME_USER_SET_ACTIVITY, {
+      type: MessageType.REALTIME_USER_SET_ACTIVITY,
+      payload: {
+        active: false,
+      },
+    });
 
     expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(
@@ -588,14 +628,19 @@ describe('realtime user status adapter', () => {
       expectedInactivityMessage5,
     );
 
-    clientLoggedIn1
-      .getTransporter()
-      .emit(MessageType.REALTIME_USER_SET_ACTIVITY, {
-        type: MessageType.REALTIME_USER_SET_ACTIVITY,
-        payload: {
-          active: true,
-        },
-      });
+    messageTransporterLoggedIn1.emit(MessageType.REALTIME_USER_SET_ACTIVITY, {
+      type: MessageType.REALTIME_USER_SET_ACTIVITY,
+      payload: {
+        active: true,
+      },
+    });
+
+    messageTransporterLoggedIn1.emit(MessageType.REALTIME_USER_SET_ACTIVITY, {
+      type: MessageType.REALTIME_USER_SET_ACTIVITY,
+      payload: {
+        active: true,
+      },
+    });
 
     const expectedReactivityMessage2: Message<MessageType.REALTIME_USER_STATE_SET> =
       {
@@ -735,14 +780,12 @@ describe('realtime user status adapter', () => {
       expectedReactivityMessage5,
     );
 
-    clientLoggedIn1
-      .getTransporter()
-      .emit(MessageType.REALTIME_USER_SET_ACTIVITY, {
-        type: MessageType.REALTIME_USER_SET_ACTIVITY,
-        payload: {
-          active: true,
-        },
-      });
+    messageTransporterLoggedIn1.emit(MessageType.REALTIME_USER_SET_ACTIVITY, {
+      type: MessageType.REALTIME_USER_SET_ACTIVITY,
+      payload: {
+        active: true,
+      },
+    });
 
     expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(

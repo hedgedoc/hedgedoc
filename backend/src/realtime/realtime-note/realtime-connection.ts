@@ -50,7 +50,11 @@ export class RealtimeConnection {
     this.realtimeUserStateAdapter = new RealtimeUserStatusAdapter(
       this.user?.username ?? null,
       this.getDisplayName(),
-      this,
+      () =>
+        this.realtimeNote
+          .getConnections()
+          .map((connection) => connection.getRealtimeUserStateAdapter()),
+      this.getTransporter(),
       () => acceptEdits,
     );
   }

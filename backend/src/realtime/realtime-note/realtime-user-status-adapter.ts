@@ -3,11 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Message, MessageType, RealtimeUser } from '@hedgedoc/commons';
+import {
+  Message,
+  MessageTransporter,
+  MessageType,
+  RealtimeUser,
+} from '@hedgedoc/commons';
 import { Listener } from 'eventemitter2';
 
-import { RealtimeConnection } from './realtime-connection';
-import { RealtimeNote } from './realtime-note';
+export type OtherAdapterCollector = () => RealtimeUserStatusAdapter[];
 
 /**
  * Saves the current realtime status of a specific client and sends updates of changes to other clients.
@@ -16,30 +20,23 @@ export class RealtimeUserStatusAdapter {
   private readonly realtimeUser: RealtimeUser;
 
   constructor(
-    username: string | null,
-    displayName: string,
-    private connection: RealtimeConnection,
+    private readonly username: string | null,
+    private readonly displayName: string,
+    private collectOtherAdapters: OtherAdapterCollector,
+    private messageTransporter: MessageTransporter,
     private acceptCursorUpdateProvider: () => boolean,
   ) {
-    this.realtimeUser = this.createInitialRealtimeUserState(
-      username,
-      displayName,
-      connection.getRealtimeNote(),
-    );
-    this.bindRealtimeUserStateEvents(connection);
+    this.realtimeUser = this.createInitialRealtimeUserState();
+    this.bindRealtimeUserStateEvents();
   }
 
-  private createInitialRealtimeUserState(
-    username: string | null,
-    displayName: string,
-    realtimeNote: RealtimeNote,
-  ): RealtimeUser {
+  private createInitialRealtimeUserState(): RealtimeUser {
     return {
-      username: username,
-      displayName: displayName,
+      username: this.username,
+      displayName: this.displayName,
       active: true,
       styleIndex: this.findLeastUsedStyleIndex(
-        this.createStyleIndexToCountMap(realtimeNote),
+        this.createStyleIndexToCountMap(),
       ),
       cursor: !this.acceptCursorUpdateProvider()
         ? null
@@ -50,51 +47,55 @@ export class RealtimeUserStatusAdapter {
     };
   }
 
-  private bindRealtimeUserStateEvents(connection: RealtimeConnection): void {
-    const realtimeNote = connection.getRealtimeNote();
-    const transporterMessagesListener = connection.getTransporter().on(
+  private bindRealtimeUserStateEvents(): void {
+    const transporterMessagesListener = this.messageTransporter.on(
       MessageType.REALTIME_USER_SINGLE_UPDATE,
       (message: Message<MessageType.REALTIME_USER_SINGLE_UPDATE>) => {
         this.realtimeUser.cursor = this.acceptCursorUpdateProvider()
           ? message.payload
           : null;
-        this.sendRealtimeUserStatusUpdateEvent(connection);
-      },
-      { objectify: true },
-    ) as Listener;
-    const transporterRequestMessageListener = connection.getTransporter().on(
-      MessageType.REALTIME_USER_STATE_REQUEST,
-      () => {
-        this.sendCompleteStateToClient(connection);
+        this.collectOtherAdapters()
+          .filter((adapter) => adapter !== this)
+          .forEach((adapter) => adapter.sendCompleteStateToClient());
       },
       { objectify: true },
     ) as Listener;
 
-    const clientRemoveListener = realtimeNote.on(
-      'clientRemoved',
-      (client: RealtimeConnection) => {
-        if (client === connection) {
-          this.sendRealtimeUserStatusUpdateEvent(connection);
-        }
+    const transporterRequestMessageListener = this.messageTransporter.on(
+      MessageType.REALTIME_USER_STATE_REQUEST,
+      () => {
+        this.sendCompleteStateToClient();
+      },
+      { objectify: true },
+    ) as Listener;
+
+    const clientRemoveListener = this.messageTransporter.on(
+      'disconnected',
+      () => {
+        this.collectOtherAdapters()
+          .filter((adapter) => adapter !== this)
+          .forEach((adapter) => adapter.sendCompleteStateToClient());
       },
       {
         objectify: true,
       },
     ) as Listener;
 
-    const realtimeUserSetActivityListener = connection.getTransporter().on(
+    const realtimeUserSetActivityListener = this.messageTransporter.on(
       MessageType.REALTIME_USER_SET_ACTIVITY,
       (message: Message<MessageType.REALTIME_USER_SET_ACTIVITY>) => {
         if (this.realtimeUser.active === message.payload.active) {
           return;
         }
         this.realtimeUser.active = message.payload.active;
-        this.sendRealtimeUserStatusUpdateEvent(connection);
+        this.collectOtherAdapters()
+          .filter((adapter) => adapter !== this)
+          .forEach((adapter) => adapter.sendCompleteStateToClient());
       },
       { objectify: true },
     ) as Listener;
 
-    connection.getTransporter().on('disconnected', () => {
+    this.messageTransporter.on('disconnected', () => {
       transporterMessagesListener?.off();
       transporterRequestMessageListener.off();
       clientRemoveListener.off();
@@ -102,43 +103,29 @@ export class RealtimeUserStatusAdapter {
     });
   }
 
-  private sendRealtimeUserStatusUpdateEvent(
-    exceptClient: RealtimeConnection,
-  ): void {
-    this.collectAllConnectionsExcept(exceptClient).forEach(
-      this.sendCompleteStateToClient.bind(this),
-    );
+  private getSendableState(): RealtimeUser | undefined {
+    return this.messageTransporter.isReady() ? this.realtimeUser : undefined;
   }
 
-  private sendCompleteStateToClient(receivingClient: RealtimeConnection): void {
-    const realtimeUser =
-      receivingClient.getRealtimeUserStateAdapter().realtimeUser;
-    const realtimeUsers = this.collectAllConnectionsExcept(receivingClient)
-      .map((client) => client.getRealtimeUserStateAdapter().realtimeUser)
-      .filter((realtimeUser) => realtimeUser !== null);
+  public sendCompleteStateToClient(): void {
+    if (!this.messageTransporter.isReady()) {
+      return;
+    }
+    const realtimeUsers = this.collectOtherAdapters()
+      .filter((adapter) => adapter !== this)
+      .map((adapter) => adapter.getSendableState())
+      .filter((value) => value !== undefined) as RealtimeUser[];
 
-    receivingClient.getTransporter().sendMessage({
+    this.messageTransporter.sendMessage({
       type: MessageType.REALTIME_USER_STATE_SET,
       payload: {
         users: realtimeUsers,
         ownUser: {
-          displayName: realtimeUser.displayName,
-          styleIndex: realtimeUser.styleIndex,
+          displayName: this.realtimeUser.displayName,
+          styleIndex: this.realtimeUser.styleIndex,
         },
       },
     });
-  }
-
-  private collectAllConnectionsExcept(
-    exceptClient: RealtimeConnection,
-  ): RealtimeConnection[] {
-    return this.connection
-      .getRealtimeNote()
-      .getConnections()
-      .filter(
-        (client) =>
-          client !== exceptClient && client.getTransporter().isReady(),
-      );
   }
 
   private findLeastUsedStyleIndex(map: Map<number, number>): number {
@@ -154,15 +141,9 @@ export class RealtimeUserStatusAdapter {
     return leastUsedStyleIndex;
   }
 
-  private createStyleIndexToCountMap(
-    realtimeNote: RealtimeNote,
-  ): Map<number, number> {
-    return realtimeNote
-      .getConnections()
-      .map(
-        (connection) =>
-          connection.getRealtimeUserStateAdapter().realtimeUser?.styleIndex,
-      )
+  private createStyleIndexToCountMap(): Map<number, number> {
+    return this.collectOtherAdapters()
+      .map((adapter) => adapter.realtimeUser.styleIndex)
       .reduce((map, styleIndex) => {
         if (styleIndex !== undefined) {
           const count = (map.get(styleIndex) ?? 0) + 1;

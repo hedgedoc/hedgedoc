@@ -82,8 +82,21 @@ export class MockConnectionBuilder {
     const displayName = this.deriveDisplayName();
 
     const transporter = new MockedBackendMessageTransporter('');
-    let realtimeUserStateAdapter: RealtimeUserStatusAdapter =
-      Mock.of<RealtimeUserStatusAdapter>({});
+    const realtimeUserStateAdapter: RealtimeUserStatusAdapter =
+      this.includeRealtimeUserStatus === RealtimeUserState.WITHOUT
+        ? Mock.of<RealtimeUserStatusAdapter>({})
+        : new RealtimeUserStatusAdapter(
+            this.username ?? null,
+            displayName,
+            () =>
+              this.realtimeNote
+                .getConnections()
+                .map((connection) => connection.getRealtimeUserStateAdapter()),
+            transporter,
+            () =>
+              this.includeRealtimeUserStatus ===
+              RealtimeUserState.WITH_READWRITE,
+          );
 
     const mockUser =
       this.username === null
@@ -106,16 +119,6 @@ export class MockConnectionBuilder {
     transporter.on('disconnected', () =>
       this.realtimeNote.removeClient(connection),
     );
-
-    if (this.includeRealtimeUserStatus !== RealtimeUserState.WITHOUT) {
-      realtimeUserStateAdapter = new RealtimeUserStatusAdapter(
-        this.username ?? null,
-        displayName,
-        connection,
-        () =>
-          this.includeRealtimeUserStatus === RealtimeUserState.WITH_READWRITE,
-      );
-    }
 
     this.realtimeNote.addClient(connection);
 
