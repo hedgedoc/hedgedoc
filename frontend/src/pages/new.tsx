@@ -37,7 +37,7 @@ export const NewNotePage: NextPage = () => {
         />
       }>
       <ShowIf condition={!!value}>
-        <Redirect to={`/n/${(value as Note).metadata.primaryAddress}`} />
+        <Redirect to={`/n/${(value as Note).metadata.primaryAddress}`} replace={true} />
       </ShowIf>
     </CustomAsyncLoadingBoundary>
   )
