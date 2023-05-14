@@ -16,7 +16,10 @@ import { User } from '../../users/user.entity';
 import * as NameRandomizerModule from './random-word-lists/name-randomizer';
 import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';
-import { RealtimeUserStatusAdapter } from './realtime-user-status-adapter';
+import {
+  OtherAdapterCollector,
+  RealtimeUserStatusAdapter,
+} from './realtime-user-status-adapter';
 import * as RealtimeUserStatusModule from './realtime-user-status-adapter';
 
 jest.mock('./random-word-lists/name-randomizer');
@@ -77,18 +80,46 @@ describe('websocket connection', () => {
   it.each([true, false])(
     'returns the correct realtime user status with acceptEdits %s',
     (acceptEdits) => {
-      const realtimeUserStatus = Mock.of<RealtimeUserStatusAdapter>();
-      let usedConnection: RealtimeConnection | undefined = undefined;
+      const realtimeUserStatus1 = Mock.of<RealtimeUserStatusAdapter>();
+      const realtimeUserStatus2 = Mock.of<RealtimeUserStatusAdapter>();
+      const realtimeUserStatus3 = Mock.of<RealtimeUserStatusAdapter>();
+
+      const realtimeConnections = [
+        Mock.of<RealtimeConnection>({
+          getRealtimeUserStateAdapter: () => realtimeUserStatus1,
+        }),
+        Mock.of<RealtimeConnection>({
+          getRealtimeUserStateAdapter: () => realtimeUserStatus2,
+        }),
+        Mock.of<RealtimeConnection>({
+          getRealtimeUserStateAdapter: () => realtimeUserStatus3,
+        }),
+      ];
 
       jest
+        .spyOn(mockedRealtimeNote, 'getConnections')
+        .mockImplementation(() => realtimeConnections);
+
+      const constructor = jest
         .spyOn(RealtimeUserStatusModule, 'RealtimeUserStatusAdapter')
         .mockImplementation(
-          (username, displayName, connection, acceptCursorUpdateProvider) => {
+          (
+            username,
+            displayName,
+            otherAdapterCollector: OtherAdapterCollector,
+            messageTransporter,
+            acceptCursorUpdateProvider,
+          ) => {
             expect(username).toBe(mockedUserName);
             expect(displayName).toBe(mockedDisplayName);
-            usedConnection = connection;
+            expect(otherAdapterCollector()).toStrictEqual([
+              realtimeUserStatus1,
+              realtimeUserStatus2,
+              realtimeUserStatus3,
+            ]);
+            expect(messageTransporter).toBe(mockedMessageTransporter);
             expect(acceptCursorUpdateProvider()).toBe(acceptEdits);
-            return realtimeUserStatus;
+            return realtimeUserStatus1;
           },
         );
 
@@ -99,8 +130,14 @@ describe('websocket connection', () => {
         acceptEdits,
       );
 
-      expect(usedConnection).toBe(sut);
-      expect(sut.getRealtimeUserStateAdapter()).toBe(realtimeUserStatus);
+      expect(constructor).toHaveBeenCalledWith(
+        mockedUserName,
+        mockedDisplayName,
+        expect.anything(),
+        mockedMessageTransporter,
+        expect.anything(),
+      );
+      expect(sut.getRealtimeUserStateAdapter()).toBe(realtimeUserStatus1);
     },
   );
 
