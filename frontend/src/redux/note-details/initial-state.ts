@@ -25,11 +25,7 @@ export const initialState: NoteDetails = {
   },
   selection: { from: 0 },
   rawFrontmatter: '',
-  frontmatterRendererInfo: {
-    frontmatterInvalid: false,
-    lineOffset: 0,
-    slideOptions: initialSlideOptions
-  },
+  startOfContentLineOffset: 0,
   id: '',
   createdAt: 0,
   updatedAt: 0,
@@ -52,8 +48,6 @@ export const initialState: NoteDetails = {
     lang: 'en',
     dir: NoteTextDirection.LTR,
     newlinesAreBreaks: true,
-    GA: '',
-    disqus: '',
     license: '',
     type: NoteType.DOCUMENT,
     opengraph: {},

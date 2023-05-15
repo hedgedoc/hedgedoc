@@ -5,7 +5,6 @@
  */
 import type { Note } from '../../../api/notes/types'
 import * as buildStateFromUpdatedMarkdownContentModule from '../build-state-from-updated-markdown-content'
-import { initialSlideOptions } from '../initial-state'
 import type { NoteDetails } from '../types/note-details'
 import { buildStateFromServerDto } from './build-state-from-set-note-data-from-server'
 import { NoteTextDirection, NoteType } from '@hedgedoc/commons'
@@ -88,8 +87,6 @@ describe('build state from set note data from server', () => {
         license: '',
         dir: NoteTextDirection.LTR,
         newlinesAreBreaks: true,
-        GA: '',
-        disqus: '',
         type: NoteType.DOCUMENT,
         opengraph: {},
         slideOptions: {
@@ -100,11 +97,7 @@ describe('build state from set note data from server', () => {
           slideNumber: false
         }
       },
-      frontmatterRendererInfo: {
-        frontmatterInvalid: false,
-        lineOffset: 0,
-        slideOptions: initialSlideOptions
-      },
+      startOfContentLineOffset: 0,
       title: 'title',
       selection: { from: 0 },
       markdownContent: {

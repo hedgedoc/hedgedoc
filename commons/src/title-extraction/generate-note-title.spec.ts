@@ -16,8 +16,6 @@ const testFrontmatter: NoteFrontmatter = {
   lang: 'en',
   dir: NoteTextDirection.LTR,
   newlinesAreBreaks: true,
-  GA: '',
-  disqus: '',
   license: '',
   type: NoteType.DOCUMENT,
   opengraph: {},

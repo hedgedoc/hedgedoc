@@ -5,7 +5,6 @@
  */
 import type { NoteMetadata } from '../../../api/notes/types'
 import type { CursorSelection } from '../../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
-import type { SlideOptions } from '@hedgedoc/commons'
 import type { NoteFrontmatter } from '@hedgedoc/commons'
 
 type UnnecessaryNoteAttributes = 'updatedAt' | 'createdAt' | 'tags' | 'description'
@@ -25,11 +24,5 @@ export interface NoteDetails extends Omit<NoteMetadata, UnnecessaryNoteAttribute
   firstHeading?: string
   rawFrontmatter: string
   frontmatter: NoteFrontmatter
-  frontmatterRendererInfo: RendererFrontmatterInfo
-}
-
-export interface RendererFrontmatterInfo {
-  lineOffset: number
-  frontmatterInvalid: boolean
-  slideOptions: SlideOptions
+  startOfContentLineOffset: number
 }
