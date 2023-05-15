@@ -39,8 +39,6 @@ const parseRawNoteFrontmatter = (rawData: RawNoteFrontmatter): NoteFrontmatter =
     description: rawData.description ?? initialState.frontmatter.description,
     robots: rawData.robots ?? initialState.frontmatter.robots,
     newlinesAreBreaks: parseBoolean(rawData.breaks) ?? initialState.frontmatter.newlinesAreBreaks,
-    GA: rawData.GA ?? initialState.frontmatter.GA,
-    disqus: rawData.disqus ?? initialState.frontmatter.disqus,
     lang: parseLanguage(rawData),
     type: parseNoteType(rawData),
     dir: parseTextDirection(rawData),

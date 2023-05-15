@@ -60,10 +60,10 @@ const buildStateFromMarkdownContentAndLines = (
         lines: markdownContentLines,
         lineStartIndexes
       },
+      startOfContentLineOffset: 0,
       rawFrontmatter: '',
       title: generateNoteTitle(initialState.frontmatter, state.firstHeading),
-      frontmatter: initialState.frontmatter,
-      frontmatterRendererInfo: initialState.frontmatterRendererInfo
+      frontmatter: initialState.frontmatter
     }
   }
 }
@@ -88,11 +88,7 @@ const buildStateFromFrontmatterUpdate = (
       rawFrontmatter: frontmatterExtraction.rawText,
       frontmatter: frontmatter,
       title: generateNoteTitle(frontmatter, state.firstHeading),
-      frontmatterRendererInfo: {
-        lineOffset: frontmatterExtraction.lineOffset,
-        frontmatterInvalid: false,
-        slideOptions: frontmatter.slideOptions
-      }
+      startOfContentLineOffset: frontmatterExtraction.lineOffset
     }
   } catch (e) {
     return {
@@ -100,11 +96,7 @@ const buildStateFromFrontmatterUpdate = (
       title: generateNoteTitle(initialState.frontmatter, state.firstHeading),
       rawFrontmatter: frontmatterExtraction.rawText,
       frontmatter: initialState.frontmatter,
-      frontmatterRendererInfo: {
-        lineOffset: frontmatterExtraction.lineOffset,
-        frontmatterInvalid: true,
-        slideOptions: initialState.frontmatterRendererInfo.slideOptions
-      }
+      startOfContentLineOffset: frontmatterExtraction.lineOffset
     }
   }
 }

@@ -27,8 +27,6 @@ export interface NoteFrontmatter {
   lang: Iso6391Language
   dir: NoteTextDirection
   newlinesAreBreaks: boolean
-  GA: string
-  disqus: string
   license: string
   type: NoteType
   opengraph: OpenGraph

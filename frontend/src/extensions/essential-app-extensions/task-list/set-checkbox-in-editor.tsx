@@ -32,7 +32,7 @@ export const useSetCheckboxInEditor = () => {
   return useCallback(
     ({ lineInMarkdown, newCheckedState }: TaskCheckedEventPayload): void => {
       changeEditorContent?.(({ markdownContent }) => {
-        const correctedLineIndex = lineInMarkdown + store.getState().noteDetails.frontmatterRendererInfo.lineOffset
+        const correctedLineIndex = lineInMarkdown + store.getState().noteDetails.startOfContentLineOffset
         const edits = findCheckBox(markdownContent, correctedLineIndex)
           .map(([startIndex, endIndex]) => createCheckboxContentEdit(startIndex, endIndex, newCheckedState))
           .orElse([])

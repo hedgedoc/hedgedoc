@@ -18,7 +18,7 @@ export const useTrimmedNoteMarkdownContentWithoutFrontmatter = (): string[] => {
     lines: state.noteDetails.markdownContent.lines,
     content: state.noteDetails.markdownContent.plain
   }))
-  const lineOffset = useApplicationState((state) => state.noteDetails.frontmatterRendererInfo.lineOffset)
+  const lineOffset = useApplicationState((state) => state.noteDetails.startOfContentLineOffset)
 
   const trimmedLines = useMemo(() => {
     if (markdownContent.content.length > maxLength) {
