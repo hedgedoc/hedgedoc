@@ -2274,7 +2274,7 @@ __metadata:
     "@types/minio": 7.0.18
     "@types/mysql": 2.15.21
     "@types/node": 20.1.1
-    "@types/node-fetch": 2.6.3
+    "@types/node-fetch": 2.6.4
     "@types/passport-http-bearer": 1.0.37
     "@types/passport-local": 1.0.35
     "@types/pg": 8.6.6
@@ -4769,7 +4769,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node-fetch@npm:2.6.3, @types/node-fetch@npm:^2.5.0":
+"@types/node-fetch@npm:2.6.4":
+  version: 2.6.4
+  resolution: "@types/node-fetch@npm:2.6.4"
+  dependencies:
+    "@types/node": "*"
+    form-data: ^3.0.0
+  checksum: f3e1d881bb42269e676ecaf49f0e096ab345e22823a2b2d071d60619414817fe02df48a31a8d05adb23054028a2a65521bdb3906ceb763ab6d3339c8d8775058
+  languageName: node
+  linkType: hard
+
+"@types/node-fetch@npm:^2.5.0":
   version: 2.6.3
   resolution: "@types/node-fetch@npm:2.6.3"
   dependencies:
