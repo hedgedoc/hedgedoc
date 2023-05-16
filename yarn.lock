@@ -2499,7 +2499,7 @@ __metadata:
     uuid: 9.0.0
     vega: 5.25.0
     vega-embed: 6.22.1
-    vega-lite: 5.9.0
+    vega-lite: 5.9.1
     words-count: 2.0.2
     ws: 8.13.0
     yjs: 13.6.1
@@ -18898,9 +18898,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-lite@npm:5.9.0":
-  version: 5.9.0
-  resolution: "vega-lite@npm:5.9.0"
+"vega-lite@npm:5.9.1":
+  version: 5.9.1
+  resolution: "vega-lite@npm:5.9.1"
   dependencies:
     "@types/clone": ~2.1.1
     clone: ~2.1.2
@@ -18911,7 +18911,7 @@ __metadata:
     vega-event-selector: ~3.0.1
     vega-expression: ~5.1.0
     vega-util: ~1.17.2
-    yargs: ~17.7.1
+    yargs: ~17.7.2
   peerDependencies:
     vega: ^5.24.0
   bin:
@@ -18919,7 +18919,7 @@ __metadata:
     vl2png: bin/vl2png
     vl2svg: bin/vl2svg
     vl2vg: bin/vl2vg
-  checksum: ebe3a45a58e02e544ed0b1b73c50c2142dc3d18147c2015cbaa65576b260dcf59945960bf0d946189fe06cc61fb78cb50937cd16b279c137be41a355b459404b
+  checksum: 97500381146fc4c35af334fb004f1b5e9bce9ae684be470d7b9fb991469ca4043fccfc618e48f50ac8d88d9e79cc5b1b800eac7ddce1d7bffd49fea227594538
   languageName: node
   linkType: hard
 
@@ -19685,7 +19685,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^17.3.1, yargs@npm:^17.5.1, yargs@npm:^17.6.2, yargs@npm:~17.7.1":
+"yargs@npm:^17.3.1, yargs@npm:^17.5.1, yargs@npm:^17.6.2, yargs@npm:~17.7.2":
   version: 17.7.2
   resolution: "yargs@npm:17.7.2"
   dependencies:
