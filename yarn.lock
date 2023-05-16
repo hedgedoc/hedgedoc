@@ -8484,9 +8484,9 @@ pbkdf2@^3.0.3:
     sha.js "^2.4.8"
 
 pdfobject@^2.0.201604172:
-  version "2.2.10"
-  resolved "https://registry.yarnpkg.com/pdfobject/-/pdfobject-2.2.10.tgz#08653f9a9f86447ae84bd87b95d9718357c2beae"
-  integrity sha512-wmpTuiFO3KJMfzg2jInDFiMaXxZ4m6bH03PldxyY6ueCjeVC4zw2ievkaKS1yPKpV4OHSuhyD0LT9JzE6Qu14Q==
+  version "2.2.11"
+  resolved "https://registry.yarnpkg.com/pdfobject/-/pdfobject-2.2.11.tgz#b0309dfa234083f326a462df14863c75970bd1f2"
+  integrity sha512-vGHG1+APo9+FQnnQsf36oHnpL7orJDkt8V3jRTQdvuajgJXBs1PbjA+gKsoiU1BOSNe9aSQubYWnW1LhNqurGw==
 
 peek-readable@^5.0.0:
   version "5.0.0"
