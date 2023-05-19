@@ -4,16 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export type FrontmatterExtractionResult =
-  | PresentFrontmatterExtractionResult
-  | NonPresentFrontmatterExtractionResult
-
-export interface PresentFrontmatterExtractionResult {
-  isPresent: true
+export interface FrontmatterExtractionResult {
   rawText: string
   lineOffset: number
-}
-
-interface NonPresentFrontmatterExtractionResult {
-  isPresent: false
 }

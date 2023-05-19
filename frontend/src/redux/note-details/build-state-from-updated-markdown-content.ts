@@ -8,7 +8,7 @@ import { initialState } from './initial-state'
 import { createNoteFrontmatterFromYaml } from './raw-note-frontmatter-parser/parser'
 import type { NoteDetails } from './types/note-details'
 import { extractFrontmatter, generateNoteTitle } from '@hedgedoc/commons'
-import type { PresentFrontmatterExtractionResult } from '@hedgedoc/commons'
+import type { FrontmatterExtractionResult } from '@hedgedoc/commons'
 
 /**
  * Copies a {@link NoteDetails} but with another markdown content.
@@ -40,7 +40,7 @@ const buildStateFromMarkdownContentAndLines = (
 ): NoteDetails => {
   const frontmatterExtraction = extractFrontmatter(markdownContentLines)
   const lineStartIndexes = calculateLineStartIndexes(markdownContentLines)
-  if (frontmatterExtraction.isPresent) {
+  if (frontmatterExtraction !== undefined) {
     return buildStateFromFrontmatterUpdate(
       {
         ...state,
@@ -76,7 +76,7 @@ const buildStateFromMarkdownContentAndLines = (
  */
 const buildStateFromFrontmatterUpdate = (
   state: NoteDetails,
-  frontmatterExtraction: PresentFrontmatterExtractionResult
+  frontmatterExtraction: FrontmatterExtractionResult
 ): NoteDetails => {
   if (frontmatterExtraction.rawText === state.rawFrontmatter) {
     return state
