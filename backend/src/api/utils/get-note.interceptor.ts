@@ -11,8 +11,8 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
-import { Note } from '../../notes/note.entity';
 import { NotesService } from '../../notes/notes.service';
+import { extractNoteFromRequest } from './extract-note-from-request';
 import { CompleteRequest } from './request.type';
 
 /**
@@ -28,15 +28,10 @@ export class GetNoteInterceptor implements NestInterceptor {
     next: CallHandler,
   ): Promise<Observable<T>> {
     const request: CompleteRequest = context.switchToHttp().getRequest();
-    const noteIdOrAlias = request.params['noteIdOrAlias'];
-    request.note = await getNote(this.noteService, noteIdOrAlias);
+    const note = await extractNoteFromRequest(request, this.noteService);
+    if (note !== undefined) {
+      request.note = note;
+    }
     return next.handle();
   }
-}
-
-export async function getNote(
-  noteService: NotesService,
-  noteIdOrAlias: string,
-): Promise<Note> {
-  return await noteService.getNoteByIdOrAlias(noteIdOrAlias);
 }
