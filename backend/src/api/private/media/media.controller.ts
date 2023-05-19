@@ -23,10 +23,10 @@ import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
 import { MulterFile } from '../../../media/multer-file.interface';
 import { Note } from '../../../notes/note.entity';
-import { Permission } from '../../../permissions/permissions.enum';
 import { PermissionsGuard } from '../../../permissions/permissions.guard';
 import { PermissionsService } from '../../../permissions/permissions.service';
 import { RequirePermission } from '../../../permissions/require-permission.decorator';
+import { RequiredPermission } from '../../../permissions/required-permission.enum';
 import { User } from '../../../users/user.entity';
 import { NoteHeaderInterceptor } from '../../utils/note-header.interceptor';
 import { OpenApi } from '../../utils/openapi.decorator';
@@ -66,7 +66,7 @@ export class MediaController {
   @UseGuards(PermissionsGuard)
   @UseInterceptors(FileInterceptor('file'))
   @UseInterceptors(NoteHeaderInterceptor)
-  @RequirePermission(Permission.WRITE)
+  @RequirePermission(RequiredPermission.WRITE)
   @OpenApi(
     {
       code: 201,

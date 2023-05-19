@@ -10,8 +10,8 @@ import { extractNoteFromRequest } from '../api/utils/extract-note-from-request';
 import { CompleteRequest } from '../api/utils/request.type';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { NotesService } from '../notes/notes.service';
-import { Permission } from './permissions.enum';
 import { PermissionsService } from './permissions.service';
+import { RequiredPermission } from './required-permission.enum';
 
 /**
  * This guards controller methods from access, if the user has not the appropriate permissions.
@@ -31,7 +31,7 @@ export class PermissionsGuard implements CanActivate {
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const permissions = this.reflector.get<Permission[]>(
+    const permissions = this.reflector.get<RequiredPermission[]>(
       'permissions',
       context.getHandler(),
     );
@@ -45,7 +45,7 @@ export class PermissionsGuard implements CanActivate {
     const request: CompleteRequest = context.switchToHttp().getRequest();
     const user = request.user ?? null;
     // handle CREATE permissions, as this does not need any note
-    if (permissions[0] === Permission.CREATE) {
+    if (permissions[0] === RequiredPermission.CREATE) {
       return this.permissionsService.mayCreate(user);
     }
     // Attention: This gets the note an additional time if used in conjunction with GetNoteInterceptor or NoteHeaderInterceptor
