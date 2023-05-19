@@ -3,7 +3,7 @@
 exports[`Table of contents renders correctly 1`] = `
 <div>
   <div
-    class="markdown-toc customClassName"
+    class="toc customClassName"
   >
     <ul>
       <li>
@@ -42,7 +42,7 @@ exports[`Table of contents renders correctly 1`] = `
 exports[`Table of contents renders only in requested max depth 1`] = `
 <div>
   <div
-    class="markdown-toc customClassName"
+    class="toc customClassName"
   >
     <ul>
       <li>

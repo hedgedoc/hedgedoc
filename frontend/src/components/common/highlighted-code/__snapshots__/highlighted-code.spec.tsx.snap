@@ -2,7 +2,7 @@
 
 exports[`Highlighted Code can hide the line numbers 1`] = `
 <code
-  class="hljs  wrapLines"
+  class="hljs wrapLines"
   data-testid="code-highlighter"
 >
   <span
@@ -22,7 +22,7 @@ exports[`Highlighted Code can hide the line numbers 1`] = `
 
 exports[`Highlighted Code highlights code 1`] = `
 <code
-  class="hljs showGutter "
+  class="hljs showGutter"
   data-testid="code-highlighter"
 >
   <span
@@ -50,7 +50,7 @@ exports[`Highlighted Code highlights code 1`] = `
 
 exports[`Highlighted Code renders plain text 1`] = `
 <code
-  class="hljs showGutter "
+  class="hljs showGutter"
   data-testid="code-highlighter"
 >
   <span
