@@ -20,7 +20,7 @@ export class FrontmatterLinter implements Linter {
   lint(view: EditorView): Diagnostic[] {
     const lines = view.state.doc.toString().split('\n')
     const frontmatterExtraction = extractFrontmatter(lines)
-    if (!frontmatterExtraction.isPresent) {
+    if (frontmatterExtraction === undefined) {
       return []
     }
     const startOfYaml = lines[0].length + 1

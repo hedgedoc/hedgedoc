@@ -20,11 +20,9 @@ const FRONTMATTER_END_REGEX = /^(?:-{3,}|\.{3,})$/
  */
 export const extractFrontmatter = (
   lines: string[]
-): FrontmatterExtractionResult => {
+): FrontmatterExtractionResult | undefined => {
   if (lines.length < 2 || !FRONTMATTER_BEGIN_REGEX.test(lines[0])) {
-    return {
-      isPresent: false
-    }
+    return undefined
   }
   for (let i = 1; i < lines.length; i++) {
     if (
@@ -32,13 +30,10 @@ export const extractFrontmatter = (
       FRONTMATTER_END_REGEX.test(lines[i])
     ) {
       return {
-        isPresent: true,
         rawText: lines.slice(1, i).join('\n'),
         lineOffset: i + 1
       }
     }
   }
-  return {
-    isPresent: false
-  }
+  return undefined
 }
