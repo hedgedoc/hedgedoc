@@ -11,9 +11,9 @@ export const PERMISSION_METADATA_KEY = 'requiredPermission';
 
 /**
  * This decorator gathers the {@link RequiredPermission Permission} a user must hold for the {@link PermissionsGuard}
- * @param permissions - an array of permissions. In practice this should always contain exactly one {@link RequiredPermission}
+ * @param {RequiredPermission} permission the required permission for the decorated action.
  */
 // eslint-disable-next-line func-style,@typescript-eslint/naming-convention
 export const RequirePermission = (
-  ...permissions: RequiredPermission[]
-): CustomDecorator => SetMetadata(PERMISSION_METADATA_KEY, permissions);
+  permission: RequiredPermission,
+): CustomDecorator => SetMetadata(PERMISSION_METADATA_KEY, permission);
