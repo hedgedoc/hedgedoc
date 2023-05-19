@@ -32,12 +32,12 @@ export class PermissionsGuard implements CanActivate {
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const permissions = this.reflector.get<RequiredPermission[]>(
+    const permission = this.reflector.get<RequiredPermission>(
       PERMISSION_METADATA_KEY,
       context.getHandler(),
     );
     // If no permissions are set this is probably an error and this guard should not let the request pass
-    if (!permissions) {
+    if (!permission) {
       this.logger.error(
         'Could not find permission metadata. This should never happen. If you see this, please open an issue at https://github.com/hedgedoc/hedgedoc/issues',
       );
@@ -46,7 +46,7 @@ export class PermissionsGuard implements CanActivate {
     const request: CompleteRequest = context.switchToHttp().getRequest();
     const user = request.user ?? null;
     // handle CREATE permissions, as this does not need any note
-    if (permissions[0] === RequiredPermission.CREATE) {
+    if (permission === RequiredPermission.CREATE) {
       return this.permissionsService.mayCreate(user);
     }
     // Attention: This gets the note an additional time if used in conjunction with GetNoteInterceptor or NoteHeaderInterceptor
@@ -58,7 +58,7 @@ export class PermissionsGuard implements CanActivate {
       return false;
     }
     return await this.permissionsService.checkPermissionOnNote(
-      permissions[0],
+      permission,
       user,
       note,
     );
