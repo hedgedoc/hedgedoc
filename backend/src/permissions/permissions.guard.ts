@@ -24,9 +24,9 @@ import { RequiredPermission } from './required-permission.enum';
 export class PermissionsGuard implements CanActivate {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    private reflector: Reflector,
-    private permissionsService: PermissionsService,
-    private noteService: NotesService,
+    private readonly reflector: Reflector,
+    private readonly permissionsService: PermissionsService,
+    private readonly noteService: NotesService,
   ) {
     this.logger.setContext(PermissionsGuard.name);
   }
