@@ -12,4 +12,4 @@ type WantedRevealOptions =
   | 'backgroundTransition'
   | 'slideNumber'
 
-export type SlideOptions = Required<Pick<RevealOptions, WantedRevealOptions>>
+export type SlideOptions = Pick<RevealOptions, WantedRevealOptions>

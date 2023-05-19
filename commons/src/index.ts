@@ -26,11 +26,17 @@ export { waitForOtherPromisesToFinish } from './utils/wait-for-other-promises-to
 
 export { RealtimeDoc } from './y-doc-sync/realtime-doc.js'
 
-export * from './title-extraction/frontmatter-extractor/extractor.js'
-export * from './title-extraction/frontmatter-extractor/types.js'
+export * from './frontmatter-extractor/extractor.js'
+export * from './frontmatter-extractor/types.js'
+export * from './note-frontmatter-parser/parse-raw-frontmatter-from-yaml.js'
+export * from './note-frontmatter-parser/convert-raw-frontmatter-to-note-frontmatter.js'
+export * from './note-frontmatter-parser/default-values.js'
+export * from './note-frontmatter-parser/parse-tags.js'
+export * from './note-frontmatter-parser/types.js'
+
 export * from './title-extraction/generate-note-title.js'
-export * from './title-extraction/types/iso6391.js'
-export * from './title-extraction/types/frontmatter.js'
-export * from './title-extraction/types/slide-show-options.js'
+export * from './note-frontmatter/iso6391.js'
+export * from './note-frontmatter/frontmatter.js'
+export * from './note-frontmatter/slide-show-options.js'
 
 export { extractFirstHeading } from './title-extraction/extract-first-heading.js'

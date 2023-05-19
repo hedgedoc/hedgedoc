@@ -28,6 +28,7 @@ export const ISO6391 = [
   'ar-ye',
   'as',
   'ay',
+  'de',
   'de-at',
   'de-ch',
   'de-li',

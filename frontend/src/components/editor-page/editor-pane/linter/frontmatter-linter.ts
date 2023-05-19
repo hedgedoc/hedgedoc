@@ -3,13 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { RawNoteFrontmatter } from '../../../../redux/note-details/raw-note-frontmatter-parser/types'
 import type { Linter } from './linter'
 import type { Diagnostic } from '@codemirror/lint'
 import type { EditorView } from '@codemirror/view'
-import { extractFrontmatter } from '@hedgedoc/commons'
+import { extractFrontmatter, parseRawFrontmatterFromYaml, parseTags } from '@hedgedoc/commons'
 import { t } from 'i18next'
-import { load } from 'js-yaml'
 
 /**
  * Creates a {@link Linter linter} for the yaml frontmatter.
@@ -23,27 +21,42 @@ export class FrontmatterLinter implements Linter {
     if (frontmatterExtraction === undefined) {
       return []
     }
-    const startOfYaml = lines[0].length + 1
     const frontmatterLines = lines.slice(1, frontmatterExtraction.lineOffset - 1)
-    const rawNoteFrontmatter = FrontmatterLinter.loadYaml(frontmatterExtraction.rawText)
-    if (rawNoteFrontmatter === undefined) {
-      return [
-        {
-          from: startOfYaml,
-          to: startOfYaml + frontmatterLines.join('\n').length,
-          message: t('editor.linter.frontmatter'),
-          severity: 'error'
-        }
-      ]
+    const startOfYaml = lines[0].length + 1
+    const endOfYaml = startOfYaml + frontmatterLines.join('\n').length
+    const rawNoteFrontmatter = parseRawFrontmatterFromYaml(frontmatterExtraction.rawText)
+    if (rawNoteFrontmatter.error) {
+      return this.createErrorDiagnostics(startOfYaml, endOfYaml, rawNoteFrontmatter.error, 'error')
+    } else if (rawNoteFrontmatter.warning) {
+      return this.createErrorDiagnostics(startOfYaml, endOfYaml, rawNoteFrontmatter.warning, 'warning')
+    } else if (!Array.isArray(rawNoteFrontmatter.value.tags)) {
+      return this.createReplaceSingleStringTagsDiagnostic(rawNoteFrontmatter.value.tags, frontmatterLines, startOfYaml)
     }
-    if (typeof rawNoteFrontmatter.tags !== 'string' && typeof rawNoteFrontmatter.tags !== 'number') {
-      return []
-    }
-    const tags: string[] =
-      rawNoteFrontmatter?.tags
-        .toString()
-        .split(',')
-        .map((entry) => entry.trim()) ?? []
+    return []
+  }
+
+  private createErrorDiagnostics(
+    startOfYaml: number,
+    endOfYaml: number,
+    error: Error,
+    severity: 'error' | 'warning'
+  ): Diagnostic[] {
+    return [
+      {
+        from: startOfYaml,
+        to: endOfYaml,
+        message: error.message,
+        severity: severity
+      }
+    ]
+  }
+
+  private createReplaceSingleStringTagsDiagnostic(
+    rawTags: string,
+    frontmatterLines: string[],
+    startOfYaml: number
+  ): Diagnostic[] {
+    const tags: string[] = parseTags(rawTags)
     const replacedText = 'tags:\n- ' + tags.join('\n- ')
     const tagsLineIndex = frontmatterLines.findIndex((value) => value.startsWith('tags: '))
     const linesBeforeTagsLine = frontmatterLines.slice(0, tagsLineIndex)
@@ -67,13 +80,5 @@ export class FrontmatterLinter implements Linter {
         severity: 'warning'
       }
     ]
-  }
-
-  private static loadYaml(raw: string): RawNoteFrontmatter | undefined {
-    try {
-      return load(raw) as RawNoteFrontmatter
-    } catch {
-      return undefined
-    }
   }
 }
