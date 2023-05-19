@@ -16,7 +16,7 @@ export enum NoteTextDirection {
 }
 
 export enum NoteType {
-  DOCUMENT = '',
+  DOCUMENT = 'document',
   SLIDE = 'slide'
 }
 export interface NoteFrontmatter {

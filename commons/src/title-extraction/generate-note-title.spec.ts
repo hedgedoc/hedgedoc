@@ -3,9 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  NoteFrontmatter,
+  NoteTextDirection,
+  NoteType
+} from '../note-frontmatter/frontmatter.js'
 import { generateNoteTitle } from './generate-note-title.js'
-import { NoteFrontmatter, NoteTextDirection } from './types/frontmatter.js'
-import { NoteType } from './types/frontmatter.js'
 import { describe, expect, it } from '@jest/globals'
 
 const testFrontmatter: NoteFrontmatter = {
@@ -36,7 +39,7 @@ describe('generate note title', () => {
         title: 'frontmatter',
         opengraph: { title: 'opengraph' }
       },
-      'first-heading'
+      () => 'first-heading'
     )
     expect(actual).toEqual('frontmatter')
   })
@@ -44,13 +47,16 @@ describe('generate note title', () => {
   it('will choose the opengraph title second', () => {
     const actual = generateNoteTitle(
       { ...testFrontmatter, opengraph: { title: 'opengraph' } },
-      'first-heading'
+      () => 'first-heading'
     )
     expect(actual).toEqual('opengraph')
   })
 
   it('will choose the first heading third', () => {
-    const actual = generateNoteTitle({ ...testFrontmatter }, 'first-heading')
+    const actual = generateNoteTitle(
+      { ...testFrontmatter },
+      () => 'first-heading'
+    )
     expect(actual).toEqual('first-heading')
   })
 })

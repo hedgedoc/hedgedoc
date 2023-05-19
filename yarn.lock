@@ -2386,6 +2386,7 @@ __metadata:
     eventemitter2: 6.4.9
     isomorphic-ws: 5.0.0
     jest: 29.5.0
+    joi: 17.9.2
     microbundle: 0.15.1
     prettier: 2.8.8
     reveal.js: 4.5.0
