@@ -1,17 +1,17 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
-import { ConsoleLoggerService } from '../../logger/console-logger.service';
-import { NotesService } from '../../notes/notes.service';
-import { Permission } from '../../permissions/permissions.enum';
-import { PermissionsService } from '../../permissions/permissions.service';
-import { getNote } from './get-note.interceptor';
-import { CompleteRequest } from './request.type';
+import { getNote } from '../api/utils/get-note.interceptor';
+import { CompleteRequest } from '../api/utils/request.type';
+import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { NotesService } from '../notes/notes.service';
+import { Permission } from './permissions.enum';
+import { PermissionsService } from './permissions.service';
 
 /**
  * This guards controller methods from access, if the user has not the appropriate permissions.

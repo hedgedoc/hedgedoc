@@ -23,13 +23,13 @@ import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
 import { MulterFile } from '../../../media/multer-file.interface';
 import { Note } from '../../../notes/note.entity';
+import { Permissions } from '../../../permissions/permissions.decorator';
 import { Permission } from '../../../permissions/permissions.enum';
+import { PermissionsGuard } from '../../../permissions/permissions.guard';
 import { PermissionsService } from '../../../permissions/permissions.service';
 import { User } from '../../../users/user.entity';
 import { NoteHeaderInterceptor } from '../../utils/note-header.interceptor';
 import { OpenApi } from '../../utils/openapi.decorator';
-import { Permissions } from '../../utils/permissions.decorator';
-import { PermissionsGuard } from '../../utils/permissions.guard';
 import { RequestNote } from '../../utils/request-note.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
