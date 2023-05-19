@@ -27,7 +27,7 @@ import { UsersService } from '../users/users.service';
 import { checkArrayForDuplicates } from '../utils/arrayDuplicatCheck';
 import { NoteGroupPermission } from './note-group-permission.entity';
 import { NoteUserPermission } from './note-user-permission.entity';
-import { Permission } from './permissions.enum';
+import { RequiredPermission } from './required-permission.enum';
 
 @Injectable()
 export class PermissionsService {
@@ -44,22 +44,22 @@ export class PermissionsService {
    * Checks if the given {@link User} is has the in {@link desiredPermission} specified permission on {@link Note}.
    *
    * @async
-   * @param {Permission} desiredPermission - permission level to check for
+   * @param {RequiredPermission} desiredPermission - permission level to check for
    * @param {User} user - The user whose permission should be checked. Value is null if guest access should be checked
    * @param {Note} note - The note for which the permission should be checked
    * @return if the user has the specified permission on the note
    */
   public async checkPermissionOnNote(
-    desiredPermission: Exclude<Permission, Permission.CREATE>,
+    desiredPermission: Exclude<RequiredPermission, RequiredPermission.CREATE>,
     user: User | null,
     note: Note,
   ): Promise<boolean> {
     switch (desiredPermission) {
-      case Permission.READ:
+      case RequiredPermission.READ:
         return await this.mayRead(user, note);
-      case Permission.WRITE:
+      case RequiredPermission.WRITE:
         return await this.mayWrite(user, note);
-      case Permission.OWNER:
+      case RequiredPermission.OWNER:
         return await this.isOwner(user, note);
     }
   }

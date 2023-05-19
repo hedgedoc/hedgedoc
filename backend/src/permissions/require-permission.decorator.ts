@@ -5,7 +5,7 @@
  */
 import { CustomDecorator, SetMetadata } from '@nestjs/common';
 
-import { Permission } from './permissions.enum';
+import { RequiredPermission } from './required-permission.enum';
 
 /**
  * This decorator gathers the {@link Permission Permission} a user must hold for the {@link PermissionsGuard}
@@ -14,5 +14,5 @@ import { Permission } from './permissions.enum';
  */
 // eslint-disable-next-line func-style,@typescript-eslint/naming-convention
 export const RequirePermission = (
-  ...permissions: Permission[]
+  ...permissions: RequiredPermission[]
 ): CustomDecorator => SetMetadata('permissions', permissions);

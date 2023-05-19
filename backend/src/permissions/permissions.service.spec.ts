@@ -44,9 +44,9 @@ import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { NoteGroupPermission } from './note-group-permission.entity';
 import { NoteUserPermission } from './note-user-permission.entity';
-import { Permission } from './permissions.enum';
 import { PermissionsModule } from './permissions.module';
 import { PermissionsService } from './permissions.service';
+import { RequiredPermission } from './required-permission.enum';
 
 function mockedEventEmitter(eventEmitter: EventEmitter2) {
   return jest.spyOn(eventEmitter, 'emit').mockImplementationOnce((event) => {
@@ -188,6 +188,7 @@ describe('PermissionsService', () => {
       return isOwner;
     });
   }
+
   beforeEach(() => {
     mockNoteRepo(noteRepo);
     eventEmitterEmitSpy = mockedEventEmitter(eventEmitter);
@@ -793,14 +794,18 @@ describe('PermissionsService', () => {
       it('with mayRead', async () => {
         mockMayReadTrue();
         expect(
-          await service.checkPermissionOnNote(Permission.READ, user1, notes[0]),
+          await service.checkPermissionOnNote(
+            RequiredPermission.READ,
+            user1,
+            notes[0],
+          ),
         ).toBeTruthy();
       });
       it('with mayWrite', async () => {
         mockMayWriteTrue();
         expect(
           await service.checkPermissionOnNote(
-            Permission.WRITE,
+            RequiredPermission.WRITE,
             user1,
             notes[0],
           ),
@@ -810,7 +815,7 @@ describe('PermissionsService', () => {
         mockIsOwner(true);
         expect(
           await service.checkPermissionOnNote(
-            Permission.OWNER,
+            RequiredPermission.OWNER,
             user1,
             notes[0],
           ),
@@ -824,7 +829,7 @@ describe('PermissionsService', () => {
         mockIsOwner(false);
         expect(
           await service.checkPermissionOnNote(
-            Permission.OWNER,
+            RequiredPermission.OWNER,
             user1,
             notes[0],
           ),
