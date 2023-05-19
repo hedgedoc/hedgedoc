@@ -11,6 +11,7 @@ import { CompleteRequest } from '../api/utils/request.type';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { NotesService } from '../notes/notes.service';
 import { PermissionsService } from './permissions.service';
+import { PERMISSION_METADATA_KEY } from './require-permission.decorator';
 import { RequiredPermission } from './required-permission.enum';
 
 /**
@@ -32,7 +33,7 @@ export class PermissionsGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const permissions = this.reflector.get<RequiredPermission[]>(
-      'permissions',
+      PERMISSION_METADATA_KEY,
       context.getHandler(),
     );
     // If no permissions are set this is probably an error and this guard should not let the request pass
