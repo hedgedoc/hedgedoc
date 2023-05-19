@@ -6,7 +6,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
-import { getNote } from '../api/utils/get-note.interceptor';
+import { extractNoteFromRequest } from '../api/utils/extract-note-from-request';
 import { CompleteRequest } from '../api/utils/request.type';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { NotesService } from '../notes/notes.service';
@@ -48,12 +48,14 @@ export class PermissionsGuard implements CanActivate {
     if (permissions[0] === Permission.CREATE) {
       return this.permissionsService.mayCreate(user);
     }
-    // Get the note from the parameter noteIdOrAlias or the http header hedgedoc-note
     // Attention: This gets the note an additional time if used in conjunction with GetNoteInterceptor or NoteHeaderInterceptor
-    let noteIdOrAlias = request.params['noteIdOrAlias'];
-    if (noteIdOrAlias === undefined)
-      noteIdOrAlias = request.headers['hedgedoc-note'] as string;
-    const note = await getNote(this.noteService, noteIdOrAlias);
+    const note = await extractNoteFromRequest(request, this.noteService);
+    if (note === undefined) {
+      this.logger.error(
+        'Could not find noteIdOrAlias metadata. This should never happen. If you see this, please open an issue at https://github.com/hedgedoc/hedgedoc/issues',
+      );
+      return false;
+    }
     return await this.permissionsService.checkPermissionOnNote(
       permissions[0],
       user,
