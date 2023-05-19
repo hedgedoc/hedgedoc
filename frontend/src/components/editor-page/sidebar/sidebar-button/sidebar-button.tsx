@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { concatCssClasses } from '../../../../utils/concat-css-classes'
 import { UiIcon } from '../../../common/icons/ui-icon'
 import { ShowIf } from '../../../common/show-if/show-if'
 import type { SidebarEntryProps } from '../types'
@@ -34,15 +35,15 @@ export const SidebarButton: React.FC<PropsWithChildren<SidebarEntryProps>> = ({
   return (
     <button
       ref={buttonRef}
-      className={`${styles['sidebar-button']} ${hide ? styles['hide'] : ''} ${className ?? ''}`}
+      className={concatCssClasses(styles.button, className, { [styles.hide]: hide })}
       disabled={disabled}
       {...props}>
       <ShowIf condition={!!icon}>
-        <span className={`sidebar-button-icon ${styles['sidebar-icon']}`}>
+        <span className={`sidebar-button-icon ${styles.icon}`}>
           <UiIcon icon={icon} />
         </span>
       </ShowIf>
-      <span className={styles['sidebar-text']}>{children}</span>
+      <span className={styles.text}>{children}</span>
     </button>
   )
 }

@@ -5,6 +5,7 @@
  */
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import { toggleHistoryEntryPinning } from '../../../../../redux/history/methods'
+import { concatCssClasses } from '../../../../../utils/concat-css-classes'
 import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
 import { SidebarButton } from '../../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../../types'
@@ -42,7 +43,7 @@ export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ class
       icon={IconPin}
       hide={hide}
       onClick={onPinClicked}
-      className={`${className ?? ''} ${isPinned ? styles['highlighted'] : ''}`}>
+      className={concatCssClasses(className, { [styles['highlighted']]: isPinned })}>
       <Trans i18nKey={isPinned ? 'editor.documentBar.pinnedToHistory' : 'editor.documentBar.pinNoteToHistory'} />
     </SidebarButton>
   )

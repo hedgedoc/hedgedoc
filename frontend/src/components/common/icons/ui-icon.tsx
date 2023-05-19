@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { concatCssClasses } from '../../../utils/concat-css-classes'
 import styles from './ui-icons.module.scss'
 import React, { Fragment, useMemo } from 'react'
 import type { Icon } from 'react-bootstrap-icons'
@@ -26,9 +27,7 @@ export const UiIcon: React.FC<UiIconProps> = ({ icon, nbsp, className, size, spi
     }
   }, [size])
 
-  const finalClassName = useMemo(() => {
-    return `${spin ? styles.spin : ''} ${className ?? ''}`
-  }, [className, spin])
+  const finalClassName = useMemo(() => concatCssClasses(className, { [styles.spin]: spin }), [className, spin])
 
   if (icon) {
     return (

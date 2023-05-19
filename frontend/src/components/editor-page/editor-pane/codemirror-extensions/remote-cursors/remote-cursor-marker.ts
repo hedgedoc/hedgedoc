@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { concatCssClasses } from '../../../../../utils/concat-css-classes'
 import { createCursorCssClass } from './create-cursor-css-class'
 import styles from './style.module.scss'
 import type { SelectionRange } from '@codemirror/state'
@@ -40,9 +41,10 @@ export class RemoteCursorMarker implements LayerMarker {
     element.style.setProperty('--name', `"${this.name}"`)
     const cursorOnRightSide = this.left > this.viewWidth / 2
     const cursorOnDownSide = this.top < 20
-    element.className = `${styles.cursor} ${createCursorCssClass(this.styleIndex)} ${
-      cursorOnRightSide ? styles.right : ''
-    } ${cursorOnDownSide ? styles.down : ''}`
+    element.className = concatCssClasses(styles.cursor, createCursorCssClass(this.styleIndex), {
+      [styles.right]: cursorOnRightSide,
+      [styles.down]: cursorOnDownSide
+    })
   }
 
   eq(other: RemoteCursorMarker): boolean {

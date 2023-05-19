@@ -3,12 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { concatCssClasses } from '../../../utils/concat-css-classes'
 import type { PropsWithDataTestId } from '../../../utils/test-id'
 import { testId } from '../../../utils/test-id'
 import { UiIcon } from '../icons/ui-icon'
 import { ShowIf } from '../show-if/show-if'
 import styles from './icon-button.module.scss'
-import React from 'react'
+import React, { useMemo } from 'react'
 import type { ButtonProps } from 'react-bootstrap'
 import { Button } from 'react-bootstrap'
 import type { Icon } from 'react-bootstrap-icons'
@@ -38,13 +39,16 @@ export const IconButton: React.FC<IconButtonProps> = ({
   iconSize,
   ...props
 }) => {
+  const finalClassName = useMemo(
+    () =>
+      concatCssClasses(styles['btn-icon'], 'd-inline-flex align-items-stretch', className, {
+        [styles['with-border']]: border
+      }),
+    [border, className]
+  )
+
   return (
-    <Button
-      {...props}
-      className={`${styles['btn-icon']} d-inline-flex align-items-stretch ${border ? styles['with-border'] : ''} ${
-        className ?? ''
-      }`}
-      {...testId('icon-button')}>
+    <Button {...props} className={finalClassName} {...testId('icon-button')}>
       <span className={`${styles['icon-part']}`}>
         <UiIcon size={iconSize} icon={icon} className={'icon'} />
       </span>

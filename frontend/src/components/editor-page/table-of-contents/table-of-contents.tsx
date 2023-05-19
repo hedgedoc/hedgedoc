@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { concatCssClasses } from '../../../utils/concat-css-classes'
 import { ShowIf } from '../../common/show-if/show-if'
 import styles from './table-of-contents.module.scss'
 import { useBuildReactDomFromTocAst } from './use-build-react-dom-from-toc-ast'
@@ -30,7 +31,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ ast, maxDepth 
   const tocTree = useBuildReactDomFromTocAst(ast, maxDepth, baseUrl)
 
   return (
-    <div className={`${styles['markdown-toc']} ${className ?? ''}`}>
+    <div className={concatCssClasses(styles.toc, className)}>
       <ShowIf condition={ast.children.length === 0}>
         <Trans i18nKey={'editor.infoToc'} />
       </ShowIf>

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { DarkModePreference } from '../../../redux/dark-mode/types'
+import { concatCssClasses } from '../../../utils/concat-css-classes'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { Logger } from '../../../utils/logger'
 import { isTestMode } from '../../../utils/test-modes'
@@ -168,7 +169,7 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
         allowFullScreen={true}
         ref={frameReference}
         referrerPolicy={'no-referrer'}
-        className={`border-0 ${frameClasses ?? ''}`}
+        className={concatCssClasses('border-0', frameClasses)}
         allow={'clipboard-write'}
         {...cypressAttribute('renderer-ready', rendererReady ? 'true' : 'false')}
         {...cypressAttribute('renderer-type', rendererType)}
