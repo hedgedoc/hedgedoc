@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
+import { concatCssClasses } from '../../../../../utils/concat-css-classes'
 import { SidebarButton } from '../../sidebar-button/sidebar-button'
 import { SidebarMenu } from '../../sidebar-menu/sidebar-menu'
 import type { SpecificSidebarMenuProps } from '../../types'
@@ -69,7 +70,7 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         buttonRef={buttonRef}
         onClick={onClickHandler}
         icon={expand ? IconArrowLeft : IconPeople}
-        className={`${styles['online-entry']} ${className ?? ''}`}>
+        className={concatCssClasses(styles.entry, className)}>
         <Trans i18nKey={'editor.onlineStatus.online'} />
       </SidebarButton>
       <SidebarMenu expand={expand}>

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-.sidebar-button {
+.button {
   height: var(--sidebar-entry-height);
   flex: 0 0 var(--sidebar-entry-height);
   width: 100%;
@@ -25,16 +25,16 @@
     height: 0;
     border-width: 0;
 
-    .sidebar-icon {
+    .icon {
       opacity: 0;
     }
 
-    .sidebar-text {
+    .text {
       opacity: 0;
     }
   }
 
-  .sidebar-icon {
+  .icon {
     transition: opacity 0.2s;
     opacity: 1;
     height: var(--sidebar-entry-height);
@@ -46,7 +46,7 @@
     flex: 0 0 var(--sidebar-entry-height);
   }
 
-  .sidebar-text {
+  .text {
     height: 100%;
     display: flex;
     align-items: center;

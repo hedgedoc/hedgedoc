@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { concatCssClasses } from '../../../../utils/concat-css-classes'
 import type { SidebarMenuProps } from '../types'
 import styles from './sidebar-menu.module.scss'
 import type { PropsWithChildren } from 'react'
@@ -16,7 +17,7 @@ import React from 'react'
  */
 export const SidebarMenu: React.FC<PropsWithChildren<SidebarMenuProps>> = ({ children, expand }) => {
   return (
-    <div className={`${styles['sidebar-menu']} ${expand ? styles['show'] : ''}`}>
+    <div className={concatCssClasses(styles.menu, { [styles['show']]: expand })}>
       <div className={`d-flex flex-column`}>{children}</div>
     </div>
   )

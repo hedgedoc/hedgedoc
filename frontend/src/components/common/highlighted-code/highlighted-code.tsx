@@ -5,13 +5,14 @@
  */
 import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary/async-loading-boundary'
 import { CopyToClipboardButton } from '../../../components/common/copyable/copy-to-clipboard-button/copy-to-clipboard-button'
+import { concatCssClasses } from '../../../utils/concat-css-classes'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { testId } from '../../../utils/test-id'
 import styles from './highlighted-code.module.scss'
 import { useAsyncHighlightJsImport } from './hooks/use-async-highlight-js-import'
 import { useAttachLineNumbers } from './hooks/use-attach-line-numbers'
 import { useCodeDom } from './hooks/use-code-dom'
-import React from 'react'
+import React, { useMemo } from 'react'
 
 export interface HighlightedCodeProps {
   code: string
@@ -35,6 +36,13 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
   const codeDom = useCodeDom(code, hljsApi, language)
   const wrappedDomLines = useAttachLineNumbers(codeDom, startLineNumber)
 
+  const className = useMemo(() => {
+    return concatCssClasses('hljs', {
+      [styles['showGutter']]: showGutter,
+      [styles['wrapLines']]: wrapLines
+    })
+  }, [showGutter, wrapLines])
+
   return (
     <AsyncLoadingBoundary loading={loading || !hljsApi} error={!!error} componentName={'highlight.js'}>
       <div className={styles['code-highlighter']} {...cypressId('highlighted-code-block')}>
@@ -43,7 +51,7 @@ export const HighlightedCode: React.FC<HighlightedCodeProps> = ({ code, language
           {...cypressId('code-highlighter')}
           {...cypressAttribute('showgutter', showGutter ? 'true' : 'false')}
           {...cypressAttribute('wraplines', wrapLines ? 'true' : 'false')}
-          className={`hljs ${showGutter ? styles['showGutter'] : ''} ${wrapLines ? styles['wrapLines'] : ''}`}>
+          className={className}>
           {wrappedDomLines}
         </code>
         <div className={'text-right button-inside'}>

@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { concatCssClasses } from '../../../utils/concat-css-classes'
 import type { PropsWithDataCypressId } from '../../../utils/cypress-attribute'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { testId } from '../../../utils/test-id'
@@ -73,7 +74,7 @@ export const CommonModal: React.FC<PropsWithChildren<CommonModalProps>> = ({
         onHide={onHide}
         animation={true}
         {...testId('commonModal')}
-        dialogClassName={`text-dark ${additionalClasses ?? ''}`}
+        dialogClassName={concatCssClasses('text-dark', additionalClasses)}
         size={modalSize}>
         <Modal.Header closeButton={!!showCloseButton}>
           <Modal.Title>

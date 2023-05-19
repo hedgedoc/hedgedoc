@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { concatCssClasses } from '../../../utils/concat-css-classes'
 import { UiIcon } from '../../common/icons/ui-icon'
 import { createNumberRangeArray } from '../../common/number-range/number-range'
 import styles from './animations.module.scss'
@@ -24,12 +25,12 @@ export const LoadingAnimation: React.FC<HedgeDocLogoProps> = ({ error }) => {
   const iconRows = useMemo(() => createNumberRangeArray(12).map((index) => <IconRow key={index} />), [])
 
   return (
-    <div className={`position-relative ${error ? styles.error : ''}`}>
+    <div className={concatCssClasses('position-relative', { [styles.error]: error })}>
       <div className={styles.logo}>
         <div>
           <UiIcon icon={IconPencilFill} className={styles.background} size={5} />
         </div>
-        <div className={`${styles.overlay}`}>
+        <div className={styles.overlay}>
           <UiIcon icon={IconPencil} size={5} />
         </div>
       </div>

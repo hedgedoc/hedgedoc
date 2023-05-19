@@ -21,19 +21,16 @@ export interface BrandingProps {
 export const CustomBranding: React.FC<BrandingProps> = ({ inline = false }) => {
   const branding = useBrandingDetails()
 
+  const className = inline ? styles['inline-size'] : styles['regular-size']
+
   if (!branding) {
     return null
   } else if (branding.logo) {
     return (
       /* eslint-disable-next-line @next/next/no-img-element */
-      <img
-        src={branding.logo}
-        alt={branding.name}
-        title={branding.name}
-        className={inline ? styles['inline-size'] : styles['regular-size']}
-      />
+      <img src={branding.logo} alt={branding.name} title={branding.name} className={className} />
     )
   } else {
-    return <span className={inline ? styles['inline-size'] : styles['regular-size']}>{branding.name}</span>
+    return <span className={className}>{branding.name}</span>
   }
 }
