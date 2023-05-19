@@ -30,10 +30,10 @@ import { NoteDto } from '../../../notes/note.dto';
 import { Note } from '../../../notes/note.entity';
 import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
 import { NotesService } from '../../../notes/notes.service';
-import { Permissions } from '../../../permissions/permissions.decorator';
 import { Permission } from '../../../permissions/permissions.enum';
 import { PermissionsGuard } from '../../../permissions/permissions.guard';
 import { PermissionsService } from '../../../permissions/permissions.service';
+import { RequirePermission } from '../../../permissions/require-permission.decorator';
 import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
 import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
@@ -65,7 +65,7 @@ export class NotesController {
 
   @Get(':noteIdOrAlias')
   @OpenApi(200)
-  @Permissions(Permission.READ)
+  @RequirePermission(Permission.READ)
   @UseInterceptors(GetNoteInterceptor)
   async getNote(
     @RequestUser({ guestsAllowed: true }) user: User | null,
@@ -77,7 +77,7 @@ export class NotesController {
 
   @Get(':noteIdOrAlias/media')
   @OpenApi(200)
-  @Permissions(Permission.READ)
+  @RequirePermission(Permission.READ)
   @UseInterceptors(GetNoteInterceptor)
   async getNotesMedia(@RequestNote() note: Note): Promise<MediaUploadDto[]> {
     const media = await this.mediaService.listUploadsByNote(note);
@@ -88,7 +88,7 @@ export class NotesController {
 
   @Post()
   @OpenApi(201, 413)
-  @Permissions(Permission.CREATE)
+  @RequirePermission(Permission.CREATE)
   async createNote(
     @RequestUser({ guestsAllowed: true }) user: User | null,
     @MarkdownBody() text: string,
@@ -101,7 +101,7 @@ export class NotesController {
 
   @Post(':noteAlias')
   @OpenApi(201, 400, 404, 409, 413)
-  @Permissions(Permission.CREATE)
+  @RequirePermission(Permission.CREATE)
   async createNamedNote(
     @RequestUser({ guestsAllowed: true }) user: User | null,
     @Param('noteAlias') noteAlias: string,
@@ -115,7 +115,7 @@ export class NotesController {
 
   @Delete(':noteIdOrAlias')
   @OpenApi(204, 404, 500)
-  @Permissions(Permission.OWNER)
+  @RequirePermission(Permission.OWNER)
   @UseInterceptors(GetNoteInterceptor)
   async deleteNote(
     @RequestUser() user: User,
@@ -137,7 +137,7 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteInterceptor)
-  @Permissions(Permission.READ)
+  @RequirePermission(Permission.READ)
   @Get(':noteIdOrAlias/metadata')
   async getNoteMetadata(
     @RequestUser({ guestsAllowed: true }) user: User | null,
@@ -148,7 +148,7 @@ export class NotesController {
 
   @Get(':noteIdOrAlias/revisions')
   @OpenApi(200, 404)
-  @Permissions(Permission.READ)
+  @RequirePermission(Permission.READ)
   @UseInterceptors(GetNoteInterceptor)
   async getNoteRevisions(
     @RequestUser({ guestsAllowed: true }) user: User | null,
@@ -164,7 +164,7 @@ export class NotesController {
 
   @Delete(':noteIdOrAlias/revisions')
   @OpenApi(204, 404)
-  @Permissions(Permission.OWNER)
+  @RequirePermission(Permission.OWNER)
   @UseInterceptors(GetNoteInterceptor)
   async purgeNoteRevisions(
     @RequestUser() user: User,
@@ -184,7 +184,7 @@ export class NotesController {
 
   @Get(':noteIdOrAlias/revisions/:revisionId')
   @OpenApi(200, 404)
-  @Permissions(Permission.READ)
+  @RequirePermission(Permission.READ)
   @UseInterceptors(GetNoteInterceptor)
   async getNoteRevision(
     @RequestUser({ guestsAllowed: true }) user: User | null,
@@ -199,7 +199,7 @@ export class NotesController {
   @Put(':noteIdOrAlias/metadata/permissions/users/:userName')
   @OpenApi(200, 403, 404)
   @UseInterceptors(GetNoteInterceptor)
-  @Permissions(Permission.OWNER)
+  @RequirePermission(Permission.OWNER)
   async setUserPermission(
     @RequestUser() user: User,
     @RequestNote() note: Note,
@@ -216,7 +216,7 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteInterceptor)
-  @Permissions(Permission.OWNER)
+  @RequirePermission(Permission.OWNER)
   @Delete(':noteIdOrAlias/metadata/permissions/users/:userName')
   async removeUserPermission(
     @RequestUser() user: User,
@@ -241,7 +241,7 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteInterceptor)
-  @Permissions(Permission.OWNER)
+  @RequirePermission(Permission.OWNER)
   @Put(':noteIdOrAlias/metadata/permissions/groups/:groupName')
   async setGroupPermission(
     @RequestUser() user: User,
@@ -259,7 +259,7 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteInterceptor)
-  @Permissions(Permission.OWNER)
+  @RequirePermission(Permission.OWNER)
   @UseGuards(PermissionsGuard)
   @Delete(':noteIdOrAlias/metadata/permissions/groups/:groupName')
   async removeGroupPermission(
@@ -276,7 +276,7 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteInterceptor)
-  @Permissions(Permission.OWNER)
+  @RequirePermission(Permission.OWNER)
   @Put(':noteIdOrAlias/metadata/permissions/owner')
   async changeOwner(
     @RequestUser() user: User,

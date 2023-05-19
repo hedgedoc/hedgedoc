@@ -13,5 +13,6 @@ import { Permission } from './permissions.enum';
  * @constructor
  */
 // eslint-disable-next-line func-style,@typescript-eslint/naming-convention
-export const Permissions = (...permissions: Permission[]): CustomDecorator =>
-  SetMetadata('permissions', permissions);
+export const RequirePermission = (
+  ...permissions: Permission[]
+): CustomDecorator => SetMetadata('permissions', permissions);
