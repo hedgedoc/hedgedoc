@@ -31,6 +31,7 @@ const schema = Joi.object<RawNoteFrontmatter>({
   robots: Joi.string().optional().default(defaultNoteFrontmatter.robots),
   lang: Joi.string()
     .valid(...ISO6391)
+    .lowercase()
     .optional()
     .default(defaultNoteFrontmatter.lang),
   dir: Joi.string()
