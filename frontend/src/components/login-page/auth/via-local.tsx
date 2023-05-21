@@ -5,6 +5,7 @@
  */
 import { doLocalLogin } from '../../../api/auth/local'
 import { ErrorToI18nKeyMapper } from '../../../api/common/error-to-i18n-key-mapper'
+import { useLowercaseOnInputChange } from '../../../hooks/common/use-lowercase-on-input-change'
 import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
 import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
 import { ShowIf } from '../../common/show-if/show-if'
@@ -44,7 +45,7 @@ export const ViaLocal: React.FC = () => {
     [username, password]
   )
 
-  const onUsernameChange = useOnInputChange(setUsername)
+  const onUsernameChange = useLowercaseOnInputChange(setUsername)
   const onPasswordChange = useOnInputChange(setPassword)
 
   return (
@@ -54,7 +55,7 @@ export const ViaLocal: React.FC = () => {
           <Trans i18nKey='login.signInVia' values={{ service: t('login.auth.username') }} />
         </Card.Title>
         <Form onSubmit={onLoginSubmit} className={'d-flex gap-3 flex-column'}>
-          <UsernameField onChange={onUsernameChange} invalid={!!error} />
+          <UsernameField onChange={onUsernameChange} invalid={!!error} value={username} />
           <PasswordField onChange={onPasswordChange} invalid={!!error} />
           <Alert className='small' show={!!error} variant='danger'>
             <Trans i18nKey={error} />

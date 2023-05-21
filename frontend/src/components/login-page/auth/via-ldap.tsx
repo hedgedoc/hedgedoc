@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { doLdapLogin } from '../../../api/auth/ldap'
+import { useLowercaseOnInputChange } from '../../../hooks/common/use-lowercase-on-input-change'
 import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
 import { PasswordField } from './fields/password-field'
 import { UsernameField } from './fields/username-field'
@@ -38,7 +39,7 @@ export const ViaLdap: React.FC<ViaLdapProps> = ({ providerName, identifier }) =>
     [username, password, identifier]
   )
 
-  const onUsernameChange = useOnInputChange(setUsername)
+  const onUsernameChange = useLowercaseOnInputChange(setUsername)
   const onPasswordChange = useOnInputChange(setPassword)
 
   return (
@@ -48,7 +49,7 @@ export const ViaLdap: React.FC<ViaLdapProps> = ({ providerName, identifier }) =>
           <Trans i18nKey='login.signInVia' values={{ service: providerName }} />
         </Card.Title>
         <Form onSubmit={onLoginSubmit}>
-          <UsernameField onChange={onUsernameChange} invalid={!!error} />
+          <UsernameField onChange={onUsernameChange} invalid={!!error} value={username} />
           <PasswordField onChange={onPasswordChange} invalid={!!error} />
           <Alert className='small' show={!!error} variant='danger'>
             <Trans i18nKey={error} />

@@ -17,6 +17,7 @@ import { useUiNotifications } from '../components/notifications/ui-notification-
 import { RegisterError } from '../components/register-page/register-error'
 import { RegisterInfos } from '../components/register-page/register-infos'
 import { useApplicationState } from '../hooks/common/use-application-state'
+import { useLowercaseOnInputChange } from '../hooks/common/use-lowercase-on-input-change'
 import { useOnInputChange } from '../hooks/common/use-on-input-change'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
@@ -62,7 +63,7 @@ export const RegisterPage: NextPage = () => {
     return error?.backendErrorName === 'PasswordTooWeakError'
   }, [error])
 
-  const onUsernameChange = useOnInputChange(setUsername)
+  const onUsernameChange = useLowercaseOnInputChange(setUsername)
   const onDisplayNameChange = useOnInputChange(setDisplayName)
   const onPasswordChange = useOnInputChange(setPassword)
   const onPasswordAgainChange = useOnInputChange(setPasswordAgain)
