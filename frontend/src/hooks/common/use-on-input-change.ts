@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,10 +13,5 @@ import { useCallback } from 'react'
  * @return Hook that can be used as callback for onChange.
  */
 export const useOnInputChange = (setter: (value: string) => void): ((event: ChangeEvent<HTMLInputElement>) => void) => {
-  return useCallback(
-    (event) => {
-      setter(event.target.value)
-    },
-    [setter]
-  )
+  return useCallback((event) => setter(event.target.value), [setter])
 }

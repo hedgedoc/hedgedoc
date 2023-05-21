@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useOnInputChange } from '../../../../../../hooks/common/use-on-input-change'
+import { useLowercaseOnInputChange } from '../../../../../../hooks/common/use-lowercase-on-input-change'
 import { UiIcon } from '../../../../../common/icons/ui-icon'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import React, { useCallback, useState } from 'react'
@@ -31,7 +31,7 @@ export const PermissionAddEntryField: React.FC<PermissionAddEntryFieldProps & Pe
   const { t } = useTranslation()
 
   const [newEntryIdentifier, setNewEntryIdentifier] = useState('')
-  const onChange = useOnInputChange(setNewEntryIdentifier)
+  const onChange = useLowercaseOnInputChange(setNewEntryIdentifier)
 
   const onSubmit = useCallback(() => {
     onAddEntry(newEntryIdentifier)
