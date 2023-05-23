@@ -2749,9 +2749,9 @@ connect-flash@^0.1.1:
   integrity sha512-2rcfELQt/ZMP+SM/pG8PyhJRaLKp+6Hk2IUBNkEit09X+vwn3QsAL3ZbYtxUn7NVPzbMTSLRDhqe0B/eh30RYA==
 
 connect-session-sequelize@^7.1.2:
-  version "7.1.6"
-  resolved "https://registry.yarnpkg.com/connect-session-sequelize/-/connect-session-sequelize-7.1.6.tgz#fdfc21d6639c15b0d2fb4ae38f3088c37c1e015b"
-  integrity sha512-gYV5J4QXTCNqq8pKLQeQadRfKjzCJaf4zqOZEf8Gut+8fBlEDOPviYQXup011vEx97if3hqzCJukkTuLzERmtw==
+  version "7.1.7"
+  resolved "https://registry.yarnpkg.com/connect-session-sequelize/-/connect-session-sequelize-7.1.7.tgz#7506a82a8e1c7972f3278bb62b7b129e67f1ef93"
+  integrity sha512-Wqq7rg0w+9bOVs6jC0nhZnssXJ3+iKNlDVWn2JfBuBPoY7oYaxzxfBKeUYrX6dHt3OWEWbZV6LJvapwi76iBQQ==
   dependencies:
     debug "^4.1.1"
 
