@@ -10,6 +10,7 @@ import { MarkdownToReact } from '../../../markdown-renderer/markdown-to-react/ma
 import { RendererType } from '../../window-post-message-communicator/rendering-message'
 import type { CommonMarkdownRendererProps } from '../common-markdown-renderer-props'
 import { LoadingSlide } from './loading-slide'
+import styles from './slideshow.module.scss'
 import type { SlideOptions } from '@hedgedoc/commons'
 import React, { useMemo, useRef } from 'react'
 
@@ -57,9 +58,11 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps>
   )
 
   return (
-    <div className={'reveal'}>
-      <div ref={markdownBodyRef} className={`slides`}>
-        {slideShowDOM}
+    <div className={styles.wrapper}>
+      <div className={'reveal'}>
+        <div ref={markdownBodyRef} className={`slides`}>
+          {slideShowDOM}
+        </div>
       </div>
     </div>
   )
