@@ -21,22 +21,23 @@ export * from './utils/permissions.types.js'
 export * from './y-doc-sync/y-doc-sync-client-adapter.js'
 export * from './y-doc-sync/y-doc-sync-server-adapter.js'
 export * from './y-doc-sync/y-doc-sync-adapter.js'
+export * from './y-doc-sync/realtime-doc.js'
 
 export { waitForOtherPromisesToFinish } from './utils/wait-for-other-promises-to-finish.js'
 
-export { RealtimeDoc } from './y-doc-sync/realtime-doc.js'
-
 export * from './frontmatter-extractor/extractor.js'
 export * from './frontmatter-extractor/types.js'
+
 export * from './note-frontmatter-parser/parse-raw-frontmatter-from-yaml.js'
 export * from './note-frontmatter-parser/convert-raw-frontmatter-to-note-frontmatter.js'
 export * from './note-frontmatter-parser/default-values.js'
 export * from './note-frontmatter-parser/parse-tags.js'
 export * from './note-frontmatter-parser/types.js'
 
-export * from './title-extraction/generate-note-title.js'
 export * from './note-frontmatter/iso6391.js'
 export * from './note-frontmatter/frontmatter.js'
 export * from './note-frontmatter/slide-show-options.js'
+
+export * from './title-extraction/generate-note-title.js'
 
 export { extractFirstHeading } from './title-extraction/extract-first-heading.js'
