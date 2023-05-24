@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import lists from './random-words.json';
+import { adjectives, items } from './random-words';
 
 /**
  * Generates a random names based on an adjective and a noun.
@@ -11,8 +11,8 @@ import lists from './random-words.json';
  * @return the generated name
  */
 export function generateRandomName(): string {
-  const adjective = generateRandomWord(lists.adjectives);
-  const things = generateRandomWord(lists.items);
+  const adjective = generateRandomWord(adjectives);
+  const things = generateRandomWord(items);
   return `${adjective} ${things}`;
 }
 
