@@ -15,7 +15,7 @@ runs:
   steps:
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
-      run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+      run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
       shell: bash
 
     - name: Cache yarn cache
@@ -31,6 +31,6 @@ runs:
         node-version: ${{ inputs.NODEJS_VERSION }}
 
     - name: Install dependencies
-      run: yarn install --frozen-lockfile --prefer-offline
+      run: yarn install --immutable
       working-directory: .
       shell: bash
