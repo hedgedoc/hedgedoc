@@ -10,6 +10,9 @@ You now need Node 16 to run HedgeDoc. We don't support more recent versions of N
 - Allow setting of `documentMaxLength` via `CMD_DOCUMENT_MAX_LENGTH` environment variable.
 - Add dedicated healthcheck endpoint at /_health that is less resource intensive than /status.
 
+### Bugfixes
+- Fix that permission errors can break existing connections to a note, causing inconsistent note content and changes not being saved
+
 ## <i class="fa fa-tag"></i> 1.9.7 <i class="fa fa-calendar-o"></i> 2023-02-19
 
 ### Bugfixes
