@@ -5,6 +5,13 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
+// This monkey-patches node to use sha256 instead of md4 for crypto.createHash
+// md4 is not available in node 18+ anymore, as that uses modern OpenSSL versions
+// Inspired by https://stackoverflow.com/questions/69394632/webpack-build-failing-with-err-ossl-evp-unsupported/69691525#69691525
+const crypto = require('crypto')
+const cryptoOrigCreateHash = crypto.createHash
+crypto.createHash = algorithm => cryptoOrigCreateHash(algorithm === 'md4' ? 'sha256' : algorithm)
+
 // Fix possible nofile-issues
 const fs = require('fs')
 const gracefulFs = require('graceful-fs')
