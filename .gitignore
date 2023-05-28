@@ -28,3 +28,12 @@ public/uploads/*
 !public/uploads/.gitkeep
 
 site/
+
+# Yarn 2+ without zero-installs
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

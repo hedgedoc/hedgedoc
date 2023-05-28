@@ -136,6 +136,7 @@
     "url": "https://github.com/hedgedoc/hedgedoc.git"
   },
   "devDependencies": {
+    "@hedgedoc/codemirror-5": "5.65.12",
     "abcjs": "6.2.2",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.3",
@@ -146,7 +147,6 @@
     "babel-runtime": "6.26.0",
     "bootstrap": "3.4.1",
     "bootstrap-validator": "0.11.9",
-    "@hedgedoc/codemirror-5": "5.65.12",
     "copy-webpack-plugin": "6.4.1",
     "css-loader": "5.2.7",
     "emojify.js": "1.1.0",
@@ -209,5 +209,6 @@
   "optionalDependencies": {
     "bufferutil": "^4.0.0",
     "utf-8-validate": "^6.0.0"
-  }
+  },
+  "packageManager": "yarn@3.5.1"
 }
