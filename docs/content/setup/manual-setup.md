@@ -10,7 +10,9 @@
       This can break if symbols with more bytes are used.
       You can use `alter database <DBNAME> character set utf8mb4 COLLATE utf8mb4_unicode_ci` to be on the safe side.
     - NPM (and its dependencies, [node-gyp](https://github.com/nodejs/node-gyp#installation))
-    - [Yarn Classic](https://classic.yarnpkg.com) 1.22 or higher (Yarn 2 is currently not supported)
+    - [Yarn 3](https://yarnpkg.com/): Running `corepack enable` once should be sufficient, Node.js will then
+      automatically use the correct version of Yarn. If `corepack` is not available, try `npm i -g corepack` first.
+      See [the official docs](https://yarnpkg.com/getting-started/install) for more information and other options.
     - Bash (for the setup script)
     - For **building** the HedgeDoc frontend you need a machine with at least **2 GB** RAM.
       - Starting with release 1.7 the release tarball includes the prebuilt frontend, so building it yourself is not necessary.
@@ -35,7 +37,7 @@
    It's also possible to use environment variables.
    For details, have a look at [the configuration documentation](../configuration.md).
 5. *:octicons-light-bulb-16: If you use the release tarball for 1.7.0 or newer, this step can be skipped.*  
-   Build the frontend bundle by running `yarn install --frozen-lockfile` and then `yarn build`. The extra `yarn install --frozen-lockfile` is necessary as `bin/setup` does not install the build dependencies.
+   Build the frontend bundle by running `yarn install --immutable` and then `yarn build`. The extra `yarn install --immutable` is necessary as `bin/setup` does not install the build dependencies.
 6. It is recommended to start your server manually once:  
    ```shell
    NODE_ENV=production yarn start
@@ -62,7 +64,7 @@ If you want to upgrade HedgeDoc from an older version, follow these steps:
    <small>If you use Git, you can check out the new tag with e.g. `git fetch origin && git checkout 1.9.7`</small>
 5. Run `bin/setup`. This will take care of installing dependencies. It is safe to run on an existing installation.
 6. *:octicons-light-bulb-16: If you used the release tarball for 1.7.0 or newer, this step can be skipped.*  
-   Build the frontend bundle by running `yarn install --frozen-lockfile` and `yarn build`. The extra `yarn install --frozen-lockfile` is necessary as `bin/setup` does not install the       build dependencies.
+   Build the frontend bundle by running `yarn install --immutable` and `yarn build`. The extra `yarn install --immutable` is necessary as `bin/setup` does not install the       build dependencies.
 7. It is recommended to start your server manually once:
    ```shell
    NODE_ENV=production yarn start
@@ -102,7 +104,7 @@ Type=exec
 Environment=NODE_ENV=production
 Restart=always
 RestartSec=2s
-ExecStart=/usr/bin/yarn start --production
+ExecStart=/usr/bin/yarn start
 CapabilityBoundingSet=
 NoNewPrivileges=true
 PrivateDevices=true
