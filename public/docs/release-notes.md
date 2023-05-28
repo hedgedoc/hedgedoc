@@ -3,12 +3,13 @@
 ## UNRELEASED
 
 **Please note:** This release dropped support for Node 14, which is end-of-life since May 2023.
-You now need Node 16 to run HedgeDoc. We don't support more recent versions of Node.
+You now need at least Node 16 to run HedgeDoc. We recommend to use the latest LTS release of Node.js.
 
 ### Enhancements
 - Extend boolean environment variable parsing with other positive answers and case insensitivity.
 - Allow setting of `documentMaxLength` via `CMD_DOCUMENT_MAX_LENGTH` environment variable.
 - Add dedicated healthcheck endpoint at /_health that is less resource intensive than /status.
+- Compatibility with Node.js 18 and later
 
 ### Bugfixes
 - Fix that permission errors can break existing connections to a note, causing inconsistent note content and changes not being saved
