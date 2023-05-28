@@ -14,19 +14,11 @@ if ! type yarn > /dev/null; then
   cat << EOF
 FATAL: Yarn could not be found.
 
-Please follow the official installation instructions at
-https://classic.yarnpkg.com/en/docs/install
-and try again.
-EOF
-  exit 1
-fi
+Run 'corepack enable', then try this script again.
+If 'corepack' is not available, try 'npm i -g corepack' first.
 
-if version_lt "$(yarn --version)" '1.22.0'; then
-  cat << EOF
-FATAL: Your Yarn version is not supported.
-
-Please upgrade to version 1.22.0 or higher and try again.
-See https://classic.yarnpkg.com/en/docs/install for instructions.
+For more information, see the installation instructions at
+https://yarnpkg.com/getting-started/install
 EOF
   exit 1
 fi
@@ -47,10 +39,10 @@ if [ ! -f config.json ]; then
 fi
 
 echo "Installing packages..."
-yarn install --production=true --frozen-lockfile
+yarn workspaces focus --production
 
 cat << EOF
-If you want to build the frontend yourself, you need to run 'yarn install --frozen-lockfile' before 'yarn build' to install the devDependencies for the build process.
+If you want to build the frontend yourself, you need to run 'yarn install --immutable' before 'yarn build' to install the devDependencies for the build process.
 
 Edit the following config file to setup HedgeDoc server and client.
 Read more info at https://docs.hedgedoc.org/configuration/
