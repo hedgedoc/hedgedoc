@@ -129,7 +129,12 @@ module.exports = {
         {
           context: path.join(__dirname, 'node_modules/reveal.js'),
           from: 'plugin',
-          to: 'reveal.js/plugin'
+          to: 'reveal.js/plugin',
+          transform (content, path) {
+            // The marked.js script wants a 'exports' variable and is referenced from plugin/notes/notes.html
+            // we copy, so just patch that to give it one.
+            return content.toString().replace('<script src="../../plugin/markdown/marked.js"></script>', '<script>var exports = {};</script><script src="../../plugin/markdown/marked.js"></script>')
+          }
         }
       ]
     }),

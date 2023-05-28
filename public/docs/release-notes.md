@@ -12,6 +12,7 @@ You now need Node 16 to run HedgeDoc. We don't support more recent versions of N
 
 ### Bugfixes
 - Fix that permission errors can break existing connections to a note, causing inconsistent note content and changes not being saved
+- Fix speaker notes not showing up in the presentation view
 
 ## <i class="fa fa-tag"></i> 1.9.7 <i class="fa fa-calendar-o"></i> 2023-02-19
 
