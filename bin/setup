@@ -31,11 +31,11 @@ EOF
   exit 1
 fi
 
-if version_lt "$(node --version)" 'v14.13.1'; then
+if version_lt "$(node --version)" 'v16.0.0'; then
   cat << EOF
 FATAL: Your Node.js version is not supported.
 
-Please upgrade to version 14.13.1 or higher and try again.
+Please upgrade to version 16 or higher and try again.
 We recommend running the latest LTS release, see https://nodejs.org/en/about/releases/ for details.
 EOF
   exit 1
