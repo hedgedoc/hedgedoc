@@ -5,6 +5,10 @@
 **Please note:** This release dropped support for Node 14, which is end-of-life since May 2023.
 You now need at least Node 16 to run HedgeDoc. We recommend to use the latest LTS release of Node.js.
 
+This release switches to Yarn 3 for dependency management, as Yarn 1 has bugs preventing us from upgrading some dependencies.
+If you install HedgeDoc manually, run `bin/setup` again for instructions. Other installation methods should not require
+special actions.
+
 ### Enhancements
 - Extend boolean environment variable parsing with other positive answers and case insensitivity.
 - Allow setting of `documentMaxLength` via `CMD_DOCUMENT_MAX_LENGTH` environment variable.
@@ -14,6 +18,7 @@ You now need at least Node 16 to run HedgeDoc. We recommend to use the latest LT
 ### Bugfixes
 - Fix that permission errors can break existing connections to a note, causing inconsistent note content and changes not being saved
 - Fix speaker notes not showing up in the presentation view
+- Fix issues with upgrading some dependencies by upgrading to Yarn 3
 
 ## <i class="fa fa-tag"></i> 1.9.7 <i class="fa fa-calendar-o"></i> 2023-02-19
 
