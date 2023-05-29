@@ -8,8 +8,8 @@ import {
   NoteTextDirection,
   NoteType,
   OpenGraph
-} from '../note-frontmatter/frontmatter.js'
-import { SlideOptions } from '../note-frontmatter/slide-show-options.js'
+} from '../note-frontmatter/index.js'
+import { SlideOptions } from '../note-frontmatter/index.js'
 
 export interface RawNoteFrontmatter {
   title: string

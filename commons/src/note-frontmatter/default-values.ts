@@ -3,12 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  NoteFrontmatter,
-  NoteTextDirection,
-  NoteType
-} from '../note-frontmatter/frontmatter.js'
-import { SlideOptions } from '../note-frontmatter/slide-show-options.js'
+import { NoteFrontmatter, NoteTextDirection, NoteType } from './frontmatter.js'
+import { SlideOptions } from './slide-show-options.js'
 
 export const defaultSlideOptions: SlideOptions = {
   transition: 'zoom',

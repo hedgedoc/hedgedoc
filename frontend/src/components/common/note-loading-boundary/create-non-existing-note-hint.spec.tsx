@@ -8,9 +8,12 @@ import type { Note, NoteMetadata } from '../../../api/notes/types'
 import * as useSingleStringUrlParameterModule from '../../../hooks/common/use-single-string-url-parameter'
 import { mockI18n } from '../../../test-utils/mock-i18n'
 import { CreateNonExistingNoteHint } from './create-non-existing-note-hint'
-import { waitForOtherPromisesToFinish } from '@hedgedoc/commons'
 import { act, render, screen, waitFor } from '@testing-library/react'
 import { Mock } from 'ts-mockery'
+
+function waitForOtherPromisesToFinish(): Promise<void> {
+  return new Promise((resolve) => process.nextTick(resolve))
+}
 
 jest.mock('../../../api/notes')
 jest.mock('../../../hooks/common/use-single-string-url-parameter')
