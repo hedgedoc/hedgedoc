@@ -5,7 +5,6 @@
  */
 import * as createNoteWithPrimaryAliasModule from '../../../api/notes'
 import type { Note, NoteMetadata } from '../../../api/notes/types'
-import * as useSingleStringUrlParameterModule from '../../../hooks/common/use-single-string-url-parameter'
 import { mockI18n } from '../../../test-utils/mock-i18n'
 import { CreateNonExistingNoteHint } from './create-non-existing-note-hint'
 import { waitForOtherPromisesToFinish } from '@hedgedoc/commons'
@@ -17,14 +16,6 @@ jest.mock('../../../hooks/common/use-single-string-url-parameter')
 
 describe('create non existing note hint', () => {
   const mockedNoteId = 'mockedNoteId'
-
-  const mockGetNoteIdQueryParameter = () => {
-    const expectedQueryParameter = 'noteId'
-    jest.spyOn(useSingleStringUrlParameterModule, 'useSingleStringUrlParameter').mockImplementation((parameter) => {
-      expect(parameter).toBe(expectedQueryParameter)
-      return mockedNoteId
-    })
-  }
 
   const mockCreateNoteWithPrimaryAlias = () => {
     jest
@@ -59,14 +50,24 @@ describe('create non existing note hint', () => {
     jest.resetModules()
   })
 
-  beforeEach(() => {
-    mockGetNoteIdQueryParameter()
+  it('renders nothing if no note id has been provided', async () => {
+    const onNoteCreatedCallback = jest.fn()
+    const view = render(
+      <CreateNonExistingNoteHint noteId={undefined} onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>
+    )
+    await waitForOtherPromisesToFinish()
+    expect(onNoteCreatedCallback).not.toBeCalled()
+    expect(view.container).toMatchSnapshot()
   })
 
   it('renders an button as initial state', async () => {
     mockCreateNoteWithPrimaryAlias()
     const onNoteCreatedCallback = jest.fn()
-    const view = render(<CreateNonExistingNoteHint onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>)
+    const view = render(
+      <CreateNonExistingNoteHint
+        noteId={mockedNoteId}
+        onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>
+    )
     await screen.findByTestId('createNoteMessage')
     await waitForOtherPromisesToFinish()
     expect(onNoteCreatedCallback).not.toBeCalled()
@@ -76,7 +77,11 @@ describe('create non existing note hint', () => {
   it('renders a waiting message when button is clicked', async () => {
     mockCreateNoteWithPrimaryAlias()
     const onNoteCreatedCallback = jest.fn()
-    const view = render(<CreateNonExistingNoteHint onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>)
+    const view = render(
+      <CreateNonExistingNoteHint
+        noteId={mockedNoteId}
+        onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>
+    )
     const button = await screen.findByTestId('createNoteButton')
     await act<void>(() => {
       button.click()
@@ -92,7 +97,11 @@ describe('create non existing note hint', () => {
   it('shows success message when the note has been created', async () => {
     mockCreateNoteWithPrimaryAlias()
     const onNoteCreatedCallback = jest.fn()
-    const view = render(<CreateNonExistingNoteHint onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>)
+    const view = render(
+      <CreateNonExistingNoteHint
+        noteId={mockedNoteId}
+        onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>
+    )
     const button = await screen.findByTestId('createNoteButton')
     await act<void>(() => {
       button.click()
@@ -108,7 +117,11 @@ describe('create non existing note hint', () => {
   it("shows an error message if note couldn't be created", async () => {
     mockFailingCreateNoteWithPrimaryAlias()
     const onNoteCreatedCallback = jest.fn()
-    const view = render(<CreateNonExistingNoteHint onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>)
+    const view = render(
+      <CreateNonExistingNoteHint
+        noteId={mockedNoteId}
+        onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>
+    )
     const button = await screen.findByTestId('createNoteButton')
     await act<void>(() => {
       button.click()

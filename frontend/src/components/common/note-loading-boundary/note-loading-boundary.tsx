@@ -1,3 +1,4 @@
+'use client'
 /*
  * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *
@@ -17,15 +18,20 @@ import React, { useEffect, useMemo } from 'react'
 
 const logger = new Logger('NoteLoadingBoundary')
 
+export interface NoteIdProps {
+  noteId: string | undefined
+}
+
 /**
  * Loads the note identified by the note-id in the URL.
  * During the loading a {@link LoadingScreen loading screen} will be rendered instead of the child elements.
  * The boundary also shows errors that occur during the loading process.
  *
- * @param children The react elements that will be shown when the loading was successful.
+ * @param children The react elements that will be shown when the loading was successful
+ * @param noteId the id of the note to load
  */
-export const NoteLoadingBoundary: React.FC<PropsWithChildren> = ({ children }) => {
-  const [{ error, loading, value }, loadNoteFromServer] = useLoadNoteFromServer()
+export const NoteLoadingBoundary: React.FC<PropsWithChildren<NoteIdProps>> = ({ children, noteId }) => {
+  const [{ error, loading, value }, loadNoteFromServer] = useLoadNoteFromServer(noteId)
 
   useEffect(() => {
     loadNoteFromServer()
@@ -46,11 +52,11 @@ export const NoteLoadingBoundary: React.FC<PropsWithChildren> = ({ children }) =
         titleI18nKey={`${errorI18nKeyPrefix}.title`}
         descriptionI18nKey={`${errorI18nKeyPrefix}.description`}>
         <ShowIf condition={error instanceof ApiError && error.statusCode === 404}>
-          <CreateNonExistingNoteHint onNoteCreated={loadNoteFromServer} />
+          <CreateNonExistingNoteHint onNoteCreated={loadNoteFromServer} noteId={noteId} />
         </ShowIf>
       </CommonErrorPage>
     )
-  }, [error, loadNoteFromServer])
+  }, [error, loadNoteFromServer, noteId])
 
   return (
     <CustomAsyncLoadingBoundary

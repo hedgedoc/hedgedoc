@@ -5,15 +5,15 @@
  */
 import type { BaseUrls } from '../components/common/base-url/base-url-context-provider'
 import { Logger } from './logger'
-import { isTestMode } from './test-modes'
+import { isTestMode, isBuildTime } from './test-modes'
 import { NoSubdirectoryAllowedError, parseUrl } from '@hedgedoc/commons'
 import { Optional } from '@mrdrogdrog/optional'
 
 /**
- * Extracts the editor and renderer base urls from the environment variables.
+ * Extracts and caches the editor and renderer base urls from the environment variables.
  */
 export class BaseUrlFromEnvExtractor {
-  private baseUrls: Optional<BaseUrls> | undefined
+  private baseUrls: BaseUrls | undefined
   private readonly logger = new Logger('Base URL Configuration')
 
   private extractUrlFromEnvVar(envVarName: string, envVarValue: string | undefined): Optional<URL> {
@@ -51,23 +51,17 @@ export class BaseUrlFromEnvExtractor {
     return this.extractUrlFromEnvVar('HD_RENDERER_BASE_URL', process.env.HD_RENDERER_BASE_URL)
   }
 
-  private renewBaseUrls(): void {
-    this.baseUrls = this.extractEditorBaseUrlFromEnv().flatMap((editorBaseUrl) =>
-      this.extractRendererBaseUrlFromEnv(editorBaseUrl).map((rendererBaseUrl) => {
-        return {
-          editor: editorBaseUrl.toString(),
-          renderer: rendererBaseUrl.toString()
-        }
-      })
-    )
-    this.baseUrls.ifPresent((urls) => {
-      this.logger.info('Editor base URL', urls.editor.toString())
-      this.logger.info('Renderer base URL', urls.renderer.toString())
-    })
-  }
-
-  private isEnvironmentExtractDone(): boolean {
-    return this.baseUrls !== undefined
+  private renewBaseUrls(): BaseUrls {
+    return this.extractEditorBaseUrlFromEnv()
+      .flatMap((editorBaseUrl) =>
+        this.extractRendererBaseUrlFromEnv(editorBaseUrl).map((rendererBaseUrl) => {
+          return {
+            editor: editorBaseUrl.toString(),
+            renderer: rendererBaseUrl.toString()
+          }
+        })
+      )
+      .orElseThrow(() => new Error('couldnt parse env vars'))
   }
 
   /**
@@ -75,10 +69,28 @@ export class BaseUrlFromEnvExtractor {
    *
    * @return An {@link Optional} with the base urls.
    */
-  public extractBaseUrls(): Optional<BaseUrls> {
-    if (!this.isEnvironmentExtractDone()) {
-      this.renewBaseUrls()
+  public extractBaseUrls(): BaseUrls {
+    if (isBuildTime) {
+      return {
+        editor: 'https://example.org/',
+        renderer: 'https://example.org/'
+      }
     }
-    return Optional.ofNullable(this.baseUrls).flatMap((value) => value)
+
+    if (this.baseUrls === undefined) {
+      this.baseUrls = this.renewBaseUrls()
+      this.logBaseUrls()
+    }
+    return this.baseUrls
+  }
+
+  private logBaseUrls() {
+    if (this.baseUrls === undefined) {
+      return
+    }
+    this.logger.info('Editor base URL', this.baseUrls.editor.toString())
+    this.logger.info('Renderer base URL', this.baseUrls.renderer.toString())
   }
 }
+
+export const baseUrlFromEnvExtractor = new BaseUrlFromEnvExtractor()

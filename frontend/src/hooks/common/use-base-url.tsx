@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { baseUrlContext } from '../../components/common/base-url/base-url-context-provider'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { useContext, useMemo } from 'react'
 
 export enum ORIGIN {
@@ -22,11 +22,11 @@ export const useBaseUrl = (origin = ORIGIN.CURRENT_PAGE): string => {
     throw new Error('No base url context received. Did you forget to use the provider component?')
   }
 
-  const router = useRouter()
+  const route = usePathname()
 
   return useMemo(() => {
-    return (router.route === '/render' && origin === ORIGIN.CURRENT_PAGE) || origin === ORIGIN.RENDERER
+    return (route === '/render' && origin === ORIGIN.CURRENT_PAGE) || origin === ORIGIN.RENDERER
       ? baseUrls.renderer
       : baseUrls.editor
-  }, [origin, baseUrls.renderer, baseUrls.editor, router.route])
+  }, [origin, baseUrls.renderer, baseUrls.editor, route])
 }

@@ -19,7 +19,7 @@ else
 fi
 
 echo "🦔 > Building"
-next build
+BUILD_TIME=true next build
 
 echo "🦔 > Bundling"
 mv .next/standalone dist

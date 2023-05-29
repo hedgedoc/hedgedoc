@@ -4,15 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useNoteTitle } from '../../../../../hooks/common/use-note-title'
-import { Logger } from '../../../../../utils/logger'
 import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
 import type { MessageTransporter } from '@hedgedoc/commons'
 import { MessageType } from '@hedgedoc/commons'
 import type { Listener } from 'eventemitter2'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useCallback, useEffect } from 'react'
-
-const logger = new Logger('UseOnNoteDeleted')
 
 /**
  * Hook that redirects the user to the history page and displays a notification when the note is deleted.
@@ -30,9 +27,7 @@ export const useOnNoteDeleted = (websocketConnection: MessageTransporter): void 
         noteTitle
       }
     })
-    router?.push('/history').catch((error: Error) => {
-      logger.error(`Error while redirecting to /history`, error)
-    })
+    router.push('/history')
   }, [router, noteTitle, dispatchUiNotification])
 
   useEffect(() => {

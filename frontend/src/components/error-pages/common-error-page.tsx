@@ -1,3 +1,4 @@
+'use client'
 /*
  * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
  *

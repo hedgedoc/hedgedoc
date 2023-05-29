@@ -20,13 +20,13 @@ export const historyToolbarStateContext = createContext<HistoryToolbarStateWithD
  * @param children The children that should receive the toolbar state via context.
  */
 export const HistoryToolbarStateContextProvider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
-  const urlParameterSearch = useSingleStringUrlParameter('search', '')
-  const urlParameterSelectedTags = useArrayStringUrlParameter('selectedTags')
+  const search = useSingleStringUrlParameter('search', '')
+  const selectedTags = useArrayStringUrlParameter('selectedTags')
 
   const stateWithDispatcher = useState<HistoryToolbarState>(() => ({
     viewState: ViewStateEnum.CARD,
-    search: urlParameterSearch,
-    selectedTags: urlParameterSelectedTags,
+    search: search,
+    selectedTags: selectedTags,
     titleSortDirection: SortModeEnum.no,
     lastVisitedSortDirection: SortModeEnum.down
   }))

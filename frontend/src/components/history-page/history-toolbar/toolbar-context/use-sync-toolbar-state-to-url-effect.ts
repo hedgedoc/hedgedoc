@@ -3,42 +3,46 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useArrayStringUrlParameter } from '../../../../hooks/common/use-array-string-url-parameter'
-import { useSingleStringUrlParameter } from '../../../../hooks/common/use-single-string-url-parameter'
-import { Logger } from '../../../../utils/logger'
 import { useHistoryToolbarState } from './use-history-toolbar-state'
 import equal from 'fast-deep-equal'
-import { useRouter } from 'next/router'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
-
-const logger = new Logger('useSyncToolbarStateToUrl')
 
 /**
  * Pushes the current search and tag selection into the navigation history stack of the browser.
  */
 export const useSyncToolbarStateToUrlEffect = (): void => {
   const router = useRouter()
-  const urlParameterSearch = useSingleStringUrlParameter('search', '')
-  const urlParameterSelectedTags = useArrayStringUrlParameter('selectedTags')
+  const searchParams = useSearchParams()
   const [state] = useHistoryToolbarState()
+  const pathname = usePathname()
 
   useEffect(() => {
-    if (!equal(state.search, urlParameterSearch) || !equal(state.selectedTags, urlParameterSelectedTags)) {
-      router
-        .push(
-          {
-            pathname: router.pathname,
-            query: {
-              search: state.search === '' ? [] : state.search,
-              selectedTags: state.selectedTags
-            }
-          },
-          undefined,
-          {
-            shallow: true
-          }
-        )
-        .catch(() => logger.error("Can't update route"))
+    if (!searchParams || !pathname) {
+      return
     }
-  }, [state, router, urlParameterSearch, urlParameterSelectedTags])
+
+    const urlParameterSearch = searchParams.get('search') ?? ''
+    const urlParameterSelectedTags = searchParams.getAll('selectedTags')
+    const params = new URLSearchParams(searchParams.toString())
+    let shouldUpdate = false
+
+    if (!equal(state.search, urlParameterSearch)) {
+      if (!state.search) {
+        params.delete('search')
+      } else {
+        params.set('search', state.search)
+      }
+      shouldUpdate = true
+    }
+    if (!equal(state.selectedTags, urlParameterSelectedTags)) {
+      params.delete('selectedTags')
+      state.selectedTags.forEach((tag) => params.append('selectedTags', tag))
+      shouldUpdate = true
+    }
+
+    if (shouldUpdate) {
+      router.push(`${pathname}?${params.toString()}`)
+    }
+  }, [state, router, searchParams, pathname])
 }

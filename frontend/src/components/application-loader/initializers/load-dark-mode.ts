@@ -6,7 +6,6 @@
 import { DARK_MODE_LOCAL_STORAGE_KEY } from '../../../hooks/dark-mode/use-save-dark-mode-preference-to-local-storage'
 import { setDarkModePreference } from '../../../redux/dark-mode/methods'
 import { DarkModePreference } from '../../../redux/dark-mode/types'
-import { isClientSideRendering } from '../../../utils/is-client-side-rendering'
 import { Logger } from '../../../utils/logger'
 
 const logger = new Logger('Dark mode initializer')
@@ -29,9 +28,6 @@ export const loadDarkMode = (): Promise<void> => {
  *         {@link false} if the user doesn't prefer dark mode or if the value couldn't be read from local storage.
  */
 const fetchDarkModeFromLocalStorage = (): DarkModePreference => {
-  if (!isClientSideRendering()) {
-    return DarkModePreference.AUTO
-  }
   try {
     const colorScheme = window.localStorage.getItem(DARK_MODE_LOCAL_STORAGE_KEY)
     if (colorScheme === 'dark') {

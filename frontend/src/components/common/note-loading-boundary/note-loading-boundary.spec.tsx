@@ -7,7 +7,6 @@ import { ApiError } from '../../../api/common/api-error'
 import * as getNoteModule from '../../../api/notes'
 import type { Note } from '../../../api/notes/types'
 import * as LoadingScreenModule from '../../../components/application-loader/loading-screen/loading-screen'
-import * as useSingleStringUrlParameterModule from '../../../hooks/common/use-single-string-url-parameter'
 import * as setNoteDataFromServerModule from '../../../redux/note-details/methods'
 import { mockI18n } from '../../../test-utils/mock-i18n'
 import { testId } from '../../../utils/test-id'
@@ -64,16 +63,7 @@ describe('Note loading boundary', () => {
           </Fragment>
         )
       })
-    mockGetNoteIdQueryParameter()
   })
-
-  const mockGetNoteIdQueryParameter = () => {
-    const expectedQueryParameter = 'noteId'
-    jest.spyOn(useSingleStringUrlParameterModule, 'useSingleStringUrlParameter').mockImplementation((parameter) => {
-      expect(parameter).toBe(expectedQueryParameter)
-      return mockedNoteId
-    })
-  }
 
   const mockGetNoteApiCall = (returnValue: Note) => {
     jest.spyOn(getNoteModule, 'getNote').mockImplementation((id) => {
@@ -105,7 +95,7 @@ describe('Note loading boundary', () => {
     const setNoteInReduxFunctionMock = mockSetNoteInRedux(mockedNote)
 
     const view = render(
-      <NoteLoadingBoundary>
+      <NoteLoadingBoundary noteId={mockedNoteId}>
         <span data-testid={'success'}>success!</span>
       </NoteLoadingBoundary>
     )
@@ -121,7 +111,7 @@ describe('Note loading boundary', () => {
     const setNoteInReduxFunctionMock = mockSetNoteInRedux(mockedNote)
 
     const view = render(
-      <NoteLoadingBoundary>
+      <NoteLoadingBoundary noteId={mockedNoteId}>
         <span data-testid={'success'}>success!</span>
       </NoteLoadingBoundary>
     )

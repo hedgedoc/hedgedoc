@@ -28,7 +28,7 @@ export interface OneClickMetadata {
 }
 
 const getBackendAuthUrl = (providerIdentifer: string): string => {
-  return `auth/${providerIdentifer}`
+  return `/auth/${providerIdentifer}`
 }
 
 const logger = new Logger('GetOneClickProviderMetadata')

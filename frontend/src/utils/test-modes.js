@@ -43,9 +43,17 @@ const isDevMode = process.env.NODE_ENV === 'development'
  */
 const isProfilingMode = !!process.env.ANALYZE && isPositiveAnswer(process.env.ANALYZE)
 
+/**
+ * Defines if the currently running process is building or executing.
+ *
+ * @type boolean
+ */
+const isBuildTime = !!process.env.BUILD_TIME && isPositiveAnswer(process.env.BUILD_TIME)
+
 module.exports = {
   isTestMode,
   isMockMode,
   isDevMode,
-  isProfilingMode
+  isProfilingMode,
+  isBuildTime
 }

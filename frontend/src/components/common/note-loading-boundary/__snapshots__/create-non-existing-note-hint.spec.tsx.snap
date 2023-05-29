@@ -38,6 +38,8 @@ exports[`create non existing note hint renders an button as initial state 1`] = 
 </div>
 `;
 
+exports[`create non existing note hint renders nothing if no note id has been provided 1`] = `<div />`;
+
 exports[`create non existing note hint shows an error message if note couldn't be created 1`] = `
 <div>
   <div
