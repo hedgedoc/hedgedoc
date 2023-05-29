@@ -122,7 +122,7 @@ declare module 'reveal.js' {
   export interface Plugin {
     id: string
 
-    init(deck: RevealStatic): void | Promise<void>
+    init(deck: Reveal): void | Promise<void>
   }
 
   export default class Reveal {

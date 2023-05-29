@@ -3,14 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { defaultNoteFrontmatter } from '../note-frontmatter/index.js'
 import {
   NoteTextDirection,
   NoteType,
   OpenGraph
-} from '../note-frontmatter/frontmatter.js'
+} from '../note-frontmatter/index.js'
+import { SlideOptions } from '../note-frontmatter/index.js'
 import { ISO6391 } from '../note-frontmatter/iso6391.js'
-import { SlideOptions } from '../note-frontmatter/slide-show-options.js'
-import { defaultNoteFrontmatter } from './default-values.js'
 import type { RawNoteFrontmatter } from './types.js'
 import type { ValidationError } from 'joi'
 import Joi from 'joi'

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { NoteFrontmatter } from '../note-frontmatter/frontmatter.js'
+import { NoteFrontmatter } from '../note-frontmatter/index.js'
 import { parseTags } from './parse-tags.js'
 import { RawNoteFrontmatter } from './types.js'
 
