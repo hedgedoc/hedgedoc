@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
+import { store } from '../../../../../redux'
 import { setRealtimeUsers } from '../../../../../redux/realtime/methods'
+import { RealtimeStatusActionType } from '../../../../../redux/realtime/types'
 import type { MessageTransporter } from '@hedgedoc/commons'
 import { MessageType } from '@hedgedoc/commons'
 import type { Listener } from 'eventemitter2'
@@ -40,4 +42,13 @@ export const useReceiveRealtimeUsers = (messageTransporter: MessageTransporter):
       messageTransporter.sendMessage({ type: MessageType.REALTIME_USER_STATE_REQUEST })
     }
   }, [isConnected, messageTransporter])
+
+  useEffect(
+    () => () => {
+      store.dispatch({
+        type: RealtimeStatusActionType.RESET_REALTIME_STATUS
+      })
+    },
+    []
+  )
 }

@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplyDarkModeStyle } from '../../../../hooks/dark-mode/use-apply-dark-mode-style'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import type { ScrollProps } from '../../../editor-page/synced-scroll/scroll-props'
+import { useApplyDarkModeStyle } from '../../../layout/dark-mode/use-apply-dark-mode-style'
 import type { LineMarkers } from '../../../markdown-renderer/extensions/linemarker/add-line-marker-markdown-it-plugin'
 import { LinemarkerMarkdownExtension } from '../../../markdown-renderer/extensions/linemarker/linemarker-markdown-extension'
 import { useCalculateLineMarkerPosition } from '../../../markdown-renderer/hooks/use-calculate-line-marker-positions'

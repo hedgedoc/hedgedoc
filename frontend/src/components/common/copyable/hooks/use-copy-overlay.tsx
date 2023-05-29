@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { isClientSideRendering } from '../../../../utils/is-client-side-rendering'
 import { Logger } from '../../../../utils/logger'
 import { ShowIf } from '../../show-if/show-if'
 import type { ReactElement, RefObject } from 'react'
@@ -45,11 +44,6 @@ export const useCopyOverlay = (
   }, [reset, showState])
 
   const copyToClipboard = useCallback(() => {
-    if (!isClientSideRendering()) {
-      setShowState(SHOW_STATE.ERROR)
-      log.error('Clipboard not available in server side rendering')
-      return
-    }
     if (typeof navigator.clipboard === 'undefined') {
       setShowState(SHOW_STATE.ERROR)
       return

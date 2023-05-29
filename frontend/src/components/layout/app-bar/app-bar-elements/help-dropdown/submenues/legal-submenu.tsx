@@ -3,24 +3,23 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useFrontendConfig } from '../../../../../common/frontend-config-context/use-frontend-config'
 import { ShowIf } from '../../../../../common/show-if/show-if'
 import { DropdownHeader } from '../dropdown-header'
 import { TranslatedDropdownItem } from '../translated-dropdown-item'
-import React, { Fragment, useMemo } from 'react'
+import type { ReactElement } from 'react'
+import React, { Fragment } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
+import { useFrontendConfig } from '../../../../../common/frontend-config-context/use-frontend-config'
 
 /**
  * Renders the legal submenu for the help dropdown.
  */
-export const LegalSubmenu: React.FC = () => {
+export const LegalSubmenu: React.FC = (): null | ReactElement => {
   useTranslation()
   const specialUrls = useFrontendConfig().specialUrls
-  const linksConfigured = useMemo(
-    () => specialUrls.privacy || specialUrls.termsOfUse || specialUrls.imprint,
-    [specialUrls]
-  )
+
+  const linksConfigured = specialUrls?.privacy || specialUrls?.termsOfUse || specialUrls?.imprint
 
   if (!linksConfigured) {
     return null

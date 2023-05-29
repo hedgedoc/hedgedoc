@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useRouter } from 'next/router'
+import { useSearchParams } from 'next/navigation'
 import { useMemo } from 'react'
 
 /**
@@ -14,10 +14,9 @@ import { useMemo } from 'react'
  * @return A value extracted from the router.
  */
 export const useSingleStringUrlParameter = <T>(parameter: string, fallback: T): string | T => {
-  const router = useRouter()
+  const router = useSearchParams()
 
   return useMemo(() => {
-    const value = router.query[parameter]
-    return (typeof value === 'string' ? value : value?.[0]) ?? fallback
-  }, [fallback, parameter, router.query])
+    return router?.get(parameter) ?? fallback
+  }, [fallback, parameter, router])
 }

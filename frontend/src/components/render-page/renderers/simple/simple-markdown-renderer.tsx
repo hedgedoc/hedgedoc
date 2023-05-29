@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplyDarkModeStyle } from '../../../../hooks/dark-mode/use-apply-dark-mode-style'
 import { cypressId } from '../../../../utils/cypress-attribute'
+import { useApplyDarkModeStyle } from '../../../layout/dark-mode/use-apply-dark-mode-style'
 import { useMarkdownExtensions } from '../../../markdown-renderer/hooks/use-markdown-extensions'
 import { MarkdownToReact } from '../../../markdown-renderer/markdown-to-react/markdown-to-react'
 import { useOnHeightChange } from '../../hooks/use-on-height-change'

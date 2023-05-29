@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 
 /**

@@ -3,16 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplyDarkModeStyle } from '../../hooks/dark-mode/use-apply-dark-mode-style'
-import { useSaveDarkModePreferenceToLocalStorage } from '../../hooks/dark-mode/use-save-dark-mode-preference-to-local-storage'
-import { MotdModal } from '../global-dialogs/motd-modal/motd-modal'
 import { EditorAppBar } from '../layout/app-bar/editor-app-bar'
 import { CommunicatorImageLightbox } from '../markdown-renderer/extensions/image/communicator-image-lightbox'
 import { ExtensionEventEmitterProvider } from '../markdown-renderer/hooks/use-extension-event-emitter'
 import { ChangeEditorContentContextProvider } from './change-content-context/codemirror-reference-context'
 import { EditorPane } from './editor-pane/editor-pane'
 import { useComponentsFromAppExtensions } from './editor-pane/hooks/use-components-from-app-extensions'
-import { HeadMetaProperties } from './head-meta-properties/head-meta-properties'
+import { useNoteAndAppTitle } from './head-meta-properties/use-note-and-app-title'
 import { useScrollState } from './hooks/use-scroll-state'
 import { useSetScrollSource } from './hooks/use-set-scroll-source'
 import { useUpdateLocalHistoryEntry } from './hooks/use-update-local-history-entry'
@@ -33,8 +30,6 @@ export enum ScrollSource {
 export const EditorPageContent: React.FC = () => {
   useTranslation()
 
-  useApplyDarkModeStyle()
-  useSaveDarkModePreferenceToLocalStorage()
   useUpdateLocalHistoryEntry()
 
   const scrollSource = useRef<ScrollSource>(ScrollSource.EDITOR)
@@ -67,14 +62,13 @@ export const EditorPageContent: React.FC = () => {
   )
 
   const editorExtensionComponents = useComponentsFromAppExtensions()
+  useNoteAndAppTitle()
 
   return (
     <ChangeEditorContentContextProvider>
       <ExtensionEventEmitterProvider>
         {editorExtensionComponents}
         <CommunicatorImageLightbox />
-        <HeadMetaProperties />
-        <MotdModal />
         <div className={'d-flex flex-column vh-100'}>
           <EditorAppBar />
           <div className={'flex-fill d-flex h-100 w-100 overflow-hidden flex-row'}>

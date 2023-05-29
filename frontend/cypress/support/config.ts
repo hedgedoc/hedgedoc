@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { AuthProviderType } from '../../src/api/config/types'
+import { HttpMethod } from '../../src/handler-utils/respond-to-matching-request'
 
 declare namespace Cypress {
   interface Chainable {
@@ -80,13 +81,7 @@ export const config = {
 }
 
 Cypress.Commands.add('loadConfig', (additionalConfig?: Partial<typeof config>) => {
-  return cy.intercept('/api/private/config', {
-    statusCode: 200,
-    body: {
-      ...config,
-      ...additionalConfig
-    }
-  })
+  return cy.request(HttpMethod.POST, '/api/private/config', { ...config, ...additionalConfig })
 })
 
 beforeEach(() => {

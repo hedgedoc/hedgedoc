@@ -1,10 +1,11 @@
+'use client'
 /*
  * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { PropsWithChildren } from 'react'
-import React, { createContext, useState } from 'react'
+import React, { createContext } from 'react'
 
 export interface BaseUrls {
   renderer: string
@@ -27,10 +28,9 @@ export const BaseUrlContextProvider: React.FC<PropsWithChildren<BaseUrlContextPr
   baseUrls,
   children
 }) => {
-  const [baseUrlState] = useState<undefined | BaseUrls>(() => baseUrls)
-  return baseUrlState === undefined ? (
+  return baseUrls === undefined ? (
     <span className={'text-white bg-dark'}>HedgeDoc is not configured correctly! Please check the server log.</span>
   ) : (
-    <baseUrlContext.Provider value={baseUrlState}>{children}</baseUrlContext.Provider>
+    <baseUrlContext.Provider value={baseUrls}>{children}</baseUrlContext.Provider>
   )
 }

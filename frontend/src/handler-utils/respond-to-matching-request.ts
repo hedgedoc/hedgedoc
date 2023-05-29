@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { isMockMode } from '../utils/test-modes'
+import { isMockMode, isTestMode } from '../utils/test-modes'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export enum HttpMethod {
@@ -22,6 +22,7 @@ export enum HttpMethod {
  * @param res The response object.
  * @param response The response data that will be returned when the HTTP method was the expected one.
  * @param statusCode The status code with which the response will be sent.
+ * @param respondMethodNotAllowedOnMismatch If set and the method can't process the request then a 405 will be returned. Used for chaining multiple calls together.
  * @return {@link true} if the HTTP method of the request is the expected one, {@link false} otherwise.
  */
 export const respondToMatchingRequest = <T>(
@@ -29,17 +30,42 @@ export const respondToMatchingRequest = <T>(
   req: NextApiRequest,
   res: NextApiResponse,
   response: T,
-  statusCode = 200
+  statusCode = 200,
+  respondMethodNotAllowedOnMismatch = true
 ): boolean => {
   if (!isMockMode) {
     res.status(404).send('Mock API is disabled')
     return false
-  }
-  if (method !== req.method) {
-    res.status(405).send('Method not allowed')
-    return false
-  } else {
+  } else if (method === req.method) {
     res.status(statusCode).json(response)
     return true
+  } else if (respondMethodNotAllowedOnMismatch) {
+    res.status(405).send('Method not allowed')
+    return true
+  } else {
+    return false
   }
+}
+
+/**
+ * Intercepts a mock HTTP request that is only allowed in test mode.
+ * Such requests can only be issued from localhost and only if mock API is activated.
+ *
+ * @param req The request object.
+ * @param res The response object.
+ * @param response The response data that will be returned when the HTTP method was the expected one.
+ */
+export const respondToTestRequest = <T>(req: NextApiRequest, res: NextApiResponse, response: () => T): boolean => {
+  if (!isMockMode) {
+    res.status(404).send('Mock API is disabled')
+  } else if (req.method !== HttpMethod.POST) {
+    res.status(405).send('Method not allowed')
+  } else if (!isTestMode) {
+    res.status(404).send('Route only available in test mode')
+  } else if (req.socket.remoteAddress !== '127.0.0.1' && req.socket.remoteAddress !== '::1') {
+    res.status(403).send('Request must come from localhost')
+  } else {
+    res.status(200).json(response())
+  }
+  return true
 }

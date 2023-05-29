@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-const { isMockMode, isTestMode, isProfilingMode } = require('./src/utils/test-modes')
+const { isMockMode, isTestMode, isProfilingMode, isBuildTime } = require('./src/utils/test-modes')
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -12,15 +12,13 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 console.log('Node environment is', process.env.NODE_ENV)
 
-if (isMockMode) {
-  console.log('Use mock API')
-}
-
 if (isTestMode) {
   console.warn(`This build runs in test mode. This means:
- - no sandboxed iframe
+ - No sandboxed iframe
  - Additional data-attributes for e2e tests added to DOM
- - Editor and renderer are running on the same origin`)
+ - Editor and renderer are running on the same origin
+ - No frontend config caching
+`)
 }
 
 if (isMockMode) {
@@ -28,7 +26,14 @@ if (isMockMode) {
  - No real data. All API responses are mocked
  - No persistent data
  - No realtime editing
- `)
+`)
+}
+
+if (isBuildTime) {
+  console.warn(`This process runs in build mode. During build time this means:
+ - Editor and Renderer base urls are https://example.org
+ - No frontend config will be fetched
+`)
 }
 
 if (isProfilingMode) {
@@ -54,7 +59,6 @@ const svgrConfig = {
 /** @type {import('next').NextConfig} */
 const rawNextConfig = {
   webpack: (config) => {
-
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { createNoteWithPrimaryAlias } from '../../../api/notes'
-import { useSingleStringUrlParameter } from '../../../hooks/common/use-single-string-url-parameter'
 import { testId } from '../../../utils/test-id'
 import { UiIcon } from '../icons/ui-icon'
 import { ShowIf } from '../show-if/show-if'
@@ -20,6 +19,7 @@ import { useAsyncFn } from 'react-use'
 
 export interface CreateNonExistingNoteHintProps {
   onNoteCreated: () => void
+  noteId: string | undefined
 }
 
 /**
@@ -27,17 +27,16 @@ export interface CreateNonExistingNoteHintProps {
  * When the button was clicked it also shows the progress.
  *
  * @param onNoteCreated A function that will be called after the note was created.
+ * @param noteId The wanted id for the note to create
  */
-export const CreateNonExistingNoteHint: React.FC<CreateNonExistingNoteHintProps> = ({ onNoteCreated }) => {
+export const CreateNonExistingNoteHint: React.FC<CreateNonExistingNoteHintProps> = ({ onNoteCreated, noteId }) => {
   useTranslation()
-  const noteIdFromUrl = useSingleStringUrlParameter('noteId', undefined)
 
   const [returnState, createNote] = useAsyncFn(async () => {
-    if (noteIdFromUrl === undefined) {
-      throw new Error('Note id not set')
+    if (noteId !== undefined) {
+      return await createNoteWithPrimaryAlias('', noteId)
     }
-    return await createNoteWithPrimaryAlias('', noteIdFromUrl)
-  }, [noteIdFromUrl])
+  }, [noteId])
 
   const onClickHandler = useCallback(() => {
     void createNote()
@@ -49,7 +48,7 @@ export const CreateNonExistingNoteHint: React.FC<CreateNonExistingNoteHintProps>
     }
   }, [onNoteCreated, returnState.value])
 
-  if (noteIdFromUrl === undefined) {
+  if (noteId === undefined) {
     return null
   } else if (returnState.value) {
     return (
@@ -76,7 +75,7 @@ export const CreateNonExistingNoteHint: React.FC<CreateNonExistingNoteHintProps>
     return (
       <Alert variant={'info'} {...testId('createNoteMessage')} className={'mt-5'}>
         <span>
-          <Trans i18nKey={'noteLoadingBoundary.createNote.question'} values={{ aliasName: noteIdFromUrl }} />
+          <Trans i18nKey={'noteLoadingBoundary.createNote.question'} values={{ aliasName: noteId }} />
         </span>
         <div className={'mt-3'}>
           <Button

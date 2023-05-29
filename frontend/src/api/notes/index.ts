@@ -16,8 +16,8 @@ import type { Note, NoteDeletionOptions, NoteMetadata } from './types'
  * @return Content and metadata of the specified note.
  * @throws {Error} when the api request wasn't successful.
  */
-export const getNote = async (noteIdOrAlias: string): Promise<Note> => {
-  const response = await new GetApiRequestBuilder<Note>('notes/' + noteIdOrAlias).sendRequest()
+export const getNote = async (noteIdOrAlias: string, baseUrl?: string): Promise<Note> => {
+  const response = await new GetApiRequestBuilder<Note>('notes/' + noteIdOrAlias, baseUrl).sendRequest()
   return response.asParsedJsonObject()
 }
 

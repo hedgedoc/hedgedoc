@@ -7,18 +7,15 @@ import { deleteNote } from '../../../../../api/notes'
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import { useBooleanState } from '../../../../../hooks/common/use-boolean-state'
 import { cypressId } from '../../../../../utils/cypress-attribute'
-import { Logger } from '../../../../../utils/logger'
 import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
 import { SidebarButton } from '../../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../../types'
 import { DeleteNoteModal } from './delete-note-modal'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import type { PropsWithChildren } from 'react'
 import React, { Fragment, useCallback } from 'react'
 import { Trash as IconTrash } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
-
-const logger = new Logger('note-deletion')
 
 /**
  * Sidebar entry that can be used to delete the current note.
@@ -35,9 +32,7 @@ export const DeleteNoteSidebarEntry: React.FC<PropsWithChildren<SpecificSidebarE
 
   const deleteNoteAndCloseDialog = useCallback(() => {
     deleteNote(noteId)
-      .then(() => {
-        router.push('/history').catch((reason) => logger.error('Error while redirecting to /history', reason))
-      })
+      .then(() => router.push('/history'))
       .catch(showErrorNotification('landing.history.error.deleteNote.text'))
       .finally(closeModal)
   }, [closeModal, noteId, router, showErrorNotification])

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { getNote } from '../../../../api/notes'
-import { useSingleStringUrlParameter } from '../../../../hooks/common/use-single-string-url-parameter'
 import { setNoteDataFromServer } from '../../../../redux/note-details/methods'
 import { useAsyncFn } from 'react-use'
 import type { AsyncState } from 'react-use/lib/useAsyncFn'
@@ -14,15 +13,13 @@ import type { AsyncState } from 'react-use/lib/useAsyncFn'
  *
  * @return An {@link AsyncState async state} that represents the current state of the loading process.
  */
-export const useLoadNoteFromServer = (): [AsyncState<boolean>, () => void] => {
-  const id = useSingleStringUrlParameter('noteId', undefined)
-
+export const useLoadNoteFromServer = (noteId: string | undefined): [AsyncState<boolean>, () => void] => {
   return useAsyncFn(async (): Promise<boolean> => {
-    if (id === undefined) {
+    if (noteId === undefined) {
       throw new Error('Invalid id')
     }
-    const noteFromServer = await getNote(id)
+    const noteFromServer = await getNote(noteId)
     setNoteDataFromServer(noteFromServer)
     return true
-  }, [id])
+  }, [noteId])
 }

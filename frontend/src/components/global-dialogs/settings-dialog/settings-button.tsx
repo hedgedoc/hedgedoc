@@ -5,6 +5,7 @@
  */
 import { useBooleanState } from '../../../hooks/common/use-boolean-state'
 import { useOutlineButtonVariant } from '../../../hooks/dark-mode/use-outline-button-variant'
+import { useSaveDarkModePreferenceToLocalStorage } from '../../../hooks/dark-mode/use-save-dark-mode-preference-to-local-storage'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { IconButton } from '../../common/icon-button/icon-button'
 import { SettingsModal } from './settings-modal'
@@ -19,6 +20,7 @@ export type SettingsButtonProps = Omit<ButtonProps, 'onClick'>
 export const SettingsButton: React.FC<SettingsButtonProps> = (props) => {
   const [show, showModal, hideModal] = useBooleanState(false)
   const buttonVariant = useOutlineButtonVariant()
+  useSaveDarkModePreferenceToLocalStorage()
 
   return (
     <Fragment>
