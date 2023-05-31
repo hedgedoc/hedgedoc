@@ -12,7 +12,7 @@ import React from 'react'
  */
 export const Footer: React.FC = () => {
   return (
-    <footer className='text-light small'>
+    <footer className='small'>
       <PoweredByLinks />
       <SocialLink />
     </footer>

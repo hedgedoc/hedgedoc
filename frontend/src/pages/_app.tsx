@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import '../../global-styles/dark.scss'
 import '../../global-styles/index.scss'
 import type { FrontendConfig } from '../api/config/types'
 import { ApplicationLoader } from '../components/application-loader/application-loader'

@@ -53,7 +53,7 @@ export const MotdModal: React.FC = () => {
       show={!!lines && !loading && !error && !dismissed}
       titleI18nKey={'motd.title'}
       {...cypressId('motd-modal')}>
-      <Modal.Body className={'bg-light'}>
+      <Modal.Body>
         <EditorToRendererCommunicatorContextProvider>
           <RendererIframe
             frameClasses={'w-100'}

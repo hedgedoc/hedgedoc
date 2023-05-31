@@ -13,11 +13,16 @@ export const useApplyDarkModeStyle = (): void => {
   const darkMode = useDarkModeState()
   useEffect(() => {
     if (darkMode) {
-      window.document.body.classList.add('dark')
+      window.document.body.dataset.bsTheme = 'dark'
     } else {
-      window.document.body.classList.remove('dark')
+      window.document.body.dataset.bsTheme = 'light'
     }
   }, [darkMode])
 
-  useEffect(() => () => window.document.body.classList.remove('dark'), [])
+  useEffect(
+    () => () => {
+      window.document.body.dataset.bsTheme = 'light'
+    },
+    []
+  )
 }

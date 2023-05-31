@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-.nav-link {
+.link {
   border-bottom: 2px solid transparent
 }
 
-.nav-link-active {
-  border-bottom-color: #fff;
+.active {
+  border-bottom-color: var(--bs-primary);
 }

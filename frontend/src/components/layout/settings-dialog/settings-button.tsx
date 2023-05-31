@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useBooleanState } from '../../../hooks/common/use-boolean-state'
+import { useOutlineButtonVariant } from '../../../hooks/dark-mode/use-outline-button-variant'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { IconButton } from '../../common/icon-button/icon-button'
 import { SettingsModal } from './settings-modal'
@@ -17,9 +18,17 @@ export type SettingsButtonProps = Omit<ButtonProps, 'onClick'>
  */
 export const SettingsButton: React.FC<SettingsButtonProps> = (props) => {
   const [show, showModal, hideModal] = useBooleanState(false)
+  const buttonVariant = useOutlineButtonVariant()
+
   return (
     <Fragment>
-      <IconButton {...props} {...cypressId('settingsButton')} onClick={showModal} icon={IconGear} />
+      <IconButton
+        {...props}
+        {...cypressId('settingsButton')}
+        onClick={showModal}
+        icon={IconGear}
+        variant={buttonVariant}
+      />
       <SettingsModal show={show} onHide={hideModal} />
     </Fragment>
   )

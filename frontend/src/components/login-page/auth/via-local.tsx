@@ -49,7 +49,7 @@ export const ViaLocal: React.FC = () => {
   const onPasswordChange = useOnInputChange(setPassword)
 
   return (
-    <Card className='bg-dark mb-4'>
+    <Card className='mb-4'>
       <Card.Body>
         <Card.Title>
           <Trans i18nKey='login.signInVia' values={{ service: t('login.auth.username') }} />

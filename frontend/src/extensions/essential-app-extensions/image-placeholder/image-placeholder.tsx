@@ -97,7 +97,7 @@ export const ImagePlaceholder: React.FC<PlaceholderImageFrameProps> = ({
         onChange={onChangeHandler}
         ref={fileInputReference}
       />
-      <div className={'align-items-center flex-column justify-content-center flex-fill d-flex'}>
+      <div className={'align-items-center flex-column justify-content-center flex-fill d-flex text-body-emphasis'}>
         <div className={'d-flex flex-column'}>
           <span className='my-2'>
             <Trans i18nKey={'editor.embeddings.placeholderImage.placeholderText'} />

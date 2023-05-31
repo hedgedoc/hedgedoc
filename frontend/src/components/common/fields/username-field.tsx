@@ -33,7 +33,6 @@ export const UsernameField: React.FC<CommonFieldProps> = ({ onChange, value }) =
         isValid={isValid}
         onChange={onChange}
         placeholder={t('login.auth.username') ?? undefined}
-        className='bg-dark text-light'
         autoComplete='username'
         autoFocus={true}
         required

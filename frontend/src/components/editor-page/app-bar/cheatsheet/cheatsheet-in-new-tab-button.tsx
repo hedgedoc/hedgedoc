@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useOutlineButtonVariant } from '../../../../hooks/dark-mode/use-outline-button-variant'
 import { IconButton } from '../../../common/icon-button/icon-button'
 import type { MouseEvent } from 'react'
 import React, { useCallback } from 'react'
@@ -28,6 +29,8 @@ export const CheatsheetInNewTabButton: React.FC<CheatsheetInNewTabButtonProps> =
 
   const { t } = useTranslation()
 
+  const buttonVariant = useOutlineButtonVariant()
+
   return (
     <IconButton
       size={'sm'}
@@ -36,7 +39,7 @@ export const CheatsheetInNewTabButton: React.FC<CheatsheetInNewTabButtonProps> =
       onClick={openPopUp}
       icon={BoxArrowUpRight}
       className={'p-2 border-0'}
-      variant={'outline-dark'}
+      variant={buttonVariant}
       target={'_blank'}
       title={t('cheatsheet.modal.popup') ?? ''}
     />

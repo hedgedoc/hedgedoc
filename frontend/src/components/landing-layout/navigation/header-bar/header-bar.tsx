@@ -32,7 +32,7 @@ const HeaderBar: React.FC = () => {
         </HeaderNavLink>
       </div>
       <div className='d-inline-flex gap-2'>
-        <SettingsButton variant={'outline-light'} />
+        <SettingsButton variant={'outline-dark'} />
         <NewNoteButton />
         {!userExists ? <SignInButton size='sm' /> : <UserDropdown />}
       </div>

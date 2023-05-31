@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary/async-loading-boundary'
-import { CopyToClipboardButton } from '../../../components/common/copyable/copy-to-clipboard-button/copy-to-clipboard-button'
 import { concatCssClasses } from '../../../utils/concat-css-classes'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { testId } from '../../../utils/test-id'
+import { AsyncLoadingBoundary } from '../async-loading-boundary/async-loading-boundary'
+import { CopyToClipboardButton } from '../copyable/copy-to-clipboard-button/copy-to-clipboard-button'
 import styles from './highlighted-code.module.scss'
 import { useAsyncHighlightJsImport } from './hooks/use-async-highlight-js-import'
 import { useAttachLineNumbers } from './hooks/use-attach-line-numbers'

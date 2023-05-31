@@ -3,7 +3,7 @@
 exports[`TranslatedInternalLink renders with i18nKey 1`] = `
 <div>
   <a
-    class="text-light"
+    class=""
     href="/test"
   >
     testi18nKey

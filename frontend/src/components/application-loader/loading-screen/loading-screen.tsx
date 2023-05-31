@@ -21,7 +21,7 @@ export interface LoadingScreenProps {
  */
 export const LoadingScreen: React.FC<LoadingScreenProps> = ({ errorMessage }) => {
   return (
-    <div className={`${styles.loader} text-light`}>
+    <div className={`${styles.loader} text-light bg-dark`}>
       <div className='mb-3 text-light'>
         <span className={`d-block`}>
           <LoadingAnimation error={!!errorMessage} />

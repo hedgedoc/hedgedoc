@@ -72,7 +72,7 @@ export const LoginPage: React.FC = () => {
           </ShowIf>
           <ShowIf condition={oneClickProviders.length > 0}>
             <Col xs={12} sm={10} lg={4}>
-              <Card className='bg-dark mb-4'>
+              <Card className='mb-4'>
                 <Card.Body>
                   <Card.Title>
                     <Trans i18nKey='login.signInVia' values={{ service: '' }} />

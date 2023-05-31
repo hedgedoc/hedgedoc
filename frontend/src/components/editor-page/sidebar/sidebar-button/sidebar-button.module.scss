@@ -18,7 +18,7 @@
   padding: 0;
   transition: height 0.2s, flex-basis 0.2s;
   overflow: hidden;
-  color: var(--bs-dark);
+  color: var(--bs-emphasis-color);
 
   &.hide {
     flex-basis: 0;

@@ -128,7 +128,7 @@ export const ImportHistoryButton: React.FC = () => {
         {...cypressId('import-history-file-input')}
       />
       <Button
-        variant={'light'}
+        variant={'secondary'}
         title={t('landing.history.toolbar.import') ?? undefined}
         onClick={onUploadButtonClick}
         {...cypressId('import-history-file-button')}>

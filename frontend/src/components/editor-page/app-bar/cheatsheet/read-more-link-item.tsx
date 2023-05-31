@@ -23,7 +23,7 @@ export const ReadMoreLinkItem: React.FC<ReadMoreLinkGroupProps> = ({ url }) => {
       <h4>
         <Trans i18nKey={'cheatsheet.modal.headlines.readMoreLink'} />
       </h4>
-      <ExternalLink className={'text-dark'} text={url.toString()} href={url.toString()}></ExternalLink>
+      <ExternalLink text={url.toString()} href={url.toString()}></ExternalLink>
     </ListGroupItem>
   )
 }

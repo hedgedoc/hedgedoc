@@ -4,19 +4,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-.split-divider {
+.divider {
   width: 15px;
-  background: white;
+  background: var(--bs-body-bg);
   z-index: 1;
-  box-shadow: 3px 0 6px #e7e7e7;
+  box-shadow: 0 0 6px var(--bs-gray-400);
 
   display: flex;
   align-items: center;
   justify-content: center;
-
-  :global(body.dark) & {
-    box-shadow: 3px 0 6px #7b7b7b;
-  }
 }
 
 .grabber {
@@ -29,7 +25,8 @@
   z-index: 100000;
   position: absolute;
   border-radius: 90px;
-  border: solid 1px #d5d5d5;
+  border: solid 1px var(--bs-gray-500);
+  background: var(--bs-body-bg);
   overflow: hidden;
   display: flex;
   flex-direction: row;

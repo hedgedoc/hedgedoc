@@ -7,7 +7,7 @@
 .slide-sidebar {
   --sidebar-entry-height: 44px;
   --sidebar-menu-width: 280px;
-  --sidebar-separator-color: rgba(0, 0, 0, 0.15);
+  --sidebar-separator-color: var(--bs-secondary);
 
   :global(body.dark) & {
     --sidebar-separator-color: rgba(255, 255, 255, 0.2);
@@ -35,6 +35,6 @@
       left: calc(0px - var(--sidebar-menu-width) + var(--sidebar-entry-height));
     }
 
-    background: var(--bs-light);
+    background: var(--bs-body-bg);
   }
 }

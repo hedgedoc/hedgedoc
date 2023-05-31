@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
+import { useOutlineButtonVariant } from '../../../../hooks/dark-mode/use-outline-button-variant'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { IconButton } from '../../../common/icon-button/icon-button'
 import { HelpModal } from './help-modal'
@@ -17,6 +18,7 @@ import { Trans, useTranslation } from 'react-i18next'
 export const HelpButton: React.FC = () => {
   const { t } = useTranslation()
   const [modalVisibility, showModal, closeModal] = useBooleanState()
+  const buttonVariant = useOutlineButtonVariant()
 
   return (
     <Fragment>
@@ -26,7 +28,7 @@ export const HelpButton: React.FC = () => {
         title={t('editor.documentBar.help') ?? undefined}
         className='ms-2'
         size='sm'
-        variant='outline-dark'
+        variant={buttonVariant}
         onClick={showModal}>
         <Trans i18nKey={'editor.documentBar.help'} />
       </IconButton>

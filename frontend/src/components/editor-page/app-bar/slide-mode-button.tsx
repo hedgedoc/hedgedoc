@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { useOutlineButtonVariant } from '../../../hooks/dark-mode/use-outline-button-variant'
 import { UiIcon } from '../../common/icons/ui-icon'
 import Link from 'next/link'
 import React from 'react'
@@ -17,6 +18,7 @@ import { useTranslation } from 'react-i18next'
 export const SlideModeButton: React.FC = () => {
   const { t } = useTranslation()
   const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const buttonVariant = useOutlineButtonVariant()
 
   return (
     <Link href={`/p/${noteIdentifier}`} target='_blank'>
@@ -24,7 +26,7 @@ export const SlideModeButton: React.FC = () => {
         title={t('editor.documentBar.slideMode') ?? undefined}
         className='ms-2 text-secondary'
         size='sm'
-        variant='outline-light'>
+        variant={buttonVariant}>
         <UiIcon icon={IconTv} />
       </Button>
     </Link>

@@ -6,6 +6,6 @@
 
 @import '~highlight.js/styles/github';
 
-body.dark {
+[data-bs-theme="dark"] {
   @import '~highlight.js/styles/github-dark';
 }

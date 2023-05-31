@@ -64,7 +64,7 @@ export const SortButton: React.FC<SortButtonProps> = ({ children, onDirectionCha
   }, [direction])
 
   return (
-    <IconButton onClick={toggleSort} variant={'light'} icon={icon} iconSize={1.5} border={true}>
+    <IconButton onClick={toggleSort} variant={'secondary'} icon={icon} iconSize={1.5} border={true}>
       {children}
     </IconButton>
   )

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
+import { useOutlineButtonVariant } from '../../../../hooks/dark-mode/use-outline-button-variant'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { CommonModal } from '../../../common/modals/common-modal'
 import { CheatsheetContent } from './cheatsheet-content'
@@ -18,6 +19,7 @@ import { Trans, useTranslation } from 'react-i18next'
 export const CheatsheetButton: React.FC = () => {
   const { t } = useTranslation()
   const [modalVisibility, showModal, closeModal] = useBooleanState()
+  const buttonVariant = useOutlineButtonVariant()
 
   return (
     <Fragment>
@@ -25,7 +27,7 @@ export const CheatsheetButton: React.FC = () => {
         {...cypressId('open.cheatsheet-button')}
         title={t('cheatsheet.button') ?? undefined}
         className={'mx-2'}
-        variant='outline-dark'
+        variant={buttonVariant}
         size={'sm'}
         onClick={showModal}>
         <Trans i18nKey={'cheatsheet.button'}></Trans>

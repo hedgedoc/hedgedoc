@@ -14,7 +14,7 @@ exports[`motd modal renders a modal if a motd was fetched and can dismiss it 1`]
     This is a mock implementation of a Modal: 
     <dialog>
       <div
-        class="bg-light modal-body"
+        class="modal-body"
       >
         <span
           data-testid="motd-renderer"

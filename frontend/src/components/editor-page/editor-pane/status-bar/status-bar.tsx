@@ -16,7 +16,7 @@ import React from 'react'
  */
 export const StatusBar: React.FC = () => {
   return (
-    <div className={`d-flex flex-row border-secondary border-top small bg-light px-2`}>
+    <div className={`d-flex flex-row border-secondary border-top small px-2`}>
       <div>
         <CursorPositionInfo />
         <SelectedCharacters />

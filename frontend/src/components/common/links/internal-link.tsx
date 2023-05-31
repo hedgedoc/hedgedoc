@@ -19,14 +19,7 @@ import React from 'react'
  * @param className Additional class names added to the link object
  * @param title The title of the link
  */
-export const InternalLink: React.FC<LinkWithTextProps> = ({
-  href,
-  text,
-  icon,
-  id,
-  className = 'text-light',
-  title
-}) => {
+export const InternalLink: React.FC<LinkWithTextProps> = ({ href, text, icon, id, className = '', title }) => {
   return (
     <Link href={href} className={className} id={id} title={title}>
       <UiIcon icon={icon} nbsp={true} />
