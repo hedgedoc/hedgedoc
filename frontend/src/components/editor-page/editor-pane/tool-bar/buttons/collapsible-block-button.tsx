@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { ContentFormatter } from '../../../change-content-context/use-change-editor-content-callback'
+import { FormatterToolbarButton } from '../formatter-toolbar-button'
 import { changeCursorsToWholeLineIfNoToCursor } from '../formatters/utils/change-cursors-to-whole-line-if-no-to-cursor'
 import { wrapSelection } from '../formatters/wrap-selection'
-import { ToolbarButton } from '../toolbar-button'
 import React, { useCallback } from 'react'
 import { ArrowsCollapse as IconArrowsCollapse } from 'react-bootstrap-icons'
 
@@ -21,5 +21,5 @@ export const CollapsibleBlockButton: React.FC = () => {
       '\n:::\n'
     )
   }, [])
-  return <ToolbarButton i18nKey={'collapsibleBlock'} icon={IconArrowsCollapse} formatter={formatter}></ToolbarButton>
+  return <FormatterToolbarButton i18nKey={'collapsibleBlock'} icon={IconArrowsCollapse} formatter={formatter} />
 }

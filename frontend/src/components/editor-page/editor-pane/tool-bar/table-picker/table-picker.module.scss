@@ -4,10 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-.table-cell {
+.cell {
+  &.selected {
+    background: var(--bs-primary);
+    border-color: transparent;
+  }
+  background: transparent;
+  border-color: var(--bs-secondary);
   margin: 1px;
   border-radius: 2px;
-  border: solid 1px var(--bs-dark);
+  border: solid 1px;
 }
 
 .table-container {

@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { ContentFormatter } from '../../../change-content-context/use-change-editor-content-callback'
+import { FormatterToolbarButton } from '../formatter-toolbar-button'
 import { changeCursorsToWholeLineIfNoToCursor } from '../formatters/utils/change-cursors-to-whole-line-if-no-to-cursor'
 import { wrapSelection } from '../formatters/wrap-selection'
-import { ToolbarButton } from '../toolbar-button'
 import React, { useCallback } from 'react'
 import { Code as IconCode } from 'react-bootstrap-icons'
 
@@ -17,5 +17,5 @@ export const CodeFenceButton: React.FC = () => {
   const formatter: ContentFormatter = useCallback(({ currentSelection, markdownContent }) => {
     return wrapSelection(changeCursorsToWholeLineIfNoToCursor(markdownContent, currentSelection), '```\n', '\n```')
   }, [])
-  return <ToolbarButton i18nKey={'code'} icon={IconCode} formatter={formatter}></ToolbarButton>
+  return <FormatterToolbarButton i18nKey={'code'} icon={IconCode} formatter={formatter} />
 }
