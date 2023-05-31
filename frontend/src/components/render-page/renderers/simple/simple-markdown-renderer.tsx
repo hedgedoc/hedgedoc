@@ -6,10 +6,10 @@
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { useMarkdownExtensions } from '../../../markdown-renderer/hooks/use-markdown-extensions'
 import { MarkdownToReact } from '../../../markdown-renderer/markdown-to-react/markdown-to-react'
+import { useOnHeightChange } from '../../hooks/use-on-height-change'
 import { RendererType } from '../../window-post-message-communicator/rendering-message'
 import type { CommonMarkdownRendererProps, HeightChangeRendererProps } from '../common-markdown-renderer-props'
-import useResizeObserver from '@react-hook/resize-observer'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef } from 'react'
 
 export type SimpleMarkdownRendererProps = CommonMarkdownRendererProps & HeightChangeRendererProps
 
@@ -28,11 +28,7 @@ export const SimpleMarkdownRenderer: React.FC<SimpleMarkdownRendererProps> = ({
   newLinesAreBreaks
 }) => {
   const rendererRef = useRef<HTMLDivElement | null>(null)
-  const [rendererSize, setRendererSize] = useState<DOMRectReadOnly>()
-  useResizeObserver(rendererRef.current, (entry) => {
-    setRendererSize(entry.contentRect)
-  })
-  useEffect(() => onHeightChange?.((rendererSize?.height ?? 0) + 1), [rendererSize, onHeightChange])
+  useOnHeightChange(rendererRef, onHeightChange)
   const extensions = useMarkdownExtensions(baseUrl, RendererType.SIMPLE, [])
 
   return (
