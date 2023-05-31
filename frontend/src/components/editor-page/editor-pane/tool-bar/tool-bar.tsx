@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useMayEdit } from '../../../../hooks/common/use-may-edit'
+import { concatCssClasses } from '../../../../utils/concat-css-classes'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { BoldButton } from './buttons/bold-button'
 import { CheckListButton } from './buttons/check-list-button'
@@ -39,7 +40,7 @@ export const ToolBar: React.FC = () => {
 
   return (
     <ShowIf condition={mayEdit}>
-      <ButtonToolbar className={`bg-light ${styles.toolbar}`}>
+      <ButtonToolbar className={concatCssClasses(styles.toolbar, 'mb-2')}>
         <ButtonGroup className={'mx-1 flex-wrap'}>
           <BoldButton />
           <ItalicButton />

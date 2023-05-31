@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useDarkModeState } from '../../../hooks/dark-mode/use-dark-mode-state'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { Pager } from '../../common/pagination/pager'
 import type { HistoryEntriesProps, HistoryEventHandlers } from '../history-content/history-content'
@@ -44,13 +45,15 @@ export const HistoryTable: React.FC<HistoryEntriesProps & HistoryEventHandlers> 
     ))
   }, [entries, onPinClick, onRemoveEntryClick, onDeleteNoteClick])
 
+  const darkModeState = useDarkModeState()
+
   return (
     <Table
       striped
       bordered
       hover
       size='sm'
-      variant='dark'
+      variant={darkModeState ? 'dark' : 'light'}
       className={styles['history-table']}
       {...cypressId('history-table')}>
       <thead>

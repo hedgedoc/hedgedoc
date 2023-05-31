@@ -25,7 +25,7 @@ export const DocumentReadOnlyPage: React.FC = () => {
       <NoteLoadingBoundary>
         <HeadMetaProperties />
         <MotdModal />
-        <div className={'d-flex flex-column mvh-100 bg-light'}>
+        <div className={'d-flex flex-column mvh-100'}>
           <AppBar mode={AppBarMode.BASIC} />
           <DocumentReadOnlyPageContent />
         </div>

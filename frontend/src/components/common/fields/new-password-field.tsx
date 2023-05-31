@@ -33,7 +33,6 @@ export const NewPasswordField: React.FC<CommonFieldProps> = ({ onChange, value, 
         isInvalid={hasError}
         onChange={onChange}
         placeholder={t('login.auth.password') ?? undefined}
-        className='bg-dark text-light'
         autoComplete='new-password'
         required
       />

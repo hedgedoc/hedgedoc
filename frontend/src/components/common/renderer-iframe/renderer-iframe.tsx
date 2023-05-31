@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { DarkModePreference } from '../../../redux/dark-mode/types'
 import { concatCssClasses } from '../../../utils/concat-css-classes'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { Logger } from '../../../utils/logger'
@@ -27,11 +26,11 @@ import { useForceRenderPageUrlOnIframeLoadCallback } from './hooks/use-force-ren
 import { useSendAdditionalConfigurationToRenderer } from './hooks/use-send-additional-configuration-to-renderer'
 import { useSendMarkdownToRenderer } from './hooks/use-send-markdown-to-renderer'
 import { useSendScrollState } from './hooks/use-send-scroll-state'
+import styles from './style.module.scss'
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 export interface RendererIframeProps extends Omit<CommonMarkdownRendererProps & ScrollProps, 'baseUrl'> {
   rendererType: RendererType
-  forcedDarkMode?: DarkModePreference
   frameClasses?: string
   onRendererStatusChange?: undefined | ((rendererReady: boolean) => void)
   adaptFrameHeightToContent?: boolean
@@ -51,7 +50,6 @@ const log = new Logger('RendererIframe')
  * @param onMakeScrollSource Callback that is fired when the renderer requests to be set as the current scroll source
  * @param frameClasses CSS classes that should be applied to the iframe
  * @param rendererType The {@link RendererType type} of the renderer to use.
- * @param forcedDarkMode If set, the dark mode will be set to the given value. Otherwise, the dark mode won't be changed.
  * @param adaptFrameHeightToContent If set, the iframe height will be adjusted to the content height
  * @param onRendererStatusChange Callback that is fired when the renderer in the iframe is ready
  */
@@ -62,7 +60,6 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
   onMakeScrollSource,
   frameClasses,
   rendererType,
-  forcedDarkMode,
   adaptFrameHeightToContent,
   onRendererStatusChange
 }) => {
@@ -142,7 +139,7 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
   )
 
   useEffectOnRenderTypeChange(rendererType, onIframeLoad)
-  useSendAdditionalConfigurationToRenderer(rendererReady, forcedDarkMode)
+  useSendAdditionalConfigurationToRenderer(rendererReady)
   useSendMarkdownToRenderer(markdownContentLines, rendererReady)
 
   useSendScrollState(scrollState, rendererReady)
@@ -169,7 +166,7 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
         allowFullScreen={true}
         ref={frameReference}
         referrerPolicy={'no-referrer'}
-        className={concatCssClasses('border-0', frameClasses)}
+        className={concatCssClasses('border-0', styles.frame, frameClasses)}
         allow={'clipboard-write'}
         {...cypressAttribute('renderer-ready', rendererReady ? 'true' : 'false')}
         {...cypressAttribute('renderer-type', rendererType)}

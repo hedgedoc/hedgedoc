@@ -74,7 +74,7 @@ export const CommonModal: React.FC<PropsWithChildren<CommonModalProps>> = ({
         onHide={onHide}
         animation={true}
         {...testId('commonModal')}
-        dialogClassName={concatCssClasses('text-dark', additionalClasses)}
+        dialogClassName={concatCssClasses(additionalClasses)}
         size={modalSize}>
         <Modal.Header closeButton={!!showCloseButton}>
           <Modal.Title>

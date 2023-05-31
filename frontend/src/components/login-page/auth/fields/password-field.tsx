@@ -25,7 +25,6 @@ export const PasswordField: React.FC<AuthFieldProps> = ({ onChange, invalid }) =
         size='sm'
         placeholder={t('login.auth.password') ?? undefined}
         onChange={onChange}
-        className='bg-dark text-light'
         autoComplete='current-password'
       />
     </Form.Group>

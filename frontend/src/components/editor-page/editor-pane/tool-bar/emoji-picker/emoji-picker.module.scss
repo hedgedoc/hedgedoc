@@ -5,9 +5,7 @@
  */
 
 .tooltip {
-  &, :global(body.dark) & {
-    --bs-popover-max-width: 100%;
-    --bs-popover-body-padding-y: 0;
-    --bs-popover-body-padding-x: 0;
-  }
+  --bs-popover-max-width: 100%;
+  --bs-popover-body-padding-y: 0;
+  --bs-popover-body-padding-x: 0;
 }

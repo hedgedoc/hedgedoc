@@ -2,7 +2,7 @@
 
 exports[`DeletionModal disables deletion when user is not owner 1`] = `
 <div
-  class="modal-dialog text-dark"
+  class="modal-dialog"
   data-testid="commonModal"
 >
   <div
@@ -23,7 +23,7 @@ exports[`DeletionModal disables deletion when user is not owner 1`] = `
       />
     </div>
     <div
-      class="text-dark modal-body"
+      class="modal-body"
     >
       testText
     </div>
@@ -44,7 +44,7 @@ exports[`DeletionModal disables deletion when user is not owner 1`] = `
 
 exports[`DeletionModal renders correctly with deletionButtonI18nKey 1`] = `
 <div
-  class="modal-dialog text-dark"
+  class="modal-dialog"
   data-testid="commonModal"
 >
   <div
@@ -65,7 +65,7 @@ exports[`DeletionModal renders correctly with deletionButtonI18nKey 1`] = `
       />
     </div>
     <div
-      class="text-dark modal-body"
+      class="modal-body"
     >
       testText
     </div>

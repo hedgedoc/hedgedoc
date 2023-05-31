@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { useOutlineButtonVariant } from '../../../hooks/dark-mode/use-outline-button-variant'
 import { NewNoteButton } from '../../common/new-note-button/new-note-button'
 import { ShowIf } from '../../common/show-if/show-if'
 import { SignInButton } from '../../landing-layout/navigation/sign-in-button'
@@ -35,9 +36,10 @@ export interface AppBarProps {
 export const AppBar: React.FC<AppBarProps> = ({ mode }) => {
   const userExists = useApplicationState((state) => !!state.user)
   const noteFrontmatter = useApplicationState((state) => state.noteDetails.frontmatter)
+  const buttonVariant = useOutlineButtonVariant()
 
   return (
-    <Navbar expand={true} className={'bg-light px-3'}>
+    <Navbar expand={true} className={'px-3'}>
       <Nav className='me-auto d-flex align-items-center'>
         <NavbarBranding />
         <ShowIf condition={mode === AppBarMode.EDITOR}>
@@ -52,7 +54,7 @@ export const AppBar: React.FC<AppBarProps> = ({ mode }) => {
         </ShowIf>
       </Nav>
       <Nav className='d-flex gap-2 align-items-center text-secondary justify-content-end'>
-        <SettingsButton variant={'outline-dark'} />
+        <SettingsButton variant={buttonVariant} />
         <NewNoteButton />
         <ShowIf condition={!userExists}>
           <SignInButton size={'sm'} />

@@ -19,7 +19,7 @@ export const HistoryRefreshButton: React.FC = () => {
   const refreshHistory = useSafeRefreshHistoryStateCallback()
 
   return (
-    <Button variant={'light'} title={t('landing.history.toolbar.refresh') ?? undefined} onClick={refreshHistory}>
+    <Button variant={'secondary'} title={t('landing.history.toolbar.refresh') ?? undefined} onClick={refreshHistory}>
       <UiIcon icon={IconArrowRepeat} />
     </Button>
   )

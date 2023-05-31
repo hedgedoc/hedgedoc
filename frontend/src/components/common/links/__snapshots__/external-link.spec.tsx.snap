@@ -3,7 +3,7 @@
 exports[`ExternalLink renders an external link correctly 1`] = `
 <div>
   <a
-    class="text-light"
+    class=""
     dir="auto"
     href="https://example.com"
     rel="noopener noreferrer"
@@ -17,7 +17,7 @@ exports[`ExternalLink renders an external link correctly 1`] = `
 exports[`ExternalLink renders an external link with a title 1`] = `
 <div>
   <a
-    class="text-light"
+    class=""
     dir="auto"
     href="https://example.com"
     rel="noopener noreferrer"
@@ -46,7 +46,7 @@ exports[`ExternalLink renders an external link with additional className 1`] = `
 exports[`ExternalLink renders an external link with an icon 1`] = `
 <div>
   <a
-    class="text-light"
+    class=""
     dir="auto"
     href="https://example.com"
     rel="noopener noreferrer"
@@ -62,7 +62,7 @@ exports[`ExternalLink renders an external link with an icon 1`] = `
 exports[`ExternalLink renders an external link with an id 1`] = `
 <div>
   <a
-    class="text-light"
+    class=""
     dir="auto"
     href="https://example.com"
     id="testId"

@@ -84,7 +84,7 @@ export const RegisterPage: NextPage = () => {
         </h1>
         <Row className='h-100 d-flex justify-content-center'>
           <Col lg={6}>
-            <Card className='bg-dark mb-4 text-start'>
+            <Card className='mb-4 text-start'>
               <Card.Body>
                 <Form onSubmit={doRegisterSubmit} className={'d-flex flex-column gap-3'}>
                   <UsernameField onChange={onUsernameChange} value={username} />

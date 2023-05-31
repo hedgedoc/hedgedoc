@@ -38,7 +38,6 @@ export const DisplayNameField: React.FC<DisplayNameFieldProps> = ({ onChange, va
         isValid={isValid}
         onChange={onChange}
         placeholder={t('profile.displayName') ?? undefined}
-        className='bg-dark text-light'
         autoComplete='name'
         required
       />

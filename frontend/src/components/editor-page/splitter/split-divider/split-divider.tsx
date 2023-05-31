@@ -3,10 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { concatCssClasses } from '../../../../utils/concat-css-classes'
 import { testId } from '../../../../utils/test-id'
 import { UiIcon } from '../../../common/icons/ui-icon'
 import styles from './split-divider.module.scss'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Button } from 'react-bootstrap'
 import { ArrowLeftRight as IconArrowLeftRight } from 'react-bootstrap-icons'
 import { ArrowLeft as IconArrowLeft } from 'react-bootstrap-icons'
@@ -49,12 +50,17 @@ export const SplitDivider: React.FC<SplitDividerProps> = ({
   focusRight,
   forceOpen
 }) => {
-  const shiftClass = dividerButtonsShift == '' ? '' : styles[dividerButtonsShift]
+  const className = useMemo(() => {
+    return concatCssClasses(styles.middle, {
+      [styles.open]: forceOpen,
+      [styles[dividerButtonsShift]]: dividerButtonsShift !== ''
+    })
+  }, [dividerButtonsShift, forceOpen])
 
   return (
-    <div className={`${styles['split-divider']}`} {...testId('splitter-divider')}>
-      <div className={`bg-light ${styles['middle']} ${forceOpen ? styles['open'] : ''} ${shiftClass}`}>
-        <div className={styles['buttons']}>
+    <div className={styles.divider} {...testId('splitter-divider')}>
+      <div className={className}>
+        <div className={styles.buttons}>
           <Button variant={focusLeft ? 'secondary' : 'light'} onClick={onLeftButtonClick}>
             <UiIcon icon={IconArrowLeft} />
           </Button>

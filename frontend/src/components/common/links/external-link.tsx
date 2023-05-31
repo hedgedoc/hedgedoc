@@ -19,14 +19,7 @@ import React from 'react'
  * @param className Additional class names added to the link object
  * @param title The title of the link
  */
-export const ExternalLink: React.FC<LinkWithTextProps> = ({
-  href,
-  text,
-  icon,
-  id,
-  className = 'text-light',
-  title
-}) => {
+export const ExternalLink: React.FC<LinkWithTextProps> = ({ href, text, icon, id, className = '', title }) => {
   return (
     <a href={href} target='_blank' rel='noopener noreferrer' id={id} className={className} title={title} dir='auto'>
       <UiIcon icon={icon} nbsp={true} />

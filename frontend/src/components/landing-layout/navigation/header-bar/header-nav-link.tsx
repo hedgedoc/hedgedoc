@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { concatCssClasses } from '../../../../utils/concat-css-classes'
 import type { PropsWithDataCypressId } from '../../../../utils/cypress-attribute'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import styles from './header-nav-link.module.scss'
@@ -26,17 +27,19 @@ export interface HeaderNavLinkProps extends PropsWithDataCypressId {
 export const HeaderNavLink: React.FC<PropsWithChildren<HeaderNavLinkProps>> = ({ to, children, ...props }) => {
   const { route } = useRouter()
 
-  const activeClass = useMemo(() => {
-    return route === to ? styles['nav-link-active'] : ''
+  const className = useMemo(() => {
+    return concatCssClasses(
+      {
+        [styles.active]: route === to
+      },
+      'nav-link',
+      styles.link
+    )
   }, [route, to])
 
   return (
     <Nav.Item>
-      <Link
-        href={to}
-        passHref={true}
-        className={`nav-link text-light ${activeClass} ${styles['nav-link']}`}
-        {...cypressId(props)}>
+      <Link href={to} passHref={true} className={className} {...cypressId(props)}>
         {children}
       </Link>
     </Nav.Item>

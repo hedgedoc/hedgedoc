@@ -28,7 +28,7 @@ export interface PinButtonProps {
 export const PinButton: React.FC<PinButtonProps> = ({ isPinned, onPinClick, isDark, className }) => {
   return (
     <Button
-      variant={isDark ? 'secondary' : 'light'}
+      variant={isDark ? 'secondary' : 'secondary'}
       className={`${styles['history-pin']} ${className || ''} ${isPinned ? styles['pinned'] : ''}`}
       onClick={onPinClick}
       {...cypressId('history-entry-pin-button')}

@@ -47,7 +47,6 @@ export const PasswordAgainField: React.FC<PasswordAgainFieldProps> = ({
         isValid={isValid}
         onChange={onChange}
         placeholder={t('login.register.passwordAgain') ?? undefined}
-        className='bg-dark text-light'
         autoComplete='new-password'
         required
       />

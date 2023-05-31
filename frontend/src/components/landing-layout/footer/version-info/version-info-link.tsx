@@ -18,12 +18,7 @@ export const VersionInfoLink: React.FC = () => {
 
   return (
     <Fragment>
-      <Button
-        size={'sm'}
-        variant={'link'}
-        {...cypressId('show-version-modal')}
-        className={'text-light p-0'}
-        onClick={showModal}>
+      <Button size={'sm'} variant={'link'} {...cypressId('show-version-modal')} className={'p-0'} onClick={showModal}>
         <Trans i18nKey={'landing.versionInfo.versionInfo'} />
       </Button>
       <VersionInfoModal onHide={closeModal} show={modalVisibility} />

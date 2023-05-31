@@ -41,7 +41,8 @@ export const ToolbarButton: React.FC<PropsWithChildren<ToolbarButtonProps>> = ({
 
   return (
     <Button
-      variant={'light'}
+      variant={'outline-secondary'}
+      className={'text-body-emphasis'}
       onClick={onClick}
       title={title}
       ref={buttonRef}

@@ -51,7 +51,7 @@ export const EntryMenu: React.FC<EntryMenuProps> = ({
   return (
     <Dropdown className={`d-inline-flex ${className || ''}`} {...cypressId('history-entry-menu')}>
       <Dropdown.Toggle
-        variant={'light'}
+        variant={'secondary'}
         id={`dropdown-card-${id}`}
         className={`no-arrow ${styles['history-menu']} d-inline-flex align-items-center`}>
         <UiIcon icon={IconThreeDots} />

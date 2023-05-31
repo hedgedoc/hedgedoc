@@ -44,14 +44,14 @@ export const HistoryTableRow: React.FC<HistoryEntryProps & HistoryEventHandlers>
   return (
     <tr {...cypressAttribute('entry-title', entryTitle)}>
       <td>
-        <Link href={`/n/${entry.identifier}`} className='text-light' {...cypressId('history-entry-title')}>
+        <Link href={`/n/${entry.identifier}`} className='text-secondary' {...cypressId('history-entry-title')}>
           {entryTitle}
         </Link>
       </td>
       <td>{formatHistoryDate(entry.lastVisitedAt)}</td>
       <td>
         {entry.tags.map((tag) => (
-          <Badge className={'bg-light me-1 mb-1'} key={tag}>
+          <Badge className={'me-1 mb-1'} key={tag}>
             {tag}
           </Badge>
         ))}

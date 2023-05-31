@@ -3,7 +3,7 @@
 exports[`TranslatedExternalLink renders with i18nKey 1`] = `
 <div>
   <a
-    class="text-light"
+    class=""
     dir="auto"
     href="https://example.com"
     rel="noopener noreferrer"

@@ -32,7 +32,6 @@ export const UsernameField: React.FC<UsernameFieldProps> = ({ onChange, invalid,
         size='sm'
         placeholder={t('login.auth.username') ?? undefined}
         onChange={onChange}
-        className='bg-dark text-light'
         autoComplete='username'
       />
     </Form.Group>
