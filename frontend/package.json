@@ -79,7 +79,6 @@
     "i18next": "22.5.0",
     "i18next-browser-languagedetector": "7.0.2",
     "i18next-resources-to-backend": "1.1.4",
-    "isomorphic-ws": "5.0.0",
     "js-yaml": "4.1.0",
     "katex": "0.16.7",
     "luxon": "3.3.0",

@@ -5,7 +5,7 @@
  */
 import {
   MessageTransporter,
-  MockedBackendMessageTransporter,
+  MockedBackendTransportAdapter,
   YDocSyncServerAdapter,
 } from '@hedgedoc/commons';
 import * as HedgeDocCommonsModule from '@hedgedoc/commons';
@@ -49,7 +49,8 @@ describe('websocket connection', () => {
       displayName: mockedDisplayName,
     });
 
-    mockedMessageTransporter = new MockedBackendMessageTransporter('');
+    mockedMessageTransporter = new MessageTransporter();
+    mockedMessageTransporter.setAdapter(new MockedBackendTransportAdapter(''));
   });
 
   afterEach(() => {

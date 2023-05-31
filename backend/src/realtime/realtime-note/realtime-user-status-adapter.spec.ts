@@ -5,16 +5,15 @@
  */
 import {
   Message,
+  MessageTransporter,
   MessageType,
-  MockedBackendMessageTransporter,
+  MockedBackendTransportAdapter,
+  waitForOtherPromisesToFinish,
 } from '@hedgedoc/commons';
 
 import { RealtimeUserStatusAdapter } from './realtime-user-status-adapter';
 
-type SendMessageSpy = jest.SpyInstance<
-  void,
-  [Required<MockedBackendMessageTransporter['sendMessage']>]
->;
+type SendMessageSpy = jest.SpyInstance<void, [content: Message<MessageType>]>;
 
 describe('realtime user status adapter', () => {
   let clientLoggedIn1: RealtimeUserStatusAdapter | undefined;
@@ -36,24 +35,42 @@ describe('realtime user status adapter', () => {
 
   const guestDisplayName = 'Virtuous Mockingbird';
 
-  let messageTransporterLoggedIn1: MockedBackendMessageTransporter;
-  let messageTransporterLoggedIn2: MockedBackendMessageTransporter;
-  let messageTransporterGuest: MockedBackendMessageTransporter;
-  let messageTransporterNotReady: MockedBackendMessageTransporter;
-  let messageTransporterDecline: MockedBackendMessageTransporter;
+  let messageTransporterLoggedIn1: MessageTransporter;
+  let messageTransporterLoggedIn2: MessageTransporter;
+  let messageTransporterGuest: MessageTransporter;
+  let messageTransporterNotReady: MessageTransporter;
+  let messageTransporterDecline: MessageTransporter;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     clientLoggedIn1 = undefined;
     clientLoggedIn2 = undefined;
     clientGuest = undefined;
     clientNotReady = undefined;
     clientDecline = undefined;
 
-    messageTransporterLoggedIn1 = new MockedBackendMessageTransporter('');
-    messageTransporterLoggedIn2 = new MockedBackendMessageTransporter('');
-    messageTransporterGuest = new MockedBackendMessageTransporter('');
-    messageTransporterNotReady = new MockedBackendMessageTransporter('');
-    messageTransporterDecline = new MockedBackendMessageTransporter('');
+    messageTransporterLoggedIn1 = new MessageTransporter();
+    messageTransporterLoggedIn2 = new MessageTransporter();
+    messageTransporterGuest = new MessageTransporter();
+    messageTransporterNotReady = new MessageTransporter();
+    messageTransporterDecline = new MessageTransporter();
+
+    const mockedTransportAdapterLoggedIn1 = new MockedBackendTransportAdapter(
+      '',
+    );
+    const mockedTransportAdapterLoggedIn2 = new MockedBackendTransportAdapter(
+      '',
+    );
+    const mockedTransportAdapterGuest = new MockedBackendTransportAdapter('');
+    const mockedTransportAdapterNotReady = new MockedBackendTransportAdapter(
+      '',
+    );
+    const mockedTransportAdapterDecline = new MockedBackendTransportAdapter('');
+
+    messageTransporterLoggedIn1.setAdapter(mockedTransportAdapterLoggedIn1);
+    messageTransporterLoggedIn2.setAdapter(mockedTransportAdapterLoggedIn2);
+    messageTransporterGuest.setAdapter(mockedTransportAdapterGuest);
+    messageTransporterNotReady.setAdapter(mockedTransportAdapterNotReady);
+    messageTransporterDecline.setAdapter(mockedTransportAdapterDecline);
 
     function otherAdapterCollector(): RealtimeUserStatusAdapter[] {
       return [
@@ -126,14 +143,15 @@ describe('realtime user status adapter', () => {
     messageTransporterLoggedIn2.sendReady();
     messageTransporterGuest.sendReady();
     messageTransporterDecline.sendReady();
+    await waitForOtherPromisesToFinish();
   });
 
   it('can answer a state request', () => {
-    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(1);
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(1);
+    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(1);
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(1);
 
     messageTransporterLoggedIn1.emit(MessageType.REALTIME_USER_STATE_REQUEST);
 
@@ -176,21 +194,21 @@ describe('realtime user status adapter', () => {
       },
     };
     expect(clientLoggedIn1SendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedMessage1,
     );
-    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(1);
+    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(1);
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(1);
   });
 
   it('can save an cursor update', () => {
-    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(1);
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(1);
+    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(1);
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(1);
 
     const newFrom = Math.floor(Math.random() * 100);
     const newTo = Math.floor(Math.random() * 100);
@@ -323,28 +341,28 @@ describe('realtime user status adapter', () => {
       },
     };
 
-    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(1);
     expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedMessage2,
     );
     expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedMessage5,
     );
   });
 
   it('will inform other clients about removed client', () => {
-    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(1);
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(1);
+    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(1);
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(1);
 
     messageTransporterLoggedIn2.disconnect();
 
@@ -439,27 +457,27 @@ describe('realtime user status adapter', () => {
     };
 
     expect(clientLoggedIn1SendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedMessage1,
     );
-    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(1);
     expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedMessage5,
     );
   });
 
   it('will inform other clients about inactivity and reactivity', () => {
-    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(1);
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(1);
+    expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(1);
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientDeclineSendMessageSpy).toHaveBeenCalledTimes(1);
 
     messageTransporterLoggedIn1.emit(MessageType.REALTIME_USER_SET_ACTIVITY, {
       type: MessageType.REALTIME_USER_SET_ACTIVITY,
@@ -591,18 +609,18 @@ describe('realtime user status adapter', () => {
         },
       };
 
-    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(1);
     expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedInactivityMessage2,
     );
     expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedInactivityMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedInactivityMessage5,
     );
 
@@ -613,18 +631,18 @@ describe('realtime user status adapter', () => {
       },
     });
 
-    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(1);
     expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedInactivityMessage2,
     );
     expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedInactivityMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedInactivityMessage5,
     );
 
@@ -765,18 +783,18 @@ describe('realtime user status adapter', () => {
         },
       };
 
-    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(1);
     expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedReactivityMessage2,
     );
     expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedReactivityMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedReactivityMessage5,
     );
 
@@ -787,18 +805,18 @@ describe('realtime user status adapter', () => {
       },
     });
 
-    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(0);
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(1);
     expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedReactivityMessage2,
     );
     expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedReactivityMessage3,
     );
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
     expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
-      1,
+      2,
       expectedReactivityMessage5,
     );
   });

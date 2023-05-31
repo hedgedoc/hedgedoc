@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Message, MessagePayloads, MessageType } from './message.js'
+import { TransportAdapter } from './transport-adapter.js'
 import { EventEmitter2, Listener } from 'eventemitter2'
 
 export type MessageEvents = MessageType | 'connected' | 'disconnected'
@@ -15,18 +16,60 @@ type MessageEventPayloadMap = {
 }
 
 export enum ConnectionState {
-  DISCONNECT,
-  CONNECTING,
-  CONNECTED
+  DISCONNECTED = 'DISCONNECTED',
+  CONNECTING = 'CONNECTING',
+  CONNECTED = 'CONNECTED'
 }
 
 /**
- * Base class for event based message communication.
+ * Coordinates the sending, receiving and handling of messages for realtime communication.
  */
-export abstract class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
+export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
+  private transportAdapter: TransportAdapter | undefined
   private readyMessageReceived = false
+  private destroyOnMessageEventHandler: undefined | (() => void)
+  private destroyOnErrorEventHandler: undefined | (() => void)
+  private destroyOnCloseEventHandler: undefined | (() => void)
+  private destroyOnConnectedEventHandler: undefined | (() => void)
 
-  public abstract sendMessage<M extends MessageType>(content: Message<M>): void
+  public sendMessage<M extends MessageType>(content: Message<M>): void {
+    if (!this.isConnected()) {
+      this.onDisconnecting()
+      console.debug(
+        "Can't send message over closed connection. Triggering onDisconencted event. Message that couldn't be sent was",
+        content
+      )
+      return
+    }
+
+    if (this.transportAdapter === undefined) {
+      throw new Error('no transport adapter set')
+    }
+
+    try {
+      this.transportAdapter.send(content)
+    } catch (error: unknown) {
+      this.disconnect()
+      throw error
+    }
+  }
+
+  public setAdapter(websocket: TransportAdapter) {
+    if (websocket.getConnectionState() !== ConnectionState.CONNECTED) {
+      throw new Error('Websocket must be connected')
+    }
+    this.unbindEventsFromPreviousWebsocket()
+    this.transportAdapter = websocket
+    this.bindWebsocketEvents(websocket)
+
+    if (this.isConnected()) {
+      this.onConnected()
+    } else {
+      this.destroyOnConnectedEventHandler = websocket.bindOnConnectedEvent(
+        this.onConnected.bind(this)
+      )
+    }
+  }
 
   protected receiveMessage<L extends MessageType>(message: Message<L>): void {
     if (message.type === MessageType.READY) {
@@ -35,21 +78,53 @@ export abstract class MessageTransporter extends EventEmitter2<MessageEventPaylo
     this.emit(message.type, message)
   }
 
-  public sendReady(): void {
-    this.sendMessage({
-      type: MessageType.READY
-    })
+  public disconnect(): void {
+    this.transportAdapter?.disconnect()
   }
 
-  public abstract disconnect(): void
+  public getConnectionState(): ConnectionState {
+    return (
+      this.transportAdapter?.getConnectionState() ??
+      ConnectionState.DISCONNECTED
+    )
+  }
 
-  public abstract getConnectionState(): ConnectionState
+  private unbindEventsFromPreviousWebsocket() {
+    if (this.transportAdapter) {
+      this.destroyOnMessageEventHandler?.()
+      this.destroyOnCloseEventHandler?.()
+      this.destroyOnErrorEventHandler?.()
+
+      this.destroyOnMessageEventHandler = undefined
+      this.destroyOnCloseEventHandler = undefined
+      this.destroyOnErrorEventHandler = undefined
+    }
+  }
+
+  private bindWebsocketEvents(websocket: TransportAdapter) {
+    this.destroyOnErrorEventHandler = websocket.bindOnErrorEvent(
+      this.onDisconnecting.bind(this)
+    )
+    this.destroyOnCloseEventHandler = websocket.bindOnCloseEvent(
+      this.onDisconnecting.bind(this)
+    )
+    this.destroyOnMessageEventHandler = websocket.bindOnMessageEvent(
+      this.receiveMessage.bind(this)
+    )
+  }
 
   protected onConnected(): void {
+    this.destroyOnConnectedEventHandler?.()
+    this.destroyOnConnectedEventHandler = undefined
     this.emit('connected')
   }
 
   protected onDisconnecting(): void {
+    if (this.transportAdapter === undefined) {
+      return
+    }
+    this.unbindEventsFromPreviousWebsocket()
+    this.transportAdapter = undefined
     this.readyMessageReceived = false
     this.emit('disconnected')
   }
@@ -98,5 +173,11 @@ export abstract class MessageTransporter extends EventEmitter2<MessageEventPaylo
     return this.on('connected', callback, {
       objectify: true
     }) as Listener
+  }
+
+  public sendReady(): void {
+    this.sendMessage({
+      type: MessageType.READY
+    })
   }
 }

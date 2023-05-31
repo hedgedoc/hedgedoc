@@ -47,6 +47,6 @@ export class InMemoryConnectionMessageTransporter extends MessageTransporter {
   getConnectionState(): ConnectionState {
     return this.otherSide !== undefined
       ? ConnectionState.CONNECTED
-      : ConnectionState.DISCONNECT
+      : ConnectionState.DISCONNECTED
   }
 }

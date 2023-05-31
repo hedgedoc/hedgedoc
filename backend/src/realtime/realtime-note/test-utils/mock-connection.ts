@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
-  MockedBackendMessageTransporter,
+  MessageTransporter,
+  MockedBackendTransportAdapter,
   YDocSyncServerAdapter,
 } from '@hedgedoc/commons';
 import { Mock } from 'ts-mockery';
@@ -81,7 +82,8 @@ export class MockConnectionBuilder {
   public build(): RealtimeConnection {
     const displayName = this.deriveDisplayName();
 
-    const transporter = new MockedBackendMessageTransporter('');
+    const transporter = new MessageTransporter();
+    transporter.setAdapter(new MockedBackendTransportAdapter(''));
     const realtimeUserStateAdapter: RealtimeUserStatusAdapter =
       this.includeRealtimeUserStatus === RealtimeUserState.WITHOUT
         ? Mock.of<RealtimeUserStatusAdapter>({})

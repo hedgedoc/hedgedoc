@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
+  MessageTransporter,
   NotePermissions,
   userCanEdit,
-  WebsocketTransporter,
 } from '@hedgedoc/commons';
 import { OnGatewayConnection, WebSocketGateway } from '@nestjs/websockets';
 import { IncomingMessage } from 'http';
@@ -21,6 +21,7 @@ import { User } from '../../users/user.entity';
 import { UsersService } from '../../users/users.service';
 import { RealtimeConnection } from '../realtime-note/realtime-connection';
 import { RealtimeNoteService } from '../realtime-note/realtime-note.service';
+import { BackendWebsocketAdapter } from './backend-websocket-adapter';
 import { extractNoteIdFromRequestUrl } from './utils/extract-note-id-from-request-url';
 
 /**
@@ -85,7 +86,7 @@ export class WebsocketGateway implements OnGatewayConnection {
       const realtimeNote =
         await this.realtimeNoteService.getOrCreateRealtimeNote(note);
 
-      const websocketTransporter = new WebsocketTransporter();
+      const websocketTransporter = new MessageTransporter();
       const permissions = await this.noteService.toNotePermissionsDto(note);
       const acceptEdits: boolean = userCanEdit(
         permissions as NotePermissions,
@@ -97,7 +98,9 @@ export class WebsocketGateway implements OnGatewayConnection {
         realtimeNote,
         acceptEdits,
       );
-      websocketTransporter.setWebsocket(clientSocket);
+      websocketTransporter.setAdapter(
+        new BackendWebsocketAdapter(clientSocket),
+      );
 
       realtimeNote.addClient(connection);
 
