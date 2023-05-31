@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { concatCssClasses } from '../../../../../utils/concat-css-classes'
 import { cypressAttribute, cypressId } from '../../../../../utils/cypress-attribute'
 import { UiIcon } from '../../../../common/icons/ui-icon'
 import { createNumberRangeArray } from '../../../../common/number-range/number-range'
@@ -55,7 +56,7 @@ export const TableSizePickerPopover = React.forwardRef<HTMLDivElement, TableSize
             return (
               <div
                 key={`${row}_${col}`}
-                className={`${styles['table-cell']} ${selected ? 'bg-primary border-primary' : ''}`}
+                className={concatCssClasses(styles.cell, { [styles.selected]: selected })}
                 {...cypressAttribute('selected', selected ? 'true' : 'false')}
                 {...cypressAttribute('col', `${col + 1}`)}
                 {...cypressAttribute('row', `${row + 1}`)}
@@ -70,7 +71,7 @@ export const TableSizePickerPopover = React.forwardRef<HTMLDivElement, TableSize
     )
 
     return (
-      <Popover ref={ref} {...cypressId('table-size-picker-popover')} className={`bg-light`} {...props}>
+      <Popover ref={ref} {...cypressId('table-size-picker-popover')} className={`bg-body`} {...props}>
         <Popover.Header>
           <TableSizeText tableSize={tableSize} />
         </Popover.Header>

@@ -5,18 +5,16 @@
  */
 import { cypressId } from '../../../../../utils/cypress-attribute'
 import { Logger } from '../../../../../utils/logger'
-import { UiIcon } from '../../../../common/icons/ui-icon'
 import { ShowIf } from '../../../../common/show-if/show-if'
 import { acceptedMimeTypes } from '../../../../common/upload-image-mimetypes'
 import { UploadInput } from '../../../../common/upload-input'
 import { useCodemirrorReferenceContext } from '../../../change-content-context/codemirror-reference-context'
 import { useHandleUpload } from '../../hooks/use-handle-upload'
+import { ToolbarButton } from '../toolbar-button'
 import { extractSelectedText } from './extract-selected-text'
 import { Optional } from '@mrdrogdrog/optional'
 import React, { Fragment, useCallback, useRef } from 'react'
-import { Button } from 'react-bootstrap'
 import { Upload as IconUpload } from 'react-bootstrap-icons'
-import { useTranslation } from 'react-i18next'
 
 const logger = new Logger('Upload image button')
 
@@ -24,7 +22,6 @@ const logger = new Logger('Upload image button')
  * Shows a button that uploads a chosen file to the backend and adds the link to the note.
  */
 export const UploadImageButton: React.FC = () => {
-  const { t } = useTranslation()
   const clickRef = useRef<() => void>()
   const buttonClick = useCallback(() => {
     clickRef.current?.()
@@ -49,22 +46,16 @@ export const UploadImageButton: React.FC = () => {
 
   return (
     <Fragment>
-      <Button
-        variant='light'
-        onClick={buttonClick}
-        disabled={!codeMirror}
-        title={t('editor.editorToolbar.uploadImage') ?? undefined}
-        {...cypressId('editor-toolbar-upload-image-button')}>
-        <UiIcon icon={IconUpload} />
-      </Button>
-      <ShowIf condition={!!codeMirror}>
-        <UploadInput
-          onLoad={onUploadImage}
-          allowedFileTypes={acceptedMimeTypes}
-          onClickRef={clickRef}
-          {...cypressId('editor-toolbar-upload-image-input')}
-        />
-      </ShowIf>
+      <ToolbarButton i18nKey={'uploadImage'} icon={IconUpload} onClick={buttonClick}>
+        <ShowIf condition={!!codeMirror}>
+          <UploadInput
+            onLoad={onUploadImage}
+            allowedFileTypes={acceptedMimeTypes}
+            onClickRef={clickRef}
+            {...cypressId('toolbar.uploadImage.input')}
+          />
+        </ShowIf>
+      </ToolbarButton>
     </Fragment>
   )
 }

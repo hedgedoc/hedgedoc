@@ -3,19 +3,17 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { cypressId } from '../../../../../utils/cypress-attribute'
-import { UiIcon } from '../../../../common/icons/ui-icon'
 import { useChangeEditorContentCallback } from '../../../change-content-context/use-change-editor-content-callback'
 import { replaceSelection } from '../formatters/replace-selection'
+import { ToolbarButton } from '../toolbar-button'
 import { createMarkdownTable } from './create-markdown-table'
 import { CustomTableSizeModal } from './custom-table-size-modal'
 import './table-picker.module.scss'
 import { TableSizePickerPopover } from './table-size-picker-popover'
-import React, { Fragment, useCallback, useMemo, useRef, useState } from 'react'
-import { Button, Overlay } from 'react-bootstrap'
+import React, { Fragment, useCallback, useRef, useState } from 'react'
+import { Overlay } from 'react-bootstrap'
 import { Table as IconTable } from 'react-bootstrap-icons'
 import type { OverlayInjectedProps } from 'react-bootstrap/Overlay'
-import { useTranslation } from 'react-i18next'
 
 enum PickerMode {
   INVISIBLE,
@@ -27,7 +25,6 @@ enum PickerMode {
  * Toggles the visibility of a table size picker overlay and inserts the result into the editor.
  */
 export const TablePickerButton: React.FC = () => {
-  const { t } = useTranslation()
   const [pickerMode, setPickerMode] = useState<PickerMode>(PickerMode.INVISIBLE)
   const onDismiss = useCallback(() => setPickerMode(PickerMode.INVISIBLE), [])
   const onShowModal = useCallback(() => setPickerMode(PickerMode.CUSTOM), [])
@@ -42,7 +39,6 @@ export const TablePickerButton: React.FC = () => {
     [changeEditorContent]
   )
 
-  const tableTitle = useMemo(() => t('editor.editorToolbar.table.titleWithoutSize'), [t])
   const button = useRef(null)
   const toggleOverlayVisibility = useCallback(() => {
     setPickerMode((oldPickerMode) => (oldPickerMode === PickerMode.INVISIBLE ? PickerMode.GRID : PickerMode.INVISIBLE))
@@ -71,15 +67,12 @@ export const TablePickerButton: React.FC = () => {
 
   return (
     <Fragment>
-      <Button
-        {...cypressId('table-size-picker-button')}
-        variant='light'
+      <ToolbarButton
+        i18nKey={'table.titleWithoutSize'}
+        icon={IconTable}
         onClick={toggleOverlayVisibility}
-        title={tableTitle}
-        ref={button}
-        disabled={!changeEditorContent}>
-        <UiIcon icon={IconTable} />
-      </Button>
+        buttonRef={button}
+      />
       <Overlay
         target={button.current}
         onHide={onOverlayHide}
