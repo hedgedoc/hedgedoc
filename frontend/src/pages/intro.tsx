@@ -4,11 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { CustomBranding } from '../components/common/custom-branding/custom-branding'
-import {
-  HedgeDocLogoSize,
-  HedgeDocLogoType,
-  HedgeDocLogoWithText
-} from '../components/common/hedge-doc-logo/hedge-doc-logo-with-text'
+import { HedgeDocLogoVertical } from '../components/common/hedge-doc-logo/hedge-doc-logo-vertical'
+import { LogoSize } from '../components/common/hedge-doc-logo/logo-size'
 import { EditorToRendererCommunicatorContextProvider } from '../components/editor-page/render-context/editor-to-renderer-communicator-context-provider'
 import { CoverButtons } from '../components/intro-page/cover-buttons/cover-buttons'
 import { IntroCustomContent } from '../components/intro-page/intro-custom-content'
@@ -26,7 +23,7 @@ const IntroPage: NextPage = () => {
       <EditorToRendererCommunicatorContextProvider>
         <div className={'flex-fill mt-3'}>
           <h1 dir='auto' className={'align-items-center d-flex justify-content-center flex-column'}>
-            <HedgeDocLogoWithText logoType={HedgeDocLogoType.COLOR_VERTICAL} size={HedgeDocLogoSize.BIG} />
+            <HedgeDocLogoVertical size={LogoSize.BIG} autoTextColor={true} />
           </h1>
           <p className='lead'>
             <Trans i18nKey='app.slogan' />
