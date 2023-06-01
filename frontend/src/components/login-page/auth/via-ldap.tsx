@@ -6,8 +6,8 @@
 import { doLdapLogin } from '../../../api/auth/ldap'
 import { useLowercaseOnInputChange } from '../../../hooks/common/use-lowercase-on-input-change'
 import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
+import { UsernameField } from '../../common/fields/username-field'
 import { PasswordField } from './fields/password-field'
-import { UsernameField } from './fields/username-field'
 import { fetchAndSetUser } from './utils'
 import type { FormEvent } from 'react'
 import React, { useCallback, useState } from 'react'
@@ -49,7 +49,7 @@ export const ViaLdap: React.FC<ViaLdapProps> = ({ providerName, identifier }) =>
           <Trans i18nKey='login.signInVia' values={{ service: providerName }} />
         </Card.Title>
         <Form onSubmit={onLoginSubmit}>
-          <UsernameField onChange={onUsernameChange} invalid={!!error} value={username} />
+          <UsernameField onChange={onUsernameChange} isValid={!!error} value={username} />
           <PasswordField onChange={onPasswordChange} invalid={!!error} />
           <Alert className='small' show={!!error} variant='danger'>
             <Trans i18nKey={error} />
