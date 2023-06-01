@@ -4,42 +4,38 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { CommonFieldProps } from './fields'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Form } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
+
+export interface UsernameFieldProps extends CommonFieldProps {
+  isInvalid?: boolean
+  isValid?: boolean
+}
 
 /**
  * Renders an input field for the username when registering.
  *
- * @param onChange Hook that is called when the entered username changes.
+ * @param onChange Callback that is called when the entered username changes.
  * @param value The currently entered username.
+ * @param isValid  Is a valid field or not
+ * @param isInvalid Adds error style to label
  */
-export const UsernameField: React.FC<CommonFieldProps> = ({ onChange, value }) => {
+export const UsernameField: React.FC<UsernameFieldProps> = ({ onChange, value, isValid, isInvalid }) => {
   const { t } = useTranslation()
 
-  const isValid = useMemo(() => {
-    return value?.trim() !== ''
-  }, [value])
-
   return (
-    <Form.Group>
-      <Form.Label>
-        <Trans i18nKey='login.auth.username' />
-      </Form.Label>
-      <Form.Control
-        type='text'
-        size='sm'
-        value={value}
-        isValid={isValid}
-        onChange={onChange}
-        placeholder={t('login.auth.username') ?? undefined}
-        autoComplete='username'
-        autoFocus={true}
-        required
-      />
-      <Form.Text>
-        <Trans i18nKey='login.register.usernameInfo' />
-      </Form.Text>
-    </Form.Group>
+    <Form.Control
+      type='text'
+      size='sm'
+      value={value}
+      isValid={isValid}
+      isInvalid={isInvalid}
+      onChange={onChange}
+      placeholder={t('login.auth.username') ?? undefined}
+      autoComplete='username'
+      autoFocus={true}
+      required
+    />
   )
 }

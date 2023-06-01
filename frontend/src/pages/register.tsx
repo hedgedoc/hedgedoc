@@ -8,7 +8,7 @@ import type { ApiError } from '../api/common/api-error'
 import { DisplayNameField } from '../components/common/fields/display-name-field'
 import { NewPasswordField } from '../components/common/fields/new-password-field'
 import { PasswordAgainField } from '../components/common/fields/password-again-field'
-import { UsernameField } from '../components/common/fields/username-field'
+import { UsernameLabelField } from '../components/common/fields/username-label-field'
 import { useFrontendConfig } from '../components/common/frontend-config-context/use-frontend-config'
 import { Redirect } from '../components/common/redirect'
 import { LandingLayout } from '../components/landing-layout/landing-layout'
@@ -63,6 +63,8 @@ export const RegisterPage: NextPage = () => {
     return error?.backendErrorName === 'PasswordTooWeakError'
   }, [error])
 
+  const isValidUsername = useMemo(() => Boolean(username.trim()), [username])
+
   const onUsernameChange = useLowercaseOnInputChange(setUsername)
   const onDisplayNameChange = useOnInputChange(setDisplayName)
   const onPasswordChange = useOnInputChange(setPassword)
@@ -87,7 +89,7 @@ export const RegisterPage: NextPage = () => {
             <Card className='mb-4 text-start'>
               <Card.Body>
                 <Form onSubmit={doRegisterSubmit} className={'d-flex flex-column gap-3'}>
-                  <UsernameField onChange={onUsernameChange} value={username} />
+                  <UsernameLabelField onChange={onUsernameChange} value={username} isValid={isValidUsername} />
                   <DisplayNameField onChange={onDisplayNameChange} value={displayName} />
                   <NewPasswordField onChange={onPasswordChange} value={password} hasError={isWeakPassword} />
                   <PasswordAgainField
