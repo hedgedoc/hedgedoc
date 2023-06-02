@@ -7,7 +7,7 @@ import { createNote } from '../../../api/notes'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 import { IconButton } from '../icon-button/icon-button'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { useCallback } from 'react'
 import { FileEarmarkPlus as IconPlus } from 'react-bootstrap-icons'
 import { Trans } from 'react-i18next'
@@ -21,8 +21,7 @@ export const NewNoteButton: React.FC = () => {
   const createNewNoteAndRedirect = useCallback((): void => {
     createNote('')
       .then((note) => {
-        const to = `/n/${note.metadata.primaryAddress}`
-        return router?.push(to)
+        router?.push(`/n/${note.metadata.primaryAddress}`)
       })
       .catch((error: Error) => {
         showErrorNotification(error.message)
