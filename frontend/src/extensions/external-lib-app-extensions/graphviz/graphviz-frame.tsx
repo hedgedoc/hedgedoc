@@ -8,7 +8,6 @@ import { ShowIf } from '../../../components/common/show-if/show-if'
 import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { Logger } from '../../../utils/logger'
-import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { useAsync } from 'react-use'
@@ -23,8 +22,6 @@ const log = new Logger('GraphvizFrame')
 export const GraphvizFrame: React.FC<CodeProps> = ({ code }) => {
   const container = useRef<HTMLDivElement>(null)
   const [error, setError] = useState<string>()
-
-  const { basePath } = useRouter()
 
   const {
     value: graphvizImport,
@@ -58,7 +55,7 @@ export const GraphvizFrame: React.FC<CodeProps> = ({ code }) => {
     } catch (error) {
       showError(error as string)
     }
-  }, [code, basePath, showError, graphvizImport])
+  }, [code, showError, graphvizImport])
 
   return (
     <AsyncLoadingBoundary loading={isLibLoading || !graphvizImport} componentName={'graphviz'} error={libLoadingError}>
