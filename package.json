@@ -210,5 +210,5 @@
     "bufferutil": "^4.0.0",
     "utf-8-validate": "^6.0.0"
   },
-  "packageManager": "yarn@3.5.1"
+  "packageManager": "yarn@3.6.0"
 }
