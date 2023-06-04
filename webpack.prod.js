@@ -17,8 +17,8 @@ module.exports = [
       minimizer: [
         new EsbuildPlugin({
           target: 'es2015',
-          format: "cjs",
-          exclude: ['MathJax/extensions/a11y/mathmaps']
+          format: 'cjs',
+          exclude: ['MathJax/extensions/a11y/mathmaps', 'reveal.js/plugin/markdown/marked.js']
         })
       ],
       splitChunks: {
@@ -33,7 +33,7 @@ module.exports = [
       minimizer: [
         new EsbuildPlugin({
           target: 'es2015',
-          format: "cjs"
+          format: 'cjs'
         }),
         new OptimizeCSSAssetsPlugin({})
       ]
