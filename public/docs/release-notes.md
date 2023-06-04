@@ -1,6 +1,6 @@
 # Release Notes
 
-## UNRELEASED
+## <i class="fa fa-tag"></i> 1.9.8 <i class="fa fa-calendar-o"></i> 2023-06-04
 
 **Please note:** This release dropped support for Node 14, which is end-of-life since May 2023.
 You now need at least Node 16 to run HedgeDoc. We recommend to use the latest LTS release of Node.js.
@@ -10,15 +10,15 @@ If you install HedgeDoc manually, run `bin/setup` again for instructions. Other 
 special actions.
 
 ### Enhancements
-- Extend boolean environment variable parsing with other positive answers and case insensitivity.
-- Allow setting of `documentMaxLength` via `CMD_DOCUMENT_MAX_LENGTH` environment variable.
-- Add dedicated healthcheck endpoint at /_health that is less resource intensive than /status.
+- Extend boolean environment variable parsing with other positive answers and case insensitivity
+- Allow setting of `documentMaxLength` via `CMD_DOCUMENT_MAX_LENGTH` environment variable (contributed by [@jmallach](https://github.com/jmallach))
+- Add dedicated healthcheck endpoint at /_health that is less resource intensive than /status
 - Compatibility with Node.js 18 and later
 - Add support for the arm64 architecture in the docker image
 - Add a config option to disable the `/status` and `/metrics` endpoints
 
 ### Bugfixes
-- Fix that permission errors can break existing connections to a note, causing inconsistent note content and changes not being saved
+- Fix that permission errors can break existing connections to a note, causing inconsistent note content and changes not being saved (contributed by [@julianrother](https://github.com/julianrother))
 - Fix speaker notes not showing up in the presentation view
 - Fix issues with upgrading some dependencies by upgrading to Yarn 3
 - Fix macOS compatibility of `bin/setup` script
