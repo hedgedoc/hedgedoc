@@ -95,7 +95,7 @@
     "scrypt-kdf": "2.0.1",
     "sequelize": "5.22.5",
     "shortid": "2.2.16",
-    "socket.io": "^2.1.1",
+    "socket.io": "2.5.0",
     "sqlite3": "5.1.6",
     "store": "2.0.12",
     "string": "3.3.3",
