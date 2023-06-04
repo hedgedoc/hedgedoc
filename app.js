@@ -75,8 +75,10 @@ app.use(morgan('combined', {
 }))
 
 // Register prometheus metrics endpoint
-app.use(apiMetrics())
-metrics.setupCustomPrometheusMetrics()
+if (config.enableStatsApi) {
+  app.use(apiMetrics())
+  metrics.setupCustomPrometheusMetrics()
+}
 
 // socket io
 const io = require('socket.io')(server, { cookie: false })

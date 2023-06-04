@@ -15,6 +15,7 @@ special actions.
 - Add dedicated healthcheck endpoint at /_health that is less resource intensive than /status.
 - Compatibility with Node.js 18 and later
 - Add support for the arm64 architecture in the docker image
+- Add a config option to disable the `/status` and `/metrics` endpoints
 
 ### Bugfixes
 - Fix that permission errors can break existing connections to a note, causing inconsistent note content and changes not being saved
