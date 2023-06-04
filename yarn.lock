@@ -6450,13 +6450,13 @@ __metadata:
   linkType: hard
 
 "file-type@npm:^18.0.0":
-  version: 18.4.0
-  resolution: "file-type@npm:18.4.0"
+  version: 18.5.0
+  resolution: "file-type@npm:18.5.0"
   dependencies:
     readable-web-to-node-stream: ^3.0.2
     strtok3: ^7.0.0
     token-types: ^5.0.1
-  checksum: 191aa44b662417d496efc51bfb061da4c51cddfe2e3f7467b580964c3d83dbd88f76662368ea231a84d489a7d8cfc0bc2df9fefc439b519c2e6ddc498122dae0
+  checksum: d2bc81d842b110970a0ca9d90356ce4e9738c1c05596ce8931f2af334477856d92bcecd0742dc6646e13a970c0125150ad4415898688d1901d80e972d90ab1ca
   languageName: node
   linkType: hard
 
