@@ -1,0 +1,15 @@
+diff --git a/package.json b/package.json
+index 2a14fcbae9d8c3b147f8a67aaa11c81dcab03188..c01e841bcedffdce3cb58af9bdd25743efbb9c4d 100644
+--- a/package.json
++++ b/package.json
+@@ -9,8 +9,8 @@
+   ],
+   "license": "BSD-3-Clause",
+   "author": "Jeffrey Heer (http://idl.cs.washington.edu)",
+-  "main": "build/vega-canvas.node.js",
+-  "module": "build/vega-canvas.node.module.js",
++  "main": "build/vega-canvas.browser.js",
++  "module": "build/vega-canvas.browser.module.js",
+   "unpkg": "build/vega-canvas.min.js",
+   "jsdelivr": "build/vega-canvas.min.js",
+   "repository": "vega/vega",

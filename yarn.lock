@@ -17952,10 +17952,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-canvas@npm:^1.2.6, vega-canvas@npm:^1.2.7":
+"vega-canvas@npm:1.2.7":
   version: 1.2.7
   resolution: "vega-canvas@npm:1.2.7"
   checksum: 6ff92fcdf0c359f2f662909c859a7f4cb4a502436136ab2f4c02373c47a621996ec0eea23e2108f11d62a618be301de86cd8528b5058c2e207a53ddd7ff58d1b
+  languageName: node
+  linkType: hard
+
+"vega-canvas@patch:vega-canvas@npm%3A1.2.7#./.yarn/patches/vega-canvas-npm-1.2.7-df0c331091.patch::locator=hedgedoc%40workspace%3A.":
+  version: 1.2.7
+  resolution: "vega-canvas@patch:vega-canvas@npm%3A1.2.7#./.yarn/patches/vega-canvas-npm-1.2.7-df0c331091.patch::version=1.2.7&hash=713695&locator=hedgedoc%40workspace%3A."
+  checksum: c933998d0402278195becacf3880958810d77fb0eaa0225d2c4d687845cd9db9b442c8e0ded6219638abb057864dde1dd903884c7e5c1c762f91d9bdbe89f83c
   languageName: node
   linkType: hard
 
