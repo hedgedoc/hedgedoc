@@ -23,6 +23,11 @@ special actions.
 - Fix issues with upgrading some dependencies by upgrading to Yarn 3
 - Fix macOS compatibility of `bin/setup` script
 
+### Contributors
+- UwYFmLpoKtYn (translator)
+- Pub (translator)
+- SnowCode (translator)
+
 ## <i class="fa fa-tag"></i> 1.9.7 <i class="fa fa-calendar-o"></i> 2023-02-19
 
 ### Bugfixes
