@@ -19,6 +19,7 @@ special actions.
 - Fix that permission errors can break existing connections to a note, causing inconsistent note content and changes not being saved
 - Fix speaker notes not showing up in the presentation view
 - Fix issues with upgrading some dependencies by upgrading to Yarn 3
+- Fix macOS compatibility of `bin/setup` script
 
 ## <i class="fa fa-tag"></i> 1.9.7 <i class="fa fa-calendar-o"></i> 2023-02-19
 
