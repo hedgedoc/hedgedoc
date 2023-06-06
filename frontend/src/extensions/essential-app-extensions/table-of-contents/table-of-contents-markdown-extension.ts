@@ -16,22 +16,28 @@ import type MarkdownIt from 'markdown-it'
 export class TableOfContentsMarkdownExtension extends EventMarkdownRendererExtension {
   public static readonly EVENT_NAME = 'TocChange'
   private lastAst: TocAst | undefined = undefined
+  private postAst = false
 
   public configureMarkdownIt(markdownIt: MarkdownIt): void {
-    const eventEmitter = this.eventEmitter
-    if (eventEmitter !== undefined) {
-      toc(markdownIt, {
-        listType: 'ul',
-        level: [1, 2, 3],
-        callback: (ast: TocAst): void => {
-          if (equal(ast, this.lastAst)) {
-            return
-          }
-          this.lastAst = ast
-          eventEmitter.emit(TableOfContentsMarkdownExtension.EVENT_NAME, ast)
-        },
-        slugify: tocSlugify
-      })
+    toc(markdownIt, {
+      listType: 'ul',
+      level: [1, 2, 3],
+      callback: (ast: TocAst): void => {
+        if (equal(ast, this.lastAst)) {
+          return
+        }
+        this.lastAst = ast
+        this.postAst = true
+      },
+      slugify: tocSlugify
+    })
+  }
+
+  public doAfterRendering(): void {
+    if (!this.postAst) {
+      return
     }
+    this.postAst = false
+    this.eventEmitter.emit(TableOfContentsMarkdownExtension.EVENT_NAME, this.lastAst)
   }
 }
