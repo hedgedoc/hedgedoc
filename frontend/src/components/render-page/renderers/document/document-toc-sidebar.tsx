@@ -19,8 +19,9 @@ export interface DocumentTocSidebarProps {
 export const DocumentTocSidebar: React.FC<DocumentTocSidebarProps> = ({ width, baseUrl }) => {
   const [tocAst, setTocAst] = useState<TocAst>()
   useExtensionEventEmitterHandler(TableOfContentsMarkdownExtension.EVENT_NAME, setTocAst)
+
   return (
-    <div className={styles['markdown-document-side']}>
+    <div className={styles.side}>
       <ShowIf condition={!!tocAst}>
         <WidthBasedTableOfContents tocAst={tocAst as TocAst} baseUrl={baseUrl} width={width} />
       </ShowIf>

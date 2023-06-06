@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-.markdown-document {
+.document {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -12,14 +12,14 @@
   display: flex;
   flex-direction: row;
 
-  .markdown-document-side {
+  .side {
     position: sticky;
     top: 0;
     bottom: 0;
     flex: 1 0 0;
   }
 
-  .markdown-document-content {
+  .content {
     padding-left: 10px;
     padding-right: 10px;
     flex: 0 0 900px;

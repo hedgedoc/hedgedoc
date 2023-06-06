@@ -71,14 +71,14 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
 
   return (
     <div
-      className={`${styles['markdown-document']} vh-100`}
+      className={`${styles.document} vh-100`}
       ref={internalDocumentRenderPaneRef}
       onScroll={onUserScroll}
       data-scroll-element={true}
       onMouseEnter={onMakeScrollSource}
       onTouchStart={onMakeScrollSource}>
-      <div className={styles['markdown-document-side']} />
-      <div className={styles['markdown-document-content']}>
+      <div className={styles.side} />
+      <div className={styles.content}>
         <div ref={rendererRef} className={`position-relative`}>
           <div
             {...cypressId('markdown-body')}
