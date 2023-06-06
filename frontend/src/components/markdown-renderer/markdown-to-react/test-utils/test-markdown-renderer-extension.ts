@@ -12,6 +12,10 @@ import type MarkdownIt from 'markdown-it'
 import Token from 'markdown-it/lib/token'
 
 export class TestMarkdownRendererExtension extends MarkdownRendererExtension {
+  constructor(private doAfterCallback: () => void) {
+    super()
+  }
+
   buildNodeProcessors(): NodeProcessor[] {
     return [new TestNodeProcessor()]
   }
@@ -36,5 +40,9 @@ export class TestMarkdownRendererExtension extends MarkdownRendererExtension {
       markdownIt.core.ruler.push('post', (core) => core.tokens.push(new Token('post', 'post', 0)))
       markdownIt.renderer.rules.post = () => '<span>post</span>'
     })
+  }
+
+  doAfterRendering() {
+    this.doAfterCallback()
   }
 }

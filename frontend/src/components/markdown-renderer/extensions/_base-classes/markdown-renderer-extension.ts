@@ -32,4 +32,8 @@ export abstract class MarkdownRendererExtension {
   public buildTagNameAllowList(): string[] {
     return []
   }
+
+  public doAfterRendering(): void {
+    return
+  }
 }

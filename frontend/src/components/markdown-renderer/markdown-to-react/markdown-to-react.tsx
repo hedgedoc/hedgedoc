@@ -11,7 +11,7 @@ import { LineContentToLineIdMapper } from './utils/line-content-to-line-id-mappe
 import { NodeToReactTransformer } from './utils/node-to-react-transformer'
 import type { ParserOptions } from '@hedgedoc/html-to-react'
 import type DOMPurify from 'dompurify'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 
 export interface MarkdownToReactProps {
   markdownContentLines: string[]
@@ -67,6 +67,10 @@ export const MarkdownToReact: React.FC<MarkdownToReactProps> = ({
     }),
     [markdownRenderExtensions]
   )
+
+  useEffect(() => {
+    markdownRenderExtensions.forEach((extension) => extension.doAfterRendering())
+  }, [html, markdownRenderExtensions])
 
   return <HtmlToReact htmlCode={html} parserOptions={parserOptions} domPurifyConfig={domPurifyConfig} />
 }

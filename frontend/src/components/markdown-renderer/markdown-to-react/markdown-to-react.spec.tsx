@@ -55,14 +55,17 @@ describe('markdown to react', () => {
   })
 
   it('will use markdown render extensions', () => {
+    const doAfterCallback = jest.fn()
+
     const view = render(
       <MarkdownToReact
         markdownContentLines={['<span>test</span>']}
-        markdownRenderExtensions={[new TestMarkdownRendererExtension()]}
+        markdownRenderExtensions={[new TestMarkdownRendererExtension(doAfterCallback)]}
         newlinesAreBreaks={true}
         allowHtml={false}
       />
     )
     expect(view.container).toMatchSnapshot()
+    expect(doAfterCallback).toBeCalled()
   })
 })
