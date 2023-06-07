@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useApplyDarkModeStyle } from '../../../../hooks/dark-mode/use-apply-dark-mode-style'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import type { ScrollProps } from '../../../editor-page/synced-scroll/scroll-props'
 import type { LineMarkers } from '../../../markdown-renderer/extensions/linemarker/add-line-marker-markdown-it-plugin'
@@ -12,6 +13,7 @@ import { useMarkdownExtensions } from '../../../markdown-renderer/hooks/use-mark
 import { MarkdownToReact } from '../../../markdown-renderer/markdown-to-react/markdown-to-react'
 import { useDocumentSyncScrolling } from '../../hooks/sync-scroll/use-document-sync-scrolling'
 import { useOnHeightChange } from '../../hooks/use-on-height-change'
+import { useTransparentBodyBackground } from '../../hooks/use-transparent-body-background'
 import { RendererType } from '../../window-post-message-communicator/rendering-message'
 import type { CommonMarkdownRendererProps, HeightChangeRendererProps } from '../common-markdown-renderer-props'
 import { DocumentTocSidebar } from './document-toc-sidebar'
@@ -68,6 +70,9 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
     useMemo(() => [new LinemarkerMarkdownExtension((values) => (currentLineMarkers.current = values))], [])
   )
   useCalculateLineMarkerPosition(markdownBodyRef, currentLineMarkers.current, recalculateLineMarkers)
+
+  useTransparentBodyBackground()
+  useApplyDarkModeStyle()
 
   return (
     <div

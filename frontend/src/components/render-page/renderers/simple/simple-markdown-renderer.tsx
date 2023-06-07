@@ -3,10 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useApplyDarkModeStyle } from '../../../../hooks/dark-mode/use-apply-dark-mode-style'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { useMarkdownExtensions } from '../../../markdown-renderer/hooks/use-markdown-extensions'
 import { MarkdownToReact } from '../../../markdown-renderer/markdown-to-react/markdown-to-react'
 import { useOnHeightChange } from '../../hooks/use-on-height-change'
+import { useTransparentBodyBackground } from '../../hooks/use-transparent-body-background'
 import { RendererType } from '../../window-post-message-communicator/rendering-message'
 import type { CommonMarkdownRendererProps, HeightChangeRendererProps } from '../common-markdown-renderer-props'
 import React, { useRef } from 'react'
@@ -30,6 +32,9 @@ export const SimpleMarkdownRenderer: React.FC<SimpleMarkdownRendererProps> = ({
   const rendererRef = useRef<HTMLDivElement | null>(null)
   useOnHeightChange(rendererRef, onHeightChange)
   const extensions = useMarkdownExtensions(baseUrl, RendererType.SIMPLE, [])
+
+  useTransparentBodyBackground()
+  useApplyDarkModeStyle()
 
   return (
     <div className={`vh-100 bg-transparent overflow-y-hidden`}>
