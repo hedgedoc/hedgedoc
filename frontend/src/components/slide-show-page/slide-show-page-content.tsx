@@ -36,7 +36,7 @@ export const SlideShowPageContent: React.FC = () => {
   )
 
   return (
-    <div className={'vh-100 vw-100'}>
+    <div className={'vh-100 vw-100 overflow-hidden'}>
       <RendererIframe
         frameClasses={'h-100 w-100'}
         markdownContentLines={markdownContentLines}
