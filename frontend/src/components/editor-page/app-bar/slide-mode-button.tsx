@@ -22,11 +22,7 @@ export const SlideModeButton: React.FC = () => {
 
   return (
     <Link href={`/p/${noteIdentifier}`} target='_blank'>
-      <Button
-        title={t('editor.documentBar.slideMode') ?? undefined}
-        className='ms-2 text-secondary'
-        size='sm'
-        variant={buttonVariant}>
+      <Button title={t('editor.documentBar.slideMode') ?? undefined} className='ms-2' size='sm' variant={buttonVariant}>
         <UiIcon icon={IconTv} />
       </Button>
     </Link>
