@@ -60,6 +60,7 @@ export const MotdModal: React.FC = () => {
             rendererType={RendererType.SIMPLE}
             markdownContentLines={lines as string[]}
             adaptFrameHeightToContent={true}
+            showWaitSpinner={true}
           />
         </EditorToRendererCommunicatorContextProvider>
       </Modal.Body>

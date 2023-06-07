@@ -34,6 +34,7 @@ export interface RendererIframeProps extends Omit<CommonMarkdownRendererProps & 
   frameClasses?: string
   onRendererStatusChange?: undefined | ((rendererReady: boolean) => void)
   adaptFrameHeightToContent?: boolean
+  showWaitSpinner?: boolean
 }
 
 const log = new Logger('RendererIframe')
@@ -52,6 +53,7 @@ const log = new Logger('RendererIframe')
  * @param rendererType The {@link RendererType type} of the renderer to use.
  * @param adaptFrameHeightToContent If set, the iframe height will be adjusted to the content height
  * @param onRendererStatusChange Callback that is fired when the renderer in the iframe is ready
+ * @param showWaitSpinner Defines if the page loading should be indicated by a wait spinner instead of the page loading animation.
  */
 export const RendererIframe: React.FC<RendererIframeProps> = ({
   markdownContentLines,
@@ -61,7 +63,8 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
   frameClasses,
   rendererType,
   adaptFrameHeightToContent,
-  onRendererStatusChange
+  onRendererStatusChange,
+  showWaitSpinner = false
 }) => {
   const [rendererReady, setRendererReady] = useState<boolean>(false)
   const frameReference = useRef<HTMLIFrameElement>(null)
@@ -152,9 +155,14 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
     useCallback(() => onMakeScrollSource?.(), [onMakeScrollSource])
   )
 
+  const frameClassNames = useMemo(
+    () => concatCssClasses({ 'd-none': !rendererReady && showWaitSpinner }, 'border-0', styles.frame, frameClasses),
+    [frameClasses, rendererReady, showWaitSpinner]
+  )
+
   return (
     <Fragment>
-      <ShowIf condition={!rendererReady}>
+      <ShowIf condition={!rendererReady && showWaitSpinner}>
         <WaitSpinner />
       </ShowIf>
       <iframe
@@ -166,7 +174,7 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
         allowFullScreen={true}
         ref={frameReference}
         referrerPolicy={'no-referrer'}
-        className={concatCssClasses('border-0', styles.frame, frameClasses)}
+        className={frameClassNames}
         allow={'clipboard-write'}
         {...cypressAttribute('renderer-ready', rendererReady ? 'true' : 'false')}
         {...cypressAttribute('renderer-type', rendererType)}
