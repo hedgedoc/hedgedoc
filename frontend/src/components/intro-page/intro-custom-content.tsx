@@ -32,6 +32,7 @@ export const IntroCustomContent: React.FC = () => {
         markdownContentLines={value as string[]}
         rendererType={RendererType.SIMPLE}
         adaptFrameHeightToContent={true}
+        showWaitSpinner={true}
       />
     </AsyncLoadingBoundary>
   )
