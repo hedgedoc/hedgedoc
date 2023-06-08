@@ -26,7 +26,6 @@ export const CurrentPasswordField: React.FC<CommonFieldProps> = ({ onChange }) =
         size='sm'
         onChange={onChange}
         placeholder={t('login.auth.password') ?? undefined}
-        className='bg-dark text-light'
         autoComplete='current-password'
         required
       />

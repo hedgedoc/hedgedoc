@@ -70,7 +70,7 @@ export const ProfileChangePassword: React.FC = () => {
   }, [loading, oldPassword, newPassword, newPasswordAgain])
 
   return (
-    <Card className='bg-dark mb-4'>
+    <Card className='mb-4'>
       <Card.Body>
         <Card.Title>
           <Trans i18nKey='profile.changePassword.title' />

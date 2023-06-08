@@ -36,7 +36,6 @@ export const AccessTokenCreationFormExpiryField: React.FC<AccessTokenCreationFor
         type='date'
         size='sm'
         value={formValues.expiryDate}
-        className='bg-dark text-light'
         onChange={onChangeExpiry}
         min={minMaxDefaultDates.min}
         max={minMaxDefaultDates.max}
