@@ -2314,7 +2314,7 @@ __metadata:
     "@types/pg": 8.10.2
     "@types/source-map-support": 0.5.6
     "@types/supertest": 2.0.12
-    "@types/ws": 8.5.4
+    "@types/ws": 8.5.5
     "@typescript-eslint/eslint-plugin": 5.59.9
     "@typescript-eslint/parser": 5.59.9
     "@zxcvbn-ts/core": 3.0.2
@@ -2375,7 +2375,7 @@ __metadata:
   dependencies:
     "@jest/types": 29.5.0
     "@mrdrogdrog/optional": 1.1.0
-    "@types/ws": 8.5.4
+    "@types/ws": 8.5.5
     "@typescript-eslint/eslint-plugin": 5.59.9
     "@typescript-eslint/parser": 5.59.9
     domhandler: 5.0.3
@@ -2445,8 +2445,8 @@ __metadata:
     "@types/react-dom": 18.2.4
     "@types/sass": 1.43.1
     "@types/testing-library__jest-dom": 5.14.6
-    "@types/uuid": 9.0.1
-    "@types/ws": 8.5.4
+    "@types/uuid": 9.0.2
+    "@types/ws": 8.5.5
     "@typescript-eslint/eslint-plugin": 5.59.9
     "@typescript-eslint/parser": 5.59.9
     "@uiw/react-codemirror": 4.21.2
@@ -5109,10 +5109,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/uuid@npm:9.0.1":
-  version: 9.0.1
-  resolution: "@types/uuid@npm:9.0.1"
-  checksum: c472b8a77cbeded4bc529220b8611afa39bd64677f507838f8083d8aac8033b1f88cb9ddaa2f8589e0dcd2317291d0f6e1379f82d5ceebd6f74f3b4825288e00
+"@types/uuid@npm:9.0.2":
+  version: 9.0.2
+  resolution: "@types/uuid@npm:9.0.2"
+  checksum: 1754bcf3444e1e3aeadd6e774fc328eb53bc956665e2e8fb6ec127aa8e1f43d9a224c3d22a9a6233dca8dd81a12dc7fed4d84b8876dd5ec82d40f574f7ff8b68
   languageName: node
   linkType: hard
 
@@ -5130,12 +5130,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ws@npm:8.5.4":
-  version: 8.5.4
-  resolution: "@types/ws@npm:8.5.4"
+"@types/ws@npm:8.5.5":
+  version: 8.5.5
+  resolution: "@types/ws@npm:8.5.5"
   dependencies:
     "@types/node": "*"
-  checksum: fefbad20d211929bb996285c4e6f699b12192548afedbe4930ab4384f8a94577c9cd421acaad163cacd36b88649509970a05a0b8f20615b30c501ed5269038d1
+  checksum: d00bf8070e6938e3ccf933010921c6ce78ac3606696ce37a393b27a9a603f7bd93ea64f3c5fa295a2f743575ba9c9a9fdb904af0f5fe2229bf2adf0630386e4a
   languageName: node
   linkType: hard
 
