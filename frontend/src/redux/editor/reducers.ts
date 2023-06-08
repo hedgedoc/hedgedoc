@@ -3,10 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { loadFromLocalStorage, saveToLocalStorage } from './methods'
 import type { EditorConfig, EditorConfigActions } from './types'
 import { EditorConfigActionType } from './types'
 import type { Reducer } from 'redux'
+import { Logger } from '../../utils/logger'
+
+const logger = new Logger('EditorConfig Local Storage')
 
 const initialState: EditorConfig = {
   ligatures: true,
@@ -16,16 +18,14 @@ const initialState: EditorConfig = {
   lineWrapping: true
 }
 
-const getInitialState = (): EditorConfig => {
-  return { ...initialState, ...loadFromLocalStorage() }
-}
-
 export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (
-  state: EditorConfig = getInitialState(),
+  state: EditorConfig = initialState,
   action: EditorConfigActions
 ) => {
   let newState: EditorConfig
   switch (action.type) {
+    case EditorConfigActionType.LOAD_FROM_LOCAL_STORAGE:
+      return loadFromLocalStorage() ?? initialState
     case EditorConfigActionType.SET_SYNC_SCROLL:
       newState = {
         ...state,
@@ -63,5 +63,33 @@ export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (
       return newState
     default:
       return state
+  }
+}
+
+export const loadFromLocalStorage = (): EditorConfig | undefined => {
+  try {
+    const stored = window.localStorage.getItem('editorConfig')
+    if (!stored) {
+      return undefined
+    }
+    const storedConfiguration = JSON.parse(stored) as Record<string, boolean>
+    return {
+      ligatures: storedConfiguration?.ligatures === true ?? true,
+      syncScroll: storedConfiguration?.syncScroll === true ?? true,
+      smartPaste: storedConfiguration?.smartPaste === true ?? true,
+      spellCheck: storedConfiguration?.spellCheck === true ?? false,
+      lineWrapping: storedConfiguration?.lineWrapping === true ?? true
+    }
+  } catch (_) {
+    return undefined
+  }
+}
+
+export const saveToLocalStorage = (editorConfig: EditorConfig): void => {
+  try {
+    const json = JSON.stringify(editorConfig)
+    localStorage.setItem('editorConfig', json)
+  } catch (error) {
+    logger.error('Error while saving editor config in local storage', error)
   }
 }

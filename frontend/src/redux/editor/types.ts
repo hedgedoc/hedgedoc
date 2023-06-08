@@ -8,6 +8,7 @@ import type { Action } from 'redux'
 export enum EditorConfigActionType {
   SET_EDITOR_VIEW_MODE = 'editor/view-mode/set',
   SET_SYNC_SCROLL = 'editor/syncScroll/set',
+  LOAD_FROM_LOCAL_STORAGE = 'editor/preferences/load',
   SET_LIGATURES = 'editor/preferences/setLigatures',
   SET_LINE_WRAPPING = 'editor/preferences/setLineWrapping',
   SET_SMART_PASTE = 'editor/preferences/setSmartPaste',
@@ -28,6 +29,11 @@ export type EditorConfigActions =
   | SetEditorSmartPasteAction
   | SetEditorLineWrappingAction
   | SetSpellCheckAction
+  | LoadFromLocalStorageAction
+
+export interface LoadFromLocalStorageAction extends Action<EditorConfigActionType> {
+  type: EditorConfigActionType.LOAD_FROM_LOCAL_STORAGE
+}
 
 export interface SetEditorLineWrappingAction extends Action<EditorConfigActionType> {
   type: EditorConfigActionType.SET_LINE_WRAPPING
