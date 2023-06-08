@@ -39,7 +39,7 @@ export const ProfileDisplayName: React.FC = () => {
   }, [displayName, userName])
 
   return (
-    <Card className='bg-dark mb-4'>
+    <Card className='mb-4'>
       <Card.Body>
         <Card.Title>
           <Trans i18nKey='profile.userProfile' />

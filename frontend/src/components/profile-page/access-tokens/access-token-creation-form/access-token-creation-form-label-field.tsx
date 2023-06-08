@@ -39,7 +39,6 @@ export const AccessTokenCreationFormLabelField: React.FC<AccessTokenCreationForm
         size='sm'
         placeholder={t('profile.accessTokens.label') ?? undefined}
         value={formValues.label}
-        className='bg-dark text-light'
         onChange={onChangeLabel}
         isValid={labelValid}
         required

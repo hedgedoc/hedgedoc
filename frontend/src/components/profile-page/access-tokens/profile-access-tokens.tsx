@@ -46,7 +46,7 @@ export const ProfileAccessTokens: React.FC = () => {
   )
 
   return (
-    <Card className='bg-dark mb-4 access-tokens'>
+    <Card className='mb-4 access-tokens'>
       <Card.Body>
         <Card.Title>
           <Trans i18nKey='profile.accessTokens.title' />
