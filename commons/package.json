@@ -43,7 +43,7 @@
     "joi": "17.9.2",
     "reveal.js": "4.5.0",
     "ws": "8.13.0",
-    "yjs": "13.6.1"
+    "yjs": "13.6.2"
   },
   "devDependencies": {
     "@jest/types": "29.5.0",
