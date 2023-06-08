@@ -4,38 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { store } from '..'
-import { Logger } from '../../utils/logger'
 import type {
-  EditorConfig,
+  LoadFromLocalStorageAction,
   SetEditorLigaturesAction,
   SetEditorLineWrappingAction,
   SetEditorSmartPasteAction,
   SetEditorSyncScrollAction
 } from './types'
 import { EditorConfigActionType } from './types'
-
-const log = new Logger('Redux > Editor')
-
-export const loadFromLocalStorage = (): EditorConfig | undefined => {
-  try {
-    const stored = window.localStorage.getItem('editorConfig')
-    if (!stored) {
-      return undefined
-    }
-    return JSON.parse(stored) as EditorConfig
-  } catch (_) {
-    return undefined
-  }
-}
-
-export const saveToLocalStorage = (editorConfig: EditorConfig): void => {
-  try {
-    const json = JSON.stringify(editorConfig)
-    localStorage.setItem('editorConfig', json)
-  } catch (error) {
-    log.error('Error while saving editor config in local storage', error)
-  }
-}
 
 export const setEditorSyncScroll = (syncScroll: boolean): void => {
   const action: SetEditorSyncScrollAction = {
@@ -65,6 +41,13 @@ export const setEditorSmartPaste = (smartPaste: boolean): void => {
   const action: SetEditorSmartPasteAction = {
     type: EditorConfigActionType.SET_SMART_PASTE,
     smartPaste
+  }
+  store.dispatch(action)
+}
+
+export const loadFromLocalStorage = (): void => {
+  const action: LoadFromLocalStorageAction = {
+    type: EditorConfigActionType.LOAD_FROM_LOCAL_STORAGE
   }
   store.dispatch(action)
 }

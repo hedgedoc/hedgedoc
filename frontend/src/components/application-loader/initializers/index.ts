@@ -9,6 +9,7 @@ import { isDevMode, isTestMode } from '../../../utils/test-modes'
 import { fetchAndSetUser } from '../../login-page/auth/utils'
 import { loadDarkMode } from './load-dark-mode'
 import { setUpI18n } from './setupI18n'
+import { loadFromLocalStorage } from '../../../redux/editor/methods'
 
 const logger = new Logger('Application Loader')
 
@@ -63,8 +64,17 @@ export const createSetUpTaskList = (): InitTask[] => {
       task: refreshHistoryState
     },
     {
+      name: 'Load preferences',
+      task: loadFromLocalStorageAsync
+    },
+    {
       name: 'Add Delay',
       task: customDelay
     }
   ]
+}
+
+const loadFromLocalStorageAsync = (): Promise<void> => {
+  loadFromLocalStorage()
+  return Promise.resolve()
 }
