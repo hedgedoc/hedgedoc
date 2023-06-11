@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Mock } from 'ts-mockery';
 import { DataSource, EntityManager, Repository } from 'typeorm';
 
 import { AuthToken } from '../auth/auth-token.entity';
@@ -35,6 +36,7 @@ import { RevisionsModule } from '../revisions/revisions.module';
 import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
+import { mockSelectQueryBuilderInRepo } from '../utils/test-utils/mockSelectQueryBuilder';
 import { Alias } from './alias.entity';
 import { AliasService } from './alias.service';
 import { Note } from './note.entity';
@@ -259,15 +261,13 @@ describe('AliasService', () => {
         .spyOn(aliasRepo, 'save')
         .mockImplementationOnce(async (alias: Alias): Promise<Alias> => alias)
         .mockImplementationOnce(async (alias: Alias): Promise<Alias> => alias);
-      const createQueryBuilder = {
-        leftJoinAndSelect: () => createQueryBuilder,
-        where: () => createQueryBuilder,
-        orWhere: () => createQueryBuilder,
-        setParameter: () => createQueryBuilder,
-        getOne: async () => {
-          return {
-            ...note,
-            aliases: (await note.aliases).map((anAlias) => {
+
+      mockSelectQueryBuilderInRepo(
+        noteRepo,
+        Mock.of<Note>({
+          ...note,
+          aliases: Promise.resolve(
+            (await note.aliases).map((anAlias) => {
               if (anAlias.primary) {
                 anAlias.primary = false;
               }
@@ -276,14 +276,10 @@ describe('AliasService', () => {
               }
               return anAlias;
             }),
-          };
-        },
-      };
-      jest
-        .spyOn(noteRepo, 'createQueryBuilder')
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        .mockImplementation(() => createQueryBuilder);
+          ),
+        }),
+      );
+
       const savedAlias = await service.makeAliasPrimary(note, alias2.name);
       expect(savedAlias.name).toEqual(alias2.name);
       expect(savedAlias.primary).toBeTruthy();

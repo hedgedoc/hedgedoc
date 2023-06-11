@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Mock } from 'ts-mockery';
 import {
   DataSource,
   EntityManager,
@@ -43,20 +44,24 @@ import { RealtimeNoteModule } from '../realtime/realtime-note/realtime-note.modu
 import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
 import { RevisionsModule } from '../revisions/revisions.module';
+import { RevisionsService } from '../revisions/revisions.service';
 import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
+import { mockSelectQueryBuilderInRepo } from '../utils/test-utils/mockSelectQueryBuilder';
 import { Alias } from './alias.entity';
 import { AliasService } from './alias.service';
 import { Note } from './note.entity';
 import { NotesService } from './notes.service';
 import { Tag } from './tag.entity';
 
+jest.mock('../revisions/revisions.service');
+
 describe('NotesService', () => {
   let service: NotesService;
+  let revisionsService: RevisionsService;
   const noteMockConfig: NoteConfig = createDefaultMockNoteConfig();
   let noteRepo: Repository<Note>;
-  let revisionRepo: Repository<Revision>;
   let userRepo: Repository<User>;
   let groupRepo: Repository<Group>;
   let forbiddenNoteId: string;
@@ -74,99 +79,10 @@ describe('NotesService', () => {
     true,
   );
 
-  /**
-   * Creates a Note and a corresponding User and Group for testing.
-   * The Note does not have any aliases.
-   */
-  async function getMockData(): Promise<[Note, User, Group]> {
-    const user = User.create('hardcoded', 'Testy') as User;
-    const author = Author.create(1);
-    author.user = Promise.resolve(user);
-    const group = Group.create('testGroup', 'testGroup', false) as Group;
-    const content = 'testContent';
-    jest
-      .spyOn(noteRepo, 'save')
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      .mockImplementation(async (note: Note): Promise<Note> => note);
-    mockGroupRepo();
-    const note = await service.createNote(content, null);
-    const revisions = await note.revisions;
-    revisions[0].edits = Promise.resolve([
-      {
-        revisions: Promise.resolve(revisions),
-        startPos: 0,
-        endPos: 1,
-        updatedAt: new Date(1549312452000),
-        author: Promise.resolve(author),
-      } as Edit,
-      {
-        revisions: Promise.resolve(revisions),
-        startPos: 0,
-        endPos: 1,
-        updatedAt: new Date(1549312452001),
-        author: Promise.resolve(author),
-      } as Edit,
-    ]);
-    revisions[0].createdAt = new Date(1549312452000);
-    jest.spyOn(revisionRepo, 'findOne').mockResolvedValue(revisions[0]);
-    const createQueryBuilder = {
-      innerJoin: () => createQueryBuilder,
-      where: () => createQueryBuilder,
-      getMany: () => [user],
-    };
-    jest
-      .spyOn(userRepo, 'createQueryBuilder')
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      .mockImplementation(() => createQueryBuilder);
-    note.publicId = 'testId';
-    note.title = 'testTitle';
-    note.description = 'testDescription';
-    note.owner = Promise.resolve(user);
-    note.userPermissions = Promise.resolve([
-      {
-        id: 1,
-        note: Promise.resolve(note),
-        user: Promise.resolve(user),
-        canEdit: true,
-      },
-    ]);
-    note.groupPermissions = Promise.resolve([
-      {
-        id: 1,
-        note: Promise.resolve(note),
-        group: Promise.resolve(group),
-        canEdit: true,
-      },
-    ]);
-    note.tags = Promise.resolve([
-      {
-        id: 1,
-        name: 'testTag',
-        notes: Promise.resolve([note]),
-      },
-    ]);
-    note.viewCount = 1337;
-
-    return [note, user, group];
-  }
-
-  function mockGroupRepo() {
-    jest.spyOn(groupRepo, 'findOne').mockReset();
-    jest.spyOn(groupRepo, 'findOne').mockImplementation((args) => {
-      const groupName = (args.where as FindOptionsWhere<Group>).name;
-      if (groupName === loggedin.name) {
-        return Promise.resolve(loggedin as Group);
-      } else if (groupName === everyone.name) {
-        return Promise.resolve(everyone as Group);
-      } else {
-        return Promise.resolve(null);
-      }
-    });
-  }
-
   beforeEach(async () => {
+    jest.resetAllMocks();
+    jest.resetModules();
+
     /**
      * We need to have *one* userRepo for both the providers array and
      * the overrideProvider call, as otherwise we have two instances
@@ -202,9 +118,19 @@ describe('NotesService', () => {
       ),
       undefined,
     );
+
+    revisionsService = Mock.of<RevisionsService>({
+      getLatestRevision: jest.fn(),
+      createRevision: jest.fn(),
+    });
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         NotesService,
+        {
+          provide: RevisionsService,
+          useValue: revisionsService,
+        },
         AliasService,
         {
           provide: getRepositoryToken(Note),
@@ -212,6 +138,10 @@ describe('NotesService', () => {
         },
         {
           provide: getRepositoryToken(Tag),
+          useClass: Repository,
+        },
+        {
+          provide: getRepositoryToken(Revision),
           useClass: Repository,
         },
         {
@@ -280,11 +210,105 @@ describe('NotesService', () => {
     loggedinDefaultAccessPermission = noteConfig.permissions.default.loggedIn;
     service = module.get<NotesService>(NotesService);
     noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));
-    revisionRepo = module.get<Repository<Revision>>(
-      getRepositoryToken(Revision),
-    );
     eventEmitter = module.get<EventEmitter2>(EventEmitter2);
   });
+
+  /**
+   * Creates a Note and a corresponding User and Group for testing.
+   * The Note does not have any aliases.
+   */
+  async function getMockData(): Promise<[Note, User, Group, Revision]> {
+    const user = User.create('hardcoded', 'Testy') as User;
+    const author = Author.create(1);
+    author.user = Promise.resolve(user);
+    const group = Group.create('testGroup', 'testGroup', false) as Group;
+    jest
+      .spyOn(noteRepo, 'save')
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      .mockImplementation(async (note: Note): Promise<Note> => note);
+    mockGroupRepo();
+
+    const revision = Mock.of<Revision>({
+      edits: Promise.resolve([
+        {
+          startPos: 0,
+          endPos: 1,
+          updatedAt: new Date(1549312452000),
+          author: Promise.resolve(author),
+        } as Edit,
+        {
+          startPos: 0,
+          endPos: 1,
+          updatedAt: new Date(1549312452001),
+          author: Promise.resolve(author),
+        } as Edit,
+      ]),
+      createdAt: new Date(1549312452000),
+      tags: Promise.resolve([
+        {
+          id: 0,
+          name: 'tag1',
+        } as Tag,
+      ]),
+      content: 'mockContent',
+      description: 'mockDescription',
+      title: 'mockTitle',
+    });
+
+    const note = Mock.of<Note>({
+      revisions: Promise.resolve([revision]),
+      aliases: Promise.resolve([]),
+    });
+
+    mockRevisionService(note, revision);
+
+    mockSelectQueryBuilderInRepo(userRepo, user);
+    note.publicId = 'testId';
+    note.owner = Promise.resolve(user);
+    note.userPermissions = Promise.resolve([
+      {
+        id: 1,
+        note: Promise.resolve(note),
+        user: Promise.resolve(user),
+        canEdit: true,
+      },
+    ]);
+    note.groupPermissions = Promise.resolve([
+      {
+        id: 1,
+        note: Promise.resolve(note),
+        group: Promise.resolve(group),
+        canEdit: true,
+      },
+    ]);
+    note.viewCount = 1337;
+
+    return [note, user, group, revision];
+  }
+
+  function mockRevisionService(note: Note, revision: Revision) {
+    jest
+      .spyOn(revisionsService, 'getLatestRevision')
+      .mockImplementation((requestedNote) => {
+        expect(requestedNote).toBe(note);
+        return Promise.resolve(revision);
+      });
+  }
+
+  function mockGroupRepo() {
+    jest.spyOn(groupRepo, 'findOne').mockReset();
+    jest.spyOn(groupRepo, 'findOne').mockImplementation((args) => {
+      const groupName = (args.where as FindOptionsWhere<Group>).name;
+      if (groupName === loggedin.name) {
+        return Promise.resolve(loggedin as Group);
+      } else if (groupName === everyone.name) {
+        return Promise.resolve(everyone as Group);
+      } else {
+        return Promise.resolve(null);
+      }
+    });
+  }
 
   it('should be defined', () => {
     expect(service).toBeDefined();
@@ -297,52 +321,19 @@ describe('NotesService', () => {
       const note = Note.create(user, alias) as Note;
 
       it('with no note', async () => {
-        const createQueryBuilder = {
-          leftJoinAndSelect: () => createQueryBuilder,
-          where: () => createQueryBuilder,
-          getMany: async () => {
-            return null;
-          },
-        };
-        jest
-          .spyOn(noteRepo, 'createQueryBuilder')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementation(() => createQueryBuilder);
+        mockSelectQueryBuilderInRepo(noteRepo, null);
         const notes = await service.getUserNotes(user);
         expect(notes).toEqual([]);
       });
 
       it('with one note', async () => {
-        const createQueryBuilder = {
-          leftJoinAndSelect: () => createQueryBuilder,
-          where: () => createQueryBuilder,
-          getMany: async () => {
-            return [note];
-          },
-        };
-        jest
-          .spyOn(noteRepo, 'createQueryBuilder')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementation(() => createQueryBuilder);
+        mockSelectQueryBuilderInRepo(noteRepo, note);
         const notes = await service.getUserNotes(user);
         expect(notes).toEqual([note]);
       });
 
       it('with multiple note', async () => {
-        const createQueryBuilder = {
-          leftJoinAndSelect: () => createQueryBuilder,
-          where: () => createQueryBuilder,
-          getMany: async () => {
-            return [note, note];
-          },
-        };
-        jest
-          .spyOn(noteRepo, 'createQueryBuilder')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementation(() => createQueryBuilder);
+        mockSelectQueryBuilderInRepo(noteRepo, [note, note]);
         const notes = await service.getUserNotes(user);
         expect(notes).toEqual([note, note]);
       });
@@ -353,6 +344,9 @@ describe('NotesService', () => {
     const user = User.create('hardcoded', 'Testy') as User;
     const alias = 'alias';
     const content = 'testContent';
+    const newRevision = Mock.of<Revision>({});
+    let createRevisionSpy: jest.SpyInstance;
+
     describe('works', () => {
       beforeEach(() => {
         jest
@@ -361,12 +355,16 @@ describe('NotesService', () => {
           // @ts-ignore
           .mockImplementation(async (note: Note): Promise<Note> => note);
         mockGroupRepo();
+
+        createRevisionSpy = jest
+          .spyOn(revisionsService, 'createRevision')
+          .mockResolvedValue(newRevision);
       });
       it('without alias, without owner', async () => {
         const newNote = await service.createNote(content, null);
-        const revisions = await newNote.revisions;
-        expect(revisions).toHaveLength(1);
-        expect(revisions[0].content).toEqual(content);
+
+        expect(createRevisionSpy).toHaveBeenCalledWith(newNote, content);
+        expect(await newNote.revisions).toStrictEqual([newRevision]);
         expect(await newNote.historyEntries).toHaveLength(0);
         expect(await newNote.userPermissions).toHaveLength(0);
         const groupPermissions = await newNote.groupPermissions;
@@ -383,15 +381,13 @@ describe('NotesService', () => {
         expect((await groupPermissions[1].group).name).toEqual(
           SpecialGroup.LOGGED_IN,
         );
-        expect(await newNote.tags).toHaveLength(0);
         expect(await newNote.owner).toBeNull();
         expect(await newNote.aliases).toHaveLength(0);
       });
       it('without alias, with owner', async () => {
         const newNote = await service.createNote(content, user);
-        const revisions = await newNote.revisions;
-        expect(revisions).toHaveLength(1);
-        expect(revisions[0].content).toEqual(content);
+        expect(createRevisionSpy).toHaveBeenCalledWith(newNote, content);
+        expect(await newNote.revisions).toStrictEqual([newRevision]);
         expect(await newNote.historyEntries).toHaveLength(1);
         expect(await (await newNote.historyEntries)[0].user).toEqual(user);
         expect(await newNote.userPermissions).toHaveLength(0);
@@ -409,15 +405,13 @@ describe('NotesService', () => {
         expect((await groupPermissions[1].group).name).toEqual(
           SpecialGroup.LOGGED_IN,
         );
-        expect(await newNote.tags).toHaveLength(0);
         expect(await newNote.owner).toEqual(user);
         expect(await newNote.aliases).toHaveLength(0);
       });
       it('with alias, without owner', async () => {
         const newNote = await service.createNote(content, null, alias);
-        const revisions = await newNote.revisions;
-        expect(revisions).toHaveLength(1);
-        expect(revisions[0].content).toEqual(content);
+        expect(createRevisionSpy).toHaveBeenCalledWith(newNote, content);
+        expect(await newNote.revisions).toStrictEqual([newRevision]);
         expect(await newNote.historyEntries).toHaveLength(0);
         expect(await newNote.userPermissions).toHaveLength(0);
         const groupPermissions = await newNote.groupPermissions;
@@ -434,15 +428,14 @@ describe('NotesService', () => {
         expect((await groupPermissions[1].group).name).toEqual(
           SpecialGroup.LOGGED_IN,
         );
-        expect(await newNote.tags).toHaveLength(0);
         expect(await newNote.owner).toBeNull();
         expect(await newNote.aliases).toHaveLength(1);
       });
       it('with alias, with owner', async () => {
         const newNote = await service.createNote(content, user, alias);
-        const revisions = await newNote.revisions;
-        expect(revisions).toHaveLength(1);
-        expect(revisions[0].content).toEqual(content);
+
+        expect(createRevisionSpy).toHaveBeenCalledWith(newNote, content);
+        expect(await newNote.revisions).toStrictEqual([newRevision]);
         expect(await newNote.historyEntries).toHaveLength(1);
         expect(await (await newNote.historyEntries)[0].user).toEqual(user);
         expect(await newNote.userPermissions).toHaveLength(0);
@@ -460,7 +453,6 @@ describe('NotesService', () => {
         expect((await groupPermissions[1].group).name).toEqual(
           SpecialGroup.LOGGED_IN,
         );
-        expect(await newNote.tags).toHaveLength(0);
         expect(await newNote.owner).toEqual(user);
         expect(await newNote.aliases).toHaveLength(1);
         expect((await newNote.aliases)[0].name).toEqual(alias);
@@ -470,9 +462,9 @@ describe('NotesService', () => {
         it('and content has length maxDocumentLength', async () => {
           const content = 'x'.repeat(noteMockConfig.maxDocumentLength);
           const newNote = await service.createNote(content, user, alias);
-          const revisions = await newNote.revisions;
-          expect(revisions).toHaveLength(1);
-          expect(revisions[0].content).toEqual(content);
+
+          expect(createRevisionSpy).toHaveBeenCalledWith(newNote, content);
+          expect(await newNote.revisions).toStrictEqual([newRevision]);
           expect(await newNote.historyEntries).toHaveLength(1);
           expect(await (await newNote.historyEntries)[0].user).toEqual(user);
           expect(await newNote.userPermissions).toHaveLength(0);
@@ -490,7 +482,6 @@ describe('NotesService', () => {
           expect((await groupPermissions[1].group).name).toEqual(
             SpecialGroup.LOGGED_IN,
           );
-          expect(await newNote.tags).toHaveLength(0);
           expect(await newNote.owner).toEqual(user);
           expect(await newNote.aliases).toHaveLength(1);
           expect((await newNote.aliases)[0].name).toEqual(alias);
@@ -505,9 +496,9 @@ describe('NotesService', () => {
         it('default permissions', async () => {
           mockGroupRepo();
           const newNote = await service.createNote(content, user, alias);
-          const revisions = await newNote.revisions;
-          expect(revisions).toHaveLength(1);
-          expect(revisions[0].content).toEqual(content);
+
+          expect(createRevisionSpy).toHaveBeenCalledWith(newNote, content);
+          expect(await newNote.revisions).toStrictEqual([newRevision]);
           expect(await newNote.historyEntries).toHaveLength(1);
           expect(await (await newNote.historyEntries)[0].user).toEqual(user);
           expect(await newNote.userPermissions).toHaveLength(0);
@@ -519,7 +510,6 @@ describe('NotesService', () => {
           expect((await groupPermissions[0].group).name).toEqual(
             SpecialGroup.LOGGED_IN,
           );
-          expect(await newNote.tags).toHaveLength(0);
           expect(await newNote.owner).toEqual(user);
           expect(await newNote.aliases).toHaveLength(1);
           expect((await newNote.aliases)[0].name).toEqual(alias);
@@ -561,54 +551,25 @@ describe('NotesService', () => {
   describe('getNoteContent', () => {
     it('works', async () => {
       const content = 'testContent';
-      jest
-        .spyOn(noteRepo, 'save')
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        .mockImplementation(async (note: Note): Promise<Note> => note);
-      mockGroupRepo();
-      const newNote = await service.createNote(content, null);
-      const revisions = await newNote.revisions;
-      jest.spyOn(revisionRepo, 'findOne').mockResolvedValueOnce(revisions[0]);
-      await service.getNoteContent(newNote).then((result) => {
-        expect(result).toEqual(content);
-      });
+      const revision = Mock.of<Revision>({ content: content });
+      const newNote = Mock.of<Note>();
+      mockRevisionService(newNote, revision);
+      const result = await service.getNoteContent(newNote);
+      expect(result).toEqual(content);
     });
   });
 
   describe('getNoteByIdOrAlias', () => {
     it('works', async () => {
       const user = User.create('hardcoded', 'Testy') as User;
-      const note = Note.create(user);
-      const createQueryBuilder = {
-        leftJoinAndSelect: () => createQueryBuilder,
-        where: () => createQueryBuilder,
-        orWhere: () => createQueryBuilder,
-        setParameter: () => createQueryBuilder,
-        getOne: () => note,
-      };
-      jest
-        .spyOn(noteRepo, 'createQueryBuilder')
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        .mockImplementation(() => createQueryBuilder);
+      const note = Note.create(user) as Note;
+      mockSelectQueryBuilderInRepo(noteRepo, note);
       const foundNote = await service.getNoteByIdOrAlias('noteThatExists');
       expect(foundNote).toEqual(note);
     });
     describe('fails:', () => {
       it('no note found', async () => {
-        const createQueryBuilder = {
-          leftJoinAndSelect: () => createQueryBuilder,
-          where: () => createQueryBuilder,
-          orWhere: () => createQueryBuilder,
-          setParameter: () => createQueryBuilder,
-          getOne: () => null,
-        };
-        jest
-          .spyOn(noteRepo, 'createQueryBuilder')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementation(() => createQueryBuilder);
+        mockSelectQueryBuilderInRepo(noteRepo, null);
         await expect(
           service.getNoteByIdOrAlias('noteThatDoesNoteExist'),
         ).rejects.toThrow(NotInDBError);
@@ -644,81 +605,111 @@ describe('NotesService', () => {
   });
 
   describe('updateNote', () => {
-    it('works', async () => {
-      const [note, ,] = await getMockData();
-      const revisionLength = (await note.revisions).length;
-      const updatedNote = await service.updateNote(note, 'newContent');
-      expect(await updatedNote.revisions).toHaveLength(revisionLength + 1);
-    });
-  });
+    it('adds a new revision if content is different', async () => {
+      const [note, , , revision] = await getMockData();
 
-  describe('toTagList', () => {
-    it('works', async () => {
-      const note = {} as Note;
-      note.tags = Promise.resolve([
-        {
-          id: 1,
-          name: 'testTag',
-          notes: Promise.resolve([note]),
-        },
+      const mockRevision = Mock.of<Revision>({});
+      const createRevisionSpy = jest
+        .spyOn(revisionsService, 'createRevision')
+        .mockReturnValue(Promise.resolve(mockRevision));
+
+      const newContent = 'newContent';
+      const updatedNote = await service.updateNote(note, newContent);
+      expect(await updatedNote.revisions).toStrictEqual([
+        revision,
+        mockRevision,
       ]);
-      const tagList = await service.toTagList(note);
-      expect(tagList).toHaveLength(1);
-      expect(tagList[0]).toEqual((await note.tags)[0].name);
+      expect(createRevisionSpy).toHaveBeenCalledWith(note, newContent);
+    });
+
+    it("won't create a new revision if content is same", async () => {
+      const [note, , , revision] = await getMockData();
+      const createRevisionSpy = jest
+        .spyOn(revisionsService, 'createRevision')
+        .mockReturnValue(Promise.resolve(undefined));
+
+      const newContent = 'newContent';
+      const updatedNote = await service.updateNote(note, newContent);
+      expect(await updatedNote.revisions).toStrictEqual([revision]);
+      expect(createRevisionSpy).toHaveBeenCalledWith(note, newContent);
     });
   });
 
   describe('toNotePermissionsDto', () => {
     it('works', async () => {
-      const [note, user, group] = await getMockData();
+      const [note] = await getMockData();
       const permissions = await service.toNotePermissionsDto(note);
-      expect(permissions.owner).toEqual(user.username);
-      expect(permissions.sharedToUsers).toHaveLength(1);
-      expect(permissions.sharedToUsers[0].username).toEqual(user.username);
-      expect(permissions.sharedToUsers[0].canEdit).toEqual(true);
-      expect(permissions.sharedToGroups).toHaveLength(1);
-      expect(permissions.sharedToGroups[0].groupName).toEqual(
-        group.displayName,
-      );
-      expect(permissions.sharedToGroups[0].canEdit).toEqual(true);
+      expect(permissions).toMatchInlineSnapshot(`
+        {
+          "owner": "hardcoded",
+          "sharedToGroups": [
+            {
+              "canEdit": true,
+              "groupName": "testGroup",
+            },
+          ],
+          "sharedToUsers": [
+            {
+              "canEdit": true,
+              "username": "hardcoded",
+            },
+          ],
+        }
+      `);
     });
   });
 
   describe('toNoteMetadataDto', () => {
     it('works', async () => {
-      const [note, user, group] = await getMockData();
+      const [note] = await getMockData();
       note.aliases = Promise.resolve([
         Alias.create('testAlias', note, true) as Alias,
       ]);
 
       const metadataDto = await service.toNoteMetadataDto(note);
-      expect(metadataDto.id).toEqual(note.publicId);
-      expect(metadataDto.aliases).toHaveLength(1);
-      expect(metadataDto.aliases[0].name).toEqual((await note.aliases)[0].name);
-      expect(metadataDto.primaryAddress).toEqual('testAlias');
-      expect(metadataDto.title).toEqual(note.title);
-      expect(metadataDto.description).toEqual(note.description);
-      expect(metadataDto.editedBy).toHaveLength(1);
-      expect(metadataDto.editedBy[0]).toEqual(user.username);
-      expect(metadataDto.permissions.owner).toEqual(user.username);
-      expect(metadataDto.permissions.sharedToUsers).toHaveLength(1);
-      expect(metadataDto.permissions.sharedToUsers[0].username).toEqual(
-        user.username,
-      );
-      expect(metadataDto.permissions.sharedToUsers[0].canEdit).toEqual(true);
-      expect(metadataDto.permissions.sharedToGroups).toHaveLength(1);
-      expect(metadataDto.permissions.sharedToGroups[0].groupName).toEqual(
-        group.displayName,
-      );
-      expect(metadataDto.permissions.sharedToGroups[0].canEdit).toEqual(true);
-      expect(metadataDto.tags).toHaveLength(1);
-      expect(metadataDto.tags[0]).toEqual((await note.tags)[0].name);
-      expect(metadataDto.updatedAt).toEqual(
-        (await note.revisions)[0].createdAt,
-      );
-      expect(metadataDto.updateUsername).toEqual(user.username);
-      expect(metadataDto.viewCount).toEqual(note.viewCount);
+      expect(metadataDto).toMatchInlineSnapshot(`
+        {
+          "aliases": [
+            {
+              "name": "testAlias",
+              "noteId": "testId",
+              "primaryAlias": true,
+            },
+          ],
+          "createdAt": undefined,
+          "description": "mockDescription",
+          "editedBy": [
+            "hardcoded",
+          ],
+          "id": "testId",
+          "permissions": {
+            "owner": "hardcoded",
+            "sharedToGroups": [
+              {
+                "canEdit": true,
+                "groupName": "testGroup",
+              },
+            ],
+            "sharedToUsers": [
+              {
+                "canEdit": true,
+                "username": "hardcoded",
+              },
+            ],
+          },
+          "primaryAddress": "testAlias",
+          "tags": [
+            "tag1",
+          ],
+          "title": "mockTitle",
+          "updateUsername": "hardcoded",
+          "updatedAt": 2019-02-04T20:34:12.000Z,
+          "version": undefined,
+          "viewCount": 1337,
+        }
+      `);
     });
+
     it('returns publicId if no alias exists', async () => {
       const [note, ,] = await getMockData();
       const metadataDto = await service.toNoteMetadataDto(note);
@@ -728,41 +719,57 @@ describe('NotesService', () => {
 
   describe('toNoteDto', () => {
     it('works', async () => {
-      const [note, user, group] = await getMockData();
+      const [note] = await getMockData();
       note.aliases = Promise.resolve([
         Alias.create('testAlias', note, true) as Alias,
       ]);
 
       const noteDto = await service.toNoteDto(note);
-      expect(noteDto.metadata.id).toEqual(note.publicId);
-      expect(noteDto.metadata.aliases).toHaveLength(1);
-      expect(noteDto.metadata.aliases[0].name).toEqual(
-        (await note.aliases)[0].name,
-      );
-      expect(noteDto.metadata.title).toEqual(note.title);
-      expect(noteDto.metadata.description).toEqual(note.description);
-      expect(noteDto.metadata.editedBy).toHaveLength(1);
-      expect(noteDto.metadata.editedBy[0]).toEqual(user.username);
-      expect(noteDto.metadata.permissions.owner).toEqual(user.username);
-      expect(noteDto.metadata.permissions.sharedToUsers).toHaveLength(1);
-      expect(noteDto.metadata.permissions.sharedToUsers[0].username).toEqual(
-        user.username,
-      );
-      expect(noteDto.metadata.permissions.sharedToUsers[0].canEdit).toEqual(
-        true,
-      );
-      expect(noteDto.metadata.permissions.sharedToGroups).toHaveLength(1);
-      expect(noteDto.metadata.permissions.sharedToGroups[0].groupName).toEqual(
-        group.displayName,
-      );
-      expect(noteDto.metadata.permissions.sharedToGroups[0].canEdit).toEqual(
-        true,
-      );
-      expect(noteDto.metadata.tags).toHaveLength(1);
-      expect(noteDto.metadata.tags[0]).toEqual((await note.tags)[0].name);
-      expect(noteDto.metadata.updateUsername).toEqual(user.username);
-      expect(noteDto.metadata.viewCount).toEqual(note.viewCount);
-      expect(noteDto.content).toEqual('testContent');
+      expect(noteDto).toMatchInlineSnapshot(`
+        {
+          "content": "mockContent",
+          "editedByAtPosition": [],
+          "metadata": {
+            "aliases": [
+              {
+                "name": "testAlias",
+                "noteId": "testId",
+                "primaryAlias": true,
+              },
+            ],
+            "createdAt": undefined,
+            "description": "mockDescription",
+            "editedBy": [
+              "hardcoded",
+            ],
+            "id": "testId",
+            "permissions": {
+              "owner": "hardcoded",
+              "sharedToGroups": [
+                {
+                  "canEdit": true,
+                  "groupName": "testGroup",
+                },
+              ],
+              "sharedToUsers": [
+                {
+                  "canEdit": true,
+                  "username": "hardcoded",
+                },
+              ],
+            },
+            "primaryAddress": "testAlias",
+            "tags": [
+              "tag1",
+            ],
+            "title": "mockTitle",
+            "updateUsername": "hardcoded",
+            "updatedAt": 2019-02-04T20:34:12.000Z,
+            "version": undefined,
+            "viewCount": 1337,
+          },
+        }
+      `);
     });
   });
 });
