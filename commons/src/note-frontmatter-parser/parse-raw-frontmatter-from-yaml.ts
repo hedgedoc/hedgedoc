@@ -66,14 +66,6 @@ const schema = Joi.object<RawNoteFrontmatter>({
   .default(defaultNoteFrontmatter)
   .unknown(true)
 
-const loadYaml = (rawYaml: string): unknown => {
-  try {
-    return load(rawYaml)
-  } catch {
-    return undefined
-  }
-}
-
 type ParserResult =
   | {
       error: undefined
@@ -87,9 +79,10 @@ type ParserResult =
     }
 
 export const parseRawFrontmatterFromYaml = (rawYaml: string): ParserResult => {
-  const rawNoteFrontmatter = loadYaml(rawYaml)
-  if (rawNoteFrontmatter === undefined) {
+  try {
+    const rawNoteFrontmatter = load(rawYaml)
+    return schema.validate(rawNoteFrontmatter, { convert: true })
+  } catch {
     return { error: new Error('Invalid YAML'), value: undefined }
   }
-  return schema.validate(rawNoteFrontmatter, { convert: true })
 }
