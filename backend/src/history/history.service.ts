@@ -11,6 +11,7 @@ import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Note } from '../notes/note.entity';
 import { NotesService } from '../notes/notes.service';
+import { RevisionsService } from '../revisions/revisions.service';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { HistoryEntryImportDto } from './history-entry-import.dto';
@@ -29,6 +30,7 @@ export class HistoryService {
     private historyEntryRepository: Repository<HistoryEntry>,
     private usersService: UsersService,
     private notesService: NotesService,
+    private revisionsService: RevisionsService,
   ) {
     this.logger.setContext(HistoryService.name);
   }
@@ -177,11 +179,13 @@ export class HistoryService {
    * @return {HistoryEntryDto} the built HistoryEntryDto
    */
   async toHistoryEntryDto(entry: HistoryEntry): Promise<HistoryEntryDto> {
+    const note = await entry.note;
+    const revision = await this.revisionsService.getLatestRevision(note);
     return {
       identifier: await getIdentifier(entry),
       lastVisitedAt: entry.updatedAt,
-      tags: await this.notesService.toTagList(await entry.note),
-      title: (await entry.note).title ?? '',
+      tags: (await revision.tags).map((tag) => tag.name),
+      title: revision.title ?? '',
       pinStatus: entry.pinStatus,
     };
   }
