@@ -11,6 +11,9 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
   respondToMatchingRequest<RevisionDetails>(HttpMethod.GET, req, res, {
     id: 1,
     createdAt: '2021-12-29T17:54:11.000Z',
+    title: 'Features',
+    description: 'Many more features, such wow!',
+    tags: ['hedgedoc', 'demo', 'react'],
     patch: `Index:
 ===================================================================
 ---

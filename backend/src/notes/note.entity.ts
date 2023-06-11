@@ -7,8 +7,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -21,7 +19,6 @@ import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Revision } from '../revisions/revision.entity';
 import { User } from '../users/user.entity';
 import { Alias } from './alias.entity';
-import { Tag } from './tag.entity';
 import { generatePublicId } from './utils';
 
 @Entity()
@@ -75,22 +72,6 @@ export class Note {
   mediaUploads: Promise<MediaUpload[]>;
 
   @Column({
-    nullable: true,
-    type: 'text',
-  })
-  description: string | null;
-
-  @Column({
-    nullable: true,
-    type: 'text',
-  })
-  title: string | null;
-
-  @ManyToMany((_) => Tag, (tag) => tag.notes, { eager: true, cascade: true })
-  @JoinTable()
-  tags: Promise<Tag[]>;
-
-  @Column({
     default: 2,
   })
   version: number;
@@ -122,9 +103,6 @@ export class Note {
     newNote.revisions = Promise.resolve([]);
     newNote.historyEntries = Promise.resolve([]);
     newNote.mediaUploads = Promise.resolve([]);
-    newNote.description = null;
-    newNote.title = null;
-    newNote.tags = Promise.resolve([]);
     newNote.version = 2;
     return newNote;
   }
