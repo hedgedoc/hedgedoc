@@ -14,14 +14,20 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
       createdAt: '2021-12-29T17:54:11.000Z',
       length: 2788,
       authorUsernames: [],
-      anonymousAuthorCount: 4
+      anonymousAuthorCount: 4,
+      title: 'Features',
+      description: 'Many features, such wow!',
+      tags: ['hedgedoc', 'demo', 'react']
     },
     {
       id: 0,
       createdAt: '2021-12-21T16:59:42.000Z',
       length: 2782,
       authorUsernames: [],
-      anonymousAuthorCount: 2
+      anonymousAuthorCount: 2,
+      title: 'Features',
+      description: 'Many more features, such wow!',
+      tags: ['hedgedoc', 'demo', 'react']
     }
   ])
 }

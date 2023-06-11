@@ -17,4 +17,7 @@ export interface RevisionMetadata {
   length: number
   authorUsernames: string[]
   anonymousAuthorCount: number
+  title: string
+  tags: string[]
+  description: string
 }

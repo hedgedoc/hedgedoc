@@ -5,7 +5,7 @@
  */
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-import { Note } from './note.entity';
+import { Revision } from '../revisions/revision.entity';
 
 @Entity()
 export class Tag {
@@ -17,6 +17,6 @@ export class Tag {
   })
   name: string;
 
-  @ManyToMany((_) => Note, (note) => note.tags)
-  notes: Promise<Note[]>;
+  @ManyToMany((_) => Revision, (revision) => revision.tags)
+  revisions: Promise<Revision[]>;
 }
