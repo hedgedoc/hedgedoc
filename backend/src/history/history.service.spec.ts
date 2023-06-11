@@ -30,6 +30,8 @@ import { NoteGroupPermission } from '../permissions/note-group-permission.entity
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
+import { RevisionsModule } from '../revisions/revisions.module';
+import { RevisionsService } from '../revisions/revisions.service';
 import { Session } from '../users/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
@@ -40,6 +42,7 @@ import { HistoryService } from './history.service';
 
 describe('HistoryService', () => {
   let service: HistoryService;
+  let revisionsService: RevisionsService;
   let historyRepo: Repository<HistoryEntry>;
   let noteRepo: Repository<Note>;
   let mockedTransaction: jest.Mock<
@@ -94,6 +97,7 @@ describe('HistoryService', () => {
         LoggerModule,
         UsersModule,
         NotesModule,
+        RevisionsModule,
         ConfigModule.forRoot({
           isGlobal: true,
           load: [
@@ -135,6 +139,7 @@ describe('HistoryService', () => {
       .compile();
 
     service = module.get<HistoryService>(HistoryService);
+    revisionsService = module.get<RevisionsService>(RevisionsService);
     historyRepo = module.get<Repository<HistoryEntry>>(
       getRepositoryToken(HistoryEntry),
     );
@@ -419,8 +424,17 @@ describe('HistoryService', () => {
         const title = 'title';
         const tags = ['tag1', 'tag2'];
         const note = Note.create(user, alias) as Note;
-        note.title = title;
-        note.tags = Promise.resolve(
+        const revision = Revision.create(
+          '',
+          '',
+          note,
+          null,
+          '',
+          '',
+          [],
+        ) as Revision;
+        revision.title = title;
+        revision.tags = Promise.resolve(
           tags.map((tag) => {
             const newTag = new Tag();
             newTag.name = tag;
@@ -431,6 +445,13 @@ describe('HistoryService', () => {
         historyEntry.pinStatus = true;
 
         mockSelectQueryBuilderInRepo(noteRepo, note);
+        jest
+          .spyOn(revisionsService, 'getLatestRevision')
+          .mockImplementation((requestedNote) => {
+            expect(note).toBe(requestedNote);
+            return Promise.resolve(revision);
+          });
+
         const historyEntryDto = await service.toHistoryEntryDto(historyEntry);
         expect(historyEntryDto.pinStatus).toEqual(true);
         expect(historyEntryDto.identifier).toEqual(alias);
