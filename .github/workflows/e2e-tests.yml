@@ -56,7 +56,8 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mariadb:
-        image: mariadb
+        # renovate: datasource=docker depName=mariadb
+        image: mariadb:10.11.4
         env:
           MYSQL_USER: hedgedoc
           MYSQL_PASSWORD: hedgedoc
