@@ -175,7 +175,7 @@ export class RevisionsService {
       return entity;
     });
 
-    const revision = Revision.create(
+    return Revision.create(
       newContent,
       patch,
       note,
@@ -184,6 +184,5 @@ export class RevisionsService {
       description,
       tagEntities,
     ) as Revision;
-    return await this.revisionRepository.save(revision);
   }
 }
