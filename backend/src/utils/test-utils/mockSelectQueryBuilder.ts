@@ -13,18 +13,48 @@ import { ObjectLiteral, Repository, SelectQueryBuilder } from 'typeorm';
  * @return The mocked query builder
  */
 export function mockSelectQueryBuilder<T extends ObjectLiteral>(
-  returnValue: T | null,
+  returnValue: T | T[] | null,
 ): SelectQueryBuilder<T> {
   const mockedQueryBuilder: SelectQueryBuilder<T> = Mock.of<
     SelectQueryBuilder<T>
   >({
-    where: () => mockedQueryBuilder,
-    andWhere: () => mockedQueryBuilder,
+    where: (where) => {
+      if (typeof where === 'function') {
+        where(mockedQueryBuilder);
+      }
+      return mockedQueryBuilder;
+    },
+    andWhere: (where) => {
+      if (typeof where === 'function') {
+        where(mockedQueryBuilder);
+      }
+      return mockedQueryBuilder;
+    },
+    subQuery: () => mockedQueryBuilder,
+    select: () => mockedQueryBuilder,
+    from: <M extends ObjectLiteral>() => mockSelectQueryBuilder<M>(null),
+    innerJoin: () => mockedQueryBuilder,
     leftJoinAndSelect: () => mockedQueryBuilder,
-    getOne: () => Promise.resolve(returnValue),
-    orWhere: () => mockedQueryBuilder,
+    getQuery: () => '',
+    getOne: () =>
+      Promise.resolve(
+        Array.isArray(returnValue) ? returnValue[0] : returnValue,
+      ),
+    orWhere: (where) => {
+      if (typeof where === 'function') {
+        where(mockedQueryBuilder);
+      }
+      return mockedQueryBuilder;
+    },
     setParameter: () => mockedQueryBuilder,
-    getMany: () => Promise.resolve(returnValue ? [returnValue] : []),
+    getMany: () => {
+      if (!returnValue) {
+        return Promise.resolve([]);
+      }
+      return Promise.resolve(
+        Array.isArray(returnValue) ? returnValue : [returnValue],
+      );
+    },
   });
   return mockedQueryBuilder;
 }
@@ -39,9 +69,9 @@ export function mockSelectQueryBuilder<T extends ObjectLiteral>(
  */
 export function mockSelectQueryBuilderInRepo<T extends ObjectLiteral>(
   repository: Repository<T>,
-  returnValue: T | null,
+  returnValue: T | T[] | null,
 ): SelectQueryBuilder<T> {
-  const selectQueryBuilder = mockSelectQueryBuilder(returnValue);
+  const selectQueryBuilder = mockSelectQueryBuilder<T>(returnValue);
   jest
     .spyOn(repository, 'createQueryBuilder')
     .mockImplementation(() => selectQueryBuilder);
