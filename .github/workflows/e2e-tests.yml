@@ -89,7 +89,8 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres
+        # renovate: datasource=docker depName=postgres
+        image: postgres:15.3
         env:
           POSTGRES_PASSWORD: hedgedoc
           POSTGRES_USER: hedgedoc
