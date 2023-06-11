@@ -9,6 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { LoggerModule } from '../logger/logger.module';
 import { NotesModule } from '../notes/notes.module';
+import { RevisionsModule } from '../revisions/revisions.module';
 import { UsersModule } from '../users/users.module';
 import { HistoryEntry } from './history-entry.entity';
 import { HistoryService } from './history.service';
@@ -22,6 +23,7 @@ import { HistoryService } from './history.service';
     UsersModule,
     NotesModule,
     ConfigModule,
+    RevisionsModule,
   ],
 })
 export class HistoryModule {}
