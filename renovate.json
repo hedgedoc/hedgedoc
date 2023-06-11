@@ -87,6 +87,17 @@
   "regexManagers": [
     {
       "fileMatch": [
+        "\\.yml$",
+        "\\.yaml$"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s+\\S+:\\s+\"?(?<currentValue>[^\"]*?)\"?\\s"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "fileMatch": [
         ".github/workflows/frontend-netlify-deploy-main.yml$",
         ".github/workflows/frontend-netlify-deploy-pr.yml$"
       ],
