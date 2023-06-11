@@ -11,10 +11,12 @@ import { Repository } from 'typeorm';
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Note } from '../notes/note.entity';
+import { Tag } from '../notes/tag.entity';
 import { EditService } from './edit.service';
 import { RevisionMetadataDto } from './revision-metadata.dto';
 import { RevisionDto } from './revision.dto';
 import { Revision } from './revision.entity';
+import { extractRevisionMetadataFromContent } from './utils/extract-revision-metadata-from-content';
 
 class RevisionUserInfo {
   usernames: string[];
@@ -121,6 +123,9 @@ export class RevisionsService {
       createdAt: revision.createdAt,
       authorUsernames: revisionUserInfo.usernames,
       anonymousAuthorCount: revisionUserInfo.anonymousUserCount,
+      title: revision.title,
+      description: revision.description,
+      tags: (await revision.tags).map((tag) => tag.name),
     };
   }
 
@@ -131,6 +136,9 @@ export class RevisionsService {
       content: revision.content,
       length: revision.length,
       createdAt: revision.createdAt,
+      title: revision.title,
+      tags: (await revision.tags).map((tag) => tag.name),
+      description: revision.description,
       authorUsernames: revisionUserInfo.usernames,
       anonymousAuthorCount: revisionUserInfo.anonymousUserCount,
       patch: revision.patch,
@@ -147,18 +155,35 @@ export class RevisionsService {
     newContent: string,
     yjsStateVector?: number[],
   ): Promise<Revision | undefined> {
-    // TODO: Save metadata
-    const latestRevision = await this.getLatestRevision(note);
-    const oldContent = latestRevision.content;
+    const latestRevision =
+      note.id === undefined ? undefined : await this.getLatestRevision(note);
+    const oldContent = latestRevision?.content;
     if (oldContent === newContent) {
       return undefined;
     }
     const patch = createPatch(
       note.publicId,
-      latestRevision.content,
+      latestRevision?.content ?? '',
       newContent,
     );
-    const revision = Revision.create(newContent, patch, note, yjsStateVector);
+    const { title, description, tags } =
+      extractRevisionMetadataFromContent(newContent);
+
+    const tagEntities = tags.map((tagName) => {
+      const entity = new Tag();
+      entity.name = tagName;
+      return entity;
+    });
+
+    const revision = Revision.create(
+      newContent,
+      patch,
+      note,
+      yjsStateVector ?? null,
+      title,
+      description,
+      tagEntities,
+    ) as Revision;
     return await this.revisionRepository.save(revision);
   }
 }
