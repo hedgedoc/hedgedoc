@@ -77,6 +77,10 @@ dataSource
         'This is a test note',
         'This is a test note',
         notes[i],
+        null,
+        'Test note',
+        '',
+        [],
       ) as Revision;
       const edit = Edit.create(author, 1, 42) as Edit;
       revision.edits = Promise.resolve([edit]);
