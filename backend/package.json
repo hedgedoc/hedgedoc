@@ -28,7 +28,7 @@
     "@hedgedoc/commons": "workspace:commons",
     "@mrdrogdrog/optional": "1.1.0",
     "@nestjs/common": "9.4.3",
-    "@nestjs/config": "2.3.3",
+    "@nestjs/config": "2.3.4",
     "@nestjs/core": "9.4.3",
     "@nestjs/event-emitter": "1.4.2",
     "@nestjs/passport": "9.0.3",
