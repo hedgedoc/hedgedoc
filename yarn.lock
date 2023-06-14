@@ -2278,7 +2278,7 @@ __metadata:
     "@mrdrogdrog/optional": 1.1.0
     "@nestjs/cli": 9.5.0
     "@nestjs/common": 9.4.3
-    "@nestjs/config": 2.3.3
+    "@nestjs/config": 2.3.4
     "@nestjs/core": 9.4.3
     "@nestjs/event-emitter": 1.4.2
     "@nestjs/passport": 9.0.3
@@ -3175,9 +3175,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/config@npm:2.3.3":
-  version: 2.3.3
-  resolution: "@nestjs/config@npm:2.3.3"
+"@nestjs/config@npm:2.3.4":
+  version: 2.3.4
+  resolution: "@nestjs/config@npm:2.3.4"
   dependencies:
     dotenv: 16.1.4
     dotenv-expand: 10.0.0
@@ -3187,7 +3187,7 @@ __metadata:
     "@nestjs/common": ^7.0.0 || ^8.0.0 || ^9.0.0
     reflect-metadata: ^0.1.13
     rxjs: ^6.0.0 || ^7.2.0
-  checksum: bf5f06910827d07f1e2db6ce054dae2176f940f4a72d49543721009513c687190e3777dd1286dbcb0567ab0b7b6a2c8f5fe41eace8212f143c399b7244fda6be
+  checksum: 3b0c3d90e99788a224d65b8c5eb26809c85c54ac9f5d9e71f623de51a2cc84290c5c2e4b0beb98c68d42caf595571b12c5aabdfee72587b1e2e2fd77cf8952f4
   languageName: node
   linkType: hard
 
