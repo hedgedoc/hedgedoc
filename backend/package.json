@@ -74,7 +74,7 @@
     "sqlite3": "5.1.6",
     "typeorm": "0.3.16",
     "ws": "8.13.0",
-    "yjs": "13.6.2"
+    "yjs": "13.6.4"
   },
   "devDependencies": {
     "@nestjs/cli": "9.5.0",
