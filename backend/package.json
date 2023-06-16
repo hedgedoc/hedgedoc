@@ -60,7 +60,6 @@
     "ldapauth-fork": "5.0.5",
     "minio": "7.1.1",
     "mysql": "2.18.1",
-    "nest-router": "1.0.9",
     "node-fetch": "2.6.11",
     "passport": "0.6.0",
     "passport-custom": "1.1.1",

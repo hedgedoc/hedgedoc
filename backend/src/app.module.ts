@@ -5,10 +5,10 @@
  */
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { RouterModule, Routes } from '@nestjs/core';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RouterModule, Routes } from 'nest-router';
 
 import { PrivateApiModule } from './api/private/private-api.module';
 import { PublicApiModule } from './api/public/public-api.module';
@@ -53,7 +53,7 @@ const routes: Routes = [
 
 @Module({
   imports: [
-    RouterModule.forRoutes(routes),
+    RouterModule.register(routes),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule, LoggerModule],
       inject: [databaseConfig.KEY, TypeormLoggerService],
