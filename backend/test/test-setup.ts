@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { RouterModule, Routes } from '@nestjs/core';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { RouterModule, Routes } from 'nest-router';
 import { Connection, createConnection } from 'typeorm';
 
 import { PrivateApiModule } from '../src/api/private/private-api.module';
@@ -240,7 +240,7 @@ export class TestSetupBuilder {
       'https://md-' + testSetupBuilder.testId + '.example.com';
     testSetupBuilder.testingModuleBuilder = Test.createTestingModule({
       imports: [
-        RouterModule.forRoutes(routes),
+        RouterModule.register(routes),
         TypeOrmModule.forRoot(
           TestSetupBuilder.getTestDBConf(testSetupBuilder.testId),
         ),

@@ -2339,7 +2339,6 @@ __metadata:
     minio: 7.1.1
     mocked-env: 1.3.5
     mysql: 2.18.1
-    nest-router: 1.0.9
     node-fetch: 2.6.11
     passport: 0.6.0
     passport-custom: 1.1.1
@@ -13972,13 +13971,6 @@ __metadata:
   version: 2.6.2
   resolution: "neo-async@npm:2.6.2"
   checksum: deac9f8d00eda7b2e5cd1b2549e26e10a0faa70adaa6fdadca701cc55f49ee9018e427f424bac0c790b7c7e2d3068db97f3093f1093975f2acb8f8818b936ed9
-  languageName: node
-  linkType: hard
-
-"nest-router@npm:1.0.9":
-  version: 1.0.9
-  resolution: "nest-router@npm:1.0.9"
-  checksum: 431d0b9e344f842f0eb759b07ab461d0f06e9733a806fdeb070004f041657d7e1e9ce270a32129a7b6ac2eda6f118fde3bea0b2e7211edb4d3aa67e02d0508e4
   languageName: node
   linkType: hard
 
