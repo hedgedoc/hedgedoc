@@ -11,7 +11,11 @@ import crypto from 'crypto';
 import { Repository } from 'typeorm';
 
 import appConfigMock from '../config/mock/app.config.mock';
-import { NotInDBError, TokenNotValidError } from '../errors/errors';
+import {
+  NotInDBError,
+  TokenNotValidError,
+  TooManyTokensError,
+} from '../errors/errors';
 import { Identity } from '../identity/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
 import { Session } from '../users/session.entity';
@@ -108,6 +112,14 @@ describe('AuthService', () => {
       const tokens = await service.getTokensByUser(user);
       expect(tokens).toHaveLength(1);
       expect(tokens).toEqual([authToken]);
+    });
+    it('should return empty array if token for user do not exists', async () => {
+      jest
+        .spyOn(authTokenRepo, 'find')
+        .mockImplementationOnce(async () => null);
+      const tokens = await service.getTokensByUser(user);
+      expect(tokens).toHaveLength(0);
+      expect(tokens).toEqual([]);
     });
   });
 
@@ -303,18 +315,70 @@ describe('AuthService', () => {
         expect(token.lastUsedAt).toBeNull();
         expect(token.secret.startsWith(token.keyId)).toBeTruthy();
       });
+      it('should throw TooManyTokensError when number of tokens >= 200', async () => {
+        jest
+          .spyOn(authTokenRepo, 'find')
+          .mockImplementationOnce(async (): Promise<AuthToken[]> => {
+            const inValidToken = [authToken];
+            inValidToken.length = 201;
+            return inValidToken;
+          });
+        const validUntil = new Date().getTime() + 30000;
+        await expect(
+          service.addToken(user, identifier, validUntil),
+        ).rejects.toThrow(TooManyTokensError);
+      });
+    });
+  });
+
+  describe('removeInvalidTokens', () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('works', async () => {
+      const expiredDate = new Date().getTime() - 30000;
+      const expiredToken = { ...authToken, validUntil: new Date(expiredDate) };
+      jest
+        .spyOn(authTokenRepo, 'find')
+        .mockResolvedValueOnce([expiredToken, authToken]);
+      jest
+        .spyOn(authTokenRepo, 'remove')
+        .mockImplementationOnce(async (token): Promise<AuthToken> => {
+          expect(token).toEqual(expiredToken);
+          expect(token).not.toBe(authToken);
+          return authToken;
+        });
+
+      await service.removeInvalidTokens();
+    });
+  });
+
+  describe('auto remove invalid tokens', () => {
+    beforeEach(() => {
+      jest.spyOn(service, 'removeInvalidTokens');
+    });
+
+    it('handleCron should call removeInvalidTokens', async () => {
+      await service.handleCron();
+      expect(service.removeInvalidTokens).toHaveBeenCalledTimes(1);
+    });
+
+    it('handleTimeout should call removeInvalidTokens', async () => {
+      await service.handleTimeout();
+      expect(service.removeInvalidTokens).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('toAuthTokenDto', () => {
+    const authToken = new AuthToken();
+    authToken.keyId = 'testKeyId';
+    authToken.label = 'testLabel';
+    const date = new Date();
+    date.setHours(date.getHours() - 1);
+    authToken.createdAt = date;
+    authToken.validUntil = new Date();
     it('works', () => {
-      const authToken = new AuthToken();
-      authToken.keyId = 'testKeyId';
-      authToken.label = 'testLabel';
-      const date = new Date();
-      date.setHours(date.getHours() - 1);
-      authToken.createdAt = date;
-      authToken.validUntil = new Date();
       const tokenDto = service.toAuthTokenDto(authToken);
       expect(tokenDto.keyId).toEqual(authToken.keyId);
       expect(tokenDto.lastUsedAt).toBeNull();
@@ -325,6 +389,11 @@ describe('AuthService', () => {
       expect(tokenDto.createdAt.getTime()).toEqual(
         authToken.createdAt.getTime(),
       );
+    });
+    it('should have lastUsedAt', () => {
+      authToken.lastUsedAt = new Date();
+      const tokenDto = service.toAuthTokenDto(authToken);
+      expect(tokenDto.lastUsedAt).toEqual(authToken.lastUsedAt);
     });
   });
 });
