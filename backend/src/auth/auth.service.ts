@@ -16,7 +16,6 @@ import {
 } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { User } from '../users/user.entity';
-import { UsersService } from '../users/users.service';
 import { bufferToBase64Url } from '../utils/password';
 import { TimestampMillis } from '../utils/timestamp';
 import { AuthTokenDto, AuthTokenWithSecretDto } from './auth-token.dto';
@@ -26,7 +25,6 @@ import { AuthToken } from './auth-token.entity';
 export class AuthService {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    private usersService: UsersService,
     @InjectRepository(AuthToken)
     private authTokenRepository: Repository<AuthToken>,
   ) {
