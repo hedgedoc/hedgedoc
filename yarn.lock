@@ -2359,7 +2359,7 @@ __metadata:
     ts-mockery: 1.2.0
     ts-node: 10.9.1
     tsconfig-paths: 4.2.0
-    typeorm: 0.3.16
+    typeorm: 0.3.17
     typescript: 5.1.3
     ws: 8.13.0
     yjs: 13.6.4
@@ -18407,9 +18407,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typeorm@npm:0.3.16":
-  version: 0.3.16
-  resolution: "typeorm@npm:0.3.16"
+"typeorm@npm:0.3.17":
+  version: 0.3.17
+  resolution: "typeorm@npm:0.3.17"
   dependencies:
     "@sqltools/formatter": ^1.2.5
     app-root-path: ^3.1.0
@@ -18483,7 +18483,7 @@ __metadata:
     typeorm: cli.js
     typeorm-ts-node-commonjs: cli-ts-node-commonjs.js
     typeorm-ts-node-esm: cli-ts-node-esm.js
-  checksum: d889f6b4392367c38d9748fabaab1a75d21d78e7aa62088d53847958f2308b672acf8ab3e0bcf26c880fa52fac54be9a78ca43c99f19c4fe604fab458dc04c17
+  checksum: 71fcb2b2e889c759b24add6c6ab7938c9a52f7c206b055f3a2abd77725acfec125b8f303e263381258ee03e52f7d3eb88c1fb893b15750b5237c8fc9db31ed78
   languageName: node
   linkType: hard
 
