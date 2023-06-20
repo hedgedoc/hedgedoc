@@ -2372,6 +2372,7 @@ __metadata:
   dependencies:
     "@jest/types": 29.5.0
     "@mrdrogdrog/optional": 1.1.0
+    "@types/js-yaml": 4.0.5
     "@types/ws": 8.5.5
     "@typescript-eslint/eslint-plugin": 5.60.0
     "@typescript-eslint/parser": 5.60.0
@@ -2383,6 +2384,7 @@ __metadata:
     eventemitter2: 6.4.9
     jest: 29.5.0
     joi: 17.9.2
+    js-yaml: 4.1.0
     microbundle: 0.15.1
     prettier: 2.8.8
     reveal.js: 4.5.0
@@ -2431,7 +2433,6 @@ __metadata:
     "@types/diff": 5.0.3
     "@types/dompurify": 3.0.2
     "@types/jest": 29.5.2
-    "@types/js-yaml": 4.0.5
     "@types/katex": 0.16.0
     "@types/luxon": 3.3.0
     "@types/markdown-it": 12.2.3
@@ -2485,7 +2486,6 @@ __metadata:
     i18next-resources-to-backend: 1.1.4
     jest: 29.5.0
     jest-environment-jsdom: 29.5.0
-    js-yaml: 4.1.0
     katex: 0.16.7
     luxon: 3.3.0
     markdown-it: 13.0.1
