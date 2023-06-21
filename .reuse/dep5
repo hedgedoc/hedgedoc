@@ -55,10 +55,6 @@ Files: docs/content/images/hedgedoc_logo_*.svg
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: LicenseRef-HedgeDoc-Icon-Usage-Guidelines
 
-Files: docs/content/legal/developer-certificate-of-origin.txt
-Copyright: 2004, 2006 The Linux Foundation and its contributors.
-License: LicenseRef-DCO
-
 Files: docs/content/theme/styles/Roboto/*
 Copyright: 2011 Christian Robertson
 License: Apache-2.0
