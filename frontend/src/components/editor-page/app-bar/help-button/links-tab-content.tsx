@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import links from '../../../../links.json'
+import { IconMatrixOrg } from '../../../common/icons/additional/icon-matrix-org'
 import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
 import { TranslatedInternalLink } from '../../../common/links/translated-internal-link'
 import React from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { Dot as IconDot } from 'react-bootstrap-icons'
 import { Flag as IconFlag } from 'react-bootstrap-icons'
-import { Hash as IconHash } from 'react-bootstrap-icons'
 import { PeopleFill as IconPeopleFill } from 'react-bootstrap-icons'
 import { Tag as IconTag } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
@@ -42,7 +42,7 @@ export const LinksTabContent: React.FC = () => {
                 i18nKey='editor.help.contacts.meetUsOn'
                 i18nOption={{ service: 'Matrix' }}
                 href={links.chat}
-                icon={IconHash}
+                icon={IconMatrixOrg}
                 className='text-primary'
               />
             </li>

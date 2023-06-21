@@ -6,12 +6,12 @@
 import type { AuthProvider } from '../../../../api/config/types'
 import { AuthProviderType } from '../../../../api/config/types'
 import { Logger } from '../../../../utils/logger'
+import { IconGitlab } from '../../../common/icons/additional/icon-gitlab'
 import styles from '../via-one-click.module.scss'
 import type { Icon } from 'react-bootstrap-icons'
 import { Dropbox as IconDropbox } from 'react-bootstrap-icons'
 import { Exclamation as IconExclamation } from 'react-bootstrap-icons'
 import { Facebook as IconFacebook } from 'react-bootstrap-icons'
-import { Git as IconGit } from 'react-bootstrap-icons'
 import { Github as IconGithub } from 'react-bootstrap-icons'
 import { Google as IconGoogle } from 'react-bootstrap-icons'
 import { People as IconPeople } from 'react-bootstrap-icons'
@@ -63,7 +63,7 @@ export const getOneClickProviderMetadata = (provider: AuthProvider): OneClickMet
     case AuthProviderType.GITLAB:
       return {
         name: provider.providerName,
-        icon: IconGit, //TODO: gitlab icon
+        icon: IconGitlab,
         className: styles['btn-social-gitlab'],
         url: getBackendAuthUrl(provider.identifier)
       }
