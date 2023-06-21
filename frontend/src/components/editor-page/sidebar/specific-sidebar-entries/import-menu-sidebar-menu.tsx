@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { cypressId } from '../../../../utils/cypress-attribute'
+import { IconGitlab } from '../../../common/icons/additional/icon-gitlab'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
 import { SidebarMenu } from '../sidebar-menu/sidebar-menu'
 import type { SpecificSidebarMenuProps } from '../types'
@@ -13,7 +14,6 @@ import React, { Fragment, useCallback } from 'react'
 import { ArrowLeft as IconArrowLeft } from 'react-bootstrap-icons'
 import { Clipboard as IconClipboard } from 'react-bootstrap-icons'
 import { CloudUpload as IconCloudUpload } from 'react-bootstrap-icons'
-import { Git as IconGit } from 'react-bootstrap-icons'
 import { Github as IconGithub } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
@@ -51,7 +51,7 @@ export const ImportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
       </SidebarButton>
       <SidebarMenu expand={expand}>
         <SidebarButton icon={IconGithub}>Gist</SidebarButton>
-        <SidebarButton icon={IconGit}>Gitlab Snippet</SidebarButton>
+        <SidebarButton icon={IconGitlab}>Gitlab Snippet</SidebarButton>
         <SidebarButton icon={IconClipboard}>
           <Trans i18nKey={'editor.import.clipboard'} />
         </SidebarButton>
