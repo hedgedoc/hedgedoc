@@ -150,6 +150,17 @@ export class RevisionsService {
     };
   }
 
+  /**
+   * Creates (but does not persist(!)) a new {@link Revision} for the given {@link Note}.
+   * Useful if the revision is saved together with the note in one action.
+   *
+   * @async
+   * @param note The note for which the revision should be created
+   * @param newContent The new note content
+   * @param yjsStateVector The yjs state vector that describes the new content
+   * @return {Revision} the created revision
+   * @return {undefined} if the revision couldn't be created because e.g. the content hasn't changed
+   */
   async createRevision(
     note: Note,
     newContent: string,
@@ -184,5 +195,28 @@ export class RevisionsService {
       description,
       tagEntities,
     ) as Revision;
+  }
+
+  /**
+   * Creates and saves a new {@link Revision} for the given {@link Note}.
+   *
+   * @async
+   * @param note The note for which the revision should be created
+   * @param newContent The new note content
+   * @param yjsStateVector The yjs state vector that describes the new content
+   */
+  async createAndSaveRevision(
+    note: Note,
+    newContent: string,
+    yjsStateVector?: number[],
+  ): Promise<void> {
+    const revision = await this.createRevision(
+      note,
+      newContent,
+      yjsStateVector,
+    );
+    if (revision) {
+      await this.revisionRepository.save(revision);
+    }
   }
 }

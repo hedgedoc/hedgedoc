@@ -364,4 +364,50 @@ describe('RevisionsService', () => {
       expect(saveSpy).not.toHaveBeenCalled();
     });
   });
+
+  describe('createAndSaveRevision', () => {
+    it('creates and saves a new revision', async () => {
+      const newRevision = Mock.of<Revision>();
+      const createRevisionSpy = jest
+        .spyOn(service, 'createRevision')
+        .mockResolvedValue(newRevision);
+      const repoSaveSpy = jest
+        .spyOn(revisionRepo, 'save')
+        .mockResolvedValue(newRevision);
+
+      const note = Mock.of<Note>({});
+      const newContent = 'MockContent';
+
+      const yjsState = [0, 1, 2, 3, 4, 5];
+
+      await service.createAndSaveRevision(note, newContent, yjsState);
+      expect(createRevisionSpy).toHaveBeenCalledWith(
+        note,
+        newContent,
+        yjsState,
+      );
+      expect(repoSaveSpy).toHaveBeenCalledWith(newRevision);
+    });
+
+    it("doesn't save if no revision has been created", async () => {
+      const createRevisionSpy = jest
+        .spyOn(service, 'createRevision')
+        .mockResolvedValue(undefined);
+      const repoSaveSpy = jest
+        .spyOn(revisionRepo, 'save')
+        .mockRejectedValue(new Error("shouldn't have been called"));
+
+      const note = Mock.of<Note>({});
+      const newContent = 'MockContent';
+      const yjsState = [0, 1, 2, 3, 4, 5];
+
+      await service.createAndSaveRevision(note, newContent, yjsState);
+      expect(createRevisionSpy).toHaveBeenCalledWith(
+        note,
+        newContent,
+        yjsState,
+      );
+      expect(repoSaveSpy).not.toHaveBeenCalled();
+    });
+  });
 });

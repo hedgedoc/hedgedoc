@@ -44,7 +44,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
    */
   public saveRealtimeNote(realtimeNote: RealtimeNote): void {
     this.revisionsService
-      .createRevision(
+      .createAndSaveRevision(
         realtimeNote.getNote(),
         realtimeNote.getRealtimeDoc().getCurrentContent(),
         realtimeNote.getRealtimeDoc().encodeStateAsUpdate(),

@@ -78,7 +78,7 @@ describe('RealtimeNoteService', () => {
 
     revisionsService = Mock.of<RevisionsService>({
       getLatestRevision: jest.fn(),
-      createRevision: jest.fn(),
+      createAndSaveRevision: jest.fn(),
     });
 
     consoleLoggerService = Mock.of<ConsoleLoggerService>({
@@ -294,8 +294,8 @@ describe('RealtimeNoteService', () => {
     await realtimeNoteService.getOrCreateRealtimeNote(note);
 
     const createRevisionSpy = jest
-      .spyOn(revisionsService, 'createRevision')
-      .mockImplementation(() => Promise.resolve(Mock.of<Revision>()));
+      .spyOn(revisionsService, 'createAndSaveRevision')
+      .mockResolvedValue();
 
     realtimeNote.emit('beforeDestroy');
     expect(createRevisionSpy).toHaveBeenCalledWith(
