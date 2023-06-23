@@ -2507,7 +2507,7 @@ __metadata:
     next: 13.4.7
     prettier: 2.8.8
     react: 18.2.0
-    react-bootstrap: 2.7.4
+    react-bootstrap: 2.8.0
     react-bootstrap-icons: 1.10.3
     react-bootstrap-typeahead: 6.2.3
     react-diff-viewer: 3.1.1
@@ -15842,9 +15842,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-bootstrap@npm:2.7.4":
-  version: 2.7.4
-  resolution: "react-bootstrap@npm:2.7.4"
+"react-bootstrap@npm:2.8.0":
+  version: 2.8.0
+  resolution: "react-bootstrap@npm:2.8.0"
   dependencies:
     "@babel/runtime": ^7.21.0
     "@restart/hooks": ^0.4.9
@@ -15865,7 +15865,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 37e51f60ed5b9390e2335b148e1f8ef2fae926c5bbf17e40d9e93b44b7913686fcb0b07d8292596c437d1c046f16d695badad14baca939c725f5ea7677c2fa9c
+  checksum: 589f64354ae03872a111fe3d37ad9b5dc2c69480edfd4b4f912a7d59cc15311df3f0374def08d5d6b63024b1674483daa862004e53bc5fac426d891993484ddc
   languageName: node
   linkType: hard
 
