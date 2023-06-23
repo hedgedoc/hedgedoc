@@ -154,7 +154,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
       <MaxLengthWarning />
       <ToolBar />
       <ReactCodeMirror
-        editable={updateViewContextExtension !== null && isSynced && mayEdit}
+        readOnly={updateViewContextExtension === null || !isSynced || !mayEdit}
         placeholder={placeholderText}
         extensions={extensions}
         width={'100%'}
