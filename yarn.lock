@@ -1857,17 +1857,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/lang-markdown@npm:6.1.1":
-  version: 6.1.1
-  resolution: "@codemirror/lang-markdown@npm:6.1.1"
+"@codemirror/lang-markdown@npm:6.2.0":
+  version: 6.2.0
+  resolution: "@codemirror/lang-markdown@npm:6.2.0"
   dependencies:
+    "@codemirror/autocomplete": ^6.7.1
     "@codemirror/lang-html": ^6.0.0
     "@codemirror/language": ^6.3.0
     "@codemirror/state": ^6.0.0
     "@codemirror/view": ^6.0.0
     "@lezer/common": ^1.0.0
     "@lezer/markdown": ^1.0.0
-  checksum: db891dad10a8ea8db17d0a9222774389794cb0957b784e3f154bf27ab4a9be89a28ad4c2f6abf7d829115c3ce46694a2816b61723a5d5776c1d75d566ce016c8
+  checksum: 0b2b5334abc8bb46fdaf0723fcddb9565b89c58d245ee0cced2c62c9c5de8430ad8bd73ab92d8a6bd67130173b59006bec2922e614e0277aa2b2d62f308113cf
   languageName: node
   linkType: hard
 
@@ -2019,14 +2020,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/lint@npm:6.2.2":
-  version: 6.2.2
-  resolution: "@codemirror/lint@npm:6.2.2"
+"@codemirror/lint@npm:6.3.0":
+  version: 6.3.0
+  resolution: "@codemirror/lint@npm:6.3.0"
   dependencies:
     "@codemirror/state": ^6.0.0
     "@codemirror/view": ^6.0.0
     crelt: ^1.0.5
-  checksum: f37dea6f84b5ee74e4e77c0ad244a3e0c10beb26542c5e10b2d5655f1fab3a9e580da2d772f2a6e3b09eb944ef8a52ff4e1b61cb8a02ee78e97f2ae8ae13842a
+  checksum: 4ac907c1a4b5d69e44dcf214ece17050a6175ff5fae517e41118e34b3245d963fc671e7a021bff6a3efddf8c13f688f5f88f06907b9820f91ac52a8426525716
   languageName: node
   linkType: hard
 
@@ -2060,14 +2061,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/view@npm:6.13.2":
-  version: 6.13.2
-  resolution: "@codemirror/view@npm:6.13.2"
+"@codemirror/view@npm:6.14.0":
+  version: 6.14.0
+  resolution: "@codemirror/view@npm:6.14.0"
   dependencies:
     "@codemirror/state": ^6.1.4
     style-mod: ^4.0.0
     w3c-keyname: ^2.2.4
-  checksum: db0d638fbbe2f9a832674f06512ca55cdb7576a265c01ab8a7b6715d2a50ddf53200f597637b146adebe1df51255fe5bd2d2c74cf1fa539b0434764c0550d3a5
+  checksum: f8fbb8e8cf1bc23de8cd64b1e645112d13f72cd2f1609fb9047d616908c2189ff518b89f21484371e7a37ba1804288452558e96488791f0c850f62b8e28dc163
   languageName: node
   linkType: hard
 
@@ -2408,13 +2409,13 @@ __metadata:
   dependencies:
     "@codemirror/autocomplete": 6.8.1
     "@codemirror/commands": 6.2.4
-    "@codemirror/lang-markdown": 6.1.1
+    "@codemirror/lang-markdown": 6.2.0
     "@codemirror/language": 6.8.0
     "@codemirror/language-data": 6.3.1
-    "@codemirror/lint": 6.2.2
+    "@codemirror/lint": 6.3.0
     "@codemirror/state": 6.2.1
     "@codemirror/theme-one-dark": 6.1.2
-    "@codemirror/view": 6.13.2
+    "@codemirror/view": 6.14.0
     "@fontsource/source-sans-pro": 5.0.3
     "@hedgedoc/commons": "workspace:commons"
     "@hedgedoc/html-to-react": 2.0.0
