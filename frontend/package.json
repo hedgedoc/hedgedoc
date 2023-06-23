@@ -37,7 +37,7 @@
     ]
   },
   "dependencies": {
-    "@codemirror/autocomplete": "6.8.0",
+    "@codemirror/autocomplete": "6.8.1",
     "@codemirror/commands": "6.2.4",
     "@codemirror/lang-markdown": "6.1.1",
     "@codemirror/language": "6.8.0",
@@ -56,7 +56,7 @@
     "@reduxjs/toolkit": "1.9.5",
     "@svgr/webpack": "8.0.1",
     "@types/katex": "0.16.0",
-    "@uiw/react-codemirror": "4.21.3",
+    "@uiw/react-codemirror": "4.21.4",
     "abcjs": "6.2.2",
     "bootstrap": "5.3.0",
     "copy-webpack-plugin": "11.0.0",
