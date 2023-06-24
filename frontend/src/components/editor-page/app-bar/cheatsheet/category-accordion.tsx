@@ -68,6 +68,12 @@ export const CategoryAccordion: React.FC<GroupAccordionProps> = ({ extensions, s
       </Accordion.Item>
     ))
   }, [groupEntries, onStateChange, selectedEntry])
+  const defaultActiveKey = useMemo(() => {
+    if (groupEntries.length === 0) {
+      return ''
+    }
+    return groupEntries[0][0]
+  }, [groupEntries])
 
-  return <Accordion defaultActiveKey={groupEntries[0][0]}>{elements}</Accordion>
+  return <Accordion defaultActiveKey={defaultActiveKey}>{elements}</Accordion>
 }
