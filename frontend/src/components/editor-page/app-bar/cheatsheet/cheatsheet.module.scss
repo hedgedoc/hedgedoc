@@ -1,5 +1,5 @@
-/*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+/*!
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,4 +12,28 @@
   position: sticky;
   top: 1rem;
   bottom: 1rem;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.innerBtn {
+  position: absolute;
+  font-weight: 550;
+  border: none;
+  background-color: transparent;
+  align-self: center;
+  left: calc(100% - 30px);
+  z-index: 99999;
+  border-radius: var(--bs-border-radius);
+  filter: var(--bs-btn-close-white-filter);
+}
+
+.innerBtn:hover {
+  color: var(--bs-btn-close-color);
+  text-decoration: none;
+  opacity: var(--bs-btn-close-hover-opacity);
 }

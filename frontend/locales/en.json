@@ -645,6 +645,7 @@
   },
   "cheatsheet": {
     "button": "Open Cheatsheet",
+    "search": "Search for Cheatsheets",
     "modal": {
       "popup": "Open in new tab",
       "title": "Cheatsheet",

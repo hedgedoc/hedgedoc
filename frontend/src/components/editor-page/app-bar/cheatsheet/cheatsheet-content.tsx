@@ -3,13 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { allAppExtensions } from '../../../../extensions/all-app-extensions'
 import type { CheatsheetEntry, CheatsheetExtension } from '../../cheatsheet/cheatsheet-extension'
 import { isCheatsheetGroup } from '../../cheatsheet/cheatsheet-extension'
 import { CategoryAccordion } from './category-accordion'
 import { CheatsheetEntryPane } from './cheatsheet-entry-pane'
+import { CheatsheetSearch } from './cheatsheet-search'
+import styles from './cheatsheet.module.scss'
 import { TopicSelection } from './topic-selection'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Col, ListGroup, Row } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
 
@@ -17,6 +18,7 @@ import { Trans } from 'react-i18next'
  * Renders the tab content for the cheatsheet.
  */
 export const CheatsheetContent: React.FC = () => {
+  const [visibleExtensions, setVisibleExtensions] = useState<CheatsheetExtension[]>([])
   const [selectedExtension, setSelectedExtension] = useState<CheatsheetExtension>()
   const [selectedEntry, setSelectedEntry] = useState<CheatsheetEntry>()
 
@@ -25,12 +27,15 @@ export const CheatsheetContent: React.FC = () => {
     setSelectedEntry(isCheatsheetGroup(value) ? value.entries[0] : value)
   }, [])
 
-  const extensions = useMemo(() => allAppExtensions.flatMap((extension) => extension.buildCheatsheetExtensions()), [])
-
   return (
     <Row className={`mt-2`}>
-      <Col xs={3}>
-        <CategoryAccordion extensions={extensions} selectedEntry={selectedExtension} onStateChange={changeExtension} />
+      <Col xs={3} className={styles.sidebar}>
+        <CheatsheetSearch setVisibleExtensions={setVisibleExtensions} />
+        <CategoryAccordion
+          extensions={visibleExtensions}
+          selectedEntry={selectedExtension}
+          onStateChange={changeExtension}
+        />
       </Col>
       <Col xs={9}>
         <ListGroup>
