@@ -37,7 +37,7 @@ import { NotesModule } from './notes/notes.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { WebsocketModule } from './realtime/websocket/websocket.module';
 import { RevisionsModule } from './revisions/revisions.module';
-import { SessionModule } from './session/session.module';
+import { SessionModule } from './sessions/session.module';
 import { UsersModule } from './users/users.module';
 
 const routes: Routes = [

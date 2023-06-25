@@ -8,7 +8,7 @@ import { Module } from '@nestjs/common';
 import { LoggerModule } from '../../logger/logger.module';
 import { NotesModule } from '../../notes/notes.module';
 import { PermissionsModule } from '../../permissions/permissions.module';
-import { SessionModule } from '../../session/session.module';
+import { SessionModule } from '../../sessions/session.module';
 import { UsersModule } from '../../users/users.module';
 import { RealtimeNoteModule } from '../realtime-note/realtime-note.module';
 import { WebsocketGateway } from './websocket.gateway';

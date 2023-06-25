@@ -17,9 +17,9 @@ import { DatabaseType } from '../config/database-type.enum';
 import databaseConfiguration, {
   DatabaseConfig,
 } from '../config/database.config';
-import { Session } from '../users/session.entity';
 import { HEDGEDOC_SESSION } from '../utils/session';
 import { Username } from '../utils/username';
+import { Session } from './session.entity';
 
 export interface SessionState {
   cookie: unknown;

@@ -14,8 +14,8 @@ import { Repository } from 'typeorm';
 import { AuthConfig } from '../config/auth.config';
 import { DatabaseType } from '../config/database-type.enum';
 import { DatabaseConfig } from '../config/database.config';
-import { Session } from '../users/session.entity';
 import { HEDGEDOC_SESSION } from '../utils/session';
+import { Session } from './session.entity';
 import { SessionService, SessionState } from './session.service';
 
 jest.mock('cookie');
