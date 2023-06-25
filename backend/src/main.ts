@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { LogLevel } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -12,14 +11,16 @@ import { setupApp } from './app-init';
 import { AppModule } from './app.module';
 import { AppConfig } from './config/app.config';
 import { AuthConfig } from './config/auth.config';
+import { Loglevel } from './config/loglevel.enum';
 import { MediaConfig } from './config/media.config';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 
 async function bootstrap(): Promise<void> {
   // Initialize AppModule
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    logger: ['error', 'warn', 'log'] as LogLevel[],
-    bufferLogs: true,
+    // ConsoleLoggerService only uses the loglevel, so we can give it an incomplete AppConfig to log everything
+    // This Logger instance will be replaced by a proper one with config from DI below
+    logger: new ConsoleLoggerService({ loglevel: Loglevel.TRACE } as AppConfig),
   });
 
   // Set up our custom logger
