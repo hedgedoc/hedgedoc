@@ -3,25 +3,27 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { isDevMode, isTestMode } from './test-modes'
 import { DateTime } from 'luxon'
-
-export enum LogLevel {
-  DEBUG = 'debug',
-  INFO = 'info',
-  WARN = 'warn',
-  ERROR = 'error'
-}
-
-type OutputFunction = (...data: unknown[]) => void
 
 /**
  * Simple logger that prefixes messages with a timestamp and a name.
  */
 export class Logger {
   private readonly scope: string
+  private readonly debugLoggingEnabled: boolean
 
   constructor(scope: string) {
     this.scope = scope
+    this.debugLoggingEnabled = isDevMode || isTestMode || this.isDebugLoggingEnabled()
+  }
+
+  private isDebugLoggingEnabled() {
+    try {
+      return !!window?.localStorage?.getItem('debugLogging')
+    } catch {
+      return false
+    }
   }
 
   /**
@@ -30,7 +32,9 @@ export class Logger {
    * @param data data to log
    */
   debug(...data: unknown[]): void {
-    this.log(LogLevel.DEBUG, ...data)
+    if (this.debugLoggingEnabled) {
+      this.log(console.debug, ...data)
+    }
   }
 
   /**
@@ -39,7 +43,7 @@ export class Logger {
    * @param data data to log
    */
   info(...data: unknown[]): void {
-    this.log(LogLevel.INFO, ...data)
+    this.log(console.info, ...data)
   }
 
   /**
@@ -48,7 +52,7 @@ export class Logger {
    * @param data data to log
    */
   warn(...data: unknown[]): void {
-    this.log(LogLevel.WARN, ...data)
+    this.log(console.warn, ...data)
   }
 
   /**
@@ -57,26 +61,11 @@ export class Logger {
    * @param data data to log
    */
   error(...data: unknown[]): void {
-    this.log(LogLevel.ERROR, ...data)
+    this.log(console.error, ...data)
   }
 
-  private log(loglevel: LogLevel, ...data: unknown[]) {
-    const preparedData = [...this.prefix(), ...data]
-    const logOutput = Logger.getLogOutput(loglevel)
-    logOutput(...preparedData)
-  }
-
-  private static getLogOutput(logLevel: LogLevel): OutputFunction {
-    switch (logLevel) {
-      case LogLevel.INFO:
-        return console.info
-      case LogLevel.DEBUG:
-        return console.debug
-      case LogLevel.ERROR:
-        return console.error
-      case LogLevel.WARN:
-        return console.warn
-    }
+  private log(logSink: (...data: unknown[]) => void, ...data: unknown[]) {
+    logSink(...this.prefix(), ...data)
   }
 
   private prefix(): string[] {
