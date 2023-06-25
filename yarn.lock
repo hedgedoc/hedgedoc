@@ -2364,7 +2364,7 @@ __metadata:
     typeorm: 0.3.17
     typescript: 5.1.3
     ws: 8.13.0
-    yjs: 13.6.5
+    yjs: 13.6.6
   languageName: unknown
   linkType: soft
 
@@ -2393,7 +2393,7 @@ __metadata:
     ts-jest: 29.1.0
     typescript: 5.1.3
     ws: 8.13.0
-    yjs: 13.6.5
+    yjs: 13.6.6
   languageName: unknown
   linkType: soft
 
@@ -2534,7 +2534,7 @@ __metadata:
     vega-lite: 5.11.0
     words-count: 2.0.2
     ws: 8.13.0
-    yjs: 13.6.5
+    yjs: 13.6.6
   languageName: unknown
   linkType: soft
 
@@ -19812,21 +19812,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yjs@npm:13.6.5":
-  version: 13.6.5
-  resolution: "yjs@npm:13.6.5"
+"yjs@npm:13.6.6":
+  version: 13.6.6
+  resolution: "yjs@npm:13.6.6"
   dependencies:
     lib0: ^0.2.74
-  checksum: d48fe5b4d1193a2ef297d6602a55a307bfefa1f7d5a03c7ef44de0f48667158ff15bbda19fbee4e2c0918579f99712ef67bdbee08b2d37ecc4a6a6bc6eedf062
+  checksum: c69cb9a084aa433e813f6d0a191ebad5800a9a7098f7c6715952e4f8e5fc23270e3b8d7d747e1b0d0f1adca5f6efe01019654389eddb3977006814c4e2ff7ce6
   languageName: node
   linkType: hard
 
-"yjs@patch:yjs@npm%3A13.6.5#./.yarn/patches/yjs-remove-import-warning-in-test.patch::locator=hedgedoc%40workspace%3A.":
-  version: 13.6.5
-  resolution: "yjs@patch:yjs@npm%3A13.6.5#./.yarn/patches/yjs-remove-import-warning-in-test.patch::version=13.6.5&hash=e7d95b&locator=hedgedoc%40workspace%3A."
+"yjs@patch:yjs@npm%3A13.6.6#./.yarn/patches/yjs-remove-import-warning-in-test.patch::locator=hedgedoc%40workspace%3A.":
+  version: 13.6.6
+  resolution: "yjs@patch:yjs@npm%3A13.6.6#./.yarn/patches/yjs-remove-import-warning-in-test.patch::version=13.6.6&hash=e7d95b&locator=hedgedoc%40workspace%3A."
   dependencies:
     lib0: ^0.2.74
-  checksum: 359397d84ead5dae826bf0089ecff159f040c8e66349c5cd5698d156a620de7cd94c1d554ac72a10a76f78c480bec7792c1edefb3317ca8d17cb7616287192fb
+  checksum: 37386aab8a75bfee0e543bd157742203ace63b91e6f15bdf6b6ab6dec6cec6383ad2ceecba1ad874d67bb317e6818e882ffeb329df45c43a4cb483128def3747
   languageName: node
   linkType: hard
 
