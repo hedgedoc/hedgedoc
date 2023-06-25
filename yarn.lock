@@ -2162,6 +2162,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@darraghor/eslint-plugin-nestjs-typed@npm:3.22.6":
+  version: 3.22.6
+  resolution: "@darraghor/eslint-plugin-nestjs-typed@npm:3.22.6"
+  dependencies:
+    "@typescript-eslint/scope-manager": ^5.59.8
+    "@typescript-eslint/utils": ^5.59.8
+    eslint-module-utils: 2.8.0
+    reflect-metadata: 0.1.13
+  peerDependencies:
+    "@typescript-eslint/parser": ^5.0.0
+    class-validator: "*"
+    eslint: ^8.0.0
+  checksum: bb7fc9f1ae406e9b7eb7acf5fce03446c8b6ca60107f965fac88679f7b69355a0c4511579bbd91f0a6c4b6c460059497a445aa0727b9b5479291cbbc4996aa6f
+  languageName: node
+  linkType: hard
+
 "@emotion/cache@npm:^10.0.27":
   version: 10.0.29
   resolution: "@emotion/cache@npm:10.0.29"
@@ -2313,6 +2329,7 @@ __metadata:
   resolution: "@hedgedoc/backend@workspace:backend"
   dependencies:
     "@azure/storage-blob": 12.14.0
+    "@darraghor/eslint-plugin-nestjs-typed": 3.22.6
     "@hedgedoc/commons": "workspace:commons"
     "@mrdrogdrog/optional": 1.1.0
     "@nestjs/cli": 10.1.7
@@ -5332,7 +5349,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/scope-manager@npm:5.61.0":
+"@typescript-eslint/scope-manager@npm:5.61.0, @typescript-eslint/scope-manager@npm:^5.59.8":
   version: 5.61.0
   resolution: "@typescript-eslint/scope-manager@npm:5.61.0"
   dependencies:
@@ -5409,7 +5426,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:5.61.0":
+"@typescript-eslint/utils@npm:5.61.0, @typescript-eslint/utils@npm:^5.59.8":
   version: 5.61.0
   resolution: "@typescript-eslint/utils@npm:5.61.0"
   dependencies:
@@ -9275,7 +9292,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-module-utils@npm:^2.7.4":
+"eslint-module-utils@npm:2.8.0, eslint-module-utils@npm:^2.7.4":
   version: 2.8.0
   resolution: "eslint-module-utils@npm:2.8.0"
   dependencies:
