@@ -30,19 +30,15 @@ export class SingleLineRegexLinter implements Linter {
   ) {}
 
   lint(view: EditorView): Diagnostic[] {
-    return view.state.doc
-      .toString()
-      .split('\n')
-      .reduce(
-        (state, line, lineIndex, lines) => [
-          ...state,
-          {
-            line,
-            startIndex: lineIndex === 0 ? 0 : state[lineIndex - 1].startIndex + lines[lineIndex - 1].length + 1
-          } as LineWithStartIndex
-        ],
-        [] as LineWithStartIndex[]
-      )
+    const lines = view.state.doc.toString().split('\n')
+    return lines
+      .reduce((state, line, lineIndex, lines) => {
+        state[lineIndex] = {
+          line,
+          startIndex: lineIndex === 0 ? 0 : state[lineIndex - 1].startIndex + lines[lineIndex - 1].length + 1
+        } as LineWithStartIndex
+        return state
+      }, new Array<LineWithStartIndex>(lines.length))
       .map(({ line, startIndex }) => ({
         lineStartIndex: startIndex,
         regexResult: this.regex.exec(line)

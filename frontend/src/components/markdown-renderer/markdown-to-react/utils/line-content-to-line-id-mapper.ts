@@ -63,10 +63,7 @@ export class LineContentToLineIdMapper {
           LineContentToLineIdMapper.changeIsNotChangingLines(change) ||
           LineContentToLineIdMapper.changeIsAddingLines(change)
       )
-      .reduce(
-        (previousLineKeys, currentChange) => [...previousLineKeys, ...this.convertChangeToLinesWithIds(currentChange)],
-        [] as LineWithId[]
-      )
+      .flatMap((currentChange) => this.convertChangeToLinesWithIds(currentChange))
   }
 
   /**

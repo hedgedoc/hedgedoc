@@ -11,6 +11,7 @@ import { linter } from '@codemirror/lint'
 import type { Extension } from '@codemirror/state'
 import type { EditorView } from '@codemirror/view'
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 
 /**
  * The Linter interface.
@@ -32,11 +33,16 @@ const createLinterExtension = () =>
 /**
  * Creates a codemirror linter that runs all markdown extension linters.
  * Due to a bug in codemirror that breaks the "fix" buttons when switching themes, the extension is recreated if the app switches between dark and light mode.
+ * To update translations the t function is also included.
  *
  * @return The build codemirror linter extension
  */
 export const useLinter = (): Extension => {
   const darkModeActivated = useDarkModeState()
+  const { t } = useTranslation()
 
-  return useMemo(() => (darkModeActivated ? createLinterExtension() : createLinterExtension()), [darkModeActivated])
+  return useMemo(
+    () => (darkModeActivated && !!t ? createLinterExtension() : createLinterExtension()),
+    [darkModeActivated, t]
+  )
 }
