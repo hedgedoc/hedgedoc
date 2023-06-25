@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import { BaseDto } from '../utils/base.dto.';
 
@@ -14,9 +14,9 @@ export class ServerVersion {
   minor: number;
   @ApiProperty()
   patch: number;
-  @ApiProperty()
+  @ApiPropertyOptional()
   preRelease?: string;
-  @ApiProperty()
+  @ApiPropertyOptional()
   commit?: string;
   @ApiProperty()
   fullString: string;

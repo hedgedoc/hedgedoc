@@ -11,7 +11,8 @@ import { LoggerModule } from '../logger/logger.module';
 import { UsersModule } from '../users/users.module';
 import { AuthToken } from './auth-token.entity';
 import { AuthService } from './auth.service';
-import { TokenStrategy } from './token.strategy';
+import { MockAuthGuard } from './mock-auth.guard';
+import { TokenAuthGuard, TokenStrategy } from './token.strategy';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { TokenStrategy } from './token.strategy';
     LoggerModule,
     TypeOrmModule.forFeature([AuthToken]),
   ],
-  providers: [AuthService, TokenStrategy],
+  providers: [AuthService, TokenStrategy, MockAuthGuard, TokenAuthGuard],
   exports: [AuthService],
 })
 export class AuthModule {}

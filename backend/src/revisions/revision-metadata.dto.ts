@@ -15,6 +15,7 @@ export class RevisionMetadataDto extends BaseDto {
    * ID of this revision
    * @example 13
    */
+  @Type(() => Number)
   @IsNumber()
   @ApiProperty()
   id: Revision['id'];
@@ -41,7 +42,7 @@ export class RevisionMetadataDto extends BaseDto {
    * Does not include anonymous users
    */
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ isArray: true, type: String })
   authorUsernames: string[];
 
   /**
@@ -75,6 +76,6 @@ export class RevisionMetadataDto extends BaseDto {
    */
   @IsArray()
   @IsString({ each: true })
-  @ApiProperty()
+  @ApiProperty({ isArray: true, type: String })
   tags: string[];
 }

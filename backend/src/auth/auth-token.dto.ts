@@ -40,5 +40,6 @@ export class AuthTokenCreateDto extends BaseDto {
   label: string;
 
   @IsNumber()
+  @Type(() => Number)
   validUntil: TimestampMillis;
 }

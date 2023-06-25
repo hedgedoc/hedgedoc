@@ -12,8 +12,8 @@ import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { Identity } from './identity.entity';
 import { IdentityService } from './identity.service';
-import { LdapStrategy } from './ldap/ldap.strategy';
-import { LocalStrategy } from './local/local.strategy';
+import { LdapAuthGuard, LdapStrategy } from './ldap/ldap.strategy';
+import { LocalAuthGuard, LocalStrategy } from './local/local.strategy';
 
 @Module({
   imports: [
@@ -23,7 +23,13 @@ import { LocalStrategy } from './local/local.strategy';
     LoggerModule,
   ],
   controllers: [],
-  providers: [IdentityService, LocalStrategy, LdapStrategy],
+  providers: [
+    IdentityService,
+    LocalStrategy,
+    LdapStrategy,
+    LdapAuthGuard,
+    LocalAuthGuard,
+  ],
   exports: [IdentityService, LocalStrategy, LdapStrategy],
 })
 export class IdentityModule {}
