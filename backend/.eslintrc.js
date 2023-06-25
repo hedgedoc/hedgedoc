@@ -39,12 +39,13 @@ module.exports = {
       },
     },
   ],
-  plugins: ['@typescript-eslint', 'jest', 'eslint-plugin-local-rules'],
+  plugins: ['@typescript-eslint', 'jest', 'eslint-plugin-local-rules','@darraghor/nestjs-typed'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:prettier/recommended',
+    'plugin:@darraghor/nestjs-typed/recommended'
   ],
   root: true,
   env: {
@@ -87,5 +88,7 @@ module.exports = {
         format: ['PascalCase'],
       },
     ],
+    // We have our own OpenApi decorator and don't directly use the one from NestJS
+    '@darraghor/nestjs-typed/api-method-should-specify-api-response': 'off',
   },
 };
