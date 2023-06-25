@@ -8,12 +8,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { Identity } from '../identity/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
-import { Session } from './session.entity';
+import { Session } from '../sessions/session.entity';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Identity, Session]), LoggerModule],
+  imports: [TypeOrmModule.forFeature([User, Identity]), LoggerModule, Session],
   providers: [UsersService],
   exports: [UsersService],
 })

@@ -26,7 +26,7 @@ import { RegisterDto } from '../../../identity/local/register.dto';
 import { UpdatePasswordDto } from '../../../identity/local/update-password.dto';
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { SessionState } from '../../../session/session.service';
+import { SessionState } from '../../../sessions/session.service';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
 import { makeUsernameLowercase } from '../../../utils/username';

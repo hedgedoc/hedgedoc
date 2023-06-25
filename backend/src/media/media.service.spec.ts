@@ -30,7 +30,7 @@ import { NoteGroupPermission } from '../permissions/note-group-permission.entity
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
-import { Session } from '../users/session.entity';
+import { Session } from '../sessions/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { BackendType } from './backends/backend-type.enum';

@@ -13,7 +13,7 @@ import { MediaConfig } from './config/media.config';
 import { ErrorExceptionMapping } from './errors/error-mapping';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 import { BackendType } from './media/backends/backend-type.enum';
-import { SessionService } from './session/session.service';
+import { SessionService } from './sessions/session.service';
 import { setupSpecialGroups } from './utils/createSpecialGroups';
 import { setupSessionMiddleware } from './utils/session';
 import { setupValidationPipe } from './utils/setup-pipes';

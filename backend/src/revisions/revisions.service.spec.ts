@@ -27,7 +27,7 @@ import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
-import { Session } from '../users/session.entity';
+import { Session } from '../sessions/session.entity';
 import { User } from '../users/user.entity';
 import { Edit } from './edit.entity';
 import { EditService } from './edit.service';

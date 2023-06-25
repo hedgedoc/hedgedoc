@@ -9,7 +9,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { LoggerModule } from '../../logger/logger.module';
 import { PermissionsModule } from '../../permissions/permissions.module';
 import { RevisionsModule } from '../../revisions/revisions.module';
-import { SessionModule } from '../../session/session.module';
+import { SessionModule } from '../../sessions/session.module';
 import { UsersModule } from '../../users/users.module';
 import { RealtimeNoteStore } from './realtime-note-store';
 import { RealtimeNoteService } from './realtime-note.service';

@@ -12,7 +12,7 @@ import {
 } from 'typeorm';
 
 import { Edit } from '../revisions/edit.entity';
-import { Session } from '../users/session.entity';
+import { Session } from '../sessions/session.entity';
 import { User } from '../users/user.entity';
 
 export type AuthorColor = number;

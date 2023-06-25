@@ -40,7 +40,7 @@ import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
 import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
-import { Session } from '../users/session.entity';
+import { Session } from '../sessions/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { NoteGroupPermission } from './note-group-permission.entity';
