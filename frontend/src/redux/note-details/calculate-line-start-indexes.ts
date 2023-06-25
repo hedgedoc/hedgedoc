@@ -12,7 +12,7 @@
  */
 export const calculateLineStartIndexes = (markdownContentLines: string[]): number[] => {
   return markdownContentLines.reduce((state, line, lineIndex, lines) => {
-    const lastIndex = lineIndex === 0 ? 0 : state[lineIndex - 1] + lines[lineIndex - 1].length + 1
-    return [...state, lastIndex]
-  }, [] as number[])
+    state[lineIndex] = lineIndex === 0 ? 0 : state[lineIndex - 1] + lines[lineIndex - 1].length + 1
+    return state
+  }, new Array<number>(markdownContentLines.length))
 }

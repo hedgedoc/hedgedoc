@@ -35,9 +35,11 @@ export class YTextSyncViewPlugin implements PluginValue {
     const [changes] = event.delta.reduce(
       ([changes, position], delta) => {
         if (delta.insert !== undefined && typeof delta.insert === 'string') {
-          return [[...changes, { from: position, to: position, insert: delta.insert }], position]
+          changes.push({ from: position, to: position, insert: delta.insert })
+          return [changes, position]
         } else if (delta.delete !== undefined) {
-          return [[...changes, { from: position, to: position + delta.delete, insert: '' }], position + delta.delete]
+          changes.push({ from: position, to: position + delta.delete, insert: '' })
+          return [changes, position + delta.delete]
         } else if (delta.retain !== undefined) {
           return [changes, position + delta.retain]
         } else {
