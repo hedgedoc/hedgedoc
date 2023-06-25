@@ -21,7 +21,7 @@ export const useSendRealtimeActivity = (messageTransporter: MessageTransporter) 
   const idling = useIdle(INACTIVITY_TIMEOUT_SECONDS * 1000)
 
   useEffect(() => {
-    messageTransporter.doAsSoonAsReady(() => {
+    const listener = messageTransporter.doAsSoonAsReady(() => {
       messageTransporter.sendMessage({
         type: MessageType.REALTIME_USER_SET_ACTIVITY,
         payload: {
@@ -29,5 +29,9 @@ export const useSendRealtimeActivity = (messageTransporter: MessageTransporter) 
         }
       })
     })
+
+    return () => {
+      listener.off()
+    }
   }, [active, idling, messageTransporter])
 }
