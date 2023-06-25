@@ -43,6 +43,7 @@ export class MediaUploadDto extends BaseDto {
    */
   @IsString()
   @IsLowercase()
+  @IsOptional()
   @ApiProperty()
   username: Username | null;
 }

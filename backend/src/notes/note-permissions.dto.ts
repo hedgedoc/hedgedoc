@@ -21,6 +21,7 @@ export class NoteUserPermissionEntryDto extends BaseDto {
   /**
    * Username of the User this permission applies to
    */
+  @Type(() => String)
   @IsString()
   @IsLowercase()
   @ApiProperty()
@@ -40,6 +41,7 @@ export class NoteUserPermissionUpdateDto {
    * Username of the user this permission should apply to
    * @example "john.smith"
    */
+  @Type(() => String)
   @IsString()
   @IsLowercase()
   @ApiProperty()
@@ -93,6 +95,9 @@ export class NotePermissionsDto {
   /**
    * Username of the User this permission applies to
    */
+  // nestjs-typed does not detect '| null' types as optional
+  // eslint-disable-next-line @darraghor/nestjs-typed/api-property-matches-property-optionality
+  @Type(() => String)
   @IsString()
   @ApiPropertyOptional()
   @IsOptional()

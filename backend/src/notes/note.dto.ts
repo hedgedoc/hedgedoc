@@ -23,6 +23,7 @@ export class NoteDto extends BaseDto {
   /**
    * Metadata of the note
    */
+  @Type(() => NoteMetadataDto)
   @ValidateNested()
   @ApiProperty({ type: NoteMetadataDto })
   metadata: NoteMetadataDto;

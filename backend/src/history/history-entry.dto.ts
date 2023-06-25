@@ -37,7 +37,7 @@ export class HistoryEntryDto extends BaseDto {
 
   @IsArray()
   @IsString({ each: true })
-  @ApiProperty()
+  @ApiProperty({ isArray: true, type: String })
   tags: string[];
 
   /**

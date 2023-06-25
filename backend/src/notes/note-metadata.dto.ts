@@ -29,9 +29,10 @@ export class NoteMetadataDto extends BaseDto {
   /**
    * All aliases of the note (including the primaryAlias)
    */
+  @Type(() => AliasDto)
   @IsArray()
-  @ValidateNested()
-  @ApiProperty()
+  @ValidateNested({ each: true })
+  @ApiProperty({ isArray: true, type: AliasDto })
   aliases: AliasDto[];
 
   /**
@@ -67,7 +68,7 @@ export class NoteMetadataDto extends BaseDto {
    */
   @IsArray()
   @IsString({ each: true })
-  @ApiProperty()
+  @ApiProperty({ isArray: true, type: String })
   tags: string[];
 
   @IsNumber()
@@ -86,8 +87,9 @@ export class NoteMetadataDto extends BaseDto {
   /**
    * User that last edited the note
    */
-  @IsString()
+  // eslint-disable-next-line @darraghor/nestjs-typed/api-property-matches-property-optionality
   @ApiPropertyOptional()
+  @IsString()
   @IsOptional()
   updateUsername: string | null;
 
@@ -114,13 +116,13 @@ export class NoteMetadataDto extends BaseDto {
    */
   @IsArray()
   @IsString({ each: true })
-  @ApiProperty()
+  @ApiProperty({ isArray: true, type: String })
   editedBy: string[];
 
   /**
    * Permissions currently in effect for the note
    */
-  @ValidateNested({ each: true })
+  @ValidateNested()
   @Type(() => NotePermissionsDto)
   @ApiProperty({ type: NotePermissionsDto })
   permissions: NotePermissionsDto;
@@ -151,6 +153,6 @@ export class NoteMetadataUpdateDto {
    */
   @IsArray()
   @IsString({ each: true })
-  @ApiProperty()
+  @ApiProperty({ isArray: true, type: String })
   tags: string[];
 }

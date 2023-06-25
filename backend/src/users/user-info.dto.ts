@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import { IsLowercase, IsString } from 'class-validator';
 
 import { BaseDto } from '../utils/base.dto.';
@@ -14,6 +15,7 @@ export class UserInfoDto extends BaseDto {
    * The username
    * @example "john.smith"
    */
+  @Type(() => String)
   @IsString()
   @IsLowercase()
   @ApiProperty()

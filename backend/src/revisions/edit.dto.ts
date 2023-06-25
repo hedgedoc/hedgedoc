@@ -16,6 +16,8 @@ export class EditDto extends BaseDto {
    * Is `null` if the user is anonymous
    * @example "john.smith"
    */
+  // nestjs-typed does not detect '| null' types as optional
+  // eslint-disable-next-line @darraghor/nestjs-typed/api-property-matches-property-optionality
   @IsString()
   @IsOptional()
   @ApiPropertyOptional()

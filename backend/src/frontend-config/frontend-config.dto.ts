@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { Type } from 'class-transformer';
 import {
   IsArray,
   IsBoolean,
@@ -50,6 +51,7 @@ export class AuthProviderWithoutCustomNameDto extends BaseDto {
    * The type of the auth provider.
    */
   @IsString()
+  @Type(() => String)
   type: AuthProviderTypeWithoutCustomName;
 }
 
@@ -58,6 +60,7 @@ export class AuthProviderWithCustomNameDto extends BaseDto {
    * The type of the auth provider.
    */
   @IsString()
+  @Type(() => String)
   type: AuthProviderTypeWithCustomName;
 
   /**
@@ -94,6 +97,7 @@ export class BrandingDto extends BaseDto {
    */
   @IsUrl()
   @IsOptional()
+  @Type(() => URL)
   logo?: URL;
 }
 
@@ -104,6 +108,7 @@ export class SpecialUrlsDto extends BaseDto {
    */
   @IsUrl()
   @IsOptional()
+  @Type(() => URL)
   privacy?: URL;
 
   /**
@@ -112,6 +117,7 @@ export class SpecialUrlsDto extends BaseDto {
    */
   @IsUrl()
   @IsOptional()
+  @Type(() => URL)
   termsOfUse?: URL;
 
   /**
@@ -120,6 +126,7 @@ export class SpecialUrlsDto extends BaseDto {
    */
   @IsUrl()
   @IsOptional()
+  @Type(() => URL)
   imprint?: URL;
 }
 
@@ -139,6 +146,7 @@ export class FrontendConfigDto extends BaseDto {
   /**
    * Which auth providers are enabled and how are they configured?
    */
+  // eslint-disable-next-line @darraghor/nestjs-typed/validated-non-primitive-property-needs-type-decorator
   @IsArray()
   @ValidateNested({ each: true })
   authProviders: AuthProviderDto[];
@@ -147,6 +155,7 @@ export class FrontendConfigDto extends BaseDto {
    * Individual branding information
    */
   @ValidateNested()
+  @Type(() => BrandingDto)
   branding: BrandingDto;
 
   /**
@@ -159,12 +168,14 @@ export class FrontendConfigDto extends BaseDto {
    * Links to some special pages
    */
   @ValidateNested()
+  @Type(() => SpecialUrlsDto)
   specialUrls: SpecialUrlsDto;
 
   /**
    * The version of HedgeDoc
    */
   @ValidateNested()
+  @Type(() => ServerVersion)
   version: ServerVersion;
 
   /**
@@ -172,6 +183,7 @@ export class FrontendConfigDto extends BaseDto {
    */
   @IsUrl()
   @IsOptional()
+  @Type(() => URL)
   plantUmlServer?: URL;
 
   /**
