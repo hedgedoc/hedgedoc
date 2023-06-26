@@ -2277,7 +2277,7 @@ __metadata:
     "@azure/storage-blob": 12.14.0
     "@hedgedoc/commons": "workspace:commons"
     "@mrdrogdrog/optional": 1.1.0
-    "@nestjs/cli": 10.0.3
+    "@nestjs/cli": 10.0.5
     "@nestjs/common": 10.0.3
     "@nestjs/config": 3.0.0
     "@nestjs/core": 10.0.3
@@ -2287,7 +2287,7 @@ __metadata:
     "@nestjs/platform-ws": 10.0.3
     "@nestjs/schedule": 3.0.1
     "@nestjs/schematics": 10.0.1
-    "@nestjs/swagger": 7.0.4
+    "@nestjs/swagger": 7.0.6
     "@nestjs/testing": 10.0.3
     "@nestjs/typeorm": 10.0.0
     "@nestjs/websockets": 10.0.3
@@ -3122,9 +3122,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/cli@npm:10.0.3":
-  version: 10.0.3
-  resolution: "@nestjs/cli@npm:10.0.3"
+"@nestjs/cli@npm:10.0.5":
+  version: 10.0.5
+  resolution: "@nestjs/cli@npm:10.0.5"
   dependencies:
     "@angular-devkit/core": 16.1.0
     "@angular-devkit/schematics": 16.1.0
@@ -3158,7 +3158,7 @@ __metadata:
       optional: true
   bin:
     nest: bin/nest.js
-  checksum: 45e059006863e5e144a302a8d50fac5ae6873420f1db2a4e9170abeb3040c681e8fcf3e920d61183171fdd8fe4d996ce5af0b60e2987cc9a5ad69479a839b2f6
+  checksum: 985855548576d0caa3b72cff2336b180501ebb6db510b53079efcda3a11362c11f157991c6e4bc7adad001464665b0d18022098381fd3cb7710461c9949d038a
   languageName: node
   linkType: hard
 
@@ -3325,9 +3325,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/swagger@npm:7.0.4":
-  version: 7.0.4
-  resolution: "@nestjs/swagger@npm:7.0.4"
+"@nestjs/swagger@npm:7.0.6":
+  version: 7.0.6
+  resolution: "@nestjs/swagger@npm:7.0.6"
   dependencies:
     "@nestjs/mapped-types": 2.0.2
     js-yaml: 4.1.0
@@ -3348,7 +3348,7 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: 3a444b44446cdc067bebd7ccf57ab6114755f716af3a7243ba2df91d145340fe224af2f47547f349c9a18ef747109a4aab9c4c4d3babc370120a3c28d4efbce2
+  checksum: e0723e20df3f3b024b3f7261cead051fc18f64556b64ba3d06b32321073820617797b4a749cd9857ea12f45a8b0da4d2d60fb4e0cc7d0816ee5f7891c346aac9
   languageName: node
   linkType: hard
 
