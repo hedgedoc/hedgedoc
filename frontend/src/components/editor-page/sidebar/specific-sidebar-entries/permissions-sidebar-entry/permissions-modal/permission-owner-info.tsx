@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
+import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
 import { UiIcon } from '../../../../../common/icons/ui-icon'
 import { UserAvatarForUsername } from '../../../../../common/user-avatar/user-avatar-for-username'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import React, { Fragment } from 'react'
 import { Button } from 'react-bootstrap'
 import { Pencil as IconPencil } from 'react-bootstrap-icons'
-import { useTranslation } from 'react-i18next'
 
 export interface PermissionOwnerInfoProps {
   onEditOwner: () => void
@@ -26,17 +26,13 @@ export const PermissionOwnerInfo: React.FC<PermissionOwnerInfoProps & Permission
   onEditOwner,
   disabled
 }) => {
-  const { t } = useTranslation()
   const noteOwner = useApplicationState((state) => state.noteDetails.permissions.owner)
+  const buttonTitle = useTranslatedText('editor.modal.permissions.ownerChange.button')
 
   return (
     <Fragment>
       <UserAvatarForUsername username={noteOwner} />
-      <Button
-        variant='light'
-        disabled={disabled}
-        title={t('editor.modal.permissions.ownerChange.button') ?? undefined}
-        onClick={onEditOwner}>
+      <Button variant='light' disabled={disabled} title={buttonTitle} onClick={onEditOwner}>
         <UiIcon icon={IconPencil} />
       </Button>
     </Fragment>

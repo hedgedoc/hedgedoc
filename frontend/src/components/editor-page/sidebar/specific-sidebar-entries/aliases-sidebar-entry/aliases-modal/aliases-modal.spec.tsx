@@ -11,8 +11,8 @@ import * as AliasesAddFormModule from './aliases-add-form'
 import * as AliasesListModule from './aliases-list'
 import { AliasesModal } from './aliases-modal'
 import { render } from '@testing-library/react'
-import React from 'react'
 import type { PropsWithChildren } from 'react'
+import React from 'react'
 
 jest.mock('./aliases-list')
 jest.mock('./aliases-add-form')

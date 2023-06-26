@@ -4,16 +4,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
+import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import { useHistoryToolbarState } from './toolbar-context/use-history-toolbar-state'
 import React from 'react'
 import { FormControl } from 'react-bootstrap'
-import { useTranslation } from 'react-i18next'
 
 /**
  * A text input that is used to filter history entries for specific keywords.
  */
 export const KeywordSearchInput: React.FC = () => {
-  const { t } = useTranslation()
   const [historyToolbarState, setHistoryToolbarState] = useHistoryToolbarState()
 
   const onChange = useOnInputChange((search) => {
@@ -23,10 +22,12 @@ export const KeywordSearchInput: React.FC = () => {
     }))
   })
 
+  const searchKeywordsText = useTranslatedText('landing.history.toolbar.searchKeywords')
+
   return (
     <FormControl
-      placeholder={t('landing.history.toolbar.searchKeywords') ?? undefined}
-      aria-label={t('landing.history.toolbar.searchKeywords') ?? undefined}
+      placeholder={searchKeywordsText}
+      aria-label={searchKeywordsText}
       onChange={onChange}
       value={historyToolbarState.search}
     />

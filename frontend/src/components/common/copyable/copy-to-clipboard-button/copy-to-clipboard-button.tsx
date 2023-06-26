@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useTranslatedText } from '../../../../hooks/common/use-translated-text'
 import type { PropsWithDataCypressId } from '../../../../utils/cypress-attribute'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { UiIcon } from '../../icons/ui-icon'
@@ -11,7 +12,6 @@ import React, { Fragment, useRef } from 'react'
 import { Button } from 'react-bootstrap'
 import { Files as IconFiles } from 'react-bootstrap-icons'
 import type { Variant } from 'react-bootstrap/types'
-import { useTranslation } from 'react-i18next'
 
 export interface CopyToClipboardButtonProps extends PropsWithDataCypressId {
   content: string
@@ -33,10 +33,9 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButtonProps> = ({
   variant = 'dark',
   ...props
 }) => {
-  const { t } = useTranslation()
   const button = useRef<HTMLButtonElement>(null)
-
   const [copyToClipboard, overlayElement] = useCopyOverlay(button, content)
+  const buttonTitle = useTranslatedText('renderer.highlightCode.copyCode')
 
   return (
     <Fragment>
@@ -44,7 +43,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButtonProps> = ({
         ref={button}
         size={size}
         variant={variant}
-        title={t('renderer.highlightCode.copyCode') ?? undefined}
+        title={buttonTitle}
         onClick={copyToClipboard}
         {...cypressId(props)}>
         <UiIcon icon={IconFiles} />

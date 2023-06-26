@@ -6,6 +6,7 @@
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { ORIGIN, useBaseUrl } from '../../../hooks/common/use-base-url'
 import { useMayEdit } from '../../../hooks/common/use-may-edit'
+import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import { useDarkModeState } from '../../../hooks/dark-mode/use-dark-mode-state'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { findLanguageByCodeBlockName } from '../../markdown-renderer/extensions/_base-classes/code-block-markdown-extension/find-language-by-code-block-name'
@@ -42,7 +43,6 @@ import { lintGutter } from '@codemirror/lint'
 import { oneDark } from '@codemirror/theme-one-dark'
 import ReactCodeMirror from '@uiw/react-codemirror'
 import React, { useEffect, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
 
 export type EditorPaneProps = ScrollProps
 
@@ -129,7 +129,6 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
     [ligaturesEnabled]
   )
 
-  const { t } = useTranslation()
   const darkModeActivated = useDarkModeState()
   const editorOrigin = useBaseUrl(ORIGIN.EDITOR)
   const isSynced = useApplicationState((state) => state.realtimeStatus.isSynced)
@@ -142,6 +141,9 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
     }
   }, [messageTransporter])
 
+  const translateOptions = useMemo(() => ({ host: editorOrigin }), [editorOrigin])
+  const placeholderText = useTranslatedText('editor.placeholder', translateOptions)
+
   return (
     <div
       className={`d-flex flex-column h-100 position-relative`}
@@ -153,7 +155,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
       <ToolBar />
       <ReactCodeMirror
         editable={updateViewContextExtension !== null && isSynced && mayEdit}
-        placeholder={t('editor.placeholder', { host: editorOrigin }) ?? ''}
+        placeholder={placeholderText}
         extensions={extensions}
         width={'100%'}
         height={'100%'}

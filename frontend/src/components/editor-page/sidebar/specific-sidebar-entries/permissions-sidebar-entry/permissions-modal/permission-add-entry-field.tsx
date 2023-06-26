@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useLowercaseOnInputChange } from '../../../../../../hooks/common/use-lowercase-on-input-change'
+import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
 import { UiIcon } from '../../../../../common/icons/ui-icon'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import React, { useCallback, useState } from 'react'
 import { Button, FormControl, InputGroup } from 'react-bootstrap'
 import { Plus as IconPlus } from 'react-bootstrap-icons'
-import { useTranslation } from 'react-i18next'
 
 export interface PermissionAddEntryFieldProps {
   onAddEntry: (identifier: string) => void
@@ -28,8 +28,6 @@ export const PermissionAddEntryField: React.FC<PermissionAddEntryFieldProps & Pe
   i18nKey,
   disabled
 }) => {
-  const { t } = useTranslation()
-
   const [newEntryIdentifier, setNewEntryIdentifier] = useState('')
   const onChange = useLowercaseOnInputChange(setNewEntryIdentifier)
 
@@ -37,19 +35,16 @@ export const PermissionAddEntryField: React.FC<PermissionAddEntryFieldProps & Pe
     onAddEntry(newEntryIdentifier)
   }, [newEntryIdentifier, onAddEntry])
 
+  const placeholderText = useTranslatedText(i18nKey)
+
   return (
     <li className={'list-group-item'}>
       <InputGroup className={'me-1 mb-1'}>
-        <FormControl
-          value={newEntryIdentifier}
-          placeholder={t(i18nKey) ?? undefined}
-          onChange={onChange}
-          disabled={disabled}
-        />
+        <FormControl value={newEntryIdentifier} placeholder={placeholderText} onChange={onChange} disabled={disabled} />
         <Button
           variant='light'
           className={'text-secondary ms-2'}
-          title={t(i18nKey) ?? undefined}
+          title={placeholderText}
           onClick={onSubmit}
           disabled={disabled}>
           <UiIcon icon={IconPlus} />

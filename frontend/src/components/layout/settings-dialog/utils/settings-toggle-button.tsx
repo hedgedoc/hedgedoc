@@ -3,11 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useTranslatedText } from '../../../../hooks/common/use-translated-text'
 import type { PropsWithDataTestId } from '../../../../utils/test-id'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback } from 'react'
 import type { ButtonProps } from 'react-bootstrap'
 import { Button } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import { Trans } from 'react-i18next'
 
 type DarkModeToggleButtonProps = Omit<ButtonProps, 'onSelect'> &
   PropsWithDataTestId & {
@@ -36,9 +37,7 @@ export const SettingsToggleButton = ({
   value,
   ...props
 }: DarkModeToggleButtonProps) => {
-  const { t } = useTranslation()
-
-  const title = useMemo(() => t(i18nKeyTooltip), [i18nKeyTooltip, t])
+  const title = useTranslatedText(i18nKeyTooltip)
 
   const onChange = useCallback(() => {
     if (!selected) {

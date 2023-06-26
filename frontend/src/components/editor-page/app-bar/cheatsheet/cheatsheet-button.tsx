@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
+import { useTranslatedText } from '../../../../hooks/common/use-translated-text'
 import { useOutlineButtonVariant } from '../../../../hooks/dark-mode/use-outline-button-variant'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { CommonModal } from '../../../common/modals/common-modal'
@@ -11,21 +12,21 @@ import { CheatsheetContent } from './cheatsheet-content'
 import { CheatsheetInNewTabButton } from './cheatsheet-in-new-tab-button'
 import React, { Fragment } from 'react'
 import { Button, Modal } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import { Trans } from 'react-i18next'
 
 /**
  * Shows a button that opens the cheatsheet dialog.
  */
 export const CheatsheetButton: React.FC = () => {
-  const { t } = useTranslation()
   const [modalVisibility, showModal, closeModal] = useBooleanState()
   const buttonVariant = useOutlineButtonVariant()
+  const buttonTitle = useTranslatedText('cheatsheet.button')
 
   return (
     <Fragment>
       <Button
         {...cypressId('open.cheatsheet-button')}
-        title={t('cheatsheet.button') ?? undefined}
+        title={buttonTitle}
         className={'mx-2'}
         variant={buttonVariant}
         size={'sm'}

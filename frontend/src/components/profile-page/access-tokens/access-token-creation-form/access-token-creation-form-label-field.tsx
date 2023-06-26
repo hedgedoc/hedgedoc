@@ -3,11 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useTranslatedText } from '../../../../hooks/common/use-translated-text'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import type { ChangeEvent } from 'react'
 import React, { useMemo } from 'react'
 import { Form } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import { Trans } from 'react-i18next'
 
 interface AccessTokenCreationFormLabelFieldProps extends AccessTokenCreationFormFieldProps {
   onChangeLabel: (event: ChangeEvent<HTMLInputElement>) => void
@@ -23,11 +24,8 @@ export const AccessTokenCreationFormLabelField: React.FC<AccessTokenCreationForm
   onChangeLabel,
   formValues
 }) => {
-  const { t } = useTranslation()
-
-  const labelValid = useMemo(() => {
-    return formValues.label.trim() !== ''
-  }, [formValues])
+  const labelValid = useMemo(() => formValues.label.trim() !== '', [formValues])
+  const placeholderText = useTranslatedText('profile.accessTokens.label')
 
   return (
     <Form.Group>
@@ -37,7 +35,7 @@ export const AccessTokenCreationFormLabelField: React.FC<AccessTokenCreationForm
       <Form.Control
         type='text'
         size='sm'
-        placeholder={t('profile.accessTokens.label') ?? undefined}
+        placeholder={placeholderText}
         value={formValues.label}
         onChange={onChangeLabel}
         isValid={labelValid}

@@ -5,6 +5,7 @@
  */
 import { removeGroupPermission, setGroupPermission } from '../../../../../../api/permissions'
 import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
+import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
 import { setNotePermissionsFromServer } from '../../../../../../redux/note-details/methods'
 import { IconButton } from '../../../../../common/icon-button/icon-button'
 import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
@@ -12,9 +13,7 @@ import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { AccessLevel, SpecialGroup } from '@hedgedoc/commons'
 import React, { useCallback, useMemo } from 'react'
 import { ToggleButtonGroup } from 'react-bootstrap'
-import { Eye as IconEye } from 'react-bootstrap-icons'
-import { Pencil as IconPencil } from 'react-bootstrap-icons'
-import { SlashCircle as IconSlashCircle } from 'react-bootstrap-icons'
+import { Eye as IconEye, Pencil as IconPencil, SlashCircle as IconSlashCircle } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 export interface PermissionEntrySpecialGroupProps {
@@ -71,6 +70,11 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
     }
   }, [type, t])
 
+  const translateOptions = useMemo(() => ({ name }), [name])
+  const denyGroupText = useTranslatedText('editor.modal.permissions.denyGroup', translateOptions)
+  const viewOnlyGroupText = useTranslatedText('editor.modal.permissions.viewOnlyGroup', translateOptions)
+  const editGroupText = useTranslatedText('editor.modal.permissions.editGroup', translateOptions)
+
   return (
     <li className={'list-group-item d-flex flex-row justify-content-between align-items-center'}>
       <span>{name}</span>
@@ -78,7 +82,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
         <ToggleButtonGroup type='radio' name='edit-mode'>
           <IconButton
             icon={IconSlashCircle}
-            title={t('editor.modal.permissions.denyGroup', { name }) ?? undefined}
+            title={denyGroupText}
             variant={level === AccessLevel.NONE ? 'secondary' : 'outline-secondary'}
             onClick={onSetEntryDenied}
             disabled={disabled}
@@ -86,7 +90,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
           />
           <IconButton
             icon={IconEye}
-            title={t('editor.modal.permissions.viewOnlyGroup', { name }) ?? undefined}
+            title={viewOnlyGroupText}
             variant={level === AccessLevel.READ_ONLY ? 'secondary' : 'outline-secondary'}
             onClick={onSetEntryReadOnly}
             disabled={disabled}
@@ -94,7 +98,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
           />
           <IconButton
             icon={IconPencil}
-            title={t('editor.modal.permissions.editGroup', { name }) ?? undefined}
+            title={editGroupText}
             variant={level === AccessLevel.WRITEABLE ? 'secondary' : 'outline-secondary'}
             onClick={onSetEntryWriteable}
             disabled={disabled}

@@ -6,6 +6,7 @@
 import { deleteAlias, markAliasAsPrimary } from '../../../../../../api/alias'
 import type { Alias } from '../../../../../../api/alias/types'
 import { useIsOwner } from '../../../../../../hooks/common/use-is-owner'
+import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
 import { updateMetadata } from '../../../../../../redux/note-details/methods'
 import { testId } from '../../../../../../utils/test-id'
 import { UiIcon } from '../../../../../common/icons/ui-icon'
@@ -13,9 +14,7 @@ import { ShowIf } from '../../../../../common/show-if/show-if'
 import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
 import React, { useCallback } from 'react'
 import { Button } from 'react-bootstrap'
-import { StarFill as IconStarFill } from 'react-bootstrap-icons'
-import { Star as IconStar } from 'react-bootstrap-icons'
-import { X as IconX } from 'react-bootstrap-icons'
+import { Star as IconStar, StarFill as IconStarFill, X as IconX } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 export interface AliasesListEntryProps {
@@ -44,6 +43,10 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
       .catch(showErrorNotification(t('editor.modal.aliases.errorMakingPrimary')))
   }, [alias, t, showErrorNotification])
 
+  const isPrimaryText = useTranslatedText('editor.modal.aliases.isPrimary')
+  const makePrimaryText = useTranslatedText('editor.modal.aliases.makePrimary')
+  const removeAliasText = useTranslatedText('editor.modal.aliases.removeAlias')
+
   return (
     <li className={'list-group-item d-flex flex-row justify-content-between align-items-center'}>
       {alias.name}
@@ -53,7 +56,7 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
             className={'me-2 text-warning'}
             variant='light'
             disabled={true}
-            title={t('editor.modal.aliases.isPrimary') ?? undefined}
+            title={isPrimaryText}
             {...testId('aliasIsPrimary')}>
             <UiIcon icon={IconStar} />
           </Button>
@@ -63,7 +66,7 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
             className={'me-2'}
             variant='light'
             disabled={!isOwner}
-            title={t('editor.modal.aliases.makePrimary') ?? undefined}
+            title={makePrimaryText}
             onClick={onMakePrimaryClick}
             {...testId('aliasButtonMakePrimary')}>
             <UiIcon icon={IconStarFill} />
@@ -73,7 +76,7 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
           variant='light'
           className={'text-danger'}
           disabled={!isOwner}
-          title={t('editor.modal.aliases.removeAlias') ?? undefined}
+          title={removeAliasText}
           onClick={onRemoveClick}
           {...testId('aliasButtonRemove')}>
           <UiIcon icon={IconX} />

@@ -9,8 +9,7 @@ import { createNumberRangeArray } from '../../common/number-range/number-range'
 import styles from './animations.module.scss'
 import { IconRow } from './icon-row'
 import React, { useMemo } from 'react'
-import { Pencil as IconPencil } from 'react-bootstrap-icons'
-import { PencilFill as IconPencilFill } from 'react-bootstrap-icons'
+import { Pencil as IconPencil, PencilFill as IconPencilFill } from 'react-bootstrap-icons'
 
 export interface HedgeDocLogoProps {
   error: boolean

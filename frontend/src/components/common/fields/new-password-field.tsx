@@ -3,10 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import type { CommonFieldProps } from './fields'
 import React, { useMemo } from 'react'
 import { Form } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import { Trans } from 'react-i18next'
 
 /**
  * Renders an input field for the new password when registering.
@@ -15,11 +16,9 @@ import { Trans, useTranslation } from 'react-i18next'
  * @param value The currently entered password.
  */
 export const NewPasswordField: React.FC<CommonFieldProps> = ({ onChange, value, hasError = false }) => {
-  const { t } = useTranslation()
+  const isValid = useMemo(() => value.trim() !== '', [value])
 
-  const isValid = useMemo(() => {
-    return value.trim() !== ''
-  }, [value])
+  const placeholderText = useTranslatedText('login.auth.password')
 
   return (
     <Form.Group>
@@ -32,7 +31,7 @@ export const NewPasswordField: React.FC<CommonFieldProps> = ({ onChange, value, 
         isValid={isValid}
         isInvalid={hasError}
         onChange={onChange}
-        placeholder={t('login.auth.password') ?? undefined}
+        placeholder={placeholderText}
         autoComplete='new-password'
         required
       />

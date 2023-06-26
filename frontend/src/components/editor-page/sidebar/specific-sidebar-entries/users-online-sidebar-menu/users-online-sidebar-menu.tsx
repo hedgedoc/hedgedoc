@@ -13,8 +13,7 @@ import styles from './online-counter.module.scss'
 import { OwnUserLine } from './own-user-line'
 import { UserLine } from './user-line/user-line'
 import React, { Fragment, useCallback, useEffect, useMemo, useRef } from 'react'
-import { ArrowLeft as IconArrowLeft } from 'react-bootstrap-icons'
-import { People as IconPeople } from 'react-bootstrap-icons'
+import { ArrowLeft as IconArrowLeft, People as IconPeople } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**

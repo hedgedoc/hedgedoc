@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useOnInputChange } from '../../../../../../hooks/common/use-on-input-change'
+import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
 import { UiIcon } from '../../../../../common/icons/ui-icon'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, FormControl, InputGroup } from 'react-bootstrap'
 import { Check as IconCheck } from 'react-bootstrap-icons'
-import { useTranslation } from 'react-i18next'
 
 export interface PermissionOwnerChangeProps {
   onConfirmOwnerChange: (newOwner: string) => void
@@ -20,7 +20,6 @@ export interface PermissionOwnerChangeProps {
  * @param onConfirmOwnerChange The callback to call if the owner was changed.
  */
 export const PermissionOwnerChange: React.FC<PermissionOwnerChangeProps> = ({ onConfirmOwnerChange }) => {
-  const { t } = useTranslation()
   const [ownerFieldValue, setOwnerFieldValue] = useState('')
 
   const onChangeField = useOnInputChange(setOwnerFieldValue)
@@ -32,16 +31,15 @@ export const PermissionOwnerChange: React.FC<PermissionOwnerChangeProps> = ({ on
     return ownerFieldValue.trim() === ''
   }, [ownerFieldValue])
 
+  const placeholderText = useTranslatedText('editor.modal.permissions.ownerChange.placeholder')
+  const buttonTitleText = useTranslatedText('common.save')
+
   return (
     <InputGroup className={'me-1 mb-1'}>
-      <FormControl
-        value={ownerFieldValue}
-        placeholder={t('editor.modal.permissions.ownerChange.placeholder') ?? undefined}
-        onChange={onChangeField}
-      />
+      <FormControl value={ownerFieldValue} placeholder={placeholderText} onChange={onChangeField} />
       <Button
         variant='light'
-        title={t('common.save') ?? undefined}
+        title={buttonTitleText}
         onClick={onClickConfirm}
         className={'ms-2'}
         disabled={confirmButtonDisabled}>

@@ -8,8 +8,7 @@ import { UiIcon } from '../../common/icons/ui-icon'
 import { AccountDeletionModal } from './account-deletion-modal'
 import React, { Fragment } from 'react'
 import { Button, Card, Row } from 'react-bootstrap'
-import { Trash as IconTrash } from 'react-bootstrap-icons'
-import { CloudDownload as IconCloudDownload } from 'react-bootstrap-icons'
+import { CloudDownload as IconCloudDownload, Trash as IconTrash } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**

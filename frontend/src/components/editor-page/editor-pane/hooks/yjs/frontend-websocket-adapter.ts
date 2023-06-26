@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ConnectionState } from '@hedgedoc/commons'
 import type { TransportAdapter } from '@hedgedoc/commons'
+import { ConnectionState } from '@hedgedoc/commons'
 import type { Message, MessageType } from '@hedgedoc/commons/dist'
 
 /**

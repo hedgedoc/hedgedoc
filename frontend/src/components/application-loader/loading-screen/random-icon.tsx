@@ -6,18 +6,20 @@
 import styles from './animations.module.scss'
 import React, { Fragment, useEffect, useState } from 'react'
 import type { Icon } from 'react-bootstrap-icons'
-import { FileText as IconFileText } from 'react-bootstrap-icons'
-import { File as IconFile } from 'react-bootstrap-icons'
-import { Fonts as IconFonts } from 'react-bootstrap-icons'
-import { Gear as IconGear } from 'react-bootstrap-icons'
-import { KeyboardFill as IconKeyboardFill } from 'react-bootstrap-icons'
-import { ListCheck as IconListCheck } from 'react-bootstrap-icons'
-import { Markdown as IconMarkdown } from 'react-bootstrap-icons'
-import { Pencil as IconPencil } from 'react-bootstrap-icons'
-import { Person as IconPerson } from 'react-bootstrap-icons'
-import { Tag as IconTag } from 'react-bootstrap-icons'
-import { TypeBold as IconTypeBold } from 'react-bootstrap-icons'
-import { TypeItalic as IconTypeItalic } from 'react-bootstrap-icons'
+import {
+  File as IconFile,
+  FileText as IconFileText,
+  Fonts as IconFonts,
+  Gear as IconGear,
+  KeyboardFill as IconKeyboardFill,
+  ListCheck as IconListCheck,
+  Markdown as IconMarkdown,
+  Pencil as IconPencil,
+  Person as IconPerson,
+  Tag as IconTag,
+  TypeBold as IconTypeBold,
+  TypeItalic as IconTypeItalic
+} from 'react-bootstrap-icons'
 
 const elements: Icon[] = [
   IconFileText,

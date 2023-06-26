@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import { InternalLink } from './internal-link'
 import type { TranslatedLinkProps } from './types'
-import React, { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
+import React from 'react'
 
 /**
  * An {@link InternalLink internal link} with translated text.
@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next'
  * @param props Additional props directly given to the {@link InternalLink}
  */
 export const TranslatedInternalLink: React.FC<TranslatedLinkProps> = ({ i18nKey, i18nOption, ...props }) => {
-  const { t } = useTranslation()
-  const text = useMemo(() => (i18nOption ? t(i18nKey, i18nOption) : t(i18nKey)), [i18nKey, i18nOption, t])
+  const text = useTranslatedText(i18nKey, i18nOption)
+
   return <InternalLink text={text} {...props} />
 }

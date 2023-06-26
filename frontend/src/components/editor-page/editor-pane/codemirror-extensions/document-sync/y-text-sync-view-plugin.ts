@@ -5,10 +5,8 @@
  */
 import type { ChangeSpec, Transaction } from '@codemirror/state'
 import { Annotation } from '@codemirror/state'
-import type { EditorView, PluginValue } from '@codemirror/view'
-import type { ViewUpdate } from '@codemirror/view'
-import type { Text as YText } from 'yjs'
-import type { Transaction as YTransaction, YTextEvent } from 'yjs'
+import type { EditorView, PluginValue, ViewUpdate } from '@codemirror/view'
+import type { Text as YText, Transaction as YTransaction, YTextEvent } from 'yjs'
 
 const syncAnnotation = Annotation.define()
 

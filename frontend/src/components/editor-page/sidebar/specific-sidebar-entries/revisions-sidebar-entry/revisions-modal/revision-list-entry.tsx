@@ -14,10 +14,12 @@ import { getUserDataForRevision } from './utils'
 import { DateTime } from 'luxon'
 import React, { useMemo } from 'react'
 import { ListGroup } from 'react-bootstrap'
-import { Clock as IconClock } from 'react-bootstrap-icons'
-import { FileText as IconFileText } from 'react-bootstrap-icons'
-import { Person as IconPerson } from 'react-bootstrap-icons'
-import { PersonPlus as IconPersonPlus } from 'react-bootstrap-icons'
+import {
+  Clock as IconClock,
+  FileText as IconFileText,
+  Person as IconPerson,
+  PersonPlus as IconPersonPlus
+} from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 import { useAsync } from 'react-use'
 

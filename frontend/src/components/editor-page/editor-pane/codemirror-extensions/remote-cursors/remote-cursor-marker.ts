@@ -7,7 +7,7 @@ import { concatCssClasses } from '../../../../../utils/concat-css-classes'
 import { createCursorCssClass } from './create-cursor-css-class'
 import styles from './style.module.scss'
 import type { SelectionRange } from '@codemirror/state'
-import type { LayerMarker, EditorView, Rect } from '@codemirror/view'
+import type { EditorView, LayerMarker, Rect } from '@codemirror/view'
 import { Direction } from '@codemirror/view'
 
 /**

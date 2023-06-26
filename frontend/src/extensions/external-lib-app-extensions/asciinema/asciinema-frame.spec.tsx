@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import * as ClickShieldModule from '../../../components/markdown-renderer/replace-components/click-shield/click-shield'
 import type { ClickShieldProps } from '../../../components/markdown-renderer/replace-components/click-shield/click-shield'
+import * as ClickShieldModule from '../../../components/markdown-renderer/replace-components/click-shield/click-shield'
 import { AsciinemaFrame } from './asciinema-frame'
 import { render } from '@testing-library/react'
 import React from 'react'

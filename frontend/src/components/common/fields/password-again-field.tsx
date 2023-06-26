@@ -3,10 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import type { CommonFieldProps } from './fields'
 import React, { useMemo } from 'react'
 import { Form } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import { Trans } from 'react-i18next'
 
 interface PasswordAgainFieldProps extends CommonFieldProps {
   password: string
@@ -15,9 +16,10 @@ interface PasswordAgainFieldProps extends CommonFieldProps {
 /**
  * Renders an input field for typing the new password again when registering.
  *
- * @param onChange Hook that is called when the entered retype of the password changes.
- * @param value The currently entered retype of the password.
- * @param password The password entered into the password input field.
+ * @param onChange Hook that is called when the entered retype of the password changes
+ * @param value The currently entered retype of the password
+ * @param password The password entered into the password input field
+ * @param hasError Defines if the password should be shown as invalid
  */
 export const PasswordAgainField: React.FC<PasswordAgainFieldProps> = ({
   onChange,
@@ -25,15 +27,9 @@ export const PasswordAgainField: React.FC<PasswordAgainFieldProps> = ({
   password,
   hasError = false
 }) => {
-  const { t } = useTranslation()
-
-  const isInvalid = useMemo(() => {
-    return value !== '' && password !== value && hasError
-  }, [password, value, hasError])
-
-  const isValid = useMemo(() => {
-    return password !== '' && password === value && !hasError
-  }, [password, value, hasError])
+  const isInvalid = useMemo(() => value !== '' && password !== value && hasError, [password, value, hasError])
+  const isValid = useMemo(() => password !== '' && password === value && !hasError, [password, value, hasError])
+  const placeholderText = useTranslatedText('login.register.passwordAgain')
 
   return (
     <Form.Group>
@@ -46,7 +42,7 @@ export const PasswordAgainField: React.FC<PasswordAgainFieldProps> = ({
         isInvalid={isInvalid}
         isValid={isValid}
         onChange={onChange}
-        placeholder={t('login.register.passwordAgain') ?? undefined}
+        placeholder={placeholderText}
         autoComplete='new-password'
         required
       />

@@ -14,7 +14,7 @@ import { PasswordField } from './fields/password-field'
 import { fetchAndSetUser } from './utils'
 import Link from 'next/link'
 import type { FormEvent } from 'react'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 
@@ -48,11 +48,13 @@ export const ViaLocal: React.FC = () => {
   const onUsernameChange = useLowercaseOnInputChange(setUsername)
   const onPasswordChange = useOnInputChange(setPassword)
 
+  const translationOptions = useMemo(() => ({ service: t('login.auth.username') }), [t])
+
   return (
     <Card className='mb-4'>
       <Card.Body>
         <Card.Title>
-          <Trans i18nKey='login.signInVia' values={{ service: t('login.auth.username') }} />
+          <Trans i18nKey='login.signInVia' values={translationOptions} />
         </Card.Title>
         <Form onSubmit={onLoginSubmit} className={'d-flex gap-3 flex-column'}>
           <UsernameField onChange={onUsernameChange} isInvalid={!!error} value={username} />

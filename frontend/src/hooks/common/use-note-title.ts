@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from './use-application-state'
+import { useTranslatedText } from './use-translated-text'
 import { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
 
 /**
  * Retrieves the title of the note or a placeholder text, if no title is set.
@@ -13,8 +13,7 @@ import { useTranslation } from 'react-i18next'
  * @return The title of the note
  */
 export const useNoteTitle = (): string => {
-  const { t } = useTranslation()
-  const untitledNote = useMemo(() => t('editor.untitledNote'), [t])
+  const untitledNote = useTranslatedText('editor.untitledNote')
   const noteTitle = useApplicationState((state) => state.noteDetails.title)
 
   return useMemo(() => (noteTitle === '' ? untitledNote : noteTitle), [noteTitle, untitledNote])

@@ -9,14 +9,16 @@ import { Logger } from '../../../../utils/logger'
 import { IconGitlab } from '../../../common/icons/additional/icon-gitlab'
 import styles from '../via-one-click.module.scss'
 import type { Icon } from 'react-bootstrap-icons'
-import { Dropbox as IconDropbox } from 'react-bootstrap-icons'
-import { Exclamation as IconExclamation } from 'react-bootstrap-icons'
-import { Facebook as IconFacebook } from 'react-bootstrap-icons'
-import { Github as IconGithub } from 'react-bootstrap-icons'
-import { Google as IconGoogle } from 'react-bootstrap-icons'
-import { People as IconPeople } from 'react-bootstrap-icons'
-import { PersonRolodex as IconPersonRolodex } from 'react-bootstrap-icons'
-import { Twitter as IconTwitter } from 'react-bootstrap-icons'
+import {
+  Dropbox as IconDropbox,
+  Exclamation as IconExclamation,
+  Facebook as IconFacebook,
+  Github as IconGithub,
+  Google as IconGoogle,
+  People as IconPeople,
+  PersonRolodex as IconPersonRolodex,
+  Twitter as IconTwitter
+} from 'react-bootstrap-icons'
 
 export interface OneClickMetadata {
   name: string

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { RealtimeStatusActions, RealtimeStatus } from './types'
+import type { RealtimeStatus, RealtimeStatusActions } from './types'
 import { RealtimeStatusActionType } from './types'
 import type { Reducer } from 'redux'
 
