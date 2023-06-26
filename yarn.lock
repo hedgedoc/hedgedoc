@@ -406,17 +406,18 @@ __metadata:
   linkType: hard
 
 "@npmcli/config@npm:^6.0.0":
-  version: 6.2.0
-  resolution: "@npmcli/config@npm:6.2.0"
+  version: 6.2.1
+  resolution: "@npmcli/config@npm:6.2.1"
   dependencies:
     "@npmcli/map-workspaces": ^3.0.2
+    ci-info: ^3.8.0
     ini: ^4.1.0
     nopt: ^7.0.0
     proc-log: ^3.0.0
     read-package-json-fast: ^3.0.2
     semver: ^7.3.5
     walk-up-path: ^3.0.1
-  checksum: 5c5bf66820e3ad7ddcdcfdc5930c0aa1ca2c290f1bda894656be1b22c81ea96c104b2249a95515e1d8714bfc6cdf7343cef2005549832297e6079a6e6f571f1b
+  checksum: 8c8d47f900cb4ecc5afea4f30d9556c8867913eca10fc2d6d2ad108d5b0e7d7356fd33b6a1c9b709b334c1ccf7fe15bb3147ece408436fcb2f4988507a388019
   languageName: node
   linkType: hard
 
@@ -817,12 +818,13 @@ __metadata:
   linkType: hard
 
 "@types/serve-static@npm:*":
-  version: 1.15.1
-  resolution: "@types/serve-static@npm:1.15.1"
+  version: 1.15.2
+  resolution: "@types/serve-static@npm:1.15.2"
   dependencies:
+    "@types/http-errors": "*"
     "@types/mime": "*"
     "@types/node": "*"
-  checksum: 2e078bdc1e458c7dfe69e9faa83cc69194b8896cce57cb745016580543c7ab5af07fdaa8ac1765eb79524208c81017546f66056f44d1204f812d72810613de36
+  checksum: 15c261dbfc57890f7cc17c04d5b22b418dfa0330c912b46c5d8ae2064da5d6f844ef7f41b63c7f4bbf07675e97ebe6ac804b032635ec742ae45d6f1274259b3e
   languageName: node
   linkType: hard
 
@@ -3294,9 +3296,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30000844, caniuse-lite@npm:^1.0.30001503":
-  version: 1.0.30001504
-  resolution: "caniuse-lite@npm:1.0.30001504"
-  checksum: 0256f8ef2f5d6d1559198967d7325952e6451e79ff1b92d3d6ba1ec43efedf49fcd3fbb0735ebed0bfd96c6c6a49730e169535e273c60795d23ef25bd37e3e3d
+  version: 1.0.30001508
+  resolution: "caniuse-lite@npm:1.0.30001508"
+  checksum: 0a083ed92194d87e608fc35cac65830a27900249729eb8a68e270f866f2c4f83396c2e54eb47b0ef71360682174dd74e2e68eac0b8d407d125611c7bc12488eb
   languageName: node
   linkType: hard
 
@@ -3477,6 +3479,13 @@ __metadata:
   version: 1.0.3
   resolution: "chrome-trace-event@npm:1.0.3"
   checksum: cb8b1fc7e881aaef973bd0c4a43cd353c2ad8323fb471a041e64f7c2dd849cde4aad15f8b753331a32dda45c973f032c8a03b8177fc85d60eaa75e91e08bfb97
+  languageName: node
+  linkType: hard
+
+"ci-info@npm:^3.8.0":
+  version: 3.8.0
+  resolution: "ci-info@npm:3.8.0"
+  checksum: d0a4d3160497cae54294974a7246202244fff031b0a6ea20dd57b10ec510aa17399c41a1b0982142c105f3255aff2173e5c0dd7302ee1b2f28ba3debda375098
   languageName: node
   linkType: hard
 
@@ -5391,9 +5400,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.3.47, electron-to-chromium@npm:^1.4.431":
-  version: 1.4.433
-  resolution: "electron-to-chromium@npm:1.4.433"
-  checksum: 106e3bc2fb4ee5eddd4b141363900d5cd731c7579aa6bebd02509c52d6b598a1684aba1b75791e838dfa54dec0a40ddd17ea01199041ea46310aafb206395e43
+  version: 1.4.440
+  resolution: "electron-to-chromium@npm:1.4.440"
+  checksum: 702f8f045492a15bc6eee408987c986de1e78a568b34fc68ed6a21e1fc03f3a3019e7e6a6d88c1f4468fbe788045425e70104ec9b481825d0bce00e3841418b8
   languageName: node
   linkType: hard
 
@@ -5558,11 +5567,11 @@ __metadata:
   linkType: hard
 
 "envinfo@npm:^7.7.3":
-  version: 7.8.1
-  resolution: "envinfo@npm:7.8.1"
+  version: 7.9.0
+  resolution: "envinfo@npm:7.9.0"
   bin:
     envinfo: dist/cli.js
-  checksum: de736c98d6311c78523628ff127af138451b162e57af5293c1b984ca821d0aeb9c849537d2fde0434011bed33f6bca5310ca2aab8a51a3f28fc719e89045d648
+  checksum: 133583b07510309374b91c943f436c12cecc2d7b8520d65b699a80713773d130ccccb55fe6204d5b6a700b85357b6106d8d0dcf6ac24809cb44b24841e40543f
   languageName: node
   linkType: hard
 
@@ -6362,13 +6371,13 @@ __metadata:
   linkType: hard
 
 "fast-xml-parser@npm:^4.1.3, fast-xml-parser@npm:^4.2.2":
-  version: 4.2.4
-  resolution: "fast-xml-parser@npm:4.2.4"
+  version: 4.2.5
+  resolution: "fast-xml-parser@npm:4.2.5"
   dependencies:
     strnum: ^1.0.5
   bin:
     fxparser: src/cli/cli.js
-  checksum: d3b4d0c0152c09f98def792769fca6bb3fa1d597f9745d9564451c239089bd86bdf573c9263b4944860028cb7edb81752d64399c1aff8b87c9225ecef96905f7
+  checksum: d32b22005504eeb207249bf40dc82d0994b5bb9ca9dcc731d335a1f425e47fe085b3cace3cf9d32172dd1a5544193c49e8615ca95b4bf95a4a4920a226b06d80
   languageName: node
   linkType: hard
 
@@ -7081,8 +7090,8 @@ __metadata:
   linkType: hard
 
 "glob@npm:^10.2.2, glob@npm:^10.2.5":
-  version: 10.2.7
-  resolution: "glob@npm:10.2.7"
+  version: 10.3.0
+  resolution: "glob@npm:10.3.0"
   dependencies:
     foreground-child: ^3.1.0
     jackspeak: ^2.0.3
@@ -7091,7 +7100,7 @@ __metadata:
     path-scurry: ^1.7.0
   bin:
     glob: dist/cjs/src/bin.js
-  checksum: 555205a74607d6f8d9874ba888924b305b5ea1abfaa2e9ccb11ac713d040aac7edbf7d8702a2f4a1cd81b2d7666412170ce7ef061d33cddde189dae8c1a1a054
+  checksum: 6fa4ac0a86ffec1c5715a2e6fbdd63e1e7f1c2c8f5db08cc3256cdfcb81093678e7c80a3d100b502a1b9d141369ecf87bc24fe2bcb72acec7b14626d358a4eb0
   languageName: node
   linkType: hard
 
@@ -10065,11 +10074,11 @@ __metadata:
   linkType: hard
 
 "minimatch@npm:^9.0.0, minimatch@npm:^9.0.1":
-  version: 9.0.1
-  resolution: "minimatch@npm:9.0.1"
+  version: 9.0.2
+  resolution: "minimatch@npm:9.0.2"
   dependencies:
     brace-expansion: ^2.0.1
-  checksum: 97f5f5284bb57dc65b9415dec7f17a0f6531a33572193991c60ff18450dcfad5c2dad24ffeaf60b5261dccd63aae58cc3306e2209d57e7f88c51295a532d8ec3
+  checksum: 2eb12e2047a062fdb973fb51b9803f2455e3a00977858c038d66646d303a5a15bbcbc6ed5a2fc403bc869b1309f829ed3acd881d3246faf044ea7a494974b924
   languageName: node
   linkType: hard
 
@@ -13745,18 +13754,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.0.0, semver@npm:^7.3.5":
-  version: 7.5.2
-  resolution: "semver@npm:7.5.2"
-  dependencies:
-    lru-cache: ^6.0.0
-  bin:
-    semver: bin/semver.js
-  checksum: 3fdf5d1e6f170fe8bcc41669e31787649af91af7f54f05c71d0865bb7aa27e8b92f68b3e6b582483e2c1c648008bc84249d2cd86301771fe5cbf7621d1fe5375
-  languageName: node
-  linkType: hard
-
-"semver@npm:^7.5.3":
+"semver@npm:^7.0.0, semver@npm:^7.3.5, semver@npm:^7.5.3":
   version: 7.5.3
   resolution: "semver@npm:7.5.3"
   dependencies:
