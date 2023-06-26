@@ -2531,7 +2531,7 @@ __metadata:
     uuid: 9.0.0
     vega: 5.25.0
     vega-embed: 6.22.1
-    vega-lite: 5.11.0
+    vega-lite: 5.11.1
     words-count: 2.0.2
     ws: 8.13.0
     yjs: 13.6.6
@@ -18999,9 +18999,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-lite@npm:5.11.0":
-  version: 5.11.0
-  resolution: "vega-lite@npm:5.11.0"
+"vega-lite@npm:5.11.1":
+  version: 5.11.1
+  resolution: "vega-lite@npm:5.11.1"
   dependencies:
     "@types/clone": ~2.1.1
     clone: ~2.1.2
@@ -19020,7 +19020,7 @@ __metadata:
     vl2png: bin/vl2png
     vl2svg: bin/vl2svg
     vl2vg: bin/vl2vg
-  checksum: f6a9d25ac240d62c9dbfbf9dd2b833c97269b8ac21bea977b87859ed692a9a29c90be01a6aaff22563cb544bdb7545beb44e6dd9b55fbc1ce74d67244a48065c
+  checksum: a19ac03f08044b7d382097ef0013e68ee7eeee01fd04df342621a9d3857df35c099354f4732e6241196a10e0a3df5364299e95c5627019c2ffe1dad0e2baa392
   languageName: node
   linkType: hard
 
