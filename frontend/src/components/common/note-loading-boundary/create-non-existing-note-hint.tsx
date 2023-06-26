@@ -10,9 +10,11 @@ import { UiIcon } from '../icons/ui-icon'
 import { ShowIf } from '../show-if/show-if'
 import React, { useCallback, useEffect } from 'react'
 import { Alert, Button } from 'react-bootstrap'
-import { ArrowRepeat as IconArrowRepeat } from 'react-bootstrap-icons'
-import { CheckCircle as IconCheckCircle } from 'react-bootstrap-icons'
-import { ExclamationTriangle as IconExclamationTriangle } from 'react-bootstrap-icons'
+import {
+  ArrowRepeat as IconArrowRepeat,
+  CheckCircle as IconCheckCircle,
+  ExclamationTriangle as IconExclamationTriangle
+} from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 import { useAsyncFn } from 'react-use'
 

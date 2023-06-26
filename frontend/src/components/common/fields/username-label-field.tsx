@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { UsernameField } from './username-field'
 import type { UsernameFieldProps } from './username-field'
+import { UsernameField } from './username-field'
 import React from 'react'
 import { Form } from 'react-bootstrap'
 import { Trans } from 'react-i18next'

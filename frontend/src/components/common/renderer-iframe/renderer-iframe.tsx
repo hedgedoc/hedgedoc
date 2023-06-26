@@ -15,9 +15,9 @@ import { useEditorReceiveHandler } from '../../render-page/window-post-message-c
 import type {
   ExtensionEvent,
   OnHeightChangeMessage,
+  RendererType,
   SetScrollStateMessage
 } from '../../render-page/window-post-message-communicator/rendering-message'
-import type { RendererType } from '../../render-page/window-post-message-communicator/rendering-message'
 import { CommunicationMessageType } from '../../render-page/window-post-message-communicator/rendering-message'
 import { ShowIf } from '../show-if/show-if'
 import { WaitSpinner } from '../wait-spinner/wait-spinner'

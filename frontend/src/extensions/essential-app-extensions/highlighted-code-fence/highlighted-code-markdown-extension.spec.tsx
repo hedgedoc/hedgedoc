@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import * as HighlightedCodeModule from '../../../components/common/highlighted-code/highlighted-code'
 import type { HighlightedCodeProps } from '../../../components/common/highlighted-code/highlighted-code'
+import * as HighlightedCodeModule from '../../../components/common/highlighted-code/highlighted-code'
 import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
 import { mockI18n } from '../../../test-utils/mock-i18n'
 import { HighlightedCodeMarkdownExtension } from './highlighted-code-markdown-extension'

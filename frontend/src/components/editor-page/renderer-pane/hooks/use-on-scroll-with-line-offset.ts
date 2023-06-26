@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { getGlobalState } from '../../../../redux'
-import type { ScrollState } from '../../synced-scroll/scroll-props'
-import type { ScrollCallback } from '../../synced-scroll/scroll-props'
+import type { ScrollCallback, ScrollState } from '../../synced-scroll/scroll-props'
 import { useMemo } from 'react'
 
 /**

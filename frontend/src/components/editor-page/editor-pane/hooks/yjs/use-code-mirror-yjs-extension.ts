@@ -7,8 +7,7 @@ import { useApplicationState } from '../../../../../hooks/common/use-application
 import { YTextSyncViewPlugin } from '../../codemirror-extensions/document-sync/y-text-sync-view-plugin'
 import type { Extension } from '@codemirror/state'
 import { ViewPlugin } from '@codemirror/view'
-import type { YDocSyncClientAdapter } from '@hedgedoc/commons'
-import type { RealtimeDoc } from '@hedgedoc/commons'
+import type { RealtimeDoc, YDocSyncClientAdapter } from '@hedgedoc/commons'
 import { useEffect, useMemo, useState } from 'react'
 
 /**

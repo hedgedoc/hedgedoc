@@ -3,12 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useTranslatedText } from '../../../../hooks/common/use-translated-text'
 import { useOutlineButtonVariant } from '../../../../hooks/dark-mode/use-outline-button-variant'
 import { IconButton } from '../../../common/icon-button/icon-button'
 import type { MouseEvent } from 'react'
 import React, { useCallback } from 'react'
 import { BoxArrowUpRight } from 'react-bootstrap-icons'
-import { useTranslation } from 'react-i18next'
 
 export interface CheatsheetInNewTabButtonProps {
   onClick?: () => void
@@ -26,10 +26,8 @@ export const CheatsheetInNewTabButton: React.FC<CheatsheetInNewTabButtonProps> =
     },
     [onClick]
   )
-
-  const { t } = useTranslation()
-
   const buttonVariant = useOutlineButtonVariant()
+  const buttonTitle = useTranslatedText('cheatsheet.modal.popup')
 
   return (
     <IconButton
@@ -41,7 +39,7 @@ export const CheatsheetInNewTabButton: React.FC<CheatsheetInNewTabButtonProps> =
       className={'p-2 border-0'}
       variant={buttonVariant}
       target={'_blank'}
-      title={t('cheatsheet.modal.popup') ?? ''}
+      title={buttonTitle}
     />
   )
 }

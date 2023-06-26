@@ -10,7 +10,7 @@ import { mockI18n } from '../../../../../../test-utils/mock-i18n'
 import { mockNoteOwnership } from '../../../../../../test-utils/note-ownership'
 import * as useUiNotificationsModule from '../../../../../notifications/ui-notification-boundary'
 import { AliasesListEntry } from './aliases-list-entry'
-import { render, act, screen } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import React from 'react'
 
 jest.mock('../../../../../../api/alias')

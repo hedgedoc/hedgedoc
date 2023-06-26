@@ -8,9 +8,7 @@ import { IconDiscourse } from '../../common/icons/additional/icon-discourse'
 import { IconMatrixOrg } from '../../common/icons/additional/icon-matrix-org'
 import { ExternalLink } from '../../common/links/external-link'
 import React from 'react'
-import { Github as IconGithub } from 'react-bootstrap-icons'
-import { Globe as IconGlobe } from 'react-bootstrap-icons'
-import { Mastodon as IconMastodon } from 'react-bootstrap-icons'
+import { Github as IconGithub, Globe as IconGlobe, Mastodon as IconMastodon } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**

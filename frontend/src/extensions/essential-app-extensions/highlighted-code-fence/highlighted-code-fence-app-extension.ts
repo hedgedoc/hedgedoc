@@ -8,8 +8,7 @@ import { codeFenceRegex } from '../../../components/editor-page/editor-pane/auto
 import type { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/_base-classes/markdown-renderer-extension'
 import { AppExtension } from '../../_base-classes/app-extension'
 import { HighlightedCodeMarkdownExtension } from './highlighted-code-markdown-extension'
-import type { CompletionSource } from '@codemirror/autocomplete'
-import type { CompletionContext, CompletionResult } from '@codemirror/autocomplete'
+import type { CompletionContext, CompletionResult, CompletionSource } from '@codemirror/autocomplete'
 import { languages } from '@codemirror/language-data'
 
 /**

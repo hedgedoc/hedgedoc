@@ -9,9 +9,11 @@ import { UiIcon } from '../../../common/icons/ui-icon'
 import styles from './split-divider.module.scss'
 import React, { useMemo } from 'react'
 import { Button } from 'react-bootstrap'
-import { ArrowLeftRight as IconArrowLeftRight } from 'react-bootstrap-icons'
-import { ArrowLeft as IconArrowLeft } from 'react-bootstrap-icons'
-import { ArrowRight as IconArrowRight } from 'react-bootstrap-icons'
+import {
+  ArrowLeft as IconArrowLeft,
+  ArrowLeftRight as IconArrowLeftRight,
+  ArrowRight as IconArrowRight
+} from 'react-bootstrap-icons'
 
 export enum DividerButtonsShift {
   SHIFT_TO_LEFT = 'shift-left',

@@ -5,7 +5,7 @@
  */
 import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test-utils/test-markdown-renderer'
 import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-markdown-extension'
-import { screen, render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import React from 'react'
 
 describe('blockquote extra tag', () => {

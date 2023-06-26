@@ -9,10 +9,7 @@ import { TranslatedExternalLink } from '../../../common/links/translated-externa
 import { TranslatedInternalLink } from '../../../common/links/translated-internal-link'
 import React from 'react'
 import { Col, Row } from 'react-bootstrap'
-import { Dot as IconDot } from 'react-bootstrap-icons'
-import { Flag as IconFlag } from 'react-bootstrap-icons'
-import { PeopleFill as IconPeopleFill } from 'react-bootstrap-icons'
-import { Tag as IconTag } from 'react-bootstrap-icons'
+import { Dot as IconDot, Flag as IconFlag, PeopleFill as IconPeopleFill, Tag as IconTag } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**

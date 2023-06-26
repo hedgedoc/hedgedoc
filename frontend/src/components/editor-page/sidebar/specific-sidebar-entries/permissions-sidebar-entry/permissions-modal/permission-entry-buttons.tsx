@@ -3,15 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
 import { UiIcon } from '../../../../../common/icons/ui-icon'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { AccessLevel } from '@hedgedoc/commons'
 import React, { useMemo } from 'react'
 import { Button, ToggleButtonGroup } from 'react-bootstrap'
-import { Eye as IconEye } from 'react-bootstrap-icons'
-import { Pencil as IconPencil } from 'react-bootstrap-icons'
-import { X as IconX } from 'react-bootstrap-icons'
-import { useTranslation } from 'react-i18next'
+import { Eye as IconEye, Pencil as IconPencil, X as IconX } from 'react-bootstrap-icons'
 
 interface PermissionEntryButtonI18nKeys {
   remove: string
@@ -53,8 +51,6 @@ export const PermissionEntryButtons: React.FC<PermissionEntryButtonsProps & Perm
   onRemove,
   disabled
 }) => {
-  const { t } = useTranslation()
-
   const i18nKeys: PermissionEntryButtonI18nKeys = useMemo(() => {
     switch (type) {
       case PermissionType.USER:
@@ -72,27 +68,27 @@ export const PermissionEntryButtons: React.FC<PermissionEntryButtonsProps & Perm
     }
   }, [type])
 
+  const translateOptions = useMemo(() => ({ name }), [name])
+  const removeTitle = useTranslatedText(i18nKeys.remove, translateOptions)
+  const setReadOnlyTitle = useTranslatedText(i18nKeys.setReadOnly, translateOptions)
+  const setWritableTitle = useTranslatedText(i18nKeys.setWriteable, translateOptions)
+
   return (
     <div>
-      <Button
-        variant='light'
-        className={'text-danger me-2'}
-        disabled={disabled}
-        title={t(i18nKeys.remove, { name }) ?? undefined}
-        onClick={onRemove}>
+      <Button variant='light' className={'text-danger me-2'} disabled={disabled} title={removeTitle} onClick={onRemove}>
         <UiIcon icon={IconX} />
       </Button>
       <ToggleButtonGroup type='radio' name='edit-mode' value={currentSetting}>
         <Button
           disabled={disabled}
-          title={t(i18nKeys.setReadOnly, { name }) ?? undefined}
+          title={setReadOnlyTitle}
           variant={currentSetting === AccessLevel.READ_ONLY ? 'secondary' : 'outline-secondary'}
           onClick={onSetReadOnly}>
           <UiIcon icon={IconEye} />
         </Button>
         <Button
           disabled={disabled}
-          title={t(i18nKeys.setWriteable, { name }) ?? undefined}
+          title={setWritableTitle}
           variant={currentSetting === AccessLevel.WRITEABLE ? 'secondary' : 'outline-secondary'}
           onClick={onSetWriteable}>
           <UiIcon icon={IconPencil} />

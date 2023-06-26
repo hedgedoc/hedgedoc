@@ -3,13 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import { ShowIf } from '../show-if/show-if'
 import defaultAvatar from './default-avatar.png'
 import styles from './user-avatar.module.scss'
 import React, { useCallback, useMemo } from 'react'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import type { OverlayInjectedProps } from 'react-bootstrap/Overlay'
-import { useTranslation } from 'react-i18next'
 
 export interface UserAvatarProps {
   size?: 'sm' | 'lg'
@@ -34,8 +34,6 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
   additionalClasses = '',
   showName = true
 }) => {
-  const { t } = useTranslation()
-
   const imageSize = useMemo(() => {
     switch (size) {
       case 'sm':
@@ -51,7 +49,13 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
     return photoUrl || defaultAvatar.src
   }, [photoUrl])
 
-  const imgDescription = useMemo(() => t('common.avatarOf', { name: displayName }), [t, displayName])
+  const imageTranslateOptions = useMemo(
+    () => ({
+      name: displayName
+    }),
+    [displayName]
+  )
+  const imgDescription = useTranslatedText('common.avatarOf', imageTranslateOptions)
 
   const tooltip = useCallback(
     (overlayInjectedProps: OverlayInjectedProps) => (

@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
 import { ShowIf } from '../../common/show-if/show-if'
@@ -12,7 +13,7 @@ import Link from 'next/link'
 import React, { useMemo } from 'react'
 import { Button } from 'react-bootstrap'
 import type { ButtonProps } from 'react-bootstrap/Button'
-import { Trans, useTranslation } from 'react-i18next'
+import { Trans } from 'react-i18next'
 
 export type SignInButtonProps = Omit<ButtonProps, 'href'>
 
@@ -24,7 +25,6 @@ export type SignInButtonProps = Omit<ButtonProps, 'href'>
  * @param props Further props inferred from the common button component.
  */
 export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props }) => {
-  const { t } = useTranslation()
   const authProviders = useFrontendConfig().authProviders
 
   const loginLink = useMemo(() => {
@@ -35,15 +35,12 @@ export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props })
     }
     return '/login'
   }, [authProviders])
+  const buttonTitle = useTranslatedText('login.signIn')
 
   return (
     <ShowIf condition={authProviders.length > 0}>
       <Link href={loginLink} passHref={true}>
-        <Button
-          title={t('login.signIn') ?? undefined}
-          {...cypressId('sign-in-button')}
-          variant={variant || 'success'}
-          {...props}>
+        <Button title={buttonTitle} {...cypressId('sign-in-button')} variant={variant || 'success'} {...props}>
           <Trans i18nKey='login.signIn' />
         </Button>
       </Link>

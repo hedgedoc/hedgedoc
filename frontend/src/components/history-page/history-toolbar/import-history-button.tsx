@@ -6,6 +6,7 @@
 import type { HistoryEntryWithOrigin } from '../../../api/history/types'
 import { HistoryEntryOrigin } from '../../../api/history/types'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import { convertV1History, importHistoryEntries, mergeHistoryEntries } from '../../../redux/history/methods'
 import type { HistoryExportJson, V1HistoryEntry } from '../../../redux/history/types'
 import { cypressId } from '../../../utils/cypress-attribute'
@@ -15,13 +16,11 @@ import { useSafeRefreshHistoryStateCallback } from './hooks/use-safe-refresh-his
 import React, { useCallback, useRef, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { Upload as IconUpload } from 'react-bootstrap-icons'
-import { useTranslation } from 'react-i18next'
 
 /**
  * Button that lets the user select a history JSON file and uploads imports that into the history.
  */
 export const ImportHistoryButton: React.FC = () => {
-  const { t } = useTranslation()
   const userExists = useApplicationState((state) => !!state.user)
   const historyState = useApplicationState((state) => state.history)
   const uploadInput = useRef<HTMLInputElement>(null)
@@ -117,6 +116,8 @@ export const ImportHistoryButton: React.FC = () => {
     }
   }
 
+  const buttonTitle = useTranslatedText('landing.history.toolbar.import')
+
   return (
     <div>
       <input
@@ -129,7 +130,7 @@ export const ImportHistoryButton: React.FC = () => {
       />
       <Button
         variant={'secondary'}
-        title={t('landing.history.toolbar.import') ?? undefined}
+        title={buttonTitle}
         onClick={onUploadButtonClick}
         {...cypressId('import-history-file-button')}>
         <UiIcon icon={IconUpload} />

@@ -11,7 +11,7 @@ import { RendererType } from '../../render-page/window-post-message-communicator
 import { CommonModal } from '../modals/common-modal'
 import { RendererIframe } from '../renderer-iframe/renderer-iframe'
 import { fetchMotd, MOTD_LOCAL_STORAGE_KEY } from './fetch-motd'
-import React, { useCallback, useMemo, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { useAsync } from 'react-use'

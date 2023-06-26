@@ -10,7 +10,7 @@ import { mockI18n } from '../../../../../../test-utils/mock-i18n'
 import { mockNoteOwnership } from '../../../../../../test-utils/note-ownership'
 import * as useUiNotificationsModule from '../../../../../notifications/ui-notification-boundary'
 import { AliasesAddForm } from './aliases-add-form'
-import { render, act, screen } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import testEvent from '@testing-library/user-event'
 import React from 'react'
 

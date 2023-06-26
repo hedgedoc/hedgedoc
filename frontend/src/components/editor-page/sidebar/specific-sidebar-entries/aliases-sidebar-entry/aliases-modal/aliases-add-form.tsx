@@ -7,6 +7,7 @@ import { addAlias } from '../../../../../../api/alias'
 import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
 import { useIsOwner } from '../../../../../../hooks/common/use-is-owner'
 import { useOnInputChange } from '../../../../../../hooks/common/use-on-input-change'
+import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
 import { updateMetadata } from '../../../../../../redux/note-details/methods'
 import { testId } from '../../../../../../utils/test-id'
 import { UiIcon } from '../../../../../common/icons/ui-icon'
@@ -15,7 +16,6 @@ import type { FormEvent } from 'react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Form, InputGroup } from 'react-bootstrap'
 import { Plus as IconPlus } from 'react-bootstrap-icons'
-import { useTranslation } from 'react-i18next'
 
 const validAliasRegex = /^[a-z0-9_-]*$/
 
@@ -23,7 +23,6 @@ const validAliasRegex = /^[a-z0-9_-]*$/
  * Form for adding a new alias to a note.
  */
 export const AliasesAddForm: React.FC = () => {
-  const { t } = useTranslation()
   const { showErrorNotification } = useUiNotifications()
   const noteId = useApplicationState((state) => state.noteDetails.id)
   const isOwner = useIsOwner()
@@ -48,12 +47,14 @@ export const AliasesAddForm: React.FC = () => {
     return validAliasRegex.test(newAlias)
   }, [newAlias])
 
+  const addAliasText = useTranslatedText('editor.modal.aliases.addAlias')
+
   return (
     <form onSubmit={onAddAlias}>
       <InputGroup className={'me-1 mb-1'} hasValidation={true}>
         <Form.Control
           value={newAlias}
-          placeholder={t('editor.modal.aliases.addAlias') ?? undefined}
+          placeholder={addAliasText}
           onChange={onNewAliasInputChange}
           isInvalid={!newAliasValid}
           disabled={!isOwner}
@@ -65,7 +66,7 @@ export const AliasesAddForm: React.FC = () => {
           variant='light'
           className={'text-secondary ms-2'}
           disabled={!isOwner || !newAliasValid || newAlias === ''}
-          title={t('editor.modal.aliases.addAlias') ?? undefined}
+          title={addAliasText}
           {...testId('addAliasButton')}>
           <UiIcon icon={IconPlus} />
         </Button>

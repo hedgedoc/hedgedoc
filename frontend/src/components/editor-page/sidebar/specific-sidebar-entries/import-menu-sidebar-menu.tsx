@@ -11,10 +11,12 @@ import type { SpecificSidebarMenuProps } from '../types'
 import { DocumentSidebarMenuSelection } from '../types'
 import { ImportMarkdownSidebarEntry } from './import-markdown-sidebar-entry'
 import React, { Fragment, useCallback } from 'react'
-import { ArrowLeft as IconArrowLeft } from 'react-bootstrap-icons'
-import { Clipboard as IconClipboard } from 'react-bootstrap-icons'
-import { CloudUpload as IconCloudUpload } from 'react-bootstrap-icons'
-import { Github as IconGithub } from 'react-bootstrap-icons'
+import {
+  ArrowLeft as IconArrowLeft,
+  Clipboard as IconClipboard,
+  CloudUpload as IconCloudUpload,
+  Github as IconGithub
+} from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**

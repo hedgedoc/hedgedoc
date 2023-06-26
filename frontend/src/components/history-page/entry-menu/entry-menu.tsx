@@ -13,9 +13,7 @@ import styles from './entry-menu.module.scss'
 import { RemoveNoteEntryItem } from './remove-note-entry-item'
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
-import { Cloud as IconCloud } from 'react-bootstrap-icons'
-import { Laptop as IconLaptop } from 'react-bootstrap-icons'
-import { ThreeDots as IconThreeDots } from 'react-bootstrap-icons'
+import { Cloud as IconCloud, Laptop as IconLaptop, ThreeDots as IconThreeDots } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 export interface EntryMenuProps {

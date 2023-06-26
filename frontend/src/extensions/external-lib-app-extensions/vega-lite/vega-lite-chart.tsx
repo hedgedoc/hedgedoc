@@ -49,7 +49,7 @@ export const VegaLiteChart: React.FC<CodeProps> = ({ code }) => {
         SVG_ACTION: t('renderer.vega-lite.svg') ?? undefined
       }
     })
-  }, [code, vegaEmbed])
+  }, [code, vegaEmbed, t])
 
   useEffect(() => {
     if (renderingError) {

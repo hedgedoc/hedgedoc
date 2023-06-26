@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { testId } from '../../../utils/test-id'
-import { BootstrapLazyIcons } from './bootstrap-icons'
 import type { BootstrapIconName } from './bootstrap-icons'
+import { BootstrapLazyIcons } from './bootstrap-icons'
 import React, { Suspense, useMemo } from 'react'
 
 export interface LazyBootstrapIconProps {

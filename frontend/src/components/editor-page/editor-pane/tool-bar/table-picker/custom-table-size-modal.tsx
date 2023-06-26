@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useTranslatedText } from '../../../../../hooks/common/use-translated-text'
 import { cypressId } from '../../../../../utils/cypress-attribute'
 import { UiIcon } from '../../../../common/icons/ui-icon'
 import { CommonModal } from '../../../../common/modals/common-modal'
@@ -10,9 +11,8 @@ import type { TableSize } from './table-size-picker-popover'
 import type { ChangeEvent } from 'react'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Button, Form, ModalFooter } from 'react-bootstrap'
-import { Table as IconTable } from 'react-bootstrap-icons'
-import { X as IconX } from 'react-bootstrap-icons'
-import { Trans, useTranslation } from 'react-i18next'
+import { Table as IconTable, X as IconX } from 'react-bootstrap-icons'
+import { Trans } from 'react-i18next'
 
 export interface CustomTableSizeModalProps {
   showModal: boolean
@@ -33,7 +33,6 @@ const initialTableSize: TableSize = {
  * @param onSizeSelect is called if the user entered and confirmed a custom table size
  */
 export const CustomTableSizeModal: React.FC<CustomTableSizeModalProps> = ({ showModal, onDismiss, onSizeSelect }) => {
-  const { t } = useTranslation()
   const [tableSize, setTableSize] = useState<TableSize>(() => initialTableSize)
 
   useEffect(() => {
@@ -63,6 +62,9 @@ export const CustomTableSizeModal: React.FC<CustomTableSizeModalProps> = ({ show
     }))
   }, [])
 
+  const columnPlaceholderText = useTranslatedText('editor.editorToolbar.table.cols')
+  const rowsPlaceholderText = useTranslatedText('editor.editorToolbar.table.rows')
+
   return (
     <CommonModal
       show={showModal}
@@ -75,7 +77,7 @@ export const CustomTableSizeModal: React.FC<CustomTableSizeModalProps> = ({ show
         <Form.Control
           type={'number'}
           min={1}
-          placeholder={t('editor.editorToolbar.table.cols') ?? undefined}
+          placeholder={columnPlaceholderText}
           isInvalid={tableSize.columns <= 0}
           onChange={onColChange}
         />
@@ -83,7 +85,7 @@ export const CustomTableSizeModal: React.FC<CustomTableSizeModalProps> = ({ show
         <Form.Control
           type={'number'}
           min={1}
-          placeholder={t('editor.editorToolbar.table.rows') ?? undefined}
+          placeholder={rowsPlaceholderText}
           isInvalid={tableSize.rows <= 0}
           onChange={onRowChange}
         />

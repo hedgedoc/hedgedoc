@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useTranslatedText } from '../../../../hooks/common/use-translated-text'
 import type { AuthFieldProps } from './fields'
 import React from 'react'
 import { Form } from 'react-bootstrap'
-import { useTranslation } from 'react-i18next'
 
 /**
  * Renders an input field for the password of a user.
@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next'
  * @param invalid True when the entered password is invalid, false otherwise.
  */
 export const PasswordField: React.FC<AuthFieldProps> = ({ onChange, invalid }) => {
-  const { t } = useTranslation()
+  const placeholderText = useTranslatedText('login.auth.password')
 
   return (
     <Form.Group>
@@ -23,7 +23,7 @@ export const PasswordField: React.FC<AuthFieldProps> = ({ onChange, invalid }) =
         isInvalid={invalid}
         type='password'
         size='sm'
-        placeholder={t('login.auth.password') ?? undefined}
+        placeholder={placeholderText}
         onChange={onChange}
         autoComplete='current-password'
       />

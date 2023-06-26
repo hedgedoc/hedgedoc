@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { store } from '..'
-import type { SetRealtimeSyncStatusAction, SetRealtimeUsersAction, SetRealtimeConnectionStatusAction } from './types'
+import type { SetRealtimeConnectionStatusAction, SetRealtimeSyncStatusAction, SetRealtimeUsersAction } from './types'
 import { RealtimeStatusActionType } from './types'
 import type { RealtimeUser } from '@hedgedoc/commons'
 

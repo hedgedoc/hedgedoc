@@ -3,10 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import type { CommonFieldProps } from './fields'
 import React, { useMemo } from 'react'
 import { Form } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import { Trans } from 'react-i18next'
 
 interface DisplayNameFieldProps extends CommonFieldProps {
   initialValue?: string
@@ -20,11 +21,8 @@ interface DisplayNameFieldProps extends CommonFieldProps {
  * @param initialValue The initial input field value.
  */
 export const DisplayNameField: React.FC<DisplayNameFieldProps> = ({ onChange, value, initialValue }) => {
-  const { t } = useTranslation()
-
-  const isValid = useMemo(() => {
-    return value.trim() !== '' && value !== initialValue
-  }, [value, initialValue])
+  const isValid = useMemo(() => value.trim() !== '' && value !== initialValue, [value, initialValue])
+  const placeholderText = useTranslatedText('profile.displayName')
 
   return (
     <Form.Group>
@@ -37,7 +35,7 @@ export const DisplayNameField: React.FC<DisplayNameFieldProps> = ({ onChange, va
         value={value}
         isValid={isValid}
         onChange={onChange}
-        placeholder={t('profile.displayName') ?? undefined}
+        placeholder={placeholderText}
         autoComplete='name'
         required
       />

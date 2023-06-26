@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import type { CommonFieldProps } from './fields'
 import React from 'react'
 import { Form } from 'react-bootstrap'
-import { useTranslation } from 'react-i18next'
 
 export interface UsernameFieldProps extends CommonFieldProps {
   isInvalid?: boolean
@@ -22,7 +22,7 @@ export interface UsernameFieldProps extends CommonFieldProps {
  * @param isInvalid Adds error style to label
  */
 export const UsernameField: React.FC<UsernameFieldProps> = ({ onChange, value, isValid, isInvalid }) => {
-  const { t } = useTranslation()
+  const placeholderText = useTranslatedText('login.auth.username')
 
   return (
     <Form.Control
@@ -32,7 +32,7 @@ export const UsernameField: React.FC<UsernameFieldProps> = ({ onChange, value, i
       isValid={isValid}
       isInvalid={isInvalid}
       onChange={onChange}
-      placeholder={t('login.auth.username') ?? undefined}
+      placeholder={placeholderText}
       autoComplete='username'
       autoFocus={true}
       required
