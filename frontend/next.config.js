@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-const { isMockMode, isTestMode, isProductionMode} = require('./src/utils/test-modes')
+const { isMockMode, isTestMode, isProductionMode, isProfilingMode } = require('./src/utils/test-modes')
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true'
+  enabled: isProfilingMode
 })
 
 console.log('Node environment is', process.env.NODE_ENV)
@@ -29,6 +29,10 @@ if (isMockMode) {
  - No persistent data
  - No realtime editing
  `)
+}
+
+if (isProfilingMode) {
+  console.info('This build contains the bundle analyzer and profiling metrics.')
 }
 
 /** @type {import('@svgr/webpack').LoaderOptions} */

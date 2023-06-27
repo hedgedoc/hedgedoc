@@ -43,9 +43,16 @@ const isDevMode = process.env.NODE_ENV === 'development'
  */
 const isProductionMode = process.env.NODE_ENV === 'production'
 
+/**
+ * Defines if the current runtime contains the bundle analyzer and profiling metrics.
+ * @type boolean
+ */
+const isProfilingMode = !!process.env.ANALYZE && isPositiveAnswer(process.env.ANALYZE)
+
 module.exports = {
   isTestMode,
   isMockMode,
   isDevMode,
-  isProductionMode
+  isProductionMode,
+  isProfilingMode
 }
