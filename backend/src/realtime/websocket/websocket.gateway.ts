@@ -87,19 +87,21 @@ export class WebsocketGateway implements OnGatewayConnection {
         await this.realtimeNoteService.getOrCreateRealtimeNote(note);
 
       const websocketTransporter = new MessageTransporter();
+      websocketTransporter.setAdapter(
+        new BackendWebsocketAdapter(clientSocket),
+      );
+
       const permissions = await this.noteService.toNotePermissionsDto(note);
       const acceptEdits: boolean = userCanEdit(
         permissions as NotePermissions,
         user?.username,
       );
+
       const connection = new RealtimeConnection(
         websocketTransporter,
         user,
         realtimeNote,
         acceptEdits,
-      );
-      websocketTransporter.setAdapter(
-        new BackendWebsocketAdapter(clientSocket),
       );
 
       realtimeNote.addClient(connection);
