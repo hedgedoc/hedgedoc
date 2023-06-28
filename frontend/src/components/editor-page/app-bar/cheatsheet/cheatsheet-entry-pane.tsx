@@ -8,7 +8,7 @@ import { HtmlToReact } from '../../../common/html-to-react/html-to-react'
 import { RendererIframe } from '../../../common/renderer-iframe/renderer-iframe'
 import { ExtensionEventEmitterProvider } from '../../../markdown-renderer/hooks/use-extension-event-emitter'
 import { RendererType } from '../../../render-page/window-post-message-communicator/rendering-message'
-import type { CheatsheetEntry } from '../../cheatsheet/cheatsheet-extension'
+import type { CheatsheetSingleEntry } from '../../cheatsheet/cheatsheet-extension'
 import { EditorToRendererCommunicatorContextProvider } from '../../render-context/editor-to-renderer-communicator-context-provider'
 import { ReadMoreLinkItem } from './read-more-link-item'
 import { useComponentsFromAppExtensions } from './use-components-from-app-extensions'
@@ -19,7 +19,7 @@ import { Trans, useTranslation } from 'react-i18next'
 
 interface CheatsheetRendererProps {
   rootI18nKey?: string
-  extension: CheatsheetEntry
+  extension: CheatsheetSingleEntry
 }
 
 /**

@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { CheatsheetEntry, CheatsheetExtension } from '../../cheatsheet/cheatsheet-extension'
-import { isCheatsheetGroup } from '../../cheatsheet/cheatsheet-extension'
+import type { CheatsheetSingleEntry, CheatsheetExtension } from '../../cheatsheet/cheatsheet-extension'
+import { hasCheatsheetTopics } from '../../cheatsheet/cheatsheet-extension'
 import { CategoryAccordion } from './category-accordion'
 import { CheatsheetEntryPane } from './cheatsheet-entry-pane'
 import { CheatsheetSearch } from './cheatsheet-search'
@@ -20,11 +20,11 @@ import { Trans } from 'react-i18next'
 export const CheatsheetContent: React.FC = () => {
   const [visibleExtensions, setVisibleExtensions] = useState<CheatsheetExtension[]>([])
   const [selectedExtension, setSelectedExtension] = useState<CheatsheetExtension>()
-  const [selectedEntry, setSelectedEntry] = useState<CheatsheetEntry>()
+  const [selectedEntry, setSelectedEntry] = useState<CheatsheetSingleEntry>()
 
   const changeExtension = useCallback((value: CheatsheetExtension) => {
     setSelectedExtension(value)
-    setSelectedEntry(isCheatsheetGroup(value) ? value.entries[0] : value)
+    setSelectedEntry(hasCheatsheetTopics(value) ? value.topics[0] : value)
   }, [])
 
   return (
@@ -46,7 +46,7 @@ export const CheatsheetContent: React.FC = () => {
           />
           {selectedEntry !== undefined ? (
             <CheatsheetEntryPane
-              rootI18nKey={isCheatsheetGroup(selectedExtension) ? selectedExtension.i18nKey : undefined}
+              rootI18nKey={hasCheatsheetTopics(selectedExtension) ? selectedExtension.i18nKey : undefined}
               extension={selectedEntry}
             />
           ) : (

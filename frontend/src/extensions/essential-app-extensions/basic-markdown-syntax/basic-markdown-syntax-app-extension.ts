@@ -33,7 +33,7 @@ export class BasicMarkdownSyntaxAppExtension extends AppExtension {
       {
         i18nKey: 'basics.headlines',
         categoryI18nKey: 'basic',
-        entries: [
+        topics: [
           {
             i18nKey: 'hashtag'
           },
@@ -45,17 +45,17 @@ export class BasicMarkdownSyntaxAppExtension extends AppExtension {
       {
         i18nKey: 'basics.code',
         categoryI18nKey: 'basic',
-        entries: [{ i18nKey: 'inline' }, { i18nKey: 'block' }]
+        topics: [{ i18nKey: 'inline' }, { i18nKey: 'block' }]
       },
       {
         i18nKey: 'basics.lists',
         categoryI18nKey: 'basic',
-        entries: [{ i18nKey: 'unordered' }, { i18nKey: 'ordered' }]
+        topics: [{ i18nKey: 'unordered' }, { i18nKey: 'ordered' }]
       },
       {
         i18nKey: 'basics.images',
         categoryI18nKey: 'basic',
-        entries: [{ i18nKey: 'basic' }, { i18nKey: 'size' }]
+        topics: [{ i18nKey: 'basic' }, { i18nKey: 'size' }]
       },
       {
         i18nKey: 'basics.links',

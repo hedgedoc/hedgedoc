@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -23,7 +23,7 @@ export class HighlightedCodeFenceAppExtension extends AppExtension {
     return [
       {
         i18nKey: 'codeHighlighting',
-        entries: [{ i18nKey: 'language' }, { i18nKey: 'lineNumbers' }, { i18nKey: 'lineWrapping' }]
+        topics: [{ i18nKey: 'language' }, { i18nKey: 'lineNumbers' }, { i18nKey: 'lineWrapping' }]
       }
     ]
   }
