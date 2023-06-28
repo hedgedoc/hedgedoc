@@ -102,9 +102,9 @@ describe('backend websocket adapter', () => {
   });
 
   it('can send messages', () => {
-    const value: Message<MessageType> = { type: MessageType.READY };
+    const value: Message<MessageType> = { type: MessageType.READY_REQUEST };
     sut.send(value);
-    expect(mockedSocket.send).toHaveBeenCalledWith('{"type":"READY"}');
+    expect(mockedSocket.send).toHaveBeenCalledWith('{"type":"READY_REQUEST"}');
   });
 
   it('can read the connection state when open', () => {

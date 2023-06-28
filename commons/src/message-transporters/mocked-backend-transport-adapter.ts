@@ -70,18 +70,22 @@ export class MockedBackendTransportAdapter implements TransportAdapter {
 
   send(value: Message<MessageType>): void {
     if (value.type === MessageType.NOTE_CONTENT_STATE_REQUEST) {
-      new Promise(() => {
-        this.messageHandler?.({
-          type: MessageType.NOTE_CONTENT_UPDATE,
-          payload: this.doc.encodeStateAsUpdate(value.payload)
-        })
-      }).catch((error: Error) => console.error(error))
-    } else if (value.type === MessageType.READY) {
-      new Promise(() => {
-        this.messageHandler?.({
-          type: MessageType.READY
-        })
-      }).catch((error: Error) => console.error(error))
+      setTimeout(
+        () =>
+          this.messageHandler?.({
+            type: MessageType.NOTE_CONTENT_UPDATE,
+            payload: this.doc.encodeStateAsUpdate(value.payload)
+          }),
+        0
+      )
+    } else if (value.type === MessageType.READY_REQUEST) {
+      setTimeout(
+        () =>
+          this.messageHandler?.({
+            type: MessageType.READY_ANSWER
+          }),
+        0
+      )
     }
   }
 }

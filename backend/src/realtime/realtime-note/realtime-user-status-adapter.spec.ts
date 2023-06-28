@@ -8,7 +8,6 @@ import {
   MessageTransporter,
   MessageType,
   MockedBackendTransportAdapter,
-  waitForOtherPromisesToFinish,
 } from '@hedgedoc/commons';
 
 import { RealtimeUserStatusAdapter } from './realtime-user-status-adapter';
@@ -40,6 +39,14 @@ describe('realtime user status adapter', () => {
   let messageTransporterGuest: MessageTransporter;
   let messageTransporterNotReady: MessageTransporter;
   let messageTransporterDecline: MessageTransporter;
+
+  beforeAll(() => {
+    jest.useFakeTimers();
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
 
   beforeEach(async () => {
     clientLoggedIn1 = undefined;
@@ -139,11 +146,12 @@ describe('realtime user status adapter', () => {
       'sendMessage',
     );
 
-    messageTransporterLoggedIn1.sendReady();
-    messageTransporterLoggedIn2.sendReady();
-    messageTransporterGuest.sendReady();
-    messageTransporterDecline.sendReady();
-    await waitForOtherPromisesToFinish();
+    messageTransporterLoggedIn1.startSendingOfReadyRequests();
+    messageTransporterLoggedIn2.startSendingOfReadyRequests();
+    messageTransporterGuest.startSendingOfReadyRequests();
+    messageTransporterDecline.startSendingOfReadyRequests();
+
+    jest.advanceTimersByTime(500);
   });
 
   it('can answer a state request', () => {

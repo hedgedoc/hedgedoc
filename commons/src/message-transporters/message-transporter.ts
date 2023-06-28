@@ -7,7 +7,7 @@ import { Message, MessagePayloads, MessageType } from './message.js'
 import { TransportAdapter } from './transport-adapter.js'
 import { EventEmitter2, Listener } from 'eventemitter2'
 
-export type MessageEvents = MessageType | 'connected' | 'disconnected'
+export type MessageEvents = MessageType | 'connected' | 'disconnected' | 'ready'
 
 type MessageEventPayloadMap = {
   [E in MessageEvents]: E extends keyof MessagePayloads
@@ -26,11 +26,13 @@ export enum ConnectionState {
  */
 export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
   private transportAdapter: TransportAdapter | undefined
-  private readyMessageReceived = false
   private destroyOnMessageEventHandler: undefined | (() => void)
   private destroyOnErrorEventHandler: undefined | (() => void)
   private destroyOnCloseEventHandler: undefined | (() => void)
   private destroyOnConnectedEventHandler: undefined | (() => void)
+  private thisSideReady = false
+  private otherSideReady = false
+  private readyInterval: NodeJS.Timer | undefined
 
   public sendMessage<M extends MessageType>(content: Message<M>): void {
     if (!this.isConnected()) {
@@ -59,6 +61,8 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
       throw new Error('Websocket must be connected')
     }
     this.unbindEventsFromPreviousWebsocket()
+    this.thisSideReady = false
+    this.otherSideReady = false
     this.transportAdapter = websocket
     this.bindWebsocketEvents(websocket)
 
@@ -72,14 +76,41 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
   }
 
   protected receiveMessage<L extends MessageType>(message: Message<L>): void {
-    if (message.type === MessageType.READY) {
-      this.readyMessageReceived = true
+    if (!this.thisSideReady) {
+      return
+    }
+    if (message.type === MessageType.READY_REQUEST) {
+      this.sendMessage({ type: MessageType.READY_ANSWER })
+      return
+    }
+    if (message.type === MessageType.READY_ANSWER) {
+      this.processReadyAnswer()
+      return
+    }
+    if (!this.isReady()) {
+      return
     }
     this.emit(message.type, message)
   }
 
+  private processReadyAnswer() {
+    this.stopSendingOfReadyRequests()
+    if (this.otherSideReady) {
+      return
+    }
+    this.otherSideReady = true
+    this.emit('ready')
+  }
+
+  private stopSendingOfReadyRequests() {
+    if (this.readyInterval !== undefined) {
+      clearInterval(this.readyInterval)
+    }
+  }
+
   public disconnect(): void {
     this.transportAdapter?.disconnect()
+    this.onDisconnecting()
   }
 
   public getConnectionState(): ConnectionState {
@@ -123,9 +154,11 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
     if (this.transportAdapter === undefined) {
       return
     }
+    this.stopSendingOfReadyRequests()
     this.unbindEventsFromPreviousWebsocket()
+    this.thisSideReady = false
+    this.otherSideReady = false
     this.transportAdapter = undefined
-    this.readyMessageReceived = false
     this.emit('disconnected')
   }
 
@@ -137,10 +170,10 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
   }
 
   /**
-   * Indicates if the message transporter has receives a {@link MessageType.READY ready message} yet.
+   * Indicates if the message transporter is ready to receives messages.
    */
   public isReady(): boolean {
-    return this.readyMessageReceived
+    return this.thisSideReady && this.otherSideReady
   }
 
   /**
@@ -151,10 +184,10 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
    * @return The event listener that waits for ready messages
    */
   public doAsSoonAsReady(callback: () => void): Listener {
-    if (this.readyMessageReceived) {
+    if (this.isReady()) {
       callback()
     }
-    return this.on(MessageType.READY, callback, {
+    return this.on('ready', callback, {
       objectify: true
     }) as Listener
   }
@@ -175,9 +208,17 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
     }) as Listener
   }
 
-  public sendReady(): void {
-    this.sendMessage({
-      type: MessageType.READY
-    })
+  /**
+   * Marks the transporter as ready for communication and starts sending of ready requests to the other side.
+   * This method should be called after all preparations are done and messages can be processed.
+   */
+  public startSendingOfReadyRequests(): void {
+    this.thisSideReady = true
+
+    this.readyInterval = setInterval(() => {
+      this.sendMessage({
+        type: MessageType.READY_REQUEST
+      })
+    }, 100)
   }
 }
