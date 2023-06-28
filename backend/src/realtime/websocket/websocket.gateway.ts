@@ -106,7 +106,7 @@ export class WebsocketGateway implements OnGatewayConnection {
 
       realtimeNote.addClient(connection);
 
-      websocketTransporter.sendReady();
+      websocketTransporter.startSendingOfReadyRequests();
     } catch (error: unknown) {
       this.logger.error(
         `Error occurred while initializing: ${(error as Error).message}`,

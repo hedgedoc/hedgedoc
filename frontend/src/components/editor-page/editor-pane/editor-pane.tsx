@@ -135,7 +135,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
   const mayEdit = useMayEdit()
 
   useEffect(() => {
-    const listener = messageTransporter.doAsSoonAsConnected(() => messageTransporter.sendReady())
+    const listener = messageTransporter.doAsSoonAsConnected(() => messageTransporter.startSendingOfReadyRequests())
     return () => {
       listener.off()
     }

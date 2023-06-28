@@ -89,9 +89,9 @@ describe('frontend websocket', () => {
 
   it('can send messages', () => {
     mockSocket()
-    const value: Message<MessageType> = { type: MessageType.READY }
+    const value: Message<MessageType> = { type: MessageType.READY_REQUEST }
     adapter.send(value)
-    expect(sendSpy).toHaveBeenCalledWith('{"type":"READY"}')
+    expect(sendSpy).toHaveBeenCalledWith('{"type":"READY_REQUEST"}')
   })
 
   it('can read the connection state when open', () => {

@@ -3,14 +3,22 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { MessageTransporter } from '../message-transporters/index.js'
 import { Message, MessageType } from '../message-transporters/message.js'
-import { InMemoryConnectionMessageTransporter } from './in-memory-connection-message.transporter.js'
+import { InMemoryConnectionTransportAdapter } from './in-memory-connection-transport-adapter.js'
 import { RealtimeDoc } from './realtime-doc.js'
 import { YDocSyncClientAdapter } from './y-doc-sync-client-adapter.js'
 import { YDocSyncServerAdapter } from './y-doc-sync-server-adapter.js'
-import { describe, expect, it } from '@jest/globals'
+import { describe, expect, it, beforeAll, jest, afterAll } from '@jest/globals'
 
-describe('message transporter', () => {
+describe('y-doc-sync-adapter', () => {
+  beforeAll(() => {
+    jest.useFakeTimers()
+  })
+  afterAll(() => {
+    jest.useRealTimers()
+  })
+
   it('server client communication', async () => {
     const docServer: RealtimeDoc = new RealtimeDoc('This is a test note')
     const docClient1: RealtimeDoc = new RealtimeDoc()
@@ -21,51 +29,76 @@ describe('message transporter', () => {
     const textClient2 = docClient2.getMarkdownContentChannel()
 
     textServer.observe(() =>
-      console.debug('textServer', new Date(), textServer.toString())
+      console.log('textServer', new Date(), textServer.toString())
     )
     textClient1.observe(() =>
-      console.debug('textClient1', new Date(), textClient1.toString())
+      console.log('textClient1', new Date(), textClient1.toString())
     )
     textClient2.observe(() =>
-      console.debug('textClient2', new Date(), textClient2.toString())
+      console.log('textClient2', new Date(), textClient2.toString())
     )
 
-    const transporterServerTo1 = new InMemoryConnectionMessageTransporter('s>1')
-    const transporterServerTo2 = new InMemoryConnectionMessageTransporter('s>2')
-    const transporterClient1 = new InMemoryConnectionMessageTransporter('1>s')
-    const transporterClient2 = new InMemoryConnectionMessageTransporter('2>s')
+    const transporterAdapterServerTo1 = new InMemoryConnectionTransportAdapter(
+      's>1'
+    )
+    const transporterAdapterServerTo2 = new InMemoryConnectionTransportAdapter(
+      's>2'
+    )
+    const transporterAdapterClient1 = new InMemoryConnectionTransportAdapter(
+      '1>s'
+    )
+    const transporterAdapterClient2 = new InMemoryConnectionTransportAdapter(
+      '2>s'
+    )
 
-    transporterServerTo1.on(MessageType.NOTE_CONTENT_UPDATE, () =>
-      console.debug('Received NOTE_CONTENT_UPDATE from client 1 to server')
+    const messageTransporterServerTo1 = new MessageTransporter()
+    const messageTransporterServerTo2 = new MessageTransporter()
+    const messageTransporterClient1 = new MessageTransporter()
+    const messageTransporterClient2 = new MessageTransporter()
+
+    messageTransporterServerTo1.on(MessageType.NOTE_CONTENT_UPDATE, () =>
+      console.log('Received NOTE_CONTENT_UPDATE from client 1 to server')
     )
-    transporterServerTo2.on(MessageType.NOTE_CONTENT_UPDATE, () =>
-      console.debug('Received NOTE_CONTENT_UPDATE from client 2 to server')
+    messageTransporterServerTo2.on(MessageType.NOTE_CONTENT_UPDATE, () =>
+      console.log('Received NOTE_CONTENT_UPDATE from client 2 to server')
     )
-    transporterClient1.on(MessageType.NOTE_CONTENT_UPDATE, () =>
-      console.debug('Received NOTE_CONTENT_UPDATE from server to client 1')
+    messageTransporterClient1.on(MessageType.NOTE_CONTENT_UPDATE, () =>
+      console.log('Received NOTE_CONTENT_UPDATE from server to client 1')
     )
-    transporterClient2.on(MessageType.NOTE_CONTENT_UPDATE, () =>
-      console.debug('Received NOTE_CONTENT_UPDATE from server to client 2')
+    messageTransporterClient2.on(MessageType.NOTE_CONTENT_UPDATE, () =>
+      console.log('Received NOTE_CONTENT_UPDATE from server to client 2')
     )
-    transporterServerTo1.on(MessageType.NOTE_CONTENT_STATE_REQUEST, () =>
-      console.debug('Received NOTE_CONTENT_REQUEST from client 1 to server')
+    messageTransporterServerTo1.on(MessageType.NOTE_CONTENT_STATE_REQUEST, () =>
+      console.log('Received NOTE_CONTENT_REQUEST from client 1 to server')
     )
-    transporterServerTo2.on(MessageType.NOTE_CONTENT_STATE_REQUEST, () =>
-      console.debug('Received NOTE_CONTENT_REQUEST from client 2 to server')
+    messageTransporterServerTo2.on(MessageType.NOTE_CONTENT_STATE_REQUEST, () =>
+      console.log('Received NOTE_CONTENT_REQUEST from client 2 to server')
     )
-    transporterClient1.on(MessageType.NOTE_CONTENT_STATE_REQUEST, () =>
-      console.debug('Received NOTE_CONTENT_REQUEST from server to client 1')
+    messageTransporterClient1.on(MessageType.NOTE_CONTENT_STATE_REQUEST, () =>
+      console.log('Received NOTE_CONTENT_REQUEST from server to client 1')
     )
-    transporterClient2.on(MessageType.NOTE_CONTENT_STATE_REQUEST, () =>
-      console.debug('Received NOTE_CONTENT_REQUEST from server to client 2')
+    messageTransporterClient2.on(MessageType.NOTE_CONTENT_STATE_REQUEST, () =>
+      console.log('Received NOTE_CONTENT_REQUEST from server to client 2')
     )
-    transporterClient1.on('connected', () => console.debug('1>s is connected'))
-    transporterClient2.on('connected', () => console.debug('2>s is connected'))
-    transporterServerTo1.on('connected', () =>
-      console.debug('s>1 is connected')
+    messageTransporterClient1.doAsSoonAsConnected(() =>
+      console.log('1>s is connected')
     )
-    transporterServerTo2.on('connected', () =>
-      console.debug('s>2 is connected')
+    messageTransporterClient2.doAsSoonAsConnected(() =>
+      console.log('2>s is connected')
+    )
+    messageTransporterServerTo1.doAsSoonAsConnected(() =>
+      console.log('s>1 is connected')
+    )
+    messageTransporterServerTo2.doAsSoonAsConnected(() =>
+      console.log('s>2 is connected')
+    )
+    messageTransporterClient1.doAsSoonAsReady(() => console.log('1>s is ready'))
+    messageTransporterClient2.doAsSoonAsReady(() => console.log('2>s is ready'))
+    messageTransporterServerTo1.doAsSoonAsReady(() =>
+      console.log('s>1 is connected')
+    )
+    messageTransporterServerTo2.doAsSoonAsReady(() =>
+      console.log('s>2 is connected')
     )
 
     docServer.on('update', (update: number[], origin: unknown) => {
@@ -73,74 +106,91 @@ describe('message transporter', () => {
         type: MessageType.NOTE_CONTENT_UPDATE,
         payload: update
       }
-      if (origin !== transporterServerTo1) {
-        console.debug('YDoc on Server updated. Sending to Client 1')
-        transporterServerTo1.sendMessage(message)
+      if (origin !== messageTransporterServerTo1) {
+        console.log('YDoc on Server updated. Sending to Client 1')
+        messageTransporterServerTo1.sendMessage(message)
       }
-      if (origin !== transporterServerTo2) {
-        console.debug('YDoc on Server updated. Sending to Client 2')
-        transporterServerTo2.sendMessage(message)
+      if (origin !== messageTransporterServerTo2) {
+        console.log('YDoc on Server updated. Sending to Client 2')
+        messageTransporterServerTo2.sendMessage(message)
       }
     })
     docClient1.on('update', (update: number[], origin: unknown) => {
-      if (origin !== transporterClient1) {
-        console.debug('YDoc on client 1 updated. Sending to Server')
+      if (origin !== messageTransporterClient1) {
+        console.log('YDoc on client 1 updated. Sending to Server')
       }
     })
     docClient2.on('update', (update: number[], origin: unknown) => {
-      if (origin !== transporterClient2) {
-        console.debug('YDoc on client 2 updated. Sending to Server')
+      if (origin !== messageTransporterClient2) {
+        console.log('YDoc on client 2 updated. Sending to Server')
       }
     })
 
     const yDocSyncAdapter1 = new YDocSyncClientAdapter(
-      transporterClient1,
+      messageTransporterClient1,
       docClient1
     )
     const yDocSyncAdapter2 = new YDocSyncClientAdapter(
-      transporterClient2,
+      messageTransporterClient2,
       docClient2
     )
 
     const yDocSyncAdapterServerTo1 = new YDocSyncServerAdapter(
-      transporterServerTo1,
+      messageTransporterServerTo1,
       docServer,
       () => true
     )
 
     const yDocSyncAdapterServerTo2 = new YDocSyncServerAdapter(
-      transporterServerTo2,
+      messageTransporterServerTo2,
       docServer,
       () => true
     )
 
     const waitForClient1Sync = new Promise<void>((resolve) => {
       yDocSyncAdapter1.doAsSoonAsSynced(() => {
-        console.debug('client 1 received the first sync')
+        console.log('client 1 received the first sync')
         resolve()
       })
     })
     const waitForClient2Sync = new Promise<void>((resolve) => {
       yDocSyncAdapter2.doAsSoonAsSynced(() => {
-        console.debug('client 2 received the first sync')
+        console.log('client 2 received the first sync')
         resolve()
       })
     })
     const waitForServerTo11Sync = new Promise<void>((resolve) => {
       yDocSyncAdapterServerTo1.doAsSoonAsSynced(() => {
-        console.debug('server 1 received the first sync')
+        console.log('server 1 received the first sync')
         resolve()
       })
     })
     const waitForServerTo21Sync = new Promise<void>((resolve) => {
       yDocSyncAdapterServerTo2.doAsSoonAsSynced(() => {
-        console.debug('server 2 received the first sync')
+        console.log('server 2 received the first sync')
         resolve()
       })
     })
 
-    transporterClient1.connect(transporterServerTo1)
-    transporterClient2.connect(transporterServerTo2)
+    transporterAdapterClient1.connect(transporterAdapterServerTo1)
+    transporterAdapterClient2.connect(transporterAdapterServerTo2)
+
+    messageTransporterClient1.setAdapter(transporterAdapterClient1)
+    messageTransporterClient2.setAdapter(transporterAdapterClient2)
+    messageTransporterServerTo1.setAdapter(transporterAdapterServerTo1)
+    messageTransporterServerTo2.setAdapter(transporterAdapterServerTo2)
+
+    messageTransporterClient1.startSendingOfReadyRequests()
+    messageTransporterClient2.startSendingOfReadyRequests()
+    messageTransporterServerTo1.startSendingOfReadyRequests()
+    messageTransporterServerTo2.startSendingOfReadyRequests()
+
+    jest.advanceTimersByTime(1000)
+
+    expect(messageTransporterClient1.isReady()).toBeTruthy()
+    expect(messageTransporterClient2.isReady()).toBeTruthy()
+    expect(messageTransporterServerTo1.isReady()).toBeTruthy()
+    expect(messageTransporterServerTo2.isReady()).toBeTruthy()
 
     yDocSyncAdapter1.requestDocumentState()
     yDocSyncAdapter2.requestDocumentState()
