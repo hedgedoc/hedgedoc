@@ -7,6 +7,7 @@ import { allAppExtensions } from '../../../../extensions/all-app-extensions'
 import type { SearchIndexEntry } from '../../../../hooks/common/use-document-search'
 import { useDocumentSearch } from '../../../../hooks/common/use-document-search'
 import { useOnInputChange } from '../../../../hooks/common/use-on-input-change'
+import { useTranslatedText } from '../../../../hooks/common/use-translated-text'
 import { UiIcon } from '../../../common/icons/ui-icon'
 import type { CheatsheetSingleEntry, CheatsheetExtension } from '../../cheatsheet/cheatsheet-extension'
 import { hasCheatsheetTopics } from '../../cheatsheet/cheatsheet-extension'
@@ -47,8 +48,8 @@ export const CheatsheetSearch: React.FC<CheatsheetSearchProps> = ({ setVisibleEx
     () => allAppExtensions.flatMap((extension) => extension.buildCheatsheetExtensions()),
     []
   )
-  const buildSearchIndexDocument = useCallback(
-    (entry: CheatsheetEntry, rootI18nKey: string | undefined = undefined): CheatsheetSearchIndexEntry => {
+  const buildSearchIndexEntry = useCallback(
+    (entry: CheatsheetSingleEntry, rootI18nKey: string | undefined = undefined): CheatsheetSearchIndexEntry => {
       const rootI18nKeyWithDot = rootI18nKey ? `${rootI18nKey}.` : ''
       return {
         id: rootI18nKey ? rootI18nKey : entry.i18nKey,
@@ -59,15 +60,16 @@ export const CheatsheetSearch: React.FC<CheatsheetSearchProps> = ({ setVisibleEx
     },
     [t]
   )
+  const placeholderText = useTranslatedText('cheatsheet.search')
   const cheatsheetSearchIndexEntries = useMemo(
     () =>
       allCheatsheetExtensions.flatMap((entry) => {
         if (hasCheatsheetTopics(entry)) {
           return entry.topics.map((innerEntry) => buildSearchIndexEntry(innerEntry, entry.i18nKey))
         }
-        return buildSearchIndexDocument(entry)
+        return buildSearchIndexEntry(entry)
       }),
-    [buildSearchIndexDocument, allCheatsheetExtensions]
+    [buildSearchIndexEntry, allCheatsheetExtensions]
   )
   const searchResults = useDocumentSearch(cheatsheetSearchIndexEntries, searchOptions, searchTerm)
   useEffect(() => {
@@ -81,21 +83,14 @@ export const CheatsheetSearch: React.FC<CheatsheetSearchProps> = ({ setVisibleEx
     })
     setVisibleExtensions(extensionResults)
   }, [allCheatsheetExtensions, searchResults, searchTerm, setVisibleExtensions])
-  const onChange = useOnInputChange((search) => {
-    setSearchTerm(search)
-  })
+  const onChange = useOnInputChange(setSearchTerm)
   const clearSearch = useCallback(() => {
     setSearchTerm('')
   }, [setSearchTerm])
 
   return (
     <InputGroup className='mb-3'>
-      <FormControl
-        placeholder={t('cheatsheet.search') ?? undefined}
-        aria-label={t('cheatsheet.search') ?? undefined}
-        onChange={onChange}
-        value={searchTerm}
-      />
+      <FormControl placeholder={placeholderText} aria-label={placeholderText} onChange={onChange} value={searchTerm} />
       <button className={styles.innerBtn} onClick={clearSearch}>
         <UiIcon icon={X} />
       </button>

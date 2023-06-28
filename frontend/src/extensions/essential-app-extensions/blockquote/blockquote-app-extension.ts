@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -22,7 +22,7 @@ export class BlockquoteAppExtension extends AppExtension {
   }
 
   buildCheatsheetExtensions(): CheatsheetExtension[] {
-    return [{ i18nKey: 'blockquoteTags', entries: [{ i18nKey: 'name' }, { i18nKey: 'color' }, { i18nKey: 'time' }] }]
+    return [{ i18nKey: 'blockquoteTags', topics: [{ i18nKey: 'name' }, { i18nKey: 'color' }, { i18nKey: 'time' }] }]
   }
 
   buildAutocompletion(): CompletionSource[] {

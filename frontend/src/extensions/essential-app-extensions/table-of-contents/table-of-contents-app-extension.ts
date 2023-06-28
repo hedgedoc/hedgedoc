@@ -21,7 +21,7 @@ export class TableOfContentsAppExtension extends AppExtension {
     return [
       {
         i18nKey: 'toc',
-        entries: [
+        topics: [
           {
             i18nKey: 'basic'
           },
