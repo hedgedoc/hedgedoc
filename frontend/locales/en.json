@@ -381,6 +381,13 @@
         "download": "Download selected revision",
         "guestCount": "Anonymous authors or guests"
       },
+      "deleteRevision": {
+        "title": "Delete Revisions for current note",
+        "question": "Do you really want to remove all the previous revisions except the current of this note?",
+        "warning": "All the previous revisions except the current will be deleted for this note. This process is irreversible.",
+        "error": "An error occurred while deleting revisions of this note.",
+        "button": "Delete Revisions"
+      },
       "clipboardImport": {
         "title": "Import from clipboard",
         "insertMarkdown": "Paste your markdown or webpage here…"

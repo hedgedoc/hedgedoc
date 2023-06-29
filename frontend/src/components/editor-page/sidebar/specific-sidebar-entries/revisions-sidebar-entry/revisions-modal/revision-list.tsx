@@ -3,17 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { getAllRevisions } from '../../../../../../api/revisions'
-import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
+import type { RevisionMetadata } from '../../../../../../api/revisions/types'
+import { cypressId } from '../../../../../../utils/cypress-attribute'
 import { AsyncLoadingBoundary } from '../../../../../common/async-loading-boundary/async-loading-boundary'
 import { RevisionListEntry } from './revision-list-entry'
 import { DateTime } from 'luxon'
 import React, { useMemo } from 'react'
 import { ListGroup } from 'react-bootstrap'
-import { useAsync } from 'react-use'
 
-export interface RevisionListProps {
+interface RevisionListProps {
   selectedRevisionId?: number
+  revisions?: RevisionMetadata[]
+  loadingRevisions: boolean
+  error?: Error | boolean
   onRevisionSelect: (selectedRevisionId: number) => void
 }
 
@@ -22,20 +24,19 @@ export interface RevisionListProps {
  *
  * @param selectedRevisionId The currently selected revision
  * @param onRevisionSelect Callback that is executed when a list entry is selected
+ * @param revisions List of all the revisions
+ * @param error Indicates an error occurred
+ * @param loadingRevisions Boolean for showing loading state
  */
-export const RevisionList: React.FC<RevisionListProps> = ({ selectedRevisionId, onRevisionSelect }) => {
-  const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
-
-  const {
-    value: revisions,
-    error,
-    loading
-  } = useAsync(() => {
-    return getAllRevisions(noteIdentifier)
-  }, [noteIdentifier])
-
+export const RevisionList: React.FC<RevisionListProps> = ({
+  selectedRevisionId,
+  onRevisionSelect,
+  revisions,
+  loadingRevisions,
+  error
+}) => {
   const revisionList = useMemo(() => {
-    if (loading || !revisions) {
+    if (loadingRevisions || !revisions) {
       return null
     }
     return revisions
@@ -52,11 +53,11 @@ export const RevisionList: React.FC<RevisionListProps> = ({ selectedRevisionId, 
           key={revisionListEntry.id}
         />
       ))
-  }, [loading, onRevisionSelect, revisions, selectedRevisionId])
+  }, [loadingRevisions, onRevisionSelect, revisions, selectedRevisionId])
 
   return (
-    <AsyncLoadingBoundary loading={loading || !revisions} error={error} componentName={'revision list'}>
-      <ListGroup>{revisionList}</ListGroup>
+    <AsyncLoadingBoundary loading={loadingRevisions || !revisions} error={error} componentName={'revision list'}>
+      <ListGroup {...cypressId('revision.modal.lists')}>{revisionList}</ListGroup>
     </AsyncLoadingBoundary>
   )
 }
