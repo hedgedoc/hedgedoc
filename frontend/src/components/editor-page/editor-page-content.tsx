@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplyDarkModeStyle } from '../../hooks/dark-mode/use-apply-dark-mode-style'
 import { useSaveDarkModePreferenceToLocalStorage } from '../../hooks/dark-mode/use-save-dark-mode-preference-to-local-storage'
-import { MotdModal } from '../common/motd-modal/motd-modal'
+import { MotdModal } from '../global-dialogs/motd-modal/motd-modal'
 import { CommunicatorImageLightbox } from '../markdown-renderer/extensions/image/communicator-image-lightbox'
 import { ExtensionEventEmitterProvider } from '../markdown-renderer/hooks/use-extension-event-emitter'
 import { AppBar, AppBarMode } from './app-bar/app-bar'
