@@ -3,13 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import HighlightedCode from '../../../common/highlighted-code/highlighted-code'
-import { HtmlToReact } from '../../../common/html-to-react/html-to-react'
-import { RendererIframe } from '../../../common/renderer-iframe/renderer-iframe'
-import { ExtensionEventEmitterProvider } from '../../../markdown-renderer/hooks/use-extension-event-emitter'
-import { RendererType } from '../../../render-page/window-post-message-communicator/rendering-message'
-import type { CheatsheetSingleEntry } from '../../cheatsheet/cheatsheet-extension'
-import { EditorToRendererCommunicatorContextProvider } from '../../render-context/editor-to-renderer-communicator-context-provider'
+import HighlightedCode from '../common/highlighted-code/highlighted-code'
+import { HtmlToReact } from '../common/html-to-react/html-to-react'
+import { RendererIframe } from '../common/renderer-iframe/renderer-iframe'
+import { EditorToRendererCommunicatorContextProvider } from '../editor-page/render-context/editor-to-renderer-communicator-context-provider'
+import { ExtensionEventEmitterProvider } from '../markdown-renderer/hooks/use-extension-event-emitter'
+import { RendererType } from '../render-page/window-post-message-communicator/rendering-message'
+import type { CheatsheetSingleEntry } from './cheatsheet-extension'
 import { ReadMoreLinkItem } from './read-more-link-item'
 import { useComponentsFromAppExtensions } from './use-components-from-app-extensions'
 import MarkdownIt from 'markdown-it'

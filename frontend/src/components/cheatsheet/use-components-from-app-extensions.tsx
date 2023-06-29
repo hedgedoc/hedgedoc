@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { allAppExtensions } from '../../../../extensions/all-app-extensions'
-import type { CheatsheetExtensionComponentProps } from '../../cheatsheet/cheatsheet-extension'
-import { hasCheatsheetTopics } from '../../cheatsheet/cheatsheet-extension'
+import { allAppExtensions } from '../../extensions/all-app-extensions'
+import type { CheatsheetExtensionComponentProps } from './cheatsheet-extension'
+import { hasCheatsheetTopics } from './cheatsheet-extension'
 import type { ReactElement } from 'react'
 import React, { Fragment, useMemo } from 'react'
 

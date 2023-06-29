@@ -1,9 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { CheatsheetExtensionComponentProps } from '../../../components/editor-page/cheatsheet/cheatsheet-extension'
+import type { CheatsheetExtensionComponentProps } from '../../../components/cheatsheet/cheatsheet-extension'
 import { useExtensionEventEmitterHandler } from '../../../components/markdown-renderer/hooks/use-extension-event-emitter'
 import { createCheckboxContent } from './create-checkbox-content'
 import type { TaskCheckedEventPayload } from './event-emitting-task-list-checkbox'

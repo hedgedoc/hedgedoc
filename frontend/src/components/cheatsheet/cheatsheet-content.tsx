@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { CheatsheetSingleEntry, CheatsheetExtension } from '../../cheatsheet/cheatsheet-extension'
-import { hasCheatsheetTopics } from '../../cheatsheet/cheatsheet-extension'
 import { CategoryAccordion } from './category-accordion'
 import { CheatsheetEntryPane } from './cheatsheet-entry-pane'
+import type { CheatsheetSingleEntry, CheatsheetExtension } from './cheatsheet-extension'
+import { hasCheatsheetTopics } from './cheatsheet-extension'
 import { CheatsheetSearch } from './cheatsheet-search'
 import styles from './cheatsheet.module.scss'
 import { TopicSelection } from './topic-selection'

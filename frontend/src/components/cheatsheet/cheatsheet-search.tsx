@@ -3,14 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { allAppExtensions } from '../../../../extensions/all-app-extensions'
-import type { SearchIndexEntry } from '../../../../hooks/common/use-document-search'
-import { useDocumentSearch } from '../../../../hooks/common/use-document-search'
-import { useOnInputChange } from '../../../../hooks/common/use-on-input-change'
-import { useTranslatedText } from '../../../../hooks/common/use-translated-text'
-import { UiIcon } from '../../../common/icons/ui-icon'
-import type { CheatsheetSingleEntry, CheatsheetExtension } from '../../cheatsheet/cheatsheet-extension'
-import { hasCheatsheetTopics } from '../../cheatsheet/cheatsheet-extension'
+import { allAppExtensions } from '../../extensions/all-app-extensions'
+import type { SearchIndexEntry } from '../../hooks/common/use-document-search'
+import { useDocumentSearch } from '../../hooks/common/use-document-search'
+import { useOnInputChange } from '../../hooks/common/use-on-input-change'
+import { useTranslatedText } from '../../hooks/common/use-translated-text'
+import { UiIcon } from '../common/icons/ui-icon'
+import type { CheatsheetSingleEntry, CheatsheetExtension } from './cheatsheet-extension'
+import { hasCheatsheetTopics } from './cheatsheet-extension'
 import styles from './cheatsheet.module.scss'
 import type { IndexOptionsForDocumentSearch, StoreOption } from 'flexsearch-ts'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'

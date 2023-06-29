@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useTranslatedText } from '../../../../hooks/common/use-translated-text'
-import { useOutlineButtonVariant } from '../../../../hooks/dark-mode/use-outline-button-variant'
-import { IconButton } from '../../../common/icon-button/icon-button'
+import { useTranslatedText } from '../../hooks/common/use-translated-text'
+import { useOutlineButtonVariant } from '../../hooks/dark-mode/use-outline-button-variant'
+import { IconButton } from '../common/icon-button/icon-button'
 import type { MouseEvent } from 'react'
 import React, { useCallback } from 'react'
 import { BoxArrowUpRight } from 'react-bootstrap-icons'

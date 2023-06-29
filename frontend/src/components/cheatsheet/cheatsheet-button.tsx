@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
-import { useTranslatedText } from '../../../../hooks/common/use-translated-text'
-import { useOutlineButtonVariant } from '../../../../hooks/dark-mode/use-outline-button-variant'
-import { cypressId } from '../../../../utils/cypress-attribute'
-import { CommonModal } from '../../../common/modals/common-modal'
+import { useBooleanState } from '../../hooks/common/use-boolean-state'
+import { useTranslatedText } from '../../hooks/common/use-translated-text'
+import { useOutlineButtonVariant } from '../../hooks/dark-mode/use-outline-button-variant'
+import { cypressId } from '../../utils/cypress-attribute'
+import { CommonModal } from '../common/modals/common-modal'
 import { CheatsheetContent } from './cheatsheet-content'
 import { CheatsheetInNewTabButton } from './cheatsheet-in-new-tab-button'
 import React, { Fragment } from 'react'

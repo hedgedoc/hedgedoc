@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { FrontendConfig } from '../../api/config/types'
-import type { CheatsheetExtension } from '../../components/editor-page/cheatsheet/cheatsheet-extension'
+import type { CheatsheetExtension } from '../../components/cheatsheet/cheatsheet-extension'
 import type { Linter } from '../../components/editor-page/editor-pane/linter/linter'
 import type { MarkdownRendererExtension } from '../../components/markdown-renderer/extensions/_base-classes/markdown-renderer-extension'
 import type { RendererType } from '../../components/render-page/window-post-message-communicator/rendering-message'
