@@ -1,12 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { NewNoteButton } from '../../../common/new-note-button/new-note-button'
-import { SettingsButton } from '../../../layout/settings-dialog/settings-button'
+import { SettingsButton } from '../../../global-dialogs/settings-dialog/settings-button'
 import { SignInButton } from '../sign-in-button'
 import { UserDropdown } from '../user-dropdown'
 import { HeaderNavLink } from './header-nav-link'
