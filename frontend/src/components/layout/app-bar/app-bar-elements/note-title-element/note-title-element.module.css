@@ -1,18 +1,10 @@
-/*!
+/*
  * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-.regular-size {
-  height: 50px;
-}
-
-.inline-logo {
-  height: 32px;
-}
-
-.inline-text {
-  font-size: 18px;
-  line-height: 1.0;
+.read-only-marker {
+    font-size: 0.8em;
+    margin-top: -0.3em;
 }
