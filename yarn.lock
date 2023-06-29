@@ -1254,7 +1254,7 @@ __metadata:
     moment: 2.29.4
     morgan: 1.10.0
     mysql2: 3.4.2
-    node-fetch: 2.6.11
+    node-fetch: 2.6.12
     optimize-css-assets-webpack-plugin: 6.0.1
     passport: 0.6.0
     passport-dropbox-oauth2: 1.1.0
@@ -10525,7 +10525,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:2.6.11, node-fetch@npm:^2.6.7":
+"node-fetch@npm:2.6.12":
+  version: 2.6.12
+  resolution: "node-fetch@npm:2.6.12"
+  dependencies:
+    whatwg-url: ^5.0.0
+  peerDependencies:
+    encoding: ^0.1.0
+  peerDependenciesMeta:
+    encoding:
+      optional: true
+  checksum: 3bc1655203d47ee8e313c0d96664b9673a3d4dd8002740318e9d27d14ef306693a4b2ef8d6525775056fd912a19e23f3ac0d7111ad8925877b7567b29a625592
+  languageName: node
+  linkType: hard
+
+"node-fetch@npm:^2.6.7":
   version: 2.6.11
   resolution: "node-fetch@npm:2.6.11"
   dependencies:
