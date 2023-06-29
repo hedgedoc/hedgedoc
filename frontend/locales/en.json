@@ -234,35 +234,6 @@
     "untitledNote": "Untitled",
     "placeholder": "← Start by entering a title here\n===\nVisit {{host}}features if you don't know what to do.\nHappy hacking :)",
     "infoToc": "Structure your note with headings to see a table-of-contents here.",
-    "help": {
-      "shortcuts": {
-        "title": "Shortcuts",
-        "bold": "Make selection bold",
-        "italic": "Make selection italic",
-        "underline": "Underline selection",
-        "strikethrough": "Strike selection through",
-        "mark": "Mark selection",
-        "link": "Add link around selection",
-        "view": "Show only View",
-        "both": "Show View and Edit",
-        "edit": "Show only Edit"
-      },
-      "links": {
-        "title": "Links"
-      },
-      "contacts": {
-        "title": "Contacts",
-        "community": "Join the community",
-        "meetUsOn": "Meet us on {{service}}",
-        "helpTranslating": "Help us translating",
-        "reportIssue": "Report an issue"
-      },
-      "documents": {
-        "title": "Documents",
-        "yamlMetadata": "YAML Metadata",
-        "slideExample": "Slide Example"
-      }
-    },
     "onlineStatus": {
       "online": "Online",
       "you": "(You)"
@@ -513,6 +484,15 @@
       "editNote": "Edit this note"
     }
   },
+  "appbar": {
+    "help": {
+      "help": {
+        "header": "Help",
+        "shortcuts": "Shortcuts",
+        "cheatsheet": "Cheatsheet"
+      }
+    }
+  },
   "common": {
     "yes": "Yes",
     "no": "No",
@@ -641,6 +621,24 @@
         "label": "Language",
         "help": "The primary user interface language"
       }
+    }
+  },
+  "shortcuts": {
+    "title": "Shortcuts",
+    "editor": {
+      "header": "Editor",
+      "bold": "Make selection bold",
+      "italic": "Make selection italic",
+      "underline": "Underline selection",
+      "strikethrough": "Strike selection through",
+      "mark": "Mark selection",
+      "link": "Add link around selection"
+    },
+    "viewMode": {
+      "header": "View Mode",
+      "view": "Show only View",
+      "both": "Show View and Edit",
+      "edit": "Show only Edit"
     }
   },
   "cheatsheet": {

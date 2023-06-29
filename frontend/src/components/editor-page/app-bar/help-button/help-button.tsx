@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,13 +8,13 @@ import { useTranslatedText } from '../../../../hooks/common/use-translated-text'
 import { useOutlineButtonVariant } from '../../../../hooks/dark-mode/use-outline-button-variant'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { IconButton } from '../../../common/icon-button/icon-button'
-import { HelpModal } from './help-modal'
+import { ShortcutsModal } from '../../../global-dialogs/shortcuts-modal/shortcuts-modal'
 import React, { Fragment } from 'react'
 import { QuestionCircle as IconQuestionCircle } from 'react-bootstrap-icons'
 import { Trans } from 'react-i18next'
 
 /**
- * Renders the button to open the {@link HelpModal}.
+ * Renders the button to open the shortcuts modal.
  */
 export const HelpButton: React.FC = () => {
   const [modalVisibility, showModal, closeModal] = useBooleanState()
@@ -33,7 +33,7 @@ export const HelpButton: React.FC = () => {
         onClick={showModal}>
         <Trans i18nKey={'editor.documentBar.help'} />
       </IconButton>
-      <HelpModal show={modalVisibility} onHide={closeModal} />
+      <ShortcutsModal show={modalVisibility} onHide={closeModal} />
     </Fragment>
   )
 }
