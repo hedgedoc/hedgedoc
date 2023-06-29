@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
 import { cypressId } from '../../../../utils/cypress-attribute'
-import { VersionInfoModal } from './version-info-modal'
+import { VersionInfoModal } from '../../../global-dialogs/version-info-modal/version-info-modal'
 import React, { Fragment } from 'react'
 import { Button } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
