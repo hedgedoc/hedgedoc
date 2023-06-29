@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { CheatsheetExtension } from '../../cheatsheet/cheatsheet-extension'
+import type { CheatsheetExtension } from './cheatsheet-extension'
 import styles from './cheatsheet.module.scss'
 import React, { useMemo } from 'react'
 import { ListGroup, ListGroupItem } from 'react-bootstrap'

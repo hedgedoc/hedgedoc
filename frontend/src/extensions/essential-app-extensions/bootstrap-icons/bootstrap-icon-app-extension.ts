@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { CheatsheetExtension } from '../../../components/cheatsheet/cheatsheet-extension'
 import { BootstrapLazyIcons } from '../../../components/common/icons/bootstrap-icons'
-import type { CheatsheetExtension } from '../../../components/editor-page/cheatsheet/cheatsheet-extension'
 import { regexCompletion } from '../../../components/editor-page/editor-pane/autocompletions/regex-completion'
 import type { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/_base-classes/markdown-renderer-extension'
 import { AppExtension } from '../../_base-classes/app-extension'

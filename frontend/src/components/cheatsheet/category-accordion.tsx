@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { CheatsheetExtension } from '../../cheatsheet/cheatsheet-extension'
+import type { CheatsheetExtension } from './cheatsheet-extension'
 import { EntryList } from './entry-list'
 import React, { useMemo } from 'react'
 import { Accordion } from 'react-bootstrap'

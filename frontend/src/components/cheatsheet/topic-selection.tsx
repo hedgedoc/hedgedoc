@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { CheatsheetSingleEntry, CheatsheetExtension } from '../../cheatsheet/cheatsheet-extension'
-import { hasCheatsheetTopics } from '../../cheatsheet/cheatsheet-extension'
+import type { CheatsheetSingleEntry, CheatsheetExtension } from './cheatsheet-extension'
+import { hasCheatsheetTopics } from './cheatsheet-extension'
 import React, { useMemo } from 'react'
 import { Button, ButtonGroup, ListGroupItem } from 'react-bootstrap'
 import { Trans } from 'react-i18next'

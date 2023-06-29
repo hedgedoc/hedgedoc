@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ExternalLink } from '../../../common/links/external-link'
+import { ExternalLink } from '../common/links/external-link'
 import React from 'react'
 import { ListGroupItem } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
