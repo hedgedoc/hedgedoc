@@ -2483,7 +2483,7 @@ __metadata:
     flowchart.js: 1.17.1
     highlight.js: 11.8.0
     htmlparser2: 9.0.0
-    i18next: 23.2.3
+    i18next: 23.2.5
     i18next-browser-languagedetector: 7.1.0
     i18next-resources-to-backend: 1.1.4
     jest: 29.5.0
@@ -10983,12 +10983,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:23.2.3":
-  version: 23.2.3
-  resolution: "i18next@npm:23.2.3"
+"i18next@npm:23.2.5":
+  version: 23.2.5
+  resolution: "i18next@npm:23.2.5"
   dependencies:
     "@babel/runtime": ^7.22.5
-  checksum: 74504bfe1f7784f76b08c9d5e589779c4c65b85b4d44f2b89531bc0cb0fbe18b9abede5eb3e0f3c088ba39455d4271cccf1d40aebadaa82a58d517847b7518b2
+  checksum: 254242afc2e5a379120ac63fae32c0c50b3fe0701d3b09ff6bcb0cb2811729900fb26ff3136767b9e60f49f8edf24c97efb90cdf1dcbf03be679e2cce49a6515
   languageName: node
   linkType: hard
 
