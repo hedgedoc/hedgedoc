@@ -3,15 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { BackendVersion } from '../../../../api/config/types'
-import links from '../../../../links.json'
-import { cypressId } from '../../../../utils/cypress-attribute'
-import { CopyableField } from '../../../common/copyable/copyable-field/copyable-field'
-import { useFrontendConfig } from '../../../common/frontend-config-context/use-frontend-config'
-import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
-import type { CommonModalProps } from '../../../common/modals/common-modal'
-import { CommonModal } from '../../../common/modals/common-modal'
-import { ShowIf } from '../../../common/show-if/show-if'
+import type { BackendVersion } from '../../../api/config/types'
+import links from '../../../links.json'
+import { cypressId } from '../../../utils/cypress-attribute'
+import { CopyableField } from '../../common/copyable/copyable-field/copyable-field'
+import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
+import { TranslatedExternalLink } from '../../common/links/translated-external-link'
+import type { CommonModalProps } from '../../common/modals/common-modal'
+import { CommonModal } from '../../common/modals/common-modal'
+import { ShowIf } from '../../common/show-if/show-if'
 import React, { useMemo } from 'react'
 import { Modal } from 'react-bootstrap'
 
