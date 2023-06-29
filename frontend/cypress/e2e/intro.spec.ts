@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -34,16 +34,6 @@ describe('Intro page', () => {
     it('is visible when logged out', () => {
       cy.logout()
       cy.getByCypressId('sign-in-button').should('exist')
-    })
-  })
-
-  describe('version dialog', () => {
-    it('can be opened and closed', () => {
-      cy.getByCypressId('version-modal').should('not.exist')
-      cy.getByCypressId('show-version-modal').click()
-      cy.getByCypressId('version-modal').should('be.visible')
-      cy.getByCypressId('version-modal').find('.modal-header .btn-close').click()
-      cy.getByCypressId('version-modal').should('not.exist')
     })
   })
 })

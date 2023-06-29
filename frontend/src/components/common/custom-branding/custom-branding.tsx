@@ -3,9 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { concatCssClasses } from '../../../utils/concat-css-classes'
 import styles from './branding.module.scss'
 import { useBrandingDetails } from './use-branding-details'
-import React from 'react'
+import React, { useMemo } from 'react'
 
 export interface BrandingProps {
   inline?: boolean
@@ -16,12 +17,19 @@ export interface BrandingProps {
  * This branding can either be a text, a logo or both (in that case the text is used as the title and alt of the image).
  *
  * @param inline If the logo should be using the inline-size or the regular-size css class.
- * @param delimiter If the delimiter between the HedgeDoc logo and the branding should be shown.
  */
 export const CustomBranding: React.FC<BrandingProps> = ({ inline = false }) => {
   const branding = useBrandingDetails()
 
-  const className = inline ? styles['inline-size'] : styles['regular-size']
+  const className = useMemo(
+    () =>
+      concatCssClasses({
+        [styles['regular-size']]: !inline,
+        [styles['inline-logo']]: inline && branding && !!branding.logo,
+        [styles['inline-text']]: inline && branding && !branding.logo
+      }),
+    [inline, branding]
+  )
 
   if (!branding) {
     return null

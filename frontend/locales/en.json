@@ -147,11 +147,7 @@
     },
     "footer": {
       "releases": "Releases",
-      "poweredBy": "Powered by <0></0>",
-      "imprint": "Imprint",
-      "followUs": "Follow us on <0></0>, <1></1>, <2></2>, <3></3>, and <4></4>.",
-      "privacy": "Privacy",
-      "termsOfUse": "Terms of Use"
+      "poweredBy": "Powered by <0></0>"
     },
     "versionInfo": {
       "issueTracker": "Found a bug? Fill an issue!",
@@ -485,11 +481,36 @@
     }
   },
   "appbar": {
+    "editor": {
+      "readOnly": "read-only"
+    },
     "help": {
       "help": {
         "header": "Help",
         "shortcuts": "Shortcuts",
         "cheatsheet": "Cheatsheet"
+      },
+      "instance": {
+        "header": "About this instance",
+        "versionInfo": "Running version"
+      },
+      "legal": {
+        "header": "Legal",
+        "privacy": "Privacy Policy",
+        "termsOfUse": "Terms of use",
+        "imprint": "Imprint"
+      },
+      "project": {
+        "header": "Project",
+        "github": "Project on GitHub",
+        "reportIssue": "Report an issue",
+        "helpTranslating": "Help us translating"
+      },
+      "social": {
+        "header": "Social",
+        "discourse": "Join the community",
+        "matrix": "Chat with us on Matrix",
+        "mastodon": "Follow us on Mastodon"
       }
     }
   },
@@ -642,7 +663,6 @@
     }
   },
   "cheatsheet": {
-    "button": "Open Cheatsheet",
     "search": "Search for Cheatsheets",
     "modal": {
       "popup": "Open in new tab",

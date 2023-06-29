@@ -35,7 +35,7 @@ exports[`custom branding with inline=false will prefer the logo over the text 1`
 exports[`custom branding with inline=true shows an image if branding logo is defined 1`] = `
 <div>
   <img
-    class="inline-size"
+    class="inline-logo"
     src="mockBrandingUrl"
   />
 </div>
@@ -44,7 +44,7 @@ exports[`custom branding with inline=true shows an image if branding logo is def
 exports[`custom branding with inline=true shows an text if branding text is defined 1`] = `
 <div>
   <span
-    class="inline-size"
+    class="inline-text"
   >
     mockedBranding
   </span>
@@ -55,7 +55,7 @@ exports[`custom branding with inline=true will prefer the logo over the text 1`]
 <div>
   <img
     alt="mockedBranding"
-    class="inline-size"
+    class="inline-logo"
     src="mockBrandingUrl"
     title="mockedBranding"
   />
