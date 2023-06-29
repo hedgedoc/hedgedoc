@@ -6,9 +6,9 @@
 import * as UseBaseUrlModule from '../../../hooks/common/use-base-url'
 import { mockI18n } from '../../../test-utils/mock-i18n'
 import { testId } from '../../../utils/test-id'
-import type { CommonModalProps } from '../modals/common-modal'
-import * as CommonModalModule from '../modals/common-modal'
-import * as RendererIframeModule from '../renderer-iframe/renderer-iframe'
+import type { CommonModalProps } from '../../common/modals/common-modal'
+import * as CommonModalModule from '../../common/modals/common-modal'
+import * as RendererIframeModule from '../../common/renderer-iframe/renderer-iframe'
 import * as fetchMotdModule from './fetch-motd'
 import { MotdModal } from './motd-modal'
 import { act, render, screen } from '@testing-library/react'
@@ -16,8 +16,8 @@ import type { PropsWithChildren } from 'react'
 import React from 'react'
 
 jest.mock('./fetch-motd')
-jest.mock('../modals/common-modal')
-jest.mock('../renderer-iframe/renderer-iframe')
+jest.mock('../../common/modals/common-modal')
+jest.mock('../../common/renderer-iframe/renderer-iframe')
 jest.mock('../../../hooks/common/use-base-url')
 
 describe('motd modal', () => {
