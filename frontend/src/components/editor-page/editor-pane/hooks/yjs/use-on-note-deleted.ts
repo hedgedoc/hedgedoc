@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../../hooks/common/use-application-state'
+import { useNoteTitle } from '../../../../../hooks/common/use-note-title'
 import { Logger } from '../../../../../utils/logger'
 import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
 import type { MessageTransporter } from '@hedgedoc/commons'
@@ -21,7 +21,7 @@ const logger = new Logger('UseOnNoteDeleted')
  */
 export const useOnNoteDeleted = (websocketConnection: MessageTransporter): void => {
   const router = useRouter()
-  const noteTitle = useApplicationState((state) => state.noteDetails.title)
+  const noteTitle = useNoteTitle()
   const { dispatchUiNotification } = useUiNotifications()
 
   const noteDeletedHandler = useCallback(() => {
