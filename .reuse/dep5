@@ -55,6 +55,18 @@ Files: docs/content/theme/styles/Roboto/*
 Copyright: 2011 Christian Robertson
 License: Apache-2.0
 
+Files: docs/content/setup/docker/config.env
+Copyright: 2023 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: docs/content/setup/docker/docker-compose.yml
+Copyright: 2023 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: docs/content/setup/docker/Caddyfile
+Copyright: 2023 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
 Files: backend/public/*.md
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC0-1.0
