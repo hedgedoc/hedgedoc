@@ -40,19 +40,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/schematics-cli@npm:16.1.0":
-  version: 16.1.0
-  resolution: "@angular-devkit/schematics-cli@npm:16.1.0"
+"@angular-devkit/core@npm:16.1.3":
+  version: 16.1.3
+  resolution: "@angular-devkit/core@npm:16.1.3"
   dependencies:
-    "@angular-devkit/core": 16.1.0
-    "@angular-devkit/schematics": 16.1.0
+    ajv: 8.12.0
+    ajv-formats: 2.1.1
+    jsonc-parser: 3.2.0
+    rxjs: 7.8.1
+    source-map: 0.7.4
+  peerDependencies:
+    chokidar: ^3.5.2
+  peerDependenciesMeta:
+    chokidar:
+      optional: true
+  checksum: 0108e4bde01fdd2da115e0f7b0bceae12cdb5a8996686d68e55b819f41cbcb8dd1b0cdc26ed3ecc52ca752f33523bf3ecb7cabbc62b50460cf0d138912d2c326
+  languageName: node
+  linkType: hard
+
+"@angular-devkit/schematics-cli@npm:16.1.3":
+  version: 16.1.3
+  resolution: "@angular-devkit/schematics-cli@npm:16.1.3"
+  dependencies:
+    "@angular-devkit/core": 16.1.3
+    "@angular-devkit/schematics": 16.1.3
     ansi-colors: 4.1.3
     inquirer: 8.2.4
     symbol-observable: 4.0.0
     yargs-parser: 21.1.1
   bin:
     schematics: bin/schematics.js
-  checksum: 87a93943d403bc23895c693213db4ded200d5bc26a71327b2a0189fb091c7160625e68cf2501eed5e7af7ca1cc34b52a69f01486931e1d9b8ffd4df84e7053ec
+  checksum: bcda206f5efed3e2ee05cf23cae8a939599a4f0c35e0b2356641fea0dba87bd3747a34748c7a407fe3d612997e5bee8d8d3f609a22fe43e1d23e8e126aedf219
   languageName: node
   linkType: hard
 
@@ -66,6 +84,19 @@ __metadata:
     ora: 5.4.1
     rxjs: 7.8.1
   checksum: 03fc8fcd7bed8cdef51696a9b5aaee5244f0e92395e0d6089ee7c212c457423166574760414ae53575ff01a5f30cf2716cfeab3ad3ac09658823e00f80fdfd04
+  languageName: node
+  linkType: hard
+
+"@angular-devkit/schematics@npm:16.1.3":
+  version: 16.1.3
+  resolution: "@angular-devkit/schematics@npm:16.1.3"
+  dependencies:
+    "@angular-devkit/core": 16.1.3
+    jsonc-parser: 3.2.0
+    magic-string: 0.30.0
+    ora: 5.4.1
+    rxjs: 7.8.1
+  checksum: 597b80d506bb3e26c8c669dc56019b5143321b26cf4315ff381e5adb79be7e76a9c1e0304c94d9d4c9900c9cee665aa5d7e0377961dc5d4d0e74798717b45e28
   languageName: node
   linkType: hard
 
@@ -2277,7 +2308,7 @@ __metadata:
     "@azure/storage-blob": 12.14.0
     "@hedgedoc/commons": "workspace:commons"
     "@mrdrogdrog/optional": 1.1.0
-    "@nestjs/cli": 10.0.5
+    "@nestjs/cli": 10.1.0
     "@nestjs/common": 10.0.4
     "@nestjs/config": 3.0.0
     "@nestjs/core": 10.0.4
@@ -3122,13 +3153,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/cli@npm:10.0.5":
-  version: 10.0.5
-  resolution: "@nestjs/cli@npm:10.0.5"
+"@nestjs/cli@npm:10.1.0":
+  version: 10.1.0
+  resolution: "@nestjs/cli@npm:10.1.0"
   dependencies:
-    "@angular-devkit/core": 16.1.0
-    "@angular-devkit/schematics": 16.1.0
-    "@angular-devkit/schematics-cli": 16.1.0
+    "@angular-devkit/core": 16.1.3
+    "@angular-devkit/schematics": 16.1.3
+    "@angular-devkit/schematics-cli": 16.1.3
     "@nestjs/schematics": ^10.0.1
     chalk: 4.1.2
     chokidar: 3.5.3
@@ -3145,8 +3176,8 @@ __metadata:
     tree-kill: 1.2.2
     tsconfig-paths: 4.2.0
     tsconfig-paths-webpack-plugin: 4.0.1
-    typescript: 5.1.3
-    webpack: 5.87.0
+    typescript: 5.1.6
+    webpack: 5.88.1
     webpack-node-externals: 3.0.0
   peerDependencies:
     "@swc/cli": ^0.1.62
@@ -3158,7 +3189,7 @@ __metadata:
       optional: true
   bin:
     nest: bin/nest.js
-  checksum: 985855548576d0caa3b72cff2336b180501ebb6db510b53079efcda3a11362c11f157991c6e4bc7adad001464665b0d18022098381fd3cb7710461c9949d038a
+  checksum: 61d65ffc0a17830df67308a39b303f6f0df1756246e1dadd644d0dc911b08b42a2205329b8f0077efe6fbe8cb3423d9d73209f62f8bc9063df7d511de095166e
   languageName: node
   linkType: hard
 
@@ -18506,16 +18537,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.1.3":
-  version: 5.1.3
-  resolution: "typescript@npm:5.1.3"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: d9d51862d98efa46534f2800a1071a613751b1585dc78884807d0c179bcd93d6e9d4012a508e276742f5f33c480adefc52ffcafaf9e0e00ab641a14cde9a31c7
-  languageName: node
-  linkType: hard
-
 "typescript@npm:5.1.6":
   version: 5.1.6
   resolution: "typescript@npm:5.1.6"
@@ -18533,16 +18554,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: ee000bc26848147ad423b581bd250075662a354d84f0e06eb76d3b892328d8d4440b7487b5a83e851b12b255f55d71835b008a66cbf8f255a11e4400159237db
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@5.1.3#~builtin<compat/typescript>":
-  version: 5.1.3
-  resolution: "typescript@patch:typescript@npm%3A5.1.3#~builtin<compat/typescript>::version=5.1.3&hash=5da071"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 6f0a9dca6bf4ce9dcaf4e282aade55ef4c56ecb5fb98d0a4a5c0113398815aea66d871b5611e83353e5953a19ed9ef103cf5a76ac0f276d550d1e7cd5344f61e
   languageName: node
   linkType: hard
 
@@ -19482,9 +19493,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:5.87.0":
-  version: 5.87.0
-  resolution: "webpack@npm:5.87.0"
+"webpack@npm:5.88.1":
+  version: 5.88.1
+  resolution: "webpack@npm:5.88.1"
   dependencies:
     "@types/eslint-scope": ^3.7.3
     "@types/estree": ^1.0.0
@@ -19515,7 +19526,7 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: b7d0e390f9d30627e303d54b17cb87b62f49ecffe2d35481f830679904993bae208e23748ffe0e6091b6dd4810562b2f2e88bb0f23b96515d74fb1e3c2898210
+  checksum: 726e7e05ab2e7c142609a673dd6aa1a711ed97f349418a2a393d650c5ddad172d191257f60e1e37f6b2a77261571c202aabd5ce9240791a686774f0801cf5ec2
   languageName: node
   linkType: hard
 
