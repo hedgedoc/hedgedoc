@@ -20,13 +20,13 @@ In the following you will find all of these files with some explanations and lin
 ---
 services:
   backend:
-    image: ghcr.io/hedgedoc/hedgedoc/backend:2023.1.0-alpha
+    image: ghcr.io/hedgedoc/hedgedoc/backend:2.0-alpha
     volumes:
       - $PWD/.env:/usr/src/app/backend/.env
       - hedgedoc_uploads:/usr/src/app/backend/uploads
 
   frontend:
-    image: ghcr.io/hedgedoc/hedgedoc/frontend:2023.1.0-alpha
+    image: ghcr.io/hedgedoc/hedgedoc/frontend:2.0-alpha
     environment:
       HD_BASE_URL: "${HD_BASE_URL}"
 
