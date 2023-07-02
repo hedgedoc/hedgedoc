@@ -1,45 +1,66 @@
 site_name: HedgeDoc 2
-site_url: https://docs.hedgedoc.org
+site_url: https://docs.hedgedoc.dev
 repo_url: https://github.com/hedgedoc/hedgedoc
-site_description: 'HedgeDoc Documentation'
+site_description: 'HedgeDoc 2 Documentation'
 site_author: 'HedgeDoc Developers'
 docs_dir: content
-edit_uri: https://github.com/hedgedoc/hedgedoc/edit/master/docs/content/
+edit_uri: https://github.com/hedgedoc/hedgedoc/edit/develop/docs/content/
 nav:
   - Home: index.md
-  - Installation:
-      - Getting Started: setup/getting_started.md
-  - Configuration:
-    - Configuration: config/index.md
-    - Media:
-      - Azure: config/media/azure.md
-      - Filesystem: config/media/filesystem.md
-      - imgur: config/media/imgur.md
-      - S3: config/media/s3.md
-      - WebDAV: config/media/webdav.md
-  - Interface:
-    - Toolbar: interface/toolbar.md
+  - Tutorials:
+    - Overview: tutorials/index.md
+    - Setup: tutorials/setup.md
+    - 'Create a user': tutorials/user.md
+    - 'Create a note': tutorials/first-note.md
+    - 'Create a presentation': tutorials/first-presentation.md
+  - 'How-to guides':
+    - Overview: how-to/index.md
+    - 'Reverse Proxy': how-to/reverse-proxy.md
+    - Backup: how-to/backup.md
+    - Authentication: how-to/auth.md
+    - Database: how-to/database.md
+    - Develop:
+      - Setup: how-to/develop/setup.md
+      - 'Frontend setup': how-to/develop/frontend.md
+      - 'Build docker images': how-to/develop/docker.md
+      - 'Build Documentation': how-to/develop/documentation.md
+      - 'LDAP test environment': how-to/develop/auth/ldap.md
+  - 'Core concepts':
+    - Overview: concepts/index.md
+    - Notes: concepts/notes.md
+    - 'User Profiles': concepts/user-profiles.md
+    - Config: concepts/config.md
+    - 'API Auth': concepts/api-auth.md
+    - Events: concepts/events.md
   - References:
-    - 'HedgeDoc Flavored Markdown': references/hfm.md
-  - Development:
-    - Getting Started: dev/getting-started.md
-    - Frontend: dev/setup/frontend.md
-    - Development Notes: dev/dev_notes.md
-    - Docker: dev/docker.md
-    - Writing Docs: dev/documentation.md
-    - Design Documents:
-      - API Authentication: dev/design_docs/api_auth.md
-      - Configuration: dev/design_docs/config.md
-      - Events: dev/design_docs/events.md
-      - Notes: dev/design_docs/notes.md
-      - 'User Profiles & Authentication': dev/design_docs/user_profiles.md
-  - FAQ: https://hedgedoc.org/faq
+      - Overview: references/index.md
+      - 'HFM Syntax': references/hfm.md
+      - Configuration:
+        - Overview: references/config/index.md
+        - General: references/config/general.md
+        - Notes: references/config/notes.md
+        - Database: references/config/database.md
+        - Authentication:
+          - 'Local accounts': references/config/auth/local.md
+          - LDAP: references/config/auth/ldap.md
+        - Customization: references/config/customization.md
+        - Media Backends:
+          - Azure: references/config/media/azure.md
+          - Filesystem: references/config/media/filesystem.md
+          - imgur: references/config/media/imgur.md
+          - S3: references/config/media/s3.md
+          - WebDAV: references/config/media/webdav.md
+        - Integrations: references/config/integrations.md
+  - FAQ: faq/index.md
 markdown_extensions:
   - toc:
       permalink: true
   - admonition
+  - pymdownx.details
+  - pymdownx.superfences
   - attr_list
   - footnotes
+  - mdx_truly_sane_lists
 theme:
   name: 'material'
   language: en
