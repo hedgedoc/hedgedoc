@@ -35,11 +35,11 @@ Files: docs/**/*.png
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC-BY-SA-4.0
 
-Files: docs/content/dev/db-schema.plantuml
+Files: docs/content/old/dev/db-schema.plantuml
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC-BY-SA-4.0
 
-Files: docs/content/dev/*api.yml
+Files: docs/content/old/dev/*api.yml
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC-BY-SA-4.0
 
@@ -54,6 +54,26 @@ License: LicenseRef-HedgeDoc-Icon-Usage-Guidelines
 Files: docs/content/theme/styles/Roboto/*
 Copyright: 2011 Christian Robertson
 License: Apache-2.0
+
+Files: docs/content/files/setup-docker/config.env
+Copyright: 2023 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: docs/content/files/setup-docker/docker-compose.yml
+Copyright: 2023 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: docs/content/files/setup-docker/Caddyfile
+Copyright: 2023 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: docs/netlify.toml
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
+
+Files: docs/.netlify/*
+Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
+License: CC0-1.0
 
 Files: backend/public/*.md
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)

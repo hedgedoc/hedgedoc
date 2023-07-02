@@ -1,7 +1,7 @@
 # HedgeDoc Flavored Markdown
 
 HedgeDoc has its own markdown dialect which supports many features from [CommonMark][commonmark]
-and [Github Flavored Markdown][gfm]. It also adds some new extensions and is missing some.
+and [GitHub Flavored Markdown][gfm]. It also adds some new extensions and is missing some.
 
 These tables tell you what exactly we support in HedgeDoc 1.x (HFM 1) and HedgeDoc 2 (HFM 2).
 

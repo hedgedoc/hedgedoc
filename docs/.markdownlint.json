@@ -25,7 +25,7 @@
     "style": "---"
   },
   "MD044": {
-    "names": ["HedgeDoc"]
+    "names": ["HedgeDoc", "Docker"]
   },
   "MD046": {
     "style": "fenced"
