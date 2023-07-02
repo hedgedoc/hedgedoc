@@ -13,6 +13,7 @@
     "lint": "dotenv -- turbo run lint",
     "format": "dotenv -- turbo run format",
     "start:dev": "dotenv -- turbo run start:dev",
+    "start": "dotenv -- turbo run start",
     "test:ci": "dotenv -- turbo run test:ci",
     "test": "dotenv -- turbo run test"
   },
