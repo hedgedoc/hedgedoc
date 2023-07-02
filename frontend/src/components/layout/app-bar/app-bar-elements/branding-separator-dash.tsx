@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useBrandingDetails } from './use-branding-details'
+import { useBrandingDetails } from '../../../common/custom-branding/use-branding-details'
 import React from 'react'
 
 /**

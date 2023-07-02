@@ -9,7 +9,6 @@ import { NoteLoadingBoundary } from '../../../../components/common/note-loading-
 import { DocumentReadOnlyPageContent } from '../../../../components/document-read-only-page/document-read-only-page-content'
 import { useNoteAndAppTitle } from '../../../../components/editor-page/head-meta-properties/use-note-and-app-title'
 import { EditorToRendererCommunicatorContextProvider } from '../../../../components/editor-page/render-context/editor-to-renderer-communicator-context-provider'
-import { BaseAppBar } from '../../../../components/layout/app-bar/base-app-bar'
 import type { NextPage } from 'next'
 import React from 'react'
 
@@ -26,10 +25,7 @@ const DocumentReadOnlyPage: NextPage<PageParams> = ({ params }) => {
   return (
     <EditorToRendererCommunicatorContextProvider>
       <NoteLoadingBoundary noteId={params.noteId}>
-        <div className={'d-flex flex-column mvh-100'}>
-          <BaseAppBar />
-          <DocumentReadOnlyPageContent />
-        </div>
+        <DocumentReadOnlyPageContent />
       </NoteLoadingBoundary>
     </EditorToRendererCommunicatorContextProvider>
   )

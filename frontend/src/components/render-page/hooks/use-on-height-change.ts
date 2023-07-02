@@ -5,7 +5,7 @@
  */
 import useResizeObserver from '@react-hook/resize-observer'
 import type { RefObject } from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 /**
  * Monitors the height of the referenced {@link HTMLElement} and executes the callback on change.
@@ -18,6 +18,7 @@ export const useOnHeightChange = (
   onHeightChange: undefined | ((value: number) => void)
 ): void => {
   const [rendererSize, setRendererSize] = useState<number>(0)
+  const lastPostedSize = useRef<number>(0)
   useResizeObserver(elementRef, (entry) => {
     setRendererSize(entry.contentRect.height)
   })
@@ -29,6 +30,10 @@ export const useOnHeightChange = (
     setRendererSize(value)
   }, [elementRef])
   useEffect(() => {
+    if (lastPostedSize.current === rendererSize) {
+      return
+    }
+    lastPostedSize.current = rendererSize
     onHeightChange?.(rendererSize + 1)
-  }, [rendererSize, onHeightChange])
+  })
 }

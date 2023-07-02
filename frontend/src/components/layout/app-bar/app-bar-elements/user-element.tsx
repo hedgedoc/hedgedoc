@@ -13,5 +13,5 @@ import React from 'react'
  */
 export const UserElement: React.FC = () => {
   const userExists = useApplicationState((state) => !!state.user)
-  return userExists ? <UserDropdown /> : <SignInButton size={'sm'} />
+  return userExists ? <UserDropdown /> : <SignInButton size={'sm'} className={'h-100'} />
 }
