@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { IndexOptionsForDocumentSearch, Id, SimpleDocumentSearchResultSetUnit } from 'flexsearch-ts'
+import type { IndexOptionsForDocumentSearch, Id, SimpleDocumentSearchResultSetUnit, StoreOption } from 'flexsearch-ts'
 import { Document } from 'flexsearch-ts'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -21,12 +21,12 @@ export interface SearchIndexEntry {
  */
 export const useDocumentSearch = <T extends SearchIndexEntry>(
   entries: Array<T>,
-  options: IndexOptionsForDocumentSearch<T>,
+  options: IndexOptionsForDocumentSearch<T, StoreOption>,
   searchTerm: string
 ): SimpleDocumentSearchResultSetUnit[] => {
   const [results, setResults] = useState<SimpleDocumentSearchResultSetUnit[]>([])
   const searchIndex = useMemo(() => {
-    const index = new Document<T>({
+    const index = new Document<T, StoreOption>({
       tokenize: 'full',
       ...options
     })

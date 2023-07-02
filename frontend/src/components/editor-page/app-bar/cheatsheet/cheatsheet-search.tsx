@@ -12,7 +12,7 @@ import { UiIcon } from '../../../common/icons/ui-icon'
 import type { CheatsheetSingleEntry, CheatsheetExtension } from '../../cheatsheet/cheatsheet-extension'
 import { hasCheatsheetTopics } from '../../cheatsheet/cheatsheet-extension'
 import styles from './cheatsheet.module.scss'
-import type { IndexOptionsForDocumentSearch } from 'flexsearch-ts'
+import type { IndexOptionsForDocumentSearch, StoreOption } from 'flexsearch-ts'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { FormControl, InputGroup } from 'react-bootstrap'
 import { X } from 'react-bootstrap-icons'
@@ -24,7 +24,7 @@ interface CheatsheetSearchIndexEntry extends SearchIndexEntry {
   example: string
 }
 
-const searchOptions: IndexOptionsForDocumentSearch<CheatsheetSearchIndexEntry> = {
+const searchOptions: IndexOptionsForDocumentSearch<CheatsheetSearchIndexEntry, StoreOption> = {
   document: {
     id: 'id',
     field: ['title', 'description', 'example']
