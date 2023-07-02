@@ -52,3 +52,12 @@ You can inspect the generated production-bundle files to look for optimization i
 
 1. run `yarn analyze`. This will overwrite any existing builds!
 2. Open the generated `.next/server/analyze/server.html` in your favourite browser
+
+## Enable Debug Logging in Production
+
+The debug logger can be enabled in production by setting `debugLogging` in the browser's local storage to `true`.
+This can be done e.g. by executing this JavaScript command in the browser's console.
+
+```javascript
+window.localStorage.setItem("debugLogging", 'true');
+```
