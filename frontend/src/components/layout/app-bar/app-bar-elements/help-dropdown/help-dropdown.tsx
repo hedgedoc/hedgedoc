@@ -22,7 +22,7 @@ export const HelpDropdown: React.FC = () => {
 
   return (
     <Dropdown>
-      <Dropdown.Toggle size={'sm'}>
+      <Dropdown.Toggle size={'sm'} className={'h-100'}>
         <UiIcon icon={IconQuestion} />
       </Dropdown.Toggle>
       <Dropdown.Menu>

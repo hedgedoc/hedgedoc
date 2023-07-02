@@ -1,12 +1,14 @@
+'use client'
+
 /*
  * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../hooks/common/use-application-state'
-import { RealtimeConnectionAlert } from '../../editor-page/realtime-connection-alert/realtime-connection-alert'
-import { NoteTitleElement } from './app-bar-elements/note-title-element/note-title-element'
-import { BaseAppBar } from './base-app-bar'
+import { RealtimeConnectionAlert } from '../../../../../components/editor-page/realtime-connection-alert/realtime-connection-alert'
+import { NoteTitleElement } from '../../../../../components/layout/app-bar/app-bar-elements/note-title-element/note-title-element'
+import { BaseAppBar } from '../../../../../components/layout/app-bar/base-app-bar'
+import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import React from 'react'
 
 /**

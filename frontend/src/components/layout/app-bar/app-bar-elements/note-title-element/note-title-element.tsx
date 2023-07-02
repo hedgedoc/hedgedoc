@@ -1,3 +1,5 @@
+'use client'
+
 /*
  * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
@@ -8,7 +10,7 @@ import { useNoteTitle } from '../../../../../hooks/common/use-note-title'
 import { useTranslatedText } from '../../../../../hooks/common/use-translated-text'
 import { UiIcon } from '../../../../common/icons/ui-icon'
 import { ShowIf } from '../../../../common/show-if/show-if'
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Lock as IconLock } from 'react-bootstrap-icons'
 
 /**
@@ -20,13 +22,13 @@ export const NoteTitleElement: React.FC = () => {
   const readOnlyLabel = useTranslatedText('appbar.editor.readOnly')
 
   return (
-    <Fragment>
+    <span className={'m-0 text-truncate'}>
       <ShowIf condition={!isWriteable}>
         <span className={'text-secondary me-2'}>
-          <UiIcon icon={IconLock} title={readOnlyLabel} />
+          <UiIcon icon={IconLock} className={'me-2'} title={readOnlyLabel} />
         </span>
       </ShowIf>
-      <span className={'text-truncate mw-100'}>{noteTitle}</span>
-    </Fragment>
+      {noteTitle}
+    </span>
   )
 }

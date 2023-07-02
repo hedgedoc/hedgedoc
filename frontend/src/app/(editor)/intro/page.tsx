@@ -9,7 +9,6 @@ import { CustomBranding } from '../../../components/common/custom-branding/custo
 import { HedgeDocLogoVertical } from '../../../components/common/hedge-doc-logo/hedge-doc-logo-vertical'
 import { LogoSize } from '../../../components/common/hedge-doc-logo/logo-size'
 import { EditorToRendererCommunicatorContextProvider } from '../../../components/editor-page/render-context/editor-to-renderer-communicator-context-provider'
-import { CoverButtons } from '../../../components/intro-page/cover-buttons/cover-buttons'
 import { IntroCustomContent } from '../../../components/intro-page/intro-custom-content'
 import { LandingLayout } from '../../../components/landing-layout/landing-layout'
 import type { NextPage } from 'next'
@@ -33,7 +32,6 @@ const IntroPage: NextPage = () => {
           <div className={'mb-5'}>
             <CustomBranding />
           </div>
-          <CoverButtons />
           <IntroCustomContent />
         </div>
       </EditorToRendererCommunicatorContextProvider>

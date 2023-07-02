@@ -14,12 +14,17 @@ import { StoreProvider } from '../../redux/store-provider'
 import { baseUrlFromEnvExtractor } from '../../utils/base-url-from-env-extractor'
 import { configureLuxon } from '../../utils/configure-luxon'
 import type { Metadata } from 'next'
+import type { PropsWithChildren } from 'react'
 import React from 'react'
 import { getConfig } from '../../api/config'
 
 configureLuxon()
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+interface RootLayoutProps extends PropsWithChildren {
+  appBar: React.ReactNode
+}
+
+export default async function RootLayout({ children, appBar }: RootLayoutProps) {
   const baseUrls = baseUrlFromEnvExtractor.extractBaseUrls()
   const frontendConfig = await getConfig(baseUrls.editor)
 
@@ -35,7 +40,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <ApplicationLoader>
                 <DarkMode />
                 <MotdModal />
-                <UiNotificationBoundary>{children}</UiNotificationBoundary>
+                <UiNotificationBoundary>
+                  <div className={'d-flex flex-column vh-100'}>
+                    {appBar}
+                    {children}
+                  </div>
+                </UiNotificationBoundary>
               </ApplicationLoader>
             </StoreProvider>
           </FrontendConfigContextProvider>

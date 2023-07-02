@@ -3,16 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import * as UseApplicationStateModule from '../../../hooks/common/use-application-state'
-import type { ApplicationState } from '../../../redux/application-state'
-import { mockI18n } from '../../../test-utils/mock-i18n'
+import * as UseApplicationStateModule from '../../../../../hooks/common/use-application-state'
+import type { ApplicationState } from '../../../../../redux/application-state'
+import { mockI18n } from '../../../../../test-utils/mock-i18n'
 import { EditorAppBar } from './editor-app-bar'
 import type { NoteGroupPermissionEntry, NoteUserPermissionEntry } from '@hedgedoc/commons'
 import { render } from '@testing-library/react'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
 
-jest.mock('./base-app-bar', () => ({
+jest.mock('../../../../../components/layout/app-bar/base-app-bar', () => ({
   __esModule: true,
   BaseAppBar: ({ children }: PropsWithChildren) => (
     <div>
@@ -22,7 +22,7 @@ jest.mock('./base-app-bar', () => ({
     </div>
   )
 }))
-jest.mock('../../../hooks/common/use-application-state')
+jest.mock('../../../../../hooks/common/use-application-state')
 
 const mockedCommonAppState = {
   noteDetails: {

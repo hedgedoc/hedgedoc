@@ -30,13 +30,13 @@ exports[`app bar contains note title and read-only marker when having only read 
     </span>
     <div>
       <span
-        class="text-secondary me-2"
+        class="m-0 text-truncate"
       >
-        BootstrapIconMock_Lock
-      </span>
-      <span
-        class="text-truncate mw-100"
-      >
+        <span
+          class="text-secondary me-2"
+        >
+          BootstrapIconMock_Lock
+        </span>
         Note Title Test
       </span>
     </div>
@@ -55,7 +55,7 @@ exports[`app bar contains note title when editor is synced 1`] = `
     </span>
     <div>
       <span
-        class="text-truncate mw-100"
+        class="m-0 text-truncate"
       >
         Note Title Test
       </span>

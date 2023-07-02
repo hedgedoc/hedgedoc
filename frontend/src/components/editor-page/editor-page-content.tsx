@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { EditorAppBar } from '../layout/app-bar/editor-app-bar'
 import { CommunicatorImageLightbox } from '../markdown-renderer/extensions/image/communicator-image-lightbox'
 import { ExtensionEventEmitterProvider } from '../markdown-renderer/hooks/use-extension-event-emitter'
 import { ChangeEditorContentContextProvider } from './change-content-context/codemirror-reference-context'
@@ -69,16 +68,13 @@ export const EditorPageContent: React.FC = () => {
       <ExtensionEventEmitterProvider>
         {editorExtensionComponents}
         <CommunicatorImageLightbox />
-        <div className={'d-flex flex-column vh-100'}>
-          <EditorAppBar />
-          <div className={'flex-fill d-flex h-100 w-100 overflow-hidden flex-row'}>
-            <Splitter
-              left={leftPane}
-              right={rightPane}
-              additionalContainerClassName={'overflow-hidden position-relative'}
-            />
-            <Sidebar />
-          </div>
+        <div className={'flex-fill d-flex h-100 w-100 overflow-hidden flex-row'}>
+          <Splitter
+            left={leftPane}
+            right={rightPane}
+            additionalContainerClassName={'overflow-hidden position-relative'}
+          />
+          <Sidebar />
         </div>
       </ExtensionEventEmitterProvider>
     </ChangeEditorContentContextProvider>

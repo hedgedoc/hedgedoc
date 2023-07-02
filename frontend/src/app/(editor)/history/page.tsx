@@ -13,7 +13,7 @@ import { LandingLayout } from '../../../components/landing-layout/landing-layout
 import type { NextPage } from 'next'
 import React, { useEffect } from 'react'
 import { Row } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 
 /**
  * The page that shows the local and remote note history.
@@ -29,9 +29,6 @@ const HistoryPage: NextPage = () => {
   return (
     <LandingLayout>
       <HistoryToolbarStateContextProvider>
-        <h1 className='mb-4'>
-          <Trans i18nKey={'landing.navigation.history'} />
-        </h1>
         <Row className={'justify-content-center mt-5 mb-3'}>
           <HistoryToolbar />
         </Row>
