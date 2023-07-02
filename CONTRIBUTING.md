@@ -54,10 +54,10 @@ HedgeDoc is a volunteer effort. We encourage you to pitch in and help us to make
 ## Certificate of Origin
 
 By contributing to this project you agree to
-the [Developer Certificate of Origin (DCO)](docs/content/legal/developer-certificate-of-origin.txt). This document was created
+the [Developer Certificate of Origin (DCO)](developer-certificate-of-origin.txt). This document was created
 by the Linux Kernel community and is a simple statement that you, as a contributor, have the legal right to make the
 contribution. The DCO is a legally binding statement,
-please [read it carefully](docs/content/legal/developer-certificate-of-origin.txt).
+please [read it carefully](developer-certificate-of-origin.txt).
 
 If you can certify it, then just add a line to every git commit message:
 
