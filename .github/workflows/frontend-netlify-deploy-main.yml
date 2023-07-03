@@ -62,4 +62,4 @@ jobs:
       - name: Run netlify CLI deployment
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: "netlify deploy --build --prod --message \"${{ github.event.head_commit.id }}: ${{ github.event.head_commit.message }}\""
+        run: "netlify deploy --build --prod --message \"${{ github.event.head_commit.id }}\""
