@@ -2315,7 +2315,7 @@ __metadata:
     "@azure/storage-blob": 12.14.0
     "@hedgedoc/commons": "workspace:commons"
     "@mrdrogdrog/optional": 1.1.0
-    "@nestjs/cli": 10.1.1
+    "@nestjs/cli": 10.1.3
     "@nestjs/common": 10.0.5
     "@nestjs/config": 3.0.0
     "@nestjs/core": 10.0.5
@@ -3159,9 +3159,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/cli@npm:10.1.1":
-  version: 10.1.1
-  resolution: "@nestjs/cli@npm:10.1.1"
+"@nestjs/cli@npm:10.1.3":
+  version: 10.1.3
+  resolution: "@nestjs/cli@npm:10.1.3"
   dependencies:
     "@angular-devkit/core": 16.1.3
     "@angular-devkit/schematics": 16.1.3
@@ -3195,7 +3195,7 @@ __metadata:
       optional: true
   bin:
     nest: bin/nest.js
-  checksum: bd46e7676db3d14d28d9d2f1a5fcde52259164d05cb02fa4d440d977dc1efbf7db15e3bc690aa58b67def3003860b4bf63586e36dc29f282d7c649ab020d7b87
+  checksum: 08b8dc7b625b74bf46ffb8ae6bc6a89479eff806136e3ff7627a5fc2d2a619cfe7fe76a92061c1f742b4f28c66efcecf486916f87ab0a4d2699623fde7cffe96
   languageName: node
   linkType: hard
 
