@@ -40,6 +40,7 @@ nav:
       - 'HedgeDoc Flavored Markdown': references/hfm.md
       - 'Slide Options': references/slide-options.md
       - 'URL Scheme': references/url-scheme.md
+      - 'YAML Metadata': references/yaml-metadata.md
   - Developer:
       - 'Getting Started': dev/getting-started.md
       - API: dev/api.md
