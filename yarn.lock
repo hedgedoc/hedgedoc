@@ -2410,7 +2410,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/commons@workspace:commons"
   dependencies:
-    "@jest/types": 29.5.0
+    "@jest/types": 29.6.0
     "@mrdrogdrog/optional": 1.1.0
     "@types/js-yaml": 4.0.5
     "@types/ws": 8.5.5
@@ -2904,21 +2904,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/types@npm:29.5.0, @jest/types@npm:^29.5.0":
-  version: 29.5.0
-  resolution: "@jest/types@npm:29.5.0"
-  dependencies:
-    "@jest/schemas": ^29.4.3
-    "@types/istanbul-lib-coverage": ^2.0.0
-    "@types/istanbul-reports": ^3.0.0
-    "@types/node": "*"
-    "@types/yargs": ^17.0.8
-    chalk: ^4.0.0
-  checksum: 1811f94b19cf8a9460a289c4f056796cfc373480e0492692a6125a553cd1a63824bd846d7bb78820b7b6f758f6dd3c2d4558293bb676d541b2fa59c70fdf9d39
-  languageName: node
-  linkType: hard
-
-"@jest/types@npm:^29.6.0":
+"@jest/types@npm:29.6.0, @jest/types@npm:^29.6.0":
   version: 29.6.0
   resolution: "@jest/types@npm:29.6.0"
   dependencies:
@@ -2929,6 +2915,20 @@ __metadata:
     "@types/yargs": ^17.0.8
     chalk: ^4.0.0
   checksum: cb793a8c04194c29059c5f3a89416e9e1f3643236d4d545fe99fa43a230be4c521e9e1d46ca97837a731545599c9afe2c5a99ff37ee4edf197be0d8d85433b05
+  languageName: node
+  linkType: hard
+
+"@jest/types@npm:^29.5.0":
+  version: 29.5.0
+  resolution: "@jest/types@npm:29.5.0"
+  dependencies:
+    "@jest/schemas": ^29.4.3
+    "@types/istanbul-lib-coverage": ^2.0.0
+    "@types/istanbul-reports": ^3.0.0
+    "@types/node": "*"
+    "@types/yargs": ^17.0.8
+    chalk: ^4.0.0
+  checksum: 1811f94b19cf8a9460a289c4f056796cfc373480e0492692a6125a553cd1a63824bd846d7bb78820b7b6f758f6dd3c2d4558293bb676d541b2fa59c70fdf9d39
   languageName: node
   linkType: hard
 
