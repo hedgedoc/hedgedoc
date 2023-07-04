@@ -6,7 +6,8 @@
     "backend",
     "frontend",
     "commons",
-    "dev-reverse-proxy"
+    "dev-reverse-proxy",
+    "docs"
   ],
   "scripts": {
     "build": "dotenv -- turbo run build",

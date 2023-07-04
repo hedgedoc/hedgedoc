@@ -53,6 +53,11 @@
         "^build"
       ]
     },
+    "lint:fix": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
 
     "format": {},
 
