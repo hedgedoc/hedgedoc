@@ -1,0 +1,13 @@
+{
+  "name": "@hedgedoc/docs",
+  "version": "2.0.0-dev",
+  "license": "AGPL-3.0",
+  "scripts": {
+    "lint": "markdownlint-cli2 content/**/*.md",
+    "lint:fix": "markdownlint-cli2 --fix content/**/*.md"
+  },
+  "devDependencies": {
+    "markdownlint-cli2": "0.8.1"
+  },
+  "packageManager": "yarn@3.6.1"
+}

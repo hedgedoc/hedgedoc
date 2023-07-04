@@ -1,0 +1,42 @@
+{
+  "default": true,
+  "MD002": false,
+  "MD003": {
+    "style": "atx"
+  },
+  "MD004": {
+    "style": "dash"
+  },
+  "MD009": {
+    "br_spaces": 2,
+    "list_item_empty_lines": true,
+    "strict": false
+  },
+  "MD013": {
+    "code_block_line_length": 100,
+    "line_length": 100,
+    "tables": false,
+    "stern": true
+  },
+  "MD029": {
+    "style": "ordered"
+  },
+  "MD035": {
+    "style": "---"
+  },
+  "MD044": {
+    "names": ["HedgeDoc"]
+  },
+  "MD046": {
+    "style": "fenced"
+  },
+  "MD048": {
+    "style": "backtick"
+  },
+  "MD049": {
+    "style": "asterisk"
+  },
+  "MD050": {
+    "style": "asterisk"
+  }
+}
