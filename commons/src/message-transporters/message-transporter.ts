@@ -223,7 +223,7 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
       this.sendMessage({
         type: MessageType.READY_REQUEST
       })
-    }, 100)
+    }, 400)
     this.sendMessage({
       type: MessageType.READY_REQUEST
     })
