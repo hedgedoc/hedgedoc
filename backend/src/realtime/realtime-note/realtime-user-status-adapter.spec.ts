@@ -146,10 +146,10 @@ describe('realtime user status adapter', () => {
       'sendMessage',
     );
 
-    messageTransporterLoggedIn1.startSendingOfReadyRequests();
-    messageTransporterLoggedIn2.startSendingOfReadyRequests();
-    messageTransporterGuest.startSendingOfReadyRequests();
-    messageTransporterDecline.startSendingOfReadyRequests();
+    messageTransporterLoggedIn1.markAsReady();
+    messageTransporterLoggedIn2.markAsReady();
+    messageTransporterGuest.markAsReady();
+    messageTransporterDecline.markAsReady();
 
     jest.advanceTimersByTime(500);
   });
