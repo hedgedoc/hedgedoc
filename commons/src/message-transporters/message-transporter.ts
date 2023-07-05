@@ -44,10 +44,6 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
       return
     }
 
-    if (this.transportAdapter === undefined) {
-      throw new Error('no transport adapter set')
-    }
-
     try {
       this.transportAdapter.send(content)
     } catch (error: unknown) {
@@ -85,9 +81,6 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
     }
     if (message.type === MessageType.READY_ANSWER) {
       this.processReadyAnswer()
-      return
-    }
-    if (!this.isReady()) {
       return
     }
     this.emit(message.type, message)
