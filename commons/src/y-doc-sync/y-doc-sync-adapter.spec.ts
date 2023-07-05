@@ -180,10 +180,10 @@ describe('y-doc-sync-adapter', () => {
     messageTransporterServerTo1.setAdapter(transporterAdapterServerTo1)
     messageTransporterServerTo2.setAdapter(transporterAdapterServerTo2)
 
-    messageTransporterClient1.startSendingOfReadyRequests()
-    messageTransporterClient2.startSendingOfReadyRequests()
-    messageTransporterServerTo1.startSendingOfReadyRequests()
-    messageTransporterServerTo2.startSendingOfReadyRequests()
+    messageTransporterClient1.markAsReady()
+    messageTransporterClient2.markAsReady()
+    messageTransporterServerTo1.markAsReady()
+    messageTransporterServerTo2.markAsReady()
 
     jest.advanceTimersByTime(1000)
 

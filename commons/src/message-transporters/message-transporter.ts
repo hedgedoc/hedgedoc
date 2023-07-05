@@ -212,9 +212,12 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
    * Marks the transporter as ready for communication and starts sending of ready requests to the other side.
    * This method should be called after all preparations are done and messages can be processed.
    */
-  public startSendingOfReadyRequests(): void {
+  public markAsReady(): void {
     this.thisSideReady = true
+    this.startSendingOfReadyRequests()
+  }
 
+  private startSendingOfReadyRequests(): void {
     this.readyInterval = setInterval(() => {
       this.sendMessage({
         type: MessageType.READY_REQUEST
