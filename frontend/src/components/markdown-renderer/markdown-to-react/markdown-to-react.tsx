@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { measurePerformance } from '../../../utils/measure-performance'
 import { HtmlToReact } from '../../common/html-to-react/html-to-react'
 import type { MarkdownRendererExtension } from '../extensions/_base-classes/markdown-renderer-extension'
 import { useCombinedNodePreprocessor } from './hooks/use-combined-node-preprocessor'
@@ -43,7 +44,9 @@ export const MarkdownToReact: React.FC<MarkdownToReactProps> = ({
   }, [nodeToReactTransformer, markdownRenderExtensions])
 
   useMemo(() => {
-    nodeToReactTransformer.setLineIds(lineNumberMapper.updateLineMapping(markdownContentLines))
+    measurePerformance('markdown-to-react: update-line-mapping', () => {
+      nodeToReactTransformer.setLineIds(lineNumberMapper.updateLineMapping(markdownContentLines))
+    })
   }, [nodeToReactTransformer, lineNumberMapper, markdownContentLines])
 
   const nodePreProcessor = useCombinedNodePreprocessor(markdownRenderExtensions)
@@ -60,7 +63,11 @@ export const MarkdownToReact: React.FC<MarkdownToReactProps> = ({
     [nodeToReactTransformer, nodePreProcessor]
   )
 
-  const html = useMemo(() => markdownIt.render(markdownContentLines.join('\n')), [markdownContentLines, markdownIt])
+  const html = useMemo(() => {
+    return measurePerformance('markdown-to-react: markdown-it', () =>
+      markdownIt.render(markdownContentLines.join('\n'))
+    )
+  }, [markdownContentLines, markdownIt])
   const domPurifyConfig: DOMPurify.Config = useMemo(
     () => ({
       ADD_TAGS: markdownRenderExtensions.flatMap((extension) => extension.buildTagNameAllowList())
