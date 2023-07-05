@@ -105,6 +105,7 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
   private stopSendingOfReadyRequests() {
     if (this.readyInterval !== undefined) {
       clearInterval(this.readyInterval)
+      this.readyInterval = undefined
     }
   }
 
