@@ -16,13 +16,15 @@ import { CommunicationMessageType, RendererType } from './window-post-message-co
 import { countWords } from './word-counter'
 import type { SlideOptions } from '@hedgedoc/commons'
 import { EventEmitter2 } from 'eventemitter2'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
 
 /**
  * Wraps the markdown rendering in an iframe.
  */
 export const RenderPageContent: React.FC = () => {
-  const [markdownContentLines, setMarkdownContentLines] = useState<string[]>([])
+  const [wantedMarkdownContentLines, setWantedMarkdownContentLines] = useState<string[]>([])
+  const deferredMarkdownContentLines = useDeferredValue(wantedMarkdownContentLines)
+
   const [scrollState, setScrollState] = useState<ScrollState>({ firstLineInView: 1, scrolledPercentage: 0 })
   const [baseConfiguration, setBaseConfiguration] = useState<BaseConfiguration | undefined>(undefined)
   const communicator = useRendererToEditorCommunicator()
@@ -49,7 +51,7 @@ export const RenderPageContent: React.FC = () => {
 
   useRendererReceiveHandler(
     CommunicationMessageType.SET_MARKDOWN_CONTENT,
-    useCallback((values) => setMarkdownContentLines(values.content), [])
+    useCallback((values) => setWantedMarkdownContentLines(values.content), [])
   )
 
   useRendererReceiveHandler(
@@ -119,7 +121,7 @@ export const RenderPageContent: React.FC = () => {
       case RendererType.DOCUMENT:
         return (
           <DocumentMarkdownRenderer
-            markdownContentLines={markdownContentLines}
+            markdownContentLines={deferredMarkdownContentLines}
             onMakeScrollSource={onMakeScrollSource}
             scrollState={scrollState}
             onScroll={onScroll}
@@ -131,7 +133,7 @@ export const RenderPageContent: React.FC = () => {
       case RendererType.SLIDESHOW:
         return (
           <SlideshowMarkdownRenderer
-            markdownContentLines={markdownContentLines}
+            markdownContentLines={deferredMarkdownContentLines}
             baseUrl={baseConfiguration.baseUrl}
             newLinesAreBreaks={newLinesAreBreaks}
             slideOptions={slideOptions}
@@ -140,7 +142,7 @@ export const RenderPageContent: React.FC = () => {
       case RendererType.SIMPLE:
         return (
           <SimpleMarkdownRenderer
-            markdownContentLines={markdownContentLines}
+            markdownContentLines={deferredMarkdownContentLines}
             baseUrl={baseConfiguration.baseUrl}
             newLinesAreBreaks={newLinesAreBreaks}
             onHeightChange={onHeightChange}
@@ -151,7 +153,7 @@ export const RenderPageContent: React.FC = () => {
     }
   }, [
     baseConfiguration,
-    markdownContentLines,
+    deferredMarkdownContentLines,
     newLinesAreBreaks,
     onHeightChange,
     onMakeScrollSource,
