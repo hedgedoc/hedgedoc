@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { measurePerformance } from '../../../utils/measure-performance'
 import type { ParserOptions } from '@hedgedoc/html-to-react'
 import { convertHtmlToReact } from '@hedgedoc/html-to-react'
 import type DOMPurify from 'dompurify'
@@ -24,8 +25,12 @@ export interface HtmlToReactProps {
  */
 export const HtmlToReact: React.FC<HtmlToReactProps> = ({ htmlCode, domPurifyConfig, parserOptions }) => {
   const elements = useMemo(() => {
-    const sanitizedHtmlCode = sanitize(htmlCode, { ...domPurifyConfig, RETURN_DOM_FRAGMENT: false, RETURN_DOM: false })
-    return convertHtmlToReact(sanitizedHtmlCode, parserOptions)
+    const sanitizedHtmlCode = measurePerformance('html-to-react: sanitize', () => {
+      return sanitize(htmlCode, { ...domPurifyConfig, RETURN_DOM_FRAGMENT: false, RETURN_DOM: false })
+    })
+    return measurePerformance('html-to-react: convertHtmlToReact', () => {
+      return convertHtmlToReact(sanitizedHtmlCode, parserOptions)
+    })
   }, [domPurifyConfig, htmlCode, parserOptions])
 
   return <Fragment>{elements}</Fragment>
