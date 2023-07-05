@@ -42,6 +42,14 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
    * @throws Error if no transport adapter has been set
    */
   public sendMessage<M extends MessageType>(content: Message<M>): void {
+    if (this.transportAdapter === undefined) {
+      console.debug(
+        "Can't send message without transport adapter. Message that couldn't be sent was",
+        content
+      )
+      return
+    }
+
     if (!this.isConnected()) {
       this.onDisconnecting()
       console.debug(
@@ -49,6 +57,22 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
         content
       )
       return
+    }
+
+    if (
+      !this.thisSideReady &&
+      content.type !== MessageType.READY_REQUEST &&
+      content.type !== MessageType.READY_ANSWER
+    ) {
+      throw new Error("Can't send message. This side isn't ready")
+    }
+
+    if (
+      !this.otherSideReady &&
+      content.type !== MessageType.READY_REQUEST &&
+      content.type !== MessageType.READY_ANSWER
+    ) {
+      throw new Error("Can't send message. Other side isn't ready")
     }
 
     try {
