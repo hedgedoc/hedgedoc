@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MessageTransporter } from '../message-transporters/message-transporter.js'
+import { MessageTransporter } from '../message-transporters/index.js'
 import { Message, MessageType } from '../message-transporters/message.js'
 import { RealtimeDoc } from './realtime-doc.js'
 import { Listener } from 'eventemitter2'
@@ -54,10 +54,6 @@ export abstract class YDocSyncAdapter {
     }) as Listener
   }
 
-  public getMessageTransporter(): MessageTransporter {
-    return this.messageTransporter
-  }
-
   public isSynced(): boolean {
     return this.synced
   }
@@ -71,12 +67,10 @@ export abstract class YDocSyncAdapter {
     const stateRequestListener = this.messageTransporter.on(
       MessageType.NOTE_CONTENT_STATE_REQUEST,
       (payload) => {
-        if (this.doc) {
-          this.messageTransporter.sendMessage({
-            type: MessageType.NOTE_CONTENT_UPDATE,
-            payload: this.doc.encodeStateAsUpdate(payload.payload)
-          })
-        }
+        this.messageTransporter.sendMessage({
+          type: MessageType.NOTE_CONTENT_UPDATE,
+          payload: this.doc.encodeStateAsUpdate(payload.payload)
+        })
       },
       { objectify: true }
     ) as Listener
@@ -128,11 +122,9 @@ export abstract class YDocSyncAdapter {
   }
 
   public requestDocumentState(): void {
-    if (this.doc) {
-      this.messageTransporter.sendMessage({
-        type: MessageType.NOTE_CONTENT_STATE_REQUEST,
-        payload: this.doc.encodeStateVector()
-      })
-    }
+    this.messageTransporter.sendMessage({
+      type: MessageType.NOTE_CONTENT_STATE_REQUEST,
+      payload: this.doc.encodeStateVector()
+    })
   }
 }
