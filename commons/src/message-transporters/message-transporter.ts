@@ -34,6 +34,13 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
   private otherSideReady = false
   private readyInterval: NodeJS.Timer | undefined
 
+  /**
+   * Send a message to the other side using the currently set message transporter.
+   *
+   * @param content The complete message to send
+   * @throws Error if this or the other side are not ready yet and the message is not a READY_ANSWER or READY_REQUEST
+   * @throws Error if no transport adapter has been set
+   */
   public sendMessage<M extends MessageType>(content: Message<M>): void {
     if (!this.isConnected()) {
       this.onDisconnecting()
