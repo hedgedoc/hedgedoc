@@ -13,11 +13,16 @@ import { MockConnectionBuilder } from './test-utils/mock-connection';
 describe('realtime note', () => {
   let mockedNote: Note;
 
+  beforeAll(() => {
+    jest.useFakeTimers();
+  });
+
   beforeEach(() => {
     mockedNote = Mock.of<Note>({ id: 4711 });
   });
 
   afterAll(() => {
+    jest.useRealTimers();
     jest.resetAllMocks();
     jest.resetModules();
   });

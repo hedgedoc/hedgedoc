@@ -126,7 +126,7 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
     this.emit('ready')
   }
 
-  private stopSendingOfReadyRequests() {
+  protected stopSendingOfReadyRequests() {
     if (this.readyInterval !== undefined) {
       clearInterval(this.readyInterval)
       this.readyInterval = undefined
@@ -242,7 +242,7 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
     this.startSendingOfReadyRequests()
   }
 
-  private startSendingOfReadyRequests(): void {
+  protected startSendingOfReadyRequests(): void {
     this.readyInterval = setInterval(() => {
       this.sendMessage({
         type: MessageType.READY_REQUEST
