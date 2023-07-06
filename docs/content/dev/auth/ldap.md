@@ -1,6 +1,7 @@
 # LDAP
 
-LDAP authentication can be tested with the [`test-openldap`](https://github.com/rroemhild/docker-test-openldap) docker image from [rroemhild](https://github.com/rroemhild).
+LDAP authentication can be tested with the [`test-openldap`][docker-image]
+docker image from [rroemhild][rroemhild].
 
 Simply run
 
@@ -10,7 +11,7 @@ docker run --rm -p 10389:10389 -p 10636:10636 rroemhild/test-openldap
 
 and add the following to the `.env` file before starting the backend.
 
-```
+```dotenv
 HD_AUTH_LDAPS="FUTURAMA"
 HD_AUTH_LDAP_FUTURAMA_PROVIDER_NAME="Futurama LDAP"
 HD_AUTH_LDAP_FUTURAMA_URL="ldap://localhost:10389"
@@ -32,3 +33,5 @@ You should then be able to log in with either of these logins (`username` : `pas
 - `bender` : `bender`
 - `amy` : `amy`
 
+[docker-image]: https://github.com/rroemhild/docker-test-openldap
+[rroemhild]: https://github.com/rroemhild
