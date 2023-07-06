@@ -14,8 +14,9 @@ The Toolbar is found above the editor and is split into five sections:
 
 ![Emphasis toolbar](../images/interface/toolbar/emphasis.png)
 
-These buttons are able to either surround selected text with the necessary symbols to emphasize it or insert the symbols
-without any content between them to be filled out by you. The icons on the buttons should be rather easy to identify.
+These buttons are able to either surround selected text with the necessary symbols to emphasize it
+or insert the symbols without any content between them to be filled out by you. The icons on
+the buttons should be rather easy to identify.
 Nonetheless, here is their functionality:
 
 1. bold e.g `**text**`
@@ -32,25 +33,26 @@ Nonetheless, here is their functionality:
 These buttons all work a bit different so, we will describe each on separately:
 
 1. **Heading**  
-   Adds `# ` in front of the line. If the line is already starting with a `#` adds just `#`.
+   Adds `#` in front of the line. If the line is already starting with a `#` adds just `#`.
 2. **Code Blocks**  
-   Adds ` ``` ` around the selected text or if no text is selected just adds two lines with ` ``` ` and an empty line
-   between them.
+   Adds ` ``` ` around the selected text or if no text is selected just adds two lines with ` ``` `
+   and an empty line between them.
 3. **Quote**  
-   Adds `> ` in front of the line.
+   Adds `>` in front of the line.
 4. **Unordered List**  
-   Ads `- ` in front of the line.
+   Ads `-` in front of the line.
 5. **Ordered List**  
-   Adds `1. ` in front of the line.
+   Adds `1.` in front of the line.
 6. **ToDo List**  
-   Adds `- [ ] ` in front of the line.
+   Adds `- [ ]` in front of the line.
 
 ## Links & Images
 
 ![Links & Images toolbar](../images/interface/toolbar/links.png)
 
 These buttons add the corresponding syntax at the current cursor position.
-If some text is selected it will either put that as the link, if it thinks that the selected text is a link, or as the alt text.
+If some text is selected it will either put that as the link, if it thinks that the selected text
+is a link, or as the alt text.
 
 1. **Link**  
    Adds the link template `[](https://)` (For more information
@@ -66,8 +68,9 @@ If some text is selected it will either put that as the link, if it thinks that 
 ![larger blocks & emojis toolbar](../images/interface/toolbar/large_blocks.png)
 
 1. **Table**  
-   This button opens an overlay, which lets you choose the size of your table up to 10 columns and 8 rows. By clicking
-   on any of the squares a table with the corresponding size will be added to the note at the position of your cursor.  
+   This button opens an overlay, which lets you choose the size of your table up to 10 columns
+   and 8 rows. By clicking on any of the squares a table with the corresponding size will be added
+   to the note at the position of your cursor.  
    ![Table overlay](../images/interface/toolbar/table_overlay.png)  
    A larger table can be created by clicking the 'Custom Size' button.  
    ![Table modal](../images/interface/toolbar/table_modal.png)  
@@ -77,15 +80,16 @@ If some text is selected it will either put that as the link, if it thinks that 
 3. **Collapsable Block**  
    This button adds a template for a Collapsable Block like this:
 
-     ```
-     :::spoiler Toggle label
-     Toggled content
-     :::
-     ```
+   ```markdown
+   :::spoiler Toggle label
+   Toggled content
+   :::
+   ```
 
 4. **Comment**  
-   This button adds `> []` at the beginning of the line. You can either specify a name for your comment by
-   inserting `name=$YourName`, a time by inserting `time=$time` or a color by inserting `color=#FFFFFF` in the `[]`.
+   This button adds `> []` at the beginning of the line. You can either specify a name
+   for your comment by inserting `name=$YourName`, a time by inserting `time=$time`
+   or a color by inserting `color=#FFFFFF` in the `[]`.
    Please note that you can only specify one of those per `[]`, but you can use multiple `[]`.
 5. **Emoji Picker**  
    This button opens the emoji picker, where you can choose an emoji to insert into your note.  
