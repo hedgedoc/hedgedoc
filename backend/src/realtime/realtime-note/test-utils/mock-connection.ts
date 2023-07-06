@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
-  MessageTransporter,
   MockedBackendTransportAdapter,
   YDocSyncServerAdapter,
 } from '@hedgedoc/commons';
@@ -15,6 +14,7 @@ import { Username } from '../../../utils/username';
 import { RealtimeConnection } from '../realtime-connection';
 import { RealtimeNote } from '../realtime-note';
 import { RealtimeUserStatusAdapter } from '../realtime-user-status-adapter';
+import { MockMessageTransporter } from './mock-message-transporter';
 
 enum RealtimeUserState {
   WITHOUT,
@@ -83,7 +83,7 @@ export class MockConnectionBuilder {
   public build(): RealtimeConnection {
     const displayName = this.deriveDisplayName();
 
-    const transporter = new MessageTransporter();
+    const transporter = new MockMessageTransporter();
     transporter.setAdapter(new MockedBackendTransportAdapter(''));
     const realtimeUserStateAdapter: RealtimeUserStatusAdapter =
       this.includeRealtimeUserStatus === RealtimeUserState.WITHOUT
@@ -124,6 +124,9 @@ export class MockConnectionBuilder {
     );
 
     this.realtimeNote.addClient(connection);
+
+    transporter.markAsReady();
+    jest.advanceTimersByTime(0);
 
     return connection;
   }
