@@ -5,7 +5,9 @@ Our documentation is build with [mkdocs][mkdocs].
 ## Writing
 
 All documentation files are found in the `docs/content` directory of
-the [HedgeDoc/HedgeDoc repo](https://github.com/hedgedoc/hedgedoc). These files are just normal
+<!-- markdownlint-disable proper-names -->
+the [hedgedoc/hedgedoc repo](https://github.com/hedgedoc/hedgedoc). These files are just normal
+<!-- markdownlint-enable proper-names -->
 markdown files with nothing special about them.
 
 The configuration for mkdocs lies in the `docs` folder in a file called `mkdocs.yml`. With that file
@@ -27,8 +29,10 @@ To build the documentation locally you need to perform the following steps:
 
 The documentation is deployed with [mkdocs][mkdocs].
 
-The repository [docs.HedgeDoc.org][docs.HedgeDoc.org] is used to deploy the actual website
+<!-- markdownlint-disable proper-names -->
+The repository [docs.hedgedoc.org][docs.hedgedoc.org] is used to deploy the actual website
+<!-- markdownlint-enable proper-names -->
 to github.io. Currently only the `master` branch is deployed as it contains the latest release.
 
 [mkdocs]: https://www.mkdocs.org
-[docs.HedgeDoc.org]: https://github.com/hedgedoc/docs.hedgedoc.org
+[docs.hedgedoc.org]: https://github.com/hedgedoc/docs.hedgedoc.org

@@ -17,7 +17,7 @@ You will have to accept the TLS warning in your browser the first time the page 
 !!! danger "HedgeDoc 2 is not yet production ready!"
     This section explains how a production deployment of HedgeDoc 2 on a publicly accessible domain
     might look in the future.  
-     HedgeDoc 2 itself is not production ready yet, so only use these instructions to set up an
+    HedgeDoc 2 itself is not production ready yet, so only use these instructions to set up an
     instance for testing with your friends.
 
 For a production setup, first set a unique session secret with
