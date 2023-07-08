@@ -22,12 +22,12 @@ export const RegisterInfos: React.FC = () => {
       <ul>
         <ShowIf condition={!!specialUrls.termsOfUse}>
           <li>
-            <TranslatedExternalLink i18nKey='landing.footer.termsOfUse' href={specialUrls.termsOfUse ?? ''} />
+            <TranslatedExternalLink i18nKey='appBar.legal.termsOfUse' href={specialUrls.termsOfUse ?? ''} />
           </li>
         </ShowIf>
         <ShowIf condition={!!specialUrls.privacy}>
           <li>
-            <TranslatedExternalLink i18nKey='landing.footer.privacy' href={specialUrls.privacy ?? ''} />
+            <TranslatedExternalLink i18nKey='appBar.legal.privacy' href={specialUrls.privacy ?? ''} />
           </li>
         </ShowIf>
       </ul>
