@@ -7,7 +7,9 @@
 Each note in HedgeDoc 2 contains the following information:
 
 - publicId (`b604x5885k9k01bq7tsmawvnp0`)
-- a list of aliases (`[HedgeDoc-2, HedgeDoc-next]`)
+  <!-- markdownlint-disable proper-names -->
+- a list of aliases (`[hedgedoc-2, hedgedoc-next]`)
+  <!-- markdownlint-enable proper-names -->
 - groupPermissions
 - userPermissions
 - viewCount (`0`)

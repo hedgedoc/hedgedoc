@@ -7,7 +7,9 @@
 
 🚧⚠️🚧 **HedgeDoc 2.0 is still in development!**  
 You are probably looking for the 1.x docs.  
-Find them in the `master` branch and on [docs.HedgeDoc.org](https://docs.hedgedoc.org).
+<!-- markdownlint-disable proper-names -->
+Find them in the `master` branch and on [docs.hedgedoc.org](https://docs.hedgedoc.org).
+<!-- markdownlint-enable proper-names -->
 
 If you want to help us to develop HedgeDoc 2, join us on [Matrix][matrix.org-url]!
 

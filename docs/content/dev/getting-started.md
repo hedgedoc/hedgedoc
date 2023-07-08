@@ -18,10 +18,12 @@ and the provided configuration.
 
 1. Clone [our repository][hedgedoc-repo] and go into its directory
 
+   <!-- markdownlint-disable proper-names -->
    ```shell
    git clone https://github.com/hedgedoc/hedgedoc.git
-   cd HedgeDoc
+   cd hedgedoc
    ```
+   <!-- markdownlint-enable proper-names -->
 
 2. Install Node.js. You need at least Node 16, but we recommend Node 20.
 3. Install [Yarn][yarn]
@@ -48,7 +50,9 @@ If you want to run HedgeDoc in dev mode some preconditions have to be met.
 
 1. Make sure that Node.js is installed. You need at least Node 16, but we recommend Node 18.
 2. Make sure that [Yarn][yarn] is installed.
-3. Clone this repo (e.g. `git clone https://github.com/hedgedoc/hedgedoc.git HedgeDoc`)
+   <!-- markdownlint-disable proper-names -->
+3. Clone this repo (e.g. `git clone https://github.com/hedgedoc/hedgedoc.git hedgedoc`)
+   <!-- markdownlint-enable proper-names -->
 4. Go into the cloned directory
 
 ## Installing the dependencies
