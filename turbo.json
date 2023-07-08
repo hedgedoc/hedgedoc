@@ -56,7 +56,11 @@
 
     "format": {},
 
-    "test": {},
+    "test": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
 
     "test:ci": {},
     "@hedgedoc/backend#test:ci": {
