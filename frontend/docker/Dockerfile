@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
 # BASE
-FROM docker.io/node:20-alpine@sha256:77516e190b36147a51d2d1b85b52f57592fe956b1dbeea57a3d618a0affd5104 AS base
+FROM docker.io/node:20-alpine@sha256:79be5e50eced5e97926fb3c01788b221293761682bfd907d1942f58f8a9e3681 AS base
 RUN apk add --no-cache tini
 ENTRYPOINT ["tini", "--"]
 
