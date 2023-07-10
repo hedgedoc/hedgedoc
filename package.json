@@ -69,7 +69,7 @@
     "minio": "7.1.1",
     "moment": "2.29.4",
     "morgan": "1.10.0",
-    "mysql2": "3.5.0",
+    "mysql2": "3.5.1",
     "node-fetch": "2.6.12",
     "passport": "0.6.0",
     "passport-dropbox-oauth2": "1.1.0",
