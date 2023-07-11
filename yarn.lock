@@ -2507,7 +2507,7 @@ __metadata:
     "@types/react": 18.2.14
     "@types/react-dom": 18.2.6
     "@types/sass": 1.43.1
-    "@types/testing-library__jest-dom": 5.14.7
+    "@types/testing-library__jest-dom": 5.14.8
     "@types/uuid": 9.0.2
     "@types/ws": 8.5.5
     "@typescript-eslint/eslint-plugin": 5.62.0
@@ -5146,7 +5146,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/testing-library__jest-dom@npm:5.14.7, @types/testing-library__jest-dom@npm:^5.9.1":
+"@types/testing-library__jest-dom@npm:5.14.8":
+  version: 5.14.8
+  resolution: "@types/testing-library__jest-dom@npm:5.14.8"
+  dependencies:
+    "@types/jest": "*"
+  checksum: 18f5ba7d0db8ebd91667b544537762ce63f11c4fd02b3d57afa92f9457a384d3ecf9bc7b50b6b445af1b3ea38b69862b4f95130720d4dd23621d598ac074d93a
+  languageName: node
+  linkType: hard
+
+"@types/testing-library__jest-dom@npm:^5.9.1":
   version: 5.14.7
   resolution: "@types/testing-library__jest-dom@npm:5.14.7"
   dependencies:
