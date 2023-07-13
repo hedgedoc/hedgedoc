@@ -2383,7 +2383,7 @@ __metadata:
     eslint: 8.44.0
     eslint-config-prettier: 8.8.0
     eslint-plugin-import: 2.27.5
-    eslint-plugin-jest: 27.2.2
+    eslint-plugin-jest: 27.2.3
     eslint-plugin-local-rules: 1.3.2
     eslint-plugin-prettier: 4.2.1
     express-session: 1.17.3
@@ -2435,7 +2435,7 @@ __metadata:
     domhandler: 5.0.3
     eslint: 8.44.0
     eslint-config-prettier: 8.8.0
-    eslint-plugin-jest: 27.2.2
+    eslint-plugin-jest: 27.2.3
     eslint-plugin-prettier: 4.2.1
     eventemitter2: 6.4.9
     jest: 29.6.1
@@ -2535,7 +2535,7 @@ __metadata:
     eslint-config-prettier: 8.8.0
     eslint-plugin-chai-friendly: 0.7.2
     eslint-plugin-cypress: 2.13.3
-    eslint-plugin-jest: 27.2.2
+    eslint-plugin-jest: 27.2.3
     eslint-plugin-node: 11.1.0
     eslint-plugin-prettier: 4.2.1
     eslint-plugin-promise: 6.1.1
@@ -9366,13 +9366,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jest@npm:27.2.2":
-  version: 27.2.2
-  resolution: "eslint-plugin-jest@npm:27.2.2"
+"eslint-plugin-jest@npm:27.2.3":
+  version: 27.2.3
+  resolution: "eslint-plugin-jest@npm:27.2.3"
   dependencies:
     "@typescript-eslint/utils": ^5.10.0
   peerDependencies:
-    "@typescript-eslint/eslint-plugin": ^5.0.0
+    "@typescript-eslint/eslint-plugin": ^5.0.0 || ^6.0.0
     eslint: ^7.0.0 || ^8.0.0
     jest: "*"
   peerDependenciesMeta:
@@ -9380,7 +9380,7 @@ __metadata:
       optional: true
     jest:
       optional: true
-  checksum: 98b63252d985f5dedf36ce9587dd4a0d24daf71ca8a997258343402c0d33ddd5070502378dafd9ac7fc0ef2e0d557b5c77f18e09ad73c71a52de8061db88293f
+  checksum: 4c7e07f52f17749ac6fd0ff5fcd5ce30b88983ba31eeee322e4d48859f55eaa112f06172e586ad2031c00ff28bb2dfdc3d35c83895251b9c0e860fa47dfc5ff4
   languageName: node
   linkType: hard
 
