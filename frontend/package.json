@@ -97,7 +97,7 @@
     "markdown-it-sub": "1.0.0",
     "markdown-it-sup": "1.0.0",
     "mermaid": "10.2.4",
-    "next": "13.4.9",
+    "next": "13.4.10",
     "react": "18.2.0",
     "react-bootstrap": "2.8.0",
     "react-bootstrap-icons": "1.10.3",
@@ -123,7 +123,7 @@
     "yjs": "13.6.6"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "13.4.9",
+    "@next/bundle-analyzer": "13.4.10",
     "@testing-library/cypress": "9.0.0",
     "@testing-library/dom": "9.3.1",
     "@testing-library/jest-dom": "5.16.5",
