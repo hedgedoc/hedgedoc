@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -169,7 +169,7 @@ describe('authConfig', () => {
     const tlsCaContent = ['test-cert\n'];
     const completeLdapConfig = {
       /* eslint-disable @typescript-eslint/naming-convention */
-      HD_AUTH_LDAPS: ldapNames.join(','),
+      HD_AUTH_LDAP_SERVERS: ldapNames.join(','),
       HD_AUTH_LDAP_FUTURAMA_PROVIDER_NAME: providerName,
       HD_AUTH_LDAP_FUTURAMA_URL: url,
       HD_AUTH_LDAP_FUTURAMA_SEARCH_BASE: searchBase,

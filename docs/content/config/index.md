@@ -93,7 +93,7 @@ The password score is calculated with [zxcvbn-ts][zxcvbn-ts-score].
 ### LDAP
 
 HedgeDoc can use one or multiple LDAP servers to authenticate users. To do this,
-you first need to tell HedgeDoc the names of servers you want to use (`HD_AUTH_LDAPS`),
+you first need to tell HedgeDoc the names of servers you want to use (`HD_AUTH_LDAP_SERVERS`),
 and then you need to provide the configuration for those LDAP servers
 depending on how you want to use them.
 Each of those variables will contain the given name for this LDAP server.
@@ -102,7 +102,7 @@ will start with `HD_AUTH_LDAP_MY_LDAP`.
 
 | environment variable                       | default              | example                                            | description                                                                                                   |
 | ------------------------------------------ | -------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `HD_AUTH_LDAPS`                            | -                    | `MY_LDAP`                                          | A comma-seperated list of names of LDAP servers HedgeDoc should use.                                          |
+| `HD_AUTH_LDAP_SERVERS`                     | -                    | `MY_LDAP`                                          | A comma-seperated list of names of LDAP servers HedgeDoc should use.                                          |
 | `HD_AUTH_LDAP_$NAME_PROVIDER_NAME`         | `LDAP`               | `My LDAP`                                          | The display name for the LDAP server, that is shown in the UI of HegdeDoc.                                    |
 | `HD_AUTH_LDAP_$NAME_URL`                   | -                    | `ldaps://ldap.example.com`                         | The url with which the LDAP server can be accessed.                                                           |
 | `HD_AUTH_LDAP_$NAME_SEARCH_BASE`           | -                    | `ou=users,dc=LDAP,dc=example,dc=com`               | The LDAP search base which contains the user accounts on the LDAP server.                                     |
