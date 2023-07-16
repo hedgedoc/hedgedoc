@@ -11,7 +11,10 @@ import { ApiError } from './api-error'
 export class ErrorToI18nKeyMapper {
   private foundI18nKey: string | undefined = undefined
 
-  constructor(private apiError: Error, private i18nNamespace?: string) {}
+  constructor(
+    private apiError: Error,
+    private i18nNamespace?: string
+  ) {}
 
   public withHttpCode(code: number, i18nKey: string, treatAsAbsoluteKey?: boolean): this {
     if (this.foundI18nKey === undefined && this.apiError instanceof ApiError && this.apiError.statusCode === code) {

@@ -61,8 +61,12 @@ export class SessionService {
    */
   fetchUsernameForSessionId(sessionId: string): Promise<Username | undefined> {
     return new Promise((resolve, reject) => {
-      this.typeormStore.get(sessionId, (error?: Error, result?: SessionState) =>
-        error || !result ? reject(error) : resolve(result.username as Username),
+      this.typeormStore.get(
+        sessionId,
+        (error?: Error, result?: SessionState) =>
+          error || !result
+            ? reject(error)
+            : resolve(result.username as Username),
       );
     });
   }

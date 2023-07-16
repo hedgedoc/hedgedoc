@@ -16,7 +16,11 @@ const syncAnnotation = Annotation.define()
 export class YTextSyncViewPlugin implements PluginValue {
   private readonly observer: YTextSyncViewPlugin['onYTextUpdate']
 
-  constructor(private view: EditorView, private readonly yText: YText, pluginLoaded: () => void) {
+  constructor(
+    private view: EditorView,
+    private readonly yText: YText,
+    pluginLoaded: () => void
+  ) {
     this.observer = this.onYTextUpdate.bind(this)
     this.yText.observe(this.observer)
     pluginLoaded()

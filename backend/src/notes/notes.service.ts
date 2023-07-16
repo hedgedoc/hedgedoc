@@ -372,9 +372,9 @@ export class NotesService {
     return {
       id: note.publicId,
       aliases: await Promise.all(
-        (
-          await note.aliases
-        ).map((alias) => this.aliasService.toAliasDto(alias, note)),
+        (await note.aliases).map((alias) =>
+          this.aliasService.toAliasDto(alias, note),
+        ),
       ),
       primaryAddress: (await getPrimaryAlias(note)) ?? note.publicId,
       title: latestRevision.title,

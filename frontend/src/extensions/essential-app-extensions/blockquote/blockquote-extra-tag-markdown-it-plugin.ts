@@ -26,7 +26,10 @@ export interface QuoteExtraTagValues {
 export class BlockquoteExtraTagMarkdownItPlugin {
   private static readonly BlockquoteExtraTagRuleName = 'blockquote_extra_tag'
 
-  constructor(private tagName: string, private icon: BootstrapIconName) {}
+  constructor(
+    private tagName: string,
+    private icon: BootstrapIconName
+  ) {}
 
   /**
    * Registers an inline rule that detects blockquote extra tags and replaces them with blockquote tokens.

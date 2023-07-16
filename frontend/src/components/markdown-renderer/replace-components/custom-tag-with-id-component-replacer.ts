@@ -17,7 +17,10 @@ export interface IdProps {
  * Replaces custom tags that have just an id (<app-something id="something"/>) with react elements.
  */
 export class CustomTagWithIdComponentReplacer extends ComponentReplacer {
-  constructor(private component: FunctionComponent<IdProps>, private tagName: string) {
+  constructor(
+    private component: FunctionComponent<IdProps>,
+    private tagName: string
+  ) {
     super()
   }
 
