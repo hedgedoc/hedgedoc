@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -253,9 +253,9 @@ export default registerAs('authConfig', () => {
   const gitlabNames = (
     toArrayConfig(process.env.HD_AUTH_GITLABS, ',') ?? []
   ).map((name) => name.toUpperCase());
-  const ldapNames = (toArrayConfig(process.env.HD_AUTH_LDAPS, ',') ?? []).map(
-    (name) => name.toUpperCase(),
-  );
+  const ldapNames = (
+    toArrayConfig(process.env.HD_AUTH_LDAP_SERVERS, ',') ?? []
+  ).map((name) => name.toUpperCase());
   const samlNames = (toArrayConfig(process.env.HD_AUTH_SAMLS, ',') ?? []).map(
     (name) => name.toUpperCase(),
   );
