@@ -12,6 +12,7 @@
   "scripts": {
     "build": "dotenv -- turbo run build",
     "lint": "dotenv -- turbo run lint",
+    "lint:fix": "dotenv -- turbo run lint:fix",
     "format": "dotenv -- turbo run format",
     "start:dev": "dotenv -- turbo run start:dev",
     "start": "dotenv -- turbo run start",
