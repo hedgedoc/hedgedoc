@@ -32,7 +32,7 @@ jest.mock(
       ...jest.requireActual('@hedgedoc/commons'),
       // eslint-disable-next-line @typescript-eslint/naming-convention
       YDocSyncServerAdapter: jest.fn(() => Mock.of<YDocSyncServerAdapter>({})),
-    } as Record<string, unknown>),
+    }) as Record<string, unknown>,
 );
 
 describe('websocket connection', () => {

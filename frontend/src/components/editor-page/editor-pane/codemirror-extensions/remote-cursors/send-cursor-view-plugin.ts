@@ -16,7 +16,11 @@ export class SendCursorViewPlugin implements PluginValue {
   private lastCursor: SelectionRange | undefined
   private listener?: Listener
 
-  constructor(private view: EditorView, private messageTransporter: MessageTransporter, private mayEdit: boolean) {
+  constructor(
+    private view: EditorView,
+    private messageTransporter: MessageTransporter,
+    private mayEdit: boolean
+  ) {
     if (mayEdit) {
       this.listener = messageTransporter.doAsSoonAsReady(() => {
         this.sendCursor(this.lastCursor)

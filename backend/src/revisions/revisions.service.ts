@@ -143,9 +143,9 @@ export class RevisionsService {
       anonymousAuthorCount: revisionUserInfo.anonymousUserCount,
       patch: revision.patch,
       edits: await Promise.all(
-        (
-          await revision.edits
-        ).map(async (edit) => await this.editService.toEditDto(edit)),
+        (await revision.edits).map(
+          async (edit) => await this.editService.toEditDto(edit),
+        ),
       ),
     };
   }

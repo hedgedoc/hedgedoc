@@ -40,10 +40,13 @@ export const useRealtimeConnection = (): MessageTransporter => {
       const socket = new WebSocket(websocketUrl.toString())
       socket.addEventListener('error', () => {
         const timeout = WEBSOCKET_RECONNECT_INTERVAL + reconnectCount.current * 1000 + Math.random() * 1000
-        setTimeout(() => {
-          reconnectCount.current += 1
-          establishWebsocketConnection()
-        }, Math.max(timeout, WEBSOCKET_RECONNECT_MAX_DURATION))
+        setTimeout(
+          () => {
+            reconnectCount.current += 1
+            establishWebsocketConnection()
+          },
+          Math.max(timeout, WEBSOCKET_RECONNECT_MAX_DURATION)
+        )
       })
       socket.addEventListener('open', () => {
         messageTransporter.setAdapter(new FrontendWebsocketAdapter(socket))

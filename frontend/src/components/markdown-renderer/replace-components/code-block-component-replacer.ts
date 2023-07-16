@@ -17,7 +17,10 @@ export interface CodeProps {
  * Checks if the given checked node is a code block with a specific language attribute and creates an react-element that receives the code.
  */
 export class CodeBlockComponentReplacer extends ComponentReplacer {
-  constructor(private component: FunctionComponent<CodeProps>, private language: string) {
+  constructor(
+    private component: FunctionComponent<CodeProps>,
+    private language: string
+  ) {
     super()
   }
 

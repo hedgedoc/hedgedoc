@@ -13,7 +13,7 @@ jest.mock(
     ({
       ...jest.requireActual('@hedgedoc/commons'),
       generateNoteTitle: () => 'generated title'
-    } as Record<string, unknown>)
+    }) as Record<string, unknown>
 )
 
 describe('build state from first heading update', () => {
