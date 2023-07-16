@@ -24,7 +24,6 @@ import { useApplyScrollState } from './hooks/use-apply-scroll-state'
 import { useCursorActivityCallback } from './hooks/use-cursor-activity-callback'
 import { useDisconnectOnUserLoginStatusChange } from './hooks/use-disconnect-on-user-login-status-change'
 import { useUpdateCodeMirrorReference } from './hooks/use-update-code-mirror-reference'
-import { useBindYTextToRedux } from './hooks/yjs/use-bind-y-text-to-redux'
 import { useCodeMirrorYjsExtension } from './hooks/yjs/use-code-mirror-yjs-extension'
 import { useOnMetadataUpdated } from './hooks/yjs/use-on-metadata-updated'
 import { useOnNoteDeleted } from './hooks/yjs/use-on-note-deleted'
@@ -43,6 +42,7 @@ import { lintGutter } from '@codemirror/lint'
 import { oneDark } from '@codemirror/theme-one-dark'
 import ReactCodeMirror from '@uiw/react-codemirror'
 import React, { useEffect, useMemo } from 'react'
+import { useSyncToReduxExtension } from './codemirror-extensions/use-sync-to-redux-extension'
 
 export type EditorPaneProps = ScrollProps
 
@@ -83,12 +83,14 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
   useOnMetadataUpdated(messageTransporter)
   useOnNoteDeleted(messageTransporter)
 
-  useBindYTextToRedux(realtimeDoc)
   useReceiveRealtimeUsers(messageTransporter)
   useSendRealtimeActivity(messageTransporter)
 
+  const syncToReduxExtension = useSyncToReduxExtension()
+
   const extensions = useMemo(
     () => [
+      syncToReduxExtension,
       linterExtension,
       lintGutter(),
       markdown({
@@ -107,17 +109,18 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
       spellCheckExtension
     ],
     [
+      syncToReduxExtension,
       linterExtension,
       remoteCursorsExtension,
-      autoCompletionExtension,
+      lineWrappingExtension,
       editorScrollExtension,
       tablePasteExtensions,
       fileInsertExtension,
+      autoCompletionExtension,
       cursorActivityExtension,
       updateViewContextExtension,
       yjsExtension,
-      spellCheckExtension,
-      lineWrappingExtension
+      spellCheckExtension
     ]
   )
 

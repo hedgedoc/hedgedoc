@@ -6,6 +6,7 @@
 import { useFrontendConfig } from '../../components/common/frontend-config-context/use-frontend-config'
 import { useApplicationState } from './use-application-state'
 import { useMemo } from 'react'
+import { useDeferredState } from './use-deferred-state'
 
 /**
  * Returns the markdown content from the global application state trimmed to the maximal note length and without the frontmatter lines.
@@ -28,7 +29,8 @@ export const useTrimmedNoteMarkdownContentWithoutFrontmatter = (): string[] => {
     }
   }, [markdownContent, maxLength])
 
-  return useMemo(() => {
-    return trimmedLines.slice(lineOffset)
-  }, [lineOffset, trimmedLines])
+  return useDeferredState(
+    useMemo(() => trimmedLines.slice(lineOffset), [lineOffset, trimmedLines]),
+    []
+  )
 }
