@@ -47,9 +47,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/core@npm:16.1.3":
-  version: 16.1.3
-  resolution: "@angular-devkit/core@npm:16.1.3"
+"@angular-devkit/core@npm:16.1.4":
+  version: 16.1.4
+  resolution: "@angular-devkit/core@npm:16.1.4"
   dependencies:
     ajv: 8.12.0
     ajv-formats: 2.1.1
@@ -61,23 +61,23 @@ __metadata:
   peerDependenciesMeta:
     chokidar:
       optional: true
-  checksum: 0108e4bde01fdd2da115e0f7b0bceae12cdb5a8996686d68e55b819f41cbcb8dd1b0cdc26ed3ecc52ca752f33523bf3ecb7cabbc62b50460cf0d138912d2c326
+  checksum: 1e59add916acd0caae2a99511dd3c7d9e6c068324f7afbad06177f54692175568de0294117a6e0529d750d37cde418e98d3a60b26593591e9601e4df388deb34
   languageName: node
   linkType: hard
 
-"@angular-devkit/schematics-cli@npm:16.1.3":
-  version: 16.1.3
-  resolution: "@angular-devkit/schematics-cli@npm:16.1.3"
+"@angular-devkit/schematics-cli@npm:16.1.4":
+  version: 16.1.4
+  resolution: "@angular-devkit/schematics-cli@npm:16.1.4"
   dependencies:
-    "@angular-devkit/core": 16.1.3
-    "@angular-devkit/schematics": 16.1.3
+    "@angular-devkit/core": 16.1.4
+    "@angular-devkit/schematics": 16.1.4
     ansi-colors: 4.1.3
     inquirer: 8.2.4
     symbol-observable: 4.0.0
     yargs-parser: 21.1.1
   bin:
     schematics: bin/schematics.js
-  checksum: bcda206f5efed3e2ee05cf23cae8a939599a4f0c35e0b2356641fea0dba87bd3747a34748c7a407fe3d612997e5bee8d8d3f609a22fe43e1d23e8e126aedf219
+  checksum: 7d807c0ce945fcd7ec2df1303699e5e6b65904465f2ba064c5c927fe1504a7cedcef2764ad4c7a76803e0a4d5424825f109b14921ae437d8632db0f9d372a545
   languageName: node
   linkType: hard
 
@@ -94,16 +94,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/schematics@npm:16.1.3":
-  version: 16.1.3
-  resolution: "@angular-devkit/schematics@npm:16.1.3"
+"@angular-devkit/schematics@npm:16.1.4":
+  version: 16.1.4
+  resolution: "@angular-devkit/schematics@npm:16.1.4"
   dependencies:
-    "@angular-devkit/core": 16.1.3
+    "@angular-devkit/core": 16.1.4
     jsonc-parser: 3.2.0
     magic-string: 0.30.0
     ora: 5.4.1
     rxjs: 7.8.1
-  checksum: 597b80d506bb3e26c8c669dc56019b5143321b26cf4315ff381e5adb79be7e76a9c1e0304c94d9d4c9900c9cee665aa5d7e0377961dc5d4d0e74798717b45e28
+  checksum: 100240e35dc6380690a3457e92fb3fc7913bdecc6359709361508e70528ae0e8879fe5f29d0c3e7795d709a7df8f9a7451d7cce52c99e60f353d3689e1d671e6
   languageName: node
   linkType: hard
 
@@ -2331,7 +2331,7 @@ __metadata:
     "@darraghor/eslint-plugin-nestjs-typed": 4.0.1
     "@hedgedoc/commons": "workspace:commons"
     "@mrdrogdrog/optional": 1.1.0
-    "@nestjs/cli": 10.1.8
+    "@nestjs/cli": 10.1.9
     "@nestjs/common": 10.0.5
     "@nestjs/config": 3.0.0
     "@nestjs/core": 10.0.5
@@ -3186,13 +3186,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/cli@npm:10.1.8":
-  version: 10.1.8
-  resolution: "@nestjs/cli@npm:10.1.8"
+"@nestjs/cli@npm:10.1.9":
+  version: 10.1.9
+  resolution: "@nestjs/cli@npm:10.1.9"
   dependencies:
-    "@angular-devkit/core": 16.1.3
-    "@angular-devkit/schematics": 16.1.3
-    "@angular-devkit/schematics-cli": 16.1.3
+    "@angular-devkit/core": 16.1.4
+    "@angular-devkit/schematics": 16.1.4
+    "@angular-devkit/schematics-cli": 16.1.4
     "@nestjs/schematics": ^10.0.1
     chalk: 4.1.2
     chokidar: 3.5.3
@@ -3208,7 +3208,7 @@ __metadata:
     source-map-support: 0.5.21
     tree-kill: 1.2.2
     tsconfig-paths: 4.2.0
-    tsconfig-paths-webpack-plugin: 4.0.1
+    tsconfig-paths-webpack-plugin: 4.1.0
     typescript: 5.1.6
     webpack: 5.88.1
     webpack-node-externals: 3.0.0
@@ -3222,7 +3222,7 @@ __metadata:
       optional: true
   bin:
     nest: bin/nest.js
-  checksum: 66585805851f410cf0cf94240f3e9b2ff0148d2c3ebbb31815991eb5181f43bc1af750c7847c7f843041559944a5f41c95f023e8b0b21ee722fabe2b93884f8d
+  checksum: 35d3aa353eb0f8d34dd51b5f1eb64c824d3459779766792d8e5c1c9771293f58dedb60a4d89ebf4179510c6913f45760d34b47a2d785fd3e229da777559023c7
   languageName: node
   linkType: hard
 
@@ -18456,14 +18456,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsconfig-paths-webpack-plugin@npm:4.0.1":
-  version: 4.0.1
-  resolution: "tsconfig-paths-webpack-plugin@npm:4.0.1"
+"tsconfig-paths-webpack-plugin@npm:4.1.0":
+  version: 4.1.0
+  resolution: "tsconfig-paths-webpack-plugin@npm:4.1.0"
   dependencies:
     chalk: ^4.1.0
     enhanced-resolve: ^5.7.0
     tsconfig-paths: ^4.1.2
-  checksum: a09e765c4939379fa060f78bbc906d0a7be541b9b49d3ad4744e99a2e87f28aa30d549a549196159bc5a50f420fdb1391b8eed360f47ee8ce40e15dcb800b5aa
+  checksum: f6e9a8a407e1a405b0f2531184296d9f033cb4fe5837282b757ab4a2f4cd82a3117e62c4b86d56c7d47749c7f1345aa438ec6417dbf64a0ec74a292fe9eae44d
   languageName: node
   linkType: hard
 
