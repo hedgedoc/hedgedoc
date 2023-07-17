@@ -37,6 +37,6 @@
   },
   "devDependencies": {
     "dotenv-cli": "7.2.1",
-    "turbo": "1.10.7"
+    "turbo": "1.10.8"
   }
 }
