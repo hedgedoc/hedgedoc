@@ -37,7 +37,7 @@
     ]
   },
   "dependencies": {
-    "@codemirror/autocomplete": "6.8.1",
+    "@codemirror/autocomplete": "6.9.0",
     "@codemirror/commands": "6.2.4",
     "@codemirror/lang-markdown": "6.2.0",
     "@codemirror/language": "6.8.0",
@@ -45,7 +45,7 @@
     "@codemirror/lint": "6.4.0",
     "@codemirror/state": "6.2.1",
     "@codemirror/theme-one-dark": "6.1.2",
-    "@codemirror/view": "6.14.1",
+    "@codemirror/view": "6.15.3",
     "@fontsource/source-sans-pro": "5.0.5",
     "@hedgedoc/commons": "workspace:commons",
     "@hedgedoc/html-to-react": "2.0.0",

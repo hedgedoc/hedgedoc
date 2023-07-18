@@ -1760,9 +1760,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/autocomplete@npm:6.8.1":
-  version: 6.8.1
-  resolution: "@codemirror/autocomplete@npm:6.8.1"
+"@codemirror/autocomplete@npm:6.9.0":
+  version: 6.9.0
+  resolution: "@codemirror/autocomplete@npm:6.9.0"
   dependencies:
     "@codemirror/language": ^6.0.0
     "@codemirror/state": ^6.0.0
@@ -1773,7 +1773,7 @@ __metadata:
     "@codemirror/state": ^6.0.0
     "@codemirror/view": ^6.0.0
     "@lezer/common": ^1.0.0
-  checksum: 8599cd91defa3fea5276a7f9aff43ced323d9c4401dfb867e43608ba72ded48cb458256c5c784949a6332c0c20ba2fedac16a5708335cd809d269e4ea5076957
+  checksum: a5f661944c75f40b02c90a193c9a459c0fd7e335c0ac5973420c19157dfb46010f573c2b70731591fe477e7a2ad10121ff3ae394a72d450946d7b886c28b0368
   languageName: node
   linkType: hard
 
@@ -2094,14 +2094,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/view@npm:6.14.1":
-  version: 6.14.1
-  resolution: "@codemirror/view@npm:6.14.1"
+"@codemirror/view@npm:6.15.3":
+  version: 6.15.3
+  resolution: "@codemirror/view@npm:6.15.3"
   dependencies:
     "@codemirror/state": ^6.1.4
     style-mod: ^4.0.0
     w3c-keyname: ^2.2.4
-  checksum: 19114ee05b3795ebe07a69cf00c36e8351b3500ce105b8412d90e757d459f71370ead3de852f0fda069041803276e6c38e6f1f943f77e85c9b5c279ab7fa1c4a
+  checksum: 048949b1b493a962904a7f77661a939f7c1893a7381022756a135f5dd8daf667f498be1b81da9c37c0e8de85b078ad987c2f75318385c520ed83c95da6313e95
   languageName: node
   linkType: hard
 
@@ -2465,7 +2465,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/frontend@workspace:frontend"
   dependencies:
-    "@codemirror/autocomplete": 6.8.1
+    "@codemirror/autocomplete": 6.9.0
     "@codemirror/commands": 6.2.4
     "@codemirror/lang-markdown": 6.2.0
     "@codemirror/language": 6.8.0
@@ -2473,7 +2473,7 @@ __metadata:
     "@codemirror/lint": 6.4.0
     "@codemirror/state": 6.2.1
     "@codemirror/theme-one-dark": 6.1.2
-    "@codemirror/view": 6.14.1
+    "@codemirror/view": 6.15.3
     "@fontsource/source-sans-pro": 5.0.5
     "@hedgedoc/commons": "workspace:commons"
     "@hedgedoc/html-to-react": 2.0.0
