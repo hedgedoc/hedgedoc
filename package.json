@@ -33,7 +33,7 @@
     "@codemirror/theme-one-dark": "6.1.2",
     "@types/react": "18.2.15",
     "eventemitter2@6.4.9": "patch:eventemitter2@npm%3A6.4.9#./.yarn/patches/eventemitter2-npm-6.4.9-ba37798a18.patch",
-    "yjs@13.6.6": "patch:yjs@npm%3A13.6.6#./.yarn/patches/yjs-remove-import-warning-in-test.patch"
+    "yjs@13.6.7": "patch:yjs@npm%3A13.6.7#./.yarn/patches/yjs-remove-import-warning-in-test.patch"
   },
   "devDependencies": {
     "dotenv-cli": "7.2.1",
