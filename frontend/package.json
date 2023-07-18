@@ -120,7 +120,7 @@
     "vega-lite": "5.13.0",
     "words-count": "2.0.2",
     "ws": "8.13.0",
-    "yjs": "13.6.6"
+    "yjs": "13.6.7"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "13.4.10",
