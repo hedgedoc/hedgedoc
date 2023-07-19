@@ -16,7 +16,7 @@ export const extractEmojiShortCode = (emoji: EmojiClickEventDetail): string | un
     return undefined
   }
   let skinToneModifier = ''
-  if ((emoji.emoji as NativeEmoji).skins && emoji.skinTone !== 0) {
+  if ((emoji.emoji as NativeEmoji).skins && (emoji.skinTone as number) !== 0) {
     skinToneModifier = `:skin-tone-${emoji.skinTone as number}:`
   }
   return `:${emoji.emoji.shortcodes[0]}:${skinToneModifier}`

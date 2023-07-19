@@ -47,8 +47,8 @@ async function findNotePermissionByGroup(
 function isSpecialGroup(group: Group): boolean {
   return (
     group.special &&
-    (group.name === SpecialGroup.LOGGED_IN ||
-      group.name === SpecialGroup.EVERYONE)
+    (group.name === (SpecialGroup.LOGGED_IN as string) ||
+      group.name === (SpecialGroup.EVERYONE as string))
   );
 }
 

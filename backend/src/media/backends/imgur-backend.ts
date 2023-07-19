@@ -77,6 +77,7 @@ export class ImgurBackend implements MediaBackend {
           headers: { Authorization: `Client-ID ${this.config.clientID}` },
         },
       ).then((res) => ImgurBackend.checkStatus(res));
+      // eslint-disable-next-line @typescript-eslint/no-base-to-string
       this.logger.debug(`Response: ${result.toString()}`, 'deleteFile');
       this.logger.log(`Deleted ${fileName}`, 'deleteFile');
       return;

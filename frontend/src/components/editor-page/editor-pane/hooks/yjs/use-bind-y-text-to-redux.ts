@@ -15,6 +15,7 @@ import { useEffect } from 'react'
 export const useBindYTextToRedux = (realtimeDoc: RealtimeDoc): void => {
   useEffect(() => {
     const yText = realtimeDoc.getMarkdownContentChannel()
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string
     const yTextCallback = () => setNoteContent(yText.toString())
     yText.observe(yTextCallback)
     return () => yText.unobserve(yTextCallback)

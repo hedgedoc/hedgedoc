@@ -27,7 +27,7 @@ export interface OnOffButtonGroupProps {
 export const OnOffButtonGroup: React.FC<OnOffButtonGroupProps> = ({ onSelect, value }) => {
   const buttonGroupValue = useMemo(() => (value ? OnOffState.ON : OnOffState.OFF), [value])
   const onButtonSelect = useCallback(
-    (value: number) => {
+    (value: OnOffState) => {
       onSelect(value === OnOffState.ON)
     },
     [onSelect]

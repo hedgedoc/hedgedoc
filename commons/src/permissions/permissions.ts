@@ -37,10 +37,12 @@ export const userCanEdit = (
   const mayWriteViaGroupPermission =
     !!user &&
     permissions.sharedToGroups.some(
-      (value) => value.groupName === SpecialGroup.LOGGED_IN && value.canEdit
+      (value) =>
+        value.groupName === (SpecialGroup.LOGGED_IN as string) && value.canEdit
     )
   const everyoneMayWriteViaGroupPermission = permissions.sharedToGroups.some(
-    (value) => value.groupName === SpecialGroup.EVERYONE && value.canEdit
+    (value) =>
+      value.groupName === (SpecialGroup.EVERYONE as string) && value.canEdit
   )
   return (
     isOwner ||
