@@ -2327,7 +2327,7 @@ __metadata:
     "@darraghor/eslint-plugin-nestjs-typed": 4.0.1
     "@hedgedoc/commons": "workspace:commons"
     "@mrdrogdrog/optional": 1.1.0
-    "@nestjs/cli": 10.1.9
+    "@nestjs/cli": 10.1.10
     "@nestjs/common": 10.1.0
     "@nestjs/config": 3.0.0
     "@nestjs/core": 10.1.0
@@ -3182,9 +3182,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/cli@npm:10.1.9":
-  version: 10.1.9
-  resolution: "@nestjs/cli@npm:10.1.9"
+"@nestjs/cli@npm:10.1.10":
+  version: 10.1.10
+  resolution: "@nestjs/cli@npm:10.1.10"
   dependencies:
     "@angular-devkit/core": 16.1.4
     "@angular-devkit/schematics": 16.1.4
@@ -3218,7 +3218,7 @@ __metadata:
       optional: true
   bin:
     nest: bin/nest.js
-  checksum: 35d3aa353eb0f8d34dd51b5f1eb64c824d3459779766792d8e5c1c9771293f58dedb60a4d89ebf4179510c6913f45760d34b47a2d785fd3e229da777559023c7
+  checksum: 83fefb62d32e2140289624e5440d590d12dd43d5144acb49eab6bd1fd2228330d3f01545d245d9255f8b4a3a803822e64bae7461849d0f844b63733cf3f967fc
   languageName: node
   linkType: hard
 
