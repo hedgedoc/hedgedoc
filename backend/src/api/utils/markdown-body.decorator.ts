@@ -43,6 +43,7 @@ export const MarkdownBody = createParamDecorator(
     (target, key): void => {
       if (key === undefined) {
         throw new Error(
+          // eslint-disable-next-line @typescript-eslint/no-base-to-string
           `Could not enhance param decorator for target ${target.toString()} because key is undefined`,
         );
       }
@@ -52,6 +53,7 @@ export const MarkdownBody = createParamDecorator(
       );
       if (!ownPropertyDescriptor) {
         throw new Error(
+          // eslint-disable-next-line @typescript-eslint/no-base-to-string
           `Could not get property descriptor for target ${target.toString()} and key ${key.toString()}`,
         );
       }

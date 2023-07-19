@@ -32,7 +32,7 @@ export const ProfilePage: React.FC = () => {
         <Row className='h-100 flex justify-content-center'>
           <Col lg={6}>
             <ProfileDisplayName />
-            <ShowIf condition={userProvider === AuthProviderType.LOCAL}>
+            <ShowIf condition={userProvider === (AuthProviderType.LOCAL as string)}>
               <ProfileChangePassword />
             </ShowIf>
             <ProfileAccessTokens />

@@ -55,7 +55,7 @@ export const SplitDivider: React.FC<SplitDividerProps> = ({
   const className = useMemo(() => {
     return concatCssClasses(styles.middle, {
       [styles.open]: forceOpen,
-      [styles[dividerButtonsShift]]: dividerButtonsShift !== ''
+      [styles[dividerButtonsShift]]: dividerButtonsShift !== DividerButtonsShift.NO_SHIFT
     })
   }, [dividerButtonsShift, forceOpen])
 

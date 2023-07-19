@@ -22,8 +22,8 @@ export const PermissionSectionSpecialGroups: React.FC<PermissionDisabledProps> =
   const isOwner = useIsOwner()
 
   const specialGroupEntries = useMemo(() => {
-    const groupEveryone = groupPermissions.find((entry) => entry.groupName === SpecialGroup.EVERYONE)
-    const groupLoggedIn = groupPermissions.find((entry) => entry.groupName === SpecialGroup.LOGGED_IN)
+    const groupEveryone = groupPermissions.find((entry) => entry.groupName === (SpecialGroup.EVERYONE as string))
+    const groupLoggedIn = groupPermissions.find((entry) => entry.groupName === (SpecialGroup.LOGGED_IN as string))
 
     return {
       everyone: groupEveryone

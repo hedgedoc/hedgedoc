@@ -22,6 +22,6 @@ export async function getFirstIdentityFromUser(
     return undefined;
   }
   return identities.find(
-    (aIdentity) => aIdentity.providerType === providerType,
+    (aIdentity) => aIdentity.providerType === (providerType as string),
   );
 }
