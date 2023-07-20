@@ -148,7 +148,7 @@
     "@typescript-eslint/eslint-plugin": "6.1.0",
     "@typescript-eslint/parser": "6.1.0",
     "csstype": "3.1.2",
-    "cypress": "12.17.1",
+    "cypress": "12.17.2",
     "cypress-commands": "3.0.0",
     "cypress-fill-command": "1.0.2",
     "eslint": "8.45.0",
