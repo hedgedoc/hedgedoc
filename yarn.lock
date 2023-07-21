@@ -2479,7 +2479,7 @@ __metadata:
     "@hedgedoc/html-to-react": 2.0.0
     "@hedgedoc/markdown-it-plugins": 2.0.0
     "@mrdrogdrog/optional": 1.1.0
-    "@next/bundle-analyzer": 13.4.10
+    "@next/bundle-analyzer": 13.4.11
     "@react-hook/resize-observer": 1.2.6
     "@redux-devtools/core": 3.13.1
     "@reduxjs/toolkit": 1.9.5
@@ -2565,7 +2565,7 @@ __metadata:
     markdown-it-sub: 1.0.0
     markdown-it-sup: 1.0.0
     mermaid: 10.2.4
-    next: 13.4.10
+    next: 13.4.11
     prettier: 3.0.0
     react: 18.2.0
     react-bootstrap: 2.8.0
@@ -3466,19 +3466,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/bundle-analyzer@npm:13.4.10":
-  version: 13.4.10
-  resolution: "@next/bundle-analyzer@npm:13.4.10"
+"@next/bundle-analyzer@npm:13.4.11":
+  version: 13.4.11
+  resolution: "@next/bundle-analyzer@npm:13.4.11"
   dependencies:
     webpack-bundle-analyzer: 4.7.0
-  checksum: 876474d910583c8326c6ae1c23124461783c8c58abb1c9f197185f96c36b71d0d19861cd54ebaa0db5317f6fd035d465a703a3c70a2006492c0e2aa25621fceb
+  checksum: b59124d12463b8946d89cc998cb6799e65991de27926d3c2f25dd2ac560fcebe7bf820d4b3dedc1174d81cf9e39c3a1db087bbcacf6c8dacd5072cc9656af2d4
   languageName: node
   linkType: hard
 
-"@next/env@npm:13.4.10":
-  version: 13.4.10
-  resolution: "@next/env@npm:13.4.10"
-  checksum: a3e1ca0fe2e58288a9747a279d168a5d2cdda68bd72174d4c8b6746e5172f261174401d787ec356ac424504f967f0a47bffeffcfdabd6fa73a9e2bd0ff851a73
+"@next/env@npm:13.4.11":
+  version: 13.4.11
+  resolution: "@next/env@npm:13.4.11"
+  checksum: f0181ae16ba3f7bbf6e7ce9b431218740b800ab3c2a61a50a75828794eecb7e6fe324f0547bfc6d80221ab3f4b812184a040c7c72b0f37c2f0c3742047f352c6
   languageName: node
   linkType: hard
 
@@ -3491,65 +3491,65 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-arm64@npm:13.4.10":
-  version: 13.4.10
-  resolution: "@next/swc-darwin-arm64@npm:13.4.10"
+"@next/swc-darwin-arm64@npm:13.4.11":
+  version: 13.4.11
+  resolution: "@next/swc-darwin-arm64@npm:13.4.11"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-x64@npm:13.4.10":
-  version: 13.4.10
-  resolution: "@next/swc-darwin-x64@npm:13.4.10"
+"@next/swc-darwin-x64@npm:13.4.11":
+  version: 13.4.11
+  resolution: "@next/swc-darwin-x64@npm:13.4.11"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-gnu@npm:13.4.10":
-  version: 13.4.10
-  resolution: "@next/swc-linux-arm64-gnu@npm:13.4.10"
+"@next/swc-linux-arm64-gnu@npm:13.4.11":
+  version: 13.4.11
+  resolution: "@next/swc-linux-arm64-gnu@npm:13.4.11"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-musl@npm:13.4.10":
-  version: 13.4.10
-  resolution: "@next/swc-linux-arm64-musl@npm:13.4.10"
+"@next/swc-linux-arm64-musl@npm:13.4.11":
+  version: 13.4.11
+  resolution: "@next/swc-linux-arm64-musl@npm:13.4.11"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-gnu@npm:13.4.10":
-  version: 13.4.10
-  resolution: "@next/swc-linux-x64-gnu@npm:13.4.10"
+"@next/swc-linux-x64-gnu@npm:13.4.11":
+  version: 13.4.11
+  resolution: "@next/swc-linux-x64-gnu@npm:13.4.11"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-musl@npm:13.4.10":
-  version: 13.4.10
-  resolution: "@next/swc-linux-x64-musl@npm:13.4.10"
+"@next/swc-linux-x64-musl@npm:13.4.11":
+  version: 13.4.11
+  resolution: "@next/swc-linux-x64-musl@npm:13.4.11"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-win32-arm64-msvc@npm:13.4.10":
-  version: 13.4.10
-  resolution: "@next/swc-win32-arm64-msvc@npm:13.4.10"
+"@next/swc-win32-arm64-msvc@npm:13.4.11":
+  version: 13.4.11
+  resolution: "@next/swc-win32-arm64-msvc@npm:13.4.11"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-win32-ia32-msvc@npm:13.4.10":
-  version: 13.4.10
-  resolution: "@next/swc-win32-ia32-msvc@npm:13.4.10"
+"@next/swc-win32-ia32-msvc@npm:13.4.11":
+  version: 13.4.11
+  resolution: "@next/swc-win32-ia32-msvc@npm:13.4.11"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@next/swc-win32-x64-msvc@npm:13.4.10":
-  version: 13.4.10
-  resolution: "@next/swc-win32-x64-msvc@npm:13.4.10"
+"@next/swc-win32-x64-msvc@npm:13.4.11":
+  version: 13.4.11
+  resolution: "@next/swc-win32-x64-msvc@npm:13.4.11"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -14139,20 +14139,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:13.4.10":
-  version: 13.4.10
-  resolution: "next@npm:13.4.10"
+"next@npm:13.4.11":
+  version: 13.4.11
+  resolution: "next@npm:13.4.11"
   dependencies:
-    "@next/env": 13.4.10
-    "@next/swc-darwin-arm64": 13.4.10
-    "@next/swc-darwin-x64": 13.4.10
-    "@next/swc-linux-arm64-gnu": 13.4.10
-    "@next/swc-linux-arm64-musl": 13.4.10
-    "@next/swc-linux-x64-gnu": 13.4.10
-    "@next/swc-linux-x64-musl": 13.4.10
-    "@next/swc-win32-arm64-msvc": 13.4.10
-    "@next/swc-win32-ia32-msvc": 13.4.10
-    "@next/swc-win32-x64-msvc": 13.4.10
+    "@next/env": 13.4.11
+    "@next/swc-darwin-arm64": 13.4.11
+    "@next/swc-darwin-x64": 13.4.11
+    "@next/swc-linux-arm64-gnu": 13.4.11
+    "@next/swc-linux-arm64-musl": 13.4.11
+    "@next/swc-linux-x64-gnu": 13.4.11
+    "@next/swc-linux-x64-musl": 13.4.11
+    "@next/swc-win32-arm64-msvc": 13.4.11
+    "@next/swc-win32-ia32-msvc": 13.4.11
+    "@next/swc-win32-x64-msvc": 13.4.11
     "@swc/helpers": 0.5.1
     busboy: 1.6.0
     caniuse-lite: ^1.0.30001406
@@ -14194,7 +14194,7 @@ __metadata:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: 823ec02325fc6d5cad055a596df8ba84066d9c259abf94755eeda4c8846e5b56fe244d0362d5f5a1182a29d9a62bebf1f428a2f79c338a07086a8cf3620778f7
+  checksum: 3d6a7443bc1f22bc98db1cb87096df1e97c511a7cb8b0ee24469ea20bcfe50ba0b2baeb7e7ad9dba4c92cc126fc6809ba7f1690510ee2f54226bfd3173b921bd
   languageName: node
   linkType: hard
 
