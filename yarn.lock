@@ -2497,7 +2497,7 @@ __metadata:
     "@types/katex": 0.16.1
     "@types/luxon": 3.3.1
     "@types/markdown-it": 12.2.3
-    "@types/markdown-it-container": 2.0.5
+    "@types/markdown-it-container": 2.0.6
     "@types/markdown-it-plantuml": 1.4.1
     "@types/node": 20.4.4
     "@types/react": 18.2.15
@@ -4798,12 +4798,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/markdown-it-container@npm:2.0.5":
-  version: 2.0.5
-  resolution: "@types/markdown-it-container@npm:2.0.5"
+"@types/markdown-it-container@npm:2.0.6":
+  version: 2.0.6
+  resolution: "@types/markdown-it-container@npm:2.0.6"
   dependencies:
     "@types/markdown-it": "*"
-  checksum: 33e47d2461dcf2203458fd10f2c0f7e15271b61615f00a8d69176668546ecd498844c6f9fb6f12df627e35909221aada091b1fdc7a185cafba8ec07791dfa710
+  checksum: 7e322b5da68dd40f32f11787aff9d2fe2b3e2be78ba72d66cf4607f8c969e082b22fdeda4666882ff66c99183ca0091f128d8d8d6ec9c32228d243f7f15dd73a
   languageName: node
   linkType: hard
 
