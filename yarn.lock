@@ -2500,10 +2500,10 @@ __metadata:
     "@types/markdown-it-container": 2.0.6
     "@types/markdown-it-plantuml": 1.4.1
     "@types/node": 20.4.4
-    "@types/react": 18.2.15
+    "@types/react": 18.2.16
     "@types/react-dom": 18.2.7
     "@types/sass": 1.43.1
-    "@types/testing-library__jest-dom": 5.14.8
+    "@types/testing-library__jest-dom": 5.14.9
     "@types/uuid": 9.0.2
     "@types/ws": 8.5.5
     "@typescript-eslint/eslint-plugin": 6.2.0
@@ -5010,14 +5010,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.15":
-  version: 18.2.15
-  resolution: "@types/react@npm:18.2.15"
+"@types/react@npm:18.2.16":
+  version: 18.2.16
+  resolution: "@types/react@npm:18.2.16"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 36989f638201bfe2f4110b06c119180f6df9c0e13d7060481e82e7a745f81745a01ae543c478a25b61e0767cb52e82da2ad5b0dedacabf99339e523d06176705
+  checksum: 3d4fdc12509e0098e0dbb4bacdea53e8ccc6632e9df63d9f2711c77aa81ce3b2bb9c76d087f284034b25fd7245680167f4832bf6e4df960c5af2634b52adfd0c
   languageName: node
   linkType: hard
 
@@ -5123,7 +5123,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/testing-library__jest-dom@npm:5.14.8, @types/testing-library__jest-dom@npm:^5.9.1":
+"@types/testing-library__jest-dom@npm:5.14.9":
+  version: 5.14.9
+  resolution: "@types/testing-library__jest-dom@npm:5.14.9"
+  dependencies:
+    "@types/jest": "*"
+  checksum: d364494fc2545316292e88861146146af1e3818792ca63b62a63758b2f737669b687f4aaddfcfbcb7d0e1ed7890a9bd05de23ff97f277d5e68de574497a9ee72
+  languageName: node
+  linkType: hard
+
+"@types/testing-library__jest-dom@npm:^5.9.1":
   version: 5.14.8
   resolution: "@types/testing-library__jest-dom@npm:5.14.8"
   dependencies:
