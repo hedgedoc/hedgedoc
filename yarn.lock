@@ -2333,8 +2333,8 @@ __metadata:
     "@nestjs/core": 10.1.1
     "@nestjs/event-emitter": 2.0.0
     "@nestjs/passport": 10.0.0
-    "@nestjs/platform-express": 10.1.1
-    "@nestjs/platform-ws": 10.1.1
+    "@nestjs/platform-express": 10.1.2
+    "@nestjs/platform-ws": 10.1.2
     "@nestjs/schedule": 3.0.1
     "@nestjs/schematics": 10.0.1
     "@nestjs/swagger": 7.1.2
@@ -3326,33 +3326,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/platform-express@npm:10.1.1":
-  version: 10.1.1
-  resolution: "@nestjs/platform-express@npm:10.1.1"
+"@nestjs/platform-express@npm:10.1.2":
+  version: 10.1.2
+  resolution: "@nestjs/platform-express@npm:10.1.2"
   dependencies:
     body-parser: 1.20.2
     cors: 2.8.5
     express: 4.18.2
     multer: 1.4.4-lts.1
-    tslib: 2.6.0
+    tslib: 2.6.1
   peerDependencies:
     "@nestjs/common": ^10.0.0
     "@nestjs/core": ^10.0.0
-  checksum: e1a09001b52bbae5dc44a33afbf2315b30f958865ba0fd28a5f6705e6e8e3abb2ee4b7a8802682c0d9ef8185fb55ede4fa7ccf353c431c3e71079a1d794e61f1
+  checksum: c2a713b2b43a836060d9b4e29fd05f5c251a2cf9d8d4c0f9db8b3c753773eab40f0e37caf75e60d8ce140dbea0596eaf2494c09c6f2133a31e342b33c5d1f6e3
   languageName: node
   linkType: hard
 
-"@nestjs/platform-ws@npm:10.1.1":
-  version: 10.1.1
-  resolution: "@nestjs/platform-ws@npm:10.1.1"
+"@nestjs/platform-ws@npm:10.1.2":
+  version: 10.1.2
+  resolution: "@nestjs/platform-ws@npm:10.1.2"
   dependencies:
-    tslib: 2.6.0
+    tslib: 2.6.1
     ws: 8.13.0
   peerDependencies:
     "@nestjs/common": ^10.0.0
     "@nestjs/websockets": ^10.0.0
     rxjs: ^7.1.0
-  checksum: fcf79a89299a02fc0f498ccc1eea7e268a2258bcc93a6826ffa2316bbda8f3be4169439ab667ce237807ffe085a264acf9a00865125e8f8997fcb0420ddcefb0
+  checksum: e731d67c68a13777581f37ea8c74ee0a698f01a9657cfe87ee2f7d6dfd88c76da381101dd7a8d61a5b9fdaf90016bf87b931dd752e0a7b2cd8df72aa1372b7f6
   languageName: node
   linkType: hard
 
@@ -18476,6 +18476,13 @@ __metadata:
   version: 2.6.0
   resolution: "tslib@npm:2.6.0"
   checksum: c01066038f950016a18106ddeca4649b4d76caa76ec5a31e2a26e10586a59fceb4ee45e96719bf6c715648e7c14085a81fee5c62f7e9ebee68e77a5396e5538f
+  languageName: node
+  linkType: hard
+
+"tslib@npm:2.6.1":
+  version: 2.6.1
+  resolution: "tslib@npm:2.6.1"
+  checksum: b0d176d176487905b66ae4d5856647df50e37beea7571c53b8d10ba9222c074b81f1410fb91da13debaf2cbc970663609068bdebafa844ea9d69b146527c38fe
   languageName: node
   linkType: hard
 
