@@ -105,7 +105,7 @@
     "react-diff-viewer": "3.1.1",
     "react-dom": "18.2.0",
     "react-i18next": "13.0.2",
-    "react-redux": "8.1.1",
+    "react-redux": "8.1.2",
     "react-use": "17.4.0",
     "redux": "4.2.1",
     "reveal.js": "4.5.0",
