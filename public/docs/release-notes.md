@@ -17,6 +17,10 @@ This release fixes a security issue. We recommend upgrading as soon as possible.
 ### Bugfixes
 - Fix non-existing notes being created in some cases, instead of returning a 404 error
 
+### Contributors
+- Jordi Mallach (translator)
+- sujade (translator)
+
 ## <i class="fa fa-tag"></i> 1.9.8 <i class="fa fa-calendar-o"></i> 2023-06-04
 
 **Please note:** This release dropped support for Node 14, which is end-of-life since May 2023.
