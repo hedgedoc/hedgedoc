@@ -1,5 +1,22 @@
 # Release Notes
 
+## <i class="fa fa-tag"></i> 1.9.9 <i class="fa fa-calendar-o"></i> 2023-07-30
+
+HedgeDoc has a new slogan! See [our announcement](https://community.hedgedoc.org/t/and-the-new-slogan-is/) for the details.
+
+This release fixes a security issue. We recommend upgrading as soon as possible.
+
+### Security Fixes
+- [CVE-2023-38487: API allows to hide existing notes](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-7494-7hcf-vxpg)
+
+### Enhancements
+- Docker secrets can now be used to provide OAuth2 client secrets ([#4196](https://github.com/hedgedoc/hedgedoc/pull/4196) by [@DennisGaida](https://github.com/DennisGaida))
+- Document how to set up Azure Active Directory authentication ([#4413](https://github.com/hedgedoc/hedgedoc/pull/4413) by [@pramitsingh0](https://github.com/pramitsingh0))
+- Add YAML metadata to documentation page ([#4371](https://github.com/hedgedoc/hedgedoc/pull/4371) by [@JunedKhan101](https://github.com/JunedKhan101))
+
+### Bugfixes
+- Fix non-existing notes being created in some cases, instead of returning a 404 error
+
 ## <i class="fa fa-tag"></i> 1.9.8 <i class="fa fa-calendar-o"></i> 2023-06-04
 
 **Please note:** This release dropped support for Node 14, which is end-of-life since May 2023.
