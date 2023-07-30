@@ -5,7 +5,7 @@
  */
 import type { TransportAdapter } from '@hedgedoc/commons'
 import { ConnectionState } from '@hedgedoc/commons'
-import type { Message, MessageType } from '@hedgedoc/commons/dist'
+import type { Message, MessageType } from '@hedgedoc/commons'
 
 /**
  * Implements a transport adapter that communicates using a browser websocket.
