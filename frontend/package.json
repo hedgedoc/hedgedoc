@@ -50,7 +50,7 @@
     "@hedgedoc/commons": "workspace:commons",
     "@hedgedoc/html-to-react": "2.0.0",
     "@hedgedoc/markdown-it-plugins": "2.0.0",
-    "@mrdrogdrog/optional": "1.1.0",
+    "@mrdrogdrog/optional": "1.2.1",
     "@react-hook/resize-observer": "1.2.6",
     "@redux-devtools/core": "3.13.1",
     "@reduxjs/toolkit": "1.9.5",

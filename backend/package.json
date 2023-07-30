@@ -26,7 +26,7 @@
   "dependencies": {
     "@azure/storage-blob": "12.15.0",
     "@hedgedoc/commons": "workspace:commons",
-    "@mrdrogdrog/optional": "1.1.0",
+    "@mrdrogdrog/optional": "1.2.1",
     "@nestjs/common": "10.1.2",
     "@nestjs/config": "3.0.0",
     "@nestjs/core": "10.1.2",

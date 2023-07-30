@@ -2333,7 +2333,7 @@ __metadata:
     "@azure/storage-blob": 12.15.0
     "@darraghor/eslint-plugin-nestjs-typed": 4.0.2
     "@hedgedoc/commons": "workspace:commons"
-    "@mrdrogdrog/optional": 1.1.0
+    "@mrdrogdrog/optional": 1.2.1
     "@nestjs/cli": 10.1.10
     "@nestjs/common": 10.1.2
     "@nestjs/config": 3.0.0
@@ -2430,7 +2430,7 @@ __metadata:
   resolution: "@hedgedoc/commons@workspace:commons"
   dependencies:
     "@jest/types": 29.6.1
-    "@mrdrogdrog/optional": 1.1.0
+    "@mrdrogdrog/optional": 1.2.1
     "@types/js-yaml": 4.0.5
     "@types/ws": 8.5.5
     "@typescript-eslint/eslint-plugin": 6.2.0
@@ -2485,7 +2485,7 @@ __metadata:
     "@hedgedoc/commons": "workspace:commons"
     "@hedgedoc/html-to-react": 2.0.0
     "@hedgedoc/markdown-it-plugins": 2.0.0
-    "@mrdrogdrog/optional": 1.1.0
+    "@mrdrogdrog/optional": 1.2.1
     "@next/bundle-analyzer": 13.4.12
     "@react-hook/resize-observer": 1.2.6
     "@redux-devtools/core": 3.13.1
@@ -3191,10 +3191,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mrdrogdrog/optional@npm:1.1.0":
-  version: 1.1.0
-  resolution: "@mrdrogdrog/optional@npm:1.1.0"
-  checksum: 343d06b3e8d6760a75f0f04cee27fdc2a4dc86f127528231a069fcddae4b2562965a87e654fdae16676273fe402f26a3311ad95c3facd9ae8357b3423b9613f6
+"@mrdrogdrog/optional@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@mrdrogdrog/optional@npm:1.2.1"
+  checksum: 0549a75f80fa18405a000a4d62d77439176b28df31a532f89940bebd60591889fe4fa8d3fbbcfd42947383d2cd8c59fa59e474b3163ea6284370ca169d46c212
   languageName: node
   linkType: hard
 
