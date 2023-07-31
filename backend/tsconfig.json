@@ -16,6 +16,7 @@
     "strictPropertyInitialization": false,
     "resolveJsonModule": true,
     "useDefineForClassFields": false,
-    "preserveWatchOutput": true
+    "preserveWatchOutput": true,
+    "allowJs": true
   }
 }
