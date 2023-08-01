@@ -61,7 +61,7 @@
     "bootstrap": "5.3.1",
     "copy-webpack-plugin": "11.0.0",
     "cross-env": "7.0.3",
-    "d3-graphviz": "5.0.2",
+    "d3-graphviz": "5.1.0",
     "d3-selection": "3.0.0",
     "deepmerge": "4.3.1",
     "diff": "5.1.0",

@@ -2468,7 +2468,7 @@ __metadata:
     cypress: 12.17.2
     cypress-commands: 3.0.0
     cypress-fill-command: 1.0.2
-    d3-graphviz: 5.0.2
+    d3-graphviz: 5.1.0
     d3-selection: 3.0.0
     deepmerge: 4.3.1
     diff: 5.1.0
@@ -2573,14 +2573,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hpcc-js/wasm@npm:2.5.0":
-  version: 2.5.0
-  resolution: "@hpcc-js/wasm@npm:2.5.0"
+"@hpcc-js/wasm@npm:2.13.1":
+  version: 2.13.1
+  resolution: "@hpcc-js/wasm@npm:2.13.1"
   dependencies:
-    yargs: 17.6.2
+    yargs: 17.7.2
   bin:
     dot-wasm: bin/dot-wasm.js
-  checksum: 56afff13c95088402fbe40b5b39be25cd07ce977aa59072ced0c7726402ac81c12293a0e1d87098dfb5f19687c4b5a958d479ecac364d512fd8a4d8661a9b413
+  checksum: bdc290a118d4a191d9136b1be6c10bc1d4d1d8325e85c4e9786f6a644845d237ac43a8a452ab74b880a8ec16e645dea629734205e051eb91620dd932a9f59ae2
   languageName: node
   linkType: hard
 
@@ -7793,11 +7793,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-graphviz@npm:5.0.2":
-  version: 5.0.2
-  resolution: "d3-graphviz@npm:5.0.2"
+"d3-graphviz@npm:5.1.0":
+  version: 5.1.0
+  resolution: "d3-graphviz@npm:5.1.0"
   dependencies:
-    "@hpcc-js/wasm": 2.5.0
+    "@hpcc-js/wasm": 2.13.1
     d3-dispatch: ^3.0.1
     d3-format: ^3.1.0
     d3-interpolate: ^3.0.1
@@ -7807,7 +7807,7 @@ __metadata:
     d3-zoom: ^3.0.0
   peerDependencies:
     d3-selection: ^3.0.0
-  checksum: c62770ed320db85ce2d2870a99c007af8aa72a5e91e5d3455f53f0a8e3c385cc5c0c8d3b23a17eefb3a9d214ed911e5d215d46cf27c0ef9ab2a9bc0fc2222d82
+  checksum: 7ecf45c5d8f68e50eaace04eb6e38965af91b3a41349cdf87ef1110d8d1d86ea33c4a7b3a323bbf1c838feeb6b2de4774c2d1d2ed265fdb9a99603116e776094
   languageName: node
   linkType: hard
 
@@ -18714,9 +18714,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:17.6.2":
-  version: 17.6.2
-  resolution: "yargs@npm:17.6.2"
+"yargs@npm:17.7.2, yargs@npm:^17.3.1, yargs@npm:^17.6.2, yargs@npm:~17.7.2":
+  version: 17.7.2
+  resolution: "yargs@npm:17.7.2"
   dependencies:
     cliui: ^8.0.1
     escalade: ^3.1.1
@@ -18725,7 +18725,7 @@ __metadata:
     string-width: ^4.2.3
     y18n: ^5.0.5
     yargs-parser: ^21.1.1
-  checksum: 47da1b0d854fa16d45a3ded57b716b013b2179022352a5f7467409da5a04a1eef5b3b3d97a2dfc13e8bbe5f2ffc0afe3bc6a4a72f8254e60f5a4bd7947138643
+  checksum: 73b572e863aa4a8cbef323dd911d79d193b772defd5a51aab0aca2d446655216f5002c42c5306033968193bdbf892a7a4c110b0d77954a7fdf563e653967b56a
   languageName: node
   linkType: hard
 
@@ -18741,21 +18741,6 @@ __metadata:
     y18n: ^5.0.5
     yargs-parser: ^20.2.2
   checksum: b14afbb51e3251a204d81937c86a7e9d4bdbf9a2bcee38226c900d00f522969ab675703bee2a6f99f8e20103f608382936034e64d921b74df82b63c07c5e8f59
-  languageName: node
-  linkType: hard
-
-"yargs@npm:^17.3.1, yargs@npm:^17.6.2, yargs@npm:~17.7.2":
-  version: 17.7.2
-  resolution: "yargs@npm:17.7.2"
-  dependencies:
-    cliui: ^8.0.1
-    escalade: ^3.1.1
-    get-caller-file: ^2.0.5
-    require-directory: ^2.1.1
-    string-width: ^4.2.3
-    y18n: ^5.0.5
-    yargs-parser: ^21.1.1
-  checksum: 73b572e863aa4a8cbef323dd911d79d193b772defd5a51aab0aca2d446655216f5002c42c5306033968193bdbf892a7a4c110b0d77954a7fdf563e653967b56a
   languageName: node
   linkType: hard
 
