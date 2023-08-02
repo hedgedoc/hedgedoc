@@ -2541,7 +2541,7 @@ __metadata:
     typescript: 5.1.6
     uuid: 9.0.0
     vega: 5.25.0
-    vega-embed: 6.22.1
+    vega-embed: 6.22.2
     vega-lite: 5.14.1
     words-count: 2.0.2
     ws: 8.13.0
@@ -15780,17 +15780,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:~7.4.0":
-  version: 7.4.0
-  resolution: "semver@npm:7.4.0"
-  dependencies:
-    lru-cache: ^6.0.0
-  bin:
-    semver: bin/semver.js
-  checksum: debf7f4d6fa36fdc5ef82bd7fc3603b6412165c8a3963a30be0c45a587be1a49e7681e80aa109da1875765741af24edc6e021cee1ba16ae96f649d06c5df296d
-  languageName: node
-  linkType: hard
-
 "send@npm:0.18.0":
   version: 0.18.0
   resolution: "send@npm:0.18.0"
@@ -17136,7 +17125,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.6.1, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.2.0, tslib@npm:^2.4.0, tslib@npm:^2.5.0, tslib@npm:^2.6.0":
+"tslib@npm:2.6.1, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.2.0, tslib@npm:^2.4.0, tslib@npm:^2.5.0, tslib@npm:^2.6.0, tslib@npm:^2.6.1":
   version: 2.6.1
   resolution: "tslib@npm:2.6.1"
   checksum: b0d176d176487905b66ae4d5856647df50e37beea7571c53b8d10ba9222c074b81f1410fb91da13debaf2cbc970663609068bdebafa844ea9d69b146527c38fe
@@ -17819,23 +17808,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-embed@npm:6.22.1":
-  version: 6.22.1
-  resolution: "vega-embed@npm:6.22.1"
+"vega-embed@npm:6.22.2":
+  version: 6.22.2
+  resolution: "vega-embed@npm:6.22.2"
   dependencies:
     fast-json-patch: ^3.1.1
     json-stringify-pretty-compact: ^3.0.0
-    semver: ~7.4.0
-    tslib: ^2.5.0
+    semver: ^7.5.4
+    tslib: ^2.6.1
     vega-interpreter: ^1.0.5
     vega-schema-url-parser: ^2.2.0
-    vega-themes: ^2.13.0
+    vega-themes: ^2.14.0
     vega-tooltip: ^0.32.0
     yallist: "*"
   peerDependencies:
     vega: ^5.21.0
     vega-lite: "*"
-  checksum: 9f3f9abe5b517703116d85c738c6dd94d280466878c46deed5e48a3e6ea7afc8af06edf2dbf9fda57c8a1f42d38d527fafa7dfc7a13a212d40d61f7e8c2d9e87
+  checksum: d79f00940a3e9724667684f48070194cf89ced43a5c5755ee88f73725154a2bd5862ab6407f510741220938dd93a5b519ce9d148f6bcc93751bc307015e6a6f8
   languageName: node
   linkType: hard
 
@@ -18096,7 +18085,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-themes@npm:^2.13.0":
+"vega-themes@npm:^2.14.0":
   version: 2.14.0
   resolution: "vega-themes@npm:2.14.0"
   peerDependencies:
