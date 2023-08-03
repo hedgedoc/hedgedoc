@@ -46,7 +46,7 @@
     "@codemirror/state": "6.2.1",
     "@codemirror/theme-one-dark": "6.1.2",
     "@codemirror/view": "6.16.0",
-    "@fontsource/source-sans-pro": "5.0.6",
+    "@fontsource/source-sans-pro": "5.0.7",
     "@hedgedoc/commons": "workspace:commons",
     "@hedgedoc/html-to-react": "2.1.0",
     "@hedgedoc/markdown-it-plugins": "2.1.3",
