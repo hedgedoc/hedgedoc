@@ -46,11 +46,10 @@ exports[`blockquote extra tag renders the tag "[color=#abcdef]" correctly 1`] = 
   
 
   <p>
-    <span
-      class="blockquote-extra"
-      style="color: rgb(171, 205, 239);"
-    >
-      BootstrapIconMock_Tag
+    <span>
+      [color=
+      #abcdef
+      ]
     </span>
   </p>
   
@@ -66,11 +65,10 @@ exports[`blockquote extra tag renders the tag "[color=#dfe]" correctly 1`] = `
   
 
   <p>
-    <span
-      class="blockquote-extra"
-      style="color: rgb(221, 255, 238);"
-    >
-      BootstrapIconMock_Tag
+    <span>
+      [color=
+      #dfe
+      ]
     </span>
   </p>
   
@@ -101,10 +99,10 @@ exports[`blockquote extra tag renders the tag "[color=notarealcolor]" correctly 
   
 
   <p>
-    <span
-      class="blockquote-extra"
-    >
+    <span>
+      [color=
       notarealcolor
+      ]
     </span>
   </p>
   
@@ -120,11 +118,10 @@ exports[`blockquote extra tag renders the tag "[color=white]" correctly 1`] = `
   
 
   <p>
-    <span
-      class="blockquote-extra"
-      style="color: white;"
-    >
-      BootstrapIconMock_Tag
+    <span>
+      [color=
+      white
+      ]
     </span>
   </p>
   
