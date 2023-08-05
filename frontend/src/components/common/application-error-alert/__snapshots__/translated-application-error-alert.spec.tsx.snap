@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TranslatedApplicationErrorAlert renders correctly 1`] = `
+<div>
+  This is a mock for ApplicationErrorAlert.
+  <br />
+  Props: 
+  {"className":"test-css-class"}
+  <br />
+  Children: 
+  testKey
+</div>
+`;
