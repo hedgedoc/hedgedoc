@@ -7,10 +7,18 @@ import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test
 import { mockI18n } from '../../../test-utils/mock-i18n'
 import { PlantumlMarkdownExtension } from './plantuml-markdown-extension'
 import { render } from '@testing-library/react'
+import type { PropsWithChildren } from 'react'
 import React from 'react'
 
+jest.mock('../../../components/common/application-error-alert/translated-application-error-alert', () => ({
+  TranslatedApplicationErrorAlert: (props: PropsWithChildren) =>
+    `This is a mock for "TranslatedApplicationErrorAlert". Props: ${JSON.stringify(props)}`
+}))
+
 describe('PlantUML markdown extensions', () => {
-  beforeAll(() => mockI18n())
+  beforeAll(async () => {
+    await mockI18n()
+  })
 
   it('renders a plantuml codeblock', () => {
     const view = render(

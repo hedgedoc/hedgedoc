@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ApplicationErrorAlert renders correctly 1`] = `
+<div>
+  <div
+    class="fade alert test-class alert alert-primary show"
+    role="alert"
+  >
+    <p
+      class="d-flex align-items-center"
+    >
+      This is a mock for "HedgeDocLogoHorizontalGrey". Props: {"color":"dark","showText":false,"size":32,"width":32,"className":"logo"}
+      <span
+        class="exclamation ms-1 me-2"
+      >
+        !
+      </span>
+      <span>
+        <span>
+          Test Child
+        </span>
+      </span>
+    </p>
+  </div>
+</div>
+`;

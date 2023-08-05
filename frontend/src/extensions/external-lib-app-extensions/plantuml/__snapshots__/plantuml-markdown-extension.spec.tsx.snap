@@ -13,10 +13,6 @@ exports[`PlantUML markdown extensions renders a plantuml codeblock 1`] = `
 
 exports[`PlantUML markdown extensions renders an error if no server is defined 1`] = `
 <div>
-  <p
-    class="alert alert-danger"
-  >
-    renderer.plantuml.notConfigured
-  </p>
+  This is a mock for "TranslatedApplicationErrorAlert". Props: {"errorI18nKey":"renderer.plantuml.notConfigured"}
 </div>
 `;
