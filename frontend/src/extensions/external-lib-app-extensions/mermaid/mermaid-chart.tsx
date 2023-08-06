@@ -17,7 +17,7 @@ const log = new Logger('MermaidChart')
 
 let mermaidInitialized = false
 
-const loadMermaid = async (): Promise<typeof import('mermaid')['default']> => {
+const loadMermaid = async (): Promise<(typeof import('mermaid'))['default']> => {
   try {
     return (await import(/* webpackChunkName: "mermaid" */ 'mermaid')).default
   } catch (error) {
