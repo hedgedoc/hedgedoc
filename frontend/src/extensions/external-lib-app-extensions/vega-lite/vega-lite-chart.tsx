@@ -8,10 +8,10 @@ import { ShowIf } from '../../../components/common/show-if/show-if'
 import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
 import { Logger } from '../../../utils/logger'
 import React, { useEffect, useRef } from 'react'
-import { Alert } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { useAsync } from 'react-use'
 import type { VisualizationSpec } from 'vega-embed'
+import { TranslatedApplicationErrorAlert } from '../../../components/common/application-error-alert/translated-application-error-alert'
 
 const log = new Logger('VegaChart')
 
@@ -60,9 +60,7 @@ export const VegaLiteChart: React.FC<CodeProps> = ({ code }) => {
   return (
     <AsyncLoadingBoundary loading={libLoading || !vegaEmbed} error={libLoadingError} componentName={'Vega Lite'}>
       <ShowIf condition={!!renderingError}>
-        <Alert variant={'danger'}>
-          <Trans i18nKey={'renderer.vega-lite.errorJson'} />
-        </Alert>
+        <TranslatedApplicationErrorAlert errorI18nKey={'renderer.vega-lite.errorJson'} />
       </ShowIf>
       <div className={'text-center'}>
         <div ref={diagramContainer} />
