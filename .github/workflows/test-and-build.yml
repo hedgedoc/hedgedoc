@@ -51,9 +51,16 @@ jobs:
           TURBO_API: ${{ vars.TURBO_API }}
           TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
-      - name: Upload coverage
+      - name: Upload backend coverage
         if: "${{ matrix.coverage == true }}"
         uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
         with:
           directory: backend/coverage
-          flags: integration-tests
+          flags: backend, unit-tests, backend-unit-tests
+
+      - name: Upload frontend coverage
+        if: "${{ matrix.coverage == true }}"
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
+        with:
+          directory: frontend/coverage
+          flags: frontend, unit-tests, frontend-unit-tests
