@@ -2,12 +2,18 @@
 
 exports[`TranslatedApplicationErrorAlert renders correctly 1`] = `
 <div>
-  This is a mock for ApplicationErrorAlert.
-  <br />
-  Props: 
-  {"className":"test-css-class"}
-  <br />
-  Children: 
-  testKey
+  <div>
+    <h3>
+      This is a mock for ApplicationErrorAlert.
+    </h3>
+    Props: 
+    <code>
+      {"className":"test-css-class"}
+    </code>
+    Children:
+    <div>
+      testKey
+    </div>
+  </div>
 </div>
 `;

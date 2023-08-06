@@ -15,19 +15,3 @@ exports[`Vega-Lite markdown extensions renders a vega-lite codeblock 1`] = `
 
 </div>
 `;
-
-exports[`Vega-Lite markdown extensions shows an error on invalid json 1`] = `
-<div>
-  <pre>
-    <span>
-      this is a mock for vega lite
-      <code>
-        wpieoghwpoegj
-
-      </code>
-    </span>
-  </pre>
-  
-
-</div>
-`;

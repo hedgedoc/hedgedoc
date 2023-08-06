@@ -8,19 +8,18 @@ import { render } from '@testing-library/react'
 import type { KatexOptions } from 'katex'
 import { default as KatexDefault } from 'katex'
 import type { PropsWithChildren } from 'react'
-import React, { Fragment } from 'react'
+import React from 'react'
 
 jest.mock('katex')
 
 jest.mock('../../../components/common/application-error-alert/application-error-alert', () => ({
   ApplicationErrorAlert: ({ children, ...props }: PropsWithChildren) => (
-    <Fragment>
-      This is a mock for ApplicationErrorAlert.
-      <br />
-      Props: {JSON.stringify(props)}
-      <br />
-      Children: {children}
-    </Fragment>
+    <div>
+      <h3>This is a mock for ApplicationErrorAlert.</h3>
+      Props: <code>{JSON.stringify(props)}</code>
+      Children:
+      <div>{children}</div>
+    </div>
   )
 }))
 

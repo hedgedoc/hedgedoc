@@ -6,7 +6,19 @@
 import { mockI18n } from '../../../test-utils/mock-i18n'
 import { AbcFrame } from './abc-frame'
 import { render, screen } from '@testing-library/react'
+import type { PropsWithChildren } from 'react'
 import React from 'react'
+
+jest.mock('../../../components/common/application-error-alert/application-error-alert', () => ({
+  ApplicationErrorAlert: ({ children, ...props }: PropsWithChildren) => (
+    <div>
+      <h3>This is a mock for ApplicationErrorAlert.</h3>
+      Props: <code>{JSON.stringify(props)}</code>
+      Children:
+      <div>{children}</div>
+    </div>
+  )
+}))
 
 describe('AbcFrame', () => {
   afterEach(() => {

@@ -9,9 +9,20 @@ import { mockI18n } from '../../../test-utils/mock-i18n'
 import * as VegaLiteChartModule from '../vega-lite/vega-lite-chart'
 import { VegaLiteMarkdownExtension } from './vega-lite-markdown-extension'
 import { render } from '@testing-library/react'
+import type { PropsWithChildren } from 'react'
 import React from 'react'
 
 jest.mock('../vega-lite/vega-lite-chart')
+jest.mock('../../../components/common/application-error-alert/application-error-alert', () => ({
+  ApplicationErrorAlert: ({ children, ...props }: PropsWithChildren) => (
+    <div>
+      <h3>This is a mock for ApplicationErrorAlert.</h3>
+      Props: <code>{JSON.stringify(props)}</code>
+      Children:
+      <div>{children}</div>
+    </div>
+  )
+}))
 
 describe('Vega-Lite markdown extensions', () => {
   beforeAll(async () => {
