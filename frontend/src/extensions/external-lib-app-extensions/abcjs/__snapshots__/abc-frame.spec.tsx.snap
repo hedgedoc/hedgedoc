@@ -2384,11 +2384,18 @@ exports[`AbcFrame renders an error if abcjs render function crashes 1`] = `
 
 exports[`AbcFrame renders an error if abcjs render function crashes 2`] = `
 <div>
-  <div
-    class="fade alert alert-danger show"
-    role="alert"
-  >
-    editor.embeddings.abcJs.errorWhileRendering
+  <div>
+    <h3>
+      This is a mock for ApplicationErrorAlert.
+    </h3>
+    Props: 
+    <code>
+      {}
+    </code>
+    Children:
+    <div>
+      editor.embeddings.abcJs.errorWhileRendering
+    </div>
   </div>
   <div
     class="abcjs-score bg-white text-black svg-container"

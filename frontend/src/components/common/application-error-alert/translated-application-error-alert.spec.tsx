@@ -8,17 +8,16 @@ import { render } from '@testing-library/react'
 import { mockI18n } from '../../../test-utils/mock-i18n'
 import { TranslatedApplicationErrorAlert } from './translated-application-error-alert'
 import type { PropsWithChildren } from 'react'
-import React, { Fragment } from 'react'
+import React from 'react'
 
 jest.mock('./application-error-alert', () => ({
   ApplicationErrorAlert: ({ children, ...props }: PropsWithChildren) => (
-    <Fragment>
-      This is a mock for ApplicationErrorAlert.
-      <br />
-      Props: {JSON.stringify(props)}
-      <br />
-      Children: {children}
-    </Fragment>
+    <div>
+      <h3>This is a mock for ApplicationErrorAlert.</h3>
+      Props: <code>{JSON.stringify(props)}</code>
+      Children:
+      <div>{children}</div>
+    </div>
   )
 }))
 

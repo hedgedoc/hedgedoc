@@ -9,8 +9,20 @@ import { FlowChart } from './flowchart'
 import * as useMediaQuery from '@restart/hooks/useMediaQuery'
 import { render, screen } from '@testing-library/react'
 import type * as flowchartJsModule from 'flowchart.js'
+import type { PropsWithChildren } from 'react'
+import React from 'react'
 
 jest.mock('@restart/hooks/useMediaQuery')
+jest.mock('../../../components/common/application-error-alert/application-error-alert', () => ({
+  ApplicationErrorAlert: ({ children, ...props }: PropsWithChildren) => (
+    <div>
+      <h3>This is a mock for ApplicationErrorAlert.</h3>
+      Props: <code>{JSON.stringify(props)}</code>
+      Children:
+      <div>{children}</div>
+    </div>
+  )
+}))
 
 describe('Flowchart', () => {
   const successText = 'Flowchart rendering succeeded!'

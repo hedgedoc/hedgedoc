@@ -13,11 +13,18 @@ exports[`Flowchart handles error if lib loading failed 1`] = `
 
 exports[`Flowchart handles error while rendering 1`] = `
 <div>
-  <div
-    class="fade alert alert-danger show"
-    role="alert"
-  >
-    renderer.flowchart.invalidSyntax
+  <div>
+    <h3>
+      This is a mock for ApplicationErrorAlert.
+    </h3>
+    Props: 
+    <code>
+      {}
+    </code>
+    Children:
+    <div>
+      renderer.flowchart.invalidSyntax
+    </div>
   </div>
   <div
     class="text-center"
