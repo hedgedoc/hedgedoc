@@ -9,9 +9,9 @@ import { cypressId } from '../../../utils/cypress-attribute'
 import { Logger } from '../../../utils/logger'
 import styles from './mermaid.module.scss'
 import React, { Fragment, useRef } from 'react'
-import { Alert } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { useAsync } from 'react-use'
+import { ApplicationErrorAlert } from '../../../components/common/application-error-alert/application-error-alert'
 
 const log = new Logger('MermaidChart')
 
@@ -66,7 +66,7 @@ export const MermaidChart: React.FC<CodeProps> = ({ code }) => {
   return (
     <Fragment>
       <ShowIf condition={!!error}>
-        <Alert variant={'warning'}>{error?.message}</Alert>
+        <ApplicationErrorAlert className={'text-wrap'}>{error?.message}</ApplicationErrorAlert>
       </ShowIf>
       <div
         {...cypressId('mermaid-frame')}
