@@ -8,7 +8,7 @@ import { testId } from '../../../utils/test-id'
 import KaTeX from 'katex'
 import 'katex/dist/katex.min.css'
 import React, { useMemo } from 'react'
-import { Alert } from 'react-bootstrap'
+import { ApplicationErrorAlert } from '../../../components/common/application-error-alert/application-error-alert'
 
 interface KatexFrameProps {
   expression: string
@@ -33,9 +33,9 @@ export const KatexFrame: React.FC<KatexFrameProps> = ({ expression, block = fals
       )
     } catch (error) {
       return (
-        <Alert className={block ? '' : 'd-inline-block'} variant={'danger'}>
+        <ApplicationErrorAlert className={block ? '' : 'd-inline-block'}>
           {(error as Error).message}
-        </Alert>
+        </ApplicationErrorAlert>
       )
     }
   }, [block, expression])
