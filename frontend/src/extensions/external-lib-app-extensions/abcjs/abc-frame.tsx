@@ -12,9 +12,8 @@ import { cypressId } from '../../../utils/cypress-attribute'
 import { Logger } from '../../../utils/logger'
 import styles from './abc.module.scss'
 import React, { useRef } from 'react'
-import { Alert } from 'react-bootstrap'
-import { Trans } from 'react-i18next'
 import { useAsync } from 'react-use'
+import { TranslatedApplicationErrorAlert } from '../../../components/common/application-error-alert/translated-application-error-alert'
 
 const log = new Logger('AbcFrame')
 
@@ -51,9 +50,7 @@ export const AbcFrame: React.FC<CodeProps> = ({ code }) => {
   return (
     <AsyncLoadingBoundary loading={loading || !abcLib} error={!!loadingError} componentName={'abc.js'}>
       <ShowIf condition={!!renderError}>
-        <Alert variant={'danger'}>
-          <Trans i18nKey={'editor.embeddings.abcJs.errorWhileRendering'} />
-        </Alert>
+        <TranslatedApplicationErrorAlert errorI18nKey={'editor.embeddings.abcJs.errorWhileRendering'} />
       </ShowIf>
       <div
         ref={container}
