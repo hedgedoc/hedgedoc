@@ -9,8 +9,8 @@ import type { CodeProps } from '../../../components/markdown-renderer/replace-co
 import { cypressId } from '../../../utils/cypress-attribute'
 import { Logger } from '../../../utils/logger'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { Alert } from 'react-bootstrap'
 import { useAsync } from 'react-use'
+import { ApplicationErrorAlert } from '../../../components/common/application-error-alert/application-error-alert'
 
 const log = new Logger('GraphvizFrame')
 /**
@@ -60,7 +60,7 @@ export const GraphvizFrame: React.FC<CodeProps> = ({ code }) => {
   return (
     <AsyncLoadingBoundary loading={isLibLoading || !graphvizImport} componentName={'graphviz'} error={libLoadingError}>
       <ShowIf condition={!!error}>
-        <Alert variant={'warning'}>{error}</Alert>
+        <ApplicationErrorAlert className={'text-wrap'}>{error}</ApplicationErrorAlert>
       </ShowIf>
       <div className={'svg-container'} {...cypressId('graphviz')} ref={container} />
     </AsyncLoadingBoundary>
