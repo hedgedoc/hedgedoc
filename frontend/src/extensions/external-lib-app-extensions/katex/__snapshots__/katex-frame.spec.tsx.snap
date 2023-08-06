@@ -89,12 +89,13 @@ exports[`katex frame renders an error for an invalid latex expression as explici
   <p
     data-testid="katex-block"
   >
-    <div
-      class="fade alert alert-danger show"
-      role="alert"
-    >
-      mocked parseerror
-    </div>
+    This is a mock for ApplicationErrorAlert.
+    <br />
+    Props: 
+    {"className":""}
+    <br />
+    Children: 
+    mocked parseerror
   </p>
 </div>
 `;
@@ -104,12 +105,13 @@ exports[`katex frame renders an error for an invalid latex expression as explici
   <span
     data-testid="katex-inline"
   >
-    <div
-      class="fade d-inline-block alert alert-danger show"
-      role="alert"
-    >
-      mocked parseerror
-    </div>
+    This is a mock for ApplicationErrorAlert.
+    <br />
+    Props: 
+    {"className":"d-inline-block"}
+    <br />
+    Children: 
+    mocked parseerror
   </span>
 </div>
 `;
@@ -119,12 +121,13 @@ exports[`katex frame renders an error for an invalid latex expression as implici
   <span
     data-testid="katex-inline"
   >
-    <div
-      class="fade d-inline-block alert alert-danger show"
-      role="alert"
-    >
-      mocked parseerror
-    </div>
+    This is a mock for ApplicationErrorAlert.
+    <br />
+    Props: 
+    {"className":"d-inline-block"}
+    <br />
+    Children: 
+    mocked parseerror
   </span>
 </div>
 `;
