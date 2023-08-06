@@ -20,7 +20,7 @@
     "test:e2e": "cypress run --browser chrome",
     "test:e2e:ci": "cypress run --browser chrome --record true --parallel --group \"chrome\"",
     "test:watch": "cross-env NODE_ENV=test jest --watch",
-    "test:ci": "cross-env NODE_ENV=test jest --ci",
+    "test:ci": "cross-env NODE_ENV=test jest --coverage",
     "test": "cross-env NODE_ENV=test jest"
   },
   "browserslist": {

@@ -49,7 +49,7 @@ jobs:
         uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
         with:
           directory: backend/coverage-e2e
-          flags: e2e-tests
+          flags: backend, e2e-tests, backend-e2e-tests
 
   backend-mariadb:
     if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
