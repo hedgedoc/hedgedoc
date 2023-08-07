@@ -2141,9 +2141,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@darraghor/eslint-plugin-nestjs-typed@npm:4.0.7":
-  version: 4.0.7
-  resolution: "@darraghor/eslint-plugin-nestjs-typed@npm:4.0.7"
+"@darraghor/eslint-plugin-nestjs-typed@npm:4.0.8":
+  version: 4.0.8
+  resolution: "@darraghor/eslint-plugin-nestjs-typed@npm:4.0.8"
   dependencies:
     "@typescript-eslint/scope-manager": 6.2.1
     "@typescript-eslint/utils": 6.2.1
@@ -2153,7 +2153,7 @@ __metadata:
     "@typescript-eslint/parser": ^6.0.0
     class-validator: "*"
     eslint: ^8.0.1
-  checksum: eb0075c2c7590ea395057caba5077be2869809a61b2fc505b81d6d6ea573f4e880124bd4d9d22bfe6c3a3be0205aa7db562d5fd122de2480678284651cae78ef
+  checksum: 20303397d2d76fb35179d98f6cc54980e727316a339822adf60d255fa61d01d4870b397db7b69c6e0cdbfe29456e8b807551fe84565fd3578b30cdb5dafd1769
   languageName: node
   linkType: hard
 
@@ -2308,7 +2308,7 @@ __metadata:
   resolution: "@hedgedoc/backend@workspace:backend"
   dependencies:
     "@azure/storage-blob": 12.15.0
-    "@darraghor/eslint-plugin-nestjs-typed": 4.0.7
+    "@darraghor/eslint-plugin-nestjs-typed": 4.0.8
     "@hedgedoc/commons": "workspace:commons"
     "@mrdrogdrog/optional": 1.2.1
     "@nestjs/cli": 10.1.11
