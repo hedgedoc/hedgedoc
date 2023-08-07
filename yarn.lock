@@ -65,6 +65,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@angular-devkit/core@npm:16.1.8":
+  version: 16.1.8
+  resolution: "@angular-devkit/core@npm:16.1.8"
+  dependencies:
+    ajv: 8.12.0
+    ajv-formats: 2.1.1
+    jsonc-parser: 3.2.0
+    rxjs: 7.8.1
+    source-map: 0.7.4
+  peerDependencies:
+    chokidar: ^3.5.2
+  peerDependenciesMeta:
+    chokidar:
+      optional: true
+  checksum: 422d225df2fc1fcc44670fc51ca25873f3d937b20a0fc344f68182927b7ac775aff2c8014d98647133b65da45f220fbed2c234d25787e72865dab975a43ee907
+  languageName: node
+  linkType: hard
+
 "@angular-devkit/schematics-cli@npm:16.1.4":
   version: 16.1.4
   resolution: "@angular-devkit/schematics-cli@npm:16.1.4"
@@ -104,6 +122,19 @@ __metadata:
     ora: 5.4.1
     rxjs: 7.8.1
   checksum: 100240e35dc6380690a3457e92fb3fc7913bdecc6359709361508e70528ae0e8879fe5f29d0c3e7795d709a7df8f9a7451d7cce52c99e60f353d3689e1d671e6
+  languageName: node
+  linkType: hard
+
+"@angular-devkit/schematics@npm:16.1.8":
+  version: 16.1.8
+  resolution: "@angular-devkit/schematics@npm:16.1.8"
+  dependencies:
+    "@angular-devkit/core": 16.1.8
+    jsonc-parser: 3.2.0
+    magic-string: 0.30.0
+    ora: 5.4.1
+    rxjs: 7.8.1
+  checksum: 9c691145565c8232bb807782ed6dd7de92b540faaa7a806723678964f9f3931fb5dad8d802966b2fcf31f2c388a3e3e8b0c640f8b212b5e3f9845205136f11a0
   languageName: node
   linkType: hard
 
@@ -2284,13 +2315,13 @@ __metadata:
     "@nestjs/common": 10.1.3
     "@nestjs/config": 3.0.0
     "@nestjs/core": 10.1.3
-    "@nestjs/event-emitter": 2.0.0
+    "@nestjs/event-emitter": 2.0.1
     "@nestjs/passport": 10.0.0
     "@nestjs/platform-express": 10.1.3
     "@nestjs/platform-ws": 10.1.3
     "@nestjs/schedule": 3.0.2
-    "@nestjs/schematics": 10.0.1
-    "@nestjs/swagger": 7.1.6
+    "@nestjs/schematics": 10.0.2
+    "@nestjs/swagger": 7.1.7
     "@nestjs/testing": 10.1.3
     "@nestjs/typeorm": 10.0.0
     "@nestjs/websockets": 10.1.3
@@ -3241,16 +3272,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/event-emitter@npm:2.0.0":
-  version: 2.0.0
-  resolution: "@nestjs/event-emitter@npm:2.0.0"
+"@nestjs/event-emitter@npm:2.0.1":
+  version: 2.0.1
+  resolution: "@nestjs/event-emitter@npm:2.0.1"
   dependencies:
     eventemitter2: 6.4.9
   peerDependencies:
     "@nestjs/common": ^8.0.0 || ^9.0.0 || ^10.0.0
     "@nestjs/core": ^8.0.0 || ^9.0.0 || ^10.0.0
     reflect-metadata: ^0.1.12
-  checksum: 958eec68b5a157fd81d00e53ee90de6b01a981968befd6d4b13c056faba0a55bde3cf9a820da333031c320c0d752d7488540a4b7e8cf8ea07bb95be30a670235
+  checksum: b5a2b93b095db26ee16bf8e67eb04d7457fdb03811e61d015cef9dc10cb8b4a333773e4e18868f6dc0dbc52c52a0fb17ab0473a79ce86e7b6c769e98822b1eec
   languageName: node
   linkType: hard
 
@@ -3325,7 +3356,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/schematics@npm:10.0.1, @nestjs/schematics@npm:^10.0.1":
+"@nestjs/schematics@npm:10.0.2":
+  version: 10.0.2
+  resolution: "@nestjs/schematics@npm:10.0.2"
+  dependencies:
+    "@angular-devkit/core": 16.1.8
+    "@angular-devkit/schematics": 16.1.8
+    comment-json: 4.2.3
+    jsonc-parser: 3.2.0
+    pluralize: 8.0.0
+  peerDependencies:
+    typescript: ">=4.8.2"
+  checksum: bb54681dcf4f6c20315184c6b512998bbd2cb366dc197d0262efd4c0f25b87317cb305cf4b895237cbb712c80a5d7109f621e985f9de9cddd70d2bc5d2be7d62
+  languageName: node
+  linkType: hard
+
+"@nestjs/schematics@npm:^10.0.1":
   version: 10.0.1
   resolution: "@nestjs/schematics@npm:10.0.1"
   dependencies:
@@ -3340,15 +3386,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/swagger@npm:7.1.6":
-  version: 7.1.6
-  resolution: "@nestjs/swagger@npm:7.1.6"
+"@nestjs/swagger@npm:7.1.7":
+  version: 7.1.7
+  resolution: "@nestjs/swagger@npm:7.1.7"
   dependencies:
     "@nestjs/mapped-types": 2.0.2
     js-yaml: 4.1.0
     lodash: 4.17.21
     path-to-regexp: 3.2.0
-    swagger-ui-dist: 5.1.0
+    swagger-ui-dist: 5.3.1
   peerDependencies:
     "@fastify/static": ^6.0.0
     "@nestjs/common": ^9.0.0 || ^10.0.0
@@ -3363,7 +3409,7 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: 8428b36c22b4cc1c2e86748d29450a4aa2fc58a901a6545318c3b11c35d040be9cb11754663fe413b3b90e057ec7e01f16250bfed9b31bf4dd3cfe50f433a663
+  checksum: 5356eb6c1e37834891d0e258265017a32dc46cfb5513347b857747b9ac48955276eceea990b06dd7f39c1b201cbf838f861cec294758431a21f29bb0e59fd3d2
   languageName: node
   linkType: hard
 
@@ -16536,10 +16582,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swagger-ui-dist@npm:5.1.0":
-  version: 5.1.0
-  resolution: "swagger-ui-dist@npm:5.1.0"
-  checksum: 41b91708e757852423a4fddfc07d0e87ef38c4ad9fad5757fbc27b23c9e71593a1c48b53661fa2d9bb241043b6800cd9a57d980943a17c9eb388704e30156120
+"swagger-ui-dist@npm:5.3.1":
+  version: 5.3.1
+  resolution: "swagger-ui-dist@npm:5.3.1"
+  checksum: babf26f3a40a932db22248a620dbb0c5c68721c4165b173537a949c6ec3df3a89982db484651e1f5fe31f3cdb1037eeef13fb6b746efbb72902d7410291070c8
   languageName: node
   linkType: hard
 
