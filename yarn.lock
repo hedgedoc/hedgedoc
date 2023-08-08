@@ -2513,7 +2513,7 @@ __metadata:
     eslint-config-next: 13.4.13
     eslint-config-prettier: 9.0.0
     eslint-plugin-chai-friendly: 0.7.2
-    eslint-plugin-cypress: 2.13.3
+    eslint-plugin-cypress: 2.13.4
     eslint-plugin-jest: 27.2.3
     eslint-plugin-node: 11.1.0
     eslint-plugin-prettier: 5.0.0
@@ -8919,14 +8919,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-cypress@npm:2.13.3":
-  version: 2.13.3
-  resolution: "eslint-plugin-cypress@npm:2.13.3"
+"eslint-plugin-cypress@npm:2.13.4":
+  version: 2.13.4
+  resolution: "eslint-plugin-cypress@npm:2.13.4"
   dependencies:
-    globals: ^11.12.0
+    globals: ^13.20.0
   peerDependencies:
     eslint: ">= 3.2.1"
-  checksum: 9affbcee29e030a4251c4794f7533e8e8c0e3b98ab3470a2c730ed059f733c5857a04c7ac214cc0ca7aeef1b11242e72595de7fc1f6b8b4d4578d9eca10af203
+  checksum: 231202f0bc8ae7c77c9de2888d1773a753c6b95799d89ced1b6fe273591dd9718687320341b294f5f6e22de73c1e83487bb7456ee74a77313c1c5a68ed2da205
   languageName: node
   linkType: hard
 
@@ -10235,14 +10235,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globals@npm:^11.1.0, globals@npm:^11.12.0":
+"globals@npm:^11.1.0":
   version: 11.12.0
   resolution: "globals@npm:11.12.0"
   checksum: 67051a45eca3db904aee189dfc7cd53c20c7d881679c93f6146ddd4c9f4ab2268e68a919df740d39c71f4445d2b38ee360fc234428baea1dbdfe68bbcb46979e
   languageName: node
   linkType: hard
 
-"globals@npm:^13.19.0":
+"globals@npm:^13.19.0, globals@npm:^13.20.0":
   version: 13.20.0
   resolution: "globals@npm:13.20.0"
   dependencies:
