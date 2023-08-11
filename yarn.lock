@@ -1737,7 +1737,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@braintree/sanitize-url@npm:^6.0.2":
+"@braintree/sanitize-url@npm:^6.0.1":
   version: 6.0.4
   resolution: "@braintree/sanitize-url@npm:6.0.4"
   checksum: f5ec6048973722ea1c46ae555d2e9eb848d7fa258994f8ea7d6db9514ee754ea3ef344ef71b3696d486776bcb839f3124e79f67c6b5b2814ed2da220b340627c
@@ -2547,7 +2547,7 @@ __metadata:
     markdown-it-regex: 0.2.0
     markdown-it-sub: 1.0.0
     markdown-it-sup: 1.0.0
-    mermaid: 10.3.0
+    mermaid: 10.3.1
     next: 13.4.13
     prettier: 3.0.1
     react: 18.2.0
@@ -8471,7 +8471,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:3.0.5":
+"dompurify@npm:3.0.5, dompurify@npm:^3.0.5":
   version: 3.0.5
   resolution: "dompurify@npm:3.0.5"
   checksum: 2d9421570c833ce26ce7022955241749b646d41e8bf453f42ede9f22d0e98af482cedb7dfbf8129419eb48b351c1d677a08fc9f1cd91836ce7f6c1807a0676b2
@@ -12875,11 +12875,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mermaid@npm:10.3.0":
-  version: 10.3.0
-  resolution: "mermaid@npm:10.3.0"
+"mermaid@npm:10.3.1":
+  version: 10.3.1
+  resolution: "mermaid@npm:10.3.1"
   dependencies:
-    "@braintree/sanitize-url": ^6.0.2
+    "@braintree/sanitize-url": ^6.0.1
     "@types/d3-scale": ^4.0.3
     "@types/d3-scale-chromatic": ^3.0.0
     cytoscape: ^3.23.0
@@ -12889,7 +12889,7 @@ __metadata:
     d3-sankey: ^0.12.3
     dagre-d3-es: 7.0.10
     dayjs: ^1.11.7
-    dompurify: 3.0.5
+    dompurify: ^3.0.5
     elkjs: ^0.8.2
     khroma: ^2.0.0
     lodash-es: ^4.17.21
@@ -12899,7 +12899,7 @@ __metadata:
     ts-dedent: ^2.2.0
     uuid: ^9.0.0
     web-worker: ^1.2.0
-  checksum: bf8c5b5366e2e551ec3abc10663eac4bd00bc0a2db448b0d1d6c375f1fe13fbf0b7e1f569eca0e85ce94192ffaf793272bd9266392fcf5d46e86bba285a54208
+  checksum: bd5061c968b9985bcc76295f3c738fa6cc8f3f6ec25012a50a556e4c3d11d94c2bfa760bdd7d56298148201e1a5978ce58c9c2dd9cecff28da83adfb668fd0f5
   languageName: node
   linkType: hard
 
