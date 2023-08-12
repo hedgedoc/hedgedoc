@@ -7,7 +7,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 describe('Intro page', () => {
   beforeEach(() => {
-    cy.intercept('public/intro.md', 'test content')
+    cy.intercept('/public/intro.md', 'test content')
     cy.visitHome()
   })
 
@@ -17,7 +17,7 @@ describe('Intro page', () => {
     })
 
     it("won't show anything if no content was found", () => {
-      cy.intercept('public/intro.md', {
+      cy.intercept('/public/intro.md', {
         statusCode: 404
       })
       cy.visitHome()

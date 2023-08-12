@@ -23,7 +23,7 @@ export interface MotdApiResponse {
  */
 export const fetchMotd = async (): Promise<MotdApiResponse | undefined> => {
   const cachedLastModified = window.localStorage.getItem(MOTD_LOCAL_STORAGE_KEY)
-  const motdUrl = `public/motd.md`
+  const motdUrl = `/public/motd.md`
 
   if (cachedLastModified) {
     const response = await fetch(motdUrl, {

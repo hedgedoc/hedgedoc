@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MissingTrailingSlashError, WrongProtocolError } from './errors.js'
+import { NoSubdirectoryAllowedError, WrongProtocolError } from './errors.js'
 import { parseUrl } from './parse-url.js'
 import { describe, expect, it } from '@jest/globals'
 
@@ -44,14 +44,14 @@ describe('validate url', () => {
         'http://example.org/'
       )
     })
-    it('accepts urls with with subpath and trailing slash', () => {
-      expect(parseUrl('http://example.org/asd/').get().toString()).toEqual(
-        'http://example.org/asd/'
-      )
+    it('declines urls with with subpath and trailing slash', () => {
+      expect(() =>
+        parseUrl('http://example.org/asd/').get().toString()
+      ).toThrow(NoSubdirectoryAllowedError)
     })
-    it("doesn't accept urls with with subpath and without trailing slash", () => {
+    it('declines urls with with subpath and without trailing slash', () => {
       expect(() => parseUrl('http://example.org/asd').get().toString()).toThrow(
-        MissingTrailingSlashError
+        NoSubdirectoryAllowedError
       )
     })
   })

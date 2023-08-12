@@ -11,7 +11,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
   respondToMatchingRequest<UserInfo>(HttpMethod.GET, req, res, {
     username: 'molly',
     displayName: 'Molly',
-    photo: 'public/img/avatar.png'
+    photo: '/public/img/avatar.png'
   })
 }
 

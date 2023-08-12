@@ -26,14 +26,14 @@ describe('DeleteApiRequestBuilder', () => {
 
   describe('sendRequest without body', () => {
     it('without headers', async () => {
-      expectFetch('api/private/test', 204, { method: 'DELETE' })
+      expectFetch('/api/private/test', 204, { method: 'DELETE' })
       await new DeleteApiRequestBuilder<string, undefined>('test').sendRequest()
     })
 
     it('with single header', async () => {
       const expectedHeaders = new Headers()
       expectedHeaders.append('test', 'true')
-      expectFetch('api/private/test', 204, {
+      expectFetch('/api/private/test', 204, {
         method: 'DELETE',
         headers: expectedHeaders
       })
@@ -43,7 +43,7 @@ describe('DeleteApiRequestBuilder', () => {
     it('with overriding single header', async () => {
       const expectedHeaders = new Headers()
       expectedHeaders.append('test', 'false')
-      expectFetch('api/private/test', 204, {
+      expectFetch('/api/private/test', 204, {
         method: 'DELETE',
         headers: expectedHeaders
       })
@@ -57,7 +57,7 @@ describe('DeleteApiRequestBuilder', () => {
       const expectedHeaders = new Headers()
       expectedHeaders.append('test', 'true')
       expectedHeaders.append('test2', 'false')
-      expectFetch('api/private/test', 204, {
+      expectFetch('/api/private/test', 204, {
         method: 'DELETE',
         headers: expectedHeaders
       })
@@ -72,7 +72,7 @@ describe('DeleteApiRequestBuilder', () => {
     const expectedHeaders = new Headers()
     expectedHeaders.append('Content-Type', 'application/json')
 
-    expectFetch('api/private/test', 204, {
+    expectFetch('/api/private/test', 204, {
       method: 'DELETE',
       headers: expectedHeaders,
       body: '{"test":true,"foo":"bar"}'
@@ -86,7 +86,7 @@ describe('DeleteApiRequestBuilder', () => {
   })
 
   it('sendRequest with other body', async () => {
-    expectFetch('api/private/test', 204, {
+    expectFetch('/api/private/test', 204, {
       method: 'DELETE',
       body: 'HedgeDoc'
     })
@@ -95,7 +95,7 @@ describe('DeleteApiRequestBuilder', () => {
 
   describe('sendRequest with custom options', () => {
     it('with one option', async () => {
-      expectFetch('api/private/test', 204, {
+      expectFetch('/api/private/test', 204, {
         method: 'DELETE',
         cache: 'force-cache'
       })
@@ -107,7 +107,7 @@ describe('DeleteApiRequestBuilder', () => {
     })
 
     it('overriding single option', async () => {
-      expectFetch('api/private/test', 204, {
+      expectFetch('/api/private/test', 204, {
         method: 'DELETE',
         cache: 'no-store'
       })
@@ -122,7 +122,7 @@ describe('DeleteApiRequestBuilder', () => {
     })
 
     it('with multiple options', async () => {
-      expectFetch('api/private/test', 204, {
+      expectFetch('/api/private/test', 204, {
         method: 'DELETE',
         cache: 'force-cache',
         integrity: 'test'
@@ -138,13 +138,13 @@ describe('DeleteApiRequestBuilder', () => {
 
   describe('failing sendRequest', () => {
     it('without backend provided error name or error message', async () => {
-      expectFetch('api/private/test', 400, { method: 'DELETE' })
+      expectFetch('/api/private/test', 400, { method: 'DELETE' })
       const request = new DeleteApiRequestBuilder<string>('test').sendRequest()
       await expect(request).rejects.toEqual(new ApiError(400, undefined, undefined))
     })
 
     it('with backend error name and error message', async () => {
-      expectFetch('api/private/test', 400, { method: 'DELETE' }, {
+      expectFetch('/api/private/test', 400, { method: 'DELETE' }, {
         message: 'The API has exploded!',
         name: 'testExplosion'
       } as ApiErrorResponse)
@@ -153,7 +153,7 @@ describe('DeleteApiRequestBuilder', () => {
     })
 
     it('with another status code than 400', async () => {
-      expectFetch('api/private/test', 401, { method: 'DELETE' }, {
+      expectFetch('/api/private/test', 401, { method: 'DELETE' }, {
         message: 'The API has exploded!',
         name: 'testExplosion'
       } as ApiErrorResponse)

@@ -10,7 +10,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 const handler = (req: NextApiRequest, res: NextApiResponse): void => {
   respondToMatchingRequest<LoginUserInfo>(HttpMethod.GET, req, res, {
     username: 'mock',
-    photo: 'public/img/avatar.png',
+    photo: '/public/img/avatar.png',
     displayName: 'Mock User',
     authProvider: 'local',
     email: 'mock@hedgedoc.test'

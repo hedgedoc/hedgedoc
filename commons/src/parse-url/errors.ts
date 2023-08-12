@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export class MissingTrailingSlashError extends Error {
+export class NoSubdirectoryAllowedError extends Error {
   constructor() {
-    super("Path doesn't end with a trailing slash")
+    super('Subdirectories are not allowed')
   }
 }
 

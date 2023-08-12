@@ -6,7 +6,7 @@
 import type { BaseUrls } from '../components/common/base-url/base-url-context-provider'
 import { Logger } from './logger'
 import { isTestMode } from './test-modes'
-import { MissingTrailingSlashError, parseUrl } from '@hedgedoc/commons'
+import { NoSubdirectoryAllowedError, parseUrl } from '@hedgedoc/commons'
 import { Optional } from '@mrdrogdrog/optional'
 
 /**
@@ -20,8 +20,8 @@ export class BaseUrlFromEnvExtractor {
     try {
       return parseUrl(envVarValue)
     } catch (error) {
-      if (error instanceof MissingTrailingSlashError) {
-        this.logger.error(`The path in ${envVarName} must end with an '/'`)
+      if (error instanceof NoSubdirectoryAllowedError) {
+        this.logger.error(error.message)
         return Optional.empty()
       } else {
         throw error

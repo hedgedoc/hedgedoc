@@ -20,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
     req,
     res,
     {
-      url: 'public/img/avatar.png',
+      url: '/public/img/avatar.png',
       noteId: null,
       username: 'test',
       createdAt: '2022-02-27T21:54:23.856Z'
