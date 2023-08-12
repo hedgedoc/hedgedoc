@@ -54,7 +54,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     ],
     branding: {
       name: 'DEMO Corp',
-      logo: 'public/img/demo.png'
+      logo: '/public/img/demo.png'
     },
     useImageProxy: false,
     specialUrls: {

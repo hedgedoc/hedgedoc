@@ -7,7 +7,7 @@ import { fetchMotd } from './fetch-motd'
 import { Mock } from 'ts-mockery'
 
 describe('fetch motd', () => {
-  const motdUrl = 'public/motd.md'
+  const motdUrl = '/public/motd.md'
 
   beforeEach(() => {
     window.localStorage.clear()

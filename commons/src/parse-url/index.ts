@@ -5,4 +5,4 @@
  */
 
 export { parseUrl } from './parse-url.js'
-export { MissingTrailingSlashError, WrongProtocolError } from './errors.js'
+export { NoSubdirectoryAllowedError, WrongProtocolError } from './errors.js'

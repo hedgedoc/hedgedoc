@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
-  MissingTrailingSlashError,
+  NoSubdirectoryAllowedError,
   parseUrl,
   WrongProtocolError,
 } from '@hedgedoc/commons';
@@ -23,15 +23,15 @@ export interface AppConfig {
   persistInterval: number;
 }
 
-function validateUrlWithTrailingSlash(
+function validateUrl(
   value: string,
   helpers: CustomHelpers,
 ): string | ErrorReport {
   try {
     return parseUrl(value).isPresent() ? value : helpers.error('string.uri');
   } catch (error) {
-    if (error instanceof MissingTrailingSlashError) {
-      return helpers.error('url.missingTrailingSlash');
+    if (error instanceof NoSubdirectoryAllowedError) {
+      return helpers.error('url.noSubDirectoryAllowed');
     } else if (error instanceof WrongProtocolError) {
       return helpers.error('url.wrongProtocol');
     } else {
@@ -41,11 +41,9 @@ function validateUrlWithTrailingSlash(
 }
 
 const schema = Joi.object({
-  baseUrl: Joi.string()
-    .custom(validateUrlWithTrailingSlash)
-    .label('HD_BASE_URL'),
+  baseUrl: Joi.string().custom(validateUrl).label('HD_BASE_URL'),
   rendererBaseUrl: Joi.string()
-    .custom(validateUrlWithTrailingSlash)
+    .custom(validateUrl)
     .default(Joi.ref('baseUrl'))
     .optional()
     .label('HD_RENDERER_BASE_URL'),
@@ -69,7 +67,7 @@ const schema = Joi.object({
     .label('HD_PERSIST_INTERVAL'),
 }).messages({
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  'url.missingTrailingSlash': '{{#label}} must end with a trailing slash',
+  'url.noSubDirectoryAllowed': '{{#label}} must not contain a subdirectory',
   // eslint-disable-next-line @typescript-eslint/naming-convention
   'url.wrongProtocol': '{{#label}} protocol must be HTTP or HTTPS',
 });

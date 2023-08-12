@@ -26,14 +26,14 @@ describe('PostApiRequestBuilder', () => {
 
   describe('sendRequest without body', () => {
     it('without headers', async () => {
-      expectFetch('api/private/test', 201, { method: 'POST' })
+      expectFetch('/api/private/test', 201, { method: 'POST' })
       await new PostApiRequestBuilder<string, undefined>('test').sendRequest()
     })
 
     it('with single header', async () => {
       const expectedHeaders = new Headers()
       expectedHeaders.append('test', 'true')
-      expectFetch('api/private/test', 201, {
+      expectFetch('/api/private/test', 201, {
         method: 'POST',
         headers: expectedHeaders
       })
@@ -43,7 +43,7 @@ describe('PostApiRequestBuilder', () => {
     it('with overriding single header', async () => {
       const expectedHeaders = new Headers()
       expectedHeaders.append('test', 'false')
-      expectFetch('api/private/test', 201, {
+      expectFetch('/api/private/test', 201, {
         method: 'POST',
         headers: expectedHeaders
       })
@@ -57,7 +57,7 @@ describe('PostApiRequestBuilder', () => {
       const expectedHeaders = new Headers()
       expectedHeaders.append('test', 'true')
       expectedHeaders.append('test2', 'false')
-      expectFetch('api/private/test', 201, {
+      expectFetch('/api/private/test', 201, {
         method: 'POST',
         headers: expectedHeaders
       })
@@ -72,7 +72,7 @@ describe('PostApiRequestBuilder', () => {
     const expectedHeaders = new Headers()
     expectedHeaders.append('Content-Type', 'application/json')
 
-    expectFetch('api/private/test', 201, {
+    expectFetch('/api/private/test', 201, {
       method: 'POST',
       headers: expectedHeaders,
       body: '{"test":true,"foo":"bar"}'
@@ -86,7 +86,7 @@ describe('PostApiRequestBuilder', () => {
   })
 
   it('sendRequest with other body', async () => {
-    expectFetch('api/private/test', 201, {
+    expectFetch('/api/private/test', 201, {
       method: 'POST',
       body: 'HedgeDoc'
     })
@@ -95,7 +95,7 @@ describe('PostApiRequestBuilder', () => {
 
   describe('sendRequest with custom options', () => {
     it('with one option', async () => {
-      expectFetch('api/private/test', 201, {
+      expectFetch('/api/private/test', 201, {
         method: 'POST',
         cache: 'force-cache'
       })
@@ -107,7 +107,7 @@ describe('PostApiRequestBuilder', () => {
     })
 
     it('overriding single option', async () => {
-      expectFetch('api/private/test', 201, {
+      expectFetch('/api/private/test', 201, {
         method: 'POST',
         cache: 'no-store'
       })
@@ -122,7 +122,7 @@ describe('PostApiRequestBuilder', () => {
     })
 
     it('with multiple options', async () => {
-      expectFetch('api/private/test', 201, {
+      expectFetch('/api/private/test', 201, {
         method: 'POST',
         cache: 'force-cache',
         integrity: 'test'
@@ -138,13 +138,13 @@ describe('PostApiRequestBuilder', () => {
 
   describe('failing sendRequest', () => {
     it('without backend provided error name or error message', async () => {
-      expectFetch('api/private/test', 400, { method: 'POST' })
+      expectFetch('/api/private/test', 400, { method: 'POST' })
       const request = new PostApiRequestBuilder<string, string>('test').sendRequest()
       await expect(request).rejects.toEqual(new ApiError(400, undefined, undefined))
     })
 
     it('with backend error name and error message', async () => {
-      expectFetch('api/private/test', 400, { method: 'POST' }, {
+      expectFetch('/api/private/test', 400, { method: 'POST' }, {
         message: 'The API has exploded!',
         name: 'testExplosion'
       } as ApiErrorResponse)
@@ -153,7 +153,7 @@ describe('PostApiRequestBuilder', () => {
     })
 
     it('with another status code than 400', async () => {
-      expectFetch('api/private/test', 401, { method: 'POST' }, {
+      expectFetch('/api/private/test', 401, { method: 'POST' }, {
         message: 'The API has exploded!',
         name: 'testExplosion'
       } as ApiErrorResponse)

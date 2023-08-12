@@ -12,13 +12,13 @@ const motdMockHtml = 'This is the <strong>mock</strong> Motd call'
 describe('Motd', () => {
   it("shows, dismisses and won't show again a motd modal", () => {
     localStorage.removeItem(MOTD_LOCAL_STORAGE_KEY)
-    cy.intercept('GET', 'public/motd.md', {
+    cy.intercept('GET', '/public/motd.md', {
       statusCode: 200,
       headers: { 'Last-Modified': MOCK_LAST_MODIFIED },
       body: motdMockContent
     })
 
-    cy.intercept('HEAD', 'public/motd.md', {
+    cy.intercept('HEAD', '/public/motd.md', {
       statusCode: 200,
       headers: { 'Last-Modified': MOCK_LAST_MODIFIED }
     })

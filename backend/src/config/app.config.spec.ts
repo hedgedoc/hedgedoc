@@ -180,11 +180,11 @@ describe('appConfig', () => {
       restore();
     });
 
-    it('when given a base url with path but no trailing slash in HD_BASE_URL', async () => {
+    it('when given a base url with subdirectory in HD_BASE_URL', async () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_BASE_URL: 'https://example.org/a',
+          HD_BASE_URL: 'https://example.org/subdirectory/',
           HD_LOGLEVEL: loglevel,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -193,7 +193,7 @@ describe('appConfig', () => {
         },
       );
       expect(() => appConfig()).toThrow(
-        '"HD_BASE_URL" must end with a trailing slash',
+        '"HD_BASE_URL" must not contain a subdirectory',
       );
       restore();
     });

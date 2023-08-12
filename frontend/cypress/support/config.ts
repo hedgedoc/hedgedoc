@@ -13,7 +13,7 @@ declare namespace Cypress {
 
 export const branding = {
   name: 'DEMO Corp',
-  logo: 'public/img/demo.png'
+  logo: '/public/img/demo.png'
 }
 
 export const authProviders = [
@@ -80,7 +80,7 @@ export const config = {
 }
 
 Cypress.Commands.add('loadConfig', (additionalConfig?: Partial<typeof config>) => {
-  return cy.intercept('api/private/config', {
+  return cy.intercept('/api/private/config', {
     statusCode: 200,
     body: {
       ...config,
@@ -92,11 +92,11 @@ Cypress.Commands.add('loadConfig', (additionalConfig?: Partial<typeof config>) =
 beforeEach(() => {
   cy.loadConfig()
 
-  cy.intercept('GET', 'public/motd.md', {
+  cy.intercept('GET', '/public/motd.md', {
     body: '404 Not Found!',
     statusCode: 404
   })
-  cy.intercept('HEAD', 'public/motd.md', {
+  cy.intercept('HEAD', '/public/motd.md', {
     statusCode: 404
   })
 })

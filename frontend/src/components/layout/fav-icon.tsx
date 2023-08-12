@@ -11,17 +11,17 @@ import React, { Fragment } from 'react'
 export const FavIcon: React.FC = () => {
   return (
     <Fragment>
-      <link href='icons/apple-touch-icon.png' rel='apple-touch-icon' sizes='180x180' />
-      <link href='icons/favicon-32x32.png' rel='icon' sizes='32x32' type='image/png' />
-      <link href='icons/favicon-16x16.png' rel='icon' sizes='16x16' type='image/png' />
-      <link href='icons/site.webmanifest' rel='manifest' />
-      <link href='icons/favicon.ico' rel='shortcut icon' />
-      <link color='#b51f08' href='icons/safari-pinned-tab.svg' rel='mask-icon' />
+      <link href='/icons/apple-touch-icon.png' rel='apple-touch-icon' sizes='180x180' />
+      <link href='/icons/favicon-32x32.png' rel='icon' sizes='32x32' type='image/png' />
+      <link href='/icons/favicon-16x16.png' rel='icon' sizes='16x16' type='image/png' />
+      <link href='/icons/site.webmanifest' rel='manifest' />
+      <link href='/icons/favicon.ico' rel='shortcut icon' />
+      <link color='#b51f08' href='/icons/safari-pinned-tab.svg' rel='mask-icon' />
       <meta name='apple-mobile-web-app-title' content='HedgeDoc' />
       <meta name='application-name' content='HedgeDoc' />
       <meta name='msapplication-TileColor' content='#b51f08' />
       <meta name='theme-color' content='#b51f08' />
-      <meta content='icons/browserconfig.xml' name='msapplication-config' />
+      <meta content='/icons/browserconfig.xml' name='msapplication-config' />
       <meta content='HedgeDoc - Collaborative markdown notes' name='description' />
     </Fragment>
   )

@@ -27,7 +27,7 @@ export abstract class ApiRequestBuilder<ResponseType> {
    * @param baseUrl An optional base URL that is used for the endpoint
    */
   constructor(endpoint: string, baseUrl?: string) {
-    this.targetUrl = `${baseUrl ?? ''}api/private/${endpoint}`
+    this.targetUrl = `${baseUrl ?? '/'}api/private/${endpoint}`
   }
 
   protected async sendRequestAndVerifyResponse(httpMethod: RequestInit['method']): Promise<ApiResponse<ResponseType>> {
