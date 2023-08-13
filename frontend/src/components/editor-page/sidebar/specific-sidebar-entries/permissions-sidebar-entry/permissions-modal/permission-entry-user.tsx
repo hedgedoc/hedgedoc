@@ -17,6 +17,7 @@ import { AccessLevel, SpecialGroup } from '@hedgedoc/commons'
 import React, { useCallback, useMemo } from 'react'
 import { useAsync } from 'react-use'
 import { PermissionInconsistentAlert } from './permission-inconsistent-alert'
+import { useGetSpecialPermissions } from './hooks/use-get-special-permissions'
 
 export interface PermissionEntryUserProps {
   entry: NoteUserPermissionEntry
@@ -34,16 +35,15 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
 }) => {
   const noteId = useApplicationState((state) => state.noteDetails?.primaryAddress)
   const { showErrorNotification } = useUiNotifications()
-  const groupPermissions = useApplicationState((state) => state.noteDetails.permissions.sharedToGroups)
+  const { [SpecialGroup.EVERYONE]: everyonePermission, [SpecialGroup.LOGGED_IN]: loggedInPermission } =
+    useGetSpecialPermissions()
 
-  const permissionInconsistent = useMemo(() => {
-    const everyonePermission = groupPermissions.find((group) => group.groupName === (SpecialGroup.EVERYONE as string))
-    const loggedInPermission = groupPermissions.find((group) => group.groupName === (SpecialGroup.LOGGED_IN as string))
-    return (
+  const permissionInconsistent = useMemo(
+    () =>
       (everyonePermission && everyonePermission.canEdit && !entry.canEdit) ||
-      (loggedInPermission && loggedInPermission.canEdit && !entry.canEdit)
-    )
-  }, [groupPermissions, entry])
+      (loggedInPermission && loggedInPermission.canEdit && !entry.canEdit),
+    [everyonePermission, loggedInPermission, entry]
+  )
 
   const onRemoveEntry = useCallback(() => {
     if (!noteId) {
