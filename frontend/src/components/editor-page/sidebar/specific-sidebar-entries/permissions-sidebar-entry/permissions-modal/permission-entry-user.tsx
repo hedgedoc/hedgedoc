@@ -13,9 +13,10 @@ import { useUiNotifications } from '../../../../../notifications/ui-notification
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionEntryButtons, PermissionType } from './permission-entry-buttons'
 import type { NoteUserPermissionEntry } from '@hedgedoc/commons'
-import { AccessLevel } from '@hedgedoc/commons'
-import React, { useCallback } from 'react'
+import { AccessLevel, SpecialGroup } from '@hedgedoc/commons'
+import React, { useCallback, useMemo } from 'react'
 import { useAsync } from 'react-use'
+import { PermissionInconsistentAlert } from './permission-inconsistent-alert'
 
 export interface PermissionEntryUserProps {
   entry: NoteUserPermissionEntry
@@ -33,6 +34,16 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
 }) => {
   const noteId = useApplicationState((state) => state.noteDetails?.primaryAddress)
   const { showErrorNotification } = useUiNotifications()
+  const groupPermissions = useApplicationState((state) => state.noteDetails.permissions.sharedToGroups)
+
+  const permissionInconsistent = useMemo(() => {
+    const everyonePermission = groupPermissions.find((group) => group.groupName === (SpecialGroup.EVERYONE as string))
+    const loggedInPermission = groupPermissions.find((group) => group.groupName === (SpecialGroup.LOGGED_IN as string))
+    return (
+      (everyonePermission && everyonePermission.canEdit && !entry.canEdit) ||
+      (loggedInPermission && loggedInPermission.canEdit && !entry.canEdit)
+    )
+  }, [groupPermissions, entry])
 
   const onRemoveEntry = useCallback(() => {
     if (!noteId) {
@@ -79,15 +90,18 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
     <ShowIf condition={!loading && !error}>
       <li className={'list-group-item d-flex flex-row justify-content-between align-items-center'}>
         <UserAvatarForUser user={value} />
-        <PermissionEntryButtons
-          type={PermissionType.USER}
-          currentSetting={entry.canEdit ? AccessLevel.WRITEABLE : AccessLevel.READ_ONLY}
-          name={value.displayName}
-          onSetReadOnly={onSetEntryReadOnly}
-          onSetWriteable={onSetEntryWriteable}
-          onRemove={onRemoveEntry}
-          disabled={disabled}
-        />
+        <div className={'d-flex flex-row align-items-center'}>
+          <PermissionInconsistentAlert show={permissionInconsistent ?? false} />
+          <PermissionEntryButtons
+            type={PermissionType.USER}
+            currentSetting={entry.canEdit ? AccessLevel.WRITEABLE : AccessLevel.READ_ONLY}
+            name={value.displayName}
+            onSetReadOnly={onSetEntryReadOnly}
+            onSetWriteable={onSetEntryWriteable}
+            onRemove={onRemoveEntry}
+            disabled={disabled}
+          />
+        </div>
       </li>
     </ShowIf>
   )
