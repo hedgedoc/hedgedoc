@@ -15,10 +15,12 @@ import React, { useCallback, useMemo } from 'react'
 import { ToggleButtonGroup } from 'react-bootstrap'
 import { Eye as IconEye, Pencil as IconPencil, SlashCircle as IconSlashCircle } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
+import { PermissionInconsistentAlert } from './permission-inconsistent-alert'
 
 export interface PermissionEntrySpecialGroupProps {
   level: AccessLevel
   type: SpecialGroup
+  inconsistent?: boolean
 }
 
 /**
@@ -27,11 +29,13 @@ export interface PermissionEntrySpecialGroupProps {
  * @param level The access level that is currently set for the group.
  * @param type The type of the special group. Must be either {@link SpecialGroup.EVERYONE} or {@link SpecialGroup.LOGGED_IN}.
  * @param disabled If the user is not the owner, functionality is disabled.
+ * @param inconsistent Whether to show the inconsistency alert icon or not
  */
 export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupProps & PermissionDisabledProps> = ({
   level,
   type,
-  disabled
+  disabled,
+  inconsistent
 }) => {
   const noteId = useApplicationState((state) => state.noteDetails?.primaryAddress)
   const { t } = useTranslation()
@@ -88,6 +92,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
     <li className={'list-group-item d-flex flex-row justify-content-between align-items-center'}>
       <span>{name}</span>
       <div>
+        <PermissionInconsistentAlert show={inconsistent ?? false} />
         <ToggleButtonGroup type='radio' name='edit-mode'>
           <IconButton
             icon={IconSlashCircle}

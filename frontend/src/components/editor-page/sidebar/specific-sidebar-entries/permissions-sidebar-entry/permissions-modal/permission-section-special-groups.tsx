@@ -29,16 +29,17 @@ export const PermissionSectionSpecialGroups: React.FC<PermissionDisabledProps> =
     const groupLoggedIn = groupPermissions.find((entry) => entry.groupName === (SpecialGroup.LOGGED_IN as string))
 
     return {
-      everyone: groupEveryone
+      everyoneLevel: groupEveryone
         ? groupEveryone.canEdit
           ? AccessLevel.WRITEABLE
           : AccessLevel.READ_ONLY
         : AccessLevel.NONE,
-      loggedIn: groupLoggedIn
+      loggedInLevel: groupLoggedIn
         ? groupLoggedIn.canEdit
           ? AccessLevel.WRITEABLE
           : AccessLevel.READ_ONLY
-        : AccessLevel.NONE
+        : AccessLevel.NONE,
+      loggedInInconsistentAlert: groupEveryone && (!groupLoggedIn || (groupEveryone.canEdit && !groupLoggedIn.canEdit))
     }
   }, [groupPermissions])
 
@@ -53,12 +54,13 @@ export const PermissionSectionSpecialGroups: React.FC<PermissionDisabledProps> =
       </h5>
       <ul className={'list-group'}>
         <PermissionEntrySpecialGroup
-          level={specialGroupEntries.loggedIn}
+          level={specialGroupEntries.loggedInLevel}
           type={SpecialGroup.LOGGED_IN}
           disabled={!isOwner}
+          inconsistent={specialGroupEntries.loggedInInconsistentAlert}
         />
         <PermissionEntrySpecialGroup
-          level={specialGroupEntries.everyone}
+          level={specialGroupEntries.everyoneLevel}
           type={SpecialGroup.EVERYONE}
           disabled={disabled}
         />

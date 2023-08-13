@@ -423,7 +423,8 @@
           "error": "There was an error changing the owner of this note.",
           "placeholder": "Enter username of new note owner",
           "button": "Change the owner of this note"
-        }
+        },
+        "inconsistent": "This permission is overridden by another permission"
       },
       "shareLink": {
         "title": "Share link",
