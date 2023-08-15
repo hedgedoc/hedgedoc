@@ -56,9 +56,8 @@ describe('Me', () => {
       .expect(200);
     const history: HistoryEntryDto[] = response.body;
     expect(history.length).toEqual(1);
-    const historyDto = await testSetup.historyService.toHistoryEntryDto(
-      createdHistoryEntry,
-    );
+    const historyDto =
+      await testSetup.historyService.toHistoryEntryDto(createdHistoryEntry);
     for (const historyEntry of history) {
       expect(historyEntry.identifier).toEqual(historyDto.identifier);
       expect(historyEntry.title).toEqual(historyDto.title);
@@ -81,9 +80,8 @@ describe('Me', () => {
         .expect('Content-Type', /json/)
         .expect(200);
       const historyEntry: HistoryEntryDto = response.body;
-      const historyEntryDto = await testSetup.historyService.toHistoryEntryDto(
-        createdHistoryEntry,
-      );
+      const historyEntryDto =
+        await testSetup.historyService.toHistoryEntryDto(createdHistoryEntry);
       expect(historyEntry.identifier).toEqual(historyEntryDto.identifier);
       expect(historyEntry.title).toEqual(historyEntryDto.title);
       expect(historyEntry.tags).toEqual(historyEntryDto.tags);

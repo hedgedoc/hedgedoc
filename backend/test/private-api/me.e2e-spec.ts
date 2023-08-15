@@ -127,9 +127,8 @@ describe('Me', () => {
     await expect(
       testSetup.userService.getUserByUsername('hardcoded'),
     ).rejects.toThrow(NotInDBError);
-    const mediaUploadsAfter = await testSetup.mediaService.listUploadsByNote(
-      note1,
-    );
+    const mediaUploadsAfter =
+      await testSetup.mediaService.listUploadsByNote(note1);
     expect(mediaUploadsAfter).toHaveLength(0);
   });
 });
