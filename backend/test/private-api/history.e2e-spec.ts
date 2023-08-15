@@ -122,9 +122,8 @@ describe('History', () => {
       let postEntryDto: HistoryEntryImportDto;
       let prevEntry: HistoryEntry;
       beforeAll(async () => {
-        const previousHistory = await testSetup.historyService.getEntriesByUser(
-          user,
-        );
+        const previousHistory =
+          await testSetup.historyService.getEntriesByUser(user);
         expect(previousHistory).toHaveLength(1);
         prevEntry = previousHistory[0];
         pinStatus = !previousHistory[0].pinStatus;
@@ -159,9 +158,8 @@ describe('History', () => {
           .expect(404);
       });
       afterEach(async () => {
-        const historyEntries = await testSetup.historyService.getEntriesByUser(
-          user,
-        );
+        const historyEntries =
+          await testSetup.historyService.getEntriesByUser(user);
         expect(historyEntries).toHaveLength(1);
         expect(await (await historyEntries[0].note).aliases).toEqual(
           await (

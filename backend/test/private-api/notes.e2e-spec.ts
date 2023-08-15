@@ -485,9 +485,8 @@ describe('Notes', () => {
         });
 
         it("doesn't do anything if the user is the owner", async () => {
-          const note = await testSetup.notesService.getNoteByIdOrAlias(
-            user1NoteAlias,
-          );
+          const note =
+            await testSetup.notesService.getNoteByIdOrAlias(user1NoteAlias);
           await testSetup.permissionsService.removeUserPermission(note, user2);
 
           const response = await agent
@@ -533,9 +532,8 @@ describe('Notes', () => {
         });
 
         it('works', async () => {
-          const note = await testSetup.notesService.getNoteByIdOrAlias(
-            user1NoteAlias,
-          );
+          const note =
+            await testSetup.notesService.getNoteByIdOrAlias(user1NoteAlias);
           await testSetup.permissionsService.setUserPermission(
             note,
             user2,
@@ -607,9 +605,8 @@ describe('Notes', () => {
         });
 
         it('works', async () => {
-          const note = await testSetup.notesService.getNoteByIdOrAlias(
-            user1NoteAlias,
-          );
+          const note =
+            await testSetup.notesService.getNoteByIdOrAlias(user1NoteAlias);
           await testSetup.permissionsService.setGroupPermission(
             note,
             group1,
