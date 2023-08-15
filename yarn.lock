@@ -2564,7 +2564,7 @@ __metadata:
     reveal.js: 4.5.0
     sanitize-filename: 1.6.3
     sass: 1.65.1
-    sharp: 0.32.4
+    sharp: 0.32.5
     tlds: 1.242.0
     ts-loader: 9.4.4
     ts-mockery: 1.2.0
@@ -15980,9 +15980,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sharp@npm:0.32.4":
-  version: 0.32.4
-  resolution: "sharp@npm:0.32.4"
+"sharp@npm:0.32.5":
+  version: 0.32.5
+  resolution: "sharp@npm:0.32.5"
   dependencies:
     color: ^4.2.3
     detect-libc: ^2.0.2
@@ -15993,7 +15993,7 @@ __metadata:
     simple-get: ^4.0.1
     tar-fs: ^3.0.4
     tunnel-agent: ^0.6.0
-  checksum: 52e3cfe8fbba2623a9b935be8a3d00d6993a2c56c775ac5cc89b273826db95f029f68a0029a37f96dcb6790aa2e3c05a02599035535b319f50ab31f5d86a13f0
+  checksum: 3cd6dc037c9ba126a30af90ac94043c4418bbb4228e15fd446638ff43fc9b14eabb553037988e484162c318f7baff21d896a5bef7dcc453f608e247d468f41e0
   languageName: node
   linkType: hard
 
