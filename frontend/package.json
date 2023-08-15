@@ -54,7 +54,7 @@
     "@react-hook/resize-observer": "1.2.6",
     "@redux-devtools/core": "3.13.1",
     "@reduxjs/toolkit": "1.9.5",
-    "@svgr/webpack": "8.0.1",
+    "@svgr/webpack": "8.1.0",
     "@types/katex": "0.16.2",
     "@uiw/react-codemirror": "4.21.9",
     "abcjs": "6.2.2",
