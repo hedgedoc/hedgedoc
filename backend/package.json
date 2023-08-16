@@ -47,7 +47,7 @@
     "@zxcvbn-ts/language-common": "3.0.3",
     "@zxcvbn-ts/language-en": "3.0.1",
     "base32-encode": "1.2.0",
-    "bcrypt": "5.1.0",
+    "bcrypt": "5.1.1",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.0",
     "cli-color": "2.0.3",
