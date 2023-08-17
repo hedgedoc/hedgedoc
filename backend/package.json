@@ -67,7 +67,7 @@
     "passport-custom": "1.1.1",
     "passport-http-bearer": "1.0.1",
     "passport-local": "1.0.0",
-    "pg": "8.11.2",
+    "pg": "8.11.3",
     "raw-body": "2.5.2",
     "reflect-metadata": "0.1.13",
     "rimraf": "5.0.1",
