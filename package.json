@@ -36,7 +36,7 @@
     "yjs@13.6.7": "patch:yjs@npm%3A13.6.7#./.yarn/patches/yjs-remove-import-warning-in-test.patch"
   },
   "devDependencies": {
-    "dotenv-cli": "7.2.1",
+    "dotenv-cli": "7.3.0",
     "turbo": "1.10.12"
   }
 }
