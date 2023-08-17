@@ -84,7 +84,7 @@
     "passport-twitter": "1.0.4",
     "passport.socketio": "3.7.0",
     "pdfobject": "2.2.12",
-    "pg": "8.11.2",
+    "pg": "8.11.3",
     "pg-hstore": "2.3.4",
     "prom-client": "14.2.0",
     "prometheus-api-metrics": "3.2.2",
