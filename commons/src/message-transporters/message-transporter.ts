@@ -32,7 +32,7 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
   private destroyOnConnectedEventHandler: undefined | (() => void)
   private thisSideReady = false
   private otherSideReady = false
-  private readyInterval: NodeJS.Timer | undefined
+  private readyInterval: NodeJS.Timeout | undefined
 
   /**
    * Send a message to the other side using the currently set message transporter.
