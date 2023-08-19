@@ -70,7 +70,7 @@
     "moment": "2.29.4",
     "morgan": "1.10.0",
     "mysql2": "3.6.0",
-    "node-fetch": "2.6.12",
+    "node-fetch": "2.6.13",
     "passport": "0.6.0",
     "passport-dropbox-oauth2": "1.1.0",
     "passport-facebook": "3.0.0",
