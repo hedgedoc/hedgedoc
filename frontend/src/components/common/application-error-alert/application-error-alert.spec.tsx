@@ -6,11 +6,10 @@
 
 import { render } from '@testing-library/react'
 import { ApplicationErrorAlert } from './application-error-alert'
-import type { PropsWithChildren } from 'react'
+import type { AlertIconProps } from './alert-icon'
 
-jest.mock('../hedge-doc-logo/hedge-doc-logo-horizontal-grey', () => ({
-  HedgeDocLogoHorizontalGrey: (props: PropsWithChildren) =>
-    `This is a mock for "HedgeDocLogoHorizontalGrey". Props: ${JSON.stringify(props)}`
+jest.mock('./alert-icon', () => ({
+  AlertIcon: (props: AlertIconProps) => `This is a mock for "AlertIcon". Props: ${JSON.stringify(props)}`
 }))
 
 describe('ApplicationErrorAlert', () => {

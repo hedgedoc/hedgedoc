@@ -4,14 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-.exclamation {
-  font-size: 2.3em;
-  line-height: 1.4em;
-  height: 48px;
-  display: inline-block;
-  user-select: none;
-}
-
 .alert {
   $color: #5A0F04;
   display: flex;
@@ -22,5 +14,7 @@
 }
 
 .logo {
-  flex: 0 0 32px;
+  flex: 0 0 50px;
+  height: 48px;
+  margin-right: 8px;
 }

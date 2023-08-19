@@ -5,10 +5,10 @@
  */
 import type { PropsWithChildren } from 'react'
 import React from 'react'
-import { HedgeDocLogoHorizontalGrey } from '../hedge-doc-logo/hedge-doc-logo-horizontal-grey'
 import styles from './style.module.scss'
 import { Alert } from 'react-bootstrap'
 import { concatCssClasses } from '../../../utils/concat-css-classes'
+import { AlertIcon } from './alert-icon'
 
 export interface ApplicationErrorAlertProps extends PropsWithChildren {
   className?: string
@@ -23,8 +23,7 @@ export const ApplicationErrorAlert: React.FC<ApplicationErrorAlertProps> = ({ ch
   return (
     <Alert className={concatCssClasses(styles.alert, className)}>
       <p className={'d-flex align-items-center'}>
-        <HedgeDocLogoHorizontalGrey color={'dark'} showText={false} size={32} width={32} className={styles.logo} />
-        <span className={concatCssClasses(styles.exclamation, 'ms-1 me-2')}>!</span>
+        <AlertIcon className={styles.logo} />
         <span>{children}</span>
       </p>
     </Alert>
