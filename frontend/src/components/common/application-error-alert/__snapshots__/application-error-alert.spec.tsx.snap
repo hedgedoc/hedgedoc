@@ -9,12 +9,7 @@ exports[`ApplicationErrorAlert renders correctly 1`] = `
     <p
       class="d-flex align-items-center"
     >
-      This is a mock for "HedgeDocLogoHorizontalGrey". Props: {"color":"dark","showText":false,"size":32,"width":32,"className":"logo"}
-      <span
-        class="exclamation ms-1 me-2"
-      >
-        !
-      </span>
+      This is a mock for "AlertIcon". Props: {"className":"logo"}
       <span>
         <span>
           Test Child
