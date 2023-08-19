@@ -62,7 +62,7 @@
     "markdown-it": "13.0.1",
     "minio": "7.1.1",
     "mysql": "2.18.1",
-    "node-fetch": "2.6.12",
+    "node-fetch": "2.6.13",
     "passport": "0.6.0",
     "passport-custom": "1.1.1",
     "passport-http-bearer": "1.0.1",
