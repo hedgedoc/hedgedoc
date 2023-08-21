@@ -2360,7 +2360,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/commons@workspace:commons"
   dependencies:
-    "@jest/types": 29.6.1
+    "@jest/types": 29.6.3
     "@mrdrogdrog/optional": 1.2.1
     "@types/js-yaml": 4.0.5
     "@types/ws": 8.5.5
@@ -2788,6 +2788,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jest/schemas@npm:^29.6.3":
+  version: 29.6.3
+  resolution: "@jest/schemas@npm:29.6.3"
+  dependencies:
+    "@sinclair/typebox": ^0.27.8
+  checksum: 910040425f0fc93cd13e68c750b7885590b8839066dfa0cd78e7def07bbb708ad869381f725945d66f2284de5663bbecf63e8fdd856e2ae6e261ba30b1687e93
+  languageName: node
+  linkType: hard
+
 "@jest/source-map@npm:^29.6.0":
   version: 29.6.0
   resolution: "@jest/source-map@npm:29.6.0"
@@ -2846,7 +2855,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/types@npm:29.6.1, @jest/types@npm:^29.6.1":
+"@jest/types@npm:29.6.3":
+  version: 29.6.3
+  resolution: "@jest/types@npm:29.6.3"
+  dependencies:
+    "@jest/schemas": ^29.6.3
+    "@types/istanbul-lib-coverage": ^2.0.0
+    "@types/istanbul-reports": ^3.0.0
+    "@types/node": "*"
+    "@types/yargs": ^17.0.8
+    chalk: ^4.0.0
+  checksum: a0bcf15dbb0eca6bdd8ce61a3fb055349d40268622a7670a3b2eb3c3dbafe9eb26af59938366d520b86907b9505b0f9b29b85cec11579a9e580694b87cd90fcc
+  languageName: node
+  linkType: hard
+
+"@jest/types@npm:^29.6.1":
   version: 29.6.1
   resolution: "@jest/types@npm:29.6.1"
   dependencies:
