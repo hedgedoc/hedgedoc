@@ -2280,7 +2280,7 @@ __metadata:
     "@nestjs/typeorm": 10.0.0
     "@nestjs/websockets": 10.1.3
     "@trivago/prettier-plugin-sort-imports": 4.2.0
-    "@tsconfig/node18": 18.2.0
+    "@tsconfig/node18": 18.2.1
     "@types/bcrypt": 5.0.0
     "@types/cli-color": 2.0.2
     "@types/cookie": 0.5.1
@@ -4167,10 +4167,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/node18@npm:18.2.0":
-  version: 18.2.0
-  resolution: "@tsconfig/node18@npm:18.2.0"
-  checksum: 04263c931db2f69f5bd421755bae83df5623701bab3ce086fad4a775c14f523d864ef2ca3282fc1f866895914d474fa3871809647dd089259aa66631c1e47a76
+"@tsconfig/node18@npm:18.2.1":
+  version: 18.2.1
+  resolution: "@tsconfig/node18@npm:18.2.1"
+  checksum: 9d969456125f37c4d14baa7fe028cfcd448fde4bec7072f7518acf83919bd1e5b25695897954e1bad6fabd54658583c44a56d140a8dc87039ad9d96fd4c5a1ed
   languageName: node
   linkType: hard
 
