@@ -93,7 +93,7 @@
     "@types/jest": "29.5.3",
     "@types/markdown-it": "13.0.0",
     "@types/mysql": "2.15.21",
-    "@types/node": "20.5.1",
+    "@types/node": "20.5.2",
     "@types/passport-local": "1.0.35",
     "@types/pg": "8.10.2",
     "@types/source-map-support": "0.5.6",
