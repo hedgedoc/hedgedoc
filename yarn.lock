@@ -2394,7 +2394,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/docs@workspace:docs"
   dependencies:
-    markdownlint-cli2: 0.8.1
+    markdownlint-cli2: 0.9.0
   languageName: unknown
   linkType: soft
 
@@ -10422,16 +10422,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globby@npm:13.1.4":
-  version: 13.1.4
-  resolution: "globby@npm:13.1.4"
+"globby@npm:13.2.2, globby@npm:^13.1.1":
+  version: 13.2.2
+  resolution: "globby@npm:13.2.2"
   dependencies:
     dir-glob: ^3.0.1
-    fast-glob: ^3.2.11
-    ignore: ^5.2.0
+    fast-glob: ^3.3.0
+    ignore: ^5.2.4
     merge2: ^1.4.1
     slash: ^4.0.0
-  checksum: e8bc13879972082d590cd1b0e27080d90d2e12fff7eeb2cee9329c29115ace14cc5b9f899e3d6beb136ba826307a727016658919a6f383e1511d698acee81741
+  checksum: f3d84ced58a901b4fcc29c846983108c426631fe47e94872868b65565495f7bee7b3defd68923bd480582771fd4bbe819217803a164a618ad76f1d22f666f41e
   languageName: node
   linkType: hard
 
@@ -10446,19 +10446,6 @@ __metadata:
     merge2: ^1.4.1
     slash: ^3.0.0
   checksum: b4be8885e0cfa018fc783792942d53926c35c50b3aefd3fdcfb9d22c627639dc26bd2327a40a0b74b074100ce95bb7187bfeae2f236856aa3de183af7a02aea6
-  languageName: node
-  linkType: hard
-
-"globby@npm:^13.1.1":
-  version: 13.2.2
-  resolution: "globby@npm:13.2.2"
-  dependencies:
-    dir-glob: ^3.0.1
-    fast-glob: ^3.3.0
-    ignore: ^5.2.4
-    merge2: ^1.4.1
-    slash: ^4.0.0
-  checksum: f3d84ced58a901b4fcc29c846983108c426631fe47e94872868b65565495f7bee7b3defd68923bd480582771fd4bbe819217803a164a618ad76f1d22f666f41e
   languageName: node
   linkType: hard
 
@@ -12921,38 +12908,38 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdownlint-cli2@npm:0.8.1":
-  version: 0.8.1
-  resolution: "markdownlint-cli2@npm:0.8.1"
+"markdownlint-cli2@npm:0.9.0":
+  version: 0.9.0
+  resolution: "markdownlint-cli2@npm:0.9.0"
   dependencies:
-    globby: 13.1.4
-    markdownlint: 0.29.0
+    globby: 13.2.2
+    markdownlint: 0.30.0
     markdownlint-cli2-formatter-default: 0.0.4
     micromatch: 4.0.5
-    strip-json-comments: 5.0.0
+    strip-json-comments: 5.0.1
     yaml: 2.3.1
   bin:
     markdownlint-cli2: markdownlint-cli2.js
     markdownlint-cli2-config: markdownlint-cli2-config.js
     markdownlint-cli2-fix: markdownlint-cli2-fix.js
-  checksum: 38464d73d91a1abe1cc43f925112e567ee27eb20f536e4a0c1329e28cea4366db68e9c365127bbd95f2580bf2983ec8ea61e98ece1c868c17994b542e37e495d
+  checksum: 9a5c8adc7b14c21bd3e06ec84a416ad22108e27cfc431c0e075c8b291854ad8e64bb9bbe24c70777aa858fb1e8592319f6e1e24ad79dbd46f1f4919b3ddfd468
   languageName: node
   linkType: hard
 
-"markdownlint-micromark@npm:0.1.5":
-  version: 0.1.5
-  resolution: "markdownlint-micromark@npm:0.1.5"
-  checksum: fc69c340c31a06b46cf358759348a12b60b0080d82406ec1ed2e015e96b664e4075584980cf1bf029287109503ec37d0da012ec67827bc7a21a9f7d0b5a624b8
+"markdownlint-micromark@npm:0.1.7":
+  version: 0.1.7
+  resolution: "markdownlint-micromark@npm:0.1.7"
+  checksum: 1f40938fcbd9aab1eed1a6b5907b3a9ca731568622ea7b74f722a276216997a674a92cb7c54ee13ae6d64e81e300b26f2d5edad03d98ee9b0950871e74f21254
   languageName: node
   linkType: hard
 
-"markdownlint@npm:0.29.0":
-  version: 0.29.0
-  resolution: "markdownlint@npm:0.29.0"
+"markdownlint@npm:0.30.0":
+  version: 0.30.0
+  resolution: "markdownlint@npm:0.30.0"
   dependencies:
     markdown-it: 13.0.1
-    markdownlint-micromark: 0.1.5
-  checksum: 5785f5173f553510516bf1f68a0768118dcae3a3a19234f6ed57d5d5a8f5beedcca859593fdcf0d8e90fdccb69fd0e168e77416f5712e04e2062c5bf2dca5612
+    markdownlint-micromark: 0.1.7
+  checksum: cc99517c61fe8df9af918fafad314e685a8888162c476d6f7ef51555008c4f2581231e3930ea3d29b46a29307d2e4fce1c78db8dcd6962bf7069983e72cd3bba
   languageName: node
   linkType: hard
 
@@ -16712,10 +16699,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strip-json-comments@npm:5.0.0":
-  version: 5.0.0
-  resolution: "strip-json-comments@npm:5.0.0"
-  checksum: 99cad07ccc3b86cc7bb8a9274a801b0660cbd595189ad291f6e206b8d7b23d90eed3119cdae44e126d9563796024b3ef0e7de2eeee4634b3b9019bafb62803e7
+"strip-json-comments@npm:5.0.1":
+  version: 5.0.1
+  resolution: "strip-json-comments@npm:5.0.1"
+  checksum: b314af70c6666a71133e309a571bdb87687fc878d9fd8b38ebed393a77b89835b92f191aa6b0bc10dfd028ba99eed6b6365985001d64c5aef32a4a82456a156b
   languageName: node
   linkType: hard
 
