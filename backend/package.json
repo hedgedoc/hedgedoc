@@ -79,7 +79,7 @@
   },
   "devDependencies": {
     "@darraghor/eslint-plugin-nestjs-typed": "4.0.12",
-    "@nestjs/cli": "10.1.14",
+    "@nestjs/cli": "10.1.16",
     "@nestjs/schematics": "10.0.2",
     "@nestjs/testing": "10.2.1",
     "@trivago/prettier-plugin-sort-imports": "4.2.0",
