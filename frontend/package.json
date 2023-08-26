@@ -56,7 +56,7 @@
     "@reduxjs/toolkit": "1.9.5",
     "@svgr/webpack": "8.1.0",
     "@types/katex": "0.16.2",
-    "@uiw/react-codemirror": "4.21.10",
+    "@uiw/react-codemirror": "4.21.11",
     "abcjs": "6.2.2",
     "bootstrap": "5.3.1",
     "copy-webpack-plugin": "11.0.0",
