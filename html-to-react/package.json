@@ -32,7 +32,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/hedgedoc/html-to-react.git"
+    "url": "git+https://github.com/hedgedoc/hedgedoc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hedgedoc/hedgedoc/issues"
   },
   "keywords": [
     "react",
