@@ -1,0 +1,10 @@
+{
+  "extends" : "./tsconfig.base.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "target" : "esnext",
+    "outDir": "../dist/esm",
+    "moduleResolution": "NodeNext",
+    "declarationDir": "../dist/esm"
+  }
+}

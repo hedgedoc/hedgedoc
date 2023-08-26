@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+/*
+ * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+exports[`markdown-it-task-lists renders bullet correctly 1`] = `
+"<ul class="contains-task-list">
+<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" disabled="" id="task-item-1" />unchecked item 1</li>
+<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" disabled="" id="task-item-2" />unchecked item 2</li>
+<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" disabled="" id="task-item-3" />unchecked item 3</li>
+<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" checked="" disabled="" id="task-item-4" />checked item 4</li>
+</ul>
+"
+`;
+
+exports[`markdown-it-task-lists renders dirty correctly 1`] = `
+"<ul class="contains-task-list">
+<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" disabled="" id="task-item-1" />unchecked todo item 1</li>
+<li>[ ]</li>
+<li>[  ] not a todo item 2</li>
+<li>[ x] not a todo item 3</li>
+<li>[x ] not a todo item 4</li>
+<li>[ x ] not a todo item 5</li>
+<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" checked="" disabled="" id="task-item-7" />todo item 6</li>
+</ul>
+"
+`;
+
+exports[`markdown-it-task-lists renders mixedNested correctly 1`] = `
+"<h1>Test 1</h1>
+<ol>
+<li>foo
+<ul class="contains-task-list">
+<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" disabled="" id="task-item-4" />nested unchecked item 1</li>
+<li>not a todo item 2</li>
+<li>not a todo item 3</li>
+<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" checked="" disabled="" id="task-item-7" />nested checked item 4</li>
+</ul>
+</li>
+<li>bar</li>
+<li>spam</li>
+</ol>
+<h1>Test 2</h1>
+<ul>
+<li>foo
+<ul class="contains-task-list">
+<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" disabled="" id="task-item-14" />nested unchecked item 1</li>
+<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" disabled="" id="task-item-15" />nested unchecked item 2</li>
+<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" checked="" disabled="" id="task-item-16" />nested checked item 3</li>
+<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" checked="" disabled="" id="task-item-17" />nested checked item 4</li>
+</ul>
+</li>
+</ul>
+"
+`;
+
+exports[`markdown-it-task-lists renders ordered correctly 1`] = `
+"<ol class="contains-task-list">
+<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" checked="" disabled="" id="task-item-1" />checked ordered 1</li>
+<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" disabled="" id="task-item-2" />unchecked ordered 2</li>
+<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" checked="" disabled="" id="task-item-3" />checked ordered 3</li>
+<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" disabled="" id="task-item-4" />unchecked ordered 4</li>
+</ol>
+"
+`;

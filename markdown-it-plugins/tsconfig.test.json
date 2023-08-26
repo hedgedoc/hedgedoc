@@ -1,0 +1,6 @@
+{
+  "extends" : "./tsconfig.esm.json",
+  "exclude": [
+    "../dist"
+  ]
+}
