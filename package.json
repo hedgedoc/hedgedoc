@@ -19,7 +19,7 @@
     "test:ci": "dotenv -- turbo run test:ci",
     "test": "dotenv -- turbo run test"
   },
-  "packageManager": "yarn@3.6.2",
+  "packageManager": "yarn@3.6.3",
   "resolutions": {
     "domhandler": "5.0.3",
     "@codemirror/state": "6.2.1",
