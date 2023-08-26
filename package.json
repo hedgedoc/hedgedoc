@@ -8,7 +8,8 @@
     "commons",
     "dev-reverse-proxy",
     "docs",
-    "html-to-react"
+    "html-to-react",
+    "markdown-it-plugins"
   ],
   "scripts": {
     "build": "dotenv -- turbo run build",

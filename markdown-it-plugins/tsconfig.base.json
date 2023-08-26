@@ -12,11 +12,10 @@
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "allowJs": true,
-    "sourceMap": true
+    "declarationMap":true,
+    "sourceMap": true,
+    "typeRoots": ["./types"]
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "../dist", "**/*.test.ts"]
+  "include": ["./src", "./types"],
+  "exclude": ["./dist", "**/*.test.ts"]
 }

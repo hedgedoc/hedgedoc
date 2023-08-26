@@ -2414,7 +2414,7 @@ __metadata:
     "@fontsource/source-sans-pro": 5.0.8
     "@hedgedoc/commons": "workspace:commons"
     "@hedgedoc/html-to-react": "workspace:html-to-react"
-    "@hedgedoc/markdown-it-plugins": 2.1.3
+    "@hedgedoc/markdown-it-plugins": "workspace:markdown-it-plugins"
     "@mrdrogdrog/optional": 1.2.1
     "@next/bundle-analyzer": 13.4.19
     "@react-hook/resize-observer": 1.2.6
@@ -2563,17 +2563,29 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hedgedoc/markdown-it-plugins@npm:2.1.3":
-  version: 2.1.3
-  resolution: "@hedgedoc/markdown-it-plugins@npm:2.1.3"
+"@hedgedoc/markdown-it-plugins@workspace:markdown-it-plugins":
+  version: 0.0.0-use.local
+  resolution: "@hedgedoc/markdown-it-plugins@workspace:markdown-it-plugins"
   dependencies:
+    "@jest/types": 29.6.3
     "@mrdrogdrog/optional": ^1.2.1
+    "@types/markdown-it": 13.0.0
+    "@typescript-eslint/eslint-plugin": 6.4.1
+    "@typescript-eslint/parser": 6.4.1
+    eslint: 8.48.0
+    eslint-config-prettier: 9.0.0
+    eslint-plugin-jest: 27.2.3
+    eslint-plugin-prettier: 5.0.0
     html-entities: ^2.4.0
+    jest: 29.6.4
+    markdown-it: 13.0.1
+    prettier: 3.0.2
+    ts-jest: 29.1.1
+    typescript: 5.2.2
   peerDependencies:
     markdown-it: ">=12"
-  checksum: bac43a6c69eaca295f769e4ff35abf273359cf38fc3cae2929c135df3a5cebe5c82f5a0a787033eed8a7746ed98bc5b99a1ab26572272926dc6154293861f860
-  languageName: node
-  linkType: hard
+  languageName: unknown
+  linkType: soft
 
 "@hpcc-js/wasm@npm:2.13.1":
   version: 2.13.1
