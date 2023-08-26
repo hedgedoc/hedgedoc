@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
 #
