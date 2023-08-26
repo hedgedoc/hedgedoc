@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+/*
+ * SPDX-FileCopyrightText: Original: (c) 2018 Fabio Zendhi Nagao / Modifications: (c) 2022 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+exports[`toc ignores the levels in the placeholder if not sorted 1`] = `
+"<nav class="table-of-contents"><ol><li><a href="#head-1">Head 1</a><ol><li><a href="#head-2">Head 2</a><ol><li><a href="#head-3">Head 3</a><ol><li><a href="#head-4">Head 4</a></li></ol></li></ol></li></ol></li></ol></nav><h1>Head 1</h1>
+<h2>Head 2</h2>
+<h3>Head 3</h3>
+<h4>Head 4</h4>
+"
+`;
+
+exports[`toc renders a toc with a level number array 1`] = `
+"<nav class="table-of-contents"><ol><li><a href="#head-2">Head 2</a><ol><li><a href="#head-4">Head 4</a></li></ol></li></ol></nav><h1>Head 1</h1>
+<h2>Head 2</h2>
+<h3>Head 3</h3>
+<h4>Head 4</h4>
+"
+`;
+
+exports[`toc renders a toc with a single level number 1`] = `
+"<nav class="table-of-contents"><ol><li><a href="#head-2">Head 2</a><ol><li><a href="#head-3">Head 3</a></li></ol></li></ol></nav><h1>Head 1</h1>
+<h2>Head 2</h2>
+<h3>Head 3</h3>
+"
+`;
+
+exports[`toc renders a toc with custom allowed token types 1`] = `
+"<nav class="table-of-contents"><ol><li><a href="#text"> text</a></li><li><a href="#head-2">Head 2</a></li></ol></nav><h1><code>Head 1</code> text</h1>
+<h1>Head 2</h1>
+"
+`;
+
+exports[`toc renders a toc with custom classes 1`] = `
+"<nav id="containerId" class="containerClass"><ol class="listClass"><li class="itemClass"><a class="linkClass" href="#head-1">Head 1</a><ol class="listClass"><li class="itemClass"><a class="linkClass" href="#heading-2">Heading 2</a><ol class="listClass"><li class="itemClass"><a class="linkClass" href="#heading-3">Heading 3</a></li></ol></li></ol></li></ol></nav><h1>Head 1</h1>
+<h2>Heading 2</h2>
+<h3>Heading 3</h3>
+"
+`;
+
+exports[`toc renders a toc with custom format function 1`] = `
+"<nav class="table-of-contents"><ol><li><a href="#head-1">HEAD 1</a><ol><li><a href="#heading-2">HEADING 2</a><ol><li><a href="#heading-3">HEADING 3</a></li></ol></li></ol></li></ol></nav><h1>Head 1</h1>
+<h2>Heading 2</h2>
+<h3>Heading 3</h3>
+"
+`;
+
+exports[`toc renders a toc with custom slugify 1`] = `
+"<nav class="table-of-contents"><ol><li><a href="#slug-Head 1-0">Head 1</a><ol><li><a href="#slug-Heading 2-0">Heading 2</a><ol><li><a href="#slug-Heading 3-0">Heading 3</a></li></ol></li></ol></li></ol></nav><h1>Head 1</h1>
+<h2>Heading 2</h2>
+<h3>Heading 3</h3>
+"
+`;
+
+exports[`toc renders a toc with custom unique slug start index 1`] = `
+"<nav class="table-of-contents"><ol><li><a href="#head-1-10">Head 1</a><ol><li><a href="#heading-2-10">Heading 2</a><ol><li><a href="#heading-3-10">Heading 3</a></li></ol></li></ol></li></ol></nav><h1>Head 1</h1>
+<h2>Heading 2</h2>
+<h3>Heading 3</h3>
+"
+`;
+
+exports[`toc renders a toc with default settings 1`] = `
+"<nav class="table-of-contents"><ol><li><a href="#head-1">Head 1</a><ol><li><a href="#heading-2">Heading 2</a><ol><li><a href="#heading-3">Heading 3</a></li></ol></li></ol></li><li><a href="#head-1-1">Head 1</a></li><li><a href="#head-1-2">Head 1</a></li><li><a href="#head-1-3">Head 1</a></li></ol></nav><h1>Head 1</h1>
+<h2>Heading 2</h2>
+<h3>Heading 3</h3>
+<h1>Head 1</h1>
+<h1>Head 1</h1>
+<h1>Head 1</h1>
+"
+`;
+
+exports[`toc renders a toc with levels in the placeholder 1`] = `
+"<nav class="table-of-contents"><ol><li><a href="#head-2">Head 2</a><ol><li><a href="#head-3">Head 3</a><ol></ol></li></ol></li></ol></nav><h1>Head 1</h1>
+<h2>Head 2</h2>
+<h3>Head 3</h3>
+<h4>Head 4</h4>
+"
+`;
+
+exports[`toc renders a toc with ordered list 1`] = `
+"<nav class="table-of-contents"><ol><li><a href="#head-1">Head 1</a><ol><li><a href="#heading-2">Heading 2</a><ol><li><a href="#heading-3">Heading 3</a></li></ol></li></ol></li></ol></nav><h1>Head 1</h1>
+<h2>Heading 2</h2>
+<h3>Heading 3</h3>
+"
+`;
+
+exports[`toc renders a toc with unordered list 1`] = `
+"<nav class="table-of-contents"><ul><li><a href="#head-1">Head 1</a><ul><li><a href="#heading-2">Heading 2</a><ul><li><a href="#heading-3">Heading 3</a></li></ul></li></ul></li></ul></nav><h1>Head 1</h1>
+<h2>Heading 2</h2>
+<h3>Heading 3</h3>
+"
+`;
