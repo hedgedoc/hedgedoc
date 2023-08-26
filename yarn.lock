@@ -2394,7 +2394,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/docs@workspace:docs"
   dependencies:
-    markdownlint-cli2: 0.9.0
+    markdownlint-cli2: 0.9.1
   languageName: unknown
   linkType: soft
 
@@ -12908,9 +12908,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdownlint-cli2@npm:0.9.0":
-  version: 0.9.0
-  resolution: "markdownlint-cli2@npm:0.9.0"
+"markdownlint-cli2@npm:0.9.1":
+  version: 0.9.1
+  resolution: "markdownlint-cli2@npm:0.9.1"
   dependencies:
     globby: 13.2.2
     markdownlint: 0.30.0
@@ -12922,7 +12922,7 @@ __metadata:
     markdownlint-cli2: markdownlint-cli2.js
     markdownlint-cli2-config: markdownlint-cli2-config.js
     markdownlint-cli2-fix: markdownlint-cli2-fix.js
-  checksum: 9a5c8adc7b14c21bd3e06ec84a416ad22108e27cfc431c0e075c8b291854ad8e64bb9bbe24c70777aa858fb1e8592319f6e1e24ad79dbd46f1f4919b3ddfd468
+  checksum: 0a3daacf39b57bd1a69c578fc9a4d691fdc4f0f79f30c01055fa87239ab057f31652467ce4863544ae0d7d5b787a6029b53590f6763cf37521028dbf9c4e08f1
   languageName: node
   linkType: hard
 
