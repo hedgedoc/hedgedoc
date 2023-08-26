@@ -85,11 +85,12 @@
     "dist/esm/toc/toc-options.js.map"
   ],
   "scripts": {
-    "test": "../node_modules/.bin/jest",
-    "build": "build.sh",
-    "prepublish": "rm -rf ../dist && yarn lint && yarn build && yarn test",
-    "lint": "../node_modules/.bin/eslint --ext .ts markdown-it-plugins/src",
-    "lint:fix": "../node_modules/.bin/eslint --fix --ext .ts markdown-it-plugins/src"
+    "build": "./build.sh",
+    "test": "jest",
+    "test:ci": "jest --ci",
+    "prepublish": "rm -rf dist && yarn lint && yarn build && yarn test",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint --fix --ext .ts src"
   },
   "keywords": [
     "markdown",

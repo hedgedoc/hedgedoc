@@ -49,7 +49,7 @@
     "@fontsource/source-sans-pro": "5.0.8",
     "@hedgedoc/commons": "workspace:commons",
     "@hedgedoc/html-to-react": "workspace:html-to-react",
-    "@hedgedoc/markdown-it-plugins": "2.1.3",
+    "@hedgedoc/markdown-it-plugins": "workspace:markdown-it-plugins",
     "@mrdrogdrog/optional": "1.2.1",
     "@react-hook/resize-observer": "1.2.6",
     "@redux-devtools/core": "3.13.1",

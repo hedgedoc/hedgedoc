@@ -18,6 +18,14 @@
         "dist/**"
       ]
     },
+    "@hedgedoc/markdown-it-plugins#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
+    },
     "@hedgedoc/frontend#build": {
       "dependsOn": [
         "^build"

@@ -3,8 +3,8 @@
   "compilerOptions": {
     "module": "CommonJS",
     "target": "ES2015",
-    "outDir": "../dist/cjs",
-    "declarationDir": "../dist/cjs",
+    "outDir": "dist/cjs",
+    "declarationDir": "dist/cjs",
     "moduleResolution": "node"
   }
 }
