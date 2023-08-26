@@ -19,7 +19,7 @@ class Plugin {
   public readonly START_LEVEL_ATTRIBUTE_NAME = 'startLevel'
   public readonly END_LEVEL_ATTRIBUTE_NAME = 'endLevel'
 
-  private readonly TOC_PLACEHOLDER = /^\[\[toc(?::(\d+):(\d+))?]]|\[toc(?::(\d+):(\d+))?]$/i
+  private readonly TOC_PLACEHOLDER = /^(?:\[\[toc(?::(\d+):(\d+))?]]|\[toc(?::(\d+):(\d+))?])$/i
 
   public constructor(md: MarkdownIt, tocOptions?: Partial<TocOptions>) {
     this.tocOptions = {
