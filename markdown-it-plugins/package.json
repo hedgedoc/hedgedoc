@@ -124,11 +124,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hedgedoc/markdown-it-plugins.git"
+    "url": "git+https://github.com/hedgedoc/hedgedoc.git"
   },
   "bugs": {
-    "url": "https://github.com/hedgedoc/markdown-it-plugins/issues"
+    "url": "https://github.com/hedgedoc/hedgedoc/issues"
   },
-  "homepage": "https://github.com/hedgedoc/markdown-it-plugins#readme",
   "packageManager": "yarn@3.6.3"
 }
