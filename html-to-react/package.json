@@ -1,0 +1,86 @@
+{
+  "name": "@hedgedoc/html-to-react",
+  "version": "2.1.0",
+  "description": "Parse HTML into React components",
+  "source": "src/index.ts",
+  "main": "dist/cjs/index.js",
+  "types": "dist/cjs/index.d.ts",
+  "module": "./dist/esm/index.js",
+  "exports": {
+    "import": {
+      "types": "./dist/esm/index.d.ts",
+      "default": "./dist/esm/index.js"
+    },
+    "require": {
+      "types": "./dist/cjs/index.d.ts",
+      "default": "./dist/cjs/index.js"
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "test": "jest",
+    "build": "./build.sh",
+    "prepublish": "yarn lint && yarn build && yarn test",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint --fix --ext .ts src"
+  },
+  "files": [
+    "LICENSES/*",
+    "package.json",
+    "README.md",
+    "dist/**"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hedgedoc/html-to-react.git"
+  },
+  "keywords": [
+    "react",
+    "html",
+    "htmlparser",
+    "htmlparser2",
+    "inner html",
+    "dangerouslySetInnerHTML"
+  ],
+  "author": "The HedgeDoc Authors",
+  "license": "AGPL-3.0",
+  "devDependencies": {
+    "@jest/globals": "29.6.4",
+    "@jest/types": "29.6.3",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "@typescript-eslint/eslint-plugin": "6.4.1",
+    "@typescript-eslint/parser": "6.4.1",
+    "eslint": "8.48.0",
+    "eslint-config-prettier": "9.0.0",
+    "eslint-plugin-jest": "27.2.3",
+    "eslint-plugin-prettier": "5.0.0",
+    "jest": "29.6.4",
+    "prettier": "3.0.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "ts-jest": "29.1.1",
+    "typescript": "5.1.6"
+  },
+  "dependencies": {
+    "domelementtype": "^2.3.0",
+    "domhandler": "^5.0.3",
+    "htmlparser2": "^9.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "browserslist": [
+    "node> 12"
+  ],
+  "engines": {
+    "node": ">=12"
+  },
+  "resolutions": {
+    "@types/react": "18.2.21"
+  },
+  "packageManager": "yarn@3.6.3"
+}
