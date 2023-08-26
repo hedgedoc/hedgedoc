@@ -38,12 +38,6 @@ const isMockMode = !!process.env.NEXT_PUBLIC_USE_MOCK_API && isPositiveAnswer(pr
 const isDevMode = process.env.NODE_ENV === 'development'
 
 /**
- * Defines if the current runtime was built in production mode.
- * @type boolean
- */
-const isProductionMode = process.env.NODE_ENV === 'production'
-
-/**
  * Defines if the current runtime contains the bundle analyzer and profiling metrics.
  * @type boolean
  */
@@ -53,6 +47,5 @@ module.exports = {
   isTestMode,
   isMockMode,
   isDevMode,
-  isProductionMode,
   isProfilingMode
 }
