@@ -2,6 +2,14 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {},
+    "@hedgedoc/html-to-react#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
+    },
     "@hedgedoc/commons#build": {
       "dependsOn": [
         "^build"
