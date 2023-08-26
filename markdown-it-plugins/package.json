@@ -104,8 +104,8 @@
     "markdown-it": ">=12"
   },
   "dependencies": {
-    "@mrdrogdrog/optional": "^1.2.1",
-    "html-entities": "^2.4.0"
+    "@mrdrogdrog/optional": "1.2.1",
+    "html-entities": "2.4.0"
   },
   "devDependencies": {
     "@jest/types": "29.6.3",

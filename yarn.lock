@@ -2545,13 +2545,13 @@ __metadata:
     "@types/react-dom": 18.2.7
     "@typescript-eslint/eslint-plugin": 6.4.1
     "@typescript-eslint/parser": 6.4.1
-    domelementtype: ^2.3.0
-    domhandler: ^5.0.3
+    domelementtype: 2.3.0
+    domhandler: 5.0.3
     eslint: 8.48.0
     eslint-config-prettier: 9.0.0
     eslint-plugin-jest: 27.2.3
     eslint-plugin-prettier: 5.0.0
-    htmlparser2: ^9.0.0
+    htmlparser2: 9.0.0
     jest: 29.6.4
     prettier: 3.0.2
     react: 18.2.0
@@ -2568,7 +2568,7 @@ __metadata:
   resolution: "@hedgedoc/markdown-it-plugins@workspace:markdown-it-plugins"
   dependencies:
     "@jest/types": 29.6.3
-    "@mrdrogdrog/optional": ^1.2.1
+    "@mrdrogdrog/optional": 1.2.1
     "@types/markdown-it": 13.0.0
     "@typescript-eslint/eslint-plugin": 6.4.1
     "@typescript-eslint/parser": 6.4.1
@@ -2576,7 +2576,7 @@ __metadata:
     eslint-config-prettier: 9.0.0
     eslint-plugin-jest: 27.2.3
     eslint-plugin-prettier: 5.0.0
-    html-entities: ^2.4.0
+    html-entities: 2.4.0
     jest: 29.6.4
     markdown-it: 13.0.1
     prettier: 3.0.2
@@ -3160,7 +3160,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mrdrogdrog/optional@npm:1.2.1, @mrdrogdrog/optional@npm:^1.2.1":
+"@mrdrogdrog/optional@npm:1.2.1":
   version: 1.2.1
   resolution: "@mrdrogdrog/optional@npm:1.2.1"
   checksum: 0549a75f80fa18405a000a4d62d77439176b28df31a532f89940bebd60591889fe4fa8d3fbbcfd42947383d2cd8c59fa59e474b3163ea6284370ca169d46c212
@@ -8521,7 +8521,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"domelementtype@npm:^2.3.0":
+"domelementtype@npm:2.3.0, domelementtype@npm:^2.3.0":
   version: 2.3.0
   resolution: "domelementtype@npm:2.3.0"
   checksum: ee837a318ff702622f383409d1f5b25dd1024b692ef64d3096ff702e26339f8e345820f29a68bcdcea8cfee3531776b3382651232fbeae95612d6f0a75efb4f6
@@ -10639,7 +10639,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-entities@npm:^2.4.0":
+"html-entities@npm:2.4.0":
   version: 2.4.0
   resolution: "html-entities@npm:2.4.0"
   checksum: 25bea32642ce9ebd0eedc4d24381883ecb0335ccb8ac26379a0958b9b16652fdbaa725d70207ce54a51db24103436a698a8e454397d3ba8ad81460224751f1dc
@@ -10662,7 +10662,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"htmlparser2@npm:9.0.0, htmlparser2@npm:^9.0.0":
+"htmlparser2@npm:9.0.0":
   version: 9.0.0
   resolution: "htmlparser2@npm:9.0.0"
   dependencies:

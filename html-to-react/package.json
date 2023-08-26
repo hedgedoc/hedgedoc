@@ -66,9 +66,9 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "domelementtype": "^2.3.0",
-    "domhandler": "^5.0.3",
-    "htmlparser2": "^9.0.0"
+    "domelementtype": "2.3.0",
+    "domhandler": "5.0.3",
+    "htmlparser2": "9.0.0"
   },
   "peerDependencies": {
     "react": ">=16.0"
