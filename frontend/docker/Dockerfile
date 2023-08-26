@@ -26,8 +26,6 @@ ARG TURBO_TEAM
 ARG TURBO_API
 ARG TURBO_TOKEN
 
-RUN rm -rf frontend/public/public
-RUN rm -rf frontend/src/pages/api
 RUN yarn turbo run build --filter=frontend --no-cache --no-daemon
 
 # RUNNER
@@ -43,10 +41,7 @@ LABEL org.opencontainers.image.licenses='AGPL-3.0'
 
 WORKDIR /usr/src/app
 
-COPY --from=builder --chown=node:node /usr/src/app/frontend/.next/standalone ./
-COPY --from=builder --chown=node:node /usr/src/app/frontend/.next/static ./frontend/.next/static
-COPY --from=builder /usr/src/app/frontend/next.config.js ./frontend/next.config.js
-COPY --from=builder /usr/src/app/frontend/public ./frontend/public
+COPY --from=builder --chown=node:node /usr/src/app/frontend/dist ./
 
 USER node
 

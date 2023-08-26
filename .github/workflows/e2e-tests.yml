@@ -142,7 +142,7 @@ jobs:
           TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
       - name: Compress build
-        run: tar --exclude='frontend/.next/cache' --exclude='frontend/.next/standalone' --zstd -cf frontend-e2e-build.tar.zst frontend/.next/
+        run: tar --zstd -cf frontend-e2e-build.tar.zst frontend/dist/
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
@@ -186,9 +186,12 @@ jobs:
 
       - name: Run server
         working-directory: frontend/
-        run: (screen -dmS server -L yarn start:ci) && sleep 3 && (tail -f screenlog.0 &)
+        run: (screen -dmS server -L yarn start) && sleep 3 && (tail -f screenlog.0 &)
         env:
           NODE_ENV: test
+          HOSTNAME: "127.0.0.1"
+          HD_BASE_URL: "http://127.0.0.1:3001/"
+          PORT: 3001
 
       - name: Wait for server
         run: "curl -L --max-time 120 http://127.0.0.1:3001/"
