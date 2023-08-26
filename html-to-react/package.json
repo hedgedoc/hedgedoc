@@ -1,6 +1,6 @@
 {
   "name": "@hedgedoc/html-to-react",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Parse HTML into React components",
   "source": "src/index.ts",
   "main": "dist/cjs/index.js",
