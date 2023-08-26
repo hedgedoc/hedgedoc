@@ -135,7 +135,7 @@
     "@types/dompurify": "3.0.2",
     "@types/jest": "29.5.4",
     "@types/luxon": "3.3.1",
-    "@types/markdown-it": "13.0.0",
+    "@types/markdown-it": "13.0.1",
     "@types/markdown-it-container": "2.0.6",
     "@types/markdown-it-plantuml": "1.4.1",
     "@types/node": "20.5.6",
