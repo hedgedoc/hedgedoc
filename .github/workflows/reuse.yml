@@ -16,7 +16,7 @@ jobs:
     container:
       image: fsfe/reuse:2.1.0@sha256:fa898b2fc662e6feae6782d971e6a45105250841676823508e5fcb873a29f68e
     steps:
-      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
 
       - name: Run linter
         run: reuse lint
