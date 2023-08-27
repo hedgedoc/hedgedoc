@@ -9,12 +9,12 @@ import { BaseUrlContextProvider } from '../../components/common/base-url/base-ur
 import { FrontendConfigContextProvider } from '../../components/common/frontend-config-context/frontend-config-context-provider'
 import { ExpectedOriginBoundary } from '../../components/layout/expected-origin-boundary'
 import { StoreProvider } from '../../redux/store-provider'
-import { baseUrlFromEnvExtractor } from '../../utils/base-url-from-env-extractor'
+import { extractBaseUrls } from '../../utils/base-url-from-env-extractor'
 import React from 'react'
 import { getConfig } from '../../api/config'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const baseUrls = baseUrlFromEnvExtractor.extractBaseUrls()
+  const baseUrls = extractBaseUrls()
   const frontendConfig = await getConfig(baseUrls.renderer)
 
   return (
