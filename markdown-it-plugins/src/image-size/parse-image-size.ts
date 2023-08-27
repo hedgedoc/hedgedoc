@@ -18,13 +18,13 @@ export interface ParseNextNumber {
 }
 
 function isCharacterADigit(code: number) {
-  return code >= SpecialCharacters.NUMBER_ZERO && code <= SpecialCharacters.NUMBER_NINE
+  return code >= (SpecialCharacters.NUMBER_ZERO as number) && code <= (SpecialCharacters.NUMBER_NINE as number)
 }
 
 function findNextNotNumberCharacter(startPosition: number, maximalPosition: number, content: string): number {
   for (let position = startPosition; position < maximalPosition; position += 1) {
     const code = content.charCodeAt(position)
-    if (!isCharacterADigit(code) && code !== SpecialCharacters.PERCENTAGE) {
+    if (!isCharacterADigit(code) && code !== (SpecialCharacters.PERCENTAGE as number)) {
       return position
     }
   }
@@ -49,8 +49,8 @@ function parseNextNumber(content: string, startPosition: number, maximalPosition
 */
 const checkImageSizeStart = (code: number): boolean => {
   return (
-    code === SpecialCharacters.LOWER_CASE_X ||
-    (code >= SpecialCharacters.NUMBER_ZERO && code <= SpecialCharacters.NUMBER_NINE)
+    code === (SpecialCharacters.LOWER_CASE_X as number) ||
+    (code >= (SpecialCharacters.NUMBER_ZERO as number) && code <= (SpecialCharacters.NUMBER_NINE as number))
   )
 }
 
@@ -65,7 +65,7 @@ export function parseImageSize(
 
   let currentCharacterPosition = startCharacterPosition
 
-  if (imageSize.charCodeAt(currentCharacterPosition) !== SpecialCharacters.EQUALS /* = */) {
+  if (imageSize.charCodeAt(currentCharacterPosition) !== (SpecialCharacters.EQUALS as number)) {
     return
   }
 
@@ -81,7 +81,7 @@ export function parseImageSize(
 
   // next charactor must be 'x'
   const code = imageSize.charCodeAt(currentCharacterPosition)
-  if (code !== SpecialCharacters.LOWER_CASE_X /* x */) {
+  if (code !== (SpecialCharacters.LOWER_CASE_X as number)) {
     return
   }
   currentCharacterPosition += 1
