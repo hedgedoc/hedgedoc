@@ -12,8 +12,8 @@ import { SpecialCharacters } from './specialCharacters.js'
 
 const checkForImageTagStart = (state: StateInline): boolean => {
   return (
-    state.src.charCodeAt(state.pos) === SpecialCharacters.EXCLAMATION_MARK &&
-    state.src.charCodeAt(state.pos + 1) === SpecialCharacters.OPENING_BRACKET
+    state.src.charCodeAt(state.pos) === (SpecialCharacters.EXCLAMATION_MARK as number) &&
+    state.src.charCodeAt(state.pos + 1) === (SpecialCharacters.OPENING_BRACKET as number)
   )
 }
 
@@ -21,7 +21,7 @@ const skipWhiteSpaces = (startPosition: number, state: StateInline): number => {
   let position = startPosition
   while (position < state.posMax) {
     const code = state.src.charCodeAt(position)
-    if (code !== SpecialCharacters.WHITESPACE && code !== SpecialCharacters.NEW_LINE) {
+    if (code !== (SpecialCharacters.WHITESPACE as number) && code !== (SpecialCharacters.NEW_LINE as number)) {
       break
     }
     position += 1
@@ -68,6 +68,15 @@ function createImageToken(
   }
 }
 
+interface LinkReference {
+  href: string
+  title: string
+}
+
+interface ReferenceEnvironment {
+  references?: Record<string, LinkReference>
+}
+
 function parseSizeParameters(startPosition: number, state: StateInline): ParseImageSize | undefined {
   // [link](  <href>  "title" =WxH  )
   //                          ^^^^ parsing image size
@@ -75,7 +84,7 @@ function parseSizeParameters(startPosition: number, state: StateInline): ParseIm
     return
   }
   const code = state.src.charCodeAt(startPosition - 1)
-  if (code !== SpecialCharacters.WHITESPACE) {
+  if (code !== (SpecialCharacters.WHITESPACE as number)) {
     return
   }
   const res = parseImageSize(state.src, startPosition, state.posMax)
@@ -135,7 +144,7 @@ const imageWithSize: ParserInline.RuleInline = (state, silent) => {
   }
 
   position = labelEndIndex + 1
-  if (position < max && state.src.charCodeAt(position) === SpecialCharacters.OPENING_PARENTHESIS) {
+  if (position < max && state.src.charCodeAt(position) === (SpecialCharacters.OPENING_PARENTHESIS as number)) {
     //
     // Inline link
     //
@@ -181,7 +190,7 @@ const imageWithSize: ParserInline.RuleInline = (state, silent) => {
       height = parseSizeParametersResult.height
     }
 
-    if (position >= max || state.src.charCodeAt(position) !== SpecialCharacters.CLOSING_PARENTHESIS) {
+    if (position >= max || state.src.charCodeAt(position) !== (SpecialCharacters.CLOSING_PARENTHESIS as number)) {
       state.pos = oldPos
       return false
     }
@@ -190,7 +199,7 @@ const imageWithSize: ParserInline.RuleInline = (state, silent) => {
     //
     // Link reference
     //
-    if (typeof state.env.references === 'undefined') {
+    if (typeof (state.env as ReferenceEnvironment).references === 'undefined') {
       return false
     }
 
@@ -200,7 +209,7 @@ const imageWithSize: ParserInline.RuleInline = (state, silent) => {
 
     let label
 
-    if (position < max && state.src.charCodeAt(position) === SpecialCharacters.OPENING_BRACKET) {
+    if (position < max && state.src.charCodeAt(position) === (SpecialCharacters.OPENING_BRACKET as number)) {
       start = position + 1
       position = state.md.helpers.parseLinkLabel(state, position)
       if (position >= 0) {
@@ -218,7 +227,7 @@ const imageWithSize: ParserInline.RuleInline = (state, silent) => {
       label = state.src.slice(labelStartIndex, labelEndIndex)
     }
 
-    const ref = state.env.references[state.md.utils.normalizeReference(label)]
+    const ref = (state.env as ReferenceEnvironment).references?.[state.md.utils.normalizeReference(label)]
     if (!ref) {
       state.pos = oldPos
       return false

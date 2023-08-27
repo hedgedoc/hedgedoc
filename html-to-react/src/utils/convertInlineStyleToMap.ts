@@ -38,7 +38,7 @@ export function convertInlineStyleToMap(
       const replacedProperty = property
         .toLowerCase()
         .replace(/^-ms-/, 'ms-')
-        .replace(/-(.)/g, (_, character) => character.toUpperCase())
+        .replace(/-(.)/g, (_, character: string) => character.toUpperCase())
 
       // add the new style property and value to the style object
       styleObject[replacedProperty] = value
