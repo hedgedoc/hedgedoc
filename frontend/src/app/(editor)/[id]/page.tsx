@@ -5,8 +5,8 @@
  */
 import { getNote } from '../../../api/notes'
 import { redirect } from 'next/navigation'
-import { baseUrlFromEnvExtractor } from '../../../utils/base-url-from-env-extractor'
 import { notFound } from 'next/navigation'
+import { extractBaseUrls } from '../../../utils/base-url-from-env-extractor'
 
 interface PageProps {
   params: { id: string | undefined }
@@ -16,7 +16,7 @@ interface PageProps {
  * Redirects the user to the editor if the link is a root level direct link to a version 1 note.
  */
 const DirectLinkFallback = async ({ params }: PageProps) => {
-  const baseUrl = baseUrlFromEnvExtractor.extractBaseUrls().editor
+  const baseUrl = extractBaseUrls().editor
 
   if (params.id === undefined) {
     notFound()
