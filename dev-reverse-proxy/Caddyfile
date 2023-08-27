@@ -12,9 +12,9 @@ log {
 	format console
 }
 
-reverse_proxy /realtime http://127.0.0.1:{$HD_BACKEND_PORT:3000}
-reverse_proxy /api/* http://127.0.0.1:{$HD_BACKEND_PORT:3000}
-reverse_proxy /public/* http://127.0.0.1:{$HD_BACKEND_PORT:3000}
-reverse_proxy /uploads/* http://127.0.0.1:{$HD_BACKEND_PORT:3000}
-reverse_proxy /apidoc/* http://127.0.0.1:{$HD_BACKEND_PORT:3000}
-reverse_proxy /* http://127.0.0.1:{$HD_FRONTEND_PORT:3001}
+reverse_proxy /realtime http://localhost:{$HD_BACKEND_PORT:3000}
+reverse_proxy /api/* http://localhost:{$HD_BACKEND_PORT:3000}
+reverse_proxy /public/* http://localhost:{$HD_BACKEND_PORT:3000}
+reverse_proxy /uploads/* http://localhost:{$HD_BACKEND_PORT:3000}
+reverse_proxy /apidoc/* http://localhost:{$HD_BACKEND_PORT:3000}
+reverse_proxy /* http://localhost:{$HD_FRONTEND_PORT:3001}
