@@ -26,6 +26,18 @@
         "dist/**"
       ]
     },
+    "@hedgedoc/frontend#build:netlify": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**"
+      ],
+      "env": [
+        "NODEJS_VERSION"
+      ]
+    },
     "@hedgedoc/frontend#build": {
       "dependsOn": [
         "^build"

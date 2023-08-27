@@ -5,6 +5,7 @@
   "license": "AGPL-3.0",
   "scripts": {
     "build": "cross-env NODE_ENV=production ./build.sh",
+    "build:netlify": "cross-env NODE_ENV=production next build",
     "build:mock": "cross-env NEXT_PUBLIC_USE_MOCK_API=true ./build.sh --keep-mock-api",
     "build:test": "cross-env NODE_ENV=test NEXT_PUBLIC_TEST_MODE=true ./build.sh --keep-mock-api",
     "analyze": "cross-env ANALYZE=true yarn build --profile",

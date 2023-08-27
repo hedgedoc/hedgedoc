@@ -67,7 +67,7 @@ jobs:
         run: echo "HD_BASE_URL=\"${{ env.DEPLOY_URL }}\"" >> .env.production
 
       - name: Build app
-        run: yarn turbo run build --filter=frontend
+        run: yarn turbo run build:netlify --filter=frontend
         shell: bash
         working-directory: .
         env:
