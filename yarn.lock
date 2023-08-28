@@ -1220,7 +1220,7 @@ __metadata:
     imports-loader: 1.2.0
     ionicons: 2.0.1
     is-svg: 4.4.0
-    jquery: 3.7.0
+    jquery: 3.7.1
     jquery-mousewheel: 3.1.13
     jquery-ui: 1.13.2
     js-cookie: 3.0.5
@@ -8504,7 +8504,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jquery@npm:3.7.0, jquery@npm:>=1.8.0 <4.0.0":
+"jquery@npm:3.7.1":
+  version: 3.7.1
+  resolution: "jquery@npm:3.7.1"
+  checksum: 4370b8139d6ae82867eb6f7f21d1edccf1d1bdf41c0840920ea80d366c2cd5dbe1ceebb110ee9772aa839b04400faa1572c5c560b507c688ed7b61cea26c0e27
+  languageName: node
+  linkType: hard
+
+"jquery@npm:>=1.8.0 <4.0.0":
   version: 3.7.0
   resolution: "jquery@npm:3.7.0"
   checksum: 907785e133afc427650a131af5fccef66a404885037513b3d4d7d63aee6409bcc32a39836868c60e59b05aa0fb8ace8961c18b2ee3ffdf6ffdb571d6d7cd88ff
