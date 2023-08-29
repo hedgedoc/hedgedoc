@@ -2328,7 +2328,7 @@ __metadata:
     joi: 17.10.0
     ldapauth-fork: 5.0.5
     markdown-it: 13.0.1
-    minio: 7.1.1
+    minio: 7.1.2
     mocked-env: 1.3.5
     mysql: 2.18.1
     node-fetch: 2.7.0
@@ -13288,9 +13288,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minio@npm:7.1.1":
-  version: 7.1.1
-  resolution: "minio@npm:7.1.1"
+"minio@npm:7.1.2":
+  version: 7.1.2
+  resolution: "minio@npm:7.1.2"
   dependencies:
     async: ^3.2.4
     block-stream2: ^2.1.0
@@ -13306,7 +13306,7 @@ __metadata:
     web-encoding: ^1.1.5
     xml: ^1.0.1
     xml2js: ^0.5.0
-  checksum: 9a3235f06182a0495d66a72eeca7544cf788ff5028d0b37b45599a39f3c2035e6c398c1d91a251c7756a4408766ec2bcbe47d5acc528f11b1d0e0989fa7cc261
+  checksum: 917affd72eff810cec7c905b8de39aa7b4d0a8f192ad2359edfa8f02d8a549c8c0e9cb9d12fd74f7b96bbdc1f4776d81f2403fdb95e5191e65939293c3025800
   languageName: node
   linkType: hard
 
