@@ -2275,7 +2275,7 @@ __metadata:
     "@nestjs/platform-ws": 10.2.2
     "@nestjs/schedule": 3.0.3
     "@nestjs/schematics": 10.0.2
-    "@nestjs/swagger": 7.1.8
+    "@nestjs/swagger": 7.1.9
     "@nestjs/testing": 10.2.2
     "@nestjs/typeorm": 10.0.0
     "@nestjs/websockets": 10.2.2
@@ -3338,15 +3338,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/swagger@npm:7.1.8":
-  version: 7.1.8
-  resolution: "@nestjs/swagger@npm:7.1.8"
+"@nestjs/swagger@npm:7.1.9":
+  version: 7.1.9
+  resolution: "@nestjs/swagger@npm:7.1.9"
   dependencies:
     "@nestjs/mapped-types": 2.0.2
     js-yaml: 4.1.0
     lodash: 4.17.21
     path-to-regexp: 3.2.0
-    swagger-ui-dist: 5.3.1
+    swagger-ui-dist: 5.4.2
   peerDependencies:
     "@fastify/static": ^6.0.0
     "@nestjs/common": ^9.0.0 || ^10.0.0
@@ -3361,7 +3361,7 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: 771d9ca2dda69cd548184a59086c7a8202a1af554dcb73357de72be9376e56572aaa003fda0ea732c54fcb7d7ea55d80d5beb64aa3d6c1877510e2c70d9d1f9b
+  checksum: ee49c654ec63e03ef8cea4f4f2a483b696975923cb51b61496c05b41111832dd34f121bb9fc9ce74e001743f19d48693b07ea3a69807d007be872e7ad6c14bf3
   languageName: node
   linkType: hard
 
@@ -16683,10 +16683,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swagger-ui-dist@npm:5.3.1":
-  version: 5.3.1
-  resolution: "swagger-ui-dist@npm:5.3.1"
-  checksum: babf26f3a40a932db22248a620dbb0c5c68721c4165b173537a949c6ec3df3a89982db484651e1f5fe31f3cdb1037eeef13fb6b746efbb72902d7410291070c8
+"swagger-ui-dist@npm:5.4.2":
+  version: 5.4.2
+  resolution: "swagger-ui-dist@npm:5.4.2"
+  checksum: eb80a699474b247800f7ce2594ecf75a3c92ee3da752d890fe6be7f358628f08b353ab403151826cb4a8010c055bccc1ccd8b6fe5c3673a9b1b126e7e6da599d
   languageName: node
   linkType: hard
 
