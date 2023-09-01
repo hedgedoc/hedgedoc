@@ -21,7 +21,7 @@
     "Idle.Js": "git+https://github.com/shawnmclean/Idle.js",
     "archiver": "5.3.2",
     "async": "3.2.4",
-    "aws-sdk": "2.1445.0",
+    "aws-sdk": "2.1450.0",
     "azure-storage": "2.10.7",
     "base64url": "3.0.1",
     "body-parser": "1.20.2",
