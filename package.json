@@ -18,8 +18,8 @@
     "format": "dotenv -- turbo run format",
     "start:dev": "dotenv -- turbo run start:dev",
     "start": "dotenv -- turbo run start",
-    "test:ci": "dotenv -- turbo run test:ci",
-    "test": "dotenv -- turbo run test"
+    "test:ci": "dotenv -c test -- turbo run test:ci",
+    "test": "dotenv -c test -- turbo run test"
   },
   "packageManager": "yarn@3.6.3",
   "resolutions": {

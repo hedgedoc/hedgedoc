@@ -7,15 +7,29 @@
 
 set -e
 
+cleanup () {
+    if [ -d ../tmp/src/pages/api ]; then
+        echo "🦔 > Moving Mock API files back"
+        mv ../tmp/src/pages/api src/pages
+    fi
+}
+
+trap cleanup EXIT
+
 echo "🦔 Frontend Production Build"
 echo "🦔 > Clearing existing builds"
 rm -rf dist/
 
 echo "🦔 > Preparing files"
-if [ "${1}" = "--keep-mock-api" ]; then
-    echo "🦔 > Keeping Mock API"
+if [ ! -z "${NEXT_PUBLIC_USE_MOCK_API}" ]; then
+    echo "🦔 > Keeping Mock API because NEXT_PUBLIC_USE_MOCK_API is set"
+    if [ ! -d src/pages/api ]; then
+        echo "🦔 > ⚠️ src/pages/api doesn't exist"
+    fi
 else
-    rm -rf src/pages/api
+    echo "🦔 > Moving Mock API because NEXT_PUBLIC_USE_MOCK_API is unset"
+    mkdir -p ../tmp/src/pages
+    mv src/pages/api ../tmp/src/pages/api
 fi
 
 echo "🦔 > Building"
