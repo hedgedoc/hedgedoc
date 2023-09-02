@@ -9,7 +9,6 @@ import { BaseUrlContextProvider } from '../../components/common/base-url/base-ur
 import { FrontendConfigContextProvider } from '../../components/common/frontend-config-context/frontend-config-context-provider'
 import { MotdModal } from '../../components/global-dialogs/motd-modal/motd-modal'
 import { DarkMode } from '../../components/layout/dark-mode/dark-mode'
-import { ExpectedOriginBoundary } from '../../components/layout/expected-origin-boundary'
 import { UiNotificationBoundary } from '../../components/notifications/ui-notification-boundary'
 import { StoreProvider } from '../../redux/store-provider'
 import { extractBaseUrls } from '../../utils/base-url-from-env-extractor'
@@ -30,23 +29,23 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link color='#b51f08' href='/icons/safari-pinned-tab.svg' rel='mask-icon' />
       </head>
       <body>
-        <ExpectedOriginBoundary expectedOrigin={baseUrls.editor}>
-          <BaseUrlContextProvider baseUrls={baseUrls}>
-            <FrontendConfigContextProvider config={frontendConfig}>
-              <StoreProvider>
-                <ApplicationLoader>
-                  <DarkMode />
-                  <MotdModal />
-                  <UiNotificationBoundary>{children}</UiNotificationBoundary>
-                </ApplicationLoader>
-              </StoreProvider>
-            </FrontendConfigContextProvider>
-          </BaseUrlContextProvider>
-        </ExpectedOriginBoundary>
+        <BaseUrlContextProvider baseUrls={baseUrls}>
+          <FrontendConfigContextProvider config={frontendConfig}>
+            <StoreProvider>
+              <ApplicationLoader>
+                <DarkMode />
+                <MotdModal />
+                <UiNotificationBoundary>{children}</UiNotificationBoundary>
+              </ApplicationLoader>
+            </StoreProvider>
+          </FrontendConfigContextProvider>
+        </BaseUrlContextProvider>
       </body>
     </html>
   )
 }
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   themeColor: '#b51f08',
