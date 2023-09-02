@@ -5,6 +5,7 @@
  */
 import { isDevMode, isTestMode } from './test-modes'
 import { DateTime } from 'luxon'
+import pico from 'picocolors'
 
 /**
  * Simple logger that prefixes messages with a timestamp and a name.
@@ -70,6 +71,11 @@ export class Logger {
 
   private prefix(): string[] {
     const timestamp = DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss')
-    return [`%c[${timestamp}] %c(${this.scope})`, 'color: yellow', 'color: orange']
+
+    if (typeof window === 'undefined') {
+      return [pico.yellow(`[${timestamp}]`), pico.green(`(${this.scope})`)]
+    } else {
+      return [`%c[${timestamp}] %c(${this.scope})`, 'color: yellow', 'color: green']
+    }
   }
 }

@@ -98,6 +98,7 @@
     "markdown-it-sup": "1.0.0",
     "mermaid": "10.4.0",
     "next": "13.4.19",
+    "picocolors": "1.0.0",
     "react": "18.2.0",
     "react-bootstrap": "2.8.0",
     "react-bootstrap-icons": "1.10.3",
