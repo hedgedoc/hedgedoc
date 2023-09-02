@@ -60,7 +60,7 @@
     "joi": "17.10.1",
     "ldapauth-fork": "5.0.5",
     "markdown-it": "13.0.1",
-    "minio": "7.1.2",
+    "minio": "7.1.3",
     "mysql": "2.18.1",
     "node-fetch": "2.7.0",
     "passport": "0.6.0",
