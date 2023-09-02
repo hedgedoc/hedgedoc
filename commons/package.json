@@ -44,7 +44,7 @@
   "dependencies": {
     "domhandler": "5.0.3",
     "eventemitter2": "6.4.9",
-    "joi": "17.10.0",
+    "joi": "17.10.1",
     "js-yaml": "4.1.0",
     "reveal.js": "4.5.0",
     "ws": "8.13.0",
