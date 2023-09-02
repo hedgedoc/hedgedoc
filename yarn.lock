@@ -2504,6 +2504,7 @@ __metadata:
     markdown-it-sup: 1.0.0
     mermaid: 10.4.0
     next: 13.4.19
+    picocolors: 1.0.0
     prettier: 3.0.3
     react: 18.2.0
     react-bootstrap: 2.8.0
@@ -14561,7 +14562,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picocolors@npm:^1.0.0":
+"picocolors@npm:1.0.0, picocolors@npm:^1.0.0":
   version: 1.0.0
   resolution: "picocolors@npm:1.0.0"
   checksum: a2e8092dd86c8396bdba9f2b5481032848525b3dc295ce9b57896f931e63fc16f79805144321f72976383fc249584672a75cc18d6777c6b757603f372f745981

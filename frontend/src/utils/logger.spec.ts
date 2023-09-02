@@ -96,7 +96,7 @@ describe('Logger', () => {
       expect(debugLogMock).toHaveBeenCalledWith(
         '%c[2021-10-25 01:02:03] %c(prefix)',
         'color: yellow',
-        'color: orange',
+        'color: green',
         'muffin'
       )
       expect(defaultLogMock).not.toBeCalled()
@@ -129,7 +129,7 @@ describe('Logger', () => {
       expect(debugLogMock).toHaveBeenCalledWith(
         '%c[2021-10-25 03:04:05] %c(prefix)',
         'color: yellow',
-        'color: orange',
+        'color: green',
         'muffin'
       )
       expect(defaultLogMock).not.toBeCalled()
@@ -148,7 +148,7 @@ describe('Logger', () => {
       expect(debugLogMock).toHaveBeenCalledWith(
         '%c[2021-10-25 04:05:06] %c(prefix)',
         'color: yellow',
-        'color: orange',
+        'color: green',
         'muffin'
       )
       expect(defaultLogMock).not.toBeCalled()
@@ -163,7 +163,7 @@ describe('Logger', () => {
     expect(infoLogMock).toHaveBeenCalledWith(
       '%c[2021-10-25 05:06:07] %c(prefix)',
       'color: yellow',
-      'color: orange',
+      'color: green',
       'toast'
     )
     expect(warnLogMock).not.toBeCalled()
@@ -182,7 +182,7 @@ describe('Logger', () => {
     expect(warnLogMock).toHaveBeenCalledWith(
       '%c[2021-10-25 06:07:08] %c(prefix)',
       'color: yellow',
-      'color: orange',
+      'color: green',
       'eggs'
     )
     expect(errorLogMock).not.toBeCalled()
@@ -200,7 +200,7 @@ describe('Logger', () => {
     expect(errorLogMock).toHaveBeenCalledWith(
       '%c[2021-10-25 07:08:09] %c(prefix)',
       'color: yellow',
-      'color: orange',
+      'color: green',
       'bacon'
     )
     expect(debugLogMock).not.toBeCalled()
