@@ -8,12 +8,12 @@ import { ApplicationLoader } from '../../components/application-loader/applicati
 import { BaseUrlContextProvider } from '../../components/common/base-url/base-url-context-provider'
 import { FrontendConfigContextProvider } from '../../components/common/frontend-config-context/frontend-config-context-provider'
 import { StoreProvider } from '../../redux/store-provider'
-import { extractBaseUrls } from '../../utils/base-url-from-env-extractor'
+import { baseUrlFromEnvExtractor } from '../../utils/base-url-from-env-extractor'
 import React from 'react'
 import { getConfig } from '../../api/config'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const baseUrls = extractBaseUrls()
+  const baseUrls = baseUrlFromEnvExtractor.extractBaseUrls()
   const frontendConfig = await getConfig(baseUrls.renderer)
 
   return (
