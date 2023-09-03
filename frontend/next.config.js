@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-const { isMockMode, isTestMode, isProfilingMode, isBuildTime, Logger } = require('@hedgedoc/commons')
+const { isMockMode, isTestMode, isProfilingMode, isBuildTime, Logger, BaseUrlFromEnvExtractor } = require('@hedgedoc/commons')
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -13,6 +13,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const logger = new Logger('Bootstrap')
 
 logger.info('Node environment is', process.env.NODE_ENV)
+new BaseUrlFromEnvExtractor(false).extractBaseUrls()
 
 if (isTestMode) {
   logger.warn(`This build runs in test mode. This means:

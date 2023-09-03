@@ -5,8 +5,8 @@
  */
 import { getNote } from '../../../api/notes'
 import { redirect } from 'next/navigation'
-import { baseUrlFromEnvExtractor } from '../../../utils/base-url-from-env-extractor'
 import { notFound } from 'next/navigation'
+import { baseUrlFromEnvExtractor } from '../../../utils/base-url-singelton'
 
 interface PageProps {
   params: { id: string | undefined }

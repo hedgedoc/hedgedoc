@@ -45,4 +45,15 @@ rm -f dist/frontend/.env
 rm -rf dist/frontend/public/public
 rm -rf dist/frontend/src
 
+echo "🦔 > Patching env var check into prod build"
+
+cat << EOF > dist/frontend/server.js.new
+const { BaseUrlFromEnvExtractor } = require('@hedgedoc/commons')
+new BaseUrlFromEnvExtractor(true).extractBaseUrls()
+
+EOF
+cat dist/frontend/server.js >> dist/frontend/server.js.new
+rm dist/frontend/server.js
+mv dist/frontend/server.js.new dist/frontend/server.js
+
 echo "🦔 > Done! You can run the build by going into the dist directory and executing \`node frontend/server.js\`"
