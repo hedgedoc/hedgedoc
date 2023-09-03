@@ -3,22 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import type { BaseUrls } from '../components/common/base-url/base-url-context-provider'
+import { BaseUrlFromEnvExtractor } from './base-url-from-env-extractor'
 
 describe('BaseUrlFromEnvExtractor', () => {
-  let extractBaseUrls: () => BaseUrls
-
-  beforeEach(async () => {
-    jest.resetModules()
-    extractBaseUrls = (await import('./base-url-from-env-extractor')).extractBaseUrls
-  })
-
   it('should return the base urls if both are valid urls', () => {
     process.env.HD_BASE_URL = 'https://editor.example.org/'
     process.env.HD_RENDERER_BASE_URL = 'https://renderer.example.org/'
+    const sut = new BaseUrlFromEnvExtractor()
 
-    expect(extractBaseUrls()).toStrictEqual({
+    expect(sut.extractBaseUrls()).toStrictEqual({
       renderer: 'https://renderer.example.org/',
       editor: 'https://editor.example.org/'
     })
@@ -27,29 +20,33 @@ describe('BaseUrlFromEnvExtractor', () => {
   it('should return an empty optional if no var is set', () => {
     process.env.HD_BASE_URL = undefined
     process.env.HD_RENDERER_BASE_URL = undefined
+    const sut = new BaseUrlFromEnvExtractor()
 
-    expect(() => extractBaseUrls()).toThrow()
+    expect(() => sut.extractBaseUrls()).toThrow()
   })
 
   it("should return an empty optional if editor base url isn't an URL", () => {
     process.env.HD_BASE_URL = 'bibedibabedibu'
     process.env.HD_RENDERER_BASE_URL = 'https://renderer.example.org/'
+    const sut = new BaseUrlFromEnvExtractor()
 
-    expect(() => extractBaseUrls()).toThrow()
+    expect(() => sut.extractBaseUrls()).toThrow()
   })
 
   it("should return an empty optional if renderer base url isn't an URL", () => {
     process.env.HD_BASE_URL = 'https://editor.example.org/'
     process.env.HD_RENDERER_BASE_URL = 'bibedibabedibu'
+    const sut = new BaseUrlFromEnvExtractor()
 
-    expect(() => extractBaseUrls()).toThrow()
+    expect(() => sut.extractBaseUrls()).toThrow()
   })
 
   it("should return an optional if editor base url isn't ending with a slash", () => {
     process.env.HD_BASE_URL = 'https://editor.example.org'
     process.env.HD_RENDERER_BASE_URL = 'https://renderer.example.org/'
+    const sut = new BaseUrlFromEnvExtractor()
 
-    expect(extractBaseUrls()).toStrictEqual({
+    expect(sut.extractBaseUrls()).toStrictEqual({
       renderer: 'https://renderer.example.org/',
       editor: 'https://editor.example.org/'
     })
@@ -58,8 +55,9 @@ describe('BaseUrlFromEnvExtractor', () => {
   it("should return an optional if renderer base url isn't ending with a slash", () => {
     process.env.HD_BASE_URL = 'https://editor.example.org/'
     process.env.HD_RENDERER_BASE_URL = 'https://renderer.example.org'
+    const sut = new BaseUrlFromEnvExtractor()
 
-    expect(extractBaseUrls()).toStrictEqual({
+    expect(sut.extractBaseUrls()).toStrictEqual({
       renderer: 'https://renderer.example.org/',
       editor: 'https://editor.example.org/'
     })
@@ -68,8 +66,9 @@ describe('BaseUrlFromEnvExtractor', () => {
   it('should copy editor base url to renderer base url if renderer base url is omitted', () => {
     process.env.HD_BASE_URL = 'https://editor.example.org/'
     delete process.env.HD_RENDERER_BASE_URL
+    const sut = new BaseUrlFromEnvExtractor()
 
-    expect(extractBaseUrls()).toStrictEqual({
+    expect(sut.extractBaseUrls()).toStrictEqual({
       renderer: 'https://editor.example.org/',
       editor: 'https://editor.example.org/'
     })

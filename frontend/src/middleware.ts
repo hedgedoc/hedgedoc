@@ -6,7 +6,7 @@
 
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { extractBaseUrls } from './utils/base-url-from-env-extractor'
+import { baseUrlFromEnvExtractor } from './utils/base-url-from-env-extractor'
 
 /**
  * Next.js middleware that checks if the expected and the current origin align.
@@ -51,5 +51,9 @@ const determineOriginFromHeaders = (headers: Headers): string | undefined => {
  * @param request The current request
  */
 const determineExpectedOrigin = (request: NextRequest): string => {
-  return new URL(request.nextUrl.pathname === '/render' ? extractBaseUrls().renderer : extractBaseUrls().editor).origin
+  return new URL(
+    request.nextUrl.pathname === '/render'
+      ? baseUrlFromEnvExtractor.extractBaseUrls().renderer
+      : baseUrlFromEnvExtractor.extractBaseUrls().editor
+  ).origin
 }
