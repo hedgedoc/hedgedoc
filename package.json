@@ -12,12 +12,12 @@
     "markdown-it-plugins"
   ],
   "scripts": {
-    "build": "dotenv -- turbo run build",
-    "lint": "dotenv -- turbo run lint",
-    "lint:fix": "dotenv -- turbo run lint:fix",
-    "format": "dotenv -- turbo run format",
-    "start:dev": "dotenv -- turbo run start:dev",
-    "start": "dotenv -- turbo run start",
+    "build": "dotenv -c production -- turbo run build",
+    "lint": "dotenv -c development -- turbo run lint",
+    "lint:fix": "dotenv -c development -- turbo run lint:fix",
+    "format": "dotenv -c development -- turbo run format",
+    "start:dev": "dotenv -c development -- turbo run start:dev",
+    "start": "dotenv -c production -- turbo run start",
     "test:ci": "dotenv -c test -- turbo run test:ci",
     "test": "dotenv -c test -- turbo run test"
   },
