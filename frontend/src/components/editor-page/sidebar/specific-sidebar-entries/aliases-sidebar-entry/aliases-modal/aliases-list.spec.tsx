@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { Alias } from '../../../../../../api/alias/types'
-import * as useApplicationStateModule from '../../../../../../hooks/common/use-application-state'
 import { mockI18n } from '../../../../../../test-utils/mock-i18n'
 import { AliasesList } from './aliases-list'
 import type { AliasesListEntryProps } from './aliases-list-entry'
 import * as AliasesListEntryModule from './aliases-list-entry'
 import { render } from '@testing-library/react'
 import React from 'react'
+import { mockAppState } from '../../../../../../test-utils/mock-app-state'
 
 jest.mock('../../../../../../hooks/common/use-application-state')
 jest.mock('./aliases-list-entry')
@@ -18,23 +17,27 @@ jest.mock('./aliases-list-entry')
 describe('AliasesList', () => {
   beforeEach(async () => {
     await mockI18n()
-    jest.spyOn(useApplicationStateModule, 'useApplicationState').mockReturnValue([
-      {
-        name: 'a-test',
-        noteId: 'note-id',
-        primaryAlias: false
-      },
-      {
-        name: 'z-test',
-        noteId: 'note-id',
-        primaryAlias: false
-      },
-      {
-        name: 'b-test',
-        noteId: 'note-id',
-        primaryAlias: true
+    mockAppState({
+      noteDetails: {
+        aliases: [
+          {
+            name: 'a-test',
+            noteId: 'note-id',
+            primaryAlias: false
+          },
+          {
+            name: 'z-test',
+            noteId: 'note-id',
+            primaryAlias: false
+          },
+          {
+            name: 'b-test',
+            noteId: 'note-id',
+            primaryAlias: true
+          }
+        ]
       }
-    ] as Alias[])
+    })
     jest.spyOn(AliasesListEntryModule, 'AliasesListEntry').mockImplementation((({ alias }) => {
       return (
         <span>

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { mockI18n } from '../../../test-utils/mock-i18n'
-import { mockNoteOwnership } from '../../../test-utils/note-ownership'
+import { mockNotePermissions } from '../../../test-utils/mock-note-permissions'
 import { DeletionModal } from './deletion-modal'
 import { render, screen } from '@testing-library/react'
 
@@ -19,7 +19,7 @@ describe('DeletionModal', () => {
   })
 
   it('renders correctly with deletionButtonI18nKey', async () => {
-    mockNoteOwnership('test', 'test')
+    mockNotePermissions('test', 'test')
     const onConfirm = jest.fn()
     render(
       <DeletionModal onConfirm={onConfirm} deletionButtonI18nKey={'testDeletionButton'} show={true}>
@@ -31,7 +31,7 @@ describe('DeletionModal', () => {
   })
 
   it('disables deletion when user is not owner', async () => {
-    mockNoteOwnership('test2', 'test')
+    mockNotePermissions('test2', 'test')
     const onConfirm = jest.fn()
     render(
       <DeletionModal onConfirm={onConfirm} deletionButtonI18nKey={'testDeletionButton'} show={true}>

@@ -4,13 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { LoginUserInfo } from '../../../../api/me/types'
-import * as UseApplicationStateModule from '../../../../hooks/common/use-application-state'
-import type { ApplicationState } from '../../../../redux/application-state'
 import { useDisconnectOnUserLoginStatusChange } from './use-disconnect-on-user-login-status-change'
 import type { MessageTransporter } from '@hedgedoc/commons'
 import { render } from '@testing-library/react'
 import React, { Fragment } from 'react'
 import { Mock } from 'ts-mockery'
+import { mockAppState } from '../../../../test-utils/mock-app-state'
 
 jest.mock('../../../../hooks/common/use-application-state')
 
@@ -21,11 +20,9 @@ describe('use logout on user change', () => {
   }
 
   const mockUseApplicationState = (userLoggedIn: boolean) => {
-    jest
-      .spyOn(UseApplicationStateModule, 'useApplicationState')
-      .mockImplementation((fn) =>
-        fn(Mock.of<ApplicationState>({ user: userLoggedIn ? Mock.of<LoginUserInfo>({}) : null }))
-      )
+    mockAppState({
+      user: userLoggedIn ? Mock.of<LoginUserInfo>({}) : null
+    })
   }
 
   let disconnectCallback: jest.Mock

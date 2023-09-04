@@ -3,14 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import * as UseApplicationStateModule from '../../../../../hooks/common/use-application-state'
-import type { ApplicationState } from '../../../../../redux/application-state'
 import { mockI18n } from '../../../../../test-utils/mock-i18n'
 import { EditorAppBar } from './editor-app-bar'
 import type { NoteGroupPermissionEntry, NoteUserPermissionEntry } from '@hedgedoc/commons'
 import { render } from '@testing-library/react'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
+import { mockAppState } from '../../../../../test-utils/mock-app-state'
+import type { LoginUserInfo } from '../../../../../api/me/types'
 
 jest.mock('../../../../../components/layout/app-bar/base-app-bar', () => ({
   __esModule: true,
@@ -40,7 +40,7 @@ const mockedCommonAppState = {
   },
   user: {
     username: 'test'
-  }
+  } as LoginUserInfo
 }
 
 describe('app bar', () => {
@@ -48,40 +48,34 @@ describe('app bar', () => {
   afterAll(() => jest.restoreAllMocks())
 
   it('contains note title when editor is synced', () => {
-    jest.spyOn(UseApplicationStateModule, 'useApplicationState').mockImplementation((fn) => {
-      return fn({
-        ...mockedCommonAppState,
-        realtimeStatus: {
-          isSynced: true
-        }
-      } as ApplicationState)
+    mockAppState({
+      ...mockedCommonAppState,
+      realtimeStatus: {
+        isSynced: true
+      }
     })
     const view = render(<EditorAppBar />)
     expect(view.container).toMatchSnapshot()
   })
 
   it('contains alert when editor is not synced', () => {
-    jest.spyOn(UseApplicationStateModule, 'useApplicationState').mockImplementation((fn) => {
-      return fn({
-        ...mockedCommonAppState,
-        realtimeStatus: {
-          isSynced: false
-        }
-      } as ApplicationState)
+    mockAppState({
+      ...mockedCommonAppState,
+      realtimeStatus: {
+        isSynced: false
+      }
     })
     const view = render(<EditorAppBar />)
     expect(view.container).toMatchSnapshot()
   })
 
   it('contains note title and read-only marker when having only read permissions', () => {
-    jest.spyOn(UseApplicationStateModule, 'useApplicationState').mockImplementation((fn) => {
-      return fn({
-        ...mockedCommonAppState,
-        realtimeStatus: {
-          isSynced: true
-        },
-        user: null
-      } as ApplicationState)
+    mockAppState({
+      ...mockedCommonAppState,
+      realtimeStatus: {
+        isSynced: true
+      },
+      user: null
     })
     const view = render(<EditorAppBar />)
     expect(view.container).toMatchSnapshot()
