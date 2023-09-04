@@ -2282,8 +2282,8 @@ __metadata:
     "@trivago/prettier-plugin-sort-imports": 4.2.0
     "@tsconfig/node18": 18.2.1
     "@types/bcrypt": 5.0.0
-    "@types/cli-color": 2.0.2
-    "@types/cookie": 0.5.1
+    "@types/cli-color": 2.0.3
+    "@types/cookie": 0.5.2
     "@types/cookie-signature": 1.1.0
     "@types/cron": 2.0.1
     "@types/diff": 5.0.3
@@ -4248,10 +4248,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/cli-color@npm:2.0.2":
-  version: 2.0.2
-  resolution: "@types/cli-color@npm:2.0.2"
-  checksum: 255b57b6072ca09416987e37d01c20161115e2ed5e7e72166df15cc69c932e54e603200c86b1f6769eea13aec6fe128b1ed553f00b21f46d0ef7f2ed336fd100
+"@types/cli-color@npm:2.0.3":
+  version: 2.0.3
+  resolution: "@types/cli-color@npm:2.0.3"
+  checksum: 3a8bb776533ae0d3fea5373eb858a0f840d6e480fa7749e4750e86e69e75e061703d5994aacb7ee8995f9392dddd9cc3c34b080427ac3bfebf2b663ddcb240a4
   languageName: node
   linkType: hard
 
@@ -4287,10 +4287,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/cookie@npm:0.5.1":
-  version: 0.5.1
-  resolution: "@types/cookie@npm:0.5.1"
-  checksum: 9a8d60fc84797122bc399d6bd330fe5780dc7aab032321de705049ea925339f74658bfa418de483a625d51858770efef58df633ff2e20f1bdf7fbd74a52847e2
+"@types/cookie@npm:0.5.2":
+  version: 0.5.2
+  resolution: "@types/cookie@npm:0.5.2"
+  checksum: 4a1e46379d877f5a3cc687a9799dd72e5f7e68c4764d45cb469789dec92b4b4a7a5bb8b10a08c90be15939fa7b9b402f87ed339dfac0cabf43699c5189880e88
   languageName: node
   linkType: hard
 
