@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,7 +10,7 @@ import { Logger } from '../../utils/logger'
 
 const logger = new Logger('EditorConfig Local Storage')
 
-const initialState: EditorConfig = {
+export const initialState: EditorConfig = {
   ligatures: true,
   syncScroll: true,
   smartPaste: true,

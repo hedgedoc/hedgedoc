@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,7 +7,7 @@ import type { RealtimeStatus, RealtimeStatusActions } from './types'
 import { RealtimeStatusActionType } from './types'
 import type { Reducer } from 'redux'
 
-const initialState: RealtimeStatus = {
+export const initialState: RealtimeStatus = {
   isSynced: false,
   isConnected: false,
   onlineUsers: [],

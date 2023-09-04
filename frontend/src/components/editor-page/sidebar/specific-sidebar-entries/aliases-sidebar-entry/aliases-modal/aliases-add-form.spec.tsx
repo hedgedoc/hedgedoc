@@ -7,12 +7,12 @@ import * as AliasModule from '../../../../../../api/alias'
 import * as NoteDetailsReduxModule from '../../../../../../redux/note-details/methods'
 import type { NoteDetails } from '../../../../../../redux/note-details/types/note-details'
 import { mockI18n } from '../../../../../../test-utils/mock-i18n'
-import { mockNoteOwnership } from '../../../../../../test-utils/note-ownership'
-import * as useUiNotificationsModule from '../../../../../notifications/ui-notification-boundary'
+import { mockNotePermissions } from '../../../../../../test-utils/mock-note-permissions'
 import { AliasesAddForm } from './aliases-add-form'
 import { act, render, screen } from '@testing-library/react'
 import testEvent from '@testing-library/user-event'
 import React from 'react'
+import { mockUiNotifications } from '../../../../../../test-utils/mock-ui-notifications'
 
 jest.mock('../../../../../../api/alias')
 jest.mock('../../../../../../redux/note-details/methods')
@@ -24,14 +24,10 @@ const addPromise = Promise.resolve({ name: 'mock', primaryAlias: true, noteId: '
 describe('AliasesAddForm', () => {
   beforeEach(async () => {
     await mockI18n()
+    mockUiNotifications()
     jest.spyOn(AliasModule, 'addAlias').mockImplementation(() => addPromise)
     jest.spyOn(NoteDetailsReduxModule, 'updateMetadata').mockImplementation(() => Promise.resolve())
-    jest.spyOn(useUiNotificationsModule, 'useUiNotifications').mockReturnValue({
-      showErrorNotification: jest.fn(),
-      dismissNotification: jest.fn(),
-      dispatchUiNotification: jest.fn()
-    })
-    mockNoteOwnership('test', 'test', { noteDetails: { id: 'mock-note' } as NoteDetails })
+    mockNotePermissions('test', 'test', undefined, { noteDetails: { id: 'mock-note' } as NoteDetails })
   })
 
   afterAll(() => {
