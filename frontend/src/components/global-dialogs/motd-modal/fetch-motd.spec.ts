@@ -97,21 +97,27 @@ describe('fetch motd', () => {
     })
   })
 
-  it("can detect that the motd hasn't been updated", async () => {
+  it("can detect that the motd hasn't been updated and returns cached content", async () => {
     mockFetch('mocked motd', 'yesterday')
     window.localStorage.setItem('motd.lastModified', 'yesterday')
+    window.localStorage.setItem('motd.content', 'mocked motd')
     const result = fetchMotd()
-    await expect(result).resolves.toStrictEqual(undefined)
+    await expect(result).resolves.toStrictEqual({
+      motdText: 'mocked motd',
+      lastModified: 'yesterday'
+    })
   })
 
-  it('can detect that the motd has been updated', async () => {
+  it('can detect that the motd has been updated and updates cache', async () => {
     mockFetch('mocked motd', 'yesterday')
+    window.localStorage.setItem('motd.content', 'old motd')
     window.localStorage.setItem('motd.lastModified', 'the day before yesterday')
     const result = fetchMotd()
     await expect(result).resolves.toStrictEqual({
       motdText: 'mocked motd',
       lastModified: 'yesterday'
     })
+    expect(window.localStorage.getItem('motd.content')).toBe('mocked motd')
   })
 
   it("won't fetch a motd if no file was found", async () => {

@@ -6,7 +6,8 @@
 import { defaultConfig } from '../../../api/common/default-config'
 import { Logger } from '../../../utils/logger'
 
-export const MOTD_LOCAL_STORAGE_KEY = 'motd.lastModified'
+export const MOTD_LOCAL_STORAGE_KEY_LAST_MODIFIED = 'motd.lastModified'
+export const MOTD_LOCAL_STORAGE_KEY_CONTENT = 'motd.content'
 const log = new Logger('Motd')
 
 export interface MotdApiResponse {
@@ -22,7 +23,7 @@ export interface MotdApiResponse {
  * @return A promise that gets resolved if the motd was fetched successfully.
  */
 export const fetchMotd = async (): Promise<MotdApiResponse | undefined> => {
-  const cachedLastModified = window.localStorage.getItem(MOTD_LOCAL_STORAGE_KEY)
+  const cachedLastModified = window.localStorage.getItem(MOTD_LOCAL_STORAGE_KEY_LAST_MODIFIED)
   const motdUrl = `/public/motd.md`
 
   if (cachedLastModified) {
@@ -34,8 +35,9 @@ export const fetchMotd = async (): Promise<MotdApiResponse | undefined> => {
       return undefined
     }
     const lastModified = response.headers.get('Last-Modified') || response.headers.get('etag')
+    const cachedContent = window.localStorage.getItem(MOTD_LOCAL_STORAGE_KEY_CONTENT)
     if (lastModified === cachedLastModified) {
-      return undefined
+      return cachedContent ? { motdText: cachedContent, lastModified } : undefined
     }
   }
 
@@ -52,5 +54,8 @@ export const fetchMotd = async (): Promise<MotdApiResponse | undefined> => {
     log.warn("'Last-Modified' or 'Etag' not found for motd.md!")
   }
 
-  return { motdText: await response.text(), lastModified }
+  const motdText = await response.text()
+  window.localStorage.setItem(MOTD_LOCAL_STORAGE_KEY_CONTENT, motdText)
+
+  return { motdText, lastModified }
 }

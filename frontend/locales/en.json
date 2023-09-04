@@ -498,7 +498,8 @@
       },
       "instance": {
         "header": "About this instance",
-        "versionInfo": "Running version"
+        "versionInfo": "Running version",
+        "motdModal": "Instance information message"
       },
       "legal": {
         "header": "Legal",

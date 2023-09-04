@@ -5,53 +5,45 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { cypressId } from '../../../utils/cypress-attribute'
-import { Logger } from '../../../utils/logger'
 import { testId } from '../../../utils/test-id'
 import { CommonModal } from '../../common/modals/common-modal'
 import { RendererIframe } from '../../common/renderer-iframe/renderer-iframe'
 import { EditorToRendererCommunicatorContextProvider } from '../../editor-page/render-context/editor-to-renderer-communicator-context-provider'
 import { RendererType } from '../../render-page/window-post-message-communicator/rendering-message'
-import { fetchMotd, MOTD_LOCAL_STORAGE_KEY } from './fetch-motd'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import { useAsync } from 'react-use'
+import { useMotdMessage } from './use-motd-message'
 
-const logger = new Logger('Motd')
+export interface MotdModalProps {
+  showExplicitly?: boolean
+  onDismiss?: () => void
+}
 
 /**
  * Reads the motd from the global application state and shows it in a modal.
  * If the modal gets dismissed by the user then the "last modified" identifier will be written into the local storage
  * to prevent that the motd will be shown again until it gets changed.
+ *
+ * @param showExplicitly If true then the modal will be shown even if the motd was already dismissed.
+ * @param onDismiss Optional callback when the modal gets dismissed.
  */
-export const MotdModal: React.FC = () => {
+export const MotdModal: React.FC<MotdModalProps> = ({ showExplicitly, onDismiss }) => {
   useTranslation()
+  const { isMessageSet, messageLines, isDismissed, dismissMotd } = useMotdMessage()
 
-  const { error, loading, value } = useAsync(fetchMotd)
-  const [dismissed, setDismissed] = useState(false)
+  const onClickDismiss = useCallback(() => {
+    onDismiss?.()
+    dismissMotd()
+  }, [onDismiss, dismissMotd])
 
-  const lines = useMemo(() => value?.motdText.split('\n'), [value?.motdText])
-
-  const dismiss = useCallback(() => {
-    if (value?.lastModified) {
-      window.localStorage.setItem(MOTD_LOCAL_STORAGE_KEY, value.lastModified)
-    }
-    setDismissed(true)
-  }, [value])
-
-  useEffect(() => {
-    if (error) {
-      logger.error('Error while fetching motd', error)
-    }
-  }, [error])
-
-  if (process.env.NODE_ENV === 'test' && !loading && !value) {
+  if (process.env.NODE_ENV === 'test' && !isMessageSet) {
     return <span {...testId('loaded not visible')}></span>
   }
 
   return (
     <CommonModal
-      show={!!lines && !loading && !error && !dismissed}
+      show={isMessageSet && (showExplicitly || !isDismissed)}
       titleI18nKey={'motd.title'}
       {...cypressId('motd-modal')}>
       <Modal.Body>
@@ -59,14 +51,14 @@ export const MotdModal: React.FC = () => {
           <RendererIframe
             frameClasses={'w-100'}
             rendererType={RendererType.SIMPLE}
-            markdownContentLines={lines as string[]}
+            markdownContentLines={messageLines!}
             adaptFrameHeightToContent={true}
             showWaitSpinner={true}
           />
         </EditorToRendererCommunicatorContextProvider>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant={'success'} onClick={dismiss} {...testId('motd-dismiss')} {...cypressId('motd-dismiss')}>
+        <Button variant={'success'} onClick={onClickDismiss} {...testId('motd-dismiss')} {...cypressId('motd-dismiss')}>
           <Trans i18nKey={'common.dismiss'} />
         </Button>
       </Modal.Footer>
