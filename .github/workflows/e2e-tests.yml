@@ -28,7 +28,7 @@ jobs:
     if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+      - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
         with:
           fetch-depth: 0
       - name: Setup node
@@ -69,7 +69,7 @@ jobs:
         ports:
           - 3306:3306
     steps:
-      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+      - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
         with:
           fetch-depth: 0
       - name: Setup node
@@ -100,7 +100,7 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+      - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
         with:
           fetch-depth: 0
       - name: Setup node
@@ -123,7 +123,7 @@ jobs:
     name: Build test build of frontend
     steps:
       - name: Check out repo
-        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
         with:
           ref: ${{ env.HEAD_COMMIT_HASH }}
 
@@ -167,7 +167,7 @@ jobs:
         run: apt-get update && apt-get install -y jq zstd screen curl
 
       - name: Check out repo
-        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
         with:
           ref: ${{ env.HEAD_COMMIT_HASH }}
 
