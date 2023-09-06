@@ -13,7 +13,7 @@ import { Trans, useTranslation } from 'react-i18next'
 export const NumberOfLinesInDocumentInfo: React.FC = () => {
   useTranslation()
 
-  const linesInDocument = useApplicationState((state) => state.noteDetails.markdownContent.lines.length)
+  const linesInDocument = useApplicationState((state) => state.noteDetails?.markdownContent.lines.length ?? 0)
   const translationOptions = useMemo(() => ({ lines: linesInDocument }), [linesInDocument])
 
   return (

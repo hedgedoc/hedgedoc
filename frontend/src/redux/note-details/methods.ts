@@ -73,9 +73,19 @@ export const updateCursorPositions = (selection: CursorSelection): void => {
  * Updates the current note's metadata from the server.
  */
 export const updateMetadata = async (): Promise<void> => {
-  const updatedMetadata = await getNoteMetadata(store.getState().noteDetails.id)
+  const noteDetails = store.getState().noteDetails
+  if (!noteDetails) {
+    return
+  }
+  const updatedMetadata = await getNoteMetadata(noteDetails.id)
   store.dispatch({
     type: NoteDetailsActionType.UPDATE_METADATA,
     updatedMetadata
   } as UpdateMetadataAction)
+}
+
+export const unloadNote = (): void => {
+  store.dispatch({
+    type: NoteDetailsActionType.UNLOAD_NOTE
+  })
 }

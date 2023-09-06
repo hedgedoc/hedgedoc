@@ -15,17 +15,18 @@ import { useMemo } from 'react'
  */
 export const useSendAdditionalConfigurationToRenderer = (rendererReady: boolean): void => {
   const darkModePreference = useApplicationState((state) => state.darkMode.darkModePreference)
-  const newlinesAreBreaks = useApplicationState((state) => state.noteDetails.frontmatter.newlinesAreBreaks)
+  const newlinesAreBreaks = useApplicationState((state) => state.noteDetails?.frontmatter.newlinesAreBreaks)
 
   useSendToRenderer(
-    useMemo(
-      () => ({
-        type: CommunicationMessageType.SET_ADDITIONAL_CONFIGURATION,
-        darkModePreference: darkModePreference,
-        newLinesAreBreaks: newlinesAreBreaks
-      }),
-      [darkModePreference, newlinesAreBreaks]
-    ),
+    useMemo(() => {
+      return newlinesAreBreaks === undefined
+        ? undefined
+        : {
+            type: CommunicationMessageType.SET_ADDITIONAL_CONFIGURATION,
+            darkModePreference: darkModePreference,
+            newLinesAreBreaks: newlinesAreBreaks
+          }
+    }, [darkModePreference, newlinesAreBreaks]),
     rendererReady
   )
 }

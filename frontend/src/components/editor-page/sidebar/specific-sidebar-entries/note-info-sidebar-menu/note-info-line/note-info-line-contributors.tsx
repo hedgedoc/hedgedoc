@@ -12,7 +12,7 @@ import { People as IconPeople } from 'react-bootstrap-icons'
  * Renders an info line about the number of contributors for the note.
  */
 export const NoteInfoLineContributors: React.FC = () => {
-  const contributors = useApplicationState((state) => state.noteDetails.editedBy.length)
+  const contributors = useApplicationState((state) => state.noteDetails?.editedBy.length ?? 0)
 
   return (
     <SidebarMenuInfoEntry titleI18nKey={'editor.noteInfo.contributors'} icon={IconPeople}>

@@ -26,11 +26,14 @@ import { Trans, useTranslation } from 'react-i18next'
 export const DeleteNoteSidebarEntry: React.FC<PropsWithChildren<SpecificSidebarEntryProps>> = ({ hide, className }) => {
   useTranslation()
   const router = useRouter()
-  const noteId = useApplicationState((state) => state.noteDetails.id)
+  const noteId = useApplicationState((state) => state.noteDetails?.id)
   const [modalVisibility, showModal, closeModal] = useBooleanState()
   const { showErrorNotification } = useUiNotifications()
 
   const deleteNoteAndCloseDialog = useCallback(() => {
+    if (noteId === undefined) {
+      return
+    }
     deleteNote(noteId)
       .then(() => router.push('/history'))
       .catch(showErrorNotification('landing.history.error.deleteNote.text'))

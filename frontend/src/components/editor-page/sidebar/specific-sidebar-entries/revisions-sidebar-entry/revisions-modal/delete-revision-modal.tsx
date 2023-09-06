@@ -21,9 +21,12 @@ import { Trans } from 'react-i18next'
  */
 export const RevisionDeleteModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   const { showErrorNotification } = useUiNotifications()
-  const noteId = useApplicationState((state) => state.noteDetails.id)
+  const noteId = useApplicationState((state) => state.noteDetails?.id)
 
   const deleteAllRevisions = useCallback(() => {
+    if (!noteId) {
+      return
+    }
     deleteRevisionsForNote(noteId).catch(showErrorNotification('editor.modal.deleteRevision.error')).finally(onHide)
   }, [noteId, onHide, showErrorNotification])
 

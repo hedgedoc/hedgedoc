@@ -25,16 +25,16 @@ export interface RevisionViewerProps {
  * @param allRevisions List of metadata for all available revisions.
  */
 export const RevisionViewer: React.FC<RevisionViewerProps> = ({ selectedRevisionId }) => {
-  const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const noteId = useApplicationState((state) => state.noteDetails?.id)
   const darkModeEnabled = useDarkModeState()
 
   const { value, error, loading } = useAsync(async () => {
-    if (selectedRevisionId === undefined) {
+    if (noteId === undefined || selectedRevisionId === undefined) {
       throw new Error('No revision selected')
     } else {
-      return await getRevision(noteIdentifier, selectedRevisionId)
+      return await getRevision(noteId, selectedRevisionId)
     }
-  }, [selectedRevisionId, noteIdentifier])
+  }, [selectedRevisionId, noteId])
 
   const previousRevisionContent = useMemo(() => {
     return Optional.ofNullable(value)

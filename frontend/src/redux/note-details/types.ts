@@ -14,7 +14,8 @@ export enum NoteDetailsActionType {
   SET_NOTE_PERMISSIONS_FROM_SERVER = 'note-details/data/permissions/set',
   UPDATE_NOTE_TITLE_BY_FIRST_HEADING = 'note-details/update-note-title-by-first-heading',
   UPDATE_CURSOR_POSITION = 'note-details/updateCursorPosition',
-  UPDATE_METADATA = 'note-details/update-metadata'
+  UPDATE_METADATA = 'note-details/update-metadata',
+  UNLOAD_NOTE = 'note-details/unload-note'
 }
 
 export type NoteDetailsActions =
@@ -24,6 +25,7 @@ export type NoteDetailsActions =
   | UpdateNoteTitleByFirstHeadingAction
   | UpdateCursorPositionAction
   | UpdateMetadataAction
+  | UnloadNoteAction
 
 /**
  * Action for updating the document content of the currently loaded note.
@@ -68,4 +70,8 @@ export interface UpdateCursorPositionAction extends Action<NoteDetailsActionType
 export interface UpdateMetadataAction extends Action<NoteDetailsActionType> {
   type: NoteDetailsActionType.UPDATE_METADATA
   updatedMetadata: NoteMetadata
+}
+
+export interface UnloadNoteAction extends Action<NoteDetailsActionType> {
+  type: NoteDetailsActionType.UNLOAD_NOTE
 }

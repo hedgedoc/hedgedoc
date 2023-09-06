@@ -33,11 +33,14 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
   type,
   disabled
 }) => {
-  const noteId = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const noteId = useApplicationState((state) => state.noteDetails?.primaryAddress)
   const { t } = useTranslation()
   const { showErrorNotification } = useUiNotifications()
 
   const onSetEntryReadOnly = useCallback(() => {
+    if (!noteId) {
+      return
+    }
     setGroupPermission(noteId, type, false)
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
@@ -46,6 +49,9 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
   }, [noteId, showErrorNotification, type])
 
   const onSetEntryWriteable = useCallback(() => {
+    if (!noteId) {
+      return
+    }
     setGroupPermission(noteId, type, true)
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
@@ -54,6 +60,9 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
   }, [noteId, showErrorNotification, type])
 
   const onSetEntryDenied = useCallback(() => {
+    if (!noteId) {
+      return
+    }
     removeGroupPermission(noteId, type)
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)

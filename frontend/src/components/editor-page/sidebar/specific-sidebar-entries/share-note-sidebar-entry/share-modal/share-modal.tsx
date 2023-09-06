@@ -21,7 +21,11 @@ import { Trans, useTranslation } from 'react-i18next'
  */
 export const ShareModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   useTranslation()
-  const noteFrontmatter = useApplicationState((state) => state.noteDetails.frontmatter)
+  const noteFrontmatter = useApplicationState((state) => state.noteDetails?.frontmatter)
+
+  if (!noteFrontmatter) {
+    return null
+  }
 
   return (
     <CommonModal show={show} onHide={onHide} showCloseButton={true} titleI18nKey={'editor.modal.shareLink.title'}>

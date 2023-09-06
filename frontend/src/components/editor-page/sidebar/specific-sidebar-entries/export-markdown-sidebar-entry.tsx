@@ -20,7 +20,11 @@ export const ExportMarkdownSidebarEntry: React.FC = () => {
   const { t } = useTranslation()
   const markdownContent = useNoteMarkdownContent()
   const onClick = useCallback(() => {
-    const sanitized = sanitize(getGlobalState().noteDetails.title)
+    const title = getGlobalState().noteDetails?.title
+    if (title === undefined) {
+      return
+    }
+    const sanitized = sanitize(title)
     download(markdownContent, `${sanitized !== '' ? sanitized : t('editor.untitledNote')}.md`, 'text/markdown')
   }, [markdownContent, t])
 

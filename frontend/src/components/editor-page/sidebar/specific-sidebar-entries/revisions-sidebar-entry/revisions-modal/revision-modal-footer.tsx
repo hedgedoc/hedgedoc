@@ -37,7 +37,7 @@ export const RevisionModalFooter: React.FC<RevisionModalFooterProps> = ({
   disableDeleteRevisions
 }) => {
   useTranslation()
-  const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const noteId = useApplicationState((state) => state.noteDetails?.id)
   const { showErrorNotification } = useUiNotifications()
 
   const onRevertToRevision = useCallback(() => {
@@ -47,15 +47,15 @@ export const RevisionModalFooter: React.FC<RevisionModalFooterProps> = ({
   }, [])
 
   const onDownloadRevision = useCallback(() => {
-    if (selectedRevisionId === undefined) {
+    if (selectedRevisionId === undefined || noteId === undefined) {
       return
     }
-    getRevision(noteIdentifier, selectedRevisionId)
+    getRevision(noteId, selectedRevisionId)
       .then((revision) => {
-        downloadRevision(noteIdentifier, revision)
+        downloadRevision(noteId, revision)
       })
       .catch(showErrorNotification(''))
-  }, [noteIdentifier, selectedRevisionId, showErrorNotification])
+  }, [noteId, selectedRevisionId, showErrorNotification])
 
   const openDeleteModal = useCallback(() => {
     onHide?.()

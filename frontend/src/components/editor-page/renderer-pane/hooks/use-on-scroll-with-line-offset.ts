@@ -19,8 +19,12 @@ export const useOnScrollWithLineOffset = (onScroll: ScrollCallback | undefined):
       return undefined
     } else {
       return (scrollState: ScrollState) => {
+        const noteDetails = getGlobalState().noteDetails
+        if (noteDetails === null) {
+          return undefined
+        }
         onScroll({
-          firstLineInView: scrollState.firstLineInView + getGlobalState().noteDetails.startOfContentLineOffset,
+          firstLineInView: scrollState.firstLineInView + noteDetails.startOfContentLineOffset,
           scrolledPercentage: scrollState.scrolledPercentage
         })
       }

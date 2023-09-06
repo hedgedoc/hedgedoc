@@ -22,16 +22,17 @@ export const SlideShowPageContent: React.FC = () => {
   const markdownContentLines = useTrimmedNoteMarkdownContentWithoutFrontmatter()
   useTranslation()
 
-  const slideOptions = useApplicationState((state) => state.noteDetails.frontmatter.slideOptions)
+  const slideOptions = useApplicationState((state) => state.noteDetails?.frontmatter.slideOptions)
   const rendererReady = useApplicationState((state) => state.rendererStatus.rendererReady)
   useSendToRenderer(
-    useMemo(
-      () => ({
-        type: CommunicationMessageType.SET_SLIDE_OPTIONS,
-        slideOptions
-      }),
-      [slideOptions]
-    ),
+    useMemo(() => {
+      return !slideOptions
+        ? undefined
+        : {
+            type: CommunicationMessageType.SET_SLIDE_OPTIONS,
+            slideOptions
+          }
+    }, [slideOptions]),
     rendererReady
   )
 

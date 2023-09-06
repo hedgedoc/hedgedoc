@@ -24,13 +24,16 @@ export interface LinkFieldProps {
  */
 export const NoteUrlField: React.FC<LinkFieldProps> = ({ type }) => {
   const baseUrl = useBaseUrl()
-  const noteIdentifier = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const noteId = useApplicationState((state) => state.noteDetails?.id)
 
   const url = useMemo(() => {
+    if (noteId === undefined) {
+      return undefined
+    }
     const url = new URL(baseUrl)
-    url.pathname += `${type}/${noteIdentifier}`
+    url.pathname += `${type}/${noteId}`
     return url.toString()
-  }, [baseUrl, noteIdentifier, type])
+  }, [baseUrl, noteId, type])
 
-  return <CopyableField content={url} shareOriginUrl={url} />
+  return !url ? null : <CopyableField content={url} shareOriginUrl={url} />
 }

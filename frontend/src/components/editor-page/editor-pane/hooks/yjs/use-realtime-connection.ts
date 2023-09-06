@@ -32,7 +32,7 @@ export const useRealtimeConnection = (): MessageTransporter => {
     if (isMockMode) {
       logger.debug('Creating Loopback connection...')
       messageTransporter.setAdapter(
-        new MockedBackendTransportAdapter(getGlobalState().noteDetails.markdownContent.plain)
+        new MockedBackendTransportAdapter(getGlobalState().noteDetails?.markdownContent.plain ?? '')
       )
     } else if (websocketUrl) {
       logger.debug(`Connecting to ${websocketUrl.toString()}`)

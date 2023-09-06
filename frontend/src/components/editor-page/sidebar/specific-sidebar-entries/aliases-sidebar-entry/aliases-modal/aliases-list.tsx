@@ -12,12 +12,14 @@ import React, { Fragment, useMemo } from 'react'
  * Renders the list of aliases.
  */
 export const AliasesList: React.FC = () => {
-  const aliases = useApplicationState((state: ApplicationState) => state.noteDetails.aliases)
+  const aliases = useApplicationState((state: ApplicationState) => state.noteDetails?.aliases)
 
   const aliasesDom = useMemo(() => {
-    return aliases
-      .sort((a, b) => a.name.localeCompare(b.name))
-      .map((alias) => <AliasesListEntry alias={alias} key={alias.name} />)
+    return aliases === undefined
+      ? null
+      : aliases
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((alias) => <AliasesListEntry alias={alias} key={alias.name} />)
   }, [aliases])
 
   return <Fragment>{aliasesDom}</Fragment>

@@ -14,7 +14,7 @@ const LOCAL_FALLBACK_URL = 'ws://localhost:8080/realtime/'
  * Provides the URL for the realtime endpoint.
  */
 export const useWebsocketUrl = (): URL | undefined => {
-  const noteId = useApplicationState((state) => state.noteDetails.id)
+  const noteId = useApplicationState((state) => state.noteDetails?.id)
   const baseUrl = useBaseUrl()
 
   const websocketUrl = useMemo(() => {
@@ -33,7 +33,7 @@ export const useWebsocketUrl = (): URL | undefined => {
   }, [baseUrl])
 
   return useMemo(() => {
-    if (noteId === '') {
+    if (noteId === '' || noteId === undefined) {
       return
     }
     const url = new URL(websocketUrl)

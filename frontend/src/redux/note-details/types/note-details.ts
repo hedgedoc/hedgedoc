@@ -26,3 +26,5 @@ export interface NoteDetails extends Omit<NoteMetadata, UnnecessaryNoteAttribute
   frontmatter: NoteFrontmatter
   startOfContentLineOffset: number
 }
+
+export type OptionalNoteDetails = NoteDetails | null
