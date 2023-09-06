@@ -11,5 +11,5 @@ import { useApplicationState } from './use-application-state'
  * @return The markdown content of the note
  */
 export const useNoteMarkdownContent = (): string => {
-  return useApplicationState((state) => state.noteDetails.markdownContent.plain)
+  return useApplicationState((state) => state.noteDetails?.markdownContent.plain ?? '')
 }

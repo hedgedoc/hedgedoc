@@ -50,7 +50,10 @@ export const useHandleUpload = (): handleUploadSignature => {
         : t('editor.upload.uploadFile.withoutDescription', { fileName: file.name })
 
       const uploadPlaceholder = `![${uploadFileInfo}](upload-${randomId}${additionalUrlText ?? ''})`
-      const noteId = getGlobalState().noteDetails.id
+      const noteId = getGlobalState().noteDetails?.id
+      if (noteId === undefined) {
+        return
+      }
       changeContent(({ currentSelection }) => {
         return replaceSelection(cursorSelection ?? currentSelection, uploadPlaceholder, false)
       })

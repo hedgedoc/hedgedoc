@@ -19,7 +19,7 @@ import { Trans } from 'react-i18next'
  * @param disabled If the user is not the owner, functionality is disabled.
  */
 export const PermissionSectionOwner: React.FC<PermissionDisabledProps> = ({ disabled }) => {
-  const noteId = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const noteId = useApplicationState((state) => state.noteDetails?.id)
   const [changeOwner, setChangeOwner] = useState(false)
   const { showErrorNotification } = useUiNotifications()
 
@@ -29,6 +29,9 @@ export const PermissionSectionOwner: React.FC<PermissionDisabledProps> = ({ disa
 
   const onOwnerChange = useCallback(
     (newOwner: string) => {
+      if (!noteId) {
+        return
+      }
       setNoteOwner(noteId, newOwner)
         .then((updatedPermissions) => {
           setNotePermissionsFromServer(updatedPermissions)

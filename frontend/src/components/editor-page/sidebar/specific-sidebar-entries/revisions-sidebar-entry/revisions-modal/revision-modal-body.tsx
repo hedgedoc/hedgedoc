@@ -27,8 +27,17 @@ export const RevisionModalBody = ({ onShowDeleteModal, onHide }: RevisionModal) 
   useTranslation()
   const isOwner = useIsOwner()
   const [selectedRevisionId, setSelectedRevisionId] = useState<number>()
-  const noteIdentifier = useApplicationState((state) => state.noteDetails.id)
-  const { value: revisions, error, loading } = useAsync(() => getAllRevisions(noteIdentifier), [noteIdentifier])
+  const noteId = useApplicationState((state) => state.noteDetails?.id)
+  const {
+    value: revisions,
+    error,
+    loading
+  } = useAsync(async () => {
+    if (!noteId) {
+      return []
+    }
+    return getAllRevisions(noteId)
+  }, [noteId])
 
   const revisionLength = revisions?.length ?? 0
   const enableDeleteRevisions = revisionLength > 1 && isOwner

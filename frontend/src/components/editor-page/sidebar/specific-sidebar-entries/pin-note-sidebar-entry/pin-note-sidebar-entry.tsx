@@ -22,21 +22,24 @@ import { Trans, useTranslation } from 'react-i18next'
  */
 export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
   useTranslation()
-  const id = useApplicationState((state) => state.noteDetails.id)
+  const noteId = useApplicationState((state) => state.noteDetails?.id)
   const history = useApplicationState((state) => state.history)
   const { showErrorNotification } = useUiNotifications()
 
   const isPinned = useMemo(() => {
-    const entry = history.find((entry) => entry.identifier === id)
+    const entry = history.find((entry) => entry.identifier === noteId)
     if (!entry) {
       return false
     }
     return entry.pinStatus
-  }, [id, history])
+  }, [history, noteId])
 
   const onPinClicked = useCallback(() => {
-    toggleHistoryEntryPinning(id).catch(showErrorNotification('landing.history.error.updateEntry.text'))
-  }, [id, showErrorNotification])
+    if (!noteId) {
+      return
+    }
+    toggleHistoryEntryPinning(noteId).catch(showErrorNotification('landing.history.error.updateEntry.text'))
+  }, [noteId, showErrorNotification])
 
   return (
     <SidebarButton

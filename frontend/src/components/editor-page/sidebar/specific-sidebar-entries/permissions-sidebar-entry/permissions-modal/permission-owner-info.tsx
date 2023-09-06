@@ -26,8 +26,12 @@ export const PermissionOwnerInfo: React.FC<PermissionOwnerInfoProps & Permission
   onEditOwner,
   disabled
 }) => {
-  const noteOwner = useApplicationState((state) => state.noteDetails.permissions.owner)
+  const noteOwner = useApplicationState((state) => state.noteDetails?.permissions.owner)
   const buttonTitle = useTranslatedText('editor.modal.permissions.ownerChange.button')
+
+  if (!noteOwner) {
+    return null
+  }
 
   return (
     <Fragment>

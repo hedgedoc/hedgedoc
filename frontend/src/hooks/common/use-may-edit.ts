@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from './use-application-state'
-import type { NotePermissions } from '@hedgedoc/commons'
 import { userCanEdit } from '@hedgedoc/commons'
 import { useMemo } from 'react'
 
@@ -15,7 +14,7 @@ import { useMemo } from 'react'
  */
 export const useMayEdit = (): boolean => {
   const me: string | undefined = useApplicationState((state) => state.user?.username)
-  const permissions: NotePermissions = useApplicationState((state) => state.noteDetails.permissions)
+  const permissions = useApplicationState((state) => state.noteDetails?.permissions)
 
-  return useMemo(() => userCanEdit(permissions, me), [permissions, me])
+  return useMemo(() => (!permissions ? false : userCanEdit(permissions, me)), [permissions, me])
 }

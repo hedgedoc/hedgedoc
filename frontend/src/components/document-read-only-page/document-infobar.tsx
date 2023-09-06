@@ -22,6 +22,11 @@ export const DocumentInfobar: React.FC = () => {
 
   // TODO Check permissions ("writability") of note and show edit link depending on that.
   const linkTitle = useTranslatedText('views.readOnly.editNote')
+
+  if (noteDetails === null) {
+    return null
+  }
+
   return (
     <div className={`d-flex flex-row my-3 ${styles['document-infobar']}`}>
       <div className={'col-md'}>&nbsp;</div>

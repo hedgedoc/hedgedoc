@@ -71,7 +71,7 @@ describe('Revision modal', () => {
     cy.getByCypressId('sidebar.revision.modal').should('be.visible')
   })
   it('can download revisions', () => {
-    cy.intercept('GET', '/api/private/notes/mock-note/revisions/1', {
+    cy.intercept('GET', `/api/private/notes/${testNoteId}/revisions/1`, {
       id: 1,
       createdAt: defaultCreatedAt,
       title: 'Features',
@@ -86,7 +86,7 @@ describe('Revision modal', () => {
     })
 
     const downloadFolder = Cypress.config('downloadsFolder')
-    const fileName = `mock-note-${defaultCreatedAt.replace(/:/g, '_')}.md`
+    const fileName = `${testNoteId}-${defaultCreatedAt.replace(/:/g, '_')}.md`
     const filePath = join(downloadFolder, fileName)
 
     cy.getByCypressId('revision.modal.lists').contains(formattedDate).click()

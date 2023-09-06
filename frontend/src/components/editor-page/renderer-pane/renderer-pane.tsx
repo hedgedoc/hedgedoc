@@ -28,9 +28,13 @@ export type RendererPaneProps = Omit<
  */
 export const RendererPane: React.FC<RendererPaneProps> = ({ scrollState, onScroll, ...props }) => {
   const trimmedContentLines = useTrimmedNoteMarkdownContentWithoutFrontmatter()
-  const noteType: NoteType = useApplicationState((state) => state.noteDetails.frontmatter.type)
+  const noteType = useApplicationState((state) => state.noteDetails?.frontmatter.type)
   const adjustedOnScroll = useOnScrollWithLineOffset(onScroll)
   const adjustedScrollState = useScrollStateWithoutLineOffset(scrollState)
+
+  if (!noteType) {
+    return null
+  }
 
   return (
     <RendererIframe

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { buildStateFromUpdatedMarkdownContent } from './build-state-from-updated-markdown-content'
-import { initialState } from './initial-state'
 import { buildStateFromFirstHeadingUpdate } from './reducers/build-state-from-first-heading-update'
 import { buildStateFromMetadataUpdate } from './reducers/build-state-from-metadata-update'
 import { buildStateFromServerPermissions } from './reducers/build-state-from-server-permissions'
@@ -12,13 +11,19 @@ import { buildStateFromServerDto } from './reducers/build-state-from-set-note-da
 import { buildStateFromUpdateCursorPosition } from './reducers/build-state-from-update-cursor-position'
 import type { NoteDetailsActions } from './types'
 import { NoteDetailsActionType } from './types'
-import type { NoteDetails } from './types/note-details'
+import type { OptionalNoteDetails } from './types/note-details'
 import type { Reducer } from 'redux'
 
-export const NoteDetailsReducer: Reducer<NoteDetails, NoteDetailsActions> = (
-  state: NoteDetails = initialState,
+export const NoteDetailsReducer: Reducer<OptionalNoteDetails, NoteDetailsActions> = (
+  state: OptionalNoteDetails = null,
   action: NoteDetailsActions
 ) => {
+  if (action.type === NoteDetailsActionType.SET_NOTE_DATA_FROM_SERVER) {
+    return buildStateFromServerDto(action.noteFromServer)
+  }
+  if (state === null) {
+    return null
+  }
   switch (action.type) {
     case NoteDetailsActionType.UPDATE_CURSOR_POSITION:
       return buildStateFromUpdateCursorPosition(state, action.selection)
@@ -28,10 +33,10 @@ export const NoteDetailsReducer: Reducer<NoteDetails, NoteDetailsActions> = (
       return buildStateFromServerPermissions(state, action.notePermissionsFromServer)
     case NoteDetailsActionType.UPDATE_NOTE_TITLE_BY_FIRST_HEADING:
       return buildStateFromFirstHeadingUpdate(state, action.firstHeading)
-    case NoteDetailsActionType.SET_NOTE_DATA_FROM_SERVER:
-      return buildStateFromServerDto(action.noteFromServer)
     case NoteDetailsActionType.UPDATE_METADATA:
       return buildStateFromMetadataUpdate(state, action.updatedMetadata)
+    case NoteDetailsActionType.UNLOAD_NOTE:
+      return null
     default:
       return state
   }

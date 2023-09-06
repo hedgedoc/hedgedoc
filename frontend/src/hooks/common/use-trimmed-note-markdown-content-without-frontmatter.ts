@@ -14,13 +14,23 @@ import { useMemo } from 'react'
  */
 export const useTrimmedNoteMarkdownContentWithoutFrontmatter = (): string[] => {
   const maxLength = useFrontendConfig().maxDocumentLength
-  const markdownContent = useApplicationState((state) => ({
-    lines: state.noteDetails.markdownContent.lines,
-    content: state.noteDetails.markdownContent.plain
-  }))
-  const lineOffset = useApplicationState((state) => state.noteDetails.startOfContentLineOffset)
+  const markdownContent = useApplicationState((state) => {
+    const noteDetails = state.noteDetails
+    if (!noteDetails) {
+      return undefined
+    } else {
+      return {
+        lines: noteDetails.markdownContent.lines,
+        content: noteDetails.markdownContent.plain
+      }
+    }
+  })
+  const lineOffset = useApplicationState((state) => state.noteDetails?.startOfContentLineOffset)
 
   const trimmedLines = useMemo(() => {
+    if (!markdownContent) {
+      return undefined
+    }
     if (markdownContent.content.length > maxLength) {
       return markdownContent.content.slice(0, maxLength).split('\n')
     } else {
@@ -29,6 +39,6 @@ export const useTrimmedNoteMarkdownContentWithoutFrontmatter = (): string[] => {
   }, [markdownContent, maxLength])
 
   return useMemo(() => {
-    return trimmedLines.slice(lineOffset)
+    return trimmedLines === undefined || lineOffset === undefined ? [] : trimmedLines.slice(lineOffset)
   }, [lineOffset, trimmedLines])
 }

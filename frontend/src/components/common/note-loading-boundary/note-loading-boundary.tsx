@@ -15,6 +15,7 @@ import { CreateNonExistingNoteHint } from './create-non-existing-note-hint'
 import { useLoadNoteFromServer } from './hooks/use-load-note-from-server'
 import type { PropsWithChildren } from 'react'
 import React, { useEffect, useMemo } from 'react'
+import { unloadNote } from '../../../redux/note-details/methods'
 
 const logger = new Logger('NoteLoadingBoundary')
 
@@ -36,6 +37,13 @@ export const NoteLoadingBoundary: React.FC<PropsWithChildren<NoteIdProps>> = ({ 
   useEffect(() => {
     loadNoteFromServer()
   }, [loadNoteFromServer])
+
+  useEffect(
+    () => () => {
+      unloadNote()
+    },
+    []
+  )
 
   const errorComponent = useMemo(() => {
     if (error === undefined) {

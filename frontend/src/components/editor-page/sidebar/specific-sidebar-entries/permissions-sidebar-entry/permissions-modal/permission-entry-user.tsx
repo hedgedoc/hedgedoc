@@ -31,10 +31,13 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
   entry,
   disabled
 }) => {
-  const noteId = useApplicationState((state) => state.noteDetails.primaryAddress)
+  const noteId = useApplicationState((state) => state.noteDetails?.primaryAddress)
   const { showErrorNotification } = useUiNotifications()
 
   const onRemoveEntry = useCallback(() => {
+    if (!noteId) {
+      return
+    }
     removeUserPermission(noteId, entry.username)
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
@@ -43,6 +46,9 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
   }, [noteId, entry.username, showErrorNotification])
 
   const onSetEntryReadOnly = useCallback(() => {
+    if (!noteId) {
+      return
+    }
     setUserPermission(noteId, entry.username, false)
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
@@ -51,6 +57,9 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
   }, [noteId, entry.username, showErrorNotification])
 
   const onSetEntryWriteable = useCallback(() => {
+    if (!noteId) {
+      return
+    }
     setUserPermission(noteId, entry.username, true)
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)

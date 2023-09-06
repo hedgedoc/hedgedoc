@@ -16,7 +16,7 @@ export const RemainingCharactersInfo: React.FC = () => {
   const { t } = useTranslation()
 
   const maxDocumentLength = useFrontendConfig().maxDocumentLength
-  const contentLength = useApplicationState((state) => state.noteDetails.markdownContent.plain.length)
+  const contentLength = useApplicationState((state) => state.noteDetails?.markdownContent.plain.length ?? 0)
   const remainingCharacters = useMemo(() => maxDocumentLength - contentLength, [contentLength, maxDocumentLength])
 
   const remainingCharactersClass = useMemo(() => {

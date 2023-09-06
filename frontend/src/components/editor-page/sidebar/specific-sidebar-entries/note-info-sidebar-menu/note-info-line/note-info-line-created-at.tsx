@@ -16,10 +16,13 @@ import { useTranslation } from 'react-i18next'
  */
 export const NoteInfoLineCreatedAt: React.FC = () => {
   useTranslation()
-  const noteCreateTime = useApplicationState((state) => state.noteDetails.createdAt)
-  const noteCreateDateTime = useMemo(() => DateTime.fromSeconds(noteCreateTime), [noteCreateTime])
+  const noteCreateTime = useApplicationState((state) => state.noteDetails?.createdAt)
+  const noteCreateDateTime = useMemo(
+    () => (noteCreateTime === undefined ? undefined : DateTime.fromSeconds(noteCreateTime)),
+    [noteCreateTime]
+  )
 
-  return (
+  return !noteCreateDateTime ? null : (
     <SidebarMenuInfoEntry titleI18nKey={'editor.noteInfo.created'} icon={IconPlus}>
       <TimeFromNow time={noteCreateDateTime} />
     </SidebarMenuInfoEntry>

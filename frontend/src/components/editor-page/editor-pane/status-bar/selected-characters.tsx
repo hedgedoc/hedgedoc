@@ -14,10 +14,10 @@ import { Trans, useTranslation } from 'react-i18next'
 export const SelectedCharacters: React.FC = () => {
   useTranslation()
 
-  const selection = useApplicationState((state) => state.noteDetails.selection)
+  const selection = useApplicationState((state) => state.noteDetails?.selection)
   const count = useMemo(
-    () => (selection.to === undefined ? undefined : selection.to - selection.from),
-    [selection.from, selection.to]
+    () => (selection === undefined || selection.to === undefined ? undefined : selection.to - selection.from),
+    [selection]
   )
   const countTranslationOptions = useMemo(() => ({ count }), [count])
 

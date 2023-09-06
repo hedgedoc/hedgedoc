@@ -16,16 +16,16 @@ import { useEffect, useRef } from 'react'
  * The entry is updated when the title or tags of the note change.
  */
 export const useUpdateLocalHistoryEntry = (): void => {
-  const id = useApplicationState((state) => state.noteDetails.id)
+  const id = useApplicationState((state) => state.noteDetails?.id)
   const userExists = useApplicationState((state) => !!state.user)
-  const currentNoteTitle = useApplicationState((state) => state.noteDetails.title)
-  const currentNoteTags = useApplicationState((state) => state.noteDetails.frontmatter.tags)
+  const currentNoteTitle = useApplicationState((state) => state.noteDetails?.title ?? '')
+  const currentNoteTags = useApplicationState((state) => state.noteDetails?.frontmatter.tags ?? [])
 
   const lastNoteTitle = useRef('')
   const lastNoteTags = useRef<string[]>([])
 
   useEffect(() => {
-    if (userExists) {
+    if (userExists || id === undefined) {
       return
     }
     if (currentNoteTitle === lastNoteTitle.current && equal(currentNoteTags, lastNoteTags.current)) {

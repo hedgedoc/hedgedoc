@@ -18,10 +18,13 @@ import { Trans, useTranslation } from 'react-i18next'
  */
 export const PermissionSectionSpecialGroups: React.FC<PermissionDisabledProps> = ({ disabled }) => {
   useTranslation()
-  const groupPermissions = useApplicationState((state) => state.noteDetails.permissions.sharedToGroups)
+  const groupPermissions = useApplicationState((state) => state.noteDetails?.permissions.sharedToGroups)
   const isOwner = useIsOwner()
 
   const specialGroupEntries = useMemo(() => {
+    if (!groupPermissions) {
+      return
+    }
     const groupEveryone = groupPermissions.find((entry) => entry.groupName === (SpecialGroup.EVERYONE as string))
     const groupLoggedIn = groupPermissions.find((entry) => entry.groupName === (SpecialGroup.LOGGED_IN as string))
 
@@ -38,6 +41,10 @@ export const PermissionSectionSpecialGroups: React.FC<PermissionDisabledProps> =
         : AccessLevel.NONE
     }
   }, [groupPermissions])
+
+  if (!specialGroupEntries) {
+    return null
+  }
 
   return (
     <Fragment>

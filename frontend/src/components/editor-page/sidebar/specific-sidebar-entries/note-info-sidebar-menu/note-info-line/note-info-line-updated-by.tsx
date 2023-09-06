@@ -15,7 +15,7 @@ import { Trans, useTranslation } from 'react-i18next'
  */
 export const NoteInfoLineUpdatedBy: React.FC = () => {
   useTranslation()
-  const noteUpdateUser = useApplicationState((state) => state.noteDetails.updateUsername)
+  const noteUpdateUser = useApplicationState((state) => state.noteDetails?.updateUsername)
 
   const userBlock = useMemo(() => {
     if (!noteUpdateUser) {
