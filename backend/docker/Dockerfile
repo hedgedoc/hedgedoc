@@ -40,7 +40,7 @@ ARG TURBO_TEAM
 ARG TURBO_API
 ARG TURBO_TOKEN
 
-RUN yarn turbo run build --filter=backend --no-cache --no-daemon
+RUN yarn build --filter=backend --no-cache --no-daemon
 
 ## Stage 2b: Install only prod dependencies
 FROM code-with-deps as prod-dependencies

@@ -27,7 +27,7 @@ jobs:
           NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
 
       - name: Run ESLint
-        run: yarn turbo run lint
+        run: yarn lint
         shell: bash
         env:
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}

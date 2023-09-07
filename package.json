@@ -13,13 +13,15 @@
   ],
   "scripts": {
     "build": "dotenv -c production -- turbo run build",
+    "build:test": "dotenv -c production -- turbo run build:test",
     "lint": "dotenv -c development -- turbo run lint",
     "lint:fix": "dotenv -c development -- turbo run lint:fix",
     "format": "dotenv -c development -- turbo run format",
     "start:dev": "dotenv -c development -- turbo run start:dev",
     "start": "dotenv -c production -- turbo run start",
     "test:ci": "dotenv -c test -- turbo run test:ci",
-    "test": "dotenv -c test -- turbo run test"
+    "test": "dotenv -c test -- turbo run test",
+    "test:e2e:ci": "dotenv -c test -- turbo run test:e2e:ci"
   },
   "packageManager": "yarn@3.6.3",
   "resolutions": {
