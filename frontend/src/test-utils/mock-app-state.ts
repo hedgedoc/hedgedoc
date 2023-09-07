@@ -5,7 +5,6 @@
  */
 import * as useApplicationStateModule from '../hooks/common/use-application-state'
 import type { ApplicationState } from '../redux/application-state'
-import type { DeepPartial } from 'redux'
 import { initialState as initialStateDarkMode } from '../redux/dark-mode/reducers'
 import { initialState as initialStateEditorConfig } from '../redux/editor/reducers'
 import { initialState as initialStateNoteDetails } from '../redux/note-details/initial-state'
@@ -13,7 +12,7 @@ import { initialState as initialStateRealtimeStatus } from '../redux/realtime/re
 import { initialState as initialStateRendererStatus } from '../redux/renderer-status/reducers'
 import type { NoteDetails } from '../redux/note-details/types/note-details'
 import type { RealtimeStatus } from '../redux/realtime/types'
-import type { HistoryEntryWithOrigin } from '../api/history/types'
+import type { DeepPartial } from '@hedgedoc/commons'
 
 jest.mock('../redux/editor/methods', () => ({
   loadFromLocalStorage: jest.fn().mockReturnValue(undefined)
@@ -37,7 +36,7 @@ export const mockAppState = (state?: DeepPartial<ApplicationState>) => {
         ...initialStateEditorConfig,
         ...state?.editorConfig
       },
-      history: (state?.history ?? []) as HistoryEntryWithOrigin[],
+      history: state?.history ?? [],
       noteDetails: {
         ...initialStateNoteDetails,
         ...state?.noteDetails
