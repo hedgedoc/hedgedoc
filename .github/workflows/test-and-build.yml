@@ -34,7 +34,7 @@ jobs:
           NODEJS_VERSION: ${{ matrix.node }}
 
       - name: Build project
-        run: yarn turbo run build
+        run: yarn build
         shell: bash
         env:
           NODEJS_VERSION: ${{ matrix.node }}
@@ -43,7 +43,7 @@ jobs:
           TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
       - name: Test Project
-        run: yarn turbo run test:ci
+        run: yarn test:ci
         shell: bash
         env:
           NODEJS_VERSION: ${{ matrix.node }}
