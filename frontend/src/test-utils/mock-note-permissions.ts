@@ -4,10 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { ApplicationState } from '../redux/application-state'
-import type { DeepPartial } from 'redux'
 import { mockAppState } from './mock-app-state'
-import type { LoginUserInfo } from '../api/me/types'
-import type { NotePermissions } from '@hedgedoc/commons'
+import type { DeepPartial, NotePermissions } from '@hedgedoc/commons'
 
 /**
  * Mocks the {@link NotePermissions} field of a note in the {@link ApplicationState }for a test.
@@ -38,6 +36,6 @@ export const mockNotePermissions = (
     user: {
       ...additionalState?.user,
       username: ownUsername
-    } as LoginUserInfo
-  })
+    }
+  } as DeepPartial<ApplicationState>)
 }
