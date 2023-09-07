@@ -19,8 +19,8 @@
     "format": "dotenv -c development -- turbo run format",
     "start:dev": "dotenv -c development -- turbo run start:dev",
     "start": "dotenv -c production -- turbo run start",
-    "test:ci": "dotenv -c test -- turbo run test:ci",
-    "test": "dotenv -c test -- turbo run test",
+    "test:ci": "dotenv -c test -- turbo run test:ci --concurrency 1",
+    "test": "dotenv -c test -- turbo run test --concurrency 1",
     "test:e2e:ci": "dotenv -c test -- turbo run test:e2e:ci"
   },
   "packageManager": "yarn@3.6.3",
