@@ -2527,7 +2527,7 @@ __metadata:
     ts-node: 10.9.1
     twemoji-colr-font: 14.1.3
     typescript: 5.2.2
-    user-agent-data-types: 0.3.1
+    user-agent-data-types: 0.4.2
     uuid: 9.0.0
     vega: 5.25.0
     vega-embed: 6.22.2
@@ -17792,10 +17792,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"user-agent-data-types@npm:0.3.1":
-  version: 0.3.1
-  resolution: "user-agent-data-types@npm:0.3.1"
-  checksum: b1e00d85fe1471d1adb203c371a99c4eba8b478d648611f2fcdad4fba31428fdc5f777739c14d58b8995e5ab54bccd6b92e169e9594ca7a07294846fd70c3d4b
+"user-agent-data-types@npm:0.4.2":
+  version: 0.4.2
+  resolution: "user-agent-data-types@npm:0.4.2"
+  checksum: 0c448b820b70eb99f64ce611ddda70ff3a5af4bfe0b02e4fcae72bb8377710593358657413399daf583622c63a50e024b11d8947d1136ddeca01d6b066f963ad
   languageName: node
   linkType: hard
 
