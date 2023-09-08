@@ -83,8 +83,7 @@
       ]
     },
 
-    "test:ci": {},
-    "@hedgedoc/backend#test:ci": {
+    "test:ci": {
       "dependsOn": [
         "^build"
       ],
@@ -93,14 +92,6 @@
       ],
       "outputs": [
         "coverage/**"
-      ]
-    },
-    "@hedgedoc/frontend#test:ci": {
-      "dependsOn": [
-        "^build"
-      ],
-      "env": [
-        "NODEJS_VERSION"
       ]
     },
 
