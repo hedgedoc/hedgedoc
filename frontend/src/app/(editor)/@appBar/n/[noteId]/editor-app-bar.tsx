@@ -16,6 +16,21 @@ import React from 'react'
  */
 export const EditorAppBar: React.FC = () => {
   const isSynced = useApplicationState((state) => state.realtimeStatus.isSynced)
+  const noteDetailsExist = useApplicationState((state) => !!state.noteDetails)
 
-  return <BaseAppBar>{isSynced ? <NoteTitleElement /> : <RealtimeConnectionAlert />}</BaseAppBar>
+  if (!noteDetailsExist) {
+    return <BaseAppBar />
+  } else if (isSynced) {
+    return (
+      <BaseAppBar>
+        <NoteTitleElement />
+      </BaseAppBar>
+    )
+  } else {
+    return (
+      <BaseAppBar>
+        <RealtimeConnectionAlert />
+      </BaseAppBar>
+    )
+  }
 }
