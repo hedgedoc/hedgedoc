@@ -36,6 +36,6 @@ Congratulation you know have a working local user account for your HedgeDoc inst
 [register-button]: ../images/tutorial/user/register-button.png
 [register-form]: ../images/tutorial/user/register-form.png
 
-[tutorials/first-note]: /tutorials/first-note/
-[tutorials/first-presentation]: /tutorials/first-presentation/
-[config]: /references/config/
+[tutorials/first-note]: first-note.md
+[tutorials/first-presentation]: first-presentation.md
+[config]: ../references/config/index.md

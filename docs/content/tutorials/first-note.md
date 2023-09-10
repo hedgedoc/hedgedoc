@@ -47,6 +47,6 @@ Also you can use
 [editor]: ../images/tutorial/note/editor.png
 [editor-filled]: ../images/tutorial/note/editor-filled.png
 
-[hfm]: /references/hfm/
-[tutorials/first-presentation]: /tutorials/first-presentation/
-[config]: /references/config/
+[hfm]: ../references/hfm.md
+[tutorials/first-presentation]: first-presentation.md
+[config]: ../references/config/index.md

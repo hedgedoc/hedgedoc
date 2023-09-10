@@ -11,4 +11,4 @@
 | `HD_MAX_DOCUMENT_LENGTH` | 100000                 |                             | The maximum length of any one document. Changes to this will impact performance for your users.                                                        |
 | `HD_PERSIST_INTERVAL`    | 10                     | `0`, `5`, `10`, `20`        | The time interval in **minutes** for the periodic note revision creation during realtime editing. `0` deactivates the periodic note revision creation. |
 
-[faq-entry]: /faq/#why-should-i-want-to-run-my-renderer-on-a-different-sub-domain
+[faq-entry]: ../../faq/index.md#why-should-i-want-to-run-my-renderer-on-a-different-sub-domain

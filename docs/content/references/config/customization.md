@@ -43,11 +43,11 @@ For this demo we use the name `DEMO Corp`
 ![The name in the editor (dark)][name-editor-dark]
 *name used in the editor*
 
-[links-frontpage]: /images/customization/links.png
-[demo-logo]: /images/customization/demo_logo.png
-[logo-front-page]: /images/customization/logo/frontpage.png
-[logo-editor-light]: /images/customization/logo/editor_light.png
-[logo-editor-dark]: /images/customization/logo/editor_dark.png
-[name-front-page]: /images/customization/name/frontpage.png
-[name-editor-light]: /images/customization/name/editor_light.png
-[name-editor-dark]: /images/customization/name/editor_dark.png
+[links-frontpage]: ../../images/customization/links.png
+[demo-logo]: ../../images/customization/demo_logo.png
+[logo-front-page]: ../../images/customization/logo/frontpage.png
+[logo-editor-light]: ../../images/customization/logo/editor_light.png
+[logo-editor-dark]: ../../images/customization/logo/editor_dark.png
+[name-front-page]: ../../images/customization/name/frontpage.png
+[name-editor-light]: ../../images/customization/name/editor_light.png
+[name-editor-dark]: ../../images/customization/name/editor_dark.png
