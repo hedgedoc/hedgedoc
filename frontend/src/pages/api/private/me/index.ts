@@ -8,6 +8,11 @@ import { HttpMethod, respondToMatchingRequest } from '../../../../handler-utils/
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = (req: NextApiRequest, res: NextApiResponse): void => {
+  const cookieSet = req.headers?.['cookie']?.split(';').find((value) => value.trim() === 'mock-session=1') !== undefined
+  if (!cookieSet) {
+    res.status(403).json({})
+    return
+  }
   respondToMatchingRequest<LoginUserInfo>(HttpMethod.GET, req, res, {
     username: 'mock',
     photo: '/public/img/avatar.png',

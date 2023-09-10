@@ -89,7 +89,7 @@ const rawNextConfig = {
     return Promise.resolve([
       {
         source: '/',
-        destination: '/intro',
+        destination: '/login',
         permanent: true
       }
     ])

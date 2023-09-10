@@ -147,7 +147,7 @@ describe('History', () => {
         body: []
       })
       cy.visitHistory()
-      cy.logout()
+      cy.logOut()
 
       cy.fixture('history.json').as('history')
       cy.fixture('history-2.json').as('history-2')

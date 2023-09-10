@@ -21,7 +21,7 @@ export const HelpDropdown: React.FC = () => {
   useTranslation()
 
   return (
-    <Dropdown>
+    <Dropdown drop={'start'}>
       <Dropdown.Toggle size={'sm'} className={'h-100'}>
         <UiIcon icon={IconQuestion} />
       </Dropdown.Toggle>

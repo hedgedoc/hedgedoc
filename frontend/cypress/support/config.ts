@@ -8,7 +8,9 @@ import { HttpMethod } from '../../src/handler-utils/respond-to-matching-request'
 
 declare namespace Cypress {
   interface Chainable {
-    loadConfig(): Chainable<Window>
+    loadConfig(additionalConfig?: Partial<typeof config>): Chainable<Window>,
+    logIn: Chainable<Window>,
+    logOut: Chainable<Window>
   }
 }
 
@@ -84,8 +86,17 @@ Cypress.Commands.add('loadConfig', (additionalConfig?: Partial<typeof config>) =
   return cy.request(HttpMethod.POST, '/api/private/config', { ...config, ...additionalConfig })
 })
 
+Cypress.Commands.add('logIn', () => {
+  return cy.setCookie('mock-session', '1', { path: '/' })
+})
+
+Cypress.Commands.add('logOut', () => {
+  return cy.clearCookie('mock-session')
+})
+
 beforeEach(() => {
   cy.loadConfig()
+  cy.logIn()
 
   cy.intercept('GET', '/public/motd.md', {
     body: '404 Not Found!',

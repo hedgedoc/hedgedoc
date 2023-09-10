@@ -1,13 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { AuthProvider } from '../../../../api/config/types'
-import { AuthProviderType } from '../../../../api/config/types'
-import { Logger } from '../../../../utils/logger'
-import { IconGitlab } from '../../../common/icons/additional/icon-gitlab'
-import styles from '../via-one-click.module.scss'
+import styles from './via-one-click.module.scss'
 import type { Icon } from 'react-bootstrap-icons'
 import {
   Dropbox as IconDropbox,
@@ -19,6 +15,10 @@ import {
   PersonRolodex as IconPersonRolodex,
   Twitter as IconTwitter
 } from 'react-bootstrap-icons'
+import { Logger } from '../../../utils/logger'
+import type { AuthProvider } from '../../../api/config/types'
+import { AuthProviderType } from '../../../api/config/types'
+import { IconGitlab } from '../../common/icons/additional/icon-gitlab'
 
 export interface OneClickMetadata {
   name: string

@@ -7,12 +7,12 @@ import { updateDisplayName } from '../../../api/me'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
 import { DisplayNameField } from '../../common/fields/display-name-field'
-import { fetchAndSetUser } from '../../login-page/auth/utils'
 import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 import type { FormEvent } from 'react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
+import { fetchAndSetUser } from '../../login-page/utils/fetch-and-set-user'
 
 /**
  * Profile page section for changing the current display name.

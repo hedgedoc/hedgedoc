@@ -8,6 +8,7 @@
 describe('Intro page', () => {
   beforeEach(() => {
     cy.intercept('/public/intro.md', 'test content')
+    cy.logOut()
     cy.visitHome()
   })
 
@@ -23,17 +24,6 @@ describe('Intro page', () => {
       cy.visitHome()
 
       cy.getByCypressId('documentIframe').should('not.exist')
-    })
-  })
-
-  describe('sign in button', () => {
-    it('is hidden when logged in', () => {
-      cy.getByCypressId('sign-in-button').should('not.exist')
-    })
-
-    it('is visible when logged out', () => {
-      cy.logout()
-      cy.getByCypressId('sign-in-button').should('exist')
     })
   })
 })

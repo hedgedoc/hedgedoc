@@ -7,11 +7,6 @@ import type { MediaUpload } from '../../../../api/media/types'
 import { HttpMethod, respondToMatchingRequest } from '../../../../handler-utils/respond-to-matching-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-/*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
- *
- * SPDX-License-Identifier: AGPL-3.0-only
- */
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
   respondToMatchingRequest<MediaUpload[]>(HttpMethod.GET, req, res, [
     {

@@ -7,17 +7,32 @@ import type { AuthProvider } from '../../src/api/config/types'
 import { AuthProviderType } from '../../src/api/config/types'
 
 const initLoggedOutTestWithCustomAuthProviders = (cy: Cypress.cy, enabledProviders: AuthProvider[]) => {
+  cy.logOut()
   cy.loadConfig({
     authProviders: enabledProviders
   })
-  cy.visitHome()
-  cy.logout()
+  cy.visitHistory()
 }
 
 describe('When logged-in, ', () => {
   it('sign-in button is hidden', () => {
-    cy.visitHome()
+    cy.visitHistory()
+    cy.getByCypressId('base-app-bar').should('be.visible')
     cy.getByCypressId('sign-in-button').should('not.exist')
+  })
+  describe('login page route will redirect', () => {
+    it('to /history if no redirect url has been provided', () => {
+      cy.visit('/login')
+      cy.url().should('contain', '/history')
+    })
+    it('to any page if a redirect url has been provided', () => {
+      cy.visit('/login?redirectBackTo=/profile')
+      cy.url().should('contain', '/profile')
+    })
+    it('to /history if a external redirect url has been provided', () => {
+      cy.visit('/login?redirectBackTo=https://example.org')
+      cy.url().should('contain', '/history')
+    })
   })
 })
 
