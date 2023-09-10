@@ -3,8 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { AuthProvider } from '../../../api/config/types'
-import { authProviderTypeOneClick } from '../../../api/config/types'
+
 import { getMe } from '../../../api/me'
 import { setUser } from '../../../redux/user/methods'
 
@@ -20,14 +19,4 @@ export const fetchAndSetUser: () => Promise<void> = async () => {
     authProvider: me.authProvider,
     email: me.email
   })
-}
-
-/**
- * Filter to apply to a list of auth providers to get only one-click providers.
- *
- * @param provider The provider to test whether it is a one-click provider or not.
- * @return {@link true} when the provider is a one-click one, {@link false} otherwise.
- */
-export const filterOneClickProviders = (provider: AuthProvider): boolean => {
-  return authProviderTypeOneClick.includes(provider.type)
 }

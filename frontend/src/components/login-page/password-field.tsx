@@ -1,12 +1,17 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useTranslatedText } from '../../../../hooks/common/use-translated-text'
-import type { AuthFieldProps } from './fields'
+import type { ChangeEvent } from 'react'
 import React from 'react'
 import { Form } from 'react-bootstrap'
+import { useTranslatedText } from '../../hooks/common/use-translated-text'
+
+export interface AuthFieldProps {
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void
+  invalid: boolean
+}
 
 /**
  * Renders an input field for the password of a user.

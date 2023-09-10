@@ -15,13 +15,17 @@ import type { PropsWithChildren } from 'react'
 import React from 'react'
 import { Nav, Navbar } from 'react-bootstrap'
 import { HistoryButton } from './app-bar-elements/help-dropdown/history-button'
+import { cypressId } from '../../../utils/cypress-attribute'
 
 /**
  * Renders the base app bar with branding, help, settings user elements.
  */
 export const BaseAppBar: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <Navbar expand={true} className={`px-2 py-1 align-items-center border-bottom ${styles.navbar}`}>
+    <Navbar
+      expand={true}
+      className={`px-2 py-1 align-items-center border-bottom ${styles.navbar}`}
+      {...cypressId('base-app-bar')}>
       <Nav className={`align-items-center justify-content-start gap-2 flex-grow-1 ${styles.side}`}>
         <BrandingElement />
       </Nav>

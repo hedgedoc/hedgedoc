@@ -7,13 +7,13 @@ import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
 import { ShowIf } from '../../common/show-if/show-if'
-import { filterOneClickProviders } from '../../login-page/auth/utils'
-import { getOneClickProviderMetadata } from '../../login-page/auth/utils/get-one-click-provider-metadata'
 import Link from 'next/link'
 import React, { useMemo } from 'react'
 import { Button } from 'react-bootstrap'
 import type { ButtonProps } from 'react-bootstrap/Button'
 import { Trans } from 'react-i18next'
+import { filterOneClickProviders } from '../../login-page/utils/filter-one-click-providers'
+import { getOneClickProviderMetadata } from '../../login-page/one-click/get-one-click-provider-metadata'
 
 export type SignInButtonProps = Omit<ButtonProps, 'href'>
 
@@ -28,7 +28,7 @@ export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props })
   const authProviders = useFrontendConfig().authProviders
 
   const loginLink = useMemo(() => {
-    const oneClickProviders = authProviders.filter(filterOneClickProviders)
+    const oneClickProviders = filterOneClickProviders(authProviders)
     if (authProviders.length === 1 && oneClickProviders.length === 1) {
       const metadata = getOneClickProviderMetadata(oneClickProviders[0])
       return metadata.url

@@ -554,6 +554,9 @@
     "signIn": "Sign In",
     "signOut": "Sign Out",
     "logoutFailed": "There was an error logging you out.\nClose your browser window to ensure session data is removed.",
+    "guest": {
+      "title": "Continue as guest"
+    },
     "auth": {
       "email": "Email",
       "password": "Password",

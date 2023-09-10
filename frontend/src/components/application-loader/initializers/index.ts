@@ -6,10 +6,10 @@
 import { refreshHistoryState } from '../../../redux/history/methods'
 import { Logger } from '../../../utils/logger'
 import { isDevMode, isTestMode } from '../../../utils/test-modes'
-import { fetchAndSetUser } from '../../login-page/auth/utils'
 import { loadDarkMode } from './load-dark-mode'
 import { setUpI18n } from './setupI18n'
 import { loadFromLocalStorage } from '../../../redux/editor/methods'
+import { fetchAndSetUser } from '../../login-page/utils/fetch-and-set-user'
 
 const logger = new Logger('Application Loader')
 
