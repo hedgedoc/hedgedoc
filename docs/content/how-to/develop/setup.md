@@ -158,5 +158,5 @@ We recommend to use our pre-configured [Caddy][caddy] configuration.
 [hedgedoc-repo]: https://github.com/hedgedoc/hedgedoc
 [yarn]: https://yarnpkg.com/getting-started/install
 [caddy]: https://caddyserver.com/
-[config-docs]: /references/config/
+[config-docs]: ../../references/config/index.md
 [frontend-setup]: ./frontend.md

@@ -58,18 +58,18 @@ There are different ways how you can participate in the HedgeDoc project:
   your own features.
 
 [hedgedoc-tour]: https://tour.hedgedoc.org
-[install-guide]: /tutorials/setup/
-[config-reference]: /references/config/
+[install-guide]: tutorials/setup.md
+[config-reference]: references/config/index.md
 
-[faq]: /faq/
+[faq]: faq/index.md
 [community-forum]: https://community.hedgedoc.org/
 [chat]: https://chat.hedgedoc.org
 [issue-tracker]: https://github.com/hedgedoc/hedgedoc/issues/new/choose
 
-[tutorials]: /tutorials/
-[how-to]: /how-to/
-[core-concepts]: /concepts/
-[references]: /references/
+[tutorials]: tutorials/index.md
+[how-to]: how-to/index.md
+[core-concepts]: concepts/index.md
+[references]: references/index.md
 
 [weblate]: https://translate.hedgedoc.org
-[how-to-dev]: /how-to/develop/
+[how-to-dev]: how-to/develop/setup.md

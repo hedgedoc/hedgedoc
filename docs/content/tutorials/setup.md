@@ -71,12 +71,12 @@ about [reverse proxying][reverse-proxying].
 [docker-docs]: https://docs.docker.com/
 [docker-install]: https://docs.docker.com/engine/install/
 
-[tutorials/user]: /tutorials/user/
-[tutorials/first-note]: /tutorials/first-note/
-[tutorials/first-presentation]: /tutorials/first-presentation/
+[tutorials/user]: user.md
+[tutorials/first-note]: first-note.md
+[tutorials/first-presentation]: first-presentation.md
 
-[reverse-proxying]: /how-to/reverse-proxy/
-[backups]: /how-to/backup/
-[auth-methods]: /how-to/auth/
+[reverse-proxying]: ../how-to/reverse-proxy.md
+[backups]: ../how-to/backup.md
+[auth-methods]: ../how-to/auth.md
 
-[config]: /references/config/
+[config]: ../references/config/index.md
