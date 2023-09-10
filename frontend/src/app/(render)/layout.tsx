@@ -7,6 +7,7 @@ import '../../../global-styles/index.scss'
 import { ApplicationLoader } from '../../components/application-loader/application-loader'
 import { BaseUrlContextProvider } from '../../components/common/base-url/base-url-context-provider'
 import { FrontendConfigContextProvider } from '../../components/common/frontend-config-context/frontend-config-context-provider'
+import { ExpectedOriginBoundary } from '../../components/layout/expected-origin-boundary'
 import { StoreProvider } from '../../redux/store-provider'
 import { baseUrlFromEnvExtractor } from '../../utils/base-url-from-env-extractor'
 import React from 'react'
@@ -19,16 +20,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang='en'>
       <body>
-        <BaseUrlContextProvider baseUrls={baseUrls}>
-          <FrontendConfigContextProvider config={frontendConfig}>
-            <StoreProvider>
-              <ApplicationLoader>{children}</ApplicationLoader>
-            </StoreProvider>
-          </FrontendConfigContextProvider>
-        </BaseUrlContextProvider>
+        <ExpectedOriginBoundary expectedOrigin={baseUrls.renderer}>
+          <BaseUrlContextProvider baseUrls={baseUrls}>
+            <FrontendConfigContextProvider config={frontendConfig}>
+              <StoreProvider>
+                <ApplicationLoader>{children}</ApplicationLoader>
+              </StoreProvider>
+            </FrontendConfigContextProvider>
+          </BaseUrlContextProvider>
+        </ExpectedOriginBoundary>
       </body>
     </html>
   )
 }
-
-export const dynamic = 'force-dynamic'
