@@ -1164,7 +1164,7 @@ __metadata:
     abcjs: 6.2.2
     archiver: 5.3.2
     async: 3.2.4
-    aws-sdk: 2.1454.0
+    aws-sdk: 2.1459.0
     azure-storage: 2.10.7
     babel-cli: 6.26.0
     babel-core: 6.26.3
@@ -1939,9 +1939,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-sdk@npm:2.1454.0":
-  version: 2.1454.0
-  resolution: "aws-sdk@npm:2.1454.0"
+"aws-sdk@npm:2.1459.0":
+  version: 2.1459.0
+  resolution: "aws-sdk@npm:2.1459.0"
   dependencies:
     buffer: 4.9.2
     events: 1.1.1
@@ -1953,7 +1953,7 @@ __metadata:
     util: ^0.12.4
     uuid: 8.0.0
     xml2js: 0.5.0
-  checksum: bc4f425c45333bea67e75dd6bb78db974967149d815b24af9dd12e49a0f00f1e14a5d3d1c20322e0ccbc99ac5a5a8e550b8275eb0020d9e27cbad1214ede61ee
+  checksum: 576e783384c5e3fbc73aec6a2edbcc1cf9d92bee665b402d4b6dfb332196f2ab90777acd1e5d95b295a04b04671091b34a3c0993135e97d589a957dc9b439ca1
   languageName: node
   linkType: hard
 
