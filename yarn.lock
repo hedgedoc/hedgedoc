@@ -2325,7 +2325,7 @@ __metadata:
     htmlparser2: 9.0.0
     http-proxy-middleware: 2.0.6
     jest: 29.7.0
-    joi: 17.10.1
+    joi: 17.10.2
     ldapauth-fork: 5.0.5
     markdown-it: 13.0.1
     minio: 7.1.3
@@ -2373,7 +2373,7 @@ __metadata:
     eslint-plugin-prettier: 5.0.0
     eventemitter2: 6.4.9
     jest: 29.7.0
-    joi: 17.10.1
+    joi: 17.10.2
     js-yaml: 4.1.0
     prettier: 3.0.3
     reveal.js: 4.5.0
@@ -12220,16 +12220,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"joi@npm:17.10.1":
-  version: 17.10.1
-  resolution: "joi@npm:17.10.1"
+"joi@npm:17.10.2":
+  version: 17.10.2
+  resolution: "joi@npm:17.10.2"
   dependencies:
     "@hapi/hoek": ^9.0.0
     "@hapi/topo": ^5.0.0
     "@sideway/address": ^4.1.3
     "@sideway/formula": ^3.0.1
     "@sideway/pinpoint": ^2.0.0
-  checksum: 7affbb27ae9283596d6471871352b85ebf73a1e782c0be1998bce1ecc86ba48bee834c8af9a44d7143bb470654d6ae1248a29009ee5463618675d655dbd69306
+  checksum: 2fac59e83b35465d04ffcd33a937c39795264bdd3d392bebee8034710f84631a400cd320a3bb0bb736e70ce930abb1ea551bc3ffbeca023b53417d864eb216a4
   languageName: node
   linkType: hard
 
