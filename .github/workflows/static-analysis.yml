@@ -30,7 +30,7 @@ jobs:
         with:
           args: '--sarif --output results.sarif src || true'
       - name: Upload njsscan report
-        uses: github/codeql-action/upload-sarif@00e563ead9f72a8461b24876bee2d0c2e8bd2ee8 # v2.21.5
+        uses: github/codeql-action/upload-sarif@04daf014b50eaf774287bf3f0f1869d4b4c4b913 # v2.21.7
         with:
           sarif_file: results.sarif
 
@@ -49,15 +49,15 @@ jobs:
         uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@00e563ead9f72a8461b24876bee2d0c2e8bd2ee8 # v2.21.5
+        uses: github/codeql-action/init@04daf014b50eaf774287bf3f0f1869d4b4c4b913 # v2.21.7
         with:
           languages: ${{ matrix.language }}
           queries: +security-and-quality
 
       - name: Autobuild
-        uses: github/codeql-action/autobuild@00e563ead9f72a8461b24876bee2d0c2e8bd2ee8 # v2.21.5
+        uses: github/codeql-action/autobuild@04daf014b50eaf774287bf3f0f1869d4b4c4b913 # v2.21.7
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@00e563ead9f72a8461b24876bee2d0c2e8bd2ee8 # v2.21.5
+        uses: github/codeql-action/analyze@04daf014b50eaf774287bf3f0f1869d4b4c4b913 # v2.21.7
         with:
           category: "/language:${{ matrix.language }}"
