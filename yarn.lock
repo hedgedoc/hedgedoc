@@ -2095,19 +2095,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@darraghor/eslint-plugin-nestjs-typed@npm:4.0.16":
-  version: 4.0.16
-  resolution: "@darraghor/eslint-plugin-nestjs-typed@npm:4.0.16"
+"@darraghor/eslint-plugin-nestjs-typed@npm:4.1.0":
+  version: 4.1.0
+  resolution: "@darraghor/eslint-plugin-nestjs-typed@npm:4.1.0"
   dependencies:
-    "@typescript-eslint/scope-manager": 6.5.0
-    "@typescript-eslint/utils": 6.5.0
+    "@typescript-eslint/scope-manager": 6.7.0
+    "@typescript-eslint/utils": 6.7.0
     eslint-module-utils: 2.8.0
     reflect-metadata: 0.1.13
   peerDependencies:
     "@typescript-eslint/parser": ^6.0.0
     class-validator: "*"
     eslint: ^8.0.1
-  checksum: 6ee30c73f4e71407a1f4dbddd2c98f45a8f76bc9c1c18e68e653eec9a3c2339e83ba22e19baa3a9788399fcf100a2764ffa4ce4149579dcc3a7915f1919b52b3
+  checksum: d780146c21d1945e5d892206f918622db1afa253bb1bc2f99242fa9afa7fa5c592ba0954a4afee75473c6eadb7e910d9596bdcf0689f893aa8a13e44198ef406
   languageName: node
   linkType: hard
 
@@ -2262,7 +2262,7 @@ __metadata:
   resolution: "@hedgedoc/backend@workspace:backend"
   dependencies:
     "@azure/storage-blob": 12.15.0
-    "@darraghor/eslint-plugin-nestjs-typed": 4.0.16
+    "@darraghor/eslint-plugin-nestjs-typed": 4.1.0
     "@hedgedoc/commons": "workspace:commons"
     "@mrdrogdrog/optional": 1.2.1
     "@nestjs/cli": 10.1.17
@@ -5308,23 +5308,6 @@ __metadata:
     typescript:
       optional: true
   checksum: 9bd57910085f0dd97d7083e0468c34e0753d20d36d3ffaa4ba111f13cc4986743374f5aed928e645ea982cf2ed9a8141598bee41393cad0abee001f0842ad117
-  languageName: node
-  linkType: hard
-
-"@typescript-eslint/utils@npm:6.5.0":
-  version: 6.5.0
-  resolution: "@typescript-eslint/utils@npm:6.5.0"
-  dependencies:
-    "@eslint-community/eslint-utils": ^4.4.0
-    "@types/json-schema": ^7.0.12
-    "@types/semver": ^7.5.0
-    "@typescript-eslint/scope-manager": 6.5.0
-    "@typescript-eslint/types": 6.5.0
-    "@typescript-eslint/typescript-estree": 6.5.0
-    semver: ^7.5.4
-  peerDependencies:
-    eslint: ^7.0.0 || ^8.0.0
-  checksum: 58a82213c8a7bac97a6538b9845c1de5c5692fbf72548f95ed5e044a222608590bcafbb9eacba92a8c4e9eb3e5d0a2fd553eae0d6694ed2d6152aed4dabf9480
   languageName: node
   linkType: hard
 
