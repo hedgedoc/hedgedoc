@@ -2303,9 +2303,9 @@ __metadata:
     "@types/ws": 8.5.5
     "@typescript-eslint/eslint-plugin": 6.7.0
     "@typescript-eslint/parser": 6.7.0
-    "@zxcvbn-ts/core": 3.0.3
-    "@zxcvbn-ts/language-common": 3.0.3
-    "@zxcvbn-ts/language-en": 3.0.1
+    "@zxcvbn-ts/core": 3.0.4
+    "@zxcvbn-ts/language-common": 3.0.4
+    "@zxcvbn-ts/language-en": 3.0.2
     base32-encode: 1.2.0
     bcrypt: 5.1.1
     class-transformer: 0.5.1
@@ -5681,26 +5681,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zxcvbn-ts/core@npm:3.0.3":
-  version: 3.0.3
-  resolution: "@zxcvbn-ts/core@npm:3.0.3"
+"@zxcvbn-ts/core@npm:3.0.4":
+  version: 3.0.4
+  resolution: "@zxcvbn-ts/core@npm:3.0.4"
   dependencies:
     fastest-levenshtein: 1.0.16
-  checksum: 9c6f1bc42c1376178a4373a41461fdb9bb201ff483048760f813f06b60005da7b15c8a1d83b977c080c370766de849e537728c90833a5781f9539faea1101547
+  checksum: b2c4a5d875f8329b4d742ee1a6a81519e786bc2f0a0657b496a44e8ee70333673f33f388e5dd500bb735765e8c7ef46ac41cd95a266a97b50f1f480116b90873
   languageName: node
   linkType: hard
 
-"@zxcvbn-ts/language-common@npm:3.0.3":
-  version: 3.0.3
-  resolution: "@zxcvbn-ts/language-common@npm:3.0.3"
-  checksum: 4c46b989fb860a5d4c5b7a53780429189597429b50b37e0e38f191ef791fa2948d7f00972e23b2fa7a7f4eb251496917aa02335372e41eb4713cc36b7688b0eb
+"@zxcvbn-ts/language-common@npm:3.0.4":
+  version: 3.0.4
+  resolution: "@zxcvbn-ts/language-common@npm:3.0.4"
+  checksum: c9f80cca0237b8c159e3c1633ffd60fd4fcdb507699de491a1c2e1213d1c1fe2838a6cba2e80c3b5f84b8f04e3d5881f87f0023623cce4d2f65000961b1045d8
   languageName: node
   linkType: hard
 
-"@zxcvbn-ts/language-en@npm:3.0.1":
-  version: 3.0.1
-  resolution: "@zxcvbn-ts/language-en@npm:3.0.1"
-  checksum: 40338610e88d7516fd8876512be86a670f8f2b02cfeaf72983e2d279119774df9f07dd0023bff3d9163ce38bdb34c11dd6e9ced5bd089465cf515e107ab02e3c
+"@zxcvbn-ts/language-en@npm:3.0.2":
+  version: 3.0.2
+  resolution: "@zxcvbn-ts/language-en@npm:3.0.2"
+  checksum: e3abc2e6896fc5af87d563777514036bb59404a74e9ebfb98d33ee6a9ef3c09a0fba1d6fac7621985f5e516527c895387c34a37d591ef18aa89bcad6149b2d1e
   languageName: node
   linkType: hard
 
