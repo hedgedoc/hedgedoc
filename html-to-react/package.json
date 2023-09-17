@@ -48,7 +48,7 @@
   "author": "The HedgeDoc Authors",
   "license": "AGPL-3.0",
   "devDependencies": {
-    "@jest/globals": "29.6.4",
+    "@jest/globals": "29.7.0",
     "@jest/types": "29.6.3",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
