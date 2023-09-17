@@ -28,7 +28,7 @@
     "domhandler": "5.0.3",
     "@codemirror/state": "6.2.1",
     "@codemirror/autocomplete": "6.9.1",
-    "@codemirror/view": "6.18.1",
+    "@codemirror/view": "6.19.0",
     "@codemirror/language": "6.9.0",
     "@codemirror/commands": "6.2.5",
     "@codemirror/lang-markdown": "6.2.1",
