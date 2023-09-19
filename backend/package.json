@@ -24,7 +24,7 @@
     "seed": "ts-node src/seed.ts"
   },
   "dependencies": {
-    "@azure/storage-blob": "12.15.0",
+    "@azure/storage-blob": "12.16.0",
     "@hedgedoc/commons": "workspace:commons",
     "@mrdrogdrog/optional": "1.2.1",
     "@nestjs/common": "10.2.5",
