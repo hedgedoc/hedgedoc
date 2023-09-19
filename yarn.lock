@@ -2395,7 +2395,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/docs@workspace:docs"
   dependencies:
-    markdownlint-cli2: 0.9.2
+    markdownlint-cli2: 0.10.0
   languageName: unknown
   linkType: soft
 
@@ -12935,21 +12935,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdownlint-cli2@npm:0.9.2":
-  version: 0.9.2
-  resolution: "markdownlint-cli2@npm:0.9.2"
+"markdownlint-cli2@npm:0.10.0":
+  version: 0.10.0
+  resolution: "markdownlint-cli2@npm:0.10.0"
   dependencies:
     globby: 13.2.2
-    markdownlint: 0.30.0
+    markdownlint: 0.31.1
     markdownlint-cli2-formatter-default: 0.0.4
     micromatch: 4.0.5
     strip-json-comments: 5.0.1
-    yaml: 2.3.1
+    yaml: 2.3.2
   bin:
     markdownlint-cli2: markdownlint-cli2.js
     markdownlint-cli2-config: markdownlint-cli2-config.js
     markdownlint-cli2-fix: markdownlint-cli2-fix.js
-  checksum: 6927f8befa23554b66ffb3e78618596598606cd0f00f665b85a9f0c7f5a0bc818c006e96bb59919477cc3961efe7bbe65a6c32f3c9ffd56c735c26b3c95da3f4
+  checksum: aa933ebd51e049fc1da03f4c804ea99b89a0d7824b3a9ab4986dca1845485f2c5473e77059aef82c4db651a94f0624edde3d457d5ab2c26c8c6822cde85cc401
   languageName: node
   linkType: hard
 
@@ -12960,13 +12960,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdownlint@npm:0.30.0":
-  version: 0.30.0
-  resolution: "markdownlint@npm:0.30.0"
+"markdownlint@npm:0.31.1":
+  version: 0.31.1
+  resolution: "markdownlint@npm:0.31.1"
   dependencies:
     markdown-it: 13.0.1
     markdownlint-micromark: 0.1.7
-  checksum: cc99517c61fe8df9af918fafad314e685a8888162c476d6f7ef51555008c4f2581231e3930ea3d29b46a29307d2e4fce1c78db8dcd6962bf7069983e72cd3bba
+  checksum: a633ecb5a6011c4101a65848509b53511931480d8c70d7afc95675d5c3bccfdfadfc7f43855b1cd86764fa55d11187cb96e35b50cbbd987d10fa47648596f5bd
   languageName: node
   linkType: hard
 
@@ -18993,10 +18993,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yaml@npm:2.3.1":
-  version: 2.3.1
-  resolution: "yaml@npm:2.3.1"
-  checksum: 2c7bc9a7cd4c9f40d3b0b0a98e370781b68b8b7c4515720869aced2b00d92f5da1762b4ffa947f9e795d6cd6b19f410bd4d15fdd38aca7bd96df59bd9486fb54
+"yaml@npm:2.3.2":
+  version: 2.3.2
+  resolution: "yaml@npm:2.3.2"
+  checksum: acd80cc24df12c808c6dec8a0176d404ef9e6f08ad8786f746ecc9d8974968c53c6e8a67fdfabcc5f99f3dc59b6bb0994b95646ff03d18e9b1dcd59eccc02146
   languageName: node
   linkType: hard
 
