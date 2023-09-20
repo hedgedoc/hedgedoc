@@ -2421,7 +2421,7 @@ __metadata:
     "@redux-devtools/core": 3.13.1
     "@reduxjs/toolkit": 1.9.5
     "@svgr/webpack": 8.1.0
-    "@testing-library/cypress": 9.0.0
+    "@testing-library/cypress": 10.0.1
     "@testing-library/dom": 9.3.3
     "@testing-library/jest-dom": 6.1.3
     "@testing-library/react": 14.0.0
@@ -3979,15 +3979,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/cypress@npm:9.0.0":
-  version: 9.0.0
-  resolution: "@testing-library/cypress@npm:9.0.0"
+"@testing-library/cypress@npm:10.0.1":
+  version: 10.0.1
+  resolution: "@testing-library/cypress@npm:10.0.1"
   dependencies:
     "@babel/runtime": ^7.14.6
-    "@testing-library/dom": ^8.1.0
+    "@testing-library/dom": ^9.0.0
   peerDependencies:
-    cypress: ^12.0.0
-  checksum: fbd24e8f0b8a60279b336de5f6bc0e7ad6fb31316eacab5128dacc7fccde1eb40935b90f2c3bddc7d814115fe3965c6dbf011785448cd15b5a5b0bc40ef5bb4c
+    cypress: ^12.0.0 || ^13.0.0
+  checksum: 737e16563844851e830786da1862ea2c29d9f67155d8d2ea4d5178c98b77621c67c89e47a91a633d36c0528adfff9592f7228a5f19666af9882c837eeacbd08e
   languageName: node
   linkType: hard
 
@@ -4004,22 +4004,6 @@ __metadata:
     lz-string: ^1.5.0
     pretty-format: ^27.0.2
   checksum: 34e0a564da7beb92aa9cc44a9080221e2412b1a132eb37be3d513fe6c58027674868deb9f86195756d98d15ba969a30fe00632a4e26e25df2a5a4f6ac0686e37
-  languageName: node
-  linkType: hard
-
-"@testing-library/dom@npm:^8.1.0":
-  version: 8.20.1
-  resolution: "@testing-library/dom@npm:8.20.1"
-  dependencies:
-    "@babel/code-frame": ^7.10.4
-    "@babel/runtime": ^7.12.5
-    "@types/aria-query": ^5.0.1
-    aria-query: 5.1.3
-    chalk: ^4.1.0
-    dom-accessibility-api: ^0.5.9
-    lz-string: ^1.5.0
-    pretty-format: ^27.0.2
-  checksum: 06fc8dc67849aadb726cbbad0e7546afdf8923bd39acb64c576d706249bd7d0d05f08e08a31913fb621162e3b9c2bd0dce15964437f030f9fa4476326fdd3007
   languageName: node
   linkType: hard
 
