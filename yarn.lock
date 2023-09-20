@@ -2465,7 +2465,7 @@ __metadata:
     emoji-picker-element: 1.18.3
     emoji-picker-element-data: 1.4.0
     eslint: 8.49.0
-    eslint-config-next: 13.5.1
+    eslint-config-next: 13.5.2
     eslint-config-prettier: 9.0.0
     eslint-plugin-chai-friendly: 0.7.2
     eslint-plugin-cypress: 2.15.1
@@ -3447,12 +3447,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/eslint-plugin-next@npm:13.5.1":
-  version: 13.5.1
-  resolution: "@next/eslint-plugin-next@npm:13.5.1"
+"@next/eslint-plugin-next@npm:13.5.2":
+  version: 13.5.2
+  resolution: "@next/eslint-plugin-next@npm:13.5.2"
   dependencies:
     glob: 7.1.7
-  checksum: 35743d40651a4bae3ca42ad373f3c7255507f8c0f093ec6b08149295e56f2e115aa99fcd43fa645cdc8c42ad4d2687c21a09cf254146b4a28a7de9322a778da5
+  checksum: 5ce46cbbc5831950d39a129171adacc6e82bfd653133f9d32bdc7f5bd3ba8e8db298c8fe69be51f280571e58018f4631806fda7b87daa239eabb7b79a69db470
   languageName: node
   linkType: hard
 
@@ -9001,11 +9001,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-next@npm:13.5.1":
-  version: 13.5.1
-  resolution: "eslint-config-next@npm:13.5.1"
+"eslint-config-next@npm:13.5.2":
+  version: 13.5.2
+  resolution: "eslint-config-next@npm:13.5.2"
   dependencies:
-    "@next/eslint-plugin-next": 13.5.1
+    "@next/eslint-plugin-next": 13.5.2
     "@rushstack/eslint-patch": ^1.3.3
     "@typescript-eslint/parser": ^5.4.2 || ^6.0.0
     eslint-import-resolver-node: ^0.3.6
@@ -9020,7 +9020,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: a8a2d17e4a1948609e99074d948fe43ce9af8decd9e867269eb915853c4fa71733cfb800ba739d5d77b6a8e05c58a8578218184183085f1c7c4c9125051ba5de
+  checksum: c94f12c95b028c6115521d054f399dca0d83b623447c5bf7293d553463cc158a0e648d26ae8b8546f1a3bf2ababf5259fa61287e13a6775096930dbffb4da545
   languageName: node
   linkType: hard
 
