@@ -2531,7 +2531,7 @@ __metadata:
     uuid: 9.0.1
     vega: 5.25.0
     vega-embed: 6.22.2
-    vega-lite: 5.14.1
+    vega-lite: 5.15.0
     words-count: 2.0.2
     ws: 8.14.2
     yjs: 13.6.8
@@ -4277,13 +4277,6 @@ __metadata:
   version: 2.0.3
   resolution: "@types/cli-color@npm:2.0.3"
   checksum: 3a8bb776533ae0d3fea5373eb858a0f840d6e480fa7749e4750e86e69e75e061703d5994aacb7ee8995f9392dddd9cc3c34b080427ac3bfebf2b663ddcb240a4
-  languageName: node
-  linkType: hard
-
-"@types/clone@npm:~2.1.1":
-  version: 2.1.1
-  resolution: "@types/clone@npm:2.1.1"
-  checksum: bda9668b9d6e0875d64bbe00763676f566e8647bc224333a03ac7fd66655dfed56a98a9f8304d0145c4411b964649c84c4d1a03adbdb6547eafb9ab8f303d254
   languageName: node
   linkType: hard
 
@@ -7053,13 +7046,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clone@npm:~2.1.2":
-  version: 2.1.2
-  resolution: "clone@npm:2.1.2"
-  checksum: aaf106e9bc025b21333e2f4c12da539b568db4925c0501a1bf4070836c9e848c892fa22c35548ce0d1132b08bbbfa17a00144fe58fccdab6fa900fec4250f67d
-  languageName: node
-  linkType: hard
-
 "co@npm:^4.6.0":
   version: 4.6.0
   resolution: "co@npm:4.6.0"
@@ -9719,7 +9705,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-deep-equal@npm:3.1.3, fast-deep-equal@npm:^3.1.1, fast-deep-equal@npm:^3.1.3, fast-deep-equal@npm:~3.1.3":
+"fast-deep-equal@npm:3.1.3, fast-deep-equal@npm:^3.1.1, fast-deep-equal@npm:^3.1.3":
   version: 3.1.3
   resolution: "fast-deep-equal@npm:3.1.3"
   checksum: e21a9d8d84f53493b6aa15efc9cfd53dd5b714a1f23f67fb5dc8f574af80df889b3bce25dc081887c6d25457cce704e636395333abad896ccdec03abaf1f3f9d
@@ -9760,7 +9746,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-json-stable-stringify@npm:2.x, fast-json-stable-stringify@npm:^2.0.0, fast-json-stable-stringify@npm:^2.1.0, fast-json-stable-stringify@npm:~2.1.0":
+"fast-json-stable-stringify@npm:2.x, fast-json-stable-stringify@npm:^2.0.0, fast-json-stable-stringify@npm:^2.1.0":
   version: 2.1.0
   resolution: "fast-json-stable-stringify@npm:2.1.0"
   checksum: b191531e36c607977e5b1c47811158733c34ccb3bfde92c44798929e9b4154884378536d26ad90dfecd32e1ffc09c545d23535ad91b3161a27ddbb8ebe0cbecb
@@ -17407,7 +17393,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.6.2, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.2.0, tslib@npm:^2.4.0, tslib@npm:^2.5.0, tslib@npm:^2.6.0, tslib@npm:^2.6.1":
+"tslib@npm:2.6.2, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.2.0, tslib@npm:^2.4.0, tslib@npm:^2.5.0, tslib@npm:^2.6.0, tslib@npm:^2.6.1, tslib@npm:~2.6.2":
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
   checksum: 329ea56123005922f39642318e3d1f0f8265d1e7fcb92c633e0809521da75eeaca28d2cf96d7248229deb40e5c19adf408259f4b9640afd20d13aecc1430f3ad
@@ -17418,13 +17404,6 @@ __metadata:
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
-  languageName: node
-  linkType: hard
-
-"tslib@npm:~2.5.0":
-  version: 2.5.3
-  resolution: "tslib@npm:2.5.3"
-  checksum: 88902b309afaf83259131c1e13da1dceb0ad1682a213143a1346a649143924d78cf3760c448b84d796938fd76127183894f8d85cbb3bf9c4fddbfcc140c0003c
   languageName: node
   linkType: hard
 
@@ -18272,16 +18251,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-lite@npm:5.14.1":
-  version: 5.14.1
-  resolution: "vega-lite@npm:5.14.1"
+"vega-lite@npm:5.15.0":
+  version: 5.15.0
+  resolution: "vega-lite@npm:5.15.0"
   dependencies:
-    "@types/clone": ~2.1.1
-    clone: ~2.1.2
-    fast-deep-equal: ~3.1.3
-    fast-json-stable-stringify: ~2.1.0
     json-stringify-pretty-compact: ~3.0.0
-    tslib: ~2.5.0
+    tslib: ~2.6.2
     vega-event-selector: ~3.0.1
     vega-expression: ~5.1.0
     vega-util: ~1.17.2
@@ -18293,7 +18268,7 @@ __metadata:
     vl2png: bin/vl2png
     vl2svg: bin/vl2svg
     vl2vg: bin/vl2vg
-  checksum: 0870a72a9703d0665f7a63f5b3e28f2118175de492eddc49b31e9fdec369adeec62895e857e06180e91fc96585ec308045b902b1ef0fb2c09174f26fcb42de9e
+  checksum: 174c435dd7a637385c1e77117a7a919ae168f7d4611c3d647c7acd756fe9bca43070f7169171273b3680f5076f4d705ce1cd84bf02742aab94991f6db0509a97
   languageName: node
   linkType: hard
 
