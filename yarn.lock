@@ -2286,15 +2286,15 @@ __metadata:
     "@types/cookie": 0.5.2
     "@types/cookie-signature": 1.1.0
     "@types/cron": 2.0.1
-    "@types/diff": 5.0.3
+    "@types/diff": 5.0.4
     "@types/express": 4.17.17
     "@types/express-session": 1.17.7
     "@types/jest": 29.5.5
     "@types/markdown-it": 13.0.1
     "@types/minio": 7.1.0
     "@types/mysql": 2.15.21
-    "@types/node": 20.6.0
-    "@types/node-fetch": 2.6.4
+    "@types/node": 20.6.3
+    "@types/node-fetch": 2.6.5
     "@types/passport-http-bearer": 1.0.37
     "@types/passport-local": 1.0.35
     "@types/pg": 8.10.2
@@ -2362,7 +2362,7 @@ __metadata:
   dependencies:
     "@jest/types": 29.6.3
     "@mrdrogdrog/optional": 1.2.1
-    "@types/js-yaml": 4.0.5
+    "@types/js-yaml": 4.0.6
     "@types/ws": 8.5.5
     "@typescript-eslint/eslint-plugin": 6.7.2
     "@typescript-eslint/parser": 6.7.2
@@ -2428,20 +2428,20 @@ __metadata:
     "@testing-library/react-hooks": 8.0.1
     "@testing-library/user-event": 14.5.1
     "@types/d3-graphviz": 2.6.7
-    "@types/diff": 5.0.3
+    "@types/diff": 5.0.4
     "@types/dompurify": 3.0.2
     "@types/jest": 29.5.5
-    "@types/katex": 0.16.2
+    "@types/katex": 0.16.3
     "@types/luxon": 3.3.2
     "@types/markdown-it": 13.0.1
     "@types/markdown-it-container": 2.0.6
     "@types/markdown-it-plantuml": 1.4.1
-    "@types/node": 20.6.0
-    "@types/react": 18.2.21
+    "@types/node": 20.6.3
+    "@types/react": 18.2.22
     "@types/react-dom": 18.2.7
     "@types/sass": 1.43.1
     "@types/testing-library__jest-dom": 5.14.9
-    "@types/uuid": 9.0.3
+    "@types/uuid": 9.0.4
     "@types/ws": 8.5.5
     "@typescript-eslint/eslint-plugin": 6.7.2
     "@typescript-eslint/parser": 6.7.2
@@ -2544,7 +2544,7 @@ __metadata:
   dependencies:
     "@jest/globals": 29.7.0
     "@jest/types": 29.6.3
-    "@types/react": 18.2.21
+    "@types/react": 18.2.22
     "@types/react-dom": 18.2.7
     "@typescript-eslint/eslint-plugin": 6.7.2
     "@typescript-eslint/parser": 6.7.2
@@ -4440,10 +4440,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/diff@npm:5.0.3":
-  version: 5.0.3
-  resolution: "@types/diff@npm:5.0.3"
-  checksum: d8a7d4de12f1aba0bd0c17b0b0d1e45c83824d3d6cc65763fbad371cd8315361a7e16fbae3f260a83bfdf30cebe1c876b42cec4518698055bc430fb09db1cbc8
+"@types/diff@npm:5.0.4":
+  version: 5.0.4
+  resolution: "@types/diff@npm:5.0.4"
+  checksum: 58f8c3e9c8ed40e97fc8039af95d8f12a620e9facf351273906612ad795678c3f64309e0ce29b03bce8e04a2913f0e6bc5cf2289821bdd312b99f1220025f90a
   languageName: node
   linkType: hard
 
@@ -4617,10 +4617,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/js-yaml@npm:4.0.5":
-  version: 4.0.5
-  resolution: "@types/js-yaml@npm:4.0.5"
-  checksum: 7dcac8c50fec31643cc9d6444b5503239a861414cdfaa7ae9a38bc22597c4d850c4b8cec3d82d73b3fbca408348ce223b0408d598b32e094470dfffc6d486b4d
+"@types/js-yaml@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@types/js-yaml@npm:4.0.6"
+  checksum: d4439ec2cc830d355c2a1d7508f49888931b2cfe59d786d27621edd530bf06314b1dceeaa759e21f9b035a0ff623a0ca306752ebb73df9485c02abe045bd962c
   languageName: node
   linkType: hard
 
@@ -4649,10 +4649,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/katex@npm:0.16.2":
-  version: 0.16.2
-  resolution: "@types/katex@npm:0.16.2"
-  checksum: c681c3b8b5ec5de9422ec041ffdf43227a3ef2877b2b1d1c906b8d87341d385259b468febbb0426dd8834d2803fe5ab86384557b70dfbd89e9ae0af6886898ba
+"@types/katex@npm:0.16.3":
+  version: 0.16.3
+  resolution: "@types/katex@npm:0.16.3"
+  checksum: 46921044ad1e1fcb171fb779a958fd2ce25b1763742626963d54f97e9ac4c99ed6c6cb1ffa3d86facaa24ef56db7f2e1a221178025c87f92c15c22b434883e0f
   languageName: node
   linkType: hard
 
@@ -4794,7 +4794,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node-fetch@npm:2.6.4, @types/node-fetch@npm:^2.5.0":
+"@types/node-fetch@npm:2.6.5":
+  version: 2.6.5
+  resolution: "@types/node-fetch@npm:2.6.5"
+  dependencies:
+    "@types/node": "*"
+    form-data: ^4.0.0
+  checksum: 686ee0d52bb82d73f82c0da0bb025d4af1ba7bd8df4edd09336f6179eb838b6d4b5f0a524677a8faec2b00918d1b08a1690d50fa592c9741a5df6a8041a52495
+  languageName: node
+  linkType: hard
+
+"@types/node-fetch@npm:^2.5.0":
   version: 2.6.4
   resolution: "@types/node-fetch@npm:2.6.4"
   dependencies:
@@ -4811,10 +4821,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.6.0":
-  version: 20.6.0
-  resolution: "@types/node@npm:20.6.0"
-  checksum: 52611801af5cf151c6fac1963aa4a8a8ca2e388a9e9ed82b01b70bca762088ded5b32cc789c5564220d5d7dccba2b8dd34446a3d4fc74736805e1f2cf262e29d
+"@types/node@npm:20.6.3":
+  version: 20.6.3
+  resolution: "@types/node@npm:20.6.3"
+  checksum: 444a6f1f41cfa8d3e20ce0108e6e43960fb2ae0e481f233bb1c14d6252aa63a92e021de561cd317d9fdb411688f871065f40175a1f18763282dee2613a08f8a3
   languageName: node
   linkType: hard
 
@@ -4923,14 +4933,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.21":
-  version: 18.2.21
-  resolution: "@types/react@npm:18.2.21"
+"@types/react@npm:18.2.22":
+  version: 18.2.22
+  resolution: "@types/react@npm:18.2.22"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: ffed203bfe7aad772b8286f7953305c9181ac3a8f27d3f5400fbbc2a8e27ca8e5bbff818ee014f39ca0d19d2b3bb154e5bdbec7e232c6f80b59069375aa78349
+  checksum: 44289523dabaadcd3fd85689abb98f9ebcc8492d7e978348d1c986138acef4801030b279e89a19e38a6319e294bcea77559e37e0c803e4bacf2b8ae3a56ba587
   languageName: node
   linkType: hard
 
@@ -5073,10 +5083,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/uuid@npm:9.0.3":
-  version: 9.0.3
-  resolution: "@types/uuid@npm:9.0.3"
-  checksum: 3dde198defd71c067dd14b3050a8fe6d1ead5fe94ec318472e2c30a399d13f18941fe66cffabdcac7267177c9de2f975fdee6f0cc87cde610a2578e1ce4cc3af
+"@types/uuid@npm:9.0.4":
+  version: 9.0.4
+  resolution: "@types/uuid@npm:9.0.4"
+  checksum: 356e2504456eaebbc43a5af5ca6c07d71f5ae5520b5767cb1c62cd0ec55475fc4ee3d16a2874f4a5fce78e40e8583025afd3a7d9ba41f82939de310665f53f0e
   languageName: node
   linkType: hard
 
