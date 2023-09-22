@@ -8,9 +8,8 @@ import { useApplicationState } from '../../../../../../hooks/common/use-applicat
 import { useDarkModeState } from '../../../../../../hooks/dark-mode/use-dark-mode-state'
 import { AsyncLoadingBoundary } from '../../../../../common/async-loading-boundary/async-loading-boundary'
 import { invertUnifiedPatch } from './invert-unified-patch'
-import { Optional } from '@mrdrogdrog/optional'
 import { applyPatch, parsePatch } from 'diff'
-import React, { useMemo } from 'react'
+import React, { Fragment, useMemo } from 'react'
 import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
 import { useAsync } from 'react-use'
 
@@ -28,7 +27,11 @@ export const RevisionViewer: React.FC<RevisionViewerProps> = ({ selectedRevision
   const noteId = useApplicationState((state) => state.noteDetails?.id)
   const darkModeEnabled = useDarkModeState()
 
-  const { value, error, loading } = useAsync(async () => {
+  const {
+    value: revision,
+    error,
+    loading
+  } = useAsync(async () => {
     if (noteId === undefined || selectedRevisionId === undefined) {
       throw new Error('No revision selected')
     } else {
@@ -37,24 +40,24 @@ export const RevisionViewer: React.FC<RevisionViewerProps> = ({ selectedRevision
   }, [selectedRevisionId, noteId])
 
   const previousRevisionContent = useMemo(() => {
-    return Optional.ofNullable(value)
-      .flatMap((revision) =>
-        Optional.ofNullable(parsePatch(revision.patch)[0])
-          .map((patch) => invertUnifiedPatch(patch))
-          .map((patch) => applyPatch(revision.content, patch))
-      )
-      .orElse('')
-  }, [value])
+    if (revision === undefined) {
+      return ''
+    }
+    const patch = parsePatch(revision.patch)[0]
+    const inversePatch = invertUnifiedPatch(patch)
+    const reverseContent = applyPatch(revision.content, inversePatch)
+    return reverseContent === false ? '' : reverseContent
+  }, [revision])
 
   if (selectedRevisionId === undefined) {
-    return null
+    return <Fragment />
   }
 
   return (
-    <AsyncLoadingBoundary loading={loading || !value} componentName={'RevisionViewer'} error={error}>
+    <AsyncLoadingBoundary loading={loading || !revision} componentName={'RevisionViewer'} error={error}>
       <ReactDiffViewer
         oldValue={previousRevisionContent ?? ''}
-        newValue={value?.content ?? ''}
+        newValue={revision?.content ?? ''}
         splitView={false}
         compareMethod={DiffMethod.WORDS}
         useDarkTheme={darkModeEnabled}
