@@ -1,4 +1,4 @@
 mkdocs==1.5.3
-mkdocs-material==9.3.2
+mkdocs-material==9.4.0
 pymdown-extensions==10.3
 mdx_truly_sane_lists==1.3
