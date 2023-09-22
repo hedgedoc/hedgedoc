@@ -2279,7 +2279,7 @@ __metadata:
     "@nestjs/swagger": 7.1.12
     "@nestjs/testing": 10.2.6
     "@nestjs/typeorm": 10.0.0
-    "@nestjs/websockets": 10.2.5
+    "@nestjs/websockets": 10.2.6
     "@trivago/prettier-plugin-sort-imports": 4.2.0
     "@tsconfig/node18": 18.2.2
     "@types/bcrypt": 5.0.0
@@ -3419,9 +3419,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/websockets@npm:10.2.5":
-  version: 10.2.5
-  resolution: "@nestjs/websockets@npm:10.2.5"
+"@nestjs/websockets@npm:10.2.6":
+  version: 10.2.6
+  resolution: "@nestjs/websockets@npm:10.2.6"
   dependencies:
     iterare: 1.2.1
     object-hash: 3.0.0
@@ -3435,7 +3435,7 @@ __metadata:
   peerDependenciesMeta:
     "@nestjs/platform-socket.io":
       optional: true
-  checksum: 2c60cc4d5e754eaf031d73bf014bceae60c21d0c8824a83511df14484efb807be3bfcb68fdb3676ee83e705847b4b606c4d98a4268cbd3781cc5da712cfed92c
+  checksum: 853f17e6bcfdad2969c6e1f69c12aef4408fc5f2bb6d904b47e85689d17c327b8190992961381cd180f16c51052582e9f93aca3d461cff454e5ec0a38b36ae35
   languageName: node
   linkType: hard
 
