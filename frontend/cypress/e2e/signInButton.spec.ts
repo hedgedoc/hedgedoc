@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -51,7 +51,10 @@ describe('When logged-out ', () => {
           type: AuthProviderType.LOCAL
         }
       ])
-      cy.getByCypressId('sign-in-button').should('be.visible').parent().should('have.attr', 'href', '/login')
+      cy.getByCypressId('sign-in-button')
+        .should('be.visible')
+        .parent()
+        .should('have.attr', 'href', '/login?redirectBackTo=/history')
     })
 
     it('sign-in button points to login route: ldap', () => {
@@ -62,7 +65,10 @@ describe('When logged-out ', () => {
           providerName: 'cy LDAP'
         }
       ])
-      cy.getByCypressId('sign-in-button').should('be.visible').parent().should('have.attr', 'href', '/login')
+      cy.getByCypressId('sign-in-button')
+        .should('be.visible')
+        .parent()
+        .should('have.attr', 'href', '/login?redirectBackTo=/history')
     })
   })
 
@@ -91,7 +97,10 @@ describe('When logged-out ', () => {
           type: AuthProviderType.GOOGLE
         }
       ])
-      cy.getByCypressId('sign-in-button').should('be.visible').parent().should('have.attr', 'href', '/login')
+      cy.getByCypressId('sign-in-button')
+        .should('be.visible')
+        .parent()
+        .should('have.attr', 'href', '/login?redirectBackTo=/history')
     })
   })
 
@@ -105,7 +114,10 @@ describe('When logged-out ', () => {
           type: AuthProviderType.LOCAL
         }
       ])
-      cy.getByCypressId('sign-in-button').should('be.visible').parent().should('have.attr', 'href', '/login')
+      cy.getByCypressId('sign-in-button')
+        .should('be.visible')
+        .parent()
+        .should('have.attr', 'href', '/login?redirectBackTo=/history')
     })
   })
 })

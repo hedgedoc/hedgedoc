@@ -14,6 +14,7 @@ import type { ButtonProps } from 'react-bootstrap/Button'
 import { Trans } from 'react-i18next'
 import { filterOneClickProviders } from '../../login-page/utils/filter-one-click-providers'
 import { getOneClickProviderMetadata } from '../../login-page/one-click/get-one-click-provider-metadata'
+import { usePathname } from 'next/navigation'
 
 export type SignInButtonProps = Omit<ButtonProps, 'href'>
 
@@ -26,6 +27,7 @@ export type SignInButtonProps = Omit<ButtonProps, 'href'>
  */
 export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props }) => {
   const authProviders = useFrontendConfig().authProviders
+  const pathname = usePathname()
 
   const loginLink = useMemo(() => {
     const oneClickProviders = filterOneClickProviders(authProviders)
@@ -33,8 +35,8 @@ export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props })
       const metadata = getOneClickProviderMetadata(oneClickProviders[0])
       return metadata.url
     }
-    return '/login'
-  }, [authProviders])
+    return `/login?redirectBackTo=${pathname}`
+  }, [authProviders, pathname])
   const buttonTitle = useTranslatedText('login.signIn')
 
   return (
