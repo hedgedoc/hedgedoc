@@ -131,7 +131,7 @@
     "@testing-library/react": "14.0.0",
     "@testing-library/react-hooks": "8.0.1",
     "@testing-library/user-event": "14.5.1",
-    "@types/d3-graphviz": "2.6.7",
+    "@types/d3-graphviz": "2.6.8",
     "@types/diff": "5.0.5",
     "@types/dompurify": "3.0.3",
     "@types/jest": "29.5.5",
