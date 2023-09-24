@@ -10,7 +10,7 @@ import {
   respondToMatchingRequest,
   respondToTestRequest
 } from '../../../handler-utils/respond-to-matching-request'
-import { isTestMode } from '../../../utils/test-modes'
+import { isTestMode } from '@hedgedoc/commons'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const initialConfig: FrontendConfig = {

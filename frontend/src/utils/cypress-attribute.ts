@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { isTestMode } from './test-modes'
+import { isTestMode } from '@hedgedoc/commons'
 
 export interface PropsWithDataCypressId {
   'data-cypress-id'?: string | undefined

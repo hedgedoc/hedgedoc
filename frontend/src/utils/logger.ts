@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { isDevMode, isTestMode } from './test-modes'
+import { isDevMode, isTestMode } from '@hedgedoc/commons'
 import { DateTime } from 'luxon'
 import pico from 'picocolors'
 

@@ -5,7 +5,7 @@
  */
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import { useBaseUrl } from '../../../../../hooks/common/use-base-url'
-import { isMockMode } from '../../../../../utils/test-modes'
+import { isMockMode } from '@hedgedoc/commons'
 import { useMemo } from 'react'
 
 const LOCAL_FALLBACK_URL = 'ws://localhost:8080/realtime/'

@@ -9,7 +9,7 @@ import { Mock } from 'ts-mockery'
 
 let testMode = false
 let devMode = false
-jest.mock('./test-modes', () => ({
+jest.mock('@hedgedoc/commons', () => ({
   get isTestMode() {
     return testMode
   },

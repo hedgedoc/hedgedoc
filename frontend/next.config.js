@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-const { isMockMode, isTestMode, isProfilingMode, isBuildTime } = require('./src/utils/test-modes')
+const { isMockMode, isTestMode, isProfilingMode, isBuildTime } = require('@hedgedoc/commons')
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({

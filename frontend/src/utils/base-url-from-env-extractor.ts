@@ -5,7 +5,7 @@
  */
 import type { BaseUrls } from '../components/common/base-url/base-url-context-provider'
 import { Logger } from './logger'
-import { isTestMode, isBuildTime } from './test-modes'
+import { isTestMode, isBuildTime } from '@hedgedoc/commons'
 import { NoSubdirectoryAllowedError, parseUrl } from '@hedgedoc/commons'
 import { Optional } from '@mrdrogdrog/optional'
 

@@ -5,7 +5,7 @@
  */
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
 import type { FrontendConfig } from './types'
-import { isBuildTime } from '../../utils/test-modes'
+import { isBuildTime } from '@hedgedoc/commons'
 
 /**
  * Fetches the frontend config from the backend.

@@ -14,7 +14,7 @@
  * @param {string} value The value to check
  * @return {boolean} {@code true} if the value describes a positive answer string
  */
-const isPositiveAnswer = (value) => {
+export const isPositiveAnswer = (value: string) => {
   const lowerValue = value.toLowerCase()
   return lowerValue === 'yes' || lowerValue === '1' || lowerValue === 'true'
 }
@@ -23,37 +23,35 @@ const isPositiveAnswer = (value) => {
  * Defines if the current runtime is built in e2e test mode.
  * @type boolean
  */
-const isTestMode = !!process.env.NEXT_PUBLIC_TEST_MODE && isPositiveAnswer(process.env.NEXT_PUBLIC_TEST_MODE)
+export const isTestMode =
+  !!process.env.NEXT_PUBLIC_TEST_MODE &&
+  isPositiveAnswer(process.env.NEXT_PUBLIC_TEST_MODE)
 
 /**
  * Defines if the current runtime should use the mocked backend.
  * @type boolean
  */
-const isMockMode = !!process.env.NEXT_PUBLIC_USE_MOCK_API && isPositiveAnswer(process.env.NEXT_PUBLIC_USE_MOCK_API)
+export const isMockMode =
+  !!process.env.NEXT_PUBLIC_USE_MOCK_API &&
+  isPositiveAnswer(process.env.NEXT_PUBLIC_USE_MOCK_API)
 
 /**
  * Defines if the current runtime was built in development mode.
  * @type boolean
  */
-const isDevMode = process.env.NODE_ENV === 'development'
+export const isDevMode = process.env.NODE_ENV === 'development'
 
 /**
  * Defines if the current runtime contains the bundle analyzer and profiling metrics.
  * @type boolean
  */
-const isProfilingMode = !!process.env.ANALYZE && isPositiveAnswer(process.env.ANALYZE)
+export const isProfilingMode =
+  !!process.env.ANALYZE && isPositiveAnswer(process.env.ANALYZE)
 
 /**
  * Defines if the currently running process is building or executing.
  *
  * @type boolean
  */
-const isBuildTime = !!process.env.BUILD_TIME && isPositiveAnswer(process.env.BUILD_TIME)
-
-module.exports = {
-  isTestMode,
-  isMockMode,
-  isDevMode,
-  isProfilingMode,
-  isBuildTime
-}
+export const isBuildTime =
+  !!process.env.BUILD_TIME && isPositiveAnswer(process.env.BUILD_TIME)
