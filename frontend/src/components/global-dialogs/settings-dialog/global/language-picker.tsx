@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { cypressId } from '../../../../utils/cypress-attribute'
-import { Logger } from '../../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { testId } from '../../../../utils/test-id'
 import { availableLanguages } from './available-languages'
 import { LanguageOption } from './language-option'

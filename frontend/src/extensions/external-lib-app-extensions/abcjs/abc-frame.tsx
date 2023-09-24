@@ -9,7 +9,7 @@ import { WaitSpinner } from '../../../components/common/wait-spinner/wait-spinne
 import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
 import { useEffectWithCatch } from '../../../hooks/common/use-effect-with-catch'
 import { cypressId } from '../../../utils/cypress-attribute'
-import { Logger } from '../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import styles from './abc.module.scss'
 import React, { useRef } from 'react'
 import { useAsync } from 'react-use'

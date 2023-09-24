@@ -7,3 +7,4 @@
 export * from './wait-for-other-promises-to-finish.js'
 export type { DeepPartial } from './deep-partial.js'
 export * from './test-modes.js'
+export * from './logger.js'

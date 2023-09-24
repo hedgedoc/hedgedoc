@@ -5,7 +5,7 @@
  */
 import { concatCssClasses } from '../../../utils/concat-css-classes'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
-import { Logger } from '../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { isTestMode } from '@hedgedoc/commons'
 import { useEditorToRendererCommunicator } from '../../editor-page/render-context/editor-to-renderer-communicator-context-provider'
 import type { ScrollProps } from '../../editor-page/synced-scroll/scroll-props'

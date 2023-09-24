@@ -3,17 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-const { isMockMode, isTestMode, isProfilingMode, isBuildTime } = require('@hedgedoc/commons')
+const { isMockMode, isTestMode, isProfilingMode, isBuildTime, Logger } = require('@hedgedoc/commons')
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: isProfilingMode
 })
 
-console.log('Node environment is', process.env.NODE_ENV)
+const logger = new Logger('Bootstrap')
+
+logger.info('Node environment is', process.env.NODE_ENV)
 
 if (isTestMode) {
-  console.warn(`This build runs in test mode. This means:
+  logger.warn(`This build runs in test mode. This means:
  - No sandboxed iframe
  - Additional data-attributes for e2e tests added to DOM
  - Editor and renderer are running on the same origin
@@ -22,7 +24,7 @@ if (isTestMode) {
 }
 
 if (isMockMode) {
-  console.warn(`This build runs in mock mode. This means:
+  logger.warn(`This build runs in mock mode. This means:
  - No real data. All API responses are mocked
  - No persistent data
  - No realtime editing
@@ -30,14 +32,14 @@ if (isMockMode) {
 }
 
 if (isBuildTime) {
-  console.warn(`This process runs in build mode. During build time this means:
+  logger.warn(`This process runs in build mode. During build time this means:
  - Editor and Renderer base urls are https://example.org
  - No frontend config will be fetched
 `)
 }
 
 if (isProfilingMode) {
-  console.info('This build contains the bundle analyzer and profiling metrics.')
+  logger.info('This build contains the bundle analyzer and profiling metrics.')
 }
 
 /** @type {import('@svgr/webpack').LoaderOptions} */

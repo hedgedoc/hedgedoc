@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Logger } from '../../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { ShowIf } from '../../show-if/show-if'
 import type { ReactElement, RefObject } from 'react'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../hooks/common/use-application-state'
-import { Logger } from '../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import type { ScrollSource } from '../editor-page-content'
 import type { ScrollState } from '../synced-scroll/scroll-props'
 import type { RefObject } from 'react'

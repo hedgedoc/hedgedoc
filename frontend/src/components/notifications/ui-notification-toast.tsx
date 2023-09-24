@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { cypressId } from '../../utils/cypress-attribute'
-import { Logger } from '../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { UiIcon } from '../common/icons/ui-icon'
 import { ShowIf } from '../common/show-if/show-if'
 import styles from './notifications.module.scss'

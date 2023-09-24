@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Logger } from '../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import type { DispatchOptions, UiNotification } from './types'
 import { UiNotifications } from './ui-notifications'
 import type { TOptions } from 'i18next'

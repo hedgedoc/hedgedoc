@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { cypressId } from '../../../../../utils/cypress-attribute'
-import { Logger } from '../../../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { ShowIf } from '../../../../common/show-if/show-if'
 import { acceptedMimeTypes } from '../../../../common/upload-image-mimetypes'
 import { UploadInput } from '../../../../common/upload-input'

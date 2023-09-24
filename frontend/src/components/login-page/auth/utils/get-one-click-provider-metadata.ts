@@ -5,7 +5,7 @@
  */
 import type { AuthProvider } from '../../../../api/config/types'
 import { AuthProviderType } from '../../../../api/config/types'
-import { Logger } from '../../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { IconGitlab } from '../../../common/icons/additional/icon-gitlab'
 import styles from '../via-one-click.module.scss'
 import type { Icon } from 'react-bootstrap-icons'

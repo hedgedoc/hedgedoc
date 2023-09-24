@@ -4,9 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { BaseUrls } from '../components/common/base-url/base-url-context-provider'
-import { Logger } from './logger'
-import { isTestMode, isBuildTime } from '@hedgedoc/commons'
-import { NoSubdirectoryAllowedError, parseUrl } from '@hedgedoc/commons'
+import { NoSubdirectoryAllowedError, parseUrl, Logger, isTestMode, isBuildTime } from '@hedgedoc/commons'
 import { Optional } from '@mrdrogdrog/optional'
 
 /**

@@ -8,7 +8,7 @@ import { AsyncLoadingBoundary } from '../../../components/common/async-loading-b
 import { ShowIf } from '../../../components/common/show-if/show-if'
 import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
 import { useDarkModeState } from '../../../hooks/dark-mode/use-dark-mode-state'
-import { Logger } from '../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { testId } from '../../../utils/test-id'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Logger } from '../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import type { SlideOptions } from '@hedgedoc/commons'
 import { useEffect, useRef, useState } from 'react'
 import type Reveal from 'reveal.js'

@@ -1,9 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { isDevMode, isTestMode } from '@hedgedoc/commons'
+import { isDevMode, isTestMode } from './test-modes.js'
 import { DateTime } from 'luxon'
 import pico from 'picocolors'
 
@@ -16,7 +16,8 @@ export class Logger {
 
   constructor(scope: string) {
     this.scope = scope
-    this.debugLoggingEnabled = isDevMode || isTestMode || this.isDebugLoggingEnabled()
+    this.debugLoggingEnabled =
+      isDevMode || isTestMode || this.isDebugLoggingEnabled()
   }
 
   private isDebugLoggingEnabled() {
@@ -75,7 +76,11 @@ export class Logger {
     if (typeof window === 'undefined') {
       return [pico.yellow(`[${timestamp}]`), pico.green(`(${this.scope})`)]
     } else {
-      return [`%c[${timestamp}] %c(${this.scope})`, 'color: yellow', 'color: green']
+      return [
+        `%c[${timestamp}] %c(${this.scope})`,
+        'color: yellow',
+        'color: green'
+      ]
     }
   }
 }

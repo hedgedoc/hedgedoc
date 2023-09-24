@@ -5,7 +5,7 @@
  */
 import type { PropsWithDataCypressId } from '../../../../utils/cypress-attribute'
 import { cypressId } from '../../../../utils/cypress-attribute'
-import { Logger } from '../../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { ShowIf } from '../../../common/show-if/show-if'
 import { ProxyImageFrame } from '../../extensions/image/proxy-image-frame'
 import styles from './click-shield.module.scss'

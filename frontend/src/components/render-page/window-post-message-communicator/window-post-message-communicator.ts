@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { Logger } from '../../../utils/logger'
+import type { Logger } from '@hedgedoc/commons'
 import { Optional } from '@mrdrogdrog/optional'
 import { EventEmitter2 } from 'eventemitter2'
 

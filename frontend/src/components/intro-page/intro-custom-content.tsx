@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Logger } from '../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { AsyncLoadingBoundary } from '../common/async-loading-boundary/async-loading-boundary'
 import { RendererIframe } from '../common/renderer-iframe/renderer-iframe'
 import { RendererType } from '../render-page/window-post-message-communicator/rendering-message'
