@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { isMockMode, isTestMode } from '../utils/test-modes'
+import { isMockMode, isTestMode } from '@hedgedoc/commons'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export enum HttpMethod {

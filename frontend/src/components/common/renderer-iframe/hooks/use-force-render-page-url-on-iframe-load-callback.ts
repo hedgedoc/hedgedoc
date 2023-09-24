@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ORIGIN, useBaseUrl } from '../../../../hooks/common/use-base-url'
-import { Logger } from '../../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { useEditorToRendererCommunicator } from '../../../editor-page/render-context/editor-to-renderer-communicator-context-provider'
 import type { RefObject } from 'react'
 import { useCallback, useEffect, useMemo, useRef } from 'react'

@@ -6,7 +6,7 @@
 import { ShowIf } from '../../../components/common/show-if/show-if'
 import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
 import { cypressId } from '../../../utils/cypress-attribute'
-import { Logger } from '../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import styles from './mermaid.module.scss'
 import React, { Fragment, useRef } from 'react'
 import { useTranslation } from 'react-i18next'

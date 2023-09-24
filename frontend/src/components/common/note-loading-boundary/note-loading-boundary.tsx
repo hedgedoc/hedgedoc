@@ -6,7 +6,7 @@
  */
 import { ApiError } from '../../../api/common/api-error'
 import { ErrorToI18nKeyMapper } from '../../../api/common/error-to-i18n-key-mapper'
-import { Logger } from '../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { LoadingScreen } from '../../application-loader/loading-screen/loading-screen'
 import { CommonErrorPage } from '../../error-pages/common-error-page'
 import { CustomAsyncLoadingBoundary } from '../async-loading-boundary/custom-async-loading-boundary'

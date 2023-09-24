@@ -12,12 +12,12 @@ import { DarkMode } from '../../components/layout/dark-mode/dark-mode'
 import { ExpectedOriginBoundary } from '../../components/layout/expected-origin-boundary'
 import { UiNotificationBoundary } from '../../components/notifications/ui-notification-boundary'
 import { StoreProvider } from '../../redux/store-provider'
-import { baseUrlFromEnvExtractor } from '../../utils/base-url-from-env-extractor'
 import { configureLuxon } from '../../utils/configure-luxon'
 import type { Metadata } from 'next'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
 import { getConfig } from '../../api/config'
+import { baseUrlFromEnvExtractor } from '../../utils/base-url-singelton'
 
 configureLuxon()
 

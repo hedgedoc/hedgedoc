@@ -3,13 +3,22 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Logger } from './logger'
+import { Logger } from './logger.js'
 import { Settings } from 'luxon'
 import { Mock } from 'ts-mockery'
+import {
+  jest,
+  describe,
+  beforeEach,
+  expect,
+  it,
+  afterEach
+} from '@jest/globals'
+import type { SpyInstance } from 'jest-mock'
 
 let testMode = false
 let devMode = false
-jest.mock('./test-modes', () => ({
+jest.mock('../utils/test-modes.js', () => ({
   get isTestMode() {
     return testMode
   },
@@ -22,11 +31,11 @@ describe('Logger', () => {
   let originalNow: () => number
   let dateShift = 0
 
-  let infoLogMock: jest.SpyInstance
-  let warnLogMock: jest.SpyInstance
-  let errorLogMock: jest.SpyInstance
-  let debugLogMock: jest.SpyInstance
-  let defaultLogMock: jest.SpyInstance
+  let infoLogMock: SpyInstance
+  let warnLogMock: SpyInstance
+  let errorLogMock: SpyInstance
+  let debugLogMock: SpyInstance
+  let defaultLogMock: SpyInstance
   let isLocalStorageAccessDenied = false
 
   const mockLocalStorage = () => {
@@ -63,7 +72,16 @@ describe('Logger', () => {
     defaultLogMock = jest.spyOn(console, 'log').mockReturnValue()
 
     originalNow = Settings.now
-    Settings.now = () => new Date(2021, 9, 25, dateShift, 1 + dateShift, 2 + dateShift, 3 + dateShift).valueOf()
+    Settings.now = () =>
+      new Date(
+        2021,
+        9,
+        25,
+        dateShift,
+        1 + dateShift,
+        2 + dateShift,
+        3 + dateShift
+      ).valueOf()
   })
 
   afterEach(() => {

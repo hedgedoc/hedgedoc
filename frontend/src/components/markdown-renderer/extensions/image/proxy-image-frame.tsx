@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { getProxiedUrl } from '../../../../api/media'
-import { Logger } from '../../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { useFrontendConfig } from '../../../common/frontend-config-context/use-frontend-config'
 import React, { useEffect, useState } from 'react'
 

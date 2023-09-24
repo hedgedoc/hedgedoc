@@ -33,7 +33,7 @@ describe('validate url', () => {
     })
   })
 
-  describe('trailing slash', () => {
+  describe('subpaths', () => {
     it('accepts urls with just domain with trailing slash', () => {
       expect(parseUrl('http://example.org/').get().toString()).toEqual(
         'http://example.org/'

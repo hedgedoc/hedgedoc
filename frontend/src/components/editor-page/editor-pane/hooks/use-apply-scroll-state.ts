@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Logger } from '../../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { useCodemirrorReferenceContext } from '../../change-content-context/codemirror-reference-context'
 import type { ScrollState } from '../../synced-scroll/scroll-props'
 import { EditorView } from '@codemirror/view'

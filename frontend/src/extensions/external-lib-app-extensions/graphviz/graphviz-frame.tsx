@@ -7,7 +7,7 @@ import { AsyncLoadingBoundary } from '../../../components/common/async-loading-b
 import { ShowIf } from '../../../components/common/show-if/show-if'
 import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
 import { cypressId } from '../../../utils/cypress-attribute'
-import { Logger } from '../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useAsync } from 'react-use'
 import { ApplicationErrorAlert } from '../../../components/common/application-error-alert/application-error-alert'

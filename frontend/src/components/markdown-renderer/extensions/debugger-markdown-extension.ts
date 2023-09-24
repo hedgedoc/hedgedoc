@@ -3,8 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Logger } from '../../../utils/logger'
-import { isDevMode } from '../../../utils/test-modes'
+import { Logger, isDevMode } from '@hedgedoc/commons'
 import { MarkdownRendererExtension } from './_base-classes/markdown-renderer-extension'
 import type MarkdownIt from 'markdown-it'
 

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { isDevMode } from '../../../utils/test-modes'
+import { isDevMode } from '@hedgedoc/commons'
 import type { ResourceKey } from 'i18next'
 import i18n, { use as i18nUse } from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Logger } from '../../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { UiIcon } from '../../icons/ui-icon'
 import { ShowIf } from '../../show-if/show-if'
 import { CopyToClipboardButton } from '../copy-to-clipboard-button/copy-to-clipboard-button'

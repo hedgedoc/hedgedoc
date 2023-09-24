@@ -1,4 +1,5 @@
 'use client'
+import type { BaseUrls } from '@hedgedoc/commons'
 /*
  * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
@@ -6,11 +7,6 @@
  */
 import type { PropsWithChildren } from 'react'
 import React, { createContext } from 'react'
-
-export interface BaseUrls {
-  renderer: string
-  editor: string
-}
 
 interface BaseUrlContextProviderProps {
   baseUrls?: BaseUrls

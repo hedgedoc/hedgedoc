@@ -1,26 +1,29 @@
 {
-  "testRegex" : "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-  "testPathIgnorePatterns" : [
+  "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+  "testPathIgnorePatterns": [
     "/dist/"
   ],
-  "moduleFileExtensions" : [
+  "moduleFileExtensions": [
     "ts",
     "tsx",
     "js"
   ],
-  "extensionsToTreatAsEsm" : [
+  "extensionsToTreatAsEsm": [
     ".ts"
   ],
-  "moduleNameMapper" : {
-    "^(\\.{1,2}/.*)\\.js$" : "$1"
+  "moduleNameMapper": {
+    "^(\\.{1,2}/.*)\\.js$": "$1"
   },
-  "transformIgnorePatterns": ["<rootDir>/node_modules/"],
-  "transform" : {
-    "^.+\\.tsx?$" : [
+  "testEnvironment": "jsdom",
+  "transformIgnorePatterns": [
+    "<rootDir>/node_modules/"
+  ],
+  "transform": {
+    "^.+\\.tsx?$": [
       "ts-jest",
       {
-        "tsconfig" : "tsconfig.test.json",
-        "useESM" : true
+        "tsconfig": "tsconfig.test.json",
+        "useESM": true
       }
     ]
   }

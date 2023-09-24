@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { getGlobalState } from '../../../../../redux'
-import { Logger } from '../../../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { useEditorReceiveHandler } from '../../../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
 import type { ImageUploadMessage } from '../../../../render-page/window-post-message-communicator/rendering-message'
 import { CommunicationMessageType } from '../../../../render-page/window-post-message-communicator/rendering-message'

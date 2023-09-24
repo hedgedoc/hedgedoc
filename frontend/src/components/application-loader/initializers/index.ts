@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { refreshHistoryState } from '../../../redux/history/methods'
-import { Logger } from '../../../utils/logger'
-import { isDevMode, isTestMode } from '../../../utils/test-modes'
+import { Logger } from '@hedgedoc/commons'
+import { isDevMode, isTestMode } from '@hedgedoc/commons'
 import { fetchAndSetUser } from '../../login-page/auth/utils'
 import { loadDarkMode } from './load-dark-mode'
 import { setUpI18n } from './setupI18n'

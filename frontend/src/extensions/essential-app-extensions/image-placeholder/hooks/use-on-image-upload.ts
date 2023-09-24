@@ -5,7 +5,7 @@
  */
 import { useRendererToEditorCommunicator } from '../../../../components/editor-page/render-context/renderer-to-editor-communicator-context-provider'
 import { CommunicationMessageType } from '../../../../components/render-page/window-post-message-communicator/rendering-message'
-import { Logger } from '../../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { FileContentFormat, readFile } from '../../../../utils/read-file'
 import { useCallback } from 'react'
 

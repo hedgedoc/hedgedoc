@@ -5,7 +5,7 @@
  */
 import type { MediaUpload } from '../../../api/media/types'
 import { HttpMethod, respondToMatchingRequest } from '../../../handler-utils/respond-to-matching-request'
-import { isMockMode, isTestMode } from '../../../utils/test-modes'
+import { isMockMode, isTestMode } from '@hedgedoc/commons'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {

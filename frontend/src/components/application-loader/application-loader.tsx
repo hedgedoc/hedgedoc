@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Logger } from '../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { ApplicationLoaderError } from './application-loader-error'
 import { createSetUpTaskList } from './initializers'
 import { LoadingScreen } from './loading-screen/loading-screen'

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Logger } from '../../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { TravelerNodeProcessor } from '../../node-preprocessors/traveler-node-processor'
 import type { DataNode, Element, Node } from 'domhandler'
 import { isComment, isTag } from 'domhandler'

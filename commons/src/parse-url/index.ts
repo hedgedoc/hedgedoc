@@ -6,3 +6,5 @@
 
 export { parseUrl } from './parse-url.js'
 export { NoSubdirectoryAllowedError, WrongProtocolError } from './errors.js'
+export { BaseUrlFromEnvExtractor } from './base-url-from-env-extractor.js'
+export type { BaseUrls } from './base-urls.types.js'

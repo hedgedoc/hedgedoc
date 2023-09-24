@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Logger } from '../../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import type { HLJSApi } from 'highlight.js'
 import { useAsync } from 'react-use'
 import type { AsyncState } from 'react-use/lib/useAsyncFn'

@@ -14,7 +14,7 @@ import { addRemoteOriginToHistoryEntry, historyEntryToHistoryEntryPutDto } from 
 import type { HistoryEntry, HistoryEntryWithOrigin } from '../../api/history/types'
 import { HistoryEntryOrigin } from '../../api/history/types'
 import { download } from '../../components/common/download/download'
-import { Logger } from '../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { getGlobalState, store } from '../index'
 import type { HistoryExportJson, RemoveEntryAction, SetEntriesAction, UpdateEntryAction, V1HistoryEntry } from './types'
 import { HistoryActionType } from './types'

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { DarkModePreference } from '../../redux/dark-mode/types'
-import { Logger } from '../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import { useApplicationState } from '../common/use-application-state'
 import { useEffect } from 'react'
 

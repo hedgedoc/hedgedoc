@@ -6,7 +6,7 @@
 import type { EditorConfig, EditorConfigActions } from './types'
 import { EditorConfigActionType } from './types'
 import type { Reducer } from 'redux'
-import { Logger } from '../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 
 const logger = new Logger('EditorConfig Local Storage')
 

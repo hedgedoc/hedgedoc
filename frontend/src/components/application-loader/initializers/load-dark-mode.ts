@@ -6,7 +6,7 @@
 import { DARK_MODE_LOCAL_STORAGE_KEY } from '../../../hooks/dark-mode/use-save-dark-mode-preference-to-local-storage'
 import { setDarkModePreference } from '../../../redux/dark-mode/methods'
 import { DarkModePreference } from '../../../redux/dark-mode/types'
-import { Logger } from '../../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 
 const logger = new Logger('Dark mode initializer')
 

@@ -5,7 +5,7 @@
  */
 import type { PropsWithDataCypressId } from '../../utils/cypress-attribute'
 import { cypressId } from '../../utils/cypress-attribute'
-import { Logger } from '../../utils/logger'
+import { Logger } from '@hedgedoc/commons'
 import type { MutableRefObject } from 'react'
 import React, { useCallback, useEffect, useRef } from 'react'
 
