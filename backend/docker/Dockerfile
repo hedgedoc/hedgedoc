@@ -67,7 +67,7 @@ COPY --chown=node package.json package.json
 COPY --chown=node --from=prod-dependencies /usr/src/app/node_modules ./node_modules
 
 COPY --chown=node backend/package.json backend/package.json
-COPY --chown=node --from=builder /usr/src/app/backend/dist backend/dist
+COPY --chown=node --from=builder /usr/src/app/backend/dist/src backend/dist
 COPY --chown=node backend/public backend/public
 
 COPY --chown=node commons/package.json /usr/src/app/commons/package.json
