@@ -10,16 +10,17 @@ import { NewNoteButton } from '../../common/new-note-button/new-note-button'
 import { HistoryButton } from '../../layout/app-bar/app-bar-elements/help-dropdown/history-button'
 import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
 import { Trans, useTranslation } from 'react-i18next'
+import { GuestAccessLevel } from '../../../api/config/types'
 
 /**
  * Renders the card with the options for not logged-in users.
  */
 export const GuestCard: React.FC = () => {
-  const allowAnonymous = useFrontendConfig().allowAnonymous
+  const guestAccessLevel = useFrontendConfig().guestAccess
 
   useTranslation()
 
-  if (!allowAnonymous) {
+  if (guestAccessLevel === GuestAccessLevel.DENY) {
     return null
   }
 

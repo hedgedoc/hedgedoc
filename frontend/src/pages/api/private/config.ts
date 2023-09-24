@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { FrontendConfig } from '../../../api/config/types'
-import { AuthProviderType } from '../../../api/config/types'
+import { AuthProviderType, GuestAccessLevel } from '../../../api/config/types'
 import {
   HttpMethod,
   respondToMatchingRequest,
@@ -14,12 +14,12 @@ import { isTestMode } from '../../../utils/test-modes'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const initialConfig: FrontendConfig = {
-  allowAnonymous: true,
   allowRegister: true,
   branding: {
     name: 'DEMO Corp',
     logo: '/public/img/demo.png'
   },
+  guestAccess: GuestAccessLevel.WRITE,
   useImageProxy: false,
   specialUrls: {
     privacy: 'https://example.com/privacy',
