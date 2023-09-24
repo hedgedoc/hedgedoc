@@ -39,7 +39,6 @@ echo "🦔 > Bundling"
 mv .next/standalone dist
 mkdir -p dist/frontend/.next
 cp -R .next/static dist/frontend/.next/static
-cp next.config.js dist/frontend/next.config.js
 cp -R public dist/frontend/public
 rm -f dist/frontend/.env
 rm -rf dist/frontend/public/public
