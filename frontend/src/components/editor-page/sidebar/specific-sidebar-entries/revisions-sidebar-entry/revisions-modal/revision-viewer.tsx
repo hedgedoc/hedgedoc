@@ -43,10 +43,12 @@ export const RevisionViewer: React.FC<RevisionViewerProps> = ({ selectedRevision
     if (revision === undefined) {
       return ''
     }
-    const patch = parsePatch(revision.patch)[0]
-    const inversePatch = invertUnifiedPatch(patch)
-    const reverseContent = applyPatch(revision.content, inversePatch)
-    return reverseContent === false ? '' : reverseContent
+    const patches = parsePatch(revision.patch)
+    if (patches.length === 0) {
+      return ''
+    }
+    const inversePatch = invertUnifiedPatch(patches[0])
+    return applyPatch(revision.content, inversePatch)
   }, [revision])
 
   if (selectedRevisionId === undefined) {
