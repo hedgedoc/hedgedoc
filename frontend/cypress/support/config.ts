@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,8 +8,8 @@ import { HttpMethod } from '../../src/handler-utils/respond-to-matching-request'
 
 declare namespace Cypress {
   interface Chainable {
-    loadConfig(additionalConfig?: Partial<typeof config>): Chainable<Window>,
-    logIn: Chainable<Window>,
+    loadConfig(additionalConfig?: Partial<typeof config>): Chainable<Window>
+    logIn: Chainable<Window>
     logOut: Chainable<Window>
   }
 }
@@ -61,8 +61,8 @@ export const authProviders = [
 ]
 
 export const config = {
-  allowAnonymous: true,
   allowRegister: true,
+  guestAccess: 'write',
   authProviders: authProviders,
   branding: branding,
   useImageProxy: false,

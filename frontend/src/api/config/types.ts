@@ -5,15 +5,22 @@
  */
 
 export interface FrontendConfig {
-  allowAnonymous: boolean
   allowRegister: boolean
   authProviders: AuthProvider[]
   branding: BrandingConfig
+  guestAccess: GuestAccessLevel
   useImageProxy: boolean
   specialUrls: SpecialUrls
   version: BackendVersion
   plantumlServer?: string
   maxDocumentLength: number
+}
+
+export enum GuestAccessLevel {
+  DENY = 'deny',
+  READ = 'read',
+  WRITE = 'write',
+  CREATE = 'create'
 }
 
 export enum AuthProviderType {
