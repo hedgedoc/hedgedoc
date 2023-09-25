@@ -97,7 +97,7 @@
     "@types/passport-local": "1.0.36",
     "@types/pg": "8.10.3",
     "@types/source-map-support": "0.5.7",
-    "@types/supertest": "2.0.12",
+    "@types/supertest": "2.0.13",
     "@types/ws": "8.5.5",
     "@typescript-eslint/eslint-plugin": "6.7.2",
     "@typescript-eslint/parser": "6.7.2",
