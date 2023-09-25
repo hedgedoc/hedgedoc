@@ -45,7 +45,7 @@
     "@codemirror/lint": "6.4.2",
     "@codemirror/state": "6.2.1",
     "@codemirror/theme-one-dark": "6.1.2",
-    "@codemirror/view": "6.20.1",
+    "@codemirror/view": "6.20.2",
     "@fontsource/source-sans-pro": "5.0.8",
     "@hedgedoc/commons": "workspace:commons",
     "@hedgedoc/html-to-react": "workspace:html-to-react",
