@@ -89,6 +89,14 @@ server {
     ssl_dhparam ssl-dhparams.pem;
 }
 ```
+
+!!! warning
+
+    NGINX `proxy_pass` directives must NOT have trailing slashes. If the trailing
+    slashes are present, the browser will not be able to establish a WebSocket
+    connection to the server, and the editor interface will display an endless loading
+    animation.
+
 ### Apache
 You will need these modules enabled: `proxy`, `proxy_http` and `proxy_wstunnel`.  
 Here is an example config snippet:
