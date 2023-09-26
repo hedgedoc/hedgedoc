@@ -1252,7 +1252,7 @@ __metadata:
     lutim: 1.0.3
     lz-string: "git+https://github.com/hackmdio/lz-string.git"
     mariadb: 3.2.1
-    markdown-it: 13.0.1
+    markdown-it: 13.0.2
     markdown-it-abbr: 1.0.4
     markdown-it-container: 3.0.0
     markdown-it-deflist: 2.1.0
@@ -9518,9 +9518,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-it@npm:13.0.1":
-  version: 13.0.1
-  resolution: "markdown-it@npm:13.0.1"
+"markdown-it@npm:13.0.2":
+  version: 13.0.2
+  resolution: "markdown-it@npm:13.0.2"
   dependencies:
     argparse: ^2.0.1
     entities: ~3.0.1
@@ -9529,7 +9529,7 @@ __metadata:
     uc.micro: ^1.0.5
   bin:
     markdown-it: bin/markdown-it.js
-  checksum: faf5891d389dc433bcf21d3fbff2009beb044b42b117c92f4848899780ca1a2282a209e3ff4672db4afed726a7248304ec473e6e242a7d6498af7113d31974e7
+  checksum: bb4bf2cb3e5d77a7f3dc9cf48e17d050fbcd26d37992204eaa5812220752858fe9debe439b2ae1de06e749a3bba537c0baf6ce7510307cf7163a70f04fafe672
   languageName: node
   linkType: hard
 
