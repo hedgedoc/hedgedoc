@@ -2508,7 +2508,7 @@ __metadata:
     picocolors: 1.0.0
     prettier: 3.0.3
     react: 18.2.0
-    react-bootstrap: 2.8.0
+    react-bootstrap: 2.9.0
     react-bootstrap-icons: 1.10.3
     react-bootstrap-typeahead: 6.2.3
     react-diff-viewer: 3.1.1
@@ -3740,7 +3740,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@restart/ui@npm:^1.6.3":
+"@restart/ui@npm:^1.6.6":
   version: 1.6.6
   resolution: "@restart/ui@npm:1.6.6"
   dependencies:
@@ -4930,7 +4930,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-transition-group@npm:^4.4.5":
+"@types/react-transition-group@npm:^4.4.6":
   version: 4.4.6
   resolution: "@types/react-transition-group@npm:4.4.6"
   dependencies:
@@ -15224,14 +15224,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-bootstrap@npm:2.8.0":
-  version: 2.8.0
-  resolution: "react-bootstrap@npm:2.8.0"
+"react-bootstrap@npm:2.9.0":
+  version: 2.9.0
+  resolution: "react-bootstrap@npm:2.9.0"
   dependencies:
-    "@babel/runtime": ^7.21.0
+    "@babel/runtime": ^7.22.5
     "@restart/hooks": ^0.4.9
-    "@restart/ui": ^1.6.3
-    "@types/react-transition-group": ^4.4.5
+    "@restart/ui": ^1.6.6
+    "@types/react-transition-group": ^4.4.6
     classnames: ^2.3.2
     dom-helpers: ^5.2.1
     invariant: ^2.2.4
@@ -15247,7 +15247,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 589f64354ae03872a111fe3d37ad9b5dc2c69480edfd4b4f912a7d59cc15311df3f0374def08d5d6b63024b1674483daa862004e53bc5fac426d891993484ddc
+  checksum: 9fa4df0923a8fed104548661460b63734f10a23a60ec24f945dee64788add66dabae6a63d2f0cb78a094a66931b7250432cca523a9c138c06f61c042631134ea
   languageName: node
   linkType: hard
 
