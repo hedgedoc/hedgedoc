@@ -2291,9 +2291,9 @@ __metadata:
     "@types/express": 4.17.18
     "@types/express-session": 1.17.8
     "@types/jest": 29.5.5
-    "@types/markdown-it": 13.0.1
+    "@types/markdown-it": 13.0.2
     "@types/minio": 7.1.0
-    "@types/mysql": 2.15.21
+    "@types/mysql": 2.15.22
     "@types/node": 20.7.0
     "@types/node-fetch": 2.6.6
     "@types/passport-http-bearer": 1.0.38
@@ -2434,9 +2434,9 @@ __metadata:
     "@types/jest": 29.5.5
     "@types/katex": 0.16.3
     "@types/luxon": 3.3.2
-    "@types/markdown-it": 13.0.1
-    "@types/markdown-it-container": 2.0.6
-    "@types/markdown-it-plantuml": 1.4.1
+    "@types/markdown-it": 13.0.2
+    "@types/markdown-it-container": 2.0.7
+    "@types/markdown-it-plantuml": 1.4.2
     "@types/node": 20.7.0
     "@types/react": 18.2.23
     "@types/react-dom": 18.2.8
@@ -2573,7 +2573,7 @@ __metadata:
   dependencies:
     "@jest/types": 29.6.3
     "@mrdrogdrog/optional": 1.2.1
-    "@types/markdown-it": 13.0.1
+    "@types/markdown-it": 13.0.2
     "@typescript-eslint/eslint-plugin": 6.7.3
     "@typescript-eslint/parser": 6.7.3
     eslint: 8.50.0
@@ -4717,31 +4717,41 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/markdown-it-container@npm:2.0.6":
-  version: 2.0.6
-  resolution: "@types/markdown-it-container@npm:2.0.6"
+"@types/markdown-it-container@npm:2.0.7":
+  version: 2.0.7
+  resolution: "@types/markdown-it-container@npm:2.0.7"
   dependencies:
     "@types/markdown-it": "*"
-  checksum: 7e322b5da68dd40f32f11787aff9d2fe2b3e2be78ba72d66cf4607f8c969e082b22fdeda4666882ff66c99183ca0091f128d8d8d6ec9c32228d243f7f15dd73a
+  checksum: fceeedce7082a06a76d44bd50623da6f30e2f09822c5301f0bf583ba92d95964b89cd4314d8ce4ad8907ae19c2a5fd1b60dfbdaab352aaf3ef0ed0980de51428
   languageName: node
   linkType: hard
 
-"@types/markdown-it-plantuml@npm:1.4.1":
-  version: 1.4.1
-  resolution: "@types/markdown-it-plantuml@npm:1.4.1"
+"@types/markdown-it-plantuml@npm:1.4.2":
+  version: 1.4.2
+  resolution: "@types/markdown-it-plantuml@npm:1.4.2"
   dependencies:
     "@types/markdown-it": "*"
-  checksum: 7c91e836b3563a386f02e18acda15539af9c5231c14c06ef9593696209c5f9b2bd52ca20ea70bd5d725a94d550611f69bef7f5fd7d3d5de394b29100e132ba00
+  checksum: 2ee58aa5b6213d8f3e2ee3c8889538a43fd03921f658d20995622b6da7b7237ddb87d637e48c440be2ee928d7982f4210e1209fb8608d61cb01b7e729a55bf9f
   languageName: node
   linkType: hard
 
-"@types/markdown-it@npm:*, @types/markdown-it@npm:13.0.1":
+"@types/markdown-it@npm:*":
   version: 13.0.1
   resolution: "@types/markdown-it@npm:13.0.1"
   dependencies:
     "@types/linkify-it": "*"
     "@types/mdurl": "*"
   checksum: 184d383ac21903a9e6be1639cde2b0cc082d0366b423fd8a69d0f37d9d1d36338f66611226ba4ef1da6148f370a62e08f688e8147ead43d429d6ff213c38c062
+  languageName: node
+  linkType: hard
+
+"@types/markdown-it@npm:13.0.2":
+  version: 13.0.2
+  resolution: "@types/markdown-it@npm:13.0.2"
+  dependencies:
+    "@types/linkify-it": "*"
+    "@types/mdurl": "*"
+  checksum: fe1f6a12ee8ad2246359376431a30d22c9b603e63e93e3e27d6920840934b9764034679a4d0b01ec54b0693c8d5c42012ec34715cba4f5b0736b8a4b66db4c74
   languageName: node
   linkType: hard
 
@@ -4791,12 +4801,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/mysql@npm:2.15.21":
-  version: 2.15.21
-  resolution: "@types/mysql@npm:2.15.21"
+"@types/mysql@npm:2.15.22":
+  version: 2.15.22
+  resolution: "@types/mysql@npm:2.15.22"
   dependencies:
     "@types/node": "*"
-  checksum: 6f526e0183c2d03628ca3bdeec839900403863641d61397de3aa0431b8e92457f1580de16b54ee3cd81ccb3968f949a5fa9be939a2101f2148ed5ff3c775c0a7
+  checksum: 325120f027b04052b3ed056fef096d186ecc0988d9efe110a52bd3f2233d02e17fb802ea42da7fa1ae1d150b0194cddf56ff71bfb28411bc05361f947b0635af
   languageName: node
   linkType: hard
 
