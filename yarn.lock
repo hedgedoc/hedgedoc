@@ -2461,7 +2461,7 @@ __metadata:
     diff: 5.1.0
     dom-serializer: 2.0.0
     domhandler: 5.0.3
-    dompurify: 3.0.5
+    dompurify: 3.0.6
     dotenv-cli: 7.3.0
     emoji-picker-element: 1.18.3
     emoji-picker-element-data: 1.4.0
@@ -8586,7 +8586,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:3.0.5, dompurify@npm:^3.0.5":
+"dompurify@npm:3.0.6":
+  version: 3.0.6
+  resolution: "dompurify@npm:3.0.6"
+  checksum: e5c6cdc5fe972a9d0859d939f1d86320de275be00bbef7bd5591c80b1e538935f6ce236624459a1b0c84ecd7c6a1e248684aa4637512659fccc0ce7c353828a6
+  languageName: node
+  linkType: hard
+
+"dompurify@npm:^3.0.5":
   version: 3.0.5
   resolution: "dompurify@npm:3.0.5"
   checksum: 2d9421570c833ce26ce7022955241749b646d41e8bf453f42ede9f22d0e98af482cedb7dfbf8129419eb48b351c1d677a08fc9f1cd91836ce7f6c1807a0676b2
