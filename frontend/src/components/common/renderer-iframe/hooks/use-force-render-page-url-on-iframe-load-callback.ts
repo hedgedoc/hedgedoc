@@ -7,7 +7,7 @@ import { ORIGIN, useBaseUrl } from '../../../../hooks/common/use-base-url'
 import { Logger } from '../../../../utils/logger'
 import { useEditorToRendererCommunicator } from '../../../editor-page/render-context/editor-to-renderer-communicator-context-provider'
 import type { RefObject } from 'react'
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useMemo, useRef } from 'react'
 
 const log = new Logger('IframeLoader')
 
@@ -31,7 +31,7 @@ export const useForceRenderPageUrlOnIframeLoadCallback = (
   }, [iframeCommunicator, rendererBaseUrl])
   const redirectionInProgress = useRef<boolean>(false)
 
-  const loadCallback = useCallback(() => {
+  return useCallback(() => {
     const frame = iFrameReference.current
 
     if (!frame) {
@@ -50,10 +50,4 @@ export const useForceRenderPageUrlOnIframeLoadCallback = (
       frame.src = forcedUrl
     }
   }, [iFrameReference, onNavigateAway, forcedUrl])
-
-  useEffect(() => {
-    loadCallback()
-  }, [loadCallback])
-
-  return loadCallback
 }
