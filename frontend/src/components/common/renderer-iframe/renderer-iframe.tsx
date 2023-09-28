@@ -78,9 +78,9 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
 
   useEffect(() => {
     if (rendererReady) {
-      log.info('Renderer Ready!')
+      log.debug('Renderer Ready!')
     } else {
-      log.info('Renderer not ready')
+      log.debug('Renderer not ready')
     }
   }, [log, rendererReady])
 
