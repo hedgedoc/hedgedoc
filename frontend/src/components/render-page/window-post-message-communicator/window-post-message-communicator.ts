@@ -45,14 +45,14 @@ export abstract class WindowPostMessageCommunicator<
   ) {
     this.boundListener = this.handleEvent.bind(this)
     this.communicationEnabled = false
-    this.log = this.createLogger()
+    this.log = this.createLogger(uuid)
   }
 
   public getUuid(): string {
     return this.uuid
   }
 
-  protected abstract createLogger(): Logger
+  protected abstract createLogger(uuid: string): Logger
 
   /**
    * Registers the event listener on the current global {@link window}.

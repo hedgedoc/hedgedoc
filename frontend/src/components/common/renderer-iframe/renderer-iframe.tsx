@@ -37,8 +37,6 @@ export interface RendererIframeProps extends Omit<CommonMarkdownRendererProps & 
   showWaitSpinner?: boolean
 }
 
-const log = new Logger('RendererIframe')
-
 /**
  * Renders the iframe for the HTML-rendering of the markdown content.
  * The iframe is enhanced by the {@link useEditorToRendererCommunicator iframe communicator} which is used for
@@ -69,18 +67,34 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
   const [rendererReady, setRendererReady] = useState<boolean>(false)
   const frameReference = useRef<HTMLIFrameElement>(null)
   const iframeCommunicator = useEditorToRendererCommunicator()
+  const log = useMemo(() => new Logger(`RendererIframe[${iframeCommunicator.getUuid()}]`), [iframeCommunicator])
+
   const resetRendererReady = useCallback(() => {
     log.debug('Reset render status')
     setRendererReady(false)
-  }, [])
+  }, [log])
   const onIframeLoad = useForceRenderPageUrlOnIframeLoadCallback(frameReference, resetRendererReady)
   const [frameHeight, setFrameHeight] = useState<number>(0)
+
+  useEffect(() => {
+    if (rendererReady) {
+      log.info('Renderer Ready!')
+    } else {
+      log.info('Renderer not ready')
+    }
+  }, [log, rendererReady])
 
   useEffect(() => {
     onRendererStatusChange?.(rendererReady)
   }, [onRendererStatusChange, rendererReady])
 
-  useEffect(() => () => setRendererReady(false), [iframeCommunicator])
+  useEffect(
+    () => () => {
+      log.debug('Component ended')
+      setRendererReady(false)
+    },
+    [iframeCommunicator, log]
+  )
 
   useEffect(() => {
     if (!rendererReady) {
@@ -138,7 +152,7 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
         }
       })
       setRendererReady(true)
-    }, [iframeCommunicator, rendererType])
+    }, [iframeCommunicator, log, rendererType])
   )
 
   useEffectOnRenderTypeChange(rendererType, onIframeLoad)

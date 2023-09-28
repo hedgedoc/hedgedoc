@@ -19,7 +19,7 @@ export class EditorToRendererCommunicator extends WindowPostMessageCommunicator<
   EditorToRendererMessageType,
   CommunicationMessages
 > {
-  protected createLogger(): Logger {
-    return new Logger('EditorToRendererCommunicator')
+  protected createLogger(uuid: string): Logger {
+    return new Logger(`EditorToRendererCommunicator[${uuid}]`)
   }
 }
