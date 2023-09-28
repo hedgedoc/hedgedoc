@@ -43,7 +43,8 @@ export const useForceRenderPageUrlOnIframeLoadCallback = (
       redirectionInProgress.current = false
       log.debug('Redirect complete')
     } else {
-      log.warn(`Navigated away from unknown URL. Forcing back to ${forcedUrl}`)
+      const oldUrl = frame.src === '' ? '(none)' : frame.src
+      log.warn(`Navigated away from unknown URL. Was ${oldUrl}. Forcing back to ${forcedUrl}`)
       onNavigateAway?.()
       redirectionInProgress.current = true
       frame.src = forcedUrl
