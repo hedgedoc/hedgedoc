@@ -96,7 +96,15 @@
     },
 
     "test:e2e:ci": {},
-    "@hedgedoc/frontend#test:e2e:ci": {
+    "@hedgedoc/frontend#test:e2e:ci:chrome": {
+      "dependsOn": [
+        "^build"
+      ],
+      "env": [
+        "CYPRESS_CONTAINER_ID"
+      ]
+    },
+    "@hedgedoc/frontend#test:e2e:ci:firefox": {
       "dependsOn": [
         "^build"
       ],

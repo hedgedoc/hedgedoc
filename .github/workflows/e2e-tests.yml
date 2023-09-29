@@ -162,6 +162,7 @@ jobs:
       fail-fast: false
       matrix:
         containers: [ 1, 2, 3 ]
+        browser: ["chrome", "firefox"]
     steps:
       - name: Install additional packages
         run: apt-get update && apt-get install -y jq zstd screen curl
@@ -197,7 +198,7 @@ jobs:
         run: "curl -L --max-time 120 http://127.0.0.1:3001/"
 
       - name: Run cypress
-        run: yarn test:e2e:ci --filter=frontend
+        run: yarn test:e2e:ci:${{ matrix.browser }} --filter=frontend
         shell: bash
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}

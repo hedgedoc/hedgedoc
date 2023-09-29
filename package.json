@@ -21,6 +21,8 @@
     "start": "dotenv -c production -- turbo run start",
     "test:ci": "dotenv -c test -- turbo run test:ci --concurrency 1",
     "test": "dotenv -c test -- turbo run test --concurrency 1",
+    "test:e2e:ci:firefox": "dotenv -c test -- turbo run test:e2e:ci:firefox",
+    "test:e2e:ci:chrome": "dotenv -c test -- turbo run test:e2e:ci:chrome",
     "test:e2e:ci": "dotenv -c test -- turbo run test:e2e:ci"
   },
   "packageManager": "yarn@3.6.4",

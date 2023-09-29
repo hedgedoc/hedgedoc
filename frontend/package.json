@@ -18,7 +18,8 @@
     "start:dev:test": "cross-env PORT=${HD_FRONTEND_PORT:-3001} NODE_ENV=test NEXT_PUBLIC_TEST_MODE=true next dev",
     "test:e2e:open": "cypress open",
     "test:e2e": "cypress run --browser chrome",
-    "test:e2e:ci": "cypress run --browser chrome --record true --parallel --group \"chrome\"",
+    "test:e2e:ci:chrome": "cypress run --browser chrome --record true --parallel --group \"chrome\"",
+    "test:e2e:ci:firefox": "cypress run --browser firefox --record true --parallel --group \"firefox\"",
     "test:watch": "cross-env NODE_ENV=test jest --watch",
     "test:ci": "cross-env NODE_ENV=test jest --coverage",
     "test": "cross-env NODE_ENV=test jest"
