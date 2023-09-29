@@ -139,7 +139,7 @@
     "@types/markdown-it": "13.0.2",
     "@types/markdown-it-container": "2.0.7",
     "@types/markdown-it-plantuml": "1.4.2",
-    "@types/node": "20.7.1",
+    "@types/node": "20.7.2",
     "@types/react": "18.2.23",
     "@types/react-dom": "18.2.8",
     "@types/sass": "1.43.1",
