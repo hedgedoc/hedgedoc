@@ -6,11 +6,8 @@
 
 import { render } from '@testing-library/react'
 import { ApplicationErrorAlert } from './application-error-alert'
-import type { AlertIconProps } from './alert-icon'
 
-jest.mock('./alert-icon', () => ({
-  AlertIcon: (props: AlertIconProps) => `This is a mock for "AlertIcon". Props: ${JSON.stringify(props)}`
-}))
+jest.mock('./alert-icon', () => require('../../../test-utils/mock-component').mockComponent('AlertIcon'))
 
 describe('ApplicationErrorAlert', () => {
   it('renders correctly', () => {
