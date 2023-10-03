@@ -2594,7 +2594,7 @@ __metadata:
     user-agent-data-types: 0.4.2
     uuid: 9.0.1
     vega: 5.25.0
-    vega-embed: 6.22.2
+    vega-embed: 6.23.0
     vega-lite: 5.15.1
     words-count: 2.0.2
     ws: 8.14.2
@@ -18252,9 +18252,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-embed@npm:6.22.2":
-  version: 6.22.2
-  resolution: "vega-embed@npm:6.22.2"
+"vega-embed@npm:6.23.0":
+  version: 6.23.0
+  resolution: "vega-embed@npm:6.23.0"
   dependencies:
     fast-json-patch: ^3.1.1
     json-stringify-pretty-compact: ^3.0.0
@@ -18263,12 +18263,12 @@ __metadata:
     vega-interpreter: ^1.0.5
     vega-schema-url-parser: ^2.2.0
     vega-themes: ^2.14.0
-    vega-tooltip: ^0.32.0
+    vega-tooltip: ^0.33.0
     yallist: "*"
   peerDependencies:
     vega: ^5.21.0
     vega-lite: "*"
-  checksum: d79f00940a3e9724667684f48070194cf89ced43a5c5755ee88f73725154a2bd5862ab6407f510741220938dd93a5b519ce9d148f6bcc93751bc307015e6a6f8
+  checksum: 529207859ea34a30a9aa60f57956d9fdc3bd0b3007bda47e1cc14b53960b7846826b1faf2f6e84d5c203e6c9e6de4d96fda32c4b2e908eb18f7ef03e6bfd15c5
   languageName: node
   linkType: hard
 
@@ -18546,12 +18546,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-tooltip@npm:^0.32.0":
-  version: 0.32.0
-  resolution: "vega-tooltip@npm:0.32.0"
+"vega-tooltip@npm:^0.33.0":
+  version: 0.33.0
+  resolution: "vega-tooltip@npm:0.33.0"
   dependencies:
-    vega-util: ^1.17.1
-  checksum: 61c81e8cc8bf76626c013e31dfece2c9c029892522d11ae1179c665fb1b7e24f4df3e1639f1d396df6d87b34095bddb0127b361eb5b721c83d0d0cd97544526b
+    vega-util: ^1.17.2
+  checksum: c15a6c4c43290ab21ced2691a2688e52b0975d81817338f1f1dde28fed4230d3a8e45ed35e62f0c347d3f982b99843edd3617a0506b1890183afea3c49c4a0d2
   languageName: node
   linkType: hard
 
@@ -18580,7 +18580,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-util@npm:^1.15.2, vega-util@npm:^1.17.1, vega-util@npm:~1.17.2":
+"vega-util@npm:^1.15.2, vega-util@npm:^1.17.1, vega-util@npm:^1.17.2, vega-util@npm:~1.17.2":
   version: 1.17.2
   resolution: "vega-util@npm:1.17.2"
   checksum: 5d681cb1a6ffda7af1b74df7c1c46a32f1d874daef54f9c9c65c7d7c7bfc4271dc6d9b1c1c7a853b14eb6e4cc8ec811b0132cd3ea25fa85259eac92e1b4f07fa
