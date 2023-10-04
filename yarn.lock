@@ -2439,7 +2439,7 @@ __metadata:
     "@types/markdown-it-plantuml": 1.4.2
     "@types/node": 20.7.2
     "@types/react": 18.2.24
-    "@types/react-dom": 18.2.9
+    "@types/react-dom": 18.2.10
     "@types/sass": 1.43.1
     "@types/testing-library__jest-dom": 5.14.9
     "@types/uuid": 9.0.4
@@ -2546,7 +2546,7 @@ __metadata:
     "@jest/globals": 29.7.0
     "@jest/types": 29.6.3
     "@types/react": 18.2.24
-    "@types/react-dom": 18.2.9
+    "@types/react-dom": 18.2.10
     "@typescript-eslint/eslint-plugin": 6.7.4
     "@typescript-eslint/parser": 6.7.4
     domelementtype: 2.3.0
@@ -4931,12 +4931,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.2.9":
-  version: 18.2.9
-  resolution: "@types/react-dom@npm:18.2.9"
+"@types/react-dom@npm:18.2.10":
+  version: 18.2.10
+  resolution: "@types/react-dom@npm:18.2.10"
   dependencies:
     "@types/react": "*"
-  checksum: d64e58b24549e5b3bb8c792f937061fa80e35a96f0d1757707de5b1377ebce3cf4932f0869bd54cbdf4d321edc7742ae3af03d543306d0f5efb58065b3a0917e
+  checksum: ced70643d82dd9d165cd6d1a98ec7556daf77d8fdec1ed19badb744a2a2370a84cc109248667536d7f850409e85432c300ec9f8c87d46e066ad295ddf9b6ab03
   languageName: node
   linkType: hard
 
