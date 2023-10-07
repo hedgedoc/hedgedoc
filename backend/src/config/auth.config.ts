@@ -221,15 +221,30 @@ export default registerAs('authConfig', () => {
   const gitlabNames = (
     toArrayConfig(process.env.HD_AUTH_GITLABS, ',') ?? []
   ).map((name) => name.toUpperCase());
+  if (gitlabNames.length !== 0) {
+    throw new Error(
+      "GitLab auth is currently not yet supported. Please don't configure it",
+    );
+  }
   const ldapNames = (
     toArrayConfig(process.env.HD_AUTH_LDAP_SERVERS, ',') ?? []
   ).map((name) => name.toUpperCase());
   const samlNames = (toArrayConfig(process.env.HD_AUTH_SAMLS, ',') ?? []).map(
     (name) => name.toUpperCase(),
   );
+  if (samlNames.length !== 0) {
+    throw new Error(
+      "SAML auth is currently not yet supported. Please don't configure it",
+    );
+  }
   const oauth2Names = (
     toArrayConfig(process.env.HD_AUTH_OAUTH2S, ',') ?? []
   ).map((name) => name.toUpperCase());
+  if (oauth2Names.length !== 0) {
+    throw new Error(
+      "OAuth2 auth is currently not yet supported. Please don't configure it",
+    );
+  }
 
   const gitlabs = gitlabNames.map((gitlabName) => {
     return {
@@ -333,6 +348,25 @@ export default registerAs('authConfig', () => {
       accessRole: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_ACCESS_ROLE`],
     };
   });
+
+  if (
+    process.env.HD_AUTH_GITHUB_CLIENT_ID !== undefined ||
+    process.env.HD_AUTH_GITHUB_CLIENT_SECRET !== undefined
+  ) {
+    throw new Error(
+      "GitHub config is currently not yet supported. Please don't configure it",
+    );
+  }
+
+  if (
+    process.env.HD_AUTH_GOOGLE_CLIENT_ID !== undefined ||
+    process.env.HD_AUTH_GOOGLE_CLIENT_SECRET !== undefined ||
+    process.env.HD_AUTH_GOOGLE_APP_KEY !== undefined
+  ) {
+    throw new Error(
+      "Google config is currently not yet supported. Please don't configure it",
+    );
+  }
 
   const authConfig = authSchema.validate(
     {

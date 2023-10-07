@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -29,6 +29,11 @@ const schema = Joi.object({
 });
 
 export default registerAs('externalServicesConfig', () => {
+  if (process.env.HD_IMAGE_PROXY !== undefined) {
+    throw new Error(
+      "HD_IMAGE_PROXY is currently not yet supported. Please don't configure it",
+    );
+  }
   const externalConfig = schema.validate(
     {
       plantUmlServer: process.env.HD_PLANTUML_SERVER,
