@@ -6,9 +6,7 @@
 import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import { ShowIf } from '../show-if/show-if'
 import styles from './user-avatar.module.scss'
-import React, { useCallback, useMemo } from 'react'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
-import type { OverlayInjectedProps } from 'react-bootstrap/Overlay'
+import React, { useMemo } from 'react'
 import { useAvatarUrl } from './hooks/use-avatar-url'
 
 export interface UserAvatarProps {
@@ -55,15 +53,6 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
   )
   const imgDescription = useTranslatedText('common.avatarOf', imageTranslateOptions)
 
-  const tooltip = useCallback(
-    (overlayInjectedProps: OverlayInjectedProps) => (
-      <Tooltip id={displayName} {...overlayInjectedProps}>
-        {displayName}
-      </Tooltip>
-    ),
-    [displayName]
-  )
-
   return (
     <span className={'d-inline-flex align-items-center ' + additionalClasses}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -76,9 +65,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
         width={imageSize}
       />
       <ShowIf condition={showName}>
-        <OverlayTrigger overlay={tooltip}>
-          <span className={`ms-2 me-1 ${styles['user-line-name']}`}>{displayName}</span>
-        </OverlayTrigger>
+        <span className={`ms-2 me-1 ${styles['user-line-name']}`}>{displayName}</span>
       </ShowIf>
     </span>
   )
