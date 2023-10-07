@@ -85,5 +85,5 @@
   "resolutions": {
     "@types/react": "18.2.25"
   },
-  "packageManager": "yarn@3.6.3"
+  "packageManager": "yarn@3.6.4"
 }
