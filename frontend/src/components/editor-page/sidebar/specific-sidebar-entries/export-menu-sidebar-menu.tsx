@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -52,13 +52,19 @@ export const ExportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         <Trans i18nKey={'editor.documentBar.export'} />
       </SidebarButton>
       <SidebarMenu expand={expand}>
-        <SidebarButton icon={IconGithub}>Gist</SidebarButton>
-        <SidebarButton icon={IconGitlab}>Gitlab Snippet</SidebarButton>
+        <SidebarButton icon={IconGithub} disabled={true}>
+          Gist
+        </SidebarButton>
+        <SidebarButton icon={IconGitlab} disabled={true}>
+          Gitlab Snippet
+        </SidebarButton>
 
         <ExportMarkdownSidebarEntry />
 
-        <SidebarButton icon={IconFileCode}>HTML</SidebarButton>
-        <SidebarButton icon={IconFileCode}>
+        <SidebarButton icon={IconFileCode} disabled={true}>
+          HTML
+        </SidebarButton>
+        <SidebarButton icon={IconFileCode} disabled={true}>
           <Trans i18nKey='editor.export.rawHtml' />
         </SidebarButton>
       </SidebarMenu>
