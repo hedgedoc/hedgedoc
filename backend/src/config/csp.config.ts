@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -19,6 +19,15 @@ const cspSchema = Joi.object({
 });
 
 export default registerAs('cspConfig', () => {
+  if (
+    process.env.HD_CSP_ENABLE !== undefined ||
+    process.env.HD_CSP_REPORT_URI !== undefined
+  ) {
+    throw new Error(
+      "CSP config is currently not yet supported. Please don't configure it",
+    );
+  }
+
   const cspConfig = cspSchema.validate(
     {
       enable: process.env.HD_CSP_ENABLE || true,
