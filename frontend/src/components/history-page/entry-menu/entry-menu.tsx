@@ -76,7 +76,7 @@ export const EntryMenu: React.FC<EntryMenuProps> = ({
 
         <RemoveNoteEntryItem onConfirm={onRemoveFromHistory} noteTitle={title} />
 
-        {/* TODO Check permissions (ownership) before showing option for delete  */}
+        {/* TODO Check permissions (ownership) before showing option for delete  (https://github.com/hedgedoc/hedgedoc/issues/5036)*/}
         <ShowIf condition={userExists}>
           <Dropdown.Divider />
           <DeleteNoteItem onConfirm={onDeleteNote} noteTitle={title} />

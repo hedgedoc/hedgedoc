@@ -47,7 +47,7 @@ export class ApiResponse<ResponseType> {
       throw new Error('Response body does not seem to be JSON encoded.')
     }
     // TODO Responses should better be type validated
-    // see https://github.com/hedgedoc/hedgedoc/issues/2910
+    //  see https://github.com/hedgedoc/hedgedoc/issues/2910
     return (await this.response.json()) as ResponseType
   }
 }

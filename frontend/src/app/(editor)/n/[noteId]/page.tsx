@@ -30,8 +30,7 @@ const EditorPage: NextPage<PageParams> = ({ params }) => {
 
 /*
  TODO: implement these in generateMetadata. We need these only in SSR.
-
- See https://github.com/hedgedoc/hedgedoc/issues/4766
+  See https://github.com/hedgedoc/hedgedoc/issues/4766
 
  But its problematic because we dont get the opengraph meta data via API.
 

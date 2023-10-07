@@ -18,7 +18,8 @@ export class ForkAwesomeHtmlTagAppExtension extends AppExtension {
     return [
       new SingleLineRegexLinter(
         forkAwesomeRegex,
-        t('editor.linter.fork-awesome', { link: 'https://docs.hedgedoc.org' }) // ToDo: Add correct link here
+        // ToDo: Add correct link here (https://github.com/hedgedoc/hedgedoc/issues/5021)
+        t('editor.linter.fork-awesome', { link: 'https://docs.hedgedoc.org' })
       )
     ]
   }

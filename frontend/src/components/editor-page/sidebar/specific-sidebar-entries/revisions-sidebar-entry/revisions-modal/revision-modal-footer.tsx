@@ -42,7 +42,7 @@ export const RevisionModalFooter: React.FC<RevisionModalFooterProps> = ({
 
   const onRevertToRevision = useCallback(() => {
     // TODO Websocket message handler missing
-    // see https://github.com/hedgedoc/hedgedoc/issues/1984
+    //  see https://github.com/hedgedoc/hedgedoc/issues/1984
     window.alert('Not yet implemented. Requires websocket.')
   }, [])
 

@@ -46,9 +46,9 @@ describe('App', () => {
 
     /**
      * TODO: This is not really a regression test, as it does not use the
-     * real initialization code in main.ts.
-     * Should be fixed after https://github.com/hedgedoc/hedgedoc/issues/2083
-     * is done.
+     *  real initialization code in main.ts.
+     *  Should be fixed after https://github.com/hedgedoc/hedgedoc/issues/2083
+     *  is done.
      */
     const app = moduleRef.createNestApplication();
     app.useWebSocketAdapter(new WsAdapter(app));

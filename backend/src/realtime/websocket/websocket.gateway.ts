@@ -67,6 +67,7 @@ export class WebsocketGateway implements OnGatewayConnection {
       );
       if (notePermission < NotePermission.READ) {
         //TODO: [mrdrogdrog] inform client about reason of disconnect.
+        // (https://github.com/hedgedoc/hedgedoc/issues/5034)
         this.logger.log(
           `Access denied to note '${note.id}' for user '${username}'`,
           'handleConnection',

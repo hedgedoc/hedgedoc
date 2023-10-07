@@ -149,7 +149,7 @@ export class ConsoleLoggerService implements LoggerService {
       day: '2-digit',
       month: '2-digit',
     };
-    //TODO make timestamp optional
+    //TODO make timestamp optional (https://github.com/hedgedoc/hedgedoc/issues/5033)
     const timestamp = new Date(Date.now()).toLocaleString(
       undefined,
       localeStringOptions,
