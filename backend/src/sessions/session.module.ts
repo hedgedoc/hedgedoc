@@ -6,11 +6,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { LoggerModule } from '../logger/logger.module';
 import { Session } from './session.entity';
 import { SessionService } from './session.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Session])],
+  imports: [TypeOrmModule.forFeature([Session]), LoggerModule],
   exports: [SessionService],
   providers: [SessionService],
 })

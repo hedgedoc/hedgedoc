@@ -128,10 +128,14 @@ export class WebsocketGateway implements OnGatewayConnection {
   ): Promise<User | null> {
     const sessionId = this.sessionService.extractSessionIdFromRequest(request);
 
+    this.logger.debug(
+      'Checking if sessionId is empty',
+      'findUserByRequestSession',
+    );
     if (sessionId.isEmpty()) {
       return null;
     }
-
+    this.logger.debug('sessionId is not empty', 'findUserByRequestSession');
     const username = await this.sessionService.fetchUsernameForSessionId(
       sessionId.get(),
     );
