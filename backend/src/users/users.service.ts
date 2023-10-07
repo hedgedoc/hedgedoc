@@ -105,7 +105,6 @@ export class UsersService {
     if (user.photo) {
       return user.photo;
     } else {
-      // TODO: Create new photo, see old code
       return '';
     }
   }

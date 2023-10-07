@@ -13,8 +13,6 @@ import { NoteMetadataDto } from '../../src/notes/note-metadata.dto';
 import { User } from '../../src/users/user.entity';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
-// TODO Tests have to be reworked using UserService functions
-
 describe('Me', () => {
   let testSetup: TestSetup;
 
