@@ -21,6 +21,10 @@ export const GuestCard: React.FC = () => {
 
   useTranslation()
 
+  if (guestAccessLevel === GuestAccessLevel.DENY) {
+    return null
+  }
+
   return (
     <Card>
       <Card.Body>
