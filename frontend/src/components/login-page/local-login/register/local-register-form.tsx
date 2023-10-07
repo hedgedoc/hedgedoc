@@ -49,7 +49,7 @@ export const LocalRegisterForm: NextPage = () => {
       doLocalRegister(username, displayName, password)
         .then(() => fetchAndSetUser())
         .then(() => dispatchUiNotification('login.register.success.title', 'login.register.success.message', {}))
-        .then(() => router.push('/'))
+        .then(() => router.push('/history'))
         .catch((error: ApiError) => setError(error))
       event.preventDefault()
     },
