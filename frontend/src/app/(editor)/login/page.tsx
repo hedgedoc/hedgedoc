@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 'use client'
 
 /*
@@ -14,16 +20,16 @@ import { Trans } from 'react-i18next'
 import { CustomBranding } from '../../../components/common/custom-branding/custom-branding'
 import { IntroCustomContent } from '../../../components/intro-page/intro-custom-content'
 import React from 'react'
-import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { RedirectToParamOrHistory } from '../../../components/login-page/redirect-to-param-or-history'
 import { Col, Container, Row } from 'react-bootstrap'
 import { LocalLoginCard } from '../../../components/login-page/local-login/local-login-card'
 import { LdapLoginCards } from '../../../components/login-page/ldap/ldap-login-cards'
 import { OneClickLoginCard } from '../../../components/login-page/one-click/one-click-login-card'
 import { GuestCard } from '../../../components/login-page/guest/guest-card'
+import { useIsLoggedIn } from '../../../hooks/common/use-is-logged-in'
 
 const LoginPage: NextPage = () => {
-  const userLoggedIn = useApplicationState((state) => !!state.user)
+  const userLoggedIn = useIsLoggedIn()
 
   if (userLoggedIn) {
     return <RedirectToParamOrHistory />

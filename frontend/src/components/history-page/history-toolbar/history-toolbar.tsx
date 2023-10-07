@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -24,6 +24,7 @@ import { useSyncToolbarStateToUrlEffect } from './toolbar-context/use-sync-toolb
 import React, { useCallback } from 'react'
 import { Button, Col } from 'react-bootstrap'
 import { CloudUpload as IconCloudUpload } from 'react-bootstrap-icons'
+import { useIsLoggedIn } from '../../../hooks/common/use-is-logged-in'
 
 export enum ViewStateEnum {
   CARD,
@@ -35,7 +36,7 @@ export enum ViewStateEnum {
  */
 export const HistoryToolbar: React.FC = () => {
   const historyEntries = useApplicationState((state) => state.history)
-  const userExists = useApplicationState((state) => !!state.user)
+  const userExists = useIsLoggedIn()
   const { showErrorNotification } = useUiNotifications()
   const safeRefreshHistoryState = useSafeRefreshHistoryStateCallback()
   useSyncToolbarStateToUrlEffect()

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,12 +16,13 @@ import { useSafeRefreshHistoryStateCallback } from './hooks/use-safe-refresh-his
 import React, { useCallback, useRef, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { Upload as IconUpload } from 'react-bootstrap-icons'
+import { useIsLoggedIn } from '../../../hooks/common/use-is-logged-in'
 
 /**
  * Button that lets the user select a history JSON file and uploads imports that into the history.
  */
 export const ImportHistoryButton: React.FC = () => {
-  const userExists = useApplicationState((state) => !!state.user)
+  const userExists = useIsLoggedIn()
   const historyState = useApplicationState((state) => state.history)
   const uploadInput = useRef<HTMLInputElement>(null)
   const [fileName, setFilename] = useState('')
