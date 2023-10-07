@@ -1,10 +1,31 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Loglevel } from './loglevel.enum';
 
+export function findDuplicatesInArray<T>(array: T[]): T[] {
+  // This uses the Array-Set conversion to remove duplicates in the finding.
+  // This can happen if an entry is present three or more times
+  return Array.from(
+    new Set(array.filter((item, index) => array.indexOf(item) !== index)),
+  );
+}
+
+export function ensureNoDuplicatesExist(
+  authName: string,
+  names: string[],
+): void {
+  const duplicates = findDuplicatesInArray(names);
+  if (duplicates.length !== 0) {
+    throw new Error(
+      `Your ${authName} names '${names.join(
+        ',',
+      )}' contain duplicates '${duplicates.join(',')}'`,
+    );
+  }
+}
 export function toArrayConfig(
   configValue?: string,
   separator = ',',

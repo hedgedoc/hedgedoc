@@ -10,6 +10,7 @@ import * as Joi from 'joi';
 import { GitlabScope, GitlabVersion } from './gitlab.enum';
 import {
   buildErrorMessage,
+  ensureNoDuplicatesExist,
   parseOptionalNumber,
   replaceAuthErrorsWithEnvironmentVariables,
   toArrayConfig,
@@ -217,7 +218,6 @@ const authSchema = Joi.object({
 });
 
 export default registerAs('authConfig', () => {
-  // ToDo: Validate these with Joi to prevent duplicate entries?
   const gitlabNames = (
     toArrayConfig(process.env.HD_AUTH_GITLABS, ',') ?? []
   ).map((name) => name.toUpperCase());
@@ -226,9 +226,13 @@ export default registerAs('authConfig', () => {
       "GitLab auth is currently not yet supported. Please don't configure it",
     );
   }
+  ensureNoDuplicatesExist('GitLab', gitlabNames);
+
   const ldapNames = (
     toArrayConfig(process.env.HD_AUTH_LDAP_SERVERS, ',') ?? []
   ).map((name) => name.toUpperCase());
+  ensureNoDuplicatesExist('LDAP', ldapNames);
+
   const samlNames = (toArrayConfig(process.env.HD_AUTH_SAMLS, ',') ?? []).map(
     (name) => name.toUpperCase(),
   );
@@ -237,6 +241,8 @@ export default registerAs('authConfig', () => {
       "SAML auth is currently not yet supported. Please don't configure it",
     );
   }
+  ensureNoDuplicatesExist('SAML', samlNames);
+
   const oauth2Names = (
     toArrayConfig(process.env.HD_AUTH_OAUTH2S, ',') ?? []
   ).map((name) => name.toUpperCase());
@@ -245,6 +251,7 @@ export default registerAs('authConfig', () => {
       "OAuth2 auth is currently not yet supported. Please don't configure it",
     );
   }
+  ensureNoDuplicatesExist('OAuth2', oauth2Names);
 
   const gitlabs = gitlabNames.map((gitlabName) => {
     return {
