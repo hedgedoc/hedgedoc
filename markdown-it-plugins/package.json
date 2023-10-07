@@ -129,5 +129,5 @@
   "bugs": {
     "url": "https://github.com/hedgedoc/hedgedoc/issues"
   },
-  "packageManager": "yarn@3.6.3"
+  "packageManager": "yarn@3.6.4"
 }
