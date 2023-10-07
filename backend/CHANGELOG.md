@@ -6,6 +6,14 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # CHANGELOG
 
+## [Unreleased]
+
+### Removals
+
+- Dropbox Login
+- Facebook Login
+- Twitter Login
+
 Please refer to the release notes published on
 [our releases page](https://hedgedoc.org/releases/) or [on GitHub](https://github.com/hedgedoc/hedgedoc/releases).
 

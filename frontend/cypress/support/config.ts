@@ -21,16 +21,7 @@ export const branding = {
 
 export const authProviders = [
   {
-    type: AuthProviderType.FACEBOOK
-  },
-  {
     type: AuthProviderType.GITHUB
-  },
-  {
-    type: AuthProviderType.TWITTER
-  },
-  {
-    type: AuthProviderType.DROPBOX
   },
   {
     type: AuthProviderType.GOOGLE

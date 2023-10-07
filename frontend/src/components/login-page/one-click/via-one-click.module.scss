@@ -1,5 +1,5 @@
-/*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+/*!
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,14 +12,6 @@
   }
 }
 
-.btn-social-dropbox {
-  @include button(#1087DD);
-}
-
-.btn-social-facebook {
-  @include button(#3B5998);
-}
-
 .btn-social-github {
   @include button(#444444);
 }
@@ -30,8 +22,4 @@
 
 .btn-social-google {
   @include button(#DD4B39);
-}
-
-.btn-social-twitter {
-  @include button(#55ACEE);
 }

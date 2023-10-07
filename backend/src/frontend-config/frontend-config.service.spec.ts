@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -37,22 +37,9 @@ describe('FrontendConfigService', () => {
       enableRegister: false,
       minimalPasswordStrength: 2,
     },
-    facebook: {
-      clientID: undefined,
-      clientSecret: undefined,
-    },
-    twitter: {
-      consumerKey: undefined,
-      consumerSecret: undefined,
-    },
     github: {
       clientID: undefined,
       clientSecret: undefined,
-    },
-    dropbox: {
-      clientID: undefined,
-      clientSecret: undefined,
-      appKey: undefined,
     },
     google: {
       clientID: undefined,
@@ -66,22 +53,9 @@ describe('FrontendConfigService', () => {
   };
 
   describe('getAuthProviders', () => {
-    const facebook: AuthConfig['facebook'] = {
-      clientID: 'facebookTestId',
-      clientSecret: 'facebookTestSecret',
-    };
-    const twitter: AuthConfig['twitter'] = {
-      consumerKey: 'twitterTestId',
-      consumerSecret: 'twitterTestSecret',
-    };
     const github: AuthConfig['github'] = {
       clientID: 'githubTestId',
       clientSecret: 'githubTestSecret',
-    };
-    const dropbox: AuthConfig['dropbox'] = {
-      clientID: 'dropboxTestId',
-      clientSecret: 'dropboxTestSecret',
-      appKey: 'dropboxTestKey',
     };
     const google: AuthConfig['google'] = {
       clientID: 'googleTestId',
@@ -155,10 +129,7 @@ describe('FrontendConfigService', () => {
       },
     ];
     for (const authConfigConfigured of [
-      facebook,
-      twitter,
       github,
-      dropbox,
       google,
       gitlab,
       ldap,
@@ -211,16 +182,6 @@ describe('FrontendConfigService', () => {
         }).compile();
         const service = module.get(FrontendConfigService);
         const config = await service.getFrontendConfig();
-        if (authConfig.dropbox.clientID) {
-          expect(config.authProviders).toContainEqual({
-            type: AuthProviderType.DROPBOX,
-          });
-        }
-        if (authConfig.facebook.clientID) {
-          expect(config.authProviders).toContainEqual({
-            type: AuthProviderType.FACEBOOK,
-          });
-        }
         if (authConfig.google.clientID) {
           expect(config.authProviders).toContainEqual({
             type: AuthProviderType.GOOGLE,
@@ -234,11 +195,6 @@ describe('FrontendConfigService', () => {
         if (authConfig.local.enableLogin) {
           expect(config.authProviders).toContainEqual({
             type: AuthProviderType.LOCAL,
-          });
-        }
-        if (authConfig.twitter.consumerKey) {
-          expect(config.authProviders).toContainEqual({
-            type: AuthProviderType.TWITTER,
           });
         }
         expect(
