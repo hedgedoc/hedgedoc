@@ -19,8 +19,6 @@ import { Trans } from 'react-i18next'
  */
 export const DocumentInfobar: React.FC = () => {
   const noteDetails = useApplicationState((state) => state.noteDetails)
-
-  // TODO Check permissions ("writability") of note and show edit link depending on that.
   const linkTitle = useTranslatedText('views.readOnly.editNote')
 
   if (noteDetails === null) {

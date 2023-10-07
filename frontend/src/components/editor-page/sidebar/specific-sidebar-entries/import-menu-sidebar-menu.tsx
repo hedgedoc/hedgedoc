@@ -40,7 +40,6 @@ export const ImportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   const onClickHandler = useCallback(() => {
     onClick(menuId)
   }, [menuId, onClick])
-  //todo: replace git with gitlab
   return (
     <Fragment>
       <SidebarButton

@@ -40,7 +40,6 @@ export const ExportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   const onClickHandler = useCallback(() => {
     onClick(menuId)
   }, [menuId, onClick])
-  //todo: replace git with gitlab icon
   return (
     <Fragment>
       <SidebarButton
