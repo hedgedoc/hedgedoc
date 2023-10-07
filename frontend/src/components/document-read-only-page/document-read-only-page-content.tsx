@@ -18,8 +18,6 @@ export const DocumentReadOnlyPageContent: React.FC = () => {
   useTranslation()
 
   const markdownContentLines = useTrimmedNoteMarkdownContentWithoutFrontmatter()
-
-  // TODO Change todo values with real ones as soon as the backend is ready.
   return (
     <Fragment>
       <DocumentInfobar />
