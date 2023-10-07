@@ -1,10 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Loglevel } from './loglevel.enum';
 import {
+  ensureNoDuplicatesExist,
+  findDuplicatesInArray,
   needToLog,
   parseOptionalNumber,
   replaceAuthErrorsWithEnvironmentVariables,
@@ -12,6 +14,39 @@ import {
 } from './utils';
 
 describe('config utils', () => {
+  describe('findDuplicatesInArray', () => {
+    it('empty array', () => {
+      expect(findDuplicatesInArray([])).toEqual([]);
+    });
+    it('returns empty array when input does not have any duplicates', () => {
+      expect(findDuplicatesInArray(['A', 'B'])).toEqual([]);
+    });
+    it('returns duplicates if input contains a duplicate', () => {
+      expect(findDuplicatesInArray(['A', 'B', 'A'])).toEqual(['A']);
+    });
+    it('returns duplicates if input contains a duplicate twice', () => {
+      expect(findDuplicatesInArray(['A', 'B', 'A', 'A'])).toEqual(['A']);
+    });
+    it('returns duplicates if input contains multiple duplicates', () => {
+      expect(findDuplicatesInArray(['A', 'B', 'A', 'B'])).toEqual(['A', 'B']);
+    });
+  });
+  describe('ensureNoDuplicatesExist', () => {
+    // eslint-disable-next-line jest/expect-expect
+    it('throws no error if everything is correct', () => {
+      ensureNoDuplicatesExist('Test', ['A']);
+    });
+    it('throws error if there is a duplicate', () => {
+      expect(() => ensureNoDuplicatesExist('Test', ['A', 'A'])).toThrow(
+        "Your Test names 'A,A' contain duplicates 'A'",
+      );
+    });
+    it('throws error if there are multiple duplicates', () => {
+      expect(() =>
+        ensureNoDuplicatesExist('Test', ['A', 'A', 'B', 'B']),
+      ).toThrow("Your Test names 'A,A,B,B' contain duplicates 'A,B'");
+    });
+  });
   describe('toArrayConfig', () => {
     it('empty', () => {
       expect(toArrayConfig('')).toEqual(undefined);
