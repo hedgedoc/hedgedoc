@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -52,9 +52,13 @@ export const ImportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         <Trans i18nKey={'editor.documentBar.import'} />
       </SidebarButton>
       <SidebarMenu expand={expand}>
-        <SidebarButton icon={IconGithub}>Gist</SidebarButton>
-        <SidebarButton icon={IconGitlab}>Gitlab Snippet</SidebarButton>
-        <SidebarButton icon={IconClipboard}>
+        <SidebarButton icon={IconGithub} disabled={true}>
+          Gist
+        </SidebarButton>
+        <SidebarButton icon={IconGitlab} disabled={true}>
+          Gitlab Snippet
+        </SidebarButton>
+        <SidebarButton icon={IconClipboard} disabled={true}>
           <Trans i18nKey={'editor.import.clipboard'} />
         </SidebarButton>
         <ImportMarkdownSidebarEntry />

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,7 +9,9 @@ import { ShowIf } from '../../../common/show-if/show-if'
 import type { SidebarEntryProps } from '../types'
 import styles from './sidebar-button.module.scss'
 import type { PropsWithChildren } from 'react'
-import React from 'react'
+import React, { useCallback } from 'react'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import type { OverlayInjectedProps } from 'react-bootstrap/Overlay'
 
 /**
  * A button that should be rendered in the sidebar.
@@ -32,18 +34,30 @@ export const SidebarButton: React.FC<PropsWithChildren<SidebarEntryProps>> = ({
   disabled,
   ...props
 }) => {
+  const tooltip = useCallback(
+    (overlayInjectedProps: OverlayInjectedProps) => {
+      if (!disabled) {
+        return <></>
+      }
+      return <Tooltip {...overlayInjectedProps}>This feature is not yet supported.</Tooltip>
+    },
+    [disabled]
+  )
+
   return (
-    <button
-      ref={buttonRef}
-      className={concatCssClasses(styles.button, className, { [styles.hide]: hide })}
-      disabled={disabled}
-      {...props}>
-      <ShowIf condition={!!icon}>
-        <span className={`sidebar-button-icon ${styles.icon}`}>
-          <UiIcon icon={icon} />
-        </span>
-      </ShowIf>
-      <span className={styles.text}>{children}</span>
-    </button>
+    <OverlayTrigger overlay={tooltip}>
+      <button
+        ref={buttonRef}
+        className={concatCssClasses(styles.button, className, { [styles.hide]: hide })}
+        disabled={disabled}
+        {...props}>
+        <ShowIf condition={!!icon}>
+          <span className={`sidebar-button-icon ${styles.icon}`}>
+            <UiIcon icon={icon} />
+          </span>
+        </ShowIf>
+        <span className={concatCssClasses(styles.text, { [styles.disabled]: disabled })}>{children}</span>
+      </button>
+    </OverlayTrigger>
   )
 }

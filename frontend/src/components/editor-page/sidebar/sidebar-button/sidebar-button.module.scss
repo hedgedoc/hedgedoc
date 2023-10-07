@@ -57,6 +57,10 @@
     width: 0;
   }
 
+  .disabled {
+    text-decoration: line-through;
+  }
+
   &.sidebar-button-primary {
     color: var(--bs-light);
     background: var(--bs-primary);
