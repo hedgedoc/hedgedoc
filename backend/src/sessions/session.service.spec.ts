@@ -11,9 +11,12 @@ import { IncomingMessage } from 'http';
 import { Mock } from 'ts-mockery';
 import { Repository } from 'typeorm';
 
+import { AppConfig } from '../config/app.config';
 import { AuthConfig } from '../config/auth.config';
 import { DatabaseType } from '../config/database-type.enum';
 import { DatabaseConfig } from '../config/database.config';
+import { Loglevel } from '../config/loglevel.enum';
+import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { HEDGEDOC_SESSION } from '../utils/session';
 import { Session } from './session.entity';
 import { SessionService, SessionState } from './session.service';
@@ -63,6 +66,7 @@ describe('SessionService', () => {
       .mockReturnValue(mockedTypeormStore);
 
     sessionService = new SessionService(
+      new ConsoleLoggerService({ loglevel: Loglevel.DEBUG } as AppConfig),
       mockedSessionRepository,
       databaseConfigMock,
       authConfigMock,

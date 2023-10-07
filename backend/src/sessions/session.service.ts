@@ -17,6 +17,7 @@ import { DatabaseType } from '../config/database-type.enum';
 import databaseConfiguration, {
   DatabaseConfig,
 } from '../config/database.config';
+import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { HEDGEDOC_SESSION } from '../utils/session';
 import { Username } from '../utils/username';
 import { Session } from './session.entity';
@@ -36,12 +37,14 @@ export class SessionService {
   private readonly typeormStore: TypeormStore;
 
   constructor(
+    private readonly logger: ConsoleLoggerService,
     @InjectRepository(Session) private sessionRepository: Repository<Session>,
     @Inject(databaseConfiguration.KEY)
     private dbConfig: DatabaseConfig,
     @Inject(authConfiguration.KEY)
     private authConfig: AuthConfig,
   ) {
+    this.logger.setContext(SessionService.name);
     this.typeormStore = new TypeormStore({
       cleanupLimit: 2,
       limitSubquery: dbConfig.type !== DatabaseType.MARIADB,
@@ -61,12 +64,21 @@ export class SessionService {
    */
   fetchUsernameForSessionId(sessionId: string): Promise<Username | undefined> {
     return new Promise((resolve, reject) => {
+      this.logger.debug(
+        `Fetching username for sessionId ${sessionId}`,
+        'fetchUsernameForSessionId',
+      );
       this.typeormStore.get(
         sessionId,
-        (error?: Error, result?: SessionState) =>
-          error || !result
-            ? reject(error)
-            : resolve(result.username as Username),
+        (error?: Error, result?: SessionState) => {
+          this.logger.debug(
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            `Got error ${error}, result ${result?.username} for sessionId ${sessionId}`,
+            'fetchUsernameForSessionId',
+          );
+          if (error) return reject(error);
+          return resolve(result?.username as Username);
+        },
       );
     });
   }
