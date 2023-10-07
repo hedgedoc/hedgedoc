@@ -45,7 +45,7 @@ async function bootstrap(): Promise<void> {
 
   // Start the server
   await app.listen(appConfig.port);
-  logger.log(`Listening on port ${appConfig.port}`, 'AppBootstrap');
+  logger.warn(`Listening on port ${appConfig.port}`, 'AppBootstrap');
 }
 
 void bootstrap();
