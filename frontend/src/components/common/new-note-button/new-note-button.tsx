@@ -11,6 +11,9 @@ import { useRouter } from 'next/navigation'
 import React, { useCallback } from 'react'
 import { FileEarmarkPlus as IconPlus } from 'react-bootstrap-icons'
 import { Trans } from 'react-i18next'
+import { useFrontendConfig } from '../frontend-config-context/use-frontend-config'
+import { GuestAccessLevel } from '../../../api/config/types'
+import { useIsLoggedIn } from '../../../hooks/common/use-is-logged-in'
 
 /**
  * Links to the "new note" endpoint
@@ -18,6 +21,9 @@ import { Trans } from 'react-i18next'
 export const NewNoteButton: React.FC = () => {
   const { showErrorNotification } = useUiNotifications()
   const router = useRouter()
+  const guestAccessLevel = useFrontendConfig().guestAccess
+  const isLoggedIn = useIsLoggedIn()
+
   const createNewNoteAndRedirect = useCallback((): void => {
     createNote('')
       .then((note) => {
@@ -27,6 +33,10 @@ export const NewNoteButton: React.FC = () => {
         showErrorNotification(error.message)
       })
   }, [router, showErrorNotification])
+
+  if (!isLoggedIn && guestAccessLevel !== GuestAccessLevel.CREATE) {
+    return null
+  }
 
   return (
     <IconButton
