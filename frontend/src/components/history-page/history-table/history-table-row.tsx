@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -57,14 +57,16 @@ export const HistoryTableRow: React.FC<HistoryEntryProps & HistoryEventHandlers>
         ))}
       </td>
       <td>
-        <PinButton isDark={true} isPinned={entry.pinStatus} onPinClick={onPinEntry} className={'mb-1 me-1'} />
-        <EntryMenu
-          id={entry.identifier}
-          title={entryTitle}
-          origin={entry.origin}
-          onRemoveFromHistory={onEntryRemove}
-          onDeleteNote={onDeleteNote}
-        />
+        <div className={'d-flex align-items-start justify-content-center'}>
+          <PinButton isDark={true} isPinned={entry.pinStatus} onPinClick={onPinEntry} className={'mb-1 me-1'} />
+          <EntryMenu
+            id={entry.identifier}
+            title={entryTitle}
+            origin={entry.origin}
+            onRemoveFromHistory={onEntryRemove}
+            onDeleteNote={onDeleteNote}
+          />
+        </div>
       </td>
     </tr>
   )

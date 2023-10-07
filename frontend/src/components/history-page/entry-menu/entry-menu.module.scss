@@ -1,5 +1,5 @@
-/*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+/*!
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,4 +8,6 @@
   &:global(.btn) {
     padding: 0.6rem 0.65rem;
   }
+  height: 2.5rem;
+  width: 2.5rem;
 }
