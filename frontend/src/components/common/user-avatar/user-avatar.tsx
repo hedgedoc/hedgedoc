@@ -1,15 +1,15 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import { ShowIf } from '../show-if/show-if'
-import defaultAvatar from './default-avatar.png'
 import styles from './user-avatar.module.scss'
 import React, { useCallback, useMemo } from 'react'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import type { OverlayInjectedProps } from 'react-bootstrap/Overlay'
+import { useAvatarUrl } from './hooks/use-avatar-url'
 
 export interface UserAvatarProps {
   size?: 'sm' | 'lg'
@@ -45,9 +45,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
     }
   }, [size])
 
-  const avatarUrl = useMemo(() => {
-    return photoUrl || defaultAvatar.src
-  }, [photoUrl])
+  const avatarUrl = useAvatarUrl(photoUrl, displayName)
 
   const imageTranslateOptions = useMemo(
     () => ({

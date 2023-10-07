@@ -104,3 +104,47 @@ exports[`UserAvatar renders the user avatar in size sm 1`] = `
   </span>
 </div>
 `;
+
+exports[`UserAvatar uses identicon when empty photoUrl is given 1`] = `
+<div>
+  <span
+    class="d-inline-flex align-items-center "
+  >
+    <img
+      alt="common.avatarOf"
+      class="rounded user-image"
+      height="20"
+      src="data:image/x-other,identicon-mock"
+      title="common.avatarOf"
+      width="20"
+    />
+    <span
+      class="ms-2 me-1 user-line-name"
+    >
+      test
+    </span>
+  </span>
+</div>
+`;
+
+exports[`UserAvatar uses identicon when no photoUrl is given 1`] = `
+<div>
+  <span
+    class="d-inline-flex align-items-center "
+  >
+    <img
+      alt="common.avatarOf"
+      class="rounded user-image"
+      height="20"
+      src="data:image/x-other,identicon-mock"
+      title="common.avatarOf"
+      width="20"
+    />
+    <span
+      class="ms-2 me-1 user-line-name"
+    >
+      test
+    </span>
+  </span>
+</div>
+`;

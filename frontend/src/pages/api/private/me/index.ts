@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,7 +15,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
   }
   respondToMatchingRequest<LoginUserInfo>(HttpMethod.GET, req, res, {
     username: 'mock',
-    photo: '/public/img/avatar.png',
+    photoUrl: '/public/img/avatar.png',
     displayName: 'Mock User',
     authProvider: 'local',
     email: 'mock@hedgedoc.test'
