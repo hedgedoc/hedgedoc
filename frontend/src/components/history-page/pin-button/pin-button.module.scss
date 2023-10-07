@@ -1,10 +1,12 @@
-/*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+/*!
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 .history-pin {
+  height: 2.5rem;
+  width: 2.5rem;
   svg {
     opacity: 0.5;
     transition: opacity 0.2s ease-in-out, color 0.2s ease-in-out;
