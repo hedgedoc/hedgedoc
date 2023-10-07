@@ -7,7 +7,7 @@ import { registerAs } from '@nestjs/config';
 import * as fs from 'fs';
 import * as Joi from 'joi';
 
-import { GitlabScope, GitlabVersion } from './gitlab.enum';
+import { GitlabScope} from './gitlab.enum';
 import {
   buildErrorMessage,
   ensureNoDuplicatesExist,
@@ -57,7 +57,6 @@ export interface AuthConfig {
     clientID: string;
     clientSecret: string;
     scope: GitlabScope;
-    version: GitlabVersion;
   }[];
   // ToDo: tlsOptions exist in config.json.example. See https://nodejs.org/api/tls.html#tls_tls_connect_options_callback
   ldap: LDAPConfig[];
@@ -142,10 +141,6 @@ const authSchema = Joi.object({
         scope: Joi.string()
           .valid(...Object.values(GitlabScope))
           .default(GitlabScope.READ_USER)
-          .optional(),
-        version: Joi.string()
-          .valid(...Object.values(GitlabVersion))
-          .default(GitlabVersion.V4)
           .optional(),
       }).optional(),
     )
