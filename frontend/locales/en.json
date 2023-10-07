@@ -234,6 +234,10 @@
       "you": "(You)"
     },
     "error": {
+      "noPermission": {
+        "title": "No edit permission",
+        "description": "You don't have permission to edit this note. Please login and try again"
+      },
       "locked": {
         "title": "This note is locked",
         "description": "Sorry, only the owner can edit this note."
