@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -147,7 +147,7 @@ describe('UsersService', () => {
       const userDto = service.toUserDto(user);
       expect(userDto.username).toEqual(username);
       expect(userDto.displayName).toEqual(displayname);
-      expect(userDto.photo).toEqual('');
+      expect(userDto.photoUrl).toEqual('');
     });
   });
 
@@ -159,7 +159,7 @@ describe('UsersService', () => {
       const userDto = service.toFullUserDto(user);
       expect(userDto.username).toEqual(username);
       expect(userDto.displayName).toEqual(displayname);
-      expect(userDto.photo).toEqual('');
+      expect(userDto.photoUrl).toEqual('');
       expect(userDto.email).toEqual('');
     });
   });

@@ -37,7 +37,7 @@ export class UserInfoDto extends BaseDto {
     format: 'uri',
   })
   @IsString()
-  photo: string;
+  photoUrl: string;
 }
 
 /**

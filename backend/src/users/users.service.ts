@@ -119,7 +119,7 @@ export class UsersService {
     return {
       username: user.username,
       displayName: user.displayName,
-      photo: this.getPhotoUrl(user),
+      photoUrl: this.getPhotoUrl(user),
     };
   }
 
@@ -132,7 +132,7 @@ export class UsersService {
     return {
       username: user.username,
       displayName: user.displayName,
-      photo: this.getPhotoUrl(user),
+      photoUrl: this.getPhotoUrl(user),
       email: user.email ?? '',
     };
   }
