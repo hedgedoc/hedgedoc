@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,7 @@ import React from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { Cloud as IconCloud, Laptop as IconLaptop, ThreeDots as IconThreeDots } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
+import { useIsLoggedIn } from '../../../hooks/common/use-is-logged-in'
 
 export interface EntryMenuProps {
   id: string
@@ -44,7 +45,7 @@ export const EntryMenu: React.FC<EntryMenuProps> = ({
   className
 }) => {
   useTranslation()
-  const userExists = useApplicationState((state) => !!state.user)
+  const userExists = useIsLoggedIn()
 
   return (
     <Dropdown className={`d-inline-flex ${className || ''}`} {...cypressId('history-entry-menu')}>
