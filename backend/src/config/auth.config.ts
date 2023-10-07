@@ -299,6 +299,7 @@ export default registerAs('authConfig', () => {
       idpCert: process.env[`HD_AUTH_SAML_${samlName}_IDP_CERT`],
       clientCert: process.env[`HD_AUTH_SAML_${samlName}_CLIENT_CERT`],
       // ToDo: (default: config.serverURL) will be build on-the-fly in the config/index.js from domain, urlAddPort and urlPath.
+      //  https://github.com/hedgedoc/hedgedoc/issues/5043
       issuer: process.env[`HD_AUTH_SAML_${samlName}_ISSUER`],
       identifierFormat:
         process.env[`HD_AUTH_SAML_${samlName}_IDENTIFIER_FORMAT`],

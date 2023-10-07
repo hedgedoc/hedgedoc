@@ -66,6 +66,7 @@ export const Sidebar: React.FC = () => {
           onClick={toggleValue}
         />
         <ShareNoteSidebarEntry hide={selectionIsNotNone} />
+        {/* TODO only show if user has permissions (Owner) (https://github.com/hedgedoc/hedgedoc/issues/5036) */}
         <DeleteNoteSidebarEntry hide={selectionIsNotNone} />
         <PinNoteSidebarEntry hide={selectionIsNotNone} />
       </div>

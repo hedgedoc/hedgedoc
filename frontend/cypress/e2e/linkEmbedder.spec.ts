@@ -9,7 +9,9 @@ describe('Link gets replaced with embedding: ', () => {
     cy.visitTestNote()
   })
 
-  // TODO Add general testing of one-click-embedding component. The tests below just test a specific use of the component.
+  // TODO Add general testing of one-click-embedding component.
+  //  The tests below just test a specific use of the component.
+  //  https://github.com/hedgedoc/hedgedoc/issues/5039
 
   it('GitHub Gist', () => {
     cy.setCodemirrorContent('https://gist.github.com/schacon/1')

@@ -106,7 +106,7 @@ export class IdentityService {
         shouldSave = true;
       }
       if (profilePicture) {
-        // ToDo: sync image
+        // ToDo: sync image (https://github.com/hedgedoc/hedgedoc/issues/5032)
       }
       if (shouldSave) {
         identity.user = Promise.resolve(user);

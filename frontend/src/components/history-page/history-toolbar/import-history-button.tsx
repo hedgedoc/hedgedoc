@@ -65,6 +65,7 @@ export const ImportHistoryButton: React.FC = () => {
       }
       //TODO: [mrdrogdrog] The following whole block can be shortened using our `readFile` util.
       // But I won't do it right now because the whole components needs a make over and that's definitely out of scope for my current PR.
+      // https://github.com/hedgedoc/hedgedoc/issues/5042
       const fileReader = new FileReader()
       fileReader.onload = (event) => {
         if (event.target && event.target.result) {
