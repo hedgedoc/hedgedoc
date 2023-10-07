@@ -86,7 +86,7 @@ export const deleteNote = async (noteIdOrAlias: string): Promise<void> => {
     .withJsonBody({
       keepMedia: false
       // TODO Ask whether the user wants to keep the media uploaded to the note.
-      // https://github.com/hedgedoc/react-client/issues/2288
+      // https://github.com/hedgedoc/hedgedoc/issues/2928
     })
     .sendRequest()
 }
