@@ -12,7 +12,7 @@ import { AuthConfig } from '../config/auth.config';
 import { CustomizationConfig } from '../config/customization.config';
 import { DefaultAccessLevel } from '../config/default-access-level.enum';
 import { ExternalServicesConfig } from '../config/external-services.config';
-import { GitlabScope, GitlabVersion } from '../config/gitlab.enum';
+import { GitlabScope } from '../config/gitlab.enum';
 import { GuestAccess } from '../config/guest_access.enum';
 import { Loglevel } from '../config/loglevel.enum';
 import { NoteConfig } from '../config/note.config';
@@ -70,7 +70,6 @@ describe('FrontendConfigService', () => {
         clientID: 'gitlabTestId',
         clientSecret: 'gitlabTestSecret',
         scope: GitlabScope.API,
-        version: GitlabVersion.V4,
       },
     ];
     const ldap: AuthConfig['ldap'] = [
