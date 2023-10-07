@@ -105,7 +105,6 @@ export class MeController {
     @RequestNote() note: Note,
     @Body() entryUpdateDto: HistoryEntryUpdateDto,
   ): Promise<HistoryEntryDto> {
-    // ToDo: Check if user is allowed to pin this history entry
     return await this.historyService.toHistoryEntryDto(
       await this.historyService.updateHistoryEntry(note, user, entryUpdateDto),
     );
@@ -118,7 +117,6 @@ export class MeController {
     @RequestUser() user: User,
     @RequestNote() note: Note,
   ): Promise<void> {
-    // ToDo: Check if user is allowed to delete note
     await this.historyService.deleteHistoryEntry(note, user);
   }
 
