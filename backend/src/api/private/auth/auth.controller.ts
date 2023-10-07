@@ -62,7 +62,6 @@ export class AuthController {
       registerDto.username,
       registerDto.displayName,
     );
-    // ToDo: Figure out how to rollback user if anything with this calls goes wrong
     await this.identityService.createLocalIdentity(user, registerDto.password);
     request.session.username = registerDto.username;
     request.session.authProvider = 'local';
