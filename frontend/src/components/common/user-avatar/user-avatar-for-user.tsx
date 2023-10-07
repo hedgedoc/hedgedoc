@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -19,5 +19,5 @@ export interface UserAvatarForUserProps extends Omit<UserAvatarProps, 'photoUrl'
  * @param props remaining avatar props
  */
 export const UserAvatarForUser: React.FC<UserAvatarForUserProps> = ({ user, ...props }) => {
-  return <UserAvatar displayName={user.displayName} photoUrl={user.photo} {...props} />
+  return <UserAvatar displayName={user.displayName} photoUrl={user.photoUrl} {...props} />
 }

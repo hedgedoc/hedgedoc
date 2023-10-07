@@ -46,6 +46,8 @@
     "@codemirror/state": "6.2.1",
     "@codemirror/theme-one-dark": "6.1.2",
     "@codemirror/view": "6.20.2",
+    "@dicebear/core": "7.0.1",
+    "@dicebear/identicon": "7.0.1",
     "@fontsource/source-sans-pro": "5.0.8",
     "@hedgedoc/commons": "workspace:commons",
     "@hedgedoc/html-to-react": "workspace:html-to-react",

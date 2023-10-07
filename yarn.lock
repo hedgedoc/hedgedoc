@@ -2112,6 +2112,67 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@dicebear/converter@npm:7.0.1":
+  version: 7.0.1
+  resolution: "@dicebear/converter@npm:7.0.1"
+  dependencies:
+    "@types/json-schema": ^7.0.11
+    tmp-promise: ^3.0.3
+  peerDependencies:
+    "@resvg/resvg-js": ^2.4.1
+    exiftool-vendored: ^22.0.0
+    sharp: ^0.32.1
+  peerDependenciesMeta:
+    "@resvg/resvg-js":
+      optional: true
+    exiftool-vendored:
+      optional: true
+    sharp:
+      optional: true
+  checksum: ba7b631c5ce4bd14740035465e622c4a9daf6f67ddcbff635ca8f7486a9063fe9cca47f2a4db2df53913a063a1b52df2d8015c72ac8d8a57b4e69818411845ef
+  languageName: node
+  linkType: hard
+
+"@dicebear/converter@patch:@dicebear/converter@npm%3A7.0.1#./.yarn/patches/@dicebear-converter-npm-7.0.1-cb9d17808e.patch::locator=hedgedoc%40workspace%3A.":
+  version: 7.0.1
+  resolution: "@dicebear/converter@patch:@dicebear/converter@npm%3A7.0.1#./.yarn/patches/@dicebear-converter-npm-7.0.1-cb9d17808e.patch::version=7.0.1&hash=659bc7&locator=hedgedoc%40workspace%3A."
+  dependencies:
+    "@types/json-schema": ^7.0.11
+    tmp-promise: ^3.0.3
+  peerDependencies:
+    "@resvg/resvg-js": ^2.4.1
+    exiftool-vendored: ^22.0.0
+    sharp: ^0.32.1
+  peerDependenciesMeta:
+    "@resvg/resvg-js":
+      optional: true
+    exiftool-vendored:
+      optional: true
+    sharp:
+      optional: true
+  checksum: f20da5a44bed334c788568dc12fd49887de93171f71a23ba37397cdc00e693ad2bead5bed158fb06bea78ffe67c3e5c7cb611982c42da37457f319090dfbcf12
+  languageName: node
+  linkType: hard
+
+"@dicebear/core@npm:7.0.1":
+  version: 7.0.1
+  resolution: "@dicebear/core@npm:7.0.1"
+  dependencies:
+    "@dicebear/converter": 7.0.1
+    "@types/json-schema": ^7.0.11
+  checksum: 9ba71a4946ae0d4fdda9074e7f4db8c545cfb4cb13c0106517943c3de5c76618bc60eb61e01d909961c8f66f5c46b9dc03491a9f7e2075b7e9f3581980ffbac9
+  languageName: node
+  linkType: hard
+
+"@dicebear/identicon@npm:7.0.1":
+  version: 7.0.1
+  resolution: "@dicebear/identicon@npm:7.0.1"
+  peerDependencies:
+    "@dicebear/core": ^7.0.0
+  checksum: 93eb3f19b2112bcf32d6f7768fa569c080100628f90b8ecb8e633a82cdf1e943fa6ab93dc627d3631c83cb81adb643c8637d1c0f924cc7629e7d070fac6ca16d
+  languageName: node
+  linkType: hard
+
 "@emotion/cache@npm:^10.0.27":
   version: 10.0.29
   resolution: "@emotion/cache@npm:10.0.29"
@@ -2412,6 +2473,8 @@ __metadata:
     "@codemirror/state": 6.2.1
     "@codemirror/theme-one-dark": 6.1.2
     "@codemirror/view": 6.20.2
+    "@dicebear/core": 7.0.1
+    "@dicebear/identicon": 7.0.1
     "@fontsource/source-sans-pro": 5.0.8
     "@hedgedoc/commons": "workspace:commons"
     "@hedgedoc/html-to-react": "workspace:html-to-react"
@@ -4645,6 +4708,13 @@ __metadata:
   version: 7.0.12
   resolution: "@types/json-schema@npm:7.0.12"
   checksum: 00239e97234eeb5ceefb0c1875d98ade6e922bfec39dd365ec6bd360b5c2f825e612ac4f6e5f1d13601b8b30f378f15e6faa805a3a732f4a1bbe61915163d293
+  languageName: node
+  linkType: hard
+
+"@types/json-schema@npm:^7.0.11":
+  version: 7.0.13
+  resolution: "@types/json-schema@npm:7.0.13"
+  checksum: 345df21a678fa72fb389f35f33de77833d09d4a142bb2bcb27c18690efa4cf70fc2876e43843cefb3fbdb9fcb12cd3e970a90936df30f53bbee899865ff605ab
   languageName: node
   linkType: hard
 
@@ -17183,6 +17253,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tmp-promise@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "tmp-promise@npm:3.0.3"
+  dependencies:
+    tmp: ^0.2.0
+  checksum: f854f5307dcee6455927ec3da9398f139897faf715c5c6dcee6d9471ae85136983ea06662eba2edf2533bdcb0fca66d16648e79e14381e30c7fb20be9c1aa62c
+  languageName: node
+  linkType: hard
+
 "tmp@npm:^0.0.33":
   version: 0.0.33
   resolution: "tmp@npm:0.0.33"
@@ -17192,7 +17271,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tmp@npm:~0.2.1":
+"tmp@npm:^0.2.0, tmp@npm:~0.2.1":
   version: 0.2.1
   resolution: "tmp@npm:0.2.1"
   dependencies:

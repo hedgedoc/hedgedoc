@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,7 +11,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
   respondToMatchingRequest<UserInfo>(HttpMethod.GET, req, res, {
     username: 'erik',
     displayName: 'Erik',
-    photo: '/public/img/avatar.png'
+    photoUrl: '/public/img/avatar.png'
   })
 }
 

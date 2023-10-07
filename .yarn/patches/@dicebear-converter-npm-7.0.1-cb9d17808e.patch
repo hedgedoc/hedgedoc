@@ -1,0 +1,17 @@
+diff --git a/package.json b/package.json
+index 4619da270df88b972b4f9ea95aeffc32aa52e341..944cadb5e2ab4e1be596e76255ee4f9ae7572b18 100644
+--- a/package.json
++++ b/package.json
+@@ -16,10 +16,10 @@
+   "license": "MIT",
+   "author": "Florian Körner <contact@florian-koerner.com>",
+   "type": "module",
+-  "main": "./lib/node/index.js",
++  "main": "./lib/index.js",
+   "browser": "./lib/index.js",
+   "exports": {
+-    "node": "./lib/node/index.js",
++    "node": "./lib/index.js",
+     "default": "./lib/index.js"
+   },
+   "types": "./lib/index.d.ts",

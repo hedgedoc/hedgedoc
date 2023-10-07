@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,7 +15,7 @@ export const fetchAndSetUser: () => Promise<void> = async () => {
   setUser({
     username: me.username,
     displayName: me.displayName,
-    photo: me.photo,
+    photoUrl: me.photoUrl,
     authProvider: me.authProvider,
     email: me.email
   })
