@@ -20,7 +20,6 @@ import cspConfig from './config/csp.config';
 import customizationConfig from './config/customization.config';
 import databaseConfig, { DatabaseConfig } from './config/database.config';
 import externalConfig from './config/external-services.config';
-import hstsConfig from './config/hsts.config';
 import mediaConfig from './config/media.config';
 import noteConfig from './config/note.config';
 import { eventModuleConfig } from './events';
@@ -80,7 +79,6 @@ const routes: Routes = [
         appConfig,
         noteConfig,
         mediaConfig,
-        hstsConfig,
         cspConfig,
         databaseConfig,
         authConfig,

@@ -31,9 +31,6 @@ The config of HedgeDoc is split up into **nine** different modules:
 `external-services.config.ts`
 : Which external services are activated and where can they be called
 
-`hsts.config.ts`
-: Configuration for [HTTP Strict-Transport-Security][hsts]
-
 `media.config.ts`
 : Where media files are being stored
 
@@ -96,6 +93,5 @@ Some config files also have a `.mock.ts` file which defines the configuration fo
 Those files just contain the default export and return the mock config object.
 
 [csp]: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
-[hsts]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
 [joi]: https://joi.dev/
 [joi-doc]: https://joi.dev/api
