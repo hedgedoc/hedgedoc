@@ -169,7 +169,7 @@
     "jest-environment-jsdom": "29.7.0",
     "prettier": "3.0.3",
     "react-test-renderer": "18.2.0",
-    "ts-loader": "9.4.4",
+    "ts-loader": "9.5.0",
     "ts-mockery": "1.2.0",
     "ts-node": "10.9.1",
     "typescript": "5.2.2",
