@@ -2294,7 +2294,7 @@ __metadata:
     "@types/markdown-it": 13.0.2
     "@types/minio": 7.1.0
     "@types/mysql": 2.15.22
-    "@types/node": 20.7.2
+    "@types/node": 20.8.3
     "@types/node-fetch": 2.6.6
     "@types/passport-http-bearer": 1.0.38
     "@types/passport-local": 1.0.36
@@ -2437,7 +2437,7 @@ __metadata:
     "@types/markdown-it": 13.0.2
     "@types/markdown-it-container": 2.0.7
     "@types/markdown-it-plantuml": 1.4.2
-    "@types/node": 20.7.2
+    "@types/node": 20.8.3
     "@types/react": 18.2.25
     "@types/react-dom": 18.2.10
     "@types/sass": 1.43.1
@@ -4837,10 +4837,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.7.2":
-  version: 20.7.2
-  resolution: "@types/node@npm:20.7.2"
-  checksum: 5baa09368c8daa50ad1eaa2499b988b2f4c06cacf8b251d1e63f68ad32df97b21d8104f1ac06889481f1d3e84056842732bb848dd1136164d823c1d4a6baf435
+"@types/node@npm:20.8.3":
+  version: 20.8.3
+  resolution: "@types/node@npm:20.8.3"
+  checksum: bfb88b341faeb19f8fd37306a3bf433721b876c6491d10fcb0b13fd26601fa36ee45113dd82b1e1c23e3c957dff5b99f81a16493cefa03abe797e41a2487a4f7
   languageName: node
   linkType: hard
 
