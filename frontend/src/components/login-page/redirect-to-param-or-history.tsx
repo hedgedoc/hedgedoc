@@ -20,5 +20,5 @@ export const RedirectToParamOrHistory: React.FC = () => {
   const cleanedUrl =
     redirectBackUrl.startsWith('/') && !redirectBackUrl.startsWith('//') ? redirectBackUrl : defaultFallback
 
-  return <Redirect to={cleanedUrl} />
+  return <Redirect to={cleanedUrl} replace={true} />
 }
