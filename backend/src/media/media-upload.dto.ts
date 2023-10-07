@@ -21,7 +21,7 @@ export class MediaUploadDto extends BaseDto {
 
   /**
    * The publicId of the note to which the uploaded file is linked to.
-   * @example "noteId" TODO how looks a note id?
+   * @example "b604x5885k9k01bq7tsmawvnp0"
    */
   @IsString()
   @IsOptional()
