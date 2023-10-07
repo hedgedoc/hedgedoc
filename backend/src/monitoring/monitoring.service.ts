@@ -10,6 +10,8 @@ import { ServerStatusDto } from './server-status.dto';
 
 @Injectable()
 export class MonitoringService {
+  // TODO Implement Server Status and other routes
+  // (https://github.com/hedgedoc/hedgedoc/issues/478)
   async getServerStatus(): Promise<ServerStatusDto> {
     return {
       connectionSocketQueueLength: 0,

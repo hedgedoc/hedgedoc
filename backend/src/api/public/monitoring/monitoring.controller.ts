@@ -29,7 +29,6 @@ export class MonitoringController {
     403,
   )
   getStatus(): Promise<ServerStatusDto> {
-    // TODO: toServerStatusDto.
     return this.monitoringService.getServerStatus();
   }
 
