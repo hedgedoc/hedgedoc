@@ -7,7 +7,7 @@ import { registerAs } from '@nestjs/config';
 import * as fs from 'fs';
 import * as Joi from 'joi';
 
-import { GitlabScope} from './gitlab.enum';
+import { GitlabScope } from './gitlab.enum';
 import {
   buildErrorMessage,
   ensureNoDuplicatesExist,
@@ -58,7 +58,6 @@ export interface AuthConfig {
     clientSecret: string;
     scope: GitlabScope;
   }[];
-  // ToDo: tlsOptions exist in config.json.example. See https://nodejs.org/api/tls.html#tls_tls_connect_options_callback
   ldap: LDAPConfig[];
   saml: {
     identifier: string;
@@ -145,7 +144,6 @@ const authSchema = Joi.object({
       }).optional(),
     )
     .optional(),
-  // ToDo: should searchfilter have a default?
   ldap: Joi.array()
     .items(
       Joi.object({
@@ -172,7 +170,6 @@ const authSchema = Joi.object({
         idpSsoUrl: Joi.string(),
         idpCert: Joi.string(),
         clientCert: Joi.string().optional(),
-        // ToDo: (default: config.serverURL) will be build on-the-fly in the config/index.js from domain, urlAddPort and urlPath.
         issuer: Joi.string().optional(),
         identifierFormat: Joi.string()
           .default('urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress')
@@ -301,6 +298,7 @@ export default registerAs('authConfig', () => {
       idpSsoUrl: process.env[`HD_AUTH_SAML_${samlName}_IDP_SSO_URL`],
       idpCert: process.env[`HD_AUTH_SAML_${samlName}_IDP_CERT`],
       clientCert: process.env[`HD_AUTH_SAML_${samlName}_CLIENT_CERT`],
+      // ToDo: (default: config.serverURL) will be build on-the-fly in the config/index.js from domain, urlAddPort and urlPath.
       issuer: process.env[`HD_AUTH_SAML_${samlName}_ISSUER`],
       identifierFormat:
         process.env[`HD_AUTH_SAML_${samlName}_IDENTIFIER_FORMAT`],
