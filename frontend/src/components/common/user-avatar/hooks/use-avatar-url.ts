@@ -5,7 +5,7 @@
  */
 import { useMemo } from 'react'
 import { createAvatar } from '@dicebear/core'
-import identicon from '@dicebear/identicon'
+import * as identicon from '@dicebear/identicon'
 
 /**
  * Returns the correct avatar url for a user.
