@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -66,16 +66,6 @@ export class FrontendConfigService {
         type: AuthProviderType.LOCAL,
       });
     }
-    if (this.authConfig.dropbox.clientID) {
-      providers.push({
-        type: AuthProviderType.DROPBOX,
-      });
-    }
-    if (this.authConfig.facebook.clientID) {
-      providers.push({
-        type: AuthProviderType.FACEBOOK,
-      });
-    }
     if (this.authConfig.github.clientID) {
       providers.push({
         type: AuthProviderType.GITHUB,
@@ -84,11 +74,6 @@ export class FrontendConfigService {
     if (this.authConfig.google.clientID) {
       providers.push({
         type: AuthProviderType.GOOGLE,
-      });
-    }
-    if (this.authConfig.twitter.consumerKey) {
-      providers.push({
-        type: AuthProviderType.TWITTER,
       });
     }
     this.authConfig.gitlab.forEach((gitLabEntry) => {

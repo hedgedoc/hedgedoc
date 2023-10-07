@@ -40,22 +40,9 @@ export interface AuthConfig {
     enableRegister: boolean;
     minimalPasswordStrength: number;
   };
-  facebook: {
-    clientID: string;
-    clientSecret: string;
-  };
-  twitter: {
-    consumerKey: string;
-    consumerSecret: string;
-  };
   github: {
     clientID: string;
     clientSecret: string;
-  };
-  dropbox: {
-    clientID: string;
-    clientSecret: string;
-    appKey: string;
   };
   google: {
     clientID: string;
@@ -134,28 +121,9 @@ const authSchema = Joi.object({
       .optional()
       .label('HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH'),
   },
-  facebook: {
-    clientID: Joi.string().optional().label('HD_AUTH_FACEBOOK_CLIENT_ID'),
-    clientSecret: Joi.string()
-      .optional()
-      .label('HD_AUTH_FACEBOOK_CLIENT_SECRET'),
-  },
-  twitter: {
-    consumerKey: Joi.string().optional().label('HD_AUTH_TWITTER_CONSUMER_KEY'),
-    consumerSecret: Joi.string()
-      .optional()
-      .label('HD_AUTH_TWITTER_CONSUMER_SECRET'),
-  },
   github: {
     clientID: Joi.string().optional().label('HD_AUTH_GITHUB_CLIENT_ID'),
     clientSecret: Joi.string().optional().label('HD_AUTH_GITHUB_CLIENT_SECRET'),
-  },
-  dropbox: {
-    clientID: Joi.string().optional().label('HD_AUTH_DROPBOX_CLIENT_ID'),
-    clientSecret: Joi.string()
-      .optional()
-      .label('HD_AUTH_DROPBOX_CLIENT_SECRET'),
-    appKey: Joi.string().optional().label('HD_AUTH_DROPBOX_APP_KEY'),
   },
   google: {
     clientID: Joi.string().optional().label('HD_AUTH_GOOGLE_CLIENT_ID'),
@@ -379,22 +347,9 @@ export default registerAs('authConfig', () => {
           process.env.HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH,
         ),
       },
-      facebook: {
-        clientID: process.env.HD_AUTH_FACEBOOK_CLIENT_ID,
-        clientSecret: process.env.HD_AUTH_FACEBOOK_CLIENT_SECRET,
-      },
-      twitter: {
-        consumerKey: process.env.HD_AUTH_TWITTER_CONSUMER_KEY,
-        consumerSecret: process.env.HD_AUTH_TWITTER_CONSUMER_SECRET,
-      },
       github: {
         clientID: process.env.HD_AUTH_GITHUB_CLIENT_ID,
         clientSecret: process.env.HD_AUTH_GITHUB_CLIENT_SECRET,
-      },
-      dropbox: {
-        clientID: process.env.HD_AUTH_DROPBOX_CLIENT_ID,
-        clientSecret: process.env.HD_AUTH_DROPBOX_CLIENT_SECRET,
-        appKey: process.env.HD_AUTH_DROPBOX_APP_KEY,
       },
       google: {
         clientID: process.env.HD_AUTH_GOOGLE_CLIENT_ID,

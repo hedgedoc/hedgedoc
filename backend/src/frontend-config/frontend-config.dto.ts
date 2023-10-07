@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -25,10 +25,7 @@ export enum AuthProviderType {
   SAML = 'saml',
   OAUTH2 = 'oauth2',
   GITLAB = 'gitlab',
-  FACEBOOK = 'facebook',
   GITHUB = 'github',
-  TWITTER = 'twitter',
-  DROPBOX = 'dropbox',
   GOOGLE = 'google',
 }
 
@@ -40,10 +37,7 @@ export type AuthProviderTypeWithCustomName =
 
 export type AuthProviderTypeWithoutCustomName =
   | AuthProviderType.LOCAL
-  | AuthProviderType.FACEBOOK
   | AuthProviderType.GITHUB
-  | AuthProviderType.TWITTER
-  | AuthProviderType.DROPBOX
   | AuthProviderType.GOOGLE;
 
 export class AuthProviderWithoutCustomNameDto extends BaseDto {

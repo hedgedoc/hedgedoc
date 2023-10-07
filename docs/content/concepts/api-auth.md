@@ -52,9 +52,6 @@ using one of the supported authentication methods:
 - OAuth2
 - GitLab
 - GitHub
-- Facebook
-- Twitter
-- Dropbox
 - Google
 
 The `SessionGuard`, which is added to each (appropriate) controller method of the private API,

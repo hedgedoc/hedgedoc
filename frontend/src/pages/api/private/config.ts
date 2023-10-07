@@ -40,16 +40,7 @@ const initialConfig: FrontendConfig = {
       type: AuthProviderType.LOCAL
     },
     {
-      type: AuthProviderType.FACEBOOK
-    },
-    {
       type: AuthProviderType.GITHUB
-    },
-    {
-      type: AuthProviderType.TWITTER
-    },
-    {
-      type: AuthProviderType.DROPBOX
     },
     {
       type: AuthProviderType.GOOGLE

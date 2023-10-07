@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -18,7 +18,7 @@ import { ProviderType } from './provider-type.enum';
 /**
  * The identity represents a single way for a user to login.
  * A 'user' can have any number of these.
- * Each one holds a type (local, github, twitter, etc.), if this type can have multiple instances (e.g. gitlab),
+ * Each one holds a type (local, github, etc.), if this type can have multiple instances (e.g. gitlab),
  * it also saves the name of the instance. Also if this identity shall be the syncSource is saved.
  */
 @Entity()

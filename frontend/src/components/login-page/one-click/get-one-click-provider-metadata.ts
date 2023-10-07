@@ -6,14 +6,11 @@
 import styles from './via-one-click.module.scss'
 import type { Icon } from 'react-bootstrap-icons'
 import {
-  Dropbox as IconDropbox,
   Exclamation as IconExclamation,
-  Facebook as IconFacebook,
   Github as IconGithub,
   Google as IconGoogle,
   People as IconPeople,
-  PersonRolodex as IconPersonRolodex,
-  Twitter as IconTwitter
+  PersonRolodex as IconPersonRolodex
 } from 'react-bootstrap-icons'
 import { Logger } from '../../../utils/logger'
 import type { AuthProvider } from '../../../api/config/types'
@@ -41,20 +38,6 @@ const logger = new Logger('GetOneClickProviderMetadata')
  */
 export const getOneClickProviderMetadata = (provider: AuthProvider): OneClickMetadata => {
   switch (provider.type) {
-    case AuthProviderType.DROPBOX:
-      return {
-        name: 'Dropbox',
-        icon: IconDropbox,
-        className: styles['btn-social-dropbox'],
-        url: getBackendAuthUrl('dropbox')
-      }
-    case AuthProviderType.FACEBOOK:
-      return {
-        name: 'Facebook',
-        icon: IconFacebook,
-        className: styles['btn-social-facebook'],
-        url: getBackendAuthUrl('facebook')
-      }
     case AuthProviderType.GITHUB:
       return {
         name: 'GitHub',
@@ -89,13 +72,6 @@ export const getOneClickProviderMetadata = (provider: AuthProvider): OneClickMet
         icon: IconPeople,
         className: 'btn-success',
         url: getBackendAuthUrl(provider.identifier)
-      }
-    case AuthProviderType.TWITTER:
-      return {
-        name: 'Twitter',
-        icon: IconTwitter,
-        className: styles['btn-social-twitter'],
-        url: getBackendAuthUrl('twitter')
       }
     default:
       logger.warn('Metadata for one-click-provider does not exist', provider)
