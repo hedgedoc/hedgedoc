@@ -42,7 +42,9 @@ import { languages } from '@codemirror/language-data'
 import { lintGutter } from '@codemirror/lint'
 import { oneDark } from '@codemirror/theme-one-dark'
 import ReactCodeMirror from '@uiw/react-codemirror'
-import React, { useEffect, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
+import { useUiNotifications } from '../../notifications/ui-notification-boundary'
+import { Lock as IconLock } from 'react-bootstrap-icons'
 
 export type EditorPaneProps = ScrollProps
 
@@ -56,6 +58,7 @@ export type EditorPaneProps = ScrollProps
  * @external {ReactCodeMirror} https://npmjs.com/@uiw/react-codemirror
  */
 export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, onMakeScrollSource }) => {
+  const { dispatchUiNotification } = useUiNotifications()
   useApplyScrollState(scrollState)
 
   const messageTransporter = useRealtimeConnection()
@@ -144,11 +147,21 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
   const translateOptions = useMemo(() => ({ host: editorOrigin }), [editorOrigin])
   const placeholderText = useTranslatedText('editor.placeholder', translateOptions)
 
+  const userMayEdit = useMayEdit()
+  const verifyUserIsAllowedToType = useCallback(() => {
+    if (!userMayEdit) {
+      dispatchUiNotification('editor.error.noPermission.title', 'editor.error.noPermission.description', {
+        icon: IconLock
+      })
+    }
+  }, [dispatchUiNotification, userMayEdit])
+
   return (
     <div
       className={`d-flex flex-column h-100 position-relative`}
       onTouchStart={onMakeScrollSource}
       onMouseEnter={onMakeScrollSource}
+      onKeyDown={verifyUserIsAllowedToType}
       {...cypressId('editor-pane')}
       {...cypressAttribute('editor-ready', String(updateViewContextExtension !== null && isSynced && mayEdit))}>
       <MaxLengthWarning />
