@@ -68,10 +68,10 @@ const routes: Routes = [
           password: databaseConfig.password,
           database: databaseConfig.database,
           autoLoadEntities: true,
-          synchronize: true, // ToDo: Remove this before release. It should be replaced by database migrations
-          // https://stackoverflow.com/questions/65222981/typeorm-synchronize-in-production
           logging: true,
           logger: logger,
+          migrations: [`**/migrations/${databaseConfig.type}-*{.ts,.js}`],
+          migrationsRun: true,
         };
       },
     }),

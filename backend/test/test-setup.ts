@@ -200,8 +200,9 @@ export class TestSetupBuilder {
           type: 'sqlite',
           database: ':memory:',
           autoLoadEntities: true,
-          synchronize: true,
           dropSchema: true,
+          migrations: [`src/migrations/sqlite-*.ts`],
+          migrationsRun: true,
         };
       case 'postgres':
       case 'mariadb':
@@ -211,8 +212,11 @@ export class TestSetupBuilder {
           username: 'hedgedoc',
           password: 'hedgedoc',
           autoLoadEntities: true,
-          synchronize: true,
           dropSchema: true,
+          migrations: [
+            `src/migrations/${process.env.HEDGEDOC_TEST_DB_TYPE}-*.ts`,
+          ],
+          migrationsRun: true,
         };
       default:
         throw new Error('Unknown database type in HEDGEDOC_TEST_DB_TYPE');
