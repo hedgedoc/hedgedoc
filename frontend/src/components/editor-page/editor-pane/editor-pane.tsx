@@ -9,7 +9,6 @@ import { useMayEdit } from '../../../hooks/common/use-may-edit'
 import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import { useDarkModeState } from '../../../hooks/dark-mode/use-dark-mode-state'
 import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
-import { findLanguageByCodeBlockName } from '../../markdown-renderer/extensions/_base-classes/code-block-markdown-extension/find-language-by-code-block-name'
 import type { ScrollProps } from '../synced-scroll/scroll-props'
 import styles from './extended-codemirror/codemirror.module.scss'
 import { useCodeMirrorAutocompletionsExtension } from './hooks/codemirror-extensions/use-code-mirror-autocompletions-extension'
@@ -37,8 +36,6 @@ import { useLinter } from './linter/linter'
 import { MaxLengthWarning } from './max-length-warning/max-length-warning'
 import { StatusBar } from './status-bar/status-bar'
 import { ToolBar } from './tool-bar/tool-bar'
-import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
-import { languages } from '@codemirror/language-data'
 import { lintGutter } from '@codemirror/lint'
 import { oneDark } from '@codemirror/theme-one-dark'
 import ReactCodeMirror from '@uiw/react-codemirror'
@@ -94,10 +91,6 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
     () => [
       linterExtension,
       lintGutter(),
-      markdown({
-        base: markdownLanguage,
-        codeLanguages: (input) => findLanguageByCodeBlockName(languages, input)
-      }),
       remoteCursorsExtension,
       lineWrappingExtension,
       editorScrollExtension,
