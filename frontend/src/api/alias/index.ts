@@ -14,7 +14,7 @@ import type { Alias, NewAliasDto, PrimaryAliasDto } from './types'
  * @param noteIdOrAlias The note id or an existing alias for a note.
  * @param newAlias The new alias.
  * @return Information about the newly created alias.
- * @throws {Error} when the api request wasn't successfull
+ * @throws {Error} when the api request wasn't successful
  */
 export const addAlias = async (noteIdOrAlias: string, newAlias: string): Promise<Alias> => {
   const response = await new PostApiRequestBuilder<Alias, NewAliasDto>('alias')
