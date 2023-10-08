@@ -7,6 +7,7 @@ name: Docker
 on:
   push:
     branches: [ develop ]
+    tags: [ v2* ]
 
 permissions:
   contents: read
