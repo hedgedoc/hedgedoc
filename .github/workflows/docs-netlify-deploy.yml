@@ -46,10 +46,7 @@ jobs:
       - name: Build docs
         run: mkdocs build
 
-      - name: Install netlify CLI
-        run: "yarn add --dev netlify-cli@${{ env.NETLIFY_VERSION }}"
-
       - name: Run netlify CLI deployment
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: "netlify deploy --build --prod --message \"${{ github.event.head_commit.id }}\""
+        run: "npx -y netlify-cli@${{ env.NETLIFY_VERSION }} deploy --build --prod --message \"${{ github.event.head_commit.id }}\""
