@@ -97,3 +97,12 @@ However, you can run HedgeDoc without this extra security, but we recommend usin
     needs to be adjusted to direct requests for this domain to the frontend.
 
 [xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
+
+## Why are forkawesome icons deprecated?
+
+As forkawesome icons are not really well maintained, we decided to replace them with
+[bootstrap icons][bootstrap-icons]. To keep the compatibility with HedgeDoc 1 notes
+we still import them, but will likely remove those icons at some point. So your
+best take of action is replacing these icons with [bootstrap icons][bootstrap-icons].
+
+[bootstrap-icons]: https://icons.getbootstrap.com/
