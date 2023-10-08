@@ -2526,7 +2526,7 @@ __metadata:
     domhandler: 5.0.3
     dompurify: 3.0.6
     dotenv-cli: 7.3.0
-    emoji-picker-element: 1.18.3
+    emoji-picker-element: 1.18.4
     emoji-picker-element-data: 1.5.0
     eslint: 8.51.0
     eslint-config-next: 13.5.4
@@ -8730,10 +8730,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"emoji-picker-element@npm:1.18.3":
-  version: 1.18.3
-  resolution: "emoji-picker-element@npm:1.18.3"
-  checksum: e951caf7702f5a351bcf7b066be8d1e680eeb5f55c32d195db88597668feb065e87f49ea4dab32ee658ebe42e4199dda05f5968f115e1abe03899df0068bb50f
+"emoji-picker-element@npm:1.18.4":
+  version: 1.18.4
+  resolution: "emoji-picker-element@npm:1.18.4"
+  checksum: 3781ef8d9b794823a64c3d438506c909dcbf14dbe9d0a1c7f8584eb1e65742dbfab7a602da14041169a2ea32df21f3b4f307defbbd5eecff6da90f8b4ec9488a
   languageName: node
   linkType: hard
 
