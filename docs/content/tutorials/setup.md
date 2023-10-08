@@ -3,6 +3,12 @@
 After completing this tutorial you'll have your own HedgeDoc instance running.
 We will use [Docker][docker-docs] to accomplish this.
 
+!!! warning "HedgeDoc 2 is currently in alpha"
+    Alpha releases come with no guarantees regarding upgradeability.
+    It is very likely that you will need to wipe the database between alpha releases.  
+    Please set up a separate instance to test HedgeDoc 2, there is currently no migration path
+    from HedgeDoc 1.
+
 <!-- markdownlint-disable proper-names -->
 
 1. Open the terminal of the machine you want to install HedgeDoc on.
