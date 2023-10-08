@@ -42,6 +42,9 @@ Information for setting up a local development environment can be found in the [
 ## HedgeDoc 2 Alpha
 Curious about the new look and feel of HedgeDoc 2? We provide a demo of the alpha on [hedgedoc.dev](https://hedgedoc.dev).
 
+If you want to try it out on your own devices, visit the [HedgeDoc 2 docs](https://docs.hedgedoc.dev).
+But be aware that these may change over time.
+
 ## Contributions
 
 We welcome contributions!  
