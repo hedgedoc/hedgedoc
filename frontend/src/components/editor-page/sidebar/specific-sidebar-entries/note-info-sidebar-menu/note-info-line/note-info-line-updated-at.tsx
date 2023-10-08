@@ -8,7 +8,7 @@ import { TimeFromNow } from '../../../../../common/time-from-now'
 import { SidebarMenuInfoEntry } from '../../../sidebar-menu-info-entry/sidebar-menu-info-entry'
 import { DateTime } from 'luxon'
 import React, { useMemo } from 'react'
-import { Pencil as IconPencil } from 'react-bootstrap-icons'
+import { Save as IconSave } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 
 /**
@@ -23,7 +23,7 @@ export const NoteInfoLineUpdatedAt: React.FC = () => {
   )
 
   return !noteUpdateDateTime ? null : (
-    <SidebarMenuInfoEntry titleI18nKey={'editor.noteInfo.lastUpdated'} icon={IconPencil}>
+    <SidebarMenuInfoEntry titleI18nKey={'editor.noteInfo.lastUpdated'} icon={IconSave}>
       <TimeFromNow time={noteUpdateDateTime} />
     </SidebarMenuInfoEntry>
   )

@@ -356,7 +356,7 @@
     "noteInfo": {
       "title": "Note info",
       "created": "Note created",
-      "lastUpdated": "Last updated",
+      "lastUpdated": "Last saved at",
       "lastUpdatedBy": "Last updated by",
       "contributors": "Count of contributors",
       "wordCount": "Count of words"
