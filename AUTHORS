@@ -13,20 +13,27 @@ To regenerate, use `git log --format='%aN <%aE>' | LC_ALL=C.UTF-8 sort -uf`.
 
 Abhilasha Sinha <abhisinha662000@gmail.com>
 Alexandru Văleanu <valeanu_alex@yahoo.com>
+Avinash <avinash.kumar.cs92@gmail.com>
 Chasethechicken <neuringe1234@gmail.com>
 David Mehren <git@herrmehren.de>
 Erik Michelson <github@erik.michelson.eu>
 Falk Rehse <neuringe1234@gmail.com>
+Henrik Hüttemann <admin@herh.de>
 Hugo Peixoto <hugo.peixoto@gmail.com>
+Jakob Klepp <jakob-github@truh.in>
 Jonas Zohren <git-pbkyr@jzohren.de>
+Juned Khan <junedkhanc101@gmail.com>
+Lautaro Alvarez <lautarolalvarez@gmail.com>
+Lukas Mertens <git@lukas-mertens.de>
 Nicolas Dietrich <nidi@mailbox.org>
 Nicolas Lenz <nicolas@eisfunke.com>
 Philip Molares <philip.molares@udo.edu>
 Renovate Bot <bot@renovateapp.com>
+SHAN michel <yuplasmas@gmail.com>
 Sheogorath <sheogorath@shivering-isles.com>
 Simon C <simonc@linux.com>
+Stéphane Guillou <stephane.guillou@member.fsf.org>
+Tamotsu Takahashi <ttakah+github@gmail.com>
 Thomas Snowden <zapperchamp1@gmail.com>
 Tilman Vatteroth <git@tilmanvatteroth.de>
 Yannick Bungers <git@innay.de>
-Henrik Hüttemann <admin@herh.de>
-Jakob Klepp <jakob-github@truh.in>
