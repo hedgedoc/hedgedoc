@@ -32,7 +32,7 @@ async function parseVersionFromPackageJson(): Promise<ServerVersion> {
   const packageInfo = JSON.parse(rawFileContent) as { version: string };
   const versionParts = Optional.ofNullable(packageInfo.version)
     .orThrow(() => new Error('No version found in root package.json'))
-    .map((version) => /^(\d+).(\d+).(\d+)(?:-(\w+))?$/g.exec(version))
+    .map((version) => /^(\d+).(\d+).(\d+)(?:-([\w.]+))?$/g.exec(version))
     .orElseThrow(
       () =>
         new Error(
