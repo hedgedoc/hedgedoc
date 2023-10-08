@@ -83,7 +83,7 @@ describe('BaseUrlFromEnvExtractor', () => {
     expect(() => sut.extractBaseUrls()).toThrow()
   })
 
-  it('should copy editor base url to renderer base/internal api url if url is omitted', () => {
+  it('should copy editor base url to renderer base url if url is omitted', () => {
     process.env.HD_BASE_URL = 'https://editor1.example.org/'
     delete process.env.HD_RENDERER_BASE_URL
     delete process.env.HD_INTERNAL_API_URL
@@ -91,7 +91,7 @@ describe('BaseUrlFromEnvExtractor', () => {
 
     expect(sut.extractBaseUrls()).toStrictEqual({
       renderer: 'https://editor1.example.org/',
-      internalApiUrl: 'https://editor1.example.org/',
+      internalApiUrl: undefined,
       editor: 'https://editor1.example.org/'
     })
   })
