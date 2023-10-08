@@ -38,6 +38,7 @@ import { WebsocketModule } from './realtime/websocket/websocket.module';
 import { RevisionsModule } from './revisions/revisions.module';
 import { SessionModule } from './sessions/session.module';
 import { UsersModule } from './users/users.module';
+import { detectTsNode } from './utils/detectTsNode';
 
 const routes: Routes = [
   {
@@ -70,7 +71,11 @@ const routes: Routes = [
           autoLoadEntities: true,
           logging: true,
           logger: logger,
-          migrations: [`**/migrations/${databaseConfig.type}-*{.ts,.js}`],
+          migrations: [
+            `**/migrations/${databaseConfig.type}-*.${
+              detectTsNode() ? 'ts' : 'js'
+            }`,
+          ],
           migrationsRun: true,
         };
       },
