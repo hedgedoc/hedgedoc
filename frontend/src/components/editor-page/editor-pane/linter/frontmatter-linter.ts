@@ -60,7 +60,7 @@ export class FrontmatterLinter implements Linter {
     const replacedText = 'tags:\n- ' + tags.join('\n- ')
     const tagsLineIndex = frontmatterLines.findIndex((value) => value.startsWith('tags: '))
     const linesBeforeTagsLine = frontmatterLines.slice(0, tagsLineIndex)
-    const from = startOfYaml + linesBeforeTagsLine.join('\n').length + 1
+    const from = startOfYaml + linesBeforeTagsLine.join('\n').length + linesBeforeTagsLine.length
     const to = from + frontmatterLines[tagsLineIndex].length
     return [
       {
