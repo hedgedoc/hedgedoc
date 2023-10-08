@@ -10,7 +10,7 @@ ENTRYPOINT ["tini", "--"]
 # BUILD
 FROM base AS builder
 
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat git
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 

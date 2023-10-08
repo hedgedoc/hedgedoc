@@ -20,7 +20,7 @@ ENV YARN_CACHE_FOLDER=/tmp/.yarn
 
 ## Stage 1: Code with all dependencies
 FROM base as code-with-deps
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat git
 
 USER node
 WORKDIR /usr/src/app
