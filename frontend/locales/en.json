@@ -756,12 +756,12 @@
         "basic": {
           "title": "Basic",
           "description": "Images can be defined using the link syntax with an exclamation mark in front of it. The text in the brackets will be used as alt-text.",
-          "example": "![This is an icon](/icons/apple-touch-icon.png)"
+          "example": "![This is an icon](/icon.png)"
         },
         "size": {
           "title": "Size",
           "description": "The size syntax allows you to set both dimensions of an image. If you omit one of the dimensions then image will be scaled to the relative size.",
-          "example": "![Image](/icons/apple-touch-icon.png =100x50)\n\n![Image](/icons/apple-touch-icon.png =60x)\n\n![Image](/icons/apple-touch-icon.png =x50)"
+          "example": "![Image](/icon.png =100x50)\n\n![Image](/icon.png =60x)\n\n![Image](/icon.png =x50)"
         }
       },
       "links": {
