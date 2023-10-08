@@ -16,7 +16,7 @@ export class BaseUrlFromEnvExtractor {
   private baseUrls: BaseUrls | undefined
   private readonly logger = new Logger('Base URL Configuration')
 
-  private extractUrlFromEnvVar(envVarName: string, envVarValue: string | undefined): Optional<URL> {
+  private extractUrlFromEnvVar(envVarValue: string | undefined): Optional<URL> {
     try {
       return parseUrl(envVarValue)
     } catch (error) {
@@ -30,36 +30,39 @@ export class BaseUrlFromEnvExtractor {
   }
 
   private extractEditorBaseUrlFromEnv(): Optional<URL> {
-    const envValue = this.extractUrlFromEnvVar('HD_BASE_URL', process.env.HD_BASE_URL)
+    const envValue = this.extractUrlFromEnvVar(process.env.HD_BASE_URL)
     if (envValue.isEmpty()) {
       this.logger.error("HD_BASE_URL isn't a valid URL!")
     }
     return envValue
   }
 
-  private extractRendererBaseUrlFromEnv(editorBaseUrl: URL): Optional<URL> {
+  private extractUrlFromEnv(editorBaseUrl: URL, envVarName: string): Optional<URL> {
     if (isTestMode) {
-      this.logger.info('Test mode activated. Using editor base url for renderer.')
+      this.logger.info(`Test mode activated. Using editor base url for ${envVarName}.`)
       return Optional.of(editorBaseUrl)
     }
 
-    if (!process.env.HD_RENDERER_BASE_URL) {
-      this.logger.info('HD_RENDERER_BASE_URL is unset. Using editor base url for renderer.')
+    if (!process.env[envVarName]) {
+      this.logger.info(`${envVarName} is unset. Using editor base url.`)
       return Optional.of(editorBaseUrl)
     }
 
-    return this.extractUrlFromEnvVar('HD_RENDERER_BASE_URL', process.env.HD_RENDERER_BASE_URL)
+    return this.extractUrlFromEnvVar(process.env[envVarName])
   }
 
   private renewBaseUrls(): BaseUrls {
     return this.extractEditorBaseUrlFromEnv()
       .flatMap((editorBaseUrl) =>
-        this.extractRendererBaseUrlFromEnv(editorBaseUrl).map((rendererBaseUrl) => {
-          return {
-            editor: editorBaseUrl.toString(),
-            renderer: rendererBaseUrl.toString()
-          }
-        })
+        this.extractUrlFromEnv(editorBaseUrl, 'HD_RENDERER_BASE_URL').flatMap((rendererBaseUrl) =>
+          this.extractUrlFromEnv(editorBaseUrl, 'HD_INTERNAL_API_URL').map((internalApiUrl) => {
+            return {
+              editor: editorBaseUrl.toString(),
+              renderer: rendererBaseUrl.toString(),
+              internalApiUrl: internalApiUrl.toString()
+            }
+          })
+        )
       )
       .orElseThrow(() => new Error('couldnt parse env vars'))
   }
@@ -73,7 +76,8 @@ export class BaseUrlFromEnvExtractor {
     if (isBuildTime) {
       return {
         editor: 'https://example.org/',
-        renderer: 'https://example.org/'
+        renderer: 'https://example.org/',
+        internalApiUrl: 'https://example.org/'
       }
     }
 
@@ -90,6 +94,7 @@ export class BaseUrlFromEnvExtractor {
     }
     this.logger.info('Editor base URL', this.baseUrls.editor.toString())
     this.logger.info('Renderer base URL', this.baseUrls.renderer.toString())
+    this.logger.info('Internal API URL', this.baseUrls.internalApiUrl.toString())
   }
 }
 

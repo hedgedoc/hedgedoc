@@ -10,6 +10,7 @@ import React, { createContext } from 'react'
 export interface BaseUrls {
   renderer: string
   editor: string
+  internalApiUrl: string
 }
 
 interface BaseUrlContextProviderProps {
