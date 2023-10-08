@@ -64,7 +64,7 @@ export const HistoryToolbar: React.FC = () => {
   const uploadAllButtonTitle = useTranslatedText('landing.history.toolbar.uploadAll')
 
   return (
-    <Col className={'d-flex flex-row'}>
+    <Col className={'d-flex flex-row flex-wrap'}>
       <div className={'me-1 mb-1'}>
         <TagSelectionInput />
       </div>
