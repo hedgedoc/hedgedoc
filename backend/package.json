@@ -21,7 +21,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config jest-e2e.json && rimraf test_uploads*",
     "test:e2e:ci": "jest --config jest-e2e.json --coverage && rimraf test_uploads*",
-    "seed": "ts-node src/seed.ts"
+    "seed": "ts-node src/seed.ts",
+    "typeorm": "typeorm-ts-node-commonjs -d src/ormconfig.ts"
   },
   "dependencies": {
     "@azure/storage-blob": "12.16.0",
