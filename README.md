@@ -39,12 +39,8 @@ We are currently working on HedgeDoc 2, a complete rewrite of HedgeDoc. Please n
 ## Development
 Information for setting up a local development environment can be found in the [developer documentation](./docs/content/dev/getting-started.md)
 
-## HedgeDoc 2 UI Test
-Curious about the new look and feel of HedgeDoc 2? We provide a demo of the new UI on [hedgedoc.dev](https://hedgedoc.dev). This
-version uses mocked data and has no data persistence.
-
-The UI test is hosted by [netlify](https://netlify.com). Please check
-their [privacy policy](https://netlify.com/privacy) as well as [ours](https://hedgedoc.org/privacy-policy).
+## HedgeDoc 2 Alpha
+Curious about the new look and feel of HedgeDoc 2? We provide a demo of the alpha on [hedgedoc.dev](https://hedgedoc.dev).
 
 ## Contributions
 
