@@ -40,7 +40,7 @@ export const ToolBar: React.FC = () => {
 
   return (
     <ShowIf condition={mayEdit}>
-      <ButtonToolbar className={concatCssClasses(styles.toolbar, 'mb-2')}>
+      <ButtonToolbar className={concatCssClasses(styles.toolbar, 'my-1')}>
         <ButtonGroup className={'mx-1 flex-wrap'}>
           <BoldButton />
           <ItalicButton />
