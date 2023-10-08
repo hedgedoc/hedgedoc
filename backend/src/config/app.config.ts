@@ -20,6 +20,7 @@ export interface AppConfig {
   rendererBaseUrl: string;
   port: number;
   loglevel: Loglevel;
+  showLogTimestamp: boolean;
   persistInterval: number;
 }
 
@@ -59,6 +60,10 @@ const schema = Joi.object({
     .default(Loglevel.WARN)
     .optional()
     .label('HD_LOGLEVEL'),
+  showLogTimestamp: Joi.boolean()
+    .default(true)
+    .optional()
+    .label('HD_SHOW_LOG_TIMESTAMP'),
   persistInterval: Joi.number()
     .integer()
     .min(0)
@@ -79,6 +84,7 @@ export default registerAs('appConfig', () => {
       rendererBaseUrl: process.env.HD_RENDERER_BASE_URL,
       port: parseOptionalNumber(process.env.HD_BACKEND_PORT),
       loglevel: process.env.HD_LOGLEVEL,
+      showLogTimestamp: process.env.HD_SHOW_LOG_TIMESTAMP,
       persistInterval: process.env.HD_PERSIST_INTERVAL,
     },
     {

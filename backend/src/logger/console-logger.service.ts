@@ -149,17 +149,17 @@ export class ConsoleLoggerService implements LoggerService {
       day: '2-digit',
       month: '2-digit',
     };
-    //TODO make timestamp optional (https://github.com/hedgedoc/hedgedoc/issues/5033)
-    const timestamp = new Date(Date.now()).toLocaleString(
-      undefined,
-      localeStringOptions,
-    );
-
+    let timeString = '';
+    if (this.appConfig.showLogTimestamp) {
+      timeString =
+        new Date(Date.now()).toLocaleString(undefined, localeStringOptions) +
+        ' ';
+    }
     const contextMessage = context ? blue(`[${context}] `) : '';
     const timestampDiff = this.updateAndGetTimestampDiff(isTimeDiffEnabled);
 
     process.stdout.write(
-      `${timestamp} ${contextMessage}${output}${timestampDiff}\n`,
+      `${timeString}${contextMessage}${output}${timestampDiff}\n`,
     );
   }
 
