@@ -39,7 +39,20 @@ export abstract class ApiRequestBuilder<ResponseType> {
    * @return the base url
    */
   private determineBaseUrl(baseUrl?: string) {
-    return typeof window !== 'undefined' ? baseUrl ?? '/' : baseUrlFromEnvExtractor.extractBaseUrls().internalApiUrl
+    if (this.isSSR()) {
+      const internalApiUrl = baseUrlFromEnvExtractor.extractBaseUrls().internalApiUrl
+      const actualBaseUrl = internalApiUrl ?? baseUrl
+      if (actualBaseUrl === undefined) {
+        throw new Error("Can't make request without forced base url and without internal api url")
+      }
+      return actualBaseUrl
+    } else {
+      return baseUrl ?? '/'
+    }
+  }
+
+  private isSSR() {
+    return typeof window === 'undefined'
   }
 
   protected async sendRequestAndVerifyResponse(httpMethod: RequestInit['method']): Promise<ApiResponse<ResponseType>> {
