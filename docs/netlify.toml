@@ -1,3 +1,3 @@
 [build]
-publish = "docs/site"
+publish = "site"
 command = "echo Pseudo build command because the build is made by the CI"
