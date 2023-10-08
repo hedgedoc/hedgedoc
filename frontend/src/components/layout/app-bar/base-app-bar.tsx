@@ -14,7 +14,6 @@ import styles from './navbar.module.scss'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
 import { Nav, Navbar } from 'react-bootstrap'
-import { HistoryButton } from './app-bar-elements/help-dropdown/history-button'
 import { cypressId } from '../../../utils/cypress-attribute'
 
 /**
@@ -32,7 +31,6 @@ export const BaseAppBar: React.FC<PropsWithChildren> = ({ children }) => {
       <Nav className={`align-items-center flex-fill overflow-hidden px-4 ${styles.center}`}>{children}</Nav>
       <Nav className={`align-items-stretch justify-content-end flex-grow-1 ${styles.side} h-100 py-1`}>
         <div className={'d-flex gap-2'}>
-          <HistoryButton />
           <HelpDropdown />
           <SettingsButton />
           <NewNoteButton />
