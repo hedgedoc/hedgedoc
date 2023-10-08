@@ -9,6 +9,7 @@ services:
     image: ghcr.io/hedgedoc/hedgedoc/frontend:2.0.0-alpha.1
     environment:
       HD_BASE_URL: "${HD_BASE_URL}"
+      HD_INTERNAL_API_URL: http://backend:3000
 
   db:
     image: postgres:16
