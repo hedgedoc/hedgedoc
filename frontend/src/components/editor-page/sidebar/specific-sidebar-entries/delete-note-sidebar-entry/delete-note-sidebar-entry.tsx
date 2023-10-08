@@ -16,6 +16,7 @@ import type { PropsWithChildren } from 'react'
 import React, { Fragment, useCallback } from 'react'
 import { Trash as IconTrash } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
+import { useIsOwner } from '../../../../../hooks/common/use-is-owner'
 
 /**
  * Sidebar entry that can be used to delete the current note.
@@ -25,6 +26,7 @@ import { Trans, useTranslation } from 'react-i18next'
  */
 export const DeleteNoteSidebarEntry: React.FC<PropsWithChildren<SpecificSidebarEntryProps>> = ({ hide, className }) => {
   useTranslation()
+  const userIsOwner = useIsOwner()
   const router = useRouter()
   const noteId = useApplicationState((state) => state.noteDetails?.id)
   const [modalVisibility, showModal, closeModal] = useBooleanState()
@@ -39,6 +41,10 @@ export const DeleteNoteSidebarEntry: React.FC<PropsWithChildren<SpecificSidebarE
       .catch(showErrorNotification('landing.history.error.deleteNote.text'))
       .finally(closeModal)
   }, [closeModal, noteId, router, showErrorNotification])
+
+  if (!userIsOwner) {
+    return null
+  }
 
   return (
     <Fragment>
