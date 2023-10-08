@@ -45,8 +45,8 @@ describe('FrontmatterLinter', () => {
       testFrontmatterLinter(
         '---\ntags: a\n---',
         {
-          from: 5,
-          to: 12,
+          from: 4,
+          to: 11,
           severity: 'warning'
         },
         'tags:\n- a'
@@ -56,8 +56,8 @@ describe('FrontmatterLinter', () => {
       testFrontmatterLinter(
         '---\ntags: 1\n---',
         {
-          from: 5,
-          to: 12,
+          from: 4,
+          to: 11,
           severity: 'warning'
         },
         'tags:\n- 1'
@@ -67,8 +67,8 @@ describe('FrontmatterLinter', () => {
       testFrontmatterLinter(
         '---\ntags: 123, a\n---',
         {
-          from: 5,
-          to: 17,
+          from: 4,
+          to: 16,
           severity: 'warning'
         },
         'tags:\n- 123\n- a'
