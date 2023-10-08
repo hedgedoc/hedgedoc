@@ -12,7 +12,7 @@ import React, { useEffect, useRef } from 'react'
 import { Popover } from 'react-bootstrap'
 import type { PopoverProps } from 'react-bootstrap/Popover'
 
-const EMOJI_DATA_PATH = '_next/static/js/emoji-data.json'
+const EMOJI_DATA_PATH = '/_next/static/js/emoji-data.json'
 
 const emojiPickerConfig: PickerConstructorOptions = {
   dataSource: EMOJI_DATA_PATH
