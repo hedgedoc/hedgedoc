@@ -141,6 +141,7 @@ describe('FrontendConfigService', () => {
           rendererBaseUrl: 'https://renderer.example.org',
           port: 3000,
           loglevel: Loglevel.ERROR,
+          showLogTimestamp: false,
           persistInterval: 10,
         };
         const authConfig: AuthConfig = {
@@ -284,6 +285,7 @@ describe('FrontendConfigService', () => {
                 rendererBaseUrl: 'https://renderer.example.org',
                 port: 3000,
                 loglevel: Loglevel.ERROR,
+                showLogTimestamp: false,
                 persistInterval: 10,
               };
               const authConfig: AuthConfig = {
