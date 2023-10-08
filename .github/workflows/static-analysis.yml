@@ -7,8 +7,10 @@ name: Static Analysis
 on:
   push:
     branches: [ develop ]
+    paths-ignore: ['docs/**']
   pull_request:
     branches: [ develop ]
+    paths-ignore: ['docs/**']
   schedule:
     - cron: '0 7 * * 6'
 

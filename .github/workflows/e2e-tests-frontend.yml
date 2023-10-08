@@ -1,0 +1,123 @@
+# SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+name: E2E Tests (Frontend)
+
+on:
+  push:
+    branches: [ develop ]
+    paths-ignore: ['docs/**', 'backend/**']
+  pull_request_target:
+    branches: [ develop ]
+    paths-ignore: ['docs/**', 'backend/**']
+  pull_request:
+    branches: [ develop ]
+    paths-ignore: ['docs/**', 'backend/**']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ !!github.event.pull_request && github.event.pull_request.head.label || github.ref }}-${{ github.event_name }}-${{ github.job }}
+  cancel-in-progress: true
+
+env:
+  NODEJS_VERSION: 20
+  HEAD_COMMIT_HASH: "${{ !!github.event.pull_request && github.event.pull_request.head.sha || github.sha }}"
+
+jobs:
+  frontend-build:
+    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
+    runs-on: ubuntu-latest
+    name: Build test build of frontend
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
+        with:
+          ref: ${{ env.HEAD_COMMIT_HASH }}
+
+      - name: Setup node
+        uses: ./.github/actions/setup-node
+        with:
+          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
+
+      - name: Build test production build
+        run: yarn build:test --filter=frontend
+        shell: bash
+        env:
+          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_API: ${{ vars.TURBO_API }}
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+      - name: Compress build
+        run: tar --zstd -cf frontend-e2e-build.tar.zst frontend/dist/
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend-e2e-build
+          retention-days: 1
+          path: frontend-e2e-build.tar.zst
+
+  frontend-cypress:
+    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
+    needs: frontend-build
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/browsers:node-18.16.0-chrome-113.0.5672.92-1-ff-113.0-edge-113.0.1774.35-1@sha256:6bf406250fcdf27fcdcea54c9087f54e1cbaf4c6c5420cced8840efc7f6b144e
+      options: --shm-size=2g
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [ 1, 2, 3 ]
+    steps:
+      - name: Install additional packages
+        run: apt-get update && apt-get install -y jq zstd screen curl
+
+      - name: Check out repo
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
+        with:
+          ref: ${{ env.HEAD_COMMIT_HASH }}
+
+      - name: Setup node
+        uses: ./.github/actions/setup-node
+        with:
+          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
+
+      - name: Download build
+        uses: actions/download-artifact@v3
+        with:
+          name: frontend-e2e-build
+
+      - name: Decompress build
+        run: tar -xf frontend-e2e-build.tar.zst
+
+      - name: Run server
+        working-directory: frontend/
+        run: (screen -dmS server -L yarn start) && sleep 3 && (tail -f screenlog.0 &)
+        env:
+          NODE_ENV: test
+          HOSTNAME: "127.0.0.1"
+          HD_BASE_URL: "http://127.0.0.1:3001/"
+          PORT: 3001
+
+      - name: Wait for server
+        run: "curl -L --max-time 120 http://127.0.0.1:3001/"
+
+      - name: Run cypress
+        run: yarn test:e2e:ci --filter=frontend
+        shell: bash
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_API: ${{ vars.TURBO_API }}
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+          CYPRESS_CONTAINER_ID: ${{ matrix.containers }}
+
+      - uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # master
+        with:
+          name: screenshots
+          path: cypress/screenshots
