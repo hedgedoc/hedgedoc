@@ -17,15 +17,22 @@ const logger = new Logger('Application Loader')
  * Create a custom delay in the loading of the application.
  */
 const customDelay: () => Promise<void> = async () => {
-  if (
-    (isDevMode || isTestMode) &&
-    typeof window !== 'undefined' &&
-    typeof window.localStorage !== 'undefined' &&
-    (window.location.search.startsWith('?customDelay=') || window.localStorage.getItem('customDelay'))
-  ) {
+  if ((isDevMode || isTestMode) && (window.location.search.startsWith('?customDelay=') || isCustomDelayActive())) {
     return new Promise((resolve) => setTimeout(resolve, 500000000))
   } else {
     return Promise.resolve()
+  }
+}
+
+const isCustomDelayActive = (): boolean => {
+  try {
+    return (
+      typeof window !== 'undefined' &&
+      typeof window.localStorage !== 'undefined' &&
+      window.localStorage.getItem('customDelay') !== null
+    )
+  } catch {
+    return false
   }
 }
 
