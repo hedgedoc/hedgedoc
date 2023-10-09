@@ -10,6 +10,9 @@ import { ActiveIndicator } from '../active-indicator'
 import styles from './user-line.module.scss'
 import React, { useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
+import { ShowIf } from '../../../../../common/show-if/show-if'
+import { Incognito as IconIncognito } from 'react-bootstrap-icons'
+import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
 
 export interface UserLineProps {
   username: string | null
@@ -30,37 +33,32 @@ export interface UserLineProps {
  */
 export const UserLine: React.FC<UserLineProps> = ({ username, displayName, active, own = false, color }) => {
   useTranslation()
+  const guestUserTitle = useTranslatedText('editor.onlineStatus.guestUser')
 
   const avatar = useMemo(() => {
-    if (username) {
-      return (
-        <UserAvatarForUsername
-          username={username}
-          additionalClasses={'flex-fill overflow-hidden px-2 text-nowrap w-100'}
-        />
-      )
-    } else {
-      return (
-        <UserAvatar displayName={displayName} additionalClasses={'flex-fill overflow-hidden px-2 text-nowrap w-100'} />
-      )
-    }
+    return username ? (
+      <UserAvatarForUsername username={username} additionalClasses={'flex-fill overflow-hidden px-2 text-nowrap'} />
+    ) : (
+      <UserAvatar displayName={displayName} additionalClasses={'flex-fill overflow-hidden px-2 text-nowrap'} />
+    )
   }, [displayName, username])
 
   return (
-    <div className={'d-flex align-items-center h-100 w-100'}>
-      <div
-        className={`d-inline-flex align-items-bottom ${styles['user-line-color-indicator']} ${createCursorCssClass(
-          color
-        )}`}
-      />
+    <div className={'d-flex h-100 w-100'}>
+      <div className={`${styles['user-line-color-indicator']} ${createCursorCssClass(color)}`} />
       {avatar}
-      {own ? (
-        <span className={'px-1'}>
-          <Trans i18nKey={'editor.onlineStatus.you'}></Trans>
-        </span>
-      ) : (
-        <ActiveIndicator active={active} />
-      )}
+      <div className={'ms-auto d-flex align-items-center gap-1 h-100'}>
+        <ShowIf condition={!username}>
+          <IconIncognito title={guestUserTitle} size={'16px'} className={'text-muted'} />
+        </ShowIf>
+        {own ? (
+          <span className={'px-1'}>
+            <Trans i18nKey={'editor.onlineStatus.you'}></Trans>
+          </span>
+        ) : (
+          <ActiveIndicator active={active} />
+        )}
+      </div>
     </div>
   )
 }

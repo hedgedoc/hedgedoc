@@ -9,6 +9,8 @@
   border-radius: $indicator-size;
   height: $indicator-size;
   width: $indicator-size;
+  margin: 0 calc($indicator-size / 2);
+  display: block;
 
   &.active {
     background-color: #5cb85c;
@@ -17,12 +19,4 @@
   &.inactive {
     background-color: #d20000;
   }
-}
-
-.active-indicator-container {
-  height: 100%;
-  display: flex;
-  flex: 0 0 20px;
-  align-items: center;
-  justify-content: center;
 }
