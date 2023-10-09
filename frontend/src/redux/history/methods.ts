@@ -185,7 +185,11 @@ export const storeLocalHistory = (): void => {
     ...entry,
     origin: undefined
   }))
-  window.localStorage.setItem('history', JSON.stringify(entriesWithoutOrigin))
+  try {
+    window.localStorage.setItem('history', JSON.stringify(entriesWithoutOrigin))
+  } catch (error) {
+    log.error("Can't save history", error)
+  }
 }
 
 /**
@@ -206,7 +210,7 @@ export const storeRemoteHistory = (): Promise<unknown> => {
  * @return The local history entries with the origin set to local.
  */
 const loadLocalHistory = (): HistoryEntryWithOrigin[] => {
-  const localV1Json = window.localStorage.getItem('notehistory')
+  const localV1Json = readV1HistoryEntriesFromLocalStorage()
   if (localV1Json) {
     try {
       const localV1History = JSON.parse(JSON.parse(localV1Json) as string) as V1HistoryEntry[]
@@ -232,6 +236,14 @@ const loadLocalHistory = (): HistoryEntryWithOrigin[] => {
   } catch (error) {
     log.error('Error while parsing locally stored history entries', error)
     return []
+  }
+}
+
+const readV1HistoryEntriesFromLocalStorage = () => {
+  try {
+    return window.localStorage.getItem('notehistory')
+  } catch {
+    return null
   }
 }
 
