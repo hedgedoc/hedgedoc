@@ -5,6 +5,7 @@
  */
 import styles from './active-indicator.module.scss'
 import React from 'react'
+import { useTranslatedText } from '../../../../../hooks/common/use-translated-text'
 
 export interface ActiveIndicatorProps {
   active: boolean
@@ -16,9 +17,13 @@ export interface ActiveIndicatorProps {
  * @param status The state of the indicator to render
  */
 export const ActiveIndicator: React.FC<ActiveIndicatorProps> = ({ active }) => {
+  const textActive = useTranslatedText('editor.onlineStatus.active')
+  const textInactive = useTranslatedText('editor.onlineStatus.inactive')
+
   return (
-    <div className={styles['active-indicator-container']}>
-      <span className={`${styles['activeIndicator']} ${active ? styles.active : styles.inactive}`} />
-    </div>
+    <span
+      title={active ? textActive : textInactive}
+      className={`${styles['activeIndicator']} ${active ? styles.active : styles.inactive}`}
+    />
   )
 }

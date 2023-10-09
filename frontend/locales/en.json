@@ -231,7 +231,10 @@
     "infoToc": "Structure your note with headings to see a table-of-contents here.",
     "onlineStatus": {
       "online": "Online",
-      "you": "(You)"
+      "you": "(You)",
+      "guestUser": "This is a guest user",
+      "active": "This user is active",
+      "inactive": "This user has been inactive for some time"
     },
     "error": {
       "noPermission": {
