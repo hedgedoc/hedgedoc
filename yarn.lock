@@ -2543,7 +2543,7 @@ __metadata:
     firacode: 6.2.0
     flexsearch-ts: 0.7.35
     flowchart.js: 1.17.1
-    highlight.js: 11.8.0
+    highlight.js: 11.9.0
     htmlparser2: 9.0.0
     i18next: 23.5.1
     i18next-browser-languagedetector: 7.1.0
@@ -10684,10 +10684,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highlight.js@npm:11.8.0":
-  version: 11.8.0
-  resolution: "highlight.js@npm:11.8.0"
-  checksum: d2578a57aee7315946ff19379053fd0a28b127baabf7617ab1d28d62cdc4eaf3d75053569cb8479a5afdc7a68f1ba9a6c1d612d8ae399b4b9aa43093b4fb6831
+"highlight.js@npm:11.9.0":
+  version: 11.9.0
+  resolution: "highlight.js@npm:11.9.0"
+  checksum: 4043d31c5de9d27d13387d9a9e5e1939557254b7b85f0fab85d9cae0e420e131a3456ebf6148552020a1d8a216d671d583f2433d6c4de6179b8a66487a8325cb
   languageName: node
   linkType: hard
 
