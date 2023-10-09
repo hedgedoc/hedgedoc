@@ -9,7 +9,6 @@ import { useEditorToRendererCommunicator } from '../../../editor-page/render-con
 import type { RefObject } from 'react'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { useTimeoutFn } from '../../../../hooks/common/use-timeout-fn'
-import { isTestMode } from '../../../../utils/test-modes'
 
 const log = new Logger('IframeLoader')
 
@@ -68,9 +67,6 @@ export const useForceRenderPageUrlOnIframeLoadCallback = (
   )
 
   useEffect(() => {
-    if (!isTestMode) {
-      return
-    }
     startForceTimer()
     return () => stopForceTimer()
   }, [startForceTimer, stopForceTimer])
