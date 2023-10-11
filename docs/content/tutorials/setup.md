@@ -36,6 +36,10 @@ We will use [Docker][docker-docs] to accomplish this.
    - `HD_DATABASE_PASS`: This should contain a strong password than `password` for your database.
      You can again use `pwgen -s 64` to generate it.
 
+!!! info "Base URL with specific port"
+    If you set `HD_BASE_URL` to an URL with a specific port then you also need to adjust 
+    the port forwarding of the proxy service in `docker-compose.yml`.
+
 7. Start the Docker containers by running `docker compose up -d`.
 
 8. Navigate your browser to the url you chose in step 6. Your instance is now ready to use.
