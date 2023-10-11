@@ -171,7 +171,7 @@
     "react-test-renderer": "18.2.0",
     "ts-loader": "9.5.0",
     "ts-mockery": "1.2.0",
-    "ts-node": "10.9.1",
+    "ts-node": "https://github.com/TypeStrong/ts-node.git#0eb980f2b7e86801eca76782a323f7ad696784ab",
     "typescript": "5.2.2",
     "user-agent-data-types": "0.4.2"
   },
