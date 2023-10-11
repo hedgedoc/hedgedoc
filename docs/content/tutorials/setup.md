@@ -40,6 +40,20 @@ We will use [Docker][docker-docs] to accomplish this.
 
 8. Navigate your browser to the url you chose in step 6. Your instance is now ready to use.
 
+<!-- markdownlint-disable no-space-in-code -->
+
+!!! info Using a different port
+    This tutorial assumes that you run your HedgeDoc 2 instance on port 80 and 443 (HTTP and HTTPS).
+    If you want to use a custom port, be sure to update your `.env` file to include the port in the
+    `HD_BASE_URL` variable as well as update the port bindings in the `docker-compose.yml` file.  
+    For example, when using the base URL `http://localhost:8080`, only use the following ports
+    section for the `proxy` service:
+    ```yaml
+    ports:
+      - "8080:8080"
+    ```
+
+<!-- markdownlint-enable no-space-in-code -->
 <!-- markdownlint-enable proper-names -->
 
 You can now play around with your HedgeDoc instance and read about next steps
