@@ -2537,7 +2537,7 @@ __metadata:
     eslint-plugin-node: 11.1.0
     eslint-plugin-prettier: 5.0.1
     eslint-plugin-promise: 6.1.1
-    eslint-plugin-testing-library: 6.0.2
+    eslint-plugin-testing-library: 6.1.0
     eventemitter2: 6.4.9
     fast-deep-equal: 3.1.3
     firacode: 6.2.0
@@ -9364,14 +9364,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-testing-library@npm:6.0.2":
-  version: 6.0.2
-  resolution: "eslint-plugin-testing-library@npm:6.0.2"
+"eslint-plugin-testing-library@npm:6.1.0":
+  version: 6.1.0
+  resolution: "eslint-plugin-testing-library@npm:6.1.0"
   dependencies:
     "@typescript-eslint/utils": ^5.58.0
   peerDependencies:
     eslint: ^7.5.0 || ^8.0.0
-  checksum: 6e91798d731dffb978e463042e8386570053c92ab6b7abe858f2700941e2565030b4534b85ef059c857366d09e75e5dea0a9e5b82de0873ff767c664c0aa0297
+  checksum: 67d2f521a6af623c157d05bbefa743d9aa360d5462a9b38a82a79b0ba008cb4d6ba3f604f54ac9d12405c53b6744695fc7fde7875f2b83aa3f85a8ced7687be3
   languageName: node
   linkType: hard
 
