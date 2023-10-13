@@ -6,13 +6,14 @@
 import type { Action } from 'redux'
 
 export enum EditorConfigActionType {
-  SET_EDITOR_VIEW_MODE = 'editor/view-mode/set',
   SET_SYNC_SCROLL = 'editor/syncScroll/set',
   LOAD_FROM_LOCAL_STORAGE = 'editor/preferences/load',
   SET_LIGATURES = 'editor/preferences/setLigatures',
   SET_LINE_WRAPPING = 'editor/preferences/setLineWrapping',
   SET_SMART_PASTE = 'editor/preferences/setSmartPaste',
-  SET_SPELL_CHECK = 'editor/preferences/setSpellCheck'
+  SET_SPELL_CHECK = 'editor/preferences/setSpellCheck',
+  SET_INDENT_WITH_TABS = 'editor/preferences/setIndentWithTabs',
+  SET_INDENT_SPACES = 'editor/preferences/setIndentSpaces'
 }
 
 export interface EditorConfig {
@@ -21,6 +22,8 @@ export interface EditorConfig {
   smartPaste: boolean
   spellCheck: boolean
   lineWrapping: boolean
+  indentWithTabs: boolean
+  indentSpaces: number
 }
 
 export type EditorConfigActions =
@@ -29,6 +32,8 @@ export type EditorConfigActions =
   | SetEditorSmartPasteAction
   | SetEditorLineWrappingAction
   | SetEditorSpellCheckAction
+  | SetEditorIndentWithTabsAction
+  | SetEditorIndentSpacesAction
   | LoadFromLocalStorageAction
 
 export interface LoadFromLocalStorageAction extends Action<EditorConfigActionType> {
@@ -58,4 +63,14 @@ export interface SetEditorSmartPasteAction extends Action<EditorConfigActionType
 export interface SetEditorSpellCheckAction extends Action<EditorConfigActionType> {
   type: EditorConfigActionType.SET_SPELL_CHECK
   spellCheck: boolean
+}
+
+export interface SetEditorIndentWithTabsAction extends Action<EditorConfigActionType> {
+  type: EditorConfigActionType.SET_INDENT_WITH_TABS
+  indentWithTabs: boolean
+}
+
+export interface SetEditorIndentSpacesAction extends Action<EditorConfigActionType> {
+  type: EditorConfigActionType.SET_INDENT_SPACES
+  indentSpaces: number
 }

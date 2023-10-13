@@ -16,6 +16,8 @@ enum OnOffState {
 export interface OnOffButtonGroupProps {
   value: boolean
   onSelect: (value: boolean) => void
+  overrideButtonOnI18nKey?: string
+  overrideButtonOffI18nKey?: string
 }
 
 /**
@@ -23,8 +25,15 @@ export interface OnOffButtonGroupProps {
  *
  * @param onSelect callback that is executed if the on/off value has changed
  * @param value the current on/off value that should be visible
+ * @param overrideButtonOnI18nKey Set to override the i18n key for the on-button
+ * @param overrideButtonOffI18nKey Set to override the i18n key for the off-button
  */
-export const OnOffButtonGroup: React.FC<OnOffButtonGroupProps> = ({ onSelect, value }) => {
+export const OnOffButtonGroup: React.FC<OnOffButtonGroupProps> = ({
+  onSelect,
+  value,
+  overrideButtonOffI18nKey,
+  overrideButtonOnI18nKey
+}) => {
   const buttonGroupValue = useMemo(() => (value ? OnOffState.ON : OnOffState.OFF), [value])
   const onButtonSelect = useCallback(
     (value: OnOffState) => {
@@ -39,16 +48,16 @@ export const OnOffButtonGroup: React.FC<OnOffButtonGroupProps> = ({ onSelect, va
         onSelect={onButtonSelect}
         selected={buttonGroupValue === OnOffState.ON}
         value={OnOffState.ON}
-        i18nKeyTooltip={'common.on'}
-        i18nKeyLabel={'common.on'}
+        i18nKeyTooltip={overrideButtonOnI18nKey ?? 'common.on'}
+        i18nKeyLabel={overrideButtonOnI18nKey ?? 'common.on'}
         {...testId('onOffButtonGroupOn')}
       />
       <SettingsToggleButton
         onSelect={onButtonSelect}
         selected={buttonGroupValue === OnOffState.OFF}
         value={OnOffState.OFF}
-        i18nKeyTooltip={'common.off'}
-        i18nKeyLabel={'common.off'}
+        i18nKeyTooltip={overrideButtonOffI18nKey ?? 'common.off'}
+        i18nKeyLabel={overrideButtonOffI18nKey ?? 'common.off'}
         {...testId('onOffButtonGroupOff')}
       />
     </ToggleButtonGroup>

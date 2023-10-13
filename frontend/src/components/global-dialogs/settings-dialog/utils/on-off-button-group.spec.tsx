@@ -30,4 +30,16 @@ describe('Settings On-Off Button Group', () => {
     })
     expect(value).toBeFalsy()
   })
+
+  it('accepts custom labels', () => {
+    const view = render(
+      <OnOffButtonGroup
+        value={true}
+        onSelect={() => {}}
+        overrideButtonOnI18nKey={'test.custom-on'}
+        overrideButtonOffI18nKey={'test.custom-off'}
+      />
+    )
+    expect(view.container).toMatchSnapshot()
+  })
 })
