@@ -26,8 +26,8 @@
   "packageManager": "yarn@3.6.4",
   "resolutions": {
     "domhandler": "5.0.3",
-    "@codemirror/state": "6.2.1",
-    "@codemirror/autocomplete": "6.9.2",
+    "@codemirror/state": "6.3.0",
+    "@codemirror/autocomplete": "6.10.2",
     "@codemirror/view": "6.21.3",
     "@codemirror/language": "6.9.1",
     "@codemirror/commands": "6.3.0",
