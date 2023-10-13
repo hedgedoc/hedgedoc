@@ -16,6 +16,7 @@ export const IndentWithTabsSettingButtonGroup: React.FC = () => {
   return (
     <OnOffButtonGroup
       value={enabled}
+      name={'settings-indent-with-tabs'}
       onSelect={setEditorIndentWithTabs}
       overrideButtonOnI18nKey={'settings.editor.indentWithTabs.tabs'}
       overrideButtonOffI18nKey={'settings.editor.indentWithTabs.spaces'}

@@ -14,7 +14,7 @@ describe('Settings On-Off Button Group', () => {
     let value = false
     const onSelect = (newValue: boolean) => (value = newValue)
 
-    const view = render(<OnOffButtonGroup value={value} onSelect={onSelect} />)
+    const view = render(<OnOffButtonGroup name={'test'} value={value} onSelect={onSelect} />)
     expect(view.container).toMatchSnapshot()
     const onButton = await screen.findByTestId('onOffButtonGroupOn')
     await act<void>(() => {
@@ -22,7 +22,7 @@ describe('Settings On-Off Button Group', () => {
     })
     expect(value).toBeTruthy()
 
-    view.rerender(<OnOffButtonGroup value={value} onSelect={onSelect} />)
+    view.rerender(<OnOffButtonGroup name={'test'} value={value} onSelect={onSelect} />)
     expect(view.container).toMatchSnapshot()
     const offButton = await screen.findByTestId('onOffButtonGroupOff')
     await act<void>(() => {
@@ -34,6 +34,7 @@ describe('Settings On-Off Button Group', () => {
   it('accepts custom labels', () => {
     const view = render(
       <OnOffButtonGroup
+        name={'test'}
         value={true}
         onSelect={() => {}}
         overrideButtonOnI18nKey={'test.custom-on'}

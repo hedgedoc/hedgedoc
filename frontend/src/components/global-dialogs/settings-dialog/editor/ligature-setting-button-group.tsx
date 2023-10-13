@@ -13,5 +13,5 @@ import React from 'react'
  */
 export const LigatureSettingButtonGroup: React.FC = () => {
   const enabled = useApplicationState((state) => state.editorConfig.ligatures)
-  return <OnOffButtonGroup value={enabled} onSelect={setEditorLigatures} />
+  return <OnOffButtonGroup value={enabled} onSelect={setEditorLigatures} name={'settings-ligatures'} />
 }
