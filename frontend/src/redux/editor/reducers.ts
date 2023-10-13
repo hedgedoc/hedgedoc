@@ -14,7 +14,7 @@ export const initialState: EditorConfig = {
   ligatures: true,
   syncScroll: true,
   smartPaste: true,
-  spellCheck: false,
+  spellCheck: true,
   lineWrapping: true
 }
 
