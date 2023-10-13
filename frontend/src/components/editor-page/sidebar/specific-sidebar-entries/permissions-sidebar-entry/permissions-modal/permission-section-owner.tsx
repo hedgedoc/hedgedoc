@@ -12,6 +12,7 @@ import { PermissionOwnerChange } from './permission-owner-change'
 import { PermissionOwnerInfo } from './permission-owner-info'
 import React, { Fragment, useCallback, useState } from 'react'
 import { Trans } from 'react-i18next'
+import { cypressId } from '../../../../../../utils/cypress-attribute'
 
 /**
  * Section in the permissions modal for managing the owner of a note.
@@ -50,7 +51,9 @@ export const PermissionSectionOwner: React.FC<PermissionDisabledProps> = ({ disa
         <Trans i18nKey={'editor.modal.permissions.owner'} />
       </h5>
       <ul className={'list-group'}>
-        <li className={'list-group-item d-flex flex-row align-items-center justify-content-between'}>
+        <li
+          className={'list-group-item d-flex flex-row align-items-center justify-content-between'}
+          {...cypressId('permission-owner-name')}>
           {changeOwner ? (
             <PermissionOwnerChange onConfirmOwnerChange={onOwnerChange} />
           ) : (
