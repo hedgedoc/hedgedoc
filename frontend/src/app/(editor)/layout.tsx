@@ -7,7 +7,6 @@ import '../../../global-styles/index.scss'
 import { ApplicationLoader } from '../../components/application-loader/application-loader'
 import { BaseUrlContextProvider } from '../../components/common/base-url/base-url-context-provider'
 import { FrontendConfigContextProvider } from '../../components/common/frontend-config-context/frontend-config-context-provider'
-import { MotdModal } from '../../components/global-dialogs/motd-modal/motd-modal'
 import { DarkMode } from '../../components/layout/dark-mode/dark-mode'
 import { ExpectedOriginBoundary } from '../../components/layout/expected-origin-boundary'
 import { UiNotificationBoundary } from '../../components/notifications/ui-notification-boundary'
@@ -18,6 +17,9 @@ import type { Metadata } from 'next'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
 import { getConfig } from '../../api/config'
+import { MotdProvider } from '../../components/motd/motd-context'
+import { fetchMotd } from '../../components/global-dialogs/motd-modal/fetch-motd'
+import { CachedMotdModal } from '../../components/global-dialogs/motd-modal/cached-motd-modal'
 
 configureLuxon()
 
@@ -28,6 +30,7 @@ interface RootLayoutProps extends PropsWithChildren {
 export default async function RootLayout({ children, appBar }: RootLayoutProps) {
   const baseUrls = baseUrlFromEnvExtractor.extractBaseUrls()
   const frontendConfig = await getConfig(baseUrls.editor)
+  const motd = await fetchMotd(baseUrls.internalApiUrl ?? baseUrls.editor)
 
   return (
     <html lang='en'>
@@ -37,20 +40,22 @@ export default async function RootLayout({ children, appBar }: RootLayoutProps) 
       <body>
         <ExpectedOriginBoundary expectedOrigin={baseUrls.editor}>
           <BaseUrlContextProvider baseUrls={baseUrls}>
-            <FrontendConfigContextProvider config={frontendConfig}>
-              <StoreProvider>
-                <ApplicationLoader>
-                  <DarkMode />
-                  <MotdModal />
-                  <UiNotificationBoundary>
-                    <div className={'d-flex flex-column vh-100'}>
-                      {appBar}
-                      {children}
-                    </div>
-                  </UiNotificationBoundary>
-                </ApplicationLoader>
-              </StoreProvider>
-            </FrontendConfigContextProvider>
+            <MotdProvider motd={motd}>
+              <FrontendConfigContextProvider config={frontendConfig}>
+                <StoreProvider>
+                  <ApplicationLoader>
+                    <DarkMode />
+                    <CachedMotdModal />
+                    <UiNotificationBoundary>
+                      <div className={'d-flex flex-column vh-100'}>
+                        {appBar}
+                        {children}
+                      </div>
+                    </UiNotificationBoundary>
+                  </ApplicationLoader>
+                </StoreProvider>
+              </FrontendConfigContextProvider>
+            </MotdProvider>
           </BaseUrlContextProvider>
         </ExpectedOriginBoundary>
       </body>

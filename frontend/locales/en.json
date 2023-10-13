@@ -506,7 +506,8 @@
       },
       "instance": {
         "header": "About this instance",
-        "versionInfo": "Running version"
+        "versionInfo": "Running version",
+        "motdModal": "Show instance announcement"
       },
       "legal": {
         "header": "Legal",
@@ -596,7 +597,7 @@
     }
   },
   "motd": {
-    "title": "Information"
+    "title": "Announcement"
   },
   "errors": {
     "notFound": {
