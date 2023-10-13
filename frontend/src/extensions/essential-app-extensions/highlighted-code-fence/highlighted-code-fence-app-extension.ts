@@ -10,6 +10,7 @@ import { AppExtension } from '../../_base-classes/app-extension'
 import { HighlightedCodeMarkdownExtension } from './highlighted-code-markdown-extension'
 import type { CompletionContext, CompletionResult, CompletionSource } from '@codemirror/autocomplete'
 import { languages } from '@codemirror/language-data'
+import { t } from 'i18next'
 
 /**
  * Adds code highlighting to the markdown rendering.
@@ -29,6 +30,16 @@ export class HighlightedCodeFenceAppExtension extends AppExtension {
   }
 
   buildAutocompletion(): CompletionSource[] {
+    const completions = [
+      {
+        detail: t('editor.editorToolbar.code'),
+        label: '```\n\n```'
+      },
+      ...languages.map((lang) => ({
+        detail: lang.name,
+        label: '```' + lang.alias[0] + '\n\n```'
+      }))
+    ]
     return [
       (context: CompletionContext): CompletionResult | null => {
         const match = context.matchBefore(codeFenceRegex)
@@ -37,10 +48,7 @@ export class HighlightedCodeFenceAppExtension extends AppExtension {
         }
         return {
           from: match.from,
-          options: languages.map((lang) => ({
-            detail: lang.name,
-            label: '```' + lang.alias[0] + '\n\n```'
-          }))
+          options: completions
         }
       }
     ]
