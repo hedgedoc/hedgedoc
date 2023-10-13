@@ -9,13 +9,12 @@ import { testId } from '../../../utils/test-id'
 import type { CommonModalProps } from '../../common/modals/common-modal'
 import * as CommonModalModule from '../../common/modals/common-modal'
 import * as RendererIframeModule from '../../common/renderer-iframe/renderer-iframe'
-import * as fetchMotdModule from './fetch-motd'
-import { MotdModal } from './motd-modal'
 import { act, render, screen } from '@testing-library/react'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
+import { CachedMotdModal } from './cached-motd-modal'
+import { MotdProvider } from '../../motd/motd-context'
 
-jest.mock('./fetch-motd')
 jest.mock('../../common/modals/common-modal')
 jest.mock('../../common/renderer-iframe/renderer-iframe')
 jest.mock('../../../hooks/common/use-base-url')
@@ -49,13 +48,15 @@ describe('motd modal', () => {
   })
 
   it('renders a modal if a motd was fetched and can dismiss it', async () => {
-    jest.spyOn(fetchMotdModule, 'fetchMotd').mockImplementation(() => {
-      return Promise.resolve({
-        motdText: 'very important mock text!',
-        lastModified: 'yesterday'
-      })
-    })
-    const view = render(<MotdModal></MotdModal>)
+    const motd = {
+      motdText: 'very important mock text!',
+      lastModified: 'yesterday'
+    }
+    const view = render(
+      <MotdProvider motd={motd}>
+        <CachedMotdModal></CachedMotdModal>
+      </MotdProvider>
+    )
     await screen.findByTestId('motd-renderer')
     expect(view.container).toMatchSnapshot()
 
@@ -67,10 +68,11 @@ describe('motd modal', () => {
   })
 
   it("doesn't render a modal if no motd has been fetched", async () => {
-    jest.spyOn(fetchMotdModule, 'fetchMotd').mockImplementation(() => {
-      return Promise.resolve(undefined)
-    })
-    const view = render(<MotdModal></MotdModal>)
+    const view = render(
+      <MotdProvider motd={undefined}>
+        <CachedMotdModal></CachedMotdModal>
+      </MotdProvider>
+    )
     await screen.findByTestId('loaded not visible')
     expect(view.container).toMatchSnapshot()
   })

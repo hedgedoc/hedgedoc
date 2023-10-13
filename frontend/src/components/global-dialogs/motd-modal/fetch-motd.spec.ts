@@ -7,7 +7,8 @@ import { fetchMotd } from './fetch-motd'
 import { Mock } from 'ts-mockery'
 
 describe('fetch motd', () => {
-  const motdUrl = '/public/motd.md'
+  const baseUrl = 'https://example.org/'
+  const motdUrl = `${baseUrl}public/motd.md`
 
   beforeEach(() => {
     window.localStorage.clear()
@@ -47,7 +48,7 @@ describe('fetch motd', () => {
     jest.spyOn(global, 'fetch').mockImplementation(() =>
       Promise.resolve(
         Mock.of<Response>({
-          status: 500
+          status: 404
         })
       )
     )
@@ -56,7 +57,7 @@ describe('fetch motd', () => {
   describe('date detection', () => {
     it('will return the last-modified value if available', async () => {
       mockFetch('mocked motd', 'yesterday-modified', null)
-      const result = fetchMotd()
+      const result = fetchMotd(baseUrl)
       await expect(result).resolves.toStrictEqual({
         motdText: 'mocked motd',
         lastModified: 'yesterday-modified'
@@ -64,7 +65,7 @@ describe('fetch motd', () => {
     })
     it('will return the etag if last-modified is not returned', async () => {
       mockFetch('mocked motd', null, 'yesterday-etag')
-      const result = fetchMotd()
+      const result = fetchMotd(baseUrl)
       await expect(result).resolves.toStrictEqual({
         motdText: 'mocked motd',
         lastModified: 'yesterday-etag'
@@ -72,7 +73,7 @@ describe('fetch motd', () => {
     })
     it('will prefer the last-modified header over the etag', async () => {
       mockFetch('mocked motd', 'yesterday-last', 'yesterday-etag')
-      const result = fetchMotd()
+      const result = fetchMotd(baseUrl)
       await expect(result).resolves.toStrictEqual({
         motdText: 'mocked motd',
         lastModified: 'yesterday-last'
@@ -80,34 +81,24 @@ describe('fetch motd', () => {
     })
     it('will return an empty value if neither the last-modified value nor the etag is returned', async () => {
       mockFetch('mocked motd', null, null)
-      const result = fetchMotd()
-      await expect(result).resolves.toStrictEqual({
-        motdText: 'mocked motd',
-        lastModified: null
-      })
+      const result = fetchMotd(baseUrl)
+      await expect(result).resolves.toBe(undefined)
     })
   })
 
   it('can fetch a motd if no last modified value has been memorized', async () => {
     mockFetch('mocked motd', 'yesterday')
-    const result = fetchMotd()
+    const result = fetchMotd(baseUrl)
     await expect(result).resolves.toStrictEqual({
       motdText: 'mocked motd',
       lastModified: 'yesterday'
     })
   })
 
-  it("can detect that the motd hasn't been updated", async () => {
-    mockFetch('mocked motd', 'yesterday')
-    window.localStorage.setItem('motd.lastModified', 'yesterday')
-    const result = fetchMotd()
-    await expect(result).resolves.toStrictEqual(undefined)
-  })
-
   it('can detect that the motd has been updated', async () => {
     mockFetch('mocked motd', 'yesterday')
     window.localStorage.setItem('motd.lastModified', 'the day before yesterday')
-    const result = fetchMotd()
+    const result = fetchMotd(baseUrl)
     await expect(result).resolves.toStrictEqual({
       motdText: 'mocked motd',
       lastModified: 'yesterday'
@@ -116,14 +107,14 @@ describe('fetch motd', () => {
 
   it("won't fetch a motd if no file was found", async () => {
     mockFileNotFoundFetch()
-    const result = fetchMotd()
+    const result = fetchMotd(baseUrl)
     await expect(result).resolves.toStrictEqual(undefined)
   })
 
   it("won't fetch a motd update if no file was found", async () => {
     mockFileNotFoundFetch()
     window.localStorage.setItem('motd.lastModified', 'the day before yesterday')
-    const result = fetchMotd()
+    const result = fetchMotd(baseUrl)
     await expect(result).resolves.toStrictEqual(undefined)
   })
 })

@@ -6,6 +6,7 @@
 import { DropdownHeader } from '../dropdown-header'
 import { VersionInfoHelpMenuEntry } from './instance/version-info-help-menu-entry'
 import React, { Fragment } from 'react'
+import { MotdModalHelpMenuEntry } from './instance/motd-modal-help-menu-entry'
 
 /**
  * Renders the instance submenu for the help dropdown.
@@ -15,6 +16,7 @@ export const InstanceSubmenu: React.FC = () => {
     <Fragment>
       <DropdownHeader i18nKey={'appbar.help.instance.header'} />
       <VersionInfoHelpMenuEntry />
+      <MotdModalHelpMenuEntry />
     </Fragment>
   )
 }
