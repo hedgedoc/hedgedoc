@@ -16,6 +16,7 @@ enum OnOffState {
 export interface OnOffButtonGroupProps {
   value: boolean
   onSelect: (value: boolean) => void
+  name: string
   overrideButtonOnI18nKey?: string
   overrideButtonOffI18nKey?: string
 }
@@ -25,12 +26,14 @@ export interface OnOffButtonGroupProps {
  *
  * @param onSelect callback that is executed if the on/off value has changed
  * @param value the current on/off value that should be visible
+ * @param name A unique name for the button group to allow the browser to distinguish between multiple ones
  * @param overrideButtonOnI18nKey Set to override the i18n key for the on-button
  * @param overrideButtonOffI18nKey Set to override the i18n key for the off-button
  */
 export const OnOffButtonGroup: React.FC<OnOffButtonGroupProps> = ({
   onSelect,
   value,
+  name,
   overrideButtonOffI18nKey,
   overrideButtonOnI18nKey
 }) => {
@@ -43,7 +46,7 @@ export const OnOffButtonGroup: React.FC<OnOffButtonGroupProps> = ({
   )
 
   return (
-    <ToggleButtonGroup type='radio' name='dark-mode' value={buttonGroupValue}>
+    <ToggleButtonGroup type='radio' name={name} value={buttonGroupValue}>
       <SettingsToggleButton
         onSelect={onButtonSelect}
         selected={buttonGroupValue === OnOffState.ON}

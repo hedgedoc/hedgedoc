@@ -13,5 +13,5 @@ import React from 'react'
  */
 export const SyncScrollSettingButtonGroup: React.FC = () => {
   const enabled = useApplicationState((state) => state.editorConfig.syncScroll)
-  return <OnOffButtonGroup value={enabled} onSelect={setEditorSyncScroll} />
+  return <OnOffButtonGroup value={enabled} onSelect={setEditorSyncScroll} name={'settings-sync-scroll'} />
 }

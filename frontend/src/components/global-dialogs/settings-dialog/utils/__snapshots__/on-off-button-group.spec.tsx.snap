@@ -9,7 +9,7 @@ exports[`Settings On-Off Button Group accepts custom labels 1`] = `
     <button
       class="btn btn-secondary"
       data-testid="onOffButtonGroupOn"
-      name="dark-mode"
+      name="test"
       title="test.custom-on"
       type="radio"
     >
@@ -18,7 +18,7 @@ exports[`Settings On-Off Button Group accepts custom labels 1`] = `
     <button
       class="btn btn-outline-secondary"
       data-testid="onOffButtonGroupOff"
-      name="dark-mode"
+      name="test"
       title="test.custom-off"
       type="radio"
     >
@@ -37,7 +37,7 @@ exports[`Settings On-Off Button Group can switch value 1`] = `
     <button
       class="btn btn-outline-secondary"
       data-testid="onOffButtonGroupOn"
-      name="dark-mode"
+      name="test"
       title="common.on"
       type="radio"
     >
@@ -46,7 +46,7 @@ exports[`Settings On-Off Button Group can switch value 1`] = `
     <button
       class="btn btn-secondary"
       data-testid="onOffButtonGroupOff"
-      name="dark-mode"
+      name="test"
       title="common.off"
       type="radio"
     >
@@ -65,7 +65,7 @@ exports[`Settings On-Off Button Group can switch value 2`] = `
     <button
       class="btn btn-secondary"
       data-testid="onOffButtonGroupOn"
-      name="dark-mode"
+      name="test"
       title="common.on"
       type="radio"
     >
@@ -74,7 +74,7 @@ exports[`Settings On-Off Button Group can switch value 2`] = `
     <button
       class="btn btn-outline-secondary"
       data-testid="onOffButtonGroupOff"
-      name="dark-mode"
+      name="test"
       title="common.off"
       type="radio"
     >

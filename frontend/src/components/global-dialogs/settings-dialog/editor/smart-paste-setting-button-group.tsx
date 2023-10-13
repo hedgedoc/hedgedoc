@@ -13,5 +13,5 @@ import React from 'react'
  */
 export const SmartPasteSettingButtonGroup: React.FC = () => {
   const enabled = useApplicationState((state) => state.editorConfig.smartPaste)
-  return <OnOffButtonGroup value={enabled} onSelect={setEditorSmartPaste} />
+  return <OnOffButtonGroup value={enabled} onSelect={setEditorSmartPaste} name={'settings-smart-paste'} />
 }

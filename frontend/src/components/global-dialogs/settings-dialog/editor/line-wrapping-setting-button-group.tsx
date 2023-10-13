@@ -13,5 +13,5 @@ import React from 'react'
  */
 export const LineWrappingSettingButtonGroup: React.FC = () => {
   const enabled = useApplicationState((state) => state.editorConfig.lineWrapping)
-  return <OnOffButtonGroup value={enabled} onSelect={setEditorLineWrapping} />
+  return <OnOffButtonGroup value={enabled} onSelect={setEditorLineWrapping} name={'settings-line-wrapping'} />
 }

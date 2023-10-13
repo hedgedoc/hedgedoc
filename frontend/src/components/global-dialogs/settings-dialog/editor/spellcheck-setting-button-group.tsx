@@ -13,5 +13,5 @@ import React from 'react'
  */
 export const SpellcheckSettingButtonGroup: React.FC = () => {
   const enabled = useApplicationState((state) => state.editorConfig.spellCheck)
-  return <OnOffButtonGroup value={enabled} onSelect={setEditorSpellCheck} />
+  return <OnOffButtonGroup value={enabled} onSelect={setEditorSpellCheck} name={'settings-spell-check'} />
 }
