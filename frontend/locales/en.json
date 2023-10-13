@@ -609,9 +609,19 @@
         "label": "Line Wrapping",
         "help": "Breaks long lines so they're visible without scrolling."
       },
-      "spellCheck":{
+      "spellCheck": {
         "label": "Spell checking",
         "help": "Enables browser spell checking."
+      },
+      "indentWithTabs": {
+        "label": "Indentation character",
+        "help": "Sets which characters should be used for indentation",
+        "tabs": "Tabs",
+        "spaces": "Spaces"
+      },
+      "indentSpaces": {
+        "label": "Indentation size",
+        "help": "Sets the amount of spaces for indentation."
       }
     },
     "global": {

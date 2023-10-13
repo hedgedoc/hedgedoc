@@ -10,7 +10,9 @@ import type {
   SetEditorLineWrappingAction,
   SetEditorSmartPasteAction,
   SetEditorSyncScrollAction,
-  SetEditorSpellCheckAction
+  SetEditorSpellCheckAction,
+  SetEditorIndentWithTabsAction,
+  SetEditorIndentSpacesAction
 } from './types'
 import { EditorConfigActionType } from './types'
 
@@ -50,6 +52,22 @@ export const setEditorSpellCheck = (spellCheck: boolean): void => {
   const action: SetEditorSpellCheckAction = {
     type: EditorConfigActionType.SET_SPELL_CHECK,
     spellCheck
+  }
+  store.dispatch(action)
+}
+
+export const setEditorIndentWithTabs = (indentWithTabs: boolean): void => {
+  const action: SetEditorIndentWithTabsAction = {
+    type: EditorConfigActionType.SET_INDENT_WITH_TABS,
+    indentWithTabs
+  }
+  store.dispatch(action)
+}
+
+export const setEditorIndentSpaces = (indentSpaces: number): void => {
+  const action: SetEditorIndentSpacesAction = {
+    type: EditorConfigActionType.SET_INDENT_SPACES,
+    indentSpaces
   }
   store.dispatch(action)
 }

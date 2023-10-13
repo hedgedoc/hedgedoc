@@ -45,6 +45,7 @@ import ReactCodeMirror from '@uiw/react-codemirror'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 import { Lock as IconLock } from 'react-bootstrap-icons'
+import { useCodeMirrorIndentationExtension } from './hooks/codemirror-extensions/use-code-mirror-indentation-extension'
 
 export type EditorPaneProps = ScrollProps
 
@@ -71,6 +72,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
   const fileInsertExtension = useCodeMirrorFileInsertExtension()
   const spellCheckExtension = useCodeMirrorSpellCheckExtension()
   const lineWrappingExtension = useCodeMirrorLineWrappingExtension()
+  const indentationExtension = useCodeMirrorIndentationExtension()
   const cursorActivityExtension = useCursorActivityCallback()
   const autoCompletionExtension = useCodeMirrorAutocompletionsExtension()
 
@@ -107,7 +109,8 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
       cursorActivityExtension,
       updateViewContextExtension,
       yjsExtension,
-      spellCheckExtension
+      spellCheckExtension,
+      indentationExtension
     ],
     [
       linterExtension,
@@ -120,7 +123,8 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
       updateViewContextExtension,
       yjsExtension,
       spellCheckExtension,
-      lineWrappingExtension
+      lineWrappingExtension,
+      indentationExtension
     ]
   )
 

@@ -15,7 +15,9 @@ export const initialState: EditorConfig = {
   syncScroll: true,
   smartPaste: true,
   spellCheck: true,
-  lineWrapping: true
+  lineWrapping: true,
+  indentWithTabs: false,
+  indentSpaces: 2
 }
 
 export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (
@@ -61,6 +63,20 @@ export const EditorConfigReducer: Reducer<EditorConfig, EditorConfigActions> = (
       }
       saveToLocalStorage(newState)
       return newState
+    case EditorConfigActionType.SET_INDENT_WITH_TABS:
+      newState = {
+        ...state,
+        indentWithTabs: action.indentWithTabs
+      }
+      saveToLocalStorage(newState)
+      return newState
+    case EditorConfigActionType.SET_INDENT_SPACES:
+      newState = {
+        ...state,
+        indentSpaces: action.indentSpaces
+      }
+      saveToLocalStorage(newState)
+      return newState
     default:
       return state
   }
@@ -72,13 +88,15 @@ export const loadFromLocalStorage = (): EditorConfig | undefined => {
     if (!stored) {
       return undefined
     }
-    const storedConfiguration = JSON.parse(stored) as Record<string, boolean>
+    const storedConfiguration = JSON.parse(stored) as Partial<EditorConfig>
     return {
       ligatures: storedConfiguration?.ligatures === true ?? true,
       syncScroll: storedConfiguration?.syncScroll === true ?? true,
       smartPaste: storedConfiguration?.smartPaste === true ?? true,
-      spellCheck: storedConfiguration?.spellCheck === true ?? false,
-      lineWrapping: storedConfiguration?.lineWrapping === true ?? true
+      spellCheck: storedConfiguration?.spellCheck === true ?? true,
+      lineWrapping: storedConfiguration?.lineWrapping === true ?? true,
+      indentWithTabs: storedConfiguration?.indentWithTabs === true ?? false,
+      indentSpaces: storedConfiguration?.indentSpaces ?? 2
     }
   } catch (_) {
     return undefined

@@ -1,5 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Settings On-Off Button Group accepts custom labels 1`] = `
+<div>
+  <div
+    class="btn-group"
+    role="group"
+  >
+    <button
+      class="btn btn-secondary"
+      data-testid="onOffButtonGroupOn"
+      name="dark-mode"
+      title="test.custom-on"
+      type="radio"
+    >
+      test.custom-on
+    </button>
+    <button
+      class="btn btn-outline-secondary"
+      data-testid="onOffButtonGroupOff"
+      name="dark-mode"
+      title="test.custom-off"
+      type="radio"
+    >
+      test.custom-off
+    </button>
+  </div>
+</div>
+`;
+
 exports[`Settings On-Off Button Group can switch value 1`] = `
 <div>
   <div
