@@ -445,35 +445,6 @@
         "errorAddingAlias": "The chosen alias can not be added to this note",
         "errorRemovingAlias": "There was an error removing the alias",
         "errorMakingPrimary": "There was an error marking the alias as primary"
-      },
-      "preferences": {
-        "title": "Preferences",
-        "theme": {
-          "label": "Editor theme",
-          "one-dark": "Dark",
-          "neat": "Light"
-        },
-        "keyMap": {
-          "label": "Keymap",
-          "sublime": "Sublime",
-          "emacs": "Emacs",
-          "vim": "Vim"
-        },
-        "indentWithTabs": {
-          "label": "Tab character",
-          "on": "Tabs",
-          "off": "Spaces"
-        },
-        "indentUnit": "Number of spaces per tab",
-        "spellcheck": {
-          "label": "Spell checking"
-        },
-        "ligatures": {
-          "label": "Show ligatures"
-        },
-        "smartPaste": {
-          "label": "Auto format pasted content"
-        }
       }
     },
     "embeddings": {
@@ -637,6 +608,10 @@
       "lineWrapping": {
         "label": "Line Wrapping",
         "help": "Breaks long lines so they're visible without scrolling."
+      },
+      "spellCheck":{
+        "label": "Spell checking",
+        "help": "Enables browser spell checking."
       }
     },
     "global": {

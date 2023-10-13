@@ -11,6 +11,7 @@ import { SyncScrollSettingButtonGroup } from './sync-scroll-setting-button-group
 import React from 'react'
 import { ListGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
+import { SpellcheckSettingButtonGroup } from './spellcheck-setting-button-group'
 
 /**
  * Shows the editor specific settings.
@@ -31,6 +32,9 @@ export const EditorSettingsTabContent: React.FC = () => {
       </SettingLine>
       <SettingLine i18nKey={'editor.lineWrapping'}>
         <LineWrappingSettingButtonGroup />
+      </SettingLine>
+      <SettingLine i18nKey={'editor.spellCheck'}>
+        <SpellcheckSettingButtonGroup />
       </SettingLine>
     </ListGroup>
   )

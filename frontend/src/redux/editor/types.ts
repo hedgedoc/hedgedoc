@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -28,7 +28,7 @@ export type EditorConfigActions =
   | SetEditorLigaturesAction
   | SetEditorSmartPasteAction
   | SetEditorLineWrappingAction
-  | SetSpellCheckAction
+  | SetEditorSpellCheckAction
   | LoadFromLocalStorageAction
 
 export interface LoadFromLocalStorageAction extends Action<EditorConfigActionType> {
@@ -55,7 +55,7 @@ export interface SetEditorSmartPasteAction extends Action<EditorConfigActionType
   smartPaste: boolean
 }
 
-export interface SetSpellCheckAction extends Action<EditorConfigActionType> {
+export interface SetEditorSpellCheckAction extends Action<EditorConfigActionType> {
   type: EditorConfigActionType.SET_SPELL_CHECK
   spellCheck: boolean
 }

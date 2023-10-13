@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,7 +9,8 @@ import type {
   SetEditorLigaturesAction,
   SetEditorLineWrappingAction,
   SetEditorSmartPasteAction,
-  SetEditorSyncScrollAction
+  SetEditorSyncScrollAction,
+  SetEditorSpellCheckAction
 } from './types'
 import { EditorConfigActionType } from './types'
 
@@ -41,6 +42,14 @@ export const setEditorSmartPaste = (smartPaste: boolean): void => {
   const action: SetEditorSmartPasteAction = {
     type: EditorConfigActionType.SET_SMART_PASTE,
     smartPaste
+  }
+  store.dispatch(action)
+}
+
+export const setEditorSpellCheck = (spellCheck: boolean): void => {
+  const action: SetEditorSpellCheckAction = {
+    type: EditorConfigActionType.SET_SPELL_CHECK,
+    spellCheck
   }
   store.dispatch(action)
 }
