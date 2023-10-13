@@ -16,6 +16,7 @@ import { ToggleButtonGroup } from 'react-bootstrap'
 import { Eye as IconEye, Pencil as IconPencil, SlashCircle as IconSlashCircle } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 import { PermissionInconsistentAlert } from './permission-inconsistent-alert'
+import { cypressId } from '../../../../../../utils/cypress-attribute'
 
 export interface PermissionEntrySpecialGroupProps {
   level: AccessLevel
@@ -101,6 +102,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
             onClick={onSetEntryDenied}
             disabled={disabled}
             className={'p-1'}
+            {...cypressId(`permission-setting-deny${type}`)}
           />
           <IconButton
             icon={IconEye}
@@ -109,6 +111,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
             onClick={onSetEntryReadOnly}
             disabled={disabled}
             className={'p-1'}
+            {...cypressId(`permission-setting-read${type}`)}
           />
           <IconButton
             icon={IconPencil}
@@ -117,6 +120,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
             onClick={onSetEntryWriteable}
             disabled={disabled}
             className={'p-1'}
+            {...cypressId(`permission-setting-write${type}`)}
           />
         </ToggleButtonGroup>
       </div>

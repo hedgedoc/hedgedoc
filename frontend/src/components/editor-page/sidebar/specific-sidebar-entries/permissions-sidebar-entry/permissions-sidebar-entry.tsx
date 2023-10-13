@@ -10,6 +10,7 @@ import { PermissionModal } from './permissions-modal/permission-modal'
 import React, { Fragment } from 'react'
 import { Lock as IconLock } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
+import { cypressId } from '../../../../../utils/cypress-attribute'
 
 /**
  * Renders a button to open the permission modal for the sidebar.
@@ -23,7 +24,12 @@ export const PermissionsSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ c
 
   return (
     <Fragment>
-      <SidebarButton hide={hide} className={className} icon={IconLock} onClick={showModal}>
+      <SidebarButton
+        hide={hide}
+        className={className}
+        icon={IconLock}
+        onClick={showModal}
+        {...cypressId('sidebar-permission-btn')}>
         <Trans i18nKey={'editor.modal.permissions.title'} />
       </SidebarButton>
       <PermissionModal show={modalVisibility} onHide={closeModal} />
