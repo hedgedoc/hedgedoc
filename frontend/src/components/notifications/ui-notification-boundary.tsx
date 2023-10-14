@@ -10,10 +10,11 @@ import { UiNotifications } from './ui-notifications'
 import type { TOptions } from 'i18next'
 import { DateTime } from 'luxon'
 import type { PropsWithChildren } from 'react'
-import React, { createContext, useCallback, useContext, useMemo, useState } from 'react'
+import React, { createContext, useCallback, useContext, useMemo } from 'react'
 import { ExclamationTriangle as IconExclamationTriangle } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 import { v4 as uuid } from 'uuid'
+import { useMap } from 'react-use'
 
 const log = new Logger('Notifications')
 
@@ -27,6 +28,7 @@ interface UiNotificationContext {
   showErrorNotification: (messageI18nKey: string, messageI18nOptions?: TOptions) => (error: Error) => void
 
   dismissNotification: (notificationUuid: string) => void
+  pruneNotification: (notificationUuid: string) => void
 }
 
 /**
@@ -50,7 +52,9 @@ const uiNotificationContext = createContext<UiNotificationContext | undefined>(u
  */
 export const UiNotificationBoundary: React.FC<PropsWithChildren> = ({ children }) => {
   const { t } = useTranslation()
-  const [uiNotifications, setUiNotifications] = useState<UiNotification[]>([])
+  const [uiNotifications, { set: setUiNotification, remove: removeUiNotification, get: getUiNotification }] = useMap<
+    Record<string, UiNotification>
+  >({})
 
   const dispatchUiNotification = useCallback(
     (
@@ -58,23 +62,21 @@ export const UiNotificationBoundary: React.FC<PropsWithChildren> = ({ children }
       contentI18nKey: string,
       { icon, durationInSecond, buttons, contentI18nOptions, titleI18nOptions }: Partial<DispatchOptions>
     ) => {
-      setUiNotifications((oldState) => [
-        ...oldState,
-        {
-          titleI18nKey,
-          contentI18nKey,
-          createdAtTimestamp: DateTime.now().toSeconds(),
-          dismissed: false,
-          titleI18nOptions: titleI18nOptions ?? {},
-          contentI18nOptions: contentI18nOptions ?? {},
-          durationInSecond: durationInSecond ?? DEFAULT_DURATION_IN_SECONDS,
-          buttons: buttons ?? [],
-          icon: icon,
-          uuid: uuid()
-        }
-      ])
+      const notificationUuid = uuid()
+      setUiNotification(notificationUuid, {
+        titleI18nKey,
+        contentI18nKey,
+        createdAtTimestamp: DateTime.now().toSeconds(),
+        dismissed: false,
+        titleI18nOptions: titleI18nOptions ?? {},
+        contentI18nOptions: contentI18nOptions ?? {},
+        durationInSecond: durationInSecond ?? DEFAULT_DURATION_IN_SECONDS,
+        buttons: buttons ?? [],
+        icon: icon,
+        uuid: notificationUuid
+      })
     },
-    []
+    [setUiNotification]
   )
 
   const showErrorNotification = useCallback(
@@ -89,24 +91,35 @@ export const UiNotificationBoundary: React.FC<PropsWithChildren> = ({ children }
     [dispatchUiNotification, t]
   )
 
-  const dismissNotification = useCallback((notificationUuid: string): void => {
-    setUiNotifications((old) => {
-      const found = old.find((notification) => notification.uuid === notificationUuid)
-      if (found === undefined) {
-        return old
+  const dismissNotification = useCallback(
+    (notificationUuid: string): void => {
+      const entry = getUiNotification(notificationUuid)
+      if (!entry) {
+        return
       }
-      return old.filter((value) => value.uuid !== notificationUuid).concat({ ...found, dismissed: true })
-    })
-  }, [])
+      setUiNotification(notificationUuid, { ...entry, dismissed: true })
+    },
+    [setUiNotification, getUiNotification]
+  )
+
+  const pruneNotification = useCallback(
+    (notificationUuid: string): void => {
+      if (!uiNotifications[notificationUuid]) {
+        return
+      }
+      removeUiNotification(notificationUuid)
+    },
+    [uiNotifications, removeUiNotification]
+  )
 
   const context = useMemo(() => {
     return {
       dispatchUiNotification: dispatchUiNotification,
       showErrorNotification: showErrorNotification,
-      dismissNotification: dismissNotification
+      dismissNotification: dismissNotification,
+      pruneNotification: pruneNotification
     }
-  }, [dismissNotification, dispatchUiNotification, showErrorNotification])
-
+  }, [dismissNotification, dispatchUiNotification, showErrorNotification, pruneNotification])
   return (
     <uiNotificationContext.Provider value={context}>
       <UiNotifications notifications={uiNotifications} />

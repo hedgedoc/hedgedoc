@@ -9,7 +9,7 @@ import { UiNotificationToast } from './ui-notification-toast'
 import React, { useMemo } from 'react'
 
 export interface UiNotificationsProps {
-  notifications: UiNotification[]
+  notifications: Record<string, UiNotification>
 }
 
 /**
@@ -19,7 +19,7 @@ export interface UiNotificationsProps {
  */
 export const UiNotifications: React.FC<UiNotificationsProps> = ({ notifications }) => {
   const notificationElements = useMemo(() => {
-    return notifications
+    return Object.values(notifications)
       .sort((a, b) => b.createdAtTimestamp - a.createdAtTimestamp)
       .map((notification) => <UiNotificationToast key={notification.uuid} notification={notification} />)
   }, [notifications])
