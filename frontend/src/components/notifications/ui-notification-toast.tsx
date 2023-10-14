@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -31,12 +31,17 @@ export interface UiNotificationProps {
 export const UiNotificationToast: React.FC<UiNotificationProps> = ({ notification }) => {
   const { t } = useTranslation()
   const [remainingSteps, setRemainingSteps] = useState<number>(() => notification.durationInSecond * STEPS_PER_SECOND)
-  const { dismissNotification } = useUiNotifications()
+  const { dismissNotification, pruneNotification } = useUiNotifications()
 
   const dismissNow = useCallback(() => {
     log.debug(`Dismiss notification ${notification.uuid} immediately`)
     setRemainingSteps(0)
   }, [notification.uuid])
+
+  const prune = useCallback(() => {
+    log.debug(`Prune notification ${notification.uuid} from state`)
+    pruneNotification(notification.uuid)
+  }, [pruneNotification, notification.uuid])
 
   useEffectOnce(() => {
     log.debug(`Show notification ${notification.uuid}`)
@@ -97,6 +102,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({ notificatio
       className={styles.toast}
       show={!notification.dismissed}
       onClose={dismissNow}
+      onExited={prune}
       {...cypressId('notification-toast')}>
       <Toast.Header>
         <strong className='me-auto'>
