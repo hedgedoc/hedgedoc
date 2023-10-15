@@ -8,7 +8,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 Thanks for your help in improving the HedgeDoc project!
 
-Please note we have a [code of conduct][code-of-conduct], please follow it in all your interactions with the project.
+Please note we have a [code of conduct][code_of_conduct], please follow it in all your interactions with the project.
 
 ## Ways of contributing
 
