@@ -1284,7 +1284,7 @@ __metadata:
     mock-require: 3.0.3
     moment: 2.29.4
     morgan: 1.10.0
-    mysql2: 3.6.1
+    mysql2: 3.6.2
     node-fetch: 2.7.0
     optimize-css-assets-webpack-plugin: 6.0.1
     passport: 0.6.0
@@ -10734,9 +10734,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mysql2@npm:3.6.1":
-  version: 3.6.1
-  resolution: "mysql2@npm:3.6.1"
+"mysql2@npm:3.6.2":
+  version: 3.6.2
+  resolution: "mysql2@npm:3.6.2"
   dependencies:
     denque: ^2.1.0
     generate-function: ^2.3.1
@@ -10746,7 +10746,7 @@ __metadata:
     named-placeholders: ^1.1.3
     seq-queue: ^0.0.5
     sqlstring: ^2.3.2
-  checksum: 29892b9810557c4cc1ce8291286aff57ffbe2d832a5ce5de8d9f336497d367a8613662ee5fac1b2144ef898550f66b251f5b8801a6d8fdf89b9018263708e63b
+  checksum: 819d7649536db477511236ea9597062ddb5ec2f60127132239b93b1c4bf7a2af182893f0eabc2a4b2c9c4f6eb1770b6e93a7d0a7f9739ae339480b6c8c608a14
   languageName: node
   linkType: hard
 
