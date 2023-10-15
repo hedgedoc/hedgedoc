@@ -8,7 +8,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 Thanks for your help in improving the HedgeDoc project!
 
-Please note we have a [code of conduct][code-of-conduct], please follow it in all your interactions with the project.
+Please note we have a [code of conduct][code_of_conduct], please follow it in all your interactions with the project.
 
 ## Ways of contributing
 
@@ -143,7 +143,7 @@ You are welcome to add a `(by [@your_username](https://github.com/your_username)
 - When refactoring something, take care to not include any functional changes into the same commit. Mixing refactoring
   and functional changes makes it hard to find the cause of regressions.
 
-[code-of-conduct]: ./CODE-OF-CONDUCT.md
+[code-of-conduct]: ./CODE_OF_CONDUCT.md
 
 [community-forum]: https://community.hedgedoc.org
 
