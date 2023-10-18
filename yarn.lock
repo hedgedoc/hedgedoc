@@ -2491,7 +2491,7 @@ __metadata:
     "@testing-library/react": 14.0.0
     "@testing-library/react-hooks": 8.0.1
     "@testing-library/user-event": 14.5.1
-    "@types/d3-graphviz": 2.6.8
+    "@types/d3-graphviz": 2.6.9
     "@types/diff": 5.0.5
     "@types/dompurify": 3.0.3
     "@types/jest": 29.5.5
@@ -4389,14 +4389,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/d3-graphviz@npm:2.6.8":
-  version: 2.6.8
-  resolution: "@types/d3-graphviz@npm:2.6.8"
+"@types/d3-graphviz@npm:2.6.9":
+  version: 2.6.9
+  resolution: "@types/d3-graphviz@npm:2.6.9"
   dependencies:
     "@types/d3-selection": ^1
     "@types/d3-transition": ^1
     "@types/d3-zoom": ^1
-  checksum: 1eda8d677312f647378c8f3af1ce11911af39c06c15b2804ff4caf10f8ba66addd8e689612b3ef81c89ef5c2fb5af4bf26d63092679469b6e2fc07ffe0141ab6
+  checksum: 3b893ee939349e23ca94c93e6b301cde4d8468d5ca21841815a4dfc18d1e664f11a9a382be336526b04e7018bcc2c8d32b9a47169be414698d5226e1a349993a
   languageName: node
   linkType: hard
 
