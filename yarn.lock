@@ -2351,7 +2351,7 @@ __metadata:
     "@types/diff": 5.0.7
     "@types/express": 4.17.20
     "@types/express-session": 1.17.9
-    "@types/jest": 29.5.5
+    "@types/jest": 29.5.6
     "@types/markdown-it": 13.0.4
     "@types/minio": 7.1.0
     "@types/mysql": 2.15.23
@@ -2361,7 +2361,7 @@ __metadata:
     "@types/passport-local": 1.0.37
     "@types/pg": 8.10.7
     "@types/source-map-support": 0.5.9
-    "@types/supertest": 2.0.14
+    "@types/supertest": 2.0.15
     "@types/ws": 8.5.8
     "@typescript-eslint/eslint-plugin": 6.8.0
     "@typescript-eslint/parser": 6.8.0
@@ -2494,7 +2494,7 @@ __metadata:
     "@types/d3-graphviz": 2.6.9
     "@types/diff": 5.0.7
     "@types/dompurify": 3.0.4
-    "@types/jest": 29.5.5
+    "@types/jest": 29.5.6
     "@types/katex": 0.16.5
     "@types/luxon": 3.3.3
     "@types/markdown-it": 13.0.4
@@ -4655,13 +4655,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:29.5.5":
-  version: 29.5.5
-  resolution: "@types/jest@npm:29.5.5"
+"@types/jest@npm:29.5.6":
+  version: 29.5.6
+  resolution: "@types/jest@npm:29.5.6"
   dependencies:
     expect: ^29.0.0
     pretty-format: ^29.0.0
-  checksum: 56e55cde9949bcc0ee2fa34ce5b7c32c2bfb20e53424aa4ff3a210859eeaaa3fdf6f42f81a3f655238039cdaaaf108b054b7a8602f394e6c52b903659338d8c6
+  checksum: fa13a27bd1c8efd0381a419478769d0d6d3a8e93e1952d7ac3a16274e8440af6f73ed6f96ac1ff00761198badf2ee226b5ab5583a5d87a78d609ea78da5c5a24
   languageName: node
   linkType: hard
 
@@ -5118,12 +5118,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/supertest@npm:2.0.14":
-  version: 2.0.14
-  resolution: "@types/supertest@npm:2.0.14"
+"@types/supertest@npm:2.0.15":
+  version: 2.0.15
+  resolution: "@types/supertest@npm:2.0.15"
   dependencies:
     "@types/superagent": "*"
-  checksum: 9f6850a22b8f0fd4c26a6dfd9b64771a66476b1a4f841a3b84a9da843ce69463efbf37594fe107297dd14a225d199b802464d48d70e9413238c637903d392137
+  checksum: 89c1983662f0ab20969b3a6c44344397fd222d0f78b282619aabbe817f7c88a64210fd2b8b8f075ea22a27084e30ebc287bc5105619cbbf9af7f008e77f6eb93
   languageName: node
   linkType: hard
 
