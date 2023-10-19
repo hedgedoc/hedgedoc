@@ -2014,10 +2014,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/state@npm:6.3.0":
-  version: 6.3.0
-  resolution: "@codemirror/state@npm:6.3.0"
-  checksum: 9d595464488e37375de8548c8f705fa737dc7e7540576810febeabb1d216b025907042f65b6ce5907964bf97ec5fb266082958a3af083ef1cd44b8c111d66ee8
+"@codemirror/state@npm:6.3.1":
+  version: 6.3.1
+  resolution: "@codemirror/state@npm:6.3.1"
+  checksum: 8e7e55b3824653936606b31f146737459cb6654c935d668e7f36113ad523e1951966640f647c1286ae4ef22e3f0c7e37a6dfcbbcdb7bbeacca43c17c80fcc918
   languageName: node
   linkType: hard
 
@@ -2470,7 +2470,7 @@ __metadata:
     "@codemirror/language": 6.9.1
     "@codemirror/language-data": 6.3.1
     "@codemirror/lint": 6.4.2
-    "@codemirror/state": 6.3.0
+    "@codemirror/state": 6.3.1
     "@codemirror/theme-one-dark": 6.1.2
     "@codemirror/view": 6.21.3
     "@dicebear/core": 7.0.1
