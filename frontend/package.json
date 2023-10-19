@@ -151,7 +151,7 @@
     "@typescript-eslint/eslint-plugin": "6.8.0",
     "@typescript-eslint/parser": "6.8.0",
     "csstype": "3.1.2",
-    "cypress": "13.3.1",
+    "cypress": "13.3.2",
     "cypress-commands": "3.0.0",
     "cypress-fill-command": "1.0.2",
     "dotenv-cli": "7.3.0",
