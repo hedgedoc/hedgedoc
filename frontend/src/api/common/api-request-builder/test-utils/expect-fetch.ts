@@ -35,7 +35,7 @@ export const expectFetch = (
         json: jest.fn(() => (responseBody ? Promise.resolve(responseBody) : Promise.reject()))
       })
     )
-  })
+  }) as typeof global.fetch
 }
 const mapCodeToText = (code: number): string => {
   switch (code) {
