@@ -2585,7 +2585,7 @@ __metadata:
     sanitize-filename: 1.6.3
     sass: 1.69.4
     sharp: 0.32.6
-    tlds: 1.242.0
+    tlds: 1.243.0
     ts-loader: 9.5.0
     ts-mockery: 1.2.0
     ts-node: "https://github.com/TypeStrong/ts-node.git#c06cbe7d83b5585bb24f9963c42ce13eadd2202f"
@@ -4608,17 +4608,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:*":
-  version: 29.5.6
-  resolution: "@types/jest@npm:29.5.6"
-  dependencies:
-    expect: ^29.0.0
-    pretty-format: ^29.0.0
-  checksum: fa13a27bd1c8efd0381a419478769d0d6d3a8e93e1952d7ac3a16274e8440af6f73ed6f96ac1ff00761198badf2ee226b5ab5583a5d87a78d609ea78da5c5a24
-  languageName: node
-  linkType: hard
-
-"@types/jest@npm:29.5.6":
+"@types/jest@npm:*, @types/jest@npm:29.5.6":
   version: 29.5.6
   resolution: "@types/jest@npm:29.5.6"
   dependencies:
@@ -16932,12 +16922,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tlds@npm:1.242.0":
-  version: 1.242.0
-  resolution: "tlds@npm:1.242.0"
+"tlds@npm:1.243.0":
+  version: 1.243.0
+  resolution: "tlds@npm:1.243.0"
   bin:
     tlds: bin.js
-  checksum: 97881aae50c40836c51f3179d5d7f8107c6898db511718001da5d11b9886273bd6a963c5c4c07b30e239e96d4229dffb451d2e4bddf8959ace10b1967dc923af
+  checksum: 75800c5bd14a2abcfdddd67b725f362d9069479c75f7e525793edbd5896d4e71fe2f00b4b9615fbd419f7c0d11e1415d7deb4774eea4f7744abbcedebfca00d7
   languageName: node
   linkType: hard
 
