@@ -48,7 +48,7 @@ export const RevisionViewer: React.FC<RevisionViewerProps> = ({ selectedRevision
       return ''
     }
     const inversePatch = invertUnifiedPatch(patches[0])
-    return applyPatch(revision.content, inversePatch)
+    return applyPatch(revision.content, inversePatch) || ''
   }, [revision])
 
   if (selectedRevisionId === undefined) {
@@ -58,7 +58,7 @@ export const RevisionViewer: React.FC<RevisionViewerProps> = ({ selectedRevision
   return (
     <AsyncLoadingBoundary loading={loading || !revision} componentName={'RevisionViewer'} error={error}>
       <ReactDiffViewer
-        oldValue={previousRevisionContent ?? ''}
+        oldValue={previousRevisionContent}
         newValue={revision?.content ?? ''}
         splitView={false}
         compareMethod={DiffMethod.WORDS}
