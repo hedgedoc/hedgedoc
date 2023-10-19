@@ -2409,7 +2409,7 @@ __metadata:
     supertest: 6.3.3
     ts-jest: 29.1.1
     ts-mockery: 1.2.0
-    ts-node: "https://github.com/TypeStrong/ts-node.git#0eb980f2b7e86801eca76782a323f7ad696784ab"
+    ts-node: "https://github.com/TypeStrong/ts-node.git#c06cbe7d83b5585bb24f9963c42ce13eadd2202f"
     tsconfig-paths: 4.2.0
     typeorm: 0.3.17
     typescript: 5.2.2
@@ -2588,7 +2588,7 @@ __metadata:
     tlds: 1.242.0
     ts-loader: 9.5.0
     ts-mockery: 1.2.0
-    ts-node: "https://github.com/TypeStrong/ts-node.git#0eb980f2b7e86801eca76782a323f7ad696784ab"
+    ts-node: "https://github.com/TypeStrong/ts-node.git#c06cbe7d83b5585bb24f9963c42ce13eadd2202f"
     twemoji-colr-font: 14.1.3
     typescript: 5.2.2
     user-agent-data-types: 0.4.2
@@ -17460,9 +17460,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-node@https://github.com/TypeStrong/ts-node.git#0eb980f2b7e86801eca76782a323f7ad696784ab":
-  version: 10.9.1
-  resolution: "ts-node@https://github.com/TypeStrong/ts-node.git#commit=0eb980f2b7e86801eca76782a323f7ad696784ab"
+"ts-node@https://github.com/TypeStrong/ts-node.git#c06cbe7d83b5585bb24f9963c42ce13eadd2202f":
+  version: 11.0.0-beta.1
+  resolution: "ts-node@https://github.com/TypeStrong/ts-node.git#commit=c06cbe7d83b5585bb24f9963c42ce13eadd2202f"
   dependencies:
     "@cspotcode/source-map-support": ^0.8.0
     "@tsconfig/node14": "*"
@@ -17491,7 +17491,7 @@ __metadata:
     ts-node-esm: dist/bin-esm.js
     ts-node-script: dist/bin-script.js
     ts-node-transpile-only: dist/bin-transpile.js
-  checksum: cc3d83097a18c8a4188e2f92b444220dac6b0a26f267eb6e66b66219d45691488296d7aba18caadaaf057bd6d59828bd90566c21ef5ba08274b9fb034cd27efa
+  checksum: 2dcd24536b3941b713fae338d392963c6c4859f9485bf2dc5fb5f60e2932d0cabc5b5294146229f735ad4cd51b702c9a2b8d7ff5944174b11ff82d6d7a5f58e3
   languageName: node
   linkType: hard
 
