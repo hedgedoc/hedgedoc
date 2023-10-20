@@ -112,7 +112,7 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
     CommunicationMessageType.EXTENSION_EVENT,
     useMemo(() => {
       return eventEmitter === undefined
-        ? undefined
+        ? null
         : (values: ExtensionEvent) => eventEmitter.emit(values.eventName, values.payload)
     }, [eventEmitter])
   )
@@ -159,7 +159,7 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
   useSendAdditionalConfigurationToRenderer(rendererReady)
   useSendMarkdownToRenderer(markdownContentLines, rendererReady)
 
-  useSendScrollState(scrollState, rendererReady)
+  useSendScrollState(scrollState ?? null, rendererReady)
   useEditorReceiveHandler(
     CommunicationMessageType.SET_SCROLL_STATE,
     useCallback((values: SetScrollStateMessage) => onScroll?.(values.scrollState), [onScroll])

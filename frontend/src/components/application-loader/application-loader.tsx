@@ -42,6 +42,8 @@ export const ApplicationLoader: React.FC<PropsWithChildren> = ({ children }) => 
           For further information look into the browser console.
         </Fragment>
       )
+    } else {
+      return null
     }
   }, [error])
 

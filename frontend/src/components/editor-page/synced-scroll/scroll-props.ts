@@ -7,8 +7,8 @@
 export type ScrollCallback = (scrollState: ScrollState) => void
 
 export interface ScrollProps {
-  scrollState?: ScrollState
-  onScroll?: ScrollCallback
+  scrollState?: ScrollState | null
+  onScroll?: ScrollCallback | null
   onMakeScrollSource?: () => void
 }
 

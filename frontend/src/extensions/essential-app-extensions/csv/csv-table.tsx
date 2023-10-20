@@ -38,7 +38,7 @@ export const CsvTable: React.FC<CsvTableProps> = ({
   }, [code, delimiter, showHeader])
 
   const renderTableHeader = useMemo(() => {
-    return headerRow.length === 0 ? undefined : (
+    return headerRow.length === 0 ? null : (
       <thead>
         <tr>
           {headerRow.map((column, columnNumber) => (

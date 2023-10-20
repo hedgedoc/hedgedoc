@@ -16,7 +16,7 @@ import { useEffect } from 'react'
  */
 export const useEditorReceiveHandler = <R extends RendererToEditorMessageType>(
   messageType: R,
-  handler?: Handler<CommunicationMessages, R>
+  handler: Handler<CommunicationMessages, R> | null
 ): void => {
   const editorToRendererCommunicator = useEditorToRendererCommunicator()
   useEffect(() => {

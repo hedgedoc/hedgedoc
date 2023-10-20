@@ -16,7 +16,6 @@ import { useMemo } from 'react'
 export const useSingleStringUrlParameter = <T>(parameter: string, fallback: T): string | T => {
   const router = useSearchParams()
 
-  return useMemo(() => {
-    return router?.get(parameter) ?? fallback
-  }, [fallback, parameter, router])
+  const value = useMemo(() => router?.get(parameter) ?? null, [parameter, router])
+  return value ?? fallback
 }

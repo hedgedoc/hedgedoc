@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { HtmlToReact } from '../../../../components/common/html-to-react/html-to-react'
+import { HtmlToReact } from '../../html-to-react/html-to-react'
 import type { HLJSApi } from 'highlight.js'
 import type { ReactElement } from 'react'
 import React, { useMemo } from 'react'
@@ -16,10 +16,10 @@ import React, { useMemo } from 'react'
  * @param language The language of the code to use for highlighting
  * @return The react elements that represent the highlighted code
  */
-export const useCodeDom = (code: string, hljs: HLJSApi | undefined, language?: string): ReactElement[] | undefined => {
+export const useCodeDom = (code: string, hljs: HLJSApi | undefined, language?: string): ReactElement[] | null => {
   return useMemo(() => {
     if (!hljs) {
-      return
+      return null
     }
     if (!!language && hljs.listLanguages().includes(language)) {
       const highlightedHtml = hljs.highlight(code, { language }).value

@@ -11,7 +11,7 @@ import React from 'react'
 import { Alert } from 'react-bootstrap'
 
 export interface LoadingScreenProps {
-  errorMessage?: string | ReactElement
+  errorMessage?: string | ReactElement | null
 }
 
 /**

@@ -20,7 +20,7 @@ export const useSendAdditionalConfigurationToRenderer = (rendererReady: boolean)
   useSendToRenderer(
     useMemo(() => {
       return newlinesAreBreaks === undefined
-        ? undefined
+        ? null
         : {
             type: CommunicationMessageType.SET_ADDITIONAL_CONFIGURATION,
             darkModePreference: darkModePreference,

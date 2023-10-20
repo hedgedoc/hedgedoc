@@ -15,7 +15,7 @@ import { useEffect } from 'react'
  * @param rendererReady Defines if the target renderer is ready
  */
 export const useSendToRenderer = (
-  message: undefined | Extract<CommunicationMessages, MessagePayload<EditorToRendererMessageType>>,
+  message: null | Extract<CommunicationMessages, MessagePayload<EditorToRendererMessageType>>,
   rendererReady: boolean
 ): void => {
   const iframeCommunicator = useEditorToRendererCommunicator()

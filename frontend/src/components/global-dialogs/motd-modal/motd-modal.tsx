@@ -30,7 +30,7 @@ export const MotdModal: React.FC = () => {
   const { error, loading, value } = useAsync(fetchMotd)
   const [dismissed, setDismissed] = useState(false)
 
-  const lines = useMemo(() => value?.motdText.split('\n'), [value?.motdText])
+  const lines = useMemo(() => value?.motdText.split('\n') ?? [], [value?.motdText])
 
   const dismiss = useCallback(() => {
     if (value?.lastModified) {
@@ -51,7 +51,7 @@ export const MotdModal: React.FC = () => {
 
   return (
     <CommonModal
-      show={!!lines && !loading && !error && !dismissed}
+      show={lines.length > 0 && !loading && !error && !dismissed}
       titleI18nKey={'motd.title'}
       {...cypressId('motd-modal')}>
       <Modal.Body>
@@ -59,7 +59,7 @@ export const MotdModal: React.FC = () => {
           <RendererIframe
             frameClasses={'w-100'}
             rendererType={RendererType.SIMPLE}
-            markdownContentLines={lines as string[]}
+            markdownContentLines={lines}
             adaptFrameHeightToContent={true}
             showWaitSpinner={true}
           />

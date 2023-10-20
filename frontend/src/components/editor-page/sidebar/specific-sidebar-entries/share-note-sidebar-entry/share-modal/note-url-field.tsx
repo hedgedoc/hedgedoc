@@ -28,7 +28,7 @@ export const NoteUrlField: React.FC<LinkFieldProps> = ({ type }) => {
 
   const url = useMemo(() => {
     if (noteId === undefined) {
-      return undefined
+      return null
     }
     const url = new URL(baseUrl)
     url.pathname += `${type}/${noteId}`

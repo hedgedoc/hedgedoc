@@ -29,7 +29,7 @@ export const useTrimmedNoteMarkdownContentWithoutFrontmatter = (): string[] => {
 
   const trimmedLines = useMemo(() => {
     if (!markdownContent) {
-      return undefined
+      return null
     }
     if (markdownContent.content.length > maxLength) {
       return markdownContent.content.slice(0, maxLength).split('\n')
@@ -39,6 +39,6 @@ export const useTrimmedNoteMarkdownContentWithoutFrontmatter = (): string[] => {
   }, [markdownContent, maxLength])
 
   return useMemo(() => {
-    return trimmedLines === undefined || lineOffset === undefined ? [] : trimmedLines.slice(lineOffset)
+    return trimmedLines === null || lineOffset === undefined ? [] : trimmedLines.slice(lineOffset)
   }, [lineOffset, trimmedLines])
 }

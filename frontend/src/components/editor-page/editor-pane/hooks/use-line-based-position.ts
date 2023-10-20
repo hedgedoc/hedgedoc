@@ -23,13 +23,13 @@ const calculateLineBasedPosition = (absolutePosition: number, lineStartIndexes: 
 /**
  * Returns the line+character based position of the to-cursor, if available.
  */
-export const useLineBasedToPosition = (): LineBasedPosition | undefined => {
+export const useLineBasedToPosition = (): LineBasedPosition | null => {
   const lineStartIndexes = useApplicationState((state) => state.noteDetails?.markdownContent.lineStartIndexes ?? [])
   const selectionTo = useApplicationState((state) => state.noteDetails?.selection.to)
 
   return useMemo(() => {
     if (selectionTo === undefined) {
-      return undefined
+      return null
     }
     return calculateLineBasedPosition(selectionTo, lineStartIndexes)
   }, [selectionTo, lineStartIndexes])

@@ -17,7 +17,7 @@ interface LanguageOptionProps {
  */
 export const LanguageOption: React.FC<LanguageOptionProps> = ({ languageCode }) => {
   const displayName = useMemo(
-    () => new Intl.DisplayNames([languageCode], { type: 'language' }).of(languageCode),
+    () => new Intl.DisplayNames([languageCode], { type: 'language' }).of(languageCode) ?? null,
     [languageCode]
   )
 

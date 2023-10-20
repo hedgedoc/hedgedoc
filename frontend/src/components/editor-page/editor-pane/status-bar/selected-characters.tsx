@@ -16,7 +16,7 @@ export const SelectedCharacters: React.FC = () => {
 
   const selection = useApplicationState((state) => state.noteDetails?.selection)
   const count = useMemo(
-    () => (selection === undefined || selection.to === undefined ? undefined : selection.to - selection.from),
+    () => (selection === undefined || selection.to === undefined ? null : selection.to - selection.from),
     [selection]
   )
   const countTranslationOptions = useMemo(() => ({ count }), [count])

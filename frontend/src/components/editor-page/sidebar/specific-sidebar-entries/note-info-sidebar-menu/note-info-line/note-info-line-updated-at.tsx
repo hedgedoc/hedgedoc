@@ -18,7 +18,7 @@ export const NoteInfoLineUpdatedAt: React.FC = () => {
   useTranslation()
   const noteUpdateTime = useApplicationState((state) => state.noteDetails?.updatedAt)
   const noteUpdateDateTime = useMemo(
-    () => (noteUpdateTime === undefined ? undefined : DateTime.fromSeconds(noteUpdateTime)),
+    () => (noteUpdateTime === undefined ? null : DateTime.fromSeconds(noteUpdateTime)),
     [noteUpdateTime]
   )
 

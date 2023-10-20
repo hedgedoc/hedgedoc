@@ -35,7 +35,7 @@ export const extractScrollState = (view: EditorView): ScrollState => {
  * @param onScroll The callback that is used to post {@link ScrollState scroll states} when the editor view is scrolling.
  * @return The extensions that watches the scrolling in the editor.
  */
-export const useCodeMirrorScrollWatchExtension = (onScroll: OnScrollCallback): Extension => {
+export const useCodeMirrorScrollWatchExtension = (onScroll: OnScrollCallback | null): Extension => {
   const onEditorScroll = useCallback(
     (view: EditorView) => {
       if (!onScroll || !view) {
