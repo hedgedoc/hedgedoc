@@ -57,8 +57,8 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
     internalDocumentRenderPaneRef,
     rendererRef,
     contentLineCount,
-    scrollState,
-    onScroll
+    scrollState ?? null,
+    onScroll ?? null
   )
 
   const markdownBodyRef = useRef<HTMLDivElement>(null)

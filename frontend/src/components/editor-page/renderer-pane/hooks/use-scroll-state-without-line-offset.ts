@@ -13,11 +13,11 @@ import { useMemo } from 'react'
  * @param scrollState The original scroll state with the line offset
  * @return the adjusted scroll state without the line offset
  */
-export const useScrollStateWithoutLineOffset = (scrollState: ScrollState | undefined): ScrollState | undefined => {
+export const useScrollStateWithoutLineOffset = (scrollState: ScrollState | null): ScrollState | null => {
   const lineOffset = useApplicationState((state) => state.noteDetails?.startOfContentLineOffset)
   return useMemo(() => {
-    return scrollState === undefined || lineOffset === undefined
-      ? undefined
+    return scrollState === null || lineOffset === undefined
+      ? null
       : {
           firstLineInView: scrollState.firstLineInView - lineOffset,
           scrolledPercentage: scrollState.scrolledPercentage

@@ -18,8 +18,8 @@ import { useCallback, useEffect, useRef } from 'react'
  * @param scrollContainer The container to scroll in
  */
 export const useScrollToLineMark = (
-  scrollState: ScrollState | undefined,
-  lineMarks: LineMarkerPosition[] | undefined,
+  scrollState: ScrollState | null,
+  lineMarks: LineMarkerPosition[],
   contentLineCount: number,
   scrollContainer: RefObject<HTMLElement>
 ): void => {

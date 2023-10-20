@@ -40,9 +40,7 @@ export const changeEditorContent = (view: EditorView, formatter: ContentFormatte
 export const useChangeEditorContentCallback = () => {
   const [codeMirrorRef] = useCodemirrorReferenceContext()
   return useMemo(() => {
-    if (codeMirrorRef) {
-      return (callback: ContentFormatter) => changeEditorContent(codeMirrorRef, callback)
-    }
+    return !codeMirrorRef ? null : (callback: ContentFormatter) => changeEditorContent(codeMirrorRef, callback)
   }, [codeMirrorRef])
 }
 

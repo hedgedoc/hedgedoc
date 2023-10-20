@@ -15,13 +15,13 @@ import { useMemo, useRef } from 'react'
  * @param scrollState The scroll state to send
  * @param rendererReady Defines if the target renderer is ready
  */
-export const useSendScrollState = (scrollState: ScrollState | undefined, rendererReady: boolean): void => {
+export const useSendScrollState = (scrollState: ScrollState | null, rendererReady: boolean): void => {
   const oldScrollState = useRef<ScrollState | undefined>(undefined)
 
   useSendToRenderer(
     useMemo(() => {
       if (!scrollState || equal(scrollState, oldScrollState.current)) {
-        return
+        return null
       }
       oldScrollState.current = scrollState
       return { type: CommunicationMessageType.SET_SCROLL_STATE, scrollState }

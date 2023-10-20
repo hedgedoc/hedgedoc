@@ -59,14 +59,14 @@ export type EditorPaneProps = ScrollProps
  */
 export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, onMakeScrollSource }) => {
   const { dispatchUiNotification } = useUiNotifications()
-  useApplyScrollState(scrollState)
+  useApplyScrollState(scrollState ?? null)
 
   const messageTransporter = useRealtimeConnection()
 
   useDisconnectOnUserLoginStatusChange(messageTransporter)
 
   const realtimeDoc = useRealtimeDoc()
-  const editorScrollExtension = useCodeMirrorScrollWatchExtension(onScroll)
+  const editorScrollExtension = useCodeMirrorScrollWatchExtension(onScroll ?? null)
   const tablePasteExtensions = useCodeMirrorTablePasteExtension()
   const fileInsertExtension = useCodeMirrorFileInsertExtension()
   const spellCheckExtension = useCodeMirrorSpellCheckExtension()

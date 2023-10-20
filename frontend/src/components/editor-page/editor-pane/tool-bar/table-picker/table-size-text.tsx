@@ -20,7 +20,7 @@ export const TableSizeText: React.FC<TableSizeProps> = ({ tableSize }) => {
   useTranslation()
 
   const translationValues = useMemo(() => {
-    return tableSize ? { cols: tableSize.columns, rows: tableSize.rows } : undefined
+    return tableSize ? { cols: tableSize.columns, rows: tableSize.rows } : null
   }, [tableSize])
 
   if (!translationValues) {

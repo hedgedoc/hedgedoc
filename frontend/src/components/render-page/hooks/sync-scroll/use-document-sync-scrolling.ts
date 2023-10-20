@@ -26,10 +26,10 @@ export const useDocumentSyncScrolling = (
   outerContainerRef: React.RefObject<HTMLElement>,
   rendererRef: React.RefObject<HTMLElement>,
   numberOfLines: number,
-  scrollState?: ScrollState,
-  onScroll?: (scrollState: ScrollState) => void
+  scrollState: ScrollState | null,
+  onScroll: null | ((scrollState: ScrollState) => void)
 ): [(lineMarkers: LineMarkerPosition[]) => void, React.UIEventHandler<HTMLElement>] => {
-  const [lineMarks, setLineMarks] = useState<LineMarkerPosition[]>()
+  const [lineMarks, setLineMarks] = useState<LineMarkerPosition[]>([])
 
   const recalculateLineMarkerPositions = useCallback(
     (linkMarkerPositions: LineMarkerPosition[]) => {

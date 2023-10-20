@@ -13,15 +13,15 @@ import { useMemo } from 'react'
  * @param onScroll The callback that posts a scroll state
  * @return the modified callback that posts the same scroll state but with line offset
  */
-export const useOnScrollWithLineOffset = (onScroll: ScrollCallback | undefined): ScrollCallback | undefined => {
+export const useOnScrollWithLineOffset = (onScroll: ScrollCallback | null): ScrollCallback | null => {
   return useMemo(() => {
-    if (onScroll === undefined) {
-      return undefined
+    if (onScroll === null) {
+      return null
     } else {
       return (scrollState: ScrollState) => {
         const noteDetails = getGlobalState().noteDetails
         if (noteDetails === null) {
-          return undefined
+          return null
         }
         onScroll({
           firstLineInView: scrollState.firstLineInView + noteDetails.startOfContentLineOffset,

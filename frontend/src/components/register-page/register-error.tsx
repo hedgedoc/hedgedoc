@@ -17,7 +17,7 @@ export const RegisterError: React.FC<RegisterErrorProps> = ({ error }) => {
 
   const errorI18nKey = useMemo(() => {
     if (!error) {
-      return undefined
+      return null
     }
     return new ErrorToI18nKeyMapper(error, 'login.register.error')
       .withHttpCode(409, 'usernameExisting')
@@ -28,7 +28,7 @@ export const RegisterError: React.FC<RegisterErrorProps> = ({ error }) => {
 
   return (
     <Alert className='small' show={!!errorI18nKey} variant='danger'>
-      <Trans i18nKey={errorI18nKey} />
+      <Trans i18nKey={errorI18nKey ?? ''} />
     </Alert>
   )
 }

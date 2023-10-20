@@ -40,8 +40,8 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
 
   const permissionInconsistent = useMemo(
     () =>
-      (everyonePermission && everyonePermission.canEdit && !entry.canEdit) ||
-      (loggedInPermission && loggedInPermission.canEdit && !entry.canEdit),
+      (!!everyonePermission && everyonePermission.canEdit && !entry.canEdit) ||
+      (!!loggedInPermission && loggedInPermission.canEdit && !entry.canEdit),
     [everyonePermission, loggedInPermission, entry]
   )
 

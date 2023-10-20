@@ -14,21 +14,21 @@ import { Fragment, useMemo } from 'react'
  * @param lines The elements to wrap
  * @param startLineNumber The line number to start with. Will default to 1 if omitted.
  */
-export const useAttachLineNumbers = (
-  lines: undefined | ReactElement[],
-  startLineNumber = 1
-): undefined | ReactElement[] =>
-  useMemo(
-    () =>
-      lines?.map((line, index) => (
-        <Fragment key={index}>
-          <span {...cypressId('linenumber')} className={styles['linenumber']}>
-            {startLineNumber + index}
-          </span>
-          <div {...cypressId('codeline')} className={styles['codeline']}>
-            {line}
-          </div>
-        </Fragment>
-      )),
-    [startLineNumber, lines]
-  )
+export const useAttachLineNumbers = (lines: ReactElement[] | null, startLineNumber = 1): ReactElement | null => {
+  return useMemo(() => {
+    if (lines === null) {
+      return null
+    }
+    const adjustedLines = lines.map((line, index) => (
+      <Fragment key={index}>
+        <span {...cypressId('linenumber')} className={styles['linenumber']}>
+          {startLineNumber + index}
+        </span>
+        <div {...cypressId('codeline')} className={styles['codeline']}>
+          {line}
+        </div>
+      </Fragment>
+    ))
+    return <Fragment>{adjustedLines}</Fragment>
+  }, [startLineNumber, lines])
+}

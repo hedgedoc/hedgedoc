@@ -41,12 +41,14 @@ export const MarkdownToReact: React.FC<MarkdownToReactProps> = ({
 
   useMemo(() => {
     nodeToReactTransformer.setReplacers(markdownRenderExtensions.flatMap((extension) => extension.buildReplacers()))
+    return null //todo: replace usememo hack
   }, [nodeToReactTransformer, markdownRenderExtensions])
 
   useMemo(() => {
     measurePerformance('markdown-to-react: update-line-mapping', () => {
       nodeToReactTransformer.setLineIds(lineNumberMapper.updateLineMapping(markdownContentLines))
     })
+    return null
   }, [nodeToReactTransformer, lineNumberMapper, markdownContentLines])
 
   const nodePreProcessor = useCombinedNodePreprocessor(markdownRenderExtensions)

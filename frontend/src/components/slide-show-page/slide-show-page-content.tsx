@@ -27,7 +27,7 @@ export const SlideShowPageContent: React.FC = () => {
   useSendToRenderer(
     useMemo(() => {
       return !slideOptions
-        ? undefined
+        ? null
         : {
             type: CommunicationMessageType.SET_SLIDE_OPTIONS,
             slideOptions
