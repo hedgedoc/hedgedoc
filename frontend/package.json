@@ -99,7 +99,7 @@
     "markdown-it-sub": "1.0.0",
     "markdown-it-sup": "1.0.0",
     "mermaid": "10.5.1",
-    "next": "13.4.19",
+    "next": "13.5.6",
     "picocolors": "1.0.0",
     "react": "18.2.0",
     "react-bootstrap": "2.9.1",
@@ -126,7 +126,7 @@
     "yjs": "13.6.8"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "13.4.19",
+    "@next/bundle-analyzer": "13.5.6",
     "@testing-library/cypress": "10.0.1",
     "@testing-library/dom": "9.3.3",
     "@testing-library/jest-dom": "6.1.4",
