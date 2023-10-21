@@ -2571,7 +2571,7 @@ __metadata:
     picocolors: 1.0.0
     prettier: 3.0.3
     react: 18.2.0
-    react-bootstrap: 2.9.0
+    react-bootstrap: 2.9.1
     react-bootstrap-icons: 1.10.3
     react-bootstrap-typeahead: 6.2.3
     react-diff-viewer: 3.1.1
@@ -14986,9 +14986,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-bootstrap@npm:2.9.0":
-  version: 2.9.0
-  resolution: "react-bootstrap@npm:2.9.0"
+"react-bootstrap@npm:2.9.1":
+  version: 2.9.1
+  resolution: "react-bootstrap@npm:2.9.1"
   dependencies:
     "@babel/runtime": ^7.22.5
     "@restart/hooks": ^0.4.9
@@ -15009,7 +15009,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 9fa4df0923a8fed104548661460b63734f10a23a60ec24f945dee64788add66dabae6a63d2f0cb78a094a66931b7250432cca523a9c138c06f61c042631134ea
+  checksum: 889de157ab782257a6496d37aebb578b13850caec41bdc068e68a2e1ff2af18740f0a388974850f59115a57fa34a2949a2803aaa79000498fef7d0b63b413706
   languageName: node
   linkType: hard
 
