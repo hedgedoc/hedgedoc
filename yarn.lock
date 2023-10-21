@@ -2379,7 +2379,7 @@ __metadata:
     eslint: 8.51.0
     eslint-config-prettier: 9.0.0
     eslint-plugin-import: 2.28.1
-    eslint-plugin-jest: 27.4.2
+    eslint-plugin-jest: 27.4.3
     eslint-plugin-local-rules: 2.0.0
     eslint-plugin-prettier: 5.0.1
     express-session: 1.17.3
@@ -2431,7 +2431,7 @@ __metadata:
     domhandler: 5.0.3
     eslint: 8.51.0
     eslint-config-prettier: 9.0.0
-    eslint-plugin-jest: 27.4.2
+    eslint-plugin-jest: 27.4.3
     eslint-plugin-prettier: 5.0.1
     eventemitter2: 6.4.9
     jest: 29.7.0
@@ -2533,7 +2533,7 @@ __metadata:
     eslint-config-prettier: 9.0.0
     eslint-plugin-chai-friendly: 0.7.2
     eslint-plugin-cypress: 2.15.1
-    eslint-plugin-jest: 27.4.2
+    eslint-plugin-jest: 27.4.3
     eslint-plugin-node: 11.1.0
     eslint-plugin-prettier: 5.0.1
     eslint-plugin-promise: 6.1.1
@@ -2616,7 +2616,7 @@ __metadata:
     domhandler: 5.0.3
     eslint: 8.51.0
     eslint-config-prettier: 9.0.0
-    eslint-plugin-jest: 27.4.2
+    eslint-plugin-jest: 27.4.3
     eslint-plugin-prettier: 5.0.1
     htmlparser2: 9.0.0
     jest: 29.7.0
@@ -2641,7 +2641,7 @@ __metadata:
     "@typescript-eslint/parser": 6.8.0
     eslint: 8.51.0
     eslint-config-prettier: 9.0.0
-    eslint-plugin-jest: 27.4.2
+    eslint-plugin-jest: 27.4.3
     eslint-plugin-prettier: 5.0.1
     html-entities: 2.4.0
     jest: 29.7.0
@@ -9027,9 +9027,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jest@npm:27.4.2":
-  version: 27.4.2
-  resolution: "eslint-plugin-jest@npm:27.4.2"
+"eslint-plugin-jest@npm:27.4.3":
+  version: 27.4.3
+  resolution: "eslint-plugin-jest@npm:27.4.3"
   dependencies:
     "@typescript-eslint/utils": ^5.10.0
   peerDependencies:
@@ -9041,7 +9041,7 @@ __metadata:
       optional: true
     jest:
       optional: true
-  checksum: 99a8301ae00c37da97866b8b13c89a077716d2c653b26bc417d242e7300a43237c0017fd488c43966fa38585f19050facdbbc71d03ca36a1ce6f2ba930a9143e
+  checksum: de062a04f30d72535aecfd6594aa302cf350d62e86805c8f0edbb3dce4cde5b557766e7acfd0f87709a9b70854cc2522c04b875337925c64d0d9bc1118ef4693
   languageName: node
   linkType: hard
 
