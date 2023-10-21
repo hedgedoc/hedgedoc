@@ -2573,7 +2573,7 @@ __metadata:
     react: 18.2.0
     react-bootstrap: 2.9.1
     react-bootstrap-icons: 1.10.3
-    react-bootstrap-typeahead: 6.2.3
+    react-bootstrap-typeahead: 6.3.1
     react-diff-viewer: 3.1.1
     react-dom: 18.2.0
     react-i18next: 13.3.1
@@ -7100,10 +7100,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"compute-scroll-into-view@npm:^1.0.20":
-  version: 1.0.20
-  resolution: "compute-scroll-into-view@npm:1.0.20"
-  checksum: f15fab29221953620735393ac1866541aab0d27d28078bedbba071a291ee9c8cc1a72bee302cf0bc06ed83c5e55afb74ebcbd634a63671ba33cf1fb1c51d3308
+"compute-scroll-into-view@npm:^3.0.2":
+  version: 3.1.0
+  resolution: "compute-scroll-into-view@npm:3.1.0"
+  checksum: 224549d6dd1d40342230de5c6d69cac5c3ed5c2f6a4437310f959aadc8db1d20b03da44a6e0de14d9419c6f9130ce51ec99a91b11bde55d4640f10551c89c213
   languageName: node
   linkType: hard
 
@@ -14963,9 +14963,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-bootstrap-typeahead@npm:6.2.3":
-  version: 6.2.3
-  resolution: "react-bootstrap-typeahead@npm:6.2.3"
+"react-bootstrap-typeahead@npm:6.3.1":
+  version: 6.3.1
+  resolution: "react-bootstrap-typeahead@npm:6.3.1"
   dependencies:
     "@babel/runtime": ^7.14.6
     "@popperjs/core": ^2.10.2
@@ -14977,12 +14977,12 @@ __metadata:
     prop-types: ^15.5.8
     react-overlays: ^5.2.0
     react-popper: ^2.2.5
-    scroll-into-view-if-needed: ^2.2.20
+    scroll-into-view-if-needed: ^3.1.0
     warning: ^4.0.1
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 21dfe10d292d146eac5fd13dc4e15515b2e676e56243c495fda8ed733c6ee7dc09d1e71ec81a68fdbe8b8c737add53749ab6687cbb98dccece6144c404ad3230
+  checksum: 04ddedb627eb2c27e8bca85028b4bee0d666b29b95495e4268a3293d2a080c3852ac83e83c284082b62603d7304a90e5932a8159051ea376b585cb3076b8d591
   languageName: node
   linkType: hard
 
@@ -15845,12 +15845,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scroll-into-view-if-needed@npm:^2.2.20":
-  version: 2.2.31
-  resolution: "scroll-into-view-if-needed@npm:2.2.31"
+"scroll-into-view-if-needed@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "scroll-into-view-if-needed@npm:3.1.0"
   dependencies:
-    compute-scroll-into-view: ^1.0.20
-  checksum: 93b28f3723a462245b40d4120c40c542c8449473e2b157a5f8e18f04d95d66cd35249d96c625e8a440a56891f7d8905b1d026c690bdda07fcfb4f1a48d643ad1
+    compute-scroll-into-view: ^3.0.2
+  checksum: edc0f68dc170d0c153ce4ae2929cbdfaf3426d1fc842b67d5f092c5ec38fbb8408e6cb8467f86d8dfb23de3f77a2f2a9e79cbf80bc49b35a39f3092e18b4c3d5
   languageName: node
   linkType: hard
 
