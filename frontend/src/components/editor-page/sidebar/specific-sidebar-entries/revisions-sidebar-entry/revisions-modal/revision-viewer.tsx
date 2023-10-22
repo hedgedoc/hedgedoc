@@ -32,9 +32,7 @@ export const RevisionViewer: React.FC<RevisionViewerProps> = ({ selectedRevision
     error,
     loading
   } = useAsync(async () => {
-    if (noteId === undefined || selectedRevisionId === undefined) {
-      throw new Error('No revision selected')
-    } else {
+    if (noteId && selectedRevisionId !== undefined) {
       return await getRevision(noteId, selectedRevisionId)
     }
   }, [selectedRevisionId, noteId])
@@ -51,7 +49,7 @@ export const RevisionViewer: React.FC<RevisionViewerProps> = ({ selectedRevision
     return applyPatch(revision.content, inversePatch) || ''
   }, [revision])
 
-  if (selectedRevisionId === undefined) {
+  if (!noteId || selectedRevisionId === undefined) {
     return <Fragment />
   }
 
