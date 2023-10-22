@@ -29,7 +29,7 @@ if [ ! -z "${NEXT_PUBLIC_USE_MOCK_API}" ]; then
 else
     echo "🦔 > Moving Mock API because NEXT_PUBLIC_USE_MOCK_API is unset"
     mkdir -p ../tmp/src/pages
-    mv src/pages/api ../tmp/src/pages/api
+    mv src/pages/api ../tmp/src/pages/
 fi
 
 echo "🦔 > Building"
