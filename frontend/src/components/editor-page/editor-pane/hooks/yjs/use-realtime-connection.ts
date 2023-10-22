@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,7 +10,7 @@ import { Logger } from '../../../../../utils/logger'
 import { isMockMode } from '../../../../../utils/test-modes'
 import { FrontendWebsocketAdapter } from './frontend-websocket-adapter'
 import { useWebsocketUrl } from './use-websocket-url'
-import { MessageTransporter, MockedBackendTransportAdapter } from '@hedgedoc/commons'
+import { DisconnectReason, MessageTransporter, MockedBackendTransportAdapter } from '@hedgedoc/commons'
 import type { Listener } from 'eventemitter2'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
@@ -28,6 +28,7 @@ export const useRealtimeConnection = (): MessageTransporter => {
   const messageTransporter = useMemo(() => new MessageTransporter(), [])
 
   const reconnectCount = useRef(0)
+  const disconnectReason = useRef<DisconnectReason | undefined>(undefined)
   const establishWebsocketConnection = useCallback(() => {
     if (isMockMode) {
       logger.debug('Creating Loopback connection...')
@@ -57,7 +58,7 @@ export const useRealtimeConnection = (): MessageTransporter => {
   const isConnected = useApplicationState((state) => state.realtimeStatus.isConnected)
 
   useEffect(() => {
-    if (isConnected || reconnectCount.current > 0) {
+    if (isConnected || reconnectCount.current > 0 || disconnectReason.current === DisconnectReason.USER_NOT_PERMITTED) {
       return
     }
     establishWebsocketConnection()
@@ -86,9 +87,16 @@ export const useRealtimeConnection = (): MessageTransporter => {
 
   useEffect(() => {
     const connectedListener = messageTransporter.doAsSoonAsReady(() => setRealtimeConnectionState(true))
-    const disconnectedListener = messageTransporter.on('disconnected', () => setRealtimeConnectionState(false), {
-      objectify: true
-    }) as Listener
+    const disconnectedListener = messageTransporter.on(
+      'disconnected',
+      (reason?: DisconnectReason) => {
+        disconnectReason.current = reason
+        setRealtimeConnectionState(false)
+      },
+      {
+        objectify: true
+      }
+    ) as Listener
 
     return () => {
       connectedListener.off()

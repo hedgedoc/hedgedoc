@@ -5,6 +5,7 @@
  */
 import { ConnectionState } from './message-transporter.js'
 import { Message, MessageType } from './message.js'
+import { DisconnectReason } from './disconnect_reason.js'
 
 /**
  * Defines methods that must be implemented to send and receive messages using an {@link AdapterMessageTransporter}.
@@ -18,7 +19,7 @@ export interface TransportAdapter {
 
   bindOnErrorEvent(handler: () => void): () => void
 
-  bindOnCloseEvent(handler: () => void): () => void
+  bindOnCloseEvent(handler: (reason?: DisconnectReason) => void): () => void
 
   disconnect(): void
 

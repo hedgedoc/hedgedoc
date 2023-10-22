@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
+  DisconnectReason,
   MessageTransporter,
   NotePermissions,
   userCanEdit,
@@ -66,13 +67,11 @@ export class WebsocketGateway implements OnGatewayConnection {
         note,
       );
       if (notePermission < NotePermission.READ) {
-        //TODO: [mrdrogdrog] inform client about reason of disconnect.
-        // (https://github.com/hedgedoc/hedgedoc/issues/5034)
         this.logger.log(
           `Access denied to note '${note.id}' for user '${username}'`,
           'handleConnection',
         );
-        clientSocket.close();
+        clientSocket.close(DisconnectReason.USER_NOT_PERMITTED);
         return;
       }
 

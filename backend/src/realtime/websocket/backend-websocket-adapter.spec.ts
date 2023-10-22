@@ -3,9 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ConnectionState, Message, MessageType } from '@hedgedoc/commons';
+import {
+  ConnectionState,
+  DisconnectReason,
+  Message,
+  MessageType,
+} from '@hedgedoc/commons';
 import { Mock } from 'ts-mockery';
-import WebSocket, { MessageEvent } from 'ws';
+import WebSocket, { CloseEvent, MessageEvent } from 'ws';
 
 import { BackendWebsocketAdapter } from './backend-websocket-adapter';
 
@@ -29,17 +34,26 @@ describe('backend websocket adapter', () => {
   });
 
   it('can bind and unbind the close event', () => {
-    const handler = jest.fn();
+    const handler = jest.fn((reason?: DisconnectReason) => console.log(reason));
+
+    let modifiedHandler: (event: CloseEvent) => void = jest.fn();
+    jest
+      .spyOn(mockedSocket, 'addEventListener')
+      .mockImplementation((event, handler_) => {
+        modifiedHandler = handler_;
+      });
+
     const unbind = sut.bindOnCloseEvent(handler);
-    expect(mockedSocket.addEventListener).toHaveBeenCalledWith(
-      'close',
-      handler,
+
+    modifiedHandler(
+      Mock.of<CloseEvent>({ code: DisconnectReason.USER_NOT_PERMITTED }),
     );
+    expect(handler).toHaveBeenCalledTimes(1);
+    expect(handler).toHaveBeenCalledWith(DisconnectReason.USER_NOT_PERMITTED);
+
     unbind();
-    expect(mockedSocket.removeEventListener).toHaveBeenCalledWith(
-      'close',
-      handler,
-    );
+
+    expect(mockedSocket.removeEventListener).toHaveBeenCalled();
   });
 
   it('can bind and unbind the connect event', () => {

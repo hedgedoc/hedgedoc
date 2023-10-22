@@ -5,7 +5,7 @@
  */
 import { FrontendWebsocketAdapter } from './frontend-websocket-adapter'
 import type { Message } from '@hedgedoc/commons'
-import { ConnectionState, MessageType } from '@hedgedoc/commons'
+import { ConnectionState, DisconnectReason, MessageType } from '@hedgedoc/commons'
 import { Mock } from 'ts-mockery'
 
 describe('frontend websocket', () => {
@@ -34,11 +34,22 @@ describe('frontend websocket', () => {
 
   it('can bind and unbind the close event', () => {
     mockSocket()
-    const handler = jest.fn()
+    const handler = jest.fn((reason?: DisconnectReason) => console.log(reason))
+
+    let modifiedHandler: (event: CloseEvent) => void = jest.fn()
+    jest.spyOn(mockedSocket, 'addEventListener').mockImplementation((event, handler_) => {
+      modifiedHandler = handler_
+    })
+
     const unbind = adapter.bindOnCloseEvent(handler)
-    expect(addEventListenerSpy).toHaveBeenCalledWith('close', handler)
+
+    modifiedHandler(Mock.of<CloseEvent>({ code: DisconnectReason.USER_NOT_PERMITTED }))
+    expect(handler).toHaveBeenCalledTimes(1)
+    expect(handler).toHaveBeenCalledWith(DisconnectReason.USER_NOT_PERMITTED)
+
     unbind()
-    expect(removeEventListenerSpy).toHaveBeenCalledWith('close', handler)
+
+    expect(removeEventListenerSpy).toHaveBeenCalled()
   })
 
   it('can bind and unbind the connect event', () => {

@@ -1,17 +1,25 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Message, MessagePayloads, MessageType } from './message.js'
+import {
+  ConnectionStateEvent,
+  Message,
+  MessagePayloads,
+  MessageType
+} from './message.js'
 import { TransportAdapter } from './transport-adapter.js'
 import { EventEmitter2, Listener } from 'eventemitter2'
+import { DisconnectReason } from './disconnect_reason.js'
 
-export type MessageEvents = MessageType | 'connected' | 'disconnected' | 'ready'
+export type AllEvents = MessageType | ConnectionStateEvent
 
 type MessageEventPayloadMap = {
-  [E in MessageEvents]: E extends keyof MessagePayloads
+  [E in AllEvents]: E extends keyof MessagePayloads
     ? (message: Message<E>) => void
+    : E extends ConnectionStateEvent.DISCONNECTED
+    ? (reason?: DisconnectReason) => void
     : () => void
 }
 
@@ -157,14 +165,14 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
     }
   }
 
-  private bindWebsocketEvents(websocket: TransportAdapter) {
-    this.destroyOnErrorEventHandler = websocket.bindOnErrorEvent(
+  private bindWebsocketEvents(transportAdapter: TransportAdapter) {
+    this.destroyOnErrorEventHandler = transportAdapter.bindOnErrorEvent(
       this.onDisconnecting.bind(this)
     )
-    this.destroyOnCloseEventHandler = websocket.bindOnCloseEvent(
+    this.destroyOnCloseEventHandler = transportAdapter.bindOnCloseEvent(
       this.onDisconnecting.bind(this)
     )
-    this.destroyOnMessageEventHandler = websocket.bindOnMessageEvent(
+    this.destroyOnMessageEventHandler = transportAdapter.bindOnMessageEvent(
       this.receiveMessage.bind(this)
     )
   }
@@ -172,10 +180,10 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
   protected onConnected(): void {
     this.destroyOnConnectedEventHandler?.()
     this.destroyOnConnectedEventHandler = undefined
-    this.emit('connected')
+    this.emit(ConnectionStateEvent.CONNECTED)
   }
 
-  protected onDisconnecting(): void {
+  protected onDisconnecting(reason?: DisconnectReason): void {
     if (this.transportAdapter === undefined) {
       return
     }
@@ -184,7 +192,7 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
     this.thisSideReady = false
     this.otherSideReady = false
     this.transportAdapter = undefined
-    this.emit('disconnected')
+    this.emit(ConnectionStateEvent.DISCONNECTED, reason)
   }
 
   /**
