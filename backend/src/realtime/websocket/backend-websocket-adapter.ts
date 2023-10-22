@@ -3,9 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ConnectionState, Message, MessageType } from '@hedgedoc/commons';
+import {
+  ConnectionState,
+  DisconnectReason,
+  Message,
+  MessageType,
+} from '@hedgedoc/commons';
 import type { TransportAdapter } from '@hedgedoc/commons';
-import WebSocket, { MessageEvent } from 'ws';
+import WebSocket, { CloseEvent, MessageEvent } from 'ws';
 
 /**
  * Implements a transport adapter that communicates using a nodejs socket.
@@ -13,10 +18,13 @@ import WebSocket, { MessageEvent } from 'ws';
 export class BackendWebsocketAdapter implements TransportAdapter {
   constructor(private socket: WebSocket) {}
 
-  bindOnCloseEvent(handler: () => void): () => void {
-    this.socket.addEventListener('close', handler);
+  bindOnCloseEvent(handler: (reason?: DisconnectReason) => void): () => void {
+    function callback(event: CloseEvent): void {
+      handler(event.code);
+    }
+    this.socket.addEventListener('close', callback);
     return () => {
-      this.socket.removeEventListener('close', handler);
+      this.socket.removeEventListener('close', callback);
     };
   }
 
