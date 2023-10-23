@@ -31,7 +31,7 @@ export const CommonErrorPage: React.FC<PropsWithChildren<CommonErrorPageProps>> 
 
   return (
     <LandingLayout>
-      <div className='text-light d-flex flex-column align-items-center justify-content-center my-5'>
+      <div className='d-flex flex-column align-items-center justify-content-center my-5'>
         <h1>
           <Trans i18nKey={titleI18nKey} />
         </h1>
