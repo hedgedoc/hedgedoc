@@ -38,7 +38,9 @@ export const ExpectedOriginBoundary: React.FC<ExpectedOriginBoundaryProps> = ({ 
   const currentOrigin = buildOriginFromHeaders()
 
   if (new URL(expectedOrigin).origin !== currentOrigin) {
-    return <span>{`You can't open this page using this URL. For this endpoint "${expectedOrigin}" is expected.`}</span>
+    return (
+      <span>{`You can't open this page using this URL. For this endpoint "${expectedOrigin}" is expected but got "${currentOrigin}".`}</span>
+    )
   }
   return children
 }
