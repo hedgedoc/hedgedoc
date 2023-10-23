@@ -2319,7 +2319,7 @@ __metadata:
     "@nestjs/platform-ws": 10.2.7
     "@nestjs/schedule": 3.0.4
     "@nestjs/schematics": 10.0.2
-    "@nestjs/swagger": 7.1.13
+    "@nestjs/swagger": 7.1.14
     "@nestjs/testing": 10.2.7
     "@nestjs/typeorm": 10.0.0
     "@nestjs/websockets": 10.2.7
@@ -3387,9 +3387,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/swagger@npm:7.1.13":
-  version: 7.1.13
-  resolution: "@nestjs/swagger@npm:7.1.13"
+"@nestjs/swagger@npm:7.1.14":
+  version: 7.1.14
+  resolution: "@nestjs/swagger@npm:7.1.14"
   dependencies:
     "@nestjs/mapped-types": 2.0.2
     js-yaml: 4.1.0
@@ -3410,7 +3410,7 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: 0b1acc41f724f7be2d83cb15f15edd75b7776504d30bdfe6d35307c0581f3ebbee97e5a510de69946c1e6a6e3ef9d67de256067e341af23b82e4e5888875711c
+  checksum: eef99bb9d23fd939aad33919774162242d925dcfb9ae248445db26d12e321d17f1c26ad52f5dc2e5d01b560273f34f1f52fa51826eaad2a78ac37240105df2fb
   languageName: node
   linkType: hard
 
