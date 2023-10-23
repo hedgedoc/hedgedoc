@@ -95,7 +95,7 @@ const rawNextConfig = {
     ])
   },
   output: 'standalone',
-  swcMinify: false, //Otherwise emoji picker is minified incorrectly
+  swcMinify: true,
   experimental: {
     outputFileTracingRoot: path.join(__dirname, '../')
   },
