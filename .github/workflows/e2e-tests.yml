@@ -186,7 +186,7 @@ jobs:
 
       - name: Run server
         working-directory: frontend/
-        run: (screen -dmS server -L yarn start) && sleep 3 && (tail -f screenlog.0 &)
+        run: screen -dmS server -L yarn start
         env:
           NODE_ENV: test
           HOSTNAME: "127.0.0.1"
@@ -194,7 +194,7 @@ jobs:
           PORT: 3001
 
       - name: Wait for server
-        run: "curl -L --max-time 120 http://127.0.0.1:3001/"
+        run: "sleep 3 && curl -L --max-time 120 http://127.0.0.1:3001/"
 
       - name: Run cypress
         run: yarn test:e2e:ci --filter=frontend
@@ -208,6 +208,13 @@ jobs:
           CYPRESS_CONTAINER_ID: ${{ matrix.containers }}
 
       - uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # master
+        if: always()
+        with:
+          name: screenlog
+          path: frontend/screenlog.0
+
+      - uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # master
+        if: always()
         with:
           name: screenshots
           path: cypress/screenshots
