@@ -25,7 +25,7 @@ in your `docker-compose.yml`:
 ??? abstract "docker-compose.yml"
     ```yaml
     backend:
-      image: ghcr.io/hedgedoc/hedgedoc/backend:2.0.0-alpha.1
+      image: ghcr.io/hedgedoc/hedgedoc/backend:2.0.0-alpha.2
       volumes:
         - $PWD/.env:/usr/src/app/backend/.env
         - hedgedoc_uploads:/usr/src/app/backend/uploads
@@ -37,7 +37,7 @@ in your `docker-compose.yml`:
         traefik.http.services.hedgedoc_2_backend.loadbalancer.server.port: "3000"
         traefik.http.services.hedgedoc_2_backend.loadbalancer.server.scheme: "http"
     frontend:
-      image: ghcr.io/hedgedoc/hedgedoc/frontend:2.0.0-alpha.1
+      image: ghcr.io/hedgedoc/hedgedoc/frontend:2.0.0-alpha.2
       environment:
         HD_BASE_URL: "${HD_BASE_URL}"
       labels:
@@ -79,14 +79,14 @@ you need to add the `ports` entry for both `backend` and `frontend` as following
 ??? abstract "docker-compose.yml"
     ```yaml
     backend:
-      image: ghcr.io/hedgedoc/hedgedoc/backend:2.0.0-alpha.1
+      image: ghcr.io/hedgedoc/hedgedoc/backend:2.0.0-alpha.2
       volumes:
         - $PWD/.env:/usr/src/app/backend/.env
         - hedgedoc_uploads:/usr/src/app/backend/uploads
       ports:
         - "3000:3000"
     frontend:
-      image: ghcr.io/hedgedoc/hedgedoc/frontend:2.0.0-alpha.1
+      image: ghcr.io/hedgedoc/hedgedoc/frontend:2.0.0-alpha.2
       environment:
         HD_BASE_URL: "${HD_BASE_URL}"
       ports:
