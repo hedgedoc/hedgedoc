@@ -62,7 +62,10 @@ export const respondToTestRequest = <T>(req: NextApiRequest, res: NextApiRespons
     res.status(405).send('Method not allowed')
   } else if (!isTestMode) {
     res.status(404).send('Route only available in test mode')
-  } else if (!['127.0.0.1', '::1', '::ffff:127.0.0.1'].includes(req.socket.remoteAddress)) {
+  } else if (
+    req.socket.remoteAddress === undefined ||
+    !['127.0.0.1', '::1', '::ffff:127.0.0.1'].includes(req.socket.remoteAddress)
+  ) {
     res.status(403).send(`Request must come from localhost but was ${req.socket.remoteAddress}`)
   } else {
     res.status(200).json(response())

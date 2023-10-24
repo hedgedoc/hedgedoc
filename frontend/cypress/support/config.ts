@@ -5,6 +5,7 @@
  */
 import { AuthProviderType } from '../../src/api/config/types'
 import { HttpMethod } from '../../src/handler-utils/respond-to-matching-request'
+import { IGNORE_MOTD, MOTD_LOCAL_STORAGE_KEY } from '../../src/components/global-dialogs/motd-modal/local-storage-keys'
 
 declare namespace Cypress {
   interface Chainable {
@@ -87,6 +88,7 @@ Cypress.Commands.add('logOut', () => {
 
 beforeEach(() => {
   cy.loadConfig()
+  window.localStorage.setItem(MOTD_LOCAL_STORAGE_KEY, IGNORE_MOTD)
   cy.logIn()
 
   cy.intercept('GET', '/public/motd.md', {

@@ -5,8 +5,6 @@
  */
 import { defaultConfig } from '../../../api/common/default-config'
 
-export const MOTD_LOCAL_STORAGE_KEY = 'motd.lastModified'
-
 export interface MotdApiResponse {
   motdText: string
   lastModified: string
