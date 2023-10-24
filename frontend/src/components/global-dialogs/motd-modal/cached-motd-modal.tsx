@@ -8,9 +8,10 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { useMotdContextValue } from '../../motd/motd-context'
 import { useLocalStorage } from 'react-use'
-import { MOTD_LOCAL_STORAGE_KEY } from './fetch-motd'
 import { MotdModal } from './motd-modal'
 import { testId } from '../../../utils/test-id'
+import { isTestMode } from '../../../utils/test-modes'
+import { IGNORE_MOTD, MOTD_LOCAL_STORAGE_KEY } from './local-storage-keys'
 
 /**
  * Reads the motd from the context and shows it in a modal.
@@ -19,13 +20,22 @@ import { testId } from '../../../utils/test-id'
  */
 export const CachedMotdModal: React.FC = () => {
   const contextValue = useMotdContextValue()
-  const [cachedLastModified, saveLocalStorage] = useLocalStorage<string>(MOTD_LOCAL_STORAGE_KEY, undefined)
+  const [cachedLastModified, saveLocalStorage] = useLocalStorage<string>(MOTD_LOCAL_STORAGE_KEY, undefined, {
+    raw: true
+  })
 
   const [dismissed, setDismissed] = useState(false)
 
   const show = useMemo(() => {
     const lastModified = contextValue?.lastModified
-    return cachedLastModified !== lastModified && lastModified !== undefined && !dismissed
+
+    if (cachedLastModified === IGNORE_MOTD && isTestMode) {
+      return false
+    }
+    if (cachedLastModified === lastModified || lastModified === undefined) {
+      return false
+    }
+    return !dismissed
   }, [cachedLastModified, contextValue?.lastModified, dismissed])
 
   const doDismiss = useCallback(() => {
