@@ -47,9 +47,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/core@npm:16.2.3":
-  version: 16.2.3
-  resolution: "@angular-devkit/core@npm:16.2.3"
+"@angular-devkit/core@npm:16.2.7":
+  version: 16.2.7
+  resolution: "@angular-devkit/core@npm:16.2.7"
   dependencies:
     ajv: "npm:8.12.0"
     ajv-formats: "npm:2.1.1"
@@ -62,23 +62,23 @@ __metadata:
   peerDependenciesMeta:
     chokidar:
       optional: true
-  checksum: 803fbf8b6f1fcf8a1b6ae5e7b55d8cd54cf9612b2aa1331c524cfd0997152e44a89982712a76e2a56e92dc7fd62f1ea35e437538c597b395e0b616710c252d03
+  checksum: 5e5d2cbc6e1800f2942d78be9b5f21cdb12b82ce4dca787aa683bb43e6b71da33ed155ad99566b4d36782919972005d0b85a17c96564a150634f359f3db0c959
   languageName: node
   linkType: hard
 
-"@angular-devkit/schematics-cli@npm:16.2.3":
-  version: 16.2.3
-  resolution: "@angular-devkit/schematics-cli@npm:16.2.3"
+"@angular-devkit/schematics-cli@npm:16.2.7":
+  version: 16.2.7
+  resolution: "@angular-devkit/schematics-cli@npm:16.2.7"
   dependencies:
-    "@angular-devkit/core": "npm:16.2.3"
-    "@angular-devkit/schematics": "npm:16.2.3"
+    "@angular-devkit/core": "npm:16.2.7"
+    "@angular-devkit/schematics": "npm:16.2.7"
     ansi-colors: "npm:4.1.3"
     inquirer: "npm:8.2.4"
     symbol-observable: "npm:4.0.0"
     yargs-parser: "npm:21.1.1"
   bin:
     schematics: bin/schematics.js
-  checksum: 60e439607830e21f542da9b4c1a82c5c1a34410eb79b96b474770607e045f382fbaec94c22c2e5cc165a23127cfb403bc030507150cbfb53a8cae657a95d9f9f
+  checksum: 4fa081f728c57a84a91d9494959045f14f8d2437d718ddcb9fbffc1874d293ef596a9562eb53843cc57f2e4c614ece9baaed61173a40b61e9dec6cc7562ec69f
   languageName: node
   linkType: hard
 
@@ -95,16 +95,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/schematics@npm:16.2.3":
-  version: 16.2.3
-  resolution: "@angular-devkit/schematics@npm:16.2.3"
+"@angular-devkit/schematics@npm:16.2.7":
+  version: 16.2.7
+  resolution: "@angular-devkit/schematics@npm:16.2.7"
   dependencies:
-    "@angular-devkit/core": "npm:16.2.3"
+    "@angular-devkit/core": "npm:16.2.7"
     jsonc-parser: "npm:3.2.0"
     magic-string: "npm:0.30.1"
     ora: "npm:5.4.1"
     rxjs: "npm:7.8.1"
-  checksum: a5770b9fa94c97a337b058ff89a12c33bc8dffc7ddc84d236022d2403843a1a6eaa3a0758ef882a07a252f6185b475a6c8cd67e6df09852f87483ddea6d9318b
+  checksum: c3791b7125420ea0b27f05916d406e5395ed3d2b45849be0f97be7818bab5fbaf90317078660abd00d191d8f6be3c35c11e5b9d9b93a553b87988f5da26fb979
   languageName: node
   linkType: hard
 
@@ -2309,7 +2309,7 @@ __metadata:
     "@darraghor/eslint-plugin-nestjs-typed": "npm:4.3.3"
     "@hedgedoc/commons": "workspace:commons"
     "@mrdrogdrog/optional": "npm:1.2.1"
-    "@nestjs/cli": "npm:10.1.18"
+    "@nestjs/cli": "npm:10.2.0"
     "@nestjs/common": "npm:10.2.7"
     "@nestjs/config": "npm:3.1.1"
     "@nestjs/core": "npm:10.2.7"
@@ -3184,19 +3184,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/cli@npm:10.1.18":
-  version: 10.1.18
-  resolution: "@nestjs/cli@npm:10.1.18"
+"@nestjs/cli@npm:10.2.0":
+  version: 10.2.0
+  resolution: "@nestjs/cli@npm:10.2.0"
   dependencies:
-    "@angular-devkit/core": "npm:16.2.3"
-    "@angular-devkit/schematics": "npm:16.2.3"
-    "@angular-devkit/schematics-cli": "npm:16.2.3"
+    "@angular-devkit/core": "npm:16.2.7"
+    "@angular-devkit/schematics": "npm:16.2.7"
+    "@angular-devkit/schematics-cli": "npm:16.2.7"
     "@nestjs/schematics": "npm:^10.0.1"
     chalk: "npm:4.1.2"
     chokidar: "npm:3.5.3"
     cli-table3: "npm:0.6.3"
     commander: "npm:4.1.1"
-    fork-ts-checker-webpack-plugin: "npm:8.0.0"
+    fork-ts-checker-webpack-plugin: "npm:9.0.0"
+    glob: "npm:10.3.4"
     inquirer: "npm:8.2.6"
     node-emoji: "npm:1.11.0"
     ora: "npm:5.4.1"
@@ -3208,7 +3209,7 @@ __metadata:
     tsconfig-paths: "npm:4.2.0"
     tsconfig-paths-webpack-plugin: "npm:4.1.0"
     typescript: "npm:5.2.2"
-    webpack: "npm:5.88.2"
+    webpack: "npm:5.89.0"
     webpack-node-externals: "npm:3.0.0"
   peerDependencies:
     "@swc/cli": ^0.1.62
@@ -3220,7 +3221,7 @@ __metadata:
       optional: true
   bin:
     nest: bin/nest.js
-  checksum: 65a88379b1c15cbc80c184af162a9651a2c4d702c53c6348237b28a3caeb009f64dfa143f05bd34fc6ca6987535e322270378ce9d2d46da686df8162de765b11
+  checksum: f9c86950c0c82103a5ec89742b8c2842a506056598db6501b3ad05fa08d74d7b03c0f918fd8f35fa73d1c7e4cfd2ee0810756ad558a4ca4320d51d1f5b3997d0
   languageName: node
   linkType: hard
 
@@ -9905,9 +9906,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fork-ts-checker-webpack-plugin@npm:8.0.0":
-  version: 8.0.0
-  resolution: "fork-ts-checker-webpack-plugin@npm:8.0.0"
+"fork-ts-checker-webpack-plugin@npm:9.0.0":
+  version: 9.0.0
+  resolution: "fork-ts-checker-webpack-plugin@npm:9.0.0"
   dependencies:
     "@babel/code-frame": "npm:^7.16.7"
     chalk: "npm:^4.1.2"
@@ -9924,7 +9925,7 @@ __metadata:
   peerDependencies:
     typescript: ">3.6.0"
     webpack: ^5.11.0
-  checksum: 1a2bb9bbd3e943e3b3a45d7fa9e8383698f5fea1ba28f7d18c8372c804460c2f13af53f791360b973fddafd3e88de7af59082c3cb3375f4e7c3365cd85accedc
+  checksum: f2fdb34912748c4596de63ae9a8b464ed58f3d8a60b074de689f6d4eef1bf08d338651fd4cb5b8d69d7df5d552f2707eecbe4e9a243ba4e79b4ea1b3bc03d65a
   languageName: node
   linkType: hard
 
@@ -10231,6 +10232,21 @@ __metadata:
   version: 0.4.1
   resolution: "glob-to-regexp@npm:0.4.1"
   checksum: 0486925072d7a916f052842772b61c3e86247f0a80cc0deb9b5a3e8a1a9faad5b04fb6f58986a09f34d3e96cd2a22a24b7e9882fb1cf904c31e9a310de96c429
+  languageName: node
+  linkType: hard
+
+"glob@npm:10.3.4":
+  version: 10.3.4
+  resolution: "glob@npm:10.3.4"
+  dependencies:
+    foreground-child: "npm:^3.1.0"
+    jackspeak: "npm:^2.0.3"
+    minimatch: "npm:^9.0.1"
+    minipass: "npm:^5.0.0 || ^6.0.2 || ^7.0.0"
+    path-scurry: "npm:^1.10.1"
+  bin:
+    glob: dist/cjs/src/bin.js
+  checksum: fe075f8109749cb0c264fd6eee8bf0cc8bb23a02305619b7a88bf1f79766218cc3ef66a3e8f3cd2e826006f047a3a8833c1694f167e978a6e37c34a8c053e48e
   languageName: node
   linkType: hard
 
@@ -11465,7 +11481,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jackspeak@npm:^2.3.5":
+"jackspeak@npm:^2.0.3, jackspeak@npm:^2.3.5":
   version: 2.3.6
   resolution: "jackspeak@npm:2.3.6"
   dependencies:
@@ -18561,9 +18577,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:5.88.2":
-  version: 5.88.2
-  resolution: "webpack@npm:5.88.2"
+"webpack@npm:5.89.0":
+  version: 5.89.0
+  resolution: "webpack@npm:5.89.0"
   dependencies:
     "@types/eslint-scope": "npm:^3.7.3"
     "@types/estree": "npm:^1.0.0"
@@ -18594,7 +18610,7 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 743acf04cdb7f73ec059761d3921798014139005c88e136ab99fe158f544695eee2caf4be775cc06e7f481d84725d443df2c1c8e00ec24a130e8b8fd514ff7b9
+  checksum: 2562bf48788d651634fb7db6a5378c2fe3fce7f66831af38468da3944bd98756d68efea94a6909593993fb57b2d14cf802cbef2c83c6ef0047f7f606d59bec50
   languageName: node
   linkType: hard
 
