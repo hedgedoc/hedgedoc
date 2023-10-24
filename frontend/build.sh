@@ -42,7 +42,12 @@ cp -R .next/static dist/frontend/.next/static
 cp next.config.js dist/frontend/next.config.js
 cp -R public dist/frontend/public
 rm -f dist/frontend/.env
-rm -rf dist/frontend/public/public
+
+if [ "${NODE_ENV}" = "production" ]; then
+    echo "🦔 > Remove public directory because this is a production build"
+    rm -rf dist/frontend/public/public
+fi
+
 rm -rf dist/frontend/src
 
 echo "🦔 > Done! You can run the build by going into the dist directory and executing \`node frontend/server.js\`"
