@@ -2337,7 +2337,7 @@ __metadata:
     "@types/markdown-it": "npm:13.0.5"
     "@types/minio": "npm:7.1.0"
     "@types/mysql": "npm:2.15.23"
-    "@types/node": "npm:20.8.7"
+    "@types/node": "npm:20.8.9"
     "@types/node-fetch": "npm:2.6.7"
     "@types/passport-http-bearer": "npm:1.0.39"
     "@types/passport-local": "npm:1.0.37"
@@ -2482,8 +2482,8 @@ __metadata:
     "@types/markdown-it": "npm:13.0.5"
     "@types/markdown-it-container": "npm:2.0.8"
     "@types/markdown-it-plantuml": "npm:1.4.3"
-    "@types/node": "npm:20.8.7"
-    "@types/react": "npm:18.2.31"
+    "@types/node": "npm:20.8.9"
+    "@types/react": "npm:18.2.32"
     "@types/react-dom": "npm:18.2.14"
     "@types/sass": "npm:1.43.1"
     "@types/testing-library__jest-dom": "npm:5.14.9"
@@ -2590,7 +2590,7 @@ __metadata:
   dependencies:
     "@jest/globals": "npm:29.7.0"
     "@jest/types": "npm:29.6.3"
-    "@types/react": "npm:18.2.31"
+    "@types/react": "npm:18.2.32"
     "@types/react-dom": "npm:18.2.14"
     "@typescript-eslint/eslint-plugin": "npm:6.8.0"
     "@typescript-eslint/parser": "npm:6.8.0"
@@ -4804,12 +4804,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:20.8.7":
+"@types/node@npm:*":
   version: 20.8.7
   resolution: "@types/node@npm:20.8.7"
   dependencies:
     undici-types: "npm:~5.25.1"
   checksum: e82b87e7f3f4c12acc5803db21f9144d5e87c20841db9ae98746958e038064700ab04294d08a3714a3df8bd710a974998e2e423443a5d031840cbba17fa126a7
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:20.8.9":
+  version: 20.8.9
+  resolution: "@types/node@npm:20.8.9"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 6fb5604ac087c8be9aeb9ee1413fae2e691c603c9a691bd722e113597b883f21e8380a44d114ab894b435a491bfc939c8478cd57bcf890c585b961343b124964
   languageName: node
   linkType: hard
 
@@ -4918,14 +4927,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.31":
-  version: 18.2.31
-  resolution: "@types/react@npm:18.2.31"
+"@types/react@npm:18.2.32":
+  version: 18.2.32
+  resolution: "@types/react@npm:18.2.32"
   dependencies:
     "@types/prop-types": "npm:*"
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: d2793873aef68038e0dc3ee05a573c663fcd3ba7402f1134a633df25aaeb72fd397479d5a5f02e9edc8cd5d000479a73f7bdc64cf00c50fb022c883f22e1fd0f
+  checksum: 648662cd852107d7933eee072fa5826069aca1ce15602db8573393ec694780de035cfac4d76f239762e2453b53a4aa8767ae057789661ccfee4d1311040953b9
   languageName: node
   linkType: hard
 
@@ -17667,6 +17676,13 @@ __metadata:
   version: 5.25.3
   resolution: "undici-types@npm:5.25.3"
   checksum: 60a47c6db451c00d27186d86a41fbd9677fa1f6d1a5350bff342c3985bd79fc3f5a638ebf56bbce21df46c701a687db43b3fbd588e1726e58047cea14d182fef
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~5.26.4":
+  version: 5.26.5
+  resolution: "undici-types@npm:5.26.5"
+  checksum: bb673d7876c2d411b6eb6c560e0c571eef4a01c1c19925175d16e3a30c4c428181fb8d7ae802a261f283e4166a0ac435e2f505743aa9e45d893f9a3df017b501
   languageName: node
   linkType: hard
 
