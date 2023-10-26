@@ -2567,7 +2567,7 @@ __metadata:
     sanitize-filename: "npm:1.6.3"
     sass: "npm:1.69.5"
     sharp: "npm:0.32.6"
-    tlds: "npm:1.243.0"
+    tlds: "npm:1.244.0"
     ts-loader: "npm:9.5.0"
     ts-mockery: "npm:1.2.0"
     ts-node: "https://github.com/TypeStrong/ts-node.git#c06cbe7d83b5585bb24f9963c42ce13eadd2202f"
@@ -16988,12 +16988,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tlds@npm:1.243.0":
-  version: 1.243.0
-  resolution: "tlds@npm:1.243.0"
+"tlds@npm:1.244.0":
+  version: 1.244.0
+  resolution: "tlds@npm:1.244.0"
   bin:
     tlds: bin.js
-  checksum: 4e4d0245695c512bf308f1e5752e7ac0454d4c17b0ccc810fd00e5f44135bd2d6937fa501f3c7826a122e60e49d3321ea7ad3b39a8f10bed135481f22f990022
+  checksum: b49d0eeb313be911a2941a68ffec6f4e5ccac7241626adea8f0128353541b62429020adb3b2a88df84721e8c412cd106d82065aba69a532cc50fea2b15299fdf
   languageName: node
   linkType: hard
 
