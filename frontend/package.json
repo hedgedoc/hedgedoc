@@ -142,7 +142,7 @@
     "@types/markdown-it-container": "2.0.8",
     "@types/markdown-it-plantuml": "1.4.3",
     "@types/node": "20.8.9",
-    "@types/react": "18.2.32",
+    "@types/react": "18.2.33",
     "@types/react-dom": "18.2.14",
     "@types/sass": "1.43.1",
     "@types/testing-library__jest-dom": "5.14.9",
