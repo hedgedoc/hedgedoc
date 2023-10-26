@@ -1951,9 +1951,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/language@npm:6.9.1":
-  version: 6.9.1
-  resolution: "@codemirror/language@npm:6.9.1"
+"@codemirror/language@npm:6.9.2":
+  version: 6.9.2
+  resolution: "@codemirror/language@npm:6.9.2"
   dependencies:
     "@codemirror/state": "npm:^6.0.0"
     "@codemirror/view": "npm:^6.0.0"
@@ -1961,7 +1961,7 @@ __metadata:
     "@lezer/highlight": "npm:^1.0.0"
     "@lezer/lr": "npm:^1.0.0"
     style-mod: "npm:^4.0.0"
-  checksum: 21a1e7d20eeff86b5b137bdda8a9cd4183e96a6a8995dce0d0531bc9e05e7e3d1658fb037261e4d3b8b9cc48e115a9ad9792c2f6ee07ff978580e353d37efd8d
+  checksum: 6220bb2500d07743b9fd77795961c555b8070608f3415acbd96186b61120614c166489bff119b6d88720b9bd7d5994265e828a821aacf21072db6894db0cec01
   languageName: node
   linkType: hard
 
@@ -2015,14 +2015,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/view@npm:6.21.3":
-  version: 6.21.3
-  resolution: "@codemirror/view@npm:6.21.3"
+"@codemirror/view@npm:6.21.4":
+  version: 6.21.4
+  resolution: "@codemirror/view@npm:6.21.4"
   dependencies:
     "@codemirror/state": "npm:^6.1.4"
     style-mod: "npm:^4.1.0"
     w3c-keyname: "npm:^2.2.4"
-  checksum: 10c9d4c5d52523d450efdfc4be8f3a4389ae6f4b986a1d8111c71fbb361a305832a3d2c7c207d0a4033d7bc8d04eafd06f75e6a6124607e4e5a6ec1e010ac337
+  checksum: 834fc8597bbad7430a746e97e484ba985683fa403dfedce21e4727615884e0c195be057eb772c267006b869a353292426bed47af584f7695524ed0a45a8d38a1
   languageName: node
   linkType: hard
 
@@ -2449,12 +2449,12 @@ __metadata:
     "@codemirror/autocomplete": "npm:6.10.2"
     "@codemirror/commands": "npm:6.3.0"
     "@codemirror/lang-markdown": "npm:6.2.2"
-    "@codemirror/language": "npm:6.9.1"
+    "@codemirror/language": "npm:6.9.2"
     "@codemirror/language-data": "npm:6.3.1"
     "@codemirror/lint": "npm:6.4.2"
     "@codemirror/state": "npm:6.3.1"
     "@codemirror/theme-one-dark": "npm:6.1.2"
-    "@codemirror/view": "npm:6.21.3"
+    "@codemirror/view": "npm:6.21.4"
     "@dicebear/core": "npm:7.0.1"
     "@dicebear/identicon": "npm:7.0.1"
     "@fontsource/source-sans-pro": "npm:5.0.8"
