@@ -10,9 +10,10 @@ import { useUiNotifications } from '../../../../notifications/ui-notification-bo
 import { SidebarButton } from '../../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../../types'
 import styles from './pin-note-sidebar-entry.module.css'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Pin as IconPin } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
+import { WaitSpinner } from '../../../../common/wait-spinner/wait-spinner'
 
 /**
  * Sidebar entry button that toggles the pinned status of the current note in the history.
@@ -22,6 +23,7 @@ import { Trans, useTranslation } from 'react-i18next'
  */
 export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
   useTranslation()
+  const [loading, setLoading] = useState(false)
   const noteId = useApplicationState((state) => state.noteDetails?.id)
   const history = useApplicationState((state) => state.history)
   const { showErrorNotification } = useUiNotifications()
@@ -38,8 +40,20 @@ export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ class
     if (!noteId) {
       return
     }
-    toggleHistoryEntryPinning(noteId).catch(showErrorNotification('landing.history.error.updateEntry.text'))
-  }, [noteId, showErrorNotification])
+    setLoading(true)
+    toggleHistoryEntryPinning(noteId)
+      .catch(showErrorNotification('landing.history.error.updateEntry.text'))
+      .finally(() => setLoading(false))
+  }, [noteId, setLoading, showErrorNotification])
+
+  if (loading) {
+    return (
+      <SidebarButton>
+        <WaitSpinner />
+        <Trans i18nKey={'common.loading'} />
+      </SidebarButton>
+    )
+  }
 
   return (
     <SidebarButton
