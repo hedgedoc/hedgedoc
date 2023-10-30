@@ -1,11 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import fontStyles from '../../../../global-styles/variables.module.scss'
 import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary/async-loading-boundary'
-import { ShowIf } from '../../../components/common/show-if/show-if'
 import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
 import { useDarkModeState } from '../../../hooks/dark-mode/use-dark-mode-state'
 import { Logger } from '../../../utils/logger'
@@ -71,9 +70,7 @@ export const FlowChart: React.FC<CodeProps> = ({ code }) => {
 
   return (
     <AsyncLoadingBoundary loading={loading || !flowchartLib} componentName={'flowchart.js'} error={!!libLoadingError}>
-      <ShowIf condition={syntaxError}>
-        <TranslatedApplicationErrorAlert errorI18nKey={'renderer.flowchart.invalidSyntax'} />
-      </ShowIf>
+      {syntaxError && <TranslatedApplicationErrorAlert errorI18nKey={'renderer.flowchart.invalidSyntax'} />}
       <div ref={diagramRef} {...testId('flowchart')} className={'text-center'} />
     </AsyncLoadingBoundary>
   )

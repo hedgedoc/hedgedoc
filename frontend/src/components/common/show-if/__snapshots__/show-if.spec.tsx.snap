@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`ShowIf does not render child if condition is false 1`] = `<div />`;
-
-exports[`ShowIf renders child if condition is true 1`] = `
-<div>
-  test
-</div>
-`;

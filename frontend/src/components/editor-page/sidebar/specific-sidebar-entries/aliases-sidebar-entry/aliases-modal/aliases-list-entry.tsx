@@ -10,7 +10,6 @@ import { useTranslatedText } from '../../../../../../hooks/common/use-translated
 import { updateMetadata } from '../../../../../../redux/note-details/methods'
 import { testId } from '../../../../../../utils/test-id'
 import { UiIcon } from '../../../../../common/icons/ui-icon'
-import { ShowIf } from '../../../../../common/show-if/show-if'
 import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
 import React, { useCallback } from 'react'
 import { Button } from 'react-bootstrap'
@@ -51,7 +50,7 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
     <li className={'list-group-item d-flex flex-row justify-content-between align-items-center'}>
       {alias.name}
       <div>
-        <ShowIf condition={alias.primaryAlias}>
+        {alias.primaryAlias && (
           <Button
             className={'me-2 text-warning'}
             variant='light'
@@ -60,8 +59,8 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
             {...testId('aliasIsPrimary')}>
             <UiIcon icon={IconStar} />
           </Button>
-        </ShowIf>
-        <ShowIf condition={!alias.primaryAlias}>
+        )}
+        {!alias.primaryAlias && (
           <Button
             className={'me-2'}
             variant='light'
@@ -71,7 +70,7 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
             {...testId('aliasButtonMakePrimary')}>
             <UiIcon icon={IconStarFill} />
           </Button>
-        </ShowIf>
+        )}
         <Button
           variant='light'
           className={'text-danger'}

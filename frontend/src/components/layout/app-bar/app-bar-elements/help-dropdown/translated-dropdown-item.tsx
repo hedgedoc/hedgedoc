@@ -5,7 +5,6 @@
  */
 import { useTranslatedText } from '../../../../../hooks/common/use-translated-text'
 import { UiIcon } from '../../../../common/icons/ui-icon'
-import { ShowIf } from '../../../../common/show-if/show-if'
 import type { TOptions } from 'i18next'
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
@@ -36,9 +35,7 @@ export const TranslatedDropdownItem: React.FC<TranslatedDropdownItemProps> = ({
 
   return (
     <Dropdown.Item {...props} title={title} className={'d-flex align-items-center'}>
-      <ShowIf condition={!!icon}>
-        <UiIcon icon={icon} className={'me-2'} />
-      </ShowIf>
+      {icon !== undefined && <UiIcon icon={icon} className={'me-2'} />}
       <span>{title}</span>
     </Dropdown.Item>
   )

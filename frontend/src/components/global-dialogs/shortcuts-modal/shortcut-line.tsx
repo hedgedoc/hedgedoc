@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ShowIf } from '../../common/show-if/show-if'
 import { AltKey } from './alt-key'
 import { ModifierKey } from './modifier-key'
 import React from 'react'
@@ -39,15 +38,19 @@ export const ShortcutLine: React.FC<ShortcutLineProps> = ({
         <Trans i18nKey={functionNameI18nKey} />
       </span>
       <span>
-        <ShowIf condition={showModifierKey}>
-          <ModifierKey />
-          <span> + </span>
-        </ShowIf>
+        {showModifierKey && (
+          <>
+            <ModifierKey />
+            <span> + </span>
+          </>
+        )}
 
-        <ShowIf condition={showAltKey}>
-          <AltKey />
-          <span> + </span>
-        </ShowIf>
+        {showAltKey && (
+          <>
+            <AltKey />
+            <span> + </span>
+          </>
+        )}
 
         <kbd>{functionKeyCode.toUpperCase()}</kbd>
       </span>

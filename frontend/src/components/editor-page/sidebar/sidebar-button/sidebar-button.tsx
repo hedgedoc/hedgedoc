@@ -5,7 +5,6 @@
  */
 import { concatCssClasses } from '../../../../utils/concat-css-classes'
 import { UiIcon } from '../../../common/icons/ui-icon'
-import { ShowIf } from '../../../common/show-if/show-if'
 import type { SidebarEntryProps } from '../types'
 import styles from './sidebar-button.module.scss'
 import type { PropsWithChildren } from 'react'
@@ -51,11 +50,11 @@ export const SidebarButton: React.FC<PropsWithChildren<SidebarEntryProps>> = ({
         className={concatCssClasses(styles.button, className, { [styles.hide]: hide })}
         disabled={disabled}
         {...props}>
-        <ShowIf condition={!!icon}>
+        {icon !== undefined && (
           <span className={`sidebar-button-icon ${styles.icon}`}>
             <UiIcon icon={icon} />
           </span>
-        </ShowIf>
+        )}
         <span className={concatCssClasses(styles.text, { [styles.disabled]: disabled })}>{children}</span>
       </button>
     </OverlayTrigger>

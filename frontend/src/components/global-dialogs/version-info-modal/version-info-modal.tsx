@@ -11,7 +11,6 @@ import { useFrontendConfig } from '../../common/frontend-config-context/use-fron
 import { TranslatedExternalLink } from '../../common/links/translated-external-link'
 import type { CommonModalProps } from '../../common/modals/common-modal'
 import { CommonModal } from '../../common/modals/common-modal'
-import { ShowIf } from '../../common/show-if/show-if'
 import React, { useMemo } from 'react'
 import { Modal } from 'react-bootstrap'
 
@@ -46,20 +45,20 @@ export const VersionInfoModal: React.FC<CommonModalProps> = ({ onHide, show }) =
       <Modal.Body>
         <CopyableField content={backendVersion} />
         <div className='d-flex justify-content-between mt-3'>
-          <ShowIf condition={!!links.sourceCode}>
+          {links.sourceCode !== undefined && (
             <TranslatedExternalLink
               i18nKey={'landing.versionInfo.sourceCode'}
               className={'btn btn-primary d-block mb-2'}
               href={links.sourceCode}
             />
-          </ShowIf>
-          <ShowIf condition={!!links.issues}>
+          )}
+          {links.issues !== undefined && (
             <TranslatedExternalLink
               i18nKey={'landing.versionInfo.issueTracker'}
               className={'btn btn-primary d-block mb-2'}
               href={links.issues}
             />
-          </ShowIf>
+          )}
         </div>
       </Modal.Body>
     </CommonModal>

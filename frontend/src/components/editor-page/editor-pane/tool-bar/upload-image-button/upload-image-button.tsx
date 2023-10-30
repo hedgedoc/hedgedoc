@@ -5,7 +5,6 @@
  */
 import { cypressId } from '../../../../../utils/cypress-attribute'
 import { Logger } from '../../../../../utils/logger'
-import { ShowIf } from '../../../../common/show-if/show-if'
 import { acceptedMimeTypes } from '../../../../common/upload-image-mimetypes'
 import { UploadInput } from '../../../../common/upload-input'
 import { useCodemirrorReferenceContext } from '../../../change-content-context/codemirror-reference-context'
@@ -47,14 +46,14 @@ export const UploadImageButton: React.FC = () => {
   return (
     <Fragment>
       <ToolbarButton i18nKey={'uploadImage'} icon={IconUpload} onClick={buttonClick}>
-        <ShowIf condition={!!codeMirror}>
+        {codeMirror !== undefined && (
           <UploadInput
             onLoad={onUploadImage}
             allowedFileTypes={acceptedMimeTypes}
             onClickRef={clickRef}
             {...cypressId('toolbar.uploadImage.input')}
           />
-        </ShowIf>
+        )}
       </ToolbarButton>
     </Fragment>
   )

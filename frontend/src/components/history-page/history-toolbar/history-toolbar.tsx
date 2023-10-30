@@ -8,7 +8,6 @@ import { useApplicationState } from '../../../hooks/common/use-application-state
 import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import { importHistoryEntries, setHistoryEntries } from '../../../redux/history/methods'
 import { UiIcon } from '../../common/icons/ui-icon'
-import { ShowIf } from '../../common/show-if/show-if'
 import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 import { ClearHistoryButton } from './clear-history-button'
 import { ExportHistoryButton } from './export-history-button'
@@ -89,13 +88,13 @@ export const HistoryToolbar: React.FC = () => {
       <div className={'me-1 mb-1'}>
         <HistoryRefreshButton />
       </div>
-      <ShowIf condition={userExists}>
+      {userExists && (
         <div className={'me-1 mb-1'}>
           <Button variant={'secondary'} title={uploadAllButtonTitle} onClick={onUploadAllToRemote}>
             <UiIcon icon={IconCloudUpload} />
           </Button>
         </div>
-      </ShowIf>
+      )}
       <div className={'me-1 mb-1'}>
         <HistoryViewModeToggleButton />
       </div>

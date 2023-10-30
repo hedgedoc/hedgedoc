@@ -1,9 +1,8 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ShowIf } from '../../common/show-if/show-if'
 import { useKeyboardShortcuts } from './hooks/use-keyboard-shortcuts'
 import { DividerButtonsShift, SplitDivider } from './split-divider/split-divider'
 import styles from './splitter.module.scss'
@@ -140,7 +139,7 @@ export const Splitter: React.FC<SplitterProps> = ({ additionalContainerClassName
       className={`flex-fill flex-row d-flex ${additionalContainerClassName || ''}${
         resizingInProgress ? ' ' + styles.resizing : ''
       }`}>
-      <ShowIf condition={resizingInProgress}>
+      {resizingInProgress && (
         <div
           className={styles['move-overlay']}
           onTouchMove={onMove}
@@ -148,7 +147,7 @@ export const Splitter: React.FC<SplitterProps> = ({ additionalContainerClassName
           onTouchCancel={onStopResizing}
           onTouchEnd={onStopResizing}
           onMouseUp={onStopResizing}></div>
-      </ShowIf>
+      )}
       <div className={styles['left']} style={{ width: `calc(${adjustedRelativeSplitValue}% - 5px)` }}>
         <div className={styles['inner']}>{left}</div>
       </div>

@@ -1,9 +1,8 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ShowIf } from '../../common/show-if/show-if'
 import { JumpAnchor } from '../../markdown-renderer/extensions/link-replacer/jump-anchor'
 import { tocSlugify } from './toc-slugify'
 import type { TocAst } from '@hedgedoc/markdown-it-plugins'
@@ -42,14 +41,12 @@ const buildReactDomFromTocAst = (
 
   return (
     <Fragment>
-      <ShowIf condition={toc.level > 0}>
+      {toc.level > 0 && (
         <JumpAnchor href={headlineUrl} title={rawName} jumpTargetId={slug.slice(1)}>
           {rawName}
         </JumpAnchor>
-      </ShowIf>
-      <ShowIf condition={children.length > 0}>
-        <ul>{children}</ul>
-      </ShowIf>
+      )}
+      {children.length > 0 && <ul>{children}</ul>}
     </Fragment>
   )
 }

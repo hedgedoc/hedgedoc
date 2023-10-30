@@ -6,7 +6,6 @@
 import { useApplicationState } from '../../hooks/common/use-application-state'
 import { useTranslatedText } from '../../hooks/common/use-translated-text'
 import { InternalLink } from '../common/links/internal-link'
-import { ShowIf } from '../common/show-if/show-if'
 import { NoteInfoLineCreatedAt } from '../editor-page/sidebar/specific-sidebar-entries/note-info-sidebar-menu/note-info-line/note-info-line-created-at'
 import { NoteInfoLineUpdatedBy } from '../editor-page/sidebar/specific-sidebar-entries/note-info-sidebar-menu/note-info-line/note-info-line-updated-by'
 import styles from './document-infobar.module.scss'
@@ -36,15 +35,13 @@ export const DocumentInfobar: React.FC = () => {
         </div>
         <span className={'ms-auto'}>
           {noteDetails.viewCount} <Trans i18nKey={'views.readOnly.viewCount'} />
-          <ShowIf condition={true}>
-            <InternalLink
-              text={''}
-              href={`/n/${noteDetails.primaryAddress}`}
-              icon={IconPencil}
-              className={'text-primary text-decoration-none mx-1'}
-              title={linkTitle}
-            />
-          </ShowIf>
+          <InternalLink
+            text={''}
+            href={`/n/${noteDetails.primaryAddress}`}
+            icon={IconPencil}
+            className={'text-primary text-decoration-none mx-1'}
+            title={linkTitle}
+          />
         </span>
       </div>
       <div className={'col-md'}>&nbsp;</div>

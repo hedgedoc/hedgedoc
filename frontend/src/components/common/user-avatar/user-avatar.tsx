@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useTranslatedText } from '../../../hooks/common/use-translated-text'
-import { ShowIf } from '../show-if/show-if'
 import styles from './user-avatar.module.scss'
 import React, { useMemo } from 'react'
 import { useAvatarUrl } from './hooks/use-avatar-url'
@@ -64,9 +63,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
         height={imageSize}
         width={imageSize}
       />
-      <ShowIf condition={showName}>
-        <span className={`ms-2 me-1 ${styles['user-line-name']}`}>{displayName}</span>
-      </ShowIf>
+      {showName && <span className={`ms-2 me-1 ${styles['user-line-name']}`}>{displayName}</span>}
     </span>
   )
 }

@@ -6,7 +6,6 @@
 import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
 import type { ModalVisibilityProps } from '../../../../../common/modals/common-modal'
 import { CommonModal } from '../../../../../common/modals/common-modal'
-import { ShowIf } from '../../../../../common/show-if/show-if'
 import { LinkType, NoteUrlField } from './note-url-field'
 import { NoteType } from '@hedgedoc/commons'
 import React from 'react'
@@ -32,14 +31,18 @@ export const ShareModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => 
       <Modal.Body>
         <Trans i18nKey={'editor.modal.shareLink.editorDescription'} />
         <NoteUrlField type={LinkType.EDITOR} />
-        <ShowIf condition={noteFrontmatter.type === NoteType.SLIDE}>
-          <Trans i18nKey={'editor.modal.shareLink.slidesDescription'} />
-          <NoteUrlField type={LinkType.SLIDESHOW} />
-        </ShowIf>
-        <ShowIf condition={noteFrontmatter.type === NoteType.DOCUMENT}>
-          <Trans i18nKey={'editor.modal.shareLink.viewOnlyDescription'} />
-          <NoteUrlField type={LinkType.DOCUMENT} />
-        </ShowIf>
+        {noteFrontmatter.type === NoteType.SLIDE && (
+          <>
+            <Trans i18nKey={'editor.modal.shareLink.slidesDescription'} />
+            <NoteUrlField type={LinkType.SLIDESHOW} />
+          </>
+        )}
+        {noteFrontmatter.type === NoteType.DOCUMENT && (
+          <>
+            <Trans i18nKey={'editor.modal.shareLink.viewOnlyDescription'} />
+            <NoteUrlField type={LinkType.DOCUMENT} />
+          </>
+        )}
       </Modal.Body>
     </CommonModal>
   )

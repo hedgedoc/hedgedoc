@@ -1,10 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary/async-loading-boundary'
-import { ShowIf } from '../../../components/common/show-if/show-if'
 import { WaitSpinner } from '../../../components/common/wait-spinner/wait-spinner'
 import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
 import { useEffectWithCatch } from '../../../hooks/common/use-effect-with-catch'
@@ -49,9 +48,9 @@ export const AbcFrame: React.FC<CodeProps> = ({ code }) => {
 
   return (
     <AsyncLoadingBoundary loading={loading || !abcLib} error={!!loadingError} componentName={'abc.js'}>
-      <ShowIf condition={!!renderError}>
+      {renderError !== undefined && (
         <TranslatedApplicationErrorAlert errorI18nKey={'editor.embeddings.abcJs.errorWhileRendering'} />
-      </ShowIf>
+      )}
       <div
         ref={container}
         className={`${styles['abcjs-score']} bg-white text-black svg-container`}

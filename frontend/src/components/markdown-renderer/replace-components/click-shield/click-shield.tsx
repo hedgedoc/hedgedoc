@@ -1,12 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { PropsWithDataCypressId } from '../../../../utils/cypress-attribute'
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { Logger } from '../../../../utils/logger'
-import { ShowIf } from '../../../common/show-if/show-if'
 import { ProxyImageFrame } from '../../extensions/image/proxy-image-frame'
 import styles from './click-shield.module.scss'
 import type { Property } from 'csstype'
@@ -113,20 +112,25 @@ export const ClickShield: React.FC<ClickShieldProps> = ({
     [hoverIcon]
   )
 
+  if (showChildren) {
+    return (
+      <span className={containerClassName} {...cypressId(props['data-cypress-id'])}>
+        {children}
+      </span>
+    )
+  }
+
   return (
     <span className={containerClassName} {...cypressId(props['data-cypress-id'])}>
-      <ShowIf condition={showChildren}>{children}</ShowIf>
-      <ShowIf condition={!showChildren}>
-        <span className={`${styles['click-shield']} d-inline-block ratio ratio-16x9`} onClick={doShowChildren}>
-          {previewBackground}
-          <span className={`${styles['preview-hover']}`}>
-            <span>
-              <Trans i18nKey={'renderer.clickShield.previewHoverText'} values={hoverTextTranslationValues} />
-            </span>
-            {icon}
+      <span className={`${styles['click-shield']} d-inline-block ratio ratio-16x9`} onClick={doShowChildren}>
+        {previewBackground}
+        <span className={`${styles['preview-hover']}`}>
+          <span>
+            <Trans i18nKey={'renderer.clickShield.previewHoverText'} values={hoverTextTranslationValues} />
           </span>
+          {icon}
         </span>
-      </ShowIf>
+      </span>
     </span>
   )
 }

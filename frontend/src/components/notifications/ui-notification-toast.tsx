@@ -6,7 +6,6 @@
 import { cypressId } from '../../utils/cypress-attribute'
 import { Logger } from '../../utils/logger'
 import { UiIcon } from '../common/icons/ui-icon'
-import { ShowIf } from '../common/show-if/show-if'
 import styles from './notifications.module.scss'
 import type { UiNotification } from './types'
 import { useUiNotifications } from './ui-notification-boundary'
@@ -106,9 +105,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({ notificatio
       {...cypressId('notification-toast')}>
       <Toast.Header>
         <strong className='me-auto'>
-          <ShowIf condition={!!notification.icon}>
-            <UiIcon icon={notification.icon} className={'me-1'} />
-          </ShowIf>
+          {notification.icon !== undefined && <UiIcon icon={notification.icon} className={'me-1'} />}
           <Trans i18nKey={notification.titleI18nKey} tOptions={notification.titleI18nOptions} />
         </strong>
         <small>{formattedCreatedAtDate}</small>

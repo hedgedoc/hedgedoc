@@ -1,11 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { getAccessTokenList } from '../../../api/tokens'
 import type { AccessToken } from '../../../api/tokens/types'
-import { ShowIf } from '../../common/show-if/show-if'
 import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 import { AccessTokenCreationForm } from './access-token-creation-form/access-token-creation-form'
 import { AccessTokenListEntry } from './access-token-list-entry'
@@ -58,14 +57,10 @@ export const ProfileAccessTokens: React.FC = () => {
           <Trans i18nKey='profile.accessTokens.infoDev' />
         </p>
         <hr />
-        <ShowIf condition={accessTokens.length === 0}>
-          <Trans i18nKey='profile.accessTokens.noTokens' />
-        </ShowIf>
+        {accessTokens.length === 0 && <Trans i18nKey='profile.accessTokens.noTokens' />}
         <ListGroup>{tokensDom}</ListGroup>
         <hr />
-        <ShowIf condition={accessTokens.length < 200}>
-          <AccessTokenCreationForm onUpdateList={refreshAccessTokens} />
-        </ShowIf>
+        {accessTokens.length < 200 && <AccessTokenCreationForm onUpdateList={refreshAccessTokens} />}
       </Card.Body>
     </Card>
   )

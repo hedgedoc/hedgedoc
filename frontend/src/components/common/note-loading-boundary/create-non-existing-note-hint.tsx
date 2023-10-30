@@ -6,7 +6,6 @@
 import { createNoteWithPrimaryAlias } from '../../../api/notes'
 import { testId } from '../../../utils/test-id'
 import { UiIcon } from '../icons/ui-icon'
-import { ShowIf } from '../show-if/show-if'
 import React, { useCallback, useEffect } from 'react'
 import { Alert, Button } from 'react-bootstrap'
 import {
@@ -85,9 +84,7 @@ export const CreateNonExistingNoteHint: React.FC<CreateNonExistingNoteHintProps>
             className='mx-2'
             onClick={onClickHandler}
             {...testId('createNoteButton')}>
-            <ShowIf condition={returnState.loading}>
-              <UiIcon icon={IconArrowRepeat} className={'me-2'} spin={true} />
-            </ShowIf>
+            {returnState.loading && <UiIcon icon={IconArrowRepeat} className={'me-2'} spin={true} />}
             <Trans i18nKey={'noteLoadingBoundary.createNote.create'} />
           </Button>
         </div>

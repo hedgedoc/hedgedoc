@@ -10,7 +10,6 @@ import { useFrontendConfig } from '../../common/frontend-config-context/use-fron
 import { AuthProviderType } from '../../../api/config/types'
 import { LocalLoginCardBody } from './local-login-card-body'
 import { LocalRegisterCardBody } from './register/local-register-card-body'
-import { ShowIf } from '../../common/show-if/show-if'
 
 /**
  * Shows the card that processes local logins and registers.
@@ -29,10 +28,12 @@ export const LocalLoginCard: React.FC = () => {
   return (
     <Card>
       <LocalLoginCardBody />
-      <ShowIf condition={frontendConfig.allowRegister}>
-        <hr className={'m-0'} />
-        <LocalRegisterCardBody />
-      </ShowIf>
+      {frontendConfig.allowRegister && (
+        <>
+          <hr className={'m-0'} />
+          <LocalRegisterCardBody />
+        </>
+      )}
     </Card>
   )
 }

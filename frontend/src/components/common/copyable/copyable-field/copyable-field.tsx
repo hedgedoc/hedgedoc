@@ -1,11 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Logger } from '../../../../utils/logger'
 import { UiIcon } from '../../icons/ui-icon'
-import { ShowIf } from '../../show-if/show-if'
 import { CopyToClipboardButton } from '../copy-to-clipboard-button/copy-to-clipboard-button'
 import React, { useCallback, useMemo } from 'react'
 import { Button, FormControl, InputGroup } from 'react-bootstrap'
@@ -54,13 +53,13 @@ export const CopyableField: React.FC<CopyableFieldProps> = ({ content, shareOrig
       <InputGroup.Text>
         <CopyToClipboardButton variant={'outline-secondary'} content={content} />
       </InputGroup.Text>
-      <ShowIf condition={sharingSupported}>
+      {sharingSupported && (
         <InputGroup.Text>
           <Button variant='secondary' title={'Share'} onClick={doShareAction}>
             <UiIcon icon={IconShare} />
           </Button>
         </InputGroup.Text>
-      </ShowIf>
+      )}
     </InputGroup>
   )
 }

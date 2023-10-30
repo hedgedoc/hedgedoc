@@ -1,9 +1,8 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ShowIf } from '../../common/show-if/show-if'
 import styles from '../application-loader.module.scss'
 import { LoadingAnimation } from './loading-animation'
 import type { ReactElement } from 'react'
@@ -27,9 +26,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ errorMessage }) =>
           <LoadingAnimation error={!!errorMessage} />
         </span>
       </div>
-      <ShowIf condition={!!errorMessage}>
-        <Alert variant={'danger'}>{errorMessage}</Alert>
-      </ShowIf>
+      {errorMessage !== undefined && <Alert variant={'danger'}>{errorMessage}</Alert>}
     </div>
   )
 }
