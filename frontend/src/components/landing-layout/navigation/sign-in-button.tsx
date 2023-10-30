@@ -6,7 +6,6 @@
 import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
-import { ShowIf } from '../../common/show-if/show-if'
 import Link from 'next/link'
 import React, { useMemo } from 'react'
 import { Button } from 'react-bootstrap'
@@ -39,13 +38,15 @@ export const SignInButton: React.FC<SignInButtonProps> = ({ variant, ...props })
   }, [authProviders, pathname])
   const buttonTitle = useTranslatedText('login.signIn')
 
+  if (authProviders.length === 0) {
+    return null
+  }
+
   return (
-    <ShowIf condition={authProviders.length > 0}>
-      <Link href={loginLink} passHref={true}>
-        <Button title={buttonTitle} {...cypressId('sign-in-button')} variant={variant || 'success'} {...props}>
-          <Trans i18nKey='login.signIn' />
-        </Button>
-      </Link>
-    </ShowIf>
+    <Link href={loginLink} passHref={true}>
+      <Button title={buttonTitle} {...cypressId('sign-in-button')} variant={variant || 'success'} {...props}>
+        <Trans i18nKey='login.signIn' />
+      </Button>
+    </Link>
   )
 }

@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ShowIf } from '../../../../../common/show-if/show-if'
 import { DropdownHeader } from '../dropdown-header'
 import { TranslatedDropdownItem } from '../translated-dropdown-item'
 import type { ReactElement } from 'react'
@@ -29,15 +28,15 @@ export const LegalSubmenu: React.FC = (): null | ReactElement => {
     <Fragment>
       <Dropdown.Divider />
       <DropdownHeader i18nKey={'appbar.help.legal.header'} />
-      <ShowIf condition={!!specialUrls.privacy}>
+      {specialUrls.privacy !== undefined && (
         <TranslatedDropdownItem href={specialUrls.privacy} i18nKey={'appbar.help.legal.privacy'} />
-      </ShowIf>
-      <ShowIf condition={!!specialUrls.termsOfUse}>
+      )}
+      {specialUrls.termsOfUse !== undefined && (
         <TranslatedDropdownItem href={specialUrls.termsOfUse} i18nKey={'appbar.help.legal.termsOfUse'} />
-      </ShowIf>
-      <ShowIf condition={!!specialUrls.imprint}>
+      )}
+      {specialUrls.imprint !== undefined && (
         <TranslatedDropdownItem href={specialUrls.imprint} i18nKey={'appbar.help.legal.imprint'} />
-      </ShowIf>
+      )}
     </Fragment>
   )
 }

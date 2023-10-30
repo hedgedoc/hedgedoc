@@ -5,7 +5,6 @@
  */
 import { cypressId } from '../../../../utils/cypress-attribute'
 import { FileContentFormat, readFile } from '../../../../utils/read-file'
-import { ShowIf } from '../../../common/show-if/show-if'
 import { UploadInput } from '../../../common/upload-input'
 import { useChangeEditorContentCallback } from '../../change-content-context/use-change-editor-content-callback'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
@@ -54,14 +53,14 @@ export const ImportMarkdownSidebarEntry: React.FC = () => {
         disabled={!changeEditorContent}>
         <Trans i18nKey={'editor.import.file'} />
       </SidebarButton>
-      <ShowIf condition={!!changeEditorContent}>
+      {changeEditorContent !== undefined && (
         <UploadInput
           onLoad={onImportMarkdown}
           {...cypressId('menu-import-markdown-input')}
           allowedFileTypes={'.md, text/markdown, text/plain'}
           onClickRef={clickRef}
         />
-      </ShowIf>
+      )}
     </Fragment>
   )
 }

@@ -5,7 +5,6 @@
  */
 import type { RevisionMetadata } from '../../../../../../api/revisions/types'
 import { UiIcon } from '../../../../../common/icons/ui-icon'
-import { ShowIf } from '../../../../../common/show-if/show-if'
 import { UserAvatarForUser } from '../../../../../common/user-avatar/user-avatar-for-user'
 import { WaitSpinner } from '../../../../../common/wait-spinner/wait-spinner'
 import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
@@ -72,10 +71,8 @@ export const RevisionListEntry: React.FC<RevisionListEntryProps> = ({ active, on
       </span>
       <span className={'d-flex flex-row my-1 align-items-center'}>
         <UiIcon icon={IconPerson} className={'mx-2'} />
-        <ShowIf condition={revisionAuthors.loading}>
-          <WaitSpinner />
-        </ShowIf>
-        <ShowIf condition={!revisionAuthors.error && !revisionAuthors.loading}>{revisionAuthors.value}</ShowIf>
+        {revisionAuthors.loading && <WaitSpinner />}
+        {!revisionAuthors.error && !revisionAuthors.loading && revisionAuthors.value}
       </span>
       <span>
         <UiIcon icon={IconPersonPlus} className='mx-2' />

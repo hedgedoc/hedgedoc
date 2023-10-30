@@ -1,9 +1,8 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ShowIf } from '../show-if/show-if'
 import { PagerItem } from './pager-item'
 import React, { useEffect, useMemo, useState } from 'react'
 import { Pagination } from 'react-bootstrap'
@@ -70,17 +69,21 @@ export const PagerPagination: React.FC<PaginationProps> = ({
 
   return (
     <Pagination dir='ltr'>
-      <ShowIf condition={correctedLowerPageIndex > 0}>
-        <PagerItem key={0} index={0} onClick={setPageIndex} />
-        <Pagination.Ellipsis disabled />
-      </ShowIf>
+      {correctedLowerPageIndex > 0 && (
+        <>
+          <PagerItem key={0} index={0} onClick={setPageIndex} />
+          <Pagination.Ellipsis disabled />
+        </>
+      )}
       {paginationItemsBefore}
       <Pagination.Item active>{correctedPageIndex + 1}</Pagination.Item>
       {paginationItemsAfter}
-      <ShowIf condition={correctedUpperPageIndex < lastPageIndex}>
-        <Pagination.Ellipsis disabled />
-        <PagerItem key={lastPageIndex} index={lastPageIndex} onClick={setPageIndex} />
-      </ShowIf>
+      {correctedUpperPageIndex < lastPageIndex && (
+        <>
+          <Pagination.Ellipsis disabled />
+          <PagerItem key={lastPageIndex} index={lastPageIndex} onClick={setPageIndex} />
+        </>
+      )}
     </Pagination>
   )
 }

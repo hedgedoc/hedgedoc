@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { UiIcon } from '../../../common/icons/ui-icon'
-import { ShowIf } from '../../../common/show-if/show-if'
 import styles from './sidebar-menu-info-entry.module.css'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
@@ -32,9 +31,7 @@ export const SidebarMenuInfoEntry: React.FC<PropsWithChildren<SidebarMenuInfoEnt
 
   return (
     <div className={`d-flex flex-row align-items-center p-1 ${styles['entry']}`}>
-      <ShowIf condition={icon !== undefined}>
-        <UiIcon icon={icon} className={'mx-2'} size={1.25} />
-      </ShowIf>
+      {icon !== undefined && <UiIcon icon={icon} className={'mx-2'} size={1.25} />}
       <div className={'d-flex flex-column px-1'}>
         <span className={styles['title']}>
           <Trans i18nKey={titleI18nKey} />

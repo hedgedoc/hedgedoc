@@ -5,7 +5,6 @@
  */
 import { useFrontendConfig } from '../common/frontend-config-context/use-frontend-config'
 import { TranslatedExternalLink } from '../common/links/translated-external-link'
-import { ShowIf } from '../common/show-if/show-if'
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
@@ -16,21 +15,25 @@ export const RegisterInfos: React.FC = () => {
   useTranslation()
   const specialUrls = useFrontendConfig().specialUrls
 
+  if (specialUrls.termsOfUse === undefined && specialUrls.privacy === undefined) {
+    return null
+  }
+
   return (
-    <ShowIf condition={!!specialUrls.termsOfUse || !!specialUrls.privacy}>
+    <>
       <Trans i18nKey='login.register.infoTermsPrivacy' />
       <ul>
-        <ShowIf condition={!!specialUrls.termsOfUse}>
+        {specialUrls.termsOfUse !== undefined && (
           <li>
             <TranslatedExternalLink i18nKey='appbar.help.legal.termsOfUse' href={specialUrls.termsOfUse ?? ''} />
           </li>
-        </ShowIf>
-        <ShowIf condition={!!specialUrls.privacy}>
+        )}
+        {specialUrls.privacy !== undefined && (
           <li>
             <TranslatedExternalLink i18nKey='appbar.help.legal.privacy' href={specialUrls.privacy ?? ''} />
           </li>
-        </ShowIf>
+        )}
       </ul>
-    </ShowIf>
+    </>
   )
 }

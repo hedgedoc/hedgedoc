@@ -5,7 +5,6 @@
  */
 import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
 import { cypressId } from '../../../../../../utils/cypress-attribute'
-import { ShowIf } from '../../../../../common/show-if/show-if'
 import { useEditorReceiveHandler } from '../../../../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
 import type { OnWordCountCalculatedMessage } from '../../../../../render-page/window-post-message-communicator/rendering-message'
 import { CommunicationMessageType } from '../../../../../render-page/window-post-message-communicator/rendering-message'
@@ -42,12 +41,8 @@ export const NoteInfoLineWordCount: React.FC<NoteInfoLineWordCountProps> = ({ vi
 
   return (
     <SidebarMenuInfoEntry titleI18nKey={'editor.noteInfo.wordCount'} icon={IconAlignStart}>
-      <ShowIf condition={wordCount === null}>
-        <Trans i18nKey={'common.loading'} />
-      </ShowIf>
-      <ShowIf condition={wordCount !== null}>
-        <span {...cypressId('document-info-word-count')}>{wordCount}</span>
-      </ShowIf>
+      {wordCount === null && <Trans i18nKey={'common.loading'} />}
+      {wordCount !== null && <span {...cypressId('document-info-word-count')}>{wordCount}</span>}
     </SidebarMenuInfoEntry>
   )
 }

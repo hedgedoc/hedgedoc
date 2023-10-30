@@ -1,10 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { concatCssClasses } from '../../../utils/concat-css-classes'
-import { ShowIf } from '../../common/show-if/show-if'
 import styles from './table-of-contents.module.scss'
 import { useBuildReactDomFromTocAst } from './use-build-react-dom-from-toc-ast'
 import type { TocAst } from '@hedgedoc/markdown-it-plugins'
@@ -32,9 +31,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ ast, maxDepth 
 
   return (
     <div className={concatCssClasses(styles.toc, className)}>
-      <ShowIf condition={ast.children.length === 0}>
-        <Trans i18nKey={'editor.infoToc'} />
-      </ShowIf>
+      {ast.children.length === 0 && <Trans i18nKey={'editor.infoToc'} />}
       {tocTree}
     </div>
   )

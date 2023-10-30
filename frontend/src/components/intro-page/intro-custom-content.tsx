@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -29,7 +29,7 @@ export const IntroCustomContent: React.FC = () => {
     <AsyncLoadingBoundary loading={loading || !value} error={error} componentName={'custom intro content'}>
       <RendererIframe
         frameClasses={'w-100 overflow-y-hidden'}
-        markdownContentLines={value as string[]}
+        markdownContentLines={value ?? []}
         rendererType={RendererType.SIMPLE}
         adaptFrameHeightToContent={true}
         showWaitSpinner={true}

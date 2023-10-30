@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -19,7 +19,6 @@ import type {
   SetScrollStateMessage
 } from '../../render-page/window-post-message-communicator/rendering-message'
 import { CommunicationMessageType } from '../../render-page/window-post-message-communicator/rendering-message'
-import { ShowIf } from '../show-if/show-if'
 import { WaitSpinner } from '../wait-spinner/wait-spinner'
 import { useEffectOnRenderTypeChange } from './hooks/use-effect-on-render-type-change'
 import { useForceRenderPageUrlOnIframeLoadCallback } from './hooks/use-force-render-page-url-on-iframe-load-callback'
@@ -176,9 +175,7 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
 
   return (
     <Fragment>
-      <ShowIf condition={!rendererReady && showWaitSpinner}>
-        <WaitSpinner />
-      </ShowIf>
+      {!rendererReady && showWaitSpinner && <WaitSpinner />}
       <iframe
         style={{ height: `${frameHeight}px` }}
         {...cypressId('documentIframe')}

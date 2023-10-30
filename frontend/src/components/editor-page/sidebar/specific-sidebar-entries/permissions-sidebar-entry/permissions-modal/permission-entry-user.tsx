@@ -7,7 +7,6 @@ import { removeUserPermission, setUserPermission } from '../../../../../../api/p
 import { getUser } from '../../../../../../api/users'
 import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
 import { setNotePermissionsFromServer } from '../../../../../../redux/note-details/methods'
-import { ShowIf } from '../../../../../common/show-if/show-if'
 import { UserAvatarForUser } from '../../../../../common/user-avatar/user-avatar-for-user'
 import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
@@ -18,6 +17,7 @@ import React, { useCallback, useMemo } from 'react'
 import { useAsync } from 'react-use'
 import { PermissionInconsistentAlert } from './permission-inconsistent-alert'
 import { useGetSpecialPermissions } from './hooks/use-get-special-permissions'
+import { AsyncLoadingBoundary } from '../../../../../common/async-loading-boundary/async-loading-boundary'
 
 export interface PermissionEntryUserProps {
   entry: NoteUserPermissionEntry
@@ -87,7 +87,7 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
   }
 
   return (
-    <ShowIf condition={!loading && !error}>
+    <AsyncLoadingBoundary loading={loading} error={error} componentName={'PermissionEntryUser'}>
       <li className={'list-group-item d-flex flex-row justify-content-between align-items-center'}>
         <UserAvatarForUser user={value} />
         <div className={'d-flex flex-row align-items-center'}>
@@ -103,6 +103,6 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
           />
         </div>
       </li>
-    </ShowIf>
+    </AsyncLoadingBoundary>
   )
 }

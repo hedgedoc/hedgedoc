@@ -8,7 +8,6 @@ import type { PropsWithDataCypressId } from '../../../utils/cypress-attribute'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { testId } from '../../../utils/test-id'
 import { UiIcon } from '../icons/ui-icon'
-import { ShowIf } from '../show-if/show-if'
 import type { PropsWithChildren, ReactElement } from 'react'
 import React, { Fragment, useMemo } from 'react'
 import { Modal } from 'react-bootstrap'
@@ -66,25 +65,27 @@ export const CommonModal: React.FC<PropsWithChildren<CommonModalProps>> = ({
     return titleI18nKey !== undefined ? <Trans i18nKey={titleI18nKey} /> : <span>{title}</span>
   }, [titleI18nKey, title])
 
+  if (!show) {
+    return null
+  }
+
   return (
-    <ShowIf condition={show}>
-      <Modal
-        {...cypressId(props)}
-        show={show}
-        onHide={onHide}
-        animation={true}
-        {...testId('commonModal')}
-        dialogClassName={concatCssClasses(additionalClasses)}
-        size={modalSize}>
-        <Modal.Header closeButton={!!showCloseButton}>
-          <Modal.Title>
-            <UiIcon icon={titleIcon} nbsp={true} />
-            {titleElement}
-          </Modal.Title>
-          {additionalTitleElement ?? <Fragment />}
-        </Modal.Header>
-        {children}
-      </Modal>
-    </ShowIf>
+    <Modal
+      {...cypressId(props)}
+      show={show}
+      onHide={onHide}
+      animation={true}
+      {...testId('commonModal')}
+      dialogClassName={concatCssClasses(additionalClasses)}
+      size={modalSize}>
+      <Modal.Header closeButton={!!showCloseButton}>
+        <Modal.Title>
+          <UiIcon icon={titleIcon} nbsp={true} />
+          {titleElement}
+        </Modal.Title>
+        {additionalTitleElement ?? <Fragment />}
+      </Modal.Header>
+      {children}
+    </Modal>
   )
 }

@@ -1,9 +1,8 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ShowIf } from '../../../components/common/show-if/show-if'
 import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { Logger } from '../../../utils/logger'
@@ -65,9 +64,7 @@ export const MermaidChart: React.FC<CodeProps> = ({ code }) => {
 
   return (
     <Fragment>
-      <ShowIf condition={!!error}>
-        <ApplicationErrorAlert className={'text-wrap'}>{error?.message}</ApplicationErrorAlert>
-      </ShowIf>
+      {error !== undefined && <ApplicationErrorAlert className={'text-wrap'}>{error?.message}</ApplicationErrorAlert>}
       <div
         {...cypressId('mermaid-frame')}
         className={`text-center ${styles['mermaid']} bg-dark text-black`}

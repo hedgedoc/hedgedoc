@@ -5,7 +5,6 @@
  */
 import { useMayEdit } from '../../../../hooks/common/use-may-edit'
 import { concatCssClasses } from '../../../../utils/concat-css-classes'
-import { ShowIf } from '../../../common/show-if/show-if'
 import { BoldButton } from './buttons/bold-button'
 import { CheckListButton } from './buttons/check-list-button'
 import { CodeFenceButton } from './buttons/code-fence-button'
@@ -38,41 +37,43 @@ const EmojiPickerButton = React.lazy(() => import('./emoji-picker/emoji-picker-b
 export const ToolBar: React.FC = () => {
   const mayEdit = useMayEdit()
 
+  if (!mayEdit) {
+    return null
+  }
+
   return (
-    <ShowIf condition={mayEdit}>
-      <ButtonToolbar className={concatCssClasses(styles.toolbar, 'my-1')}>
-        <ButtonGroup className={'mx-1 flex-wrap'}>
-          <BoldButton />
-          <ItalicButton />
-          <UnderlineButton />
-          <StrikethroughButton />
-          <SubscriptButton />
-          <SuperscriptButton />
-          <HighlightButton />
-        </ButtonGroup>
-        <ButtonGroup className={'mx-1 flex-wrap'}>
-          <HeaderLevelButton />
-          <CodeFenceButton />
-          <QuotesButton />
-          <UnorderedListButton />
-          <OrderedListButton />
-          <CheckListButton />
-        </ButtonGroup>
-        <ButtonGroup className={'mx-1 flex-wrap'}>
-          <LinkButton />
-          <ImageLinkButton />
-          <UploadImageButton />
-        </ButtonGroup>
-        <ButtonGroup className={'mx-1 flex-wrap'}>
-          <TablePickerButton />
-          <HorizontalLineButton />
-          <CollapsibleBlockButton />
-          <CommentButton />
-          <Suspense fallback={<Fragment />}>
-            <EmojiPickerButton />
-          </Suspense>
-        </ButtonGroup>
-      </ButtonToolbar>
-    </ShowIf>
+    <ButtonToolbar className={concatCssClasses(styles.toolbar, 'my-1')}>
+      <ButtonGroup className={'mx-1 flex-wrap'}>
+        <BoldButton />
+        <ItalicButton />
+        <UnderlineButton />
+        <StrikethroughButton />
+        <SubscriptButton />
+        <SuperscriptButton />
+        <HighlightButton />
+      </ButtonGroup>
+      <ButtonGroup className={'mx-1 flex-wrap'}>
+        <HeaderLevelButton />
+        <CodeFenceButton />
+        <QuotesButton />
+        <UnorderedListButton />
+        <OrderedListButton />
+        <CheckListButton />
+      </ButtonGroup>
+      <ButtonGroup className={'mx-1 flex-wrap'}>
+        <LinkButton />
+        <ImageLinkButton />
+        <UploadImageButton />
+      </ButtonGroup>
+      <ButtonGroup className={'mx-1 flex-wrap'}>
+        <TablePickerButton />
+        <HorizontalLineButton />
+        <CollapsibleBlockButton />
+        <CommentButton />
+        <Suspense fallback={<Fragment />}>
+          <EmojiPickerButton />
+        </Suspense>
+      </ButtonGroup>
+    </ButtonToolbar>
   )
 }

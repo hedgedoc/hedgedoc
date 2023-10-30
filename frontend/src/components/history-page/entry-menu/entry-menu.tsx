@@ -6,7 +6,6 @@
 import { HistoryEntryOrigin } from '../../../api/history/types'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { UiIcon } from '../../common/icons/ui-icon'
-import { ShowIf } from '../../common/show-if/show-if'
 import { DeleteNoteItem } from './delete-note-item'
 import styles from './entry-menu.module.scss'
 import { RemoveNoteEntryItem } from './remove-note-entry-item'
@@ -60,27 +59,29 @@ export const EntryMenu: React.FC<EntryMenuProps> = ({
           <Trans i18nKey='landing.history.menu.recentNotes' />
         </Dropdown.Header>
 
-        <ShowIf condition={origin === HistoryEntryOrigin.LOCAL}>
+        {origin === HistoryEntryOrigin.LOCAL && (
           <Dropdown.Item disabled>
             <UiIcon icon={IconLaptop} className='mx-2' />
             <Trans i18nKey='landing.history.menu.entryLocal' />
           </Dropdown.Item>
-        </ShowIf>
+        )}
 
-        <ShowIf condition={origin === HistoryEntryOrigin.REMOTE}>
+        {origin === HistoryEntryOrigin.REMOTE && (
           <Dropdown.Item disabled>
             <UiIcon icon={IconCloud} className='mx-2' />
             <Trans i18nKey='landing.history.menu.entryRemote' />
           </Dropdown.Item>
-        </ShowIf>
+        )}
 
         <RemoveNoteEntryItem onConfirm={onRemoveFromHistory} noteTitle={title} />
 
         {/* TODO Check permissions (ownership) before showing option for delete  (https://github.com/hedgedoc/hedgedoc/issues/5036)*/}
-        <ShowIf condition={userExists}>
-          <Dropdown.Divider />
-          <DeleteNoteItem onConfirm={onDeleteNote} noteTitle={title} />
-        </ShowIf>
+        {userExists && (
+          <>
+            <Dropdown.Divider />
+            <DeleteNoteItem onConfirm={onDeleteNote} noteTitle={title} />
+          </>
+        )}
       </Dropdown.Menu>
     </Dropdown>
   )

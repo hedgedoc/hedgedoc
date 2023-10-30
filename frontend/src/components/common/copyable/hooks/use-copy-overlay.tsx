@@ -1,10 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Logger } from '../../../../utils/logger'
-import { ShowIf } from '../../show-if/show-if'
 import type { ReactElement, RefObject } from 'react'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Overlay, Tooltip } from 'react-bootstrap'
@@ -64,12 +63,8 @@ export const useCopyOverlay = (
       <Overlay target={clickComponent} show={showState !== SHOW_STATE.HIDDEN} placement='top'>
         {(props) => (
           <Tooltip id={`copied_${tooltipId}`} {...props}>
-            <ShowIf condition={showState === SHOW_STATE.ERROR}>
-              <Trans i18nKey={'copyOverlay.error'} />
-            </ShowIf>
-            <ShowIf condition={showState === SHOW_STATE.SUCCESS}>
-              <Trans i18nKey={'copyOverlay.success'} />
-            </ShowIf>
+            {showState === SHOW_STATE.ERROR && <Trans i18nKey={'copyOverlay.error'} />}
+            {showState === SHOW_STATE.SUCCESS && <Trans i18nKey={'copyOverlay.success'} />}
           </Tooltip>
         )}
       </Overlay>

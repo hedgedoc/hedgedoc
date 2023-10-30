@@ -10,7 +10,6 @@ import { ActiveIndicator } from '../active-indicator'
 import styles from './user-line.module.scss'
 import React, { useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { ShowIf } from '../../../../../common/show-if/show-if'
 import { Incognito as IconIncognito } from 'react-bootstrap-icons'
 import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
 
@@ -48,9 +47,7 @@ export const UserLine: React.FC<UserLineProps> = ({ username, displayName, activ
       <div className={`${styles['user-line-color-indicator']} ${createCursorCssClass(color)}`} />
       {avatar}
       <div className={'ms-auto d-flex align-items-center gap-1 h-100'}>
-        <ShowIf condition={!username}>
-          <IconIncognito title={guestUserTitle} size={'16px'} className={'text-muted'} />
-        </ShowIf>
+        {!username && <IconIncognito title={guestUserTitle} size={'16px'} className={'text-muted'} />}
         {own ? (
           <span className={'px-1'}>
             <Trans i18nKey={'editor.onlineStatus.you'}></Trans>

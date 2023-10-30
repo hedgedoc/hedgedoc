@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,7 +7,6 @@ import { concatCssClasses } from '../../../utils/concat-css-classes'
 import type { PropsWithDataTestId } from '../../../utils/test-id'
 import { testId } from '../../../utils/test-id'
 import { UiIcon } from '../icons/ui-icon'
-import { ShowIf } from '../show-if/show-if'
 import styles from './icon-button.module.scss'
 import React, { useMemo } from 'react'
 import type { ButtonProps } from 'react-bootstrap'
@@ -52,9 +51,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
       <span className={`${styles['icon-part']}`}>
         <UiIcon size={iconSize} icon={icon} className={'icon'} />
       </span>
-      <ShowIf condition={!!children}>
-        <span className={`${styles['text-part']}`}>{children}</span>
-      </ShowIf>
+      {children !== undefined && <span className={`${styles['text-part']}`}>{children}</span>}
     </Button>
   )
 }
