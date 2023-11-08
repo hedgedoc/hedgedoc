@@ -1,5 +1,10 @@
 # Release Notes
 
+## UNRELEASED
+
+### Enhancements
+- Add a pointer to Mermaid 9.1.7 documentation, which is what HedgeDoc 1 supports.
+
 ## <i class="fa fa-tag"></i> 1.9.9 <i class="fa fa-calendar-o"></i> 2023-07-30
 
 HedgeDoc has a new slogan! See [our announcement](https://community.hedgedoc.org/t/and-the-new-slogan-is/) for the details.

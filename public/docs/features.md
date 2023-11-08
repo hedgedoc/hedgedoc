@@ -334,6 +334,9 @@ gantt
 
 More information about **mermaid** syntax [here](https://mermaid-js.github.io/mermaid/)
 
+This version of HedgeDoc bundles Mermaid 9.1.7. The documentation for this version can
+be found [here](https://github.com/mermaid-js/mermaid/blob/v9.1.7/docs/n00b-gettingStarted.md).
+
 #### Abc Music Notation
 
 ```abc
