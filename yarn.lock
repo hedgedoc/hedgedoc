@@ -1305,7 +1305,7 @@ __metadata:
     readline-sync: 1.4.10
     remark-cli: 12.0.0
     remark-preset-lint-markdown-style-guide: 5.1.3
-    reveal.js: 3.9.2
+    reveal.js: 5.0.2
     rimraf: 5.0.5
     sanitize-filename: 1.6.3
     scrypt-kdf: 2.0.1
@@ -13890,10 +13890,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reveal.js@npm:3.9.2":
-  version: 3.9.2
-  resolution: "reveal.js@npm:3.9.2"
-  checksum: cfccb7507d6d1b4ce6dc58564676ed56f4fd4f092b35cbc85a0d003b94c05772e42cd9df59115a3f717e545aca779ff2748174b26eaefc5e1f2581f16070ea2d
+"reveal.js@npm:5.0.2":
+  version: 5.0.2
+  resolution: "reveal.js@npm:5.0.2"
+  checksum: 0c18d04f5ade90969de9ae06c199e3fa0032f25fbbcbc7ae9ef649fa479bd204663813a5ec5c64dff59935d9048e89610d5bbd683afc344488b8bdbce1b62f0f
   languageName: node
   linkType: hard
 
