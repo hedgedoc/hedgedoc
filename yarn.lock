@@ -3005,10 +3005,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lezer/common@npm:1.1.0":
-  version: 1.1.0
-  resolution: "@lezer/common@npm:1.1.0"
-  checksum: a96efe1e00032d4e2b8b79ea7cc8f95827e06c07672b4e25a4b1de9653f67647f1753fda2adf90c78d388232058924af50243818742a81e24dd430bfb4e7d2f1
+"@lezer/common@npm:1.1.1":
+  version: 1.1.1
+  resolution: "@lezer/common@npm:1.1.1"
+  checksum: 495b76f33164c732461097ee6f8d6f1250a63d21f5c01e58a24f1da49b8d4b392188bbbe972c0c2d7ec48db8e3fd550563bcdefba3b81b4d895e821c1f91fc8e
   languageName: node
   linkType: hard
 
