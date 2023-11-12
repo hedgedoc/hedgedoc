@@ -1202,7 +1202,7 @@ __metadata:
     compression: 1.7.4
     connect-flash: 0.1.1
     connect-session-sequelize: 7.1.7
-    cookie: 0.5.0
+    cookie: 0.6.0
     cookie-parser: 1.4.6
     copy-webpack-plugin: 6.4.1
     css-loader: 5.2.7
@@ -3943,6 +3943,13 @@ __metadata:
   version: 0.5.0
   resolution: "cookie@npm:0.5.0"
   checksum: 1f4bd2ca5765f8c9689a7e8954183f5332139eb72b6ff783d8947032ec1fdf43109852c178e21a953a30c0dd42257828185be01b49d1eb1a67fd054ca588a180
+  languageName: node
+  linkType: hard
+
+"cookie@npm:0.6.0":
+  version: 0.6.0
+  resolution: "cookie@npm:0.6.0"
+  checksum: f56a7d32a07db5458e79c726b77e3c2eff655c36792f2b6c58d351fb5f61531e5b1ab7f46987150136e366c65213cbe31729e02a3eaed630c3bf7334635fb410
   languageName: node
   linkType: hard
 
