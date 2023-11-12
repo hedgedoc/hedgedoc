@@ -38,7 +38,7 @@
     "ejs": "3.1.9",
     "express": "4.18.2",
     "express-session": "1.17.3",
-    "file-type": "18.5.0",
+    "file-type": "18.7.0",
     "formidable": "2.1.2",
     "graceful-fs": "4.2.11",
     "helmet": "4.6.0",
