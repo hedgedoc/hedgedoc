@@ -1231,7 +1231,7 @@ __metadata:
     express-session: 1.17.3
     file-loader: 6.2.0
     file-saver: 2.0.5
-    file-type: 18.5.0
+    file-type: 18.7.0
     flowchart.js: 1.17.1
     fork-awesome: 1.2.0
     formidable: 2.1.2
@@ -6546,14 +6546,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"file-type@npm:18.5.0":
-  version: 18.5.0
-  resolution: "file-type@npm:18.5.0"
+"file-type@npm:18.7.0":
+  version: 18.7.0
+  resolution: "file-type@npm:18.7.0"
   dependencies:
     readable-web-to-node-stream: ^3.0.2
     strtok3: ^7.0.0
     token-types: ^5.0.1
-  checksum: d2bc81d842b110970a0ca9d90356ce4e9738c1c05596ce8931f2af334477856d92bcecd0742dc6646e13a970c0125150ad4415898688d1901d80e972d90ab1ca
+  checksum: 039dcb819858a3bc8285b51e4a756eb4b8d943dcf20e52fa4c097624cc99efd61d51aa595414879b7f86ea23fdbd83553aa3be679df2a85f5840e1ea03f93ef9
   languageName: node
   linkType: hard
 
