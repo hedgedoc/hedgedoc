@@ -693,7 +693,7 @@ export function exportToHTML (view) {
   tocAffix.find('*').removeClass('active').find("a[href^='#'][smoothhashscroll]").removeAttr('smoothhashscroll')
   // generate html via template
   $.get(`${serverurl}/build/htmlexport.html`, template => {
-    let html = template.replace('{{{url}}}', serverurl)
+    let html = template.replaceAll('{{{url}}}', serverurl)
     html = html.replace('{{title}}', title)
     html = html.replace('{{{html}}}', src[0].outerHTML)
     html = html.replace('{{{ui-toc}}}', toc.html())
