@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { concatCssClasses } from '../../../../../utils/concat-css-classes'
-import { createCursorCssClass } from './create-cursor-css-class'
+import { createRealtimeColorCssClass } from '../realtime-colors/create-realtime-color-css-class'
 import styles from './style.module.scss'
 import type { SelectionRange } from '@codemirror/state'
 import type { EditorView, LayerMarker, Rect } from '@codemirror/view'
@@ -41,7 +41,7 @@ export class RemoteCursorMarker implements LayerMarker {
     element.style.setProperty('--name', `"${this.name}"`)
     const cursorOnRightSide = this.left > this.viewWidth / 2
     const cursorOnDownSide = this.top < 20
-    element.className = concatCssClasses(styles.cursor, createCursorCssClass(this.styleIndex), {
+    element.className = concatCssClasses(styles.cursor, createRealtimeColorCssClass(this.styleIndex), {
       [styles.right]: cursorOnRightSide,
       [styles.down]: cursorOnDownSide
     })

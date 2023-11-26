@@ -1,0 +1,14 @@
+/*!
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+.authorship-highlight-mode-underline .authorship-highlight {
+  text-decoration: underline;
+  text-decoration-color: var(--color);
+}
+
+.authorship-highlight-mode-background .authorship-highlight {
+  background-color: var(--color);
+}

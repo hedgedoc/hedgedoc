@@ -54,6 +54,12 @@ export const setEditorIndentSpaces = (indentSpaces: number): void => {
   saveToLocalStorage()
 }
 
+export const setAuthorshipHighlightMode = (mode: EditorConfig['authorshipHighlightMode']): void => {
+  const action = editorConfigActionsCreator.setAuthorshipHighlightMode(mode)
+  store.dispatch(action)
+  saveToLocalStorage()
+}
+
 export const loadFromLocalStorage = (): void => {
   try {
     const config = { ...initialState }

@@ -11,4 +11,11 @@ export interface EditorConfig {
   lineWrapping: boolean
   indentWithTabs: boolean
   indentSpaces: number
+  authorshipHighlightMode: AuthorshipHighlightMode
+}
+
+export enum AuthorshipHighlightMode {
+  NONE = 'none',
+  UNDERLINE = 'underline',
+  BACKGROUND = 'background'
 }

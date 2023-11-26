@@ -12,6 +12,7 @@ import { cypressAttribute, cypressId } from '../../../utils/cypress-attribute'
 import { findLanguageByCodeBlockName } from '../../markdown-renderer/extensions/_base-classes/code-block-markdown-extension/find-language-by-code-block-name'
 import type { ScrollProps } from '../synced-scroll/scroll-props'
 import styles from './extended-codemirror/codemirror.module.scss'
+import authorshipHighlightModeStyles from './codemirror-extensions/authorship-ranges/authorship-highlight.module.scss'
 import { useCodeMirrorAutocompletionsExtension } from './hooks/codemirror-extensions/use-code-mirror-autocompletions-extension'
 import { useCodeMirrorFileInsertExtension } from './hooks/codemirror-extensions/use-code-mirror-file-insert-extension'
 import { useCodeMirrorLineWrappingExtension } from './hooks/codemirror-extensions/use-code-mirror-line-wrapping-extension'
@@ -131,9 +132,13 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
   useOnImageUploadFromRenderer()
 
   const ligaturesEnabled = useApplicationState((state) => state.editorConfig.ligatures)
+  const authorshipHighlightMode = useApplicationState((state) => state.editorConfig.authorshipHighlightMode)
   const codeMirrorClassName = useMemo(
-    () => `overflow-hidden ${styles.extendedCodemirror} h-100 ${ligaturesEnabled ? '' : styles['no-ligatures']}`,
-    [ligaturesEnabled]
+    () =>
+      `overflow-hidden ${styles.extendedCodemirror} h-100 ${ligaturesEnabled ? '' : styles['no-ligatures']} ${
+        authorshipHighlightModeStyles[`authorship-highlight-mode-${authorshipHighlightMode}`]
+      }`,
+    [ligaturesEnabled, authorshipHighlightMode]
   )
 
   const darkModeActivated = useDarkModeState()

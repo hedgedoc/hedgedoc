@@ -665,6 +665,16 @@
       "indentSpaces": {
         "label": "Indentation size",
         "help": "Sets the amount of spaces for indentation."
+      },
+      "authorshipHighlightMode": {
+        "label": "Authorship Highlight Mode",
+        "help": "Defines how authorship attribution should be displayed in the editor",
+        "none": "None",
+        "noneHelp": "Do not show authorship attribution",
+        "underline": "Underline",
+        "underlineHelp": "Underline text written by other authors",
+        "background": "Background",
+        "backgroundHelp": "Highlight text written by other authors with a background color"
       }
     },
     "global": {
