@@ -136,7 +136,7 @@
     "@types/d3-graphviz": "2.6.10",
     "@types/diff": "5.0.7",
     "@types/dompurify": "3.0.4",
-    "@types/jest": "29.5.8",
+    "@types/jest": "29.5.10",
     "@types/luxon": "3.3.3",
     "@types/markdown-it": "13.0.5",
     "@types/markdown-it-container": "2.0.8",
