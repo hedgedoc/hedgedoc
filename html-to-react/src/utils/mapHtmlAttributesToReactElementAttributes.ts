@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -48,22 +48,19 @@ export function mapHtmlAttributesToReactElementAttributes(
         !isEventHandlerAttribute(attribute) &&
         isValidTagOrAttributeName(attribute)
     )
-    .reduce(
-      (mappedAttributes, attribute) => {
-        // lowercase the attribute name and find it in the react attribute map
-        const lowerCaseAttribute = attribute.toLowerCase()
+    .reduce<Record<string, string>>((mappedAttributes, attribute) => {
+      // lowercase the attribute name and find it in the react attribute map
+      const lowerCaseAttribute = attribute.toLowerCase()
 
-        // format the attribute name
-        const name = reactAttributes[lowerCaseAttribute] || attribute
+      // format the attribute name
+      const name = reactAttributes[lowerCaseAttribute] || attribute
 
-        // add the parsed attribute value to the mapped attributes
-        mappedAttributes[name] = getParsedAttributeValue(
-          name,
-          attributes[attribute]
-        )
+      // add the parsed attribute value to the mapped attributes
+      mappedAttributes[name] = getParsedAttributeValue(
+        name,
+        attributes[attribute]
+      )
 
-        return mappedAttributes
-      },
-      {} as Record<string, string>
-    )
+      return mappedAttributes
+    }, {})
 }
