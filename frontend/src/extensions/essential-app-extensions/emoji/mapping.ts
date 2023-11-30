@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,20 +12,20 @@ interface EmojiEntry {
 
 type ShortCodeMap = { [key: string]: string }
 
-const shortCodeMap = (emojiData as unknown as EmojiEntry[]).reduce((reduceObject, emoji) => {
+const shortCodeMap = (emojiData as unknown as EmojiEntry[]).reduce<ShortCodeMap>((reduceObject, emoji) => {
   emoji.shortcodes.forEach((shortcode) => {
     reduceObject[shortcode] = emoji.emoji
   })
   return reduceObject
-}, {} as ShortCodeMap)
+}, {})
 
-const emojiSkinToneModifierMap = [1, 2, 3, 4, 5].reduce((reduceObject, modifierValue) => {
+const emojiSkinToneModifierMap = [1, 2, 3, 4, 5].reduce<ShortCodeMap>((reduceObject, modifierValue) => {
   const lightSkinCode = 127995
   const codepoint = lightSkinCode + (modifierValue - 1)
   const shortcode = `skin-tone-${modifierValue}`
   reduceObject[shortcode] = `&#${codepoint};`
   return reduceObject
-}, {} as ShortCodeMap)
+}, {})
 
 export const combinedEmojiData = {
   ...shortCodeMap,

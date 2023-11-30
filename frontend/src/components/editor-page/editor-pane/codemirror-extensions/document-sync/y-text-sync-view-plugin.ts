@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -34,7 +34,7 @@ export class YTextSyncViewPlugin implements PluginValue {
   }
 
   private calculateChanges(event: YTextEvent): ChangeSpec[] {
-    const [changes] = event.delta.reduce(
+    const [changes] = event.delta.reduce<[ChangeSpec[], number]>(
       ([changes, position], delta) => {
         if (delta.insert !== undefined && typeof delta.insert === 'string') {
           changes.push({ from: position, to: position, insert: delta.insert })
@@ -48,7 +48,7 @@ export class YTextSyncViewPlugin implements PluginValue {
           return [changes, position]
         }
       },
-      [[], 0] as [ChangeSpec[], number]
+      [[], 0]
     )
     return changes
   }

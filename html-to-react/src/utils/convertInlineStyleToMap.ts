@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2020 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -17,8 +17,9 @@ export function convertInlineStyleToMap(
     return {}
   }
 
-  return inlineStyle.split(';').reduce(
-    (styleObject, stylePropertyValue) => {
+  return inlineStyle
+    .split(';')
+    .reduce<Record<string, string>>((styleObject, stylePropertyValue) => {
       // extract the style property name and value
       const [property, value] = stylePropertyValue
         .split(/^([^:]+):/)
@@ -44,7 +45,5 @@ export function convertInlineStyleToMap(
       styleObject[replacedProperty] = value
 
       return styleObject
-    },
-    {} as Record<string, string>
-  )
+    }, {})
 }

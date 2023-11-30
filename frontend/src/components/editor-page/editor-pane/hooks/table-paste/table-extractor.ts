@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -43,10 +43,10 @@ export const convertClipboardTableToMarkdown = (pasteData: string): string => {
     return ''
   }
   const tableRows = pasteData.split(/\r?\n/).filter((row) => row.trim() !== '')
-  const tableCells = tableRows.reduce((cellsInRow, row, index) => {
+  const tableCells = tableRows.reduce<string[][]>((cellsInRow, row, index) => {
     cellsInRow[index] = row.split('\t')
     return cellsInRow
-  }, [] as string[][])
+  }, [])
   const arrayMaxRows = createNumberRangeArray(tableCells.length)
   const arrayMaxColumns = createNumberRangeArray(Math.max(...tableCells.map((row) => row.length)))
 
