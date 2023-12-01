@@ -2396,7 +2396,7 @@ __metadata:
     typeorm: "npm:0.3.17"
     typescript: "npm:5.2.2"
     ws: "npm:8.14.2"
-    yjs: "npm:13.6.8"
+    yjs: "npm:13.6.10"
   languageName: unknown
   linkType: soft
 
@@ -2424,7 +2424,7 @@ __metadata:
     ts-jest: "npm:29.1.1"
     typescript: "npm:5.2.2"
     ws: "npm:8.14.2"
-    yjs: "npm:13.6.8"
+    yjs: "npm:13.6.10"
   languageName: unknown
   linkType: soft
 
@@ -2580,7 +2580,7 @@ __metadata:
     vega-lite: "npm:5.16.1"
     words-count: "npm:2.0.2"
     ws: "npm:8.14.2"
-    yjs: "npm:13.6.8"
+    yjs: "npm:13.6.10"
   languageName: unknown
   linkType: soft
 
@@ -12431,15 +12431,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lib0@npm:^0.2.74":
-  version: 0.2.87
-  resolution: "lib0@npm:0.2.87"
+"lib0@npm:^0.2.86":
+  version: 0.2.88
+  resolution: "lib0@npm:0.2.88"
   dependencies:
     isomorphic.js: "npm:^0.2.4"
   bin:
     0gentesthtml: bin/gentesthtml.js
     0serve: bin/0serve.js
-  checksum: f53741f35adc9f5307ee093c2d2df6cf3893b8731787d6ac2b292b3c5cd10220669b536378e87c04b0558d28c0e5d8c25f026481c5410b6e1091202c9b0ab983
+  checksum: f2cb281c7dab264608072d5e6a27ff277599dd9f62f0e7ce82e160b3fc7588557c6d02ae67ba06c7b12329420cb02169198607e63f41c97b8d574c232717dc3c
   languageName: node
   linkType: hard
 
@@ -19037,21 +19037,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yjs@npm:13.6.8":
-  version: 13.6.8
-  resolution: "yjs@npm:13.6.8"
+"yjs@npm:13.6.10":
+  version: 13.6.10
+  resolution: "yjs@npm:13.6.10"
   dependencies:
-    lib0: "npm:^0.2.74"
-  checksum: 35a098676c9581d639561a703305b31a449fd48fb329ca90c78e5ae20112435a4ae9d2a1471e0f00ba3c9458407cb9c3146c0a16f9ba4526166bf2776bd04b0d
+    lib0: "npm:^0.2.86"
+  checksum: 5e58aa18ca27f3709f6dfa15c76a0834a6a7a313b5049dc97d041705fa1a109a0cc789efcca9a38f89d9f94f796165da8a4cf66aaee9cceb8f359f28b76cf02b
   languageName: node
   linkType: hard
 
-"yjs@patch:yjs@npm%3A13.6.8#./.yarn/patches/yjs-remove-import-warning-in-test.patch::locator=hedgedoc%40workspace%3A.":
-  version: 13.6.8
-  resolution: "yjs@patch:yjs@npm%3A13.6.8#./.yarn/patches/yjs-remove-import-warning-in-test.patch::version=13.6.8&hash=e7d95b&locator=hedgedoc%40workspace%3A."
+"yjs@patch:yjs@npm%3A13.6.10#./.yarn/patches/yjs-remove-import-warning-in-test.patch::locator=hedgedoc%40workspace%3A.":
+  version: 13.6.10
+  resolution: "yjs@patch:yjs@npm%3A13.6.10#./.yarn/patches/yjs-remove-import-warning-in-test.patch::version=13.6.10&hash=e7d95b&locator=hedgedoc%40workspace%3A."
   dependencies:
-    lib0: "npm:^0.2.74"
-  checksum: fd9dad8e5c11ecb9a221f2f039ae838bb336823b6402d4bfd75c6d9d55c73b1274976dc9fbdc8b36cebe160632041143d000b2b612c8305f27f98575b2bb0858
+    lib0: "npm:^0.2.86"
+  checksum: 3790565735059017a250ae4bb3afcb5092a84b8c4366884ab396960500375c6d05bb378494dccb5a428f292607e9b0332df0608cae42c5e601b6b55b5fae70b0
   languageName: node
   linkType: hard
 

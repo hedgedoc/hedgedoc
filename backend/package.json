@@ -76,7 +76,7 @@
     "sqlite3": "5.1.6",
     "typeorm": "0.3.17",
     "ws": "8.14.2",
-    "yjs": "13.6.8"
+    "yjs": "13.6.10"
   },
   "devDependencies": {
     "@darraghor/eslint-plugin-nestjs-typed": "4.3.6",
