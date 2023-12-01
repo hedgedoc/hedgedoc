@@ -54,7 +54,7 @@
     "@hedgedoc/markdown-it-plugins": "workspace:markdown-it-plugins",
     "@mrdrogdrog/optional": "1.2.1",
     "@react-hook/resize-observer": "1.2.6",
-    "@redux-devtools/core": "3.13.1",
+    "@redux-devtools/core": "3.13.3",
     "@reduxjs/toolkit": "1.9.7",
     "@svgr/webpack": "8.1.0",
     "@types/katex": "0.16.5",
