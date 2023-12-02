@@ -2557,7 +2557,7 @@ __metadata:
     markdown-it-regex: "npm:0.2.0"
     markdown-it-sub: "npm:1.0.0"
     markdown-it-sup: "npm:1.0.0"
-    mermaid: "npm:10.6.0"
+    mermaid: "npm:10.6.1"
     next: "npm:13.4.19"
     picocolors: "npm:1.0.0"
     prettier: "npm:3.0.3"
@@ -13067,9 +13067,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mermaid@npm:10.6.0":
-  version: 10.6.0
-  resolution: "mermaid@npm:10.6.0"
+"mermaid@npm:10.6.1":
+  version: 10.6.1
+  resolution: "mermaid@npm:10.6.1"
   dependencies:
     "@braintree/sanitize-url": "npm:^6.0.1"
     "@types/d3-scale": "npm:^4.0.3"
@@ -13091,7 +13091,7 @@ __metadata:
     ts-dedent: "npm:^2.2.0"
     uuid: "npm:^9.0.0"
     web-worker: "npm:^1.2.0"
-  checksum: 1c7d0ad9f8c7ea5e240c27970c4e510ef29dca036b25e124ff82c716cf6e9ddd9eb18e3fc82c7d249a880905c53402c8946caa65ee4e1801dd6be9d7cd2b039c
+  checksum: d8e4e4d7a0244da8f19d40b758ed39abdfd426c31a96196b4de991758954561da6056f038e0b4781f94c51bbc6a2a115370238f62250a3e6ba52d067174d7417
   languageName: node
   linkType: hard
 
