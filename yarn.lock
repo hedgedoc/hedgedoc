@@ -2567,7 +2567,7 @@ __metadata:
     react-bootstrap-typeahead: "npm:6.3.2"
     react-diff-viewer: "npm:3.1.1"
     react-dom: "npm:18.2.0"
-    react-i18next: "npm:13.3.1"
+    react-i18next: "npm:13.3.2"
     react-redux: "npm:8.1.3"
     react-test-renderer: "npm:18.2.0"
     react-use: "npm:17.4.0"
@@ -15216,9 +15216,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:13.3.1":
-  version: 13.3.1
-  resolution: "react-i18next@npm:13.3.1"
+"react-i18next@npm:13.3.2":
+  version: 13.3.2
+  resolution: "react-i18next@npm:13.3.2"
   dependencies:
     "@babel/runtime": "npm:^7.22.5"
     html-parse-stringify: "npm:^3.0.1"
@@ -15230,7 +15230,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: a19701359ac8ae1c75c68012215c024fd6c896c86e2f254c43a135279afb2035ed3b37c9f07ae2662fa1e44e36b3de918287ebecf841dd1bce6ecaba3a055fc4
+  checksum: 38ad9daebb9d30d589d694a09e218d545b3bd4ef7deec302b141b964b9781e957e52b7b039647079dbdbd3bfbb74ade63c136524121ff5ed040e500a8a4ec24a
   languageName: node
   linkType: hard
 
