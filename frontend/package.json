@@ -37,7 +37,7 @@
     ]
   },
   "dependencies": {
-    "@codemirror/autocomplete": "6.10.2",
+    "@codemirror/autocomplete": "6.11.1",
     "@codemirror/commands": "6.3.2",
     "@codemirror/lang-markdown": "6.2.3",
     "@codemirror/language": "6.9.3",
@@ -45,7 +45,7 @@
     "@codemirror/lint": "6.4.2",
     "@codemirror/state": "6.3.2",
     "@codemirror/theme-one-dark": "6.1.2",
-    "@codemirror/view": "6.21.4",
+    "@codemirror/view": "6.22.1",
     "@dicebear/core": "7.0.1",
     "@dicebear/identicon": "7.0.1",
     "@fontsource/source-sans-pro": "5.0.8",
