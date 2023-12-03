@@ -1690,9 +1690,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/autocomplete@npm:6.10.2":
-  version: 6.10.2
-  resolution: "@codemirror/autocomplete@npm:6.10.2"
+"@codemirror/autocomplete@npm:6.11.1":
+  version: 6.11.1
+  resolution: "@codemirror/autocomplete@npm:6.11.1"
   dependencies:
     "@codemirror/language": "npm:^6.0.0"
     "@codemirror/state": "npm:^6.0.0"
@@ -1703,7 +1703,7 @@ __metadata:
     "@codemirror/state": ^6.0.0
     "@codemirror/view": ^6.0.0
     "@lezer/common": ^1.0.0
-  checksum: 987805d78c77364b93283cbcdbdc91388db7e7f64422af232ad875ac16410e597d09ec0f84c97f8282fb1787ffa260e3e9290a35794ba2e5bfb39c9f8a8574ac
+  checksum: 65676724b4e744ff503de86dddc1aaabf87e9f7f6a001431a4035ccaa99d1f334a4f79f5fd51606aeb66e75134ef23b8bb204cead820703e7441c78188284b14
   languageName: node
   linkType: hard
 
@@ -2024,14 +2024,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/view@npm:6.21.4":
-  version: 6.21.4
-  resolution: "@codemirror/view@npm:6.21.4"
+"@codemirror/view@npm:6.22.1":
+  version: 6.22.1
+  resolution: "@codemirror/view@npm:6.22.1"
   dependencies:
     "@codemirror/state": "npm:^6.1.4"
     style-mod: "npm:^4.1.0"
     w3c-keyname: "npm:^2.2.4"
-  checksum: 834fc8597bbad7430a746e97e484ba985683fa403dfedce21e4727615884e0c195be057eb772c267006b869a353292426bed47af584f7695524ed0a45a8d38a1
+  checksum: 142a861c2bf6d0ba2817eaffdf985c19b556cc98af1bd565b1e9286bfcaf17eb12837ce41633a2462fca1731d043781c21c778fb0d5ae928c03c6a6f42485c78
   languageName: node
   linkType: hard
 
@@ -2455,7 +2455,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/frontend@workspace:frontend"
   dependencies:
-    "@codemirror/autocomplete": "npm:6.10.2"
+    "@codemirror/autocomplete": "npm:6.11.1"
     "@codemirror/commands": "npm:6.3.2"
     "@codemirror/lang-markdown": "npm:6.2.3"
     "@codemirror/language": "npm:6.9.3"
@@ -2463,7 +2463,7 @@ __metadata:
     "@codemirror/lint": "npm:6.4.2"
     "@codemirror/state": "npm:6.3.2"
     "@codemirror/theme-one-dark": "npm:6.1.2"
-    "@codemirror/view": "npm:6.21.4"
+    "@codemirror/view": "npm:6.22.1"
     "@dicebear/core": "npm:7.0.1"
     "@dicebear/identicon": "npm:7.0.1"
     "@fontsource/source-sans-pro": "npm:5.0.8"
