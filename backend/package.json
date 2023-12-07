@@ -53,7 +53,7 @@
     "class-validator": "0.14.0",
     "cli-color": "2.0.3",
     "connect-typeorm": "2.0.0",
-    "cookie": "0.5.0",
+    "cookie": "0.6.0",
     "diff": "5.1.0",
     "express-session": "1.17.3",
     "file-type": "16.5.4",
