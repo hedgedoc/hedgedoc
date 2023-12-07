@@ -73,6 +73,10 @@ module.exports = {
         trailingUnderscore: 'allow',
       },
       {
+        selector: 'import',
+        format: ['camelCase', 'PascalCase'],
+      },
+      {
         selector: 'enumMember',
         format: ['UPPER_CASE'],
       },
