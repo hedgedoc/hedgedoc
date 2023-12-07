@@ -22,7 +22,7 @@ exports[`AbcFrame renders a music sheet 2`] = `
       height="454.4200000000001"
       role="img"
       stroke="currentColor"
-      width="770.0000000000002"
+      width="770"
       xmlns:xlink="http://www.w3.org/1999/xlink"
     >
       <style>
