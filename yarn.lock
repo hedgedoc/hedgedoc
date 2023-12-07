@@ -2506,17 +2506,17 @@ __metadata:
     markdown-it: "npm:13.0.2"
     markdown-it-abbr: "npm:2.0.0"
     markdown-it-anchor: "npm:8.6.7"
-    markdown-it-container: "npm:3.0.0"
-    markdown-it-deflist: "npm:2.1.0"
+    markdown-it-container: "npm:4.0.0"
+    markdown-it-deflist: "npm:3.0.0"
     markdown-it-emoji: "npm:2.0.2"
-    markdown-it-footnote: "npm:3.0.3"
-    markdown-it-ins: "npm:3.0.1"
-    markdown-it-mark: "npm:3.0.1"
+    markdown-it-footnote: "npm:4.0.0"
+    markdown-it-ins: "npm:4.0.0"
+    markdown-it-mark: "npm:4.0.0"
     markdown-it-mathjax: "npm:2.0.0"
     markdown-it-plantuml: "npm:1.4.1"
     markdown-it-regex: "npm:0.2.0"
-    markdown-it-sub: "npm:1.0.0"
-    markdown-it-sup: "npm:1.0.0"
+    markdown-it-sub: "npm:2.0.0"
+    markdown-it-sup: "npm:2.0.0"
     mermaid: "npm:10.6.1"
     next: "npm:13.4.19"
     picocolors: "npm:1.0.0"
@@ -12696,17 +12696,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-it-container@npm:3.0.0":
-  version: 3.0.0
-  resolution: "markdown-it-container@npm:3.0.0"
-  checksum: 478dc04ec0348ad26a8bd5ee842e897d7aa47f4305023f1a6ac39b056e10b6ba66aed13b42223ee6abd15f5547570857bd0db63064af10386a612d0ac2e69ac1
+"markdown-it-container@npm:4.0.0":
+  version: 4.0.0
+  resolution: "markdown-it-container@npm:4.0.0"
+  checksum: 768390a6e2c182996b4d0be8dd1a7279d266ca2f29936dd8265ef0954a97606bc3514802cc3576db59e119e241e61924a4a1e601a91480be1c12bef5e28797ae
   languageName: node
   linkType: hard
 
-"markdown-it-deflist@npm:2.1.0":
-  version: 2.1.0
-  resolution: "markdown-it-deflist@npm:2.1.0"
-  checksum: c311a5bb86d9f03396a93b672f1043582ecfb9299c4cdc831daa9046b3187830e9f2d124f5922a987b07de5012b5e2f59736ec9b396bf494995034c85165f185
+"markdown-it-deflist@npm:3.0.0":
+  version: 3.0.0
+  resolution: "markdown-it-deflist@npm:3.0.0"
+  checksum: 09222fa810fed11d088cb4b2c8ea07f9af0f68bd15cbf8579dd015a28b4f8e956dfccbf2b86c64800bf297869f5cb8fa51b51f24c7fac2fa4d4b6b279606303c
   languageName: node
   linkType: hard
 
@@ -12717,24 +12717,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-it-footnote@npm:3.0.3":
-  version: 3.0.3
-  resolution: "markdown-it-footnote@npm:3.0.3"
-  checksum: b765a47720dbabd76f8b9379de4c4ac5a7963fff6a0f509f081955f0e7e338255410befadabf028b084883858b1f0fff11469bfa19a6521f096fb1d3734b4a74
+"markdown-it-footnote@npm:4.0.0":
+  version: 4.0.0
+  resolution: "markdown-it-footnote@npm:4.0.0"
+  checksum: 47aa807b143af211d7eca376c724b05e939e8b5960f6e287c63eca7f121be7ac697ff5601d5b7c89cbde7a32713a66b2a6f375251fad1fe989bd05d07f80e4cd
   languageName: node
   linkType: hard
 
-"markdown-it-ins@npm:3.0.1":
-  version: 3.0.1
-  resolution: "markdown-it-ins@npm:3.0.1"
-  checksum: 67d7e70792598dc0632b8f4d36e1a11e26c96a56d644fcb5b86b39686fbf537341714d42d90769ebee3ab4215895c9b6bc6874d0219d48bc613f377565bdacd9
+"markdown-it-ins@npm:4.0.0":
+  version: 4.0.0
+  resolution: "markdown-it-ins@npm:4.0.0"
+  checksum: c6f975c2162a3547a90e4451c5a022e83fed96ee54116e252fa2125a48746deb7dfd3c3ced263e2dca54aaf3b5299c2ffd34e8c88ed01eef7a91018d888031da
   languageName: node
   linkType: hard
 
-"markdown-it-mark@npm:3.0.1":
-  version: 3.0.1
-  resolution: "markdown-it-mark@npm:3.0.1"
-  checksum: 42da61be28278d5f19271455c1aafc4d28a1250ab6f0b2bd26eeb705ca120764f57caed79f23cd326ed0415d3bfd3fb74db9a2bdd3e87ece2d2f4ea9ada63f38
+"markdown-it-mark@npm:4.0.0":
+  version: 4.0.0
+  resolution: "markdown-it-mark@npm:4.0.0"
+  checksum: 58fa2220bb3beb911af2490dae70a1e11e8ba39f8b9ba825b2ecd8188878fe73875b504eb8a8ece6e75d94df5aa3fcfae4eaca5384aecd4da853a290069b952e
   languageName: node
   linkType: hard
 
@@ -12759,17 +12759,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-it-sub@npm:1.0.0":
-  version: 1.0.0
-  resolution: "markdown-it-sub@npm:1.0.0"
-  checksum: e980d7f29afd0d8bf5703a4f15569acb568d1de4f9a9c0427f917fbaaaca2a5010b80798c9a89207f3cb18d308b04c3fb8e60dfd8b2a993117a5f0d0ab93d018
+"markdown-it-sub@npm:2.0.0":
+  version: 2.0.0
+  resolution: "markdown-it-sub@npm:2.0.0"
+  checksum: d92e16e1398c496c69be4a1c8a8209c408dbbb67eb99c3ed9935b637a4a7b8940456bf6036823ed9a2bf7baae7cc764dd56bae6180069f57f40b726de58e4d91
   languageName: node
   linkType: hard
 
-"markdown-it-sup@npm:1.0.0":
-  version: 1.0.0
-  resolution: "markdown-it-sup@npm:1.0.0"
-  checksum: 67493fac9f625dfea51f1bf0250683a73d1d14dc7fa02f14fffb97f5acb26575402cc384d5ed4b59d2cd7b097d695776650d2deaf318bdaf6e51e733cd554bb3
+"markdown-it-sup@npm:2.0.0":
+  version: 2.0.0
+  resolution: "markdown-it-sup@npm:2.0.0"
+  checksum: 5cc912993e0768ef001d6c8d75ab3bf1e643639473a01b7f3526d5a2b8434e3b2e7b3b7899d8d2ba3d319632998b7a63c00d68597eb12dd91564ffbb779ebb9d
   languageName: node
   linkType: hard
 
