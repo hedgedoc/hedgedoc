@@ -59,7 +59,7 @@
     "@svgr/webpack": "8.1.0",
     "@types/katex": "0.16.5",
     "@uiw/react-codemirror": "4.21.21",
-    "abcjs": "6.2.2",
+    "abcjs": "6.2.3",
     "bootstrap": "5.3.2",
     "copy-webpack-plugin": "11.0.0",
     "cross-env": "7.0.3",
