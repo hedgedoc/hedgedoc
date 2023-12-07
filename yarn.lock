@@ -1965,10 +1965,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/state@npm:6.3.2":
-  version: 6.3.2
-  resolution: "@codemirror/state@npm:6.3.2"
-  checksum: d0fa8c78bbccacc6bff5ac661a8e825c21c12fd45294d9a2e181d50af8294165b749094a3fbfc173a0aac72eabc3bf28aa48dfebc330239663680b2ded701ff5
+"@codemirror/state@npm:6.3.3":
+  version: 6.3.3
+  resolution: "@codemirror/state@npm:6.3.3"
+  checksum: 97f0174dd6aa43d6293630b0024918ce1bb1f7833de8fa75006de8b7dbd963e2bb8b5e7a805f5a98492a0379d8b60faaee319d42583562b8ea6347ab8b63bf5f
   languageName: node
   linkType: hard
 
@@ -2421,7 +2421,7 @@ __metadata:
     "@codemirror/language": "npm:6.9.3"
     "@codemirror/language-data": "npm:6.3.1"
     "@codemirror/lint": "npm:6.4.2"
-    "@codemirror/state": "npm:6.3.2"
+    "@codemirror/state": "npm:6.3.3"
     "@codemirror/theme-one-dark": "npm:6.1.2"
     "@codemirror/view": "npm:6.22.1"
     "@dicebear/core": "npm:7.0.1"
