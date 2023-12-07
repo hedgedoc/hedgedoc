@@ -50,7 +50,7 @@
     "lz-string": "git+https://github.com/hackmdio/lz-string.git",
     "mariadb": "3.2.2",
     "markdown-it": "13.0.2",
-    "markdown-it-abbr": "1.0.4",
+    "markdown-it-abbr": "2.0.0",
     "markdown-it-container": "3.0.0",
     "markdown-it-deflist": "2.1.0",
     "markdown-it-emoji": "2.0.2",
