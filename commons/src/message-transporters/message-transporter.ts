@@ -19,8 +19,8 @@ type MessageEventPayloadMap = {
   [E in AllEvents]: E extends keyof MessagePayloads
     ? (message: Message<E>) => void
     : E extends ConnectionStateEvent.DISCONNECTED
-    ? (reason?: DisconnectReason) => void
-    : () => void
+      ? (reason?: DisconnectReason) => void
+      : () => void
 }
 
 export enum ConnectionState {

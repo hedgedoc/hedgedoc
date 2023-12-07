@@ -2216,9 +2216,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/eslintrc@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "@eslint/eslintrc@npm:2.1.2"
+"@eslint/eslintrc@npm:^2.1.4":
+  version: 2.1.4
+  resolution: "@eslint/eslintrc@npm:2.1.4"
   dependencies:
     ajv: "npm:^6.12.4"
     debug: "npm:^4.3.2"
@@ -2229,14 +2229,14 @@ __metadata:
     js-yaml: "npm:^4.1.0"
     minimatch: "npm:^3.1.2"
     strip-json-comments: "npm:^3.1.1"
-  checksum: 00efdc3797e6f05518060522b7788e5f5aff02f13facbd0c83b176c3dee86554023283a5f68542df379c5137685d2d29745c87f62bf2406a1d38d95471f44ce6
+  checksum: 32f67052b81768ae876c84569ffd562491ec5a5091b0c1e1ca1e0f3c24fb42f804952fdd0a137873bc64303ba368a71ba079a6f691cee25beee9722d94cc8573
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:8.52.0":
-  version: 8.52.0
-  resolution: "@eslint/js@npm:8.52.0"
-  checksum: cdcf8f9b54994fe1a5dc086c714a75dca5fe5899f9b362986abd12b3b5bec9c9755f7608e663ce072edd3fa3910cc752afef8d149fda0288a477652b65865a1c
+"@eslint/js@npm:8.55.0":
+  version: 8.55.0
+  resolution: "@eslint/js@npm:8.55.0"
+  checksum: 88ab9fc57a651becd2b32ec40a3958db27fae133b1ae77bebd733aa5bbd00a92f325bb02f20ad680d31c731fa49b22f060a4777dd52eb3e27da013d940bd978d
   languageName: node
   linkType: hard
 
@@ -2327,8 +2327,8 @@ __metadata:
     connect-typeorm: "npm:2.0.0"
     cookie: "npm:0.5.0"
     diff: "npm:5.1.0"
-    eslint: "npm:8.52.0"
-    eslint-config-prettier: "npm:9.0.0"
+    eslint: "npm:8.55.0"
+    eslint-config-prettier: "npm:9.1.0"
     eslint-plugin-import: "npm:2.29.0"
     eslint-plugin-jest: "npm:27.6.0"
     eslint-plugin-local-rules: "npm:2.0.1"
@@ -2350,7 +2350,7 @@ __metadata:
     passport-http-bearer: "npm:1.0.1"
     passport-local: "npm:1.0.0"
     pg: "npm:8.11.3"
-    prettier: "npm:3.0.3"
+    prettier: "npm:3.1.0"
     raw-body: "npm:2.5.2"
     reflect-metadata: "npm:0.1.13"
     rimraf: "npm:5.0.5"
@@ -2380,15 +2380,15 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:6.13.2"
     "@typescript-eslint/parser": "npm:6.13.2"
     domhandler: "npm:5.0.3"
-    eslint: "npm:8.52.0"
-    eslint-config-prettier: "npm:9.0.0"
+    eslint: "npm:8.55.0"
+    eslint-config-prettier: "npm:9.1.0"
     eslint-plugin-jest: "npm:27.6.0"
     eslint-plugin-prettier: "npm:5.0.1"
     eventemitter2: "npm:6.4.9"
     jest: "npm:29.7.0"
     joi: "npm:17.11.0"
     js-yaml: "npm:4.1.0"
-    prettier: "npm:3.0.3"
+    prettier: "npm:3.1.0"
     reveal.js: "npm:4.6.1"
     ts-jest: "npm:29.1.1"
     typescript: "npm:5.2.2"
@@ -2479,16 +2479,16 @@ __metadata:
     dotenv-cli: "npm:7.3.0"
     emoji-picker-element: "npm:1.18.4"
     emoji-picker-element-data: "npm:1.5.0"
-    eslint: "npm:8.52.0"
+    eslint: "npm:8.55.0"
     eslint-config-next: "npm:13.5.6"
-    eslint-config-prettier: "npm:9.0.0"
+    eslint-config-prettier: "npm:9.1.0"
     eslint-plugin-chai-friendly: "npm:0.7.2"
     eslint-plugin-cypress: "npm:2.15.1"
     eslint-plugin-jest: "npm:27.6.0"
     eslint-plugin-node: "npm:11.1.0"
     eslint-plugin-prettier: "npm:5.0.1"
     eslint-plugin-promise: "npm:6.1.1"
-    eslint-plugin-testing-library: "npm:6.1.2"
+    eslint-plugin-testing-library: "npm:6.2.0"
     eventemitter2: "npm:6.4.9"
     fast-deep-equal: "npm:3.1.3"
     firacode: "npm:6.2.0"
@@ -2520,7 +2520,7 @@ __metadata:
     mermaid: "npm:10.6.1"
     next: "npm:13.4.19"
     picocolors: "npm:1.0.0"
-    prettier: "npm:3.0.3"
+    prettier: "npm:3.1.0"
     react: "npm:18.2.0"
     react-bootstrap: "npm:2.9.1"
     react-bootstrap-icons: "npm:1.10.3"
@@ -2565,13 +2565,13 @@ __metadata:
     "@typescript-eslint/parser": "npm:6.13.2"
     domelementtype: "npm:2.3.0"
     domhandler: "npm:5.0.3"
-    eslint: "npm:8.52.0"
-    eslint-config-prettier: "npm:9.0.0"
+    eslint: "npm:8.55.0"
+    eslint-config-prettier: "npm:9.1.0"
     eslint-plugin-jest: "npm:27.6.0"
     eslint-plugin-prettier: "npm:5.0.1"
     htmlparser2: "npm:9.0.0"
     jest: "npm:29.7.0"
-    prettier: "npm:3.0.3"
+    prettier: "npm:3.1.0"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
     ts-jest: "npm:29.1.1"
@@ -2590,14 +2590,14 @@ __metadata:
     "@types/markdown-it": "npm:13.0.7"
     "@typescript-eslint/eslint-plugin": "npm:6.13.2"
     "@typescript-eslint/parser": "npm:6.13.2"
-    eslint: "npm:8.52.0"
-    eslint-config-prettier: "npm:9.0.0"
+    eslint: "npm:8.55.0"
+    eslint-config-prettier: "npm:9.1.0"
     eslint-plugin-jest: "npm:27.6.0"
     eslint-plugin-prettier: "npm:5.0.1"
     html-entities: "npm:2.4.0"
     jest: "npm:29.7.0"
     markdown-it: "npm:13.0.2"
-    prettier: "npm:3.0.3"
+    prettier: "npm:3.1.0"
     ts-jest: "npm:29.1.1"
     typescript: "npm:5.2.2"
   peerDependencies:
@@ -8951,14 +8951,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:9.0.0":
-  version: 9.0.0
-  resolution: "eslint-config-prettier@npm:9.0.0"
+"eslint-config-prettier@npm:9.1.0":
+  version: 9.1.0
+  resolution: "eslint-config-prettier@npm:9.1.0"
   peerDependencies:
     eslint: ">=7.0.0"
   bin:
     eslint-config-prettier: bin/cli.js
-  checksum: bc1f661915845c631824178942e5d02f858fe6d0ea796f0050d63e0f681927b92696e81139dd04714c08c3e7de580fd079c66162e40070155ba79eaee78ab5d0
+  checksum: 6d332694b36bc9ac6fdb18d3ca2f6ac42afa2ad61f0493e89226950a7091e38981b66bac2b47ba39d15b73fff2cd32c78b850a9cf9eed9ca9a96bfb2f3a2f10d
   languageName: node
   linkType: hard
 
@@ -9192,14 +9192,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-testing-library@npm:6.1.2":
-  version: 6.1.2
-  resolution: "eslint-plugin-testing-library@npm:6.1.2"
+"eslint-plugin-testing-library@npm:6.2.0":
+  version: 6.2.0
+  resolution: "eslint-plugin-testing-library@npm:6.2.0"
   dependencies:
     "@typescript-eslint/utils": "npm:^5.58.0"
   peerDependencies:
     eslint: ^7.5.0 || ^8.0.0
-  checksum: 24bfd79fb1ee20ad0ffdea73b9bfa4e13e352b188f7f63436613987c375f63ff977bd585fe0ef2b2e29cccd9a7fccab9459f715edc700f275637f957d53e87de
+  checksum: 00ed418670f5842151d8a195315aaaf36f4b19e62d539c67be40edf634914a95cc0f65bdb30a4e7a078aafecd5bae423dd4d1f96b2879e72bb9cb80d09a3916c
   languageName: node
   linkType: hard
 
@@ -9246,14 +9246,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:8.52.0":
-  version: 8.52.0
-  resolution: "eslint@npm:8.52.0"
+"eslint@npm:8.55.0":
+  version: 8.55.0
+  resolution: "eslint@npm:8.55.0"
   dependencies:
     "@eslint-community/eslint-utils": "npm:^4.2.0"
     "@eslint-community/regexpp": "npm:^4.6.1"
-    "@eslint/eslintrc": "npm:^2.1.2"
-    "@eslint/js": "npm:8.52.0"
+    "@eslint/eslintrc": "npm:^2.1.4"
+    "@eslint/js": "npm:8.55.0"
     "@humanwhocodes/config-array": "npm:^0.11.13"
     "@humanwhocodes/module-importer": "npm:^1.0.1"
     "@nodelib/fs.walk": "npm:^1.2.8"
@@ -9290,7 +9290,7 @@ __metadata:
     text-table: "npm:^0.2.0"
   bin:
     eslint: bin/eslint.js
-  checksum: 9269b32ccf6e9947d994f871888d5b541da4a8539160ee19d80ecac0c70c51a7d3a7c111a58cf1adf81f093a7c1b5564edefa5c6dbe29b1df9c9f3e30700af30
+  checksum: d28c0b60f19bb7d355cb8393e77b018c8f548dba3f820b799c89bb2e0c436ee26084e700c5e57e1e97e7972ec93065277849141b82e7b0c0d02c2dc1e553a2a1
   languageName: node
   linkType: hard
 
@@ -14720,12 +14720,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:3.0.3":
-  version: 3.0.3
-  resolution: "prettier@npm:3.0.3"
+"prettier@npm:3.1.0":
+  version: 3.1.0
+  resolution: "prettier@npm:3.1.0"
   bin:
     prettier: bin/prettier.cjs
-  checksum: f950887bc03c5b970d8c6dd129364acfbbc61e7b46aec5d5ce17f4adf6404e2ef43072c98b51c4786e0eaca949b307d362a773fd47502862d754b5a328fa2b26
+  checksum: a45ea70aa97fde162ea4c4aba3dfc7859aa6a732a1db34458d9535dc3c2c16d3bc3fb5689e6cd76aa835562555303b02d9449fd2e15af3b73c8053557e25c5b6
   languageName: node
   linkType: hard
 
