@@ -60,7 +60,7 @@
     "markdown-it-mark": "3.0.1",
     "markdown-it-mathjax": "2.0.0",
     "markdown-it-regexp": "0.4.0",
-    "markdown-it-sub": "1.0.0",
+    "markdown-it-sub": "2.0.0",
     "markdown-it-sup": "1.0.0",
     "mattermost": "3.4.0",
     "meta-marked": "git+https://github.com/hedgedoc/meta-marked",
