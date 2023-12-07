@@ -1262,7 +1262,7 @@ __metadata:
     mariadb: 3.2.2
     markdown-it: 13.0.2
     markdown-it-abbr: 1.0.4
-    markdown-it-container: 3.0.0
+    markdown-it-container: 4.0.0
     markdown-it-deflist: 2.1.0
     markdown-it-emoji: 2.0.2
     markdown-it-footnote: 3.0.3
@@ -9427,10 +9427,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-it-container@npm:3.0.0":
-  version: 3.0.0
-  resolution: "markdown-it-container@npm:3.0.0"
-  checksum: 8638a2f7587afe0c7c725558599d541fac46f8578b7ba2a7d305d87db8549d07edfb89c59147d0d17ffa189c8d39eff3f16a80613ec7aaf92af8ead713292693
+"markdown-it-container@npm:4.0.0":
+  version: 4.0.0
+  resolution: "markdown-it-container@npm:4.0.0"
+  checksum: fa66ce0f3d2fb9de9dd4c57b60597706f786636aee2c8da5692e36b015963a6382ebed59de2dbbd169f52c899df17f66185ace8970891a40650439438476be39
   languageName: node
   linkType: hard
 
