@@ -196,7 +196,7 @@ export class MediaService {
   }
 
   private chooseBackendType(): BackendType {
-    switch (this.mediaConfig.backend.use) {
+    switch (this.mediaConfig.backend.use as string) {
       case 'filesystem':
         return BackendType.FILESYSTEM;
       case 'azure':
