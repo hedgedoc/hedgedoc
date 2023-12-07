@@ -25,7 +25,7 @@
     "typeorm": "typeorm-ts-node-commonjs -d src/ormconfig.ts"
   },
   "dependencies": {
-    "@azure/storage-blob": "12.16.0",
+    "@azure/storage-blob": "12.17.0",
     "@hedgedoc/commons": "workspace:commons",
     "@mrdrogdrog/optional": "1.2.1",
     "@nestjs/common": "10.2.10",

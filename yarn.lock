@@ -169,9 +169,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@azure/storage-blob@npm:12.16.0":
-  version: 12.16.0
-  resolution: "@azure/storage-blob@npm:12.16.0"
+"@azure/storage-blob@npm:12.17.0":
+  version: 12.17.0
+  resolution: "@azure/storage-blob@npm:12.17.0"
   dependencies:
     "@azure/abort-controller": "npm:^1.0.0"
     "@azure/core-http": "npm:^3.0.0"
@@ -181,7 +181,7 @@ __metadata:
     "@azure/logger": "npm:^1.0.0"
     events: "npm:^3.0.0"
     tslib: "npm:^2.2.0"
-  checksum: fcd1f6b195ed9cb372c02cf9ff4ae65d2fb25733575f0dfd50b49a05d3677cb6f9244441a84d2df11e3b9c690c4a1fc6278c139eafe2d50b1e96789af559e62e
+  checksum: 462e04cdfcbc891a32522ba2c6cf922c2621996255b5d436411bc4c55f7bcd86ca2693881cad32df718187f574a2799cb118672ebf92f3842be02813735737ac
   languageName: node
   linkType: hard
 
@@ -2274,7 +2274,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/backend@workspace:backend"
   dependencies:
-    "@azure/storage-blob": "npm:12.16.0"
+    "@azure/storage-blob": "npm:12.17.0"
     "@darraghor/eslint-plugin-nestjs-typed": "npm:4.3.8"
     "@hedgedoc/commons": "workspace:commons"
     "@mrdrogdrog/optional": "npm:1.2.1"
