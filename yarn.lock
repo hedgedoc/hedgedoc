@@ -2336,7 +2336,7 @@ __metadata:
     "@tsconfig/node18": "npm:18.2.2"
     "@types/bcrypt": "npm:5.0.1"
     "@types/cli-color": "npm:2.0.4"
-    "@types/cookie": "npm:0.5.3"
+    "@types/cookie": "npm:0.6.0"
     "@types/cookie-signature": "npm:1.1.1"
     "@types/cron": "npm:2.0.1"
     "@types/diff": "npm:5.0.7"
@@ -2346,7 +2346,7 @@ __metadata:
     "@types/markdown-it": "npm:13.0.5"
     "@types/minio": "npm:7.1.0"
     "@types/mysql": "npm:2.15.23"
-    "@types/node": "npm:20.8.9"
+    "@types/node": "npm:20.10.4"
     "@types/node-fetch": "npm:2.6.7"
     "@types/passport-http-bearer": "npm:1.0.39"
     "@types/passport-local": "npm:1.0.37"
@@ -2491,7 +2491,7 @@ __metadata:
     "@types/markdown-it": "npm:13.0.5"
     "@types/markdown-it-container": "npm:2.0.8"
     "@types/markdown-it-plantuml": "npm:1.4.3"
-    "@types/node": "npm:20.8.9"
+    "@types/node": "npm:20.10.4"
     "@types/react": "npm:18.2.33"
     "@types/react-dom": "npm:18.2.14"
     "@types/sass": "npm:1.43.1"
@@ -4337,10 +4337,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/cookie@npm:0.5.3":
-  version: 0.5.3
-  resolution: "@types/cookie@npm:0.5.3"
-  checksum: 882555139871dcf87c49a1fe893ced58c79e2181985a13e1399d34944dbe6f199895ee6c4bb1f75574b18a9dc4cf19efcafc8bd5213d5b5c366f5d77679a307a
+"@types/cookie@npm:0.6.0":
+  version: 0.6.0
+  resolution: "@types/cookie@npm:0.6.0"
+  checksum: 5b326bd0188120fb32c0be086b141b1481fec9941b76ad537f9110e10d61ee2636beac145463319c71e4be67a17e85b81ca9e13ceb6e3bb63b93d16824d6c149
   languageName: node
   linkType: hard
 
@@ -4829,12 +4829,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:20.8.9":
+"@types/node@npm:*":
   version: 20.8.9
   resolution: "@types/node@npm:20.8.9"
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: 6fb5604ac087c8be9aeb9ee1413fae2e691c603c9a691bd722e113597b883f21e8380a44d114ab894b435a491bfc939c8478cd57bcf890c585b961343b124964
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:20.10.4":
+  version: 20.10.4
+  resolution: "@types/node@npm:20.10.4"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 2c8b70cba731eb2ae3ae046daa74903bfcbb0e7b9196da767e5895054f6d252296ae7a04fb1dbbcb53bb004c4c658c05eaea2731bc9e2dd9e08f7e88d672f563
   languageName: node
   linkType: hard
 
