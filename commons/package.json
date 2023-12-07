@@ -53,8 +53,8 @@
   "devDependencies": {
     "@jest/types": "29.6.3",
     "@mrdrogdrog/optional": "1.2.1",
-    "@types/js-yaml": "4.0.8",
-    "@types/ws": "8.5.8",
+    "@types/js-yaml": "4.0.9",
+    "@types/ws": "8.5.10",
     "@typescript-eslint/eslint-plugin": "6.13.2",
     "@typescript-eslint/parser": "6.13.2",
     "eslint": "8.52.0",
