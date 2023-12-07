@@ -85,7 +85,7 @@
     "katex": "0.16.9",
     "luxon": "3.4.4",
     "markdown-it": "13.0.2",
-    "markdown-it-abbr": "1.0.4",
+    "markdown-it-abbr": "2.0.0",
     "markdown-it-anchor": "8.6.7",
     "markdown-it-container": "3.0.0",
     "markdown-it-deflist": "2.1.0",
