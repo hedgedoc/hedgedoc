@@ -2292,7 +2292,7 @@ __metadata:
     "@nestjs/testing": "npm:10.2.10"
     "@nestjs/typeorm": "npm:10.0.1"
     "@nestjs/websockets": "npm:10.2.10"
-    "@trivago/prettier-plugin-sort-imports": "npm:4.2.1"
+    "@trivago/prettier-plugin-sort-imports": "npm:4.3.0"
     "@tsconfig/node18": "npm:18.2.2"
     "@types/bcrypt": "npm:5.0.2"
     "@types/cli-color": "npm:2.0.6"
@@ -4126,9 +4126,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@trivago/prettier-plugin-sort-imports@npm:4.2.1":
-  version: 4.2.1
-  resolution: "@trivago/prettier-plugin-sort-imports@npm:4.2.1"
+"@trivago/prettier-plugin-sort-imports@npm:4.3.0":
+  version: 4.3.0
+  resolution: "@trivago/prettier-plugin-sort-imports@npm:4.3.0"
   dependencies:
     "@babel/generator": "npm:7.17.7"
     "@babel/parser": "npm:^7.20.5"
@@ -4142,7 +4142,7 @@ __metadata:
   peerDependenciesMeta:
     "@vue/compiler-sfc":
       optional: true
-  checksum: 1c13d5a6cd858dfedafebd35e5e4bcafd56461597bf24112304d6bd8895496474b274eb1c2d41189baa5ad6c7eb3cc8837d3297146445d2f129770d682e19f0d
+  checksum: 42270fb9c89e54a3f8b6ac8c43e6d0e03350e2857e902cdad4de22c78ef1864da600525595311bc7e94e51c16c7dd3882c2e048a162fdab59761ffa893756aa2
   languageName: node
   linkType: hard
 
