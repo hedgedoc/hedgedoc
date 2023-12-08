@@ -2431,7 +2431,7 @@ __metadata:
     "@hedgedoc/html-to-react": "workspace:html-to-react"
     "@hedgedoc/markdown-it-plugins": "workspace:markdown-it-plugins"
     "@mrdrogdrog/optional": "npm:1.2.1"
-    "@next/bundle-analyzer": "npm:13.4.19"
+    "@next/bundle-analyzer": "npm:14.0.4"
     "@react-hook/resize-observer": "npm:1.2.6"
     "@redux-devtools/core": "npm:3.13.3"
     "@reduxjs/toolkit": "npm:1.9.7"
@@ -3438,12 +3438,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/bundle-analyzer@npm:13.4.19":
-  version: 13.4.19
-  resolution: "@next/bundle-analyzer@npm:13.4.19"
+"@next/bundle-analyzer@npm:14.0.4":
+  version: 14.0.4
+  resolution: "@next/bundle-analyzer@npm:14.0.4"
   dependencies:
     webpack-bundle-analyzer: "npm:4.7.0"
-  checksum: dff9ed36e5e1fd0ae579ecb498e01c54f0aa0b560bfd0ef9d012dd018ba2726cf4ce33d3e3d74d88a9936924a087b0c424d6a03826a02a45e85e753f9d4cef14
+  checksum: 5c45e2e49b5e87612e9cc4362a9b8ed71571fa1498d3014b01e0c84c97a809678044d4ba7301752d1e28eba23a20ca5c7e28b1f9636d49024ba4da75c7a1e057
   languageName: node
   linkType: hard
 
