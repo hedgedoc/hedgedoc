@@ -1227,7 +1227,7 @@ __metadata:
     file-loader: 6.2.0
     file-saver: 2.0.5
     file-type: 18.7.0
-    flowchart.js: 1.17.1
+    flowchart.js: 1.18.0
     fork-awesome: 1.2.0
     formidable: 2.1.2
     gist-embed: 2.6.0
@@ -6752,12 +6752,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flowchart.js@npm:1.17.1":
-  version: 1.17.1
-  resolution: "flowchart.js@npm:1.17.1"
+"flowchart.js@npm:1.18.0":
+  version: 1.18.0
+  resolution: "flowchart.js@npm:1.18.0"
   dependencies:
     raphael: 2.3.0
-  checksum: ae9283935e79fe7a69d854b958d0b5026c95a5aa6566cd9882e4652719f8c5054cff020c5fdabea8f7cdda2cce80633e2ea863a74c98fa4e7a8acc06fc27680f
+  checksum: 4e08302bbfcebfe98787513138ee6b4c30a7929e024e409dac959aa5207b3b6a7694f67aea904e8a257738439146a5c0ba02b3e223c586ce5b58627160f2296e
   languageName: node
   linkType: hard
 
