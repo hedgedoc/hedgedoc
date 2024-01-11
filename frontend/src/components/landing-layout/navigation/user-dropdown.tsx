@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { useOutlineButtonVariant } from '../../../hooks/dark-mode/use-outline-button-variant'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { UiIcon } from '../../common/icons/ui-icon'
 import { UserAvatarForUser } from '../../common/user-avatar/user-avatar-for-user'
@@ -20,6 +21,7 @@ import { Trans, useTranslation } from 'react-i18next'
 export const UserDropdown: React.FC = () => {
   useTranslation()
   const user = useApplicationState((state) => state.user)
+  const buttonVariant = useOutlineButtonVariant()
 
   if (!user) {
     return null
@@ -27,7 +29,11 @@ export const UserDropdown: React.FC = () => {
 
   return (
     <Dropdown align={'end'}>
-      <Dropdown.Toggle size='sm' variant='dark' {...cypressId('user-dropdown')} className={'d-flex align-items-center'}>
+      <Dropdown.Toggle
+        {...cypressId('user-dropdown')}
+        size='sm'
+        variant={buttonVariant}
+        className={'d-flex align-items-center'}>
         <UserAvatarForUser user={user} />
       </Dropdown.Toggle>
 
