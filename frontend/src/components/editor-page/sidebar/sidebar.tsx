@@ -17,6 +17,7 @@ import styles from './style/sidebar.module.scss'
 import { DocumentSidebarMenuSelection } from './types'
 import React, { useCallback, useRef, useState } from 'react'
 import { useClickAway } from 'react-use'
+import { useIsOwner } from '../../../hooks/common/use-is-owner'
 
 /**
  * Renders the sidebar for the editor.
@@ -24,6 +25,7 @@ import { useClickAway } from 'react-use'
 export const Sidebar: React.FC = () => {
   const sideBarRef = useRef<HTMLDivElement>(null)
   const [selectedMenu, setSelectedMenu] = useState<DocumentSidebarMenuSelection>(DocumentSidebarMenuSelection.NONE)
+  const isOwner = useIsOwner()
 
   useClickAway(sideBarRef, () => {
     setSelectedMenu(DocumentSidebarMenuSelection.NONE)
@@ -66,8 +68,7 @@ export const Sidebar: React.FC = () => {
           onClick={toggleValue}
         />
         <ShareNoteSidebarEntry hide={selectionIsNotNone} />
-        {/* TODO only show if user has permissions (Owner) (https://github.com/hedgedoc/hedgedoc/issues/5036) */}
-        <DeleteNoteSidebarEntry hide={selectionIsNotNone} />
+        {isOwner && <DeleteNoteSidebarEntry hide={selectionIsNotNone} />}
         <PinNoteSidebarEntry hide={selectionIsNotNone} />
       </div>
     </div>
