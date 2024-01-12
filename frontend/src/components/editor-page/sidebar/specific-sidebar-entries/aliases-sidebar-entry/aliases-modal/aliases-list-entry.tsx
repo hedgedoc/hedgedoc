@@ -12,9 +12,10 @@ import { testId } from '../../../../../../utils/test-id'
 import { UiIcon } from '../../../../../common/icons/ui-icon'
 import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
 import React, { useCallback } from 'react'
+import { Badge } from 'react-bootstrap'
 import { Button } from 'react-bootstrap'
-import { Star as IconStar, StarFill as IconStarFill, X as IconX } from 'react-bootstrap-icons'
-import { useTranslation } from 'react-i18next'
+import { Star as IconStar, X as IconX } from 'react-bootstrap-icons'
+import { useTranslation, Trans } from 'react-i18next'
 
 export interface AliasesListEntryProps {
   alias: Alias
@@ -48,32 +49,28 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
 
   return (
     <li className={'list-group-item d-flex flex-row justify-content-between align-items-center'}>
-      {alias.name}
       <div>
+        {alias.name}
         {alias.primaryAlias && (
-          <Button
-            className={'me-2 text-warning'}
-            variant='light'
-            disabled={true}
-            title={isPrimaryText}
-            {...testId('aliasIsPrimary')}>
-            <UiIcon icon={IconStar} />
-          </Button>
+          <Badge bg='secondary' className={'ms-2'} title={isPrimaryText} {...testId('aliasPrimaryBadge')}>
+            <Trans i18nKey={'editor.modal.aliases.primaryLabel'}></Trans>
+          </Badge>
         )}
+      </div>
+      <div>
         {!alias.primaryAlias && (
           <Button
             className={'me-2'}
-            variant='light'
+            variant='secondary'
             disabled={!isOwner}
             title={makePrimaryText}
             onClick={onMakePrimaryClick}
             {...testId('aliasButtonMakePrimary')}>
-            <UiIcon icon={IconStarFill} />
+            <UiIcon icon={IconStar} />
           </Button>
         )}
         <Button
-          variant='light'
-          className={'text-danger'}
+          variant='danger'
           disabled={!isOwner}
           title={removeAliasText}
           onClick={onRemoveClick}

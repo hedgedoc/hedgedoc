@@ -15,7 +15,7 @@ import { useUiNotifications } from '../../../../../notifications/ui-notification
 import type { FormEvent } from 'react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Form, InputGroup } from 'react-bootstrap'
-import { Plus as IconPlus } from 'react-bootstrap-icons'
+import { PlusLg as IconPlus } from 'react-bootstrap-icons'
 
 const validAliasRegex = /^[a-z0-9_-]*$/
 
@@ -66,8 +66,8 @@ export const AliasesAddForm: React.FC = () => {
         />
         <Button
           type={'submit'}
-          variant='light'
-          className={'text-secondary ms-2'}
+          variant='primary'
+          className={'ms-2'}
           disabled={!isOwner || !newAliasValid || newAlias === ''}
           title={addAliasText}
           {...testId('addAliasButton')}>
