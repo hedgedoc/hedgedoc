@@ -441,6 +441,7 @@
         "addAlias": "Add alias",
         "makePrimary": "Mark this alias as primary",
         "isPrimary": "This is the primary alias",
+        "primaryLabel": "Primary Alias",
         "removeAlias": "Remove this alias",
         "errorAddingAlias": "The chosen alias can not be added to this note",
         "errorRemovingAlias": "There was an error removing the alias",

@@ -14,13 +14,13 @@ exports[`AliasesAddForm renders the input form 1`] = `
         value=""
       />
       <button
-        class="text-secondary ms-2 btn btn-light"
+        class="ms-2 btn btn-primary"
         data-testid="addAliasButton"
         disabled=""
         title="editor.modal.aliases.addAlias"
         type="submit"
       >
-        BootstrapIconMock_Plus
+        BootstrapIconMock_PlusLg
       </button>
     </div>
   </form>

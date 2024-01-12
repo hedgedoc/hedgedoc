@@ -53,7 +53,7 @@ describe('AliasesListEntry', () => {
     expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
   })
 
-  it("disables button in AliasesListEntry if it's primary", () => {
+  it("adds aliasPrimaryBadge & removes aliasButtonMakePrimary in AliasesListEntry if it's primary", () => {
     mockNotePermissions('test2', 'test')
     const testAlias: Alias = {
       name: 'test-primary',
@@ -89,7 +89,7 @@ describe('AliasesListEntry', () => {
     expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
   })
 
-  it("disables button in AliasesListEntry if it's not primary", () => {
+  it("removes aliasPrimaryBadge & adds aliasButtonMakePrimary in AliasesListEntry if it's not primary", () => {
     mockNotePermissions('test2', 'test')
     const testAlias: Alias = {
       name: 'test-primary',
