@@ -6,6 +6,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { createPatch } from 'diff';
+import { Cron, Timeout } from '@nestjs/schedule';
 import { Repository } from 'typeorm';
 
 import { NotInDBError } from '../errors/errors';
@@ -229,5 +230,27 @@ export class RevisionsService {
     if (revision) {
       await this.revisionRepository.save(revision);
     }
+  }
+
+  // Delete all old revisions everyday on 0:00 AM
+  @Cron('0 0 * * *')
+  async handleCron(): Promise<void> {
+    return await this.removeOldRevisions();
+  }
+
+  // Delete all old revisions 5 sec after startup
+  @Timeout(5000)
+  async handleTimeout(): Promise<void> {
+    return await this.removeOldRevisions();
+  }
+
+  async removeOldRevisions(): Promise<void> {
+    const currentTime = new Date().getTime();
+    console.log(currentTime);
+
+    this.logger.log(
+      currentTime,
+      'removeOldRevisions',
+    );
   }
 }
