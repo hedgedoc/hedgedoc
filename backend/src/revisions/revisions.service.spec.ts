@@ -423,4 +423,20 @@ describe('RevisionsService', () => {
       expect(repoSaveSpy).not.toHaveBeenCalled();
     });
   });
+
+  describe('auto remove old revisions', () => {
+    beforeEach(() => {
+      jest.spyOn(service, 'removeOldRevisions');
+    });
+
+    it('handleCron should call removeOldRevisions', async () => {
+      await service.handleCron();
+      expect(service.removeOldRevisions).toHaveBeenCalledTimes(1);
+    });
+
+    it('handleTimeout should call removeOldRevisions', async () => {
+      await service.handleTimeout();
+      expect(service.removeOldRevisions).toHaveBeenCalledTimes(1);
+    });
+  });
 });
