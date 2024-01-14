@@ -28,8 +28,8 @@ class RevisionUserInfo {
 export class RevisionsService {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    @InjectRepository(Revision)
-    private revisionRepository: Repository<Revision>,
+    @InjectRepository(Revision) private revisionRepository: Repository<Revision>,
+    @InjectRepository(Note) private noteRepository: Repository<Note>,
     private editService: EditService,
   ) {
     this.logger.setContext(RevisionsService.name);
@@ -246,11 +246,24 @@ export class RevisionsService {
 
   async removeOldRevisions(): Promise<void> {
     const currentTime = new Date().getTime();
-    console.log(currentTime);
+    const revisionRetentionDays: number = parseInt(process.env.HD_REVISION_RETENTION_DAYS || '0')
+    if (revisionRetentionDays <= 0) {
+      return
+    }
 
-    this.logger.log(
-      currentTime,
-      'removeOldRevisions',
-    );
+    const notes: Note[] = await this.noteRepository.find();
+    for (const note of notes) {
+      const revisions: Revision[] = await this.getAllRevisions(note);
+      const oldRevisions = revisions
+        .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+        .slice(0, -1) // always keep the latest revision
+        .filter((item) => new Date(item.createdAt).getTime() <= currentTime - revisionRetentionDays)
+
+      await this.revisionRepository.remove(oldRevisions);
+      this.logger.log(
+        `${oldRevisions.length} old revisions of the note(id: ${note.id}) were reomved from the DB`,
+        'removeOldRevisions',
+      );
+    }
   }
 }

@@ -13,10 +13,11 @@ import { Edit } from './edit.entity';
 import { EditService } from './edit.service';
 import { Revision } from './revision.entity';
 import { RevisionsService } from './revisions.service';
+import { Note } from '../notes/note.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Revision, Edit]),
+    TypeOrmModule.forFeature([Revision, Edit, Note]),
     LoggerModule,
     ConfigModule,
     AuthorsModule,
