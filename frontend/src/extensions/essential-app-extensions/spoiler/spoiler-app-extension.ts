@@ -24,7 +24,7 @@ export class SpoilerAppExtension extends AppExtension {
   }
 
   buildCheatsheetExtensions(): CheatsheetExtension[] {
-    return [{ i18nKey: 'spoiler' }]
+    return [{ i18nKey: 'spoiler', categoryI18nKey: 'other' }]
   }
 
   buildAutocompletion(): CompletionSource[] {

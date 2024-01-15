@@ -22,7 +22,7 @@ export class AlertAppExtension extends AppExtension {
   }
 
   buildCheatsheetExtensions(): CheatsheetExtension[] {
-    return [{ i18nKey: 'alert' }]
+    return [{ i18nKey: 'alert', categoryI18nKey: 'other' }]
   }
 
   buildAutocompletion(): CompletionSource[] {

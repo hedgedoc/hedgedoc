@@ -5,7 +5,7 @@
  */
 import { allAppExtensions } from '../../extensions/all-app-extensions'
 import type { CheatsheetExtensionComponentProps } from './cheatsheet-extension'
-import { hasCheatsheetTopics } from './cheatsheet-extension'
+import { isCheatsheetMultiEntry } from './cheatsheet-extension'
 import type { ReactElement } from 'react'
 import React, { Fragment, useMemo } from 'react'
 
@@ -20,7 +20,7 @@ export const useComponentsFromAppExtensions = (
       <Fragment key={'app-extensions'}>
         {allAppExtensions
           .flatMap((extension) => extension.buildCheatsheetExtensions())
-          .flatMap((extension) => (hasCheatsheetTopics(extension) ? extension.topics : extension))
+          .flatMap((extension) => (isCheatsheetMultiEntry(extension) ? extension.topics : extension))
           .map((extension) => {
             if (extension.cheatsheetExtensionComponent) {
               return React.createElement(extension.cheatsheetExtensionComponent, { key: extension.i18nKey, setContent })

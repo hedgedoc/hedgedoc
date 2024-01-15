@@ -22,7 +22,7 @@ export class CsvTableAppExtension extends AppExtension {
   }
 
   buildCheatsheetExtensions(): CheatsheetExtension[] {
-    return [{ i18nKey: 'csv', topics: [{ i18nKey: 'table' }, { i18nKey: 'header' }] }]
+    return [{ i18nKey: 'csv', categoryI18nKey: 'other', topics: [{ i18nKey: 'table' }, { i18nKey: 'header' }] }]
   }
 
   buildAutocompletion(): CompletionSource[] {

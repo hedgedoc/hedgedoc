@@ -26,6 +26,6 @@ export class TaskListCheckboxAppExtension extends AppExtension {
   }
 
   buildCheatsheetExtensions(): CheatsheetExtension[] {
-    return [{ i18nKey: 'taskList', cheatsheetExtensionComponent: SetCheckboxInCheatsheet }]
+    return [{ i18nKey: 'taskList', categoryI18nKey: 'other', cheatsheetExtensionComponent: SetCheckboxInCheatsheet }]
   }
 }

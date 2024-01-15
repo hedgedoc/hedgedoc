@@ -5,8 +5,8 @@
  */
 import { CategoryAccordion } from './category-accordion'
 import { CheatsheetEntryPane } from './cheatsheet-entry-pane'
-import type { CheatsheetSingleEntry, CheatsheetExtension } from './cheatsheet-extension'
-import { hasCheatsheetTopics } from './cheatsheet-extension'
+import type { CheatsheetExtension, CheatsheetEntry } from './cheatsheet-extension'
+import { isCheatsheetMultiEntry } from './cheatsheet-extension'
 import { CheatsheetSearch } from './cheatsheet-search'
 import styles from './cheatsheet.module.scss'
 import { TopicSelection } from './topic-selection'
@@ -20,11 +20,11 @@ import { Trans } from 'react-i18next'
 export const CheatsheetContent: React.FC = () => {
   const [visibleExtensions, setVisibleExtensions] = useState<CheatsheetExtension[]>([])
   const [selectedExtension, setSelectedExtension] = useState<CheatsheetExtension>()
-  const [selectedEntry, setSelectedEntry] = useState<CheatsheetSingleEntry>()
+  const [selectedEntry, setSelectedEntry] = useState<CheatsheetEntry>()
 
   const changeExtension = useCallback((value: CheatsheetExtension) => {
     setSelectedExtension(value)
-    setSelectedEntry(hasCheatsheetTopics(value) ? value.topics[0] : value)
+    setSelectedEntry(isCheatsheetMultiEntry(value) ? value.topics[0] : value)
   }, [])
 
   return (
@@ -44,10 +44,10 @@ export const CheatsheetContent: React.FC = () => {
             selectedEntry={selectedEntry}
             setSelectedEntry={setSelectedEntry}
           />
-          {selectedEntry !== undefined ? (
+          {selectedEntry !== undefined && selectedExtension !== undefined ? (
             <CheatsheetEntryPane
-              rootI18nKey={hasCheatsheetTopics(selectedExtension) ? selectedExtension.i18nKey : undefined}
-              extension={selectedEntry}
+              i18nKeyPrefix={isCheatsheetMultiEntry(selectedExtension) ? selectedExtension.i18nKey : undefined}
+              entry={selectedEntry}
             />
           ) : (
             <span>

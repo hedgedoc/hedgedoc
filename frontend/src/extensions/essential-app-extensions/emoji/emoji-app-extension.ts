@@ -21,6 +21,7 @@ export class EmojiAppExtension extends AppExtension {
     return [
       {
         i18nKey: 'emoji',
+        categoryI18nKey: 'other',
         readMoreUrl: new URL('https://twemoji.twitter.com/')
       }
     ]

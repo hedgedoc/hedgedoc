@@ -9,29 +9,28 @@ export interface CheatsheetExtensionComponentProps {
   setContent: (dispatcher: string | ((prevState: string) => string)) => void
 }
 
-export type CheatsheetExtension = CheatsheetSingleEntry | CheatsheetEntryWithTopics
+export type CheatsheetExtension = CheatsheetSingleEntry | CheatsheetMultiEntry
 
 /**
- * Determine if a given {@link CheatsheetExtension} is a {@link CheatsheetEntryWithTopics} or just a {@link CheatsheetSingleEntry}.
+ * Determine if a given {@link CheatsheetExtension} is a {@link CheatsheetSingleEntry} or a {@link CheatsheetMultiEntry}.
  *
  * @param extension The extension in question
  * @return boolean
  */
-export const hasCheatsheetTopics = (
+export const isCheatsheetMultiEntry = (
   extension: CheatsheetExtension | undefined
-): extension is CheatsheetEntryWithTopics => {
-  return (extension as CheatsheetEntryWithTopics)?.topics !== undefined
+): extension is CheatsheetMultiEntry => {
+  return extension !== undefined && typeof (extension as CheatsheetMultiEntry).topics === 'object'
 }
 
-/**
- * This is an entry with just a name and a bunch of different topics to discuss.
- *
- * e.g 'basics.headlines' with the topics 'hashtag' and 'equal'
- */
-export interface CheatsheetEntryWithTopics {
+export interface CheatsheetMultiEntry {
   i18nKey: string
-  categoryI18nKey?: string
-  topics: CheatsheetSingleEntry[]
+  categoryI18nKey: string
+  topics: CheatsheetEntry[]
+}
+
+export interface CheatsheetSingleEntry extends CheatsheetEntry {
+  categoryI18nKey: string
 }
 
 /**
@@ -42,10 +41,8 @@ export interface CheatsheetEntryWithTopics {
  *
  * e.g 'basics.basicFormatting'
  */
-export interface CheatsheetSingleEntry {
+export interface CheatsheetEntry {
   i18nKey: string
-  categoryI18nKey?: string
   cheatsheetExtensionComponent?: React.FC<CheatsheetExtensionComponentProps>
-
   readMoreUrl?: URL
 }
