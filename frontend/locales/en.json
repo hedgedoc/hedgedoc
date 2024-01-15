@@ -681,7 +681,7 @@
       "noSelection": "Select an entry on the left side to show the instructions."
     },
     "categories": {
-      "basic": "Basics",
+      "basics": "Basics",
       "other": "Other",
       "embedding": "Embedding",
       "charts": "Charts & Diagrams"

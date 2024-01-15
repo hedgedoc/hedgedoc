@@ -24,6 +24,7 @@ export class HighlightedCodeFenceAppExtension extends AppExtension {
     return [
       {
         i18nKey: 'codeHighlighting',
+        categoryI18nKey: 'other',
         topics: [{ i18nKey: 'language' }, { i18nKey: 'lineNumbers' }, { i18nKey: 'lineWrapping' }]
       }
     ]

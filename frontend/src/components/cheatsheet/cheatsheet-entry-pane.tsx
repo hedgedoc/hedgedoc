@@ -9,7 +9,7 @@ import { RendererIframe } from '../common/renderer-iframe/renderer-iframe'
 import { EditorToRendererCommunicatorContextProvider } from '../editor-page/render-context/editor-to-renderer-communicator-context-provider'
 import { ExtensionEventEmitterProvider } from '../markdown-renderer/hooks/use-extension-event-emitter'
 import { RendererType } from '../render-page/window-post-message-communicator/rendering-message'
-import type { CheatsheetSingleEntry } from './cheatsheet-extension'
+import type { CheatsheetEntry } from './cheatsheet-extension'
 import { ReadMoreLinkItem } from './read-more-link-item'
 import { useComponentsFromAppExtensions } from './use-components-from-app-extensions'
 import MarkdownIt from 'markdown-it'
@@ -18,8 +18,8 @@ import { ListGroupItem } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 
 interface CheatsheetRendererProps {
-  rootI18nKey?: string
-  extension: CheatsheetSingleEntry
+  i18nKeyPrefix?: string
+  entry: CheatsheetEntry
 }
 
 /**
@@ -28,7 +28,7 @@ interface CheatsheetRendererProps {
  * @param extension The extension to render
  * @param rootI18nKey An additional i18n namespace
  */
-export const CheatsheetEntryPane: React.FC<CheatsheetRendererProps> = ({ extension, rootI18nKey }) => {
+export const CheatsheetEntryPane: React.FC<CheatsheetRendererProps> = ({ entry, i18nKeyPrefix }) => {
   const { t } = useTranslation()
 
   const [content, setContent] = useState('')
@@ -36,13 +36,13 @@ export const CheatsheetEntryPane: React.FC<CheatsheetRendererProps> = ({ extensi
   const lines = useMemo(() => content.split('\n'), [content])
 
   const i18nPrefix = useMemo(
-    () => `cheatsheet.${rootI18nKey ? `${rootI18nKey}.` : ''}${extension.i18nKey}.`,
-    [extension.i18nKey, rootI18nKey]
+    () => `cheatsheet.${i18nKeyPrefix !== undefined ? i18nKeyPrefix + '.' : ''}${entry.i18nKey}.`,
+    [entry.i18nKey, i18nKeyPrefix]
   )
 
   useEffect(() => {
     setContent(t(`${i18nPrefix}example`) ?? '')
-  }, [extension, i18nPrefix, t])
+  }, [entry, i18nPrefix, t])
 
   const cheatsheetExtensionComponents = useComponentsFromAppExtensions(setContent)
 
@@ -62,7 +62,7 @@ export const CheatsheetEntryPane: React.FC<CheatsheetRendererProps> = ({ extensi
           </h4>
           {descriptionElements}
         </ListGroupItem>
-        <ReadMoreLinkItem url={extension.readMoreUrl}></ReadMoreLinkItem>
+        <ReadMoreLinkItem url={entry.readMoreUrl}></ReadMoreLinkItem>
         <ListGroupItem>
           <h4>
             <Trans i18nKey={'cheatsheet.modal.headlines.exampleInput'} />

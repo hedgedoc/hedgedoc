@@ -19,7 +19,8 @@ export class ImagePlaceholderAppExtension extends AppExtension {
   buildCheatsheetExtensions(): CheatsheetExtension[] {
     return [
       {
-        i18nKey: 'imagePlaceholder'
+        i18nKey: 'imagePlaceholder',
+        categoryI18nKey: 'other'
       }
     ]
   }

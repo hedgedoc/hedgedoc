@@ -19,6 +19,6 @@ export class KatexAppExtension extends AppExtension {
   }
 
   buildCheatsheetExtensions(): CheatsheetExtension[] {
-    return [{ i18nKey: 'katex', readMoreUrl: new URL('https://katex.org/') }]
+    return [{ i18nKey: 'katex', categoryI18nKey: 'other', readMoreUrl: new URL('https://katex.org/') }]
   }
 }

@@ -22,7 +22,13 @@ export class BlockquoteAppExtension extends AppExtension {
   }
 
   buildCheatsheetExtensions(): CheatsheetExtension[] {
-    return [{ i18nKey: 'blockquoteTags', topics: [{ i18nKey: 'name' }, { i18nKey: 'color' }, { i18nKey: 'time' }] }]
+    return [
+      {
+        i18nKey: 'blockquoteTags',
+        categoryI18nKey: 'other',
+        topics: [{ i18nKey: 'name' }, { i18nKey: 'color' }, { i18nKey: 'time' }]
+      }
+    ]
   }
 
   buildAutocompletion(): CompletionSource[] {

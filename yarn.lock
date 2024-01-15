@@ -2441,6 +2441,7 @@ __metadata:
     "@hedgedoc/markdown-it-plugins": "workspace:markdown-it-plugins"
     "@mrdrogdrog/optional": "npm:1.2.1"
     "@next/bundle-analyzer": "npm:13.4.19"
+    "@orama/orama": "npm:2.0.0-beta.12"
     "@react-hook/resize-observer": "npm:1.2.6"
     "@redux-devtools/core": "npm:3.13.3"
     "@reduxjs/toolkit": "npm:1.9.7"
@@ -2501,7 +2502,6 @@ __metadata:
     eventemitter2: "npm:6.4.9"
     fast-deep-equal: "npm:3.1.3"
     firacode: "npm:6.2.0"
-    flexsearch-ts: "npm:0.7.35"
     flowchart.js: "npm:1.17.1"
     highlight.js: "npm:11.9.0"
     htmlparser2: "npm:9.0.0"
@@ -3783,6 +3783,13 @@ __metadata:
   version: 1.6.0
   resolution: "@opentelemetry/api@npm:1.6.0"
   checksum: f419853358fdd7d9bad51dfeea5a676d7894e7983633448d1022b867e979bc28083181e000e477ee53efda97895dd6a357e15392ac39ac8dfdc42dd194e0f17e
+  languageName: node
+  linkType: hard
+
+"@orama/orama@npm:2.0.0-beta.12":
+  version: 2.0.0-beta.12
+  resolution: "@orama/orama@npm:2.0.0-beta.12"
+  checksum: 666a1d2326d181c384a302d77c45635e68ba26260b89ab022af264bfbd6bef4b1213f691fc9020fe570dd272be19208685707c588260072d46a633ccf5e0b73c
   languageName: node
   linkType: hard
 
@@ -10017,13 +10024,6 @@ __metadata:
   version: 3.2.9
   resolution: "flatted@npm:3.2.9"
   checksum: 5c91c5a0a21bbc0b07b272231e5b4efe6b822bcb4ad317caf6bb06984be4042a9e9045026307da0fdb4583f1f545e317a67ef1231a59e71f7fced3cc429cfc53
-  languageName: node
-  linkType: hard
-
-"flexsearch-ts@npm:0.7.35":
-  version: 0.7.35
-  resolution: "flexsearch-ts@npm:0.7.35"
-  checksum: 0fc80ddecd016adbd477955d057f58fe3082aa57afe68c7274e4878a87995fae6fcb29287864e6895bdb012b81c02cff99e7894ef398a798eb2028abfa95e760
   languageName: node
   linkType: hard
 

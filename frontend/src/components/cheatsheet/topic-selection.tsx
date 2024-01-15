@@ -3,16 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { CheatsheetSingleEntry, CheatsheetExtension } from './cheatsheet-extension'
-import { hasCheatsheetTopics } from './cheatsheet-extension'
+import type { CheatsheetExtension, CheatsheetEntry } from './cheatsheet-extension'
+import { isCheatsheetMultiEntry } from './cheatsheet-extension'
 import React, { useMemo } from 'react'
 import { Button, ButtonGroup, ListGroupItem } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
 
 interface EntrySelectionProps {
   extension: CheatsheetExtension | undefined
-  selectedEntry: CheatsheetSingleEntry | undefined
-  setSelectedEntry: (value: CheatsheetSingleEntry) => void
+  selectedEntry: CheatsheetEntry | undefined
+  setSelectedEntry: (value: CheatsheetEntry) => void
 }
 
 /**
@@ -25,7 +25,7 @@ interface EntrySelectionProps {
  */
 export const TopicSelection: React.FC<EntrySelectionProps> = ({ extension, selectedEntry, setSelectedEntry }) => {
   const listItems = useMemo(() => {
-    if (!hasCheatsheetTopics(extension)) {
+    if (!isCheatsheetMultiEntry(extension)) {
       return null
     }
     return extension.topics.map((entry) => (

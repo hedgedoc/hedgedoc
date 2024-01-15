@@ -4,32 +4,17 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { allAppExtensions } from '../../extensions/all-app-extensions'
-import type { SearchIndexEntry } from '../../hooks/common/use-document-search'
-import { useDocumentSearch } from '../../hooks/common/use-document-search'
+import { useCheatsheetSearch } from '../../hooks/common/use-cheatsheet-search'
 import { useOnInputChange } from '../../hooks/common/use-on-input-change'
 import { useTranslatedText } from '../../hooks/common/use-translated-text'
 import { UiIcon } from '../common/icons/ui-icon'
-import type { CheatsheetSingleEntry, CheatsheetExtension } from './cheatsheet-extension'
-import { hasCheatsheetTopics } from './cheatsheet-extension'
+import type { CheatsheetExtension } from './cheatsheet-extension'
+import { isCheatsheetMultiEntry } from './cheatsheet-extension'
 import styles from './cheatsheet.module.scss'
-import type { IndexOptionsForDocumentSearch, StoreOption } from 'flexsearch-ts'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { FormControl, InputGroup } from 'react-bootstrap'
 import { X } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
-
-interface CheatsheetSearchIndexEntry extends SearchIndexEntry {
-  title: string
-  description: string
-  example: string
-}
-
-const searchOptions: IndexOptionsForDocumentSearch<CheatsheetSearchIndexEntry, StoreOption> = {
-  document: {
-    id: 'id',
-    field: ['title', 'description', 'example']
-  }
-}
 
 export interface CheatsheetSearchProps {
   setVisibleExtensions: React.Dispatch<React.SetStateAction<CheatsheetExtension[]>>
@@ -48,38 +33,43 @@ export const CheatsheetSearch: React.FC<CheatsheetSearchProps> = ({ setVisibleEx
     () => allAppExtensions.flatMap((extension) => extension.buildCheatsheetExtensions()),
     []
   )
-  const buildSearchIndexEntry = useCallback(
-    (entry: CheatsheetSingleEntry, rootI18nKey: string | undefined = undefined): CheatsheetSearchIndexEntry => {
-      const rootI18nKeyWithDot = rootI18nKey ? `${rootI18nKey}.` : ''
+  const placeholderText = useTranslatedText('cheatsheet.search')
+
+  const buildEntry = useCallback(
+    (i18nKey: string, extensionId: string) => {
       return {
-        id: rootI18nKey ? rootI18nKey : entry.i18nKey,
-        title: t(`cheatsheet.${rootI18nKeyWithDot}${entry.i18nKey}.title`),
-        description: t(`cheatsheet.${rootI18nKeyWithDot}${entry.i18nKey}.description`),
-        example: t(`cheatsheet.${rootI18nKeyWithDot}${entry.i18nKey}.example`)
+        id: i18nKey,
+        extensionId: extensionId,
+        title: t(`cheatsheet.${i18nKey}.title`),
+        description: t(`cheatsheet.${i18nKey}.description`),
+        example: t(`cheatsheet.${i18nKey}.example`)
       }
     },
     [t]
   )
-  const placeholderText = useTranslatedText('cheatsheet.search')
+
   const cheatsheetSearchIndexEntries = useMemo(
     () =>
-      allCheatsheetExtensions.flatMap((entry) => {
-        if (hasCheatsheetTopics(entry)) {
-          return entry.topics.map((innerEntry) => buildSearchIndexEntry(innerEntry, entry.i18nKey))
+      allCheatsheetExtensions.flatMap((extension) => {
+        if (isCheatsheetMultiEntry(extension)) {
+          return extension.topics.map((entry) => {
+            return buildEntry(extension.i18nKey + '.' + entry.i18nKey, extension.i18nKey)
+          })
+        } else {
+          return buildEntry(extension.i18nKey, extension.i18nKey)
         }
-        return buildSearchIndexEntry(entry)
       }),
-    [buildSearchIndexEntry, allCheatsheetExtensions]
+    [allCheatsheetExtensions, buildEntry]
   )
-  const searchResults = useDocumentSearch(cheatsheetSearchIndexEntries, searchOptions, searchTerm)
+
+  const searchResults = useCheatsheetSearch(cheatsheetSearchIndexEntries, searchTerm)
   useEffect(() => {
-    if (searchTerm.trim() === '') {
-      setVisibleExtensions(allCheatsheetExtensions)
-      return
-    }
-    const mappedResults = searchResults.flatMap((result) => result.result)
     const extensionResults = allCheatsheetExtensions.filter((extension) => {
-      return mappedResults.includes(extension.i18nKey)
+      return (
+        searchResults.find((result) => {
+          return result.extensionId === extension.i18nKey
+        }) !== undefined
+      )
     })
     setVisibleExtensions(extensionResults)
   }, [allCheatsheetExtensions, searchResults, searchTerm, setVisibleExtensions])

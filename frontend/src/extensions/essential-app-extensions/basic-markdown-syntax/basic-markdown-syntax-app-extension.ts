@@ -20,19 +20,19 @@ export class BasicMarkdownSyntaxAppExtension extends AppExtension {
     return [
       {
         i18nKey: 'basics.basicFormatting',
-        categoryI18nKey: 'basic'
+        categoryI18nKey: 'basics'
       },
       {
         i18nKey: 'basics.abbreviation',
-        categoryI18nKey: 'basic'
+        categoryI18nKey: 'basics'
       },
       {
         i18nKey: 'basics.footnote',
-        categoryI18nKey: 'basic'
+        categoryI18nKey: 'basics'
       },
       {
         i18nKey: 'basics.headlines',
-        categoryI18nKey: 'basic',
+        categoryI18nKey: 'basics',
         topics: [
           {
             i18nKey: 'hashtag'
@@ -44,22 +44,43 @@ export class BasicMarkdownSyntaxAppExtension extends AppExtension {
       },
       {
         i18nKey: 'basics.code',
-        categoryI18nKey: 'basic',
-        topics: [{ i18nKey: 'inline' }, { i18nKey: 'block' }]
+        categoryI18nKey: 'basics',
+        topics: [
+          {
+            i18nKey: 'inline'
+          },
+          {
+            i18nKey: 'block'
+          }
+        ]
       },
       {
         i18nKey: 'basics.lists',
-        categoryI18nKey: 'basic',
-        topics: [{ i18nKey: 'unordered' }, { i18nKey: 'ordered' }]
+        categoryI18nKey: 'basics',
+        topics: [
+          {
+            i18nKey: 'unordered'
+          },
+          {
+            i18nKey: 'ordered'
+          }
+        ]
       },
       {
         i18nKey: 'basics.images',
-        categoryI18nKey: 'basic',
-        topics: [{ i18nKey: 'basic' }, { i18nKey: 'size' }]
+        categoryI18nKey: 'basics',
+        topics: [
+          {
+            i18nKey: 'basic'
+          },
+          {
+            i18nKey: 'size'
+          }
+        ]
       },
       {
         i18nKey: 'basics.links',
-        categoryI18nKey: 'basic'
+        categoryI18nKey: 'basics'
       }
     ]
   }

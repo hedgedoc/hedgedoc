@@ -20,7 +20,9 @@ export class BootstrapIconAppExtension extends AppExtension {
   }
 
   buildCheatsheetExtensions(): CheatsheetExtension[] {
-    return [{ i18nKey: 'bootstrapIcon', readMoreUrl: new URL('https://icons.getbootstrap.com/') }]
+    return [
+      { i18nKey: 'bootstrapIcon', categoryI18nKey: 'other', readMoreUrl: new URL('https://icons.getbootstrap.com/') }
+    ]
   }
 
   buildAutocompletion(): CompletionSource[] {
