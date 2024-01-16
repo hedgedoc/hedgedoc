@@ -38,7 +38,6 @@ describe('revisionConfig', () => {
       expect(config.retentionDays).toEqual(0);
       restore();
     });
-
   });
 
   describe('throws error', () => {

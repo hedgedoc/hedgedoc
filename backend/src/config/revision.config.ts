@@ -19,12 +19,14 @@ const schema = Joi.object({
     .min(0)
     .optional()
     .label('HD_REVISION_RETENTION_DAYS'),
-})
+});
 
 export default registerAs('revisionConfig', () => {
   const revisionConfig = schema.validate(
     {
-      retentionDays: parseOptionalNumber(process.env.HD_REVISION_RETENTION_DAYS),
+      retentionDays: parseOptionalNumber(
+        process.env.HD_REVISION_RETENTION_DAYS,
+      ),
     },
     {
       abortEarly: false,
@@ -39,5 +41,5 @@ export default registerAs('revisionConfig', () => {
 
     throw new Error(buildErrorMessage(errorMessages));
   }
-  return revisionConfig.value;
+  return revisionConfig.value as RevisionConfig;
 });
