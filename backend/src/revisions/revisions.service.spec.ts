@@ -458,27 +458,45 @@ describe('RevisionsService', () => {
   });
 
   describe('removeOldRevisions', () => {
+    let note: Note;
+    let notes: Note[];
+    let revisions: Revision[];
+    let oldRevisions: Revision[];
+
+    beforeEach(() => {
+      note = Mock.of<Note>({ id: 1 });
+      notes = [note];
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
     it('remove all except latest revision', async () => {
-      const note = Mock.of<Note>({ id: 1 });
+      const date1 = new Date();
+      const date2 = new Date();
+      const date3 = new Date();
+      date1.setHours(date1.getHours() - 2)
+      date2.setHours(date2.getHours() - 1)
+
       const revision1 = Mock.of<Revision>({
         id: 1,
-        createdAt: new Date(),
+        createdAt: date1,
         note: Promise.resolve(note),
       });
       const revision2 = Mock.of<Revision>({
         id: 2,
-        createdAt: new Date(),
+        createdAt: date2,
         note: Promise.resolve(note),
       });
       const revision3 = Mock.of<Revision>({
         id: 3,
-        createdAt: new Date(),
+        createdAt: date3,
         note: Promise.resolve(note),
       });
 
-      const notes = [note];
-      const revisions = [revision1, revision2, revision3];
-      const oldRevisions = [revision1, revision2];
+      revisions = [revision1, revision2, revision3];
+      oldRevisions = [revision1, revision2];
 
       jest.spyOn(noteRepo, 'find').mockResolvedValueOnce(notes);
       jest.spyOn(revisionRepo, 'find').mockResolvedValueOnce(revisions);
@@ -491,6 +509,26 @@ describe('RevisionsService', () => {
       );
 
       await service.removeOldRevisions();
+    });
+
+    it('do nothing when only one revision', async () => {
+      const date = new Date();
+      date.setDate(date.getDate() - 7)
+
+      const revision1 = Mock.of<Revision>({
+        id: 1,
+        createdAt: date,
+        note: Promise.resolve(note),
+      });
+      revisions = [revision1];
+      oldRevisions = [];
+
+      jest.spyOn(noteRepo, 'find').mockResolvedValueOnce(notes);
+      jest.spyOn(revisionRepo, 'find').mockResolvedValueOnce(revisions);
+      const spyOnRemove = jest.spyOn(revisionRepo, 'remove')
+
+      await service.removeOldRevisions();
+      expect(spyOnRemove).toHaveBeenCalledTimes(0);
     });
   });
 });

@@ -18,6 +18,7 @@ import { RevisionMetadataDto } from './revision-metadata.dto';
 import { RevisionDto } from './revision.dto';
 import { Revision } from './revision.entity';
 import { extractRevisionMetadataFromContent } from './utils/extract-revision-metadata-from-content';
+import { endWith } from 'rxjs';
 
 class RevisionUserInfo {
   usernames: string[];
@@ -259,9 +260,13 @@ export class RevisionsService {
         },
       });
       const oldRevisions = revisions
-        .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+        .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
         .slice(0, -1) // always keep the latest revision
-        .filter((item) => new Date(item.createdAt).getTime() <= currentTime - revisionRetentionDays)
+        .filter((item) => new Date(item.createdAt).getTime() <= currentTime - revisionRetentionDays);
+
+      if (!oldRevisions.length) {
+        continue;
+      }
 
       await this.revisionRepository.remove(oldRevisions);
       this.logger.log(
