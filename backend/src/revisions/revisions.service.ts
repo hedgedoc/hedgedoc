@@ -253,7 +253,11 @@ export class RevisionsService {
 
     const notes: Note[] = await this.noteRepository.find();
     for (const note of notes) {
-      const revisions: Revision[] = await this.getAllRevisions(note);
+      const revisions: Revision[] = await this.revisionRepository.find({
+        where: {
+          note: { id: note.id },
+        },
+      });
       const oldRevisions = revisions
         .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
         .slice(0, -1) // always keep the latest revision

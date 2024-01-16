@@ -8,7 +8,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Mock } from 'ts-mockery';
-import { Repository } from 'typeorm';
+import { DataSource, EntityManager, Repository } from 'typeorm';
 
 import { ApiToken } from '../api-token/api-token.entity';
 import { Author } from '../authors/author.entity';
@@ -37,14 +37,30 @@ import { RevisionsService } from './revisions.service';
 describe('RevisionsService', () => {
   let service: RevisionsService;
   let revisionRepo: Repository<Revision>;
+  let noteRepo: Repository<Note>;
 
   beforeEach(async () => {
+    noteRepo = new Repository<Note>(
+      '',
+      new EntityManager(
+        new DataSource({
+          type: 'sqlite',
+          database: ':memory:',
+        }),
+      ),
+      undefined,
+    );
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         RevisionsService,
         EditService,
         {
           provide: getRepositoryToken(Revision),
+          useClass: Repository,
+        },
+        {
+          provide: getRepositoryToken(Note),
           useClass: Repository,
         },
       ],
@@ -72,7 +88,7 @@ describe('RevisionsService', () => {
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})
       .overrideProvider(getRepositoryToken(Note))
-      .useValue({})
+      .useValue(noteRepo)
       .overrideProvider(getRepositoryToken(Revision))
       .useClass(Repository)
       .overrideProvider(getRepositoryToken(Tag))
@@ -95,6 +111,7 @@ describe('RevisionsService', () => {
     revisionRepo = module.get<Repository<Revision>>(
       getRepositoryToken(Revision),
     );
+    noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));
   });
 
   it('should be defined', () => {
@@ -437,6 +454,43 @@ describe('RevisionsService', () => {
     it('handleTimeout should call removeOldRevisions', async () => {
       await service.handleTimeout();
       expect(service.removeOldRevisions).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('removeOldRevisions', () => {
+    it('remove all except latest revision', async () => {
+      const note = Mock.of<Note>({ id: 1 });
+      const revision1 = Mock.of<Revision>({
+        id: 1,
+        createdAt: new Date(),
+        note: Promise.resolve(note),
+      });
+      const revision2 = Mock.of<Revision>({
+        id: 2,
+        createdAt: new Date(),
+        note: Promise.resolve(note),
+      });
+      const revision3 = Mock.of<Revision>({
+        id: 3,
+        createdAt: new Date(),
+        note: Promise.resolve(note),
+      });
+
+      const notes = [note];
+      const revisions = [revision1, revision2, revision3];
+      const oldRevisions = [revision1, revision2];
+
+      jest.spyOn(noteRepo, 'find').mockResolvedValueOnce(notes);
+      jest.spyOn(revisionRepo, 'find').mockResolvedValueOnce(revisions);
+      jest.spyOn(revisionRepo, 'remove')
+        .mockImplementationOnce(
+          async (entry, _) => {
+            expect(entry).toEqual(oldRevisions);
+            return entry;
+          },
+      );
+
+      await service.removeOldRevisions();
     });
   });
 });
