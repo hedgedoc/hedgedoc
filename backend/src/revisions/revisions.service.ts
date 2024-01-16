@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { createPatch } from 'diff';
 import { Cron, Timeout } from '@nestjs/schedule';
@@ -18,6 +18,7 @@ import { RevisionMetadataDto } from './revision-metadata.dto';
 import { RevisionDto } from './revision.dto';
 import { Revision } from './revision.entity';
 import { extractRevisionMetadataFromContent } from './utils/extract-revision-metadata-from-content';
+import revisionConfiguration, { RevisionConfig } from '../config/revision.config';
 import { endWith } from 'rxjs';
 
 class RevisionUserInfo {
@@ -31,6 +32,7 @@ export class RevisionsService {
     private readonly logger: ConsoleLoggerService,
     @InjectRepository(Revision) private revisionRepository: Repository<Revision>,
     @InjectRepository(Note) private noteRepository: Repository<Note>,
+    @Inject(revisionConfiguration.KEY) private revisionConfig: RevisionConfig,
     private editService: EditService,
   ) {
     this.logger.setContext(RevisionsService.name);
@@ -247,7 +249,7 @@ export class RevisionsService {
 
   async removeOldRevisions(): Promise<void> {
     const currentTime = new Date().getTime();
-    const revisionRetentionDays: number = parseInt(process.env.HD_REVISION_RETENTION_DAYS || '0')
+    const revisionRetentionDays: number = this.revisionConfig.retentionDays;
     if (revisionRetentionDays <= 0) {
       return
     }
@@ -262,7 +264,7 @@ export class RevisionsService {
       const oldRevisions = revisions
         .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
         .slice(0, -1) // always keep the latest revision
-        .filter((item) => new Date(item.createdAt).getTime() <= currentTime - revisionRetentionDays);
+        .filter((revision) => new Date(revision.createdAt).getTime() <= currentTime - revisionRetentionDays * 24 * 60 * 60 * 1000);
 
       if (!oldRevisions.length) {
         continue;

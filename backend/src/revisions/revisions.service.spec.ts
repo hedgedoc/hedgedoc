@@ -16,6 +16,8 @@ import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
 import noteConfigMock from '../config/mock/note.config.mock';
+import { registerRevisionConfig, createDefaultMockRevisionConfig } from '../config/mock/revision.config.mock';
+import { RevisionConfig } from '../config/revision.config';
 import { NotInDBError } from '../errors/errors';
 import { eventModuleConfig } from '../events';
 import { Group } from '../groups/group.entity';
@@ -38,6 +40,7 @@ describe('RevisionsService', () => {
   let service: RevisionsService;
   let revisionRepo: Repository<Revision>;
   let noteRepo: Repository<Note>;
+  const revisionConfig: RevisionConfig = createDefaultMockRevisionConfig();
 
   beforeEach(async () => {
     noteRepo = new Repository<Note>(
@@ -74,6 +77,7 @@ describe('RevisionsService', () => {
             databaseConfigMock,
             authConfigMock,
             noteConfigMock,
+            registerRevisionConfig(revisionConfig),
           ],
         }),
         EventEmitterModule.forRoot(eventModuleConfig),
@@ -462,8 +466,11 @@ describe('RevisionsService', () => {
     let notes: Note[];
     let revisions: Revision[];
     let oldRevisions: Revision[];
+    const retentionDays = 30;
 
     beforeEach(() => {
+      revisionConfig.retentionDays = retentionDays;
+
       note = Mock.of<Note>({ id: 1 });
       notes = [note];
     });
@@ -476,8 +483,8 @@ describe('RevisionsService', () => {
       const date1 = new Date();
       const date2 = new Date();
       const date3 = new Date();
-      date1.setHours(date1.getHours() - 2)
-      date2.setHours(date2.getHours() - 1)
+      date1.setDate(date1.getDate() - retentionDays)
+      date2.setDate(date2.getDate() - retentionDays + 1)
 
       const revision1 = Mock.of<Revision>({
         id: 1,
@@ -496,7 +503,7 @@ describe('RevisionsService', () => {
       });
 
       revisions = [revision1, revision2, revision3];
-      oldRevisions = [revision1, revision2];
+      oldRevisions = [revision1];
 
       jest.spyOn(noteRepo, 'find').mockResolvedValueOnce(notes);
       jest.spyOn(revisionRepo, 'find').mockResolvedValueOnce(revisions);
@@ -513,7 +520,7 @@ describe('RevisionsService', () => {
 
     it('do nothing when only one revision', async () => {
       const date = new Date();
-      date.setDate(date.getDate() - 7)
+      date.setDate(date.getDate() - retentionDays * 2)
 
       const revision1 = Mock.of<Revision>({
         id: 1,
