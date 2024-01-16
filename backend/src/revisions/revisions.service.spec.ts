@@ -16,7 +16,7 @@ import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
 import noteConfigMock from '../config/mock/note.config.mock';
-import { registerRevisionConfig, createDefaultMockRevisionConfig } from '../config/mock/revision.config.mock';
+import { createDefaultMockRevisionConfig, registerRevisionConfig } from '../config/mock/revision.config.mock';
 import { RevisionConfig } from '../config/revision.config';
 import { NotInDBError } from '../errors/errors';
 import { eventModuleConfig } from '../events';
@@ -483,8 +483,8 @@ describe('RevisionsService', () => {
       const date1 = new Date();
       const date2 = new Date();
       const date3 = new Date();
-      date1.setDate(date1.getDate() - retentionDays)
-      date2.setDate(date2.getDate() - retentionDays + 1)
+      date1.setDate(date1.getDate() - retentionDays);
+      date2.setDate(date2.getDate() - retentionDays + 1);
 
       const revision1 = Mock.of<Revision>({
         id: 1,
@@ -510,8 +510,8 @@ describe('RevisionsService', () => {
       jest.spyOn(revisionRepo, 'remove')
         .mockImplementationOnce(
           async (entry, _) => {
-            expect(entry).toEqual(oldRevisions);
-            return entry;
+            expect(entry).toEqual(oldRevisions)
+            return entry
           },
       );
 
@@ -520,7 +520,7 @@ describe('RevisionsService', () => {
 
     it('do nothing when only one revision', async () => {
       const date = new Date();
-      date.setDate(date.getDate() - retentionDays * 2)
+      date.setDate(date.getDate() - retentionDays * 2);
 
       const revision1 = Mock.of<Revision>({
         id: 1,
@@ -532,7 +532,7 @@ describe('RevisionsService', () => {
 
       jest.spyOn(noteRepo, 'find').mockResolvedValueOnce(notes);
       jest.spyOn(revisionRepo, 'find').mockResolvedValueOnce(revisions);
-      const spyOnRemove = jest.spyOn(revisionRepo, 'remove')
+      const spyOnRemove = jest.spyOn(revisionRepo, 'remove');
 
       await service.removeOldRevisions();
       expect(spyOnRemove).toHaveBeenCalledTimes(0);
@@ -540,7 +540,7 @@ describe('RevisionsService', () => {
 
     it('do nothing when retention days config is zero', async () => {
       revisionConfig.retentionDays = 0;
-      const spyOnRemove = jest.spyOn(revisionRepo, 'remove')
+      const spyOnRemove = jest.spyOn(revisionRepo, 'remove');
 
       await service.removeOldRevisions();
       expect(spyOnRemove).toHaveBeenCalledTimes(0);

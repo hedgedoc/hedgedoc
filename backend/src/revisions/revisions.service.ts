@@ -4,11 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Inject, Injectable } from '@nestjs/common';
+import { Cron, Timeout } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import { createPatch } from 'diff';
-import { Cron, Timeout } from '@nestjs/schedule';
 import { Repository } from 'typeorm';
 
+import revisionConfiguration, {
+  RevisionConfig,
+} from '../config/revision.config';
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Note } from '../notes/note.entity';
@@ -18,8 +21,6 @@ import { RevisionMetadataDto } from './revision-metadata.dto';
 import { RevisionDto } from './revision.dto';
 import { Revision } from './revision.entity';
 import { extractRevisionMetadataFromContent } from './utils/extract-revision-metadata-from-content';
-import revisionConfiguration, { RevisionConfig } from '../config/revision.config';
-import { endWith } from 'rxjs';
 
 class RevisionUserInfo {
   usernames: string[];
@@ -30,8 +31,10 @@ class RevisionUserInfo {
 export class RevisionsService {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    @InjectRepository(Revision) private revisionRepository: Repository<Revision>,
-    @InjectRepository(Note) private noteRepository: Repository<Note>,
+    @InjectRepository(Revision)
+    private revisionRepository: Repository<Revision>,
+    @InjectRepository(Note)
+    private noteRepository: Repository<Note>,
     @Inject(revisionConfiguration.KEY) private revisionConfig: RevisionConfig,
     private editService: EditService,
   ) {
@@ -251,7 +254,7 @@ export class RevisionsService {
     const currentTime = new Date().getTime();
     const revisionRetentionDays: number = this.revisionConfig.retentionDays;
     if (revisionRetentionDays <= 0) {
-      return
+      return;
     }
 
     const notes: Note[] = await this.noteRepository.find();
@@ -264,7 +267,11 @@ export class RevisionsService {
       const oldRevisions = revisions
         .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
         .slice(0, -1) // always keep the latest revision
-        .filter((revision) => new Date(revision.createdAt).getTime() <= currentTime - revisionRetentionDays * 24 * 60 * 60 * 1000);
+        .filter(
+          (revision) =>
+            new Date(revision.createdAt).getTime() <=
+            currentTime - revisionRetentionDays * 24 * 60 * 60 * 1000,
+        );
 
       if (!oldRevisions.length) {
         continue;

@@ -9,11 +9,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthorsModule } from '../authors/authors.module';
 import { LoggerModule } from '../logger/logger.module';
+import { Note } from '../notes/note.entity';
 import { Edit } from './edit.entity';
 import { EditService } from './edit.service';
 import { Revision } from './revision.entity';
 import { RevisionsService } from './revisions.service';
-import { Note } from '../notes/note.entity';
 
 @Module({
   imports: [
