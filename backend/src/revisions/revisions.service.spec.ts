@@ -537,5 +537,13 @@ describe('RevisionsService', () => {
       await service.removeOldRevisions();
       expect(spyOnRemove).toHaveBeenCalledTimes(0);
     });
+
+    it('do nothing when retention days config is zero', async () => {
+      revisionConfig.retentionDays = 0;
+      const spyOnRemove = jest.spyOn(revisionRepo, 'remove')
+
+      await service.removeOldRevisions();
+      expect(spyOnRemove).toHaveBeenCalledTimes(0);
+    });
   });
 });
