@@ -16,7 +16,10 @@ import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
 import noteConfigMock from '../config/mock/note.config.mock';
-import { createDefaultMockRevisionConfig, registerRevisionConfig } from '../config/mock/revision.config.mock';
+import {
+  createDefaultMockRevisionConfig,
+  registerRevisionConfig,
+} from '../config/mock/revision.config.mock';
 import { RevisionConfig } from '../config/revision.config';
 import { NotInDBError } from '../errors/errors';
 import { eventModuleConfig } from '../events';
@@ -507,13 +510,12 @@ describe('RevisionsService', () => {
 
       jest.spyOn(noteRepo, 'find').mockResolvedValueOnce(notes);
       jest.spyOn(revisionRepo, 'find').mockResolvedValueOnce(revisions);
-      jest.spyOn(revisionRepo, 'remove')
-        .mockImplementationOnce(
-          async (entry, _) => {
-            expect(entry).toEqual(oldRevisions)
-            return entry
-          },
-      );
+      jest
+        .spyOn(revisionRepo, 'remove')
+        .mockImplementationOnce(async (entry, _) => {
+          expect(entry).toEqual(oldRevisions);
+          return entry;
+        });
 
       await service.removeOldRevisions();
     });
