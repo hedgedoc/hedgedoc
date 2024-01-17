@@ -9,6 +9,11 @@ on:
     branches: [ develop ]
   pull_request:
     branches: [ develop ]
+  pull_request_target:
+    branches: [ develop ]
+
+permissions:
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.job }}
@@ -16,6 +21,7 @@ concurrency:
 
 jobs:
   build:
+    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
     runs-on: ubuntu-latest
     strategy:
       matrix:
