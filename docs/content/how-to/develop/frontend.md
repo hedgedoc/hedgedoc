@@ -36,10 +36,10 @@ We use [cypress][cypress] for e2e tests.
 
 1. Start the frontend with `yarn start:dev:test` (or use a test build using `yarn build:test`
    which you can start using `yarn start`). The usage of `:test` is mandatory!
-2. Run `yarn cy:open` to open the cypress test loader
+2. Run `yarn test:e2e:open` to open the cypress test loader
 3. Choose your browser and start a test suite
 
-To run all tests in a headless browser use `yarn cy:run:chrome` or `yarn cy:run:firefox`
+To run all tests in a headless browser use `yarn test:e2e`
 
 ### Bundle analysis
 
