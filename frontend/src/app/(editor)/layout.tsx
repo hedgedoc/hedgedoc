@@ -13,7 +13,7 @@ import { UiNotificationBoundary } from '../../components/notifications/ui-notifi
 import { StoreProvider } from '../../redux/store-provider'
 import { baseUrlFromEnvExtractor } from '../../utils/base-url-from-env-extractor'
 import { configureLuxon } from '../../utils/configure-luxon'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
 import { getConfig } from '../../api/config'
@@ -64,13 +64,17 @@ export default async function RootLayout({ children, appBar }: RootLayoutProps) 
 }
 
 export const metadata: Metadata = {
-  themeColor: '#b51f08',
   applicationName: 'HedgeDoc',
   appleWebApp: {
     title: 'HedgeDoc'
   },
   description: 'HedgeDoc - Ideas grow better together',
-  viewport: 'width=device-width, initial-scale=1',
   title: 'HedgeDoc',
   manifest: '/icons/site.webmanifest'
+}
+
+export const viewport: Viewport = {
+  themeColor: '#b51f08',
+  width: 'device-width',
+  initialScale: 1
 }
