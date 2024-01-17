@@ -6,8 +6,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <%- include('../includes/favicon') %>
 <% for (var og in opengraph) { %>
-<% if (opengraph.hasOwnProperty(og) && opengraph[og].trim() !== '') { %>
-<meta property="og:<%= og %>" content="<%= opengraph[og] %>">
+<% if (opengraph.hasOwnProperty(og) && String(opengraph[og]).trim() !== '') { %>
+<meta property="og:<%= og %>" content="<%= String(opengraph[og]) %>">
 <% }} if (!opengraph.hasOwnProperty('image')) { %>
 <meta property="og:image" content="<%- serverURL %>/icons/android-chrome-512x512.png">
 <meta property="og:image:alt" content="HedgeDoc logo">
