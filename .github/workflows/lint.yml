@@ -7,8 +7,13 @@ name: Lint and check format
 on:
   push:
     branches: [ develop ]
+  pull_request_target:
+    branches: [ develop ]
   pull_request:
     branches: [ develop ]
+
+permissions:
+  contents: read
 
 env:
   NODEJS_VERSION: 20
@@ -17,6 +22,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     name: Lint files and check formatting
+    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
     steps:
       - name: Checkout repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
