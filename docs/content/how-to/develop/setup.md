@@ -25,7 +25,7 @@ and the provided configuration.
    ```
    <!-- markdownlint-enable proper-names -->
 
-2. Install Node.js. You need at least Node 16, but we recommend Node 20.
+2. Install Node.js. You need at least Node 20.
 3. Install [Yarn][yarn]
 4. Install Caddy (select one of the two options)
    - [Download][caddy] and place the `caddy` binary in `dev-reverse-proxy`.
@@ -48,7 +48,7 @@ The following sections describe a more detailed setup of all components.
 
 If you want to run HedgeDoc in dev mode some preconditions have to be met.
 
-1. Make sure that Node.js is installed. You need at least Node 16, but we recommend Node 18.
+1. Make sure that Node.js is installed. You need at least Node 20.
 2. Make sure that [Yarn][yarn] is installed.
    <!-- markdownlint-disable proper-names -->
 3. Clone this repo (e.g. `git clone https://github.com/hedgedoc/hedgedoc.git hedgedoc`)
