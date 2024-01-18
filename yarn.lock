@@ -1214,7 +1214,7 @@ __metadata:
     eslint-plugin-promise: 6.1.1
     eslint-plugin-standard: 4.1.0
     exports-loader: 1.1.1
-    expose-loader: 1.0.3
+    expose-loader: 5.0.0
     express: 4.18.2
     express-session: 1.17.3
     file-loader: 6.2.0
@@ -6320,15 +6320,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expose-loader@npm:1.0.3":
-  version: 1.0.3
-  resolution: "expose-loader@npm:1.0.3"
-  dependencies:
-    loader-utils: ^2.0.0
-    schema-utils: ^3.0.0
+"expose-loader@npm:5.0.0":
+  version: 5.0.0
+  resolution: "expose-loader@npm:5.0.0"
   peerDependencies:
-    webpack: ^4.0.0 || ^5.0.0
-  checksum: 652eb86135c7fc8e1fc25b7bc5e2d7d984c8b46262305aa09444381b68c25a79cb4775b70a449983b838e4dd6e207a61841625aad801bc6706e6b07ea829d9b0
+    webpack: ^5.0.0
+  checksum: 5b155ebdfa1e9e476b7b7c0355349170a7fb3faa547be97f2fdafecc18a7e68879ed822c7eabd9fb7d4f42287257fcd29e57698056e332d70762b357fb54cc27
   languageName: node
   linkType: hard
 
