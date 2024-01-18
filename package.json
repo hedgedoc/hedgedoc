@@ -96,7 +96,7 @@
     "sequelize": "5.22.5",
     "shortid": "2.2.16",
     "socket.io": "2.5.0",
-    "sqlite3": "5.1.6",
+    "sqlite3": "5.1.7",
     "store": "2.0.12",
     "string": "3.3.3",
     "toobusy-js": "0.5.1",
