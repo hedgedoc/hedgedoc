@@ -1229,7 +1229,7 @@ __metadata:
     highlight.js: 10.7.3
     html-webpack-plugin: 4.5.2
     i18n: 0.15.1
-    imports-loader: 1.2.0
+    imports-loader: 5.0.0
     ionicons: 2.0.1
     is-svg: 4.4.0
     jquery: 3.7.1
@@ -7822,17 +7822,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"imports-loader@npm:1.2.0":
-  version: 1.2.0
-  resolution: "imports-loader@npm:1.2.0"
+"imports-loader@npm:5.0.0":
+  version: 5.0.0
+  resolution: "imports-loader@npm:5.0.0"
   dependencies:
-    loader-utils: ^2.0.0
-    schema-utils: ^3.0.0
-    source-map: ^0.6.1
+    source-map-js: ^1.0.2
     strip-comments: ^2.0.1
   peerDependencies:
-    webpack: ^4.0.0 || ^5.0.0
-  checksum: 1d0b6dbe6debdd5a4e9934c46db4272670e47a9923c87e1f290c542afa748600b29459441e13c387a7dbf1d4a423642893e97a599e6bf7ae97c2d79a70074136
+    webpack: ^5.0.0
+  checksum: 49bc106c68084b6c168a0fe738300c9fdbfd9ab06084e22a24af69bf6c0a3e7447684c5a0911060f56a6946fec6992d5026749fa245e2ae9c534d7d0d19648dd
   languageName: node
   linkType: hard
 

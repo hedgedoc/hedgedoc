@@ -168,7 +168,7 @@
     "gist-embed": "2.6.0",
     "highlight.js": "10.7.3",
     "html-webpack-plugin": "4.5.2",
-    "imports-loader": "1.2.0",
+    "imports-loader": "5.0.0",
     "ionicons": "2.0.1",
     "jquery": "3.7.1",
     "jquery-mousewheel": "3.1.13",
