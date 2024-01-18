@@ -147,7 +147,7 @@
     "babel-runtime": "6.26.0",
     "bootstrap": "3.4.1",
     "bootstrap-validator": "0.11.9",
-    "copy-webpack-plugin": "6.4.1",
+    "copy-webpack-plugin": "12.0.2",
     "css-loader": "5.2.7",
     "emojify.js": "1.1.0",
     "esbuild-loader": "4.0.2",
