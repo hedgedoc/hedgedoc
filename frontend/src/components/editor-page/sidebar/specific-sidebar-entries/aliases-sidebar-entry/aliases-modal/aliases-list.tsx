@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
+import type { Alias } from '../../../../../../api/alias/types'
 import type { ApplicationState } from '../../../../../../redux/application-state'
 import { AliasesListEntry } from './aliases-list-entry'
 import React, { Fragment, useMemo } from 'react'
@@ -13,13 +14,12 @@ import React, { Fragment, useMemo } from 'react'
  */
 export const AliasesList: React.FC = () => {
   const aliases = useApplicationState((state: ApplicationState) => state.noteDetails?.aliases)
-
   const aliasesDom = useMemo(() => {
     return aliases === undefined
       ? null
-      : aliases
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .map((alias) => <AliasesListEntry alias={alias} key={alias.name} />)
+      : Object.assign([], aliases)
+          .sort((a: Alias, b: Alias) => a.name.localeCompare(b.name))
+          .map((alias: Alias) => <AliasesListEntry alias={alias} key={alias.name} />)
   }, [aliases])
 
   return <Fragment>{aliasesDom}</Fragment>
