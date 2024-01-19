@@ -1242,7 +1242,7 @@ __metadata:
     jsonlint: 1.6.3
     keymaster: 1.6.2
     less: 4.2.0
-    less-loader: 7.3.0
+    less-loader: 12.1.0
     list.js: 2.3.1
     lodash: 4.17.21
     lutim: 1.0.3
@@ -8884,13 +8884,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"klona@npm:^2.0.4":
-  version: 2.0.6
-  resolution: "klona@npm:2.0.6"
-  checksum: ac9ee3732e42b96feb67faae4d27cf49494e8a3bf3fa7115ce242fe04786788e0aff4741a07a45a2462e2079aa983d73d38519c85d65b70ef11447bbc3c58ce7
-  languageName: node
-  linkType: hard
-
 "kuler@npm:^2.0.0":
   version: 2.0.0
   resolution: "kuler@npm:2.0.0"
@@ -8954,17 +8947,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"less-loader@npm:7.3.0":
-  version: 7.3.0
-  resolution: "less-loader@npm:7.3.0"
-  dependencies:
-    klona: ^2.0.4
-    loader-utils: ^2.0.0
-    schema-utils: ^3.0.0
+"less-loader@npm:12.1.0":
+  version: 12.1.0
+  resolution: "less-loader@npm:12.1.0"
   peerDependencies:
     less: ^3.5.0 || ^4.0.0
-    webpack: ^4.0.0 || ^5.0.0
-  checksum: 1279be755428655a37fe3def27b6edcdac403bbdd0d350bf041d4b09ad02de81024edf367cb984e127e9175a3698860595e34383731dcc343a94aa044f6fa834
+    webpack: ^5.0.0
+  checksum: e950ef8d8cf10a2a53dccc8daf1118604e10ed817ca32e4a292a026c3ab985bf8f00d6b8c74ca9007bd33d6c98315139a7be26f4c59423a68a83a6755a1a285f
   languageName: node
   linkType: hard
 
