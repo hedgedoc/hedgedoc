@@ -5,6 +5,7 @@
  */
 import { TableOfContents } from '../../../editor-page/table-of-contents/table-of-contents'
 import { TableOfContentsHoveringButton } from '../../markdown-toc-button/table-of-contents-hovering-button'
+import { ORIGIN, useBaseUrl } from '../../../../hooks/common/use-base-url'
 import type { TocAst } from '@hedgedoc/markdown-it-plugins'
 import React from 'react'
 
@@ -25,9 +26,11 @@ const MAX_WIDTH_FOR_BUTTON_VISIBILITY = 1100
  * @param baseUrl the base url that will be used to generate the links //TODO: replace with consumer/provider (https://github.com/hedgedoc/hedgedoc/issues/5035)
  */
 export const WidthBasedTableOfContents: React.FC<DocumentExternalTocProps> = ({ tocAst, width, baseUrl }) => {
+  const rendererBaseUrl = useBaseUrl(ORIGIN.RENDERER)
+
   if (width >= MAX_WIDTH_FOR_BUTTON_VISIBILITY) {
-    return <TableOfContents ast={tocAst} baseUrl={baseUrl} />
+    return <TableOfContents ast={tocAst} baseUrl={rendererBaseUrl} />
   } else {
-    return <TableOfContentsHoveringButton tocAst={tocAst} baseUrl={baseUrl} />
+    return <TableOfContentsHoveringButton tocAst={tocAst} baseUrl={rendererBaseUrl} />
   }
 }
