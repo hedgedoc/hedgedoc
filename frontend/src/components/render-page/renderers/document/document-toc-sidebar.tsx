@@ -12,16 +12,15 @@ import React, { useState } from 'react'
 
 export interface DocumentTocSidebarProps {
   width: number
-  baseUrl: string
 }
 
-export const DocumentTocSidebar: React.FC<DocumentTocSidebarProps> = ({ width, baseUrl }) => {
+export const DocumentTocSidebar: React.FC<DocumentTocSidebarProps> = ({ width }) => {
   const [tocAst, setTocAst] = useState<TocAst>()
   useExtensionEventEmitterHandler(TableOfContentsMarkdownExtension.EVENT_NAME, setTocAst)
 
   return (
     <div className={styles.side}>
-      {tocAst !== undefined && <WidthBasedTableOfContents tocAst={tocAst} baseUrl={baseUrl} width={width} />}
+      {tocAst !== undefined && <WidthBasedTableOfContents tocAst={tocAst} width={width} />}
     </div>
   )
 }
