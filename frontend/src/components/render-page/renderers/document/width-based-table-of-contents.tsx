@@ -12,7 +12,6 @@ import React from 'react'
 export interface DocumentExternalTocProps {
   tocAst: TocAst
   width: number
-  baseUrl: string
 }
 
 const MAX_WIDTH_FOR_BUTTON_VISIBILITY = 1100
@@ -23,9 +22,8 @@ const MAX_WIDTH_FOR_BUTTON_VISIBILITY = 1100
  *
  * @param tocAst the {@link TocAst AST} that should be rendered.
  * @param width the width that should be used to determine if the button should be shown.
- * @param baseUrl the base url that will be used to generate the links //TODO: replace with consumer/provider (https://github.com/hedgedoc/hedgedoc/issues/5035)
  */
-export const WidthBasedTableOfContents: React.FC<DocumentExternalTocProps> = ({ tocAst, width, baseUrl }) => {
+export const WidthBasedTableOfContents: React.FC<DocumentExternalTocProps> = ({ tocAst, width }) => {
   const rendererBaseUrl = useBaseUrl(ORIGIN.RENDERER)
 
   if (width >= MAX_WIDTH_FOR_BUTTON_VISIBILITY) {

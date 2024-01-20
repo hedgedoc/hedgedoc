@@ -99,7 +99,7 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
           </div>
         </div>
       </div>
-      <DocumentTocSidebar width={internalDocumentRenderPaneSize?.width ?? 0} baseUrl={baseUrl} />
+      <DocumentTocSidebar width={internalDocumentRenderPaneSize?.width ?? 0} />
     </div>
   )
 }
