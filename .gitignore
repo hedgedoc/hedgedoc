@@ -23,6 +23,7 @@ backups/
 .turbo
 .env
 dist/
+frontend/cypress/downloads
 frontend/cypress/screenshots
 
 # Yarn 2 without zero-installs
