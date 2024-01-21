@@ -92,7 +92,7 @@ jobs:
     services:
       postgres:
         # renovate: datasource=docker depName=postgres
-        image: postgres:16.1@sha256:0599bafe1afb0762426091b894a1b47dc1043c84b480205c4768e523aa47b193
+        image: postgres:16.1@sha256:49c276fa02e3d61bd9b8db81dfb4784fe814f50f778dce5980a03817438293e3
         env:
           POSTGRES_PASSWORD: hedgedoc
           POSTGRES_USER: hedgedoc
