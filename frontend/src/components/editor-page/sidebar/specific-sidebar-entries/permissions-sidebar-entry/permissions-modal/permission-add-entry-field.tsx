@@ -9,7 +9,7 @@ import { UiIcon } from '../../../../../common/icons/ui-icon'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import React, { useCallback, useState } from 'react'
 import { Button, FormControl, InputGroup } from 'react-bootstrap'
-import { Plus as IconPlus } from 'react-bootstrap-icons'
+import { PlusLg as IconPlus } from 'react-bootstrap-icons'
 
 export interface PermissionAddEntryFieldProps {
   onAddEntry: (identifier: string) => void
@@ -42,8 +42,8 @@ export const PermissionAddEntryField: React.FC<PermissionAddEntryFieldProps & Pe
       <InputGroup className={'me-1 mb-1'}>
         <FormControl value={newEntryIdentifier} placeholder={placeholderText} onChange={onChange} disabled={disabled} />
         <Button
-          variant='light'
-          className={'text-secondary ms-2'}
+          variant='primary'
+          className={'text-ms-2'}
           title={placeholderText}
           onClick={onSubmit}
           disabled={disabled}>
