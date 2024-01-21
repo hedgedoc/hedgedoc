@@ -108,4 +108,41 @@ describe('realtime note', () => {
     expect(sendMessage1Spy).toHaveBeenNthCalledWith(2, deletedMessage);
     expect(sendMessage2Spy).toHaveBeenNthCalledWith(1, deletedMessage);
   });
+
+  describe('removeClient', () => {
+    it('destory if the number of connected clients reaches zero and the lifetime is exceeded', () => {
+      const sut = new RealtimeNote(mockedNote, 'nothing');
+      const client1 = new MockConnectionBuilder(sut).withLoggedInUser().build();
+      const docDestroy = jest.spyOn(sut, 'destroy');
+
+      sut.addClient(client1);
+      sut.removeClient(client1);
+      jest.advanceTimersByTime(5000);
+
+      sut.addClient(client1);
+      sut.removeClient(client1);
+      jest.advanceTimersByTime(10500);
+
+      expect(docDestroy).toHaveBeenCalledTimes(1);
+    });
+
+    it("doesn't destory when a client reconnects quickly", () => {
+      const sut = new RealtimeNote(mockedNote, 'nothing');
+      const client1 = new MockConnectionBuilder(sut).withLoggedInUser().build();
+      const docDestroy = jest.spyOn(sut, 'destroy');
+
+      // Assuming the case where the only connected user reloads the browser
+      sut.addClient(client1);
+      sut.removeClient(client1);
+      jest.advanceTimersByTime(5000);
+
+      sut.addClient(client1);
+      sut.removeClient(client1);
+      jest.advanceTimersByTime(5000);
+
+      sut.addClient(client1);
+
+      expect(docDestroy).toHaveBeenCalledTimes(0);
+    });
+  });
 });

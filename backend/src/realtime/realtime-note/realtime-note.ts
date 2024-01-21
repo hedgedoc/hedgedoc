@@ -5,7 +5,7 @@
  */
 import { Message, MessageType, RealtimeDoc } from '@hedgedoc/commons';
 import { Logger } from '@nestjs/common';
-import { EventEmitter2, EventMap } from 'eventemitter2';
+import { EventEmitter2, EventMap, Listener } from 'eventemitter2';
 
 import { Note } from '../../notes/note.entity';
 import { RealtimeConnection } from './realtime-connection';
@@ -19,6 +19,8 @@ export interface RealtimeNoteEventMap extends EventMap {
   yDocUpdate: (update: number[], origin: unknown) => void;
 }
 
+const LIFETIME_WITHOUT_CLIENTS = 10 * 1000; // 10 seconds
+
 /**
  * Represents a note currently being edited by a number of clients.
  */
@@ -26,7 +28,9 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   protected logger: Logger;
   private readonly doc: RealtimeDoc;
   private readonly clients = new Set<RealtimeConnection>();
+  private readonly clientAddedListener: Listener;
   private isClosing = false;
+  private destroyEventTimer: NodeJS.Timeout | null = null;
 
   constructor(
     private readonly note: Note,
@@ -40,6 +44,18 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
     this.logger.debug(
       `New realtime session for note ${note.id} created. Length of initial content: ${length} characters`,
     );
+    this.clientAddedListener = this.on(
+      'clientAdded',
+      () => {
+        if (this.destroyEventTimer) {
+          clearTimeout(this.destroyEventTimer);
+          this.destroyEventTimer = null;
+        }
+      },
+      {
+        objectify: true,
+      },
+    ) as Listener;
   }
 
   /**
@@ -68,8 +84,13 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
       } clients left.`,
     );
     this.emit('clientRemoved', client);
-    if (!this.hasConnections() && !this.isClosing) {
-      this.destroy();
+
+    if (this.canBeDestroyed()) {
+      this.destroyEventTimer = setTimeout(() => {
+        if (this.canBeDestroyed()) {
+          this.destroy();
+        }
+      }, LIFETIME_WITHOUT_CLIENTS);
     }
   }
 
@@ -87,6 +108,7 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
     this.isClosing = true;
     this.doc.destroy();
     this.clients.forEach((value) => value.getTransporter().disconnect());
+    this.clientAddedListener.off();
     this.emit('destroy');
   }
 
@@ -149,5 +171,12 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
     this.getConnections().forEach((connection) => {
       connection.getTransporter().sendMessage(content);
     });
+  }
+
+  /**
+   * Indicates if a realtime note is ready to get destroyed.
+   */
+  private canBeDestroyed(): boolean {
+    return !this.hasConnections() && !this.isClosing;
   }
 }
