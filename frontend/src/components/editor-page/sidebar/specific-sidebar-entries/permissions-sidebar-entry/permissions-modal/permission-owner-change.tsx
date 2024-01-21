@@ -38,7 +38,7 @@ export const PermissionOwnerChange: React.FC<PermissionOwnerChangeProps> = ({ on
     <InputGroup className={'me-1 mb-1'}>
       <FormControl value={ownerFieldValue} placeholder={placeholderText} onChange={onChangeField} />
       <Button
-        variant='light'
+        variant='primary'
         title={buttonTitleText}
         onClick={onClickConfirm}
         className={'ms-2'}

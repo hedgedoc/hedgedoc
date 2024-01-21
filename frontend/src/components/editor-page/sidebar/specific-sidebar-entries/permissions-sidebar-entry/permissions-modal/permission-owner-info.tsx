@@ -36,7 +36,7 @@ export const PermissionOwnerInfo: React.FC<PermissionOwnerInfoProps & Permission
   return (
     <Fragment>
       <UserAvatarForUsername username={noteOwner} />
-      <Button variant='light' disabled={disabled} title={buttonTitle} onClick={onEditOwner}>
+      <Button variant='primary' disabled={disabled} title={buttonTitle} onClick={onEditOwner}>
         <UiIcon icon={IconPencil} />
       </Button>
     </Fragment>

@@ -75,10 +75,7 @@ export const PermissionEntryButtons: React.FC<PermissionEntryButtonsProps & Perm
 
   return (
     <div>
-      <Button variant='light' className={'text-danger me-2'} disabled={disabled} title={removeTitle} onClick={onRemove}>
-        <UiIcon icon={IconX} />
-      </Button>
-      <ToggleButtonGroup type='radio' name='edit-mode' value={currentSetting}>
+      <ToggleButtonGroup className={'me-2'} type='radio' name='edit-mode' value={currentSetting}>
         <Button
           disabled={disabled}
           title={setReadOnlyTitle}
@@ -94,6 +91,9 @@ export const PermissionEntryButtons: React.FC<PermissionEntryButtonsProps & Perm
           <UiIcon icon={IconPencil} />
         </Button>
       </ToggleButtonGroup>
+      <Button variant='danger' disabled={disabled} title={removeTitle} onClick={onRemove}>
+        <UiIcon icon={IconX} />
+      </Button>
     </div>
   )
 }
