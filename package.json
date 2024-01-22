@@ -36,7 +36,7 @@
     "@codemirror/lint": "6.4.2",
     "@codemirror/theme-one-dark": "6.1.2",
     "@lezer/common": "1.1.2",
-    "@types/react": "18.2.42",
+    "@types/react": "18.2.48",
     "eventemitter2@6.4.9": "patch:eventemitter2@npm%3A6.4.9#./.yarn/patches/eventemitter2-npm-6.4.9-ba37798a18.patch",
     "yjs@13.6.10": "patch:yjs@npm%3A13.6.10#./.yarn/patches/yjs-remove-import-warning-in-test.patch",
     "vega-canvas@^1.2.6": "patch:vega-canvas@npm%3A1.2.7#./.yarn/patches/remove-vega-canvas-node.patch",

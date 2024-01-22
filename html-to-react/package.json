@@ -50,8 +50,8 @@
   "devDependencies": {
     "@jest/globals": "29.7.0",
     "@jest/types": "29.6.3",
-    "@types/react": "18.2.42",
-    "@types/react-dom": "18.2.17",
+    "@types/react": "18.2.48",
+    "@types/react-dom": "18.2.18",
     "@typescript-eslint/eslint-plugin": "6.13.2",
     "@typescript-eslint/parser": "6.13.2",
     "eslint": "8.55.0",
@@ -83,7 +83,7 @@
     "node": ">=12"
   },
   "resolutions": {
-    "@types/react": "18.2.42"
+    "@types/react": "18.2.48"
   },
   "packageManager": "yarn@4.0.2"
 }
