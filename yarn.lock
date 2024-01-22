@@ -1667,15 +1667,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/commands@npm:6.3.2":
-  version: 6.3.2
-  resolution: "@codemirror/commands@npm:6.3.2"
+"@codemirror/commands@npm:6.3.3":
+  version: 6.3.3
+  resolution: "@codemirror/commands@npm:6.3.3"
   dependencies:
     "@codemirror/language": "npm:^6.0.0"
-    "@codemirror/state": "npm:^6.2.0"
+    "@codemirror/state": "npm:^6.4.0"
     "@codemirror/view": "npm:^6.0.0"
     "@lezer/common": "npm:^1.1.0"
-  checksum: c6947410f9757fc190e0c5e0978d972cb68ccadb884ff6cbfee57ec4a175267c1604d65f44c0dbe069bf068f542225d2cab0100948eb06ded16e15cf73c16afe
+  checksum: 0b8384e54232c4046a6a1a4fd56081b2040eb072f678b4f6918f0f792c2c66b52540938b7c7cc766e1f9d5173ab0c57707ff486fa351ed60540471ad7ce7dfdd
   languageName: node
   linkType: hard
 
@@ -1780,18 +1780,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/lang-markdown@npm:6.2.3":
-  version: 6.2.3
-  resolution: "@codemirror/lang-markdown@npm:6.2.3"
+"@codemirror/lang-markdown@npm:6.2.4":
+  version: 6.2.4
+  resolution: "@codemirror/lang-markdown@npm:6.2.4"
   dependencies:
     "@codemirror/autocomplete": "npm:^6.7.1"
     "@codemirror/lang-html": "npm:^6.0.0"
     "@codemirror/language": "npm:^6.3.0"
     "@codemirror/state": "npm:^6.0.0"
     "@codemirror/view": "npm:^6.0.0"
-    "@lezer/common": "npm:^1.0.0"
+    "@lezer/common": "npm:^1.2.1"
     "@lezer/markdown": "npm:^1.0.0"
-  checksum: d4c3f3834e24694daf518e117cf18771fa73cc827464603f9da0a5fc8218e8b8bef8bf40338baa6f58d9c70507aec9e77d810b75d47e6bf0a0c7232a5ec97f1c
+  checksum: 54c38ecb5e6decc47835f4012141689d41419da4e9188e4c889d7ca296e730f12adb826c9f9c8305557641d961287c88f91873353c5ad67a1f4db9129226078a
   languageName: node
   linkType: hard
 
@@ -1984,14 +1984,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/view@npm:6.22.1":
-  version: 6.22.1
-  resolution: "@codemirror/view@npm:6.22.1"
+"@codemirror/view@npm:6.22.3":
+  version: 6.22.3
+  resolution: "@codemirror/view@npm:6.22.3"
   dependencies:
     "@codemirror/state": "npm:^6.1.4"
     style-mod: "npm:^4.1.0"
     w3c-keyname: "npm:^2.2.4"
-  checksum: 142a861c2bf6d0ba2817eaffdf985c19b556cc98af1bd565b1e9286bfcaf17eb12837ce41633a2462fca1731d043781c21c778fb0d5ae928c03c6a6f42485c78
+  checksum: ed5e48923f0522d2c55c0bb48eadb06823afaa5fb037b09b53b8eb00acdd4c7cb90816ee023ba90d7c70f7612bb8ab749d232398a6ae8bc2dc4df8d653ba7386
   languageName: node
   linkType: hard
 
@@ -2432,14 +2432,14 @@ __metadata:
   resolution: "@hedgedoc/frontend@workspace:frontend"
   dependencies:
     "@codemirror/autocomplete": "npm:6.11.1"
-    "@codemirror/commands": "npm:6.3.2"
-    "@codemirror/lang-markdown": "npm:6.2.3"
+    "@codemirror/commands": "npm:6.3.3"
+    "@codemirror/lang-markdown": "npm:6.2.4"
     "@codemirror/language": "npm:6.9.3"
     "@codemirror/language-data": "npm:6.3.1"
     "@codemirror/lint": "npm:6.4.2"
     "@codemirror/state": "npm:6.3.3"
     "@codemirror/theme-one-dark": "npm:6.1.2"
-    "@codemirror/view": "npm:6.22.1"
+    "@codemirror/view": "npm:6.22.3"
     "@dicebear/core": "npm:7.0.1"
     "@dicebear/identicon": "npm:7.0.1"
     "@fontsource/source-sans-pro": "npm:5.0.8"
