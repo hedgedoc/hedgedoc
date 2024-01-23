@@ -1183,7 +1183,7 @@ __metadata:
     abcjs: 6.2.3
     archiver: 6.0.1
     async: 3.2.5
-    aws-sdk: 2.1514.0
+    aws-sdk: 2.1542.0
     azure-storage: 2.10.7
     babel-cli: 6.26.0
     babel-core: 6.26.3
@@ -1935,9 +1935,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-sdk@npm:2.1514.0":
-  version: 2.1514.0
-  resolution: "aws-sdk@npm:2.1514.0"
+"aws-sdk@npm:2.1542.0":
+  version: 2.1542.0
+  resolution: "aws-sdk@npm:2.1542.0"
   dependencies:
     buffer: 4.9.2
     events: 1.1.1
@@ -1948,8 +1948,8 @@ __metadata:
     url: 0.10.3
     util: ^0.12.4
     uuid: 8.0.0
-    xml2js: 0.5.0
-  checksum: 6f0dab02ddb2d8696c4d6394e751f3252b804a52956e97ce5c4d43069ab5b0a09d4016858eeb5d2207a8fd2ae8238f7b4844cca0434225e77be463dc6bc7450a
+    xml2js: 0.6.2
+  checksum: 224176b3ea28ace16f640eb337193de85103386be40786161a603c4624c8becbe79ec269bd25492946fff66887e0016fc78309ff39a6e7a0f3a23aac475ef0d7
   languageName: node
   linkType: hard
 
@@ -16798,13 +16798,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xml2js@npm:0.5.0, xml2js@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "xml2js@npm:0.5.0"
+"xml2js@npm:0.6.2":
+  version: 0.6.2
+  resolution: "xml2js@npm:0.6.2"
   dependencies:
     sax: ">=0.6.0"
     xmlbuilder: ~11.0.0
-  checksum: 1aa71d62e5bc2d89138e3929b9ea46459157727759cbc62ef99484b778641c0cd21fb637696c052d901a22f82d092a3e740a16b4ce218e81ac59b933535124ea
+  checksum: 458a83806193008edff44562c0bdb982801d61ee7867ae58fd35fab781e69e17f40dfeb8fc05391a4648c9c54012066d3955fe5d993ffbe4dc63399023f32ac2
   languageName: node
   linkType: hard
 
@@ -16815,6 +16815,16 @@ __metadata:
     sax: ">=0.6.0"
     xmlbuilder: ~11.0.0
   checksum: ca0cf2dfbf6deeaae878a891c8fbc0db6fd04398087084edf143cdc83d0509ad0fe199b890f62f39c4415cf60268a27a6aed0d343f0658f8779bd7add690fa98
+  languageName: node
+  linkType: hard
+
+"xml2js@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "xml2js@npm:0.5.0"
+  dependencies:
+    sax: ">=0.6.0"
+    xmlbuilder: ~11.0.0
+  checksum: 1aa71d62e5bc2d89138e3929b9ea46459157727759cbc62ef99484b778641c0cd21fb637696c052d901a22f82d092a3e740a16b4ce218e81ac59b933535124ea
   languageName: node
   linkType: hard
 
