@@ -1211,7 +1211,7 @@ __metadata:
     diff-match-patch: "git+https://github.com/hackmdio/diff-match-patch.git"
     ejs: 3.1.9
     emojify.js: 1.1.0
-    esbuild-loader: 4.0.2
+    esbuild-loader: 4.0.3
     escape-html: 1.0.3
     eslint: 8.56.0
     eslint-config-standard: 17.1.0
@@ -5803,9 +5803,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild-loader@npm:4.0.2":
-  version: 4.0.2
-  resolution: "esbuild-loader@npm:4.0.2"
+"esbuild-loader@npm:4.0.3":
+  version: 4.0.3
+  resolution: "esbuild-loader@npm:4.0.3"
   dependencies:
     esbuild: ^0.19.0
     get-tsconfig: ^4.7.0
@@ -5813,7 +5813,7 @@ __metadata:
     webpack-sources: ^1.4.3
   peerDependencies:
     webpack: ^4.40.0 || ^5.0.0
-  checksum: beecdeb9fd1d88aceaedc3914bf35c239d7771f767b6afca68dbf4c58adde71ab0506704ed6c713329aa5cf0241c1ff6d4834562571b88bb243a8245710933ae
+  checksum: 8303a106ec9e74fb4ad2c10f5e23fb082d742cfa7bc42b1476886a9f49ef1bff99cb39c1a569827195865d2d179a09a54bedfd34fae82841ce1f02beebfd9127
   languageName: node
   linkType: hard
 
