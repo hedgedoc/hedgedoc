@@ -36,7 +36,7 @@
     "@nestjs/platform-express": "10.2.10",
     "@nestjs/platform-ws": "10.2.10",
     "@nestjs/schedule": "3.0.4",
-    "@nestjs/swagger": "7.1.16",
+    "@nestjs/swagger": "7.1.17",
     "@nestjs/typeorm": "10.0.1",
     "@nestjs/websockets": "10.2.10",
     "@types/bcrypt": "5.0.2",
