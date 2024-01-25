@@ -2317,7 +2317,7 @@ __metadata:
     base32-encode: "npm:1.2.0"
     bcrypt: "npm:5.1.1"
     class-transformer: "npm:0.5.1"
-    class-validator: "npm:0.14.0"
+    class-validator: "npm:0.14.1"
     cli-color: "npm:2.0.3"
     connect-typeorm: "npm:2.0.0"
     cookie: "npm:0.6.0"
@@ -5264,10 +5264,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/validator@npm:^13.7.10":
-  version: 13.11.5
-  resolution: "@types/validator@npm:13.11.5"
-  checksum: 3c85a355802b97c71986c2b326bf0003bc32ae0283c780312feb984edaa98f786f26431031dae803e4cb603c097b51864e13792e06d85343a8fcbcf19d0fac7e
+"@types/validator@npm:^13.11.8":
+  version: 13.11.8
+  resolution: "@types/validator@npm:13.11.8"
+  checksum: 9e96e96b25a4ed2234fa081b9d99bcbd29e8714b7c48446ff386e3c47ea9c3bb482b5d03e4cb68da636c80c63350aee06a71f7c74bd7a8e3a08a1d75ec817d8a
   languageName: node
   linkType: hard
 
@@ -6978,14 +6978,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"class-validator@npm:0.14.0":
-  version: 0.14.0
-  resolution: "class-validator@npm:0.14.0"
+"class-validator@npm:0.14.1":
+  version: 0.14.1
+  resolution: "class-validator@npm:0.14.1"
   dependencies:
-    "@types/validator": "npm:^13.7.10"
-    libphonenumber-js: "npm:^1.10.14"
-    validator: "npm:^13.7.0"
-  checksum: 1f7c34052f0c342b1d27c5aec7c42b646bb77a56874acc0d8003e2ad8f0294e7da18b43e9caaac8e8817cbb309cf9f14bcebe4611994390ca4818f3b393783dc
+    "@types/validator": "npm:^13.11.8"
+    libphonenumber-js: "npm:^1.10.53"
+    validator: "npm:^13.9.0"
+  checksum: 946e914e47548b5081449c720ea6a4877bac63dc960e14fca4b990b56e64efe3802d12f07ec22d6420c290245b72ea2d646939239f2a3b597794e6c4c2a4f2ae
   languageName: node
   linkType: hard
 
@@ -12505,10 +12505,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"libphonenumber-js@npm:^1.10.14":
-  version: 1.10.49
-  resolution: "libphonenumber-js@npm:1.10.49"
-  checksum: 0d9d854f326a77cc75dc027161477771bca4d99d9bf59ed241ec099cbf71982b2db3c6f9dffe22550510678dc9f1b097a868ee57a757ae5113449374f37df115
+"libphonenumber-js@npm:^1.10.53":
+  version: 1.10.54
+  resolution: "libphonenumber-js@npm:1.10.54"
+  checksum: 685f4510d392b2b6dc5d6171d250ff9f0aa7b1c73160e1518fca8a2c453d854a4785aa625fd6f06d910856578b2c15468febe55b2cec7ea14526a1989247b993
   languageName: node
   linkType: hard
 
@@ -17998,7 +17998,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"validator@npm:^13.7.0":
+"validator@npm:^13.9.0":
   version: 13.11.0
   resolution: "validator@npm:13.11.0"
   checksum: 0107da3add5a4ebc6391dac103c55f6d8ed055bbcc29a4c9cbf89eacfc39ba102a5618c470bdc33c6487d30847771a892134a8c791f06ef0962dd4b7a60ae0f5
