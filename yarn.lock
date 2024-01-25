@@ -2249,14 +2249,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hapi/hoek@npm:^9.0.0":
+"@hapi/hoek@npm:^9.0.0, @hapi/hoek@npm:^9.3.0":
   version: 9.3.0
   resolution: "@hapi/hoek@npm:9.3.0"
   checksum: a096063805051fb8bba4c947e293c664b05a32b47e13bc654c0dd43813a1cec993bdd8f29ceb838020299e1d0f89f68dc0d62a603c13c9cc8541963f0beca055
   languageName: node
   linkType: hard
 
-"@hapi/topo@npm:^5.0.0":
+"@hapi/topo@npm:^5.1.0":
   version: 5.1.0
   resolution: "@hapi/topo@npm:5.1.0"
   dependencies:
@@ -2333,7 +2333,7 @@ __metadata:
     htmlparser2: "npm:9.0.0"
     http-proxy-middleware: "npm:2.0.6"
     jest: "npm:29.7.0"
-    joi: "npm:17.11.0"
+    joi: "npm:17.11.1"
     ldapauth-fork: "npm:5.0.5"
     markdown-it: "npm:13.0.2"
     minio: "npm:7.1.3"
@@ -2381,7 +2381,7 @@ __metadata:
     eslint-plugin-prettier: "npm:5.0.1"
     eventemitter2: "npm:6.4.9"
     jest: "npm:29.7.0"
-    joi: "npm:17.11.0"
+    joi: "npm:17.11.1"
     js-yaml: "npm:4.1.0"
     prettier: "npm:3.1.1"
     reveal.js: "npm:4.6.1"
@@ -3943,7 +3943,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sideway/address@npm:^4.1.3":
+"@sideway/address@npm:^4.1.4":
   version: 4.1.4
   resolution: "@sideway/address@npm:4.1.4"
   dependencies:
@@ -12127,16 +12127,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"joi@npm:17.11.0":
-  version: 17.11.0
-  resolution: "joi@npm:17.11.0"
+"joi@npm:17.11.1":
+  version: 17.11.1
+  resolution: "joi@npm:17.11.1"
   dependencies:
-    "@hapi/hoek": "npm:^9.0.0"
-    "@hapi/topo": "npm:^5.0.0"
-    "@sideway/address": "npm:^4.1.3"
+    "@hapi/hoek": "npm:^9.3.0"
+    "@hapi/topo": "npm:^5.1.0"
+    "@sideway/address": "npm:^4.1.4"
     "@sideway/formula": "npm:^3.0.1"
     "@sideway/pinpoint": "npm:^2.0.0"
-  checksum: c41c86fe772828b88fbdbcaef2e41235ccbb107c22523a377f9a2fd39829f203213f37a352589f49d9a9b38bf1c645846defede8b81d8c1f3123117c1a600010
+  checksum: 7b68e7658f9d1b23c6240aa7c9def0f0ff0a1144e90a3ecc641e07f4ec33efe1d31fb373299f0e973f67020fef8cb7d5fd5c40f749ceac302f74f0c2cc8eb0e7
   languageName: node
   linkType: hard
 
