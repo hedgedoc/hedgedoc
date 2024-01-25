@@ -2283,7 +2283,7 @@ __metadata:
     "@nestjs/platform-ws": "npm:10.2.10"
     "@nestjs/schedule": "npm:3.0.4"
     "@nestjs/schematics": "npm:10.0.3"
-    "@nestjs/swagger": "npm:7.1.16"
+    "@nestjs/swagger": "npm:7.1.17"
     "@nestjs/testing": "npm:10.2.10"
     "@nestjs/typeorm": "npm:10.0.1"
     "@nestjs/websockets": "npm:10.2.10"
@@ -3441,9 +3441,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/mapped-types@npm:2.0.3":
-  version: 2.0.3
-  resolution: "@nestjs/mapped-types@npm:2.0.3"
+"@nestjs/mapped-types@npm:2.0.4":
+  version: 2.0.4
+  resolution: "@nestjs/mapped-types@npm:2.0.4"
   peerDependencies:
     "@nestjs/common": ^8.0.0 || ^9.0.0 || ^10.0.0
     class-transformer: ^0.4.0 || ^0.5.0
@@ -3454,7 +3454,7 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: 575d530683664a753d389fcdd5c1c770744efc3797051aa8585ed1b02862796fbf14fe9f2b017a1e3c6c47c94287c45f79ff94d2b05294fb65139373506dd257
+  checksum: 6fc02a27d69239602f901295f3b3fc7a1bea4a0ab926d14b6c81c85d1b37f35ae4eac43f64e393eaae5af2dc481bd16fdd297cc0524d9991eb5659cde4ac707c
   languageName: node
   linkType: hard
 
@@ -3527,15 +3527,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/swagger@npm:7.1.16":
-  version: 7.1.16
-  resolution: "@nestjs/swagger@npm:7.1.16"
+"@nestjs/swagger@npm:7.1.17":
+  version: 7.1.17
+  resolution: "@nestjs/swagger@npm:7.1.17"
   dependencies:
-    "@nestjs/mapped-types": "npm:2.0.3"
+    "@nestjs/mapped-types": "npm:2.0.4"
     js-yaml: "npm:4.1.0"
     lodash: "npm:4.17.21"
     path-to-regexp: "npm:3.2.0"
-    swagger-ui-dist: "npm:5.9.1"
+    swagger-ui-dist: "npm:5.10.3"
   peerDependencies:
     "@fastify/static": ^6.0.0
     "@nestjs/common": ^9.0.0 || ^10.0.0
@@ -3550,7 +3550,7 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: 09b318985943d0b50dc44f26c2fb094674bfa2d5de9743102e4b2cdeeb16349a5cface6e747fb7eae8c00c98b0da2ae09718de78ebe455947992b0b3c768f09b
+  checksum: 5d792d16c7b6740a0fe498605f994d22f96120e094bbfa576a34ed715fc9130ceb684721a98073cb1a2254a4aa74adf81aebbab70e8cb4be0e722723dc82ece8
   languageName: node
   linkType: hard
 
@@ -16835,10 +16835,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swagger-ui-dist@npm:5.9.1":
-  version: 5.9.1
-  resolution: "swagger-ui-dist@npm:5.9.1"
-  checksum: dee9f8b9e21b95a659ce3ecc63c71b11e1e4353b972772057a0ad88aa7a1a26eadab82996ef021b71bb8d6a4cc0212fd2fe45e5f72f4ffc57dd4df39993a1c1f
+"swagger-ui-dist@npm:5.10.3":
+  version: 5.10.3
+  resolution: "swagger-ui-dist@npm:5.10.3"
+  checksum: d613a2122ef4323f0cbeb8387ff19db30728a97a60af2059393cc714d2038651268c60b65b4628dc6f792d7b60c65c699d786085f370d91acdda80dc81e8f7a1
   languageName: node
   linkType: hard
 
