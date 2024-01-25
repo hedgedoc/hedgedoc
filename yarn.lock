@@ -2352,8 +2352,8 @@ __metadata:
     rxjs: "npm:7.8.1"
     source-map-support: "npm:0.5.21"
     sqlite3: "npm:5.1.6"
-    supertest: "npm:6.3.3"
-    ts-jest: "npm:29.1.1"
+    supertest: "npm:6.3.4"
+    ts-jest: "npm:29.1.2"
     ts-mockery: "npm:1.2.0"
     ts-node: "npm:11.0.0-beta.1"
     tsconfig-paths: "npm:4.2.0"
@@ -2385,7 +2385,7 @@ __metadata:
     js-yaml: "npm:4.1.0"
     prettier: "npm:3.1.1"
     reveal.js: "npm:4.6.1"
-    ts-jest: "npm:29.1.1"
+    ts-jest: "npm:29.1.2"
     typescript: "npm:5.3.3"
     ws: "npm:8.14.2"
     yjs: "npm:13.6.11"
@@ -2569,7 +2569,7 @@ __metadata:
     prettier: "npm:3.1.1"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
-    ts-jest: "npm:29.1.1"
+    ts-jest: "npm:29.1.2"
     typescript: "npm:5.3.3"
   peerDependencies:
     react: ">=16.0"
@@ -2593,7 +2593,7 @@ __metadata:
     jest: "npm:29.7.0"
     markdown-it: "npm:13.0.2"
     prettier: "npm:3.1.1"
-    ts-jest: "npm:29.1.1"
+    ts-jest: "npm:29.1.2"
     typescript: "npm:5.3.3"
   peerDependencies:
     markdown-it: ">=12"
@@ -16750,7 +16750,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"superagent@npm:^8.0.5":
+"superagent@npm:^8.1.2":
   version: 8.1.2
   resolution: "superagent@npm:8.1.2"
   dependencies:
@@ -16768,13 +16768,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"supertest@npm:6.3.3":
-  version: 6.3.3
-  resolution: "supertest@npm:6.3.3"
+"supertest@npm:6.3.4":
+  version: 6.3.4
+  resolution: "supertest@npm:6.3.4"
   dependencies:
     methods: "npm:^1.1.2"
-    superagent: "npm:^8.0.5"
-  checksum: 178ca0d2f3919ec01e1e22240df237793d80eb36f249f57c9bba34ce6ad002b4918db6a4fdf31ba8d15746451c9164305c60a490f4fcb43b5761a8f582def183
+    superagent: "npm:^8.1.2"
+  checksum: f8c0b6c73b5e87da31feee6ccb36e7af766a438513cad89d6907f22c97edd83b1e765b4c8de955d5f7af4bca5fd0aaf9149ff48e21567dd290b326a8633af2a7
   languageName: node
   linkType: hard
 
@@ -17185,9 +17185,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:29.1.1":
-  version: 29.1.1
-  resolution: "ts-jest@npm:29.1.1"
+"ts-jest@npm:29.1.2":
+  version: 29.1.2
+  resolution: "ts-jest@npm:29.1.2"
   dependencies:
     bs-logger: "npm:0.x"
     fast-json-stable-stringify: "npm:2.x"
@@ -17214,7 +17214,7 @@ __metadata:
       optional: true
   bin:
     ts-jest: cli.js
-  checksum: 6c45e0aeeff9cc54a64f931c43e1b99f4a1f0ddf44786cc128e7e55603ab7473c8c8f62fd83bd7e51bfe83e3c0c683132152efaeb844516bf7c923f4e92d157d
+  checksum: c2f51f0241f89d127d41392decbcb83b5dfd5e57ab9d50220aa7b7e2f9b3f3b07ccdbba33311284df1c41941879e4ddfad44b15a9d0da4b74bd1b98702b729df
   languageName: node
   linkType: hard
 
