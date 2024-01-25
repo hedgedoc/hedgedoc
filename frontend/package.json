@@ -46,7 +46,7 @@
     "@codemirror/state": "6.3.3",
     "@codemirror/theme-one-dark": "6.1.2",
     "@codemirror/view": "6.22.3",
-    "@dicebear/core": "7.0.1",
+    "@dicebear/core": "7.0.4",
     "@dicebear/identicon": "7.0.1",
     "@fontsource/source-sans-pro": "5.0.8",
     "@hedgedoc/commons": "workspace:commons",
