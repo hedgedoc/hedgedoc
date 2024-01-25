@@ -2063,16 +2063,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dicebear/converter@npm:7.0.1":
-  version: 7.0.1
-  resolution: "@dicebear/converter@npm:7.0.1"
+"@dicebear/converter@npm:7.0.4":
+  version: 7.0.4
+  resolution: "@dicebear/converter@npm:7.0.4"
   dependencies:
     "@types/json-schema": "npm:^7.0.11"
     tmp-promise: "npm:^3.0.3"
   peerDependencies:
     "@resvg/resvg-js": ^2.4.1
-    exiftool-vendored: ^22.0.0
-    sharp: ^0.32.1
+    exiftool-vendored: ^23.0.0
+    sharp: ^0.32.6
   peerDependenciesMeta:
     "@resvg/resvg-js":
       optional: true
@@ -2080,38 +2080,17 @@ __metadata:
       optional: true
     sharp:
       optional: true
-  checksum: 235be358543b3fcd9826c24265e3cae13fe8a081c46ee012888de10cc2b551d3bdc4e17377784012b92b88208866e185680c2f649a904557ec43544659068533
+  checksum: cc539e4f80dd13cc34eba27519a215d8a5e8e5ba9dd98a30f46cf94ecefccd498679be6f2fb6222c6c5529b707f671eddcd52f0795171bb555ca6a68388ce86d
   languageName: node
   linkType: hard
 
-"@dicebear/converter@patch:@dicebear/converter@npm%3A7.0.1#./.yarn/patches/@dicebear-converter-npm-7.0.1-cb9d17808e.patch::locator=hedgedoc%40workspace%3A.":
-  version: 7.0.1
-  resolution: "@dicebear/converter@patch:@dicebear/converter@npm%3A7.0.1#./.yarn/patches/@dicebear-converter-npm-7.0.1-cb9d17808e.patch::version=7.0.1&hash=659bc7&locator=hedgedoc%40workspace%3A."
+"@dicebear/core@npm:7.0.4":
+  version: 7.0.4
+  resolution: "@dicebear/core@npm:7.0.4"
   dependencies:
+    "@dicebear/converter": "npm:7.0.4"
     "@types/json-schema": "npm:^7.0.11"
-    tmp-promise: "npm:^3.0.3"
-  peerDependencies:
-    "@resvg/resvg-js": ^2.4.1
-    exiftool-vendored: ^22.0.0
-    sharp: ^0.32.1
-  peerDependenciesMeta:
-    "@resvg/resvg-js":
-      optional: true
-    exiftool-vendored:
-      optional: true
-    sharp:
-      optional: true
-  checksum: 433b0dcd20b438b12773a3c5dce8133c9e64b51d7b232af0f45b8e1d0b613c3ad40f1bc8f1d16b209abc2ac4047ed15d5a6dc3f31965baf928fe183a43ee4218
-  languageName: node
-  linkType: hard
-
-"@dicebear/core@npm:7.0.1":
-  version: 7.0.1
-  resolution: "@dicebear/core@npm:7.0.1"
-  dependencies:
-    "@dicebear/converter": "npm:7.0.1"
-    "@types/json-schema": "npm:^7.0.11"
-  checksum: b99689dfc9fd11d6fbb0f14e1636a519ef0b26fad2c4988c81e43012692afb264e1521ca4a0c864c0d84b7efde7c8abd13fe16760bc8f63dd9ed0fee03fe8505
+  checksum: 54cb21c215ace445b72a1bb1f369d59544ecbd45e4499d15f908be08810ac17c8800f2e3a32d592fa305e415b7de65ee918e03359d71ecdcf35a6a20bc76496c
   languageName: node
   linkType: hard
 
@@ -2440,7 +2419,7 @@ __metadata:
     "@codemirror/state": "npm:6.3.3"
     "@codemirror/theme-one-dark": "npm:6.1.2"
     "@codemirror/view": "npm:6.22.3"
-    "@dicebear/core": "npm:7.0.1"
+    "@dicebear/core": "npm:7.0.4"
     "@dicebear/identicon": "npm:7.0.1"
     "@fontsource/source-sans-pro": "npm:5.0.8"
     "@hedgedoc/commons": "workspace:commons"
