@@ -25,7 +25,7 @@
   },
   "packageManager": "yarn@4.0.2",
   "resolutions": {
-    "@types/node": "20.10.8",
+    "@types/node": "20.11.9",
     "domhandler": "5.0.3",
     "@codemirror/state": "6.3.3",
     "@codemirror/autocomplete": "6.11.1",
