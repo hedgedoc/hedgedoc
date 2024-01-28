@@ -137,7 +137,7 @@
   },
   "devDependencies": {
     "@hedgedoc/codemirror-5": "5.65.12",
-    "abcjs": "6.2.3",
+    "abcjs": "6.3.0",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.3",
     "babel-loader": "7.1.5",
