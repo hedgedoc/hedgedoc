@@ -207,13 +207,13 @@ jobs:
           TURBO_TEAM: ${{ vars.TURBO_TEAM }}
           CYPRESS_CONTAINER_ID: ${{ matrix.containers }}
 
-      - uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # master
+      - uses: actions/upload-artifact@d00351bf698398c17253d21cf8f90e57a344e14b # master
         if: always()
         with:
           name: screenlog-${{ matrix.containers }}
           path: frontend/screenlog.0
 
-      - uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # master
+      - uses: actions/upload-artifact@d00351bf698398c17253d21cf8f90e57a344e14b # master
         if: always()
         with:
           name: screenshots-${{ matrix.containers }}
