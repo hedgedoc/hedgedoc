@@ -7,6 +7,7 @@
 
 ### Bugfixes
 - Fix a crash when having numeric-only values in opengraph frontmatter
+- Fix unnecessary session creation on healthcheck endpoint
 
 ## <i class="fa fa-tag"></i> 1.9.9 <i class="fa fa-calendar-o"></i> 2023-07-30
 
