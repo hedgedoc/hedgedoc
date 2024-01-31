@@ -152,7 +152,7 @@ app.use('/uploads', express.static(path.resolve(__dirname, config.uploadsPath), 
 app.use('/default.md', express.static(path.resolve(__dirname, config.defaultNotePath), { maxAge: config.staticCacheTime }))
 
 // session
-app.use(useUnless(['/status', '/metrics'], session({
+app.use(useUnless(['/status', '/metrics', '/_health'], session({
   name: config.sessionName,
   secret: config.sessionSecret,
   resave: false, // don't save session if unmodified
