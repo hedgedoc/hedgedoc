@@ -2620,7 +2620,7 @@ __metadata:
     react-i18next: "npm:13.3.2"
     react-redux: "npm:8.1.3"
     react-test-renderer: "npm:18.2.0"
-    react-use: "npm:17.4.4"
+    react-use: "npm:17.5.0"
     redux: "npm:4.2.1"
     reveal.js: "npm:4.6.1"
     sanitize-filename: "npm:1.6.3"
@@ -15854,9 +15854,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-use@npm:17.4.4":
-  version: 17.4.4
-  resolution: "react-use@npm:17.4.4"
+"react-use@npm:17.5.0":
+  version: 17.5.0
+  resolution: "react-use@npm:17.5.0"
   dependencies:
     "@types/js-cookie": "npm:^2.2.6"
     "@xobotyi/scrollbar-width": "npm:^1.9.5"
@@ -15875,7 +15875,7 @@ __metadata:
   peerDependencies:
     react: "*"
     react-dom: "*"
-  checksum: 6d2a0fe21eb45850aff4d3cfec4b7a5c042dad071cdb87a9619265fe6eff214ceefa97777201a5b9699d85ee7e561f1a8c3a1a28e0939769f0858c04fc27cb2a
+  checksum: b2e606338f329f8f26bccbd1ae428cf63e1d9b4a940cb327823270955a2aae35972be745d333d1a1bd0276a3650038d1f7f6ae1077af5cccba8234a3e7376754
   languageName: node
   linkType: hard
 
