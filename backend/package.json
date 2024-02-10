@@ -55,7 +55,7 @@
     "connect-typeorm": "2.0.0",
     "cookie": "0.6.0",
     "diff": "5.1.0",
-    "express-session": "1.17.3",
+    "express-session": "1.18.0",
     "file-type": "16.5.4",
     "htmlparser2": "9.0.0",
     "joi": "17.11.1",
