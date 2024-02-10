@@ -2423,7 +2423,7 @@ __metadata:
     eslint-plugin-jest: "npm:27.6.3"
     eslint-plugin-local-rules: "npm:2.0.1"
     eslint-plugin-prettier: "npm:5.1.3"
-    express-session: "npm:1.17.3"
+    express-session: "npm:1.18.0"
     file-type: "npm:16.5.4"
     htmlparser2: "npm:9.0.0"
     http-proxy-middleware: "npm:2.0.6"
@@ -7720,6 +7720,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cookie-signature@npm:1.0.7":
+  version: 1.0.7
+  resolution: "cookie-signature@npm:1.0.7"
+  checksum: e7731ad2995ae2efeed6435ec1e22cdd21afef29d300c27281438b1eab2bae04ef0d1a203928c0afec2cee72aa36540b8747406ebe308ad23c8e8cc3c26c9c51
+  languageName: node
+  linkType: hard
+
 "cookie@npm:0.4.2":
   version: 0.4.2
   resolution: "cookie@npm:0.4.2"
@@ -10016,7 +10023,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express-session@npm:1.17.3, express-session@npm:^1.15.6":
+"express-session@npm:1.18.0":
+  version: 1.18.0
+  resolution: "express-session@npm:1.18.0"
+  dependencies:
+    cookie: "npm:0.6.0"
+    cookie-signature: "npm:1.0.7"
+    debug: "npm:2.6.9"
+    depd: "npm:~2.0.0"
+    on-headers: "npm:~1.0.2"
+    parseurl: "npm:~1.3.3"
+    safe-buffer: "npm:5.2.1"
+    uid-safe: "npm:~2.1.5"
+  checksum: 5c3f1237f2789cf32f9cd668d3217c228916edfd3b5a686a894a80c7cca63f9ef66bb86a8457074b9b4cc4b2ee97e16781dd4e0cff7829b671ab0db5da0db638
+  languageName: node
+  linkType: hard
+
+"express-session@npm:^1.15.6":
   version: 1.17.3
   resolution: "express-session@npm:1.17.3"
   dependencies:
