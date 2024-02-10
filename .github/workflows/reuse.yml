@@ -14,7 +14,7 @@ jobs:
   reuse:
     runs-on: ubuntu-latest
     container:
-      image: fsfe/reuse:2.1.0@sha256:fa898b2fc662e6feae6782d971e6a45105250841676823508e5fcb873a29f68e
+      image: fsfe/reuse:3.0.1@sha256:f17b4bea47ee3cad4e2f9a72468b95e0f63c02bc89600dc3445b3c387685e2c8
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
