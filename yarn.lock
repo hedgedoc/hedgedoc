@@ -2599,7 +2599,7 @@ __metadata:
     markdown-it-anchor: "npm:8.6.7"
     markdown-it-container: "npm:4.0.0"
     markdown-it-deflist: "npm:3.0.0"
-    markdown-it-emoji: "npm:2.0.2"
+    markdown-it-emoji: "npm:3.0.0"
     markdown-it-footnote: "npm:4.0.0"
     markdown-it-ins: "npm:4.0.0"
     markdown-it-mark: "npm:4.0.0"
@@ -12962,10 +12962,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-it-emoji@npm:2.0.2":
-  version: 2.0.2
-  resolution: "markdown-it-emoji@npm:2.0.2"
-  checksum: 10c0/c22791a7e25b6b0d6f9fa6a9ed90d6d41dcb5751ffb5d2a811053c7400c37d2c9e0bbbc7b78d5449b36dc95e468177198e3431d9912c15970f729a95510d669d
+"markdown-it-emoji@npm:3.0.0":
+  version: 3.0.0
+  resolution: "markdown-it-emoji@npm:3.0.0"
+  checksum: 10c0/e2bca9cfbf0e7e652c00c91450e88017ce4b66a84c25130aa2da6c7013fc3d51ed70715565807d4607c1967ca224edbbc231523b80b0a56436efad5feb6e2666
   languageName: node
   linkType: hard
 
