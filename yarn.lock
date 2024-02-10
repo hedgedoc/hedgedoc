@@ -1598,7 +1598,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.8, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.22.5, @babel/runtime@npm:^7.23.2, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.8, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.22.5, @babel/runtime@npm:^7.23.2, @babel/runtime@npm:^7.23.5, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.23.9
   resolution: "@babel/runtime@npm:7.23.9"
   dependencies:
@@ -2504,7 +2504,7 @@ __metadata:
     "@next/bundle-analyzer": "npm:14.1.0"
     "@orama/orama": "npm:2.0.5"
     "@react-hook/resize-observer": "npm:1.2.6"
-    "@redux-devtools/core": "npm:3.14.0"
+    "@redux-devtools/core": "npm:4.0.0"
     "@reduxjs/toolkit": "npm:1.9.7"
     "@svgr/webpack": "npm:8.1.0"
     "@testing-library/cypress": "npm:10.0.1"
@@ -3973,20 +3973,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redux-devtools/core@npm:3.14.0":
-  version: 3.14.0
-  resolution: "@redux-devtools/core@npm:3.14.0"
+"@redux-devtools/core@npm:4.0.0":
+  version: 4.0.0
+  resolution: "@redux-devtools/core@npm:4.0.0"
   dependencies:
-    "@babel/runtime": "npm:^7.23.2"
+    "@babel/runtime": "npm:^7.23.5"
     "@redux-devtools/instrument": "npm:^2.2.0"
-    "@types/prop-types": "npm:^15.7.10"
     lodash: "npm:^4.17.21"
-    prop-types: "npm:^15.8.1"
   peerDependencies:
-    react: ^0.14.9 || ^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
-    react-redux: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0
+    react: ^16.8.4 || ^17.0.0 || ^18.0.0
+    react-redux: ^7.0.0 || ^8.0.0 || ^9.0.0
     redux: ^3.5.2 || ^4.0.0 || ^5.0.0
-  checksum: 10c0/bfa4f336644edd8954828a79785db849eef8711a6c93482c50b73a0d62d702e0bf49e4d82aa172a800635b5bc4fc362965405ede8fcd556d4032860fabbb4931
+  checksum: 10c0/dcd07c9964f7aa799b8c436268060ce720d5a1d29ab8304194263f504b1c7085ea488f5aa6610ec7e49655beb6aa999aa6928717955c03d5eae759e68b438572
   languageName: node
   linkType: hard
 
@@ -5150,7 +5148,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prop-types@npm:*, @types/prop-types@npm:^15.7.10":
+"@types/prop-types@npm:*":
   version: 15.7.11
   resolution: "@types/prop-types@npm:15.7.11"
   checksum: 10c0/e53423cf9d510515ef8b47ff42f4f1b65a7b7b37c8704e2dbfcb9a60defe0c0e1f3cb1acfdeb466bad44ca938d7c79bffdd51b48ffb659df2432169d0b27a132

@@ -49,7 +49,7 @@
     "@mrdrogdrog/optional": "1.2.1",
     "@orama/orama": "2.0.5",
     "@react-hook/resize-observer": "1.2.6",
-    "@redux-devtools/core": "3.14.0",
+    "@redux-devtools/core": "4.0.0",
     "@reduxjs/toolkit": "1.9.7",
     "@svgr/webpack": "8.1.0",
     "@types/katex": "0.16.7",
