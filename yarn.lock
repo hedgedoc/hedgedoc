@@ -2391,7 +2391,7 @@ __metadata:
     typeorm: "npm:0.3.17"
     typescript: "npm:5.3.3"
     ws: "npm:8.14.2"
-    yjs: "npm:13.6.11"
+    yjs: "npm:13.6.12"
   languageName: unknown
   linkType: soft
 
@@ -2419,7 +2419,7 @@ __metadata:
     ts-jest: "npm:29.1.2"
     typescript: "npm:5.3.3"
     ws: "npm:8.14.2"
-    yjs: "npm:13.6.11"
+    yjs: "npm:13.6.12"
   languageName: unknown
   linkType: soft
 
@@ -2575,7 +2575,7 @@ __metadata:
     vega-lite: "npm:5.16.3"
     words-count: "npm:2.0.2"
     ws: "npm:8.14.2"
-    yjs: "npm:13.6.11"
+    yjs: "npm:13.6.12"
   languageName: unknown
   linkType: soft
 
@@ -19378,21 +19378,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yjs@npm:13.6.11":
-  version: 13.6.11
-  resolution: "yjs@npm:13.6.11"
+"yjs@npm:13.6.12":
+  version: 13.6.12
+  resolution: "yjs@npm:13.6.12"
   dependencies:
     lib0: "npm:^0.2.86"
-  checksum: dcda4c833d5dae3b4195ed546ea52f098eb694341b55c48d0143c36b4347388182fb2c1f98ce7b2e3201dc0675832f7d64bd8aaece0237e512caafee99565a07
+  checksum: d5fb07839af40e3240f9dd4564131d8bd216bc5fc3da584f5bf04ae15afa11d188d098400033cc57286f5be9f2268c075057cb644a1f902a958f65f345d27034
   languageName: node
   linkType: hard
 
-"yjs@patch:yjs@npm%3A13.6.11#./.yarn/patches/yjs-remove-import-warning-in-test.patch::locator=hedgedoc%40workspace%3A.":
-  version: 13.6.11
-  resolution: "yjs@patch:yjs@npm%3A13.6.11#./.yarn/patches/yjs-remove-import-warning-in-test.patch::version=13.6.11&hash=e7d95b&locator=hedgedoc%40workspace%3A."
+"yjs@patch:yjs@npm%3A13.6.12#./.yarn/patches/yjs-remove-import-warning-in-test.patch::locator=hedgedoc%40workspace%3A.":
+  version: 13.6.12
+  resolution: "yjs@patch:yjs@npm%3A13.6.12#./.yarn/patches/yjs-remove-import-warning-in-test.patch::version=13.6.12&hash=e7d95b&locator=hedgedoc%40workspace%3A."
   dependencies:
     lib0: "npm:^0.2.86"
-  checksum: b7cfb6beb6adb5bdd02f388ffaac7db4f6d43c061059894aaad0552dcbefb08d85decbeb4177e5853b93ae4e9770c5b52a10d727a821975fe1d9ac4342b735c0
+  checksum: d3a7123fbabe29f9a780911df86893a258c4b6bcff5245fcdde561942daa9af86d0f106b67c3e4973c9ab623d8ba184a8a1ed8cebb41c1bfda00cb979f291e0e
   languageName: node
   linkType: hard
 
