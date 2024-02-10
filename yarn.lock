@@ -1577,7 +1577,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.8, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.19.4, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.21.5, @babel/runtime@npm:^7.22.5, @babel/runtime@npm:^7.23.2, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.8, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.22.5, @babel/runtime@npm:^7.23.2, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.23.5
   resolution: "@babel/runtime@npm:7.23.5"
   dependencies:
@@ -2522,9 +2522,9 @@ __metadata:
     flowchart.js: "npm:1.17.1"
     highlight.js: "npm:11.9.0"
     htmlparser2: "npm:9.0.0"
-    i18next: "npm:23.6.0"
-    i18next-browser-languagedetector: "npm:7.1.0"
-    i18next-resources-to-backend: "npm:1.1.4"
+    i18next: "npm:23.8.2"
+    i18next-browser-languagedetector: "npm:7.2.0"
+    i18next-resources-to-backend: "npm:1.2.0"
     jest: "npm:29.7.0"
     jest-environment-jsdom: "npm:29.7.0"
     katex: "npm:0.16.9"
@@ -2553,7 +2553,7 @@ __metadata:
     react-bootstrap-typeahead: "npm:6.3.2"
     react-diff-viewer: "npm:3.1.1"
     react-dom: "npm:18.2.0"
-    react-i18next: "npm:13.3.2"
+    react-i18next: "npm:13.5.0"
     react-redux: "npm:8.1.3"
     react-test-renderer: "npm:18.2.0"
     react-use: "npm:17.4.4"
@@ -11052,30 +11052,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next-browser-languagedetector@npm:7.1.0":
-  version: 7.1.0
-  resolution: "i18next-browser-languagedetector@npm:7.1.0"
+"i18next-browser-languagedetector@npm:7.2.0":
+  version: 7.2.0
+  resolution: "i18next-browser-languagedetector@npm:7.2.0"
   dependencies:
-    "@babel/runtime": "npm:^7.19.4"
-  checksum: d7cd0ea0ad6047e786de665d67b41cbb0940a2983eb2c53dd85a5d71f88e170550bba8de45728470a2b5f88060bed2c79f330aff9806dd50ef58ade0ec7b8ca3
+    "@babel/runtime": "npm:^7.23.2"
+  checksum: d7676e6c9895d46e659effaeba11f10c39cbe99429560667de7689cb56db6977239d350be850c4caf4279781c19c50a7193cb9cc38bb485f391b8e1893e407ae
   languageName: node
   linkType: hard
 
-"i18next-resources-to-backend@npm:1.1.4":
-  version: 1.1.4
-  resolution: "i18next-resources-to-backend@npm:1.1.4"
+"i18next-resources-to-backend@npm:1.2.0":
+  version: 1.2.0
+  resolution: "i18next-resources-to-backend@npm:1.2.0"
   dependencies:
-    "@babel/runtime": "npm:^7.21.5"
-  checksum: 221a22d08eccdd946c12c11de1910c70d8bf61b9834f17b72ddad24ea304264a12ea50953a740e5fa1f56d32a2290dcef6f7eb699fd30984f7e8676944e41aed
+    "@babel/runtime": "npm:^7.23.2"
+  checksum: e0668b9466d7f1488a49107a30bbe4b768cc3fa74fb09733dbe1ac48a62fe6fb35a8c4c3c1a8e635748b59130d0349cdfa8e2533b864540e619c1d06dabf807f
   languageName: node
   linkType: hard
 
-"i18next@npm:23.6.0":
-  version: 23.6.0
-  resolution: "i18next@npm:23.6.0"
+"i18next@npm:23.8.2":
+  version: 23.8.2
+  resolution: "i18next@npm:23.8.2"
   dependencies:
-    "@babel/runtime": "npm:^7.22.5"
-  checksum: 292055897c01dd7720b3c6ab1321bd2b3b1f89e36702da9da90493f2a9e931e6a1f762a5b40d8e91c72803a8e80102ba9b64a4ffc0174acb91805f969072437c
+    "@babel/runtime": "npm:^7.23.2"
+  checksum: c16ccee81bc1e096fec8d10000de42f10137f7cd27b295eca22492cb174b364ebca72327b2e6be066c4308c79bf72c8585d1c7cde2aedf556e3f423af60cd66c
   languageName: node
   linkType: hard
 
@@ -15463,9 +15463,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:13.3.2":
-  version: 13.3.2
-  resolution: "react-i18next@npm:13.3.2"
+"react-i18next@npm:13.5.0":
+  version: 13.5.0
+  resolution: "react-i18next@npm:13.5.0"
   dependencies:
     "@babel/runtime": "npm:^7.22.5"
     html-parse-stringify: "npm:^3.0.1"
@@ -15477,7 +15477,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 38ad9daebb9d30d589d694a09e218d545b3bd4ef7deec302b141b964b9781e957e52b7b039647079dbdbd3bfbb74ade63c136524121ff5ed040e500a8a4ec24a
+  checksum: 955db09fb83bc68aa9fe7ed11c95fb3e9dc5ab95e85854f169c07a9e71f9154d2cc01f46e343801e2478d5de86475e7a19ec677bec532c3870cb7a01246a6a86
   languageName: node
   linkType: hard
 
