@@ -2388,7 +2388,7 @@ __metadata:
     ts-mockery: "npm:1.2.0"
     ts-node: "npm:11.0.0-beta.1"
     tsconfig-paths: "npm:4.2.0"
-    typeorm: "npm:0.3.17"
+    typeorm: "npm:0.3.20"
     typescript: "npm:5.3.3"
     ws: "npm:8.14.2"
     yjs: "npm:13.6.11"
@@ -8372,16 +8372,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:^2.29.3":
-  version: 2.30.0
-  resolution: "date-fns@npm:2.30.0"
-  dependencies:
-    "@babel/runtime": "npm:^7.21.0"
-  checksum: e4b521fbf22bc8c3db332bbfb7b094fd3e7627de0259a9d17c7551e2d2702608a7307a449206065916538e384f37b181565447ce2637ae09828427aed9cb5581
-  languageName: node
-  linkType: hard
-
-"dayjs@npm:^1.10.4, dayjs@npm:^1.11.7":
+"dayjs@npm:^1.10.4, dayjs@npm:^1.11.7, dayjs@npm:^1.11.9":
   version: 1.11.10
   resolution: "dayjs@npm:1.11.10"
   checksum: 4de9af50639d47df87f2e15fa36bb07e0f9ed1e9c52c6caa1482788ee9a384d668f1dbd00c54f82aaab163db07d61d2899384b8254da3a9184fc6deca080e2fe
@@ -10575,7 +10566,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:10.3.10, glob@npm:^10.2.2, glob@npm:^10.3.7":
+"glob@npm:10.3.10, glob@npm:^10.2.2, glob@npm:^10.3.10, glob@npm:^10.3.7":
   version: 10.3.10
   resolution: "glob@npm:10.3.10"
   dependencies:
@@ -10615,19 +10606,6 @@ __metadata:
     once: "npm:^1.3.0"
     path-is-absolute: "npm:^1.0.0"
   checksum: 65676153e2b0c9095100fe7f25a778bf45608eeb32c6048cf307f579649bcc30353277b3b898a3792602c65764e5baa4f643714dfbdfd64ea271d210c7a425fe
-  languageName: node
-  linkType: hard
-
-"glob@npm:^8.1.0":
-  version: 8.1.0
-  resolution: "glob@npm:8.1.0"
-  dependencies:
-    fs.realpath: "npm:^1.0.0"
-    inflight: "npm:^1.0.4"
-    inherits: "npm:2"
-    minimatch: "npm:^5.0.1"
-    once: "npm:^1.3.0"
-  checksum: cb0b5cab17a59c57299376abe5646c7070f8acb89df5595b492dba3bfb43d301a46c01e5695f01154e6553168207cb60d4eaf07d3be4bc3eb9b0457c5c561d0f
   languageName: node
   linkType: hard
 
@@ -13678,15 +13656,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^5.0.1":
-  version: 5.1.6
-  resolution: "minimatch@npm:5.1.6"
-  dependencies:
-    brace-expansion: "npm:^2.0.1"
-  checksum: 3defdfd230914f22a8da203747c42ee3c405c39d4d37ffda284dac5e45b7e1f6c49aa8be606509002898e73091ff2a3bbfc59c2c6c71d4660609f63aa92f98e3
-  languageName: node
-  linkType: hard
-
 "minimatch@npm:^8.0.2":
   version: 8.0.4
   resolution: "minimatch@npm:8.0.4"
@@ -15761,17 +15730,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reflect-metadata@npm:0.2.1":
+"reflect-metadata@npm:0.2.1, reflect-metadata@npm:^0.2.1":
   version: 0.2.1
   resolution: "reflect-metadata@npm:0.2.1"
   checksum: 6ca3c674bb43cf8ec3a3f5f38c8730a6116335f8e562fcdcdf3a492af168c5a7f0e8f17476a5710c3fe6bf9b5d22e8a463f14c0e26e326339cab65e099900ef7
-  languageName: node
-  linkType: hard
-
-"reflect-metadata@npm:^0.1.13":
-  version: 0.1.13
-  resolution: "reflect-metadata@npm:0.1.13"
-  checksum: 728bff0b376b05639fd11ed80c648b61f7fe653c5b506d7ca118e58b6752b9b00810fe0c86227ecf02bd88da6251ab3eb19fd403aaf2e9ff5ef36a2fda643026
   languageName: node
   linkType: hard
 
@@ -17917,21 +17879,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typeorm@npm:0.3.17":
-  version: 0.3.17
-  resolution: "typeorm@npm:0.3.17"
+"typeorm@npm:0.3.20":
+  version: 0.3.20
+  resolution: "typeorm@npm:0.3.20"
   dependencies:
     "@sqltools/formatter": "npm:^1.2.5"
     app-root-path: "npm:^3.1.0"
     buffer: "npm:^6.0.3"
     chalk: "npm:^4.1.2"
     cli-highlight: "npm:^2.1.11"
-    date-fns: "npm:^2.29.3"
+    dayjs: "npm:^1.11.9"
     debug: "npm:^4.3.4"
     dotenv: "npm:^16.0.3"
-    glob: "npm:^8.1.0"
+    glob: "npm:^10.3.10"
     mkdirp: "npm:^2.1.3"
-    reflect-metadata: "npm:^0.1.13"
+    reflect-metadata: "npm:^0.2.1"
     sha.js: "npm:^2.4.11"
     tslib: "npm:^2.5.0"
     uuid: "npm:^9.0.0"
@@ -17939,13 +17901,13 @@ __metadata:
   peerDependencies:
     "@google-cloud/spanner": ^5.18.0
     "@sap/hana-client": ^2.12.25
-    better-sqlite3: ^7.1.2 || ^8.0.0
+    better-sqlite3: ^7.1.2 || ^8.0.0 || ^9.0.0
     hdb-pool: ^0.1.6
     ioredis: ^5.0.4
-    mongodb: ^5.2.0
-    mssql: ^9.1.1
+    mongodb: ^5.8.0
+    mssql: ^9.1.1 || ^10.0.1
     mysql2: ^2.2.5 || ^3.0.1
-    oracledb: ^5.1.0
+    oracledb: ^6.3.0
     pg: ^8.5.1
     pg-native: ^3.0.0
     pg-query-stream: ^4.0.0
@@ -17993,7 +17955,7 @@ __metadata:
     typeorm: cli.js
     typeorm-ts-node-commonjs: cli-ts-node-commonjs.js
     typeorm-ts-node-esm: cli-ts-node-esm.js
-  checksum: 589b8e384310cf25061fe1bd8f396eb08340da90fa4d03aa5db6f6be4709ac667ff81e8a4b00e0896c85a79ed05a125b5a2e57c84ab0c22192be55556a46372a
+  checksum: 7e4be724641beef86ae36289c87b6e66bfaf19a4313f089926d36d2d6f0d67f9314d942711c9d83ab8a174b8622148c2f7e83e6c1448d638ee3ab24469257814
   languageName: node
   linkType: hard
 
