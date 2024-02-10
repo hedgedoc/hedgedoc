@@ -177,7 +177,7 @@ jobs:
           NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
 
       - name: Download build
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: frontend-e2e-build
 
