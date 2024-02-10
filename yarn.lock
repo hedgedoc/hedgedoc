@@ -2519,7 +2519,7 @@ __metadata:
     eventemitter2: "npm:6.4.9"
     fast-deep-equal: "npm:3.1.3"
     firacode: "npm:6.2.0"
-    flowchart.js: "npm:1.17.1"
+    flowchart.js: "npm:1.18.0"
     highlight.js: "npm:11.9.0"
     htmlparser2: "npm:9.0.0"
     i18next: "npm:23.6.0"
@@ -10201,12 +10201,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flowchart.js@npm:1.17.1":
-  version: 1.17.1
-  resolution: "flowchart.js@npm:1.17.1"
+"flowchart.js@npm:1.18.0":
+  version: 1.18.0
+  resolution: "flowchart.js@npm:1.18.0"
   dependencies:
     raphael: "npm:2.3.0"
-  checksum: ed0b79349470a1d952b57df4ba58935436874a37b62b7871410bc4dc9b669242f653da54205cc0210124cb2d5311b961dcc174f1f56803e9b274488ccc2555a7
+  checksum: fd826b4a9af2d825a7fdcfb6b36b422636f5935843d0907e22cd6d499d53986f2c218720195ca86646ee01bd30a9bec9fdd5f51ae103db8ec7e058d92c5383f1
   languageName: node
   linkType: hard
 
