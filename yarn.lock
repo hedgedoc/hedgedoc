@@ -2460,7 +2460,7 @@ __metadata:
     "@next/bundle-analyzer": "npm:14.1.0"
     "@orama/orama": "npm:2.0.2"
     "@react-hook/resize-observer": "npm:1.2.6"
-    "@redux-devtools/core": "npm:3.13.3"
+    "@redux-devtools/core": "npm:3.14.0"
     "@reduxjs/toolkit": "npm:1.9.7"
     "@svgr/webpack": "npm:8.1.0"
     "@testing-library/cypress": "npm:10.0.1"
@@ -3907,32 +3907,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redux-devtools/core@npm:3.13.3":
-  version: 3.13.3
-  resolution: "@redux-devtools/core@npm:3.13.3"
+"@redux-devtools/core@npm:3.14.0":
+  version: 3.14.0
+  resolution: "@redux-devtools/core@npm:3.14.0"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@redux-devtools/instrument": "npm:^2.1.1"
-    "@types/prop-types": "npm:^15.7.9"
+    "@redux-devtools/instrument": "npm:^2.2.0"
+    "@types/prop-types": "npm:^15.7.10"
     lodash: "npm:^4.17.21"
     prop-types: "npm:^15.8.1"
   peerDependencies:
     react: ^0.14.9 || ^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
-    react-redux: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
-    redux: ^3.5.2 || ^4.0.0
-  checksum: 4c131a5715b81e9a70d0db3b32c1bc34387de9dfad822338f66bb3b0edae2dce56b78e477338ac7657d571b50b14199201508a75d5d359d425a59b545a94650a
+    react-redux: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0
+    redux: ^3.5.2 || ^4.0.0 || ^5.0.0
+  checksum: bfa4f336644edd8954828a79785db849eef8711a6c93482c50b73a0d62d702e0bf49e4d82aa172a800635b5bc4fc362965405ede8fcd556d4032860fabbb4931
   languageName: node
   linkType: hard
 
-"@redux-devtools/instrument@npm:^2.1.1":
-  version: 2.1.2
-  resolution: "@redux-devtools/instrument@npm:2.1.2"
+"@redux-devtools/instrument@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@redux-devtools/instrument@npm:2.2.0"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
     lodash: "npm:^4.17.21"
   peerDependencies:
-    redux: ^3.4.0 || ^4.0.0
-  checksum: 91495a7b936e23eca32ffcc997c6d71b1b5291eff4e6b41ba8f456177d7c86eea61c7b08a1694e645ad344ad162d92d8f4552d7cf14628cdc377f0c50fdfb77a
+    redux: ^3.4.0 || ^4.0.0 || ^5.0.0
+  checksum: 266cd15f1ef144bbb4a2ea472c096d2a4fa72341c4c892827d633a3c85b62d1240a35aaeab71a29020f1da4da0ab2f778c176fb30c35546f6a5020a26ba1c56a
   languageName: node
   linkType: hard
 
@@ -5113,7 +5113,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prop-types@npm:*, @types/prop-types@npm:^15.7.9":
+"@types/prop-types@npm:*, @types/prop-types@npm:^15.7.10":
   version: 15.7.11
   resolution: "@types/prop-types@npm:15.7.11"
   checksum: e53423cf9d510515ef8b47ff42f4f1b65a7b7b37c8704e2dbfcb9a60defe0c0e1f3cb1acfdeb466bad44ca938d7c79bffdd51b48ffb659df2432169d0b27a132
