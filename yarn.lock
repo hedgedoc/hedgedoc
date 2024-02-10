@@ -2390,7 +2390,7 @@ __metadata:
     tsconfig-paths: "npm:4.2.0"
     typeorm: "npm:0.3.17"
     typescript: "npm:5.3.3"
-    ws: "npm:8.14.2"
+    ws: "npm:8.16.0"
     yjs: "npm:13.6.11"
   languageName: unknown
   linkType: soft
@@ -2418,7 +2418,7 @@ __metadata:
     reveal.js: "npm:4.6.1"
     ts-jest: "npm:29.1.2"
     typescript: "npm:5.3.3"
-    ws: "npm:8.14.2"
+    ws: "npm:8.16.0"
     yjs: "npm:13.6.11"
   languageName: unknown
   linkType: soft
@@ -2574,7 +2574,7 @@ __metadata:
     vega-embed: "npm:6.23.0"
     vega-lite: "npm:5.16.3"
     words-count: "npm:2.0.2"
-    ws: "npm:8.14.2"
+    ws: "npm:8.16.0"
     yjs: "npm:13.6.11"
   languageName: unknown
   linkType: soft
@@ -19226,6 +19226,21 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: 35b4c2da048b8015c797fd14bcb5a5766216ce65c8a5965616a5440ca7b6c3681ee3cbd0ea0c184a59975556e9d58f2002abf8485a14d11d3371770811050a16
+  languageName: node
+  linkType: hard
+
+"ws@npm:8.16.0":
+  version: 8.16.0
+  resolution: "ws@npm:8.16.0"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ">=5.0.2"
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: a7783bb421c648b1e622b423409cb2a58ac5839521d2f689e84bc9dc41d59379c692dd405b15a997ea1d4c0c2e5314ad707332d0c558f15232d2bc07c0b4618a
   languageName: node
   linkType: hard
 
