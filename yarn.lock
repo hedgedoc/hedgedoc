@@ -2308,7 +2308,7 @@ __metadata:
     "@nestjs/common": "npm:10.2.10"
     "@nestjs/config": "npm:3.1.1"
     "@nestjs/core": "npm:10.2.10"
-    "@nestjs/event-emitter": "npm:2.0.3"
+    "@nestjs/event-emitter": "npm:2.0.4"
     "@nestjs/passport": "npm:10.0.3"
     "@nestjs/platform-express": "npm:10.2.10"
     "@nestjs/platform-ws": "npm:10.2.10"
@@ -2316,7 +2316,7 @@ __metadata:
     "@nestjs/schematics": "npm:10.0.3"
     "@nestjs/swagger": "npm:7.1.17"
     "@nestjs/testing": "npm:10.2.10"
-    "@nestjs/typeorm": "npm:10.0.1"
+    "@nestjs/typeorm": "npm:10.0.2"
     "@nestjs/websockets": "npm:10.2.10"
     "@trivago/prettier-plugin-sort-imports": "npm:4.3.0"
     "@tsconfig/node18": "npm:18.2.2"
@@ -3479,16 +3479,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/event-emitter@npm:2.0.3":
-  version: 2.0.3
-  resolution: "@nestjs/event-emitter@npm:2.0.3"
+"@nestjs/event-emitter@npm:2.0.4":
+  version: 2.0.4
+  resolution: "@nestjs/event-emitter@npm:2.0.4"
   dependencies:
     eventemitter2: "npm:6.4.9"
   peerDependencies:
     "@nestjs/common": ^8.0.0 || ^9.0.0 || ^10.0.0
     "@nestjs/core": ^8.0.0 || ^9.0.0 || ^10.0.0
-    reflect-metadata: ^0.1.12
-  checksum: 22fdbe4b68f9a4f25be8b2cc72afa5f4956b07f3b646befa263a0c112eee200de553a0ed1804090430002dcc6139b4cb20451dabe5c9dde140dc12469489c547
+  checksum: 14fb3053a94870ff7931dbfcb47e1456860e846700ceaa88f6f2e932e7dddc0d77187019da4a51053d95a247f629faf3dba262754d24abb02a66414094fff6b9
   languageName: node
   linkType: hard
 
@@ -3624,18 +3623,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/typeorm@npm:10.0.1":
-  version: 10.0.1
-  resolution: "@nestjs/typeorm@npm:10.0.1"
+"@nestjs/typeorm@npm:10.0.2":
+  version: 10.0.2
+  resolution: "@nestjs/typeorm@npm:10.0.2"
   dependencies:
     uuid: "npm:9.0.1"
   peerDependencies:
     "@nestjs/common": ^8.0.0 || ^9.0.0 || ^10.0.0
     "@nestjs/core": ^8.0.0 || ^9.0.0 || ^10.0.0
-    reflect-metadata: ^0.1.13
+    reflect-metadata: ^0.1.13 || ^0.2.0
     rxjs: ^7.2.0
     typeorm: ^0.3.0
-  checksum: 21a71e1276ef651bba93e9a65266e70b9d9f3fc95c6ea6be2dd5370f84758fc9b5db6b94001e96c6a5da88fcaf0ffb9fde75283ce14e2d7413227e24aa380d6a
+  checksum: 0c5a59273cab43c5b7e4da189e6b9792b64309b32a09c7dbd4bcd6bf2e6ac58faeb3ae40067d3fe987ca857841031bf91c90416ae6824e3525e3e990eb5cf852
   languageName: node
   linkType: hard
 
