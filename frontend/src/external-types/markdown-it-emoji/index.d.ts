@@ -4,9 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-declare module 'markdown-it-emoji/bare' {
+declare module 'markdown-it-emoji' {
   import type MarkdownIt from 'markdown-it/lib'
   import type { EmojiOptions } from './interface'
   const markdownItEmoji: MarkdownIt.PluginWithOptions<EmojiOptions>
-  export = markdownItEmoji
+  const pluginVariations = {
+    bare: markdownItEmoji,
+    light: markdownItEmoji,
+    full: markdownItEmoji
+  }
+  export = pluginVariations
 }
