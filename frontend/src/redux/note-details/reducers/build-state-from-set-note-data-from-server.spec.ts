@@ -5,7 +5,7 @@
  */
 import type { Note } from '../../../api/notes/types'
 import * as buildStateFromUpdatedMarkdownContentModule from '../build-state-from-updated-markdown-content'
-import type { NoteDetails } from '../types/note-details'
+import type { NoteDetails } from '../types'
 import { buildStateFromServerDto } from './build-state-from-set-note-data-from-server'
 import { NoteTextDirection, NoteType } from '@hedgedoc/commons'
 import { DateTime } from 'luxon'

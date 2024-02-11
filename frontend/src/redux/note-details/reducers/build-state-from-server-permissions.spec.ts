@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { initialState } from '../initial-state'
-import type { NoteDetails } from '../types/note-details'
+import type { NoteDetails } from '../types'
 import { buildStateFromServerPermissions } from './build-state-from-server-permissions'
 import type { NotePermissions } from '@hedgedoc/commons'
 

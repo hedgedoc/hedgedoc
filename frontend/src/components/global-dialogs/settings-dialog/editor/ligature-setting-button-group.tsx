@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import { setEditorLigatures } from '../../../../redux/editor/methods'
+import { setEditorLigatures } from '../../../../redux/editor-config/methods'
 import { OnOffButtonGroup } from '../utils/on-off-button-group'
 import React from 'react'
 

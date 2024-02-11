@@ -5,7 +5,7 @@
  */
 import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
 import type { Alias } from '../../../../../../api/alias/types'
-import type { ApplicationState } from '../../../../../../redux/application-state'
+import type { ApplicationState } from '../../../../../../redux'
 import { AliasesListEntry } from './aliases-list-entry'
 import React, { Fragment, useMemo } from 'react'
 

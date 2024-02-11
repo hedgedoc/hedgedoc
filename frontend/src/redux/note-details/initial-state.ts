@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { NoteDetails } from './types/note-details'
+import type { NoteDetails } from './types'
 import { defaultNoteFrontmatter } from '@hedgedoc/commons'
 
 export const initialState: NoteDetails = {

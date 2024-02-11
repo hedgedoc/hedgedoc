@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { ApplicationState } from '../redux/application-state'
+import type { ApplicationState } from '../redux'
 import { mockAppState } from './mock-app-state'
 import type { DeepPartial, NotePermissions } from '@hedgedoc/commons'
 
