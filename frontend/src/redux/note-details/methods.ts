@@ -7,26 +7,16 @@ import { store } from '..'
 import { getNoteMetadata } from '../../api/notes'
 import type { Note } from '../../api/notes/types'
 import type { CursorSelection } from '../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
-import type {
-  SetNoteDetailsFromServerAction,
-  SetNoteDocumentContentAction,
-  SetNotePermissionsFromServerAction,
-  UpdateCursorPositionAction,
-  UpdateMetadataAction,
-  UpdateNoteTitleByFirstHeadingAction
-} from './types'
-import { NoteDetailsActionType } from './types'
 import type { NotePermissions } from '@hedgedoc/commons'
+import { noteDetailsActionsCreator } from './slice'
 
 /**
  * Sets the content of the current note, extracts and parses the frontmatter and extracts the markdown content part.
  * @param content The note content as it is written inside the editor pane.
  */
 export const setNoteContent = (content: string): void => {
-  store.dispatch({
-    type: NoteDetailsActionType.SET_DOCUMENT_CONTENT,
-    content: content
-  } as SetNoteDocumentContentAction)
+  const action = noteDetailsActionsCreator.setNoteContent(content)
+  store.dispatch(action)
 }
 
 /**
@@ -34,10 +24,8 @@ export const setNoteContent = (content: string): void => {
  * @param apiResponse The NoteDTO received from the API to store into redux.
  */
 export const setNoteDataFromServer = (apiResponse: Note): void => {
-  store.dispatch({
-    type: NoteDetailsActionType.SET_NOTE_DATA_FROM_SERVER,
-    noteFromServer: apiResponse
-  } as SetNoteDetailsFromServerAction)
+  const action = noteDetailsActionsCreator.setNoteDataFromServer(apiResponse)
+  store.dispatch(action)
 }
 
 /**
@@ -45,10 +33,8 @@ export const setNoteDataFromServer = (apiResponse: Note): void => {
  * @param apiResponse The NotePermissionsDTO received from the API to store into redux.
  */
 export const setNotePermissionsFromServer = (apiResponse: NotePermissions): void => {
-  store.dispatch({
-    type: NoteDetailsActionType.SET_NOTE_PERMISSIONS_FROM_SERVER,
-    notePermissionsFromServer: apiResponse
-  } as SetNotePermissionsFromServerAction)
+  const action = noteDetailsActionsCreator.setNotePermissionsFromServer(apiResponse)
+  store.dispatch(action)
 }
 
 /**
@@ -56,17 +42,13 @@ export const setNotePermissionsFromServer = (apiResponse: NotePermissions): void
  * @param firstHeading The content of the first heading found in the markdown content.
  */
 export const updateNoteTitleByFirstHeading = (firstHeading?: string): void => {
-  store.dispatch({
-    type: NoteDetailsActionType.UPDATE_NOTE_TITLE_BY_FIRST_HEADING,
-    firstHeading: firstHeading
-  } as UpdateNoteTitleByFirstHeadingAction)
+  const action = noteDetailsActionsCreator.updateNoteTitleByFirstHeading(firstHeading)
+  store.dispatch(action)
 }
 
 export const updateCursorPositions = (selection: CursorSelection): void => {
-  store.dispatch({
-    type: NoteDetailsActionType.UPDATE_CURSOR_POSITION,
-    selection
-  } as UpdateCursorPositionAction)
+  const action = noteDetailsActionsCreator.updateCursorPosition(selection)
+  store.dispatch(action)
 }
 
 /**
@@ -78,14 +60,11 @@ export const updateMetadata = async (): Promise<void> => {
     return
   }
   const updatedMetadata = await getNoteMetadata(noteDetails.id)
-  store.dispatch({
-    type: NoteDetailsActionType.UPDATE_METADATA,
-    updatedMetadata
-  } as UpdateMetadataAction)
+  const action = noteDetailsActionsCreator.updateMetadata(updatedMetadata)
+  store.dispatch(action)
 }
 
 export const unloadNote = (): void => {
-  store.dispatch({
-    type: NoteDetailsActionType.UNLOAD_NOTE
-  })
+  const action = noteDetailsActionsCreator.unloadNote()
+  store.dispatch(action)
 }

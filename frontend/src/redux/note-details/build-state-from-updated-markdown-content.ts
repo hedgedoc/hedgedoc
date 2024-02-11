@@ -5,7 +5,7 @@
  */
 import { calculateLineStartIndexes } from './calculate-line-start-indexes'
 import { initialState } from './initial-state'
-import type { NoteDetails } from './types/note-details'
+import type { NoteDetails } from './types'
 import type { FrontmatterExtractionResult, NoteFrontmatter } from '@hedgedoc/commons'
 import {
   convertRawFrontmatterToNoteFrontmatter,

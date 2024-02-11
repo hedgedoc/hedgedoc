@@ -5,7 +5,7 @@
  */
 import type { NoteMetadata } from '../../../api/notes/types'
 import { initialState } from '../initial-state'
-import type { NoteDetails } from '../types/note-details'
+import type { NoteDetails } from '../types'
 import { buildStateFromMetadataUpdate } from './build-state-from-metadata-update'
 
 describe('build state from server permissions', () => {

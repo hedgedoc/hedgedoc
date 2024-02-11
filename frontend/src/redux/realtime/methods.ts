@@ -4,41 +4,34 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { store } from '..'
-import type { SetRealtimeConnectionStatusAction, SetRealtimeSyncStatusAction, SetRealtimeUsersAction } from './types'
-import { RealtimeStatusActionType } from './types'
 import type { RealtimeUser } from '@hedgedoc/commons'
+import { realtimeStatusActionsCreator } from './slice'
 
 /**
  * Dispatches an event to add a user
  */
 export const setRealtimeUsers = (users: RealtimeUser[], ownStyleIndex: number, ownDisplayName: string): void => {
-  const action: SetRealtimeUsersAction = {
-    type: RealtimeStatusActionType.SET_REALTIME_USERS,
+  const action = realtimeStatusActionsCreator.setRealtimeUsers({
     users,
     ownUser: {
       styleIndex: ownStyleIndex,
       displayName: ownDisplayName
     }
-  }
+  })
   store.dispatch(action)
 }
 
 export const setRealtimeConnectionState = (status: boolean): void => {
-  store.dispatch({
-    type: RealtimeStatusActionType.SET_REALTIME_CONNECTION_STATUS,
-    isConnected: status
-  } as SetRealtimeConnectionStatusAction)
+  const action = realtimeStatusActionsCreator.setRealtimeConnectionStatus(status)
+  store.dispatch(action)
 }
 
 export const setRealtimeSyncedState = (status: boolean): void => {
-  store.dispatch({
-    type: RealtimeStatusActionType.SET_REALTIME_SYNCED_STATUS,
-    isSynced: status
-  } as SetRealtimeSyncStatusAction)
+  const action = realtimeStatusActionsCreator.setRealtimeSyncStatus(status)
+  store.dispatch(action)
 }
 
 export const resetRealtimeStatus = (): void => {
-  store.dispatch({
-    type: RealtimeStatusActionType.RESET_REALTIME_STATUS
-  })
+  const action = realtimeStatusActionsCreator.resetRealtimeStatus()
+  store.dispatch(action)
 }

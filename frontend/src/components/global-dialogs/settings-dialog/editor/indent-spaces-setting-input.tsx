@@ -6,7 +6,7 @@
 import React from 'react'
 import { Form } from 'react-bootstrap'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
-import { setEditorIndentSpaces } from '../../../../redux/editor/methods'
+import { setEditorIndentSpaces } from '../../../../redux/editor-config/methods'
 import { useCallback } from 'react'
 
 /**

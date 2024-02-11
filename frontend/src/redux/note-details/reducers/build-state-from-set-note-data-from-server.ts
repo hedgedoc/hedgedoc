@@ -7,7 +7,7 @@ import type { Note } from '../../../api/notes/types'
 import { buildStateFromUpdatedMarkdownContent } from '../build-state-from-updated-markdown-content'
 import { calculateLineStartIndexes } from '../calculate-line-start-indexes'
 import { initialState } from '../initial-state'
-import type { NoteDetails } from '../types/note-details'
+import type { NoteDetails } from '../types'
 import { buildStateFromMetadataUpdate } from './build-state-from-metadata-update'
 
 /**
