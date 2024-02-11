@@ -138,6 +138,16 @@
       ],
       "datasourceTemplate": "npm",
       "depNameTemplate": "yjs"
+    },
+    {
+      "fileMatch": [
+        "package.json"
+      ],
+      "matchStrings": [
+        "@dicebear/converter@(?:npm%3A)?(?<currentValue>[\\d\\.]+)"
+      ],
+      "datasourceTemplate": "npm",
+      "depNameTemplate": "@dicebear/converter"
     }
   ]
 }
