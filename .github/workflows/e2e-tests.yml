@@ -150,6 +150,7 @@ jobs:
           name: frontend-e2e-build
           retention-days: 1
           path: frontend-e2e-build.tar.zst
+          overwrite: true
 
   frontend-cypress:
     if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
@@ -180,6 +181,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: frontend-e2e-build
+          path: .
+          merge-multiple: true
 
       - name: Decompress build
         run: tar -xf frontend-e2e-build.tar.zst
