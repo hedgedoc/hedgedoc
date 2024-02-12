@@ -2631,7 +2631,7 @@ __metadata:
     ts-loader: "npm:9.5.1"
     ts-mockery: "npm:1.2.0"
     ts-node: "npm:11.0.0-beta.1"
-    twemoji-colr-font: "npm:14.1.3"
+    twemoji-colr-font: "npm:15.0.3"
     typescript: "npm:5.3.3"
     user-agent-data-types: "npm:0.4.2"
     uuid: "npm:9.0.1"
@@ -17636,10 +17636,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"twemoji-colr-font@npm:14.1.3":
-  version: 14.1.3
-  resolution: "twemoji-colr-font@npm:14.1.3"
-  checksum: 10c0/b28bd64725822459fded4931ceb6fe21b512f0ec975da84734e07a27bf4d8529e9c5a07385125c30ecd8a61ab164ceb8326697b5c8602daface9248ece54e470
+"twemoji-colr-font@npm:15.0.3":
+  version: 15.0.3
+  resolution: "twemoji-colr-font@npm:15.0.3"
+  checksum: 10c0/6e1791db511dc1f40eef1ef80870940353e616b95e3adeaf4b2f83c126a80e74281d1e22828f906fd920643bc2543c436b80f1e93af4cb7eb85de1d4c27ca7a8
   languageName: node
   linkType: hard
 
