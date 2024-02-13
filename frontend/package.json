@@ -47,7 +47,7 @@
     "@hedgedoc/html-to-react": "workspace:html-to-react",
     "@hedgedoc/markdown-it-plugins": "workspace:markdown-it-plugins",
     "@mrdrogdrog/optional": "1.2.1",
-    "@orama/orama": "2.0.5",
+    "@orama/orama": "2.0.6",
     "@react-hook/resize-observer": "1.2.6",
     "@redux-devtools/core": "3.14.0",
     "@reduxjs/toolkit": "1.9.7",
