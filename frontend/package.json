@@ -135,7 +135,7 @@
     "@types/markdown-it": "13.0.7",
     "@types/markdown-it-container": "2.0.9",
     "@types/markdown-it-plantuml": "1.4.4",
-    "@types/node": "20.11.17",
+    "@types/node": "20.11.18",
     "@types/react": "18.2.55",
     "@types/react-dom": "18.2.19",
     "@types/sass": "1.43.1",
