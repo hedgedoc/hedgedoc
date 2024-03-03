@@ -28,7 +28,7 @@ nav:
           - Nextcloud: guides/auth/nextcloud.md
           - Twitter: guides/auth/twitter.md
           - Authelia: guides/auth/authelia.md
-          - Azure Active Directory: guides/auth/azure-ad.md
+          - Microsoft Entra ID (Azure AD): guides/auth/entra-id.md
       - Media Backend:
           - MinIO: guides/minio-image-upload.md
           - S3: guides/s3-image-upload.md
