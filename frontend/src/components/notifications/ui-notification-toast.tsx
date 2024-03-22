@@ -12,8 +12,9 @@ import { useUiNotifications } from './ui-notification-boundary'
 import { DateTime } from 'luxon'
 import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import { Button, ProgressBar, Toast } from 'react-bootstrap'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { useEffectOnce, useInterval } from 'react-use'
+import { useTranslatedText } from '../../hooks/common/use-translated-text'
 
 const STEPS_PER_SECOND = 10
 const log = new Logger('UiNotificationToast')
@@ -31,6 +32,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({ notificatio
   const { t } = useTranslation()
   const [remainingSteps, setRemainingSteps] = useState<number>(() => notification.durationInSecond * STEPS_PER_SECOND)
   const { dismissNotification, pruneNotification } = useUiNotifications()
+  const textNotificationTitle = useTranslatedText(notification.titleI18nKey, notification.titleI18nOptions)
 
   const dismissNow = useCallback(() => {
     log.debug(`Dismiss notification ${notification.uuid} immediately`)
@@ -106,7 +108,7 @@ export const UiNotificationToast: React.FC<UiNotificationProps> = ({ notificatio
       <Toast.Header>
         <strong className='me-auto'>
           {notification.icon !== undefined && <UiIcon icon={notification.icon} className={'me-1'} />}
-          <Trans i18nKey={notification.titleI18nKey} tOptions={notification.titleI18nOptions} />
+          {textNotificationTitle}
         </strong>
         <small>{formattedCreatedAtDate}</small>
       </Toast.Header>
