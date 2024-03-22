@@ -333,6 +333,37 @@
       }
     },
     "export": {
+      "common": {
+        "title": "Export to {{service}}",
+        "createButton": "Create {{shortName}}",
+        "headingAuthentication": "Authentication",
+        "headingSettings": "Export settings",
+        "fieldToken": "Access token",
+        "fieldDescription": "Description",
+        "notificationSuccessTitle": "{{shortName}} successfully created",
+        "notificationSuccessMessage": "The note has been exported to {{service}}.",
+        "notificationSuccessButton": "Open {{shortName}}",
+        "notificationErrorTitle": "Error while creating {{shortName}}: {{errorMessage}}"
+      },
+      "gist": {
+        "service": "GitHub Gist",
+        "shortName": "Gist",
+        "infoToken": "You need a personal access token with the Gists account permission. You can create one in your GitHub settings here:",
+        "fieldPublic": "Make Gist public?"
+      },
+      "gitlab": {
+        "service": "GitLab snippet",
+        "shortName": "Snippet",
+        "infoToken": "You need a personal access token with the api permission. You can create one in your GitLab user settings here:",
+        "infoTokenLink": "Preferences → Access tokens",
+        "fieldUrl": "GitLab URL",
+        "fieldVisibility": "Set snippet visibility",
+        "visibility": {
+          "private": "Private",
+          "internal": "Internal",
+          "public": "Public"
+        }
+      },
       "rawHtml": "Raw HTML",
       "markdown-file": "Markdown file"
     },
@@ -520,6 +551,8 @@
     "avatarOf": "Avatar of '{{name}}'",
     "why": "Why?",
     "loading": "Loading ...",
+    "continue": "Continue",
+    "back": "Back",
     "errorWhileLoading": "An unexpected error occurred while loading '{{name}}'.\nCheck the browser console for more information.\nReport this error only if it comes up again.",
     "errorOccurred": "An error occurred",
     "readForMoreInfo": "Read here for more information",

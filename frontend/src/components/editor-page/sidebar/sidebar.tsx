@@ -5,7 +5,7 @@
  */
 import { AliasesSidebarEntry } from './specific-sidebar-entries/aliases-sidebar-entry/aliases-sidebar-entry'
 import { DeleteNoteSidebarEntry } from './specific-sidebar-entries/delete-note-sidebar-entry/delete-note-sidebar-entry'
-import { ExportMenuSidebarMenu } from './specific-sidebar-entries/export-menu-sidebar-menu'
+import { ExportSidebarMenu } from './specific-sidebar-entries/export-sidebar-menu/export-sidebar-menu'
 import { ImportMenuSidebarMenu } from './specific-sidebar-entries/import-menu-sidebar-menu'
 import { NoteInfoSidebarMenu } from './specific-sidebar-entries/note-info-sidebar-menu/note-info-sidebar-menu'
 import { PermissionsSidebarEntry } from './specific-sidebar-entries/permissions-sidebar-entry/permissions-sidebar-entry'
@@ -62,7 +62,7 @@ export const Sidebar: React.FC = () => {
           selectedMenuId={selectedMenu}
           onClick={toggleValue}
         />
-        <ExportMenuSidebarMenu
+        <ExportSidebarMenu
           menuId={DocumentSidebarMenuSelection.EXPORT}
           selectedMenuId={selectedMenu}
           onClick={toggleValue}
