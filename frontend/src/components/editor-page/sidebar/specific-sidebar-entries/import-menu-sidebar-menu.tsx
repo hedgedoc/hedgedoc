@@ -11,12 +11,7 @@ import type { SpecificSidebarMenuProps } from '../types'
 import { DocumentSidebarMenuSelection } from '../types'
 import { ImportMarkdownSidebarEntry } from './import-markdown-sidebar-entry'
 import React, { Fragment, useCallback } from 'react'
-import {
-  ArrowLeft as IconArrowLeft,
-  Clipboard as IconClipboard,
-  CloudUpload as IconCloudUpload,
-  Github as IconGithub
-} from 'react-bootstrap-icons'
+import { ArrowLeft as IconArrowLeft, CloudUpload as IconCloudUpload, Github as IconGithub } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 import styles from '../sidebar-button/sidebar-button.module.scss'
 import { concatCssClasses } from '../../../../utils/concat-css-classes'
@@ -58,9 +53,6 @@ export const ImportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         </SidebarButton>
         <SidebarButton icon={IconGitlab} disabled={true}>
           Gitlab Snippet
-        </SidebarButton>
-        <SidebarButton icon={IconClipboard} disabled={true}>
-          <Trans i18nKey={'editor.import.clipboard'} />
         </SidebarButton>
         <ImportMarkdownSidebarEntry />
       </SidebarMenu>
