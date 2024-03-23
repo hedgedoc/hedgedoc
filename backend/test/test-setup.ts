@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -59,6 +59,9 @@ import { HistoryModule } from '../src/history/history.module';
 import { HistoryService } from '../src/history/history.service';
 import { IdentityModule } from '../src/identity/identity.module';
 import { IdentityService } from '../src/identity/identity.service';
+import { LdapService } from '../src/identity/ldap/ldap.service';
+import { LocalService } from '../src/identity/local/local.service';
+import { OidcService } from '../src/identity/oidc/oidc.service';
 import { ConsoleLoggerService } from '../src/logger/console-logger.service';
 import { LoggerModule } from '../src/logger/logger.module';
 import { MediaModule } from '../src/media/media.module';
@@ -101,6 +104,9 @@ export class TestSetup {
   groupService: GroupsService;
   configService: ConfigService;
   identityService: IdentityService;
+  localIdentityService: LocalService;
+  ldapService: LdapService;
+  oidcService: OidcService;
   notesService: NotesService;
   mediaService: MediaService;
   historyService: HistoryService;
@@ -324,6 +330,8 @@ export class TestSetupBuilder {
       this.testSetup.moduleRef.get<ConfigService>(ConfigService);
     this.testSetup.identityService =
       this.testSetup.moduleRef.get<IdentityService>(IdentityService);
+    this.testSetup.localIdentityService =
+      this.testSetup.moduleRef.get<LocalService>(LocalService);
     this.testSetup.notesService =
       this.testSetup.moduleRef.get<NotesService>(NotesService);
     this.testSetup.mediaService =
@@ -342,6 +350,10 @@ export class TestSetupBuilder {
       this.testSetup.moduleRef.get<SessionService>(SessionService);
     this.testSetup.revisionsService =
       this.testSetup.moduleRef.get<RevisionsService>(RevisionsService);
+    this.testSetup.ldapService =
+      this.testSetup.moduleRef.get<LdapService>(LdapService);
+    this.testSetup.oidcService =
+      this.testSetup.moduleRef.get<OidcService>(OidcService);
 
     this.testSetup.app = this.testSetup.moduleRef.createNestApplication();
 
@@ -389,15 +401,15 @@ export class TestSetupBuilder {
       );
 
       // Create identities for login
-      await this.testSetup.identityService.createLocalIdentity(
+      await this.testSetup.localIdentityService.createLocalIdentity(
         this.testSetup.users[0],
         password1,
       );
-      await this.testSetup.identityService.createLocalIdentity(
+      await this.testSetup.localIdentityService.createLocalIdentity(
         this.testSetup.users[1],
         password2,
       );
-      await this.testSetup.identityService.createLocalIdentity(
+      await this.testSetup.localIdentityService.createLocalIdentity(
         this.testSetup.users[2],
         password3,
       );

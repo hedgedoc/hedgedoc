@@ -1,16 +1,18 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import type { CommonFieldProps } from './fields'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { Form } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
+import { useFrontendConfig } from '../frontend-config-context/use-frontend-config'
 
 interface DisplayNameFieldProps extends CommonFieldProps {
   initialValue?: string
+  onValidityChange?: (valid: boolean) => void
 }
 
 /**
@@ -19,10 +21,21 @@ interface DisplayNameFieldProps extends CommonFieldProps {
  * @param onChange Hook that is called when the entered display name changes.
  * @param value The currently entered display name.
  * @param initialValue The initial input field value.
+ * @param onValidityChange Callback that is called when the validity of the field changes.
  */
-export const DisplayNameField: React.FC<DisplayNameFieldProps> = ({ onChange, value, initialValue }) => {
+export const DisplayNameField: React.FC<DisplayNameFieldProps> = ({
+  onChange,
+  value,
+  initialValue,
+  onValidityChange
+}) => {
   const isValid = useMemo(() => value.trim() !== '' && value !== initialValue, [value, initialValue])
   const placeholderText = useTranslatedText('profile.displayName')
+  const profileEditsAllowed = useFrontendConfig().allowProfileEdits
+
+  useEffect(() => {
+    onValidityChange?.(isValid)
+  }, [isValid, onValidityChange])
 
   return (
     <Form.Group>
@@ -37,6 +50,7 @@ export const DisplayNameField: React.FC<DisplayNameFieldProps> = ({ onChange, va
         onChange={onChange}
         placeholder={placeholderText}
         autoComplete='name'
+        disabled={!profileEditsAllowed}
         required
       />
       <Form.Text>

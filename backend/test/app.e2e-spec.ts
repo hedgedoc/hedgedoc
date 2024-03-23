@@ -41,6 +41,7 @@ describe('App', () => {
         session: {
           secret: 'secret',
         },
+        oidc: [],
       })
       .compile();
 

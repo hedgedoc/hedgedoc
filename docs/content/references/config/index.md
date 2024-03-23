@@ -4,9 +4,9 @@ HedgeDoc can be configured via environment variables either directly or via an `
 
 ## The `.env` file
 
-The `.env` file should be in the working directory of the backend and contains key-value pairs of
-environment variables and their corresponding value.
-In the official Docker container this is `/usr/src/app/backend/`
+The `.env` file should be in the root directory of the HedgeDoc application and
+contains key-value pairs of environment variables and their corresponding value.
+In the official Docker container this is `/usr/src/app/.env`
 This can for example look like this:
 
 <!-- markdownlint-disable proper-names -->

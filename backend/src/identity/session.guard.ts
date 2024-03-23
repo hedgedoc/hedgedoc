@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,13 +10,20 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { Request } from 'express';
 
 import { CompleteRequest } from '../api/utils/request.type';
 import { GuestAccess } from '../config/guest_access.enum';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { SessionState } from '../sessions/session.service';
 import { UsersService } from '../users/users.service';
+import { ProviderType } from './provider-type.enum';
+
+export type RequestWithSession = Request & {
+  session: SessionState;
+};
 
 /**
  * This guard checks if a session is present.
@@ -42,7 +49,9 @@ export class SessionGuard implements CanActivate {
     const username = request.session?.username;
     if (!username) {
       if (this.noteConfig.guestAccess !== GuestAccess.DENY && request.session) {
-        request.session.authProvider = 'guest';
+        if (!request.session.authProviderType) {
+          request.session.authProviderType = ProviderType.GUEST;
+        }
         return true;
       }
       this.logger.debug('The user has no session.');

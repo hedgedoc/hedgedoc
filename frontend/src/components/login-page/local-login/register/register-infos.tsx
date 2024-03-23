@@ -1,10 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useFrontendConfig } from '../common/frontend-config-context/use-frontend-config'
-import { TranslatedExternalLink } from '../common/links/translated-external-link'
+import { useFrontendConfig } from '../../../common/frontend-config-context/use-frontend-config'
+import { TranslatedExternalLink } from '../../../common/links/translated-external-link'
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 

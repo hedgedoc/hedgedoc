@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,123 +8,106 @@ import {
   Body,
   Controller,
   Delete,
-  Param,
-  Post,
+  Get,
   Put,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Session } from 'express-session';
 
 import { IdentityService } from '../../../identity/identity.service';
-import { LdapLoginDto } from '../../../identity/ldap/ldap-login.dto';
-import { LdapAuthGuard } from '../../../identity/ldap/ldap.strategy';
-import { LocalAuthGuard } from '../../../identity/local/local.strategy';
-import { LoginDto } from '../../../identity/local/login.dto';
-import { RegisterDto } from '../../../identity/local/register.dto';
-import { UpdatePasswordDto } from '../../../identity/local/update-password.dto';
-import { SessionGuard } from '../../../identity/session.guard';
+import { OidcService } from '../../../identity/oidc/oidc.service';
+import { PendingUserConfirmationDto } from '../../../identity/pending-user-confirmation.dto';
+import { ProviderType } from '../../../identity/provider-type.enum';
+import {
+  RequestWithSession,
+  SessionGuard,
+} from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { SessionState } from '../../../sessions/session.service';
-import { User } from '../../../users/user.entity';
-import { UsersService } from '../../../users/users.service';
-import { makeUsernameLowercase } from '../../../utils/username';
-import { LoginEnabledGuard } from '../../utils/login-enabled.guard';
+import { FullUserInfoDto } from '../../../users/user-info.dto';
 import { OpenApi } from '../../utils/openapi.decorator';
-import { RegistrationEnabledGuard } from '../../utils/registration-enabled.guard';
-import { RequestUser } from '../../utils/request-user.decorator';
-
-type RequestWithSession = Request & {
-  session: SessionState;
-};
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    private usersService: UsersService,
     private identityService: IdentityService,
+    private oidcService: OidcService,
   ) {
     this.logger.setContext(AuthController.name);
   }
 
-  @UseGuards(RegistrationEnabledGuard)
-  @Post('local')
-  @OpenApi(201, 400, 403, 409)
-  async registerUser(
-    @Req() request: RequestWithSession,
-    @Body() registerDto: RegisterDto,
-  ): Promise<void> {
-    await this.identityService.checkPasswordStrength(registerDto.password);
-    const user = await this.usersService.createUser(
-      registerDto.username,
-      registerDto.displayName,
-    );
-    await this.identityService.createLocalIdentity(user, registerDto.password);
-    request.session.username = registerDto.username;
-    request.session.authProvider = 'local';
-  }
-
-  @UseGuards(LoginEnabledGuard, SessionGuard)
-  @Put('local')
-  @OpenApi(200, 400, 401)
-  async updatePassword(
-    @RequestUser() user: User,
-    @Body() changePasswordDto: UpdatePasswordDto,
-  ): Promise<void> {
-    await this.identityService.checkLocalPassword(
-      user,
-      changePasswordDto.currentPassword,
-    );
-    await this.identityService.updateLocalPassword(
-      user,
-      changePasswordDto.newPassword,
-    );
-    return;
-  }
-
-  @UseGuards(LoginEnabledGuard, LocalAuthGuard)
-  @Post('local/login')
-  @OpenApi(201, 400, 401)
-  login(
-    @Req()
-    request: RequestWithSession,
-    @Body() loginDto: LoginDto,
-  ): void {
-    // There is no further testing needed as we only get to this point if LocalAuthGuard was successful
-    request.session.username = loginDto.username;
-    request.session.authProvider = 'local';
-  }
-
-  @UseGuards(LdapAuthGuard)
-  @Post('ldap/:ldapIdentifier')
-  @OpenApi(201, 400, 401)
-  loginWithLdap(
-    @Req()
-    request: RequestWithSession,
-    @Param('ldapIdentifier') ldapIdentifier: string,
-    @Body() loginDto: LdapLoginDto,
-  ): void {
-    // There is no further testing needed as we only get to this point if LdapAuthGuard was successful
-    request.session.username = makeUsernameLowercase(loginDto.username);
-    request.session.authProvider = 'ldap';
-  }
-
   @UseGuards(SessionGuard)
   @Delete('logout')
-  @OpenApi(204, 400, 401)
-  logout(@Req() request: Request & { session: Session }): Promise<void> {
-    return new Promise((resolve, reject) => {
-      request.session.destroy((err) => {
-        if (err) {
-          this.logger.error('Encountered an error while logging out: ${err}');
-          reject(new BadRequestException('Unable to log out'));
-        } else {
-          resolve();
-        }
-      });
+  @OpenApi(200, 400, 401)
+  logout(@Req() request: RequestWithSession): { redirect: string } {
+    let logoutUrl: string | null = null;
+    if (request.session.authProviderType === ProviderType.OIDC) {
+      logoutUrl = this.oidcService.getLogoutUrl(request);
+    }
+    request.session.destroy((err) => {
+      if (err) {
+        this.logger.error(
+          'Error during logout:' + String(err),
+          undefined,
+          'logout',
+        );
+        throw new BadRequestException('Unable to log out');
+      }
     });
+    return {
+      redirect: logoutUrl || '/',
+    };
+  }
+
+  @Get('pending-user')
+  @OpenApi(200, 400)
+  getPendingUserData(
+    @Req() request: RequestWithSession,
+  ): Partial<FullUserInfoDto> {
+    if (
+      !request.session.newUserData ||
+      !request.session.authProviderIdentifier ||
+      !request.session.authProviderType
+    ) {
+      throw new BadRequestException('No pending user data');
+    }
+    return request.session.newUserData;
+  }
+
+  @Put('pending-user')
+  @OpenApi(204, 400)
+  async confirmPendingUserData(
+    @Req() request: RequestWithSession,
+    @Body() updatedUserInfo: PendingUserConfirmationDto,
+  ): Promise<void> {
+    if (
+      !request.session.newUserData ||
+      !request.session.authProviderIdentifier ||
+      !request.session.authProviderType ||
+      !request.session.providerUserId
+    ) {
+      throw new BadRequestException('No pending user data');
+    }
+    const identity = await this.identityService.createUserWithIdentity(
+      request.session.newUserData,
+      updatedUserInfo,
+      request.session.authProviderType,
+      request.session.authProviderIdentifier,
+      request.session.providerUserId,
+    );
+    request.session.username = (await identity.user).username;
+    // Cleanup
+    request.session.newUserData = undefined;
+  }
+
+  @Delete('pending-user')
+  @OpenApi(204, 400)
+  deletePendingUserData(@Req() request: RequestWithSession): void {
+    request.session.newUserData = undefined;
+    request.session.authProviderIdentifier = undefined;
+    request.session.authProviderType = undefined;
+    request.session.providerUserId = undefined;
   }
 }

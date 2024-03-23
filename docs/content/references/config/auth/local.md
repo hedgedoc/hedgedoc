@@ -1,8 +1,8 @@
 # Local
 
 HedgeDoc provides local accounts, handled internally. This feature only provides basic
-functionality, so for most environments we recommend using an external authentication mechanism,
-which also enable more secure authentication like 2FA or WebAuthn.
+functionality, so for most environments, we recommend using an external authentication mechanism,
+which also enables more secure authentication like 2FA or Passkeys.
 
 | environment variable                      | default | example                 | description                                                                                         |
 |-------------------------------------------|---------|-------------------------|-----------------------------------------------------------------------------------------------------|
@@ -16,7 +16,7 @@ The password score is calculated with [zxcvbn-ts][zxcvbn-ts-score].
 
 | score | meaning                                                           | minimum number of guesses required (approximated) |
 |:-----:|-------------------------------------------------------------------|---------------------------------------------------|
-|   0   | All passwords are allowed                                         | -                                                 |
+|   0   | All passwords with minimum 6 characters are allowed               | -                                                 |
 |   1   | Only `too guessable` passwords are disallowed                     | 1.000                                             |
 |   2   | `too guessable` and `very guessable` passwords are disallowed     | 1.000.000                                         |
 |   3   | `safely unguessable` and `very unguessable` passwords are allowed | 100.000.000                                       |

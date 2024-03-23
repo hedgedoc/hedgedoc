@@ -1,9 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ErrorToI18nKeyMapper } from '../../api/common/error-to-i18n-key-mapper'
+import { ErrorToI18nKeyMapper } from '../../../../api/common/error-to-i18n-key-mapper'
 import React, { useMemo } from 'react'
 import { Alert } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'

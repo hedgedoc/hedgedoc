@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -69,7 +69,7 @@ dataSource
         Author.create(1),
       )) as Author;
       const user = (await dataSource.manager.save(users[i])) as User;
-      const identity = Identity.create(user, ProviderType.LOCAL, false);
+      const identity = Identity.create(user, ProviderType.LOCAL, null);
       identity.passwordHash = await hashPassword(password);
       dataSource.manager.create(Identity, identity);
       author.user = dataSource.manager.save(user);

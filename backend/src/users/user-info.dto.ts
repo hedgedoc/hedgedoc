@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsLowercase, IsString } from 'class-validator';
+import { IsLowercase, IsOptional, IsString } from 'class-validator';
 
 import { BaseDto } from '../utils/base.dto.';
 import { Username } from '../utils/username';
@@ -33,11 +33,12 @@ export class UserInfoDto extends BaseDto {
    * URL of the profile picture
    * @example "https://hedgedoc.example.com/uploads/johnsmith.png"
    */
-  @ApiProperty({
+  @ApiPropertyOptional({
     format: 'uri',
   })
+  @IsOptional()
   @IsString()
-  photoUrl: string;
+  photoUrl?: string;
 }
 
 /**
@@ -49,11 +50,21 @@ export class FullUserInfoDto extends UserInfoDto {
    * Email address of the user
    * @example "john.smith@example.com"
    */
-  @ApiProperty({
+  @ApiPropertyOptional({
     format: 'email',
   })
+  @IsOptional()
   @IsString()
-  email: string;
+  email?: string;
+}
+
+export class FullUserInfoWithIdDto extends FullUserInfoDto {
+  /**
+   * The user's ID
+   * @example 42
+   */
+  @IsString()
+  id: string;
 }
 
 export class UserLoginInfoDto extends UserInfoDto {

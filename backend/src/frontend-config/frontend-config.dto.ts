@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,29 +16,15 @@ import {
 import { URL } from 'url';
 
 import { GuestAccess } from '../config/guest_access.enum';
+import { ProviderType } from '../identity/provider-type.enum';
 import { ServerVersion } from '../monitoring/server-status.dto';
 import { BaseDto } from '../utils/base.dto.';
 
-export enum AuthProviderType {
-  LOCAL = 'local',
-  LDAP = 'ldap',
-  SAML = 'saml',
-  OAUTH2 = 'oauth2',
-  GITLAB = 'gitlab',
-  GITHUB = 'github',
-  GOOGLE = 'google',
-}
-
 export type AuthProviderTypeWithCustomName =
-  | AuthProviderType.LDAP
-  | AuthProviderType.OAUTH2
-  | AuthProviderType.SAML
-  | AuthProviderType.GITLAB;
+  | ProviderType.LDAP
+  | ProviderType.OIDC;
 
-export type AuthProviderTypeWithoutCustomName =
-  | AuthProviderType.LOCAL
-  | AuthProviderType.GITHUB
-  | AuthProviderType.GOOGLE;
+export type AuthProviderTypeWithoutCustomName = ProviderType.LOCAL;
 
 export class AuthProviderWithoutCustomNameDto extends BaseDto {
   /**
@@ -70,6 +56,14 @@ export class AuthProviderWithCustomNameDto extends BaseDto {
    */
   @IsString()
   providerName: string;
+
+  /**
+   * The theme to apply for the login button.
+   * @example gitlab
+   */
+  @IsOptional()
+  @IsString()
+  theme?: string;
 }
 
 export type AuthProviderDto =
@@ -136,6 +130,18 @@ export class FrontendConfigDto extends BaseDto {
    */
   @IsBoolean()
   allowRegister: boolean;
+
+  /**
+   * Are users allowed to edit their profile information?
+   */
+  @IsBoolean()
+  allowProfileEdits: boolean;
+
+  /**
+   * Are users allowed to choose their username when signing up via OIDC?
+   */
+  @IsBoolean()
+  allowChooseUsername: boolean;
 
   /**
    * Which auth providers are enabled and how are they configured?

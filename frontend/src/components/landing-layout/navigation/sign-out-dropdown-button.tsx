@@ -25,7 +25,7 @@ export const SignOutDropdownButton: React.FC = () => {
   const onSignOut = useCallback(() => {
     clearUser()
     doLogout()
-      .then(() => router.push('/login'))
+      .then((logoutResponse) => router.push(logoutResponse.redirect))
       .catch(showErrorNotification('login.logoutFailed'))
   }, [showErrorNotification, router])
 

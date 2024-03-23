@@ -1,7 +1,12 @@
+/*
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Init1725203299761 implements MigrationInterface {
-  name = 'Init1725203299761';
+export class Init1725266697932 implements MigrationInterface {
+  name = 'Init1725266697932';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -50,7 +55,7 @@ export class Init1725203299761 implements MigrationInterface {
       `CREATE TABLE "author" ("id" SERIAL NOT NULL, "color" integer NOT NULL, "userId" integer, CONSTRAINT "PK_5a0e79799d372fe56f2f3fa6871" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "identity" ("id" SERIAL NOT NULL, "providerType" character varying NOT NULL, "providerName" text, "syncSource" boolean NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "providerUserId" text, "oAuthAccessToken" text, "passwordHash" text, "userId" integer, CONSTRAINT "PK_ff16a44186b286d5e626178f726" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "identity" ("id" SERIAL NOT NULL, "providerType" character varying NOT NULL, "providerIdentifier" text, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "providerUserId" text, "passwordHash" text, "userId" integer, CONSTRAINT "PK_ff16a44186b286d5e626178f726" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `CREATE TABLE "public_auth_token" ("id" SERIAL NOT NULL, "keyId" character varying NOT NULL, "label" character varying NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "hash" character varying NOT NULL, "validUntil" TIMESTAMP NOT NULL, "lastUsedAt" date, "userId" integer, CONSTRAINT "UQ_b4c4b9179f72ef63c32248e83ab" UNIQUE ("keyId"), CONSTRAINT "UQ_6450514886fa4182c889c076df6" UNIQUE ("hash"), CONSTRAINT "PK_1bdb7c2d237fb02d84fa75f48a5" PRIMARY KEY ("id"))`,

@@ -1,11 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 export interface FrontendConfig {
   allowRegister: boolean
+  allowProfileEdits: boolean
+  allowChooseUsername: boolean
   authProviders: AuthProvider[]
   branding: BrandingConfig
   guestAccess: GuestAccessLevel
@@ -24,38 +26,22 @@ export enum GuestAccessLevel {
 }
 
 export enum AuthProviderType {
-  GITHUB = 'github',
-  GOOGLE = 'google',
-  GITLAB = 'gitlab',
-  OAUTH2 = 'oauth2',
+  OIDC = 'oidc',
   LDAP = 'ldap',
-  SAML = 'saml',
   LOCAL = 'local'
 }
 
-export type AuthProviderTypeWithCustomName =
-  | AuthProviderType.GITLAB
-  | AuthProviderType.OAUTH2
-  | AuthProviderType.LDAP
-  | AuthProviderType.SAML
+export type AuthProviderTypeWithCustomName = AuthProviderType.LDAP | AuthProviderType.OIDC
 
-export type AuthProviderTypeWithoutCustomName =
-  | AuthProviderType.GITHUB
-  | AuthProviderType.GOOGLE
-  | AuthProviderType.LOCAL
+export type AuthProviderTypeWithoutCustomName = AuthProviderType.LOCAL
 
-export const authProviderTypeOneClick = [
-  AuthProviderType.GITHUB,
-  AuthProviderType.GITLAB,
-  AuthProviderType.GOOGLE,
-  AuthProviderType.OAUTH2,
-  AuthProviderType.SAML
-]
+export const authProviderTypeOneClick = [AuthProviderType.OIDC]
 
 export interface AuthProviderWithCustomName {
   type: AuthProviderTypeWithCustomName
   identifier: string
   providerName: string
+  theme?: string
 }
 
 export interface AuthProviderWithoutCustomName {

@@ -41,8 +41,10 @@ nav:
         - Notes: references/config/notes.md
         - Database: references/config/database.md
         - Authentication:
+          - Overview: references/config/auth/index.md
           - 'Local accounts': references/config/auth/local.md
           - LDAP: references/config/auth/ldap.md
+          - 'OpenID Connect (OIDC)': references/config/auth/oidc.md
         - Customization: references/config/customization.md
         - Media Backends:
           - Azure: references/config/media/azure.md

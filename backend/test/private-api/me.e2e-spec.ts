@@ -33,7 +33,7 @@ describe('Me', () => {
     await testSetup.app.init();
 
     user = await testSetup.userService.createUser(username, 'Testy');
-    await testSetup.identityService.createLocalIdentity(user, password);
+    await testSetup.localIdentityService.createLocalIdentity(user, password);
 
     content = 'This is a test note.';
     alias2 = 'note2';

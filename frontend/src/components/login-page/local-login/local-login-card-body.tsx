@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -53,7 +53,7 @@ export const LocalLoginCardBody: React.FC = () => {
       </Card.Title>
       <Form onSubmit={onLoginSubmit} className={'d-flex gap-3 flex-column'}>
         <UsernameField onChange={onUsernameChange} isInvalid={!!error} value={username} />
-        <PasswordField onChange={onPasswordChange} invalid={!!error} />
+        <PasswordField onChange={onPasswordChange} isInvalid={!!error} />
         <Alert className='small' show={!!error} variant='danger'>
           <Trans i18nKey={error} />
         </Alert>

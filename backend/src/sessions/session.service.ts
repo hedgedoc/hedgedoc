@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -17,15 +17,37 @@ import { DatabaseType } from '../config/database-type.enum';
 import databaseConfiguration, {
   DatabaseConfig,
 } from '../config/database.config';
+import { ProviderType } from '../identity/provider-type.enum';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { FullUserInfoDto } from '../users/user-info.dto';
 import { HEDGEDOC_SESSION } from '../utils/session';
 import { Username } from '../utils/username';
 import { Session } from './session.entity';
 
 export interface SessionState {
+  /** Details about the currently used session cookie */
   cookie: unknown;
+
+  /** Contains the username if logged in completely, is undefined when not being logged in */
   username?: Username;
-  authProvider: string;
+
+  /** The auth provider that is used for the current login or pending login */
+  authProviderType?: ProviderType;
+
+  /** The identifier of the auth provider that is used for the current login or pending login */
+  authProviderIdentifier?: string;
+
+  /** The id token to identify a user session with an OIDC auth provider, required for the logout */
+  oidcIdToken?: string;
+
+  /** The (random) OIDC code for verifying that OIDC responses match the OIDC requests */
+  oidcLoginCode?: string;
+
+  /** The user id as provided from the external auth provider, required for matching to a HedgeDoc identity */
+  providerUserId?: string;
+
+  /** The user data of the user that is currently being created */
+  newUserData?: FullUserInfoDto;
 }
 
 /**

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -41,21 +41,14 @@ export class Identity {
   providerType: string;
 
   /**
-   * The name of the provider.
-   * Only set if there are multiple provider of that type (e.g. gitlab)
+   * The identifier of the provider.
+   * Only set if there are multiple providers of that type (e.g. OIDC)
    */
   @Column({
     nullable: true,
     type: 'text',
   })
-  providerName: string | null;
-
-  /**
-   * If the identity should be used as the sync source.
-   * See [authentication doc](../../docs/content/dev/user_profiles.md) for clarification
-   */
-  @Column()
-  syncSource: boolean;
+  providerIdentifier: string | null;
 
   /**
    * When the identity was created.
@@ -79,15 +72,6 @@ export class Identity {
   providerUserId: string | null;
 
   /**
-   * Token used to access the OAuth provider in the users name.
-   */
-  @Column({
-    nullable: true,
-    type: 'text',
-  })
-  oAuthAccessToken: string | null;
-
-  /**
    * The hash of the password
    * Only set when the type of the identity is local
    */
@@ -100,15 +84,13 @@ export class Identity {
   public static create(
     user: User,
     providerType: ProviderType,
-    syncSource: boolean,
+    providerIdentifier: string | null,
   ): Omit<Identity, 'id' | 'createdAt' | 'updatedAt'> {
     const newIdentity = new Identity();
     newIdentity.user = Promise.resolve(user);
     newIdentity.providerType = providerType;
-    newIdentity.providerName = null;
-    newIdentity.syncSource = syncSource;
+    newIdentity.providerIdentifier = providerIdentifier;
     newIdentity.providerUserId = null;
-    newIdentity.oAuthAccessToken = null;
     newIdentity.passwordHash = null;
     return newIdentity;
   }

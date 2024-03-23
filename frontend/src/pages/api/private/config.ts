@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 const initialConfig: FrontendConfig = {
   allowRegister: true,
+  allowProfileEdits: true,
+  allowChooseUsername: true,
   branding: {
     name: 'DEMO Corp',
     logo: '/public/img/demo.png'
@@ -40,30 +42,14 @@ const initialConfig: FrontendConfig = {
       type: AuthProviderType.LOCAL
     },
     {
-      type: AuthProviderType.GITHUB
-    },
-    {
-      type: AuthProviderType.GOOGLE
-    },
-    {
       type: AuthProviderType.LDAP,
       identifier: 'test-ldap',
       providerName: 'Test LDAP'
     },
     {
-      type: AuthProviderType.GITLAB,
-      identifier: 'test-gitlab',
-      providerName: 'Test GitLab'
-    },
-    {
-      type: AuthProviderType.OAUTH2,
-      identifier: 'test-oauth2',
-      providerName: 'Test OAuth2'
-    },
-    {
-      type: AuthProviderType.SAML,
-      identifier: 'test-saml',
-      providerName: 'Test SAML'
+      type: AuthProviderType.OIDC,
+      identifier: 'test-oidc',
+      providerName: 'Test OIDC'
     }
   ]
 }

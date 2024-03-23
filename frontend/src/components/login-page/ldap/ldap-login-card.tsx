@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,6 +13,7 @@ import { Alert, Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { fetchAndSetUser } from '../utils/fetch-and-set-user'
 import { PasswordField } from '../password-field'
+import { useRouter } from 'next/navigation'
 
 export interface ViaLdapProps {
   providerName: string
@@ -25,18 +26,32 @@ export interface ViaLdapProps {
 export const LdapLoginCard: React.FC<ViaLdapProps> = ({ providerName, identifier }) => {
   useTranslation()
 
+  const router = useRouter()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string>()
 
   const onLoginSubmit = useCallback(
     (event: FormEvent) => {
+      let redirect = false
       doLdapLogin(identifier, username, password)
-        .then(() => fetchAndSetUser())
-        .catch((error: Error) => setError(error.message))
+        .then((response) => {
+          if (response.newUser) {
+            router.push('/new-user')
+          } else {
+            redirect = true
+            return fetchAndSetUser()
+          }
+        })
+        .then(() => {
+          if (redirect) {
+            router.push('/')
+          }
+        })
+        .catch((error: Error) => setError(String(error)))
       event.preventDefault()
     },
-    [username, password, identifier]
+    [username, password, identifier, router]
   )
 
   const onUsernameChange = useLowercaseOnInputChange(setUsername)
@@ -49,10 +64,10 @@ export const LdapLoginCard: React.FC<ViaLdapProps> = ({ providerName, identifier
           <Trans i18nKey='login.signInVia' values={{ service: providerName }} />
         </Card.Title>
         <Form onSubmit={onLoginSubmit} className={'d-flex gap-3 flex-column'}>
-          <UsernameField onChange={onUsernameChange} isValid={!!error} value={username} />
-          <PasswordField onChange={onPasswordChange} invalid={!!error} />
+          <UsernameField onChange={onUsernameChange} isInvalid={!!error} value={username} />
+          <PasswordField onChange={onPasswordChange} isInvalid={!!error} />
           <Alert className='small' show={!!error} variant='danger'>
-            <Trans i18nKey={error} />
+            {error}
           </Alert>
 
           <Button type='submit' variant='primary'>

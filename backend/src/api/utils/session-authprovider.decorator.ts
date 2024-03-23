@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -20,12 +20,12 @@ import { CompleteRequest } from './request.type';
 export const SessionAuthProvider = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
     const request: CompleteRequest = ctx.switchToHttp().getRequest();
-    if (!request.session?.authProvider) {
+    if (!request.session?.authProviderType) {
       // We should have an auth provider here, otherwise something is wrong
       throw new InternalServerErrorException(
         'Session is missing an auth provider identifier',
       );
     }
-    return request.session.authProvider;
+    return request.session.authProviderType;
   },
 );

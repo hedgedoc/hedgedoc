@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -18,6 +18,9 @@ import { RevisionsModule } from '../../revisions/revisions.module';
 import { UsersModule } from '../../users/users.module';
 import { AliasController } from './alias/alias.controller';
 import { AuthController } from './auth/auth.controller';
+import { LdapController } from './auth/ldap/ldap.controller';
+import { LocalController } from './auth/local/local.controller';
+import { OidcController } from './auth/oidc/oidc.controller';
 import { ConfigController } from './config/config.controller';
 import { GroupsController } from './groups/groups.controller';
 import { HistoryController } from './me/history/history.controller';
@@ -52,6 +55,9 @@ import { UsersController } from './users/users.controller';
     AuthController,
     UsersController,
     GroupsController,
+    LdapController,
+    LocalController,
+    OidcController,
   ],
 })
 export class PrivateApiModule {}

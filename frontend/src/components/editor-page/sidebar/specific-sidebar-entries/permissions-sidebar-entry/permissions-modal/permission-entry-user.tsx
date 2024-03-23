@@ -1,10 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { removeUserPermission, setUserPermission } from '../../../../../../api/permissions'
-import { getUser } from '../../../../../../api/users'
+import { getUserInfo } from '../../../../../../api/users'
 import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
 import { setNotePermissionsFromServer } from '../../../../../../redux/note-details/methods'
 import { UserAvatarForUser } from '../../../../../common/user-avatar/user-avatar-for-user'
@@ -79,7 +79,7 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
   }, [noteId, entry.username, showErrorNotification])
 
   const { value, loading, error } = useAsync(async () => {
-    return await getUser(entry.username)
+    return await getUserInfo(entry.username)
   }, [entry.username])
 
   if (!value) {

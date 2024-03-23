@@ -1,11 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import mockedEnv from 'mocked-env';
 
 import authConfig from './auth.config';
+import { Theme } from './theme.enum';
 
 describe('authConfig', () => {
   const secret = 'this-is-a-secret';
@@ -162,6 +163,7 @@ describe('authConfig', () => {
     const searchAttributes = ['mail', 'uid'];
     const userIdField = 'non_default_uid';
     const displayNameField = 'non_default_display_name';
+    const emailField = 'non_default_email';
     const profilePictureField = 'non_default_profile_picture';
     const bindDn = 'cn=admin,dc=planetexpress,dc=com';
     const bindCredentials = 'GoodNewsEveryone';
@@ -176,6 +178,7 @@ describe('authConfig', () => {
       HD_AUTH_LDAP_FUTURAMA_SEARCH_FILTER: searchFilter,
       HD_AUTH_LDAP_FUTURAMA_SEARCH_ATTRIBUTES: searchAttributes.join(','),
       HD_AUTH_LDAP_FUTURAMA_USER_ID_FIELD: userIdField,
+      HD_AUTH_LDAP_FUTURAMA_EMAIL_FIELD: emailField,
       HD_AUTH_LDAP_FUTURAMA_DISPLAY_NAME_FIELD: displayNameField,
       HD_AUTH_LDAP_FUTURAMA_PROFILE_PICTURE_FIELD: profilePictureField,
       HD_AUTH_LDAP_FUTURAMA_BIND_DN: bindDn,
@@ -199,7 +202,7 @@ describe('authConfig', () => {
         const config = authConfig();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
-        expect(firstLdap.identifier).toEqual(ldapNames[0].toUpperCase());
+        expect(firstLdap.identifier).toEqual(ldapNames[0]);
         expect(firstLdap.url).toEqual(url);
         expect(firstLdap.providerName).toEqual(providerName);
         expect(firstLdap.searchBase).toEqual(searchBase);
@@ -207,6 +210,7 @@ describe('authConfig', () => {
         expect(firstLdap.searchAttributes).toEqual(searchAttributes);
         expect(firstLdap.userIdField).toEqual(userIdField);
         expect(firstLdap.displayNameField).toEqual(displayNameField);
+        expect(firstLdap.emailField).toEqual(emailField);
         expect(firstLdap.profilePictureField).toEqual(profilePictureField);
         expect(firstLdap.bindDn).toEqual(bindDn);
         expect(firstLdap.bindCredentials).toEqual(bindCredentials);
@@ -230,7 +234,7 @@ describe('authConfig', () => {
         const config = authConfig();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
-        expect(firstLdap.identifier).toEqual(ldapNames[0].toUpperCase());
+        expect(firstLdap.identifier).toEqual(ldapNames[0]);
         expect(firstLdap.url).toEqual(url);
         expect(firstLdap.providerName).toEqual('LDAP');
         expect(firstLdap.searchBase).toEqual(searchBase);
@@ -261,7 +265,7 @@ describe('authConfig', () => {
         const config = authConfig();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
-        expect(firstLdap.identifier).toEqual(ldapNames[0].toUpperCase());
+        expect(firstLdap.identifier).toEqual(ldapNames[0]);
         expect(firstLdap.url).toEqual(url);
         expect(firstLdap.providerName).toEqual(providerName);
         expect(firstLdap.searchBase).toEqual(searchBase);
@@ -292,7 +296,7 @@ describe('authConfig', () => {
         const config = authConfig();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
-        expect(firstLdap.identifier).toEqual(ldapNames[0].toUpperCase());
+        expect(firstLdap.identifier).toEqual(ldapNames[0]);
         expect(firstLdap.url).toEqual(url);
         expect(firstLdap.providerName).toEqual(providerName);
         expect(firstLdap.searchBase).toEqual(searchBase);
@@ -323,7 +327,7 @@ describe('authConfig', () => {
         const config = authConfig();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
-        expect(firstLdap.identifier).toEqual(ldapNames[0].toUpperCase());
+        expect(firstLdap.identifier).toEqual(ldapNames[0]);
         expect(firstLdap.url).toEqual(url);
         expect(firstLdap.providerName).toEqual(providerName);
         expect(firstLdap.searchBase).toEqual(searchBase);
@@ -354,7 +358,7 @@ describe('authConfig', () => {
         const config = authConfig();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
-        expect(firstLdap.identifier).toEqual(ldapNames[0].toUpperCase());
+        expect(firstLdap.identifier).toEqual(ldapNames[0]);
         expect(firstLdap.url).toEqual(url);
         expect(firstLdap.providerName).toEqual(providerName);
         expect(firstLdap.searchBase).toEqual(searchBase);
@@ -385,7 +389,7 @@ describe('authConfig', () => {
         const config = authConfig();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
-        expect(firstLdap.identifier).toEqual(ldapNames[0].toUpperCase());
+        expect(firstLdap.identifier).toEqual(ldapNames[0]);
         expect(firstLdap.url).toEqual(url);
         expect(firstLdap.providerName).toEqual(providerName);
         expect(firstLdap.searchBase).toEqual(searchBase);
@@ -416,7 +420,7 @@ describe('authConfig', () => {
         const config = authConfig();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
-        expect(firstLdap.identifier).toEqual(ldapNames[0].toUpperCase());
+        expect(firstLdap.identifier).toEqual(ldapNames[0]);
         expect(firstLdap.url).toEqual(url);
         expect(firstLdap.providerName).toEqual(providerName);
         expect(firstLdap.searchBase).toEqual(searchBase);
@@ -447,7 +451,7 @@ describe('authConfig', () => {
         const config = authConfig();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
-        expect(firstLdap.identifier).toEqual(ldapNames[0].toUpperCase());
+        expect(firstLdap.identifier).toEqual(ldapNames[0]);
         expect(firstLdap.url).toEqual(url);
         expect(firstLdap.providerName).toEqual(providerName);
         expect(firstLdap.searchBase).toEqual(searchBase);
@@ -515,6 +519,443 @@ describe('authConfig', () => {
         expect(() => authConfig()).toThrow(
           '"HD_AUTH_LDAP_FUTURAMA_TLS_CERT_PATHS[0]" must not be a sparse array item',
         );
+        restore();
+      });
+    });
+  });
+
+  describe('odic', () => {
+    const oidcNames = ['gitlab'];
+    const providerName = 'Gitlab oAuth2';
+    const issuer = 'https://gitlab.example.org';
+    const clientId = '1234567890';
+    const clientSecret = 'ABCDEF';
+    const theme = Theme.GITHUB;
+    const authorizeUrl = 'https://example.org/auth';
+    const tokenUrl = 'https://example.org/token';
+    const userinfoUrl = 'https://example.org/user';
+    const scope = 'some scopr';
+    const defaultScope = 'openid profile email';
+    const userIdField = 'login';
+    const defaultUserIdField = 'sub';
+    const userNameField = 'preferred_username';
+    const displayNameField = 'displayName';
+    const defaultDisplayNameField = 'name';
+    const profilePictureField = 'pictureField';
+    const defaultProfilePictureField = 'picture';
+    const emailField = 'a_email';
+    const defaultEmailField = 'email';
+    const completeOidcConfig = {
+      /* eslint-disable @typescript-eslint/naming-convention */
+      HD_AUTH_OIDC_SERVERS: oidcNames.join(','),
+      HD_AUTH_OIDC_GITLAB_PROVIDER_NAME: providerName,
+      HD_AUTH_OIDC_GITLAB_ISSUER: issuer,
+      HD_AUTH_OIDC_GITLAB_CLIENT_ID: clientId,
+      HD_AUTH_OIDC_GITLAB_CLIENT_SECRET: clientSecret,
+      HD_AUTH_OIDC_GITLAB_THEME: theme,
+      HD_AUTH_OIDC_GITLAB_AUTHORIZE_URL: authorizeUrl,
+      HD_AUTH_OIDC_GITLAB_TOKEN_URL: tokenUrl,
+      HD_AUTH_OIDC_GITLAB_USERINFO_URL: userinfoUrl,
+      HD_AUTH_OIDC_GITLAB_SCOPE: scope,
+      HD_AUTH_OIDC_GITLAB_USER_ID_FIELD: userIdField,
+      HD_AUTH_OIDC_GITLAB_USER_NAME_FIELD: userNameField,
+      HD_AUTH_OIDC_GITLAB_DISPLAY_NAME_FIELD: displayNameField,
+      HD_AUTH_OIDC_GITLAB_PROFILE_PICTURE_FIELD: profilePictureField,
+      HD_AUTH_OIDC_GITLAB_EMAIL_FIELD: emailField,
+      /* eslint-enable @typescript-eslint/naming-convention */
+    };
+    describe('is correctly parsed', () => {
+      it('when given correct and complete environment variables', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeOidcConfig,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.oidc).toHaveLength(1);
+        const firstOidc = config.oidc[0];
+        expect(firstOidc.identifier).toEqual(oidcNames[0]);
+        expect(firstOidc.issuer).toEqual(issuer);
+        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientSecret).toEqual(clientSecret);
+        expect(firstOidc.theme).toEqual(theme);
+        expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
+        expect(firstOidc.tokenUrl).toEqual(tokenUrl);
+        expect(firstOidc.scope).toEqual(scope);
+        expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.userIdField).toEqual(userIdField);
+        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.displayNameField).toEqual(displayNameField);
+        expect(firstOidc.profilePictureField).toEqual(profilePictureField);
+        expect(firstOidc.emailField).toEqual(emailField);
+        restore();
+      });
+      it('when HD_AUTH_OIDC_GITLAB_THEME is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeOidcConfig,
+            HD_AUTH_OIDC_GITLAB_THEME: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.oidc).toHaveLength(1);
+        const firstOidc = config.oidc[0];
+        expect(firstOidc.identifier).toEqual(oidcNames[0]);
+        expect(firstOidc.issuer).toEqual(issuer);
+        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientSecret).toEqual(clientSecret);
+        expect(firstOidc.theme).toBeUndefined();
+        expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
+        expect(firstOidc.tokenUrl).toEqual(tokenUrl);
+        expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.scope).toEqual(scope);
+        expect(firstOidc.userIdField).toEqual(userIdField);
+        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.displayNameField).toEqual(displayNameField);
+        expect(firstOidc.profilePictureField).toEqual(profilePictureField);
+        expect(firstOidc.emailField).toEqual(emailField);
+        restore();
+      });
+      it('when HD_AUTH_OIDC_GITLAB_AUTHORIZE_URL is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeOidcConfig,
+            HD_AUTH_OIDC_GITLAB_AUTHORIZE_URL: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.oidc).toHaveLength(1);
+        const firstOidc = config.oidc[0];
+        expect(firstOidc.identifier).toEqual(oidcNames[0]);
+        expect(firstOidc.issuer).toEqual(issuer);
+        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientSecret).toEqual(clientSecret);
+        expect(firstOidc.theme).toEqual(theme);
+        expect(firstOidc.authorizeUrl).toBeUndefined();
+        expect(firstOidc.tokenUrl).toEqual(tokenUrl);
+        expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.scope).toEqual(scope);
+        expect(firstOidc.userIdField).toEqual(userIdField);
+        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.displayNameField).toEqual(displayNameField);
+        expect(firstOidc.profilePictureField).toEqual(profilePictureField);
+        expect(firstOidc.emailField).toEqual(emailField);
+        restore();
+      });
+      it('when HD_AUTH_OIDC_GITLAB_TOKEN_URL is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeOidcConfig,
+            HD_AUTH_OIDC_GITLAB_TOKEN_URL: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.oidc).toHaveLength(1);
+        const firstOidc = config.oidc[0];
+        expect(firstOidc.identifier).toEqual(oidcNames[0]);
+        expect(firstOidc.issuer).toEqual(issuer);
+        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientSecret).toEqual(clientSecret);
+        expect(firstOidc.theme).toEqual(theme);
+        expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
+        expect(firstOidc.tokenUrl).toBeUndefined();
+        expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.scope).toEqual(scope);
+        expect(firstOidc.userIdField).toEqual(userIdField);
+        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.displayNameField).toEqual(displayNameField);
+        expect(firstOidc.profilePictureField).toEqual(profilePictureField);
+        expect(firstOidc.emailField).toEqual(emailField);
+        restore();
+      });
+      it('when HD_AUTH_OIDC_GITLAB_USERINFO_URL is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeOidcConfig,
+            HD_AUTH_OIDC_GITLAB_USERINFO_URL: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.oidc).toHaveLength(1);
+        const firstOidc = config.oidc[0];
+        expect(firstOidc.identifier).toEqual(oidcNames[0]);
+        expect(firstOidc.issuer).toEqual(issuer);
+        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientSecret).toEqual(clientSecret);
+        expect(firstOidc.theme).toEqual(theme);
+        expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
+        expect(firstOidc.tokenUrl).toEqual(tokenUrl);
+        expect(firstOidc.userinfoUrl).toBeUndefined();
+        expect(firstOidc.scope).toEqual(scope);
+        expect(firstOidc.userIdField).toEqual(userIdField);
+        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.displayNameField).toEqual(displayNameField);
+        expect(firstOidc.profilePictureField).toEqual(profilePictureField);
+        expect(firstOidc.emailField).toEqual(emailField);
+        restore();
+      });
+      it('when HD_AUTH_OIDC_GITLAB_SCOPE is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeOidcConfig,
+            HD_AUTH_OIDC_GITLAB_SCOPE: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.oidc).toHaveLength(1);
+        const firstOidc = config.oidc[0];
+        expect(firstOidc.identifier).toEqual(oidcNames[0]);
+        expect(firstOidc.issuer).toEqual(issuer);
+        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientSecret).toEqual(clientSecret);
+        expect(firstOidc.theme).toEqual(theme);
+        expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
+        expect(firstOidc.tokenUrl).toEqual(tokenUrl);
+        expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.scope).toEqual(defaultScope);
+        expect(firstOidc.userIdField).toEqual(userIdField);
+        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.displayNameField).toEqual(displayNameField);
+        expect(firstOidc.profilePictureField).toEqual(profilePictureField);
+        expect(firstOidc.emailField).toEqual(emailField);
+        restore();
+      });
+      it('when HD_AUTH_OIDC_GITLAB_USER_ID_FIELD is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeOidcConfig,
+            HD_AUTH_OIDC_GITLAB_USER_ID_FIELD: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.oidc).toHaveLength(1);
+        const firstOidc = config.oidc[0];
+        expect(firstOidc.identifier).toEqual(oidcNames[0]);
+        expect(firstOidc.issuer).toEqual(issuer);
+        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientSecret).toEqual(clientSecret);
+        expect(firstOidc.theme).toEqual(theme);
+        expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
+        expect(firstOidc.tokenUrl).toEqual(tokenUrl);
+        expect(firstOidc.scope).toEqual(scope);
+        expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.userIdField).toEqual(defaultUserIdField);
+        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.displayNameField).toEqual(displayNameField);
+        expect(firstOidc.profilePictureField).toEqual(profilePictureField);
+        expect(firstOidc.emailField).toEqual(emailField);
+        restore();
+      });
+      it('when HD_AUTH_OIDC_GITLAB_DISPLAY_NAME_FIELD is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeOidcConfig,
+            HD_AUTH_OIDC_GITLAB_DISPLAY_NAME_FIELD: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.oidc).toHaveLength(1);
+        const firstOidc = config.oidc[0];
+        expect(firstOidc.identifier).toEqual(oidcNames[0]);
+        expect(firstOidc.issuer).toEqual(issuer);
+        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientSecret).toEqual(clientSecret);
+        expect(firstOidc.theme).toEqual(theme);
+        expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
+        expect(firstOidc.tokenUrl).toEqual(tokenUrl);
+        expect(firstOidc.scope).toEqual(scope);
+        expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.userIdField).toEqual(userIdField);
+        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.displayNameField).toEqual(defaultDisplayNameField);
+        expect(firstOidc.profilePictureField).toEqual(profilePictureField);
+        expect(firstOidc.emailField).toEqual(emailField);
+        restore();
+      });
+      it('when HD_AUTH_OIDC_GITLAB_PROFILE_PICTURE_FIELD is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeOidcConfig,
+            HD_AUTH_OIDC_GITLAB_PROFILE_PICTURE_FIELD: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.oidc).toHaveLength(1);
+        const firstOidc = config.oidc[0];
+        expect(firstOidc.identifier).toEqual(oidcNames[0]);
+        expect(firstOidc.issuer).toEqual(issuer);
+        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientSecret).toEqual(clientSecret);
+        expect(firstOidc.theme).toEqual(theme);
+        expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
+        expect(firstOidc.tokenUrl).toEqual(tokenUrl);
+        expect(firstOidc.scope).toEqual(scope);
+        expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.userIdField).toEqual(userIdField);
+        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.displayNameField).toEqual(displayNameField);
+        expect(firstOidc.profilePictureField).toEqual(
+          defaultProfilePictureField,
+        );
+        expect(firstOidc.emailField).toEqual(emailField);
+        restore();
+      });
+      it('when HD_AUTH_OIDC_GITLAB_EMAIL_FIELD is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeOidcConfig,
+            HD_AUTH_OIDC_GITLAB_EMAIL_FIELD: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.oidc).toHaveLength(1);
+        const firstOidc = config.oidc[0];
+        expect(firstOidc.identifier).toEqual(oidcNames[0]);
+        expect(firstOidc.issuer).toEqual(issuer);
+        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientSecret).toEqual(clientSecret);
+        expect(firstOidc.theme).toEqual(theme);
+        expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
+        expect(firstOidc.tokenUrl).toEqual(tokenUrl);
+        expect(firstOidc.scope).toEqual(scope);
+        expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.userIdField).toEqual(userIdField);
+        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.displayNameField).toEqual(displayNameField);
+        expect(firstOidc.profilePictureField).toEqual(profilePictureField);
+        expect(firstOidc.emailField).toEqual(defaultEmailField);
+        restore();
+      });
+    });
+    describe('throws error', () => {
+      it('when HD_AUTH_OIDC_GITLAB_ISSUER is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeOidcConfig,
+            HD_AUTH_OIDC_GITLAB_ISSUER: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        expect(() => authConfig()).toThrow(
+          '"HD_AUTH_OIDC_GITLAB_ISSUER" is required',
+        );
+        restore();
+      });
+      it('when HD_AUTH_OIDC_GITLAB_CLIENT_ID is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeOidcConfig,
+            HD_AUTH_OIDC_GITLAB_CLIENT_ID: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        expect(() => authConfig()).toThrow(
+          '"HD_AUTH_OIDC_GITLAB_CLIENT_ID" is required',
+        );
+        restore();
+      });
+      it('when HD_AUTH_OIDC_GITLAB_CLIENT_SECRET is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeOidcConfig,
+            HD_AUTH_OIDC_GITLAB_CLIENT_SECRET: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        expect(() => authConfig()).toThrow(
+          '"HD_AUTH_OIDC_GITLAB_CLIENT_SECRET" is required',
+        );
+        restore();
+      });
+      it('when HD_AUTH_OIDC_GITLAB_THEME is set to a wrong value', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeOidcConfig,
+            HD_AUTH_OIDC_GITLAB_THEME: 'something else',
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        expect(() => authConfig()).toThrow('"HD_AUTH_OIDC_GITLAB_THEME"');
         restore();
       });
     });

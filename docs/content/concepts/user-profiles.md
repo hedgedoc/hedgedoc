@@ -16,7 +16,7 @@ which contains the following information:
 
 HedgeDoc 2 supports multiple authentication methods per user.  
 These are called *identities* and each identity is backed by an
-auth provider (like OAuth, SAML, LDAP or internal auth).
+auth provider (like OIDC, LDAP or internal auth).
 
 One of a users identities may be marked as *sync source*.  
 This identity is used to automatically update profile attributes like the

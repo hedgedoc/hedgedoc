@@ -1,7 +1,12 @@
+/*
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class SqliteInit1725204990810 implements MigrationInterface {
-  name = 'SqliteInit1725204990810';
+export class Init1725268109950 implements MigrationInterface {
+  name = 'Init1725268109950';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -50,7 +55,7 @@ export class SqliteInit1725204990810 implements MigrationInterface {
       `CREATE TABLE "author" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "color" integer NOT NULL, "userId" integer)`,
     );
     await queryRunner.query(
-      `CREATE TABLE "identity" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "providerType" varchar NOT NULL, "providerName" text, "syncSource" boolean NOT NULL, "createdAt" datetime NOT NULL DEFAULT (datetime('now')), "updatedAt" datetime NOT NULL DEFAULT (datetime('now')), "providerUserId" text, "oAuthAccessToken" text, "passwordHash" text, "userId" integer)`,
+      `CREATE TABLE "identity" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "providerType" varchar NOT NULL, "providerIdentifier" text, "createdAt" datetime NOT NULL DEFAULT (datetime('now')), "updatedAt" datetime NOT NULL DEFAULT (datetime('now')), "providerUserId" text, "passwordHash" text, "userId" integer)`,
     );
     await queryRunner.query(
       `CREATE TABLE "public_auth_token" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "keyId" varchar NOT NULL, "label" varchar NOT NULL, "createdAt" datetime NOT NULL DEFAULT (datetime('now')), "hash" varchar NOT NULL, "validUntil" datetime NOT NULL, "lastUsedAt" date, "userId" integer, CONSTRAINT "UQ_b4c4b9179f72ef63c32248e83ab" UNIQUE ("keyId"), CONSTRAINT "UQ_6450514886fa4182c889c076df6" UNIQUE ("hash"))`,
@@ -199,10 +204,10 @@ export class SqliteInit1725204990810 implements MigrationInterface {
       `ALTER TABLE "temporary_author" RENAME TO "author"`,
     );
     await queryRunner.query(
-      `CREATE TABLE "temporary_identity" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "providerType" varchar NOT NULL, "providerName" text, "syncSource" boolean NOT NULL, "createdAt" datetime NOT NULL DEFAULT (datetime('now')), "updatedAt" datetime NOT NULL DEFAULT (datetime('now')), "providerUserId" text, "oAuthAccessToken" text, "passwordHash" text, "userId" integer, CONSTRAINT "FK_12915039d2868ab654567bf5181" FOREIGN KEY ("userId") REFERENCES "user" ("id") ON DELETE CASCADE ON UPDATE NO ACTION)`,
+      `CREATE TABLE "temporary_identity" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "providerType" varchar NOT NULL, "providerIdentifier" text, "createdAt" datetime NOT NULL DEFAULT (datetime('now')), "updatedAt" datetime NOT NULL DEFAULT (datetime('now')), "providerUserId" text, "passwordHash" text, "userId" integer, CONSTRAINT "FK_12915039d2868ab654567bf5181" FOREIGN KEY ("userId") REFERENCES "user" ("id") ON DELETE CASCADE ON UPDATE NO ACTION)`,
     );
     await queryRunner.query(
-      `INSERT INTO "temporary_identity"("id", "providerType", "providerName", "syncSource", "createdAt", "updatedAt", "providerUserId", "oAuthAccessToken", "passwordHash", "userId") SELECT "id", "providerType", "providerName", "syncSource", "createdAt", "updatedAt", "providerUserId", "oAuthAccessToken", "passwordHash", "userId" FROM "identity"`,
+      `INSERT INTO "temporary_identity"("id", "providerType", "providerIdentifier", "createdAt", "updatedAt", "providerUserId", "passwordHash", "userId") SELECT "id", "providerType", "providerIdentifier", "createdAt", "updatedAt", "providerUserId", "passwordHash", "userId" FROM "identity"`,
     );
     await queryRunner.query(`DROP TABLE "identity"`);
     await queryRunner.query(
@@ -343,10 +348,10 @@ export class SqliteInit1725204990810 implements MigrationInterface {
       `ALTER TABLE "identity" RENAME TO "temporary_identity"`,
     );
     await queryRunner.query(
-      `CREATE TABLE "identity" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "providerType" varchar NOT NULL, "providerName" text, "syncSource" boolean NOT NULL, "createdAt" datetime NOT NULL DEFAULT (datetime('now')), "updatedAt" datetime NOT NULL DEFAULT (datetime('now')), "providerUserId" text, "oAuthAccessToken" text, "passwordHash" text, "userId" integer)`,
+      `CREATE TABLE "identity" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "providerType" varchar NOT NULL, "providerIdentifier" text, "createdAt" datetime NOT NULL DEFAULT (datetime('now')), "updatedAt" datetime NOT NULL DEFAULT (datetime('now')), "providerUserId" text, "passwordHash" text, "userId" integer)`,
     );
     await queryRunner.query(
-      `INSERT INTO "identity"("id", "providerType", "providerName", "syncSource", "createdAt", "updatedAt", "providerUserId", "oAuthAccessToken", "passwordHash", "userId") SELECT "id", "providerType", "providerName", "syncSource", "createdAt", "updatedAt", "providerUserId", "oAuthAccessToken", "passwordHash", "userId" FROM "temporary_identity"`,
+      `INSERT INTO "identity"("id", "providerType", "providerIdentifier", "createdAt", "updatedAt", "providerUserId", "passwordHash", "userId") SELECT "id", "providerType", "providerIdentifier", "createdAt", "updatedAt", "providerUserId", "passwordHash", "userId" FROM "temporary_identity"`,
     );
     await queryRunner.query(`DROP TABLE "temporary_identity"`);
     await queryRunner.query(

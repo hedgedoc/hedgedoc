@@ -58,7 +58,7 @@ describe('Register and Login', () => {
     expect(profile.body.authProvider).toEqual('local');
 
     // logout again
-    await session.delete('/api/private/auth/logout').expect(204);
+    await session.delete('/api/private/auth/logout').expect(200);
 
     // not allowed to request profile now
     await session.get('/api/private/me').expect(401);

@@ -3,11 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { UserInfoDto } from '../../../users/user-info.dto';
+import {
+  UsernameCheckDto,
+  UsernameCheckResponseDto,
+} from '../../../users/username-check.dto';
 import { UsersService } from '../../../users/users.service';
 import { Username } from '../../../utils/username';
 import { OpenApi } from '../../utils/openapi.decorator';
@@ -22,7 +26,20 @@ export class UsersController {
     this.logger.setContext(UsersController.name);
   }
 
-  @Get(':username')
+  @Post('check')
+  @HttpCode(200)
+  @OpenApi(200)
+  async checkUsername(
+    @Body() usernameCheck: UsernameCheckDto,
+  ): Promise<UsernameCheckResponseDto> {
+    const userExists = await this.userService.checkIfUserExists(
+      usernameCheck.username,
+    );
+    // TODO Check if username is blocked
+    return { usernameAvailable: !userExists };
+  }
+
+  @Get('profile/:username')
   @OpenApi(200)
   async getUser(@Param('username') username: Username): Promise<UserInfoDto> {
     return this.userService.toUserDto(

@@ -1,7 +1,12 @@
+/*
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class MariadbInit1725204784823 implements MigrationInterface {
-  name = 'MariadbInit1725204784823';
+export class Init1725266569705 implements MigrationInterface {
+  name = 'Init1725266569705';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -38,7 +43,7 @@ export class MariadbInit1725204784823 implements MigrationInterface {
       `CREATE TABLE \`author\` (\`id\` int NOT NULL AUTO_INCREMENT, \`color\` int NOT NULL, \`userId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
-      `CREATE TABLE \`identity\` (\`id\` int NOT NULL AUTO_INCREMENT, \`providerType\` varchar(255) NOT NULL, \`providerName\` text NULL, \`syncSource\` tinyint NOT NULL, \`createdAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`updatedAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`providerUserId\` text NULL, \`oAuthAccessToken\` text NULL, \`passwordHash\` text NULL, \`userId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
+      `CREATE TABLE \`identity\` (\`id\` int NOT NULL AUTO_INCREMENT, \`providerType\` varchar(255) NOT NULL, \`providerIdentifier\` text NULL, \`createdAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`updatedAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`providerUserId\` text NULL, \`passwordHash\` text NULL, \`userId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
       `CREATE TABLE \`public_auth_token\` (\`id\` int NOT NULL AUTO_INCREMENT, \`keyId\` varchar(255) NOT NULL, \`label\` varchar(255) NOT NULL, \`createdAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`hash\` varchar(255) NOT NULL, \`validUntil\` datetime NOT NULL, \`lastUsedAt\` date NULL, \`userId\` int NULL, UNIQUE INDEX \`IDX_b4c4b9179f72ef63c32248e83a\` (\`keyId\`), UNIQUE INDEX \`IDX_6450514886fa4182c889c076df\` (\`hash\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,

@@ -1,10 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
-import type { LoginDto } from './types'
+import type { LdapLoginResponseDto, LoginDto } from './types'
 
 /**
  * Requests to log in a user via LDAP credentials.
@@ -14,11 +14,16 @@ import type { LoginDto } from './types'
  * @param password The password of the user.
  * @throws {Error} when the api request wasn't successfull
  */
-export const doLdapLogin = async (provider: string, username: string, password: string): Promise<void> => {
-  await new PostApiRequestBuilder<void, LoginDto>('auth/ldap/' + provider)
+export const doLdapLogin = async (
+  provider: string,
+  username: string,
+  password: string
+): Promise<LdapLoginResponseDto> => {
+  const response = await new PostApiRequestBuilder<LdapLoginResponseDto, LoginDto>(`auth/ldap/${provider}/login`)
     .withJsonBody({
       username: username,
       password: password
     })
     .sendRequest()
+  return await response.asParsedJsonObject()
 }

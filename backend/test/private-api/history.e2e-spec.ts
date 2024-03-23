@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,7 +8,7 @@ import request from 'supertest';
 import { HistoryEntryImportDto } from '../../src/history/history-entry-import.dto';
 import { HistoryEntry } from '../../src/history/history-entry.entity';
 import { HistoryService } from '../../src/history/history.service';
-import { IdentityService } from '../../src/identity/identity.service';
+import { LocalService } from '../../src/identity/local/local.service';
 import { Note } from '../../src/notes/note.entity';
 import { NotesService } from '../../src/notes/notes.service';
 import { User } from '../../src/users/user.entity';
@@ -18,7 +18,7 @@ import { TestSetup, TestSetupBuilder } from '../test-setup';
 describe('History', () => {
   let testSetup: TestSetup;
   let historyService: HistoryService;
-  let identityService: IdentityService;
+  let localIdentityService: LocalService;
   let user: User;
   let note: Note;
   let note2: Note;
@@ -40,9 +40,9 @@ describe('History', () => {
     content = 'This is a test note.';
     historyService = moduleRef.get(HistoryService);
     const userService = moduleRef.get(UsersService);
-    identityService = moduleRef.get(IdentityService);
+    localIdentityService = moduleRef.get(LocalService);
     user = await userService.createUser(username, 'Testy');
-    await identityService.createLocalIdentity(user, password);
+    await localIdentityService.createLocalIdentity(user, password);
     const notesService = moduleRef.get(NotesService);
     note = await notesService.createNote(content, user, 'note');
     note2 = await notesService.createNote(content, user, 'note2');

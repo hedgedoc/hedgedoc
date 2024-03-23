@@ -278,7 +278,7 @@ describe('Auth', () => {
         await request(testSetup.app.getHttpServer())
           .delete('/api/private/auth/logout')
           .set('Cookie', cookie)
-          .expect(204);
+          .expect(200);
       });
     });
   });
