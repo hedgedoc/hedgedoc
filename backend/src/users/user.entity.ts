@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -80,12 +80,14 @@ export class User {
   public static create(
     username: Username,
     displayName: string,
+    email?: string,
+    photoUrl?: string,
   ): Omit<User, 'id' | 'createdAt' | 'updatedAt'> {
     const newUser = new User();
     newUser.username = username;
     newUser.displayName = displayName;
-    newUser.photo = null;
-    newUser.email = null;
+    newUser.photo = photoUrl ?? null;
+    newUser.email = email ?? null;
     newUser.ownedNotes = Promise.resolve([]);
     newUser.publicAuthTokens = Promise.resolve([]);
     newUser.identities = Promise.resolve([]);

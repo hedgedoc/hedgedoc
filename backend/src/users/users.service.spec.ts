@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,6 +9,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import appConfigMock from '../config/mock/app.config.mock';
+import authConfigMock from '../config/mock/auth.config.mock';
 import { AlreadyInDBError, NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
 import { User } from './user.entity';
@@ -30,7 +31,7 @@ describe('UsersService', () => {
       imports: [
         ConfigModule.forRoot({
           isGlobal: true,
-          load: [appConfigMock],
+          load: [appConfigMock, authConfigMock],
         }),
         LoggerModule,
       ],
@@ -100,7 +101,7 @@ describe('UsersService', () => {
           return user;
         },
       );
-      await service.changeDisplayName(user, newDisplayName);
+      await service.updateUser(user, newDisplayName, undefined, undefined);
     });
   });
 

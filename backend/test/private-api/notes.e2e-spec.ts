@@ -40,9 +40,9 @@ describe('Notes', () => {
     const groupname1 = 'groupname1';
 
     user1 = await testSetup.userService.createUser(username1, 'Testy');
-    await testSetup.identityService.createLocalIdentity(user1, password1);
+    await testSetup.localIdentityService.createLocalIdentity(user1, password1);
     user2 = await testSetup.userService.createUser(username2, 'Max Mustermann');
-    await testSetup.identityService.createLocalIdentity(user2, password2);
+    await testSetup.localIdentityService.createLocalIdentity(user2, password2);
 
     group1 = await testSetup.groupService.createGroup(groupname1, 'Group 1');
 

@@ -169,6 +169,10 @@
       "successTitle": "Password changed",
       "successText": "Your password has been changed successfully."
     },
+    "selectProfilePicture": {
+      "title": "Select profile picture",
+      "info": "Your profile picture is publicly visible. Depending on your auth provider, you might have more or less choices here."
+    },
     "changeDisplayNameFailed": "There was an error changing your display name.",
     "accountManagement": "Account management",
     "deleteUser": "Delete user",
@@ -608,6 +612,13 @@
         "usernameExisting": "There is already an account with this username.",
         "other": "There was an error while registering your account. Just try it again."
       }
+    },
+    "welcome": {
+      "title": "Welcome, {{name}}!",
+      "titleFallback": "Welcome!",
+      "description": "It seems this is the first time you logged in to this instance. Please confirm your information to continue and login. This needs to be done only once.",
+      "error": "There was an error creating your user account. Please try again.",
+      "cancelError": "There was an error with the process. If this persists, try to clear your cookies, reload and try again."
     }
   },
   "motd": {

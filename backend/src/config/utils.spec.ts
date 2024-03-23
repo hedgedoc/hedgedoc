@@ -67,16 +67,6 @@ describe('config utils', () => {
     });
   });
   describe('replaceAuthErrorsWithEnvironmentVariables', () => {
-    it('"gitlab[0].scope', () => {
-      expect(
-        replaceAuthErrorsWithEnvironmentVariables(
-          '"gitlab[0].scope',
-          'gitlab',
-          'HD_AUTH_GITLAB_',
-          ['test'],
-        ),
-      ).toEqual('"HD_AUTH_GITLAB_test_SCOPE');
-    });
     it('"ldap[0].url', () => {
       expect(
         replaceAuthErrorsWithEnvironmentVariables(

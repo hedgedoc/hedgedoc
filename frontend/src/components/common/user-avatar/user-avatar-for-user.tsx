@@ -19,5 +19,5 @@ export interface UserAvatarForUserProps extends Omit<UserAvatarProps, 'photoUrl'
  * @param props remaining avatar props
  */
 export const UserAvatarForUser: React.FC<UserAvatarForUserProps> = ({ user, ...props }) => {
-  return <UserAvatar displayName={user.displayName} photoUrl={user.photoUrl} {...props} />
+  return <UserAvatar displayName={user.displayName} photoUrl={user.photoUrl} username={user.username} {...props} />
 }

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -76,14 +76,17 @@ describe('When logged-out ', () => {
     it('sign-in button points to auth-provider', () => {
       initLoggedOutTestWithCustomAuthProviders(cy, [
         {
-          type: AuthProviderType.GITHUB
+          type: AuthProviderType.OIDC,
+          identifier: 'github',
+          providerName: 'GitHub',
+          theme: 'github'
         }
       ])
       cy.getByCypressId('sign-in-button')
         .should('be.visible')
         .parent()
         // The absolute URL is used because it is defined as API base URL absolute.
-        .should('have.attr', 'href', '/auth/github')
+        .should('have.attr', 'href', '/api/private/auth/oidc/github')
     })
   })
 
@@ -91,10 +94,16 @@ describe('When logged-out ', () => {
     it('sign-in button points to login route', () => {
       initLoggedOutTestWithCustomAuthProviders(cy, [
         {
-          type: AuthProviderType.GITHUB
+          type: AuthProviderType.OIDC,
+          identifier: 'github',
+          providerName: 'GitHub',
+          theme: 'github'
         },
         {
-          type: AuthProviderType.GOOGLE
+          type: AuthProviderType.OIDC,
+          identifier: 'gitlab',
+          providerName: 'GitLab',
+          theme: 'gitlab'
         }
       ])
       cy.getByCypressId('sign-in-button')
@@ -108,7 +117,10 @@ describe('When logged-out ', () => {
     it('sign-in button points to login route', () => {
       initLoggedOutTestWithCustomAuthProviders(cy, [
         {
-          type: AuthProviderType.GITHUB
+          type: AuthProviderType.OIDC,
+          identifier: 'github',
+          providerName: 'GitHub',
+          theme: 'github'
         },
         {
           type: AuthProviderType.LOCAL

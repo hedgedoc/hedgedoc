@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,7 @@ import { Form } from 'react-bootstrap'
 export interface UsernameFieldProps extends CommonFieldProps {
   isInvalid?: boolean
   isValid?: boolean
+  onValidityChange?: (valid: boolean) => void
 }
 
 /**
@@ -21,7 +22,7 @@ export interface UsernameFieldProps extends CommonFieldProps {
  * @param isValid  Is a valid field or not
  * @param isInvalid Adds error style to label
  */
-export const UsernameField: React.FC<UsernameFieldProps> = ({ onChange, value, isValid, isInvalid }) => {
+export const UsernameField: React.FC<UsernameFieldProps> = ({ onChange, value, isValid, isInvalid, disabled }) => {
   const placeholderText = useTranslatedText('login.auth.username')
 
   return (
@@ -29,10 +30,12 @@ export const UsernameField: React.FC<UsernameFieldProps> = ({ onChange, value, i
       type='text'
       size='sm'
       value={value}
+      maxLength={64}
       isValid={isValid}
       isInvalid={isInvalid}
       onChange={onChange}
       placeholder={placeholderText}
+      disabled={disabled}
       autoComplete='username'
       autoFocus={true}
       required

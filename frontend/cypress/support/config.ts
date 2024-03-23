@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -22,12 +22,6 @@ export const branding = {
 
 export const authProviders = [
   {
-    type: AuthProviderType.GITHUB
-  },
-  {
-    type: AuthProviderType.GOOGLE
-  },
-  {
     type: AuthProviderType.LOCAL
   },
   {
@@ -36,24 +30,16 @@ export const authProviders = [
     providerName: 'Test LDAP'
   },
   {
-    type: AuthProviderType.OAUTH2,
-    identifier: 'test-oauth2',
-    providerName: 'Test OAuth2'
-  },
-  {
-    type: AuthProviderType.SAML,
-    identifier: 'test-saml',
-    providerName: 'Test SAML'
-  },
-  {
-    type: AuthProviderType.GITLAB,
-    identifier: 'test-gitlab',
-    providerName: 'Test GitLab'
+    type: AuthProviderType.OIDC,
+    identifier: 'test-oidc',
+    providerName: 'Test OIDC'
   }
 ]
 
 export const config = {
   allowRegister: true,
+  allowProfileEdits: true,
+  allowChooseUsername: true,
   guestAccess: 'write',
   authProviders: authProviders,
   branding: branding,

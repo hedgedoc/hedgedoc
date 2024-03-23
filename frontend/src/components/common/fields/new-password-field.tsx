@@ -16,7 +16,7 @@ import { Trans } from 'react-i18next'
  * @param value The currently entered password.
  */
 export const NewPasswordField: React.FC<CommonFieldProps> = ({ onChange, value, hasError = false }) => {
-  const isValid = useMemo(() => value.trim() !== '', [value])
+  const isValid = useMemo(() => value.length >= 6, [value])
 
   const placeholderText = useTranslatedText('login.auth.password')
 

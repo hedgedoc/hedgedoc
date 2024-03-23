@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,6 +14,7 @@ export interface UserAvatarProps {
   showName?: boolean
   photoUrl?: string
   displayName: string
+  username?: string | null
 }
 
 /**
@@ -29,7 +30,8 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
   displayName,
   size,
   additionalClasses = '',
-  showName = true
+  showName = true,
+  username
 }) => {
   const imageSize = useMemo(() => {
     switch (size) {
@@ -42,7 +44,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
     }
   }, [size])
 
-  const avatarUrl = useAvatarUrl(photoUrl, displayName)
+  const avatarUrl = useAvatarUrl(photoUrl, username ?? displayName)
 
   const imageTranslateOptions = useMemo(
     () => ({

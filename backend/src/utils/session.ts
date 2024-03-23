@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -27,7 +27,8 @@ export function setupSessionMiddleware(
       name: HEDGEDOC_SESSION,
       secret: authConfig.session.secret,
       cookie: {
-        maxAge: authConfig.session.lifetime,
+        // Handle session duration in seconds instead of ms
+        maxAge: authConfig.session.lifetime * 1000,
       },
       resave: false,
       saveUninitialized: false,

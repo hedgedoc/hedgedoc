@@ -11,6 +11,7 @@ import crypto from 'crypto';
 import { Repository } from 'typeorm';
 
 import appConfigMock from '../config/mock/app.config.mock';
+import authConfigMock from '../config/mock/auth.config.mock';
 import {
   NotInDBError,
   TokenNotValidError,
@@ -54,7 +55,7 @@ describe('AuthService', () => {
       imports: [
         ConfigModule.forRoot({
           isGlobal: true,
-          load: [appConfigMock],
+          load: [appConfigMock, authConfigMock],
         }),
         PassportModule,
         UsersModule,

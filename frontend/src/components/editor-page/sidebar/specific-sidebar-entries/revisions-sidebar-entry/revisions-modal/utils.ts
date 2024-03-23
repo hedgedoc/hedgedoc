@@ -1,10 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { RevisionDetails } from '../../../../../../api/revisions/types'
-import { getUser } from '../../../../../../api/users'
+import { getUserInfo } from '../../../../../../api/users'
 import type { UserInfo } from '../../../../../../api/users/types'
 import { download } from '../../../../../common/download/download'
 
@@ -34,7 +34,7 @@ export const getUserDataForRevision = async (usernames: string[]): Promise<UserI
   const users: UserInfo[] = []
   const usersToFetch = Math.min(usernames.length, DISPLAY_MAX_USERS_PER_REVISION) - 1
   for (let i = 0; i <= usersToFetch; i++) {
-    const user = await getUser(usernames[i])
+    const user = await getUserInfo(usernames[i])
     users.push(user)
   }
   return users

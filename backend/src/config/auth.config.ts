@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,7 +7,7 @@ import { registerAs } from '@nestjs/config';
 import * as fs from 'fs';
 import * as Joi from 'joi';
 
-import { GitlabScope } from './gitlab.enum';
+import { Theme } from './theme.enum';
 import {
   buildErrorMessage,
   ensureNoDuplicatesExist,
@@ -16,9 +16,12 @@ import {
   toArrayConfig,
 } from './utils';
 
-export interface LDAPConfig {
+export interface InternalIdentifier {
   identifier: string;
   providerName: string;
+}
+
+export interface LDAPConfig extends InternalIdentifier {
   url: string;
   bindDn?: string;
   bindCredentials?: string;
@@ -27,11 +30,33 @@ export interface LDAPConfig {
   searchAttributes: string[];
   userIdField: string;
   displayNameField: string;
+  emailField: string;
   profilePictureField: string;
   tlsCaCerts?: string[];
 }
 
+export interface OidcConfig extends InternalIdentifier {
+  issuer: string;
+  clientID: string;
+  clientSecret: string;
+  theme?: string;
+  authorizeUrl?: string;
+  tokenUrl?: string;
+  userinfoUrl?: string;
+  scope: string;
+  userNameField: string;
+  userIdField: string;
+  displayNameField: string;
+  profilePictureField: string;
+  emailField: string;
+}
+
 export interface AuthConfig {
+  common: {
+    allowProfileEdits: boolean;
+    allowChooseUsername: boolean;
+    syncSource?: string;
+  };
   session: {
     secret: string;
     lifetime: number;
@@ -41,66 +66,27 @@ export interface AuthConfig {
     enableRegister: boolean;
     minimalPasswordStrength: number;
   };
-  github: {
-    clientID: string;
-    clientSecret: string;
-  };
-  google: {
-    clientID: string;
-    clientSecret: string;
-    apiKey: string;
-  };
-  gitlab: {
-    identifier: string;
-    providerName: string;
-    baseURL: string;
-    clientID: string;
-    clientSecret: string;
-    scope: GitlabScope;
-  }[];
+  // ToDo: tlsOptions exist in config.json.example. See https://nodejs.org/api/tls.html#tls_tls_connect_options_callback
   ldap: LDAPConfig[];
-  saml: {
-    identifier: string;
-    providerName: string;
-    idpSsoUrl: string;
-    idpCert: string;
-    clientCert: string;
-    issuer: string;
-    identifierFormat: string;
-    disableRequestedAuthnContext: string;
-    groupAttribute: string;
-    requiredGroups?: string[];
-    externalGroups?: string[];
-    attribute: {
-      id: string;
-      username: string;
-      email: string;
-    };
-  }[];
-  oauth2: {
-    identifier: string;
-    providerName: string;
-    baseURL: string;
-    userProfileURL: string;
-    userProfileIdAttr: string;
-    userProfileUsernameAttr: string;
-    userProfileDisplayNameAttr: string;
-    userProfileEmailAttr: string;
-    tokenURL: string;
-    authorizationURL: string;
-    clientID: string;
-    clientSecret: string;
-    scope: string;
-    rolesClaim: string;
-    accessRole: string;
-  }[];
+  oidc: OidcConfig[];
 }
 
 const authSchema = Joi.object({
+  common: {
+    allowProfileEdits: Joi.boolean()
+      .default(true)
+      .optional()
+      .label('HD_AUTH_ALLOW_PROFILE_EDITS'),
+    allowChooseUsername: Joi.boolean()
+      .default(true)
+      .optional()
+      .label('HD_AUTH_ALLOW_CHOOSE_USERNAME'),
+    syncSource: Joi.string().optional().label('HD_AUTH_SYNC_SOURCE'),
+  },
   session: {
     secret: Joi.string().label('HD_SESSION_SECRET'),
     lifetime: Joi.number()
-      .default(1209600000) // 14 * 24 * 60 * 60 * 1000ms = 14 days
+      .default(1209600) // 14 * 24 * 60 * 60s = 14 days
       .optional()
       .label('HD_SESSION_LIFETIME'),
   },
@@ -120,30 +106,6 @@ const authSchema = Joi.object({
       .optional()
       .label('HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH'),
   },
-  github: {
-    clientID: Joi.string().optional().label('HD_AUTH_GITHUB_CLIENT_ID'),
-    clientSecret: Joi.string().optional().label('HD_AUTH_GITHUB_CLIENT_SECRET'),
-  },
-  google: {
-    clientID: Joi.string().optional().label('HD_AUTH_GOOGLE_CLIENT_ID'),
-    clientSecret: Joi.string().optional().label('HD_AUTH_GOOGLE_CLIENT_SECRET'),
-    apiKey: Joi.string().optional().label('HD_AUTH_GOOGLE_APP_KEY'),
-  },
-  gitlab: Joi.array()
-    .items(
-      Joi.object({
-        identifier: Joi.string(),
-        providerName: Joi.string().default('Gitlab').optional(),
-        baseURL: Joi.string(),
-        clientID: Joi.string(),
-        clientSecret: Joi.string(),
-        scope: Joi.string()
-          .valid(...Object.values(GitlabScope))
-          .default(GitlabScope.READ_USER)
-          .optional(),
-      }).optional(),
-    )
-    .optional(),
   ldap: Joi.array()
     .items(
       Joi.object({
@@ -157,107 +119,49 @@ const authSchema = Joi.object({
         searchAttributes: Joi.array().items(Joi.string()).optional(),
         userIdField: Joi.string().default('uid').optional(),
         displayNameField: Joi.string().default('displayName').optional(),
+        emailField: Joi.string().default('mail').optional(),
         profilePictureField: Joi.string().default('jpegPhoto').optional(),
         tlsCaCerts: Joi.array().items(Joi.string()).optional(),
       }).optional(),
     )
     .optional(),
-  saml: Joi.array()
+  oidc: Joi.array()
     .items(
       Joi.object({
         identifier: Joi.string(),
-        providerName: Joi.string().default('SAML').optional(),
-        idpSsoUrl: Joi.string(),
-        idpCert: Joi.string(),
-        clientCert: Joi.string().optional(),
-        issuer: Joi.string().optional(),
-        identifierFormat: Joi.string()
-          .default('urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress')
-          .optional(),
-        disableRequestedAuthnContext: Joi.boolean().default(false).optional(),
-        groupAttribute: Joi.string().optional(),
-        requiredGroups: Joi.array().items(Joi.string()).optional(),
-        externalGroups: Joi.array().items(Joi.string()).optional(),
-        attribute: {
-          id: Joi.string().default('NameId').optional(),
-          username: Joi.string().default('NameId').optional(),
-          local: Joi.string().default('NameId').optional(),
-        },
-      }).optional(),
-    )
-    .optional(),
-  oauth2: Joi.array()
-    .items(
-      Joi.object({
-        identifier: Joi.string(),
-        providerName: Joi.string().default('OAuth2').optional(),
-        baseURL: Joi.string(),
-        userProfileURL: Joi.string(),
-        userProfileIdAttr: Joi.string().optional(),
-        userProfileUsernameAttr: Joi.string(),
-        userProfileDisplayNameAttr: Joi.string(),
-        userProfileEmailAttr: Joi.string(),
-        tokenURL: Joi.string(),
-        authorizationURL: Joi.string(),
+        providerName: Joi.string().default('OpenID Connect').optional(),
+        issuer: Joi.string(),
         clientID: Joi.string(),
         clientSecret: Joi.string(),
-        scope: Joi.string().optional(),
-        rolesClaim: Joi.string().optional(),
-        accessRole: Joi.string().optional(),
+        theme: Joi.string()
+          .valid(...Object.values(Theme))
+          .optional(),
+        authorizeUrl: Joi.string().optional(),
+        tokenUrl: Joi.string().optional(),
+        userinfoUrl: Joi.string().optional(),
+        scope: Joi.string().default('openid profile email').optional(),
+        userIdField: Joi.string().default('sub').optional(),
+        userNameField: Joi.string().default('preferred_username').optional(),
+        displayNameField: Joi.string().default('name').optional(),
+        profilePictureField: Joi.string().default('picture').optional(),
+        emailField: Joi.string().default('email').optional(),
       }).optional(),
     )
     .optional(),
 });
 
 export default registerAs('authConfig', () => {
-  const gitlabNames = (
-    toArrayConfig(process.env.HD_AUTH_GITLABS, ',') ?? []
-  ).map((name) => name.toUpperCase());
-  if (gitlabNames.length !== 0) {
-    throw new Error(
-      "GitLab auth is currently not yet supported. Please don't configure it",
-    );
-  }
-  ensureNoDuplicatesExist('GitLab', gitlabNames);
-
   const ldapNames = (
     toArrayConfig(process.env.HD_AUTH_LDAP_SERVERS, ',') ?? []
   ).map((name) => name.toUpperCase());
   ensureNoDuplicatesExist('LDAP', ldapNames);
 
-  const samlNames = (toArrayConfig(process.env.HD_AUTH_SAMLS, ',') ?? []).map(
-    (name) => name.toUpperCase(),
-  );
-  if (samlNames.length !== 0) {
-    throw new Error(
-      "SAML auth is currently not yet supported. Please don't configure it",
-    );
-  }
-  ensureNoDuplicatesExist('SAML', samlNames);
-
-  const oauth2Names = (
-    toArrayConfig(process.env.HD_AUTH_OAUTH2S, ',') ?? []
+  const oidcNames = (
+    toArrayConfig(process.env.HD_AUTH_OIDC_SERVERS, ',') ?? []
   ).map((name) => name.toUpperCase());
-  if (oauth2Names.length !== 0) {
-    throw new Error(
-      "OAuth2 auth is currently not yet supported. Please don't configure it",
-    );
-  }
-  ensureNoDuplicatesExist('OAuth2', oauth2Names);
+  ensureNoDuplicatesExist('OIDC', oidcNames);
 
-  const gitlabs = gitlabNames.map((gitlabName) => {
-    return {
-      identifier: gitlabName,
-      providerName: process.env[`HD_AUTH_GITLAB_${gitlabName}_PROVIDER_NAME`],
-      baseURL: process.env[`HD_AUTH_GITLAB_${gitlabName}_BASE_URL`],
-      clientID: process.env[`HD_AUTH_GITLAB_${gitlabName}_CLIENT_ID`],
-      clientSecret: process.env[`HD_AUTH_GITLAB_${gitlabName}_CLIENT_SECRET`],
-      scope: process.env[`HD_AUTH_GITLAB_${gitlabName}_SCOPE`],
-      version: process.env[`HD_AUTH_GITLAB_${gitlabName}_GITLAB_VERSION`],
-    };
-  });
-
-  const ldaps = ldapNames.map((ldapName) => {
+  const ldapInstances = ldapNames.map((ldapName) => {
     const caFiles = toArrayConfig(
       process.env[`HD_AUTH_LDAP_${ldapName}_TLS_CERT_PATHS`],
       ',',
@@ -271,7 +175,7 @@ export default registerAs('authConfig', () => {
       });
     }
     return {
-      identifier: ldapName,
+      identifier: ldapName.toLowerCase(),
       providerName: process.env[`HD_AUTH_LDAP_${ldapName}_PROVIDER_NAME`],
       url: process.env[`HD_AUTH_LDAP_${ldapName}_URL`],
       bindDn: process.env[`HD_AUTH_LDAP_${ldapName}_BIND_DN`],
@@ -285,92 +189,45 @@ export default registerAs('authConfig', () => {
       userIdField: process.env[`HD_AUTH_LDAP_${ldapName}_USER_ID_FIELD`],
       displayNameField:
         process.env[`HD_AUTH_LDAP_${ldapName}_DISPLAY_NAME_FIELD`],
+      emailField: process.env[`HD_AUTH_LDAP_${ldapName}_EMAIL_FIELD`],
       profilePictureField:
         process.env[`HD_AUTH_LDAP_${ldapName}_PROFILE_PICTURE_FIELD`],
       tlsCaCerts: tlsCaCerts,
     };
   });
 
-  const samls = samlNames.map((samlName) => {
-    return {
-      identifier: samlName,
-      providerName: process.env[`HD_AUTH_SAML_${samlName}_PROVIDER_NAME`],
-      idpSsoUrl: process.env[`HD_AUTH_SAML_${samlName}_IDP_SSO_URL`],
-      idpCert: process.env[`HD_AUTH_SAML_${samlName}_IDP_CERT`],
-      clientCert: process.env[`HD_AUTH_SAML_${samlName}_CLIENT_CERT`],
-      // ToDo: (default: config.serverURL) will be build on-the-fly in the config/index.js from domain, urlAddPort and urlPath.
-      //  https://github.com/hedgedoc/hedgedoc/issues/5043
-      issuer: process.env[`HD_AUTH_SAML_${samlName}_ISSUER`],
-      identifierFormat:
-        process.env[`HD_AUTH_SAML_${samlName}_IDENTIFIER_FORMAT`],
-      disableRequestedAuthnContext:
-        process.env[`HD_AUTH_SAML_${samlName}_DISABLE_REQUESTED_AUTHN_CONTEXT`],
-      groupAttribute: process.env[`HD_AUTH_SAML_${samlName}_GROUP_ATTRIBUTE`],
-      requiredGroups: toArrayConfig(
-        process.env[`HD_AUTH_SAML_${samlName}_REQUIRED_GROUPS`],
-        '|',
-      ),
-      externalGroups: toArrayConfig(
-        process.env[`HD_AUTH_SAML_${samlName}_EXTERNAL_GROUPS`],
-        '|',
-      ),
-      attribute: {
-        id: process.env[`HD_AUTH_SAML_${samlName}_ATTRIBUTE_ID`],
-        username: process.env[`HD_AUTH_SAML_${samlName}_ATTRIBUTE_USERNAME`],
-        local: process.env[`HD_AUTH_SAML_${samlName}_ATTRIBUTE_LOCAL`],
-      },
-    };
-  });
+  const oidcInstances = oidcNames.map((oidcName) => ({
+    identifier: oidcName.toLowerCase(),
+    providerName: process.env[`HD_AUTH_OIDC_${oidcName}_PROVIDER_NAME`],
+    issuer: process.env[`HD_AUTH_OIDC_${oidcName}_ISSUER`],
+    clientID: process.env[`HD_AUTH_OIDC_${oidcName}_CLIENT_ID`],
+    clientSecret: process.env[`HD_AUTH_OIDC_${oidcName}_CLIENT_SECRET`],
+    theme: process.env[`HD_AUTH_OIDC_${oidcName}_THEME`],
+    authorizeUrl: process.env[`HD_AUTH_OIDC_${oidcName}_AUTHORIZE_URL`],
+    tokenUrl: process.env[`HD_AUTH_OIDC_${oidcName}_TOKEN_URL`],
+    userinfoUrl: process.env[`HD_AUTH_OIDC_${oidcName}_USERINFO_URL`],
+    scope: process.env[`HD_AUTH_OIDC_${oidcName}_SCOPE`],
+    userIdField: process.env[`HD_AUTH_OIDC_${oidcName}_USER_ID_FIELD`],
+    userNameField: process.env[`HD_AUTH_OIDC_${oidcName}_USER_NAME_FIELD`],
+    displayNameField:
+      process.env[`HD_AUTH_OIDC_${oidcName}_DISPLAY_NAME_FIELD`],
+    profilePictureField:
+      process.env[`HD_AUTH_OIDC_${oidcName}_PROFILE_PICTURE_FIELD`],
+    emailField: process.env[`HD_AUTH_OIDC_${oidcName}_EMAIL_FIELD`],
+  }));
 
-  const oauth2s = oauth2Names.map((oauth2Name) => {
-    return {
-      identifier: oauth2Name,
-      providerName: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_PROVIDER_NAME`],
-      baseURL: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_BASE_URL`],
-      userProfileURL:
-        process.env[`HD_AUTH_OAUTH2_${oauth2Name}_USER_PROFILE_URL`],
-      userProfileIdAttr:
-        process.env[`HD_AUTH_OAUTH2_${oauth2Name}_USER_PROFILE_ID_ATTR`],
-      userProfileUsernameAttr:
-        process.env[`HD_AUTH_OAUTH2_${oauth2Name}_USER_PROFILE_USERNAME_ATTR`],
-      userProfileDisplayNameAttr:
-        process.env[
-          `HD_AUTH_OAUTH2_${oauth2Name}_USER_PROFILE_DISPLAY_NAME_ATTR`
-        ],
-      userProfileEmailAttr:
-        process.env[`HD_AUTH_OAUTH2_${oauth2Name}_USER_PROFILE_EMAIL_ATTR`],
-      tokenURL: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_TOKEN_URL`],
-      authorizationURL:
-        process.env[`HD_AUTH_OAUTH2_${oauth2Name}_AUTHORIZATION_URL`],
-      clientID: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_CLIENT_ID`],
-      clientSecret: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_CLIENT_SECRET`],
-      scope: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_SCOPE`],
-      rolesClaim: process.env[`HD_AUTH_OAUTH2_${oauth2Name}`],
-      accessRole: process.env[`HD_AUTH_OAUTH2_${oauth2Name}_ACCESS_ROLE`],
-    };
-  });
-
-  if (
-    process.env.HD_AUTH_GITHUB_CLIENT_ID !== undefined ||
-    process.env.HD_AUTH_GITHUB_CLIENT_SECRET !== undefined
-  ) {
-    throw new Error(
-      "GitHub config is currently not yet supported. Please don't configure it",
-    );
-  }
-
-  if (
-    process.env.HD_AUTH_GOOGLE_CLIENT_ID !== undefined ||
-    process.env.HD_AUTH_GOOGLE_CLIENT_SECRET !== undefined ||
-    process.env.HD_AUTH_GOOGLE_APP_KEY !== undefined
-  ) {
-    throw new Error(
-      "Google config is currently not yet supported. Please don't configure it",
-    );
+  let syncSource = process.env.HD_AUTH_SYNC_SOURCE;
+  if (syncSource !== undefined) {
+    syncSource = syncSource.toLowerCase();
   }
 
   const authConfig = authSchema.validate(
     {
+      common: {
+        allowProfileEdits: process.env.HD_AUTH_ALLOW_PROFILE_EDITS,
+        allowChooseUsername: process.env.HD_AUTH_ALLOW_CHOOSE_USERNAME,
+        syncSource: syncSource,
+      },
       session: {
         secret: process.env.HD_SESSION_SECRET,
         lifetime: parseOptionalNumber(process.env.HD_SESSION_LIFETIME),
@@ -382,19 +239,8 @@ export default registerAs('authConfig', () => {
           process.env.HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH,
         ),
       },
-      github: {
-        clientID: process.env.HD_AUTH_GITHUB_CLIENT_ID,
-        clientSecret: process.env.HD_AUTH_GITHUB_CLIENT_SECRET,
-      },
-      google: {
-        clientID: process.env.HD_AUTH_GOOGLE_CLIENT_ID,
-        clientSecret: process.env.HD_AUTH_GOOGLE_CLIENT_SECRET,
-        apiKey: process.env.HD_AUTH_GOOGLE_APP_KEY,
-      },
-      gitlab: gitlabs,
-      ldap: ldaps,
-      saml: samls,
-      oauth2: oauth2s,
+      ldap: ldapInstances,
+      oidc: oidcInstances,
     },
     {
       abortEarly: false,
@@ -407,14 +253,6 @@ export default registerAs('authConfig', () => {
       .map((error) =>
         replaceAuthErrorsWithEnvironmentVariables(
           error,
-          'gitlab',
-          'HD_AUTH_GITLAB_',
-          gitlabNames,
-        ),
-      )
-      .map((error) =>
-        replaceAuthErrorsWithEnvironmentVariables(
-          error,
           'ldap',
           'HD_AUTH_LDAP_',
           ldapNames,
@@ -423,17 +261,9 @@ export default registerAs('authConfig', () => {
       .map((error) =>
         replaceAuthErrorsWithEnvironmentVariables(
           error,
-          'saml',
-          'HD_AUTH_SAML_',
-          samlNames,
-        ),
-      )
-      .map((error) =>
-        replaceAuthErrorsWithEnvironmentVariables(
-          error,
-          'oauth2',
-          'HD_AUTH_OAUTH2_',
-          oauth2Names,
+          'oidc',
+          'HD_AUTH_OIDC_',
+          oidcNames,
         ),
       );
     throw new Error(buildErrorMessage(errorMessages));

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,6 +10,10 @@ import { AuthConfig } from '../auth.config';
 
 export function createDefaultMockAuthConfig(): AuthConfig {
   return {
+    common: {
+      allowProfileEdits: true,
+      allowChooseUsername: true,
+    },
     session: {
       secret: 'my_secret',
       lifetime: 1209600000,
@@ -19,19 +23,8 @@ export function createDefaultMockAuthConfig(): AuthConfig {
       enableRegister: true,
       minimalPasswordStrength: 2,
     },
-    github: {
-      clientID: '',
-      clientSecret: '',
-    },
-    google: {
-      clientID: '',
-      clientSecret: '',
-      apiKey: '',
-    },
-    gitlab: [],
     ldap: [],
-    saml: [],
-    oauth2: [],
+    oidc: [],
   };
 }
 

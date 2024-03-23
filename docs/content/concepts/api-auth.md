@@ -48,11 +48,7 @@ using one of the supported authentication methods:
 
 - Username & Password (`local`)
 - LDAP
-- SAML
-- OAuth2
-- GitLab
-- GitHub
-- Google
+- OIDC
 
 The `SessionGuard`, which is added to each (appropriate) controller method of the private API,
 checks if the provided session is still valid and provides the controller method
