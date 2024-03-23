@@ -21,6 +21,8 @@ import { TimestampMillis } from '../utils/timestamp';
 import { AuthTokenDto, AuthTokenWithSecretDto } from './auth-token.dto';
 import { AuthToken } from './auth-token.entity';
 
+export const AUTH_TOKEN_PREFIX = 'hd2';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -32,8 +34,8 @@ export class AuthService {
   }
 
   async validateToken(tokenString: string): Promise<User> {
-    const [keyId, secret] = tokenString.split('.');
-    if (!secret) {
+    const [prefix, keyId, secret, ...rest] = tokenString.split('.');
+    if (!keyId || !secret || prefix !== AUTH_TOKEN_PREFIX || rest.length > 0) {
       throw new TokenNotValidError('Invalid AuthToken format');
     }
     if (secret.length != 86) {
@@ -105,7 +107,7 @@ export class AuthService {
     )) as AuthToken;
     return this.toAuthTokenWithSecretDto(
       createdToken,
-      `${createdToken.keyId}.${secret}`,
+      `${AUTH_TOKEN_PREFIX}.${createdToken.keyId}.${secret}`,
     );
   }
 

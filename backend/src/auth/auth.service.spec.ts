@@ -230,7 +230,7 @@ describe('AuthService', () => {
           return authToken;
         });
       const userByToken = await service.validateToken(
-        `${authToken.keyId}.${testSecret}`,
+        `hd2.${authToken.keyId}.${testSecret}`,
       );
       expect(userByToken).toEqual({
         ...user,
@@ -238,14 +238,31 @@ describe('AuthService', () => {
       });
     });
     describe('fails:', () => {
+      it('the prefix is missing', async () => {
+        await expect(
+          service.validateToken(`${authToken.keyId}.${'a'.repeat(73)}`),
+        ).rejects.toThrow(TokenNotValidError);
+      });
+      it('the prefix is wrong', async () => {
+        await expect(
+          service.validateToken(`hd1.${authToken.keyId}.${'a'.repeat(73)}`),
+        ).rejects.toThrow(TokenNotValidError);
+      });
       it('the secret is missing', async () => {
         await expect(
-          service.validateToken(`${authToken.keyId}`),
+          service.validateToken(`hd2.${authToken.keyId}`),
         ).rejects.toThrow(TokenNotValidError);
       });
       it('the secret is too long', async () => {
         await expect(
-          service.validateToken(`${authToken.keyId}.${'a'.repeat(73)}`),
+          service.validateToken(`hd2.${authToken.keyId}.${'a'.repeat(73)}`),
+        ).rejects.toThrow(TokenNotValidError);
+      });
+      it('the token contains sections after the secret', async () => {
+        await expect(
+          service.validateToken(
+            `hd2.${authToken.keyId}.${'a'.repeat(73)}.extra`,
+          ),
         ).rejects.toThrow(TokenNotValidError);
       });
     });
@@ -296,7 +313,7 @@ describe('AuthService', () => {
             (new Date().getTime() + 2 * 365 * 24 * 60 * 60 * 1000),
         ).toBeLessThanOrEqual(10000);
         expect(token.lastUsedAt).toBeNull();
-        expect(token.secret.startsWith(token.keyId)).toBeTruthy();
+        expect(token.secret.startsWith('hd2.' + token.keyId)).toBeTruthy();
       });
       it('with validUntil not 0', async () => {
         jest.spyOn(authTokenRepo, 'find').mockResolvedValueOnce([authToken]);
@@ -313,7 +330,7 @@ describe('AuthService', () => {
         expect(token.label).toEqual(identifier);
         expect(token.validUntil.getTime()).toEqual(validUntil);
         expect(token.lastUsedAt).toBeNull();
-        expect(token.secret.startsWith(token.keyId)).toBeTruthy();
+        expect(token.secret.startsWith('hd2.' + token.keyId)).toBeTruthy();
       });
       it('should throw TooManyTokensError when number of tokens >= 200', async () => {
         jest

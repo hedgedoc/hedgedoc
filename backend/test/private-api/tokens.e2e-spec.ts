@@ -51,7 +51,7 @@ describe('Tokens', () => {
       Date.now(),
     );
     expect(response.body.lastUsedAt).toBe(null);
-    expect(response.body.secret.length).toBe(98);
+    expect(response.body.secret.length).toBe(102);
   });
 
   it(`GET /tokens`, async () => {
