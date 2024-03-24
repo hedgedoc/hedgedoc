@@ -17,6 +17,24 @@ describe('HTML to React', () => {
     expect(view.container).toMatchSnapshot()
   })
 
+  it("won't render script links", () => {
+    const view = render(
+      <HtmlToReact htmlCode={'<a href="javascript:alert(true)">js</a><a href="vbscript:WScript.Evil">vbs</a>'} />
+    )
+    expect(view.container).toMatchSnapshot()
+  })
+
+  it('will render links with non-http protocols', () => {
+    const view = render(
+      <HtmlToReact
+        htmlCode={
+          '<a href="tel:+1234567890">tel</a><a href="mailto:test@example.com">mailto</a><a href="geo:25.197,55.274">geo</a><a href="xmpp:test">xmpp</a>'
+        }
+      />
+    )
+    expect(view.container).toMatchSnapshot()
+  })
+
   it('will forward the DomPurify settings', () => {
     const view = render(
       <HtmlToReact domPurifyConfig={{ ADD_TAGS: ['test-tag'] }} htmlCode={'<test-tag>Test!</test-tag>'} />
