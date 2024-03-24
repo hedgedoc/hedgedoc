@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -20,18 +20,6 @@ describe('DeletionModal', () => {
 
   it('renders correctly with deletionButtonI18nKey', async () => {
     mockNotePermissions('test', 'test')
-    const onConfirm = jest.fn()
-    render(
-      <DeletionModal onConfirm={onConfirm} deletionButtonI18nKey={'testDeletionButton'} show={true}>
-        testText
-      </DeletionModal>
-    )
-    const modal = await screen.findByTestId('commonModal')
-    expect(modal).toMatchSnapshot()
-  })
-
-  it('disables deletion when user is not owner', async () => {
-    mockNotePermissions('test2', 'test')
     const onConfirm = jest.fn()
     render(
       <DeletionModal onConfirm={onConfirm} deletionButtonI18nKey={'testDeletionButton'} show={true}>

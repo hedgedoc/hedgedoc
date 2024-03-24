@@ -395,6 +395,14 @@
       "contributors": "Count of contributors",
       "wordCount": "Count of words"
     },
+    "mediaBrowser": {
+      "title": "Media",
+      "deleteMedia": "Delete uploaded file",
+      "confirmDeletion": "Do you really want to delete this file?",
+      "errorDeleting": "The uploaded file could not be deleted.",
+      "mediaDeleted": "The uploaded file has been deleted.",
+      "noMediaUploads": "There are no media files uploaded to this note yet"
+    },
     "modal": {
       "snippetImport": {
         "title": "Import from Snippet",
@@ -553,6 +561,7 @@
     "loading": "Loading ...",
     "continue": "Continue",
     "back": "Back",
+    "success": "Success",
     "errorWhileLoading": "An unexpected error occurred while loading '{{name}}'.\nCheck the browser console for more information.\nReport this error only if it comes up again.",
     "errorOccurred": "An error occurred",
     "readForMoreInfo": "Read here for more information",

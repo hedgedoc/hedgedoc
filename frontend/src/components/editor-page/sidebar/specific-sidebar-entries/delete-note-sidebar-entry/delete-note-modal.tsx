@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,6 +9,7 @@ import type { ModalVisibilityProps } from '../../../../common/modals/common-moda
 import { DeletionModal } from '../../../../common/modals/deletion-modal'
 import React from 'react'
 import { Trans } from 'react-i18next'
+import { useIsOwner } from '../../../../../hooks/common/use-is-owner'
 
 export interface DeleteHistoryNoteModalProps {
   modalTitleI18nKey?: string
@@ -45,6 +46,7 @@ export const DeleteNoteModal: React.FC<DeleteNoteModalProps & DeleteHistoryNoteM
   modalButtonI18nKey
 }) => {
   const noteTitle = useNoteTitle()
+  const isOwner = useIsOwner()
 
   return (
     <DeletionModal
@@ -53,6 +55,7 @@ export const DeleteNoteModal: React.FC<DeleteNoteModalProps & DeleteHistoryNoteM
       deletionButtonI18nKey={modalButtonI18nKey ?? 'editor.modal.deleteNote.button'}
       show={show}
       onHide={onHide}
+      disabled={!isOwner}
       titleI18nKey={modalTitleI18nKey ?? 'editor.modal.deleteNote.title'}>
       <h5>
         <Trans i18nKey={modalQuestionI18nKey ?? 'editor.modal.deleteNote.question'} />
