@@ -12,12 +12,12 @@ import { Username } from '../utils/username';
 
 export class MediaUploadDto extends BaseDto {
   /**
-   * The link to the media file.
-   * @example "https://example.com/uploads/testfile123.jpg"
+   * The id of the media file.
+   * @example "testfile123.jpg"
    */
   @IsString()
   @ApiProperty()
-  url: string;
+  id: string;
 
   /**
    * The publicId of the note to which the uploaded file is linked to.

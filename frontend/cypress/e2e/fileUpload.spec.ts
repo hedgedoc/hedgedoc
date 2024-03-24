@@ -1,10 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-const imageUrl = 'http://example.com/non-existing.png'
+const imageId = 'non-existing.png'
 
 describe('File upload', () => {
   beforeEach(() => {
@@ -22,7 +22,7 @@ describe('File upload', () => {
         {
           statusCode: 201,
           body: {
-            url: imageUrl
+            id: imageId
           }
         }
       )
@@ -38,7 +38,7 @@ describe('File upload', () => {
         },
         { force: true }
       )
-      cy.get('.cm-line').contains(`![demo.png](${imageUrl})`)
+      cy.get('.cm-line').contains(`![demo.png](http://127.0.0.1:3001/api/private/media/${imageId})`)
     })
 
     it('via paste', () => {
@@ -51,7 +51,7 @@ describe('File upload', () => {
           }
         }
         cy.get('.cm-content').trigger('paste', pasteEvent)
-        cy.get('.cm-line').contains(`![](${imageUrl})`)
+        cy.get('.cm-line').contains(`![](http://127.0.0.1:3001/api/private/media/${imageId})`)
       })
     })
 
@@ -65,7 +65,7 @@ describe('File upload', () => {
         },
         { action: 'drag-drop', force: true }
       )
-      cy.get('.cm-line').contains(`![demo.png](${imageUrl})`)
+      cy.get('.cm-line').contains(`![demo.png](http://127.0.0.1:3001/api/private/media/${imageId})`)
     })
   })
 

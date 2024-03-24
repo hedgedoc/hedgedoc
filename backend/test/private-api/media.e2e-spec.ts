@@ -71,14 +71,15 @@ describe('Media', () => {
           .set('HedgeDoc-Note', 'test_upload_media')
           .expect('Content-Type', /json/)
           .expect(201);
-        const path: string = uploadResponse.body.url;
+        const fileName: string = uploadResponse.body.id;
         const testImage = await fs.readFile(
           'test/private-api/fixtures/test.png',
         );
-        const downloadResponse = await agent.get(path);
+        const path = '/api/private/media/' + fileName;
+        const apiResponse = await agent.get(path);
+        expect(apiResponse.statusCode).toEqual(302);
+        const downloadResponse = await agent.get(apiResponse.header.location);
         expect(downloadResponse.body).toEqual(testImage);
-        // Remove /uploads/ from path as we just need the filename.
-        const fileName = path.replace('/uploads/', '');
         // delete the file afterwards
         await fs.unlink(join(uploadPath, fileName));
       });
@@ -90,14 +91,15 @@ describe('Media', () => {
           .set('HedgeDoc-Note', 'test_upload_media')
           .expect('Content-Type', /json/)
           .expect(201);
-        const path: string = uploadResponse.body.url;
+        const fileName: string = uploadResponse.body.id;
         const testImage = await fs.readFile(
           'test/private-api/fixtures/test.png',
         );
-        const downloadResponse = await agent.get(path);
+        const path = '/api/private/media/' + fileName;
+        const apiResponse = await agent.get(path);
+        expect(apiResponse.statusCode).toEqual(302);
+        const downloadResponse = await agent.get(apiResponse.header.location);
         expect(downloadResponse.body).toEqual(testImage);
-        // Remove /uploads/ from path as we just need the filename.
-        const fileName = path.replace('/uploads/', '');
         // delete the file afterwards
         await fs.unlink(join(uploadPath, fileName));
       });
@@ -160,7 +162,7 @@ describe('Media', () => {
         user,
         testNote,
       );
-      const filename = upload.fileUrl.split('/').pop() || '';
+      const filename = upload.id;
 
       // login with a different user;
       const agent2 = request.agent(testSetup.app.getHttpServer());

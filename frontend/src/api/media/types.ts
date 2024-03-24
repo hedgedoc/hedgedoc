@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 export interface MediaUpload {
-  url: string
+  id: string
   noteId: string | null
   createdAt: string
   username: string

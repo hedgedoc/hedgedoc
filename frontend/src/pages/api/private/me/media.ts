@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,13 +12,13 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     {
       username: 'tilman',
       createdAt: '2022-03-20T20:36:32Z',
-      url: 'https://dummyimage.com/256/f00',
+      id: 'dummy.png',
       noteId: 'features'
     },
     {
       username: 'tilman',
       createdAt: '2022-03-20T20:36:57+0000',
-      url: 'https://dummyimage.com/256/00f',
+      id: 'dummy.png',
       noteId: null
     }
   ])
