@@ -140,10 +140,11 @@
   a {
     color: #0366d6;
     text-decoration: none;
+    border-bottom: solid 1px;
   }
 
   a:hover {
-    text-decoration: underline;
+    border-bottom: dashed 1px;
   }
 
   strong {
