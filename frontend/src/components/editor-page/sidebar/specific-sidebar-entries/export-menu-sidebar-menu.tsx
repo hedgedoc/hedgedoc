@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -18,6 +18,8 @@ import {
   Github as IconGithub
 } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
+import { concatCssClasses } from '../../../../utils/concat-css-classes'
+import styles from '../sidebar-button/sidebar-button.module.scss'
 
 /**
  * Renders the export menu for the sidebar.
@@ -46,7 +48,7 @@ export const ExportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         {...cypressId('menu-export')}
         hide={hide}
         icon={expand ? IconArrowLeft : IconCloudDownload}
-        className={className}
+        className={concatCssClasses(className, { [styles.main]: expand })}
         onClick={onClickHandler}>
         <Trans i18nKey={'editor.documentBar.export'} />
       </SidebarButton>
