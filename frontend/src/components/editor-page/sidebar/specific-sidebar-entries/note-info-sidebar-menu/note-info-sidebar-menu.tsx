@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,6 +16,8 @@ import { NoteInfoLineWordCount } from './note-info-line/note-info-line-word-coun
 import React, { Fragment, useCallback } from 'react'
 import { ArrowLeft as IconArrowLeft, GraphUp as IconGraphUp } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
+import styles from '../../sidebar-button/sidebar-button.module.scss'
+import { concatCssClasses } from '../../../../../utils/concat-css-classes'
 
 /**
  * Renders the note info menu for the sidebar.
@@ -44,7 +46,7 @@ export const NoteInfoSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         {...cypressId('sidebar-menu-info')}
         hide={hide}
         icon={expand ? IconArrowLeft : IconGraphUp}
-        className={className}
+        className={concatCssClasses(className, { [styles.main]: expand })}
         onClick={onClickHandler}>
         <Trans i18nKey={'editor.noteInfo.title'} />
       </SidebarButton>

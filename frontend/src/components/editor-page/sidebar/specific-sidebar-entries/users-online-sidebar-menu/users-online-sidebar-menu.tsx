@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,7 @@ import { UserLine } from './user-line/user-line'
 import React, { Fragment, useCallback, useEffect, useMemo, useRef } from 'react'
 import { ArrowLeft as IconArrowLeft, People as IconPeople } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
+import buttonStyles from '../../sidebar-button/sidebar-button.module.scss'
 
 /**
  * Sidebar menu that contains the list of currently online users in the current note session.
@@ -69,7 +70,7 @@ export const UsersOnlineSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         buttonRef={buttonRef}
         onClick={onClickHandler}
         icon={expand ? IconArrowLeft : IconPeople}
-        className={concatCssClasses(styles.entry, className)}>
+        className={concatCssClasses(styles.entry, buttonStyles.main, className)}>
         <Trans i18nKey={'editor.onlineStatus.online'} />
       </SidebarButton>
       <SidebarMenu expand={expand}>
