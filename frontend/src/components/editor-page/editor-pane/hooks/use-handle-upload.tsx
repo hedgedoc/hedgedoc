@@ -15,6 +15,7 @@ import type { CursorSelection } from '../tool-bar/formatters/types/cursor-select
 import type { EditorView } from '@codemirror/view'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useBaseUrl } from '../../../../hooks/common/use-base-url'
 
 /**
  * @param view the codemirror instance that is used to insert the Markdown code
@@ -37,6 +38,7 @@ type handleUploadSignature = (
 export const useHandleUpload = (): handleUploadSignature => {
   const { t } = useTranslation()
   const { showErrorNotification } = useUiNotifications()
+  const baseUrl = useBaseUrl()
 
   return useCallback(
     (view, file, cursorSelection, description, additionalUrlText) => {
@@ -58,8 +60,9 @@ export const useHandleUpload = (): handleUploadSignature => {
         return replaceSelection(cursorSelection ?? currentSelection, uploadPlaceholder, false)
       })
       uploadFile(noteId, file)
-        .then(({ url }) => {
-          const replacement = `![${description ?? file.name ?? ''}](${url}${additionalUrlText ?? ''})`
+        .then(({ id }) => {
+          const fullUrl = `${baseUrl}api/private/media/${id}`
+          const replacement = `![${description ?? file.name ?? ''}](${fullUrl}${additionalUrlText ?? ''})`
           changeContent(({ markdownContent }) => [
             replaceInContent(markdownContent, uploadPlaceholder, replacement),
             undefined
@@ -74,6 +77,6 @@ export const useHandleUpload = (): handleUploadSignature => {
           ])
         })
     },
-    [showErrorNotification, t]
+    [showErrorNotification, t, baseUrl]
   )
 }

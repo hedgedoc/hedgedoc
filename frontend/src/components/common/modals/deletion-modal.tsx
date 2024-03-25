@@ -1,9 +1,8 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useIsOwner } from '../../../hooks/common/use-is-owner'
 import { cypressId } from '../../../utils/cypress-attribute'
 import type { CommonModalProps } from './common-modal'
 import { CommonModal } from './common-modal'
@@ -15,6 +14,7 @@ import { Trans, useTranslation } from 'react-i18next'
 export interface DeletionModalProps extends CommonModalProps {
   onConfirm: () => void
   deletionButtonI18nKey: string
+  disabled?: boolean
 }
 
 /**
@@ -38,11 +38,10 @@ export const DeletionModal: React.FC<PropsWithChildren<DeletionModalProps>> = ({
   deletionButtonI18nKey,
   titleIcon,
   children,
+  disabled = false,
   ...props
 }) => {
   useTranslation()
-  const isOwner = useIsOwner()
-
   return (
     <CommonModal
       show={show}
@@ -53,7 +52,7 @@ export const DeletionModal: React.FC<PropsWithChildren<DeletionModalProps>> = ({
       {...props}>
       <Modal.Body>{children}</Modal.Body>
       <Modal.Footer>
-        <Button {...cypressId('deletionModal.confirmButton')} variant='danger' onClick={onConfirm} disabled={!isOwner}>
+        <Button {...cypressId('deletionModal.confirmButton')} variant='danger' onClick={onConfirm} disabled={disabled}>
           <Trans i18nKey={deletionButtonI18nKey} />
         </Button>
       </Modal.Footer>

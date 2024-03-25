@@ -495,12 +495,11 @@ describe('Notes', () => {
         .expect('Content-Type', /json/)
         .expect(200);
       expect(responseAfter.body).toHaveLength(1);
-      expect(responseAfter.body[0].url).toEqual(upload0.fileUrl);
-      expect(responseAfter.body[0].url).not.toEqual(upload1.fileUrl);
+      expect(responseAfter.body[0].id).toEqual(upload0.id);
+      expect(responseAfter.body[0].id).not.toEqual(upload1.id);
       for (const upload of [upload0, upload1]) {
-        const fileName = upload.fileUrl.replace('/uploads/', '');
         // delete the file afterwards
-        await fs.unlink(join(uploadPath, fileName));
+        await fs.unlink(join(uploadPath, upload.id));
       }
       await fs.rm(uploadPath, { recursive: true });
     });

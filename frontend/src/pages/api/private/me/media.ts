@@ -12,13 +12,13 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     {
       username: 'tilman',
       createdAt: '2022-03-20T20:36:32Z',
-      url: 'https://dummyimage.com/256/f00',
+      id: 'https://dummyimage.com/256/f00',
       noteId: 'features'
     },
     {
       username: 'tilman',
       createdAt: '2022-03-20T20:36:57+0000',
-      url: 'https://dummyimage.com/256/00f',
+      id: 'https://dummyimage.com/256/00f',
       noteId: null
     }
   ])

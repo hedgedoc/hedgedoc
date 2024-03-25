@@ -7,14 +7,17 @@ import {
   BadRequestException,
   Controller,
   Delete,
+  Get,
   Param,
   Post,
+  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes, ApiHeader, ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
 
 import { PermissionError } from '../../../errors/errors';
 import { SessionGuard } from '../../../identity/session.guard';
@@ -99,6 +102,17 @@ export class MediaController {
     }
     const upload = await this.mediaService.saveFile(file.buffer, user, note);
     return await this.mediaService.toMediaUploadDto(upload);
+  }
+
+  @Get(':filename')
+  @OpenApi(404, 500)
+  async getMedia(
+    @Param('filename') filename: string,
+    @Res() response: Response,
+  ): Promise<void> {
+    const mediaUpload = await this.mediaService.findUploadByFilename(filename);
+    const targetUrl = mediaUpload.fileUrl;
+    response.redirect(targetUrl);
   }
 
   @Delete(':filename')

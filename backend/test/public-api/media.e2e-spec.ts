@@ -41,21 +41,23 @@ describe('Media', () => {
 
   describe('POST /media', () => {
     it('works', async () => {
-      const uploadResponse = await request(testSetup.app.getHttpServer())
+      const agent = request.agent(testSetup.app.getHttpServer());
+      const uploadResponse = await agent
         .post('/api/v2/media')
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .attach('file', 'test/public-api/fixtures/test.png')
         .set('HedgeDoc-Note', 'testAlias1')
         .expect('Content-Type', /json/)
         .expect(201);
-      const path: string = uploadResponse.body.url;
+      const fileName = uploadResponse.body.id;
+      const path: string = '/api/v2/media/' + fileName;
       const testImage = await fs.readFile('test/public-api/fixtures/test.png');
-      const downloadResponse = await request(testSetup.app.getHttpServer()).get(
-        path,
-      );
+      const apiResponse = await agent
+        .get(path)
+        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`);
+      expect(apiResponse.statusCode).toEqual(302);
+      const downloadResponse = await agent.get(apiResponse.header.location);
       expect(downloadResponse.body).toEqual(testImage);
-      // Remove /uploads/ from path as we just need the filename.
-      const fileName = path.replace('/uploads/', '');
       // delete the file afterwards
       await fs.unlink(join(uploadPath, fileName));
     });

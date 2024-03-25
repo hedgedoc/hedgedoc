@@ -232,7 +232,7 @@ export class MediaService {
   async toMediaUploadDto(mediaUpload: MediaUpload): Promise<MediaUploadDto> {
     const user = await mediaUpload.user;
     return {
-      url: mediaUpload.fileUrl,
+      id: mediaUpload.id,
       notePublicId: (await mediaUpload.note)?.publicId ?? null,
       createdAt: mediaUpload.createdAt,
       username: user?.username ?? null,

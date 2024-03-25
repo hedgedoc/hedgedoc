@@ -68,18 +68,18 @@ describe('Me', () => {
     expect(responseBefore.body).toHaveLength(0);
 
     const testImage = await fs.readFile('test/public-api/fixtures/test.png');
-    const imageUrls = [];
-    imageUrls.push(
-      (await testSetup.mediaService.saveFile(testImage, user, note1)).fileUrl,
+    const imageIds = [];
+    imageIds.push(
+      (await testSetup.mediaService.saveFile(testImage, user, note1)).id,
     );
-    imageUrls.push(
-      (await testSetup.mediaService.saveFile(testImage, user, note1)).fileUrl,
+    imageIds.push(
+      (await testSetup.mediaService.saveFile(testImage, user, note1)).id,
     );
-    imageUrls.push(
-      (await testSetup.mediaService.saveFile(testImage, user, note2)).fileUrl,
+    imageIds.push(
+      (await testSetup.mediaService.saveFile(testImage, user, note2)).id,
     );
-    imageUrls.push(
-      (await testSetup.mediaService.saveFile(testImage, user, note2)).fileUrl,
+    imageIds.push(
+      (await testSetup.mediaService.saveFile(testImage, user, note2)).id,
     );
 
     const response = await agent
@@ -87,10 +87,10 @@ describe('Me', () => {
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body).toHaveLength(4);
-    expect(imageUrls).toContain(response.body[0].url);
-    expect(imageUrls).toContain(response.body[1].url);
-    expect(imageUrls).toContain(response.body[2].url);
-    expect(imageUrls).toContain(response.body[3].url);
+    expect(imageIds).toContain(response.body[0].id);
+    expect(imageIds).toContain(response.body[1].id);
+    expect(imageIds).toContain(response.body[2].id);
+    expect(imageIds).toContain(response.body[3].id);
     const mediaUploads = await testSetup.mediaService.listUploadsByUser(user);
     for (const upload of mediaUploads) {
       await testSetup.mediaService.deleteFile(upload);
@@ -122,7 +122,7 @@ describe('Me', () => {
     expect(dbUser).toBeInstanceOf(User);
     const mediaUploads = await testSetup.mediaService.listUploadsByUser(dbUser);
     expect(mediaUploads).toHaveLength(1);
-    expect(mediaUploads[0].fileUrl).toEqual(upload.fileUrl);
+    expect(mediaUploads[0].id).toEqual(upload.id);
     await agent.delete('/api/private/me').expect(204);
     await expect(
       testSetup.userService.getUserByUsername('hardcoded'),
