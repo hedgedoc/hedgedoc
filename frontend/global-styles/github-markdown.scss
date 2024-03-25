@@ -1,5 +1,5 @@
 /*!
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file) & Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file) & Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,7 +10,6 @@
   line-height: 1.5;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
   font-size: 16px;
-  line-height: 1.5;
   word-wrap: break-word;
 
   .octicon {
@@ -89,7 +88,6 @@
   }
 
   strong {
-    font-weight: inherit;
     font-weight: bolder;
   }
 
@@ -591,19 +589,6 @@
 
   hr {
     border-bottom-color: #eee;
-  }
-
-  kbd {
-    display: inline-block;
-    padding: 3px 5px;
-    font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
-    line-height: 10px;
-    color: #444d56;
-    vertical-align: middle;
-    background-color: #fafbfc;
-    border: 1px solid #d1d5da;
-    border-radius: 3px;
-    box-shadow: inset 0 -1px 0 #d1d5da;
   }
 
   .markdown-body:after,
