@@ -1,23 +1,23 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { cypressId } from '../../../../utils/cypress-attribute'
-import { IconGitlab } from '../../../common/icons/additional/icon-gitlab'
-import { SidebarButton } from '../sidebar-button/sidebar-button'
-import { SidebarMenu } from '../sidebar-menu/sidebar-menu'
-import type { SpecificSidebarMenuProps } from '../types'
-import { DocumentSidebarMenuSelection } from '../types'
-import { ExportMarkdownSidebarEntry } from './export-markdown-sidebar-entry'
+import { cypressId } from '../../../../../utils/cypress-attribute'
+import { SidebarButton } from '../../sidebar-button/sidebar-button'
+import { SidebarMenu } from '../../sidebar-menu/sidebar-menu'
+import type { SpecificSidebarMenuProps } from '../../types'
+import { DocumentSidebarMenuSelection } from '../../types'
+import { ExportMarkdownSidebarEntry } from './entries/export-markdown-sidebar-entry'
 import React, { Fragment, useCallback } from 'react'
 import {
   ArrowLeft as IconArrowLeft,
   CloudDownload as IconCloudDownload,
-  FileCode as IconFileCode,
-  Github as IconGithub
+  FileCode as IconFileCode
 } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
+import { ExportGistSidebarEntry } from './entries/export-gist-sidebar-entry/export-gist-sidebar-entry'
+import { ExportGitlabSnippetSidebarEntry } from './entries/export-gitlab-snippet-sidebar-entry/export-gitlab-snippet-sidebar-entry'
 
 /**
  * Renders the export menu for the sidebar.
@@ -27,7 +27,7 @@ import { Trans, useTranslation } from 'react-i18next'
  * @param onClick The callback, that should be called when the menu button is pressed
  * @param selectedMenuId The currently selected menu id
  */
-export const ExportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
+export const ExportSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   className,
   menuId,
   onClick,
@@ -51,13 +51,8 @@ export const ExportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         <Trans i18nKey={'editor.documentBar.export'} />
       </SidebarButton>
       <SidebarMenu expand={expand}>
-        <SidebarButton icon={IconGithub} disabled={true}>
-          Gist
-        </SidebarButton>
-        <SidebarButton icon={IconGitlab} disabled={true}>
-          Gitlab Snippet
-        </SidebarButton>
-
+        <ExportGistSidebarEntry />
+        <ExportGitlabSnippetSidebarEntry />
         <ExportMarkdownSidebarEntry />
 
         <SidebarButton icon={IconFileCode} disabled={true}>

@@ -5,7 +5,7 @@
  */
 import { AliasesSidebarEntry } from './specific-sidebar-entries/aliases-sidebar-entry/aliases-sidebar-entry'
 import { DeleteNoteSidebarEntry } from './specific-sidebar-entries/delete-note-sidebar-entry/delete-note-sidebar-entry'
-import { ExportMenuSidebarMenu } from './specific-sidebar-entries/export-menu-sidebar-menu'
+import { ExportSidebarMenu } from './specific-sidebar-entries/export-sidebar-menu/export-sidebar-menu'
 import { ImportMenuSidebarMenu } from './specific-sidebar-entries/import-menu-sidebar-menu'
 import { NoteInfoSidebarMenu } from './specific-sidebar-entries/note-info-sidebar-menu/note-info-sidebar-menu'
 import { PermissionsSidebarEntry } from './specific-sidebar-entries/permissions-sidebar-entry/permissions-sidebar-entry'
@@ -17,6 +17,7 @@ import styles from './style/sidebar.module.scss'
 import { DocumentSidebarMenuSelection } from './types'
 import React, { useCallback, useRef, useState } from 'react'
 import { useClickAway } from 'react-use'
+import { useIsOwner } from '../../../hooks/common/use-is-owner'
 
 /**
  * Renders the sidebar for the editor.
@@ -24,6 +25,7 @@ import { useClickAway } from 'react-use'
 export const Sidebar: React.FC = () => {
   const sideBarRef = useRef<HTMLDivElement>(null)
   const [selectedMenu, setSelectedMenu] = useState<DocumentSidebarMenuSelection>(DocumentSidebarMenuSelection.NONE)
+  const isOwner = useIsOwner()
 
   useClickAway(sideBarRef, () => {
     setSelectedMenu(DocumentSidebarMenuSelection.NONE)
@@ -60,14 +62,13 @@ export const Sidebar: React.FC = () => {
           selectedMenuId={selectedMenu}
           onClick={toggleValue}
         />
-        <ExportMenuSidebarMenu
+        <ExportSidebarMenu
           menuId={DocumentSidebarMenuSelection.EXPORT}
           selectedMenuId={selectedMenu}
           onClick={toggleValue}
         />
         <ShareNoteSidebarEntry hide={selectionIsNotNone} />
-        {/* TODO only show if user has permissions (Owner) (https://github.com/hedgedoc/hedgedoc/issues/5036) */}
-        <DeleteNoteSidebarEntry hide={selectionIsNotNone} />
+        {isOwner && <DeleteNoteSidebarEntry hide={selectionIsNotNone} />}
         <PinNoteSidebarEntry hide={selectionIsNotNone} />
       </div>
     </div>
