@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { store } from '..'
-import type { SetRendererStatusAction } from './types'
-import { RendererStatusActionType } from './types'
+import { rendererStatusActionsCreator } from './slice'
 
 /**
  * Dispatches a global application state change for the "renderer ready" state.
@@ -13,9 +12,6 @@ import { RendererStatusActionType } from './types'
  * @param rendererReady The new renderer ready state.
  */
 export const setRendererStatus = (rendererReady: boolean): void => {
-  const action: SetRendererStatusAction = {
-    type: RendererStatusActionType.SET_RENDERER_STATUS,
-    rendererReady
-  }
+  const action = rendererStatusActionsCreator.setRendererStatus(rendererReady)
   store.dispatch(action)
 }

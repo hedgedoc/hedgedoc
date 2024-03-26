@@ -4,17 +4,17 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import * as useApplicationStateModule from '../hooks/common/use-application-state'
-import type { ApplicationState } from '../redux/application-state'
-import { initialState as initialStateDarkMode } from '../redux/dark-mode/reducers'
-import { initialState as initialStateEditorConfig } from '../redux/editor/reducers'
+import type { ApplicationState } from '../redux'
+import { initialState as initialStateDarkMode } from '../redux/dark-mode/initial-state'
+import { initialState as initialStateEditorConfig } from '../redux/editor-config/initial-state'
 import { initialState as initialStateNoteDetails } from '../redux/note-details/initial-state'
-import { initialState as initialStateRealtimeStatus } from '../redux/realtime/reducers'
-import { initialState as initialStateRendererStatus } from '../redux/renderer-status/reducers'
-import type { NoteDetails } from '../redux/note-details/types/note-details'
+import { initialState as initialStateRealtimeStatus } from '../redux/realtime/initial-state'
+import { initialState as initialStateRendererStatus } from '../redux/renderer-status/initial-state'
+import type { NoteDetails } from '../redux/note-details/types'
 import type { RealtimeStatus } from '../redux/realtime/types'
 import type { DeepPartial } from '@hedgedoc/commons'
 
-jest.mock('../redux/editor/methods', () => ({
+jest.mock('../redux/editor-config/methods', () => ({
   loadFromLocalStorage: jest.fn().mockReturnValue(undefined)
 }))
 jest.mock('../hooks/common/use-application-state')

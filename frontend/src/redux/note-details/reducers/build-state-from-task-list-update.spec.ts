@@ -5,7 +5,7 @@
  */
 import * as buildStateFromUpdatedMarkdownContentLinesModule from '../build-state-from-updated-markdown-content'
 import { initialState } from '../initial-state'
-import type { NoteDetails } from '../types/note-details'
+import type { NoteDetails } from '../types'
 import { buildStateFromTaskListUpdate } from './build-state-from-task-list-update'
 import { Mock } from 'ts-mockery'
 

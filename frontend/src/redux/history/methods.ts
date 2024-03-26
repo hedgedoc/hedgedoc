@@ -15,10 +15,10 @@ import type { HistoryEntry, HistoryEntryWithOrigin } from '../../api/history/typ
 import { HistoryEntryOrigin } from '../../api/history/types'
 import { download } from '../../components/common/download/download'
 import { Logger } from '../../utils/logger'
-import { getGlobalState, store } from '../index'
-import type { HistoryExportJson, RemoveEntryAction, SetEntriesAction, UpdateEntryAction, V1HistoryEntry } from './types'
-import { HistoryActionType } from './types'
+import { store } from '../index'
+import type { HistoryExportJson, V1HistoryEntry } from './types'
 import { DateTime } from 'luxon'
+import { historyActionsCreator } from './slice'
 
 const log = new Logger('Redux > History')
 
@@ -27,10 +27,8 @@ const log = new Logger('Redux > History')
  * @param entries The history entries to set into the redux state.
  */
 export const setHistoryEntries = (entries: HistoryEntryWithOrigin[]): void => {
-  store.dispatch({
-    type: HistoryActionType.SET_ENTRIES,
-    entries
-  } as SetEntriesAction)
+  const action = historyActionsCreator.setEntries(entries)
+  store.dispatch(action)
   storeLocalHistory()
 }
 
@@ -47,10 +45,8 @@ export const importHistoryEntries = (entries: HistoryEntryWithOrigin[]): Promise
  * Deletes all history entries in the redux, local-storage and on the server.
  */
 export const deleteAllHistoryEntries = (): Promise<unknown> => {
-  store.dispatch({
-    type: HistoryActionType.SET_ENTRIES,
-    entries: []
-  } as SetEntriesAction)
+  const action = historyActionsCreator.setEntries([])
+  store.dispatch(action)
   storeLocalHistory()
   return deleteRemoteHistory()
 }
@@ -61,11 +57,11 @@ export const deleteAllHistoryEntries = (): Promise<unknown> => {
  * @param newEntry The modified history entry.
  */
 export const updateHistoryEntryRedux = (noteId: string, newEntry: HistoryEntry): void => {
-  store.dispatch({
-    type: HistoryActionType.UPDATE_ENTRY,
+  const action = historyActionsCreator.updateEntry({
     noteId,
     newEntry
-  } as UpdateEntryAction)
+  })
+  store.dispatch(action)
 }
 
 /**
@@ -83,14 +79,12 @@ export const updateLocalHistoryEntry = (noteId: string, newEntry: HistoryEntry):
  * @param noteId The note id of the history entry to delete.
  */
 export const removeHistoryEntry = async (noteId: string): Promise<void> => {
-  const entryToDelete = getGlobalState().history.find((entry) => entry.identifier === noteId)
+  const entryToDelete = store.getState().history.find((entry) => entry.identifier === noteId)
   if (entryToDelete && entryToDelete.origin === HistoryEntryOrigin.REMOTE) {
     await deleteRemoteHistoryEntry(noteId)
   }
-  store.dispatch({
-    type: HistoryActionType.REMOVE_ENTRY,
-    noteId
-  } as RemoveEntryAction)
+  const action = historyActionsCreator.removeEntry({ noteId })
+  store.dispatch(action)
   storeLocalHistory()
 }
 
@@ -99,7 +93,7 @@ export const removeHistoryEntry = async (noteId: string): Promise<void> => {
  * @param noteId The note id of the history entry to update.
  */
 export const toggleHistoryEntryPinning = async (noteId: string): Promise<void> => {
-  const state = getGlobalState().history
+  const state = store.getState().history
   const entryToUpdate = state.find((entry) => entry.identifier === noteId)
   if (!entryToUpdate) {
     return Promise.reject(`History entry for note '${noteId}' not found`)
@@ -120,7 +114,7 @@ export const toggleHistoryEntryPinning = async (noteId: string): Promise<void> =
  * Exports the current history redux state into a JSON file that will be downloaded by the client.
  */
 export const downloadHistory = (): void => {
-  const history = getGlobalState().history
+  const history = store.getState().history
   history.forEach((entry: Partial<HistoryEntryWithOrigin>) => {
     delete entry.origin
   })
@@ -166,7 +160,7 @@ export const convertV1History = (oldHistory: V1HistoryEntry[]): HistoryEntryWith
  */
 export const refreshHistoryState = async (): Promise<void> => {
   const localEntries = loadLocalHistory()
-  if (!getGlobalState().user) {
+  if (!store.getState().user) {
     setHistoryEntries(localEntries)
     return
   }
@@ -179,7 +173,7 @@ export const refreshHistoryState = async (): Promise<void> => {
  * Stores the history entries marked as local from the redux to the user's local-storage.
  */
 export const storeLocalHistory = (): void => {
-  const history = getGlobalState().history
+  const history = store.getState().history
   const localEntries = history.filter((entry) => entry.origin === HistoryEntryOrigin.LOCAL)
   const entriesWithoutOrigin = localEntries.map((entry) => ({
     ...entry,
@@ -196,10 +190,10 @@ export const storeLocalHistory = (): void => {
  * Stores the history entries marked as remote from the redux to the server.
  */
 export const storeRemoteHistory = (): Promise<unknown> => {
-  if (!getGlobalState().user) {
+  if (!store.getState().user) {
     return Promise.resolve()
   }
-  const history = getGlobalState().history
+  const history = store.getState().history
   const remoteEntries = history.filter((entry) => entry.origin === HistoryEntryOrigin.REMOTE)
   const remoteEntryDtos = remoteEntries.map(historyEntryToHistoryEntryPutDto)
   return setRemoteHistoryEntries(remoteEntryDtos)

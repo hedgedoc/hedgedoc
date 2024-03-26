@@ -5,27 +5,21 @@
  */
 import { store } from '..'
 import type { LoginUserInfo } from '../../api/me/types'
-import type { ClearUserAction, SetUserAction } from './types'
-import { UserActionType } from './types'
+import { userActionsCreator } from './slice'
 
 /**
  * Sets the given user state into the redux.
  * @param state The user state to set into the redux.
  */
 export const setUser = (state: LoginUserInfo): void => {
-  const action: SetUserAction = {
-    type: UserActionType.SET_USER,
-    state
-  }
+  const action = userActionsCreator.setUser(state)
   store.dispatch(action)
 }
 
 /**
  * Clears the user state from the redux.
  */
-export const clearUser: () => void = () => {
-  const action: ClearUserAction = {
-    type: UserActionType.CLEAR_USER
-  }
+export const clearUser = (): void => {
+  const action = userActionsCreator.setUser(null)
   store.dispatch(action)
 }

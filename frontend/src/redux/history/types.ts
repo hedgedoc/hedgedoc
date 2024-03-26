@@ -3,8 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { HistoryEntryWithOrigin } from '../../api/history/types'
-import type { Action } from 'redux'
+import type { HistoryEntry, HistoryEntryWithOrigin } from '../../api/history/types'
+
+export type HistoryState = HistoryEntryWithOrigin[]
 
 export interface V1HistoryEntry {
   id: string
@@ -19,32 +20,11 @@ export interface HistoryExportJson {
   entries: HistoryEntryWithOrigin[]
 }
 
-export enum HistoryActionType {
-  SET_ENTRIES = 'SET_ENTRIES',
-  ADD_ENTRY = 'ADD_ENTRY',
-  UPDATE_ENTRY = 'UPDATE_ENTRY',
-  REMOVE_ENTRY = 'REMOVE_ENTRY'
-}
-
-export type HistoryActions = SetEntriesAction | AddEntryAction | UpdateEntryAction | RemoveEntryAction
-
-export interface SetEntriesAction extends Action<HistoryActionType> {
-  type: HistoryActionType.SET_ENTRIES
-  entries: HistoryEntryWithOrigin[]
-}
-
-export interface AddEntryAction extends Action<HistoryActionType> {
-  type: HistoryActionType.ADD_ENTRY
-  newEntry: HistoryEntryWithOrigin
-}
-
-export interface UpdateEntryAction extends Action<HistoryActionType> {
-  type: HistoryActionType.UPDATE_ENTRY
+export interface UpdateEntryPayload {
   noteId: string
-  newEntry: HistoryEntryWithOrigin
+  newEntry: HistoryEntry
 }
 
-export interface RemoveEntryAction extends Action<HistoryActionType> {
-  type: HistoryActionType.REMOVE_ENTRY
+export interface RemoveEntryPayload {
   noteId: string
 }

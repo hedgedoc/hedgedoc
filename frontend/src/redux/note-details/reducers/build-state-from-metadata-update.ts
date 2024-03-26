@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { NoteMetadata } from '../../../api/notes/types'
-import type { NoteDetails } from '../types/note-details'
+import type { NoteDetails } from '../types'
 import { DateTime } from 'luxon'
 
 /**

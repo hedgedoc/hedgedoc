@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { buildStateFromUpdatedMarkdownContentLines } from '../build-state-from-updated-markdown-content'
-import type { NoteDetails } from '../types/note-details'
+import type { NoteDetails } from '../types'
 import { Optional } from '@mrdrogdrog/optional'
 
 const TASK_REGEX = /(\s*(?:[-*+]|\d+[.)]) )\[[ xX]?]( .*)/

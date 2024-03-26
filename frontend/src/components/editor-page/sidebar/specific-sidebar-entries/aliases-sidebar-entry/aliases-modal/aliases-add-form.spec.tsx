@@ -5,7 +5,7 @@
  */
 import * as AliasModule from '../../../../../../api/alias'
 import * as NoteDetailsReduxModule from '../../../../../../redux/note-details/methods'
-import type { NoteDetails } from '../../../../../../redux/note-details/types/note-details'
+import type { NoteDetails } from '../../../../../../redux/note-details/types'
 import { mockI18n } from '../../../../../../test-utils/mock-i18n'
 import { mockNotePermissions } from '../../../../../../test-utils/mock-note-permissions'
 import { AliasesAddForm } from './aliases-add-form'
