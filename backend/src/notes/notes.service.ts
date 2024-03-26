@@ -93,7 +93,13 @@ export class NotesService {
   ): Promise<Note> {
     // Check if new note doesn't violate application constraints
     if (alias) {
-      this.checkNoteIdOrAlias(alias);
+      this.ensureNoteIdOrAliasIsNotForbidden(alias);
+      // Check if the alias is a note id
+      if (await this.noteIdIsUsed(alias)) {
+        throw new AlreadyInDBError(
+          `A note with the id '${alias}' already exists.`,
+        );
+      }
     }
     if (noteContent.length > this.noteConfig.maxDocumentLength) {
       throw new MaximumDocumentLengthExceededError();
@@ -206,7 +212,7 @@ export class NotesService {
       'getNoteByIdOrAlias',
     );
 
-    this.checkNoteIdOrAlias(noteIdOrAlias);
+    this.ensureNoteIdOrAliasIsNotForbidden(noteIdOrAlias);
 
     /**
      * This query gets the note's aliases, owner, groupPermissions (and the groups), userPermissions (and the users) and tags and
@@ -267,16 +273,29 @@ export class NotesService {
    * @param noteIdOrAlias - the alias or id in question
    * @throws {ForbiddenIdError} the requested id or alias is forbidden
    */
-  checkNoteIdOrAlias(noteIdOrAlias: string): void {
+  ensureNoteIdOrAliasIsNotForbidden(noteIdOrAlias: string): void {
     if (this.noteConfig.forbiddenNoteIds.includes(noteIdOrAlias)) {
       this.logger.debug(
         `A note with the alias '${noteIdOrAlias}' is forbidden by the administrator.`,
-        'checkNoteIdOrAlias',
+        'ensureNoteIdOrAliasIsNotForbidden',
       );
       throw new ForbiddenIdError(
         `A note with the alias '${noteIdOrAlias}' is forbidden by the administrator.`,
       );
     }
+  }
+
+  async noteIdIsUsed(noteId: string): Promise<boolean> {
+    // Check if we already have a note with this id
+    const note = await this.noteRepository.findOneBy({ publicId: noteId });
+    if (note !== null) {
+      this.logger.debug(
+        `A note with the ID '${noteId}' already exists.`,
+        'noteIdIsUsed',
+      );
+      return true;
+    }
+    return false;
   }
 
   /**

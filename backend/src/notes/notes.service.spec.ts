@@ -359,6 +359,8 @@ describe('NotesService', () => {
         createRevisionSpy = jest
           .spyOn(revisionsService, 'createRevision')
           .mockResolvedValue(newRevision);
+
+        mockSelectQueryBuilderInRepo(noteRepo, null);
       });
       it('without alias, without owner', async () => {
         const newNote = await service.createNote(content, null);
@@ -528,6 +530,10 @@ describe('NotesService', () => {
       });
     });
     describe('fails:', () => {
+      beforeEach(() => {
+        mockSelectQueryBuilderInRepo(noteRepo, null);
+      });
+
       it('alias is forbidden', async () => {
         await expect(
           service.createNote(content, null, forbiddenNoteId),

@@ -20,7 +20,7 @@ describe('Notes', () => {
   let testImage: Buffer;
 
   beforeAll(async () => {
-    testSetup = await TestSetupBuilder.create().withUsers().build();
+    testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
 
     forbiddenNoteId =
       testSetup.configService.get('noteConfig').forbiddenNoteIds[0];
@@ -135,6 +135,16 @@ describe('Notes', () => {
         .send(content)
         .expect('Content-Type', /json/)
         .expect(413);
+    });
+
+    it('cannot create an alias equal to a note publicId', async () => {
+      await request(testSetup.app.getHttpServer())
+        .post(`/api/v2/notes/${testSetup.anonymousNotes[0].publicId}`)
+        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
+        .set('Content-Type', 'text/markdown')
+        .send(content)
+        .expect('Content-Type', /json/)
+        .expect(409);
     });
   });
 

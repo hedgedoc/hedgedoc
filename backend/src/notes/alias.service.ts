@@ -40,7 +40,7 @@ export class AliasService {
    * @return {Alias} the new alias
    */
   async addAlias(note: Note, alias: string): Promise<Alias> {
-    this.notesService.checkNoteIdOrAlias(alias);
+    this.notesService.ensureNoteIdOrAliasIsNotForbidden(alias);
 
     const foundAlias = await this.aliasRepository.findOne({
       where: { name: alias },
@@ -89,7 +89,7 @@ export class AliasService {
     let oldPrimaryId = 0;
     let newPrimaryId = 0;
 
-    this.notesService.checkNoteIdOrAlias(alias);
+    this.notesService.ensureNoteIdOrAliasIsNotForbidden(alias);
 
     for (const anAlias of await note.aliases) {
       // found old primary
@@ -143,7 +143,7 @@ export class AliasService {
    * @throws {PrimaryAliasDeletionForbiddenError} the primary alias can only be deleted if it's the only alias
    */
   async removeAlias(note: Note, alias: string): Promise<Note> {
-    this.notesService.checkNoteIdOrAlias(alias);
+    this.notesService.ensureNoteIdOrAliasIsNotForbidden(alias);
     const primaryAlias = await getPrimaryAlias(note);
 
     if (primaryAlias === alias && (await note.aliases).length !== 1) {

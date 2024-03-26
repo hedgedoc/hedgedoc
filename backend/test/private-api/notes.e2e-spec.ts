@@ -25,7 +25,7 @@ describe('Notes', () => {
   let agent: request.SuperAgentTest;
 
   beforeAll(async () => {
-    testSetup = await TestSetupBuilder.create().build();
+    testSetup = await TestSetupBuilder.create().withNotes().build();
 
     forbiddenNoteId =
       testSetup.configService.get('noteConfig').forbiddenNoteIds[0];
@@ -144,6 +144,15 @@ describe('Notes', () => {
         .send(content)
         .expect('Content-Type', /json/)
         .expect(413);
+    });
+
+    it('cannot create an alias equal to a note publicId', async () => {
+      await agent
+        .post(`/api/private/notes/${testSetup.anonymousNotes[0].publicId}`)
+        .set('Content-Type', 'text/markdown')
+        .send(content)
+        .expect('Content-Type', /json/)
+        .expect(409);
     });
   });
 
