@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -26,7 +26,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ errorMessage }) =>
           <LoadingAnimation error={!!errorMessage} />
         </span>
       </div>
-      {errorMessage !== undefined && <Alert variant={'danger'}>{errorMessage}</Alert>}
+      {errorMessage && <Alert variant={'danger'}>{errorMessage}</Alert>}
     </div>
   )
 }
