@@ -16,29 +16,17 @@ import {
 import { URL } from 'url';
 
 import { GuestAccess } from '../config/guest_access.enum';
+import { ProviderType } from '../identity/provider-type.enum';
 import { ServerVersion } from '../monitoring/server-status.dto';
 import { BaseDto } from '../utils/base.dto.';
 
-export enum AuthProviderType {
-  LOCAL = 'local',
-  LDAP = 'ldap',
-  SAML = 'saml',
-  OAUTH2 = 'oauth2',
-  GITLAB = 'gitlab',
-  GITHUB = 'github',
-  GOOGLE = 'google',
-}
-
 export type AuthProviderTypeWithCustomName =
-  | AuthProviderType.LDAP
-  | AuthProviderType.OAUTH2
-  | AuthProviderType.SAML
-  | AuthProviderType.GITLAB;
+  | ProviderType.LDAP
+  | ProviderType.OAUTH2
+  | ProviderType.SAML
+  | ProviderType.OIDC;
 
-export type AuthProviderTypeWithoutCustomName =
-  | AuthProviderType.LOCAL
-  | AuthProviderType.GITHUB
-  | AuthProviderType.GOOGLE;
+export type AuthProviderTypeWithoutCustomName = ProviderType.LOCAL;
 
 export class AuthProviderWithoutCustomNameDto extends BaseDto {
   /**

@@ -7,7 +7,6 @@ import { registerAs } from '@nestjs/config';
 import * as fs from 'fs';
 import * as Joi from 'joi';
 
-import { GitlabScope } from './gitlab.enum';
 import {
   buildErrorMessage,
   ensureNoDuplicatesExist,
@@ -16,9 +15,12 @@ import {
   toArrayConfig,
 } from './utils';
 
-export interface LDAPConfig {
+export interface InternalIdentifier {
   identifier: string;
   providerName: string;
+}
+
+export interface LDAPConfig extends InternalIdentifier {
   url: string;
   bindDn?: string;
   bindCredentials?: string;
@@ -31,6 +33,45 @@ export interface LDAPConfig {
   tlsCaCerts?: string[];
 }
 
+export interface SamlConfig extends InternalIdentifier {
+  idpSsoUrl: string;
+  idpCert: string;
+  clientCert: string;
+  issuer: string;
+  identifierFormat: string;
+  disableRequestedAuthnContext: string;
+  groupAttribute: string;
+  requiredGroups?: string[];
+  externalGroups?: string[];
+  attribute: {
+    id: string;
+    username: string;
+    email: string;
+  };
+}
+
+export interface Oauth2Config extends InternalIdentifier {
+  baseURL: string;
+  userProfileURL: string;
+  userProfileIdAttr: string;
+  userProfileUsernameAttr: string;
+  userProfileDisplayNameAttr: string;
+  userProfileEmailAttr: string;
+  tokenURL: string;
+  authorizationURL: string;
+  clientID: string;
+  clientSecret: string;
+  scope: string;
+  rolesClaim: string;
+  accessRole: string;
+}
+
+export interface OidcConfig extends InternalIdentifier {
+  issuer: string;
+  clientID: string;
+  clientSecret: string;
+}
+
 export interface AuthConfig {
   session: {
     secret: string;
@@ -41,59 +82,11 @@ export interface AuthConfig {
     enableRegister: boolean;
     minimalPasswordStrength: number;
   };
-  github: {
-    clientID: string;
-    clientSecret: string;
-  };
-  google: {
-    clientID: string;
-    clientSecret: string;
-    apiKey: string;
-  };
-  gitlab: {
-    identifier: string;
-    providerName: string;
-    baseURL: string;
-    clientID: string;
-    clientSecret: string;
-    scope: GitlabScope;
-  }[];
+  // ToDo: tlsOptions exist in config.json.example. See https://nodejs.org/api/tls.html#tls_tls_connect_options_callback
   ldap: LDAPConfig[];
-  saml: {
-    identifier: string;
-    providerName: string;
-    idpSsoUrl: string;
-    idpCert: string;
-    clientCert: string;
-    issuer: string;
-    identifierFormat: string;
-    disableRequestedAuthnContext: string;
-    groupAttribute: string;
-    requiredGroups?: string[];
-    externalGroups?: string[];
-    attribute: {
-      id: string;
-      username: string;
-      email: string;
-    };
-  }[];
-  oauth2: {
-    identifier: string;
-    providerName: string;
-    baseURL: string;
-    userProfileURL: string;
-    userProfileIdAttr: string;
-    userProfileUsernameAttr: string;
-    userProfileDisplayNameAttr: string;
-    userProfileEmailAttr: string;
-    tokenURL: string;
-    authorizationURL: string;
-    clientID: string;
-    clientSecret: string;
-    scope: string;
-    rolesClaim: string;
-    accessRole: string;
-  }[];
+  saml: SamlConfig[];
+  oauth2: Oauth2Config[];
+  oidc: OidcConfig[];
 }
 
 const authSchema = Joi.object({
@@ -120,30 +113,6 @@ const authSchema = Joi.object({
       .optional()
       .label('HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH'),
   },
-  github: {
-    clientID: Joi.string().optional().label('HD_AUTH_GITHUB_CLIENT_ID'),
-    clientSecret: Joi.string().optional().label('HD_AUTH_GITHUB_CLIENT_SECRET'),
-  },
-  google: {
-    clientID: Joi.string().optional().label('HD_AUTH_GOOGLE_CLIENT_ID'),
-    clientSecret: Joi.string().optional().label('HD_AUTH_GOOGLE_CLIENT_SECRET'),
-    apiKey: Joi.string().optional().label('HD_AUTH_GOOGLE_APP_KEY'),
-  },
-  gitlab: Joi.array()
-    .items(
-      Joi.object({
-        identifier: Joi.string(),
-        providerName: Joi.string().default('Gitlab').optional(),
-        baseURL: Joi.string(),
-        clientID: Joi.string(),
-        clientSecret: Joi.string(),
-        scope: Joi.string()
-          .valid(...Object.values(GitlabScope))
-          .default(GitlabScope.READ_USER)
-          .optional(),
-      }).optional(),
-    )
-    .optional(),
   ldap: Joi.array()
     .items(
       Joi.object({
@@ -207,19 +176,20 @@ const authSchema = Joi.object({
       }).optional(),
     )
     .optional(),
+  oidc: Joi.array()
+    .items(
+      Joi.object({
+        identifier: Joi.string(),
+        providerName: Joi.string().default('OpenID Connect').optional(),
+        issuer: Joi.string(),
+        clientID: Joi.string(),
+        clientSecret: Joi.string(),
+      }).optional(),
+    )
+    .optional(),
 });
 
 export default registerAs('authConfig', () => {
-  const gitlabNames = (
-    toArrayConfig(process.env.HD_AUTH_GITLABS, ',') ?? []
-  ).map((name) => name.toUpperCase());
-  if (gitlabNames.length !== 0) {
-    throw new Error(
-      "GitLab auth is currently not yet supported. Please don't configure it",
-    );
-  }
-  ensureNoDuplicatesExist('GitLab', gitlabNames);
-
   const ldapNames = (
     toArrayConfig(process.env.HD_AUTH_LDAP_SERVERS, ',') ?? []
   ).map((name) => name.toUpperCase());
@@ -245,17 +215,15 @@ export default registerAs('authConfig', () => {
   }
   ensureNoDuplicatesExist('OAuth2', oauth2Names);
 
-  const gitlabs = gitlabNames.map((gitlabName) => {
-    return {
-      identifier: gitlabName,
-      providerName: process.env[`HD_AUTH_GITLAB_${gitlabName}_PROVIDER_NAME`],
-      baseURL: process.env[`HD_AUTH_GITLAB_${gitlabName}_BASE_URL`],
-      clientID: process.env[`HD_AUTH_GITLAB_${gitlabName}_CLIENT_ID`],
-      clientSecret: process.env[`HD_AUTH_GITLAB_${gitlabName}_CLIENT_SECRET`],
-      scope: process.env[`HD_AUTH_GITLAB_${gitlabName}_SCOPE`],
-      version: process.env[`HD_AUTH_GITLAB_${gitlabName}_GITLAB_VERSION`],
-    };
-  });
+  const oidcNames = (toArrayConfig(process.env.HD_AUTH_OIDC, ',') ?? []).map(
+    (name) => name.toUpperCase(),
+  );
+  if (oidcNames.length !== 0) {
+    throw new Error(
+      "OAuth2 auth is currently not yet supported. Please don't configure it",
+    );
+  }
+  ensureNoDuplicatesExist('OIDC', oidcNames);
 
   const ldaps = ldapNames.map((ldapName) => {
     const caFiles = toArrayConfig(
@@ -350,24 +318,13 @@ export default registerAs('authConfig', () => {
     };
   });
 
-  if (
-    process.env.HD_AUTH_GITHUB_CLIENT_ID !== undefined ||
-    process.env.HD_AUTH_GITHUB_CLIENT_SECRET !== undefined
-  ) {
-    throw new Error(
-      "GitHub config is currently not yet supported. Please don't configure it",
-    );
-  }
-
-  if (
-    process.env.HD_AUTH_GOOGLE_CLIENT_ID !== undefined ||
-    process.env.HD_AUTH_GOOGLE_CLIENT_SECRET !== undefined ||
-    process.env.HD_AUTH_GOOGLE_APP_KEY !== undefined
-  ) {
-    throw new Error(
-      "Google config is currently not yet supported. Please don't configure it",
-    );
-  }
+  const oidcs = oidcNames.map((oidcName) => ({
+    identifier: oidcName,
+    providerName: process.env[`HD_AUTH_OIDC_${oidcName}_PROVIDER_NAME`],
+    issuer: process.env[`HD_AUTH_OIDC_${oidcName}_ISSUER`],
+    clientID: process.env[`HD_AUTH_OIDC_${oidcName}_CLIENT_ID`],
+    clientSecret: process.env[`HD_AUTH_OIDC_${oidcName}_CLIENT_SECRET`],
+  }));
 
   const authConfig = authSchema.validate(
     {
@@ -382,19 +339,10 @@ export default registerAs('authConfig', () => {
           process.env.HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH,
         ),
       },
-      github: {
-        clientID: process.env.HD_AUTH_GITHUB_CLIENT_ID,
-        clientSecret: process.env.HD_AUTH_GITHUB_CLIENT_SECRET,
-      },
-      google: {
-        clientID: process.env.HD_AUTH_GOOGLE_CLIENT_ID,
-        clientSecret: process.env.HD_AUTH_GOOGLE_CLIENT_SECRET,
-        apiKey: process.env.HD_AUTH_GOOGLE_APP_KEY,
-      },
-      gitlab: gitlabs,
       ldap: ldaps,
       saml: samls,
       oauth2: oauth2s,
+      oidc: oidcs,
     },
     {
       abortEarly: false,
@@ -404,14 +352,6 @@ export default registerAs('authConfig', () => {
   if (authConfig.error) {
     const errorMessages = authConfig.error.details
       .map((detail) => detail.message)
-      .map((error) =>
-        replaceAuthErrorsWithEnvironmentVariables(
-          error,
-          'gitlab',
-          'HD_AUTH_GITLAB_',
-          gitlabNames,
-        ),
-      )
       .map((error) =>
         replaceAuthErrorsWithEnvironmentVariables(
           error,
@@ -434,6 +374,14 @@ export default registerAs('authConfig', () => {
           'oauth2',
           'HD_AUTH_OAUTH2_',
           oauth2Names,
+        ),
+      )
+      .map((error) =>
+        replaceAuthErrorsWithEnvironmentVariables(
+          error,
+          'openid-connect',
+          'HD_AUTH_OIDC_',
+          oidcNames,
         ),
       );
     throw new Error(buildErrorMessage(errorMessages));

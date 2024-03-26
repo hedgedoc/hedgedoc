@@ -19,19 +19,10 @@ export function createDefaultMockAuthConfig(): AuthConfig {
       enableRegister: true,
       minimalPasswordStrength: 2,
     },
-    github: {
-      clientID: '',
-      clientSecret: '',
-    },
-    google: {
-      clientID: '',
-      clientSecret: '',
-      apiKey: '',
-    },
-    gitlab: [],
     ldap: [],
     saml: [],
     oauth2: [],
+    oidc: [],
   };
 }
 

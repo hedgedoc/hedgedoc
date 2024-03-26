@@ -15,11 +15,11 @@ import externalServicesConfiguration, {
   ExternalServicesConfig,
 } from '../config/external-services.config';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
+import { ProviderType } from '../identity/provider-type.enum';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { getServerVersionFromPackageJson } from '../utils/serverVersion';
 import {
   AuthProviderDto,
-  AuthProviderType,
   BrandingDto,
   FrontendConfigDto,
   SpecialUrlsDto,
@@ -63,45 +63,35 @@ export class FrontendConfigService {
     const providers: AuthProviderDto[] = [];
     if (this.authConfig.local.enableLogin) {
       providers.push({
-        type: AuthProviderType.LOCAL,
+        type: ProviderType.LOCAL,
       });
     }
-    if (this.authConfig.github.clientID) {
-      providers.push({
-        type: AuthProviderType.GITHUB,
-      });
-    }
-    if (this.authConfig.google.clientID) {
-      providers.push({
-        type: AuthProviderType.GOOGLE,
-      });
-    }
-    this.authConfig.gitlab.forEach((gitLabEntry) => {
-      providers.push({
-        type: AuthProviderType.GITLAB,
-        providerName: gitLabEntry.providerName,
-        identifier: gitLabEntry.identifier,
-      });
-    });
     this.authConfig.ldap.forEach((ldapEntry) => {
       providers.push({
-        type: AuthProviderType.LDAP,
+        type: ProviderType.LDAP,
         providerName: ldapEntry.providerName,
         identifier: ldapEntry.identifier,
       });
     });
     this.authConfig.oauth2.forEach((oauth2Entry) => {
       providers.push({
-        type: AuthProviderType.OAUTH2,
+        type: ProviderType.OAUTH2,
         providerName: oauth2Entry.providerName,
         identifier: oauth2Entry.identifier,
       });
     });
     this.authConfig.saml.forEach((samlEntry) => {
       providers.push({
-        type: AuthProviderType.SAML,
+        type: ProviderType.SAML,
         providerName: samlEntry.providerName,
         identifier: samlEntry.identifier,
+      });
+    });
+    this.authConfig.oidc.forEach((openidConnectEntry) => {
+      providers.push({
+        type: ProviderType.OIDC,
+        providerName: openidConnectEntry.providerName,
+        identifier: openidConnectEntry.identifier,
       });
     });
     return providers;

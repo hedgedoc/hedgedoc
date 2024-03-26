@@ -9,7 +9,5 @@ export enum ProviderType {
   LDAP = 'ldap',
   SAML = 'saml',
   OAUTH2 = 'oauth2',
-  GITLAB = 'gitlab',
-  GITHUB = 'github',
-  GOOGLE = 'google',
+  OIDC = 'oidc',
 }
