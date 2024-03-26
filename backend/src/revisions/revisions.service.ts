@@ -3,11 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { Cron, Timeout } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import { createPatch } from 'diff';
 import { Repository } from 'typeorm';
 
+import revisionConfiguration, {
+  RevisionConfig,
+} from '../config/revision.config';
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Note } from '../notes/note.entity';
@@ -29,6 +33,9 @@ export class RevisionsService {
     private readonly logger: ConsoleLoggerService,
     @InjectRepository(Revision)
     private revisionRepository: Repository<Revision>,
+    @InjectRepository(Note)
+    private noteRepository: Repository<Note>,
+    @Inject(revisionConfiguration.KEY) private revisionConfig: RevisionConfig,
     private editService: EditService,
   ) {
     this.logger.setContext(RevisionsService.name);
@@ -217,6 +224,53 @@ export class RevisionsService {
     );
     if (revision) {
       await this.revisionRepository.save(revision);
+    }
+  }
+
+  // Delete all old revisions everyday on 0:00 AM
+  @Cron('0 0 * * *')
+  async handleCron(): Promise<void> {
+    return await this.removeOldRevisions();
+  }
+
+  // Delete all old revisions 5 sec after startup
+  @Timeout(5000)
+  async handleTimeout(): Promise<void> {
+    return await this.removeOldRevisions();
+  }
+
+  async removeOldRevisions(): Promise<void> {
+    const currentTime = new Date().getTime();
+    const revisionRetentionDays: number = this.revisionConfig.retentionDays;
+    if (revisionRetentionDays <= 0) {
+      return;
+    }
+
+    const notes: Note[] = await this.noteRepository.find();
+    for (const note of notes) {
+      const revisions: Revision[] = await this.revisionRepository.find({
+        where: {
+          note: { id: note.id },
+        },
+      });
+      const oldRevisions = revisions
+        .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
+        .slice(0, -1) // always keep the latest revision
+        .filter(
+          (revision) =>
+            new Date(revision.createdAt).getTime() <=
+            currentTime - revisionRetentionDays * 24 * 60 * 60 * 1000,
+        );
+
+      if (!oldRevisions.length) {
+        continue;
+      }
+
+      await this.revisionRepository.remove(oldRevisions);
+      this.logger.log(
+        `${oldRevisions.length} old revisions of the note(id: ${note.id}) were reomved from the DB`,
+        'removeOldRevisions',
+      );
     }
   }
 }
