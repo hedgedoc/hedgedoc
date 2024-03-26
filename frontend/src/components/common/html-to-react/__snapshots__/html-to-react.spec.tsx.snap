@@ -27,4 +27,40 @@ exports[`HTML to React will forward the parser options 1`] = `
 </div>
 `;
 
+exports[`HTML to React will render links with non-http protocols 1`] = `
+<div>
+  <a
+    href="tel:+1234567890"
+  >
+    tel
+  </a>
+  <a
+    href="mailto:test@example.com"
+  >
+    mailto
+  </a>
+  <a
+    href="geo:25.197,55.274"
+  >
+    geo
+  </a>
+  <a
+    href="xmpp:test"
+  >
+    xmpp
+  </a>
+</div>
+`;
+
+exports[`HTML to React won't render script links 1`] = `
+<div>
+  <a>
+    js
+  </a>
+  <a>
+    vbs
+  </a>
+</div>
+`;
+
 exports[`HTML to React won't render script tags 1`] = `<div />`;

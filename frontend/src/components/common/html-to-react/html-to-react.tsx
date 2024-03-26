@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,6 +16,8 @@ export interface HtmlToReactProps {
   parserOptions?: ParserOptions
 }
 
+const REGEX_URI_SCHEME_NO_SCRIPTS = /^(?!.*script:).+:?/i
+
 /**
  * Renders
  * @param htmlCode
@@ -26,7 +28,12 @@ export interface HtmlToReactProps {
 export const HtmlToReact: React.FC<HtmlToReactProps> = ({ htmlCode, domPurifyConfig, parserOptions }) => {
   const elements = useMemo(() => {
     const sanitizedHtmlCode = measurePerformance('html-to-react: sanitize', () => {
-      return sanitize(htmlCode, { ...domPurifyConfig, RETURN_DOM_FRAGMENT: false, RETURN_DOM: false })
+      return sanitize(htmlCode, {
+        ...domPurifyConfig,
+        RETURN_DOM_FRAGMENT: false,
+        RETURN_DOM: false,
+        ALLOWED_URI_REGEXP: REGEX_URI_SCHEME_NO_SCRIPTS
+      })
     })
     return measurePerformance('html-to-react: convertHtmlToReact', () => {
       return convertHtmlToReact(sanitizedHtmlCode, parserOptions)
