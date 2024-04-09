@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,6 +14,7 @@ import { Identity } from './identity.entity';
 import { IdentityService } from './identity.service';
 import { LdapAuthGuard, LdapStrategy } from './ldap/ldap.strategy';
 import { LocalAuthGuard, LocalStrategy } from './local/local.strategy';
+import { OidcAuthGuard, OidcStrategy } from './oidc/oidc.strategy';
 
 @Module({
   imports: [
@@ -27,8 +28,10 @@ import { LocalAuthGuard, LocalStrategy } from './local/local.strategy';
     IdentityService,
     LocalStrategy,
     LdapStrategy,
+    OidcStrategy,
     LdapAuthGuard,
     LocalAuthGuard,
+    OidcAuthGuard,
   ],
   exports: [IdentityService, LocalStrategy, LdapStrategy],
 })
