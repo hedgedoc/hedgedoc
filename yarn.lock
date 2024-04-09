@@ -2480,7 +2480,7 @@ __metadata:
     joi: "npm:17.12.1"
     js-yaml: "npm:4.1.0"
     prettier: "npm:3.2.5"
-    reveal.js: "npm:4.6.1"
+    reveal.js: "npm:5.0.5"
     ts-jest: "npm:29.1.2"
     typescript: "npm:5.3.3"
     ws: "npm:8.16.0"
@@ -2623,7 +2623,7 @@ __metadata:
     react-test-renderer: "npm:18.2.0"
     react-use: "npm:17.5.0"
     redux: "npm:5.0.1"
-    reveal.js: "npm:4.6.1"
+    reveal.js: "npm:5.0.5"
     sanitize-filename: "npm:1.6.3"
     sass: "npm:1.71.1"
     sharp: "npm:0.33.2"
@@ -15919,10 +15919,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reveal.js@npm:4.6.1":
-  version: 4.6.1
-  resolution: "reveal.js@npm:4.6.1"
-  checksum: 10c0/a7c870ada885d2b9d0d722f68707b6d1b5ac924dccc6c044b5a18b18b562fa84ff57742fa961e40c9a690468b714aa89397b13e709c88487fd7d626b6be3e4c6
+"reveal.js@npm:5.0.5":
+  version: 5.0.5
+  resolution: "reveal.js@npm:5.0.5"
+  checksum: 10c0/9ebe682eed3ca928f393e16490e1894af146ef23fa0b2be1a1bcfbf4f1c685b882ee3dbfab821b867f7290e2546627877cfa0871f7ecf69dff5719ffe8a53082
   languageName: node
   linkType: hard
 
