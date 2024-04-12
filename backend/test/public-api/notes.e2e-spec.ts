@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -20,7 +20,7 @@ describe('Notes', () => {
   let testImage: Buffer;
 
   beforeAll(async () => {
-    testSetup = await TestSetupBuilder.create().withUsers().build();
+    testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
 
     forbiddenNoteId =
       testSetup.configService.get('noteConfig').forbiddenNoteIds[0];
@@ -129,12 +129,22 @@ describe('Notes', () => {
           .maxDocumentLength as number) + 1,
       );
       await request(testSetup.app.getHttpServer())
-        .post('/api/v2/notes/test2')
+        .post('/api/v2/notes/test3')
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .set('Content-Type', 'text/markdown')
         .send(content)
         .expect('Content-Type', /json/)
         .expect(413);
+    });
+
+    it('cannot create an alias equal to a note publicId', async () => {
+      await request(testSetup.app.getHttpServer())
+        .post(`/api/v2/notes/${testSetup.anonymousNotes[0].publicId}`)
+        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
+        .set('Content-Type', 'text/markdown')
+        .send(content)
+        .expect('Content-Type', /json/)
+        .expect(409);
     });
   });
 

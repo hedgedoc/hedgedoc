@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -25,7 +25,7 @@ describe('Notes', () => {
   let agent: request.SuperAgentTest;
 
   beforeAll(async () => {
-    testSetup = await TestSetupBuilder.create().build();
+    testSetup = await TestSetupBuilder.create().withNotes().build();
 
     forbiddenNoteId =
       testSetup.configService.get('noteConfig').forbiddenNoteIds[0];
@@ -139,11 +139,20 @@ describe('Notes', () => {
           .maxDocumentLength as number) + 1,
       );
       await agent
-        .post('/api/private/notes/test2')
+        .post('/api/private/notes/test3')
         .set('Content-Type', 'text/markdown')
         .send(content)
         .expect('Content-Type', /json/)
         .expect(413);
+    });
+
+    it('cannot create an alias equal to a note publicId', async () => {
+      await agent
+        .post(`/api/private/notes/${testSetup.anonymousNotes[0].publicId}`)
+        .set('Content-Type', 'text/markdown')
+        .send(content)
+        .expect('Content-Type', /json/)
+        .expect(409);
     });
   });
 
