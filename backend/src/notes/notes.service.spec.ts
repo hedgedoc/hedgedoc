@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -63,6 +63,7 @@ describe('NotesService', () => {
   const noteMockConfig: NoteConfig = createDefaultMockNoteConfig();
   let noteRepo: Repository<Note>;
   let userRepo: Repository<User>;
+  let aliasRepo: Repository<Alias>;
   let groupRepo: Repository<Group>;
   let forbiddenNoteId: string;
   let everyoneDefaultAccessPermission: string;
@@ -99,6 +100,16 @@ describe('NotesService', () => {
       undefined,
     );
     noteRepo = new Repository<Note>(
+      '',
+      new EntityManager(
+        new DataSource({
+          type: 'sqlite',
+          database: ':memory:',
+        }),
+      ),
+      undefined,
+    );
+    aliasRepo = new Repository<Alias>(
       '',
       new EntityManager(
         new DataSource({
@@ -146,7 +157,7 @@ describe('NotesService', () => {
         },
         {
           provide: getRepositoryToken(Alias),
-          useClass: Repository,
+          useValue: aliasRepo,
         },
         {
           provide: getRepositoryToken(User),
@@ -180,7 +191,7 @@ describe('NotesService', () => {
       .overrideProvider(getRepositoryToken(Tag))
       .useClass(Repository)
       .overrideProvider(getRepositoryToken(Alias))
-      .useClass(Repository)
+      .useValue(aliasRepo)
       .overrideProvider(getRepositoryToken(User))
       .useValue(userRepo)
       .overrideProvider(getRepositoryToken(AuthToken))
@@ -210,6 +221,7 @@ describe('NotesService', () => {
     loggedinDefaultAccessPermission = noteConfig.permissions.default.loggedIn;
     service = module.get<NotesService>(NotesService);
     noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));
+    aliasRepo = module.get<Repository<Alias>>(getRepositoryToken(Alias));
     eventEmitter = module.get<EventEmitter2>(EventEmitter2);
   });
 
@@ -354,11 +366,15 @@ describe('NotesService', () => {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           .mockImplementation(async (note: Note): Promise<Note> => note);
+        jest.spyOn(noteRepo, 'existsBy').mockResolvedValueOnce(false);
+        jest.spyOn(aliasRepo, 'existsBy').mockResolvedValueOnce(false);
         mockGroupRepo();
 
         createRevisionSpy = jest
           .spyOn(revisionsService, 'createRevision')
           .mockResolvedValue(newRevision);
+
+        mockSelectQueryBuilderInRepo(noteRepo, null);
       });
       it('without alias, without owner', async () => {
         const newNote = await service.createNote(content, null);
@@ -528,14 +544,34 @@ describe('NotesService', () => {
       });
     });
     describe('fails:', () => {
+      beforeEach(() => {
+        mockSelectQueryBuilderInRepo(noteRepo, null);
+      });
+
       it('alias is forbidden', async () => {
+        jest.spyOn(noteRepo, 'existsBy').mockResolvedValueOnce(false);
+        jest.spyOn(aliasRepo, 'existsBy').mockResolvedValueOnce(false);
         await expect(
           service.createNote(content, null, forbiddenNoteId),
         ).rejects.toThrow(ForbiddenIdError);
       });
 
-      it('alias is already used', async () => {
+      it('alias is already used (as another alias)', async () => {
         mockGroupRepo();
+        jest.spyOn(noteRepo, 'existsBy').mockResolvedValueOnce(false);
+        jest.spyOn(aliasRepo, 'existsBy').mockResolvedValueOnce(true);
+        jest.spyOn(noteRepo, 'save').mockImplementationOnce(async () => {
+          throw new Error();
+        });
+        await expect(service.createNote(content, null, alias)).rejects.toThrow(
+          AlreadyInDBError,
+        );
+      });
+
+      it('alias is already used (as publicId)', async () => {
+        mockGroupRepo();
+        jest.spyOn(noteRepo, 'existsBy').mockResolvedValueOnce(true);
+        jest.spyOn(aliasRepo, 'existsBy').mockResolvedValueOnce(false);
         jest.spyOn(noteRepo, 'save').mockImplementationOnce(async () => {
           throw new Error();
         });
@@ -547,6 +583,8 @@ describe('NotesService', () => {
         beforeEach(() => (noteMockConfig.maxDocumentLength = 1000));
         it('document is too long', async () => {
           mockGroupRepo();
+          jest.spyOn(noteRepo, 'existsBy').mockResolvedValueOnce(false);
+          jest.spyOn(aliasRepo, 'existsBy').mockResolvedValueOnce(false);
           jest.spyOn(noteRepo, 'save').mockImplementationOnce(async () => {
             throw new Error();
           });

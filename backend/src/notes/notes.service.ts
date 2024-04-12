@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -93,7 +93,7 @@ export class NotesService {
   ): Promise<Note> {
     // Check if new note doesn't violate application constraints
     if (alias) {
-      this.checkNoteIdOrAlias(alias);
+      await this.ensureNoteIdOrAliasIsAvailable(alias);
     }
     if (noteContent.length > this.noteConfig.maxDocumentLength) {
       throw new MaximumDocumentLengthExceededError();
@@ -201,12 +201,17 @@ export class NotesService {
    * @throws {ForbiddenIdError} the requested id or alias is forbidden
    */
   async getNoteByIdOrAlias(noteIdOrAlias: string): Promise<Note> {
+    const isForbidden = this.noteIdOrAliasIsForbidden(noteIdOrAlias);
+    if (isForbidden) {
+      throw new ForbiddenIdError(
+        `The note id or alias '${noteIdOrAlias}' is forbidden by the administrator.`,
+      );
+    }
+
     this.logger.debug(
       `Trying to find note '${noteIdOrAlias}'`,
       'getNoteByIdOrAlias',
     );
-
-    this.checkNoteIdOrAlias(noteIdOrAlias);
 
     /**
      * This query gets the note's aliases, owner, groupPermissions (and the groups), userPermissions (and the users) and tags and
@@ -263,20 +268,62 @@ export class NotesService {
   }
 
   /**
-   * Check if the provided note id or alias is not forbidden
+   * Check if the provided note id or alias is available for notes
    * @param noteIdOrAlias - the alias or id in question
-   * @throws {ForbiddenIdError} the requested id or alias is forbidden
+   * @throws {ForbiddenIdError} the requested id or alias is not available
    */
-  checkNoteIdOrAlias(noteIdOrAlias: string): void {
-    if (this.noteConfig.forbiddenNoteIds.includes(noteIdOrAlias)) {
-      this.logger.debug(
-        `A note with the alias '${noteIdOrAlias}' is forbidden by the administrator.`,
-        'checkNoteIdOrAlias',
-      );
+  async ensureNoteIdOrAliasIsAvailable(noteIdOrAlias: string): Promise<void> {
+    const isForbidden = this.noteIdOrAliasIsForbidden(noteIdOrAlias);
+    if (isForbidden) {
       throw new ForbiddenIdError(
-        `A note with the alias '${noteIdOrAlias}' is forbidden by the administrator.`,
+        `The note id or alias '${noteIdOrAlias}' is forbidden by the administrator.`,
       );
     }
+    const isUsed = await this.noteIdOrAliasIsUsed(noteIdOrAlias);
+    if (isUsed) {
+      throw new AlreadyInDBError(
+        `A note with the id or alias '${noteIdOrAlias}' already exists.`,
+      );
+    }
+  }
+
+  /**
+   * Check if the provided note id or alias is forbidden
+   * @param noteIdOrAlias - the alias or id in question
+   * @return {boolean} true if the id or alias is forbidden, false otherwise
+   */
+  noteIdOrAliasIsForbidden(noteIdOrAlias: string): boolean {
+    const forbidden = this.noteConfig.forbiddenNoteIds.includes(noteIdOrAlias);
+    if (forbidden) {
+      this.logger.debug(
+        `A note with the alias '${noteIdOrAlias}' is forbidden by the administrator.`,
+        'noteIdOrAliasIsForbidden',
+      );
+    }
+    return forbidden;
+  }
+
+  /**
+   * @async
+   * Check if the provided note id or alias is already used
+   * @param noteIdOrAlias - the alias or id in question
+   * @return {boolean} true if the id or alias is already used, false otherwise
+   */
+  async noteIdOrAliasIsUsed(noteIdOrAlias: string): Promise<boolean> {
+    const noteWithPublicIdExists = await this.noteRepository.existsBy({
+      publicId: noteIdOrAlias,
+    });
+    const noteWithAliasExists = await this.aliasRepository.existsBy({
+      name: noteIdOrAlias,
+    });
+    if (noteWithPublicIdExists || noteWithAliasExists) {
+      this.logger.debug(
+        `A note with the id or alias '${noteIdOrAlias}' already exists.`,
+        'noteIdOrAliasIsUsed',
+      );
+      return true;
+    }
+    return false;
   }
 
   /**

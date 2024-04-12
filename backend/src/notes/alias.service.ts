@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,7 +8,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import {
-  AlreadyInDBError,
   NotInDBError,
   PrimaryAliasDeletionForbiddenError,
 } from '../errors/errors';
@@ -40,28 +39,8 @@ export class AliasService {
    * @return {Alias} the new alias
    */
   async addAlias(note: Note, alias: string): Promise<Alias> {
-    this.notesService.checkNoteIdOrAlias(alias);
+    await this.notesService.ensureNoteIdOrAliasIsAvailable(alias);
 
-    const foundAlias = await this.aliasRepository.findOne({
-      where: { name: alias },
-    });
-    if (foundAlias !== null) {
-      this.logger.debug(`The alias '${alias}' is already used.`, 'addAlias');
-      throw new AlreadyInDBError(`The alias '${alias}' is already used.`);
-    }
-
-    const foundNote = await this.noteRepository.findOne({
-      where: { publicId: alias },
-    });
-    if (foundNote !== null) {
-      this.logger.debug(
-        `The alias '${alias}' is already a public id.`,
-        'addAlias',
-      );
-      throw new AlreadyInDBError(
-        `The alias '${alias}' is already a public id.`,
-      );
-    }
     let newAlias;
     if ((await note.aliases).length === 0) {
       // the first alias is automatically made the primary alias
@@ -89,8 +68,6 @@ export class AliasService {
     let oldPrimaryId = 0;
     let newPrimaryId = 0;
 
-    this.notesService.checkNoteIdOrAlias(alias);
-
     for (const anAlias of await note.aliases) {
       // found old primary
       if (anAlias.primary) {
@@ -113,16 +90,12 @@ export class AliasService {
       throw new NotInDBError(`The alias '${alias}' is not used by this note.`);
     }
 
-    const oldPrimary = await this.aliasRepository.findOneBy({
+    const oldPrimary = await this.aliasRepository.findOneByOrFail({
       id: oldPrimaryId,
     });
-    const newPrimary = await this.aliasRepository.findOneBy({
+    const newPrimary = await this.aliasRepository.findOneByOrFail({
       id: newPrimaryId,
     });
-
-    if (!oldPrimary || !newPrimary) {
-      throw new Error('This should not happen!');
-    }
 
     oldPrimary.primary = false;
     newPrimary.primary = true;
@@ -143,10 +116,10 @@ export class AliasService {
    * @throws {PrimaryAliasDeletionForbiddenError} the primary alias can only be deleted if it's the only alias
    */
   async removeAlias(note: Note, alias: string): Promise<Note> {
-    this.notesService.checkNoteIdOrAlias(alias);
     const primaryAlias = await getPrimaryAlias(note);
+    const noteAliases = await note.aliases;
 
-    if (primaryAlias === alias && (await note.aliases).length !== 1) {
+    if (primaryAlias === alias && noteAliases.length !== 1) {
       this.logger.debug(
         `The alias '${alias}' is the primary alias, which can only be removed if it's the only alias.`,
         'removeAlias',
@@ -156,10 +129,20 @@ export class AliasService {
       );
     }
 
-    const filteredAliases = (await note.aliases).filter(
-      (anAlias) => anAlias.name !== alias,
-    );
-    if ((await note.aliases).length === filteredAliases.length) {
+    const filteredAliases: Alias[] = [];
+    let aliasToDelete: Alias | null = null;
+    let aliasFound = false;
+
+    for (const anAlias of noteAliases) {
+      if (anAlias.name === alias) {
+        aliasFound = true;
+        aliasToDelete = anAlias;
+      } else {
+        filteredAliases.push(anAlias);
+      }
+    }
+
+    if (!aliasFound) {
       this.logger.debug(
         `The alias '${alias}' is not used by this note or is the primary alias, which can't be removed.`,
         'removeAlias',
@@ -168,12 +151,11 @@ export class AliasService {
         `The alias '${alias}' is not used by this note or is the primary alias, which can't be removed.`,
       );
     }
-    const aliasToDelete = (await note.aliases).find(
-      (anAlias) => anAlias.name === alias,
-    );
-    if (aliasToDelete !== undefined) {
+
+    if (aliasToDelete !== null) {
       await this.aliasRepository.remove(aliasToDelete);
     }
+
     note.aliases = Promise.resolve(filteredAliases);
     return await this.noteRepository.save(note);
   }
