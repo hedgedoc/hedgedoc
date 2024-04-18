@@ -400,12 +400,16 @@ describe('HistoryService', () => {
       };
 
       const mockedManager = Mock.of<EntityManager>({
-        createQueryBuilder: jest.fn().mockImplementation(() => createQueryBuilderForEntityManager),
-        remove: jest.fn().mockImplementationOnce(async (entry: HistoryEntry) => {
-          expect(await (await entry.note).aliases).toHaveLength(1);
-          expect((await (await entry.note).aliases)[0].name).toEqual(alias);
-          expect(entry.pinStatus).toEqual(false);
-        }),
+        createQueryBuilder: jest
+          .fn()
+          .mockImplementation(() => createQueryBuilderForEntityManager),
+        remove: jest
+          .fn()
+          .mockImplementationOnce(async (entry: HistoryEntry) => {
+            expect(await (await entry.note).aliases).toHaveLength(1);
+            expect((await (await entry.note).aliases)[0].name).toEqual(alias);
+            expect(entry.pinStatus).toEqual(false);
+          }),
         save: jest.fn().mockImplementationOnce(async (entry: HistoryEntry) => {
           expect((await entry.note).aliases).toEqual(
             (await newlyCreatedHistoryEntry.note).aliases,
