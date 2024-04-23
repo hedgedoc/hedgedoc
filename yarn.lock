@@ -1229,7 +1229,7 @@ __metadata:
     file-type: 18.7.0
     flowchart.js: 1.17.1
     fork-awesome: 1.2.0
-    formidable: 2.1.2
+    formidable: 3.2.4
     gist-embed: 2.6.0
     graceful-fs: 4.2.11
     helmet: 4.6.0
@@ -5251,13 +5251,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dezalgo@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "dezalgo@npm:1.0.4"
+"dezalgo@npm:1.0.3":
+  version: 1.0.3
+  resolution: "dezalgo@npm:1.0.3"
   dependencies:
     asap: ^2.0.0
     wrappy: 1
-  checksum: 895389c6aead740d2ab5da4d3466d20fa30f738010a4d3f4dcccc9fc645ca31c9d10b7e1804ae489b1eb02c7986f9f1f34ba132d409b043082a86d9a4e745624
+  checksum: 8b26238db91423b2702a7a6d9629d0019c37c415e7b6e75d4b3e8d27e9464e21cac3618dd145f4d4ee96c70cc6ff034227b5b8a0e9c09015a8bdbe6dace3cfb9
   languageName: node
   linkType: hard
 
@@ -6897,15 +6897,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"formidable@npm:2.1.2":
-  version: 2.1.2
-  resolution: "formidable@npm:2.1.2"
+"formidable@npm:3.2.4":
+  version: 3.2.4
+  resolution: "formidable@npm:3.2.4"
   dependencies:
-    dezalgo: ^1.0.4
-    hexoid: ^1.0.0
-    once: ^1.4.0
-    qs: ^6.11.0
-  checksum: 81c8e5d89f5eb873e992893468f0de22c01678ca3d315db62be0560f9de1c77d4faefc9b1f4575098eb2263b3c81ba1024833a9fc3206297ddbac88a4f69b7a8
+    dezalgo: 1.0.3
+    hexoid: 1.0.0
+    once: 1.4.0
+  checksum: 23df0f9e1d5eca3546dc56764a56dc402d0156d6a9c900c6e1f071812eeaf12637e5e368a34106f65522356d6080336b7f793b75bebbfff18950bed1d6ae92d4
   languageName: node
   linkType: hard
 
@@ -7533,7 +7532,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hexoid@npm:^1.0.0":
+"hexoid@npm:1.0.0":
   version: 1.0.0
   resolution: "hexoid@npm:1.0.0"
   checksum: 27a148ca76a2358287f40445870116baaff4a0ed0acc99900bf167f0f708ffd82e044ff55e9949c71963852b580fc024146d3ac6d5d76b508b78d927fa48ae2d
@@ -11320,7 +11319,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"once@npm:^1.3.0, once@npm:^1.3.1, once@npm:^1.4.0":
+"once@npm:1.4.0, once@npm:^1.3.0, once@npm:^1.3.1, once@npm:^1.4.0":
   version: 1.4.0
   resolution: "once@npm:1.4.0"
   dependencies:
@@ -12746,7 +12745,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:^6.11.0, qs@npm:^6.11.2, qs@npm:^6.5.2":
+"qs@npm:^6.11.2, qs@npm:^6.5.2":
   version: 6.11.2
   resolution: "qs@npm:6.11.2"
   dependencies:
