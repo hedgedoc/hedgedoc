@@ -18,6 +18,7 @@
     "lint:fix": "dotenv -c development -- turbo run lint:fix",
     "format": "dotenv -c development -- turbo run format",
     "start:dev": "dotenv -c development -- turbo run start:dev",
+    "start:no-reverse-proxy": "dotenv -c production -- turbo run start --filter=!dev-reverse-proxy",
     "start": "dotenv -c production -- turbo run start",
     "test:ci": "dotenv -c test -- turbo run test:ci --concurrency 1",
     "test": "dotenv -c test -- turbo run test --concurrency 1",
