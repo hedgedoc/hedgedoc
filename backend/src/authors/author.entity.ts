@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,7 +11,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { Edit } from '../revisions/edit.entity';
+import { RangeAuthorship } from '../revisions/range-authorship.entity';
 import { Session } from '../sessions/session.entity';
 import { User } from '../users/user.entity';
 
@@ -52,8 +52,8 @@ export class Author {
    * List of edits that this author created
    * All edits must belong to the same note
    */
-  @OneToMany(() => Edit, (edit) => edit.author)
-  edits: Promise<Edit[]>;
+  @OneToMany(() => RangeAuthorship, (edit) => edit.author)
+  edits: Promise<RangeAuthorship[]>;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}

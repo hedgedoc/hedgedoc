@@ -1,8 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { AbsolutePositionAuthorship } from '@hedgedoc/commons';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { createPatch } from 'diff';
@@ -12,7 +13,7 @@ import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Note } from '../notes/note.entity';
 import { Tag } from '../notes/tag.entity';
-import { EditService } from './edit.service';
+import { RangeAuthorshipService } from './range-authorship.service';
 import { RevisionMetadataDto } from './revision-metadata.dto';
 import { RevisionDto } from './revision.dto';
 import { Revision } from './revision.entity';
@@ -29,7 +30,7 @@ export class RevisionsService {
     private readonly logger: ConsoleLoggerService,
     @InjectRepository(Revision)
     private revisionRepository: Repository<Revision>,
-    private editService: EditService,
+    private rangeAuthorshipService: RangeAuthorshipService,
   ) {
     this.logger.setContext(RevisionsService.name);
   }
@@ -97,7 +98,9 @@ export class RevisionsService {
   async getRevisionUserInfo(revision: Revision): Promise<RevisionUserInfo> {
     // get a deduplicated list of all authors
     let authors = await Promise.all(
-      (await revision.edits).map(async (edit) => await edit.author),
+      (await revision.rangeAuthorships).map(
+        async (rangeAuthorship) => await rangeAuthorship.author,
+      ),
     );
     authors = [...new Set(authors)]; // remove duplicates with Set
 
@@ -142,9 +145,12 @@ export class RevisionsService {
       authorUsernames: revisionUserInfo.usernames,
       anonymousAuthorCount: revisionUserInfo.anonymousUserCount,
       patch: revision.patch,
-      edits: await Promise.all(
-        (await revision.edits).map(
-          async (edit) => await this.editService.toEditDto(edit),
+      rangeAuthorships: await Promise.all(
+        (await revision.rangeAuthorships).map(
+          async (rangeAuthorship) =>
+            await this.rangeAuthorshipService.toRangeAuthorshipDto(
+              rangeAuthorship,
+            ),
         ),
       ),
     };
@@ -158,12 +164,14 @@ export class RevisionsService {
    * @param note The note for which the revision should be created
    * @param newContent The new note content
    * @param yjsStateVector The yjs state vector that describes the new content
+   * @param absolutePositionAuthorships The absolute positions for authorship marks
    * @return {Revision} the created revision
    * @return {undefined} if the revision couldn't be created because e.g. the content hasn't changed
    */
   async createRevision(
     note: Note,
     newContent: string,
+    absolutePositionAuthorships: AbsolutePositionAuthorship[],
     yjsStateVector?: number[],
   ): Promise<Revision | undefined> {
     const latestRevision =
@@ -186,6 +194,12 @@ export class RevisionsService {
       return entity;
     });
 
+    const rangeAuthorships =
+      this.rangeAuthorshipService.createRangeAuthorshipsFromAbsolutePositions(
+        absolutePositionAuthorships,
+        newContent.length,
+      );
+
     return Revision.create(
       newContent,
       patch,
@@ -194,6 +208,7 @@ export class RevisionsService {
       title,
       description,
       tagEntities,
+      rangeAuthorships,
     ) as Revision;
   }
 
@@ -203,16 +218,19 @@ export class RevisionsService {
    * @async
    * @param note The note for which the revision should be created
    * @param newContent The new note content
+   * @param absolutePositionAuthorships The absolute positions for authorship marks
    * @param yjsStateVector The yjs state vector that describes the new content
    */
   async createAndSaveRevision(
     note: Note,
     newContent: string,
+    absolutePositionAuthorships: AbsolutePositionAuthorship[],
     yjsStateVector?: number[],
   ): Promise<void> {
     const revision = await this.createRevision(
       note,
       newContent,
+      absolutePositionAuthorships,
       yjsStateVector,
     );
     if (revision) {

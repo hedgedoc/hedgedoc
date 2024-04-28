@@ -1,18 +1,21 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export interface RealtimeUser {
-  displayName: string
-  username: string | null
+export interface RealtimeUser extends ShortRealtimeUser {
   active: boolean
-  styleIndex: number
   cursor: RemoteCursor | null
 }
 
 export interface RemoteCursor {
   from: number
   to?: number
+}
+
+export interface ShortRealtimeUser {
+  displayName: string
+  styleIndex: number
+  username: string | null
 }

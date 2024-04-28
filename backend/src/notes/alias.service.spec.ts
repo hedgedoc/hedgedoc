@@ -30,7 +30,7 @@ import { LoggerModule } from '../logger/logger.module';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { RealtimeNoteModule } from '../realtime/realtime-note/realtime-note.module';
-import { Edit } from '../revisions/edit.entity';
+import { RangeAuthorship } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
 import { RevisionsModule } from '../revisions/revisions.module';
 import { Session } from '../sessions/session.entity';
@@ -122,7 +122,7 @@ describe('AliasService', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})
-      .overrideProvider(getRepositoryToken(Edit))
+      .overrideProvider(getRepositoryToken(RangeAuthorship))
       .useValue({})
       .overrideProvider(getRepositoryToken(Revision))
       .useClass(Repository)

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -28,7 +28,7 @@ import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
-import { Edit } from '../revisions/edit.entity';
+import { RangeAuthorship } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
 import { Session } from '../sessions/session.entity';
 import { User } from '../users/user.entity';
@@ -82,7 +82,7 @@ describe('MediaService', () => {
         EventEmitterModule.forRoot(eventModuleConfig),
       ],
     })
-      .overrideProvider(getRepositoryToken(Edit))
+      .overrideProvider(getRepositoryToken(RangeAuthorship))
       .useValue({})
       .overrideProvider(getRepositoryToken(AuthToken))
       .useValue({})

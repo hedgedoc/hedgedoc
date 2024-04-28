@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -17,7 +17,7 @@ import { Note } from './notes/note.entity';
 import { Tag } from './notes/tag.entity';
 import { NoteGroupPermission } from './permissions/note-group-permission.entity';
 import { NoteUserPermission } from './permissions/note-user-permission.entity';
-import { Edit } from './revisions/edit.entity';
+import { RangeAuthorship } from './revisions/range-authorship.entity';
 import { Revision } from './revisions/revision.entity';
 import { Session } from './sessions/session.entity';
 import { User } from './users/user.entity';
@@ -33,7 +33,7 @@ const dataSource = new DataSource({
     User,
     Note,
     Revision,
-    Edit,
+    RangeAuthorship,
     NoteGroupPermission,
     NoteUserPermission,
     Group,
@@ -81,9 +81,14 @@ dataSource
         'Test note',
         '',
         [],
+        [],
       ) as Revision;
-      const edit = Edit.create(author, 1, 42) as Edit;
-      revision.edits = Promise.resolve([edit]);
+      const rangeAuthorship = RangeAuthorship.create(
+        author,
+        1,
+        42,
+      ) as RangeAuthorship;
+      revision.rangeAuthorships = Promise.resolve([rangeAuthorship]);
       notes[i].revisions = Promise.all([revision]);
       notes[i].userPermissions = Promise.resolve([]);
       notes[i].groupPermissions = Promise.resolve([]);
@@ -92,7 +97,7 @@ dataSource
         notes[i],
         user,
         revision,
-        edit,
+        rangeAuthorship,
         author,
         identity,
       ]);

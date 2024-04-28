@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,10 +10,21 @@ import {
   Doc,
   encodeStateAsUpdate,
   encodeStateVector,
-  Text as YText
+  Text as YText,
+  Array as YArray,
+  createAbsolutePositionFromRelativePosition,
+  createRelativePositionFromTypeIndex,
+  AbsolutePosition
 } from 'yjs'
+import {
+  AbsolutePositionAuthorship,
+  OptionalAbsolutePositionAuthorship,
+  RelativePositionAuthorship
+} from './position-authorship.js'
+import { RealtimeUser } from '../message-transporters/index.js'
 
 const MARKDOWN_CONTENT_CHANNEL_NAME = 'markdownContent'
+const RELATIVE_POSITION_AUTHORSHIPS_CHANNEL_NAME = 'relativePositionAuthorships'
 
 export interface RealtimeDocEvents extends EventMap {
   update: (update: number[], origin: unknown) => void
@@ -36,13 +47,33 @@ export class RealtimeDoc extends EventEmitter2<RealtimeDocEvents> {
    *
    * @param initialTextContent the initial text content of the {@link Doc YDoc}
    * @param initialYjsState the initial yjs state. If provided this will be used instead of the text content
+   * @param initialAbsolutePositionAuthorships the initial realtime range authorships
    */
-  constructor(initialTextContent?: string, initialYjsState?: number[]) {
+  constructor(
+    initialTextContent?: string,
+    initialYjsState?: number[],
+    initialAbsolutePositionAuthorships?: AbsolutePositionAuthorship[]
+  ) {
     super()
     if (initialYjsState) {
       this.applyUpdate(initialYjsState, this)
-    } else if (initialTextContent) {
-      this.getMarkdownContentChannel().insert(0, initialTextContent)
+    } else {
+      if (initialTextContent) {
+        this.getMarkdownContentChannel().insert(0, initialTextContent)
+      }
+
+      if (initialAbsolutePositionAuthorships) {
+        this.getRelativePositionAuthorshipsChannel().insert(
+          0,
+          initialAbsolutePositionAuthorships.map(([index, user]) => [
+            createRelativePositionFromTypeIndex(
+              this.getMarkdownContentChannel(),
+              index
+            ),
+            user
+          ])
+        )
+      }
     }
 
     this.docUpdateListener = (update, origin) => {
@@ -61,6 +92,15 @@ export class RealtimeDoc extends EventEmitter2<RealtimeDocEvents> {
   }
 
   /**
+   * Extracts the {@link YMap map channel} that contains the realtime range authorships.
+   *
+   * @return The realtime range authorships channel
+   */
+  public getRelativePositionAuthorshipsChannel(): YArray<RelativePositionAuthorship> {
+    return this.doc.getArray(RELATIVE_POSITION_AUTHORSHIPS_CHANNEL_NAME)
+  }
+
+  /**
    * Gets the current content of the note as it's currently edited in realtime.
    *
    * Please be aware that the return of this method may be very quickly outdated.
@@ -70,6 +110,25 @@ export class RealtimeDoc extends EventEmitter2<RealtimeDocEvents> {
   public getCurrentContent(): string {
     // eslint-disable-next-line @typescript-eslint/no-base-to-string
     return this.getMarkdownContentChannel().toString()
+  }
+
+  /**
+   * Gets the current authorship positions for the realtime.
+   *
+   * Please be aware that the return of this method may be very quickly outdated.
+   *
+   * @return An array of .
+   */
+  public getAbsolutePositionAuthorships(): AbsolutePositionAuthorship[] {
+    return this.getRelativePositionAuthorshipsChannel()
+      .map<OptionalAbsolutePositionAuthorship>(([relativePosition, user]) => [
+        createAbsolutePositionFromRelativePosition(relativePosition, this.doc),
+        user
+      ])
+      .filter(
+        <T, S>(value: [T | null, S]): value is [T, S] => value[0] !== null
+      )
+      .map(([absolutePosition, user]) => [absolutePosition.index, user])
   }
 
   /**

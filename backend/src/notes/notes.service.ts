@@ -104,6 +104,7 @@ export class NotesService {
     const newRevision = await this.revisionsService.createRevision(
       newNote,
       noteContent,
+      [], // TODO Use the correct rangeAuthorships
     );
     newNote.revisions = Promise.resolve(
       newRevision === undefined ? [] : [newRevision],
@@ -261,7 +262,7 @@ export class NotesService {
       .createQueryBuilder('user')
       .innerJoin('user.authors', 'author')
       .innerJoin('author.edits', 'edit')
-      .innerJoin('edit.revisions', 'revision')
+      .innerJoin('edit.revision', 'revision')
       .innerJoin('revision.note', 'note')
       .where('note.id = :id', { id: note.id })
       .getMany();
@@ -351,6 +352,7 @@ export class NotesService {
     const newRevision = await this.revisionsService.createRevision(
       note,
       noteContent,
+      [], // TODO Use the correct rangeAuthorships
     );
     if (newRevision !== undefined) {
       revisions.push(newRevision);
@@ -367,12 +369,12 @@ export class NotesService {
    */
   async calculateUpdateUser(note: Note): Promise<User | null> {
     const lastRevision = await this.revisionsService.getLatestRevision(note);
-    const edits = await lastRevision.edits;
-    if (edits.length > 0) {
+    const rangeAuthorships = await lastRevision.rangeAuthorships;
+    if (rangeAuthorships.length > 0) {
       // Sort the last Revisions Edits by their updatedAt Date to get the latest one
       // the user of that Edit is the updateUser
       return await (
-        await edits.sort(
+        await rangeAuthorships.sort(
           (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime(),
         )[0].author
       ).user;

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -33,7 +33,7 @@ import { NotePermission } from '../../permissions/note-permission.enum';
 import { NoteUserPermission } from '../../permissions/note-user-permission.entity';
 import { PermissionsModule } from '../../permissions/permissions.module';
 import { PermissionsService } from '../../permissions/permissions.service';
-import { Edit } from '../../revisions/edit.entity';
+import { RangeAuthorship } from '../../revisions/range-authorship.entity';
 import { Revision } from '../../revisions/revision.entity';
 import { Session } from '../../sessions/session.entity';
 import { SessionModule } from '../../sessions/session.module';
@@ -126,7 +126,7 @@ describe('Websocket gateway', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})
-      .overrideProvider(getRepositoryToken(Edit))
+      .overrideProvider(getRepositoryToken(RangeAuthorship))
       .useValue({})
       .overrideProvider(getRepositoryToken(Revision))
       .useValue({})

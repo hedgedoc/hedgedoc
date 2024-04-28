@@ -1,9 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { RealtimeUser, RemoteCursor } from './realtime-user.js'
+import {
+  RealtimeUser,
+  RemoteCursor,
+  ShortRealtimeUser
+} from './realtime-user.js'
 
 export enum MessageType {
   NOTE_CONTENT_STATE_REQUEST = 'NOTE_CONTENT_STATE_REQUEST',
@@ -33,10 +37,7 @@ export interface MessagePayloads {
   [MessageType.NOTE_CONTENT_UPDATE]: number[]
   [MessageType.REALTIME_USER_STATE_SET]: {
     users: RealtimeUser[]
-    ownUser: {
-      displayName: string
-      styleIndex: number
-    }
+    ownUser: ShortRealtimeUser
   }
   [MessageType.REALTIME_USER_SINGLE_UPDATE]: RemoteCursor
 

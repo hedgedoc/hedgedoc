@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,7 +10,7 @@ import { IsDate, IsNumber, IsOptional, IsString, Min } from 'class-validator';
 import { UserInfoDto } from '../users/user-info.dto';
 import { BaseDto } from '../utils/base.dto.';
 
-export class EditDto extends BaseDto {
+export class RangeAuthorshipDto extends BaseDto {
   /**
    * Username of the user who authored this section
    * Is `null` if the user is anonymous

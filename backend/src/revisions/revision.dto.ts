@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,7 +7,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsString, ValidateNested } from 'class-validator';
 
-import { EditDto } from './edit.dto';
+import { RangeAuthorshipDto } from './range-authorship.dto';
 import { RevisionMetadataDto } from './revision-metadata.dto';
 
 export class RevisionDto extends RevisionMetadataDto {
@@ -27,10 +27,10 @@ export class RevisionDto extends RevisionMetadataDto {
   patch: string;
 
   /**
-   * All edit objects which are used in the revision.
+   * All range authorship objects which are used in the revision.
    */
-  @Type(() => EditDto)
+  @Type(() => RangeAuthorshipDto)
   @ValidateNested({ each: true })
-  @ApiProperty({ isArray: true, type: EditDto })
-  edits: EditDto[];
+  @ApiProperty({ isArray: true, type: RangeAuthorshipDto })
+  rangeAuthorships: RangeAuthorshipDto[];
 }

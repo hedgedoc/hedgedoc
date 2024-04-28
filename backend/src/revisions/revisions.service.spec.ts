@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -29,8 +29,8 @@ import { NoteGroupPermission } from '../permissions/note-group-permission.entity
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Session } from '../sessions/session.entity';
 import { User } from '../users/user.entity';
-import { Edit } from './edit.entity';
-import { EditService } from './edit.service';
+import { RangeAuthorship } from './edit.entity';
+import { RangeAuthorshipService } from './range-authorship.service';
 import { Revision } from './revision.entity';
 import { RevisionsService } from './revisions.service';
 
@@ -42,7 +42,7 @@ describe('RevisionsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         RevisionsService,
-        EditService,
+        RangeAuthorshipService,
         {
           provide: getRepositoryToken(Revision),
           useClass: Repository,
@@ -63,7 +63,7 @@ describe('RevisionsService', () => {
         EventEmitterModule.forRoot(eventModuleConfig),
       ],
     })
-      .overrideProvider(getRepositoryToken(Edit))
+      .overrideProvider(getRepositoryToken(RangeAuthorship))
       .useValue({})
       .overrideProvider(getRepositoryToken(User))
       .useValue({})
@@ -183,12 +183,14 @@ describe('RevisionsService', () => {
       author.user = Promise.resolve(user);
       const anonAuthor = Author.create(123) as Author;
       const anonAuthor2 = Author.create(123) as Author;
-      const edits = [Edit.create(author, 12, 15) as Edit];
-      edits.push(Edit.create(author, 16, 18) as Edit);
-      edits.push(Edit.create(author, 29, 20) as Edit);
-      edits.push(Edit.create(anonAuthor, 29, 20) as Edit);
-      edits.push(Edit.create(anonAuthor, 29, 20) as Edit);
-      edits.push(Edit.create(anonAuthor2, 29, 20) as Edit);
+      const edits = [RangeAuthorship.create(author, 12, 15) as RangeAuthorship];
+      edits.push(RangeAuthorship.create(author, 16, 18) as RangeAuthorship);
+      edits.push(RangeAuthorship.create(author, 29, 20) as RangeAuthorship);
+      edits.push(RangeAuthorship.create(anonAuthor, 29, 20) as RangeAuthorship);
+      edits.push(RangeAuthorship.create(anonAuthor, 29, 20) as RangeAuthorship);
+      edits.push(
+        RangeAuthorship.create(anonAuthor2, 29, 20) as RangeAuthorship,
+      );
       const revision = Mock.of<Revision>({});
       revision.edits = Promise.resolve(edits);
 
@@ -210,7 +212,7 @@ describe('RevisionsService', () => {
         description: 'mockDescription',
         patch: 'mockPatch',
         edits: Promise.resolve([
-          Mock.of<Edit>({
+          Mock.of<RangeAuthorship>({
             endPos: 93,
             startPos: 34,
             createdAt: new Date('2020-03-04T20:12:00.000Z'),
@@ -259,7 +261,7 @@ describe('RevisionsService', () => {
         description: 'mockDescription',
         patch: 'mockPatch',
         edits: Promise.resolve([
-          Mock.of<Edit>({
+          Mock.of<RangeAuthorship>({
             endPos: 93,
             startPos: 34,
             createdAt: new Date('2020-03-04T22:32:00.000Z'),

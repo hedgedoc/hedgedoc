@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -47,6 +47,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
       .createAndSaveRevision(
         realtimeNote.getNote(),
         realtimeNote.getRealtimeDoc().getCurrentContent(),
+        realtimeNote.getRealtimeDoc().getAbsolutePositionAuthorships(),
         realtimeNote.getRealtimeDoc().encodeStateAsUpdate(),
       )
       .catch((reason) => this.logger.error(reason));
