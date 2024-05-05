@@ -275,9 +275,28 @@ export class RevisionsService {
             new Date(revision.createdAt).getTime() <=
             currentTime - revisionRetentionDays * 24 * 60 * 60 * 1000,
         );
+      const remainedRevisions = revisions.filter((val) => !oldRevisions.includes(val))
 
       if (!oldRevisions.length) {
         continue;
+
+      } else if (oldRevisions.length == revisions.length - 1 ){
+        const beUpdatedRevision = revisions.slice(-1)[0]
+        beUpdatedRevision.patch = createPatch(
+          note.publicId,
+          '', // donnt exist older revision
+          beUpdatedRevision.content,
+        );
+        await this.revisionRepository.save(beUpdatedRevision);
+
+      } else {
+        const beUpdatedRevision = remainedRevisions.slice(0)[0]
+        beUpdatedRevision.patch = createPatch(
+          note.publicId,
+          oldRevisions.slice(-1)[0].content,
+          beUpdatedRevision.content,
+        );
+        await this.revisionRepository.save(beUpdatedRevision);
       }
 
       await this.revisionRepository.remove(oldRevisions);
