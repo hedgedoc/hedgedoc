@@ -9,9 +9,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { createPatch } from 'diff';
 import { Repository } from 'typeorm';
 
-import revisionConfiguration, {
-  RevisionConfig,
-} from '../config/revision.config';
+import noteConfiguration, {
+  NoteConfig,
+} from '../config/note.config';
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Note } from '../notes/note.entity';
@@ -35,7 +35,7 @@ export class RevisionsService {
     private revisionRepository: Repository<Revision>,
     @InjectRepository(Note)
     private noteRepository: Repository<Note>,
-    @Inject(revisionConfiguration.KEY) private revisionConfig: RevisionConfig,
+    @Inject(noteConfiguration.KEY) private noteConfig: NoteConfig,
     private editService: EditService,
   ) {
     this.logger.setContext(RevisionsService.name);
@@ -252,7 +252,7 @@ export class RevisionsService {
 
   async removeOldRevisions(): Promise<void> {
     const currentTime = new Date().getTime();
-    const revisionRetentionDays: number = this.revisionConfig.retentionDays;
+    const revisionRetentionDays: number = this.noteConfig.revisionRetentionDays;
     if (revisionRetentionDays <= 0) {
       return;
     }

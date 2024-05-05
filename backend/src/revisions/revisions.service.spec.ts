@@ -18,10 +18,10 @@ import authConfigMock from '../config/mock/auth.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
 import noteConfigMock from '../config/mock/note.config.mock';
 import {
-  createDefaultMockRevisionConfig,
-  registerRevisionConfig,
-} from '../config/mock/revision.config.mock';
-import { RevisionConfig } from '../config/revision.config';
+  createDefaultMockNoteConfig,
+  registerNoteConfig,
+} from '../config/mock/note.config.mock';
+import { NoteConfig } from '../config/note.config';
 import { NotInDBError } from '../errors/errors';
 import { eventModuleConfig } from '../events';
 import { Group } from '../groups/group.entity';
@@ -44,7 +44,7 @@ describe('RevisionsService', () => {
   let service: RevisionsService;
   let revisionRepo: Repository<Revision>;
   let noteRepo: Repository<Note>;
-  const revisionConfig: RevisionConfig = createDefaultMockRevisionConfig();
+  const noteConfig: NoteConfig = createDefaultMockNoteConfig();
 
   beforeEach(async () => {
     noteRepo = new Repository<Note>(
@@ -81,7 +81,7 @@ describe('RevisionsService', () => {
             databaseConfigMock,
             authConfigMock,
             noteConfigMock,
-            registerRevisionConfig(revisionConfig),
+            registerNoteConfig(noteConfig),
           ],
         }),
         EventEmitterModule.forRoot(eventModuleConfig),
@@ -473,7 +473,7 @@ describe('RevisionsService', () => {
     const retentionDays = 30;
 
     beforeEach(() => {
-      revisionConfig.retentionDays = retentionDays;
+      noteConfig.revisionRetentionDays = retentionDays;
 
       note = Mock.of<Note>({ publicId: 'test-note', id: 1 });
       notes = [note];
@@ -629,7 +629,7 @@ describe('RevisionsService', () => {
     });
 
     it('do nothing when retention days config is zero', async () => {
-      revisionConfig.retentionDays = 0;
+      noteConfig.revisionRetentionDays = 0;
       const spyOnRemove = jest.spyOn(revisionRepo, 'remove');
 
       await service.removeOldRevisions();
