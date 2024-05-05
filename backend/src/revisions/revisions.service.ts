@@ -263,9 +263,12 @@ export class RevisionsService {
         where: {
           note: { id: note.id },
         },
+        order: {
+          createdAt: "ASC",
+        },
       });
+
       const oldRevisions = revisions
-        .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
         .slice(0, -1) // always keep the latest revision
         .filter(
           (revision) =>
