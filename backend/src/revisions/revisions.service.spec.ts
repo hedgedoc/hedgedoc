@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ConfigModule } from '@nestjs/config';
+import { createPatch } from 'diff';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
@@ -474,7 +475,7 @@ describe('RevisionsService', () => {
     beforeEach(() => {
       revisionConfig.retentionDays = retentionDays;
 
-      note = Mock.of<Note>({ id: 1 });
+      note = Mock.of<Note>({ publicId: 'test-note', id: 1 });
       notes = [note];
     });
 
@@ -498,12 +499,19 @@ describe('RevisionsService', () => {
         id: 2,
         createdAt: date2,
         note: Promise.resolve(note),
+        content: 'old content\n',
       });
       const revision3 = Mock.of<Revision>({
         id: 3,
         createdAt: date3,
         note: Promise.resolve(note),
+        content: '---\ntitle: new title\ndescription: new description\ntags: [ "tag1" ]\n---\nnew content\n',
       });
+      revision3.patch = createPatch(
+        note.publicId,
+        revision2.content,
+        revision3.content
+      )
 
       revisions = [revision1, revision2, revision3];
       oldRevisions = [revision1, revision2];
@@ -516,8 +524,25 @@ describe('RevisionsService', () => {
           expect(entry).toEqual(oldRevisions);
           return entry;
         });
+      jest
+        .spyOn(revisionRepo, 'save')
+        .mockResolvedValue(revision3);
 
       await service.removeOldRevisions();
+      expect(revision3.patch).toMatchInlineSnapshot(`
+        "Index: test-note
+        ===================================================================
+        --- test-note
+        +++ test-note
+        @@ -0,0 +1,6 @@
+        +---
+        +title: new title
+        +description: new description
+        +tags: [ "tag1" ]
+        +---
+        +new content
+        "
+      `);
     });
 
     it('remove a part of old revisions', async () => {
@@ -531,17 +556,24 @@ describe('RevisionsService', () => {
         id: 1,
         createdAt: date1,
         note: Promise.resolve(note),
+        content: 'old content\n',
       });
       const revision2 = Mock.of<Revision>({
         id: 2,
         createdAt: date2,
         note: Promise.resolve(note),
+        content: '---\ntitle: new title\ndescription: new description\ntags: [ "tag1" ]\n---\nnew content\n',
       });
       const revision3 = Mock.of<Revision>({
         id: 3,
         createdAt: date3,
         note: Promise.resolve(note),
       });
+      revision2.patch = createPatch(
+        note.publicId,
+        revision1.content,
+        revision2.content
+      )
 
       revisions = [revision1, revision2, revision3];
       oldRevisions = [revision1];
@@ -554,8 +586,26 @@ describe('RevisionsService', () => {
           expect(entry).toEqual(oldRevisions);
           return entry;
         });
+      jest
+        .spyOn(revisionRepo, 'save')
+        .mockResolvedValue(revision2);
 
       await service.removeOldRevisions();
+      expect(revision2.patch).toMatchInlineSnapshot(`
+        "Index: test-note
+        ===================================================================
+        --- test-note
+        +++ test-note
+        @@ -1,1 +1,6 @@
+        -old content
+        +---
+        +title: new title
+        +description: new description
+        +tags: [ "tag1" ]
+        +---
+        +new content
+        "
+      `);
     });
 
     it('do nothing when only one revision', async () => {
