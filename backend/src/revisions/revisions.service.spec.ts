@@ -482,7 +482,45 @@ describe('RevisionsService', () => {
       jest.clearAllMocks();
     });
 
-    it('remove all except latest revision', async () => {
+    it('remove all revisions except latest revision', async () => {
+      const date1 = new Date();
+      const date2 = new Date();
+      const date3 = new Date();
+      date1.setDate(date1.getDate() - retentionDays - 2);
+      date2.setDate(date2.getDate() - retentionDays - 1);
+
+      const revision1 = Mock.of<Revision>({
+        id: 1,
+        createdAt: date1,
+        note: Promise.resolve(note),
+      });
+      const revision2 = Mock.of<Revision>({
+        id: 2,
+        createdAt: date2,
+        note: Promise.resolve(note),
+      });
+      const revision3 = Mock.of<Revision>({
+        id: 3,
+        createdAt: date3,
+        note: Promise.resolve(note),
+      });
+
+      revisions = [revision1, revision2, revision3];
+      oldRevisions = [revision1, revision2];
+
+      jest.spyOn(noteRepo, 'find').mockResolvedValueOnce(notes);
+      jest.spyOn(revisionRepo, 'find').mockResolvedValueOnce(revisions);
+      jest
+        .spyOn(revisionRepo, 'remove')
+        .mockImplementationOnce(async (entry, _) => {
+          expect(entry).toEqual(oldRevisions);
+          return entry;
+        });
+
+      await service.removeOldRevisions();
+    });
+
+    it('remove a part of old revisions', async () => {
       const date1 = new Date();
       const date2 = new Date();
       const date3 = new Date();
