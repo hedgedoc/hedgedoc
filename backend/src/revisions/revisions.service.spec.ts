@@ -497,7 +497,7 @@ describe('RevisionsService', () => {
       revision3.patch = createPatch(
         note.publicId,
         revision2.content,
-        revision3.content
+        revision3.content,
       )
 
       revisions = [revision1, revision2, revision3];
@@ -559,7 +559,7 @@ describe('RevisionsService', () => {
       revision2.patch = createPatch(
         note.publicId,
         revision1.content,
-        revision2.content
+        revision2.content,
       )
 
       revisions = [revision1, revision2, revision3];
