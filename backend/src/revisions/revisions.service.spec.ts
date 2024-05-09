@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { createPatch } from 'diff';
 import { Mock } from 'ts-mockery';
 import { Repository } from 'typeorm';
 
@@ -121,7 +122,7 @@ describe('RevisionsService', () => {
     let note: Note;
 
     beforeEach(() => {
-      note = Mock.of<Note>({});
+      note = Mock.of<Note>({ publicId: 'test-note', id: 1 });
       revisions = [];
 
       jest
@@ -141,14 +142,32 @@ describe('RevisionsService', () => {
     });
 
     it('purges the revision history', async () => {
-      const revision1 = Mock.of<Revision>({ id: 1 });
-      const revision2 = Mock.of<Revision>({ id: 2 });
-      const revision3 = Mock.of<Revision>({ id: 3 });
+      const revision1 = Mock.of<Revision>({
+        id: 1,
+        note: Promise.resolve(note),
+      });
+      const revision2 = Mock.of<Revision>({
+        id: 2,
+        note: Promise.resolve(note),
+      });
+      const revision3 = Mock.of<Revision>({
+        id: 3,
+        note: Promise.resolve(note),
+        content: '---\ntitle: new title\ndescription: new description\ntags: [ "tag1" ]\n---\nnew content\n',
+      });
       revisions = [revision1, revision2, revision3];
       note.revisions = Promise.resolve(revisions);
 
       jest.spyOn(revisionRepo, 'find').mockResolvedValueOnce(revisions);
       jest.spyOn(service, 'getLatestRevision').mockResolvedValueOnce(revision3);
+
+      // expected to have only the latest revision
+      revision3.patch = createPatch(
+        note.publicId,
+        '',
+        revision3.content,
+      )
+      jest.spyOn(revisionRepo, 'save').mockResolvedValue(revision3)
 
       // expected to return all the purged revisions
       expect(await service.purgeRevisions(note)).toStrictEqual([
@@ -156,11 +175,24 @@ describe('RevisionsService', () => {
         revision2,
       ]);
 
-      // expected to have only the latest revision
       expect(revisions).toStrictEqual([revision3]);
+      expect(revision3.patch).toMatchInlineSnapshot(`
+        "Index: test-note
+        ===================================================================
+        --- test-note
+        +++ test-note
+        @@ -0,0 +1,6 @@
+        +---
+        +title: new title
+        +description: new description
+        +tags: [ "tag1" ]
+        +---
+        +new content
+        "
+      `);
     });
     it('has no effect on revision history when a single revision is present', async () => {
-      const revision1 = Mock.of<Revision>({ id: 1 });
+      const revision1 = Mock.of<Revision>({ id: 1});
       revisions = [revision1];
       note.revisions = Promise.resolve(revisions);
 
