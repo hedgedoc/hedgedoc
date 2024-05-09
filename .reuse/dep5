@@ -122,3 +122,7 @@ License: CC0-1.0
 Files: frontend/**/__snapshots__/*.snap
 Copyright: 2022 The HedgeDoc developers (see AUTHORS file)
 License: AGPL-3.0-only
+
+Files: backend/**/__snapshots__/*.snap
+Copyright: 2024 The HedgeDoc developers (see AUTHORS file)
+License: AGPL-3.0-only

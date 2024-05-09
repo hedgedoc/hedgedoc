@@ -59,6 +59,17 @@ export class RevisionsService {
     const oldRevisions = revisions.filter(
       (item) => item.id !== latestRevision.id,
     );
+
+    // update content diff
+    if (oldRevisions.length > 0) {
+      latestRevision.patch = createPatch(
+        note.publicId,
+        '',
+        latestRevision.content,
+      );
+      await this.revisionRepository.save(latestRevision);
+    }
+
     // delete the old revisions
     return await this.revisionRepository.remove(oldRevisions);
   }

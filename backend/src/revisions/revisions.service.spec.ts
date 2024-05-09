@@ -34,6 +34,7 @@ import { EditService } from './edit.service';
 import { Revision } from './revision.entity';
 import { RevisionsService } from './revisions.service';
 
+
 describe('RevisionsService', () => {
   let service: RevisionsService;
   let revisionRepo: Repository<Revision>;
@@ -121,7 +122,7 @@ describe('RevisionsService', () => {
     let note: Note;
 
     beforeEach(() => {
-      note = Mock.of<Note>({});
+      note = Mock.of<Note>({ publicId: 'test-note', id: 1 });
       revisions = [];
 
       jest
@@ -141,14 +142,27 @@ describe('RevisionsService', () => {
     });
 
     it('purges the revision history', async () => {
-      const revision1 = Mock.of<Revision>({ id: 1 });
-      const revision2 = Mock.of<Revision>({ id: 2 });
-      const revision3 = Mock.of<Revision>({ id: 3 });
+      const revision1 = Mock.of<Revision>({
+        id: 1,
+        note: Promise.resolve(note),
+      });
+      const revision2 = Mock.of<Revision>({
+        id: 2,
+        note: Promise.resolve(note),
+      });
+      const revision3 = Mock.of<Revision>({
+        id: 3,
+        note: Promise.resolve(note),
+        content:
+          '---\ntitle: new title\ndescription: new description\ntags: [ "tag1" ]\n---\nnew content\n',
+      });
       revisions = [revision1, revision2, revision3];
       note.revisions = Promise.resolve(revisions);
 
       jest.spyOn(revisionRepo, 'find').mockResolvedValueOnce(revisions);
       jest.spyOn(service, 'getLatestRevision').mockResolvedValueOnce(revision3);
+
+      jest.spyOn(revisionRepo, 'save').mockResolvedValue(Mock.of<Revision>());
 
       // expected to return all the purged revisions
       expect(await service.purgeRevisions(note)).toStrictEqual([
@@ -156,8 +170,8 @@ describe('RevisionsService', () => {
         revision2,
       ]);
 
-      // expected to have only the latest revision
       expect(revisions).toStrictEqual([revision3]);
+      expect(revision3.patch).toMatchSnapshot();
     });
     it('has no effect on revision history when a single revision is present', async () => {
       const revision1 = Mock.of<Revision>({ id: 1 });
