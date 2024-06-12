@@ -3,8 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-const imageId = 'non-existing.png'
+const fakeUuid = '77fdcf1c-35fa-4a65-bdcf-1c35fa8a65d5'
 
 describe('File upload', () => {
   beforeEach(() => {
@@ -22,7 +21,8 @@ describe('File upload', () => {
         {
           statusCode: 201,
           body: {
-            id: imageId
+            uuid: fakeUuid,
+            fileName: 'demo.png'
           }
         }
       )
@@ -38,7 +38,7 @@ describe('File upload', () => {
         },
         { force: true }
       )
-      cy.get('.cm-line').contains(`![demo.png](http://127.0.0.1:3001/api/private/media/${imageId})`)
+      cy.get('.cm-line').contains(`![demo.png](http://127.0.0.1:3001/media/${fakeUuid})`)
     })
 
     it('via paste', () => {
@@ -51,7 +51,7 @@ describe('File upload', () => {
           }
         }
         cy.get('.cm-content').trigger('paste', pasteEvent)
-        cy.get('.cm-line').contains(`![](http://127.0.0.1:3001/api/private/media/${imageId})`)
+        cy.get('.cm-line').contains(`![](http://127.0.0.1:3001/media/${fakeUuid})`)
       })
     })
 
@@ -65,7 +65,7 @@ describe('File upload', () => {
         },
         { action: 'drag-drop', force: true }
       )
-      cy.get('.cm-line').contains(`![demo.png](http://127.0.0.1:3001/api/private/media/${imageId})`)
+      cy.get('.cm-line').contains(`![demo.png](http://127.0.0.1:3001/media/${fakeUuid})`)
     })
   })
 

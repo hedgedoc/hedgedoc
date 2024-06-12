@@ -22,6 +22,8 @@ export function createDefaultMockMediaConfig(): MediaConfig {
         secretAccessKey: '',
         bucket: '',
         endPoint: '',
+        pathStyle: false,
+        region: '',
       },
       azure: {
         connectionString: '',

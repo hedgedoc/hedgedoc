@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,12 +12,20 @@ import { Username } from '../utils/username';
 
 export class MediaUploadDto extends BaseDto {
   /**
-   * The id of the media file.
-   * @example "testfile123.jpg"
+   * The uuid of the media file.
+   * @example "7697582e-0020-4188-9758-2e00207188ca"
    */
   @IsString()
   @ApiProperty()
-  id: string;
+  uuid: string;
+
+  /**
+   * The original filename of the media upload.
+   * @example "example.png"
+   */
+  @IsString()
+  @ApiProperty()
+  fileName: string;
 
   /**
    * The publicId of the note to which the uploaded file is linked to.
@@ -26,7 +34,7 @@ export class MediaUploadDto extends BaseDto {
   @IsString()
   @IsOptional()
   @ApiProperty()
-  notePublicId: string | null;
+  noteId: string | null;
 
   /**
    * The date when the upload objects was created.

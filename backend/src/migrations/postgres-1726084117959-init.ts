@@ -1,12 +1,7 @@
-/*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
- *
- * SPDX-License-Identifier: AGPL-3.0-only
- */
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Init1725266697932 implements MigrationInterface {
-  name = 'Init1725266697932';
+export class Init1726084117959 implements MigrationInterface {
+  name = 'Init1726084117959';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -16,7 +11,7 @@ export class Init1725266697932 implements MigrationInterface {
       `CREATE UNIQUE INDEX "IDX_928dd947355b0837366470a916" ON "history_entry" ("noteId", "userId") `,
     );
     await queryRunner.query(
-      `CREATE TABLE "media_upload" ("id" character varying NOT NULL, "backendType" character varying NOT NULL, "fileUrl" character varying NOT NULL, "backendData" text, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "noteId" integer, "userId" integer, CONSTRAINT "PK_b406d9cee56e253dfd3b3d52706" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "media_upload" ("uuid" character varying NOT NULL, "fileName" character varying NOT NULL, "backendType" character varying NOT NULL, "backendData" text, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "noteId" integer, "userId" integer, CONSTRAINT "PK_573c2a4f2a8f8382f2a8758444e" PRIMARY KEY ("uuid"))`,
     );
     await queryRunner.query(
       `CREATE TABLE "note_group_permission" ("id" SERIAL NOT NULL, "canEdit" boolean NOT NULL, "groupId" integer, "noteId" integer, CONSTRAINT "PK_6327989190949e6a55d02a080c3" PRIMARY KEY ("id"))`,

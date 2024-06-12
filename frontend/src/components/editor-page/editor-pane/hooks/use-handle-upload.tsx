@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -60,8 +60,8 @@ export const useHandleUpload = (): handleUploadSignature => {
         return replaceSelection(cursorSelection ?? currentSelection, uploadPlaceholder, false)
       })
       uploadFile(noteId, file)
-        .then(({ id }) => {
-          const fullUrl = `${baseUrl}api/private/media/${id}`
+        .then(({ uuid }) => {
+          const fullUrl = `${baseUrl}media/${uuid}`
           const replacement = `![${description ?? file.name ?? ''}](${fullUrl}${additionalUrlText ?? ''})`
           changeContent(({ markdownContent }) => [
             replaceInContent(markdownContent, uploadPlaceholder, replacement),

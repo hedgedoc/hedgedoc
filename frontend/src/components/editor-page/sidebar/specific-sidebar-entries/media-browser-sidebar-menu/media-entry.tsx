@@ -11,13 +11,15 @@ import {
   Trash as IconTrash,
   FileRichtextFill as IconFileRichtextFill,
   Person as IconPerson,
-  Clock as IconClock
+  Clock as IconClock,
+  FileText as IconFileText
 } from 'react-bootstrap-icons'
 import { useIsOwner } from '../../../../../hooks/common/use-is-owner'
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import { UserAvatarForUsername } from '../../../../common/user-avatar/user-avatar-for-username'
 import { useChangeEditorContentCallback } from '../../../change-content-context/use-change-editor-content-callback'
 import { replaceSelection } from '../../../editor-pane/tool-bar/formatters/replace-selection'
+import styles from './media-entry.module.css'
 
 export interface MediaEntryProps {
   entry: MediaUpload
@@ -37,7 +39,7 @@ export const MediaEntry: React.FC<MediaEntryProps> = ({ entry, onDelete }) => {
   const isOwner = useIsOwner()
 
   const imageUrl = useMemo(() => {
-    return `${baseUrl}api/private/media/${entry.id}`
+    return `${baseUrl}media/${entry.uuid}`
   }, [entry, baseUrl])
   const textCreatedTime = useMemo(() => {
     return new Date(entry.createdAt).toLocaleString()
@@ -47,7 +49,7 @@ export const MediaEntry: React.FC<MediaEntryProps> = ({ entry, onDelete }) => {
     changeEditorContent?.(({ currentSelection }) => {
       return replaceSelection(
         { from: currentSelection.to ?? currentSelection.from },
-        `![${entry.id}](${imageUrl})`,
+        `![${entry.fileName}](${imageUrl})`,
         true
       )
     })
@@ -61,10 +63,15 @@ export const MediaEntry: React.FC<MediaEntryProps> = ({ entry, onDelete }) => {
     <div className={'p-2 border-bottom border-opacity-50'}>
       <a href={imageUrl} target={'_blank'} rel={'noreferrer'} className={'text-center d-block mb-2'}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={imageUrl} alt={`Upload ${entry.id}`} height={100} className={'mw-100'} />
+        <img src={imageUrl} alt={`Upload ${entry.fileName}`} className={styles.preview} />
       </a>
       <div className={'w-100 d-flex flex-row align-items-center justify-content-between'}>
         <div>
+          <small>
+            <IconFileText className={'me-1'} />
+            {entry.fileName}
+          </small>
+          <br />
           <small className={'d-inline-flex flex-row align-items-center'}>
             <IconPerson className={'me-1'} />
             <UserAvatarForUsername username={entry.username} size={'sm'} />

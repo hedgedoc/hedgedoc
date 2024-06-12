@@ -118,3 +118,17 @@ export function parseOptionalNumber(value?: string): number | undefined {
   }
   return Number(value);
 }
+
+/**
+ * Parses a string to a boolean. The following values are considered true:
+ * true, 1, y
+ *
+ * @param value The value to parse
+ * @returns The parsed boolean or undefined if the value is undefined
+ */
+export function parseOptionalBoolean(value?: string): boolean | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+  return value === 'true' || value === '1' || value === 'y';
+}

@@ -1,12 +1,7 @@
-/*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
- *
- * SPDX-License-Identifier: AGPL-3.0-only
- */
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Init1725268109950 implements MigrationInterface {
-  name = 'Init1725268109950';
+export class Init1726084595852 implements MigrationInterface {
+  name = 'Init1726084595852';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -16,7 +11,7 @@ export class Init1725268109950 implements MigrationInterface {
       `CREATE UNIQUE INDEX "IDX_928dd947355b0837366470a916" ON "history_entry" ("noteId", "userId") `,
     );
     await queryRunner.query(
-      `CREATE TABLE "media_upload" ("id" varchar PRIMARY KEY NOT NULL, "backendType" varchar NOT NULL, "fileUrl" varchar NOT NULL, "backendData" text, "createdAt" datetime NOT NULL DEFAULT (datetime('now')), "noteId" integer, "userId" integer)`,
+      `CREATE TABLE "media_upload" ("uuid" varchar PRIMARY KEY NOT NULL, "fileName" varchar NOT NULL, "backendType" varchar NOT NULL, "backendData" text, "createdAt" datetime NOT NULL DEFAULT (datetime('now')), "noteId" integer, "userId" integer)`,
     );
     await queryRunner.query(
       `CREATE TABLE "note_group_permission" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "canEdit" boolean NOT NULL, "groupId" integer, "noteId" integer)`,
@@ -108,10 +103,10 @@ export class Init1725268109950 implements MigrationInterface {
       `CREATE UNIQUE INDEX "IDX_928dd947355b0837366470a916" ON "history_entry" ("noteId", "userId") `,
     );
     await queryRunner.query(
-      `CREATE TABLE "temporary_media_upload" ("id" varchar PRIMARY KEY NOT NULL, "backendType" varchar NOT NULL, "fileUrl" varchar NOT NULL, "backendData" text, "createdAt" datetime NOT NULL DEFAULT (datetime('now')), "noteId" integer, "userId" integer, CONSTRAINT "FK_edba6d4e0f3bcf6605772f0af6b" FOREIGN KEY ("noteId") REFERENCES "note" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION, CONSTRAINT "FK_73ce66b082df1df2003e305e9ac" FOREIGN KEY ("userId") REFERENCES "user" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION)`,
+      `CREATE TABLE "temporary_media_upload" ("uuid" varchar PRIMARY KEY NOT NULL, "fileName" varchar NOT NULL, "backendType" varchar NOT NULL, "backendData" text, "createdAt" datetime NOT NULL DEFAULT (datetime('now')), "noteId" integer, "userId" integer, CONSTRAINT "FK_edba6d4e0f3bcf6605772f0af6b" FOREIGN KEY ("noteId") REFERENCES "note" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION, CONSTRAINT "FK_73ce66b082df1df2003e305e9ac" FOREIGN KEY ("userId") REFERENCES "user" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION)`,
     );
     await queryRunner.query(
-      `INSERT INTO "temporary_media_upload"("id", "backendType", "fileUrl", "backendData", "createdAt", "noteId", "userId") SELECT "id", "backendType", "fileUrl", "backendData", "createdAt", "noteId", "userId" FROM "media_upload"`,
+      `INSERT INTO "temporary_media_upload"("uuid", "fileName", "backendType", "backendData", "createdAt", "noteId", "userId") SELECT "uuid", "fileName", "backendType", "backendData", "createdAt", "noteId", "userId" FROM "media_upload"`,
     );
     await queryRunner.query(`DROP TABLE "media_upload"`);
     await queryRunner.query(
@@ -444,10 +439,10 @@ export class Init1725268109950 implements MigrationInterface {
       `ALTER TABLE "media_upload" RENAME TO "temporary_media_upload"`,
     );
     await queryRunner.query(
-      `CREATE TABLE "media_upload" ("id" varchar PRIMARY KEY NOT NULL, "backendType" varchar NOT NULL, "fileUrl" varchar NOT NULL, "backendData" text, "createdAt" datetime NOT NULL DEFAULT (datetime('now')), "noteId" integer, "userId" integer)`,
+      `CREATE TABLE "media_upload" ("uuid" varchar PRIMARY KEY NOT NULL, "fileName" varchar NOT NULL, "backendType" varchar NOT NULL, "backendData" text, "createdAt" datetime NOT NULL DEFAULT (datetime('now')), "noteId" integer, "userId" integer)`,
     );
     await queryRunner.query(
-      `INSERT INTO "media_upload"("id", "backendType", "fileUrl", "backendData", "createdAt", "noteId", "userId") SELECT "id", "backendType", "fileUrl", "backendData", "createdAt", "noteId", "userId" FROM "temporary_media_upload"`,
+      `INSERT INTO "media_upload"("uuid", "fileName", "backendType", "backendData", "createdAt", "noteId", "userId") SELECT "uuid", "fileName", "backendType", "backendData", "createdAt", "noteId", "userId" FROM "temporary_media_upload"`,
     );
     await queryRunner.query(`DROP TABLE "temporary_media_upload"`);
     await queryRunner.query(`DROP INDEX "IDX_928dd947355b0837366470a916"`);
