@@ -8,6 +8,7 @@ import {
   ensureNoDuplicatesExist,
   findDuplicatesInArray,
   needToLog,
+  parseOptionalBoolean,
   parseOptionalNumber,
   replaceAuthErrorsWithEnvironmentVariables,
   toArrayConfig,
@@ -139,6 +140,19 @@ describe('config utils', () => {
     });
     it('correctly parses a float string', () => {
       expect(parseOptionalNumber('3.14')).toEqual(3.14);
+    });
+  });
+  describe('parseOptionalBoolean', () => {
+    it('returns undefined on undefined parameter', () => {
+      expect(parseOptionalBoolean(undefined)).toEqual(undefined);
+    });
+    it('correctly parses a given string', () => {
+      expect(parseOptionalBoolean('true')).toEqual(true);
+      expect(parseOptionalBoolean('1')).toEqual(true);
+      expect(parseOptionalBoolean('y')).toEqual(true);
+      expect(parseOptionalBoolean('false')).toEqual(false);
+      expect(parseOptionalBoolean('0')).toEqual(false);
+      expect(parseOptionalBoolean('HedgeDoc')).toEqual(false);
     });
   });
 });

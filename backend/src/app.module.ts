@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -29,6 +29,7 @@ import { HistoryModule } from './history/history.module';
 import { IdentityModule } from './identity/identity.module';
 import { LoggerModule } from './logger/logger.module';
 import { TypeormLoggerService } from './logger/typeorm-logger.service';
+import { MediaRedirectModule } from './media-redirect/media-redirect.module';
 import { MediaModule } from './media/media.module';
 import { MonitoringModule } from './monitoring/monitoring.module';
 import { NotesModule } from './notes/notes.module';
@@ -48,6 +49,10 @@ const routes: Routes = [
   {
     path: '/api/private',
     module: PrivateApiModule,
+  },
+  {
+    path: '/media',
+    module: MediaRedirectModule,
   },
 ];
 
@@ -112,6 +117,7 @@ const routes: Routes = [
     WebsocketModule,
     IdentityModule,
     SessionModule,
+    MediaRedirectModule,
   ],
   controllers: [],
   providers: [FrontendConfigService],

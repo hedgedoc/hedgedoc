@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -17,6 +17,7 @@ describe('s3 backend', () => {
   const mockedS3AccessKeyId = 'mockedS3AccessKeyId';
   const mockedS3SecretAccessKey = 'mockedS3SecretAccessKey';
   const mockedS3Bucket = 'mockedS3Bucket';
+  const mockedUuid = 'cbe87987-8e70-4092-a879-878e70b09245';
 
   const mockedLoggerService = Mock.of<ConsoleLoggerService>({
     setContext: jest.fn(),
@@ -31,6 +32,7 @@ describe('s3 backend', () => {
     mockedClient = Mock.of<Client>({
       putObject: jest.fn(),
       removeObject: jest.fn(),
+      presignedGetObject: jest.fn(),
     });
 
     clientConstructorSpy = jest
@@ -143,19 +145,21 @@ describe('s3 backend', () => {
       const sut = new S3Backend(mockedLoggerService, mediaConfig);
 
       const mockedBuffer = Mock.of<Buffer>({});
-      const mockedFileName = 'mockedFileName';
-      const [url, backendData] = await sut.saveFile(
-        mockedBuffer,
-        mockedFileName,
-      );
+      await sut.saveFile(mockedUuid, mockedBuffer, {
+        mime: 'image/png',
+        ext: 'png',
+      });
 
       expect(saveSpy).toHaveBeenCalledWith(
         mockedS3Bucket,
-        mockedFileName,
+        mockedUuid,
         mockedBuffer,
+        mockedBuffer.length,
+        {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          'Content-Type': 'image/png',
+        },
       );
-      expect(url).toBe('https://s3.example.org/mockedS3Bucket/mockedFileName');
-      expect(backendData).toBeNull();
     });
 
     it("will throw a MediaBackendError if the s3 client couldn't save the file", async () => {
@@ -167,15 +171,24 @@ describe('s3 backend', () => {
       const sut = new S3Backend(mockedLoggerService, mediaConfig);
 
       const mockedBuffer = Mock.of<Buffer>({});
-      const mockedFileName = 'mockedFileName';
       await expect(() =>
-        sut.saveFile(mockedBuffer, mockedFileName),
-      ).rejects.toThrow("Could not save 'mockedFileName' on S3");
+        sut.saveFile(mockedUuid, mockedBuffer, {
+          mime: 'image/png',
+          ext: 'png',
+        }),
+      ).rejects.toThrow(
+        'Could not save file cbe87987-8e70-4092-a879-878e70b09245',
+      );
 
       expect(saveSpy).toHaveBeenCalledWith(
         mockedS3Bucket,
-        mockedFileName,
+        mockedUuid,
         mockedBuffer,
+        mockedBuffer.length,
+        {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          'Content-Type': 'image/png',
+        },
       );
     });
   });
@@ -185,12 +198,11 @@ describe('s3 backend', () => {
       const deleteSpy = jest
         .spyOn(mockedClient, 'removeObject')
         .mockImplementation(() => Promise.resolve());
-      const mockedFileName = 'mockedFileName';
 
       const sut = new S3Backend(mockedLoggerService, mediaConfig);
-      await sut.deleteFile(mockedFileName);
+      await sut.deleteFile(mockedUuid, null);
 
-      expect(deleteSpy).toHaveBeenCalledWith(mockedS3Bucket, mockedFileName);
+      expect(deleteSpy).toHaveBeenCalledWith(mockedS3Bucket, mockedUuid);
     });
 
     it("will throw a MediaBackendError if the client couldn't delete the file", async () => {
@@ -198,15 +210,50 @@ describe('s3 backend', () => {
       const deleteSpy = jest
         .spyOn(mockedClient, 'removeObject')
         .mockImplementation(() => Promise.reject(new Error('mocked error')));
-      const mockedFileName = 'mockedFileName';
 
       const sut = new S3Backend(mockedLoggerService, mediaConfig);
 
-      await expect(() => sut.deleteFile(mockedFileName)).rejects.toThrow(
-        "Could not delete 'mockedFileName' on S3",
+      await expect(() => sut.deleteFile(mockedUuid, null)).rejects.toThrow(
+        'Could not delete file cbe87987-8e70-4092-a879-878e70b09245',
       );
 
-      expect(deleteSpy).toHaveBeenCalledWith(mockedS3Bucket, mockedFileName);
+      expect(deleteSpy).toHaveBeenCalledWith(mockedS3Bucket, mockedUuid);
+    });
+  });
+  describe('getFileUrl', () => {
+    it('returns a signed url', async () => {
+      const mediaConfig = mockMediaConfig('https://s3.example.org');
+      const fileUrlSpy = jest
+        .spyOn(mockedClient, 'presignedGetObject')
+        .mockImplementation(() =>
+          Promise.resolve(
+            'https://s3.example.org/mockedS3Bucket/cbe87987-8e70-4092-a879-878e70b09245?mockedSignature',
+          ),
+        );
+
+      const sut = new S3Backend(mockedLoggerService, mediaConfig);
+      const url = await sut.getFileUrl(mockedUuid, null);
+
+      expect(fileUrlSpy).toHaveBeenCalledWith(mockedS3Bucket, mockedUuid);
+      expect(url).toBe(
+        'https://s3.example.org/mockedS3Bucket/cbe87987-8e70-4092-a879-878e70b09245?mockedSignature',
+      );
+    });
+    it('throws a MediaBackendError if the client could not generate a signed url', async () => {
+      const mediaConfig = mockMediaConfig('https://s3.example.org');
+      const fileUrlSpy = jest
+        .spyOn(mockedClient, 'presignedGetObject')
+        .mockImplementation(() => {
+          throw new Error('mocked error');
+        });
+
+      const sut = new S3Backend(mockedLoggerService, mediaConfig);
+
+      await expect(() => sut.getFileUrl(mockedUuid, null)).rejects.toThrow(
+        'Could not get URL for file cbe87987-8e70-4092-a879-878e70b09245',
+      );
+
+      expect(fileUrlSpy).toHaveBeenCalledWith(mockedS3Bucket, mockedUuid);
     });
   });
 });

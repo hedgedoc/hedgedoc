@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -100,28 +100,33 @@ export class MediaController {
         'uploadMedia',
       );
     }
-    const upload = await this.mediaService.saveFile(file.buffer, user, note);
+    const upload = await this.mediaService.saveFile(
+      file.originalname,
+      file.buffer,
+      user,
+      note,
+    );
     return await this.mediaService.toMediaUploadDto(upload);
   }
 
-  @Get(':filename')
-  @OpenApi(404, 500)
+  @Get(':uuid')
+  @OpenApi(200, 404, 500)
   async getMedia(
-    @Param('filename') filename: string,
+    @Param('uuid') uuid: string,
     @Res() response: Response,
   ): Promise<void> {
-    const mediaUpload = await this.mediaService.findUploadByFilename(filename);
-    const targetUrl = mediaUpload.fileUrl;
-    response.redirect(targetUrl);
+    const mediaUpload = await this.mediaService.findUploadByUuid(uuid);
+    const dto = await this.mediaService.toMediaUploadDto(mediaUpload);
+    response.send(dto);
   }
 
-  @Delete(':filename')
+  @Delete(':uuid')
   @OpenApi(204, 403, 404, 500)
   async deleteMedia(
     @RequestUser() user: User,
-    @Param('filename') filename: string,
+    @Param('uuid') uuid: string,
   ): Promise<void> {
-    const mediaUpload = await this.mediaService.findUploadByFilename(filename);
+    const mediaUpload = await this.mediaService.findUploadByUuid(uuid);
     if (
       await this.permissionsService.checkMediaDeletePermission(
         user,
@@ -129,18 +134,18 @@ export class MediaController {
       )
     ) {
       this.logger.debug(
-        `Deleting '${filename}' for user '${user.username}'`,
+        `Deleting '${uuid}' for user '${user.username}'`,
         'deleteMedia',
       );
       await this.mediaService.deleteFile(mediaUpload);
     } else {
       this.logger.warn(
-        `${user.username} tried to delete '${filename}', but is not the owner of upload or connected note`,
+        `${user.username} tried to delete '${uuid}', but is not the owner of upload or connected note`,
         'deleteMedia',
       );
       const mediaUploadNote = await mediaUpload.note;
       throw new PermissionError(
-        `Neither file '${filename}' nor note '${
+        `Neither file '${uuid}' nor note '${
           mediaUploadNote?.publicId ?? 'unknown'
         }'is owned by '${user.username}'`,
       );

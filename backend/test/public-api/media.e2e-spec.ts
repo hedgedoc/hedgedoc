@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -49,17 +49,17 @@ describe('Media', () => {
         .set('HedgeDoc-Note', 'testAlias1')
         .expect('Content-Type', /json/)
         .expect(201);
-      const fileName = uploadResponse.body.id;
-      const path: string = '/api/v2/media/' + fileName;
+      const uuid = uploadResponse.body.uuid;
+      const path: string = '/api/v2/media/' + uuid;
       const testImage = await fs.readFile('test/public-api/fixtures/test.png');
       const apiResponse = await agent
         .get(path)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`);
-      expect(apiResponse.statusCode).toEqual(302);
-      const downloadResponse = await agent.get(apiResponse.header.location);
+      expect(apiResponse.statusCode).toEqual(200);
+      const downloadResponse = await agent.get(`/uploads/${uuid}.png`);
       expect(downloadResponse.body).toEqual(testImage);
       // delete the file afterwards
-      await fs.unlink(join(uploadPath, fileName));
+      await fs.unlink(join(uploadPath, uuid + '.png'));
     });
     describe('fails:', () => {
       beforeEach(async () => {
@@ -114,26 +114,26 @@ describe('Media', () => {
     it('successfully deletes an uploaded file', async () => {
       const testImage = await fs.readFile('test/public-api/fixtures/test.png');
       const upload = await testSetup.mediaService.saveFile(
+        'test.png',
         testImage,
         testSetup.users[0],
         testSetup.ownedNotes[0],
       );
-      const filename = upload.fileUrl.split('/').pop() || '';
       await request(testSetup.app.getHttpServer())
-        .delete('/api/v2/media/' + filename)
+        .delete('/api/v2/media/' + upload.uuid)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect(204);
     });
     it('returns an error if the user does not own the file', async () => {
       const testImage = await fs.readFile('test/public-api/fixtures/test.png');
       const upload = await testSetup.mediaService.saveFile(
+        'test.png',
         testImage,
         testSetup.users[0],
         testSetup.ownedNotes[0],
       );
-      const filename = upload.fileUrl.split('/').pop() || '';
       await request(testSetup.app.getHttpServer())
-        .delete('/api/v2/media/' + filename)
+        .delete('/api/v2/media/' + upload.uuid)
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
         .expect(403);
     });
@@ -146,34 +146,34 @@ describe('Media', () => {
       );
       const testImage = await fs.readFile('test/public-api/fixtures/test.png');
       const upload = await testSetup.mediaService.saveFile(
+        'test.png',
         testImage,
         testSetup.users[0],
         testNote,
       );
-      const filename = upload.fileUrl.split('/').pop() || '';
 
       const agent2 = request.agent(testSetup.app.getHttpServer());
 
       // try to delete upload with second user
       await agent2
-        .delete('/api/v2/media/' + filename)
+        .delete('/api/v2/media/' + upload.uuid)
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
         .expect(403);
 
       await agent2
-        .get('/uploads/' + filename)
+        .get(`/uploads/${upload.uuid}.png`)
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
         .expect(200);
 
       // delete upload for real
       await agent2
-        .delete('/api/v2/media/' + filename)
+        .delete('/api/v2/media/' + upload.uuid)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect(204);
 
       // Test if file is really deleted
       await agent2
-        .get('/uploads/' + filename)
+        .get(`/uploads/${upload.uuid}.png`)
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
         .expect(404);
     });
@@ -186,33 +186,33 @@ describe('Media', () => {
       );
       const testImage = await fs.readFile('test/public-api/fixtures/test.png');
       const upload = await testSetup.mediaService.saveFile(
+        'test.png',
         testImage,
         testSetup.users[0],
         testNote,
       );
-      const filename = upload.fileUrl.split('/').pop() || '';
 
       const agent2 = request.agent(testSetup.app.getHttpServer());
       // try to delete upload with second user
       await agent2
-        .delete('/api/v2/media/' + filename)
+        .delete('/api/v2/media/' + upload.uuid)
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
         .expect(403);
 
       await agent2
-        .get('/uploads/' + filename)
+        .get(`/uploads/${upload.uuid}.png`)
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
         .expect(200);
 
       // delete upload for real
       await agent2
-        .delete('/api/v2/media/' + filename)
+        .delete('/api/v2/media/' + upload.uuid)
         .set('Authorization', `Bearer ${testSetup.authTokens[2].secret}`)
         .expect(204);
 
       // Test if file is really deleted
       await agent2
-        .get('/uploads/' + filename)
+        .get(`/uploads/${upload.uuid}.png`)
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
         .expect(404);
     });
