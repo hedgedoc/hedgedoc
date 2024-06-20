@@ -163,7 +163,7 @@
     "expose-loader": "1.0.3",
     "file-loader": "6.2.0",
     "file-saver": "2.0.5",
-    "flowchart.js": "1.17.1",
+    "flowchart.js": "1.18.0",
     "fork-awesome": "1.2.0",
     "gist-embed": "2.6.0",
     "highlight.js": "10.7.3",
