@@ -33,7 +33,7 @@ These tables tell you what exactly we support in HedgeDoc 1.x (HFM 1) and HedgeD
 | unorderd list                               |            ☑️            |            ☑️            |     ☑️     | ☑️  |
 | ordered list                                |            ☑️            |            ☑️            |     ☑️     | ☑️  |
 | task list                                   |            ☑️            |            ☑️            |            | ☑️  |
-| defition list                               |            ☑️            |            ☑️            |            |     |
+| definition list                             |            ☑️            |            ☑️            |            |     |
 | emoji                                       | [Unicode 6.1][unicode-6] | [Unicode 13][unicode-13] |            |     |
 | [ForkAwesome][fa]                           | ☑️ with `<i class='fa'>` |         removed          |            |     |
 | [Bootstrap Icons][bootstrap-icons]          |                          |    ☑️ with shortcodes    |            |     |
