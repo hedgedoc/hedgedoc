@@ -4,6 +4,7 @@
 
 ### Enhancements
 - Add a pointer to Mermaid 9.1.7 documentation, which is what HedgeDoc 1 supports.
+- Add `disableNoteCreation` config option for read-only instances
 
 ### Bugfixes
 - Fix a crash when having numeric-only values in opengraph frontmatter
