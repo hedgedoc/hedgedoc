@@ -22,8 +22,10 @@
                 <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu list" role="menu" aria-labelledby="menu">
+                <% if (!disableNoteCreation) { %>
                 <li role="presentation"><a role="menuitem" class="ui-new" tabindex="-1" href="<%- serverURL %>/new" target="_blank" rel="noopener"><i class="fa fa-plus fa-fw"></i> <%= __('New') %></a>
                 </li>
+                <% } %>
                 <li role="presentation"><a role="menuitem" class="ui-publish" tabindex="-1" href="#" target="_blank" rel="noopener"><i class="fa fa-share-square-o fa-fw"></i> <%= __('Publish') %></a>
                 </li>
                 <li class="divider"></li>
@@ -112,11 +114,13 @@
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right" style="padding:0;">
+            <% if (!disableNoteCreation) { %>
             <li>
                 <a href="<%- serverURL %>/new" target="_blank" rel="noopener" class="ui-new">
                     <i class="fa fa-plus"></i> <%= __('New') %>
                 </a>
             </li>
+            <% } %>
             <li>
                 <a href="#" target="_blank" rel="noopener" class="ui-publish">
                     <i class="fa fa-share-square-o"></i> <%= __('Publish') %>
