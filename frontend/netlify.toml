@@ -1,9 +1,0 @@
-[build]
-publish = ".next"
-command = "echo Pseudo build command because the build is made by the CI"
-
-[[plugins]]
-package = "@netlify/plugin-nextjs"
-
-[dev]
-targetPort = 3001
