@@ -98,39 +98,6 @@
     },
     {
       "fileMatch": [
-        ".github/workflows/frontend-netlify-deploy-main.yml$",
-        ".github/workflows/frontend-netlify-deploy-pr.yml$"
-      ],
-      "matchStrings": [
-        "NETLIFY_VERSION=(?<currentValue>.*?)\\n"
-      ],
-      "datasourceTemplate": "npm",
-      "depNameTemplate": "netlify-cli"
-    },
-    {
-      "fileMatch": [
-        ".github/workflows/frontend-netlify-deploy-main.yml$",
-        ".github/workflows/frontend-netlify-deploy-pr.yml$"
-      ],
-      "matchStrings": [
-        "NETLIFY_NEXTJS_PLUGIN_VERSION=(?<currentValue>.*?)\\n"
-      ],
-      "datasourceTemplate": "npm",
-      "depNameTemplate": "@netlify/plugin-nextjs"
-    },
-    {
-      "fileMatch": [
-        ".github/workflows/deploy-main.yml$",
-        ".github/workflows/deploy-pr.yml$"
-      ],
-      "matchStrings": [
-        "NODEJS_VERSION=(?<currentValue>.*?)\\n"
-      ],
-      "datasourceTemplate": "node",
-      "depNameTemplate": "node version in workflows"
-    },
-    {
-      "fileMatch": [
         "package.json"
       ],
       "matchStrings": [

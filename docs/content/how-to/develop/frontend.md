@@ -17,10 +17,9 @@ after compilation. You shouldn't need to set them yourself. Use the designated n
 ## UI Test
 
 Curious about the new look and feel? We provide a demo of the new UI on
-[HedgeDoc.dev][hedgedoc-dev]. This version uses mocked data and has no data persistence.
+[HedgeDoc.dev][hedgedoc-dev]. This version is reset every day, so data is not persisted.
 
-The UI test is hosted by [netlify][netlify]. Please check their [privacy policy][netlify-privacy]
-as well as [ours][privacy].
+Please see also our [privacy policy][privacy].
 
 ## Running Tests
 
@@ -59,7 +58,5 @@ window.localStorage.setItem("debugLogging", "true");
 ```
 
 [hedgedoc-dev]: https://hedgedoc.dev
-[netlify]: https://netlify.com
-[netlify-privacy]: https://netlify.com/privacy
 [privacy]: https://hedgedoc.org/privacy-policy
 [cypress]: https://cypress.io
