@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -31,14 +31,14 @@ export async function setupApp(
 ): Promise<void> {
   await setupPublicApiDocs(app);
   logger.log(
-    `Serving OpenAPI docs for public API under '/apidoc/v2'`,
+    `Serving OpenAPI docs for public API under '/api/doc/v2'`,
     'AppBootstrap',
   );
 
   if (process.env.NODE_ENV === 'development') {
     await setupPrivateApiDocs(app);
     logger.log(
-      `Serving OpenAPI docs for private API under '/apidoc/private'`,
+      `Serving OpenAPI docs for private API under '/api/doc/private'`,
       'AppBootstrap',
     );
   }

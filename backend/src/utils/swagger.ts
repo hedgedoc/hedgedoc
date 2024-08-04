@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -23,7 +23,7 @@ export async function setupPublicApiDocs(app: INestApplication): Promise<void> {
   const publicApi = SwaggerModule.createDocument(app, publicApiOptions, {
     include: [PublicApiModule],
   });
-  SwaggerModule.setup('apidoc/v2', app, publicApi);
+  SwaggerModule.setup('api/doc/v2', app, publicApi);
 }
 
 export async function setupPrivateApiDocs(
@@ -38,5 +38,5 @@ export async function setupPrivateApiDocs(
   const privateApi = SwaggerModule.createDocument(app, privateApiOptions, {
     include: [PrivateApiModule],
   });
-  SwaggerModule.setup('apidoc/private', app, privateApi);
+  SwaggerModule.setup('api/doc/private', app, privateApi);
 }
