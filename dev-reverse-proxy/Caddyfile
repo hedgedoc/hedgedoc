@@ -16,5 +16,4 @@ reverse_proxy /realtime http://localhost:{$HD_BACKEND_PORT:3000}
 reverse_proxy /api/* http://localhost:{$HD_BACKEND_PORT:3000}
 reverse_proxy /public/* http://localhost:{$HD_BACKEND_PORT:3000}
 reverse_proxy /uploads/* http://localhost:{$HD_BACKEND_PORT:3000}
-reverse_proxy /apidoc/* http://localhost:{$HD_BACKEND_PORT:3000}
 reverse_proxy /* http://localhost:{$HD_FRONTEND_PORT:3001}
