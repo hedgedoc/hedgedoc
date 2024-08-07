@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -149,9 +149,10 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   }
 
   /**
-   * Announce to all clients that the permissions of the note have been changed.
+   * Announce to all clients that the metadata of the note have been changed.
+   * This could for example be a permission change or a revision being saved.
    */
-  public announcePermissionChange(): void {
+  public announceMetadataUpdate(): void {
     this.sendToAllClients({ type: MessageType.METADATA_UPDATED });
   }
 
