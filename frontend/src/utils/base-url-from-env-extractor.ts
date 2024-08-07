@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -56,9 +56,9 @@ export class BaseUrlFromEnvExtractor {
   public extractBaseUrls(): BaseUrls {
     if (isBuildTime) {
       return {
-        editor: 'https://example.org/',
-        renderer: 'https://example.org/',
-        internalApiUrl: 'https://example.org/'
+        editor: '',
+        renderer: '',
+        internalApiUrl: ''
       }
     }
 

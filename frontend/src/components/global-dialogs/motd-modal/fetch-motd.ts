@@ -1,9 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { defaultConfig } from '../../../api/common/default-config'
+import { isBuildTime } from '../../../utils/test-modes'
 
 export interface MotdApiResponse {
   motdText: string
@@ -18,6 +19,9 @@ export interface MotdApiResponse {
  * @return A promise that gets resolved if the motd was fetched successfully.
  */
 export const fetchMotd = async (baseUrl: string): Promise<MotdApiResponse | undefined> => {
+  if (isBuildTime) {
+    return
+  }
   const motdUrl = `${baseUrl}public/motd.md`
   const response = await fetch(motdUrl, {
     ...defaultConfig
