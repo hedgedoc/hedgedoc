@@ -61,10 +61,12 @@ export function convertInlineStyleToMap(
       // additionally don't uppercase any -ms- prefix
       // e.g. -ms-style-property = msStyleProperty
       //      -webkit-style-property = WebkitStyleProperty
-      const replacedProperty = property
-        .toLowerCase()
-        .replace(/^-ms-/, 'ms-')
-        .replace(/-(.)/g, (_, character: string) => character.toUpperCase())
+      const replacedProperty = property.startsWith('--')
+        ? property
+        : property
+            .toLowerCase()
+            .replace(/^-ms-/, 'ms-')
+            .replace(/-(.)/g, (_, character: string) => character.toUpperCase())
 
       // add the new style property and value to the style object
       styleObject[replacedProperty] = value
