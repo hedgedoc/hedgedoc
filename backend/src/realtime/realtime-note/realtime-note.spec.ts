@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -82,11 +82,11 @@ describe('realtime note', () => {
     const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
 
     const metadataMessage = { type: MessageType.METADATA_UPDATED };
-    sut.announcePermissionChange();
+    sut.announceMetadataUpdate();
     expect(sendMessage1Spy).toHaveBeenCalledWith(metadataMessage);
     expect(sendMessage2Spy).toHaveBeenCalledWith(metadataMessage);
     sut.removeClient(client2);
-    sut.announcePermissionChange();
+    sut.announceMetadataUpdate();
     expect(sendMessage1Spy).toHaveBeenCalledTimes(2);
     expect(sendMessage2Spy).toHaveBeenCalledTimes(1);
   });

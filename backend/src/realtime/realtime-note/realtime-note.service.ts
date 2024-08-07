@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -49,6 +49,9 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
         realtimeNote.getRealtimeDoc().getCurrentContent(),
         realtimeNote.getRealtimeDoc().encodeStateAsUpdate(),
       )
+      .then(() => {
+        realtimeNote.announceMetadataUpdate();
+      })
       .catch((reason) => this.logger.error(reason));
   }
 
@@ -117,7 +120,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
     const realtimeNote = this.realtimeNoteStore.find(note.id);
     if (!realtimeNote) return;
 
-    realtimeNote.announcePermissionChange();
+    realtimeNote.announceMetadataUpdate();
     const allConnections = realtimeNote.getConnections();
     await this.updateOrCloseConnection(allConnections, note);
   }
