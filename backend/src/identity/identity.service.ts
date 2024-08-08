@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -186,7 +186,7 @@ export class IdentityService {
       await getFirstIdentityFromUser(user, ProviderType.LOCAL);
     if (internalIdentity === undefined) {
       this.logger.debug(
-        `The user with the username ${user.username} does not have a internal identity.`,
+        `The user with the username ${user.username} does not have an internal identity.`,
         'checkLocalPassword',
       );
       throw new NoLocalIdentityError('This user has no internal identity.');

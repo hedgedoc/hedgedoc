@@ -1,51 +1,67 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import bcrypt from 'bcrypt';
-import { randomBytes } from 'crypto';
+import argon2 from '@node-rs/argon2';
 
 import { bufferToBase64Url, checkPassword, hashPassword } from './password';
 
 const testPassword = 'thisIsATestPassword';
+const hashOfTestPassword =
+  '$argon2id$v=19$m=19456,t=2,p=1$40fR6RcTofpngCk4xXhY8w$wAkstPrKkMgrb26TyNqrUzT78jZ+EIjwcJYZHcjrL+Q';
 
 describe('hashPassword', () => {
-  it('output looks like a bcrypt hash with 2^12 rounds of hashing', async () => {
+  it('output looks like a argon2 hash', async () => {
     /*
-     * a bcrypt hash example with the different parts highlighted:
-     * $2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy
-     * \__/\/ \____________________/\_____________________________/
-     * Alg Cost      Salt                        Hash
-     * from https://en.wikipedia.org/wiki/Bcrypt#Description
+     * a argon2 hash example with the different parts highlighted:
+     * $argon2id$v=19$m=19456,t=2,p=1$40fR6RcTofpngCk4xXhY8w$wAkstPrKkMgrb26TyNqrUzT78jZ+EIjwcJYZHcjrL+Q
+     * \________/\___/\______________/\_____________________/\_________________________________________/
+     *     Alg    Ver    Parameters            Salt                               Hash
      */
-    const regexBcrypt = /^\$2[abxy]\$12\$[A-Za-z0-9/.]{53}$/;
+    const regexArgon2 =
+      /^\$argon2id\$v=19\$m=19456,t=2,p=1\$[\w+./]{22}\$[\w+./]{43}$/;
     const hash = await hashPassword(testPassword);
-    expect(regexBcrypt.test(hash)).toBeTruthy();
+    expect(regexArgon2.test(hash)).toBeTruthy();
   });
-  it('calls bcrypt.hash with the correct parameters', async () => {
-    const spy = jest.spyOn(bcrypt, 'hash');
+  it('calls argon2.hash with the correct parameters', async () => {
+    const spy = jest.spyOn(argon2, 'hash');
     await hashPassword(testPassword);
-    expect(spy).toHaveBeenCalledWith(testPassword, 12);
+    expect(spy).toHaveBeenCalledWith(testPassword, {
+      memoryCost: 19456,
+      timeCost: 2,
+      parallelism: 1,
+    });
   });
 });
 
 describe('checkPassword', () => {
-  it("is returning true if the inputs are a plaintext password and it's bcrypt-hashed version", async () => {
-    const hashOfTestPassword =
-      '$2a$12$WHKCq4c0rg19zyx5WgX0p.or0rjSKYpIBcHhQQGLrxrr6FfMPylIW';
+  it("is returning true if the inputs are a plaintext password and it's hashed version", async () => {
     await checkPassword(testPassword, hashOfTestPassword).then((result) =>
       expect(result).toBeTruthy(),
     );
   });
-  it('fails, if secret is too short', async () => {
-    const secret = bufferToBase64Url(randomBytes(54));
-    const hash = await hashPassword(secret);
-    await checkPassword(secret, hash).then((result) =>
+  it('fails, if password is non-matching', async () => {
+    const password = 'anotherTestPassword';
+    await checkPassword(password, hashOfTestPassword).then((result) =>
+      expect(result).toBeFalsy(),
+    );
+  });
+  it('calls argon2.verify with the correct parameters', async () => {
+    const spy = jest.spyOn(argon2, 'verify');
+    await checkPassword(testPassword, hashOfTestPassword);
+    expect(spy).toHaveBeenCalledWith(hashOfTestPassword, testPassword);
+  });
+  it('verifies even passwords longer than 72 bytes', async () => {
+    const password = 'a'.repeat(70);
+    const hash =
+      '$argon2id$v=19$m=19456,t=2,p=1$4aBLKxd7MqYQqf/th835yQ$iUMe+HHphn8B8q6gQ3IPL2k1+Bdbb505r7LuqZIMTjg';
+    await checkPassword(password, hash).then((result) =>
       expect(result).toBeTruthy(),
     );
-    await checkPassword(secret.substr(0, secret.length - 1), hash).then(
-      (result) => expect(result).toBeFalsy(),
+    const password2 = 'a'.repeat(73);
+    await checkPassword(password2, hash).then((result) =>
+      expect(result).toBeFalsy(),
     );
   });
 });
