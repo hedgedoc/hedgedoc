@@ -1,21 +1,38 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { compare, hash } from 'bcrypt';
+import { hash, verify } from '@node-rs/argon2';
 
+/**
+ * Hashes a password using argon2id
+ *
+ * @param cleartext The password to hash
+ * @returns The hashed password
+ */
 export async function hashPassword(cleartext: string): Promise<string> {
-  // hash the password with bcrypt and 2^12 iterations
-  // this was decided on the basis of https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#bcrypt
-  return await hash(cleartext, 12);
+  // options recommended by OWASP
+  // https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#argon2id
+  return await hash(cleartext, {
+    memoryCost: 19456,
+    timeCost: 2,
+    parallelism: 1,
+  });
 }
 
+/**
+ * Checks if a cleartext password matches a password hash
+ *
+ * @param cleartext The cleartext password
+ * @param passwordHash The password hash
+ * @returns Whether the password matches the hash
+ */
 export async function checkPassword(
   cleartext: string,
-  password: string,
+  passwordHash: string,
 ): Promise<boolean> {
-  return await compare(cleartext, password);
+  return await verify(passwordHash, cleartext);
 }
 
 export function bufferToBase64Url(text: Buffer): string {
