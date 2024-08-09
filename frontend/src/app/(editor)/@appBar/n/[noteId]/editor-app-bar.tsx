@@ -10,6 +10,7 @@ import { NoteTitleElement } from '../../../../../components/layout/app-bar/app-b
 import { BaseAppBar } from '../../../../../components/layout/app-bar/base-app-bar'
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import React from 'react'
+import { EditorModeExtendedAppBar } from './editor-mode-extended-app-bar'
 
 /**
  * Renders the EditorAppBar that extends the {@link BaseAppBar} with the note title or realtime connection alert.
@@ -22,15 +23,15 @@ export const EditorAppBar: React.FC = () => {
     return <BaseAppBar />
   } else if (isSynced) {
     return (
-      <BaseAppBar>
+      <EditorModeExtendedAppBar>
         <NoteTitleElement />
-      </BaseAppBar>
+      </EditorModeExtendedAppBar>
     )
   } else {
     return (
-      <BaseAppBar>
+      <EditorModeExtendedAppBar>
         <RealtimeConnectionAlert />
-      </BaseAppBar>
+      </EditorModeExtendedAppBar>
     )
   }
 }

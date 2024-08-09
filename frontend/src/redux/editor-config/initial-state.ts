@@ -6,6 +6,7 @@
 import type { EditorConfig } from './types'
 
 export const initialState: EditorConfig = {
+  splitPosition: 50,
   ligatures: true,
   syncScroll: true,
   smartPaste: true,

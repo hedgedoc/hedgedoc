@@ -16,10 +16,14 @@ import React from 'react'
 import { Nav, Navbar } from 'react-bootstrap'
 import { cypressId } from '../../../utils/cypress-attribute'
 
+export interface BaseAppBarProps {
+  additionalContentLeft?: React.ReactNode
+}
+
 /**
  * Renders the base app bar with branding, help, settings user elements.
  */
-export const BaseAppBar: React.FC<PropsWithChildren> = ({ children }) => {
+export const BaseAppBar: React.FC<PropsWithChildren<BaseAppBarProps>> = ({ children, additionalContentLeft }) => {
   return (
     <Navbar
       expand={true}
@@ -27,6 +31,7 @@ export const BaseAppBar: React.FC<PropsWithChildren> = ({ children }) => {
       {...cypressId('base-app-bar')}>
       <Nav className={`align-items-center justify-content-start gap-2 flex-grow-1 ${styles.side}`}>
         <BrandingElement />
+        {additionalContentLeft}
       </Nav>
       <Nav className={`align-items-center flex-fill overflow-hidden px-4 ${styles.center}`}>{children}</Nav>
       <Nav className={`align-items-stretch justify-content-end flex-grow-1 ${styles.side} h-100 py-1`}>

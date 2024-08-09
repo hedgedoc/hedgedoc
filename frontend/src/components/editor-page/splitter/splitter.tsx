@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,6 +8,8 @@ import { DividerButtonsShift, SplitDivider } from './split-divider/split-divider
 import styles from './splitter.module.scss'
 import type { MouseEvent, ReactElement, TouchEvent } from 'react'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { setEditorSplitPosition } from '../../../redux/editor-config/methods'
 
 export interface SplitterProps {
   left?: ReactElement
@@ -54,7 +56,7 @@ const SNAP_PERCENTAGE = 10
  * @return the created component
  */
 export const Splitter: React.FC<SplitterProps> = ({ additionalContainerClassName, left, right }) => {
-  const [relativeSplitValue, setRelativeSplitValue] = useState(50)
+  const relativeSplitValue = useApplicationState((state) => state.editorConfig.splitPosition)
   const [resizingInProgress, setResizingInProgress] = useState(false)
   const adjustedRelativeSplitValue = useMemo(() => Math.min(100, Math.max(0, relativeSplitValue)), [relativeSplitValue])
   const splitContainer = useRef<HTMLDivElement>(null)
@@ -73,19 +75,19 @@ export const Splitter: React.FC<SplitterProps> = ({ additionalContainerClassName
     setResizingInProgress(false)
   }, [])
 
+  /**
+   * Moves the splitter to the left or right side if the relative split value is close to the edges.
+   */
   useEffect(() => {
     if (!resizingInProgress) {
-      setRelativeSplitValue((value) => {
-        if (value < SNAP_PERCENTAGE) {
-          return 0
-        }
-        if (value > 100 - SNAP_PERCENTAGE) {
-          return 100
-        }
-        return value
-      })
+      if (relativeSplitValue < SNAP_PERCENTAGE && relativeSplitValue > 0) {
+        setEditorSplitPosition(0)
+      }
+      if (relativeSplitValue > 100 - SNAP_PERCENTAGE && relativeSplitValue < 100) {
+        setEditorSplitPosition(100)
+      }
     }
-  }, [resizingInProgress])
+  }, [resizingInProgress, relativeSplitValue])
 
   /**
    * Recalculates the panel split based on the absolute mouse/touch position.
@@ -109,17 +111,17 @@ export const Splitter: React.FC<SplitterProps> = ({ additionalContainerClassName
     const horizontalPositionInSplitContainer = horizontalPosition - splitContainer.current.offsetLeft
     const newRelativeSize = horizontalPositionInSplitContainer / splitContainer.current.clientWidth
     const number = newRelativeSize * 100
-    setRelativeSplitValue(number)
+    setEditorSplitPosition(number)
     moveEvent.preventDefault()
   }, [])
 
   const onLeftButtonClick = useCallback(() => {
-    setRelativeSplitValue((value) => (value === 100 ? 50 : 0))
-  }, [])
+    setEditorSplitPosition(relativeSplitValue === 100 ? 50 : 0)
+  }, [relativeSplitValue])
 
   const onRightButtonClick = useCallback(() => {
-    setRelativeSplitValue((value) => (value === 0 ? 50 : 100))
-  }, [])
+    setEditorSplitPosition(relativeSplitValue === 0 ? 50 : 100)
+  }, [relativeSplitValue])
 
   const dividerButtonsShift = useMemo(() => {
     if (relativeSplitValue === 0) {
@@ -131,7 +133,7 @@ export const Splitter: React.FC<SplitterProps> = ({ additionalContainerClassName
     }
   }, [relativeSplitValue])
 
-  useKeyboardShortcuts(setRelativeSplitValue)
+  useKeyboardShortcuts()
 
   return (
     <div
