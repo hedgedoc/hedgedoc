@@ -10,5 +10,5 @@ reverse_proxy /realtime http://backend:3000
 reverse_proxy /api/* http://backend:3000
 reverse_proxy /public/* http://backend:3000
 reverse_proxy /uploads/* http://backend:3000
-reverse_proxy /apidoc/* http://backend:3000
+reverse_proxy /media/* http://backend:3000
 reverse_proxy /* http://frontend:3001

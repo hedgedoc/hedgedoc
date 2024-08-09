@@ -158,6 +158,7 @@ describe('Notes', () => {
           noteId,
         );
         await testSetup.mediaService.saveFile(
+          'test.png',
           testImage,
           testSetup.users[0],
           note,
@@ -187,6 +188,7 @@ describe('Notes', () => {
           noteId,
         );
         const upload = await testSetup.mediaService.saveFile(
+          'test.png',
           testImage,
           testSetup.users[0],
           note,
@@ -207,10 +209,8 @@ describe('Notes', () => {
         expect(
           await testSetup.mediaService.listUploadsByUser(testSetup.users[0]),
         ).toHaveLength(1);
-        // Remove /upload/ from path as we just need the filename.
-        const fileName = upload.fileUrl.replace('/uploads/', '');
         // delete the file afterwards
-        await fs.unlink(join(uploadPath, fileName));
+        await fs.unlink(join(uploadPath, upload.uuid + '.png'));
       });
     });
     it('works with an existing alias with permissions', async () => {
@@ -325,7 +325,6 @@ describe('Notes', () => {
       expect(typeof metadata.body.createdAt).toEqual('string');
       expect(metadata.body.editedBy).toEqual([]);
       expect(metadata.body.permissions.owner).toEqual('testuser1');
-      expect(metadata.body.permissions.sharedToUsers).toEqual([]);
       expect(metadata.body.permissions.sharedToUsers).toEqual([]);
       expect(metadata.body.tags).toEqual([]);
       expect(typeof metadata.body.updatedAt).toEqual('string');
@@ -489,11 +488,13 @@ describe('Notes', () => {
 
       const testImage = await fs.readFile('test/public-api/fixtures/test.png');
       const upload0 = await testSetup.mediaService.saveFile(
+        'test.png',
         testImage,
         testSetup.users[0],
         note1,
       );
       const upload1 = await testSetup.mediaService.saveFile(
+        'test.png',
         testImage,
         testSetup.users[0],
         note2,
@@ -505,11 +506,11 @@ describe('Notes', () => {
         .expect('Content-Type', /json/)
         .expect(200);
       expect(responseAfter.body).toHaveLength(1);
-      expect(responseAfter.body[0].id).toEqual(upload0.id);
-      expect(responseAfter.body[0].id).not.toEqual(upload1.id);
+      expect(responseAfter.body[0].uuid).toEqual(upload0.uuid);
+      expect(responseAfter.body[0].uuid).not.toEqual(upload1.uuid);
       for (const upload of [upload0, upload1]) {
         // delete the file afterwards
-        await fs.unlink(join(uploadPath, upload.id));
+        await fs.unlink(join(uploadPath, upload.uuid + '.png'));
       }
       await fs.rm(uploadPath, { recursive: true });
     });

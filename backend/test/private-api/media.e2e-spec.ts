@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -71,17 +71,17 @@ describe('Media', () => {
           .set('HedgeDoc-Note', 'test_upload_media')
           .expect('Content-Type', /json/)
           .expect(201);
-        const fileName: string = uploadResponse.body.id;
+        const uuid: string = uploadResponse.body.uuid;
         const testImage = await fs.readFile(
           'test/private-api/fixtures/test.png',
         );
-        const path = '/api/private/media/' + fileName;
+        const path = '/api/private/media/' + uuid;
         const apiResponse = await agent.get(path);
-        expect(apiResponse.statusCode).toEqual(302);
-        const downloadResponse = await agent.get(apiResponse.header.location);
+        expect(apiResponse.statusCode).toEqual(200);
+        const downloadResponse = await agent.get(`/uploads/${uuid}.png`);
         expect(downloadResponse.body).toEqual(testImage);
         // delete the file afterwards
-        await fs.unlink(join(uploadPath, fileName));
+        await fs.unlink(join(uploadPath, uuid + '.png'));
       });
       it('without user', async () => {
         const agent = request.agent(testSetup.app.getHttpServer());
@@ -91,17 +91,17 @@ describe('Media', () => {
           .set('HedgeDoc-Note', 'test_upload_media')
           .expect('Content-Type', /json/)
           .expect(201);
-        const fileName: string = uploadResponse.body.id;
+        const uuid: string = uploadResponse.body.uuid;
         const testImage = await fs.readFile(
           'test/private-api/fixtures/test.png',
         );
-        const path = '/api/private/media/' + fileName;
+        const path = '/api/private/media/' + uuid;
         const apiResponse = await agent.get(path);
-        expect(apiResponse.statusCode).toEqual(302);
-        const downloadResponse = await agent.get(apiResponse.header.location);
+        expect(apiResponse.statusCode).toEqual(200);
+        const downloadResponse = await agent.get(`/uploads/${uuid}.png`);
         expect(downloadResponse.body).toEqual(testImage);
         // delete the file afterwards
-        await fs.unlink(join(uploadPath, fileName));
+        await fs.unlink(join(uploadPath, uuid + '.png'));
       });
     });
     describe('fails:', () => {
@@ -158,11 +158,12 @@ describe('Media', () => {
       );
       const testImage = await fs.readFile('test/private-api/fixtures/test.png');
       const upload = await testSetup.mediaService.saveFile(
+        'test.png',
         testImage,
         user,
         testNote,
       );
-      const filename = upload.id;
+      const uuid = upload.uuid;
 
       // login with a different user;
       const agent2 = request.agent(testSetup.app.getHttpServer());
@@ -172,15 +173,15 @@ describe('Media', () => {
         .expect(201);
 
       // try to delete upload with second user
-      await agent2.delete('/api/private/media/' + filename).expect(403);
+      await agent2.delete('/api/private/media/' + uuid).expect(403);
 
-      await agent.get('/uploads/' + filename).expect(200);
+      await agent.get(`/uploads/${uuid}.png`).expect(200);
 
       // delete upload for real
-      await agent.delete('/api/private/media/' + filename).expect(204);
+      await agent.delete('/api/private/media/' + uuid).expect(204);
 
       // Test if file is really deleted
-      await agent.get('/uploads/' + filename).expect(404);
+      await agent.get(`/uploads/${uuid}.png`).expect(404);
     });
     it('deleting user is owner of note', async () => {
       // upload a file with the default test user
@@ -191,11 +192,12 @@ describe('Media', () => {
       );
       const testImage = await fs.readFile('test/private-api/fixtures/test.png');
       const upload = await testSetup.mediaService.saveFile(
+        'test.png',
         testImage,
         null,
         testNote,
       );
-      const filename = upload.fileUrl.split('/').pop() || '';
+      const uuid = upload.uuid;
 
       // login with a different user;
       const agent2 = request.agent(testSetup.app.getHttpServer());
@@ -207,18 +209,18 @@ describe('Media', () => {
       const agentGuest = request.agent(testSetup.app.getHttpServer());
 
       // try to delete upload with second user
-      await agent.delete('/api/private/media/' + filename).expect(403);
+      await agent.delete('/api/private/media/' + uuid).expect(403);
 
-      await agent.get('/uploads/' + filename).expect(200);
+      await agent.get(`/uploads/${uuid}.png`).expect(200);
 
-      await agentGuest.delete('/api/private/media/' + filename).expect(401);
+      await agentGuest.delete('/api/private/media/' + uuid).expect(401);
 
-      await agent.get('/uploads/' + filename).expect(200);
+      await agent.get(`/uploads/${uuid}.png`).expect(200);
       // delete upload for real
-      await agent2.delete('/api/private/media/' + filename).expect(204);
+      await agent2.delete('/api/private/media/' + uuid).expect(204);
 
       // Test if file is really deleted
-      await agent.get('/uploads/' + filename).expect(404);
+      await agent.get(`/uploads/${uuid}.png`).expect(404);
     });
   });
 });

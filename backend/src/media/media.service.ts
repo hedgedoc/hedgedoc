@@ -1,22 +1,20 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Inject, Injectable } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
-import crypto from 'crypto';
 import * as FileType from 'file-type';
 import { Repository } from 'typeorm';
+import { v4 as uuidV4 } from 'uuid';
 
 import mediaConfiguration, { MediaConfig } from '../config/media.config';
 import { ClientError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Note } from '../notes/note.entity';
-import { NotesService } from '../notes/notes.service';
 import { User } from '../users/user.entity';
-import { UsersService } from '../users/users.service';
 import { AzureBackend } from './backends/azure-backend';
 import { BackendType } from './backends/backend-type.enum';
 import { FilesystemBackend } from './backends/filesystem-backend';
@@ -36,8 +34,6 @@ export class MediaService {
     private readonly logger: ConsoleLoggerService,
     @InjectRepository(MediaUpload)
     private mediaUploadRepository: Repository<MediaUpload>,
-    private notesService: NotesService,
-    private usersService: UsersService,
     private moduleRef: ModuleRef,
     @Inject(mediaConfiguration.KEY)
     private mediaConfig: MediaConfig,
@@ -68,15 +64,17 @@ export class MediaService {
   /**
    * @async
    * Save the given buffer to the configured MediaBackend and create a MediaUploadEntity to track where the file is, who uploaded it and to which note.
+   * @param {string} fileName - the original file name
    * @param {Buffer} fileBuffer - the buffer of the file to save.
    * @param {User} user - the user who uploaded this file
    * @param {Note} note - the note which will be associated with the new file.
-   * @return {string} the url of the saved file
+   * @return {MediaUpload} the created MediaUpload entity
    * @throws {ClientError} the MIME type of the file is not supported.
    * @throws {NotInDBError} - the note or user is not in the database
    * @throws {MediaBackendError} - there was an error saving the file
    */
   async saveFile(
+    fileName: string,
     fileBuffer: Buffer,
     user: User | null,
     note: Note,
@@ -99,19 +97,20 @@ export class MediaService {
     if (!MediaService.isAllowedMimeType(fileTypeResult.mime)) {
       throw new ClientError('MIME type not allowed.');
     }
-    const randomBytes = crypto.randomBytes(16);
-    const id = randomBytes.toString('hex') + '.' + fileTypeResult.ext;
-    this.logger.debug(`Generated filename: '${id}'`, 'saveFile');
-    const [url, backendData] = await this.mediaBackend.saveFile(fileBuffer, id);
+    const uuid = uuidV4(); // TODO replace this with uuid-v7 in a later PR
+    const backendData = await this.mediaBackend.saveFile(
+      uuid,
+      fileBuffer,
+      fileTypeResult,
+    );
     const mediaUpload = MediaUpload.create(
-      id,
+      uuid,
+      fileName,
       note,
       user,
-      fileTypeResult.ext,
       this.mediaBackendType,
-      url,
+      backendData,
     );
-    mediaUpload.backendData = backendData;
     return await this.mediaUploadRepository.save(mediaUpload);
   }
 
@@ -122,8 +121,24 @@ export class MediaService {
    * @throws {MediaBackendError} - there was an error deleting the file
    */
   async deleteFile(mediaUpload: MediaUpload): Promise<void> {
-    await this.mediaBackend.deleteFile(mediaUpload.id, mediaUpload.backendData);
+    await this.mediaBackend.deleteFile(
+      mediaUpload.uuid,
+      mediaUpload.backendData,
+    );
     await this.mediaUploadRepository.remove(mediaUpload);
+  }
+
+  /**
+   * @async
+   * Get the URL of the file.
+   * @param {MediaUpload} mediaUpload - the file to get the URL for.
+   * @return {string} the URL of the file.
+   * @throws {MediaBackendError} - there was an error retrieving the url
+   */
+  async getFileUrl(mediaUpload: MediaUpload): Promise<string> {
+    const backendName = mediaUpload.backendType as BackendType;
+    const backend = this.getBackendFromType(backendName);
+    return await backend.getFileUrl(mediaUpload.uuid, mediaUpload.backendData);
   }
 
   /**
@@ -136,13 +151,31 @@ export class MediaService {
    */
   async findUploadByFilename(filename: string): Promise<MediaUpload> {
     const mediaUpload = await this.mediaUploadRepository.findOne({
-      where: { id: filename },
+      where: { fileName: filename },
       relations: ['user'],
     });
     if (mediaUpload === null) {
       throw new NotInDBError(
         `MediaUpload with filename '${filename}' not found`,
       );
+    }
+    return mediaUpload;
+  }
+
+  /**
+   * @async
+   * Find a file entry by its UUID.
+   * @param {string} uuid - The UUID of the MediaUpload entity to find.
+   * @returns {MediaUpload} - the MediaUpload entity if found.
+   * @throws {NotInDBError} - the MediaUpload entity with the provided UUID is not found in the database.
+   */
+  async findUploadByUuid(uuid: string): Promise<MediaUpload> {
+    const mediaUpload = await this.mediaUploadRepository.findOne({
+      where: { uuid },
+      relations: ['user'],
+    });
+    if (mediaUpload === null) {
+      throw new NotInDBError(`MediaUpload with uuid '${uuid}' not found`);
     }
     return mediaUpload;
   }
@@ -166,9 +199,9 @@ export class MediaService {
 
   /**
    * @async
-   * List all uploads by a specific note
+   * List all uploads to a specific note
    * @param {Note} note - the specific user
-   * @return {MediaUpload[]} arary of media uploads owned by the user
+   * @return {MediaUpload[]} array of media uploads owned by the user
    */
   async listUploadsByNote(note: Note): Promise<MediaUpload[]> {
     const mediaUploads = await this.mediaUploadRepository
@@ -188,7 +221,7 @@ export class MediaService {
    */
   async removeNoteFromMediaUpload(mediaUpload: MediaUpload): Promise<void> {
     this.logger.debug(
-      'Setting note to null for mediaUpload: ' + mediaUpload.id,
+      'Setting note to null for mediaUpload: ' + mediaUpload.uuid,
       'removeNoteFromMediaUpload',
     );
     mediaUpload.note = Promise.resolve(null);
@@ -232,8 +265,9 @@ export class MediaService {
   async toMediaUploadDto(mediaUpload: MediaUpload): Promise<MediaUploadDto> {
     const user = await mediaUpload.user;
     return {
-      id: mediaUpload.id,
-      notePublicId: (await mediaUpload.note)?.publicId ?? null,
+      uuid: mediaUpload.uuid,
+      fileName: mediaUpload.fileName,
+      noteId: (await mediaUpload.note)?.publicId ?? null,
       createdAt: mediaUpload.createdAt,
       username: user?.username ?? null,
     };

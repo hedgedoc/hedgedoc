@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,6 +8,7 @@ import {
   ApiBadRequestResponse,
   ApiConflictResponse,
   ApiCreatedResponse,
+  ApiFoundResponse,
   ApiInternalServerErrorResponse,
   ApiNoContentResponse,
   ApiNotFoundResponse,
@@ -21,6 +22,7 @@ import {
   badRequestDescription,
   conflictDescription,
   createdDescription,
+  foundDescription,
   internalServerErrorDescription,
   noContentDescription,
   notFoundDescription,
@@ -33,6 +35,7 @@ export type HttpStatusCodes =
   | 200
   | 201
   | 204
+  | 302
   | 400
   | 401
   | 403
@@ -128,6 +131,14 @@ export const OpenApi = (
             description: description ?? noContentDescription,
           }),
           HttpCode(204),
+        );
+        break;
+      case 302:
+        decoratorsToApply.push(
+          ApiFoundResponse({
+            description: description ?? foundDescription,
+          }),
+          HttpCode(302),
         );
         break;
       case 400:

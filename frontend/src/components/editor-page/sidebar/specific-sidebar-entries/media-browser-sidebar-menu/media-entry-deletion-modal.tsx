@@ -25,7 +25,7 @@ export const MediaEntryDeletionModal: React.FC<MediaEntryDeletionModalProps> = (
   const { showErrorNotification, dispatchUiNotification } = useUiNotifications()
 
   const handleDelete = useCallback(() => {
-    deleteUploadedMedia(entry.id)
+    deleteUploadedMedia(entry.uuid)
       .then(() => {
         dispatchUiNotification('common.success', 'editor.mediaBrowser.mediaDeleted', {})
       })

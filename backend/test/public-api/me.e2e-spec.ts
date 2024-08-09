@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -201,16 +201,44 @@ describe('Me', () => {
     const testImage = await fs.readFile('test/public-api/fixtures/test.png');
     const imageIds = [];
     imageIds.push(
-      (await testSetup.mediaService.saveFile(testImage, user, note1)).id,
+      (
+        await testSetup.mediaService.saveFile(
+          'test.png',
+          testImage,
+          user,
+          note1,
+        )
+      ).uuid,
     );
     imageIds.push(
-      (await testSetup.mediaService.saveFile(testImage, user, note1)).id,
+      (
+        await testSetup.mediaService.saveFile(
+          'test.png',
+          testImage,
+          user,
+          note1,
+        )
+      ).uuid,
     );
     imageIds.push(
-      (await testSetup.mediaService.saveFile(testImage, user, note2)).id,
+      (
+        await testSetup.mediaService.saveFile(
+          'test.png',
+          testImage,
+          user,
+          note2,
+        )
+      ).uuid,
     );
     imageIds.push(
-      (await testSetup.mediaService.saveFile(testImage, user, note2)).id,
+      (
+        await testSetup.mediaService.saveFile(
+          'test.png',
+          testImage,
+          user,
+          note2,
+        )
+      ).uuid,
     );
 
     const response = await request(httpServer)
@@ -218,13 +246,13 @@ describe('Me', () => {
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body).toHaveLength(4);
-    expect(imageIds).toContain(response.body[0].id);
-    expect(imageIds).toContain(response.body[1].id);
-    expect(imageIds).toContain(response.body[2].id);
-    expect(imageIds).toContain(response.body[3].id);
+    expect(imageIds).toContain(response.body[0].uuid);
+    expect(imageIds).toContain(response.body[1].uuid);
+    expect(imageIds).toContain(response.body[2].uuid);
+    expect(imageIds).toContain(response.body[3].uuid);
     for (const imageId of imageIds) {
       // delete the file afterwards
-      await fs.unlink(join(uploadPath, imageId));
+      await fs.unlink(join(uploadPath, imageId + '.png'));
     }
     await fs.rm(uploadPath, { recursive: true });
   });

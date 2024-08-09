@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -20,7 +20,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
     req,
     res,
     {
-      id: '/public/img/avatar.png',
+      uuid: 'e81f57cd-5866-4253-9f57-cd5866a253ca',
+      fileName: 'avatar.png',
       noteId: null,
       username: 'test',
       createdAt: '2022-02-27T21:54:23.856Z'

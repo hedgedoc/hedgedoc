@@ -1,12 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Init1696756465867 implements MigrationInterface {
-  name = 'Init1696756465867';
+export class Init1721853496465 implements MigrationInterface {
+  name = 'Init1721853496465';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -16,7 +16,7 @@ export class Init1696756465867 implements MigrationInterface {
       `CREATE TABLE \`history_entry\` (\`id\` int NOT NULL AUTO_INCREMENT, \`pinStatus\` tinyint NOT NULL, \`updatedAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`userId\` int NULL, \`noteId\` int NULL, UNIQUE INDEX \`IDX_928dd947355b0837366470a916\` (\`noteId\`, \`userId\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
-      `CREATE TABLE \`media_upload\` (\`id\` varchar(255) NOT NULL, \`backendType\` varchar(255) NOT NULL, \`fileUrl\` varchar(255) NOT NULL, \`backendData\` text NULL, \`createdAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`noteId\` int NULL, \`userId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
+      `CREATE TABLE \`media_upload\` (\`uuid\` varchar(255) NOT NULL, \`fileName\` varchar(255) NOT NULL, \`backendType\` varchar(255) NOT NULL, \`backendData\` text NULL, \`createdAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`noteId\` int NULL, \`userId\` int NULL, PRIMARY KEY (\`uuid\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
       `CREATE TABLE \`group\` (\`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NOT NULL, \`displayName\` varchar(255) NOT NULL, \`special\` tinyint NOT NULL, UNIQUE INDEX \`IDX_8a45300fd825918f3b40195fbd\` (\`name\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,

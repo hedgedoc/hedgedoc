@@ -11,6 +11,12 @@ background information and explanations. They are especially useful for contribu
             <span>Notes</span>
         </div>
     </a>
+    <a href='/concepts/media/'>
+        <div class='topic'>
+            <span>📸</span>
+            <span>Media</span>
+        </div>
+    </a>
     <a href='/concepts/user-profiles/'>
         <div class='topic'>
             <span>🙎</span>

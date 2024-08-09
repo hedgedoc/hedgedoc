@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 export interface MediaUpload {
-  id: string
+  uuid: string
+  fileName: string
   noteId: string | null
   createdAt: string
-  username: string
+  username: string | null
 }
 
 export interface ImageProxyResponse {

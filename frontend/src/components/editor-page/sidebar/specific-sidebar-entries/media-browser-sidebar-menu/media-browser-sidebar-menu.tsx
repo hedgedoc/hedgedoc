@@ -49,7 +49,7 @@ export const MediaBrowserSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
     if (loading || error || !value) {
       return []
     }
-    return value.map((entry) => <MediaEntry entry={entry} key={entry.id} onDelete={setMediaEntryForDeletion} />)
+    return value.map((entry) => <MediaEntry entry={entry} key={entry.uuid} onDelete={setMediaEntryForDeletion} />)
   }, [value, loading, error, setMediaEntryForDeletion])
 
   const cancelDeletion = useCallback(() => {

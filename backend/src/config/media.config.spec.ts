@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,6 +16,8 @@ describe('mediaConfig', () => {
   const secretAccessKey = 'secretAccessKey';
   const bucket = 'bucket';
   const endPoint = 'https://endPoint';
+  const region = 'us-east-1';
+  const pathStyle = false;
   // Azure
   const azureConnectionString = 'connectionString';
   const container = 'container';
@@ -54,6 +56,8 @@ describe('mediaConfig', () => {
           HD_MEDIA_BACKEND_S3_SECRET_KEY: secretAccessKey,
           HD_MEDIA_BACKEND_S3_BUCKET: bucket,
           HD_MEDIA_BACKEND_S3_ENDPOINT: endPoint,
+          HD_MEDIA_BACKEND_S3_REGION: region,
+          HD_MEDIA_BACKEND_S3_PATH_STYLE: pathStyle.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -66,6 +70,8 @@ describe('mediaConfig', () => {
       expect(config.backend.s3.secretAccessKey).toEqual(secretAccessKey);
       expect(config.backend.s3.bucket).toEqual(bucket);
       expect(config.backend.s3.endPoint).toEqual(endPoint);
+      expect(config.backend.s3.region).toEqual(region);
+      expect(config.backend.s3.pathStyle).toEqual(pathStyle);
       restore();
     });
 

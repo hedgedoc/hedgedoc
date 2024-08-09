@@ -1,25 +1,39 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { BackendData } from './media-upload.entity';
+import { FileTypeResult } from 'file-type';
 
 export interface MediaBackend {
   /**
    * Saves a file according to backend internals.
+   * @param uuid Unique identifier of the uploaded file
    * @param buffer File data
-   * @param fileName Name of the file to save. Can include a file extension.
+   * @param fileType File type result
    * @throws {MediaBackendError} - there was an error saving the file
-   * @return Tuple of file URL and internal backend data, which should be saved.
+   * @return The internal backend data, which should be saved
    */
-  saveFile(buffer: Buffer, fileName: string): Promise<[string, BackendData]>;
+  saveFile(
+    uuid: string,
+    buffer: Buffer,
+    fileType?: FileTypeResult,
+  ): Promise<string | null>;
 
   /**
    * Delete a file from the backend
-   * @param fileName String to identify the file
+   * @param uuid Unique identifier of the uploaded file
    * @param backendData Internal backend data
    * @throws {MediaBackendError} - there was an error deleting the file
    */
-  deleteFile(fileName: string, backendData: BackendData): Promise<void>;
+  deleteFile(uuid: string, backendData: string | null): Promise<void>;
+
+  /**
+   * Get a publicly accessible URL of a file from the backend
+   * @param uuid Unique identifier of the uploaded file
+   * @param backendData Internal backend data
+   * @throws {MediaBackendError} - there was an error getting the file
+   * @return Public accessible URL of the file
+   */
+  getFileUrl(uuid: string, backendData: string | null): Promise<string>;
 }
