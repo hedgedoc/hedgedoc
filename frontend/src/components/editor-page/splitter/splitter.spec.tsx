@@ -1,11 +1,19 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Splitter } from './splitter'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { Mock } from 'ts-mockery'
+import * as EditorConfigModule from '../../../redux/editor-config/methods'
+import { mockAppState } from '../../../test-utils/mock-app-state'
+import type { EditorConfig } from '../../../redux/editor-config/types'
+
+jest.mock('../../../hooks/common/use-application-state')
+jest.mock('../../../redux/editor-config/methods')
+
+const setEditorSplitPosition = jest.spyOn(EditorConfigModule, 'setEditorSplitPosition').mockReturnValue()
 
 describe('Splitter', () => {
   describe('resize', () => {
@@ -15,16 +23,22 @@ describe('Splitter', () => {
     })
 
     it('can react to shortcuts', () => {
-      const view = render(<Splitter left={<>left</>} right={<>right</>} />)
+      render(<Splitter left={<>left</>} right={<>right</>} />)
+
       fireEvent.keyDown(document, Mock.of<KeyboardEvent>({ ctrlKey: true, altKey: true, key: 'v' }))
-      expect(view.container).toMatchSnapshot()
+      expect(setEditorSplitPosition).toHaveBeenCalledWith(0)
+
       fireEvent.keyDown(document, Mock.of<KeyboardEvent>({ ctrlKey: true, altKey: true, key: 'e' }))
-      expect(view.container).toMatchSnapshot()
+      expect(setEditorSplitPosition).toHaveBeenCalledWith(100)
+
       fireEvent.keyDown(document, Mock.of<KeyboardEvent>({ ctrlKey: true, altKey: true, key: 'b' }))
-      expect(view.container).toMatchSnapshot()
+      expect(setEditorSplitPosition).toHaveBeenCalledWith(50)
     })
 
     it('can change size with mouse', async () => {
+      mockAppState({
+        editorConfig: { splitPosition: 50 } as EditorConfig
+      })
       const view = render(<Splitter left={<>left</>} right={<>right</>} />)
       expect(view.container).toMatchSnapshot()
       const divider = await screen.findByTestId('splitter-divider')
@@ -32,15 +46,15 @@ describe('Splitter', () => {
       fireEvent.mouseDown(divider, {})
       fireEvent.mouseMove(window, Mock.of<MouseEvent>({ buttons: 1, clientX: 1920 }))
       fireEvent.mouseUp(window)
-      expect(view.container).toMatchSnapshot()
+      expect(setEditorSplitPosition).toHaveBeenCalledWith(100)
 
       fireEvent.mouseDown(divider, {})
       fireEvent.mouseMove(window, Mock.of<MouseEvent>({ buttons: 1, clientX: 0 }))
       fireEvent.mouseUp(window)
-      expect(view.container).toMatchSnapshot()
+      expect(setEditorSplitPosition).toHaveBeenCalledWith(0)
 
       fireEvent.mouseMove(window, Mock.of<MouseEvent>({ buttons: 1, clientX: 1920 }))
-      expect(view.container).toMatchSnapshot()
+      expect(setEditorSplitPosition).toHaveBeenCalledWith(100)
     })
 
     it('can change size with touch', async () => {

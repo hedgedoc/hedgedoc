@@ -12,6 +12,9 @@ const editorConfigSlice = createSlice({
   name: 'editorConfig',
   initialState,
   reducers: {
+    setSplitPosition: (state, action: PayloadAction<EditorConfig['splitPosition']>) => {
+      state.splitPosition = action.payload
+    },
     setSyncScroll: (state, action: PayloadAction<EditorConfig['syncScroll']>) => {
       state.syncScroll = action.payload
     },

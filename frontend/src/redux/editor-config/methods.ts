@@ -12,6 +12,12 @@ import { Logger } from '../../utils/logger'
 
 const log = new Logger('Redux > EditorConfig')
 
+export const setEditorSplitPosition = (splitPosition: number): void => {
+  const action = editorConfigActionsCreator.setSplitPosition(splitPosition)
+  store.dispatch(action)
+  saveToLocalStorage()
+}
+
 export const setEditorSyncScroll = (syncScroll: boolean): void => {
   const action = editorConfigActionsCreator.setSyncScroll(syncScroll)
   store.dispatch(action)
