@@ -845,6 +845,7 @@ function imgPlayiframe (element, src) {
 
 const anchorForId = id => {
   const anchor = document.createElement('a')
+  anchor.ariaHidden = 'true'
   anchor.className = 'anchor hidden-xs'
   anchor.href = `#${id}`
   anchor.innerHTML = '<i class="fa fa-link"></i>'
