@@ -1,30 +1,29 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useEffect } from 'react'
+import { setEditorSplitPosition } from '../../../../redux/editor-config/methods'
 
 /**
  * Binds global keyboard shortcuts for setting the split value.
- *
- * @param setRelativeSplitValue A function that is used to set the split value
  */
-export const useKeyboardShortcuts = (setRelativeSplitValue: (value: number) => void) => {
+export const useKeyboardShortcuts = () => {
   useEffect(() => {
     const shortcutHandler = (event: KeyboardEvent): void => {
       if (event.ctrlKey && event.altKey && event.key === 'b') {
-        setRelativeSplitValue(50)
+        setEditorSplitPosition(50)
         event.preventDefault()
       }
 
       if (event.ctrlKey && event.altKey && event.key === 'v') {
-        setRelativeSplitValue(0)
+        setEditorSplitPosition(0)
         event.preventDefault()
       }
 
       if (event.ctrlKey && event.altKey && (event.key === 'e' || event.key === '€')) {
-        setRelativeSplitValue(100)
+        setEditorSplitPosition(100)
         event.preventDefault()
       }
     }
@@ -33,5 +32,5 @@ export const useKeyboardShortcuts = (setRelativeSplitValue: (value: number) => v
     return () => {
       document.removeEventListener('keydown', shortcutHandler, false)
     }
-  }, [setRelativeSplitValue])
+  }, [])
 }
