@@ -35,7 +35,7 @@
     "cookie-parser": "1.4.6",
     "deep-freeze": "0.0.1",
     "diff-match-patch": "git+https://github.com/hackmdio/diff-match-patch.git",
-    "ejs": "3.1.9",
+    "ejs": "3.1.10",
     "express": "4.19.2",
     "express-session": "1.18.0",
     "file-type": "18.7.0",
