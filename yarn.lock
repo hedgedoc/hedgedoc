@@ -1283,7 +1283,7 @@ __metadata:
     method-override: 3.0.0
     mini-css-extract-plugin: 1.6.2
     minimist: 1.2.8
-    minio: 7.1.3
+    minio: 8.0.1
     mocha: 10.7.3
     mock-require: 3.0.3
     moment: 2.30.1
@@ -3126,10 +3126,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"buffer-crc32@npm:^0.2.1, buffer-crc32@npm:^0.2.13":
+"buffer-crc32@npm:^0.2.1":
   version: 0.2.13
   resolution: "buffer-crc32@npm:0.2.13"
   checksum: 06252347ae6daca3453b94e4b2f1d3754a3b146a111d81c68924c22d91889a40623264e95e67955b1cb4a68cbedf317abeabb5140a9766ed248973096db5ce1c
+  languageName: node
+  linkType: hard
+
+"buffer-crc32@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "buffer-crc32@npm:1.0.0"
+  checksum: bc114c0e02fe621249e0b5093c70e6f12d4c2b1d8ddaf3b1b7bbe3333466700100e6b1ebdc12c050d0db845bc582c4fce8c293da487cc483f97eea027c480b23
   languageName: node
   linkType: hard
 
@@ -6227,6 +6234,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eventemitter3@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "eventemitter3@npm:5.0.1"
+  checksum: 543d6c858ab699303c3c32e0f0f47fc64d360bf73c3daf0ac0b5079710e340d6fe9f15487f94e66c629f5f82cd1a8678d692f3dbb6f6fcd1190e1b97fcad36f8
+  languageName: node
+  linkType: hard
+
 "events@npm:1.1.1":
   version: 1.1.1
   resolution: "events@npm:1.1.1"
@@ -8736,13 +8750,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-stream@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "json-stream@npm:1.0.0"
-  checksum: 2738069c6e8c66a7a49bf07be619ea05a45cfcf535090089efd955ed0c726de41013293eae417585639f36c2e1ddd00370f20cccc71381ba50c68ec1bee9d512
-  languageName: node
-  linkType: hard
-
 "json-stringify-safe@npm:~5.0.1":
   version: 5.0.1
   resolution: "json-stringify-safe@npm:5.0.1"
@@ -10482,25 +10489,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minio@npm:7.1.3":
-  version: 7.1.3
-  resolution: "minio@npm:7.1.3"
+"minio@npm:8.0.1":
+  version: 8.0.1
+  resolution: "minio@npm:8.0.1"
   dependencies:
     async: ^3.2.4
     block-stream2: ^2.1.0
     browser-or-node: ^2.1.1
-    buffer-crc32: ^0.2.13
+    buffer-crc32: ^1.0.0
+    eventemitter3: ^5.0.1
     fast-xml-parser: ^4.2.2
     ipaddr.js: ^2.0.1
-    json-stream: ^1.0.0
     lodash: ^4.17.21
     mime-types: ^2.1.35
     query-string: ^7.1.3
+    stream-json: ^1.8.0
     through2: ^4.0.2
     web-encoding: ^1.1.5
-    xml: ^1.0.1
     xml2js: ^0.5.0
-  checksum: 39f140a2ed6f1cddeeea0854bc3fc66db331bf4436f01506160ce14242e47794479d948e3c0dffadfc54bc3a9abeafd6afdb6f577383f66a5f2f5db36706453d
+  checksum: 338d1863e9898e594ad47a3668676a5a2c6720d11263465fd03269a4e8ac6df755efef31ab06a97c6e3b09b8d1746e829cce4520677e87b285fc23812317a77b
   languageName: node
   linkType: hard
 
@@ -14887,6 +14894,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"stream-chain@npm:^2.2.5":
+  version: 2.2.5
+  resolution: "stream-chain@npm:2.2.5"
+  checksum: c83cbf504bd11e2bcbe761a92801295b3decac7ffa4092ceffca2eb1b5d0763bcc511fa22cd8044e8a18c21ca66794fd10c8d9cd1292a3e6c0d83a4194c6b8ed
+  languageName: node
+  linkType: hard
+
 "stream-each@npm:^1.1.0":
   version: 1.2.3
   resolution: "stream-each@npm:1.2.3"
@@ -14907,6 +14921,15 @@ __metadata:
     to-arraybuffer: ^1.0.0
     xtend: ^4.0.0
   checksum: f57dfaa21a015f72e6ce6b199cf1762074cfe8acf0047bba8f005593754f1743ad0a91788f95308d9f3829ad55742399ad27b4624432f2752a08e62ef4346e05
+  languageName: node
+  linkType: hard
+
+"stream-json@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "stream-json@npm:1.8.0"
+  dependencies:
+    stream-chain: ^2.2.5
+  checksum: c17ac72228815850fc5226d8c0a80afd6c2ffbfa71c572ad99ad2eac145dc836a3fc6f62a298b3df716f1726cc1ed8a448892ed9fb6123f46abf2f89c908749f
   languageName: node
   linkType: hard
 
@@ -16803,13 +16826,6 @@ __metadata:
   dependencies:
     sax: 0.5.x
   checksum: b766411244acbf6acca7b66f3efc07e0c7baf2afe221a7edc10a3db9d3948a800aa249cf7a529f439b487a6ca6f34849bb49ad9a05db9f4047efc9f643640bad
-  languageName: node
-  linkType: hard
-
-"xml@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "xml@npm:1.0.1"
-  checksum: 11b5545ef3f8fec3fa29ce251f50ad7b6c97c103ed4d851306ec23366f5fa4699dd6a942262df52313a0cd1840ab26256da253c023bad3309d8ce46fe6020ca0
   languageName: node
   linkType: hard
 
