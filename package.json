@@ -90,7 +90,7 @@
     "prometheus-api-metrics": "3.2.2",
     "randomcolor": "0.6.2",
     "readline-sync": "1.4.10",
-    "rimraf": "5.0.5",
+    "rimraf": "5.0.10",
     "sanitize-filename": "1.6.3",
     "scrypt-kdf": "2.0.1",
     "sequelize": "5.22.5",
