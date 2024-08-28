@@ -1315,7 +1315,7 @@ __metadata:
     shortid: 2.2.16
     socket.io: 2.5.0
     socket.io-client: 2.5.0
-    spin.js: 4.1.1
+    spin.js: 4.1.2
     sqlite3: 5.1.7
     store: 2.0.12
     string: 3.3.3
@@ -14699,10 +14699,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"spin.js@npm:4.1.1":
-  version: 4.1.1
-  resolution: "spin.js@npm:4.1.1"
-  checksum: 2bf377a6e3d15d3e823978794d2fe490459626ef9dd79e4e0d8cbebb6144dfa8387b64ac717f2debdabd00cef33383425879e665417b2f55a3d20098a53fb478
+"spin.js@npm:4.1.2":
+  version: 4.1.2
+  resolution: "spin.js@npm:4.1.2"
+  checksum: 2ecf209a8b71ac7174b81dac96813db80863f820633c42c9309778fe2d602ea1486c7a66915fed6a76dccc6e0528ad1fd81e9655417ea0ae5ad06fadd3747b85
   languageName: node
   linkType: hard
 
