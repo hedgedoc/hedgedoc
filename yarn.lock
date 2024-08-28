@@ -1304,7 +1304,7 @@ __metadata:
     randomcolor: 0.6.2
     raphael: 2.3.0
     readline-sync: 1.4.10
-    remark-cli: 12.0.0
+    remark-cli: 12.0.1
     remark-preset-lint-markdown-style-guide: 5.1.3
     reveal.js: 3.9.2
     rimraf: 5.0.5
@@ -7791,13 +7791,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"import-meta-resolve@npm:^3.0.0":
-  version: 3.1.1
-  resolution: "import-meta-resolve@npm:3.1.1"
-  checksum: 24e703e8107699e22fdbea8712e1fa3ef6c379a5e999e6d62280754d302ec71bf41302e791886706a015cc20eb2d292c7187d16efb064e25b617808e3f65e1d3
-  languageName: node
-  linkType: hard
-
 "import-meta-resolve@npm:^4.0.0":
   version: 4.0.0
   resolution: "import-meta-resolve@npm:4.0.0"
@@ -13075,17 +13068,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remark-cli@npm:12.0.0":
-  version: 12.0.0
-  resolution: "remark-cli@npm:12.0.0"
+"remark-cli@npm:12.0.1":
+  version: 12.0.1
+  resolution: "remark-cli@npm:12.0.1"
   dependencies:
-    import-meta-resolve: ^3.0.0
+    import-meta-resolve: ^4.0.0
     markdown-extensions: ^2.0.0
     remark: ^15.0.0
     unified-args: ^11.0.0
   bin:
     remark: cli.js
-  checksum: 7bade7cdcf17ad670d6dbd2fd8f8cd78fbb0535d9a4dd2681a33845454f08c9b62ee858e520f308cf13195e4e1a062d2eb963a8478326679766c1dbfff95b45a
+  checksum: a23c2fe5f48c0ab2a0c52e99b9b20473d4afc8e50729231b25ff4d346b1a5da1a9050ce6ba57816eab4a51f01191a9460a8db297667b9471dd4edd5d3f9396bc
   languageName: node
   linkType: hard
 
