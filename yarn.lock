@@ -1286,7 +1286,7 @@ __metadata:
     mock-require: 3.0.3
     moment: 2.30.1
     morgan: 1.10.0
-    mysql2: 3.9.4
+    mysql2: 3.11.0
     node-fetch: 2.7.0
     optimize-css-assets-webpack-plugin: 6.0.1
     passport: 0.7.0
@@ -1970,6 +1970,13 @@ __metadata:
   version: 0.7.0
   resolution: "aws-sign2@npm:0.7.0"
   checksum: b148b0bb0778098ad8cf7e5fc619768bcb51236707ca1d3e5b49e41b171166d8be9fdc2ea2ae43d7decf02989d0aaa3a9c4caa6f320af95d684de9b548a71525
+  languageName: node
+  linkType: hard
+
+"aws-ssl-profiles@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "aws-ssl-profiles@npm:1.1.1"
+  checksum: c428ee04614bca4a22e5b4d0fd31181f9ba901206c4f614c08ae3b05333c06f1a99964082dcf2f1b119b3a7b07de9c35d2876c7b96eaa41d680c6eac9bc9443e
   languageName: node
   linkType: hard
 
@@ -10764,10 +10771,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mysql2@npm:3.9.4":
-  version: 3.9.4
-  resolution: "mysql2@npm:3.9.4"
+"mysql2@npm:3.11.0":
+  version: 3.11.0
+  resolution: "mysql2@npm:3.11.0"
   dependencies:
+    aws-ssl-profiles: ^1.1.1
     denque: ^2.1.0
     generate-function: ^2.3.1
     iconv-lite: ^0.6.3
@@ -10776,7 +10784,7 @@ __metadata:
     named-placeholders: ^1.1.3
     seq-queue: ^0.0.5
     sqlstring: ^2.3.2
-  checksum: 2829f329cda58bfb97d24826242d9e05222a9ab2397b9746afe0c01a4801b18c685f75d268aa15f8b47988ed1ef50b28358ce6f9a69e18cb50d2c965d68b1a75
+  checksum: 0a3e80c95ca9e26821bc11658cbd065704d5f07f76efd952fc84115cc28f8a0100f14646fb3dd577f28831b8d6d2bfe0ef46fd4273ba5dcbfbeabb311302874d
   languageName: node
   linkType: hard
 
