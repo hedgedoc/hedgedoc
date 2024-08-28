@@ -1313,7 +1313,7 @@ __metadata:
     select2: 3.5.2-browserify
     sequelize: 5.22.5
     shortid: 2.2.16
-    socket.io: 2.5.0
+    socket.io: 2.5.1
     socket.io-client: 2.5.0
     spin.js: 4.1.2
     sqlite3: 5.1.7
@@ -14579,9 +14579,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"socket.io@npm:2.5.0":
-  version: 2.5.0
-  resolution: "socket.io@npm:2.5.0"
+"socket.io@npm:2.5.1":
+  version: 2.5.1
+  resolution: "socket.io@npm:2.5.1"
   dependencies:
     debug: ~4.1.0
     engine.io: ~3.6.0
@@ -14589,7 +14589,7 @@ __metadata:
     socket.io-adapter: ~1.1.0
     socket.io-client: 2.5.0
     socket.io-parser: ~3.4.0
-  checksum: 6f20a413352cb0a8bb13063249fe425c81fb54beca1bdd71221262305cf21232e6a37fdd4a232b5695dbd4d3204281a9313829c9c373c5ba01c5bd7218edd094
+  checksum: 5f74797e6bbed1f744e8565c5b5e8e6d3ddc05751297981791fe7ca5a64c0e6310ce86c5f4d3ddac7caf20c034f94aa15c5c9ad91984e49221e88682c95c8281
   languageName: node
   linkType: hard
 
