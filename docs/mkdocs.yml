@@ -32,6 +32,7 @@ nav:
       - Media Backend:
           - MinIO: guides/minio-image-upload.md
           - S3: guides/s3-image-upload.md
+          - Google Cloud Storage: guides/s3-google-cloud-storage.md
       - Migrate from Etherpad: guides/migrate-etherpad.md
       - Migration Troubleshooting: guides/migration-troubleshooting.md
       - Terms of Use Setup: guides/providing-terms.md
