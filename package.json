@@ -172,7 +172,7 @@
     "ionicons": "2.0.1",
     "jquery": "3.7.1",
     "jquery-mousewheel": "3.1.13",
-    "jquery-ui": "1.13.2",
+    "jquery-ui": "1.13.3",
     "js-cookie": "3.0.5",
     "js-sequence-diagrams": "git+https://github.com/hedgedoc/js-sequence-diagrams.git",
     "js-yaml": "3.14.1",
