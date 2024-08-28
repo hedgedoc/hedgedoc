@@ -1187,7 +1187,7 @@ __metadata:
     "@hedgedoc/codemirror-5": 5.65.12
     "@passport-next/passport-openid": 1.0.0
     Idle.Js: "git+https://github.com/shawnmclean/Idle.js"
-    abcjs: 6.3.0
+    abcjs: 6.4.2
     archiver: 6.0.2
     async: 3.2.6
     aws-sdk: 2.1672.0
@@ -1379,10 +1379,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"abcjs@npm:6.3.0":
-  version: 6.3.0
-  resolution: "abcjs@npm:6.3.0"
-  checksum: ad99378f8e86fc9d42a2df2f49dfb8b1d8072e697987d5ff238fa68fa2183e0df2732e6b5af87c0810b654da1f336ebd3d578be8051149ff4cd25e1cf580b44f
+"abcjs@npm:6.4.2":
+  version: 6.4.2
+  resolution: "abcjs@npm:6.4.2"
+  checksum: ee1e7ef17158c51117bdd9611551a406f3026ef614a50ca297ca3159b626c4099c287f6fb25de5c26f4c02e39d28c1dddaef6ee0350bacd8c1b3906822b463a8
   languageName: node
   linkType: hard
 
