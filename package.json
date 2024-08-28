@@ -19,7 +19,7 @@
   "dependencies": {
     "@passport-next/passport-openid": "1.0.0",
     "Idle.Js": "git+https://github.com/shawnmclean/Idle.js",
-    "archiver": "6.0.1",
+    "archiver": "6.0.2",
     "async": "3.2.5",
     "aws-sdk": "2.1542.0",
     "azure-storage": "2.10.7",
@@ -69,7 +69,7 @@
     "minio": "7.1.3",
     "moment": "2.30.1",
     "morgan": "1.10.0",
-    "mysql2": "3.9.1",
+    "mysql2": "3.9.4",
     "node-fetch": "2.7.0",
     "passport": "0.7.0",
     "passport-dropbox-oauth2": "1.1.0",
@@ -84,9 +84,9 @@
     "passport-twitter": "1.0.4",
     "passport.socketio": "3.7.0",
     "pdfobject": "2.2.12",
-    "pg": "8.11.3",
+    "pg": "8.11.5",
     "pg-hstore": "2.3.4",
-    "prom-client": "15.1.0",
+    "prom-client": "15.1.1",
     "prometheus-api-metrics": "3.2.2",
     "randomcolor": "0.6.2",
     "readline-sync": "1.4.10",
@@ -104,7 +104,7 @@
     "uuid": "9.0.1",
     "validator": "13.11.0",
     "winston": "3.11.0",
-    "xss": "1.0.14"
+    "xss": "1.0.15"
   },
   "engines": {
     "node": ">=16"
@@ -210,5 +210,5 @@
     "bufferutil": "4.0.8",
     "utf-8-validate": "6.0.3"
   },
-  "packageManager": "yarn@3.8.0"
+  "packageManager": "yarn@3.8.1"
 }

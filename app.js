@@ -203,6 +203,7 @@ app.locals.serverURL = config.serverURL
 app.locals.sourceURL = config.sourceURL
 app.locals.allowAnonymous = config.allowAnonymous
 app.locals.allowAnonymousEdits = config.allowAnonymousEdits
+app.locals.disableNoteCreation = config.disableNoteCreation
 app.locals.authProviders = {
   facebook: config.isFacebookEnable,
   twitter: config.isTwitterEnable,
