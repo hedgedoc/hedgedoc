@@ -1334,7 +1334,7 @@ __metadata:
     url-loader: 4.1.1
     utf-8-validate: 6.0.4
     uuid: 9.0.1
-    validator: 13.11.0
+    validator: 13.12.0
     velocity-animate: 1.5.2
     visibilityjs: 2.0.2
     viz.js: 1.8.2
@@ -16203,7 +16203,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"validator@npm:13.11.0, validator@npm:^13.7.0":
+"validator@npm:13.12.0":
+  version: 13.12.0
+  resolution: "validator@npm:13.12.0"
+  checksum: fb8f070724770b1449ea1a968605823fdb112dbd10507b2802f8841cda3e7b5c376c40f18c84e6a7b59de320a06177e471554101a85f1fa8a70bac1a84e48adf
+  languageName: node
+  linkType: hard
+
+"validator@npm:^13.7.0":
   version: 13.11.0
   resolution: "validator@npm:13.11.0"
   checksum: d1e0c27022681420756da25bc03eb08d5f0c66fb008f8ff02ebc95812b77c6be6e03d3bd05cf80ca702e23eeb73dadd66b4b3683173ea2a0bc7cc72820bee131
