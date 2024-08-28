@@ -39,7 +39,7 @@
     "@nestjs/swagger": "7.3.0",
     "@nestjs/typeorm": "10.0.2",
     "@nestjs/websockets": "10.3.3",
-    "@node-rs/argon2": "^1.8.3",
+    "@node-rs/argon2": "1.8.3",
     "@types/bcrypt": "5.0.2",
     "@types/cron": "2.0.1",
     "@types/minio": "7.1.0",
