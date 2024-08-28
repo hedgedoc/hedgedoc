@@ -182,7 +182,7 @@
     "less-loader": "7.3.0",
     "list.js": "2.3.1",
     "mathjax": "2.7.9",
-    "mermaid": "9.1.7",
+    "mermaid": "11.0.2",
     "mini-css-extract-plugin": "1.6.2",
     "mocha": "10.3.0",
     "mock-require": "3.0.3",
