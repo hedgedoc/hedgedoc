@@ -1299,7 +1299,7 @@ __metadata:
     pg: 8.11.5
     pg-hstore: 2.3.4
     prismjs: 1.29.0
-    prom-client: 15.1.1
+    prom-client: 15.1.3
     prometheus-api-metrics: 3.2.2
     randomcolor: 0.6.2
     raphael: 2.3.0
@@ -12556,13 +12556,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prom-client@npm:15.1.1":
-  version: 15.1.1
-  resolution: "prom-client@npm:15.1.1"
+"prom-client@npm:15.1.3":
+  version: 15.1.3
+  resolution: "prom-client@npm:15.1.3"
   dependencies:
     "@opentelemetry/api": ^1.4.0
     tdigest: ^0.1.1
-  checksum: f10d68e22a8fb7e41ca3700af7b6ea6950dd8e505743db6fd2071ceccdfdc971dbf7f0438ff77d01e7408e76feb0c7ea52f3904cc680ef0431b9465d37497959
+  checksum: 9a57f3c16f39aa9a03da021883a4231c0bb56fc9d02f6ef9c28f913379f275640a5a33b98d9946ebf53c71011a29b580e9d2d6e3806cb1c229a3f59c65993968
   languageName: node
   linkType: hard
 
