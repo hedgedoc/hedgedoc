@@ -63,14 +63,14 @@ In order to view the images uploaded to HedgeDoc the storage bucket needs to be 
 
 ## Configure HedgeDoc
 
-In your `.env` file set:
+Set the following environment variables (or the [corresponding config.json values](/configuration/#amazon-s3)):
 
 ```env
-HD_MEDIA_BACKEND="s3"
-HD_MEDIA_BACKEND_S3_ENDPOINT="https://storage.googleapis.com"
-HD_MEDIA_BACKEND_S3_ACCESS_KEY="GOOG1EXXXXXXXXXX"
-HD_MEDIA_BACKEND_S3_SECRET_KEY="XXXXXXXXXX"
-HD_MEDIA_BACKEND_S3_BUCKET="your-bucket-name"
+CMD_IMAGE_UPLOAD_TYPE="s3"
+CMD_S3_ENDPOINT="https://storage.googleapis.com"
+CMD_S3_ACCESS_KEY_ID="GOOG1EXXXXXXXXXX"
+CMD_S3_SECRET_ACCESS_KEY="XXXXXXXXXX"
+CMD_S3_BUCKET="your-bucket-name"
 ```
 
 The access key and secret key are the values you received when you enabled the interoperability feature.
