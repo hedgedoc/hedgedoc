@@ -103,7 +103,7 @@
     "umzug": "2.3.0",
     "uuid": "9.0.1",
     "validator": "13.11.0",
-    "winston": "3.11.0",
+    "winston": "3.14.2",
     "xss": "1.0.15"
   },
   "engines": {
