@@ -34,7 +34,6 @@ import { EditService } from './edit.service';
 import { Revision } from './revision.entity';
 import { RevisionsService } from './revisions.service';
 
-
 describe('RevisionsService', () => {
   let service: RevisionsService;
   let revisionRepo: Repository<Revision>;
