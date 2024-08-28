@@ -635,10 +635,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/geojson@npm:^7946.0.10":
-  version: 7946.0.13
-  resolution: "@types/geojson@npm:7946.0.13"
-  checksum: b3b68457c89bc3f0445dc9eb54d07e6f89658672867c54989bc7f71f87d54e562195b291d43e1b84476493351271d7ccb9f5c6ab2012b29fbafbb0e8e43c4bca
+"@types/geojson@npm:^7946.0.14":
+  version: 7946.0.14
+  resolution: "@types/geojson@npm:7946.0.14"
+  checksum: ae511bee6488ae3bd5a3a3347aedb0371e997b14225b8983679284e22fa4ebd88627c6e3ff8b08bf4cc35068cb29310c89427311ffc9322c255615821a922e71
   languageName: node
   linkType: hard
 
@@ -799,10 +799,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^17.0.45":
-  version: 17.0.45
-  resolution: "@types/node@npm:17.0.45"
-  checksum: aa04366b9103b7d6cfd6b2ef64182e0eaa7d4462c3f817618486ea0422984c51fc69fd0d436eae6c9e696ddfdbec9ccaa27a917f7c2e8c75c5d57827fe3d95e8
+"@types/node@npm:^20.11.17":
+  version: 20.16.2
+  resolution: "@types/node@npm:20.16.2"
+  dependencies:
+    undici-types: ~6.19.2
+  checksum: 69d03cf607197b40775e10c57f26a30e2a7f4f108a29ef147db145227686021c26f696efbb5ff077831a7febe647c3374f725eed8e33442fc11230da9e895dda
   languageName: node
   linkType: hard
 
@@ -1254,7 +1256,7 @@ __metadata:
     lodash: 4.17.21
     lutim: 1.0.3
     lz-string: "git+https://github.com/hackmdio/lz-string.git"
-    mariadb: 3.2.3
+    mariadb: 3.3.1
     markdown-it: 13.0.2
     markdown-it-abbr: 1.0.4
     markdown-it-container: 3.0.0
@@ -9272,6 +9274,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lru-cache@npm:^10.2.0":
+  version: 10.4.3
+  resolution: "lru-cache@npm:10.4.3"
+  checksum: 6476138d2125387a6d20f100608c2583d415a4f64a0fecf30c9e2dda976614f09cad4baa0842447bd37dd459a7bd27f57d9d8f8ce558805abd487c583f3d774a
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^5.1.1":
   version: 5.1.1
   resolution: "lru-cache@npm:5.1.1"
@@ -9417,16 +9426,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mariadb@npm:3.2.3":
-  version: 3.2.3
-  resolution: "mariadb@npm:3.2.3"
+"mariadb@npm:3.3.1":
+  version: 3.3.1
+  resolution: "mariadb@npm:3.3.1"
   dependencies:
-    "@types/geojson": ^7946.0.10
-    "@types/node": ^17.0.45
+    "@types/geojson": ^7946.0.14
+    "@types/node": ^20.11.17
     denque: ^2.1.0
     iconv-lite: ^0.6.3
-    lru-cache: ^10.0.1
-  checksum: e21c2280e3f67f8934be14ae91edeaba1656b9dd48da132d6bc27a27824d65b443264c68da81231233504d4e4c6912b950466c71eafcee0744c27eac5981a321
+    lru-cache: ^10.2.0
+  checksum: 4108abee387e53678703e64f5d7277da250bd0ecd4bf8eef20596caf75c9ecd1ef25ae2093d38fa20069132f1fc1b281356b0113fedbe7ae15f5c9ebf76f373d
   languageName: node
   linkType: hard
 
@@ -15689,6 +15698,13 @@ __metadata:
   version: 5.26.5
   resolution: "undici-types@npm:5.26.5"
   checksum: 3192ef6f3fd5df652f2dc1cd782b49d6ff14dc98e5dced492aa8a8c65425227da5da6aafe22523c67f035a272c599bb89cfe803c1db6311e44bed3042fc25487
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~6.19.2":
+  version: 6.19.8
+  resolution: "undici-types@npm:6.19.8"
+  checksum: de51f1b447d22571cf155dfe14ff6d12c5bdaec237c765085b439c38ca8518fc360e88c70f99469162bf2e14188a7b0bcb06e1ed2dc031042b984b0bb9544017
   languageName: node
   linkType: hard
 
