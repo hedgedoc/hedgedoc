@@ -2231,12 +2231,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dicebear/identicon@npm:7.0.4":
-  version: 7.0.4
-  resolution: "@dicebear/identicon@npm:7.0.4"
+"@dicebear/identicon@npm:7.0.5":
+  version: 7.0.5
+  resolution: "@dicebear/identicon@npm:7.0.5"
   peerDependencies:
     "@dicebear/core": ^7.0.0
-  checksum: 10c0/f206f6cad0ad223f76135ee4fdf96e98ea96d16388bbcecaf811408309ba75a1a8eb9a60cedb400e6303335f3e01eb6262cec718f60ebdd0d624a81bee532e0e
+  checksum: 10c0/666e1d1294000dee15e88eea5b0e09b16b94e75e5d8cf84bd6987467b3ed3f1894738f14fc7009c30f75ba4d092e5b935e7e997af6d366aa224cfd9a696f31d7
   languageName: node
   linkType: hard
 
@@ -2576,7 +2576,7 @@ __metadata:
     "@codemirror/theme-one-dark": "npm:6.1.2"
     "@codemirror/view": "npm:6.24.1"
     "@dicebear/core": "npm:7.0.5"
-    "@dicebear/identicon": "npm:7.0.4"
+    "@dicebear/identicon": "npm:7.0.5"
     "@fontsource/source-sans-pro": "npm:5.0.8"
     "@hedgedoc/commons": "workspace:commons"
     "@hedgedoc/html-to-react": "workspace:html-to-react"
