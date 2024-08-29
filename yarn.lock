@@ -2667,7 +2667,7 @@ __metadata:
     prettier: "npm:3.2.5"
     react: "npm:18.2.0"
     react-bootstrap: "npm:2.10.4"
-    react-bootstrap-icons: "npm:1.10.3"
+    react-bootstrap-icons: "npm:1.11.4"
     react-bootstrap-typeahead: "npm:6.3.2"
     react-diff-viewer: "npm:3.1.1"
     react-dom: "npm:18.2.0"
@@ -15468,14 +15468,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-bootstrap-icons@npm:1.10.3":
-  version: 1.10.3
-  resolution: "react-bootstrap-icons@npm:1.10.3"
+"react-bootstrap-icons@npm:1.11.4":
+  version: 1.11.4
+  resolution: "react-bootstrap-icons@npm:1.11.4"
   dependencies:
     prop-types: "npm:^15.7.2"
   peerDependencies:
     react: ">=16.8.6"
-  checksum: 10c0/8d46051763a9e4864333cb9e57be2705b935e65e28e159d53043de175456b345d787a1bbdbd17a2df9df12bd52b91ebc97389a9813e52dbe6cf166c13f14074e
+  checksum: 10c0/1ed39006eb8f3883f14438c1604ad4b2e41578d0b9c5f33477062e01196cfe01ed9c1db9494602444a37f28c57a66dd444ba8800023a0d9303b7d1c05b2452d1
   languageName: node
   linkType: hard
 
