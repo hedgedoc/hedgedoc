@@ -59,14 +59,14 @@ jobs:
 
       - name: Upload backend coverage
         if: "${{ matrix.coverage == true }}"
-        uses: codecov/codecov-action@0cfda1dd0a4ad9efc75517f399d859cd1ea4ced1 # v4.0.2
+        uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673 # v4.5.0
         with:
           directory: backend/coverage
           flags: backend, unit-tests, backend-unit-tests
 
       - name: Upload frontend coverage
         if: "${{ matrix.coverage == true }}"
-        uses: codecov/codecov-action@0cfda1dd0a4ad9efc75517f399d859cd1ea4ced1 # v4.0.2
+        uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673 # v4.5.0
         with:
           directory: frontend/coverage
           flags: frontend, unit-tests, frontend-unit-tests
