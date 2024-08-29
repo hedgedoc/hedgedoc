@@ -2456,7 +2456,7 @@ __metadata:
     source-map-support: "npm:0.5.21"
     sqlite3: "npm:5.1.7"
     supertest: "npm:6.3.4"
-    ts-jest: "npm:29.1.2"
+    ts-jest: "npm:29.1.5"
     ts-mockery: "npm:1.2.0"
     ts-node: "npm:11.0.0-beta.1"
     tsconfig-paths: "npm:4.2.0"
@@ -2488,7 +2488,7 @@ __metadata:
     js-yaml: "npm:4.1.0"
     prettier: "npm:3.2.5"
     reveal.js: "npm:5.0.5"
-    ts-jest: "npm:29.1.2"
+    ts-jest: "npm:29.1.5"
     typescript: "npm:5.3.3"
     ws: "npm:8.17.1"
     yjs: "npm:13.6.12"
@@ -2672,7 +2672,7 @@ __metadata:
     prettier: "npm:3.2.5"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
-    ts-jest: "npm:29.1.2"
+    ts-jest: "npm:29.1.5"
     typescript: "npm:5.3.3"
   peerDependencies:
     react: ">=16.0"
@@ -2696,7 +2696,7 @@ __metadata:
     jest: "npm:29.7.0"
     markdown-it: "npm:13.0.2"
     prettier: "npm:3.2.5"
-    ts-jest: "npm:29.1.2"
+    ts-jest: "npm:29.1.5"
     typescript: "npm:5.3.3"
   peerDependencies:
     markdown-it: ">=12"
@@ -17506,9 +17506,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:29.1.2":
-  version: 29.1.2
-  resolution: "ts-jest@npm:29.1.2"
+"ts-jest@npm:29.1.5":
+  version: 29.1.5
+  resolution: "ts-jest@npm:29.1.5"
   dependencies:
     bs-logger: "npm:0.x"
     fast-json-stable-stringify: "npm:2.x"
@@ -17520,12 +17520,15 @@ __metadata:
     yargs-parser: "npm:^21.0.1"
   peerDependencies:
     "@babel/core": ">=7.0.0-beta.0 <8"
+    "@jest/transform": ^29.0.0
     "@jest/types": ^29.0.0
     babel-jest: ^29.0.0
     jest: ^29.0.0
     typescript: ">=4.3 <6"
   peerDependenciesMeta:
     "@babel/core":
+      optional: true
+    "@jest/transform":
       optional: true
     "@jest/types":
       optional: true
@@ -17535,7 +17538,7 @@ __metadata:
       optional: true
   bin:
     ts-jest: cli.js
-  checksum: 10c0/c2f51f0241f89d127d41392decbcb83b5dfd5e57ab9d50220aa7b7e2f9b3f3b07ccdbba33311284df1c41941879e4ddfad44b15a9d0da4b74bd1b98702b729df
+  checksum: 10c0/5c1baf4d23342e138745d6283ae530b07957b779b103abc99fd6713e1fd7fc65d4a4638695d5a76e177f78c46c80ec53598b365f245997db5d3d00617940bf87
   languageName: node
   linkType: hard
 
