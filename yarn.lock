@@ -2606,7 +2606,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:6.21.0"
     "@typescript-eslint/parser": "npm:6.21.0"
     "@uiw/react-codemirror": "npm:4.23.0"
-    abcjs: "npm:6.3.0"
+    abcjs: "npm:6.4.2"
     bootstrap: "npm:5.3.3"
     copy-webpack-plugin: "npm:12.0.2"
     cross-env: "npm:7.0.3"
@@ -6171,10 +6171,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"abcjs@npm:6.3.0":
-  version: 6.3.0
-  resolution: "abcjs@npm:6.3.0"
-  checksum: 10c0/cb97bdbc532e9b073e32778abec4277f272d808f46c3c3e4b701d4304ab8314e9b3de61782c8c82facc0ad8b0ec0b55d3159e837dcfd84170c9f1607f7b1a013
+"abcjs@npm:6.4.2":
+  version: 6.4.2
+  resolution: "abcjs@npm:6.4.2"
+  checksum: 10c0/7ded2fb53d9c15c3d59d62f85f60d419b09ed7b1f3c1344d3b93cfe3aea1ded58565c57bf554d8087abf28253c28e763f074627c513dd3ef8906c5fd4622abaf
   languageName: node
   linkType: hard
 
