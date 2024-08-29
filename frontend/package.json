@@ -148,7 +148,7 @@
     "cypress": "13.6.6",
     "cypress-commands": "3.0.0",
     "cypress-fill-command": "1.0.2",
-    "dotenv-cli": "7.3.0",
+    "dotenv-cli": "7.4.2",
     "eslint": "8.57.0",
     "eslint-config-next": "14.1.4",
     "eslint-config-prettier": "9.1.0",

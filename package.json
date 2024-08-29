@@ -45,7 +45,7 @@
     "@dicebear/converter@7.0.5": "patch:@dicebear/converter@npm%3A7.0.5#./.yarn/patches/@dicebear-converter-fix-js-file-path.patch"
   },
   "devDependencies": {
-    "dotenv-cli": "7.3.0",
+    "dotenv-cli": "7.4.2",
     "turbo": "1.12.5"
   }
 }
