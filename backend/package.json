@@ -58,7 +58,7 @@
     "express-session": "1.18.0",
     "file-type": "16.5.4",
     "htmlparser2": "9.1.0",
-    "joi": "17.12.1",
+    "joi": "17.12.3",
     "ldapauth-fork": "5.0.5",
     "markdown-it": "13.0.2",
     "minio": "7.1.3",
