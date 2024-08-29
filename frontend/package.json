@@ -65,7 +65,7 @@
     "dom-serializer": "2.0.0",
     "domhandler": "5.0.3",
     "dompurify": "3.0.11",
-    "emoji-picker-element": "1.21.3",
+    "emoji-picker-element": "1.22.4",
     "emoji-picker-element-data": "1.6.1",
     "eventemitter2": "6.4.9",
     "fast-deep-equal": "3.1.3",
