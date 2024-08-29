@@ -71,7 +71,7 @@
     "pg": "8.11.6",
     "raw-body": "2.5.2",
     "reflect-metadata": "0.2.2",
-    "rimraf": "5.0.5",
+    "rimraf": "5.0.10",
     "rxjs": "7.8.1",
     "sqlite3": "5.1.7",
     "typeorm": "0.3.20",
