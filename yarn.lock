@@ -2645,7 +2645,7 @@ __metadata:
     fast-deep-equal: "npm:3.1.3"
     firacode: "npm:6.2.0"
     flowchart.js: "npm:1.18.0"
-    highlight.js: "npm:11.9.0"
+    highlight.js: "npm:11.10.0"
     htmlparser2: "npm:9.1.0"
     i18next: "npm:23.8.3"
     i18next-browser-languagedetector: "npm:7.2.1"
@@ -10973,10 +10973,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highlight.js@npm:11.9.0":
-  version: 11.9.0
-  resolution: "highlight.js@npm:11.9.0"
-  checksum: 10c0/27cfa8717dc9d200aecbdb383eb122d5f45ce715d2f468583785d36fbfe5076ce033abb02486dc13b407171721cda6f474ed3f3a5a8e8c3d91367fa5f51ee374
+"highlight.js@npm:11.10.0":
+  version: 11.10.0
+  resolution: "highlight.js@npm:11.10.0"
+  checksum: 10c0/cd8bf7ef06cbd72ddb83580ecabe769f08f062be8bb82d2eb492d31c17f7480d1f8d14a66fc81deee0601645435f19f04c470510563f847242a41ccff0ab873e
   languageName: node
   linkType: hard
 
