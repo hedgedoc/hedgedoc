@@ -2572,7 +2572,7 @@ __metadata:
     ts-node: "npm:11.0.0-beta.1"
     tsconfig-paths: "npm:4.2.0"
     typeorm: "npm:0.3.20"
-    typescript: "npm:5.3.3"
+    typescript: "npm:5.5.4"
     ws: "npm:8.17.1"
     yjs: "npm:13.6.18"
   languageName: unknown
@@ -2600,7 +2600,7 @@ __metadata:
     prettier: "npm:3.3.3"
     reveal.js: "npm:5.1.0"
     ts-jest: "npm:29.2.5"
-    typescript: "npm:5.3.3"
+    typescript: "npm:5.5.4"
     ws: "npm:8.17.1"
     yjs: "npm:13.6.18"
   languageName: unknown
@@ -2750,7 +2750,7 @@ __metadata:
     ts-mockery: "npm:1.2.0"
     ts-node: "npm:11.0.0-beta.1"
     twemoji-colr-font: "npm:15.0.3"
-    typescript: "npm:5.3.3"
+    typescript: "npm:5.5.4"
     user-agent-data-types: "npm:0.4.2"
     uuid: "npm:9.0.1"
     vega: "npm:5.30.0"
@@ -2784,7 +2784,7 @@ __metadata:
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
     ts-jest: "npm:29.2.5"
-    typescript: "npm:5.3.3"
+    typescript: "npm:5.5.4"
   peerDependencies:
     react: ">=16.0"
   languageName: unknown
@@ -2808,7 +2808,7 @@ __metadata:
     markdown-it: "npm:13.0.2"
     prettier: "npm:3.3.3"
     ts-jest: "npm:29.2.5"
-    typescript: "npm:5.3.3"
+    typescript: "npm:5.5.4"
   peerDependencies:
     markdown-it: ">=12"
   languageName: unknown
@@ -18270,6 +18270,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:5.5.4":
+  version: 5.5.4
+  resolution: "typescript@npm:5.5.4"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10c0/422be60f89e661eab29ac488c974b6cc0a660fb2228003b297c3d10c32c90f3bcffc1009b43876a082515a3c376b1eefcce823d6e78982e6878408b9a923199c
+  languageName: node
+  linkType: hard
+
 "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>":
   version: 5.3.3
   resolution: "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"
@@ -18277,6 +18287,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10c0/1d0a5f4ce496c42caa9a30e659c467c5686eae15d54b027ee7866744952547f1be1262f2d40de911618c242b510029d51d43ff605dba8fb740ec85ca2d3f9500
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A5.5.4#optional!builtin<compat/typescript>":
+  version: 5.5.4
+  resolution: "typescript@patch:typescript@npm%3A5.5.4#optional!builtin<compat/typescript>::version=5.5.4&hash=5adc0c"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10c0/10dd9881baba22763de859e8050d6cb6e2db854197495c6f1929b08d1eb2b2b00d0b5d9b0bcee8472f1c3f4a7ef6a5d7ebe0cfd703f853aa5ae465b8404bc1ba
   languageName: node
   linkType: hard
 

@@ -166,7 +166,7 @@
     "ts-loader": "9.5.1",
     "ts-mockery": "1.2.0",
     "ts-node": "11.0.0-beta.1",
-    "typescript": "5.3.3",
+    "typescript": "5.5.4",
     "user-agent-data-types": "0.4.2"
   },
   "packageManager": "yarn@4.1.1"
