@@ -112,9 +112,9 @@
     "tlds": "1.254.0",
     "twemoji-colr-font": "15.0.3",
     "uuid": "9.0.1",
-    "vega": "5.27.0",
-    "vega-embed": "6.24.0",
-    "vega-lite": "5.16.3",
+    "vega": "5.30.0",
+    "vega-embed": "6.26.0",
+    "vega-lite": "5.21.0",
     "words-count": "2.0.2",
     "ws": "8.17.1",
     "yjs": "13.6.18"
