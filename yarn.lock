@@ -2529,7 +2529,7 @@ __metadata:
     "@hedgedoc/html-to-react": "workspace:html-to-react"
     "@hedgedoc/markdown-it-plugins": "workspace:markdown-it-plugins"
     "@mrdrogdrog/optional": "npm:1.2.1"
-    "@next/bundle-analyzer": "npm:14.1.0"
+    "@next/bundle-analyzer": "npm:14.1.4"
     "@orama/orama": "npm:2.0.6"
     "@react-hook/resize-observer": "npm:1.2.6"
     "@redux-devtools/core": "npm:4.0.0"
@@ -2616,7 +2616,7 @@ __metadata:
     markdown-it-sub: "npm:2.0.0"
     markdown-it-sup: "npm:2.0.0"
     mermaid: "npm:10.8.0"
-    next: "npm:14.1.1"
+    next: "npm:14.1.4"
     picocolors: "npm:1.0.0"
     prettier: "npm:3.2.5"
     react: "npm:18.2.0"
@@ -3738,19 +3738,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/bundle-analyzer@npm:14.1.0":
-  version: 14.1.0
-  resolution: "@next/bundle-analyzer@npm:14.1.0"
+"@next/bundle-analyzer@npm:14.1.4":
+  version: 14.1.4
+  resolution: "@next/bundle-analyzer@npm:14.1.4"
   dependencies:
     webpack-bundle-analyzer: "npm:4.10.1"
-  checksum: 10c0/6f2e6310c40f7beb973fff7f1db791a868b0ba0621514b6b410637909f78c4bea40af7e7fdd17bebf96c75aeb90c6286c51a458a037fdd68464c43a53f5788e0
+  checksum: 10c0/2b45e1bca970188cbfc1876df9476bb3d66a0e4f47b9d057b95292126050798a4a4cc64cb77aa0ea5ac5289e5d6ad6d7da4199a1bfd8b09611df42354645d551
   languageName: node
   linkType: hard
 
-"@next/env@npm:14.1.1":
-  version: 14.1.1
-  resolution: "@next/env@npm:14.1.1"
-  checksum: 10c0/81f7ff4f5b295c7f73d5cfeceda387626fa3e30fe75c53021168ff525470e8d52598ee4f8bb924af0903a52c44b5779e6e4c26fbdd102a3fdfaa03c08fd2bdde
+"@next/env@npm:14.1.4":
+  version: 14.1.4
+  resolution: "@next/env@npm:14.1.4"
+  checksum: 10c0/35f5e817bb47993565bc4b2b9961f9697e0f08b05bc008984de7e89c3626f4ef6db314629a52302786b2f386539005666b7ad56b441e45cc79b0a49835f8062b
   languageName: node
   linkType: hard
 
@@ -3763,65 +3763,65 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-arm64@npm:14.1.1":
-  version: 14.1.1
-  resolution: "@next/swc-darwin-arm64@npm:14.1.1"
+"@next/swc-darwin-arm64@npm:14.1.4":
+  version: 14.1.4
+  resolution: "@next/swc-darwin-arm64@npm:14.1.4"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-x64@npm:14.1.1":
-  version: 14.1.1
-  resolution: "@next/swc-darwin-x64@npm:14.1.1"
+"@next/swc-darwin-x64@npm:14.1.4":
+  version: 14.1.4
+  resolution: "@next/swc-darwin-x64@npm:14.1.4"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-gnu@npm:14.1.1":
-  version: 14.1.1
-  resolution: "@next/swc-linux-arm64-gnu@npm:14.1.1"
+"@next/swc-linux-arm64-gnu@npm:14.1.4":
+  version: 14.1.4
+  resolution: "@next/swc-linux-arm64-gnu@npm:14.1.4"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-musl@npm:14.1.1":
-  version: 14.1.1
-  resolution: "@next/swc-linux-arm64-musl@npm:14.1.1"
+"@next/swc-linux-arm64-musl@npm:14.1.4":
+  version: 14.1.4
+  resolution: "@next/swc-linux-arm64-musl@npm:14.1.4"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-gnu@npm:14.1.1":
-  version: 14.1.1
-  resolution: "@next/swc-linux-x64-gnu@npm:14.1.1"
+"@next/swc-linux-x64-gnu@npm:14.1.4":
+  version: 14.1.4
+  resolution: "@next/swc-linux-x64-gnu@npm:14.1.4"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-musl@npm:14.1.1":
-  version: 14.1.1
-  resolution: "@next/swc-linux-x64-musl@npm:14.1.1"
+"@next/swc-linux-x64-musl@npm:14.1.4":
+  version: 14.1.4
+  resolution: "@next/swc-linux-x64-musl@npm:14.1.4"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-win32-arm64-msvc@npm:14.1.1":
-  version: 14.1.1
-  resolution: "@next/swc-win32-arm64-msvc@npm:14.1.1"
+"@next/swc-win32-arm64-msvc@npm:14.1.4":
+  version: 14.1.4
+  resolution: "@next/swc-win32-arm64-msvc@npm:14.1.4"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-win32-ia32-msvc@npm:14.1.1":
-  version: 14.1.1
-  resolution: "@next/swc-win32-ia32-msvc@npm:14.1.1"
+"@next/swc-win32-ia32-msvc@npm:14.1.4":
+  version: 14.1.4
+  resolution: "@next/swc-win32-ia32-msvc@npm:14.1.4"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@next/swc-win32-x64-msvc@npm:14.1.1":
-  version: 14.1.1
-  resolution: "@next/swc-win32-x64-msvc@npm:14.1.1"
+"@next/swc-win32-x64-msvc@npm:14.1.4":
+  version: 14.1.4
+  resolution: "@next/swc-win32-x64-msvc@npm:14.1.4"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -14074,20 +14074,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:14.1.1":
-  version: 14.1.1
-  resolution: "next@npm:14.1.1"
+"next@npm:14.1.4":
+  version: 14.1.4
+  resolution: "next@npm:14.1.4"
   dependencies:
-    "@next/env": "npm:14.1.1"
-    "@next/swc-darwin-arm64": "npm:14.1.1"
-    "@next/swc-darwin-x64": "npm:14.1.1"
-    "@next/swc-linux-arm64-gnu": "npm:14.1.1"
-    "@next/swc-linux-arm64-musl": "npm:14.1.1"
-    "@next/swc-linux-x64-gnu": "npm:14.1.1"
-    "@next/swc-linux-x64-musl": "npm:14.1.1"
-    "@next/swc-win32-arm64-msvc": "npm:14.1.1"
-    "@next/swc-win32-ia32-msvc": "npm:14.1.1"
-    "@next/swc-win32-x64-msvc": "npm:14.1.1"
+    "@next/env": "npm:14.1.4"
+    "@next/swc-darwin-arm64": "npm:14.1.4"
+    "@next/swc-darwin-x64": "npm:14.1.4"
+    "@next/swc-linux-arm64-gnu": "npm:14.1.4"
+    "@next/swc-linux-arm64-musl": "npm:14.1.4"
+    "@next/swc-linux-x64-gnu": "npm:14.1.4"
+    "@next/swc-linux-x64-musl": "npm:14.1.4"
+    "@next/swc-win32-arm64-msvc": "npm:14.1.4"
+    "@next/swc-win32-ia32-msvc": "npm:14.1.4"
+    "@next/swc-win32-x64-msvc": "npm:14.1.4"
     "@swc/helpers": "npm:0.5.2"
     busboy: "npm:1.6.0"
     caniuse-lite: "npm:^1.0.30001579"
@@ -14125,7 +14125,7 @@ __metadata:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: 10c0/8c808ec0861604a176fc6a4f58a7a3c50ef9201fc63e16fab88390cfcb30f2accf92add0600ab83d0d13cfdf4ef3a72b03b828bf255c4a999bad071aba6c071d
+  checksum: 10c0/7576d7af913f6e24997126b1b13c9bfd0de926ecce72b16944f9f9ba221a3563d3a16b13d7aad7774a428462534afe71879ea0ca5ad80cc9075f08773d13a3b1
   languageName: node
   linkType: hard
 
