@@ -50,7 +50,7 @@
     "@orama/orama": "2.0.23",
     "@react-hook/resize-observer": "1.2.6",
     "@redux-devtools/core": "4.0.0",
-    "@reduxjs/toolkit": "2.1.0",
+    "@reduxjs/toolkit": "2.2.7",
     "@svgr/webpack": "8.1.0",
     "@types/katex": "0.16.7",
     "@uiw/react-codemirror": "4.21.25",
