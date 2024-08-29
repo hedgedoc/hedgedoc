@@ -105,7 +105,7 @@
     "react-redux": "9.1.2",
     "react-use": "17.5.1",
     "redux": "5.0.1",
-    "reveal.js": "5.0.5",
+    "reveal.js": "5.1.0",
     "sanitize-filename": "1.6.3",
     "sass": "1.71.1",
     "sharp": "0.33.5",
