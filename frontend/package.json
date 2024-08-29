@@ -61,7 +61,7 @@
     "d3-graphviz": "5.2.0",
     "d3-selection": "3.0.0",
     "deepmerge": "4.3.1",
-    "diff": "5.1.0",
+    "diff": "5.2.0",
     "dom-serializer": "2.0.0",
     "domhandler": "5.0.3",
     "dompurify": "3.0.11",

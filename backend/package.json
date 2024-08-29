@@ -54,7 +54,7 @@
     "cli-color": "2.0.4",
     "connect-typeorm": "2.0.0",
     "cookie": "0.6.0",
-    "diff": "5.1.0",
+    "diff": "5.2.0",
     "express-session": "1.18.0",
     "file-type": "16.5.4",
     "htmlparser2": "9.1.0",
