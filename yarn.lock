@@ -2617,7 +2617,7 @@ __metadata:
     markdown-it-sup: "npm:2.0.0"
     mermaid: "npm:10.8.0"
     next: "npm:14.1.4"
-    picocolors: "npm:1.0.0"
+    picocolors: "npm:1.0.1"
     prettier: "npm:3.2.5"
     react: "npm:18.2.0"
     react-bootstrap: "npm:2.10.1"
@@ -14885,7 +14885,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picocolors@npm:1.0.0, picocolors@npm:^1.0.0":
+"picocolors@npm:1.0.1":
+  version: 1.0.1
+  resolution: "picocolors@npm:1.0.1"
+  checksum: 10c0/c63cdad2bf812ef0d66c8db29583802355d4ca67b9285d846f390cc15c2f6ccb94e8cb7eb6a6e97fc5990a6d3ad4ae42d86c84d3146e667c739a4234ed50d400
+  languageName: node
+  linkType: hard
+
+"picocolors@npm:^1.0.0":
   version: 1.0.0
   resolution: "picocolors@npm:1.0.0"
   checksum: 10c0/20a5b249e331c14479d94ec6817a182fd7a5680debae82705747b2db7ec50009a5f6648d0621c561b0572703f84dbef0858abcbd5856d3c5511426afcb1961f7
