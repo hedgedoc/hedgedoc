@@ -114,7 +114,7 @@
     "prettier": "3.2.5",
     "source-map-support": "0.5.21",
     "supertest": "6.3.4",
-    "ts-jest": "29.1.5",
+    "ts-jest": "29.2.5",
     "ts-mockery": "1.2.0",
     "ts-node": "11.0.0-beta.1",
     "tsconfig-paths": "4.2.0",
