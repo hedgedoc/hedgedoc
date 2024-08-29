@@ -7,7 +7,7 @@
     "lint:fix": "markdownlint-cli2 --fix content/**/*.md"
   },
   "devDependencies": {
-    "markdownlint-cli2": "0.12.1"
+    "markdownlint-cli2": "0.13.0"
   },
   "packageManager": "yarn@4.1.1"
 }
