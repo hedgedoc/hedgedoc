@@ -2647,9 +2647,9 @@ __metadata:
     flowchart.js: "npm:1.18.0"
     highlight.js: "npm:11.9.0"
     htmlparser2: "npm:9.1.0"
-    i18next: "npm:23.8.2"
-    i18next-browser-languagedetector: "npm:7.2.0"
-    i18next-resources-to-backend: "npm:1.2.0"
+    i18next: "npm:23.8.3"
+    i18next-browser-languagedetector: "npm:7.2.1"
+    i18next-resources-to-backend: "npm:1.2.1"
     jest: "npm:29.7.0"
     jest-environment-jsdom: "npm:29.7.0"
     katex: "npm:0.16.11"
@@ -2678,7 +2678,7 @@ __metadata:
     react-bootstrap-typeahead: "npm:6.3.2"
     react-diff-viewer: "npm:3.1.1"
     react-dom: "npm:18.2.0"
-    react-i18next: "npm:14.0.5"
+    react-i18next: "npm:14.0.8"
     react-redux: "npm:9.1.0"
     react-test-renderer: "npm:18.2.0"
     react-use: "npm:17.5.1"
@@ -11173,30 +11173,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next-browser-languagedetector@npm:7.2.0":
-  version: 7.2.0
-  resolution: "i18next-browser-languagedetector@npm:7.2.0"
+"i18next-browser-languagedetector@npm:7.2.1":
+  version: 7.2.1
+  resolution: "i18next-browser-languagedetector@npm:7.2.1"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-  checksum: 10c0/d7676e6c9895d46e659effaeba11f10c39cbe99429560667de7689cb56db6977239d350be850c4caf4279781c19c50a7193cb9cc38bb485f391b8e1893e407ae
+  checksum: 10c0/44fa71af4efb4cd6cc8bfbbd3f3b2735159e17d8f4396346e4016c6dd0ecbcdd68f1ec17609fd0de8dd6754c3d847d6e7e03227c19c1879d4c265cb1918948bb
   languageName: node
   linkType: hard
 
-"i18next-resources-to-backend@npm:1.2.0":
-  version: 1.2.0
-  resolution: "i18next-resources-to-backend@npm:1.2.0"
+"i18next-resources-to-backend@npm:1.2.1":
+  version: 1.2.1
+  resolution: "i18next-resources-to-backend@npm:1.2.1"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-  checksum: 10c0/e0668b9466d7f1488a49107a30bbe4b768cc3fa74fb09733dbe1ac48a62fe6fb35a8c4c3c1a8e635748b59130d0349cdfa8e2533b864540e619c1d06dabf807f
+  checksum: 10c0/ba83152726aae34ab34bb152518b666d4393bf816c91ab6e1064090cbbb9b235d3dfbcf9d5640c825819644fddcaf7799f581cdbe6abb3e7b11d58c50dc4644a
   languageName: node
   linkType: hard
 
-"i18next@npm:23.8.2":
-  version: 23.8.2
-  resolution: "i18next@npm:23.8.2"
+"i18next@npm:23.8.3":
+  version: 23.8.3
+  resolution: "i18next@npm:23.8.3"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-  checksum: 10c0/c16ccee81bc1e096fec8d10000de42f10137f7cd27b295eca22492cb174b364ebca72327b2e6be066c4308c79bf72c8585d1c7cde2aedf556e3f423af60cd66c
+  checksum: 10c0/07c289c4166e4ba3124bce0b128938a034e045bb0a06233059de76379a3ac204d49efee580989852ca4044c230fca53da8abcfc82527d163c50dbff2fdd1d6b2
   languageName: node
   linkType: hard
 
@@ -15502,9 +15502,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:14.0.5":
-  version: 14.0.5
-  resolution: "react-i18next@npm:14.0.5"
+"react-i18next@npm:14.0.8":
+  version: 14.0.8
+  resolution: "react-i18next@npm:14.0.8"
   dependencies:
     "@babel/runtime": "npm:^7.23.9"
     html-parse-stringify: "npm:^3.0.1"
@@ -15516,7 +15516,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 10c0/60e3bedc6889689cfb96005b134da79d50097d3ff088284b35f213820aacedbdad1ff32e97b8447db70834c16d472ded829675e05c2a099baea9fd96b3a5b72f
+  checksum: 10c0/f3b4e7af56edf0045b0fd93fcc4d78f22eba5a806a9046a901a56351b4b3b5344deb8c60253a878be240ef6e6c06c4caa775a5c401f160658d2cd389ca8df485
   languageName: node
   linkType: hard
 
