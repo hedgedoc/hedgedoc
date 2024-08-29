@@ -3,6 +3,10 @@ Upstream-Name: hedgedoc
 Upstream-Contact: The HedgeDoc developers <license@hedgedoc.org>
 Source: https://github.com/hedgedoc/hedgedoc
 
+Files: .yarn/releases/**
+Copyright: 2016-present, Yarn Contributors
+License: BSD-2-Clause
+
 Files: .idea/**
 Copyright: 2021 The HedgeDoc developers (see AUTHORS file)
 License: CC0-1.0
