@@ -2530,7 +2530,7 @@ __metadata:
     "@hedgedoc/markdown-it-plugins": "workspace:markdown-it-plugins"
     "@mrdrogdrog/optional": "npm:1.2.1"
     "@next/bundle-analyzer": "npm:14.1.4"
-    "@orama/orama": "npm:2.0.6"
+    "@orama/orama": "npm:2.0.23"
     "@react-hook/resize-observer": "npm:1.2.6"
     "@redux-devtools/core": "npm:4.0.0"
     "@reduxjs/toolkit": "npm:2.1.0"
@@ -4066,10 +4066,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@orama/orama@npm:2.0.6":
-  version: 2.0.6
-  resolution: "@orama/orama@npm:2.0.6"
-  checksum: 10c0/1eda7b9be4eccd892258c896ae3e1e1e5a0c0319353943f4d78788bfa5de9a3058bb26959223ef96b9b9684525d1b0b243481665b2d673eb889a8924a9a25780
+"@orama/orama@npm:2.0.23":
+  version: 2.0.23
+  resolution: "@orama/orama@npm:2.0.23"
+  checksum: 10c0/b65f57e338c5cfe6498cec5917a952ce783aef202f20ef27d8f55f40e175737a616b09ccbb7ebedb3cd24250504a2295caa950c8777cbc21309ee430584c1ed3
   languageName: node
   linkType: hard
 
