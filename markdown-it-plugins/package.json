@@ -105,7 +105,7 @@
   },
   "dependencies": {
     "@mrdrogdrog/optional": "1.2.1",
-    "html-entities": "2.4.0"
+    "html-entities": "2.5.2"
   },
   "devDependencies": {
     "@jest/types": "29.6.3",
