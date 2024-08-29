@@ -103,7 +103,7 @@
     "react-dom": "18.2.0",
     "react-i18next": "14.0.5",
     "react-redux": "9.1.0",
-    "react-use": "17.5.0",
+    "react-use": "17.5.1",
     "redux": "5.0.1",
     "reveal.js": "5.0.5",
     "sanitize-filename": "1.6.3",
