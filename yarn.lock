@@ -2679,7 +2679,7 @@ __metadata:
     cypress: "npm:13.6.6"
     cypress-commands: "npm:3.0.0"
     cypress-fill-command: "npm:1.0.2"
-    d3-graphviz: "npm:5.2.0"
+    d3-graphviz: "npm:5.6.0"
     d3-selection: "npm:3.0.0"
     deepmerge: "npm:4.3.1"
     diff: "npm:5.2.0"
@@ -2814,14 +2814,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hpcc-js/wasm@npm:^2.14.1":
-  version: 2.16.0
-  resolution: "@hpcc-js/wasm@npm:2.16.0"
+"@hpcc-js/wasm@npm:^2.20.0":
+  version: 2.20.0
+  resolution: "@hpcc-js/wasm@npm:2.20.0"
   dependencies:
     yargs: "npm:17.7.2"
   bin:
-    dot-wasm: bin/dot-wasm.js
-  checksum: 10c0/b9e8d7fe05124aff496c4e417cab9e974b5b7fac0b9d6d58027c2186f30d8c0dcabf71d6c50bff089a98a3c584683725fcd885640b55b623a682f308e26cb507
+    dot-wasm: node ./node_modules/@hpcc-js/wasm-graphviz-cli/bin/index.js
+  checksum: 10c0/925ce14d47389a99837b4fc7d97d270cd401a72e089c55d5fac62212ae652830c4f3f54475e46685a4fed0658c39598a82dd182468bfa603d29d647c419f1ea5
   languageName: node
   linkType: hard
 
@@ -8371,11 +8371,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-graphviz@npm:5.2.0":
-  version: 5.2.0
-  resolution: "d3-graphviz@npm:5.2.0"
+"d3-graphviz@npm:5.6.0":
+  version: 5.6.0
+  resolution: "d3-graphviz@npm:5.6.0"
   dependencies:
-    "@hpcc-js/wasm": "npm:^2.14.1"
+    "@hpcc-js/wasm": "npm:^2.20.0"
     d3-dispatch: "npm:^3.0.1"
     d3-format: "npm:^3.1.0"
     d3-interpolate: "npm:^3.0.1"
@@ -8385,7 +8385,7 @@ __metadata:
     d3-zoom: "npm:^3.0.0"
   peerDependencies:
     d3-selection: ^3.0.0
-  checksum: 10c0/6ac36bc497e1c1007168ec1125911117161290b2006150bbcc1de7f6caa4a9023cc1703a65a6077dc4a19bc659ccfb4d57ad6e8557c730448d1a0403583018fb
+  checksum: 10c0/ffbe5facb35cfe80b9bc1985acbd1facdab180c0eb0cfaccaf6f662e9f1d6be6bd8d20539a5fa04f555075b0c511154ebb567e96335b9d3283874f9f3b5b2744
   languageName: node
   linkType: hard
 
