@@ -34,7 +34,7 @@ describe('fetch motd', () => {
         Mock.of<Response>({
           headers: Mock.of<Headers>({
             get: (name: string) => {
-              return name === 'Last-Modified' ? lastModified : name === 'etag' ? etag ?? null : null
+              return name === 'Last-Modified' ? lastModified : name === 'etag' ? (etag ?? null) : null
             }
           }),
           text: () => Promise.resolve(responseText),
