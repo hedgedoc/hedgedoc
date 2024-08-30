@@ -25,7 +25,7 @@
   },
   "packageManager": "yarn@4.1.1",
   "resolutions": {
-    "@types/node": "20.11.18",
+    "@types/node": "20.16.2",
     "domhandler": "5.0.3",
     "@codemirror/state": "6.4.1",
     "@codemirror/autocomplete": "6.18.0",
@@ -37,7 +37,7 @@
     "@codemirror/lint": "6.8.1",
     "@codemirror/theme-one-dark": "6.1.2",
     "@lezer/common": "1.2.1",
-    "@types/react": "18.2.55",
+    "@types/react": "18.3.5",
     "eventemitter2@6.4.9": "patch:eventemitter2@npm%3A6.4.9#./.yarn/patches/eventemitter2-npm-6.4.9-ba37798a18.patch",
     "yjs@13.6.18": "patch:yjs@npm%3A13.6.18#./.yarn/patches/yjs-remove-import-warning-in-test.patch",
     "vega-canvas@^1.2.6": "patch:vega-canvas@npm%3A1.2.7#./.yarn/patches/remove-vega-canvas-node.patch",
