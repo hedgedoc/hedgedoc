@@ -86,7 +86,7 @@ describe('realtime user status adapter', () => {
         clientGuest,
         clientNotReady,
         clientDecline,
-      ].filter((value) => value !== undefined) as RealtimeUserStatusAdapter[];
+      ].filter((value) => value !== undefined);
     }
 
     clientLoggedIn1 = new RealtimeUserStatusAdapter(

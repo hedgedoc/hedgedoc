@@ -116,7 +116,7 @@ export class RealtimeUserStatusAdapter {
     const realtimeUsers = this.collectOtherAdapters()
       .filter((adapter) => adapter !== this)
       .map((adapter) => adapter.getSendableState())
-      .filter((value) => value !== undefined) as RealtimeUser[];
+      .filter((value) => value !== undefined);
 
     this.messageTransporter.sendMessage({
       type: MessageType.REALTIME_USER_STATE_SET,
