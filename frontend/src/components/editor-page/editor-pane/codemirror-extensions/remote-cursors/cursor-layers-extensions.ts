@@ -38,7 +38,7 @@ export const remoteCursorStateField = StateField.define<RemoteCursor[]>({
   },
   update(currentValue: RemoteCursor[], transaction: Transaction): RemoteCursor[] {
     return Optional.ofNullable(transaction.effects.find((effect) => effect.is(remoteCursorUpdateEffect)))
-      .map((remoteCursor) => remoteCursor.value as RemoteCursor[])
+      .map((remoteCursor) => remoteCursor.value)
       .orElse(currentValue)
   }
 })
