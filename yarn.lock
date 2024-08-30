@@ -2258,27 +2258,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dicebear/converter@patch:@dicebear/converter@npm%3A7.1.3#./.yarn/patches/@dicebear-converter-fix-js-file-path.patch::locator=hedgedoc%40workspace%3A.":
-  version: 7.1.3
-  resolution: "@dicebear/converter@patch:@dicebear/converter@npm%3A7.1.3#./.yarn/patches/@dicebear-converter-fix-js-file-path.patch::version=7.1.3&hash=659bc7&locator=hedgedoc%40workspace%3A."
-  dependencies:
-    "@types/json-schema": "npm:^7.0.11"
-    tmp-promise: "npm:^3.0.3"
-  peerDependencies:
-    "@resvg/resvg-js": ^2.4.1
-    exiftool-vendored: ^23.0.0
-    sharp: ^0.32.6
-  peerDependenciesMeta:
-    "@resvg/resvg-js":
-      optional: true
-    exiftool-vendored:
-      optional: true
-    sharp:
-      optional: true
-  checksum: 10c0/0dd4007446dbe34a89898b98e3f0118fddd8f42a1f45a3060142fbf69579919b29042d98732e4b1bcbe79e3c9f9490e4b19d3d76762facb478840abfcf508e11
-  languageName: node
-  linkType: hard
-
 "@dicebear/core@npm:7.1.3":
   version: 7.1.3
   resolution: "@dicebear/core@npm:7.1.3"
