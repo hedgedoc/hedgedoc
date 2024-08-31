@@ -17,7 +17,7 @@ jobs:
       - name: Setup node
         uses: ./.github/actions/setup-node
         with:
-          NODEJS_VERSION: '20'
+          NODEJS_VERSION: '22'
 
       - name: Run ESLint
         run: yarn run eslint
