@@ -1366,7 +1366,7 @@ __metadata:
     velocity-animate: "npm:1.5.2"
     visibilityjs: "npm:2.0.2"
     viz.js: "npm:1.8.2"
-    webpack: "npm:4.46.0"
+    webpack: "npm:4.47.0"
     webpack-cli: "npm:4.10.0"
     webpack-merge: "npm:5.10.0"
     winston: "npm:3.14.2"
@@ -16740,9 +16740,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:4.46.0":
-  version: 4.46.0
-  resolution: "webpack@npm:4.46.0"
+"webpack@npm:4.47.0":
+  version: 4.47.0
+  resolution: "webpack@npm:4.47.0"
   dependencies:
     "@webassemblyjs/ast": "npm:1.9.0"
     "@webassemblyjs/helper-module-context": "npm:1.9.0"
@@ -16774,7 +16774,7 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 10/a4193e10860df1ef1e38be38e0da15157b23c980b5642f6e1f7f605885ff92e4c7f45175260286060f9721d63cc77034a88d9742c52ed1338c3761fc2a407fec
+  checksum: 10/d5763ee8d63a3c6712159e19e9439156b00ef3e33f728384a7a7ebe070be80322bf5b3fe4b131afd7b6da5053869270a9aee68e2822ec40461a1ce9d92076931
   languageName: node
   linkType: hard
 
