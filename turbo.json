@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "pipeline": {
+  "tasks": {
     "build": {},
     "@hedgedoc/html-to-react#build": {
       "dependsOn": [
@@ -49,7 +49,6 @@
         "NODEJS_VERSION"
       ]
     },
-
     "build:test": {},
     "@hedgedoc/frontend#build:test": {
       "dependsOn": [
@@ -63,7 +62,6 @@
         "NODEJS_VERSION"
       ]
     },
-
     "lint": {
       "dependsOn": [
         "^build"
@@ -74,15 +72,12 @@
         "^build"
       ]
     },
-
     "format": {},
-
     "test": {
       "dependsOn": [
         "^build"
       ]
     },
-
     "test:ci": {
       "dependsOn": [
         "^build"
@@ -94,7 +89,6 @@
         "coverage/**"
       ]
     },
-
     "test:e2e:ci": {},
     "@hedgedoc/frontend#test:e2e:ci": {
       "dependsOn": [
@@ -115,7 +109,6 @@
         "coverage-e2e/**"
       ]
     },
-
     "start:dev": {
       "dependsOn": [
         "^build"
@@ -123,11 +116,9 @@
       "cache": false,
       "persistent": true
     },
-
     "start": {
       "cache": false,
       "persistent": true
     }
   }
 }
-
