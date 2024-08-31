@@ -1791,15 +1791,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/commands@npm:6.6.0":
-  version: 6.6.0
-  resolution: "@codemirror/commands@npm:6.6.0"
+"@codemirror/commands@npm:6.6.1":
+  version: 6.6.1
+  resolution: "@codemirror/commands@npm:6.6.1"
   dependencies:
     "@codemirror/language": "npm:^6.0.0"
     "@codemirror/state": "npm:^6.4.0"
     "@codemirror/view": "npm:^6.27.0"
     "@lezer/common": "npm:^1.1.0"
-  checksum: 10c0/72be283779dafb1dc7ec4a7c80a7911b9edc251944f0a2c8112230154e7e84a0b3dedc3f09277935614b92eb3d3194b32fdbc3e167496c2501e8ee2ed4e42909
+  checksum: 10c0/94cdd70db4ff43f2e43ef0898a16cbb29ec26f35798eee6d56bd3802563b0ae242ca1a8d8ac52e5573077aaec27cd20ecb77b1f1ea6be5b5224439b3cb94601b
   languageName: node
   linkType: hard
 
@@ -2603,7 +2603,7 @@ __metadata:
   resolution: "@hedgedoc/frontend@workspace:frontend"
   dependencies:
     "@codemirror/autocomplete": "npm:6.18.0"
-    "@codemirror/commands": "npm:6.6.0"
+    "@codemirror/commands": "npm:6.6.1"
     "@codemirror/lang-markdown": "npm:6.2.5"
     "@codemirror/language": "npm:6.10.2"
     "@codemirror/language-data": "npm:6.5.1"
