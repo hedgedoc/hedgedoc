@@ -71,7 +71,7 @@
     "morgan": "1.10.0",
     "mysql2": "3.11.0",
     "node-fetch": "2.7.0",
-    "passport": "0.7.0",
+    "passport": "patch:passport@npm%3A0.7.0#~/.yarn/patches/passport-npm-0.7.0-df02531736.patch",
     "passport-dropbox-oauth2": "1.1.0",
     "passport-facebook": "3.0.0",
     "passport-github": "1.1.0",

@@ -1,0 +1,15 @@
+diff --git a/lib/sessionmanager.js b/lib/sessionmanager.js
+index 81b59b1d155314e90f3b59a0528d27d71c08e20d..db98d487b720b2d6528ed00b098f373ec636173e 100644
+--- a/lib/sessionmanager.js
++++ b/lib/sessionmanager.js
+@@ -36,7 +36,9 @@ SessionManager.prototype.logIn = function(req, user, options, cb) {
+       }
+       if (options.keepSessionInfo) {
+         merge(req.session, prevSession);
+-      }
++      } else if (options.successReturnToOrRedirect && prevSession.returnTo) {
++        req.session.returnTo = prevSession.returnTo;
++      }      
+       if (!req.session[self._key]) {
+         req.session[self._key] = {};
+       }
