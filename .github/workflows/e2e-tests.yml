@@ -37,7 +37,7 @@ jobs:
           NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
 
       - name: Run e2e tests
-        run: yarn test:e2e:ci --filter=backend
+        run: yarn test:e2e:ci --filter=@hedgedoc/backend
         shell: bash
         env:
           HEDGEDOC_TEST_DB_TYPE: sqlite
@@ -78,7 +78,7 @@ jobs:
           NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
 
       - name: Run e2e tests
-        run: yarn test:e2e:ci --filter=backend
+        run: yarn test:e2e:ci --filter=@hedgedoc/backend
         shell: bash
         env:
           HEDGEDOC_TEST_DB_TYPE: mariadb
@@ -109,7 +109,7 @@ jobs:
           NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
 
       - name: Run e2e tests
-        run: yarn test:e2e:ci --filter=backend
+        run: yarn test:e2e:ci --filter=@hedgedoc/backend
         shell: bash
         env:
           HEDGEDOC_TEST_DB_TYPE: postgres
@@ -133,7 +133,7 @@ jobs:
           NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
 
       - name: Build test production build
-        run: yarn build:test --filter=frontend
+        run: yarn build:test --filter=@hedgedoc/frontend
         shell: bash
         env:
           NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
@@ -200,7 +200,7 @@ jobs:
         run: "sleep 3 && curl -L --max-time 120 http://127.0.0.1:3001/"
 
       - name: Run cypress
-        run: yarn test:e2e:ci --filter=frontend
+        run: yarn test:e2e:ci --filter=@hedgedoc/frontend
         shell: bash
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}

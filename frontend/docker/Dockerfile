@@ -26,7 +26,7 @@ ARG TURBO_TEAM
 ARG TURBO_API
 ARG TURBO_TOKEN
 
-RUN yarn build --filter=frontend --no-cache --no-daemon
+RUN yarn build --filter=@hedgedoc/frontend --no-cache --no-daemon
 
 # RUNNER
 FROM base
