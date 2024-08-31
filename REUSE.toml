@@ -1,0 +1,200 @@
+# SPDX-FileCopyrightText: 2024 The HedgeDoc developers <license@hedgedoc.org>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+version = 1
+SPDX-PackageName = "hedgedoc"
+SPDX-PackageSupplier = "The HedgeDoc developers <license@hedgedoc.org>"
+SPDX-PackageDownloadLocation = "https://github.com/hedgedoc/hedgedoc"
+
+[[annotations]]
+path = ".yarn/releases/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2016-present, Yarn Contributors"
+SPDX-License-Identifier = "BSD-2-Clause"
+
+[[annotations]]
+path = ".idea/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ".github/ISSUE_TEMPLATE/**.md"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC-BY-SA-4.0"
+
+[[annotations]]
+path = ".github/ISSUE_TEMPLATE/**.yml"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC-BY-SA-4.0"
+
+[[annotations]]
+path = ".github/pull_request_template.md"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC-BY-SA-4.0"
+
+[[annotations]]
+path = "docs/**/**.md"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC-BY-SA-4.0"
+
+[[annotations]]
+path = "docs/mkdocs.yml"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "docs/requirements.txt"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "docs/**/**.png"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC-BY-SA-4.0"
+
+[[annotations]]
+path = "docs/content/old/dev/db-schema.plantuml"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC-BY-SA-4.0"
+
+[[annotations]]
+path = "docs/content/old/dev/**api.yml"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC-BY-SA-4.0"
+
+[[annotations]]
+path = "docs/content/images/logo.svg"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "LicenseRef-HedgeDoc-Icon-Usage-Guidelines"
+
+[[annotations]]
+path = "docs/content/images/hedgedoc_logo_**.svg"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "LicenseRef-HedgeDoc-Icon-Usage-Guidelines"
+
+[[annotations]]
+path = "docs/content/theme/styles/Roboto/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2011 Christian Robertson"
+SPDX-License-Identifier = "Apache-2.0"
+
+[[annotations]]
+path = "docs/content/files/setup-docker/config.env"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2023 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "docs/content/files/setup-docker/docker-compose.yml"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2023 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "docs/content/files/setup-docker/Caddyfile"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2023 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "docs/netlify.toml"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "docs/.netlify/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "backend/public/**.md"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "frontend/public/public/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "frontend/public/icons/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "LicenseRef-HedgeDoc-Icon-Usage-Guidelines"
+
+[[annotations]]
+path = "frontend/locales/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC-BY-SA-4.0"
+
+[[annotations]]
+path = "frontend/public/public/img/highres.jpg"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Vincent van Gogh"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "frontend/public/robots.txt"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ".yarnrc.yml"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ".turbo/config.json"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "frontend/.gitattributes"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "frontend/netlify.toml"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "frontend/.netlify/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "frontend/**/__snapshots__/**.snap"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2022 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "AGPL-3.0-only"
+
+[[annotations]]
+path = "backend/**/__snapshots__/**.snap"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2024 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "AGPL-3.0-only"
