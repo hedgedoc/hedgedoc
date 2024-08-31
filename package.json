@@ -63,7 +63,7 @@
     "markdown-it-sub": "1.0.0",
     "markdown-it-sup": "1.0.0",
     "mattermost": "3.4.0",
-    "meta-marked": "git+https://github.com/hedgedoc/meta-marked#commit=0cb5065253ab0f9851baec34dc9edbb40eabf3d0",
+    "meta-marked": "git+https://github.com/hedgedoc/meta-marked#commit=7d2041f691d909a952fd8ac0e0b2671d6ebb82d1",
     "method-override": "3.0.0",
     "minimist": "1.2.8",
     "minio": "7.1.3",
