@@ -283,6 +283,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hedgedoc/meta-marked@npm:14.1.0":
+  version: 14.1.0
+  resolution: "@hedgedoc/meta-marked@npm:14.1.0"
+  dependencies:
+    js-yaml: "npm:~4.1.0"
+    marked: "npm:14.1.0"
+  checksum: 10/f14edf09cd7d33e20ae1a0e8895688613691acf55cc204b96134bbc5a9ab85df4cc73deea26baebf897b18f315bb0e144df0a34519813aae9aaae9293cae2db2
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.14":
   version: 0.11.14
   resolution: "@humanwhocodes/config-array@npm:0.11.14"
@@ -1215,6 +1225,7 @@ __metadata:
   resolution: "HedgeDoc@workspace:."
   dependencies:
     "@hedgedoc/codemirror-5": "npm:5.65.12"
+    "@hedgedoc/meta-marked": "npm:14.1.0"
     "@passport-next/passport-openid": "npm:1.0.0"
     Idle.Js: "git+https://github.com/shawnmclean/Idle.js#commit=2b57cc6e49d177b7ddce0cca00ef5cbe07453541"
     abcjs: "npm:6.4.2"
@@ -1307,7 +1318,6 @@ __metadata:
     mathjax: "npm:2.7.9"
     mattermost: "npm:3.4.0"
     mermaid: "npm:9.1.7"
-    meta-marked: "git+https://github.com/hedgedoc/meta-marked#commit=7d2041f691d909a952fd8ac0e0b2671d6ebb82d1"
     method-override: "npm:3.0.0"
     mini-css-extract-plugin: "npm:1.6.2"
     minimist: "npm:1.2.8"
@@ -9893,16 +9903,6 @@ __metadata:
     moment-mini: "npm:2.24.0"
     stylis: "npm:^4.0.10"
   checksum: 10/5955e47d5ff92dfe2e9c78ba8dcba92aa47f02fa565890bdc5118db23817bacf6b5a8db698b88569bdd2f0ba568abb4df3d04ef33d57ce9eb5bc7a9c77efc79c
-  languageName: node
-  linkType: hard
-
-"meta-marked@git+https://github.com/hedgedoc/meta-marked#commit=7d2041f691d909a952fd8ac0e0b2671d6ebb82d1":
-  version: 0.4.5
-  resolution: "meta-marked@https://github.com/hedgedoc/meta-marked.git#commit=7d2041f691d909a952fd8ac0e0b2671d6ebb82d1"
-  dependencies:
-    js-yaml: "npm:~4.1.0"
-    marked: "npm:14.1.0"
-  checksum: 10/c783bf78feb909b397249e6f00d276141509af6536cedb1add66b541ed4a31774ef2e42627438d4e1d990399730c595e99b401e9cecd1e61f1ae88e0cc24481f
   languageName: node
   linkType: hard
 
