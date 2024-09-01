@@ -31,7 +31,7 @@ if (isMockMode) {
 
 if (isBuildTime) {
   console.warn(`This process runs in build mode. During build time this means:
- - Editor and Renderer base urls are https://example.org
+ - Editor and Renderer base urls are '' (empty string)
  - No frontend config will be fetched
 `)
 }
