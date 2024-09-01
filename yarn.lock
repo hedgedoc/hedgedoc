@@ -2708,7 +2708,7 @@ __metadata:
     twemoji-colr-font: "npm:15.0.3"
     typescript: "npm:5.5.4"
     user-agent-data-types: "npm:0.4.2"
-    uuid: "npm:9.0.1"
+    uuid: "npm:10.0.0"
     vega: "npm:5.30.0"
     vega-embed: "npm:6.26.0"
     vega-lite: "npm:5.21.0"
