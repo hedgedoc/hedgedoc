@@ -18,7 +18,7 @@ export class FrontmatterLinter implements Linter {
   lint(view: EditorView): Diagnostic[] {
     const lines = view.state.doc.toString().split('\n')
     const frontmatterExtraction = extractFrontmatter(lines)
-    if (frontmatterExtraction === undefined) {
+    if (frontmatterExtraction === undefined || frontmatterExtraction.incomplete) {
       return []
     }
     const frontmatterLines = lines.slice(1, frontmatterExtraction.lineOffset - 1)

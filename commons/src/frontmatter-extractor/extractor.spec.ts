@@ -96,4 +96,17 @@ describe('frontmatter extraction', () => {
       expect(extraction?.rawText).toEqual('multi\nline')
     })
   })
+
+  describe('is incomplete', () => {
+    it('if frontmatter is closed with one dash', () => {
+      const testNote = ['---', 'type: document', '-', 'content']
+      const extraction = extractFrontmatter(testNote)
+      expect(extraction?.incomplete).toBeTruthy()
+    })
+    it('if frontmatter is closed with two dash', () => {
+      const testNote = ['---', 'type: document', '-', 'content']
+      const extraction = extractFrontmatter(testNote)
+      expect(extraction?.incomplete).toBeTruthy()
+    })
+  })
 })
