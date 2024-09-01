@@ -28,14 +28,16 @@ export class EmojiAppExtension extends AppExtension {
   }
 
   buildAutocompletion(): CompletionSource[] {
-    return [
-      regexCompletion(
-        /:(?:[\w-+]+:?)?/,
-        emojiShortcodes.map((shortcode) => ({
-          detail: t('editor.autocompletions.emoji') ?? undefined,
-          label: `:${shortcode}:`
-        }))
-      )
+    const completions = [
+      {
+        detail: '',
+        label: ':'
+      },
+      ...emojiShortcodes.map((shortcode) => ({
+        detail: t('editor.autocompletions.emoji') ?? undefined,
+        label: `:${shortcode}:`
+      }))
     ]
+    return [regexCompletion(/:(?:[\w-+]+:?)?/, completions)]
   }
 }
