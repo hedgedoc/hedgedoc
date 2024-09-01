@@ -5,7 +5,6 @@
  */
 import { NodeProcessor } from '../../../components/markdown-renderer/node-preprocessors/node-processor'
 import { extractFirstHeading } from '@hedgedoc/commons'
-import { Optional } from '@mrdrogdrog/optional'
 import type { Document } from 'domhandler'
 import type { EventEmitter2 } from 'eventemitter2'
 
@@ -20,9 +19,7 @@ export class ExtractFirstHeadlineNodeProcessor extends NodeProcessor {
   }
 
   process(nodes: Document): Document {
-    Optional.ofNullable(extractFirstHeading(nodes))
-      .filter((text) => text !== '')
-      .ifPresent((text) => this.eventEmitter.emit(ExtractFirstHeadlineNodeProcessor.EVENT_NAME, text))
+    this.eventEmitter.emit(ExtractFirstHeadlineNodeProcessor.EVENT_NAME, extractFirstHeading(nodes))
     return nodes
   }
 }
