@@ -83,6 +83,10 @@ const buildStateFromFrontmatterUpdate = (
   state: NoteDetails,
   frontmatterExtraction: FrontmatterExtractionResult
 ): NoteDetails => {
+  if (frontmatterExtraction.incomplete) {
+    frontmatterExtraction.rawText = state.rawFrontmatter
+    return buildStateFromFrontmatter(state, parseFrontmatter(frontmatterExtraction), frontmatterExtraction)
+  }
   if (frontmatterExtraction.rawText === state.rawFrontmatter) {
     return state
   }

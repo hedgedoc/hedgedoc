@@ -7,6 +7,7 @@ import type { FrontmatterExtractionResult } from './types.js'
 
 const FRONTMATTER_BEGIN_REGEX = /^-{3,}$/
 const FRONTMATTER_END_REGEX = /^(?:-{3,}|\.{3,})$/
+const FRONTMATTER_INCOMPLETE_END_REGEX = /^-{1,2}$/
 
 /**
  * Extracts a frontmatter block from a given multiline string.
@@ -25,13 +26,21 @@ export const extractFrontmatter = (
     return undefined
   }
   for (let i = 1; i < lines.length; i++) {
+    if (FRONTMATTER_INCOMPLETE_END_REGEX.test(lines[i])) {
+      return {
+        rawText: '',
+        lineOffset: i + 1,
+        incomplete: true
+      }
+    }
     if (
       lines[i].length === lines[0].length &&
       FRONTMATTER_END_REGEX.test(lines[i])
     ) {
       return {
         rawText: lines.slice(1, i).join('\n'),
-        lineOffset: i + 1
+        lineOffset: i + 1,
+        incomplete: false
       }
     }
   }

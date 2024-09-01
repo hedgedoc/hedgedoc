@@ -7,4 +7,5 @@
 export interface FrontmatterExtractionResult {
   rawText: string
   lineOffset: number
+  incomplete: boolean
 }
