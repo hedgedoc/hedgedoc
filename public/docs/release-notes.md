@@ -2,25 +2,41 @@
 
 ## <i class="fa fa-tag"></i> 1.10.0 <i class="fa fa-calendar-o"></i> 2024-09-01
 
+This release fixes a security issue when using MySQL/MariaDB. We recommend upgrading as soon as possible, when you use
+this database.
+
+**Please note:** This release dropped support for Node 16, which is end-of-life since September 2023.
+You now need at least Node 18 to run HedgeDoc. We recommend to use the latest LTS release of Node.js.
+
+### Security Fixes
+- [GHSA-pjf2-269h-cx7p: MySQL & free URL mode allows to hide existing notes](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-pjf2-269h-cx7p)
+
+### Features
+- Add `disableNoteCreation` config option for read-only instances
+
 ### Enhancements
 - Add a pointer to Mermaid 9.1.7 documentation, which is what HedgeDoc 1 supports.
-- Add `disableNoteCreation` config option for read-only instances
+- Compatibility with Node.js 22 is now checked in CI
 
 ### Bugfixes
 - Fix a crash when having numeric-only values in opengraph frontmatter
 - Fix unnecessary session creation on healthcheck endpoint
-- Fix defect metadata being sent for minio uploads
+- Fix invalid metadata being sent for minio uploads
 - Fix screen readers announcing headings twice
+- Fix a crash when receiving unexpected OAuth profile data
+- Fix some cases of HedgeDoc not redirecting to the previous page after login
+- Fix heading anchor links referencing an invalid URL
+- Our `meta-marked` package is now published to NPM, fixing some installation issues
 
 ### Contributors
 - Axel (translator)
-- Úr Balázs (translator)
-- TheInfamousToTo (translator)
-- José M. (translator)
 - Eduard (translator)
-- Tobias (translator)
-- Meskó Balázs (translator)
 - Jordi Mallach (translator)
+- José M. (translator)
+- Meskó Balázs (translator)
+- TheInfamousToTo (translator)
+- Tobias (translator)
+- Úr Balázs (translator)
 
 ## <i class="fa fa-tag"></i> 1.9.9 <i class="fa fa-calendar-o"></i> 2023-07-30
 
