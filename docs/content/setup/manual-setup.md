@@ -1,7 +1,7 @@
 # Manual Installation
 
 !!! info "Requirements on your server"
-    - Node.js 16 or later
+    - Node.js 18 or later
       We recommend to run HedgeDoc with the latest LTS release of Node.js.
     - Database (PostgreSQL, MySQL, MariaDB, SQLite)  
       The database must use charset `utf8`. This is typically the default in PostgreSQL and SQLite.  
@@ -10,7 +10,7 @@
       This can break if symbols with more bytes are used.
       You can use `alter database <DBNAME> character set utf8mb4 COLLATE utf8mb4_unicode_ci` to be on the safe side.
     - NPM (and its dependencies, [node-gyp](https://github.com/nodejs/node-gyp#installation))
-    - [Yarn 3](https://yarnpkg.com/): Running `corepack enable` once should be sufficient, Node.js will then
+    - [Yarn 4](https://yarnpkg.com/): Running `corepack enable` once should be sufficient, Node.js will then
       automatically use the correct version of Yarn. If `corepack` is not available, try `npm i -g corepack` first.
       See [the official docs](https://yarnpkg.com/getting-started/install) for more information and other options.
     - Bash (for the setup script)
@@ -19,7 +19,7 @@
 
 1. Check if you meet the [requirements at the top of this document](#manual-installation).
 2. Download the [latest release](https://hedgedoc.org/latest-release/) and extract it.  
-   <small>Alternatively, you can use Git to clone the repository and checkout a release, e.g. with `git clone -b 1.9.9 https://github.com/hedgedoc/hedgedoc.git`.</small>
+   <small>Alternatively, you can use Git to clone the repository and checkout a release, e.g. with `git clone -b 1.10.0 https://github.com/hedgedoc/hedgedoc.git`.</small>
 3. Enter the directory and execute `bin/setup`, which will install the dependencies and create example configs.
 4. Configure HedgeDoc: To get started, you can use this minimal `config.json`:
    ```json
