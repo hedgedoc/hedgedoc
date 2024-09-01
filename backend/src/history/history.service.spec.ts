@@ -11,7 +11,6 @@ import assert from 'assert';
 import { Mock } from 'ts-mockery';
 import { DataSource, EntityManager, Repository } from 'typeorm';
 
-import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
 import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
@@ -28,6 +27,7 @@ import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
+import { PublicAuthToken } from '../public-auth-token/public-auth-token.entity';
 import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
 import { RevisionsModule } from '../revisions/revisions.module';
@@ -112,7 +112,7 @@ describe('HistoryService', () => {
     })
       .overrideProvider(getRepositoryToken(User))
       .useValue({})
-      .overrideProvider(getRepositoryToken(AuthToken))
+      .overrideProvider(getRepositoryToken(PublicAuthToken))
       .useValue({})
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})

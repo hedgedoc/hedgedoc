@@ -13,7 +13,6 @@ import { Mock } from 'ts-mockery';
 import { Repository } from 'typeorm';
 import WebSocket from 'ws';
 
-import { AuthToken } from '../../auth/auth-token.entity';
 import { Author } from '../../authors/author.entity';
 import appConfigMock from '../../config/mock/app.config.mock';
 import authConfigMock from '../../config/mock/auth.config.mock';
@@ -33,6 +32,7 @@ import { NotePermission } from '../../permissions/note-permission.enum';
 import { NoteUserPermission } from '../../permissions/note-user-permission.entity';
 import { PermissionsModule } from '../../permissions/permissions.module';
 import { PermissionsService } from '../../permissions/permissions.service';
+import { PublicAuthToken } from '../../public-auth-token/public-auth-token.entity';
 import { Edit } from '../../revisions/edit.entity';
 import { Revision } from '../../revisions/revision.entity';
 import { Session } from '../../sessions/session.entity';
@@ -122,7 +122,7 @@ describe('Websocket gateway', () => {
     })
       .overrideProvider(getRepositoryToken(User))
       .useClass(Repository)
-      .overrideProvider(getRepositoryToken(AuthToken))
+      .overrideProvider(getRepositoryToken(PublicAuthToken))
       .useValue({})
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})

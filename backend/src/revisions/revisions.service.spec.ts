@@ -10,7 +10,6 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Mock } from 'ts-mockery';
 import { Repository } from 'typeorm';
 
-import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
 import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
@@ -27,6 +26,7 @@ import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
+import { PublicAuthToken } from '../public-auth-token/public-auth-token.entity';
 import { Session } from '../sessions/session.entity';
 import { User } from '../users/user.entity';
 import { Edit } from './edit.entity';
@@ -67,7 +67,7 @@ describe('RevisionsService', () => {
       .useValue({})
       .overrideProvider(getRepositoryToken(User))
       .useValue({})
-      .overrideProvider(getRepositoryToken(AuthToken))
+      .overrideProvider(getRepositoryToken(PublicAuthToken))
       .useValue({})
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})

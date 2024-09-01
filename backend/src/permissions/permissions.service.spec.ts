@@ -10,7 +10,6 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Mock } from 'ts-mockery';
 import { DataSource, EntityManager, Repository } from 'typeorm';
 
-import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
 import { DefaultAccessLevel } from '../config/default-access-level.enum';
 import { GuestAccess } from '../config/guest_access.enum';
@@ -38,6 +37,7 @@ import {
 import { Note } from '../notes/note.entity';
 import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
+import { PublicAuthToken } from '../public-auth-token/public-auth-token.entity';
 import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
 import { Session } from '../sessions/session.entity';
@@ -162,7 +162,7 @@ describe('PermissionsService', () => {
     })
       .overrideProvider(getRepositoryToken(User))
       .useValue(userRepo)
-      .overrideProvider(getRepositoryToken(AuthToken))
+      .overrideProvider(getRepositoryToken(PublicAuthToken))
       .useValue({})
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})

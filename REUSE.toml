@@ -198,3 +198,9 @@ path = "backend/**/__snapshots__/**.snap"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2024 The HedgeDoc developers (see AUTHORS file)"
 SPDX-License-Identifier = "AGPL-3.0-only"
+
+[[annotations]]
+path = "backend/src/migrations/*"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2024 The HedgeDoc developers (see AUTHORS file)"
+SPDX-License-Identifier = "AGPL-3.0-only"

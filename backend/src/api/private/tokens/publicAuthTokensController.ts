@@ -15,14 +15,14 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import {
-  AuthTokenCreateDto,
-  AuthTokenDto,
-  AuthTokenWithSecretDto,
-} from '../../../auth/auth-token.dto';
-import { AuthService } from '../../../auth/auth.service';
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
+import {
+  PublicAuthTokenCreateDto,
+  PublicAuthTokenDto,
+  PublicAuthTokenWithSecretDto,
+} from '../../../public-auth-token/public-auth-token.dto';
+import { PublicAuthTokenService } from '../../../public-auth-token/public-auth-token.service';
 import { User } from '../../../users/user.entity';
 import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
@@ -31,29 +31,31 @@ import { RequestUser } from '../../utils/request-user.decorator';
 @OpenApi(401)
 @ApiTags('tokens')
 @Controller('tokens')
-export class TokensController {
+export class PublicAuthTokensController {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    private authService: AuthService,
+    private publicAuthTokenService: PublicAuthTokenService,
   ) {
-    this.logger.setContext(TokensController.name);
+    this.logger.setContext(PublicAuthTokensController.name);
   }
 
   @Get()
   @OpenApi(200)
-  async getUserTokens(@RequestUser() user: User): Promise<AuthTokenDto[]> {
-    return (await this.authService.getTokensByUser(user)).map((token) =>
-      this.authService.toAuthTokenDto(token),
+  async getUserTokens(
+    @RequestUser() user: User,
+  ): Promise<PublicAuthTokenDto[]> {
+    return (await this.publicAuthTokenService.getTokensByUser(user)).map(
+      (token) => this.publicAuthTokenService.toAuthTokenDto(token),
     );
   }
 
   @Post()
   @OpenApi(201)
   async postTokenRequest(
-    @Body() createDto: AuthTokenCreateDto,
+    @Body() createDto: PublicAuthTokenCreateDto,
     @RequestUser() user: User,
-  ): Promise<AuthTokenWithSecretDto> {
-    return await this.authService.addToken(
+  ): Promise<PublicAuthTokenWithSecretDto> {
+    return await this.publicAuthTokenService.addToken(
       user,
       createDto.label,
       createDto.validUntil,
@@ -66,10 +68,10 @@ export class TokensController {
     @RequestUser() user: User,
     @Param('keyId') keyId: string,
   ): Promise<void> {
-    const tokens = await this.authService.getTokensByUser(user);
+    const tokens = await this.publicAuthTokenService.getTokensByUser(user);
     for (const token of tokens) {
       if (token.keyId == keyId) {
-        return await this.authService.removeToken(keyId);
+        return await this.publicAuthTokenService.removeToken(keyId);
       }
     }
     throw new UnauthorizedException(

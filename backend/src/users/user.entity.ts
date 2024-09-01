@@ -13,13 +13,13 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
 import { Group } from '../groups/group.entity';
 import { HistoryEntry } from '../history/history-entry.entity';
 import { Identity } from '../identity/identity.entity';
 import { MediaUpload } from '../media/media-upload.entity';
 import { Note } from '../notes/note.entity';
+import { PublicAuthToken } from '../public-auth-token/public-auth-token.entity';
 import { Username } from '../utils/username';
 
 @Entity()
@@ -56,8 +56,8 @@ export class User {
   @OneToMany((_) => Note, (note) => note.owner)
   ownedNotes: Promise<Note[]>;
 
-  @OneToMany((_) => AuthToken, (authToken) => authToken.user)
-  authTokens: Promise<AuthToken[]>;
+  @OneToMany((_) => PublicAuthToken, (authToken) => authToken.user)
+  publicAuthTokens: Promise<PublicAuthToken[]>;
 
   @OneToMany((_) => Identity, (identity) => identity.user)
   identities: Promise<Identity[]>;
@@ -87,7 +87,7 @@ export class User {
     newUser.photo = null;
     newUser.email = null;
     newUser.ownedNotes = Promise.resolve([]);
-    newUser.authTokens = Promise.resolve([]);
+    newUser.publicAuthTokens = Promise.resolve([]);
     newUser.identities = Promise.resolve([]);
     newUser.groups = Promise.resolve([]);
     newUser.historyEntries = Promise.resolve([]);

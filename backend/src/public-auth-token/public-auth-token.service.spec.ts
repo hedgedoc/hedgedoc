@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -21,23 +21,23 @@ import { LoggerModule } from '../logger/logger.module';
 import { Session } from '../sessions/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
-import { AuthToken } from './auth-token.entity';
-import { AuthService } from './auth.service';
+import { PublicAuthToken } from './public-auth-token.entity';
+import { PublicAuthTokenService } from './public-auth-token.service';
 
 describe('AuthService', () => {
-  let service: AuthService;
+  let service: PublicAuthTokenService;
   let user: User;
-  let authToken: AuthToken;
+  let authToken: PublicAuthToken;
   let userRepo: Repository<User>;
-  let authTokenRepo: Repository<AuthToken>;
+  let authTokenRepo: Repository<PublicAuthToken>;
 
   class CreateQueryBuilderClass {
     leftJoinAndSelect: () => CreateQueryBuilderClass;
     where: () => CreateQueryBuilderClass;
     orWhere: () => CreateQueryBuilderClass;
     setParameter: () => CreateQueryBuilderClass;
-    getOne: () => AuthToken;
-    getMany: () => AuthToken[];
+    getOne: () => PublicAuthToken;
+    getMany: () => PublicAuthToken[];
   }
 
   let createQueryBuilderFunc: CreateQueryBuilderClass;
@@ -45,9 +45,9 @@ describe('AuthService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        AuthService,
+        PublicAuthTokenService,
         {
-          provide: getRepositoryToken(AuthToken),
+          provide: getRepositoryToken(PublicAuthToken),
           useClass: Repository,
         },
       ],
@@ -69,20 +69,20 @@ describe('AuthService', () => {
       .useValue({})
       .compile();
 
-    service = module.get<AuthService>(AuthService);
+    service = module.get<PublicAuthTokenService>(PublicAuthTokenService);
     userRepo = module.get<Repository<User>>(getRepositoryToken(User));
-    authTokenRepo = module.get<Repository<AuthToken>>(
-      getRepositoryToken(AuthToken),
+    authTokenRepo = module.get<Repository<PublicAuthToken>>(
+      getRepositoryToken(PublicAuthToken),
     );
 
     user = User.create('hardcoded', 'Testy') as User;
-    authToken = AuthToken.create(
+    authToken = PublicAuthToken.create(
       'testKeyId',
       user,
       'testToken',
       'abc',
       new Date(new Date().getTime() + 60000), // make this AuthToken valid for 1min
-    ) as AuthToken;
+    ) as PublicAuthToken;
 
     const createQueryBuilder = {
       leftJoinAndSelect: () => createQueryBuilder,
@@ -133,13 +133,13 @@ describe('AuthService', () => {
       jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
         ...authToken,
         user: Promise.resolve(user),
-        accessTokenHash: accessTokenHash,
+        hash: accessTokenHash,
       });
       const authTokenFromCall = await service.getAuthToken(authToken.keyId);
       expect(authTokenFromCall).toEqual({
         ...authToken,
         user: Promise.resolve(user),
-        accessTokenHash: accessTokenHash,
+        hash: accessTokenHash,
       });
     });
     describe('fails:', () => {
@@ -160,13 +160,13 @@ describe('AuthService', () => {
       );
 
       expect(() =>
-        service.checkToken(secret, accessToken as AuthToken),
+        service.checkToken(secret, accessToken as PublicAuthToken),
       ).not.toThrow();
     });
     it('AuthToken has wrong hash', () => {
       const [accessToken] = service.createToken(user, 'TestToken', undefined);
       expect(() =>
-        service.checkToken('secret', accessToken as AuthToken),
+        service.checkToken('secret', accessToken as PublicAuthToken),
       ).toThrow(TokenNotValidError);
     });
     it('AuthToken has wrong validUntil Date', () => {
@@ -176,7 +176,7 @@ describe('AuthService', () => {
         1549312452000,
       );
       expect(() =>
-        service.checkToken(secret, accessToken as AuthToken),
+        service.checkToken(secret, accessToken as PublicAuthToken),
       ).toThrow(TokenNotValidError);
     });
   });
@@ -191,7 +191,7 @@ describe('AuthService', () => {
       jest
         .spyOn(authTokenRepo, 'save')
         .mockImplementationOnce(
-          async (authTokenSaved, _): Promise<AuthToken> => {
+          async (authTokenSaved, _): Promise<PublicAuthToken> => {
             expect(authTokenSaved.keyId).toEqual(authToken.keyId);
             expect(authTokenSaved.lastUsedAt).not.toEqual(1549312452000);
             return authToken;
@@ -217,16 +217,16 @@ describe('AuthService', () => {
         .digest('hex');
       jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce({
         ...user,
-        authTokens: Promise.resolve([authToken]),
+        publicAuthTokens: Promise.resolve([authToken]),
       });
       jest.spyOn(authTokenRepo, 'findOne').mockResolvedValue({
         ...authToken,
         user: Promise.resolve(user),
-        accessTokenHash: accessTokenHash,
+        hash: accessTokenHash,
       });
       jest
         .spyOn(authTokenRepo, 'save')
-        .mockImplementationOnce(async (_, __): Promise<AuthToken> => {
+        .mockImplementationOnce(async (_, __): Promise<PublicAuthToken> => {
           return authToken;
         });
       const userByToken = await service.validateToken(
@@ -234,7 +234,7 @@ describe('AuthService', () => {
       );
       expect(userByToken).toEqual({
         ...user,
-        authTokens: Promise.resolve([authToken]),
+        publicAuthTokens: Promise.resolve([authToken]),
       });
     });
     describe('fails:', () => {
@@ -276,7 +276,7 @@ describe('AuthService', () => {
       });
       jest
         .spyOn(authTokenRepo, 'remove')
-        .mockImplementationOnce(async (token, __): Promise<AuthToken> => {
+        .mockImplementationOnce(async (token, __): Promise<PublicAuthToken> => {
           expect(token).toEqual({
             ...authToken,
             user: Promise.resolve(user),
@@ -301,7 +301,10 @@ describe('AuthService', () => {
         jest
           .spyOn(authTokenRepo, 'save')
           .mockImplementationOnce(
-            async (authTokenSaved: AuthToken, _): Promise<AuthToken> => {
+            async (
+              authTokenSaved: PublicAuthToken,
+              _,
+            ): Promise<PublicAuthToken> => {
               expect(authTokenSaved.lastUsedAt).toBeNull();
               return authTokenSaved;
             },
@@ -320,7 +323,10 @@ describe('AuthService', () => {
         jest
           .spyOn(authTokenRepo, 'save')
           .mockImplementationOnce(
-            async (authTokenSaved: AuthToken, _): Promise<AuthToken> => {
+            async (
+              authTokenSaved: PublicAuthToken,
+              _,
+            ): Promise<PublicAuthToken> => {
               expect(authTokenSaved.lastUsedAt).toBeNull();
               return authTokenSaved;
             },
@@ -335,7 +341,7 @@ describe('AuthService', () => {
       it('should throw TooManyTokensError when number of tokens >= 200', async () => {
         jest
           .spyOn(authTokenRepo, 'find')
-          .mockImplementationOnce(async (): Promise<AuthToken[]> => {
+          .mockImplementationOnce(async (): Promise<PublicAuthToken[]> => {
             const inValidToken = [authToken];
             inValidToken.length = 201;
             return inValidToken;
@@ -361,7 +367,7 @@ describe('AuthService', () => {
         .mockResolvedValueOnce([expiredToken, authToken]);
       jest
         .spyOn(authTokenRepo, 'remove')
-        .mockImplementationOnce(async (token): Promise<AuthToken> => {
+        .mockImplementationOnce(async (token): Promise<PublicAuthToken> => {
           expect(token).toEqual(expiredToken);
           expect(token).not.toBe(authToken);
           return authToken;
@@ -388,7 +394,7 @@ describe('AuthService', () => {
   });
 
   describe('toAuthTokenDto', () => {
-    const authToken = new AuthToken();
+    const authToken = new PublicAuthToken();
     authToken.keyId = 'testKeyId';
     authToken.label = 'testLabel';
     const date = new Date();

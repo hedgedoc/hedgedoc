@@ -10,7 +10,6 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Mock } from 'ts-mockery';
 import { DataSource, EntityManager, Repository } from 'typeorm';
 
-import { AuthToken } from '../auth/auth-token.entity';
 import { Author } from '../authors/author.entity';
 import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
@@ -29,6 +28,7 @@ import { Identity } from '../identity/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
+import { PublicAuthToken } from '../public-auth-token/public-auth-token.entity';
 import { RealtimeNoteModule } from '../realtime/realtime-note/realtime-note.module';
 import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
@@ -118,7 +118,7 @@ describe('AliasService', () => {
       .useValue(aliasRepo)
       .overrideProvider(getRepositoryToken(User))
       .useClass(Repository)
-      .overrideProvider(getRepositoryToken(AuthToken))
+      .overrideProvider(getRepositoryToken(PublicAuthToken))
       .useValue({})
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})

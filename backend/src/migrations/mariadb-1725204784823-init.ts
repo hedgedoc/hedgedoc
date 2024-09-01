@@ -1,25 +1,14 @@
-/*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
- *
- * SPDX-License-Identifier: AGPL-3.0-only
- */
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Init1696756465867 implements MigrationInterface {
-  name = 'Init1696756465867';
+export class MariadbInit1725204784823 implements MigrationInterface {
+  name = 'MariadbInit1725204784823';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `CREATE TABLE \`auth_token\` (\`id\` int NOT NULL AUTO_INCREMENT, \`keyId\` varchar(255) NOT NULL, \`label\` varchar(255) NOT NULL, \`createdAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`accessTokenHash\` varchar(255) NOT NULL, \`validUntil\` datetime NOT NULL, \`lastUsedAt\` date NULL, \`userId\` int NULL, UNIQUE INDEX \`IDX_9d2cf0a2cc3df58b87cbbc43e4\` (\`keyId\`), UNIQUE INDEX \`IDX_15b2228d06b08bb4cc98876c65\` (\`accessTokenHash\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
-    );
     await queryRunner.query(
       `CREATE TABLE \`history_entry\` (\`id\` int NOT NULL AUTO_INCREMENT, \`pinStatus\` tinyint NOT NULL, \`updatedAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`userId\` int NULL, \`noteId\` int NULL, UNIQUE INDEX \`IDX_928dd947355b0837366470a916\` (\`noteId\`, \`userId\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
       `CREATE TABLE \`media_upload\` (\`id\` varchar(255) NOT NULL, \`backendType\` varchar(255) NOT NULL, \`fileUrl\` varchar(255) NOT NULL, \`backendData\` text NULL, \`createdAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`noteId\` int NULL, \`userId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
-    );
-    await queryRunner.query(
-      `CREATE TABLE \`group\` (\`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NOT NULL, \`displayName\` varchar(255) NOT NULL, \`special\` tinyint NOT NULL, UNIQUE INDEX \`IDX_8a45300fd825918f3b40195fbd\` (\`name\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
       `CREATE TABLE \`note_group_permission\` (\`id\` int NOT NULL AUTO_INCREMENT, \`canEdit\` tinyint NOT NULL, \`groupId\` int NULL, \`noteId\` int NULL, UNIQUE INDEX \`IDX_ee1744842a9ef3ffbc05a7016a\` (\`groupId\`, \`noteId\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
@@ -49,13 +38,16 @@ export class Init1696756465867 implements MigrationInterface {
       `CREATE TABLE \`author\` (\`id\` int NOT NULL AUTO_INCREMENT, \`color\` int NOT NULL, \`userId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
-      `CREATE TABLE \`user\` (\`id\` int NOT NULL AUTO_INCREMENT, \`username\` varchar(255) NOT NULL, \`displayName\` varchar(255) NOT NULL, \`createdAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`updatedAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`photo\` text NULL, \`email\` text NULL, UNIQUE INDEX \`IDX_78a916df40e02a9deb1c4b75ed\` (\`username\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
-    );
-    await queryRunner.query(
       `CREATE TABLE \`identity\` (\`id\` int NOT NULL AUTO_INCREMENT, \`providerType\` varchar(255) NOT NULL, \`providerName\` text NULL, \`syncSource\` tinyint NOT NULL, \`createdAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`updatedAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`providerUserId\` text NULL, \`oAuthAccessToken\` text NULL, \`passwordHash\` text NULL, \`userId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
-      `CREATE TABLE \`group_members_user\` (\`groupId\` int NOT NULL, \`userId\` int NOT NULL, INDEX \`IDX_bfa303089d367a2e3c02b002b8\` (\`groupId\`), INDEX \`IDX_427107c650638bcb2f1e167d2e\` (\`userId\`), PRIMARY KEY (\`groupId\`, \`userId\`)) ENGINE=InnoDB`,
+      `CREATE TABLE \`public_auth_token\` (\`id\` int NOT NULL AUTO_INCREMENT, \`keyId\` varchar(255) NOT NULL, \`label\` varchar(255) NOT NULL, \`createdAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`hash\` varchar(255) NOT NULL, \`validUntil\` datetime NOT NULL, \`lastUsedAt\` date NULL, \`userId\` int NULL, UNIQUE INDEX \`IDX_b4c4b9179f72ef63c32248e83a\` (\`keyId\`), UNIQUE INDEX \`IDX_6450514886fa4182c889c076df\` (\`hash\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
+    );
+    await queryRunner.query(
+      `CREATE TABLE \`user\` (\`id\` int NOT NULL AUTO_INCREMENT, \`username\` varchar(255) NOT NULL, \`displayName\` varchar(255) NOT NULL, \`createdAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`updatedAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`photo\` text NULL, \`email\` text NULL, UNIQUE INDEX \`IDX_78a916df40e02a9deb1c4b75ed\` (\`username\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
+    );
+    await queryRunner.query(
+      `CREATE TABLE \`group\` (\`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NOT NULL, \`displayName\` varchar(255) NOT NULL, \`special\` tinyint NOT NULL, UNIQUE INDEX \`IDX_8a45300fd825918f3b40195fbd\` (\`name\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
       `CREATE TABLE \`revision_tags_tag\` (\`revisionId\` int NOT NULL, \`tagId\` int NOT NULL, INDEX \`IDX_3382f45eefeb40f91e45cfd418\` (\`revisionId\`), INDEX \`IDX_19dbafe2a8b456c0ef40858d49\` (\`tagId\`), PRIMARY KEY (\`revisionId\`, \`tagId\`)) ENGINE=InnoDB`,
@@ -64,7 +56,7 @@ export class Init1696756465867 implements MigrationInterface {
       `CREATE TABLE \`revision_edits_edit\` (\`revisionId\` int NOT NULL, \`editId\` int NOT NULL, INDEX \`IDX_52c6a61e1a646768391c7854fe\` (\`revisionId\`), INDEX \`IDX_470886feb50e30114e39c42698\` (\`editId\`), PRIMARY KEY (\`revisionId\`, \`editId\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
-      `ALTER TABLE \`auth_token\` ADD CONSTRAINT \`FK_5a326267f11b44c0d62526bc718\` FOREIGN KEY (\`userId\`) REFERENCES \`user\`(\`id\`) ON DELETE CASCADE ON UPDATE NO ACTION`,
+      `CREATE TABLE \`group_members_user\` (\`groupId\` int NOT NULL, \`userId\` int NOT NULL, INDEX \`IDX_bfa303089d367a2e3c02b002b8\` (\`groupId\`), INDEX \`IDX_427107c650638bcb2f1e167d2e\` (\`userId\`), PRIMARY KEY (\`groupId\`, \`userId\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
       `ALTER TABLE \`history_entry\` ADD CONSTRAINT \`FK_42b8ae461cb58747a24340e6c64\` FOREIGN KEY (\`userId\`) REFERENCES \`user\`(\`id\`) ON DELETE CASCADE ON UPDATE NO ACTION`,
@@ -112,10 +104,7 @@ export class Init1696756465867 implements MigrationInterface {
       `ALTER TABLE \`identity\` ADD CONSTRAINT \`FK_12915039d2868ab654567bf5181\` FOREIGN KEY (\`userId\`) REFERENCES \`user\`(\`id\`) ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
-      `ALTER TABLE \`group_members_user\` ADD CONSTRAINT \`FK_bfa303089d367a2e3c02b002b8f\` FOREIGN KEY (\`groupId\`) REFERENCES \`group\`(\`id\`) ON DELETE CASCADE ON UPDATE CASCADE`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE \`group_members_user\` ADD CONSTRAINT \`FK_427107c650638bcb2f1e167d2e5\` FOREIGN KEY (\`userId\`) REFERENCES \`user\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`,
+      `ALTER TABLE \`public_auth_token\` ADD CONSTRAINT \`FK_b7b4f28eb8b4a0fc443448b9054\` FOREIGN KEY (\`userId\`) REFERENCES \`user\`(\`id\`) ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `ALTER TABLE \`revision_tags_tag\` ADD CONSTRAINT \`FK_3382f45eefeb40f91e45cfd4180\` FOREIGN KEY (\`revisionId\`) REFERENCES \`revision\`(\`id\`) ON DELETE CASCADE ON UPDATE CASCADE`,
@@ -129,9 +118,21 @@ export class Init1696756465867 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE \`revision_edits_edit\` ADD CONSTRAINT \`FK_470886feb50e30114e39c426987\` FOREIGN KEY (\`editId\`) REFERENCES \`edit\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
+    await queryRunner.query(
+      `ALTER TABLE \`group_members_user\` ADD CONSTRAINT \`FK_bfa303089d367a2e3c02b002b8f\` FOREIGN KEY (\`groupId\`) REFERENCES \`group\`(\`id\`) ON DELETE CASCADE ON UPDATE CASCADE`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`group_members_user\` ADD CONSTRAINT \`FK_427107c650638bcb2f1e167d2e5\` FOREIGN KEY (\`userId\`) REFERENCES \`user\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(
+      `ALTER TABLE \`group_members_user\` DROP FOREIGN KEY \`FK_427107c650638bcb2f1e167d2e5\``,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`group_members_user\` DROP FOREIGN KEY \`FK_bfa303089d367a2e3c02b002b8f\``,
+    );
     await queryRunner.query(
       `ALTER TABLE \`revision_edits_edit\` DROP FOREIGN KEY \`FK_470886feb50e30114e39c426987\``,
     );
@@ -145,10 +146,7 @@ export class Init1696756465867 implements MigrationInterface {
       `ALTER TABLE \`revision_tags_tag\` DROP FOREIGN KEY \`FK_3382f45eefeb40f91e45cfd4180\``,
     );
     await queryRunner.query(
-      `ALTER TABLE \`group_members_user\` DROP FOREIGN KEY \`FK_427107c650638bcb2f1e167d2e5\``,
-    );
-    await queryRunner.query(
-      `ALTER TABLE \`group_members_user\` DROP FOREIGN KEY \`FK_bfa303089d367a2e3c02b002b8f\``,
+      `ALTER TABLE \`public_auth_token\` DROP FOREIGN KEY \`FK_b7b4f28eb8b4a0fc443448b9054\``,
     );
     await queryRunner.query(
       `ALTER TABLE \`identity\` DROP FOREIGN KEY \`FK_12915039d2868ab654567bf5181\``,
@@ -196,8 +194,12 @@ export class Init1696756465867 implements MigrationInterface {
       `ALTER TABLE \`history_entry\` DROP FOREIGN KEY \`FK_42b8ae461cb58747a24340e6c64\``,
     );
     await queryRunner.query(
-      `ALTER TABLE \`auth_token\` DROP FOREIGN KEY \`FK_5a326267f11b44c0d62526bc718\``,
+      `DROP INDEX \`IDX_427107c650638bcb2f1e167d2e\` ON \`group_members_user\``,
     );
+    await queryRunner.query(
+      `DROP INDEX \`IDX_bfa303089d367a2e3c02b002b8\` ON \`group_members_user\``,
+    );
+    await queryRunner.query(`DROP TABLE \`group_members_user\``);
     await queryRunner.query(
       `DROP INDEX \`IDX_470886feb50e30114e39c42698\` ON \`revision_edits_edit\``,
     );
@@ -213,17 +215,21 @@ export class Init1696756465867 implements MigrationInterface {
     );
     await queryRunner.query(`DROP TABLE \`revision_tags_tag\``);
     await queryRunner.query(
-      `DROP INDEX \`IDX_427107c650638bcb2f1e167d2e\` ON \`group_members_user\``,
+      `DROP INDEX \`IDX_8a45300fd825918f3b40195fbd\` ON \`group\``,
     );
-    await queryRunner.query(
-      `DROP INDEX \`IDX_bfa303089d367a2e3c02b002b8\` ON \`group_members_user\``,
-    );
-    await queryRunner.query(`DROP TABLE \`group_members_user\``);
-    await queryRunner.query(`DROP TABLE \`identity\``);
+    await queryRunner.query(`DROP TABLE \`group\``);
     await queryRunner.query(
       `DROP INDEX \`IDX_78a916df40e02a9deb1c4b75ed\` ON \`user\``,
     );
     await queryRunner.query(`DROP TABLE \`user\``);
+    await queryRunner.query(
+      `DROP INDEX \`IDX_6450514886fa4182c889c076df\` ON \`public_auth_token\``,
+    );
+    await queryRunner.query(
+      `DROP INDEX \`IDX_b4c4b9179f72ef63c32248e83a\` ON \`public_auth_token\``,
+    );
+    await queryRunner.query(`DROP TABLE \`public_auth_token\``);
+    await queryRunner.query(`DROP TABLE \`identity\``);
     await queryRunner.query(`DROP TABLE \`author\``);
     await queryRunner.query(
       `DROP INDEX \`IDX_28c5d1d16da7908c97c9bc2f74\` ON \`session\``,
@@ -248,21 +254,10 @@ export class Init1696756465867 implements MigrationInterface {
       `DROP INDEX \`IDX_ee1744842a9ef3ffbc05a7016a\` ON \`note_group_permission\``,
     );
     await queryRunner.query(`DROP TABLE \`note_group_permission\``);
-    await queryRunner.query(
-      `DROP INDEX \`IDX_8a45300fd825918f3b40195fbd\` ON \`group\``,
-    );
-    await queryRunner.query(`DROP TABLE \`group\``);
     await queryRunner.query(`DROP TABLE \`media_upload\``);
     await queryRunner.query(
       `DROP INDEX \`IDX_928dd947355b0837366470a916\` ON \`history_entry\``,
     );
     await queryRunner.query(`DROP TABLE \`history_entry\``);
-    await queryRunner.query(
-      `DROP INDEX \`IDX_15b2228d06b08bb4cc98876c65\` ON \`auth_token\``,
-    );
-    await queryRunner.query(
-      `DROP INDEX \`IDX_9d2cf0a2cc3df58b87cbbc43e4\` ON \`auth_token\``,
-    );
-    await queryRunner.query(`DROP TABLE \`auth_token\``);
   }
 }
