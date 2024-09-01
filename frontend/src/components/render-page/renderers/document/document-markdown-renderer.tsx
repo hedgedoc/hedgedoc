@@ -19,12 +19,9 @@ import type { CommonMarkdownRendererProps, HeightChangeRendererProps } from '../
 import { DocumentTocSidebar } from './document-toc-sidebar'
 import styles from './markdown-document.module.scss'
 import useResizeObserver from '@react-hook/resize-observer'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { Logger } from '../../../../utils/logger'
+import React, { useMemo, useRef, useState } from 'react'
 
 export type DocumentMarkdownRendererProps = CommonMarkdownRendererProps & ScrollProps & HeightChangeRendererProps
-
-const logger = new Logger('DocumentMarkdownRenderer')
 
 /**
  * Renders a Markdown document and handles scrolling, yaml metadata and a floating table of contents.
@@ -66,11 +63,6 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
 
   const markdownBodyRef = useRef<HTMLDivElement>(null)
   const currentLineMarkers = useRef<LineMarkers[]>()
-
-  // ToDo: Remove this
-  useEffect(() => {
-    logger.debug(markdownContentLines)
-  }, [markdownContentLines])
 
   const extensions = useMarkdownExtensions(
     baseUrl,
