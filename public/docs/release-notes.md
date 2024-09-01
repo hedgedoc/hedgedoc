@@ -1,6 +1,6 @@
 # Release Notes
 
-## UNRELEASED
+## <i class="fa fa-tag"></i> 1.10.0 <i class="fa fa-calendar-o"></i> 2024-09-01
 
 ### Enhancements
 - Add a pointer to Mermaid 9.1.7 documentation, which is what HedgeDoc 1 supports.
@@ -11,6 +11,16 @@
 - Fix unnecessary session creation on healthcheck endpoint
 - Fix defect metadata being sent for minio uploads
 - Fix screen readers announcing headings twice
+
+### Contributors
+- Axel (translator)
+- Úr Balázs (translator)
+- TheInfamousToTo (translator)
+- José M. (translator)
+- Eduard (translator)
+- Tobias (translator)
+- Meskó Balázs (translator)
+- Jordi Mallach (translator)
 
 ## <i class="fa fa-tag"></i> 1.9.9 <i class="fa fa-calendar-o"></i> 2023-07-30
 
