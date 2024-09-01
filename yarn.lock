@@ -2679,7 +2679,7 @@ __metadata:
     luxon: "npm:3.5.0"
     markdown-it: "npm:13.0.2"
     markdown-it-abbr: "npm:2.0.0"
-    markdown-it-anchor: "npm:8.6.7"
+    markdown-it-anchor: "npm:9.1.0"
     markdown-it-container: "npm:4.0.0"
     markdown-it-deflist: "npm:3.0.0"
     markdown-it-emoji: "npm:3.0.0"
@@ -13246,13 +13246,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-it-anchor@npm:8.6.7":
-  version: 8.6.7
-  resolution: "markdown-it-anchor@npm:8.6.7"
+"markdown-it-anchor@npm:9.1.0":
+  version: 9.1.0
+  resolution: "markdown-it-anchor@npm:9.1.0"
   peerDependencies:
     "@types/markdown-it": "*"
     markdown-it: "*"
-  checksum: 10c0/f117866488013b7e4085a6b59d12bf62879181aef65ea2851f01ed1b763b8c052580c2c27fa8bd009421886220c6beeb373a65af9e885ce63a36ee9f8dcd0e89
+  checksum: 10c0/981ea1a473e20a77ef9db7023a5a6f5f441f017b55cd6322a7be7358d0d7dbda6872fbe58e36964ff3137b756a2e47432b9aadc1401fd725e5392ceccba8e395
   languageName: node
   linkType: hard
 
