@@ -119,12 +119,12 @@
     "Help us translating": "Помочь с переводом",
     "Join the community": "Присоединиться к сообществу",
     "Imprint": "Импринт",
-    "Freely - Anyone can edit": "Freely — Любой может редактировать",
-    "Editable - Signed-in people can edit": "Editable — Зарегистрированные могут редактировать",
-    "Limited - Signed-in people can edit (forbid guests)": "Limited — Зарегистрированные могут редактировать (недоступна для гостей)",
-    "Locked - Only owner can edit": "Locked — Только владелец может редактировать",
-    "Protected - Only owner can edit (forbid guests)": "Protected — Только владелец может редактировать (недоступна для гостей)",
-    "Private - Only owner can view & edit": "Private — Только владелец может просматривать и редактировать",
+    "Freely - Anyone can edit": "Доступно — Любой может редактировать",
+    "Editable - Signed-in people can edit": "Редактировать — Зарегистрированные могут редактировать",
+    "Limited - Signed-in people can edit (forbid guests)": "Ограничено — Зарегистрированные могут редактировать (недоступна для гостей)",
+    "Locked - Only owner can edit": "Заблокировано — Только владелец может редактировать",
+    "Protected - Only owner can edit (forbid guests)": "Защищенно — Только владелец может редактировать (недоступна для гостей)",
+    "Private - Only owner can view & edit": "Личное — Только владелец может просматривать и редактировать",
     "changed": "изменена",
     "created": "создана"
 }
