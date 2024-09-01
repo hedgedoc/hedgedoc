@@ -107,7 +107,7 @@
     "xss": "1.0.15"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "bugs": "https://github.com/hedgedoc/hedgedoc/issues",
   "keywords": [
