@@ -1,6 +1,6 @@
 {
   "name": "HedgeDoc",
-  "version": "1.9.9",
+  "version": "1.10.0",
   "description": "The best platform to write and share markdown.",
   "main": "app.js",
   "license": "AGPL-3.0",
