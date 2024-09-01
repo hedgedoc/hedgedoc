@@ -2525,7 +2525,7 @@ __metadata:
     passport-local: "npm:1.0.0"
     pg: "npm:8.12.0"
     prettier: "npm:3.3.3"
-    raw-body: "npm:2.5.2"
+    raw-body: "npm:3.0.0"
     reflect-metadata: "npm:0.2.2"
     rimraf: "npm:6.0.1"
     rxjs: "npm:7.8.1"
@@ -15588,6 +15588,18 @@ __metadata:
     iconv-lite: "npm:0.4.24"
     unpipe: "npm:1.0.0"
   checksum: 10c0/b201c4b66049369a60e766318caff5cb3cc5a900efd89bdac431463822d976ad0670912c931fdbdcf5543207daf6f6833bca57aa116e1661d2ea91e12ca692c4
+  languageName: node
+  linkType: hard
+
+"raw-body@npm:3.0.0":
+  version: 3.0.0
+  resolution: "raw-body@npm:3.0.0"
+  dependencies:
+    bytes: "npm:3.1.2"
+    http-errors: "npm:2.0.0"
+    iconv-lite: "npm:0.6.3"
+    unpipe: "npm:1.0.0"
+  checksum: 10c0/f8daf4b724064a4811d118745a781ca0fb4676298b8adadfd6591155549cfea0a067523cf7dd3baeb1265fecc9ce5dfb2fc788c12c66b85202a336593ece0f87
   languageName: node
   linkType: hard
 
