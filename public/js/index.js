@@ -1087,7 +1087,7 @@ function changeMode (type) {
   }
   if (appState.currentMode !== modeType.edit) {
     $(document.body).css('background-color', 'white')
-    updateView()
+    refreshView()
   } else {
     $(document.body).css(
       'background-color',
