@@ -23,6 +23,6 @@ export const useAvatarUrl = (photoUrl: string | undefined, displayName: string):
     const avatar = createAvatar(identicon, {
       seed: displayName
     })
-    return avatar.toDataUriSync()
+    return avatar.toDataUri()
   }, [photoUrl, displayName])
 }

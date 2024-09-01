@@ -12,7 +12,7 @@ import { UserAvatar } from './user-avatar'
 jest.mock('@dicebear/identicon', () => null)
 jest.mock('@dicebear/core', () => ({
   createAvatar: jest.fn(() => ({
-    toDataUriSync: jest.fn(() => 'data:image/x-other,identicon-mock')
+    toDataUri: jest.fn(() => 'data:image/x-other,identicon-mock')
   }))
 }))
 
