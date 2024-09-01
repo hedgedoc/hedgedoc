@@ -6,12 +6,12 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
-import { TokenAuthGuard } from '../../../auth/token.strategy';
 import { MonitoringService } from '../../../monitoring/monitoring.service';
 import { ServerStatusDto } from '../../../monitoring/server-status.dto';
+import { PublicAuthTokenGuard } from '../../../public-auth-token/public-auth-token.strategy';
 import { OpenApi } from '../../utils/openapi.decorator';
 
-@UseGuards(TokenAuthGuard)
+@UseGuards(PublicAuthTokenGuard)
 @OpenApi(401)
 @ApiTags('monitoring')
 @ApiSecurity('token')

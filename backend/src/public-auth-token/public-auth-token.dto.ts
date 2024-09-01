@@ -9,7 +9,7 @@ import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
 import { BaseDto } from '../utils/base.dto.';
 import { TimestampMillis } from '../utils/timestamp';
 
-export class AuthTokenDto extends BaseDto {
+export class PublicAuthTokenDto extends BaseDto {
   @IsString()
   label: string;
 
@@ -30,12 +30,12 @@ export class AuthTokenDto extends BaseDto {
   lastUsedAt: Date | null;
 }
 
-export class AuthTokenWithSecretDto extends AuthTokenDto {
+export class PublicAuthTokenWithSecretDto extends PublicAuthTokenDto {
   @IsString()
   secret: string;
 }
 
-export class AuthTokenCreateDto extends BaseDto {
+export class PublicAuthTokenCreateDto extends BaseDto {
   @IsString()
   label: string;
 

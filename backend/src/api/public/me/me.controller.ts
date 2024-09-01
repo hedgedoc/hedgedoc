@@ -14,7 +14,6 @@ import {
 } from '@nestjs/common';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
-import { TokenAuthGuard } from '../../../auth/token.strategy';
 import { HistoryEntryUpdateDto } from '../../../history/history-entry-update.dto';
 import { HistoryEntryDto } from '../../../history/history-entry.dto';
 import { HistoryService } from '../../../history/history.service';
@@ -24,6 +23,7 @@ import { MediaService } from '../../../media/media.service';
 import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
 import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
+import { PublicAuthTokenGuard } from '../../../public-auth-token/public-auth-token.strategy';
 import { FullUserInfoDto } from '../../../users/user-info.dto';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
@@ -32,7 +32,7 @@ import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestNote } from '../../utils/request-note.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
-@UseGuards(TokenAuthGuard)
+@UseGuards(PublicAuthTokenGuard)
 @OpenApi(401)
 @ApiTags('me')
 @ApiSecurity('token')

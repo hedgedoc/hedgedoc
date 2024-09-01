@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,15 +14,15 @@ import {
 import { User } from '../users/user.entity';
 
 @Entity()
-export class AuthToken {
+export class PublicAuthToken {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ unique: true })
   keyId: string;
 
-  @ManyToOne((_) => User, (user) => user.authTokens, {
-    onDelete: 'CASCADE', // This deletes the AuthToken, when the associated User is deleted
+  @ManyToOne((_) => User, (user) => user.publicAuthTokens, {
+    onDelete: 'CASCADE', // This deletes the PublicAuthToken, when the associated User is deleted
   })
   user: Promise<User>;
 
@@ -33,7 +33,7 @@ export class AuthToken {
   createdAt: Date;
 
   @Column({ unique: true })
-  accessTokenHash: string;
+  hash: string;
 
   @Column()
   validUntil: Date;
@@ -50,12 +50,12 @@ export class AuthToken {
     label: string,
     tokenString: string,
     validUntil: Date,
-  ): Omit<AuthToken, 'id' | 'createdAt'> {
-    const token = new AuthToken();
+  ): Omit<PublicAuthToken, 'id' | 'createdAt'> {
+    const token = new PublicAuthToken();
     token.keyId = keyId;
     token.user = Promise.resolve(user);
     token.label = label;
-    token.accessTokenHash = tokenString;
+    token.hash = tokenString;
     token.validUntil = validUntil;
     token.lastUsedAt = null;
     return token;

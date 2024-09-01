@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -18,19 +18,22 @@ import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { User } from '../users/user.entity';
 import { bufferToBase64Url } from '../utils/password';
 import { TimestampMillis } from '../utils/timestamp';
-import { AuthTokenDto, AuthTokenWithSecretDto } from './auth-token.dto';
-import { AuthToken } from './auth-token.entity';
+import {
+  PublicAuthTokenDto,
+  PublicAuthTokenWithSecretDto,
+} from './public-auth-token.dto';
+import { PublicAuthToken } from './public-auth-token.entity';
 
 export const AUTH_TOKEN_PREFIX = 'hd2';
 
 @Injectable()
-export class AuthService {
+export class PublicAuthTokenService {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    @InjectRepository(AuthToken)
-    private authTokenRepository: Repository<AuthToken>,
+    @InjectRepository(PublicAuthToken)
+    private authTokenRepository: Repository<PublicAuthToken>,
   ) {
-    this.logger.setContext(AuthService.name);
+    this.logger.setContext(PublicAuthTokenService.name);
   }
 
   async validateToken(tokenString: string): Promise<User> {
@@ -54,8 +57,8 @@ export class AuthService {
   createToken(
     user: User,
     identifier: string,
-    validUntil: TimestampMillis | undefined,
-  ): [Omit<AuthToken, 'id' | 'createdAt'>, string] {
+    userDefinedValidUntil: TimestampMillis | undefined,
+  ): [Omit<PublicAuthToken, 'id' | 'createdAt'>, string] {
     const secret = bufferToBase64Url(randomBytes(64));
     const keyId = bufferToBase64Url(randomBytes(8));
     // More about the choice of SHA-512 in the dev docs
@@ -63,27 +66,23 @@ export class AuthService {
       .createHash('sha512')
       .update(secret)
       .digest('hex');
-    let token;
     // Tokens can only be valid for a maximum of 2 years
     const maximumTokenValidity =
       new Date().getTime() + 2 * 365 * 24 * 60 * 60 * 1000;
-    if (!validUntil || validUntil === 0 || validUntil > maximumTokenValidity) {
-      token = AuthToken.create(
-        keyId,
-        user,
-        identifier,
-        accessTokenHash,
-        new Date(maximumTokenValidity),
-      );
-    } else {
-      token = AuthToken.create(
-        keyId,
-        user,
-        identifier,
-        accessTokenHash,
-        new Date(validUntil),
-      );
-    }
+    const isTokenLimitedToMaximumValidity =
+      !userDefinedValidUntil ||
+      userDefinedValidUntil === 0 ||
+      userDefinedValidUntil > maximumTokenValidity;
+    const validUntil = isTokenLimitedToMaximumValidity
+      ? maximumTokenValidity
+      : userDefinedValidUntil;
+    const token = PublicAuthToken.create(
+      keyId,
+      user,
+      identifier,
+      accessTokenHash,
+      new Date(validUntil),
+    );
     return [token, secret];
   }
 
@@ -91,10 +90,10 @@ export class AuthService {
     user: User,
     identifier: string,
     validUntil: TimestampMillis | undefined,
-  ): Promise<AuthTokenWithSecretDto> {
-    user.authTokens = this.getTokensByUser(user);
+  ): Promise<PublicAuthTokenWithSecretDto> {
+    user.publicAuthTokens = this.getTokensByUser(user);
 
-    if ((await user.authTokens).length >= 200) {
+    if ((await user.publicAuthTokens).length >= 200) {
       // This is a very high ceiling unlikely to hinder legitimate usage,
       // but should prevent possible attack vectors
       throw new TooManyTokensError(
@@ -104,7 +103,7 @@ export class AuthService {
     const [token, secret] = this.createToken(user, identifier, validUntil);
     const createdToken = (await this.authTokenRepository.save(
       token,
-    )) as AuthToken;
+    )) as PublicAuthToken;
     return this.toAuthTokenWithSecretDto(
       createdToken,
       `${AUTH_TOKEN_PREFIX}.${createdToken.keyId}.${secret}`,
@@ -122,7 +121,7 @@ export class AuthService {
     await this.authTokenRepository.save(token);
   }
 
-  async getAuthToken(keyId: string): Promise<AuthToken> {
+  async getAuthToken(keyId: string): Promise<PublicAuthToken> {
     const token = await this.authTokenRepository.findOne({
       where: { keyId: keyId },
       relations: ['user'],
@@ -133,11 +132,11 @@ export class AuthService {
     return token;
   }
 
-  checkToken(secret: string, token: AuthToken): void {
+  checkToken(secret: string, token: PublicAuthToken): void {
     const userHash = Buffer.from(
       crypto.createHash('sha512').update(secret).digest('hex'),
     );
-    const dbHash = Buffer.from(token.accessTokenHash);
+    const dbHash = Buffer.from(token.hash);
     if (
       // Normally, both hashes have the same length, as they are both SHA512
       // This is only defense-in-depth, as timingSafeEqual throws if the buffers are not of the same length
@@ -159,7 +158,7 @@ export class AuthService {
     }
   }
 
-  async getTokensByUser(user: User): Promise<AuthToken[]> {
+  async getTokensByUser(user: User): Promise<PublicAuthToken[]> {
     const tokens = await this.authTokenRepository.find({
       where: { user: { id: user.id } },
     });
@@ -179,8 +178,8 @@ export class AuthService {
     await this.authTokenRepository.remove(token);
   }
 
-  toAuthTokenDto(authToken: AuthToken): AuthTokenDto {
-    const tokenDto: AuthTokenDto = {
+  toAuthTokenDto(authToken: PublicAuthToken): PublicAuthTokenDto {
+    const tokenDto: PublicAuthTokenDto = {
       label: authToken.label,
       keyId: authToken.keyId,
       createdAt: authToken.createdAt,
@@ -196,9 +195,9 @@ export class AuthService {
   }
 
   toAuthTokenWithSecretDto(
-    authToken: AuthToken,
+    authToken: PublicAuthToken,
     secret: string,
-  ): AuthTokenWithSecretDto {
+  ): PublicAuthTokenWithSecretDto {
     const tokenDto = this.toAuthTokenDto(authToken);
     return {
       ...tokenDto,
@@ -220,7 +219,7 @@ export class AuthService {
 
   async removeInvalidTokens(): Promise<void> {
     const currentTime = new Date().getTime();
-    const tokens: AuthToken[] = await this.authTokenRepository.find();
+    const tokens: PublicAuthToken[] = await this.authTokenRepository.find();
     let removedTokens = 0;
     for (const token of tokens) {
       if (token.validUntil && token.validUntil.getTime() <= currentTime) {

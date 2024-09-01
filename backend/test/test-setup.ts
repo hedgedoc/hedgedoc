@@ -14,11 +14,6 @@ import { Connection, createConnection } from 'typeorm';
 import { PrivateApiModule } from '../src/api/private/private-api.module';
 import { PublicApiModule } from '../src/api/public/public-api.module';
 import { setupApp } from '../src/app-init';
-import { AuthTokenWithSecretDto } from '../src/auth/auth-token.dto';
-import { AuthModule } from '../src/auth/auth.module';
-import { AuthService } from '../src/auth/auth.service';
-import { MockAuthGuard } from '../src/auth/mock-auth.guard';
-import { TokenAuthGuard } from '../src/auth/token.strategy';
 import { AuthorsModule } from '../src/authors/authors.module';
 import { AppConfig } from '../src/config/app.config';
 import { AuthConfig } from '../src/config/auth.config';
@@ -75,6 +70,11 @@ import { NotesModule } from '../src/notes/notes.module';
 import { NotesService } from '../src/notes/notes.service';
 import { PermissionsModule } from '../src/permissions/permissions.module';
 import { PermissionsService } from '../src/permissions/permissions.service';
+import { MockPublicAuthTokenGuard } from '../src/public-auth-token/mock-public-auth-token-guard.service';
+import { PublicAuthTokenWithSecretDto } from '../src/public-auth-token/public-auth-token.dto';
+import { PublicAuthTokenModule } from '../src/public-auth-token/public-auth-token.module';
+import { PublicAuthTokenService } from '../src/public-auth-token/public-auth-token.service';
+import { PublicAuthTokenGuard } from '../src/public-auth-token/public-auth-token.strategy';
 import { RevisionsModule } from '../src/revisions/revisions.module';
 import { RevisionsService } from '../src/revisions/revisions.service';
 import { SessionModule } from '../src/sessions/session.module';
@@ -105,12 +105,12 @@ export class TestSetup {
   mediaService: MediaService;
   historyService: HistoryService;
   aliasService: AliasService;
-  authService: AuthService;
+  publicAuthTokenService: PublicAuthTokenService;
   sessionService: SessionService;
   revisionsService: RevisionsService;
 
   users: User[] = [];
-  authTokens: AuthTokenWithSecretDto[] = [];
+  authTokens: PublicAuthTokenWithSecretDto[] = [];
   anonymousNotes: Note[] = [];
   ownedNotes: Note[] = [];
   permissionsService: PermissionsService;
@@ -288,7 +288,7 @@ export class TestSetupBuilder {
         GroupsModule,
         LoggerModule,
         MediaModule,
-        AuthModule,
+        PublicAuthTokenModule,
         FrontendConfigModule,
         IdentityModule,
         SessionModule,
@@ -332,8 +332,10 @@ export class TestSetupBuilder {
       this.testSetup.moduleRef.get<HistoryService>(HistoryService);
     this.testSetup.aliasService =
       this.testSetup.moduleRef.get<AliasService>(AliasService);
-    this.testSetup.authService =
-      this.testSetup.moduleRef.get<AuthService>(AuthService);
+    this.testSetup.publicAuthTokenService =
+      this.testSetup.moduleRef.get<PublicAuthTokenService>(
+        PublicAuthTokenService,
+      );
     this.testSetup.permissionsService =
       this.testSetup.moduleRef.get<PermissionsService>(PermissionsService);
     this.testSetup.sessionService =
@@ -363,8 +365,8 @@ export class TestSetupBuilder {
   public withMockAuth() {
     this.setupPreCompile.push(async () => {
       this.testingModuleBuilder
-        .overrideGuard(TokenAuthGuard)
-        .useClass(MockAuthGuard);
+        .overrideGuard(PublicAuthTokenGuard)
+        .useClass(MockPublicAuthTokenGuard);
       return await Promise.resolve();
     });
     return this;
@@ -403,7 +405,7 @@ export class TestSetupBuilder {
       // create auth tokens
       this.testSetup.authTokens = await Promise.all(
         this.testSetup.users.map(async (user) => {
-          return await this.testSetup.authService.addToken(
+          return await this.testSetup.publicAuthTokenService.addToken(
             user,
             'test',
             new Date().getTime() + 60 * 60 * 1000,

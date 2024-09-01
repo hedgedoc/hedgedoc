@@ -25,7 +25,6 @@ import {
 } from '@nestjs/swagger';
 import { Response } from 'express';
 
-import { TokenAuthGuard } from '../../../auth/token.strategy';
 import { PermissionError } from '../../../errors/errors';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
@@ -36,13 +35,14 @@ import { PermissionsGuard } from '../../../permissions/permissions.guard';
 import { PermissionsService } from '../../../permissions/permissions.service';
 import { RequirePermission } from '../../../permissions/require-permission.decorator';
 import { RequiredPermission } from '../../../permissions/required-permission.enum';
+import { PublicAuthTokenGuard } from '../../../public-auth-token/public-auth-token.strategy';
 import { User } from '../../../users/user.entity';
 import { NoteHeaderInterceptor } from '../../utils/note-header.interceptor';
 import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestNote } from '../../utils/request-note.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
-@UseGuards(TokenAuthGuard)
+@UseGuards(PublicAuthTokenGuard)
 @OpenApi(401)
 @ApiTags('media')
 @ApiSecurity('token')

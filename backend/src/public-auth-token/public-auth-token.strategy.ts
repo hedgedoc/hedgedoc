@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,14 +9,17 @@ import { Strategy } from 'passport-http-bearer';
 
 import { NotInDBError, TokenNotValidError } from '../errors/errors';
 import { User } from '../users/user.entity';
-import { AuthService } from './auth.service';
+import { PublicAuthTokenService } from './public-auth-token.service';
 
 @Injectable()
-export class TokenAuthGuard extends AuthGuard('token') {}
+export class PublicAuthTokenGuard extends AuthGuard('token') {}
 
 @Injectable()
-export class TokenStrategy extends PassportStrategy(Strategy, 'token') {
-  constructor(private authService: AuthService) {
+export class PublicAuthTokenStrategy extends PassportStrategy(
+  Strategy,
+  'token',
+) {
+  constructor(private authService: PublicAuthTokenService) {
     super();
   }
 
