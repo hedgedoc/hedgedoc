@@ -847,7 +847,7 @@ const anchorForId = id => {
   const anchor = document.createElement('a')
   anchor.ariaHidden = 'true'
   anchor.className = 'anchor hidden-xs'
-  anchor.href = `${document.location.origin}${document.location.pathname}#${id}`
+  anchor.href = new URL(`#${id}`, document.location).toString()
   anchor.innerHTML = '<i class="fa fa-link"></i>'
   anchor.title = id
   return anchor
