@@ -19,9 +19,9 @@
     "test:e2e:open": "cypress open",
     "test:e2e": "cypress run --browser chrome",
     "test:e2e:ci": "cypress run --browser chrome --record true --parallel --group \"chrome\"",
-    "test:watch": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" NODE_ENV=test jest --watch",
-    "test:ci": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" NODE_ENV=test jest --coverage",
-    "test": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" NODE_ENV=test jest"
+    "test:watch": "cross-env NODE_OPTIONS=\"${NODE_OPTIONS:-} --experimental-vm-modules\" NODE_ENV=test jest --watch",
+    "test:ci": "cross-env NODE_OPTIONS=\"${NODE_OPTIONS:-} --experimental-vm-modules\" NODE_ENV=test jest --coverage",
+    "test": "cross-env NODE_OPTIONS=\"${NODE_OPTIONS:-} --experimental-vm-modules\" NODE_ENV=test jest"
   },
   "browserslist": [
     "Chrome 118",
@@ -169,5 +169,5 @@
     "typescript": "5.5.4",
     "user-agent-data-types": "0.4.2"
   },
-  "packageManager": "yarn@4.1.1"
+  "packageManager": "yarn@4.4.1"
 }
