@@ -19,6 +19,7 @@ module.exports = {
       schema: [],
     },
     create: function (context) {
+      const sourceCode = context.sourceCode ?? context.getSourceCode();
       return {
         CallExpression: function (node) {
           if (
@@ -31,7 +32,9 @@ module.exports = {
           ) {
             const usedContext = node.arguments[1].value;
             let correctContext = 'undefined';
-            const ancestors = context.getAncestors();
+            const ancestors = sourceCode.getAncestors
+              ? sourceCode.getAncestors(node)
+              : context.getAncestors();
             for (let index = ancestors.length - 1; index >= 0; index--) {
               if (ancestors[index].type === 'MethodDefinition') {
                 correctContext = ancestors[index].key.name;
@@ -45,7 +48,7 @@ module.exports = {
                 fix: function (fixer) {
                   return fixer.replaceText(
                     node.arguments[1],
-                    `'${correctContext}'`
+                    `'${correctContext}'`,
                   );
                 },
               });
@@ -74,7 +77,7 @@ module.exports = {
               fix: function (fixer) {
                 return fixer.replaceText(
                   node.parent,
-                  `{ id: ${node.parent.arguments[0].name}.id }`
+                  `{ id: ${node.parent.arguments[0].name}.id }`,
                 );
               },
             });
