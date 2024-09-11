@@ -167,15 +167,15 @@ Here is an example config snippet for [Apache][apache]:
       RewriteCond %{HTTP:Upgrade} =websocket             [NC]
       RewriteRule /(.*)  ws://127.0.0.1:3000/$1          [P,L]
     
-      ProxyPass /api http://127.0.0.1:3000/
-      ProxyPass /apidoc http://127.0.0.1:3000/
-      ProxyPass /public http://127.0.0.1:3000/
-      ProxyPass /realtime http://127.0.0.1:3000/
+      ProxyPass /api http://127.0.0.1:3000/api
+      ProxyPass /apidoc http://127.0.0.1:3000/apidoc
+      ProxyPass /public http://127.0.0.1:3000/public
+      ProxyPass /realtime http://127.0.0.1:3000/realtime
       
-      ProxyPassReverse /api http://127.0.0.1:3000/
-      ProxyPassReverse /apidoc http://127.0.0.1:3000/
-      ProxyPassReverse /public http://127.0.0.1:3000/
-      ProxyPassReverse /realtime http://127.0.0.1:3000/
+      ProxyPassReverse /api http://127.0.0.1:3000/api
+      ProxyPassReverse /apidoc http://127.0.0.1:3000/apidoc
+      ProxyPassReverse /public http://127.0.0.1:3000/public
+      ProxyPassReverse /realtime http://127.0.0.1:3000/realtime
       
       ProxyPass / http://127.0.0.1:3001/
       ProxyPassReverse / http://127.0.0.1:3001/
