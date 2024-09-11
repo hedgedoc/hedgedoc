@@ -25,7 +25,7 @@
     "aws-sdk": "2.1687.0",
     "azure-storage": "2.10.7",
     "base64url": "3.0.1",
-    "body-parser": "1.20.2",
+    "body-parser": "1.20.3",
     "chance": "1.1.12",
     "cheerio": "0.22.0",
     "clean-webpack-plugin": "4.0.0",
