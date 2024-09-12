@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import * as MinioModule from 'minio';
-import { Client, ClientOptions, UploadedObjectInfo } from 'minio';
+import { Client, ClientOptions } from 'minio';
 import { Mock } from 'ts-mockery';
 
 import { MediaConfig } from '../../config/media.config';
@@ -139,7 +139,10 @@ describe('s3 backend', () => {
       const saveSpy = jest
         .spyOn(mockedClient, 'putObject')
         .mockImplementation(() =>
-          Promise.resolve(Mock.of<UploadedObjectInfo>({})),
+          Promise.resolve({
+            etag: 'mock',
+            versionId: 'mock',
+          }),
         );
 
       const sut = new S3Backend(mockedLoggerService, mediaConfig);

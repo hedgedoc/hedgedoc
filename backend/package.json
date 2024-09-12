@@ -42,7 +42,6 @@
     "@node-rs/argon2": "1.8.3",
     "@types/bcrypt": "5.0.2",
     "@types/cron": "2.4.0",
-    "@types/minio": "7.1.0",
     "@types/node-fetch": "2.6.11",
     "@types/passport-http-bearer": "1.0.41",
     "@zxcvbn-ts/core": "3.0.4",
