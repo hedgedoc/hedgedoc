@@ -2522,7 +2522,6 @@ __metadata:
     "@types/express-session": "npm:1.18.0"
     "@types/jest": "npm:29.5.12"
     "@types/markdown-it": "npm:13.0.7"
-    "@types/minio": "npm:7.1.0"
     "@types/mysql": "npm:2.15.25"
     "@types/node": "npm:20.16.2"
     "@types/node-fetch": "npm:2.6.11"
@@ -5280,15 +5279,6 @@ __metadata:
   version: 1.3.5
   resolution: "@types/mime@npm:1.3.5"
   checksum: 10c0/c2ee31cd9b993804df33a694d5aa3fa536511a49f2e06eeab0b484fef59b4483777dbb9e42a4198a0809ffbf698081fdbca1e5c2218b82b91603dfab10a10fbc
-  languageName: node
-  linkType: hard
-
-"@types/minio@npm:7.1.0":
-  version: 7.1.0
-  resolution: "@types/minio@npm:7.1.0"
-  dependencies:
-    "@types/node": "npm:*"
-  checksum: 10c0/6399d6886564918528b19470317bde1551554e4ce3cc430712006f518585ca07dc80b4e1ab8d5da00ee4026983c6bb231a1eada92950c989f05cfb0a5ef6df0f
   languageName: node
   linkType: hard
 
