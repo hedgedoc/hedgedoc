@@ -2531,6 +2531,7 @@ __metadata:
     "@types/pg": "npm:8.11.0"
     "@types/source-map-support": "npm:0.5.10"
     "@types/supertest": "npm:2.0.16"
+    "@types/uuid": "npm:9.0.8"
     "@types/ws": "npm:8.5.10"
     "@typescript-eslint/eslint-plugin": "npm:6.21.0"
     "@typescript-eslint/parser": "npm:6.21.0"
@@ -2581,6 +2582,7 @@ __metadata:
     tsconfig-paths: "npm:4.2.0"
     typeorm: "npm:0.3.20"
     typescript: "npm:5.5.4"
+    uuid: "npm:10.0.0"
     ws: "npm:8.17.1"
     yjs: "npm:13.6.18"
   languageName: unknown

@@ -76,6 +76,7 @@
     "rxjs": "7.8.1",
     "sqlite3": "5.1.7",
     "typeorm": "0.3.20",
+    "uuid": "10.0.0",
     "ws": "8.17.1",
     "yjs": "13.6.18"
   },
@@ -100,6 +101,7 @@
     "@types/pg": "8.11.0",
     "@types/source-map-support": "0.5.10",
     "@types/supertest": "2.0.16",
+    "@types/uuid": "9.0.8",
     "@types/ws": "8.5.10",
     "@typescript-eslint/eslint-plugin": "6.21.0",
     "@typescript-eslint/parser": "6.21.0",
