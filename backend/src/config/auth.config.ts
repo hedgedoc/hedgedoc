@@ -43,6 +43,7 @@ export interface OidcConfig extends InternalIdentifier {
   authorizeUrl?: string;
   tokenUrl?: string;
   userinfoUrl?: string;
+  endSessionUrl?: string;
   scope: string;
   userNameField: string;
   userIdField: string;
@@ -139,6 +140,7 @@ const authSchema = Joi.object({
         authorizeUrl: Joi.string().optional(),
         tokenUrl: Joi.string().optional(),
         userinfoUrl: Joi.string().optional(),
+        endSessionUrl: Joi.string().optional(),
         scope: Joi.string().default('openid profile email').optional(),
         userIdField: Joi.string().default('sub').optional(),
         userNameField: Joi.string().default('preferred_username').optional(),
@@ -206,6 +208,7 @@ export default registerAs('authConfig', () => {
     authorizeUrl: process.env[`HD_AUTH_OIDC_${oidcName}_AUTHORIZE_URL`],
     tokenUrl: process.env[`HD_AUTH_OIDC_${oidcName}_TOKEN_URL`],
     userinfoUrl: process.env[`HD_AUTH_OIDC_${oidcName}_USERINFO_URL`],
+    endSessionUrl: process.env[`HD_AUTH_OIDC_${oidcName}_END_SESSION_URL`],
     scope: process.env[`HD_AUTH_OIDC_${oidcName}_SCOPE`],
     userIdField: process.env[`HD_AUTH_OIDC_${oidcName}_USER_ID_FIELD`],
     userNameField: process.env[`HD_AUTH_OIDC_${oidcName}_USER_NAME_FIELD`],
