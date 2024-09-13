@@ -81,6 +81,10 @@ export function replaceAuthErrorsWithEnvironmentVariables(
       '.profilePictureField',
       '_PROFILE_PICTURE_FIELD',
     );
+    newMessage = newMessage.replace('.authorizeUrl', '_AUTHORIZE_URL');
+    newMessage = newMessage.replace('.tokenUrl', '_TOKEN_URL');
+    newMessage = newMessage.replace('.userinfoUrl', '_USERINFO_URL');
+    newMessage = newMessage.replace('.scope', '_SCOPE');
     newMessage = newMessage.replace('.tlsCaCerts', '_TLS_CERT_PATHS');
     newMessage = newMessage.replace('.issuer', '_ISSUER');
     newMessage = newMessage.replace('.theme', '_THEME');
