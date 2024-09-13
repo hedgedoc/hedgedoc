@@ -72,7 +72,7 @@ export class LdapService {
         tlsOptions: {
           ca: ldapConfig.tlsCaCerts,
         },
-      });
+      } as LdapAuth.Options);
 
       auth.once('error', (error: string | Error) => {
         const exception = this.getLdapException(username, error);
