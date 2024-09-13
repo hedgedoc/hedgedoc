@@ -5,6 +5,7 @@
  */
 import { DataSource } from 'typeorm';
 
+import { ApiToken } from './api-token/api-token.entity';
 import { Author } from './authors/author.entity';
 import { Group } from './groups/group.entity';
 import { HistoryEntry } from './history/history-entry.entity';
@@ -16,7 +17,6 @@ import { Note } from './notes/note.entity';
 import { Tag } from './notes/tag.entity';
 import { NoteGroupPermission } from './permissions/note-group-permission.entity';
 import { NoteUserPermission } from './permissions/note-user-permission.entity';
-import { PublicAuthToken } from './public-auth-token/public-auth-token.entity';
 import { Edit } from './revisions/edit.entity';
 import { Revision } from './revisions/revision.entity';
 import { Session } from './sessions/session.entity';
@@ -40,7 +40,7 @@ const dataSource = new DataSource({
     HistoryEntry,
     MediaUpload,
     Tag,
-    PublicAuthToken,
+    ApiToken,
     Identity,
     Author,
     Session,

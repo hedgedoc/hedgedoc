@@ -5,6 +5,7 @@
  */
 import { Module } from '@nestjs/common';
 
+import { ApiTokenModule } from '../../api-token/api-token.module';
 import { GroupsModule } from '../../groups/groups.module';
 import { HistoryModule } from '../../history/history.module';
 import { LoggerModule } from '../../logger/logger.module';
@@ -22,6 +23,7 @@ import { NotesController } from './notes/notes.controller';
 
 @Module({
   imports: [
+    ApiTokenModule,
     GroupsModule,
     UsersModule,
     HistoryModule,

@@ -1,9 +1,17 @@
+/*
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Init1726084117959 implements MigrationInterface {
-  name = 'Init1726084117959';
+export class Init1726271794336 implements MigrationInterface {
+  name = 'Init1726271794336';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(
+      `CREATE TABLE "api_token" ("id" SERIAL NOT NULL, "keyId" character varying NOT NULL, "label" character varying NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "hash" character varying NOT NULL, "validUntil" TIMESTAMP NOT NULL, "lastUsedAt" date, "userId" integer, CONSTRAINT "UQ_3e254e2eb542a65da7c405d0683" UNIQUE ("keyId"), CONSTRAINT "UQ_60221392192b32c7560c128a6fa" UNIQUE ("hash"), CONSTRAINT "PK_d862311c568d175c26f41bc6f98" PRIMARY KEY ("id"))`,
+    );
     await queryRunner.query(
       `CREATE TABLE "history_entry" ("id" SERIAL NOT NULL, "pinStatus" boolean NOT NULL, "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "userId" integer, "noteId" integer, CONSTRAINT "PK_b65bd95b0d2929668589d57b97a" PRIMARY KEY ("id"))`,
     );
@@ -12,6 +20,9 @@ export class Init1726084117959 implements MigrationInterface {
     );
     await queryRunner.query(
       `CREATE TABLE "media_upload" ("uuid" character varying NOT NULL, "fileName" character varying NOT NULL, "backendType" character varying NOT NULL, "backendData" text, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "noteId" integer, "userId" integer, CONSTRAINT "PK_573c2a4f2a8f8382f2a8758444e" PRIMARY KEY ("uuid"))`,
+    );
+    await queryRunner.query(
+      `CREATE TABLE "group" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "displayName" character varying NOT NULL, "special" boolean NOT NULL, CONSTRAINT "UQ_8a45300fd825918f3b40195fbdc" UNIQUE ("name"), CONSTRAINT "PK_256aa0fda9b1de1a73ee0b7106b" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `CREATE TABLE "note_group_permission" ("id" SERIAL NOT NULL, "canEdit" boolean NOT NULL, "groupId" integer, "noteId" integer, CONSTRAINT "PK_6327989190949e6a55d02a080c3" PRIMARY KEY ("id"))`,
@@ -50,16 +61,19 @@ export class Init1726084117959 implements MigrationInterface {
       `CREATE TABLE "author" ("id" SERIAL NOT NULL, "color" integer NOT NULL, "userId" integer, CONSTRAINT "PK_5a0e79799d372fe56f2f3fa6871" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "identity" ("id" SERIAL NOT NULL, "providerType" character varying NOT NULL, "providerIdentifier" text, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "providerUserId" text, "passwordHash" text, "userId" integer, CONSTRAINT "PK_ff16a44186b286d5e626178f726" PRIMARY KEY ("id"))`,
-    );
-    await queryRunner.query(
-      `CREATE TABLE "public_auth_token" ("id" SERIAL NOT NULL, "keyId" character varying NOT NULL, "label" character varying NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "hash" character varying NOT NULL, "validUntil" TIMESTAMP NOT NULL, "lastUsedAt" date, "userId" integer, CONSTRAINT "UQ_b4c4b9179f72ef63c32248e83ab" UNIQUE ("keyId"), CONSTRAINT "UQ_6450514886fa4182c889c076df6" UNIQUE ("hash"), CONSTRAINT "PK_1bdb7c2d237fb02d84fa75f48a5" PRIMARY KEY ("id"))`,
-    );
-    await queryRunner.query(
       `CREATE TABLE "user" ("id" SERIAL NOT NULL, "username" character varying NOT NULL, "displayName" character varying NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "photo" text, "email" text, CONSTRAINT "UQ_78a916df40e02a9deb1c4b75edb" UNIQUE ("username"), CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "group" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "displayName" character varying NOT NULL, "special" boolean NOT NULL, CONSTRAINT "UQ_8a45300fd825918f3b40195fbdc" UNIQUE ("name"), CONSTRAINT "PK_256aa0fda9b1de1a73ee0b7106b" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "identity" ("id" SERIAL NOT NULL, "providerType" character varying NOT NULL, "providerIdentifier" text, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "providerUserId" text, "passwordHash" text, "userId" integer, CONSTRAINT "PK_ff16a44186b286d5e626178f726" PRIMARY KEY ("id"))`,
+    );
+    await queryRunner.query(
+      `CREATE TABLE "group_members_user" ("groupId" integer NOT NULL, "userId" integer NOT NULL, CONSTRAINT "PK_7170c9a27e7b823d391d9e11f2e" PRIMARY KEY ("groupId", "userId"))`,
+    );
+    await queryRunner.query(
+      `CREATE INDEX "IDX_bfa303089d367a2e3c02b002b8" ON "group_members_user" ("groupId") `,
+    );
+    await queryRunner.query(
+      `CREATE INDEX "IDX_427107c650638bcb2f1e167d2e" ON "group_members_user" ("userId") `,
     );
     await queryRunner.query(
       `CREATE TABLE "revision_tags_tag" ("revisionId" integer NOT NULL, "tagId" integer NOT NULL, CONSTRAINT "PK_006354d3ecad6cb1e606320647b" PRIMARY KEY ("revisionId", "tagId"))`,
@@ -80,13 +94,7 @@ export class Init1726084117959 implements MigrationInterface {
       `CREATE INDEX "IDX_470886feb50e30114e39c42698" ON "revision_edits_edit" ("editId") `,
     );
     await queryRunner.query(
-      `CREATE TABLE "group_members_user" ("groupId" integer NOT NULL, "userId" integer NOT NULL, CONSTRAINT "PK_7170c9a27e7b823d391d9e11f2e" PRIMARY KEY ("groupId", "userId"))`,
-    );
-    await queryRunner.query(
-      `CREATE INDEX "IDX_bfa303089d367a2e3c02b002b8" ON "group_members_user" ("groupId") `,
-    );
-    await queryRunner.query(
-      `CREATE INDEX "IDX_427107c650638bcb2f1e167d2e" ON "group_members_user" ("userId") `,
+      `ALTER TABLE "api_token" ADD CONSTRAINT "FK_cbfc4e2b85b78207afb0b2d7fbc" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `ALTER TABLE "history_entry" ADD CONSTRAINT "FK_42b8ae461cb58747a24340e6c64" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
@@ -134,7 +142,10 @@ export class Init1726084117959 implements MigrationInterface {
       `ALTER TABLE "identity" ADD CONSTRAINT "FK_12915039d2868ab654567bf5181" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
-      `ALTER TABLE "public_auth_token" ADD CONSTRAINT "FK_b7b4f28eb8b4a0fc443448b9054" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
+      `ALTER TABLE "group_members_user" ADD CONSTRAINT "FK_bfa303089d367a2e3c02b002b8f" FOREIGN KEY ("groupId") REFERENCES "group"("id") ON DELETE CASCADE ON UPDATE CASCADE`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "group_members_user" ADD CONSTRAINT "FK_427107c650638bcb2f1e167d2e5" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `ALTER TABLE "revision_tags_tag" ADD CONSTRAINT "FK_3382f45eefeb40f91e45cfd4180" FOREIGN KEY ("revisionId") REFERENCES "revision"("id") ON DELETE CASCADE ON UPDATE CASCADE`,
@@ -148,21 +159,9 @@ export class Init1726084117959 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE "revision_edits_edit" ADD CONSTRAINT "FK_470886feb50e30114e39c426987" FOREIGN KEY ("editId") REFERENCES "edit"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
-    await queryRunner.query(
-      `ALTER TABLE "group_members_user" ADD CONSTRAINT "FK_bfa303089d367a2e3c02b002b8f" FOREIGN KEY ("groupId") REFERENCES "group"("id") ON DELETE CASCADE ON UPDATE CASCADE`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "group_members_user" ADD CONSTRAINT "FK_427107c650638bcb2f1e167d2e5" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
-    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `ALTER TABLE "group_members_user" DROP CONSTRAINT "FK_427107c650638bcb2f1e167d2e5"`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "group_members_user" DROP CONSTRAINT "FK_bfa303089d367a2e3c02b002b8f"`,
-    );
     await queryRunner.query(
       `ALTER TABLE "revision_edits_edit" DROP CONSTRAINT "FK_470886feb50e30114e39c426987"`,
     );
@@ -176,7 +175,10 @@ export class Init1726084117959 implements MigrationInterface {
       `ALTER TABLE "revision_tags_tag" DROP CONSTRAINT "FK_3382f45eefeb40f91e45cfd4180"`,
     );
     await queryRunner.query(
-      `ALTER TABLE "public_auth_token" DROP CONSTRAINT "FK_b7b4f28eb8b4a0fc443448b9054"`,
+      `ALTER TABLE "group_members_user" DROP CONSTRAINT "FK_427107c650638bcb2f1e167d2e5"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "group_members_user" DROP CONSTRAINT "FK_bfa303089d367a2e3c02b002b8f"`,
     );
     await queryRunner.query(
       `ALTER TABLE "identity" DROP CONSTRAINT "FK_12915039d2868ab654567bf5181"`,
@@ -224,12 +226,8 @@ export class Init1726084117959 implements MigrationInterface {
       `ALTER TABLE "history_entry" DROP CONSTRAINT "FK_42b8ae461cb58747a24340e6c64"`,
     );
     await queryRunner.query(
-      `DROP INDEX "public"."IDX_427107c650638bcb2f1e167d2e"`,
+      `ALTER TABLE "api_token" DROP CONSTRAINT "FK_cbfc4e2b85b78207afb0b2d7fbc"`,
     );
-    await queryRunner.query(
-      `DROP INDEX "public"."IDX_bfa303089d367a2e3c02b002b8"`,
-    );
-    await queryRunner.query(`DROP TABLE "group_members_user"`);
     await queryRunner.query(
       `DROP INDEX "public"."IDX_470886feb50e30114e39c42698"`,
     );
@@ -244,10 +242,15 @@ export class Init1726084117959 implements MigrationInterface {
       `DROP INDEX "public"."IDX_3382f45eefeb40f91e45cfd418"`,
     );
     await queryRunner.query(`DROP TABLE "revision_tags_tag"`);
-    await queryRunner.query(`DROP TABLE "group"`);
-    await queryRunner.query(`DROP TABLE "user"`);
-    await queryRunner.query(`DROP TABLE "public_auth_token"`);
+    await queryRunner.query(
+      `DROP INDEX "public"."IDX_427107c650638bcb2f1e167d2e"`,
+    );
+    await queryRunner.query(
+      `DROP INDEX "public"."IDX_bfa303089d367a2e3c02b002b8"`,
+    );
+    await queryRunner.query(`DROP TABLE "group_members_user"`);
     await queryRunner.query(`DROP TABLE "identity"`);
+    await queryRunner.query(`DROP TABLE "user"`);
     await queryRunner.query(`DROP TABLE "author"`);
     await queryRunner.query(
       `DROP INDEX "public"."IDX_28c5d1d16da7908c97c9bc2f74"`,
@@ -266,10 +269,12 @@ export class Init1726084117959 implements MigrationInterface {
       `DROP INDEX "public"."IDX_ee1744842a9ef3ffbc05a7016a"`,
     );
     await queryRunner.query(`DROP TABLE "note_group_permission"`);
+    await queryRunner.query(`DROP TABLE "group"`);
     await queryRunner.query(`DROP TABLE "media_upload"`);
     await queryRunner.query(
       `DROP INDEX "public"."IDX_928dd947355b0837366470a916"`,
     );
     await queryRunner.query(`DROP TABLE "history_entry"`);
+    await queryRunner.query(`DROP TABLE "api_token"`);
   }
 }

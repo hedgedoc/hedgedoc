@@ -14,14 +14,14 @@ import {
 import { User } from '../users/user.entity';
 
 @Entity()
-export class PublicAuthToken {
+export class ApiToken {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ unique: true })
   keyId: string;
 
-  @ManyToOne((_) => User, (user) => user.publicAuthTokens, {
+  @ManyToOne((_) => User, (user) => user.apiTokens, {
     onDelete: 'CASCADE', // This deletes the PublicAuthToken, when the associated User is deleted
   })
   user: Promise<User>;
@@ -50,8 +50,8 @@ export class PublicAuthToken {
     label: string,
     tokenString: string,
     validUntil: Date,
-  ): Omit<PublicAuthToken, 'id' | 'createdAt'> {
-    const token = new PublicAuthToken();
+  ): Omit<ApiToken, 'id' | 'createdAt'> {
+    const token = new ApiToken();
     token.keyId = keyId;
     token.user = Promise.resolve(user);
     token.label = label;

@@ -15,14 +15,14 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
+import {
+  ApiTokenCreateDto,
+  ApiTokenDto,
+  ApiTokenWithSecretDto,
+} from '../../../api-token/api-token.dto';
+import { ApiTokenService } from '../../../api-token/api-token.service';
 import { SessionGuard } from '../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import {
-  PublicAuthTokenCreateDto,
-  PublicAuthTokenDto,
-  PublicAuthTokenWithSecretDto,
-} from '../../../public-auth-token/public-auth-token.dto';
-import { PublicAuthTokenService } from '../../../public-auth-token/public-auth-token.service';
 import { User } from '../../../users/user.entity';
 import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
@@ -31,19 +31,17 @@ import { RequestUser } from '../../utils/request-user.decorator';
 @OpenApi(401)
 @ApiTags('tokens')
 @Controller('tokens')
-export class PublicAuthTokensController {
+export class ApiTokensController {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    private publicAuthTokenService: PublicAuthTokenService,
+    private publicAuthTokenService: ApiTokenService,
   ) {
-    this.logger.setContext(PublicAuthTokensController.name);
+    this.logger.setContext(ApiTokensController.name);
   }
 
   @Get()
   @OpenApi(200)
-  async getUserTokens(
-    @RequestUser() user: User,
-  ): Promise<PublicAuthTokenDto[]> {
+  async getUserTokens(@RequestUser() user: User): Promise<ApiTokenDto[]> {
     return (await this.publicAuthTokenService.getTokensByUser(user)).map(
       (token) => this.publicAuthTokenService.toAuthTokenDto(token),
     );
@@ -52,9 +50,9 @@ export class PublicAuthTokensController {
   @Post()
   @OpenApi(201)
   async postTokenRequest(
-    @Body() createDto: PublicAuthTokenCreateDto,
+    @Body() createDto: ApiTokenCreateDto,
     @RequestUser() user: User,
-  ): Promise<PublicAuthTokenWithSecretDto> {
+  ): Promise<ApiTokenWithSecretDto> {
     return await this.publicAuthTokenService.addToken(
       user,
       createDto.label,

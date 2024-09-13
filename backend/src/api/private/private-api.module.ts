@@ -5,6 +5,7 @@
  */
 import { Module } from '@nestjs/common';
 
+import { ApiTokenModule } from '../../api-token/api-token.module';
 import { FrontendConfigModule } from '../../frontend-config/frontend-config.module';
 import { GroupsModule } from '../../groups/groups.module';
 import { HistoryModule } from '../../history/history.module';
@@ -13,7 +14,6 @@ import { LoggerModule } from '../../logger/logger.module';
 import { MediaModule } from '../../media/media.module';
 import { NotesModule } from '../../notes/notes.module';
 import { PermissionsModule } from '../../permissions/permissions.module';
-import { PublicAuthTokenModule } from '../../public-auth-token/public-auth-token.module';
 import { RevisionsModule } from '../../revisions/revisions.module';
 import { UsersModule } from '../../users/users.module';
 import { AliasController } from './alias/alias.controller';
@@ -27,14 +27,14 @@ import { HistoryController } from './me/history/history.controller';
 import { MeController } from './me/me.controller';
 import { MediaController } from './media/media.controller';
 import { NotesController } from './notes/notes.controller';
-import { PublicAuthTokensController } from './tokens/publicAuthTokensController';
+import { ApiTokensController } from './tokens/api-tokens.controller';
 import { UsersController } from './users/users.controller';
 
 @Module({
   imports: [
     LoggerModule,
     UsersModule,
-    PublicAuthTokenModule,
+    ApiTokenModule,
     FrontendConfigModule,
     HistoryModule,
     PermissionsModule,
@@ -45,7 +45,7 @@ import { UsersController } from './users/users.controller';
     GroupsModule,
   ],
   controllers: [
-    PublicAuthTokensController,
+    ApiTokensController,
     ConfigController,
     MediaController,
     HistoryController,
