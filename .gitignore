@@ -34,3 +34,6 @@ frontend/cypress/screenshots
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+
+# Rathole proxy configuration
+rathole.toml
