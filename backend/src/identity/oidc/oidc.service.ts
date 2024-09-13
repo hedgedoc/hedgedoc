@@ -9,7 +9,7 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { Client, generators, Issuer } from 'openid-client';
+import { Client, generators, Issuer, UserinfoResponse } from 'openid-client';
 
 import appConfiguration, { AppConfig } from '../../config/app.config';
 import authConfiguration, {
@@ -178,16 +178,31 @@ export class OidcService {
 
     request.session.oidcIdToken = tokenSet.id_token;
     const userInfoResponse = await client.userinfo(tokenSet);
-    const userId = String(
-      userInfoResponse[oidcConfig.userIdField] || userInfoResponse.sub,
+    const userId = OidcService.getResponseFieldValue(
+      userInfoResponse,
+      oidcConfig.userIdField,
+      userInfoResponse.sub,
     );
-    const username = String(
-      userInfoResponse[oidcConfig.userNameField] ||
-        userInfoResponse[oidcConfig.userIdField],
+    const username = OidcService.getResponseFieldValue(
+      userInfoResponse,
+      oidcConfig.userNameField,
+      userId,
     ).toLowerCase() as Lowercase<string>;
-    const displayName = String(userInfoResponse[oidcConfig.displayNameField]);
-    const email = String(userInfoResponse[oidcConfig.emailField]);
-    const photoUrl = String(userInfoResponse[oidcConfig.profilePictureField]);
+    const displayName = OidcService.getResponseFieldValue(
+      userInfoResponse,
+      oidcConfig.displayNameField,
+      username,
+    );
+    const email = OidcService.getResponseFieldValue(
+      userInfoResponse,
+      oidcConfig.emailField,
+      undefined,
+    );
+    const photoUrl = OidcService.getResponseFieldValue(
+      userInfoResponse,
+      oidcConfig.profilePictureField,
+      undefined,
+    );
     const newUserData = {
       username,
       displayName,
@@ -260,5 +275,21 @@ export class OidcService {
       return null;
     }
     return `${endSessionEndpoint}?post_logout_redirect_uri=${this.appConfig.baseUrl}${idToken ? `&id_token_hint=${idToken}` : ''}`;
+  }
+
+  /**
+   * Returns a specific field from the userinfo object or a default value.
+   *
+   * @param {UserinfoResponse} response The response from the OIDC userinfo endpoint
+   * @param {string} field The field to get from the response
+   * @param {string|undefined} defaultValue The default value to return if the value is empty
+   * @returns {string|undefined} The value of the field from the response or the default value
+   */
+  private static getResponseFieldValue<T extends string | undefined>(
+    response: UserinfoResponse,
+    field: string,
+    defaultValue: T,
+  ): string | T {
+    return response[field] ? String(response[field]) : defaultValue;
   }
 }
