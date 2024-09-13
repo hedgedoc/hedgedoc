@@ -2512,11 +2512,9 @@ __metadata:
     "@node-rs/argon2": "npm:1.8.3"
     "@trivago/prettier-plugin-sort-imports": "npm:4.3.0"
     "@tsconfig/node18": "npm:18.2.4"
-    "@types/bcrypt": "npm:5.0.2"
     "@types/cli-color": "npm:2.0.6"
     "@types/cookie": "npm:0.6.0"
     "@types/cookie-signature": "npm:1.1.2"
-    "@types/cron": "npm:2.4.0"
     "@types/diff": "npm:5.2.2"
     "@types/express": "npm:4.17.21"
     "@types/express-session": "npm:1.18.0"
@@ -4947,15 +4945,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/bcrypt@npm:5.0.2":
-  version: 5.0.2
-  resolution: "@types/bcrypt@npm:5.0.2"
-  dependencies:
-    "@types/node": "npm:*"
-  checksum: 10c0/dd7f05e183b9b1fc08ec499069febf197ab8e9c720766b5bbb5628395082e248f9a444c60882fe7788361fcadc302e21e055ab9c26a300f100e08791c353e6aa
-  languageName: node
-  linkType: hard
-
 "@types/body-parser@npm:*":
   version: 1.19.5
   resolution: "@types/body-parser@npm:1.19.5"
@@ -5021,15 +5010,6 @@ __metadata:
     "@types/keygrip": "npm:*"
     "@types/node": "npm:*"
   checksum: 10c0/ce95c1968532af674185efd4092cbdec8d5d3bda72f729e512bf37fa77877f466ad4bd5f00fca299f94c6e3d2a3875744ae5a705ffc5113183f5e46b76d8846a
-  languageName: node
-  linkType: hard
-
-"@types/cron@npm:2.4.0":
-  version: 2.4.0
-  resolution: "@types/cron@npm:2.4.0"
-  dependencies:
-    cron: "npm:*"
-  checksum: 10c0/a0deb757122deb6b1395ef328e93d98c8ceb5e9fc37dfce0c1afa13122a1f0e070364cef691f08ffd0e2e817e7b6b8c3160832afa91410302b2c6f8304bca262
   languageName: node
   linkType: hard
 
@@ -8031,7 +8011,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cron@npm:*, cron@npm:3.1.7":
+"cron@npm:3.1.7":
   version: 3.1.7
   resolution: "cron@npm:3.1.7"
   dependencies:
