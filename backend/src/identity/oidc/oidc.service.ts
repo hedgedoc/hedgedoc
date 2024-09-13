@@ -89,6 +89,7 @@ export class OidcService {
           authorization_endpoint: oidcConfig.authorizeUrl,
           token_endpoint: oidcConfig.tokenUrl,
           userinfo_endpoint: oidcConfig.userinfoUrl,
+          end_session_endpoint: oidcConfig.endSessionUrl,
           /* eslint-enable @typescript-eslint/naming-convention */
         });
 

@@ -31,6 +31,7 @@ no OIDC (e.g., GitHub or Discord). In this case, you need the following addition
 | `HD_AUTH_OIDC_$NAME_AUTHORIZE_URL`         | -                    | `https://auth.example.com/oauth2/auth`     | The URL to which the user should be redirected to start the OAuth2 flow.                 |
 | `HD_AUTH_OIDC_$NAME_TOKEN_URL`             | -                    | `https://auth.example.com/oauth2/token`    | The URL to which the user should be redirected to exchange the code for an access token. |
 | `HD_AUTH_OIDC_$NAME_USERINFO_URL`          | -                    | `https://auth.example.com/oauth2/userinfo` | The URL to which the user should be redirected to get the user information.              |
+| `HD_AUTH_OIDC_$NAME_END_SESSION_URL`       | -                    | `https://auth.example.com/oauth2/logout`   | The URL to which the user should be redirected to end the session.                       |
 | `HD_AUTH_OIDC_$NAME_SCOPE`                 | -                    | `profile`                                  | The scope that should be requested to get the user information.                          |
 | `HD_AUTH_OIDC_$NAME_USER_ID_FIELD`         | `sub`                | `sub`, `id`                                | The unique identifier that is returned for the user from the OAuth2 provider.            |
 | `HD_AUTH_OIDC_$NAME_USER_ID_FIELD`         | `sub`                | `sub`, `id`                                | The unique identifier that is returned for the user from the OAuth2 provider.            |

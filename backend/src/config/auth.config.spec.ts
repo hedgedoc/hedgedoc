@@ -524,7 +524,7 @@ describe('authConfig', () => {
     });
   });
 
-  describe('odic', () => {
+  describe('oidc', () => {
     const oidcNames = ['gitlab'];
     const providerName = 'Gitlab oAuth2';
     const issuer = 'https://gitlab.example.org';
@@ -534,7 +534,8 @@ describe('authConfig', () => {
     const authorizeUrl = 'https://example.org/auth';
     const tokenUrl = 'https://example.org/token';
     const userinfoUrl = 'https://example.org/user';
-    const scope = 'some scopr';
+    const endSessionUrl = 'https://example.org/end';
+    const scope = 'some scope';
     const defaultScope = 'openid profile email';
     const userIdField = 'login';
     const defaultUserIdField = 'sub';
@@ -556,6 +557,7 @@ describe('authConfig', () => {
       HD_AUTH_OIDC_GITLAB_AUTHORIZE_URL: authorizeUrl,
       HD_AUTH_OIDC_GITLAB_TOKEN_URL: tokenUrl,
       HD_AUTH_OIDC_GITLAB_USERINFO_URL: userinfoUrl,
+      HD_AUTH_OIDC_GITLAB_END_SESSION_URL: endSessionUrl,
       HD_AUTH_OIDC_GITLAB_SCOPE: scope,
       HD_AUTH_OIDC_GITLAB_USER_ID_FIELD: userIdField,
       HD_AUTH_OIDC_GITLAB_USER_NAME_FIELD: userNameField,
@@ -587,6 +589,7 @@ describe('authConfig', () => {
         expect(firstOidc.theme).toEqual(theme);
         expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
         expect(firstOidc.tokenUrl).toEqual(tokenUrl);
+        expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
         expect(firstOidc.userIdField).toEqual(userIdField);
@@ -620,6 +623,7 @@ describe('authConfig', () => {
         expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
         expect(firstOidc.tokenUrl).toEqual(tokenUrl);
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userIdField).toEqual(userIdField);
         expect(firstOidc.userNameField).toEqual(userNameField);
@@ -652,6 +656,7 @@ describe('authConfig', () => {
         expect(firstOidc.authorizeUrl).toBeUndefined();
         expect(firstOidc.tokenUrl).toEqual(tokenUrl);
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userIdField).toEqual(userIdField);
         expect(firstOidc.userNameField).toEqual(userNameField);
@@ -684,6 +689,7 @@ describe('authConfig', () => {
         expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
         expect(firstOidc.tokenUrl).toBeUndefined();
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userIdField).toEqual(userIdField);
         expect(firstOidc.userNameField).toEqual(userNameField);
@@ -716,6 +722,40 @@ describe('authConfig', () => {
         expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
         expect(firstOidc.tokenUrl).toEqual(tokenUrl);
         expect(firstOidc.userinfoUrl).toBeUndefined();
+        expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
+        expect(firstOidc.scope).toEqual(scope);
+        expect(firstOidc.userIdField).toEqual(userIdField);
+        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.displayNameField).toEqual(displayNameField);
+        expect(firstOidc.profilePictureField).toEqual(profilePictureField);
+        expect(firstOidc.emailField).toEqual(emailField);
+        restore();
+      });
+      it('when HD_AUTH_OIDC_GITLAB_END_SESSION_URL is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeOidcConfig,
+            HD_AUTH_OIDC_GITLAB_END_SESSION_URL: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.oidc).toHaveLength(1);
+        const firstOidc = config.oidc[0];
+        expect(firstOidc.identifier).toEqual(oidcNames[0]);
+        expect(firstOidc.issuer).toEqual(issuer);
+        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientSecret).toEqual(clientSecret);
+        expect(firstOidc.theme).toEqual(theme);
+        expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
+        expect(firstOidc.tokenUrl).toEqual(tokenUrl);
+        expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.endSessionUrl).toBeUndefined();
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userIdField).toEqual(userIdField);
         expect(firstOidc.userNameField).toEqual(userNameField);
@@ -748,6 +788,7 @@ describe('authConfig', () => {
         expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
         expect(firstOidc.tokenUrl).toEqual(tokenUrl);
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.scope).toEqual(defaultScope);
         expect(firstOidc.userIdField).toEqual(userIdField);
         expect(firstOidc.userNameField).toEqual(userNameField);
@@ -781,6 +822,7 @@ describe('authConfig', () => {
         expect(firstOidc.tokenUrl).toEqual(tokenUrl);
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.userIdField).toEqual(defaultUserIdField);
         expect(firstOidc.userNameField).toEqual(userNameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
@@ -813,6 +855,7 @@ describe('authConfig', () => {
         expect(firstOidc.tokenUrl).toEqual(tokenUrl);
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.userIdField).toEqual(userIdField);
         expect(firstOidc.userNameField).toEqual(userNameField);
         expect(firstOidc.displayNameField).toEqual(defaultDisplayNameField);
@@ -845,6 +888,7 @@ describe('authConfig', () => {
         expect(firstOidc.tokenUrl).toEqual(tokenUrl);
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.userIdField).toEqual(userIdField);
         expect(firstOidc.userNameField).toEqual(userNameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
@@ -879,6 +923,7 @@ describe('authConfig', () => {
         expect(firstOidc.tokenUrl).toEqual(tokenUrl);
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.userIdField).toEqual(userIdField);
         expect(firstOidc.userNameField).toEqual(userNameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
