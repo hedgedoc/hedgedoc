@@ -155,6 +155,11 @@ We recommend to use our pre-configured [Caddy][caddy] configuration.
    (if you installed Caddy via a package manager).
 3. Open your browser on <http://localhost:8080>
 
+It is also possible to use another domain and port other than `localhost:8080`.
+To do so, you need to set the `HD_BASE_URL` environment variable accordingly.
+Furthermore, for Caddy to work with a domain name (possibly creating TLS certificates),
+set `CADDY_HOST` to your domain (for example `CADDY_HOST=http://my-hedgedoc.home:9000`).
+
 [hedgedoc-repo]: https://github.com/hedgedoc/hedgedoc
 [yarn]: https://yarnpkg.com/getting-started/install
 [caddy]: https://caddyserver.com/
