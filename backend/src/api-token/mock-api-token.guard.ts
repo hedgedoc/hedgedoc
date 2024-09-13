@@ -10,7 +10,7 @@ import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 
 @Injectable()
-export class MockPublicAuthTokenGuard {
+export class MockApiTokenGuard {
   private user: User;
 
   constructor(private usersService: UsersService) {}

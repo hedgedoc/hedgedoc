@@ -17,6 +17,7 @@ import {
 } from '@nestjs/common';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
+import { ApiTokenGuard } from '../../../api-token/api-token.guard';
 import { NotInDBError } from '../../../errors/errors';
 import { GroupsService } from '../../../groups/groups.service';
 import { HistoryService } from '../../../history/history.service';
@@ -36,7 +37,6 @@ import { PermissionsGuard } from '../../../permissions/permissions.guard';
 import { PermissionsService } from '../../../permissions/permissions.service';
 import { RequirePermission } from '../../../permissions/require-permission.decorator';
 import { RequiredPermission } from '../../../permissions/required-permission.enum';
-import { PublicAuthTokenGuard } from '../../../public-auth-token/public-auth-token.strategy';
 import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
 import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
@@ -49,7 +49,7 @@ import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestNote } from '../../utils/request-note.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
-@UseGuards(PublicAuthTokenGuard, PermissionsGuard)
+@UseGuards(ApiTokenGuard, PermissionsGuard)
 @OpenApi(401)
 @ApiTags('notes')
 @ApiSecurity('token')

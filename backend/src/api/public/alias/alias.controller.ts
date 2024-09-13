@@ -16,6 +16,7 @@ import {
 } from '@nestjs/common';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
+import { ApiTokenGuard } from '../../../api-token/api-token.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { AliasCreateDto } from '../../../notes/alias-create.dto';
 import { AliasUpdateDto } from '../../../notes/alias-update.dto';
@@ -23,12 +24,11 @@ import { AliasDto } from '../../../notes/alias.dto';
 import { AliasService } from '../../../notes/alias.service';
 import { NotesService } from '../../../notes/notes.service';
 import { PermissionsService } from '../../../permissions/permissions.service';
-import { PublicAuthTokenGuard } from '../../../public-auth-token/public-auth-token.strategy';
 import { User } from '../../../users/user.entity';
 import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 
-@UseGuards(PublicAuthTokenGuard)
+@UseGuards(ApiTokenGuard)
 @OpenApi(401)
 @ApiTags('alias')
 @ApiSecurity('token')

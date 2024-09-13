@@ -6,7 +6,7 @@
 import { Injectable } from '@nestjs/common';
 import { Cron, Timeout } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
-import crypto, { randomBytes } from 'crypto';
+import { createHash, randomBytes, timingSafeEqual } from 'crypto';
 import { Repository } from 'typeorm';
 
 import {
@@ -18,37 +18,34 @@ import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { User } from '../users/user.entity';
 import { bufferToBase64Url } from '../utils/password';
 import { TimestampMillis } from '../utils/timestamp';
-import {
-  PublicAuthTokenDto,
-  PublicAuthTokenWithSecretDto,
-} from './public-auth-token.dto';
-import { PublicAuthToken } from './public-auth-token.entity';
+import { ApiTokenDto, ApiTokenWithSecretDto } from './api-token.dto';
+import { ApiToken } from './api-token.entity';
 
 export const AUTH_TOKEN_PREFIX = 'hd2';
 
 @Injectable()
-export class PublicAuthTokenService {
+export class ApiTokenService {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    @InjectRepository(PublicAuthToken)
-    private authTokenRepository: Repository<PublicAuthToken>,
+    @InjectRepository(ApiToken)
+    private authTokenRepository: Repository<ApiToken>,
   ) {
-    this.logger.setContext(PublicAuthTokenService.name);
+    this.logger.setContext(ApiTokenService.name);
   }
 
   async validateToken(tokenString: string): Promise<User> {
     const [prefix, keyId, secret, ...rest] = tokenString.split('.');
     if (!keyId || !secret || prefix !== AUTH_TOKEN_PREFIX || rest.length > 0) {
-      throw new TokenNotValidError('Invalid AuthToken format');
+      throw new TokenNotValidError('Invalid API token format');
     }
     if (secret.length != 86) {
       // We always expect 86 characters, as the secret is generated with 64 bytes
       // and then converted to a base64url string
       throw new TokenNotValidError(
-        `AuthToken '${tokenString}' has incorrect length`,
+        `API token '${tokenString}' has incorrect length`,
       );
     }
-    const token = await this.getAuthToken(keyId);
+    const token = await this.getToken(keyId);
     this.checkToken(secret, token);
     await this.setLastUsedToken(keyId);
     return await token.user;
@@ -58,14 +55,11 @@ export class PublicAuthTokenService {
     user: User,
     identifier: string,
     userDefinedValidUntil: TimestampMillis | undefined,
-  ): [Omit<PublicAuthToken, 'id' | 'createdAt'>, string] {
+  ): [Omit<ApiToken, 'id' | 'createdAt'>, string] {
     const secret = bufferToBase64Url(randomBytes(64));
     const keyId = bufferToBase64Url(randomBytes(8));
     // More about the choice of SHA-512 in the dev docs
-    const accessTokenHash = crypto
-      .createHash('sha512')
-      .update(secret)
-      .digest('hex');
+    const accessTokenHash = createHash('sha512').update(secret).digest('hex');
     // Tokens can only be valid for a maximum of 2 years
     const maximumTokenValidity =
       new Date().getTime() + 2 * 365 * 24 * 60 * 60 * 1000;
@@ -76,7 +70,7 @@ export class PublicAuthTokenService {
     const validUntil = isTokenLimitedToMaximumValidity
       ? maximumTokenValidity
       : userDefinedValidUntil;
-    const token = PublicAuthToken.create(
+    const token = ApiToken.create(
       keyId,
       user,
       identifier,
@@ -90,20 +84,20 @@ export class PublicAuthTokenService {
     user: User,
     identifier: string,
     validUntil: TimestampMillis | undefined,
-  ): Promise<PublicAuthTokenWithSecretDto> {
-    user.publicAuthTokens = this.getTokensByUser(user);
+  ): Promise<ApiTokenWithSecretDto> {
+    user.apiTokens = this.getTokensByUser(user);
 
-    if ((await user.publicAuthTokens).length >= 200) {
+    if ((await user.apiTokens).length >= 200) {
       // This is a very high ceiling unlikely to hinder legitimate usage,
       // but should prevent possible attack vectors
       throw new TooManyTokensError(
-        `User '${user.username}' has already 200 tokens and can't have anymore`,
+        `User '${user.username}' has already 200 API tokens and can't have more`,
       );
     }
     const [token, secret] = this.createToken(user, identifier, validUntil);
     const createdToken = (await this.authTokenRepository.save(
       token,
-    )) as PublicAuthToken;
+    )) as ApiToken;
     return this.toAuthTokenWithSecretDto(
       createdToken,
       `${AUTH_TOKEN_PREFIX}.${createdToken.keyId}.${secret}`,
@@ -115,33 +109,33 @@ export class PublicAuthTokenService {
       where: { keyId: keyId },
     });
     if (token === null) {
-      throw new NotInDBError(`AuthToken for key '${keyId}' not found`);
+      throw new NotInDBError(`API token with id '${keyId}' not found`);
     }
     token.lastUsedAt = new Date();
     await this.authTokenRepository.save(token);
   }
 
-  async getAuthToken(keyId: string): Promise<PublicAuthToken> {
+  async getToken(keyId: string): Promise<ApiToken> {
     const token = await this.authTokenRepository.findOne({
       where: { keyId: keyId },
       relations: ['user'],
     });
     if (token === null) {
-      throw new NotInDBError(`AuthToken '${keyId}' not found`);
+      throw new NotInDBError(`API token with id '${keyId}' not found`);
     }
     return token;
   }
 
-  checkToken(secret: string, token: PublicAuthToken): void {
+  checkToken(secret: string, token: ApiToken): void {
     const userHash = Buffer.from(
-      crypto.createHash('sha512').update(secret).digest('hex'),
+      createHash('sha512').update(secret).digest('hex'),
     );
     const dbHash = Buffer.from(token.hash);
     if (
       // Normally, both hashes have the same length, as they are both SHA512
       // This is only defense-in-depth, as timingSafeEqual throws if the buffers are not of the same length
       userHash.length !== dbHash.length ||
-      !crypto.timingSafeEqual(userHash, dbHash)
+      !timingSafeEqual(userHash, dbHash)
     ) {
       // hashes are not the same
       throw new TokenNotValidError(
@@ -158,7 +152,7 @@ export class PublicAuthTokenService {
     }
   }
 
-  async getTokensByUser(user: User): Promise<PublicAuthToken[]> {
+  async getTokensByUser(user: User): Promise<ApiToken[]> {
     const tokens = await this.authTokenRepository.find({
       where: { user: { id: user.id } },
     });
@@ -173,13 +167,13 @@ export class PublicAuthTokenService {
       where: { keyId: keyId },
     });
     if (token === null) {
-      throw new NotInDBError(`AuthToken for key '${keyId}' not found`);
+      throw new NotInDBError(`API token with id '${keyId}' not found`);
     }
     await this.authTokenRepository.remove(token);
   }
 
-  toAuthTokenDto(authToken: PublicAuthToken): PublicAuthTokenDto {
-    const tokenDto: PublicAuthTokenDto = {
+  toAuthTokenDto(authToken: ApiToken): ApiTokenDto {
+    const tokenDto: ApiTokenDto = {
       label: authToken.label,
       keyId: authToken.keyId,
       createdAt: authToken.createdAt,
@@ -195,9 +189,9 @@ export class PublicAuthTokenService {
   }
 
   toAuthTokenWithSecretDto(
-    authToken: PublicAuthToken,
+    authToken: ApiToken,
     secret: string,
-  ): PublicAuthTokenWithSecretDto {
+  ): ApiTokenWithSecretDto {
     const tokenDto = this.toAuthTokenDto(authToken);
     return {
       ...tokenDto,
@@ -219,7 +213,7 @@ export class PublicAuthTokenService {
 
   async removeInvalidTokens(): Promise<void> {
     const currentTime = new Date().getTime();
-    const tokens: PublicAuthToken[] = await this.authTokenRepository.find();
+    const tokens: ApiToken[] = await this.authTokenRepository.find();
     let removedTokens = 0;
     for (const token of tokens) {
       if (token.validUntil && token.validUntil.getTime() <= currentTime) {

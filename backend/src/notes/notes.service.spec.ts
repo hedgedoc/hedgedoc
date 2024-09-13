@@ -15,6 +15,7 @@ import {
   Repository,
 } from 'typeorm';
 
+import { ApiToken } from '../api-token/api-token.entity';
 import { Author } from '../authors/author.entity';
 import { DefaultAccessLevel } from '../config/default-access-level.enum';
 import appConfigMock from '../config/mock/app.config.mock';
@@ -39,7 +40,6 @@ import { Identity } from '../identity/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
-import { PublicAuthToken } from '../public-auth-token/public-auth-token.entity';
 import { RealtimeNoteModule } from '../realtime/realtime-note/realtime-note.module';
 import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
@@ -194,7 +194,7 @@ describe('NotesService', () => {
       .useValue(aliasRepo)
       .overrideProvider(getRepositoryToken(User))
       .useValue(userRepo)
-      .overrideProvider(getRepositoryToken(PublicAuthToken))
+      .overrideProvider(getRepositoryToken(ApiToken))
       .useValue({})
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})

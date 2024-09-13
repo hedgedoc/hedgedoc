@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { DeepPartial } from '@hedgedoc/commons';
 import { ConfigModule } from '@nestjs/config';
-import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import crypto from 'crypto';
@@ -22,23 +22,23 @@ import { LoggerModule } from '../logger/logger.module';
 import { Session } from '../sessions/session.entity';
 import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
-import { PublicAuthToken } from './public-auth-token.entity';
-import { PublicAuthTokenService } from './public-auth-token.service';
+import { ApiToken } from './api-token.entity';
+import { ApiTokenService } from './api-token.service';
 
-describe('AuthService', () => {
-  let service: PublicAuthTokenService;
+describe('ApiTokenService', () => {
+  let service: ApiTokenService;
   let user: User;
-  let authToken: PublicAuthToken;
+  let apiToken: ApiToken;
   let userRepo: Repository<User>;
-  let authTokenRepo: Repository<PublicAuthToken>;
+  let apiTokenRepo: Repository<ApiToken>;
 
   class CreateQueryBuilderClass {
     leftJoinAndSelect: () => CreateQueryBuilderClass;
     where: () => CreateQueryBuilderClass;
     orWhere: () => CreateQueryBuilderClass;
     setParameter: () => CreateQueryBuilderClass;
-    getOne: () => PublicAuthToken;
-    getMany: () => PublicAuthToken[];
+    getOne: () => ApiToken;
+    getMany: () => ApiToken[];
   }
 
   let createQueryBuilderFunc: CreateQueryBuilderClass;
@@ -46,9 +46,9 @@ describe('AuthService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        PublicAuthTokenService,
+        ApiTokenService,
         {
-          provide: getRepositoryToken(PublicAuthToken),
+          provide: getRepositoryToken(ApiToken),
           useClass: Repository,
         },
       ],
@@ -57,7 +57,6 @@ describe('AuthService', () => {
           isGlobal: true,
           load: [appConfigMock, authConfigMock],
         }),
-        PassportModule,
         UsersModule,
         LoggerModule,
       ],
@@ -70,83 +69,77 @@ describe('AuthService', () => {
       .useValue({})
       .compile();
 
-    service = module.get<PublicAuthTokenService>(PublicAuthTokenService);
+    service = module.get<ApiTokenService>(ApiTokenService);
     userRepo = module.get<Repository<User>>(getRepositoryToken(User));
-    authTokenRepo = module.get<Repository<PublicAuthToken>>(
-      getRepositoryToken(PublicAuthToken),
+    apiTokenRepo = module.get<Repository<ApiToken>>(
+      getRepositoryToken(ApiToken),
     );
 
     user = User.create('hardcoded', 'Testy') as User;
-    authToken = PublicAuthToken.create(
+    apiToken = ApiToken.create(
       'testKeyId',
       user,
       'testToken',
       'abc',
       new Date(new Date().getTime() + 60000), // make this AuthToken valid for 1min
-    ) as PublicAuthToken;
+    ) as ApiToken;
 
     const createQueryBuilder = {
       leftJoinAndSelect: () => createQueryBuilder,
       where: () => createQueryBuilder,
       orWhere: () => createQueryBuilder,
       setParameter: () => createQueryBuilder,
-      getOne: () => authToken,
-      getMany: () => [authToken],
+      getOne: () => apiToken,
+      getMany: () => [apiToken],
     };
     createQueryBuilderFunc = createQueryBuilder;
     jest
-      .spyOn(authTokenRepo, 'createQueryBuilder')
+      .spyOn(apiTokenRepo, 'createQueryBuilder')
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       .mockImplementation(() => createQueryBuilder);
 
-    jest.spyOn(authTokenRepo, 'find').mockResolvedValue([authToken]);
-  });
-
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+    jest.spyOn(apiTokenRepo, 'find').mockResolvedValue([apiToken]);
   });
 
   describe('getTokensByUser', () => {
     it('works', async () => {
-      createQueryBuilderFunc.getMany = () => [authToken];
+      createQueryBuilderFunc.getMany = () => [apiToken];
       const tokens = await service.getTokensByUser(user);
       expect(tokens).toHaveLength(1);
-      expect(tokens).toEqual([authToken]);
+      expect(tokens).toEqual([apiToken]);
     });
     it('should return empty array if token for user do not exists', async () => {
-      jest
-        .spyOn(authTokenRepo, 'find')
-        .mockImplementationOnce(async () => null);
+      jest.spyOn(apiTokenRepo, 'find').mockImplementationOnce(async () => []);
       const tokens = await service.getTokensByUser(user);
       expect(tokens).toHaveLength(0);
       expect(tokens).toEqual([]);
     });
   });
 
-  describe('getAuthToken', () => {
+  describe('getToken', () => {
     const token = 'testToken';
     it('works', async () => {
       const accessTokenHash = crypto
         .createHash('sha512')
         .update(token)
         .digest('hex');
-      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
-        ...authToken,
+      jest.spyOn(apiTokenRepo, 'findOne').mockResolvedValueOnce({
+        ...apiToken,
         user: Promise.resolve(user),
         hash: accessTokenHash,
       });
-      const authTokenFromCall = await service.getAuthToken(authToken.keyId);
+      const authTokenFromCall = await service.getToken(apiToken.keyId);
       expect(authTokenFromCall).toEqual({
-        ...authToken,
+        ...apiToken,
         user: Promise.resolve(user),
         hash: accessTokenHash,
       });
     });
     describe('fails:', () => {
       it('AuthToken could not be found', async () => {
-        jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce(null);
-        await expect(service.getAuthToken(authToken.keyId)).rejects.toThrow(
+        jest.spyOn(apiTokenRepo, 'findOne').mockResolvedValueOnce(null);
+        await expect(service.getToken(apiToken.keyId)).rejects.toThrow(
           NotInDBError,
         );
       });
@@ -161,13 +154,13 @@ describe('AuthService', () => {
       );
 
       expect(() =>
-        service.checkToken(secret, accessToken as PublicAuthToken),
+        service.checkToken(secret, accessToken as ApiToken),
       ).not.toThrow();
     });
     it('AuthToken has wrong hash', () => {
       const [accessToken] = service.createToken(user, 'TestToken', undefined);
       expect(() =>
-        service.checkToken('secret', accessToken as PublicAuthToken),
+        service.checkToken('secret', accessToken as ApiToken),
       ).toThrow(TokenNotValidError);
     });
     it('AuthToken has wrong validUntil Date', () => {
@@ -176,33 +169,33 @@ describe('AuthService', () => {
         'Test',
         1549312452000,
       );
-      expect(() =>
-        service.checkToken(secret, accessToken as PublicAuthToken),
-      ).toThrow(TokenNotValidError);
+      expect(() => service.checkToken(secret, accessToken as ApiToken)).toThrow(
+        TokenNotValidError,
+      );
     });
   });
 
   describe('setLastUsedToken', () => {
     it('works', async () => {
-      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce({
-        ...authToken,
+      jest.spyOn(apiTokenRepo, 'findOne').mockResolvedValueOnce({
+        ...apiToken,
         user: Promise.resolve(user),
         lastUsedAt: new Date(1549312452000),
       });
       jest
-        .spyOn(authTokenRepo, 'save')
+        .spyOn(apiTokenRepo, 'save')
         .mockImplementationOnce(
-          async (authTokenSaved, _): Promise<PublicAuthToken> => {
-            expect(authTokenSaved.keyId).toEqual(authToken.keyId);
+          async (authTokenSaved, _): Promise<ApiToken> => {
+            expect(authTokenSaved.keyId).toEqual(apiToken.keyId);
             expect(authTokenSaved.lastUsedAt).not.toEqual(1549312452000);
-            return authToken;
+            return apiToken;
           },
         );
-      await service.setLastUsedToken(authToken.keyId);
+      await service.setLastUsedToken(apiToken.keyId);
     });
     it('throws if the token is not in the database', async () => {
-      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce(null);
-      await expect(service.setLastUsedToken(authToken.keyId)).rejects.toThrow(
+      jest.spyOn(apiTokenRepo, 'findOne').mockResolvedValueOnce(null);
+      await expect(service.setLastUsedToken(apiToken.keyId)).rejects.toThrow(
         NotInDBError,
       );
     });
@@ -218,51 +211,51 @@ describe('AuthService', () => {
         .digest('hex');
       jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce({
         ...user,
-        publicAuthTokens: Promise.resolve([authToken]),
+        apiTokens: Promise.resolve([apiToken]),
       });
-      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValue({
-        ...authToken,
+      jest.spyOn(apiTokenRepo, 'findOne').mockResolvedValue({
+        ...apiToken,
         user: Promise.resolve(user),
         hash: accessTokenHash,
       });
       jest
-        .spyOn(authTokenRepo, 'save')
-        .mockImplementationOnce(async (_, __): Promise<PublicAuthToken> => {
-          return authToken;
+        .spyOn(apiTokenRepo, 'save')
+        .mockImplementationOnce(async (_, __): Promise<ApiToken> => {
+          return apiToken;
         });
       const userByToken = await service.validateToken(
-        `hd2.${authToken.keyId}.${testSecret}`,
+        `hd2.${apiToken.keyId}.${testSecret}`,
       );
       expect(userByToken).toEqual({
         ...user,
-        publicAuthTokens: Promise.resolve([authToken]),
+        apiTokens: Promise.resolve([apiToken]),
       });
     });
     describe('fails:', () => {
       it('the prefix is missing', async () => {
         await expect(
-          service.validateToken(`${authToken.keyId}.${'a'.repeat(73)}`),
+          service.validateToken(`${apiToken.keyId}.${'a'.repeat(73)}`),
         ).rejects.toThrow(TokenNotValidError);
       });
       it('the prefix is wrong', async () => {
         await expect(
-          service.validateToken(`hd1.${authToken.keyId}.${'a'.repeat(73)}`),
+          service.validateToken(`hd1.${apiToken.keyId}.${'a'.repeat(73)}`),
         ).rejects.toThrow(TokenNotValidError);
       });
       it('the secret is missing', async () => {
         await expect(
-          service.validateToken(`hd2.${authToken.keyId}`),
+          service.validateToken(`hd2.${apiToken.keyId}`),
         ).rejects.toThrow(TokenNotValidError);
       });
       it('the secret is too long', async () => {
         await expect(
-          service.validateToken(`hd2.${authToken.keyId}.${'a'.repeat(73)}`),
+          service.validateToken(`hd2.${apiToken.keyId}.${'a'.repeat(73)}`),
         ).rejects.toThrow(TokenNotValidError);
       });
       it('the token contains sections after the secret', async () => {
         await expect(
           service.validateToken(
-            `hd2.${authToken.keyId}.${'a'.repeat(73)}.extra`,
+            `hd2.${apiToken.keyId}.${'a'.repeat(73)}.extra`,
           ),
         ).rejects.toThrow(TokenNotValidError);
       });
@@ -271,24 +264,24 @@ describe('AuthService', () => {
 
   describe('removeToken', () => {
     it('works', async () => {
-      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValue({
-        ...authToken,
+      jest.spyOn(apiTokenRepo, 'findOne').mockResolvedValue({
+        ...apiToken,
         user: Promise.resolve(user),
       });
       jest
-        .spyOn(authTokenRepo, 'remove')
-        .mockImplementationOnce(async (token, __): Promise<PublicAuthToken> => {
+        .spyOn(apiTokenRepo, 'remove')
+        .mockImplementationOnce(async (token, __): Promise<ApiToken> => {
           expect(token).toEqual({
-            ...authToken,
+            ...apiToken,
             user: Promise.resolve(user),
           });
-          return authToken;
+          return apiToken;
         });
-      await service.removeToken(authToken.keyId);
+      await service.removeToken(apiToken.keyId);
     });
     it('throws if the token is not in the database', async () => {
-      jest.spyOn(authTokenRepo, 'findOne').mockResolvedValueOnce(null);
-      await expect(service.removeToken(authToken.keyId)).rejects.toThrow(
+      jest.spyOn(apiTokenRepo, 'findOne').mockResolvedValueOnce(null);
+      await expect(service.removeToken(apiToken.keyId)).rejects.toThrow(
         NotInDBError,
       );
     });
@@ -298,16 +291,16 @@ describe('AuthService', () => {
     describe('works', () => {
       const identifier = 'testIdentifier';
       it('with validUntil 0', async () => {
-        jest.spyOn(authTokenRepo, 'find').mockResolvedValueOnce([authToken]);
+        jest.spyOn(apiTokenRepo, 'find').mockResolvedValueOnce([apiToken]);
         jest
-          .spyOn(authTokenRepo, 'save')
+          .spyOn(apiTokenRepo, 'save')
           .mockImplementationOnce(
             async (
-              authTokenSaved: PublicAuthToken,
+              apiTokenSaved: DeepPartial<ApiToken>,
               _,
-            ): Promise<PublicAuthToken> => {
-              expect(authTokenSaved.lastUsedAt).toBeNull();
-              return authTokenSaved;
+            ): Promise<ApiToken> => {
+              expect(apiTokenSaved.lastUsedAt).toBeNull();
+              return apiTokenSaved;
             },
           );
         const token = await service.addToken(user, identifier, 0);
@@ -320,16 +313,16 @@ describe('AuthService', () => {
         expect(token.secret.startsWith('hd2.' + token.keyId)).toBeTruthy();
       });
       it('with validUntil not 0', async () => {
-        jest.spyOn(authTokenRepo, 'find').mockResolvedValueOnce([authToken]);
+        jest.spyOn(apiTokenRepo, 'find').mockResolvedValueOnce([apiToken]);
         jest
-          .spyOn(authTokenRepo, 'save')
+          .spyOn(apiTokenRepo, 'save')
           .mockImplementationOnce(
             async (
-              authTokenSaved: PublicAuthToken,
+              apiTokenSaved: DeepPartial<ApiToken>,
               _,
-            ): Promise<PublicAuthToken> => {
-              expect(authTokenSaved.lastUsedAt).toBeNull();
-              return authTokenSaved;
+            ): Promise<ApiToken> => {
+              expect(apiTokenSaved.lastUsedAt).toBeNull();
+              return apiTokenSaved;
             },
           );
         const validUntil = new Date().getTime() + 30000;
@@ -341,9 +334,9 @@ describe('AuthService', () => {
       });
       it('should throw TooManyTokensError when number of tokens >= 200', async () => {
         jest
-          .spyOn(authTokenRepo, 'find')
-          .mockImplementationOnce(async (): Promise<PublicAuthToken[]> => {
-            const inValidToken = [authToken];
+          .spyOn(apiTokenRepo, 'find')
+          .mockImplementationOnce(async (): Promise<ApiToken[]> => {
+            const inValidToken = [apiToken];
             inValidToken.length = 201;
             return inValidToken;
           });
@@ -362,16 +355,16 @@ describe('AuthService', () => {
 
     it('works', async () => {
       const expiredDate = new Date().getTime() - 30000;
-      const expiredToken = { ...authToken, validUntil: new Date(expiredDate) };
+      const expiredToken = { ...apiToken, validUntil: new Date(expiredDate) };
       jest
-        .spyOn(authTokenRepo, 'find')
-        .mockResolvedValueOnce([expiredToken, authToken]);
+        .spyOn(apiTokenRepo, 'find')
+        .mockResolvedValueOnce([expiredToken, apiToken]);
       jest
-        .spyOn(authTokenRepo, 'remove')
-        .mockImplementationOnce(async (token): Promise<PublicAuthToken> => {
+        .spyOn(apiTokenRepo, 'remove')
+        .mockImplementationOnce(async (token): Promise<ApiToken> => {
           expect(token).toEqual(expiredToken);
-          expect(token).not.toBe(authToken);
-          return authToken;
+          expect(token).not.toBe(apiToken);
+          return apiToken;
         });
 
       await service.removeInvalidTokens();
@@ -395,29 +388,29 @@ describe('AuthService', () => {
   });
 
   describe('toAuthTokenDto', () => {
-    const authToken = new PublicAuthToken();
-    authToken.keyId = 'testKeyId';
-    authToken.label = 'testLabel';
+    const apiToken = new ApiToken();
+    apiToken.keyId = 'testKeyId';
+    apiToken.label = 'testLabel';
     const date = new Date();
     date.setHours(date.getHours() - 1);
-    authToken.createdAt = date;
-    authToken.validUntil = new Date();
+    apiToken.createdAt = date;
+    apiToken.validUntil = new Date();
     it('works', () => {
-      const tokenDto = service.toAuthTokenDto(authToken);
-      expect(tokenDto.keyId).toEqual(authToken.keyId);
+      const tokenDto = service.toAuthTokenDto(apiToken);
+      expect(tokenDto.keyId).toEqual(apiToken.keyId);
       expect(tokenDto.lastUsedAt).toBeNull();
-      expect(tokenDto.label).toEqual(authToken.label);
+      expect(tokenDto.label).toEqual(apiToken.label);
       expect(tokenDto.validUntil.getTime()).toEqual(
-        authToken.validUntil.getTime(),
+        apiToken.validUntil.getTime(),
       );
       expect(tokenDto.createdAt.getTime()).toEqual(
-        authToken.createdAt.getTime(),
+        apiToken.createdAt.getTime(),
       );
     });
     it('should have lastUsedAt', () => {
-      authToken.lastUsedAt = new Date();
-      const tokenDto = service.toAuthTokenDto(authToken);
-      expect(tokenDto.lastUsedAt).toEqual(authToken.lastUsedAt);
+      apiToken.lastUsedAt = new Date();
+      const tokenDto = service.toAuthTokenDto(apiToken);
+      expect(tokenDto.lastUsedAt).toEqual(apiToken.lastUsedAt);
     });
   });
 });

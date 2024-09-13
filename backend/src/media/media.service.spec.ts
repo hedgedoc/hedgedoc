@@ -11,6 +11,7 @@ import { promises as fs } from 'fs';
 import { Repository } from 'typeorm';
 
 import appConfigMock from '../../src/config/mock/app.config.mock';
+import { ApiToken } from '../api-token/api-token.entity';
 import { Author } from '../authors/author.entity';
 import authConfigMock from '../config/mock/auth.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
@@ -27,7 +28,6 @@ import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
-import { PublicAuthToken } from '../public-auth-token/public-auth-token.entity';
 import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
 import { Session } from '../sessions/session.entity';
@@ -84,7 +84,7 @@ describe('MediaService', () => {
     })
       .overrideProvider(getRepositoryToken(Edit))
       .useValue({})
-      .overrideProvider(getRepositoryToken(PublicAuthToken))
+      .overrideProvider(getRepositoryToken(ApiToken))
       .useValue({})
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})
