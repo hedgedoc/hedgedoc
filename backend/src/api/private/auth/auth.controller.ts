@@ -109,5 +109,6 @@ export class AuthController {
     request.session.authProviderIdentifier = undefined;
     request.session.authProviderType = undefined;
     request.session.providerUserId = undefined;
+    request.session.oidcIdToken = undefined;
   }
 }
