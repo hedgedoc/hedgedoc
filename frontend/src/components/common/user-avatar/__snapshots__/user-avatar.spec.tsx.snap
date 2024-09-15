@@ -105,6 +105,40 @@ exports[`UserAvatar renders the user avatar in size sm 1`] = `
 </div>
 `;
 
+exports[`UserAvatar uses custom photo component if provided 1`] = `
+<div>
+  <span
+    class="d-inline-flex align-items-center "
+  >
+    <div>
+      Custom Photo
+    </div>
+    <span
+      class="ms-2 me-1 user-line-name"
+    >
+      test
+    </span>
+  </span>
+</div>
+`;
+
+exports[`UserAvatar uses custom photo component preferred over photoUrl 1`] = `
+<div>
+  <span
+    class="d-inline-flex align-items-center "
+  >
+    <div>
+      Custom Photo
+    </div>
+    <span
+      class="ms-2 me-1 user-line-name"
+    >
+      test
+    </span>
+  </span>
+</div>
+`;
+
 exports[`UserAvatar uses identicon when empty photoUrl is given 1`] = `
 <div>
   <span
