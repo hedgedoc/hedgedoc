@@ -36,9 +36,12 @@ export const HistoryCard: React.FC<HistoryEntryProps & HistoryEventHandlers> = (
     onRemoveEntryClick(entry.identifier)
   }, [onRemoveEntryClick, entry.identifier])
 
-  const onDeleteNote = useCallback(() => {
-    onDeleteNoteClick(entry.identifier)
-  }, [onDeleteNoteClick, entry.identifier])
+  const onDeleteNote = useCallback(
+    (keepMedia: boolean) => {
+      onDeleteNoteClick(entry.identifier, keepMedia)
+    },
+    [onDeleteNoteClick, entry.identifier]
+  )
 
   const onPinEntry = useCallback(() => {
     onPinClick(entry.identifier)
@@ -93,6 +96,7 @@ export const HistoryCard: React.FC<HistoryEntryProps & HistoryEventHandlers> = (
               origin={entry.origin}
               onRemoveFromHistory={onRemoveEntry}
               onDeleteNote={onDeleteNote}
+              noteOwner={entry.owner}
             />
           </div>
         </Card.Body>

@@ -15,6 +15,7 @@ export interface DeletionModalProps extends CommonModalProps {
   onConfirm: () => void
   deletionButtonI18nKey: string
   disabled?: boolean
+  footerContent?: React.ReactNode
 }
 
 /**
@@ -39,6 +40,7 @@ export const DeletionModal: React.FC<PropsWithChildren<DeletionModalProps>> = ({
   titleIcon,
   children,
   disabled = false,
+  footerContent,
   ...props
 }) => {
   useTranslation()
@@ -52,6 +54,7 @@ export const DeletionModal: React.FC<PropsWithChildren<DeletionModalProps>> = ({
       {...props}>
       <Modal.Body>{children}</Modal.Body>
       <Modal.Footer>
+        {footerContent}
         <Button {...cypressId('deletionModal.confirmButton')} variant='danger' onClick={onConfirm} disabled={disabled}>
           <Trans i18nKey={deletionButtonI18nKey} />
         </Button>

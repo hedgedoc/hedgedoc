@@ -3,13 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { DropdownItemWithDeletionModal } from './dropdown-item-with-deletion-modal'
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Trash as IconTrash } from 'react-bootstrap-icons'
+import { Dropdown } from 'react-bootstrap'
+import { UiIcon } from '../../common/icons/ui-icon'
+import { Trans } from 'react-i18next'
+import { DeleteNoteModal } from '../../editor-page/sidebar/specific-sidebar-entries/delete-note-sidebar-entry/delete-note-modal'
+import { useBooleanState } from '../../../hooks/common/use-boolean-state'
 
 export interface DeleteNoteItemProps {
-  onConfirm: () => void
+  onConfirm: (keepMedia: boolean) => void
   noteTitle: string
+  isOwner: boolean
 }
 
 /**
@@ -18,13 +23,21 @@ export interface DeleteNoteItemProps {
  * @param noteTitle The title of the note to delete to show it in the deletion confirmation modal
  * @param onConfirm The callback that is fired when the deletion is confirmed
  */
-export const DeleteNoteItem: React.FC<DeleteNoteItemProps> = ({ noteTitle, onConfirm }) => {
+export const DeleteNoteItem: React.FC<DeleteNoteItemProps> = ({ noteTitle, onConfirm, isOwner }) => {
+  const [isModalVisible, showModal, hideModal] = useBooleanState()
   return (
-    <DropdownItemWithDeletionModal
-      onConfirm={onConfirm}
-      itemI18nKey={'landing.history.menu.deleteNote'}
-      modalIcon={IconTrash}
-      noteTitle={noteTitle}
-    />
+    <Fragment>
+      <Dropdown.Item onClick={showModal}>
+        <UiIcon icon={IconTrash} className='mx-2' />
+        <Trans i18nKey={'landing.history.menu.deleteNote'} />
+      </Dropdown.Item>
+      <DeleteNoteModal
+        optionalNoteTitle={noteTitle}
+        onConfirm={onConfirm}
+        show={isModalVisible}
+        onHide={hideModal}
+        overrideIsOwner={isOwner}
+      />
+    </Fragment>
   )
 }

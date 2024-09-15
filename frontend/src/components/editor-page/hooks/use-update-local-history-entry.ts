@@ -20,7 +20,7 @@ export const useUpdateLocalHistoryEntry = (): void => {
   const userExists = useApplicationState((state) => !!state.user)
   const currentNoteTitle = useApplicationState((state) => state.noteDetails?.title ?? '')
   const currentNoteTags = useApplicationState((state) => state.noteDetails?.frontmatter.tags ?? [])
-
+  const currentNoteOwner = useApplicationState((state) => state.noteDetails?.permissions.owner)
   const lastNoteTitle = useRef('')
   const lastNoteTags = useRef<string[]>([])
 
@@ -38,7 +38,8 @@ export const useUpdateLocalHistoryEntry = (): void => {
       pinStatus: false,
       lastVisitedAt: '',
       tags: [],
-      origin: HistoryEntryOrigin.LOCAL
+      origin: HistoryEntryOrigin.LOCAL,
+      owner: null
     }
     if (entry.origin === HistoryEntryOrigin.REMOTE) {
       return
@@ -46,9 +47,10 @@ export const useUpdateLocalHistoryEntry = (): void => {
     const updatedEntry = { ...entry }
     updatedEntry.title = currentNoteTitle
     updatedEntry.tags = currentNoteTags
+    updatedEntry.owner = currentNoteOwner
     updatedEntry.lastVisitedAt = new Date().toISOString()
     updateLocalHistoryEntry(id, updatedEntry)
     lastNoteTitle.current = currentNoteTitle
     lastNoteTags.current = currentNoteTags
-  }, [id, userExists, currentNoteTitle, currentNoteTags])
+  }, [id, userExists, currentNoteTitle, currentNoteTags, currentNoteOwner])
 }

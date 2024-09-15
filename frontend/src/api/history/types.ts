@@ -17,6 +17,7 @@ export interface HistoryEntryPutDto {
 export interface HistoryEntry {
   identifier: string
   title: string
+  owner: string | null
   lastVisitedAt: string
   tags: string[]
   pinStatus: boolean
