@@ -18,7 +18,7 @@
 @import "./markdown-tweaks";
 @import "./reveal";
 
-.text-black, body.dark .text-black {
+.text-black, body[data-bs-theme=dark] .text-black {
   color: $black;
 }
 

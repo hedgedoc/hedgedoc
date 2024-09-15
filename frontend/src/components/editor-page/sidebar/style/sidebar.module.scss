@@ -9,7 +9,7 @@
   --sidebar-menu-width: 280px;
   --sidebar-separator-color: var(--bs-secondary);
 
-  :global(body.dark) & {
+  :global(body[data-bs-theme=dark]) & {
     --sidebar-separator-color: rgba(255, 255, 255, 0.2);
   }
 
