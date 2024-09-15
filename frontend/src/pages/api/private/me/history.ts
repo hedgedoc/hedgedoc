@@ -14,28 +14,32 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
       title: 'Slide example',
       lastVisitedAt: '2020-05-30T15:20:36.088Z',
       pinStatus: true,
-      tags: ['features', 'cool', 'updated']
+      tags: ['features', 'cool', 'updated'],
+      owner: null
     },
     {
       identifier: 'features',
       title: 'Features',
       lastVisitedAt: '2020-05-31T15:20:36.088Z',
       pinStatus: true,
-      tags: ['features', 'cool', 'updated']
+      tags: ['features', 'cool', 'updated'],
+      owner: null
     },
     {
       identifier: 'ODakLc2MQkyyFc_Xmb53sg',
       title: 'Non existent',
       lastVisitedAt: '2020-05-25T19:48:14.025Z',
       pinStatus: false,
-      tags: []
+      tags: [],
+      owner: null
     },
     {
       identifier: 'l8JuWxApTR6Fqa0LCrpnLg',
       title: 'Non existent',
       lastVisitedAt: '2020-05-24T16:04:36.433Z',
       pinStatus: false,
-      tags: ['agenda', 'HedgeDoc community', 'community call']
+      tags: ['agenda', 'HedgeDoc community', 'community call'],
+      owner: 'test'
     }
   ])
 }

@@ -37,9 +37,12 @@ export const HistoryTableRow: React.FC<HistoryEntryProps & HistoryEventHandlers>
     onRemoveEntryClick(entry.identifier)
   }, [onRemoveEntryClick, entry.identifier])
 
-  const onDeleteNote = useCallback(() => {
-    onDeleteNoteClick(entry.identifier)
-  }, [onDeleteNoteClick, entry.identifier])
+  const onDeleteNote = useCallback(
+    (keepMedia: boolean) => {
+      onDeleteNoteClick(entry.identifier, keepMedia)
+    },
+    [onDeleteNoteClick, entry.identifier]
+  )
 
   return (
     <tr {...cypressAttribute('entry-title', entryTitle)}>
@@ -63,6 +66,7 @@ export const HistoryTableRow: React.FC<HistoryEntryProps & HistoryEventHandlers>
             id={entry.identifier}
             title={entryTitle}
             origin={entry.origin}
+            noteOwner={entry.owner}
             onRemoveFromHistory={onEntryRemove}
             onDeleteNote={onDeleteNote}
           />

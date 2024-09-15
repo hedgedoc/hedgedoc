@@ -3,10 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { cypressId } from '../../../utils/cypress-attribute'
-import { DropdownItemWithDeletionModal } from './dropdown-item-with-deletion-modal'
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Archive as IconArchive } from 'react-bootstrap-icons'
+import { useBooleanState } from '../../../hooks/common/use-boolean-state'
+import { Dropdown } from 'react-bootstrap'
+import { UiIcon } from '../../common/icons/ui-icon'
+import { Trans } from 'react-i18next'
+import { DeletionModal } from '../../common/modals/deletion-modal'
 
 export interface RemoveNoteEntryItemProps {
   onConfirm: () => void
@@ -20,17 +23,29 @@ export interface RemoveNoteEntryItemProps {
  * @param onConfirm The callback to delete the note
  */
 export const RemoveNoteEntryItem: React.FC<RemoveNoteEntryItemProps> = ({ noteTitle, onConfirm }) => {
+  const [isModalVisible, showModal, hideModal] = useBooleanState()
   return (
-    <DropdownItemWithDeletionModal
-      onConfirm={onConfirm}
-      itemI18nKey={'landing.history.menu.removeEntry'}
-      modalButtonI18nKey={'landing.history.modal.removeNote.button'}
-      modalIcon={IconArchive}
-      modalTitleI18nKey={'landing.history.modal.removeNote.title'}
-      modalQuestionI18nKey={'landing.history.modal.removeNote.question'}
-      modalWarningI18nKey={'landing.history.modal.removeNote.warning'}
-      noteTitle={noteTitle}
-      {...cypressId('history-entry-menu-remove-button')}
-    />
+    <Fragment>
+      <Dropdown.Item onClick={showModal}>
+        <UiIcon icon={IconArchive} className='mx-2' />
+        <Trans i18nKey={'landing.history.menu.removeEntry'} />
+      </Dropdown.Item>
+      <DeletionModal
+        deletionButtonI18nKey={'landing.history.modal.removeNote.button'}
+        onConfirm={onConfirm}
+        show={isModalVisible}
+        onHide={hideModal}
+        titleI18nKey={'landing.history.modal.removeNote.title'}>
+        <h5>
+          <Trans i18nKey={'landing.history.modal.removeNote.question'} />
+        </h5>
+        <ul>
+          <li>{noteTitle}</li>
+        </ul>
+        <h6>
+          <Trans i18nKey={'landing.history.modal.removeNote.warning'} />
+        </h6>
+      </DeletionModal>
+    </Fragment>
   )
 }

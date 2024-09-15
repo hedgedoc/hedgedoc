@@ -5,7 +5,13 @@
  */
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsArray, IsBoolean, IsDate, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsBoolean,
+  IsDate,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 import { BaseDto } from '../utils/base.dto.';
 
@@ -25,6 +31,16 @@ export class HistoryEntryDto extends BaseDto {
   @IsString()
   @ApiProperty()
   title: string;
+
+  /**
+   * The username of the owner of the note
+   * Might be null for anonymous notes
+   * @example "alice"
+   */
+  @IsOptional()
+  @IsString()
+  @ApiProperty()
+  owner: string | null;
 
   /**
    * Datestring of the last time this note was updated

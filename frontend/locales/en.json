@@ -445,7 +445,9 @@
         "title": "Delete note",
         "question": "Do you really want to delete this note?",
         "warning": "All users will lose their connection. This process is irreversible.",
-        "button": "Delete note"
+        "deleteButton": "Delete note and uploads",
+        "deleteButtonKeepMedia": "Delete note but keep uploads",
+        "keepMedia": "Keep uploads?"
       },
       "permissions": {
         "title": "Permissions",

@@ -7,20 +7,14 @@ import { useNoteTitle } from '../../../../../hooks/common/use-note-title'
 import { cypressId } from '../../../../../utils/cypress-attribute'
 import type { ModalVisibilityProps } from '../../../../common/modals/common-modal'
 import { DeletionModal } from '../../../../common/modals/deletion-modal'
-import React from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Trans } from 'react-i18next'
 import { useIsOwner } from '../../../../../hooks/common/use-is-owner'
 
-export interface DeleteHistoryNoteModalProps {
-  modalTitleI18nKey?: string
-  modalQuestionI18nKey?: string
-  modalWarningI18nKey?: string
-  modalButtonI18nKey?: string
-}
-
 export interface DeleteNoteModalProps extends ModalVisibilityProps {
   optionalNoteTitle?: string
-  onConfirm: () => void
+  onConfirm: (keepMedia: boolean) => void
+  overrideIsOwner?: boolean
 }
 
 /**
@@ -31,40 +25,53 @@ export interface DeleteNoteModalProps extends ModalVisibilityProps {
  * @param onHide A callback that fires if the modal should be hidden without confirmation
  * @param onConfirm A callback that fires if the user confirmed the request
  * @param modalTitleI18nKey optional i18nKey for the title
- * @param modalQuestionI18nKey optional i18nKey for the question
- * @param modalWarningI18nKey optional i18nKey for the warning
- * @param modalButtonI18nKey optional i18nKey for the button
  */
-export const DeleteNoteModal: React.FC<DeleteNoteModalProps & DeleteHistoryNoteModalProps> = ({
+export const DeleteNoteModal: React.FC<DeleteNoteModalProps> = ({
   optionalNoteTitle,
   show,
   onHide,
   onConfirm,
-  modalTitleI18nKey,
-  modalQuestionI18nKey,
-  modalWarningI18nKey,
-  modalButtonI18nKey
+  overrideIsOwner
 }) => {
+  const [keepMedia, setKeepMedia] = useState(false)
   const noteTitle = useNoteTitle()
-  const isOwner = useIsOwner()
+  const isOwnerOfCurrentEditedNote = useIsOwner()
+
+  const deletionButtonI18nKey = useMemo(() => {
+    return keepMedia ? 'editor.modal.deleteNote.deleteButtonKeepMedia' : 'editor.modal.deleteNote.deleteButton'
+  }, [keepMedia])
+
+  const handleConfirm = useCallback(() => {
+    onConfirm(keepMedia)
+  }, [onConfirm, keepMedia])
+
+  const isOwner = overrideIsOwner ?? isOwnerOfCurrentEditedNote
 
   return (
     <DeletionModal
       {...cypressId('sidebar.deleteNote.modal')}
-      onConfirm={onConfirm}
-      deletionButtonI18nKey={modalButtonI18nKey ?? 'editor.modal.deleteNote.button'}
+      onConfirm={handleConfirm}
+      deletionButtonI18nKey={deletionButtonI18nKey}
       show={show}
       onHide={onHide}
       disabled={!isOwner}
-      titleI18nKey={modalTitleI18nKey ?? 'editor.modal.deleteNote.title'}>
+      titleI18nKey={'editor.modal.deleteNote.title'}
+      footerContent={
+        <label className={'me-auto'}>
+          <input type='checkbox' checked={keepMedia} onChange={() => setKeepMedia(!keepMedia)} />
+          <span className={'ms-1'}>
+            <Trans i18nKey={'editor.modal.deleteNote.keepMedia'} />
+          </span>
+        </label>
+      }>
       <h5>
-        <Trans i18nKey={modalQuestionI18nKey ?? 'editor.modal.deleteNote.question'} />
+        <Trans i18nKey={'editor.modal.deleteNote.question'} />
       </h5>
       <ul>
         <li {...cypressId('sidebar.deleteNote.modal.noteTitle')}>{optionalNoteTitle ?? noteTitle}</li>
       </ul>
       <h6>
-        <Trans i18nKey={modalWarningI18nKey ?? 'editor.modal.deleteNote.warning'} />
+        <Trans i18nKey={'editor.modal.deleteNote.warning'} />
       </h6>
     </DeletionModal>
   )

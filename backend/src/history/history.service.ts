@@ -180,6 +180,7 @@ export class HistoryService {
    */
   async toHistoryEntryDto(entry: HistoryEntry): Promise<HistoryEntryDto> {
     const note = await entry.note;
+    const owner = await note.owner;
     const revision = await this.revisionsService.getLatestRevision(note);
     return {
       identifier: await getIdentifier(entry),
@@ -187,6 +188,7 @@ export class HistoryService {
       tags: (await revision.tags).map((tag) => tag.name),
       title: revision.title ?? '',
       pinStatus: entry.pinStatus,
+      owner: owner ? owner.username : null,
     };
   }
 }

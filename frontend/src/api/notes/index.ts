@@ -79,14 +79,13 @@ export const createNoteWithPrimaryAlias = async (markdown: string, primaryAlias:
  * Deletes the specified note.
  *
  * @param noteIdOrAlias The id or alias of the note to delete.
+ * @param keepMedia Whether to keep the uploaded media associated with the note.
  * @throws {Error} when the api request wasn't successful.
  */
-export const deleteNote = async (noteIdOrAlias: string): Promise<void> => {
+export const deleteNote = async (noteIdOrAlias: string, keepMedia: boolean): Promise<void> => {
   await new DeleteApiRequestBuilder<void, NoteDeletionOptions>('notes/' + noteIdOrAlias)
     .withJsonBody({
-      keepMedia: false
-      // TODO Ask whether the user wants to keep the media uploaded to the note.
-      //  https://github.com/hedgedoc/hedgedoc/issues/2928
+      keepMedia
     })
     .sendRequest()
 }

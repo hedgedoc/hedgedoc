@@ -23,7 +23,7 @@ type OnEntryClick = (entryId: string) => void
 export interface HistoryEventHandlers {
   onPinClick: OnEntryClick
   onRemoveEntryClick: OnEntryClick
-  onDeleteNoteClick: OnEntryClick
+  onDeleteNoteClick: (entryId: string, keepMedia: boolean) => void
 }
 
 export interface HistoryEntryProps {
@@ -61,8 +61,8 @@ export const HistoryContent: React.FC = () => {
   )
 
   const onDeleteClick = useCallback(
-    (noteId: string) => {
-      deleteNote(noteId)
+    (noteId: string, keepMedia: boolean) => {
+      deleteNote(noteId, keepMedia)
         .then(() => removeHistoryEntry(noteId))
         .catch(showErrorNotification('landing.history.error.deleteNote.text'))
     },

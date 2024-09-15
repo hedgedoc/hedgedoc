@@ -151,7 +151,8 @@ export const convertV1History = (oldHistory: V1HistoryEntry[]): HistoryEntryWith
     tags: entry.tags,
     lastVisitedAt: DateTime.fromMillis(entry.time).toISO(),
     pinStatus: entry.pinned,
-    origin: HistoryEntryOrigin.LOCAL
+    origin: HistoryEntryOrigin.LOCAL,
+    owner: null
   }))
 }
 
