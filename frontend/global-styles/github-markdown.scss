@@ -654,7 +654,7 @@
   h4,
   h5,
   h6 {
-    body.dark &, & {
+    body[data-bs-theme=dark] &, & {
       margin-top: 24px;
       margin-bottom: 16px;
       font-weight: 600;
@@ -663,7 +663,7 @@
   }
 
   h1 {
-    body.dark &, & {
+    body[data-bs-theme=dark] &, & {
       font-size: 2em;
     }
   }
@@ -675,35 +675,35 @@
   }
 
   h2 {
-    body.dark &, & {
+    body[data-bs-theme=dark] &, & {
       font-size: 1.5em;
     }
   }
 
   h3 {
-    body.dark &, & {
+    body[data-bs-theme=dark] &, & {
       font-size: 1.25em;
     }
   }
 
   h4 {
-    body.dark &, & {
+    body[data-bs-theme=dark] &, & {
       font-size: 1em;
     }
   }
 
   h5 {
-    body.dark &, & {
+    body[data-bs-theme=dark] &, & {
       font-size: .875em;
     }
   }
 
   h6 {
-    body.dark &, & {
+    body[data-bs-theme=dark] &, & {
       font-size: .85em;
     }
 
-    body.dark & {
+    body[data-bs-theme=dark] & {
       color: #b4c7d5;
     }
   }
@@ -722,7 +722,7 @@
   }
 
   li {
-    word-wrap: break-all;
+    word-wrap: break-word;
   }
 
   li > p {
@@ -826,7 +826,6 @@
 
   pre code {
     display: inline;
-    max-width: auto;
     padding: 0;
     margin: 0;
     overflow: visible;

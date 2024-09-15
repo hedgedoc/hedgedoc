@@ -14,7 +14,7 @@
     display: grid !important;
     grid-template-columns: auto minmax(0, 1fr);
 
-    :global(body.dark) & {
+    :global(body[data-bs-theme=dark]) & {
       background-color: rgb(27, 31, 35);
     }
 
