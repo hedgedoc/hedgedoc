@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GuestUserAvatar renders the guest user avatar correctly 1`] = `
+<div>
+  <span
+    class="d-inline-flex align-items-center "
+  >
+    BootstrapIconMock_Person
+    <span
+      class="ms-2 me-1 user-line-name"
+    >
+      common.guestUser
+    </span>
+  </span>
+</div>
+`;

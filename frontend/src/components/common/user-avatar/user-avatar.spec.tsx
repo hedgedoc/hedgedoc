@@ -59,4 +59,16 @@ describe('UserAvatar', () => {
     const view = render(<UserAvatar displayName={'test'} photoUrl={''} />)
     expect(view.container).toMatchSnapshot()
   })
+
+  it('uses custom photo component if provided', () => {
+    const view = render(<UserAvatar displayName={'test'} photoComponent={<div>Custom Photo</div>} />)
+    expect(view.container).toMatchSnapshot()
+  })
+
+  it('uses custom photo component preferred over photoUrl', () => {
+    const view = render(
+      <UserAvatar displayName={'test'} photoComponent={<div>Custom Photo</div>} photoUrl={user.photoUrl} />
+    )
+    expect(view.container).toMatchSnapshot()
+  })
 })

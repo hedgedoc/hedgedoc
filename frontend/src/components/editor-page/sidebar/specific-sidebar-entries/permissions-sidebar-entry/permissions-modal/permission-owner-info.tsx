@@ -11,6 +11,7 @@ import type { PermissionDisabledProps } from './permission-disabled.prop'
 import React, { Fragment } from 'react'
 import { Button } from 'react-bootstrap'
 import { Pencil as IconPencil } from 'react-bootstrap-icons'
+import { GuestUserAvatar } from '../../../../../common/user-avatar/guest-user-avatar'
 
 export interface PermissionOwnerInfoProps {
   onEditOwner: () => void
@@ -30,7 +31,7 @@ export const PermissionOwnerInfo: React.FC<PermissionOwnerInfoProps & Permission
   const buttonTitle = useTranslatedText('editor.modal.permissions.ownerChange.button')
 
   if (!noteOwner) {
-    return null
+    return <GuestUserAvatar />
   }
 
   return (
