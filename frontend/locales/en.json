@@ -231,7 +231,7 @@
       "failed": "Error while uploading {{fileName}}"
     },
     "untitledNote": "Untitled",
-    "placeholder": "← Start by entering a title here\n===\nVisit {{host}}features if you don't know what to do.\nHappy hacking :)",
+    "placeholder": "← Start by entering a title here\n===\nVisit {{host}}cheatsheet if you don't know what to do.\nLet the ideas grow :)",
     "infoToc": "Structure your note with headings to see a table-of-contents here.",
     "onlineStatus": {
       "online": "Online",
