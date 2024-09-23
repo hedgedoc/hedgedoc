@@ -284,7 +284,7 @@ export class RevisionsService {
         const beUpdatedRevision = revisions.slice(-1)[0]
         beUpdatedRevision.patch = createPatch(
           note.publicId,
-          '', // donnt exist older revision
+          '', // there is no older revision
           beUpdatedRevision.content,
         );
         await this.revisionRepository.save(beUpdatedRevision);
