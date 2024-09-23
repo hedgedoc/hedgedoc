@@ -254,6 +254,8 @@ export class RevisionsService {
     if (revisionRetentionDays <= 0) {
       return;
     }
+    const revisionRetentionSeconds =
+      revisionRetentionDays * 24 * 60 * 60 * 1000;
 
     const notes: Note[] = await this.noteRepository.find();
     for (const note of notes) {
@@ -271,7 +273,7 @@ export class RevisionsService {
         .filter(
           (revision) =>
             new Date(revision.createdAt).getTime() <=
-            currentTime - revisionRetentionDays * 24 * 60 * 60 * 1000,
+            currentTime - revisionRetentionSeconds,
         );
       const remainedRevisions = revisions.filter(
         (val) => !oldRevisions.includes(val),
