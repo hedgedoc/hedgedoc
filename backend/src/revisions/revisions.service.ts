@@ -279,7 +279,7 @@ export class RevisionsService {
 
       if (!oldRevisions.length) {
         continue;
-      } else if (oldRevisions.length == revisions.length - 1) {
+      } else if (oldRevisions.length === revisions.length - 1) {
         const beUpdatedRevision = revisions.slice(-1)[0];
         beUpdatedRevision.patch = createPatch(
           note.publicId,
