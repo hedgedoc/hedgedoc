@@ -248,6 +248,11 @@ export class RevisionsService {
     return await this.removeOldRevisions();
   }
 
+  /**
+   * Delete old {@link Revision}s except the latest one.
+   *
+   * @async
+   */
   async removeOldRevisions(): Promise<void> {
     const currentTime = new Date().getTime();
     const revisionRetentionDays: number = this.noteConfig.revisionRetentionDays;
