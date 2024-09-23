@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ConfigModule } from '@nestjs/config';
-import { createPatch } from 'diff';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { createPatch } from 'diff';
 import { Mock } from 'ts-mockery';
 import { DataSource, EntityManager, Repository } from 'typeorm';
 
@@ -505,13 +505,14 @@ describe('RevisionsService', () => {
         id: 3,
         createdAt: date3,
         note: Promise.resolve(note),
-        content: '---\ntitle: new title\ndescription: new description\ntags: [ "tag1" ]\n---\nnew content\n',
+        content:
+          '---\ntitle: new title\ndescription: new description\ntags: [ "tag1" ]\n---\nnew content\n',
       });
       revision3.patch = createPatch(
         note.publicId,
         revision2.content,
         revision3.content,
-      )
+      );
 
       revisions = [revision1, revision2, revision3];
       oldRevisions = [revision1, revision2];
@@ -524,9 +525,7 @@ describe('RevisionsService', () => {
           expect(entry).toEqual(oldRevisions);
           return entry;
         });
-      jest
-        .spyOn(revisionRepo, 'save')
-        .mockResolvedValue(revision3);
+      jest.spyOn(revisionRepo, 'save').mockResolvedValue(revision3);
 
       await service.removeOldRevisions();
       expect(revision3.patch).toMatchInlineSnapshot(`
@@ -562,7 +561,8 @@ describe('RevisionsService', () => {
         id: 2,
         createdAt: date2,
         note: Promise.resolve(note),
-        content: '---\ntitle: new title\ndescription: new description\ntags: [ "tag1" ]\n---\nnew content\n',
+        content:
+          '---\ntitle: new title\ndescription: new description\ntags: [ "tag1" ]\n---\nnew content\n',
       });
       const revision3 = Mock.of<Revision>({
         id: 3,
@@ -573,7 +573,7 @@ describe('RevisionsService', () => {
         note.publicId,
         revision1.content,
         revision2.content,
-      )
+      );
 
       revisions = [revision1, revision2, revision3];
       oldRevisions = [revision1];
@@ -586,9 +586,7 @@ describe('RevisionsService', () => {
           expect(entry).toEqual(oldRevisions);
           return entry;
         });
-      jest
-        .spyOn(revisionRepo, 'save')
-        .mockResolvedValue(revision2);
+      jest.spyOn(revisionRepo, 'save').mockResolvedValue(revision2);
 
       await service.removeOldRevisions();
       expect(revision2.patch).toMatchInlineSnapshot(`

@@ -9,9 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { createPatch } from 'diff';
 import { Repository } from 'typeorm';
 
-import noteConfiguration, {
-  NoteConfig,
-} from '../config/note.config';
+import noteConfiguration, { NoteConfig } from '../config/note.config';
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Note } from '../notes/note.entity';
@@ -264,7 +262,7 @@ export class RevisionsService {
           note: { id: note.id },
         },
         order: {
-          createdAt: "ASC",
+          createdAt: 'ASC',
         },
       });
 
@@ -275,22 +273,22 @@ export class RevisionsService {
             new Date(revision.createdAt).getTime() <=
             currentTime - revisionRetentionDays * 24 * 60 * 60 * 1000,
         );
-      const remainedRevisions = revisions.filter((val) => !oldRevisions.includes(val))
+      const remainedRevisions = revisions.filter(
+        (val) => !oldRevisions.includes(val),
+      );
 
       if (!oldRevisions.length) {
         continue;
-
-      } else if (oldRevisions.length == revisions.length - 1 ){
-        const beUpdatedRevision = revisions.slice(-1)[0]
+      } else if (oldRevisions.length == revisions.length - 1) {
+        const beUpdatedRevision = revisions.slice(-1)[0];
         beUpdatedRevision.patch = createPatch(
           note.publicId,
           '', // there is no older revision
           beUpdatedRevision.content,
         );
         await this.revisionRepository.save(beUpdatedRevision);
-
       } else {
-        const beUpdatedRevision = remainedRevisions.slice(0)[0]
+        const beUpdatedRevision = remainedRevisions.slice(0)[0];
         beUpdatedRevision.patch = createPatch(
           note.publicId,
           oldRevisions.slice(-1)[0].content,
