@@ -492,7 +492,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: invalidforbiddenNoteIds.join(' , '),
+          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
           HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
           HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
           HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.READ,
@@ -505,7 +505,7 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        '"forbiddenNoteIds[0]" is not allowed to be empty',
+        '"HD_REVISION_RETENTION_DAYS" must be greater than or equal to 0',
       );
       restore();
     });
