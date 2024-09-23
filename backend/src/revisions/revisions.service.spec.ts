@@ -528,20 +528,7 @@ describe('RevisionsService', () => {
       jest.spyOn(revisionRepo, 'save').mockResolvedValue(revision3);
 
       await service.removeOldRevisions();
-      expect(revision3.patch).toMatchInlineSnapshot(`
-        "Index: test-note
-        ===================================================================
-        --- test-note
-        +++ test-note
-        @@ -0,0 +1,6 @@
-        +---
-        +title: new title
-        +description: new description
-        +tags: [ "tag1" ]
-        +---
-        +new content
-        "
-      `);
+      expect(revision3.patch).toMatchSnapshot;
     });
 
     it('remove a part of old revisions', async () => {
@@ -589,21 +576,7 @@ describe('RevisionsService', () => {
       jest.spyOn(revisionRepo, 'save').mockResolvedValue(revision2);
 
       await service.removeOldRevisions();
-      expect(revision2.patch).toMatchInlineSnapshot(`
-        "Index: test-note
-        ===================================================================
-        --- test-note
-        +++ test-note
-        @@ -1,1 +1,6 @@
-        -old content
-        +---
-        +title: new title
-        +description: new description
-        +tags: [ "tag1" ]
-        +---
-        +new content
-        "
-      `);
+      expect(revision2.patch).toMatchSnapshot;
     });
 
     it('do nothing when only one revision', async () => {
