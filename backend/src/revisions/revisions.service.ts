@@ -238,13 +238,13 @@ export class RevisionsService {
 
   // Delete all old revisions everyday on 0:00 AM
   @Cron('0 0 * * *')
-  async handleCron(): Promise<void> {
+  async handleRevisionCleanup(): Promise<void> {
     return await this.removeOldRevisions();
   }
 
   // Delete all old revisions 5 sec after startup
   @Timeout(5000)
-  async handleTimeout(): Promise<void> {
+  async handleRevisionCleanupTimeout(): Promise<void> {
     return await this.removeOldRevisions();
   }
 
@@ -306,7 +306,7 @@ export class RevisionsService {
 
       await this.revisionRepository.remove(oldRevisions);
       this.logger.log(
-        `${oldRevisions.length} old revisions of the note(id: ${note.id}) were reomved from the DB`,
+        `${oldRevisions.length} old revisions of the note '${note.id}' were removed from the DB`,
         'removeOldRevisions',
       );
     }
