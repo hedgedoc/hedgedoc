@@ -21,6 +21,7 @@ export function createDefaultMockNoteConfig(): NoteConfig {
       },
     },
     guestAccess: GuestAccess.CREATE,
+    revisionRetentionDays: 0,
   };
 }
 

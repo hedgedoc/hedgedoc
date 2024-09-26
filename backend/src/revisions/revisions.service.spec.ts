@@ -7,8 +7,9 @@ import { ConfigModule } from '@nestjs/config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { createPatch } from 'diff';
 import { Mock } from 'ts-mockery';
-import { Repository } from 'typeorm';
+import { DataSource, EntityManager, Repository } from 'typeorm';
 
 import { ApiToken } from '../api-token/api-token.entity';
 import { Author } from '../authors/author.entity';
@@ -16,6 +17,11 @@ import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
 import noteConfigMock from '../config/mock/note.config.mock';
+import {
+  createDefaultMockNoteConfig,
+  registerNoteConfig,
+} from '../config/mock/note.config.mock';
+import { NoteConfig } from '../config/note.config';
 import { NotInDBError } from '../errors/errors';
 import { eventModuleConfig } from '../events';
 import { Group } from '../groups/group.entity';
@@ -37,14 +43,31 @@ import { RevisionsService } from './revisions.service';
 describe('RevisionsService', () => {
   let service: RevisionsService;
   let revisionRepo: Repository<Revision>;
+  let noteRepo: Repository<Note>;
+  const noteConfig: NoteConfig = createDefaultMockNoteConfig();
 
   beforeEach(async () => {
+    noteRepo = new Repository<Note>(
+      '',
+      new EntityManager(
+        new DataSource({
+          type: 'sqlite',
+          database: ':memory:',
+        }),
+      ),
+      undefined,
+    );
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         RevisionsService,
         EditService,
         {
           provide: getRepositoryToken(Revision),
+          useClass: Repository,
+        },
+        {
+          provide: getRepositoryToken(Note),
           useClass: Repository,
         },
       ],
@@ -58,6 +81,7 @@ describe('RevisionsService', () => {
             databaseConfigMock,
             authConfigMock,
             noteConfigMock,
+            registerNoteConfig(noteConfig),
           ],
         }),
         EventEmitterModule.forRoot(eventModuleConfig),
@@ -72,7 +96,7 @@ describe('RevisionsService', () => {
       .overrideProvider(getRepositoryToken(Identity))
       .useValue({})
       .overrideProvider(getRepositoryToken(Note))
-      .useValue({})
+      .useValue(noteRepo)
       .overrideProvider(getRepositoryToken(Revision))
       .useClass(Repository)
       .overrideProvider(getRepositoryToken(Tag))
@@ -95,6 +119,7 @@ describe('RevisionsService', () => {
     revisionRepo = module.get<Repository<Revision>>(
       getRepositoryToken(Revision),
     );
+    noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));
   });
 
   it('should be defined', () => {
@@ -421,6 +446,165 @@ describe('RevisionsService', () => {
         yjsState,
       );
       expect(repoSaveSpy).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('auto remove old revisions', () => {
+    beforeEach(() => {
+      jest.spyOn(service, 'removeOldRevisions');
+    });
+
+    it('handleCron should call removeOldRevisions', async () => {
+      await service.handleCron();
+      expect(service.removeOldRevisions).toHaveBeenCalledTimes(1);
+    });
+
+    it('handleTimeout should call removeOldRevisions', async () => {
+      await service.handleTimeout();
+      expect(service.removeOldRevisions).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('removeOldRevisions', () => {
+    let note: Note;
+    let notes: Note[];
+    let revisions: Revision[];
+    let oldRevisions: Revision[];
+    const retentionDays = 30;
+
+    beforeEach(() => {
+      noteConfig.revisionRetentionDays = retentionDays;
+
+      note = Mock.of<Note>({ publicId: 'test-note', id: 1 });
+      notes = [note];
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('remove all revisions except latest revision', async () => {
+      const date1 = new Date();
+      const date2 = new Date();
+      const date3 = new Date();
+      date1.setDate(date1.getDate() - retentionDays - 2);
+      date2.setDate(date2.getDate() - retentionDays - 1);
+
+      const revision1 = Mock.of<Revision>({
+        id: 1,
+        createdAt: date1,
+        note: Promise.resolve(note),
+      });
+      const revision2 = Mock.of<Revision>({
+        id: 2,
+        createdAt: date2,
+        note: Promise.resolve(note),
+        content: 'old content\n',
+      });
+      const revision3 = Mock.of<Revision>({
+        id: 3,
+        createdAt: date3,
+        note: Promise.resolve(note),
+        content:
+          '---\ntitle: new title\ndescription: new description\ntags: [ "tag1" ]\n---\nnew content\n',
+      });
+      revision3.patch = createPatch(
+        note.publicId,
+        revision2.content,
+        revision3.content,
+      );
+
+      revisions = [revision1, revision2, revision3];
+      oldRevisions = [revision1, revision2];
+
+      jest.spyOn(noteRepo, 'find').mockResolvedValueOnce(notes);
+      jest.spyOn(revisionRepo, 'find').mockResolvedValueOnce(revisions);
+      jest
+        .spyOn(revisionRepo, 'remove')
+        .mockImplementationOnce(async (entry, _) => {
+          expect(entry).toEqual(oldRevisions);
+          return entry;
+        });
+      jest.spyOn(revisionRepo, 'save').mockResolvedValue(revision3);
+
+      await service.removeOldRevisions();
+      expect(revision3.patch).toMatchSnapshot;
+    });
+
+    it('remove a part of old revisions', async () => {
+      const date1 = new Date();
+      const date2 = new Date();
+      const date3 = new Date();
+      date1.setDate(date1.getDate() - retentionDays);
+      date2.setDate(date2.getDate() - retentionDays + 1);
+
+      const revision1 = Mock.of<Revision>({
+        id: 1,
+        createdAt: date1,
+        note: Promise.resolve(note),
+        content: 'old content\n',
+      });
+      const revision2 = Mock.of<Revision>({
+        id: 2,
+        createdAt: date2,
+        note: Promise.resolve(note),
+        content:
+          '---\ntitle: new title\ndescription: new description\ntags: [ "tag1" ]\n---\nnew content\n',
+      });
+      const revision3 = Mock.of<Revision>({
+        id: 3,
+        createdAt: date3,
+        note: Promise.resolve(note),
+      });
+      revision2.patch = createPatch(
+        note.publicId,
+        revision1.content,
+        revision2.content,
+      );
+
+      revisions = [revision1, revision2, revision3];
+      oldRevisions = [revision1];
+
+      jest.spyOn(noteRepo, 'find').mockResolvedValueOnce(notes);
+      jest.spyOn(revisionRepo, 'find').mockResolvedValueOnce(revisions);
+      jest
+        .spyOn(revisionRepo, 'remove')
+        .mockImplementationOnce(async (entry, _) => {
+          expect(entry).toEqual(oldRevisions);
+          return entry;
+        });
+      jest.spyOn(revisionRepo, 'save').mockResolvedValue(revision2);
+
+      await service.removeOldRevisions();
+      expect(revision2.patch).toMatchSnapshot;
+    });
+
+    it('do nothing when only one revision', async () => {
+      const date = new Date();
+      date.setDate(date.getDate() - retentionDays * 2);
+
+      const revision1 = Mock.of<Revision>({
+        id: 1,
+        createdAt: date,
+        note: Promise.resolve(note),
+      });
+      revisions = [revision1];
+      oldRevisions = [];
+
+      jest.spyOn(noteRepo, 'find').mockResolvedValueOnce(notes);
+      jest.spyOn(revisionRepo, 'find').mockResolvedValueOnce(revisions);
+      const spyOnRemove = jest.spyOn(revisionRepo, 'remove');
+
+      await service.removeOldRevisions();
+      expect(spyOnRemove).toHaveBeenCalledTimes(0);
+    });
+
+    it('do nothing when retention days config is zero', async () => {
+      noteConfig.revisionRetentionDays = 0;
+      const spyOnRemove = jest.spyOn(revisionRepo, 'remove');
+
+      await service.removeOldRevisions();
+      expect(spyOnRemove).toHaveBeenCalledTimes(0);
     });
   });
 });

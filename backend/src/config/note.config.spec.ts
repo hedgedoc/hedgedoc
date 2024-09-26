@@ -19,6 +19,7 @@ describe('noteConfig', () => {
   const invalidMaxDocumentLength = 'not-a-max-document-length';
   const guestAccess = GuestAccess.CREATE;
   const wrongDefaultPermission = 'wrong';
+  const retentionDays = 30;
 
   describe('correctly parses config', () => {
     it('when given correct and complete environment variables', () => {
@@ -30,6 +31,7 @@ describe('noteConfig', () => {
           HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
           HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.READ,
           HD_GUEST_ACCESS: guestAccess,
+          HD_REVISION_RETENTION_DAYS: retentionDays.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -47,6 +49,7 @@ describe('noteConfig', () => {
         DefaultAccessLevel.READ,
       );
       expect(config.guestAccess).toEqual(guestAccess);
+      expect(config.revisionRetentionDays).toEqual(retentionDays);
       restore();
     });
 
@@ -219,6 +222,36 @@ describe('noteConfig', () => {
       );
 
       expect(config.guestAccess).toEqual(GuestAccess.WRITE);
+      restore();
+    });
+
+    it('when no HD_REVISION_RETENTION_DAYS is set', () => {
+      const restore = mockedEnv(
+        {
+          /* eslint-disable @typescript-eslint/naming-convention */
+          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
+          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
+          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.READ,
+          HD_GUEST_ACCESS: guestAccess,
+          /* eslint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      const config = noteConfig();
+      expect(config.forbiddenNoteIds).toHaveLength(forbiddenNoteIds.length);
+      expect(config.forbiddenNoteIds).toEqual(forbiddenNoteIds);
+      expect(config.maxDocumentLength).toEqual(maxDocumentLength);
+      expect(config.permissions.default.everyone).toEqual(
+        DefaultAccessLevel.READ,
+      );
+      expect(config.permissions.default.loggedIn).toEqual(
+        DefaultAccessLevel.READ,
+      );
+      expect(config.guestAccess).toEqual(guestAccess);
+      expect(config.revisionRetentionDays).toEqual(0);
       restore();
     });
   });
@@ -451,6 +484,28 @@ describe('noteConfig', () => {
       );
       expect(() => noteConfig()).toThrow(
         `'HD_PERMISSION_DEFAULT_EVERYONE' is set to '${DefaultAccessLevel.READ}', but 'HD_PERMISSION_DEFAULT_LOGGED_IN' is set to '${DefaultAccessLevel.NONE}'. This gives everyone greater permissions than logged-in users which is not allowed.`,
+      );
+      restore();
+    });
+
+    it('when given a negative retention days', async () => {
+      const restore = mockedEnv(
+        {
+          /* eslint-disable @typescript-eslint/naming-convention */
+          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
+          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
+          HD_PERMISSION_DEFAULT_EVERYONE: DefaultAccessLevel.READ,
+          HD_PERMISSION_DEFAULT_LOGGED_IN: DefaultAccessLevel.READ,
+          HD_GUEST_ACCESS: guestAccess,
+          HD_REVISION_RETENTION_DAYS: (-1).toString(),
+          /* eslint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      expect(() => noteConfig()).toThrow(
+        '"HD_REVISION_RETENTION_DAYS" must be greater than or equal to 0',
       );
       restore();
     });

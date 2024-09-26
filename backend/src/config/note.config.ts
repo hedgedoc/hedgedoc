@@ -23,6 +23,7 @@ export interface NoteConfig {
       loggedIn: DefaultAccessLevel;
     };
   };
+  revisionRetentionDays: number;
 }
 
 const schema = Joi.object<NoteConfig>({
@@ -56,6 +57,12 @@ const schema = Joi.object<NoteConfig>({
         .label('HD_PERMISSION_DEFAULT_LOGGED_IN'),
     },
   },
+  revisionRetentionDays: Joi.number()
+    .integer()
+    .default(0)
+    .min(0)
+    .optional()
+    .label('HD_REVISION_RETENTION_DAYS'),
 });
 
 function checkEveryoneConfigIsConsistent(config: NoteConfig): void {
@@ -97,6 +104,9 @@ export default registerAs('noteConfig', () => {
           loggedIn: process.env.HD_PERMISSION_DEFAULT_LOGGED_IN,
         },
       },
+      revisionRetentionDays: parseOptionalNumber(
+        process.env.HD_REVISION_RETENTION_DAYS,
+      ),
     } as NoteConfig,
     {
       abortEarly: false,
