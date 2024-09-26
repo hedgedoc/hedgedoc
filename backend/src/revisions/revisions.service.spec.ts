@@ -455,12 +455,12 @@ describe('RevisionsService', () => {
     });
 
     it('handleCron should call removeOldRevisions', async () => {
-      await service.handleCron();
+      await service.handleRevisionCleanup();
       expect(service.removeOldRevisions).toHaveBeenCalledTimes(1);
     });
 
     it('handleTimeout should call removeOldRevisions', async () => {
-      await service.handleTimeout();
+      await service.handleRevisionCleanupTimeout();
       expect(service.removeOldRevisions).toHaveBeenCalledTimes(1);
     });
   });
@@ -528,7 +528,7 @@ describe('RevisionsService', () => {
       jest.spyOn(revisionRepo, 'save').mockResolvedValue(revision3);
 
       await service.removeOldRevisions();
-      expect(revision3.patch).toMatchSnapshot;
+      expect(revision3.patch).toMatchSnapshot();
     });
 
     it('remove a part of old revisions', async () => {
@@ -576,7 +576,7 @@ describe('RevisionsService', () => {
       jest.spyOn(revisionRepo, 'save').mockResolvedValue(revision2);
 
       await service.removeOldRevisions();
-      expect(revision2.patch).toMatchSnapshot;
+      expect(revision2.patch).toMatchSnapshot();
     });
 
     it('do nothing when only one revision', async () => {
