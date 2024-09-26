@@ -688,23 +688,7 @@ describe('NotesService', () => {
     it('works', async () => {
       const [note] = await getMockData();
       const permissions = await service.toNotePermissionsDto(note);
-      expect(permissions).toMatchInlineSnapshot(`
-        {
-          "owner": "hardcoded",
-          "sharedToGroups": [
-            {
-              "canEdit": true,
-              "groupName": "testGroup",
-            },
-          ],
-          "sharedToUsers": [
-            {
-              "canEdit": true,
-              "username": "hardcoded",
-            },
-          ],
-        }
-      `);
+      expect(permissions).toMatchSnapshot();
     });
   });
 
@@ -716,47 +700,7 @@ describe('NotesService', () => {
       ]);
 
       const metadataDto = await service.toNoteMetadataDto(note);
-      expect(metadataDto).toMatchInlineSnapshot(`
-        {
-          "aliases": [
-            {
-              "name": "testAlias",
-              "noteId": "testId",
-              "primaryAlias": true,
-            },
-          ],
-          "createdAt": undefined,
-          "description": "mockDescription",
-          "editedBy": [
-            "hardcoded",
-          ],
-          "id": "testId",
-          "permissions": {
-            "owner": "hardcoded",
-            "sharedToGroups": [
-              {
-                "canEdit": true,
-                "groupName": "testGroup",
-              },
-            ],
-            "sharedToUsers": [
-              {
-                "canEdit": true,
-                "username": "hardcoded",
-              },
-            ],
-          },
-          "primaryAddress": "testAlias",
-          "tags": [
-            "tag1",
-          ],
-          "title": "mockTitle",
-          "updateUsername": "hardcoded",
-          "updatedAt": 2019-02-04T20:34:12.000Z,
-          "version": undefined,
-          "viewCount": 1337,
-        }
-      `);
+      expect(metadataDto).toMatchSnapshot();
     });
 
     it('returns publicId if no alias exists', async () => {
@@ -774,51 +718,7 @@ describe('NotesService', () => {
       ]);
 
       const noteDto = await service.toNoteDto(note);
-      expect(noteDto).toMatchInlineSnapshot(`
-        {
-          "content": "mockContent",
-          "editedByAtPosition": [],
-          "metadata": {
-            "aliases": [
-              {
-                "name": "testAlias",
-                "noteId": "testId",
-                "primaryAlias": true,
-              },
-            ],
-            "createdAt": undefined,
-            "description": "mockDescription",
-            "editedBy": [
-              "hardcoded",
-            ],
-            "id": "testId",
-            "permissions": {
-              "owner": "hardcoded",
-              "sharedToGroups": [
-                {
-                  "canEdit": true,
-                  "groupName": "testGroup",
-                },
-              ],
-              "sharedToUsers": [
-                {
-                  "canEdit": true,
-                  "username": "hardcoded",
-                },
-              ],
-            },
-            "primaryAddress": "testAlias",
-            "tags": [
-              "tag1",
-            ],
-            "title": "mockTitle",
-            "updateUsername": "hardcoded",
-            "updatedAt": 2019-02-04T20:34:12.000Z,
-            "version": undefined,
-            "viewCount": 1337,
-          },
-        }
-      `);
+      expect(noteDto).toMatchSnapshot();
     });
   });
 });
