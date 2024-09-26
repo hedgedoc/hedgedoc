@@ -116,6 +116,7 @@ describe('FrontendConfigService', () => {
                         loggedIn: DefaultAccessLevel.WRITE,
                       },
                     },
+                    revisionRetentionDays: 0,
                   } as NoteConfig;
                 }),
               ],
@@ -223,6 +224,7 @@ describe('FrontendConfigService', () => {
                     loggedIn: DefaultAccessLevel.WRITE,
                   },
                 },
+                revisionRetentionDays: 0,
               };
               const module: TestingModule = await Test.createTestingModule({
                 imports: [

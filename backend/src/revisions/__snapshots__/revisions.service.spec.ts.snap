@@ -14,3 +14,34 @@ exports[`RevisionsService purgeRevisions purges the revision history 1`] = `
 +new content
 "
 `;
+
+exports[`RevisionsService removeOldRevisions remove a part of old revisions 1`] = `
+"Index: test-note
+===================================================================
+--- test-note
++++ test-note
+@@ -1,1 +1,6 @@
+-old content
++---
++title: new title
++description: new description
++tags: [ "tag1" ]
++---
++new content
+"
+`;
+
+exports[`RevisionsService removeOldRevisions remove all revisions except latest revision 1`] = `
+"Index: test-note
+===================================================================
+--- test-note
++++ test-note
+@@ -0,0 +1,6 @@
++---
++title: new title
++description: new description
++tags: [ "tag1" ]
++---
++new content
+"
+`;
