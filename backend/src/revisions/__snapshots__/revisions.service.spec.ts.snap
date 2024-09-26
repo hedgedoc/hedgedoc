@@ -1,5 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`RevisionsService createRevision creates a new revision 1`] = `
+[
+  Tag {
+    "name": "tag1",
+  },
+]
+`;
+
+exports[`RevisionsService createRevision creates a new revision 2`] = `
+"Index: test-note
+===================================================================
+--- test-note
++++ test-note
+@@ -1,1 +1,6 @@
+-old content
++---
++title: new title
++description: new description
++tags: [ "tag1" ]
++---
++new content
+"
+`;
+
 exports[`RevisionsService purgeRevisions purges the revision history 1`] = `
 "Index: test-note
 ===================================================================
@@ -44,4 +68,49 @@ exports[`RevisionsService removeOldRevisions remove all revisions except latest 
 +---
 +new content
 "
+`;
+
+exports[`RevisionsService toRevisionDto converts a revision 1`] = `
+{
+  "anonymousAuthorCount": 0,
+  "authorUsernames": [
+    "mockusername",
+  ],
+  "content": "mockContent",
+  "createdAt": 2020-05-20T09:58:00.000Z,
+  "description": "mockDescription",
+  "edits": [
+    {
+      "createdAt": 2020-03-04T22:32:00.000Z,
+      "endPos": 93,
+      "startPos": 34,
+      "updatedAt": 2021-02-10T12:23:00.000Z,
+      "username": "mockusername",
+    },
+  ],
+  "id": 3246,
+  "length": 1854,
+  "patch": "mockPatch",
+  "tags": [
+    "mockTag",
+  ],
+  "title": "mockTitle",
+}
+`;
+
+exports[`RevisionsService toRevisionMetadataDto converts a revision 1`] = `
+{
+  "anonymousAuthorCount": 0,
+  "authorUsernames": [
+    "mockusername",
+  ],
+  "createdAt": 2020-05-20T09:58:00.000Z,
+  "description": "mockDescription",
+  "id": 3246,
+  "length": 1854,
+  "tags": [
+    "mockTag",
+  ],
+  "title": "mockTitle",
+}
 `;

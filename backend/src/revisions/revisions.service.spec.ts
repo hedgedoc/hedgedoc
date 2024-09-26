@@ -265,23 +265,7 @@ describe('RevisionsService', () => {
           }),
         ]),
       });
-      expect(await service.toRevisionMetadataDto(revision))
-        .toMatchInlineSnapshot(`
-        {
-          "anonymousAuthorCount": 0,
-          "authorUsernames": [
-            "mockusername",
-          ],
-          "createdAt": 2020-05-20T09:58:00.000Z,
-          "description": "mockDescription",
-          "id": 3246,
-          "length": 1854,
-          "tags": [
-            "mockTag",
-          ],
-          "title": "mockTitle",
-        }
-      `);
+      expect(await service.toRevisionMetadataDto(revision)).toMatchSnapshot();
     });
   });
 
@@ -314,33 +298,7 @@ describe('RevisionsService', () => {
           }),
         ]),
       });
-      expect(await service.toRevisionDto(revision)).toMatchInlineSnapshot(`
-        {
-          "anonymousAuthorCount": 0,
-          "authorUsernames": [
-            "mockusername",
-          ],
-          "content": "mockContent",
-          "createdAt": 2020-05-20T09:58:00.000Z,
-          "description": "mockDescription",
-          "edits": [
-            {
-              "createdAt": 2020-03-04T22:32:00.000Z,
-              "endPos": 93,
-              "startPos": 34,
-              "updatedAt": 2021-02-10T12:23:00.000Z,
-              "username": "mockusername",
-            },
-          ],
-          "id": 3246,
-          "length": 1854,
-          "patch": "mockPatch",
-          "tags": [
-            "mockTag",
-          ],
-          "title": "mockTitle",
-        }
-      `);
+      expect(await service.toRevisionDto(revision)).toMatchSnapshot();
     });
   });
 
@@ -362,31 +320,11 @@ describe('RevisionsService', () => {
       const createdRevision = await service.createRevision(note, newContent);
       expect(createdRevision).not.toBeUndefined();
       expect(createdRevision?.content).toBe(newContent);
-      await expect(createdRevision?.tags).resolves.toMatchInlineSnapshot(`
-        [
-          Tag {
-            "name": "tag1",
-          },
-        ]
-      `);
+      await expect(createdRevision?.tags).resolves.toMatchSnapshot();
       expect(createdRevision?.title).toBe('new title');
       expect(createdRevision?.description).toBe('new description');
       await expect(createdRevision?.note).resolves.toBe(note);
-      expect(createdRevision?.patch).toMatchInlineSnapshot(`
-        "Index: test-note
-        ===================================================================
-        --- test-note
-        +++ test-note
-        @@ -1,1 +1,6 @@
-        -old content
-        +---
-        +title: new title
-        +description: new description
-        +tags: [ "tag1" ]
-        +---
-        +new content
-        "
-      `);
+      expect(createdRevision?.patch).toMatchSnapshot();
     });
 
     it("won't create a revision if content is unchanged", async () => {
