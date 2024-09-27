@@ -1825,9 +1825,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/autocomplete@npm:6.18.0":
-  version: 6.18.0
-  resolution: "@codemirror/autocomplete@npm:6.18.0"
+"@codemirror/autocomplete@npm:6.18.1":
+  version: 6.18.1
+  resolution: "@codemirror/autocomplete@npm:6.18.1"
   dependencies:
     "@codemirror/language": "npm:^6.0.0"
     "@codemirror/state": "npm:^6.0.0"
@@ -1838,19 +1838,19 @@ __metadata:
     "@codemirror/state": ^6.0.0
     "@codemirror/view": ^6.0.0
     "@lezer/common": ^1.0.0
-  checksum: 10c0/dbcd6a63bd097ba78cbfbcb7f0096a8fbb801a3cabab7d6ff2c0e5b5f9af57b7609837d3a6104d1739bf021795e1204dd9423716e1a6517ab4323e4e5a54c96d
+  checksum: 10c0/30bf98685feccef3e643472c88ff67f53c31bdaf15e904a5207d499e08229fe170cf4f8322192ba622ec8ffbf7f5003e865a77798819f6530c5b7a4abafdc879
   languageName: node
   linkType: hard
 
-"@codemirror/commands@npm:6.6.1":
-  version: 6.6.1
-  resolution: "@codemirror/commands@npm:6.6.1"
+"@codemirror/commands@npm:6.6.2":
+  version: 6.6.2
+  resolution: "@codemirror/commands@npm:6.6.2"
   dependencies:
     "@codemirror/language": "npm:^6.0.0"
     "@codemirror/state": "npm:^6.4.0"
     "@codemirror/view": "npm:^6.27.0"
     "@lezer/common": "npm:^1.1.0"
-  checksum: 10c0/94cdd70db4ff43f2e43ef0898a16cbb29ec26f35798eee6d56bd3802563b0ae242ca1a8d8ac52e5573077aaec27cd20ecb77b1f1ea6be5b5224439b3cb94601b
+  checksum: 10c0/e2e5e40c9776087bba3d951b8f20077a5382e80e178c069253e786f297af8ab136a18d57964364d2d3c362900e3a1e6a0ab5dfff50f0791fc59bd93ad530eb9d
   languageName: node
   linkType: hard
 
@@ -2145,9 +2145,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/language@npm:6.10.2":
-  version: 6.10.2
-  resolution: "@codemirror/language@npm:6.10.2"
+"@codemirror/language@npm:6.10.3":
+  version: 6.10.3
+  resolution: "@codemirror/language@npm:6.10.3"
   dependencies:
     "@codemirror/state": "npm:^6.0.0"
     "@codemirror/view": "npm:^6.23.0"
@@ -2155,7 +2155,7 @@ __metadata:
     "@lezer/highlight": "npm:^1.0.0"
     "@lezer/lr": "npm:^1.0.0"
     style-mod: "npm:^4.0.0"
-  checksum: 10c0/ac9b24dffb3aa6f502283dfe2bc4b4038f9fecbed9450fc4a72d408b9a09dc254f9af735b98091531829da163eb116e4cfa95aeacacff4fd36ef95cd9a54c4a6
+  checksum: 10c0/3cb1c05c9466deb5082470d0276c18a0445c25498de04622c4bd08e96487110d23a6dffb91913685a1f0f6c34159848fb61a32829b17b75fce1fe7429e377b6d
   languageName: node
   linkType: hard
 
@@ -2168,14 +2168,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/lint@npm:6.8.1":
-  version: 6.8.1
-  resolution: "@codemirror/lint@npm:6.8.1"
+"@codemirror/lint@npm:6.8.2":
+  version: 6.8.2
+  resolution: "@codemirror/lint@npm:6.8.2"
   dependencies:
     "@codemirror/state": "npm:^6.0.0"
     "@codemirror/view": "npm:^6.0.0"
     crelt: "npm:^1.0.5"
-  checksum: 10c0/3e7ca352fe08dd11cea4f3b5cdccff2fd08afb5393fdaf98ac659ef368d9169b4d42618c4f856168910a5d1bae7aa1ab6c72020be85b56ccdeb7f678ceb65b6d
+  checksum: 10c0/a5b08c39c2ac5201bb832e6dc7d76002ac133daae839da3aeb2234be25a7d9b891c65ade582bb4bc8406f29840d17daddcade9f23fa3847129bb2e516904c0e6
   languageName: node
   linkType: hard
 
@@ -2624,12 +2624,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/frontend@workspace:frontend"
   dependencies:
-    "@codemirror/autocomplete": "npm:6.18.0"
-    "@codemirror/commands": "npm:6.6.1"
+    "@codemirror/autocomplete": "npm:6.18.1"
+    "@codemirror/commands": "npm:6.6.2"
     "@codemirror/lang-markdown": "npm:6.2.5"
-    "@codemirror/language": "npm:6.10.2"
+    "@codemirror/language": "npm:6.10.3"
     "@codemirror/language-data": "npm:6.5.1"
-    "@codemirror/lint": "npm:6.8.1"
+    "@codemirror/lint": "npm:6.8.2"
     "@codemirror/state": "npm:6.4.1"
     "@codemirror/theme-one-dark": "npm:6.1.2"
     "@codemirror/view": "npm:6.33.0"
@@ -2670,7 +2670,7 @@ __metadata:
     "@types/ws": "npm:8.5.10"
     "@typescript-eslint/eslint-plugin": "npm:6.21.0"
     "@typescript-eslint/parser": "npm:6.21.0"
-    "@uiw/react-codemirror": "npm:4.23.0"
+    "@uiw/react-codemirror": "npm:4.23.3"
     abcjs: "npm:6.4.2"
     bootstrap: "npm:5.3.3"
     copy-webpack-plugin: "npm:12.0.2"
@@ -5835,9 +5835,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uiw/codemirror-extensions-basic-setup@npm:4.23.0":
-  version: 4.23.0
-  resolution: "@uiw/codemirror-extensions-basic-setup@npm:4.23.0"
+"@uiw/codemirror-extensions-basic-setup@npm:4.23.3":
+  version: 4.23.3
+  resolution: "@uiw/codemirror-extensions-basic-setup@npm:4.23.3"
   dependencies:
     "@codemirror/autocomplete": "npm:^6.0.0"
     "@codemirror/commands": "npm:^6.0.0"
@@ -5854,19 +5854,19 @@ __metadata:
     "@codemirror/search": ">=6.0.0"
     "@codemirror/state": ">=6.0.0"
     "@codemirror/view": ">=6.0.0"
-  checksum: 10c0/951ce6f6b771c3a6c61a3e031e59e1a20bad3f9f36815743ca96a1c90bdb6b1f9bc956beda41d61c628e196e8c333512fa9e8d5ca3b5121901d294db926de31f
+  checksum: 10c0/27884755aa0c345709a0f03cbc96d1ceb19a15cd427a8d279a7dca890782bb9b6792578f0f2656cdae5dccd58d098279ba0075c529bc61eadd52a577852f924a
   languageName: node
   linkType: hard
 
-"@uiw/react-codemirror@npm:4.23.0":
-  version: 4.23.0
-  resolution: "@uiw/react-codemirror@npm:4.23.0"
+"@uiw/react-codemirror@npm:4.23.3":
+  version: 4.23.3
+  resolution: "@uiw/react-codemirror@npm:4.23.3"
   dependencies:
     "@babel/runtime": "npm:^7.18.6"
     "@codemirror/commands": "npm:^6.1.0"
     "@codemirror/state": "npm:^6.1.1"
     "@codemirror/theme-one-dark": "npm:^6.0.0"
-    "@uiw/codemirror-extensions-basic-setup": "npm:4.23.0"
+    "@uiw/codemirror-extensions-basic-setup": "npm:4.23.3"
     codemirror: "npm:^6.0.0"
   peerDependencies:
     "@babel/runtime": ">=7.11.0"
@@ -5876,7 +5876,7 @@ __metadata:
     codemirror: ">=6.0.0"
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 10c0/3bdd3bc442624f6f1c6b00b5cb447c9a57c2ccfce3b0813b8631a365b5b7408957eb1a6ac64813520658273ff18fb189a7097df0574905d672139d25f8c9259e
+  checksum: 10c0/bd430615caef301c320e8f2337e0110b3a0d43c411039ad22ffad775e233ce9abc3f8395a991932791d14089305a7c8384dc33b2c793ed7b556247686337b303
   languageName: node
   linkType: hard
 
