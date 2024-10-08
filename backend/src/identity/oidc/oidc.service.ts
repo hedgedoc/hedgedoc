@@ -9,6 +9,7 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
 import { Client, generators, Issuer, UserinfoResponse } from 'openid-client';
 
 import appConfiguration, { AppConfig } from '../../config/app.config';
@@ -43,10 +44,7 @@ export class OidcService {
     @Inject(appConfiguration.KEY)
     private appConfig: AppConfig,
   ) {
-    this.initializeAllClients();
-    // TODO The previous line should be regularly called again (@nestjs/cron?).
-    // If the HedgeDoc instance is running for a long time,
-    // the OIDC metadata or keys might change and the client needs to be reinitialized.
+    this.updateClientConfigs();
     this.logger.setContext(OidcService.name);
     this.logger.debug('OIDC service initialized', 'constructor');
   }
@@ -54,7 +52,7 @@ export class OidcService {
   /**
    * Initializes clients for all OIDC configurations by fetching their metadata and storing them in the clientConfigs map.
    */
-  private initializeAllClients(): void {
+  private updateClientConfigs(): void {
     this.authConfig.oidc.forEach((oidcConfig) => {
       this.fetchClientConfig(oidcConfig)
         .then((config) => {
@@ -62,9 +60,9 @@ export class OidcService {
         })
         .catch((error) => {
           this.logger.error(
-            `Failed to initialize OIDC client "${oidcConfig.identifier}": ${String(error)}`,
+            `Failed to update OIDC client config "${oidcConfig.identifier}": ${String(error)}`,
             undefined,
-            'initializeClient',
+            'updateClientConfigs',
           );
         });
     });
@@ -108,6 +106,12 @@ export class OidcService {
       redirectUri,
       config: oidcConfig,
     };
+  }
+
+  // Update all client configs every sunday on 3:30 AM
+  @Cron('30 3 * * 0')
+  handleCronUpdateClientConfigs(): void {
+    this.updateClientConfigs();
   }
 
   /**
@@ -167,15 +171,13 @@ export class OidcService {
     const params = client.callbackParams(request);
     const code = request.session.oidcLoginCode;
     const isAutodiscovered = clientConfig.config.authorizeUrl === undefined;
-    const tokenSet = isAutodiscovered
-      ? await client.callback(clientConfig.redirectUri, params, {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          code_verifier: code,
-        })
-      : await client.oauthCallback(clientConfig.redirectUri, params, {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          code_verifier: code,
-        });
+    const callbackMethod = isAutodiscovered
+      ? client.callback.bind(this)
+      : client.oauthCallback.bind(this);
+    const tokenSet = await callbackMethod(clientConfig.redirectUri, params, {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      code_verifier: code,
+    });
 
     request.session.oidcIdToken = tokenSet.id_token;
     const userInfoResponse = await client.userinfo(tokenSet);
