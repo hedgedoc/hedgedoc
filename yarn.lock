@@ -2592,9 +2592,9 @@ __metadata:
     "@types/express": "npm:5.0.0"
     "@types/express-session": "npm:1.18.0"
     "@types/jest": "npm:29.5.13"
-    "@types/markdown-it": "npm:13.0.7"
+    "@types/markdown-it": "npm:13.0.8"
     "@types/mysql": "npm:2.15.26"
-    "@types/node": "npm:20.16.2"
+    "@types/node": "npm:20.16.11"
     "@types/node-fetch": "npm:2.6.11"
     "@types/pg": "npm:8.11.10"
     "@types/source-map-support": "npm:0.5.10"
@@ -2731,11 +2731,11 @@ __metadata:
     "@types/jest": "npm:29.5.13"
     "@types/katex": "npm:0.16.7"
     "@types/luxon": "npm:3.4.2"
-    "@types/markdown-it": "npm:13.0.7"
+    "@types/markdown-it": "npm:13.0.8"
     "@types/markdown-it-container": "npm:2.0.9"
     "@types/markdown-it-plantuml": "npm:1.4.4"
-    "@types/node": "npm:20.16.2"
-    "@types/react": "npm:18.3.5"
+    "@types/node": "npm:20.16.11"
+    "@types/react": "npm:18.3.11"
     "@types/react-dom": "npm:18.3.1"
     "@types/ws": "npm:8.5.12"
     "@typescript-eslint/eslint-plugin": "npm:8.14.0"
@@ -2838,7 +2838,7 @@ __metadata:
   dependencies:
     "@jest/globals": "npm:29.7.0"
     "@jest/types": "npm:29.6.3"
-    "@types/react": "npm:18.3.5"
+    "@types/react": "npm:18.3.11"
     "@types/react-dom": "npm:18.3.1"
     "@typescript-eslint/eslint-plugin": "npm:8.14.0"
     "@typescript-eslint/parser": "npm:8.14.0"
@@ -2866,7 +2866,7 @@ __metadata:
   dependencies:
     "@jest/types": "npm:29.6.3"
     "@mrdrogdrog/optional": "npm:1.2.1"
-    "@types/markdown-it": "npm:13.0.7"
+    "@types/markdown-it": "npm:13.0.8"
     "@typescript-eslint/eslint-plugin": "npm:8.14.0"
     "@typescript-eslint/parser": "npm:8.14.0"
     eslint: "npm:8.57.1"
@@ -5758,7 +5758,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/linkify-it@npm:*":
+"@types/linkify-it@npm:*, @types/linkify-it@npm:^3":
   version: 3.0.5
   resolution: "@types/linkify-it@npm:3.0.5"
   checksum: 10c0/696e09975991c649ba37c5585714929fdebf5c64a8bfb99910613ef838337dbbba6c608fccdfa03d6347432586ef12e139bc0e947ae6fec569096fef5cc1c550
@@ -5790,7 +5790,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/markdown-it@npm:*, @types/markdown-it@npm:13.0.7":
+"@types/markdown-it@npm:*":
   version: 13.0.7
   resolution: "@types/markdown-it@npm:13.0.7"
   dependencies:
@@ -5800,7 +5800,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/mdurl@npm:*":
+"@types/markdown-it@npm:13.0.8":
+  version: 13.0.8
+  resolution: "@types/markdown-it@npm:13.0.8"
+  dependencies:
+    "@types/linkify-it": "npm:^3"
+    "@types/mdurl": "npm:^1"
+  checksum: 10c0/6d4eaa696c7780726da021618964a9a5cd5891e5771ceca3953819ea5df7f8baeb55a32b4f3b23f1609964a6700c386470b85b105c23c3dfb5eca0bdacc768bf
+  languageName: node
+  linkType: hard
+
+"@types/mdurl@npm:*, @types/mdurl@npm:^1":
   version: 1.0.5
   resolution: "@types/mdurl@npm:1.0.5"
   checksum: 10c0/8991c781eb94fb3621e48e191251a94057908fc14be60f52bdd7c48684af923ffa77559ea979450a0475f85c08f8a472f99ff9c2ca4308961b9b9d35fd7584f7
@@ -5847,12 +5857,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.16.2":
-  version: 20.16.2
-  resolution: "@types/node@npm:20.16.2"
+"@types/node@npm:20.16.11":
+  version: 20.16.11
+  resolution: "@types/node@npm:20.16.11"
   dependencies:
     undici-types: "npm:~6.19.2"
-  checksum: 10c0/74fac185dbd2c6b301cde75747c1cd6c9ca1ad7266147ea107a798837f40b8a05991177ebd7925fc7450d51334096259d186afad6e0d22864b7c97f8afef6ba7
+  checksum: 10c0/bba43f447c3c80548513954dae174e18132e9149d572c09df4a282772960d33e229d05680fb5364997c03489c22fe377d1dbcd018a3d4ff1cfbcfcdaa594a9c3
   languageName: node
   linkType: hard
 
@@ -5913,13 +5923,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.3.5":
-  version: 18.3.5
-  resolution: "@types/react@npm:18.3.5"
+"@types/react@npm:18.3.11":
+  version: 18.3.11
+  resolution: "@types/react@npm:18.3.11"
   dependencies:
     "@types/prop-types": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 10c0/548b1d3d7c2f0242fbfdbbd658731b4ce69a134be072fa83e6ab516f2840402a3f20e3e7f72e95133b23d4880ef24a6d864050dc8e1f7c68f39fa87ca8445917
+  checksum: 10c0/ce80512246ca5bda69db85b9f4f1835189334acfb6b2c4f3eda8cabff1ff1a3ea9ce4f3b895bdbc18c94140aa45592331aa3fdeb557f525c1b048de7ce84fc0e
   languageName: node
   linkType: hard
 
