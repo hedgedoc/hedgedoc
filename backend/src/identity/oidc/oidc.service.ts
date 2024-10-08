@@ -187,17 +187,14 @@ export class OidcService {
     const code = request.session.oidcLoginCode;
     const state = request.session.oidcLoginState;
     const isAutodiscovered = clientConfig.config.authorizeUrl === undefined;
-    const tokenSet = isAutodiscovered
-      ? await client.callback(clientConfig.redirectUri, params, {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          code_verifier: code,
-          state,
-        })
-      : await client.oauthCallback(clientConfig.redirectUri, params, {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          code_verifier: code,
-          state,
-        });
+    const callbackMethod = isAutodiscovered
+      ? client.callback.bind(this)
+      : client.oauthCallback.bind(this);
+    const tokenSet = await callbackMethod(clientConfig.redirectUri, params, {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      code_verifier: code,
+      state,
+    });
 
     request.session.oidcIdToken = tokenSet.id_token;
     const userInfoResponse = await client.userinfo(tokenSet);
