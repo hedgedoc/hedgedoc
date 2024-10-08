@@ -2515,17 +2515,17 @@ __metadata:
     "@types/cookie": "npm:0.6.0"
     "@types/cookie-signature": "npm:1.1.2"
     "@types/diff": "npm:5.2.2"
-    "@types/express": "npm:4.17.21"
+    "@types/express": "npm:5.0.0"
     "@types/express-session": "npm:1.18.0"
     "@types/jest": "npm:29.5.12"
-    "@types/markdown-it": "npm:13.0.7"
+    "@types/markdown-it": "npm:14.1.2"
     "@types/mysql": "npm:2.15.25"
     "@types/node": "npm:20.16.2"
     "@types/node-fetch": "npm:2.6.11"
     "@types/pg": "npm:8.11.0"
     "@types/source-map-support": "npm:0.5.10"
     "@types/supertest": "npm:2.0.16"
-    "@types/uuid": "npm:9.0.8"
+    "@types/uuid": "npm:10.0.0"
     "@types/ws": "npm:8.5.10"
     "@typescript-eslint/eslint-plugin": "npm:6.21.0"
     "@typescript-eslint/parser": "npm:6.21.0"
@@ -2658,7 +2658,7 @@ __metadata:
     "@types/jest": "npm:29.5.12"
     "@types/katex": "npm:0.16.7"
     "@types/luxon": "npm:3.4.2"
-    "@types/markdown-it": "npm:13.0.7"
+    "@types/markdown-it": "npm:14.1.2"
     "@types/markdown-it-container": "npm:2.0.9"
     "@types/markdown-it-plantuml": "npm:1.4.4"
     "@types/node": "npm:20.16.2"
@@ -2666,7 +2666,7 @@ __metadata:
     "@types/react-dom": "npm:18.3.0"
     "@types/sass": "npm:1.45.0"
     "@types/testing-library__jest-dom": "npm:5.14.9"
-    "@types/uuid": "npm:9.0.8"
+    "@types/uuid": "npm:10.0.0"
     "@types/ws": "npm:8.5.10"
     "@typescript-eslint/eslint-plugin": "npm:6.21.0"
     "@typescript-eslint/parser": "npm:6.21.0"
@@ -2796,7 +2796,7 @@ __metadata:
   dependencies:
     "@jest/types": "npm:29.6.3"
     "@mrdrogdrog/optional": "npm:1.2.1"
-    "@types/markdown-it": "npm:13.0.7"
+    "@types/markdown-it": "npm:14.1.2"
     "@typescript-eslint/eslint-plugin": "npm:6.21.0"
     "@typescript-eslint/parser": "npm:6.21.0"
     eslint: "npm:8.57.0"
@@ -5063,6 +5063,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/express-serve-static-core@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "@types/express-serve-static-core@npm:5.0.0"
+  dependencies:
+    "@types/node": "npm:*"
+    "@types/qs": "npm:*"
+    "@types/range-parser": "npm:*"
+    "@types/send": "npm:*"
+  checksum: 10c0/671a67a5b367e19aa634dcd515364212490f10efb938fc1097082085a883ccb11c81ec96a3c2b5cc67d5756e5cb1ccbf1de192806f8193bb7de341994beb4ea6
+  languageName: node
+  linkType: hard
+
 "@types/express-session@npm:1.18.0, @types/express-session@npm:^1.15.5":
   version: 1.18.0
   resolution: "@types/express-session@npm:1.18.0"
@@ -5072,7 +5084,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express@npm:*, @types/express@npm:4.17.21":
+"@types/express@npm:*":
   version: 4.17.21
   resolution: "@types/express@npm:4.17.21"
   dependencies:
@@ -5081,6 +5093,18 @@ __metadata:
     "@types/qs": "npm:*"
     "@types/serve-static": "npm:*"
   checksum: 10c0/12e562c4571da50c7d239e117e688dc434db1bac8be55613294762f84fd77fbd0658ccd553c7d3ab02408f385bc93980992369dd30e2ecd2c68c358e6af8fabf
+  languageName: node
+  linkType: hard
+
+"@types/express@npm:5.0.0":
+  version: 5.0.0
+  resolution: "@types/express@npm:5.0.0"
+  dependencies:
+    "@types/body-parser": "npm:*"
+    "@types/express-serve-static-core": "npm:^5.0.0"
+    "@types/qs": "npm:*"
+    "@types/serve-static": "npm:*"
+  checksum: 10c0/0d74b53aefa69c3b3817ee9b5145fd50d7dbac52a8986afc2d7500085c446656d0b6dc13158c04e2d9f18f4324d4d93b0452337c5ff73dd086dca3e4ff11f47b
   languageName: node
   linkType: hard
 
@@ -5195,6 +5219,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/linkify-it@npm:^5":
+  version: 5.0.0
+  resolution: "@types/linkify-it@npm:5.0.0"
+  checksum: 10c0/7bbbf45b9dde17bf3f184fee585aef0e7342f6954f0377a24e4ff42ab5a85d5b806aaa5c8d16e2faf2a6b87b2d94467a196b7d2b85c9c7de2f0eaac5487aaab8
+  languageName: node
+  linkType: hard
+
 "@types/luxon@npm:3.4.2, @types/luxon@npm:~3.4.0":
   version: 3.4.2
   resolution: "@types/luxon@npm:3.4.2"
@@ -5220,7 +5251,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/markdown-it@npm:*, @types/markdown-it@npm:13.0.7":
+"@types/markdown-it@npm:*":
   version: 13.0.7
   resolution: "@types/markdown-it@npm:13.0.7"
   dependencies:
@@ -5230,10 +5261,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/markdown-it@npm:14.1.2":
+  version: 14.1.2
+  resolution: "@types/markdown-it@npm:14.1.2"
+  dependencies:
+    "@types/linkify-it": "npm:^5"
+    "@types/mdurl": "npm:^2"
+  checksum: 10c0/34f709f0476bd4e7b2ba7c3341072a6d532f1f4cb6f70aef371e403af8a08a7c372ba6907ac426bc618d356dab660c5b872791ff6c1ead80c483e0d639c6f127
+  languageName: node
+  linkType: hard
+
 "@types/mdurl@npm:*":
   version: 1.0.5
   resolution: "@types/mdurl@npm:1.0.5"
   checksum: 10c0/8991c781eb94fb3621e48e191251a94057908fc14be60f52bdd7c48684af923ffa77559ea979450a0475f85c08f8a472f99ff9c2ca4308961b9b9d35fd7584f7
+  languageName: node
+  linkType: hard
+
+"@types/mdurl@npm:^2":
+  version: 2.0.0
+  resolution: "@types/mdurl@npm:2.0.0"
+  checksum: 10c0/cde7bb571630ed1ceb3b92a28f7b59890bb38b8f34cd35326e2df43eebfc74985e6aa6fd4184e307393bad8a9e0783a519a3f9d13c8e03788c0f98e5ec869c5e
   languageName: node
   linkType: hard
 
@@ -5470,10 +5518,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/uuid@npm:9.0.8":
-  version: 9.0.8
-  resolution: "@types/uuid@npm:9.0.8"
-  checksum: 10c0/b411b93054cb1d4361919579ef3508a1f12bf15b5fdd97337d3d351bece6c921b52b6daeef89b62340fd73fd60da407878432a1af777f40648cbe53a01723489
+"@types/uuid@npm:10.0.0":
+  version: 10.0.0
+  resolution: "@types/uuid@npm:10.0.0"
+  checksum: 10c0/9a1404bf287164481cb9b97f6bb638f78f955be57c40c6513b7655160beb29df6f84c915aaf4089a1559c216557dc4d2f79b48d978742d3ae10b937420ddac60
   languageName: node
   linkType: hard
 
