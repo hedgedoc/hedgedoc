@@ -44,6 +44,14 @@ Curious about the new look and feel of HedgeDoc 2? We provide a demo of the alph
 If you want to try it out on your own devices, visit the [HedgeDoc 2 docs](https://docs.hedgedoc.dev).
 But be aware that these may change over time.
 
+## Self-Hosting
+
+### Elestio
+
+You can deploy HedgeDoc on Elestio using one-click deployment. Elestio takes care of version updates, maintenance, security, backups, etc. Additionally, Elestio supports HedgeDoc by providing revenue share so go ahead and click below to deploy and start using.
+
+[![Deploy on Elestio](https://elest.io/images/logos/deploy-to-elestio-btn.png)](https://elest.io/open-source/hedgedoc)
+
 ## Contributions
 
 We welcome contributions!  
