@@ -17,9 +17,34 @@ export function convertInlineStyleToMap(
     return {}
   }
 
-  return inlineStyle
-    .split(';')
-    .reduce<Record<string, string>>((styleObject, stylePropertyValue) => {
+  const statements: string[] = []
+  let i = -1
+  let offset = 0
+  do {
+    i++
+    let curr = inlineStyle[i]
+    let prev = inlineStyle[i - 1]
+
+    if ((curr === "'" || curr === '"') && prev !== '\\') {
+      const quote = curr
+      do {
+        i++
+        curr = inlineStyle[i]
+        prev = inlineStyle[i - 1]
+      } while (!(curr === quote && prev !== '\\') && i < inlineStyle.length)
+      continue
+    }
+
+    if (curr === ';' && prev !== '\\') {
+      statements.push(inlineStyle.slice(offset, i))
+      offset = i + 1
+      continue
+    }
+  } while (i < inlineStyle.length)
+  statements.push(inlineStyle.slice(offset, inlineStyle.length))
+
+  return statements.reduce<Record<string, string>>(
+    (styleObject, stylePropertyValue) => {
       // extract the style property name and value
       const [property, value] = stylePropertyValue
         .split(/^([^:]+):/)
@@ -45,5 +70,7 @@ export function convertInlineStyleToMap(
       styleObject[replacedProperty] = value
 
       return styleObject
-    }, {})
+    },
+    {}
+  )
 }
