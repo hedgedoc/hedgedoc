@@ -43,6 +43,9 @@ export interface SessionState {
   /** The (random) OIDC code for verifying that OIDC responses match the OIDC requests */
   oidcLoginCode?: string;
 
+  /** The (random) OIDC state for verifying that OIDC responses match the OIDC requests */
+  oidcLoginState?: string;
+
   /** The user id as provided from the external auth provider, required for matching to a HedgeDoc identity */
   providerUserId?: string;
 
