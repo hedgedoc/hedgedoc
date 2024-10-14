@@ -120,13 +120,27 @@ export class OidcService {
   }
 
   /**
+   * Generates a random state for the OIDC login.
+   *
+   * @returns {string} The generated state.
+   */
+  generateState(): string {
+    return generators.state();
+  }
+
+  /**
    * Generates the authorization URL for the given OIDC identifier and code.
    *
    * @param {string} oidcIdentifier The identifier of the OIDC configuration
    * @param {string} code The code verifier generated for the login
+   * @param {string} state The state generated for the login
    * @returns {string} The generated authorization URL
    */
-  getAuthorizationUrl(oidcIdentifier: string, code: string): string {
+  getAuthorizationUrl(
+    oidcIdentifier: string,
+    code: string,
+    state: string,
+  ): string {
     const clientConfig = this.clientConfigs.get(oidcIdentifier);
     if (!clientConfig) {
       throw new NotFoundException(
@@ -139,6 +153,7 @@ export class OidcService {
       /* eslint-disable @typescript-eslint/naming-convention */
       code_challenge: generators.codeChallenge(code),
       code_challenge_method: 'S256',
+      state,
       /* eslint-enable @typescript-eslint/naming-convention */
     });
   }
@@ -166,15 +181,18 @@ export class OidcService {
     const oidcConfig = clientConfig.config;
     const params = client.callbackParams(request);
     const code = request.session.oidcLoginCode;
+    const state = request.session.oidcLoginState;
     const isAutodiscovered = clientConfig.config.authorizeUrl === undefined;
     const tokenSet = isAutodiscovered
       ? await client.callback(clientConfig.redirectUri, params, {
           // eslint-disable-next-line @typescript-eslint/naming-convention
           code_verifier: code,
+          state,
         })
       : await client.oauthCallback(clientConfig.redirectUri, params, {
           // eslint-disable-next-line @typescript-eslint/naming-convention
           code_verifier: code,
+          state,
         });
 
     request.session.oidcIdToken = tokenSet.id_token;
@@ -214,6 +232,7 @@ export class OidcService {
     request.session.newUserData = newUserData;
     // Cleanup: The code isn't necessary anymore
     request.session.oidcLoginCode = undefined;
+    request.session.oidcLoginState = undefined;
     return newUserData;
   }
 

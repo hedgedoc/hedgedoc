@@ -41,12 +41,15 @@ export class OidcController {
     @Param('oidcIdentifier') oidcIdentifier: string,
   ): { url: string } {
     const code = this.oidcService.generateCode();
+    const state = this.oidcService.generateState();
     request.session.oidcLoginCode = code;
+    request.session.oidcLoginState = state;
     request.session.authProviderType = ProviderType.OIDC;
     request.session.authProviderIdentifier = oidcIdentifier;
     const authorizationUrl = this.oidcService.getAuthorizationUrl(
       oidcIdentifier,
       code,
+      state,
     );
     return { url: authorizationUrl };
   }
