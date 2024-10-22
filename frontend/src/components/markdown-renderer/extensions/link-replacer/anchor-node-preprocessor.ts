@@ -39,7 +39,7 @@ export class AnchorNodePreprocessor extends TravelerNodeProcessor {
 
     try {
       node.attribs.href = new URL(url, this.baseUrl).toString()
-    } catch (e) {
+    } catch {
       node.attribs.href = url
     }
   }
