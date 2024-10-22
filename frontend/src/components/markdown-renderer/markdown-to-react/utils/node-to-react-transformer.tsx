@@ -74,7 +74,8 @@ export class NodeToReactTransformer {
    * @return the created react element
    */
   private translateElementToReactElement(element: Element, index: number | string): ValidReactDomElement {
-    const elementKey = this.calculateUniqueKey(element).orElseGet(() => (-index).toString())
+    const numericIndex = typeof index === 'number' ? index : Number.parseInt(index)
+    const elementKey = this.calculateUniqueKey(element).orElseGet(() => (-numericIndex).toString())
     const replacement = this.findElementReplacement(element, elementKey)
     if (replacement === null) {
       return null

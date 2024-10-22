@@ -28,7 +28,7 @@ describe('fetch motd', () => {
   ): jest.SpyInstance<Promise<Response>> => {
     return jest.spyOn(global, 'fetch').mockImplementation((url: RequestInfo | URL) => {
       if (url !== motdUrl) {
-        return Promise.reject('wrong url')
+        return Promise.reject(new Error('wrong url'))
       }
       return Promise.resolve(
         Mock.of<Response>({
