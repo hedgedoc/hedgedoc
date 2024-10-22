@@ -29,7 +29,7 @@ export function parseUrl(url: string | undefined): Optional<URL> {
 function createOptionalUrl(url: string | undefined): Optional<URL> {
   try {
     return Optional.ofNullable(url).map((value) => new URL(value))
-  } catch (error) {
+  } catch {
     return Optional.empty()
   }
 }
