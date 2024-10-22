@@ -46,7 +46,7 @@ describe('Copy to clipboard button', () => {
 
   const mockClipboard = (copyIsSuccessful: boolean): jest.Mock => {
     const writeTextToClipboardSpy = jest.fn(() =>
-      copyIsSuccessful ? Promise.resolve() : Promise.reject('mocked clipboard failed')
+      copyIsSuccessful ? Promise.resolve() : Promise.reject(new Error('mocked clipboard failed'))
     )
     Object.assign(global.navigator, {
       clipboard: {

@@ -44,7 +44,7 @@ export interface InitTask {
 const fetchUserInformation = async (): Promise<void> => {
   try {
     await fetchAndSetUser()
-  } catch (error) {
+  } catch {
     logger.error("Couldn't load user. Probably not logged in.")
   }
 }

@@ -23,8 +23,8 @@ export const readFile = async (file: Blob, fileReaderMode: FileContentFormat): P
     fileReader.addEventListener('load', () => {
       resolve(fileReader.result as string)
     })
-    fileReader.addEventListener('error', (error) => {
-      reject(error)
+    fileReader.addEventListener('error', (errorObj) => {
+      reject(new Error(JSON.stringify(errorObj)))
     })
     switch (fileReaderMode) {
       case FileContentFormat.DATA_URL:
