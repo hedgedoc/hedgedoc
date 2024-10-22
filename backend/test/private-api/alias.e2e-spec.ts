@@ -220,7 +220,7 @@ describe('Alias', () => {
         await testSetup.aliasService.removeAlias(note, newAlias);
         // Ignore errors on removing alias
         // eslint-disable-next-line no-empty
-      } catch (e) {}
+      } catch {}
       await testSetup.notesService.deleteNote(note);
     });
 
