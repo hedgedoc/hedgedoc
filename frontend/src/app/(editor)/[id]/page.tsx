@@ -27,7 +27,7 @@ const DirectLinkFallback = async ({ params }: PageProps) => {
     if (noteData.metadata.version !== 1) {
       notFound()
     }
-  } catch (error) {
+  } catch {
     notFound()
   }
 

@@ -32,7 +32,7 @@ export const expectFetch = (
       Mock.of<Response>({
         status: requestStatusCode,
         statusText: mapCodeToText(requestStatusCode),
-        json: jest.fn(() => (responseBody ? Promise.resolve(responseBody) : Promise.reject()))
+        json: jest.fn(() => (responseBody ? Promise.resolve(responseBody) : Promise.reject(new Error())))
       })
     )
   }) as typeof global.fetch

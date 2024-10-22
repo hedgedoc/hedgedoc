@@ -23,7 +23,11 @@ export const Redirect: React.FC<RedirectProps> = ({ to, replace }) => {
   const router = useRouter()
 
   useEffect(() => {
-    replace ? router.replace(to) : router.push(to)
+    if (replace) {
+      router.replace(to)
+    } else {
+      router.push(to)
+    }
   }, [replace, router, to])
 
   return (

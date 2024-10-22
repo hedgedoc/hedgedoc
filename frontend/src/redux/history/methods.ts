@@ -96,7 +96,7 @@ export const toggleHistoryEntryPinning = async (noteId: string): Promise<void> =
   const state = store.getState().history
   const entryToUpdate = state.find((entry) => entry.identifier === noteId)
   if (!entryToUpdate) {
-    return Promise.reject(`History entry for note '${noteId}' not found`)
+    return Promise.reject(new Error(`History entry for note '${noteId}' not found`))
   }
   const updatedEntry = {
     ...entryToUpdate,
