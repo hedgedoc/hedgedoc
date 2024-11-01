@@ -54,7 +54,7 @@
     "@jest/types": "29.6.3",
     "@mrdrogdrog/optional": "1.2.1",
     "@types/js-yaml": "4.0.9",
-    "@types/ws": "8.5.10",
+    "@types/ws": "8.5.12",
     "@typescript-eslint/eslint-plugin": "6.21.0",
     "@typescript-eslint/parser": "6.21.0",
     "eslint": "8.57.0",
