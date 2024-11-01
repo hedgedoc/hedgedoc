@@ -57,9 +57,15 @@ const initialConfig: FrontendConfig = {
 let currentConfig: FrontendConfig = initialConfig
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
-  // This is shorter than storing the return boolean in a variable and then calling respondToTestRequest with if
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  respondToMatchingRequest<FrontendConfig>(HttpMethod.GET, req, res, currentConfig, 200, false) ||
+  const responseSuccessful = respondToMatchingRequest<FrontendConfig>(
+    HttpMethod.GET,
+    req,
+    res,
+    currentConfig,
+    200,
+    false
+  )
+  if (!responseSuccessful) {
     respondToTestRequest<FrontendConfig>(req, res, () => {
       currentConfig = {
         ...initialConfig,
@@ -67,6 +73,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
       }
       return currentConfig
     })
+  }
 }
 
 export default handler
