@@ -5,7 +5,7 @@ exports[`YoutubeFrame renders a click shield 1`] = `
   <span>
     This is a click shield for 
     <span
-      class="ratio ratio-16x9 d-inline-block"
+      class="ratio ratio-16x9 d-inline-block d-print-none"
     >
       <iframe
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"

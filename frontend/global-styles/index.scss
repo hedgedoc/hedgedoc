@@ -17,6 +17,7 @@
 @import "./github-markdown";
 @import "./markdown-tweaks";
 @import "./reveal";
+@import "./print";
 
 .text-black, body[data-bs-theme=dark] .text-black {
   color: $black;

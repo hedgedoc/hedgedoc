@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -42,9 +42,10 @@ export const VimeoFrame: React.FC<IdProps> = ({ id }) => {
       hoverIcon={IconVimeo}
       targetDescription={'Vimeo'}
       onImageFetch={getPreviewImageLink}
+      fallbackLink={`https://vimeo.com/${id}`}
       fallbackBackgroundColor={'#00adef'}
       data-cypress-id={'click-shield-vimeo'}>
-      <span className={'ratio ratio-16x9 d-inline-block'}>
+      <span className={'ratio ratio-16x9 d-inline-block d-print-none'}>
         <iframe
           title={`vimeo video of ${id}`}
           src={`https://player.vimeo.com/video/${id}?autoplay=1`}

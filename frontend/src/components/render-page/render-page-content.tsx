@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -17,6 +17,8 @@ import { countWords } from './word-counter'
 import type { SlideOptions } from '@hedgedoc/commons'
 import { EventEmitter2 } from 'eventemitter2'
 import React, { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
+import { setPrintMode } from '../../redux/print-mode/methods'
+import { usePrintKeyboardShortcut } from '../editor-page/hooks/use-print-keyboard-shortcut'
 
 /**
  * Wraps the markdown rendering in an iframe.
@@ -77,6 +79,15 @@ export const RenderPageContent: React.FC = () => {
       })
     }, [communicator])
   )
+
+  useRendererReceiveHandler(
+    CommunicationMessageType.SET_PRINT_MODE,
+    useCallback(({ printMode }) => {
+      setPrintMode(printMode)
+    }, [])
+  )
+
+  usePrintKeyboardShortcut()
 
   const onMakeScrollSource = useCallback(() => {
     sendScrolling.current = true

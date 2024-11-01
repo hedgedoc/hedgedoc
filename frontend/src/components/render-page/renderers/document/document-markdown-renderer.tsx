@@ -76,7 +76,7 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
 
   return (
     <div
-      className={`${styles.document} vh-100`}
+      className={`vh-100 ${styles.document}`}
       ref={internalDocumentRenderPaneRef}
       onScroll={onUserScroll}
       data-scroll-element={true}

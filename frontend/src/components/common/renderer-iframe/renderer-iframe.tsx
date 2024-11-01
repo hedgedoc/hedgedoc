@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -66,7 +66,7 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
   const [rendererReady, setRendererReady] = useState<boolean>(false)
   const frameReference = useRef<HTMLIFrameElement>(null)
   const iframeCommunicator = useEditorToRendererCommunicator()
-  const log = useMemo(() => new Logger(`RendererIframe[${iframeCommunicator.getUuid()}]`), [iframeCommunicator])
+  const log = useMemo(() => new Logger(`RendererIframe[${iframeCommunicator?.getUuid()}]`), [iframeCommunicator])
 
   const resetRendererReady = useCallback(() => {
     log.debug('Reset render status')
@@ -97,7 +97,7 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
 
   useEffect(() => {
     if (!rendererReady) {
-      iframeCommunicator.unsetMessageTarget()
+      iframeCommunicator?.unsetMessageTarget()
     }
   }, [iframeCommunicator, rendererReady])
 
@@ -141,9 +141,9 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
         log.error('Load triggered without content window')
         return
       }
-      iframeCommunicator.setMessageTarget(otherWindow)
-      iframeCommunicator.enableCommunication()
-      iframeCommunicator.sendMessageToOtherSide({
+      iframeCommunicator?.setMessageTarget(otherWindow)
+      iframeCommunicator?.enableCommunication()
+      iframeCommunicator?.sendMessageToOtherSide({
         type: CommunicationMessageType.SET_BASE_CONFIGURATION,
         baseConfiguration: {
           baseUrl: window.location.toString(),
@@ -177,11 +177,14 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
     <Fragment>
       {!rendererReady && showWaitSpinner && <WaitSpinner />}
       <iframe
+        id={'editor-renderer-iframe'}
         style={{ height: `${frameHeight}px` }}
         {...cypressId('documentIframe')}
         onLoad={onIframeLoad}
         title='render'
-        {...(isTestMode ? {} : { sandbox: 'allow-downloads allow-same-origin allow-scripts allow-popups' })}
+        {...(isTestMode
+          ? {}
+          : { sandbox: 'allow-downloads allow-same-origin allow-scripts allow-popups allow-modals' })}
         allowFullScreen={true}
         ref={frameReference}
         referrerPolicy={'no-referrer'}

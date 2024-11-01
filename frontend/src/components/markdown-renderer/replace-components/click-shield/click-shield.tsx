@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,9 +10,11 @@ import { ProxyImageFrame } from '../../extensions/image/proxy-image-frame'
 import styles from './click-shield.module.scss'
 import type { Property } from 'csstype'
 import type { PropsWithChildren } from 'react'
+import { Fragment } from 'react'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import type { Icon } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
+import { PrintLink } from './print-link'
 
 const log = new Logger('OneClickEmbedding')
 
@@ -23,6 +25,7 @@ export interface ClickShieldProps extends PropsWithChildren<PropsWithDataCypress
   targetDescription: string
   containerClassName?: string
   fallbackBackgroundColor?: Property.BackgroundColor
+  fallbackLink: string
 }
 
 /**
@@ -44,6 +47,7 @@ export const ClickShield: React.FC<ClickShieldProps> = ({
   targetDescription,
   hoverIcon,
   fallbackBackgroundColor,
+  fallbackLink,
   ...props
 }) => {
   const [showChildren, setShowChildren] = useState(false)
@@ -114,23 +118,29 @@ export const ClickShield: React.FC<ClickShieldProps> = ({
 
   if (showChildren) {
     return (
-      <span className={containerClassName} {...cypressId(props['data-cypress-id'])}>
-        {children}
-      </span>
+      <Fragment>
+        <span className={containerClassName} {...cypressId(props['data-cypress-id'])}>
+          {children}
+        </span>
+        <PrintLink link={fallbackLink} />
+      </Fragment>
     )
   }
 
   return (
-    <span className={containerClassName} {...cypressId(props['data-cypress-id'])}>
-      <span className={`${styles['click-shield']} d-inline-block ratio ratio-16x9`} onClick={doShowChildren}>
-        {previewBackground}
-        <span className={`${styles['preview-hover']}`}>
-          <span>
-            <Trans i18nKey={'renderer.clickShield.previewHoverText'} values={hoverTextTranslationValues} />
+    <Fragment>
+      <span className={containerClassName} {...cypressId(props['data-cypress-id'])}>
+        <span className={`d-inline-block ratio ratio-16x9 ${styles['click-shield']}`} onClick={doShowChildren}>
+          {previewBackground}
+          <span className={`${styles['preview-hover']}`}>
+            <span>
+              <Trans i18nKey={'renderer.clickShield.previewHoverText'} values={hoverTextTranslationValues} />
+            </span>
+            {icon}
           </span>
-          {icon}
         </span>
       </span>
-    </span>
+      <PrintLink link={fallbackLink} />
+    </Fragment>
   )
 }

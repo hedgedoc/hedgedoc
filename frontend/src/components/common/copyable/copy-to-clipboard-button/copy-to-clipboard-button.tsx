@@ -12,6 +12,7 @@ import React, { Fragment, useRef } from 'react'
 import { Button } from 'react-bootstrap'
 import { Files as IconFiles } from 'react-bootstrap-icons'
 import type { Variant } from 'react-bootstrap/types'
+import styles from './style.module.scss'
 
 export interface CopyToClipboardButtonProps extends PropsWithDataCypressId {
   content: string
@@ -40,6 +41,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButtonProps> = ({
   return (
     <Fragment>
       <Button
+        className={styles['copy-button']}
         ref={button}
         size={size}
         variant={variant}

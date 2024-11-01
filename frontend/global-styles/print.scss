@@ -1,0 +1,73 @@
+/*!
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+@media print {
+  .heading-anchor, .footnote-backref {
+    display: none;
+  }
+
+  a[href] {
+    border-bottom: none;
+    text-decoration: none;
+
+    &::after {
+      content: ' (' attr(href) ')';
+      font-size: 0.75em;
+    }
+  }
+
+  nav.table-of-contents, sup.footnote-ref {
+    a[href]::after {
+      display: none;
+      content: '';
+    }
+  }
+
+  sup.footnote-ref {
+    a[href] {
+      color: unset;
+    }
+  }
+
+  abbr[title] {
+    border-bottom: none !important;
+    text-decoration: none !important;
+  }
+
+  mark {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  h1, h2, h3, h4, h5 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  table, figure, p, img, ul, ol, pre, code  {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  @page {
+    padding: 1.5cm;
+    margin: 1cm auto;
+  }
+
+  .print-only {
+    display: inline;
+  }
+
+  hr {
+    background-color: transparent !important;
+    border-bottom: 2px solid #bbbcbf;
+  }
+}
+
+@media screen {
+  .print-only {
+    display: none;
+  }
+}

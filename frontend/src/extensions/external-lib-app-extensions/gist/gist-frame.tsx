@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -31,9 +31,11 @@ export const GistFrame: React.FC<IdProps> = ({ id }) => {
       fallbackBackgroundColor={'#161b22'}
       hoverIcon={IconGithub}
       targetDescription={'GitHub Gist'}
+      fallbackLink={`https://gist.github.com/${id}`}
       data-cypress-id={'click-shield-gist'}>
       <iframe
         sandbox=''
+        className={'d-print-none'}
         {...cypressId('gh-gist')}
         width='100%'
         height={`${frameHeight}px`}
@@ -41,7 +43,7 @@ export const GistFrame: React.FC<IdProps> = ({ id }) => {
         title={`gist ${id}`}
         src={`https://gist.github.com/${id}.pibb`}
       />
-      <span className={styles['gist-resizer-row']}>
+      <span className={`${styles['gist-resizer-row']} d-print-none`}>
         <span className={styles['gist-resizer']} onMouseDown={onStart} onTouchStart={onStart} />
       </span>
     </ClickShield>

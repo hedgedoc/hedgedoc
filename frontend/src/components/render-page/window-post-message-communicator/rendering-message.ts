@@ -20,11 +20,17 @@ export enum CommunicationMessageType {
   ON_WORD_COUNT_CALCULATED = 'ON_WORD_COUNT_CALCULATED',
   SET_SLIDE_OPTIONS = 'SET_SLIDE_OPTIONS',
   IMAGE_UPLOAD = 'IMAGE_UPLOAD',
-  EXTENSION_EVENT = 'EXTENSION_EVENT'
+  EXTENSION_EVENT = 'EXTENSION_EVENT',
+  SET_PRINT_MODE = 'SET_PRINT_MODE'
 }
 
 export interface NoPayloadMessage<TYPE extends CommunicationMessageType> {
   type: TYPE
+}
+
+export interface SetPrintModeConfigurationMessage {
+  type: CommunicationMessageType.SET_PRINT_MODE
+  printMode: boolean
 }
 
 export interface SetAdditionalConfigurationMessage {
@@ -101,6 +107,7 @@ export type CommunicationMessages =
   | OnWordCountCalculatedMessage
   | ImageUploadMessage
   | ExtensionEvent
+  | SetPrintModeConfigurationMessage
 
 export type EditorToRendererMessageType =
   | CommunicationMessageType.SET_MARKDOWN_CONTENT
@@ -110,6 +117,7 @@ export type EditorToRendererMessageType =
   | CommunicationMessageType.GET_WORD_COUNT
   | CommunicationMessageType.SET_SLIDE_OPTIONS
   | CommunicationMessageType.DISABLE_RENDERER_SCROLL_SOURCE
+  | CommunicationMessageType.SET_PRINT_MODE
 
 export type RendererToEditorMessageType =
   | CommunicationMessageType.RENDERER_READY

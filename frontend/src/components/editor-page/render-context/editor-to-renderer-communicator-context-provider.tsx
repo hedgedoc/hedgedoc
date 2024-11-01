@@ -1,7 +1,7 @@
 'use client'
 
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,7 +10,9 @@ import { EditorToRendererCommunicator } from '../../render-page/window-post-mess
 import type { PropsWithChildren } from 'react'
 import React, { createContext, useContext, useEffect, useMemo } from 'react'
 import { v4 as uuid } from 'uuid'
+import { Logger } from '../../../utils/logger'
 
+const logger = new Logger('EditorToRendererCommunicator')
 const EditorToRendererCommunicatorContext = createContext<EditorToRendererCommunicator | undefined>(undefined)
 
 /**
@@ -19,10 +21,11 @@ const EditorToRendererCommunicatorContext = createContext<EditorToRendererCommun
  * @return the received communicator
  * @throws {Error} if no communicator was received
  */
-export const useEditorToRendererCommunicator: () => EditorToRendererCommunicator = () => {
+export const useEditorToRendererCommunicator = (): EditorToRendererCommunicator | undefined => {
   const communicatorFromContext = useContext(EditorToRendererCommunicatorContext)
   if (!communicatorFromContext) {
-    throw new Error('No editor-to-renderer-iframe-communicator received. Did you forget to use the provider component?')
+    logger.error('No editor-to-renderer-iframe-communicator received. Did you forget to use the provider component?')
+    return undefined
   }
   return communicatorFromContext
 }
