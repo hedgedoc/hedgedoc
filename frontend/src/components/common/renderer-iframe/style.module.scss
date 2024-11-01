@@ -7,3 +7,9 @@
 .frame {
   color-scheme: initial;
 }
+
+@media print {
+  .frame {
+    height: auto !important;
+  }
+}

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -35,7 +35,7 @@ export const NoteInfoLineWordCount: React.FC<NoteInfoLineWordCountProps> = ({ vi
   const rendererReady = useApplicationState((state) => state.rendererStatus.rendererReady)
   useEffect(() => {
     if (rendererReady && visible) {
-      editorToRendererCommunicator.sendMessageToOtherSide({ type: CommunicationMessageType.GET_WORD_COUNT })
+      editorToRendererCommunicator?.sendMessageToOtherSide({ type: CommunicationMessageType.GET_WORD_COUNT })
     }
   }, [editorToRendererCommunicator, rendererReady, visible])
 

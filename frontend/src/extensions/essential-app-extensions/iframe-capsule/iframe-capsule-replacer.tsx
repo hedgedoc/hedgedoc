@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -30,8 +30,9 @@ export class IframeCapsuleReplacer extends ComponentReplacer {
       <ClickShield
         hoverIcon={IconGlobe}
         targetDescription={node.attribs.src}
+        fallbackLink={node.attribs.src}
         data-cypress-id={'iframe-capsule-click-shield'}>
-        {nativeRenderer()}
+        <div className={'d-print-none'}>{nativeRenderer()}</div>
       </ClickShield>
     )
   }

@@ -3,7 +3,7 @@
 exports[`Copy to clipboard button show an error text if clipboard api isn't available 1`] = `
 <div>
   <button
-    class="btn btn-dark btn-sm"
+    class="copy-button btn btn-dark btn-sm"
     title="renderer.highlightCode.copyCode"
     type="button"
   >
@@ -16,7 +16,7 @@ exports[`Copy to clipboard button show an error text if clipboard api isn't avai
 <div>
   <button
     aria-describedby="copied_35a35a31-c259-48c4-b75a-8da99859dcdb"
-    class="btn btn-dark btn-sm"
+    class="copy-button btn btn-dark btn-sm"
     title="renderer.highlightCode.copyCode"
     type="button"
   >
@@ -28,7 +28,7 @@ exports[`Copy to clipboard button show an error text if clipboard api isn't avai
 exports[`Copy to clipboard button shows an error text if writing failed 1`] = `
 <div>
   <button
-    class="btn btn-dark btn-sm"
+    class="copy-button btn btn-dark btn-sm"
     title="renderer.highlightCode.copyCode"
     type="button"
   >
@@ -41,7 +41,7 @@ exports[`Copy to clipboard button shows an error text if writing failed 2`] = `
 <div>
   <button
     aria-describedby="copied_35a35a31-c259-48c4-b75a-8da99859dcdb"
-    class="btn btn-dark btn-sm"
+    class="copy-button btn btn-dark btn-sm"
     title="renderer.highlightCode.copyCode"
     type="button"
   >
@@ -53,7 +53,7 @@ exports[`Copy to clipboard button shows an error text if writing failed 2`] = `
 exports[`Copy to clipboard button shows an success text if writing succeeded 1`] = `
 <div>
   <button
-    class="btn btn-dark btn-sm"
+    class="copy-button btn btn-dark btn-sm"
     title="renderer.highlightCode.copyCode"
     type="button"
   >
@@ -66,7 +66,7 @@ exports[`Copy to clipboard button shows an success text if writing succeeded 2`]
 <div>
   <button
     aria-describedby="copied_35a35a31-c259-48c4-b75a-8da99859dcdb"
-    class="btn btn-dark btn-sm"
+    class="copy-button btn btn-dark btn-sm"
     title="renderer.highlightCode.copyCode"
     type="button"
   >

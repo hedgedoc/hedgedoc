@@ -370,7 +370,8 @@
         }
       },
       "rawHtml": "Raw HTML",
-      "markdown-file": "Markdown file"
+      "markdown-file": "Markdown file",
+      "print": "Print"
     },
     "import": {
       "clipboard": "Clipboard",
@@ -970,6 +971,12 @@
         "description": "Set a equals sign after the language to show line numbers. You can specify a start line number after the equal sign or a plus to continue the line numbers from the last code block.",
         "example": "```markdown=12\nline1\n```\n```markdown=+\nline2\n```\n```markdown=\nline3\n```"
       }
+    }
+  },
+  "print": {
+    "warning": {
+      "title": "Warning!",
+      "text": "To print this note, please use the print button in the export menu in the sidebar. Printing this page directly will not work as expected."
     }
   }
 }

@@ -43,7 +43,7 @@ export const Sidebar: React.FC = () => {
   const selectionIsNotNone = selectedMenu !== DocumentSidebarMenuSelection.NONE
 
   return (
-    <div className={styles['slide-sidebar']}>
+    <div className={styles['slide-sidebar']} id={'editor-sidebar'}>
       <div ref={sideBarRef} className={`${styles['sidebar-inner']} ${selectionIsNotNone ? styles['show'] : ''}`}>
         <UsersOnlineSidebarMenu
           menuId={DocumentSidebarMenuSelection.USERS_ONLINE}

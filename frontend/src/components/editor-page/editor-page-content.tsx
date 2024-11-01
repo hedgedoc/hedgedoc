@@ -15,8 +15,11 @@ import { useUpdateLocalHistoryEntry } from './hooks/use-update-local-history-ent
 import { RendererPane } from './renderer-pane/renderer-pane'
 import { Sidebar } from './sidebar/sidebar'
 import { Splitter } from './splitter/splitter'
+import { PrintWarning } from './print-warning/print-warning'
 import React, { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import './print.scss'
+import { usePrintKeyboardShortcut } from './hooks/use-print-keyboard-shortcut'
 
 export enum ScrollSource {
   EDITOR = 'editor',
@@ -28,7 +31,7 @@ export enum ScrollSource {
  */
 export const EditorPageContent: React.FC = () => {
   useTranslation()
-
+  usePrintKeyboardShortcut()
   useUpdateLocalHistoryEntry()
 
   const scrollSource = useRef<ScrollSource>(ScrollSource.EDITOR)
@@ -68,6 +71,7 @@ export const EditorPageContent: React.FC = () => {
       <ExtensionEventEmitterProvider>
         {editorExtensionComponents}
         <CommunicatorImageLightbox />
+        <PrintWarning />
         <div className={'flex-fill d-flex h-100 w-100 overflow-hidden flex-row'}>
           <Splitter
             left={leftPane}

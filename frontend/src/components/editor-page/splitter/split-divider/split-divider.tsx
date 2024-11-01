@@ -60,7 +60,7 @@ export const SplitDivider: React.FC<SplitDividerProps> = ({
   }, [dividerButtonsShift, forceOpen])
 
   return (
-    <div className={styles.divider} {...testId('splitter-divider')}>
+    <div className={styles.divider} {...testId('splitter-divider')} id={'editor-splitter'}>
       <div className={className}>
         <div className={styles.buttons}>
           <Button variant={focusLeft ? 'secondary' : 'light'} onClick={onLeftButtonClick}>

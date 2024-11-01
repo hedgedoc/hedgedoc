@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -27,7 +27,9 @@ export const useForceRenderPageUrlOnIframeLoadCallback = (
   const forcedUrl = useMemo(() => {
     const renderUrl = new URL(rendererBaseUrl)
     renderUrl.pathname += 'render'
-    renderUrl.searchParams.set('uuid', iframeCommunicator.getUuid())
+    if (iframeCommunicator !== undefined) {
+      renderUrl.searchParams.set('uuid', iframeCommunicator.getUuid())
+    }
     return renderUrl.toString()
   }, [iframeCommunicator, rendererBaseUrl])
   const redirectionInProgress = useRef<boolean>(false)

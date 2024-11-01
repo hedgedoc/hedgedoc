@@ -5,7 +5,7 @@ exports[`Asciinema renders a click shield 1`] = `
   <span>
     This is a click shield for 
     <span
-      class="ratio ratio-16x9"
+      class="ratio ratio-16x9 d-print-none"
     >
       <iframe
         allowfullscreen=""

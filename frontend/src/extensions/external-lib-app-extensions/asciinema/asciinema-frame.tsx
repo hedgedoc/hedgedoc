@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -21,8 +21,9 @@ export const AsciinemaFrame: React.FC<IdProps> = ({ id }) => {
       fallbackPreviewImageUrl={`https://asciinema.org/a/${id}.png`}
       fallbackBackgroundColor={'#d40000'}
       containerClassName={''}
+      fallbackLink={`https://asciinema.org/a/${id}`}
       data-cypress-id={'click-shield-asciinema'}>
-      <span className={'ratio ratio-16x9'}>
+      <span className={'ratio ratio-16x9 d-print-none'}>
         <iframe
           allowFullScreen={true}
           className=''

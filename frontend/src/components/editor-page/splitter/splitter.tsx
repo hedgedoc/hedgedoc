@@ -150,7 +150,10 @@ export const Splitter: React.FC<SplitterProps> = ({ additionalContainerClassName
           onTouchEnd={onStopResizing}
           onMouseUp={onStopResizing}></div>
       )}
-      <div className={styles['left']} style={{ width: `calc(${adjustedRelativeSplitValue}% - 5px)` }}>
+      <div
+        id={'editor-edit-pane'}
+        className={styles['left']}
+        style={{ width: `calc(${adjustedRelativeSplitValue}% - 5px)` }}>
         <div className={styles['inner']}>{left}</div>
       </div>
       <SplitDivider
@@ -162,7 +165,10 @@ export const Splitter: React.FC<SplitterProps> = ({ additionalContainerClassName
         focusRight={relativeSplitValue > 100 - SNAP_PERCENTAGE}
         dividerButtonsShift={dividerButtonsShift}
       />
-      <div className={styles['right']} style={{ width: `calc(100% - ${adjustedRelativeSplitValue}%)` }}>
+      <div
+        id={'editor-view-pane'}
+        className={styles['right']}
+        style={{ width: `calc(100% - ${adjustedRelativeSplitValue}%)` }}>
         <div className={styles['inner']}>{right}</div>
       </div>
     </div>

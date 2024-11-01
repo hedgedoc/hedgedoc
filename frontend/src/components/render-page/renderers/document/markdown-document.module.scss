@@ -27,3 +27,10 @@
     width: 900px;
   }
 }
+
+@media print {
+  .document {
+    height: auto !important;
+    color: #000;
+  }
+}
