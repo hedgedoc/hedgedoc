@@ -26,4 +26,16 @@ describe('convertInlineStyleToMap', () => {
     expect(Object.keys(styleObject)).toHaveLength(1)
     expect(styleObject.content).toEqual('\\;')
   })
+  it('should respect css custom properties', () => {
+    const styleObject = convertInlineStyleToMap('--test: okay;')
+    expect(Object.keys(styleObject)).toHaveLength(1)
+    expect(styleObject['--test']).toEqual('okay')
+  })
+  it('should transform -ms css properties', () => {
+    const styleObject = convertInlineStyleToMap(
+      '-ms-overflow-style: ms-autohiding-scrollbar'
+    )
+    expect(Object.keys(styleObject)).toHaveLength(1)
+    expect(styleObject['msOverflowStyle']).toEqual('ms-autohiding-scrollbar')
+  })
 })
