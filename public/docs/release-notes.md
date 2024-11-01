@@ -1,5 +1,10 @@
 # Release Notes
 
+## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
+
+### Bugfixes
+- Fix a crash when cannot read user profile in Oauth
+
 ## <i class="fa fa-tag"></i> 1.10.0 <i class="fa fa-calendar-o"></i> 2024-09-01
 
 This release fixes a security issue when using MySQL/MariaDB. We recommend upgrading as soon as possible, when you use
