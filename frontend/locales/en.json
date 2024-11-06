@@ -228,7 +228,8 @@
         "withDescription": "Uploading file {{fileName}} - {{description}}"
       },
       "dropImage": "Drop Image to insert",
-      "failed": "Error while uploading {{fileName}}"
+      "failed": "Error while uploading {{fileName}}",
+      "failed_size_too_large": "Error when uploading {{fileName}}.\nFile size exceeds the allowed limit"
     },
     "untitledNote": "Untitled",
     "placeholder": "← Start by entering a title here\n===\nVisit {{host}}cheatsheet if you don't know what to do.\nLet the ideas grow :)",
