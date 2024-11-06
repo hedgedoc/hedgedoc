@@ -16,6 +16,7 @@ import type { EditorView } from '@codemirror/view'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useBaseUrl } from '../../../../hooks/common/use-base-url'
+import type { ApiError } from 'next/dist/server/api-utils'
 
 /**
  * @param view the codemirror instance that is used to insert the Markdown code
@@ -68,11 +69,14 @@ export const useHandleUpload = (): handleUploadSignature => {
             undefined
           ])
         })
-        .catch((error: Error) => {
-          showErrorNotification('editor.upload.failed', { fileName: file.name })(error)
-          const replacement = `![upload of ${file.name} failed]()`
+        .catch((error: ApiError) => {
+          if (error.statusCode === 413) {
+            showErrorNotification('editor.upload.failed_size_too_large', { fileName: file.name })(error)
+          } else {
+            showErrorNotification('editor.upload.failed', { fileName: file.name })(error)
+          }
           changeContent(({ markdownContent }) => [
-            replaceInContent(markdownContent, uploadPlaceholder, replacement),
+            replaceInContent(markdownContent, uploadPlaceholder, '\n'),
             undefined
           ])
         })

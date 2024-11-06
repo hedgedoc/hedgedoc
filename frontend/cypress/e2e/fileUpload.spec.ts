@@ -69,27 +69,60 @@ describe('File upload', () => {
     })
   })
 
-  it('fails', () => {
-    cy.getByCypressId('editor-pane').should('have.attr', 'data-cypress-editor-ready', 'true')
-    cy.intercept(
-      {
-        method: 'POST',
-        url: '/api/private/media'
-      },
-      {
-        statusCode: 400
-      }
-    )
-    cy.getByCypressId('toolbar.uploadImage').should('be.visible')
-    cy.getByCypressId('toolbar.uploadImage.input').selectFile(
-      {
-        contents: '@demoImage',
-        fileName: 'demo.png',
-        mimeType: 'image/png'
-      },
-      { force: true }
-    )
-    cy.get('.cm-line').contains('![upload of demo.png failed]()')
+  describe('fails', () => {
+    it('with 400 - generic error', () => {
+      cy.getByCypressId('editor-pane').should('have.attr', 'data-cypress-editor-ready', 'true')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '/api/private/media'
+        },
+        {
+          statusCode: 400
+        }
+      )
+      cy.getByCypressId('toolbar.uploadImage').should('be.visible')
+      cy.getByCypressId('toolbar.uploadImage.input').selectFile(
+        {
+          contents: '@demoImage',
+          fileName: 'demo.png',
+          mimeType: 'image/png'
+        },
+        { force: true }
+      )
+      cy.get('.cm-line')
+        .should(($el) => {
+          expect($el.text().trim()).equal('')
+        })
+      cy.getByCypressId('notification-toast').should('be.visible')
+    })
+
+    it('with 413 - file size error', () => {
+      cy.getByCypressId('editor-pane').should('have.attr', 'data-cypress-editor-ready', 'true')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '/api/private/media'
+        },
+        {
+          statusCode: 413
+        }
+      )
+      cy.getByCypressId('toolbar.uploadImage').should('be.visible')
+      cy.getByCypressId('toolbar.uploadImage.input').selectFile(
+        {
+          contents: '@demoImage',
+          fileName: 'demo.png',
+          mimeType: 'image/png'
+        },
+        { force: true }
+      )
+      cy.get('.cm-line')
+        .should(($el) => {
+          expect($el.text().trim()).equal('')
+        })
+      cy.getByCypressId('notification-toast').should('be.visible')
+    })
   })
 
   it('lets text paste still work', () => {
