@@ -35,7 +35,7 @@
     "@nestjs/platform-express": "10.4.5",
     "@nestjs/platform-ws": "10.4.5",
     "@nestjs/schedule": "4.1.1",
-    "@nestjs/swagger": "7.4.2",
+    "@nestjs/swagger": "8.0.5",
     "@nestjs/typeorm": "10.0.2",
     "@nestjs/websockets": "10.4.5",
     "@node-rs/argon2": "2.0.0",
