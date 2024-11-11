@@ -73,7 +73,7 @@ export class LineContentToLineIdMapper {
    * @return {@link true} if the given change is neither adding nor removing lines.
    */
   private static changeIsNotChangingLines(change: LineChange): boolean {
-    return change.added === undefined && change.removed === undefined
+    return change.added === false && change.removed === false
   }
 
   /**
