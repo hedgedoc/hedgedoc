@@ -8,7 +8,7 @@ import { ModuleRef } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as FileType from 'file-type';
 import { Repository } from 'typeorm';
-import { v4 as uuidV4 } from 'uuid';
+import { v7 as uuidV7 } from 'uuid';
 
 import mediaConfiguration, { MediaConfig } from '../config/media.config';
 import { ClientError, NotInDBError } from '../errors/errors';
@@ -97,7 +97,7 @@ export class MediaService {
     if (!MediaService.isAllowedMimeType(fileTypeResult.mime)) {
       throw new ClientError('MIME type not allowed.');
     }
-    const uuid = uuidV4(); // TODO replace this with uuid-v7 in a later PR
+    const uuid = uuidV7();
     const backendData = await this.mediaBackend.saveFile(
       uuid,
       fileBuffer,

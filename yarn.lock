@@ -2588,7 +2588,6 @@ __metadata:
     "@types/pg": "npm:8.11.10"
     "@types/source-map-support": "npm:0.5.10"
     "@types/supertest": "npm:2.0.16"
-    "@types/uuid": "npm:10.0.0"
     "@types/ws": "npm:8.5.12"
     "@typescript-eslint/eslint-plugin": "npm:7.18.0"
     "@typescript-eslint/parser": "npm:7.18.0"
@@ -2635,7 +2634,7 @@ __metadata:
     tsconfig-paths: "npm:4.2.0"
     typeorm: "npm:0.3.20"
     typescript: "npm:5.6.3"
-    uuid: "npm:10.0.0"
+    uuid: "npm:11.0.3"
     ws: "npm:8.18.0"
     yjs: "npm:13.6.20"
   languageName: unknown
@@ -2727,7 +2726,6 @@ __metadata:
     "@types/node": "npm:20.16.2"
     "@types/react": "npm:18.3.5"
     "@types/react-dom": "npm:18.3.1"
-    "@types/uuid": "npm:10.0.0"
     "@types/ws": "npm:8.5.12"
     "@typescript-eslint/eslint-plugin": "npm:8.11.0"
     "@typescript-eslint/parser": "npm:8.11.0"
@@ -2813,7 +2811,7 @@ __metadata:
     twemoji-colr-font: "npm:15.0.3"
     typescript: "npm:5.6.3"
     user-agent-data-types: "npm:0.4.2"
-    uuid: "npm:10.0.0"
+    uuid: "npm:11.0.3"
     vega: "npm:5.30.0"
     vega-embed: "npm:6.26.0"
     vega-lite: "npm:5.21.0"
@@ -5715,13 +5713,6 @@ __metadata:
   version: 0.0.3
   resolution: "@types/use-sync-external-store@npm:0.0.3"
   checksum: 10c0/82824c1051ba40a00e3d47964cdf4546a224e95f172e15a9c62aa3f118acee1c7518b627a34f3aa87298a2039f982e8509f92bfcc18bea7c255c189c293ba547
-  languageName: node
-  linkType: hard
-
-"@types/uuid@npm:10.0.0":
-  version: 10.0.0
-  resolution: "@types/uuid@npm:10.0.0"
-  checksum: 10c0/9a1404bf287164481cb9b97f6bb638f78f955be57c40c6513b7655160beb29df6f84c915aaf4089a1559c216557dc4d2f79b48d978742d3ae10b937420ddac60
   languageName: node
   linkType: hard
 
@@ -19076,6 +19067,15 @@ __metadata:
   bin:
     uuid: dist/bin/uuid
   checksum: 10c0/eab18c27fe4ab9fb9709a5d5f40119b45f2ec8314f8d4cf12ce27e4c6f4ffa4a6321dc7db6c515068fa373c075b49691ba969f0010bf37f44c37ca40cd6bf7fe
+  languageName: node
+  linkType: hard
+
+"uuid@npm:11.0.3":
+  version: 11.0.3
+  resolution: "uuid@npm:11.0.3"
+  bin:
+    uuid: dist/esm/bin/uuid
+  checksum: 10c0/cee762fc76d949a2ff9205770334699e0043d52bb766472593a25f150077c9deed821230251ea3d6ab3943a5ea137d2826678797f1d5f6754c7ce5ce27e9f7a6
   languageName: node
   linkType: hard
 
