@@ -40,7 +40,6 @@
     "@types/react": "18.3.5",
     "eventemitter2@6.4.9": "patch:eventemitter2@npm%3A6.4.9#./.yarn/patches/eventemitter2-npm-6.4.9-ba37798a18.patch",
     "yjs@13.6.20": "patch:yjs@npm%3A13.6.20#./.yarn/patches/yjs-remove-import-warning-in-test.patch",
-    "vega-canvas@^1.2.6": "patch:vega-canvas@npm%3A1.2.7#./.yarn/patches/remove-vega-canvas-node.patch",
     "vega-canvas@^1.2.7": "patch:vega-canvas@npm%3A1.2.7#./.yarn/patches/remove-vega-canvas-node.patch",
     "@dicebear/converter@9.2.2": "patch:@dicebear/converter@npm%3A9.2.2#./.yarn/patches/@dicebear-converter-fix-js-file-path.patch"
   },
