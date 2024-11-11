@@ -16,8 +16,8 @@ const customJestConfig = {
   moduleNameMapper: {
     // Handle module aliases (this will be automatically configured for you soon)
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
-    // fix uuid / jest problem https://github.com/uuidjs/uuid/pull/616
-    '^uuid$': require.resolve('uuid')
+    // fix ESM loading of orama breaking jest
+    '^@orama/orama$': require.resolve('@orama/orama')
   },
   roots: ['<rootDir>/src'],
   testEnvironment: 'jsdom',
