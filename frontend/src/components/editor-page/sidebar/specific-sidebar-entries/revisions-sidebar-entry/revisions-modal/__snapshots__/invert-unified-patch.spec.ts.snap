@@ -4,20 +4,6 @@ exports[`invert unified patch inverts a patch correctly 1`] = `
 {
   "hunks": [
     {
-      "linedelimiters": [
-        "
-",
-        "
-",
-        "
-",
-        "
-",
-        "
-",
-        "
-",
-      ],
       "lines": [
         "+a",
         "+b",
