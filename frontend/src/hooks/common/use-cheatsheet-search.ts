@@ -4,10 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { useEffect, useState } from 'react'
-import { create, insert, search } from '@orama/orama'
-import { useAsync } from 'react-use'
-import { Logger } from '../../utils/logger'
+import { useEffect, useMemo, useState } from 'react'
+import type { Orama, Results } from '@orama/orama'
+import { create, insertMultiple, search } from '@orama/orama'
 
 export interface CheatsheetSearchIndexEntry {
   readonly id: string
@@ -16,8 +15,6 @@ export interface CheatsheetSearchIndexEntry {
   readonly example: string
   readonly extensionId: string
 }
-
-const logger = new Logger('Cheatsheet Search')
 
 /**
  * Generate document search index and provide functions to search.
@@ -32,12 +29,8 @@ export const useCheatsheetSearch = (
 ): CheatsheetSearchIndexEntry[] => {
   const [results, setResults] = useState<CheatsheetSearchIndexEntry[]>([])
 
-  const {
-    value: searchIndex,
-    loading: searchIndexLoading,
-    error: searchIndexError
-  } = useAsync(async () => {
-    const db = await create({
+  const searchIndex = useMemo(() => {
+    const db = create({
       schema: {
         id: 'string',
         title: 'string',
@@ -46,19 +39,15 @@ export const useCheatsheetSearch = (
         extensionId: 'string'
       } as const
     })
-    const adds = entries.map((entry) => {
-      logger.debug('Add to search entry:', entry)
-      return insert(db, entry)
-    })
-    await Promise.all(adds)
-    return db
+    void insertMultiple(db, entries)
+    return db as Orama<CheatsheetSearchIndexEntry>
   }, [entries])
 
   useEffect(() => {
-    if (searchIndexLoading || searchIndexError !== undefined || searchIndex === undefined || searchTerm === '') {
+    if (searchIndex === undefined || searchTerm === '') {
       return setResults(entries)
     }
-    search(searchIndex, {
+    const rawResults = search(searchIndex, {
       term: searchTerm,
       tolerance: 1,
       properties: ['title', 'description', 'example'],
@@ -66,15 +55,12 @@ export const useCheatsheetSearch = (
         title: 3,
         description: 2,
         example: 1
-      }
-    })
-      .then((results) => {
-        setResults(results.hits.map((entry) => entry.document))
-      })
-      .catch((error) => {
-        logger.error(error)
-      })
-  }, [entries, searchIndexError, searchIndexLoading, searchIndex, searchTerm])
+      },
+      limit: entries.length
+    }) as Results<CheatsheetSearchIndexEntry>
+    const results = rawResults.hits.map((entry) => entry.document)
+    setResults(results)
+  }, [entries, searchIndex, searchTerm])
 
   return results
 }
