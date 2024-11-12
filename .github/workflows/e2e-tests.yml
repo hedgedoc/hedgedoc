@@ -57,7 +57,7 @@ jobs:
     services:
       mariadb:
         # renovate: datasource=docker depName=mariadb
-        image: mariadb:11.5.2@sha256:4b812bbd9a025569fbe5a7a70e4a3cd3af53aa36621fecb1c2e108af2113450a
+        image: mariadb:11.5.2@sha256:4a1de8fa2a929944373d7421105500ff6f889ce90dcb883fbb2fdb070e4d427e
         env:
           MYSQL_USER: hedgedoc
           MYSQL_PASSWORD: hedgedoc
