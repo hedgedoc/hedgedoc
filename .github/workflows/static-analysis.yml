@@ -26,7 +26,7 @@ jobs:
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: Scan with njsscan
         id: njsscan
-        uses: ajinabraham/njsscan-action@74e5a58c1edb363b84c9ddd626b0e22f038ac09e # master
+        uses: ajinabraham/njsscan-action@c7b65a3590ade829628b2b3c87b34ac0ce666a79 # master
         with:
           args: '--sarif --output results.sarif src || true'
       - name: Upload njsscan report
