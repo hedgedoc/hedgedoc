@@ -70,6 +70,7 @@ export class OidcController {
       );
       const oidcUserIdentifier = request.session.providerUserId;
       if (!oidcUserIdentifier) {
+        this.logger.log('No OIDC user identifier in callback', 'callback');
         throw new UnauthorizedException('No OIDC user identifier found');
       }
       const identity = await this.oidcService.getExistingOidcIdentity(
