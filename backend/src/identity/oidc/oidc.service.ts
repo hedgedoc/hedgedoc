@@ -108,8 +108,8 @@ export class OidcService {
     };
   }
 
-  // Update all client configs every sunday on 3:30 AM
-  @Cron('30 3 * * 0')
+  // Update all client configs every day on 3:30 AM
+  @Cron('30 3 * * *')
   handleCronUpdateClientConfigs(): void {
     this.updateClientConfigs();
   }
@@ -188,8 +188,8 @@ export class OidcService {
     const state = request.session.oidcLoginState;
     const isAutodiscovered = clientConfig.config.authorizeUrl === undefined;
     const callbackMethod = isAutodiscovered
-      ? client.callback.bind(this)
-      : client.oauthCallback.bind(this);
+      ? client.callback.bind(client)
+      : client.oauthCallback.bind(client);
     const tokenSet = await callbackMethod(clientConfig.redirectUri, params, {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       code_verifier: code,
