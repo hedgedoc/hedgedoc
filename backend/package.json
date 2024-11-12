@@ -58,7 +58,7 @@
     "minio": "8.0.1",
     "mysql": "2.18.1",
     "node-fetch": "2.7.0",
-    "openid-client": "5.6.5",
+    "openid-client": "5.7.0",
     "pg": "8.13.0",
     "raw-body": "3.0.0",
     "reflect-metadata": "0.2.2",

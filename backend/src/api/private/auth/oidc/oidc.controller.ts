@@ -6,11 +6,13 @@
 import {
   Controller,
   Get,
+  InternalServerErrorException,
   Param,
   Redirect,
   Req,
   UnauthorizedException,
 } from '@nestjs/common';
+import { HttpException } from '@nestjs/common/exceptions/http.exception';
 import { ApiTags } from '@nestjs/swagger';
 
 import { IdentityService } from '../../../../identity/identity.service';
@@ -56,7 +58,7 @@ export class OidcController {
 
   @Get(':oidcIdentifier/callback')
   @Redirect()
-  @OpenApi(201, 400, 401)
+  @OpenApi(201, 400, 401, 500)
   async callback(
     @Param('oidcIdentifier') oidcIdentifier: string,
     @Req() request: RequestWithSession,
@@ -68,7 +70,7 @@ export class OidcController {
       );
       const oidcUserIdentifier = request.session.providerUserId;
       if (!oidcUserIdentifier) {
-        throw new Error('No OIDC user identifier found');
+        throw new UnauthorizedException('No OIDC user identifier found');
       }
       const identity = await this.oidcService.getExistingOidcIdentity(
         oidcIdentifier,
@@ -94,11 +96,14 @@ export class OidcController {
         return { url: '/new-user' };
       }
     } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
       this.logger.log(
-        'Error during OIDC callback:' + String(error),
+        'Error during OIDC callback: ' + String(error),
         'callback',
       );
-      throw new UnauthorizedException();
+      throw new InternalServerErrorException();
     }
   }
 }
