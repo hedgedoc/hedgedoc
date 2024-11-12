@@ -157,7 +157,7 @@ jobs:
     needs: frontend-build
     runs-on: ubuntu-latest
     container:
-      image: cypress/browsers:node-20.18.0-chrome-130.0.6723.69-1-ff-131.0.3-edge-130.0.2849.52-1
+      image: cypress/browsers:node-20.18.0-chrome-130.0.6723.69-1-ff-131.0.3-edge-130.0.2849.52-1@sha256:3dd9d85309ed42d4befeda0b80e15b93c5ede2d419b6fc93a341ffc7337e3505
       options: --shm-size=2g
     strategy:
       fail-fast: false
