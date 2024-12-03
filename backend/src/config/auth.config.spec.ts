@@ -546,6 +546,7 @@ describe('authConfig', () => {
     const defaultProfilePictureField = 'picture';
     const emailField = 'a_email';
     const defaultEmailField = 'email';
+    const enableRegistration = 'false';
     const completeOidcConfig = {
       /* eslint-disable @typescript-eslint/naming-convention */
       HD_AUTH_OIDC_SERVERS: oidcNames.join(','),
@@ -564,6 +565,7 @@ describe('authConfig', () => {
       HD_AUTH_OIDC_GITLAB_DISPLAY_NAME_FIELD: displayNameField,
       HD_AUTH_OIDC_GITLAB_PROFILE_PICTURE_FIELD: profilePictureField,
       HD_AUTH_OIDC_GITLAB_EMAIL_FIELD: emailField,
+      HD_AUTH_OIDC_GITLAB_ENABLE_REGISTER: enableRegistration,
       /* eslint-enable @typescript-eslint/naming-convention */
     };
     describe('is correctly parsed', () => {
@@ -597,6 +599,7 @@ describe('authConfig', () => {
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
+        expect(firstOidc.enableRegistration).toEqual(false);
         restore();
       });
       it('when HD_AUTH_OIDC_GITLAB_THEME is not set', () => {
@@ -630,6 +633,7 @@ describe('authConfig', () => {
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
+        expect(firstOidc.enableRegistration).toEqual(false);
         restore();
       });
       it('when HD_AUTH_OIDC_GITLAB_AUTHORIZE_URL is not set', () => {
@@ -663,6 +667,7 @@ describe('authConfig', () => {
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
+        expect(firstOidc.enableRegistration).toEqual(false);
         restore();
       });
       it('when HD_AUTH_OIDC_GITLAB_TOKEN_URL is not set', () => {
@@ -696,6 +701,7 @@ describe('authConfig', () => {
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
+        expect(firstOidc.enableRegistration).toEqual(false);
         restore();
       });
       it('when HD_AUTH_OIDC_GITLAB_USERINFO_URL is not set', () => {
@@ -729,6 +735,7 @@ describe('authConfig', () => {
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
+        expect(firstOidc.enableRegistration).toEqual(false);
         restore();
       });
       it('when HD_AUTH_OIDC_GITLAB_END_SESSION_URL is not set', () => {
@@ -762,6 +769,7 @@ describe('authConfig', () => {
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
+        expect(firstOidc.enableRegistration).toEqual(false);
         restore();
       });
       it('when HD_AUTH_OIDC_GITLAB_SCOPE is not set', () => {
@@ -795,6 +803,7 @@ describe('authConfig', () => {
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
+        expect(firstOidc.enableRegistration).toEqual(false);
         restore();
       });
       it('when HD_AUTH_OIDC_GITLAB_USER_ID_FIELD is not set', () => {
@@ -828,6 +837,7 @@ describe('authConfig', () => {
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
+        expect(firstOidc.enableRegistration).toEqual(false);
         restore();
       });
       it('when HD_AUTH_OIDC_GITLAB_DISPLAY_NAME_FIELD is not set', () => {
@@ -861,6 +871,7 @@ describe('authConfig', () => {
         expect(firstOidc.displayNameField).toEqual(defaultDisplayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
+        expect(firstOidc.enableRegistration).toEqual(false);
         restore();
       });
       it('when HD_AUTH_OIDC_GITLAB_PROFILE_PICTURE_FIELD is not set', () => {
@@ -896,6 +907,7 @@ describe('authConfig', () => {
           defaultProfilePictureField,
         );
         expect(firstOidc.emailField).toEqual(emailField);
+        expect(firstOidc.enableRegistration).toEqual(false);
         restore();
       });
       it('when HD_AUTH_OIDC_GITLAB_EMAIL_FIELD is not set', () => {
@@ -929,6 +941,41 @@ describe('authConfig', () => {
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(defaultEmailField);
+        expect(firstOidc.enableRegistration).toEqual(false);
+        restore();
+      });
+      it('when HD_AUTH_OIDC_GITLAB_ENABLE_REGISTER is not set', () => {
+        const restore = mockedEnv(
+          {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            ...neededAuthConfig,
+            ...completeOidcConfig,
+            HD_AUTH_OIDC_GITLAB_ENABLE_REGISTER: undefined,
+            /* eslint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.oidc).toHaveLength(1);
+        const firstOidc = config.oidc[0];
+        expect(firstOidc.identifier).toEqual(oidcNames[0]);
+        expect(firstOidc.issuer).toEqual(issuer);
+        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientSecret).toEqual(clientSecret);
+        expect(firstOidc.theme).toEqual(theme);
+        expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
+        expect(firstOidc.tokenUrl).toEqual(tokenUrl);
+        expect(firstOidc.scope).toEqual(scope);
+        expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
+        expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
+        expect(firstOidc.userIdField).toEqual(userIdField);
+        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.displayNameField).toEqual(displayNameField);
+        expect(firstOidc.profilePictureField).toEqual(profilePictureField);
+        expect(firstOidc.emailField).toEqual(emailField);
+        expect(firstOidc.enableRegistration).toEqual(true);
         restore();
       });
     });

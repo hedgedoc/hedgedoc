@@ -11,6 +11,7 @@ import { Theme } from './theme.enum';
 import {
   buildErrorMessage,
   ensureNoDuplicatesExist,
+  parseOptionalBoolean,
   parseOptionalNumber,
   replaceAuthErrorsWithEnvironmentVariables,
   toArrayConfig,
@@ -50,6 +51,7 @@ export interface OidcConfig extends InternalIdentifier {
   displayNameField: string;
   profilePictureField: string;
   emailField: string;
+  enableRegistration?: boolean;
 }
 
 export interface AuthConfig {
@@ -147,6 +149,7 @@ const authSchema = Joi.object({
         displayNameField: Joi.string().default('name').optional(),
         profilePictureField: Joi.string().default('picture').optional(),
         emailField: Joi.string().default('email').optional(),
+        enableRegistration: Joi.boolean().default(true).optional(),
       }).optional(),
     )
     .optional(),
@@ -217,6 +220,9 @@ export default registerAs('authConfig', () => {
     profilePictureField:
       process.env[`HD_AUTH_OIDC_${oidcName}_PROFILE_PICTURE_FIELD`],
     emailField: process.env[`HD_AUTH_OIDC_${oidcName}_EMAIL_FIELD`],
+    enableRegistration: parseOptionalBoolean(
+      process.env[`HD_AUTH_OIDC_${oidcName}_ENABLE_REGISTER`],
+    ),
   }));
 
   let syncSource = process.env.HD_AUTH_SYNC_SOURCE;
@@ -236,8 +242,12 @@ export default registerAs('authConfig', () => {
         lifetime: parseOptionalNumber(process.env.HD_SESSION_LIFETIME),
       },
       local: {
-        enableLogin: process.env.HD_AUTH_LOCAL_ENABLE_LOGIN,
-        enableRegister: process.env.HD_AUTH_LOCAL_ENABLE_REGISTER,
+        enableLogin: parseOptionalBoolean(
+          process.env.HD_AUTH_LOCAL_ENABLE_LOGIN,
+        ),
+        enableRegister: parseOptionalBoolean(
+          process.env.HD_AUTH_LOCAL_ENABLE_REGISTER,
+        ),
         minimalPasswordStrength: parseOptionalNumber(
           process.env.HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH,
         ),

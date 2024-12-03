@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
+  ForbiddenException,
   Inject,
   Injectable,
   InternalServerErrorException,
@@ -264,6 +265,11 @@ export class OidcService {
       );
     } catch (e) {
       if (e instanceof NotInDBError) {
+        if (!clientConfig.config.enableRegistration) {
+          throw new ForbiddenException(
+            'Registration is disabled for this OIDC provider',
+          );
+        }
         return null;
       } else {
         throw e;
