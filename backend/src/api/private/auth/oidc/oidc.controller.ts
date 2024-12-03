@@ -73,29 +73,30 @@ export class OidcController {
         this.logger.log('No OIDC user identifier in callback', 'callback');
         throw new UnauthorizedException('No OIDC user identifier found');
       }
+      request.session.authProviderType = ProviderType.OIDC;
       const identity = await this.oidcService.getExistingOidcIdentity(
         oidcIdentifier,
         oidcUserIdentifier,
       );
-      request.session.authProviderType = ProviderType.OIDC;
       const mayUpdate = this.identityService.mayUpdateIdentity(oidcIdentifier);
-      if (identity !== null) {
-        const user = await identity.user;
-        if (mayUpdate) {
-          await this.usersService.updateUser(
-            user,
-            userInfo.displayName,
-            userInfo.email,
-            userInfo.photoUrl,
-          );
-        }
 
-        request.session.username = user.username;
-        return { url: '/' };
-      } else {
+      if (identity === null) {
         request.session.newUserData = userInfo;
         return { url: '/new-user' };
       }
+
+      const user = await identity.user;
+      if (mayUpdate) {
+        await this.usersService.updateUser(
+          user,
+          userInfo.displayName,
+          userInfo.email,
+          userInfo.photoUrl,
+        );
+      }
+
+      request.session.username = user.username;
+      return { url: '/' };
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
