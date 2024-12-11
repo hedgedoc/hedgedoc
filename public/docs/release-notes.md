@@ -4,6 +4,7 @@
 
 ### Bugfixes
 - Fix a crash when cannot read user profile in Oauth
+- Fix CSP Header for mermaid embedded images ([#5887](https://github.com/hedgedoc/hedgedoc/pull/5887) by [@domrim](https://github.com/domrim))
 
 ## <i class="fa fa-tag"></i> 1.10.0 <i class="fa fa-calendar-o"></i> 2024-09-01
 
