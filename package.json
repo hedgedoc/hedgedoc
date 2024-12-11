@@ -32,7 +32,7 @@
     "compression": "1.7.5",
     "connect-flash": "0.1.1",
     "connect-session-sequelize": "7.1.7",
-    "cookie": "0.6.0",
+    "cookie": "0.7.2",
     "cookie-parser": "1.4.7",
     "deep-freeze": "0.0.1",
     "diff-match-patch": "git+https://github.com/hackmdio/diff-match-patch.git#commit=59a9395ad9fe143e601e7ae5765ed943bdd2b11e",
