@@ -2,6 +2,10 @@
 
 ## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
 
+### Features
+- Add fixed rate-limiting to the login and register endpoints
+- Add configurable rate-limiting to the new notes endpoint
+
 ### Bugfixes
 - Fix a crash when cannot read user profile in Oauth
 - Fix CSP Header for mermaid embedded images ([#5887](https://github.com/hedgedoc/hedgedoc/pull/5887) by [@domrim](https://github.com/domrim))
