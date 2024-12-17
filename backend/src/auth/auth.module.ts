@@ -25,4 +25,4 @@ import { OidcService } from './oidc/oidc.service';
   providers: [IdentityService, LdapService, LocalService, OidcService],
   exports: [IdentityService, LdapService, LocalService, OidcService],
 })
-export class IdentityModule {}
+export class AuthModule {}

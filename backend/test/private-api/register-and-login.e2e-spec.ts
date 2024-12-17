@@ -1,12 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import request from 'supertest';
 
-import { LoginDto } from '../../src/identity/local/login.dto';
-import { RegisterDto } from '../../src/identity/local/register.dto';
+import { LoginDto } from '../../src/auth/local/login.dto';
+import { RegisterDto } from '../../src/auth/local/register.dto';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Register and Login', () => {

@@ -15,14 +15,11 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { IdentityService } from '../../../identity/identity.service';
-import { OidcService } from '../../../identity/oidc/oidc.service';
-import { PendingUserConfirmationDto } from '../../../identity/pending-user-confirmation.dto';
-import { ProviderType } from '../../../identity/provider-type.enum';
-import {
-  RequestWithSession,
-  SessionGuard,
-} from '../../../identity/session.guard';
+import { IdentityService } from '../../../auth/identity.service';
+import { OidcService } from '../../../auth/oidc/oidc.service';
+import { PendingUserConfirmationDto } from '../../../auth/pending-user-confirmation.dto';
+import { ProviderType } from '../../../auth/provider-type.enum';
+import { RequestWithSession, SessionGuard } from '../../../auth/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { FullUserInfoDto } from '../../../users/user-info.dto';
 import { OpenApi } from '../../utils/openapi.decorator';

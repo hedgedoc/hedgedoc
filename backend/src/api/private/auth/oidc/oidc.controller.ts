@@ -15,10 +15,10 @@ import {
 import { HttpException } from '@nestjs/common/exceptions/http.exception';
 import { ApiTags } from '@nestjs/swagger';
 
-import { IdentityService } from '../../../../identity/identity.service';
-import { OidcService } from '../../../../identity/oidc/oidc.service';
-import { ProviderType } from '../../../../identity/provider-type.enum';
-import { RequestWithSession } from '../../../../identity/session.guard';
+import { IdentityService } from '../../../../auth/identity.service';
+import { OidcService } from '../../../../auth/oidc/oidc.service';
+import { ProviderType } from '../../../../auth/provider-type.enum';
+import { RequestWithSession } from '../../../../auth/session.guard';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { UsersService } from '../../../../users/users.service';
 import { OpenApi } from '../../../utils/openapi.decorator';

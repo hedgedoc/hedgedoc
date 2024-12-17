@@ -16,6 +16,7 @@ import {
 } from 'typeorm';
 
 import { ApiToken } from '../api-token/api-token.entity';
+import { Identity } from '../auth/identity.entity';
 import { Author } from '../authors/author.entity';
 import { DefaultAccessLevel } from '../config/default-access-level.enum';
 import appConfigMock from '../config/mock/app.config.mock';
@@ -36,7 +37,6 @@ import { eventModuleConfig, NoteEvent } from '../events';
 import { Group } from '../groups/group.entity';
 import { GroupsModule } from '../groups/groups.module';
 import { SpecialGroup } from '../groups/groups.special';
-import { Identity } from '../identity/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';

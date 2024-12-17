@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -21,7 +21,7 @@ import {
   ApiTokenWithSecretDto,
 } from '../../../api-token/api-token.dto';
 import { ApiTokenService } from '../../../api-token/api-token.service';
-import { SessionGuard } from '../../../identity/session.guard';
+import { SessionGuard } from '../../../auth/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { User } from '../../../users/user.entity';
 import { OpenApi } from '../../utils/openapi.decorator';

@@ -6,10 +6,10 @@
 import { Module } from '@nestjs/common';
 
 import { ApiTokenModule } from '../../api-token/api-token.module';
+import { AuthModule } from '../../auth/auth.module';
 import { FrontendConfigModule } from '../../frontend-config/frontend-config.module';
 import { GroupsModule } from '../../groups/groups.module';
 import { HistoryModule } from '../../history/history.module';
-import { IdentityModule } from '../../identity/identity.module';
 import { LoggerModule } from '../../logger/logger.module';
 import { MediaModule } from '../../media/media.module';
 import { NotesModule } from '../../notes/notes.module';
@@ -41,7 +41,7 @@ import { UsersController } from './users/users.controller';
     NotesModule,
     MediaModule,
     RevisionsModule,
-    IdentityModule,
+    AuthModule,
     GroupsModule,
   ],
   controllers: [

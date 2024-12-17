@@ -12,12 +12,12 @@ import { unsign } from 'cookie-signature';
 import { IncomingMessage } from 'http';
 import { Repository } from 'typeorm';
 
+import { ProviderType } from '../auth/provider-type.enum';
 import authConfiguration, { AuthConfig } from '../config/auth.config';
 import { DatabaseType } from '../config/database-type.enum';
 import databaseConfiguration, {
   DatabaseConfig,
 } from '../config/database.config';
-import { ProviderType } from '../identity/provider-type.enum';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { FullUserInfoDto } from '../users/user-info.dto';
 import { HEDGEDOC_SESSION } from '../utils/session';

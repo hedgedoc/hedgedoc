@@ -14,10 +14,10 @@ import {
 } from 'typeorm';
 
 import { ApiToken } from '../api-token/api-token.entity';
+import { Identity } from '../auth/identity.entity';
 import { Author } from '../authors/author.entity';
 import { Group } from '../groups/group.entity';
 import { HistoryEntry } from '../history/history-entry.entity';
-import { Identity } from '../identity/identity.entity';
 import { MediaUpload } from '../media/media-upload.entity';
 import { Note } from '../notes/note.entity';
 import { Username } from '../utils/username';
