@@ -13,6 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApiTokenModule } from './api-token/api-token.module';
 import { PrivateApiModule } from './api/private/private-api.module';
 import { PublicApiModule } from './api/public/public-api.module';
+import { AuthModule } from './auth/auth.module';
 import { AuthorsModule } from './authors/authors.module';
 import appConfig from './config/app.config';
 import authConfig from './config/auth.config';
@@ -27,7 +28,6 @@ import { FrontendConfigModule } from './frontend-config/frontend-config.module';
 import { FrontendConfigService } from './frontend-config/frontend-config.service';
 import { GroupsModule } from './groups/groups.module';
 import { HistoryModule } from './history/history.module';
-import { IdentityModule } from './identity/identity.module';
 import { LoggerModule } from './logger/logger.module';
 import { TypeormLoggerService } from './logger/typeorm-logger.service';
 import { MediaRedirectModule } from './media-redirect/media-redirect.module';
@@ -115,7 +115,7 @@ const routes: Routes = [
     ApiTokenModule,
     FrontendConfigModule,
     WebsocketModule,
-    IdentityModule,
+    AuthModule,
     SessionModule,
     MediaRedirectModule,
   ],

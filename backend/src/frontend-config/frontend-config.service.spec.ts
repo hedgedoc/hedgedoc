@@ -7,6 +7,7 @@ import { ConfigModule, registerAs } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { URL } from 'url';
 
+import { ProviderType } from '../auth/provider-type.enum';
 import { AppConfig } from '../config/app.config';
 import { AuthConfig } from '../config/auth.config';
 import { CustomizationConfig } from '../config/customization.config';
@@ -15,7 +16,6 @@ import { ExternalServicesConfig } from '../config/external-services.config';
 import { GuestAccess } from '../config/guest_access.enum';
 import { Loglevel } from '../config/loglevel.enum';
 import { NoteConfig } from '../config/note.config';
-import { ProviderType } from '../identity/provider-type.enum';
 import { LoggerModule } from '../logger/logger.module';
 import { getServerVersionFromPackageJson } from '../utils/serverVersion';
 import { FrontendConfigService } from './frontend-config.service';

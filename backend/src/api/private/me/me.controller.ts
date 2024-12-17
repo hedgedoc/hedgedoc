@@ -6,7 +6,7 @@
 import { Body, Controller, Delete, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 
-import { SessionGuard } from '../../../identity/session.guard';
+import { SessionGuard } from '../../../auth/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';

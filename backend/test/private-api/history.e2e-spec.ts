@@ -5,10 +5,10 @@
  */
 import request from 'supertest';
 
+import { LocalService } from '../../src/auth/local/local.service';
 import { HistoryEntryImportDto } from '../../src/history/history-entry-import.dto';
 import { HistoryEntry } from '../../src/history/history-entry.entity';
 import { HistoryService } from '../../src/history/history.service';
-import { LocalService } from '../../src/identity/local/local.service';
 import { Note } from '../../src/notes/note.entity';
 import { NotesService } from '../../src/notes/notes.service';
 import { User } from '../../src/users/user.entity';

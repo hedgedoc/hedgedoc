@@ -19,6 +19,11 @@ import { MockApiTokenGuard } from '../src/api-token/mock-api-token.guard';
 import { PrivateApiModule } from '../src/api/private/private-api.module';
 import { PublicApiModule } from '../src/api/public/public-api.module';
 import { setupApp } from '../src/app-init';
+import { AuthModule } from '../src/auth/auth.module';
+import { IdentityService } from '../src/auth/identity.service';
+import { LdapService } from '../src/auth/ldap/ldap.service';
+import { LocalService } from '../src/auth/local/local.service';
+import { OidcService } from '../src/auth/oidc/oidc.service';
 import { AuthorsModule } from '../src/authors/authors.module';
 import { AppConfig } from '../src/config/app.config';
 import { AuthConfig } from '../src/config/auth.config';
@@ -62,11 +67,6 @@ import { GroupsModule } from '../src/groups/groups.module';
 import { GroupsService } from '../src/groups/groups.service';
 import { HistoryModule } from '../src/history/history.module';
 import { HistoryService } from '../src/history/history.service';
-import { IdentityModule } from '../src/identity/identity.module';
-import { IdentityService } from '../src/identity/identity.service';
-import { LdapService } from '../src/identity/ldap/ldap.service';
-import { LocalService } from '../src/identity/local/local.service';
-import { OidcService } from '../src/identity/oidc/oidc.service';
 import { ConsoleLoggerService } from '../src/logger/console-logger.service';
 import { LoggerModule } from '../src/logger/logger.module';
 import { MediaModule } from '../src/media/media.module';
@@ -296,7 +296,7 @@ export class TestSetupBuilder {
         MediaModule,
         ApiTokenModule,
         FrontendConfigModule,
-        IdentityModule,
+        AuthModule,
         SessionModule,
         EventEmitterModule.forRoot(eventModuleConfig),
       ],

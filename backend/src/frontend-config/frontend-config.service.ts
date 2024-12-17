@@ -6,6 +6,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { URL } from 'url';
 
+import { ProviderType } from '../auth/provider-type.enum';
 import appConfiguration, { AppConfig } from '../config/app.config';
 import authConfiguration, { AuthConfig } from '../config/auth.config';
 import customizationConfiguration, {
@@ -15,7 +16,6 @@ import externalServicesConfiguration, {
   ExternalServicesConfig,
 } from '../config/external-services.config';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
-import { ProviderType } from '../identity/provider-type.enum';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { getServerVersionFromPackageJson } from '../utils/serverVersion';
 import {

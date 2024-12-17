@@ -10,6 +10,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import crypto from 'crypto';
 import { Repository } from 'typeorm';
 
+import { Identity } from '../auth/identity.entity';
 import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
 import {
@@ -17,7 +18,6 @@ import {
   TokenNotValidError,
   TooManyTokensError,
 } from '../errors/errors';
-import { Identity } from '../identity/identity.entity';
 import { LoggerModule } from '../logger/logger.module';
 import { Session } from '../sessions/session.entity';
 import { User } from '../users/user.entity';

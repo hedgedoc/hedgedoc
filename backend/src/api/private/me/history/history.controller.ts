@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,11 +15,11 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
+import { SessionGuard } from '../../../../auth/session.guard';
 import { HistoryEntryImportListDto } from '../../../../history/history-entry-import.dto';
 import { HistoryEntryUpdateDto } from '../../../../history/history-entry-update.dto';
 import { HistoryEntryDto } from '../../../../history/history-entry.dto';
 import { HistoryService } from '../../../../history/history.service';
-import { SessionGuard } from '../../../../identity/session.guard';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { Note } from '../../../../notes/note.entity';
 import { User } from '../../../../users/user.entity';

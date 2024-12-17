@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,6 +14,7 @@ import { Repository } from 'typeorm';
 import WebSocket from 'ws';
 
 import { ApiToken } from '../../api-token/api-token.entity';
+import { Identity } from '../../auth/identity.entity';
 import { Author } from '../../authors/author.entity';
 import appConfigMock from '../../config/mock/app.config.mock';
 import authConfigMock from '../../config/mock/auth.config.mock';
@@ -21,7 +22,6 @@ import databaseConfigMock from '../../config/mock/database.config.mock';
 import noteConfigMock from '../../config/mock/note.config.mock';
 import { eventModuleConfig } from '../../events';
 import { Group } from '../../groups/group.entity';
-import { Identity } from '../../identity/identity.entity';
 import { LoggerModule } from '../../logger/logger.module';
 import { Alias } from '../../notes/alias.entity';
 import { Note } from '../../notes/note.entity';

@@ -14,15 +14,15 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { LocalService } from '../../../../identity/local/local.service';
-import { LoginDto } from '../../../../identity/local/login.dto';
-import { RegisterDto } from '../../../../identity/local/register.dto';
-import { UpdatePasswordDto } from '../../../../identity/local/update-password.dto';
-import { ProviderType } from '../../../../identity/provider-type.enum';
+import { LocalService } from '../../../../auth/local/local.service';
+import { LoginDto } from '../../../../auth/local/login.dto';
+import { RegisterDto } from '../../../../auth/local/register.dto';
+import { UpdatePasswordDto } from '../../../../auth/local/update-password.dto';
+import { ProviderType } from '../../../../auth/provider-type.enum';
 import {
   RequestWithSession,
   SessionGuard,
-} from '../../../../identity/session.guard';
+} from '../../../../auth/session.guard';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { User } from '../../../../users/user.entity';
 import { UsersService } from '../../../../users/users.service';
