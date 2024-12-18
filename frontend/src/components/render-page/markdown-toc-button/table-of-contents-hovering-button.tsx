@@ -26,7 +26,7 @@ export const TableOfContentsHoveringButton: React.FC<MarkdownTocButtonProps> = (
   return (
     <div className={styles['markdown-toc-sidebar-button']}>
       <Dropdown drop={'up'}>
-        <Dropdown.Toggle id='toc-overlay-button' variant={'secondary'} className={'no-arrow'}>
+        <Dropdown.Toggle variant={'secondary'} className={'no-arrow'}>
           <UiIcon icon={IconListOl} />
         </Dropdown.Toggle>
         <Dropdown.Menu>

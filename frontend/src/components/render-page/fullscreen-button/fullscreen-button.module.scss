@@ -4,20 +4,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-.markdown-toc-sidebar-button {
+.fullscreen-button {
   position: fixed;
-  right: 5rem;
+  right: 1.75rem;
   bottom: 1rem;
-
-  & > :global(.dropup) {
-    position: sticky;
-    bottom: 20px;
-    right: 0;
-  }
+  z-index: 1300;
 }
 
 @media print {
-  .markdown-toc-sidebar-button {
+  .fullscreen-button {
     display: none;
   }
 }

@@ -19,6 +19,7 @@ import { EventEmitter2 } from 'eventemitter2'
 import React, { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
 import { setPrintMode } from '../../redux/print-mode/methods'
 import { usePrintKeyboardShortcut } from '../editor-page/hooks/use-print-keyboard-shortcut'
+import { FullscreenButton } from './fullscreen-button/fullscreen-button'
 
 /**
  * Wraps the markdown rendering in an iframe.
@@ -185,5 +186,10 @@ export const RenderPageContent: React.FC = () => {
     })
   }, [communicator, extensionEventEmitter])
 
-  return <eventEmitterContext.Provider value={extensionEventEmitter}>{renderer}</eventEmitterContext.Provider>
+  return (
+    <eventEmitterContext.Provider value={extensionEventEmitter}>
+      <FullscreenButton />
+      {renderer}
+    </eventEmitterContext.Provider>
+  )
 }
