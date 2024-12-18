@@ -1288,7 +1288,7 @@ __metadata:
     is-svg: "npm:4.4.0"
     jquery: "npm:3.7.1"
     jquery-mousewheel: "npm:3.1.13"
-    jquery-ui: "npm:1.14.0"
+    jquery-ui: "npm:1.14.1"
     js-cookie: "npm:3.0.5"
     js-sequence-diagrams: "git+https://github.com/hedgedoc/js-sequence-diagrams.git"
     js-yaml: "npm:3.14.1"
@@ -8670,12 +8670,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jquery-ui@npm:1.14.0":
-  version: 1.14.0
-  resolution: "jquery-ui@npm:1.14.0"
+"jquery-ui@npm:1.14.1":
+  version: 1.14.1
+  resolution: "jquery-ui@npm:1.14.1"
   dependencies:
     jquery: "npm:>=1.12.0 <5.0.0"
-  checksum: 10/85475d1956cfafbb59f4b72697ae9c02d8be45069767b87b770fb2460ce2b09dbed180f24f3e93a1fad88cf01d592fd11d8203d5e9405fe9f77760ce5e85a83a
+  checksum: 10/ce648ba36042ee47935c7835c1e9b512e4fb65d13ee591af5bf7b13cd596a44584567f08ec3a3e0051c932bd8299ac63e8d0f0236748ca89213e220c0122bbf8
   languageName: node
   linkType: hard
 
