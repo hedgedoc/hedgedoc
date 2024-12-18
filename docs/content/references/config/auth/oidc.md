@@ -10,14 +10,15 @@ for this server will start with `HD_AUTH_OIDC_MYOIDC_`.
 
 Replace `$NAME` with the identifier of the OIDC server in the table below accordingly.
 
-| environment variable               | default          | example                                    | description                                                                                                                                       |
-|------------------------------------|------------------|--------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
-| `HD_AUTH_OIDC_SERVERS`             | -                | `MYOIDC`                                   | A comma-seperated list of identifiers of OIDC servers HedgeDoc should use.                                                                        |
-| `HD_AUTH_OIDC_$NAME_PROVIDER_NAME` | `OpenID Connect` | `My OIDC Single-Sign-On`                   | The display name for the OIDC server, that is shown in the UI of HegdeDoc.                                                                        |
-| `HD_AUTH_OIDC_$NAME_ISSUER`        | -                | `https://auth.example.com`                 | The base url of the OIDC issuer. It should serve a file `.well-known/openid-configuration`                                                        |
-| `HD_AUTH_OIDC_$NAME_CLIENT_ID`     | -                | `hd2`                                      | The id with which HedgeDoc is registered at the OIDC server.                                                                                      |
-| `HD_AUTH_OIDC_$NAME_CLIENT_SECRET` | -                | `c3f70208375cf26700920678ec55b7df7cd75266` | The secret for the HedgeDoc application, given by the OIDC server.                                                                                |
-| `HD_AUTH_OIDC_$NAME_THEME`         | -                | `gitlab`, `google`, ...                    | The theme in which the button on the login page should be displayed. See below for a list of options. If not defined, a generic one will be used. |
+| environment variable                 | default          | example                                    | description                                                                                                                                       |
+|--------------------------------------|------------------|--------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| `HD_AUTH_OIDC_SERVERS`               | -                | `MYOIDC`                                   | A comma-seperated list of identifiers of OIDC servers HedgeDoc should use.                                                                        |
+| `HD_AUTH_OIDC_$NAME_PROVIDER_NAME`   | `OpenID Connect` | `My OIDC Single-Sign-On`                   | The display name for the OIDC server, that is shown in the UI of HegdeDoc.                                                                        |
+| `HD_AUTH_OIDC_$NAME_ISSUER`          | -                | `https://auth.example.com`                 | The base url of the OIDC issuer. It should serve a file `.well-known/openid-configuration`                                                        |
+| `HD_AUTH_OIDC_$NAME_CLIENT_ID`       | -                | `hd2`                                      | The id with which HedgeDoc is registered at the OIDC server.                                                                                      |
+| `HD_AUTH_OIDC_$NAME_CLIENT_SECRET`   | -                | `c3f70208375cf26700920678ec55b7df7cd75266` | The secret for the HedgeDoc application, given by the OIDC server.                                                                                |
+| `HD_AUTH_OIDC_$NAME_THEME`           | -                | `gitlab`, `google`, ...                    | The theme in which the button on the login page should be displayed. See below for a list of options. If not defined, a generic one will be used. |
+| `HD_AUTH_OIDC_$NAME_ENABLE_REGISTER` | `true`           | `true`, `false`                            | If set to `false`, only users that already exist in the HedgeDoc server are able to login.                                                        |
 
 As redirect URL you should configure
 `https://hedgedoc.example.com/api/private/auth/oidc/$NAME/callback` where `$NAME`
