@@ -12,7 +12,8 @@ import { RendererType } from '../../render-page/window-post-message-communicator
 import { useOnScrollWithLineOffset } from './hooks/use-on-scroll-with-line-offset'
 import { useScrollStateWithoutLineOffset } from './hooks/use-scroll-state-without-line-offset'
 import { NoteType } from '@hedgedoc/commons'
-import React from 'react'
+import React, { Fragment } from 'react'
+import { FullscreenButton } from '../../render-page/fullscreen-button/fullscreen-button'
 
 export type RendererPaneProps = Omit<
   RendererIframeProps,
@@ -37,13 +38,16 @@ export const RendererPane: React.FC<RendererPaneProps> = ({ scrollState, onScrol
   }
 
   return (
-    <RendererIframe
-      {...props}
-      onScroll={adjustedOnScroll}
-      scrollState={adjustedScrollState}
-      rendererType={noteType === NoteType.SLIDE ? RendererType.SLIDESHOW : RendererType.DOCUMENT}
-      markdownContentLines={trimmedContentLines}
-      onRendererStatusChange={setRendererStatus}
-    />
+    <Fragment>
+      <RendererIframe
+        {...props}
+        onScroll={adjustedOnScroll}
+        scrollState={adjustedScrollState}
+        rendererType={noteType === NoteType.SLIDE ? RendererType.SLIDESHOW : RendererType.DOCUMENT}
+        markdownContentLines={trimmedContentLines}
+        onRendererStatusChange={setRendererStatus}
+      />
+      <FullscreenButton linkToEditor={false} />
+    </Fragment>
   )
 }
