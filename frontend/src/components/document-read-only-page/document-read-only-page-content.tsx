@@ -10,6 +10,7 @@ import { RendererType } from '../render-page/window-post-message-communicator/re
 import { DocumentInfobar } from './document-infobar'
 import React, { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
+import { FullscreenButton } from '../render-page/fullscreen-button/fullscreen-button'
 
 /**
  * Renders the read-only version of a note with a header bar that contains information about the note.
@@ -27,6 +28,7 @@ export const DocumentReadOnlyPageContent: React.FC = () => {
         rendererType={RendererType.DOCUMENT}
         onRendererStatusChange={setRendererStatus}
       />
+      <FullscreenButton linkToEditor={true} />
     </Fragment>
   )
 }
