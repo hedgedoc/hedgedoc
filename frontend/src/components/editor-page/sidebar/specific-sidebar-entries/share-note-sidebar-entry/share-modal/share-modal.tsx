@@ -6,11 +6,12 @@
 import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
 import type { ModalVisibilityProps } from '../../../../../common/modals/common-modal'
 import { CommonModal } from '../../../../../common/modals/common-modal'
-import { LinkType, NoteUrlField } from './note-url-field'
+import { NoteUrlField } from './note-url-field'
 import { NoteType } from '@hedgedoc/commons'
 import React from 'react'
 import { Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
+import { NotePageType } from '../../../../../../hooks/common/use-get-note-page-type'
 
 /**
  * Renders a modal which provides shareable URLs of this note.
@@ -30,17 +31,17 @@ export const ShareModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => 
     <CommonModal show={show} onHide={onHide} showCloseButton={true} titleI18nKey={'editor.modal.shareLink.title'}>
       <Modal.Body>
         <Trans i18nKey={'editor.modal.shareLink.editorDescription'} />
-        <NoteUrlField type={LinkType.EDITOR} />
+        <NoteUrlField type={NotePageType.EDITOR} />
         {noteFrontmatter.type === NoteType.SLIDE && (
           <>
             <Trans i18nKey={'editor.modal.shareLink.slidesDescription'} />
-            <NoteUrlField type={LinkType.SLIDESHOW} />
+            <NoteUrlField type={NotePageType.PRESENTATION} />
           </>
         )}
         {noteFrontmatter.type === NoteType.DOCUMENT && (
           <>
             <Trans i18nKey={'editor.modal.shareLink.viewOnlyDescription'} />
-            <NoteUrlField type={LinkType.DOCUMENT} />
+            <NoteUrlField type={NotePageType.READ_ONLY} />
           </>
         )}
       </Modal.Body>
