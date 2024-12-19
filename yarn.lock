@@ -1370,7 +1370,7 @@ __metadata:
     turndown: "npm:7.2.0"
     umzug: "npm:2.3.0"
     url-loader: "npm:4.1.1"
-    utf-8-validate: "npm:6.0.4"
+    utf-8-validate: "npm:6.0.5"
     uuid: "npm:9.0.1"
     validator: "npm:13.12.0"
     velocity-animate: "npm:1.5.2"
@@ -16338,13 +16338,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"utf-8-validate@npm:6.0.4":
-  version: 6.0.4
-  resolution: "utf-8-validate@npm:6.0.4"
+"utf-8-validate@npm:6.0.5":
+  version: 6.0.5
+  resolution: "utf-8-validate@npm:6.0.5"
   dependencies:
     node-gyp: "npm:latest"
     node-gyp-build: "npm:^4.3.0"
-  checksum: 10/046fc81e7c7528661b8162262e62750ab23439e9901dece161b4c6faf36c699f55b8ebd3d9701da2881e315cdce1ee9597121f7dd2f4e405b8aeeec09ded8684
+  checksum: 10/8c96d342064d3f03d7acf616fe727e484825f4f5f7a455059122787306b2df1a4e23c2d27f16bf7ba21293f4ce6ab3e683b893fe7b4c74ac9d43b871c10001a0
   languageName: node
   linkType: hard
 
