@@ -1252,7 +1252,7 @@ __metadata:
     connect-flash: "npm:0.1.1"
     connect-session-sequelize: "npm:7.1.7"
     cookie: "npm:0.6.0"
-    cookie-parser: "npm:1.4.6"
+    cookie-parser: "npm:1.4.7"
     copy-webpack-plugin: "npm:6.4.1"
     css-loader: "npm:5.2.7"
     deep-freeze: "npm:0.0.1"
@@ -3943,13 +3943,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie-parser@npm:1.4.6":
-  version: 1.4.6
-  resolution: "cookie-parser@npm:1.4.6"
+"cookie-parser@npm:1.4.7":
+  version: 1.4.7
+  resolution: "cookie-parser@npm:1.4.7"
   dependencies:
-    cookie: "npm:0.4.1"
+    cookie: "npm:0.7.2"
     cookie-signature: "npm:1.0.6"
-  checksum: 10/1e5a63aa82e8eb4e02d2977c6902983dee87b02e87ec5ec43ac3cb1e72da354003716570cd5190c0ad9e8a454c9d3237f4ad6e2f16d0902205a96a1c72b77ba5
+  checksum: 10/243fa13f217e793d20a57675e6552beea08c5989fcc68495d543997a31646875335e0e82d687b42dcfd466df57891d22bae7f5ba6ab33b7705ed2dd6eb989105
   languageName: node
   linkType: hard
 
@@ -3967,17 +3967,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:0.4.1":
-  version: 0.4.1
-  resolution: "cookie@npm:0.4.1"
-  checksum: 10/0f2defd60ac93645ee31e82d11da695080435eb4fe5bed9b14d2fc4e0621a66f4c5c60f3eb05761df08a9d6279366e8646edfd1654f359d0b5afc25304fc4ddc
-  languageName: node
-  linkType: hard
-
 "cookie@npm:0.6.0":
   version: 0.6.0
   resolution: "cookie@npm:0.6.0"
   checksum: 10/c1f8f2ea7d443b9331680598b0ae4e6af18a618c37606d1bbdc75bec8361cce09fe93e727059a673f2ba24467131a9fb5a4eec76bb1b149c1b3e1ccb268dc583
+  languageName: node
+  linkType: hard
+
+"cookie@npm:0.7.2":
+  version: 0.7.2
+  resolution: "cookie@npm:0.7.2"
+  checksum: 10/24b286c556420d4ba4e9bc09120c9d3db7d28ace2bd0f8ccee82422ce42322f73c8312441271e5eefafbead725980e5996cc02766dbb89a90ac7f5636ede608f
   languageName: node
   linkType: hard
 
