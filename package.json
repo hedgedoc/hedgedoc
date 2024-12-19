@@ -29,7 +29,7 @@
     "chance": "1.1.12",
     "cheerio": "0.22.0",
     "clean-webpack-plugin": "4.0.0",
-    "compression": "1.7.4",
+    "compression": "1.7.5",
     "connect-flash": "0.1.1",
     "connect-session-sequelize": "7.1.7",
     "cookie": "0.6.0",
