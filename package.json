@@ -49,7 +49,7 @@
     "lodash": "4.17.21",
     "lutim": "1.0.3",
     "lz-string": "git+https://github.com/hackmdio/lz-string.git#commit=6edfccb79cd8c210f03fd3bf18e41ca144fbeefb",
-    "mariadb": "3.3.1",
+    "mariadb": "3.3.2",
     "markdown-it": "13.0.2",
     "markdown-it-abbr": "1.0.4",
     "markdown-it-container": "3.0.0",
