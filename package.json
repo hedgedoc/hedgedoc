@@ -69,7 +69,7 @@
     "minio": "7.1.3",
     "moment": "2.30.1",
     "morgan": "1.10.0",
-    "mysql2": "3.11.0",
+    "mysql2": "3.11.5",
     "node-fetch": "2.7.0",
     "passport": "patch:passport@npm%3A0.7.0#~/.yarn/patches/passport-npm-0.7.0-df02531736.patch",
     "passport-dropbox-oauth2": "1.1.0",
