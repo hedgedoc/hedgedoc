@@ -207,7 +207,7 @@
   },
   "optionalDependencies": {
     "bufferutil": "4.0.8",
-    "utf-8-validate": "6.0.4"
+    "utf-8-validate": "6.0.5"
   },
   "packageManager": "yarn@4.4.1"
 }
