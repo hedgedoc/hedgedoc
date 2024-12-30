@@ -23,6 +23,12 @@
     }
   }
 
+  // Fixes checkboxes moving to bottom row if task is multiline
+  ul.contains-task-list > li.task-list-item:has(input.task-list-item-checkbox) {
+    display: flex;
+    align-items: baseline;
+  }
+
   .alert {
     & > p, & > ul {
       margin-bottom: 0;
