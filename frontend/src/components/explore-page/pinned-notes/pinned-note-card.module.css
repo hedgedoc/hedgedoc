@@ -1,0 +1,48 @@
+/*
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+.card {
+    min-width: 25rem;
+    height: 8rem;
+    position: relative;
+    text-decoration: none;
+}
+
+.card:hover {
+    background-color: var(--bs-card-border-color);
+}
+
+.bookmark {
+    position: absolute;
+    top: -2px;
+    right: 1rem;
+    padding: 0;
+    color: #c40c0c;
+    z-index: 2;
+}
+
+.star {
+    position: absolute;
+    top: 0;
+    right: 1.5rem;
+    padding: 0;
+    width: 11px;
+    height: 16px;
+    background-color: #f8df33;
+    z-index: 1;
+}
+
+.title {
+    width: 22rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.titleText {
+    padding-top: 2rem;
+    padding-left: 0.5rem;
+}

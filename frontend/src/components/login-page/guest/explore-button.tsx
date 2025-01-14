@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,15 +10,15 @@ import { Trans, useTranslation } from 'react-i18next'
 import Link from 'next/link'
 
 /**
- * A button that links to the history page.
+ * A button that links to the public explore page.
  */
-export const HistoryButton: React.FC = () => {
+export const ExploreButton: React.FC = () => {
   useTranslation()
 
   return (
-    <Link href={'/history'}>
+    <Link href={'/explore/public'}>
       <Button variant={'secondary'} size={'sm'}>
-        <Trans i18nKey='landing.navigation.history' />
+        <Trans i18nKey='explore.modes.public' />
       </Button>
     </Link>
   )

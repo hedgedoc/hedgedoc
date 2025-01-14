@@ -7,7 +7,7 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
 import { NewNoteButton } from '../../common/new-note-button/new-note-button'
-import { HistoryButton } from '../../layout/app-bar/app-bar-elements/help-dropdown/history-button'
+import { ExploreButton } from './explore-button'
 import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
 import { Trans, useTranslation } from 'react-i18next'
 import { GuestAccessLevel } from '../../../api/config/types'
@@ -32,7 +32,7 @@ export const GuestCard: React.FC = () => {
         </Card.Title>
         <div className={'d-flex flex-row gap-2'}>
           <NewNoteButton />
-          <HistoryButton />
+          <ExploreButton />
         </div>
         {guestAccessLevel !== GuestAccessLevel.CREATE && (
           <div className={'text-muted mt-2 small'}>

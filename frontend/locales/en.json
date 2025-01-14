@@ -3,12 +3,25 @@
     "slogan": "Ideas grow better together",
     "icon": "HedgeDoc logo with text"
   },
-  "notificationTest": {
-    "title": "Test",
-    "content": "It works!"
-  },
   "navigation": {
     "newNote": "New Note"
+  },
+  "explore": {
+    "title": "Explore notes",
+    "welcome": {
+      "user": "Welcome, {{userName}}!",
+      "guest": "Welcome, guest!"
+    },
+    "pinnedNotes": {
+      "title": "Pinned notes",
+      "unpin": "Click to unpin this note",
+      "empty": "You don't have any pinned notes yet."
+    },
+    "modes": {
+      "my": "My notes",
+      "shared": "Shared with me",
+      "public": "Public notes"
+    }
   },
   "renderer": {
     "highlightCode": {
