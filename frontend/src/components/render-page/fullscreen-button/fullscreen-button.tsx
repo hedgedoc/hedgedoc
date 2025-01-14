@@ -25,25 +25,25 @@ import { NoteType } from '@hedgedoc/commons'
 export const FullscreenButton: React.FC = () => {
   const noteLinks = useNoteLinks()
   const pageType = useGetNotePageType()
-  const noteFrontmatter = useApplicationState((state) => state.noteDetails.frontmatter)
+  const noteType = useApplicationState((state) => state.noteDetails.frontmatter.type)
 
   const { correctLink, icon } = useMemo(() => {
-    if (!noteFrontmatter) {
+    if (!noteType) {
       return {}
     }
     switch (pageType) {
       case NotePageType.EDITOR:
-        switch (noteFrontmatter.type) {
-          case NoteType.DOCUMENT:
-            return {
-              correctLink: noteLinks[NotePageType.READ_ONLY],
-              icon: IconArrowsFullscreen
-            }
+        switch (noteType) {
           case NoteType.SLIDE:
-          default:
             return {
               correctLink: noteLinks[NotePageType.PRESENTATION],
               icon: IconCollectionPlay
+            }
+          case NoteType.DOCUMENT:
+          default:
+            return {
+              correctLink: noteLinks[NotePageType.READ_ONLY],
+              icon: IconArrowsFullscreen
             }
         }
       case NotePageType.READ_ONLY:
@@ -53,7 +53,7 @@ export const FullscreenButton: React.FC = () => {
           icon: IconPencil
         }
     }
-  }, [noteLinks, pageType, noteFrontmatter])
+  }, [noteLinks, pageType, noteType])
 
   if (pageType === NotePageType.PRESENTATION || !correctLink || !icon) {
     return null

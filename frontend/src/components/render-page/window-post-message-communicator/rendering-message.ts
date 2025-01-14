@@ -21,7 +21,8 @@ export enum CommunicationMessageType {
   SET_SLIDE_OPTIONS = 'SET_SLIDE_OPTIONS',
   IMAGE_UPLOAD = 'IMAGE_UPLOAD',
   EXTENSION_EVENT = 'EXTENSION_EVENT',
-  SET_PRINT_MODE = 'SET_PRINT_MODE'
+  SET_PRINT_MODE = 'SET_PRINT_MODE',
+  SET_NOTE_ID = 'SET_NOTE_ID'
 }
 
 export interface NoPayloadMessage<TYPE extends CommunicationMessageType> {
@@ -83,6 +84,11 @@ export interface SetSlideOptionsMessage {
   slideOptions: SlideOptions
 }
 
+export interface SetNoteMetadataMessage {
+  type: CommunicationMessageType.SET_NOTE_ID
+  noteId: string
+}
+
 export interface OnHeightChangeMessage {
   type: CommunicationMessageType.ON_HEIGHT_CHANGE
   height: number
@@ -108,6 +114,7 @@ export type CommunicationMessages =
   | ImageUploadMessage
   | ExtensionEvent
   | SetPrintModeConfigurationMessage
+  | SetNoteMetadataMessage
 
 export type EditorToRendererMessageType =
   | CommunicationMessageType.SET_MARKDOWN_CONTENT
@@ -118,6 +125,7 @@ export type EditorToRendererMessageType =
   | CommunicationMessageType.SET_SLIDE_OPTIONS
   | CommunicationMessageType.DISABLE_RENDERER_SCROLL_SOURCE
   | CommunicationMessageType.SET_PRINT_MODE
+  | CommunicationMessageType.SET_NOTE_ID
 
 export type RendererToEditorMessageType =
   | CommunicationMessageType.RENDERER_READY
