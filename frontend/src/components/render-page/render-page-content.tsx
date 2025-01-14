@@ -20,6 +20,10 @@ import React, { useCallback, useDeferredValue, useEffect, useMemo, useRef, useSt
 import { setPrintMode } from '../../redux/print-mode/methods'
 import { usePrintKeyboardShortcut } from '../editor-page/hooks/use-print-keyboard-shortcut'
 import { FullscreenButton } from './fullscreen-button/fullscreen-button'
+import { updateMetadata } from '../../redux/note-details/methods'
+import { Logger } from '../../utils/logger'
+
+const logger = new Logger('RenderPageContent')
 
 /**
  * Wraps the markdown rendering in an iframe.
@@ -85,6 +89,18 @@ export const RenderPageContent: React.FC = () => {
     CommunicationMessageType.SET_PRINT_MODE,
     useCallback(({ printMode }) => {
       setPrintMode(printMode)
+    }, [])
+  )
+
+  useRendererReceiveHandler(
+    CommunicationMessageType.SET_NOTE_ID,
+    useCallback(({ noteId }) => {
+      if (!noteId) {
+        return
+      }
+      updateMetadata(noteId).catch((error) => {
+        logger.error('Failed to update metadata for note id', noteId, error)
+      })
     }, [])
   )
 

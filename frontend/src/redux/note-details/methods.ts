@@ -52,13 +52,17 @@ export const updateCursorPositions = (selection: CursorSelection): void => {
 
 /**
  * Updates the current note's metadata from the server.
+ * If no noteId is provided, the noteId from the current note is used.
+ *
+ * @param noteId Optional: The noteId of the note to update the metadata for.
  */
-export const updateMetadata = async (): Promise<void> => {
+export const updateMetadata = async (noteId?: string): Promise<void> => {
   const noteDetails = store.getState().noteDetails
-  if (!noteDetails) {
+  if (!noteDetails && !noteId) {
     return
   }
-  const updatedMetadata = await getNoteMetadata(noteDetails.id)
+  const updatedMetadata = await getNoteMetadata(noteId || noteDetails.id)
+  console.debug('Updated metadata:', updatedMetadata)
   const action = noteDetailsActionsCreator.updateMetadata(updatedMetadata)
   store.dispatch(action)
 }

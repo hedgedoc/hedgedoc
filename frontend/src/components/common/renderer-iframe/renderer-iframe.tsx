@@ -27,6 +27,7 @@ import { useSendMarkdownToRenderer } from './hooks/use-send-markdown-to-renderer
 import { useSendScrollState } from './hooks/use-send-scroll-state'
 import styles from './style.module.scss'
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useSendNoteId } from './hooks/use-send-note-id'
 
 export interface RendererIframeProps extends Omit<CommonMarkdownRendererProps & ScrollProps, 'baseUrl'> {
   rendererType: RendererType
@@ -157,6 +158,7 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
   useEffectOnRenderTypeChange(rendererType, onIframeLoad)
   useSendAdditionalConfigurationToRenderer(rendererReady)
   useSendMarkdownToRenderer(markdownContentLines, rendererReady)
+  useSendNoteId(rendererReady)
 
   useSendScrollState(scrollState ?? null, rendererReady)
   useEditorReceiveHandler(
