@@ -7,6 +7,7 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
 import { NewNoteButton } from '../../common/new-note-button/new-note-button'
+import { ExploreButton } from './explore-button'
 import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
 import { Trans, useTranslation } from 'react-i18next'
 import { PermissionLevel } from '@hedgedoc/commons'
@@ -31,6 +32,7 @@ export const GuestCard: React.FC = () => {
         </Card.Title>
         <div className={'d-flex flex-row gap-2'}>
           <NewNoteButton />
+          <ExploreButton />
         </div>
         {guestAccessLevel !== PermissionLevel.FULL && (
           <div className={'text-muted mt-2 small'}>
