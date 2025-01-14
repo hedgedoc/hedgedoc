@@ -27,7 +27,7 @@ export const useOnNoteDeleted = (websocketConnection: MessageTransporter): void 
         noteTitle
       }
     })
-    router.push('/history')
+    router.push('/explore/my')
   }, [router, noteTitle, dispatchUiNotification])
 
   useEffect(() => {

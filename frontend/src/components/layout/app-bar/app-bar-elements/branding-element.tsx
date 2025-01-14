@@ -20,7 +20,7 @@ export const BrandingElement: React.FC = () => {
 
   return (
     <Navbar.Brand>
-      <Link href='/' className='text-secondary text-decoration-none d-flex align-items-center'>
+      <Link href='/explore/my' className='text-secondary text-decoration-none d-flex align-items-center'>
         <HedgeDocLogoHorizontalGrey
           size={LogoSize.SMALL}
           className={'w-auto'}
