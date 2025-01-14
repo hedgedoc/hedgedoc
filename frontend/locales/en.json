@@ -3,12 +3,46 @@
     "slogan": "Ideas grow better together",
     "icon": "HedgeDoc logo with text"
   },
-  "notificationTest": {
-    "title": "Test",
-    "content": "It works!"
-  },
   "navigation": {
     "newNote": "New Note"
+  },
+  "explore": {
+    "title": "Explore notes",
+    "welcome": {
+      "user": "Welcome, {{userName}}!",
+      "guest": "Welcome, guest!"
+    },
+    "pinnedNotes": {
+      "title": "Pinned notes",
+      "unpin": "Click to unpin this note",
+      "empty": "You don't have any pinned notes yet.",
+      "pinError": "Could not pin note {{name}}.",
+      "unpinError": "Could not unpin note {{name}}."
+    },
+    "modes": {
+      "my": "My notes",
+      "shared": "Shared with me",
+      "public": "Public notes"
+    },
+    "filters": {
+      "byType": {
+        "title": "Filter by type",
+        "all": "All notes",
+        "documents": "Only documents",
+        "slides": "Only slides"
+      },
+      "byTag": "Show all notes with this tag",
+      "bySearchTerm": "Search term or tag name"
+    },
+    "sort": {
+      "asc": "(ascending)",
+      "desc": "(descending)",
+      "byUpdatedDate": "Updated at {{direction}}",
+      "byTitle": "Title {{direction}}"
+    },
+    "loadingMore": "Loading entries...",
+    "noMoreNotesFound": "No more notes matching your search criteria were found.",
+    "errorLoadingEntries": "There was an error loading the explore page entries."
   },
   "renderer": {
     "highlightCode": {
@@ -369,7 +403,8 @@
         "warning": "All users will lose their connection. This process is irreversible.",
         "deleteButton": "Delete note and uploads",
         "deleteButtonKeepMedia": "Delete note but keep uploads",
-        "keepMedia": "Keep uploads?"
+        "keepMedia": "Keep uploads?",
+        "error": "There was an error deleting the note."
       },
       "permissions": {
         "title": "Permissions",

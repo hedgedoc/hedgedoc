@@ -8,7 +8,7 @@ import type { NextPage } from 'next'
 import { useTranslation } from 'react-i18next'
 import React from 'react'
 import { useIsLoggedIn } from '../../../hooks/common/use-is-logged-in'
-import { RedirectToParamOrHistory } from '../../../components/login-page/redirect-to-param-or-history'
+import { RedirectToParamOrExplore } from '../../../components/login-page/redirect-to-param-or-explore'
 import { NewUserCard } from '../../../components/login-page/new-user/new-user-card'
 import { LoginLayout } from '../../../components/layout/login-layout'
 
@@ -20,7 +20,7 @@ const NewUserPage: NextPage = () => {
   const userLoggedIn = useIsLoggedIn()
 
   if (userLoggedIn) {
-    return <RedirectToParamOrHistory />
+    return <RedirectToParamOrExplore />
   }
 
   return (
