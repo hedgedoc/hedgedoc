@@ -5,7 +5,7 @@
  */
 import { useSingleStringUrlParameter } from '../../../hooks/common/use-single-string-url-parameter'
 
-const defaultFallback = '/history'
+const defaultFallback = '/explore/my'
 
 /**
  * Returns the URL that the user should be redirected to after logging in.
