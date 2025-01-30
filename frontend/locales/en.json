@@ -21,6 +21,23 @@
       "my": "My notes",
       "shared": "Shared with me",
       "public": "Public notes"
+    },
+    "filters": {
+      "byType": {
+        "title": "Filter by type",
+        "all": "All notes",
+        "documents": "Only documents",
+        "slides": "Only slides"
+      },
+      "byTag": "Show all notes with this tag",
+      "bySearchTerm": "Search term or tag name"
+    },
+    "sort": {
+      "asc": "(ascending)",
+      "desc": "(descending)",
+      "byCreationDate": "Created at {{direction}}",
+      "byLastVisited": "Last visited {{direction}}",
+      "byTitle": "Title {{direction}}"
     }
   },
   "renderer": {
