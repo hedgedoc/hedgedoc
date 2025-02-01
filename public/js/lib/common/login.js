@@ -1,4 +1,3 @@
-/* eslint-env browser, jquery */
 /* global Cookies */
 
 import { serverurl } from '../config'

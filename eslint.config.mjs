@@ -17,7 +17,10 @@ export default [{
 }, ...compat.extends('standard'), {
   languageOptions: {
     globals: {
-      ...globals.node
+      ...globals.node,
+      ...globals.mocha,
+      ...globals.jquery,
+      ...globals.browser
     }
   },
 

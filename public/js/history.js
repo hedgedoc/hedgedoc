@@ -1,4 +1,3 @@
-/* eslint-env browser, jquery */
 /* eslint no-console: ["error", { allow: ["warn", "error", "debug"] }] */
 /* global serverurl, moment */
 

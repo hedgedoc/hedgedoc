@@ -1,4 +1,3 @@
-/* eslint-env browser, jquery */
 /* global serverurl, Reveal, RevealMarkdown */
 
 import { preventXSS } from './render'
