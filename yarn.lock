@@ -293,7 +293,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:9.19.0":
+"@eslint/js@npm:9.19.0, @eslint/js@npm:^9.19.0":
   version: 9.19.0
   resolution: "@eslint/js@npm:9.19.0"
   checksum: 10/d8133a83330676d5f0827713af2e9bbf35530631a93520fb59ead6b827a325c54fdd7ad99f2158f895fb393c47bbc55dfdaa945998a647f3b9230f1d5324a626
@@ -1312,6 +1312,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "HedgeDoc@workspace:."
   dependencies:
+    "@eslint/eslintrc": "npm:^3.2.0"
+    "@eslint/js": "npm:^9.19.0"
     "@hedgedoc/codemirror-5": "npm:5.65.12"
     "@hedgedoc/meta-marked": "npm:14.1.0"
     "@passport-next/passport-openid": "npm:1.0.0"
@@ -1367,6 +1369,7 @@ __metadata:
     fork-awesome: "npm:1.2.0"
     formidable: "npm:2.1.2"
     gist-embed: "npm:2.6.0"
+    globals: "npm:^15.14.0"
     graceful-fs: "npm:4.2.11"
     helmet: "npm:8.0.0"
     highlight.js: "npm:10.7.3"
@@ -7541,7 +7544,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globals@npm:^15.11.0":
+"globals@npm:^15.11.0, globals@npm:^15.14.0":
   version: 15.14.0
   resolution: "globals@npm:15.14.0"
   checksum: 10/e35ffbdbc024d6381efca906f67211a7bbf935db2af8c14a65155785479e28b3e475950e5933bb6b296eed54b6dcd924e25b26dbc8579b1bde9d5d25916e1c5f
