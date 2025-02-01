@@ -1450,7 +1450,7 @@ __metadata:
     fork-awesome: "npm:1.2.0"
     formidable: "npm:2.1.2"
     gist-embed: "npm:2.6.0"
-    globals: "npm:^15.14.0"
+    globals: "npm:15.14.0"
     graceful-fs: "npm:4.2.11"
     helmet: "npm:8.0.0"
     highlight.js: "npm:10.7.3"
@@ -7617,17 +7617,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"globals@npm:15.14.0, globals@npm:^15.11.0":
+  version: 15.14.0
+  resolution: "globals@npm:15.14.0"
+  checksum: 10/e35ffbdbc024d6381efca906f67211a7bbf935db2af8c14a65155785479e28b3e475950e5933bb6b296eed54b6dcd924e25b26dbc8579b1bde9d5d25916e1c5f
+  languageName: node
+  linkType: hard
+
 "globals@npm:^14.0.0":
   version: 14.0.0
   resolution: "globals@npm:14.0.0"
   checksum: 10/03939c8af95c6df5014b137cac83aa909090c3a3985caef06ee9a5a669790877af8698ab38007e4c0186873adc14c0b13764acc754b16a754c216cc56aa5f021
-  languageName: node
-  linkType: hard
-
-"globals@npm:^15.11.0, globals@npm:^15.14.0":
-  version: 15.14.0
-  resolution: "globals@npm:15.14.0"
-  checksum: 10/e35ffbdbc024d6381efca906f67211a7bbf935db2af8c14a65155785479e28b3e475950e5933bb6b296eed54b6dcd924e25b26dbc8579b1bde9d5d25916e1c5f
   languageName: node
   linkType: hard
 
