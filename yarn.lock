@@ -1296,7 +1296,7 @@ __metadata:
     formidable: "npm:2.1.2"
     gist-embed: "npm:2.6.0"
     graceful-fs: "npm:4.2.11"
-    helmet: "npm:4.6.0"
+    helmet: "npm:8.0.0"
     highlight.js: "npm:10.7.3"
     html-webpack-plugin: "npm:4.5.2"
     i18n: "npm:0.15.1"
@@ -7713,10 +7713,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"helmet@npm:4.6.0":
-  version: 4.6.0
-  resolution: "helmet@npm:4.6.0"
-  checksum: 10/47129c540dc815a30274b687699738e7dd9acdeeaa5eb4682cba8d364a381fb502b140c7fef5b8d5f9a01d9d17ed8a17ef62c884816bd9e4535d750ce3a9a6be
+"helmet@npm:8.0.0":
+  version: 8.0.0
+  resolution: "helmet@npm:8.0.0"
+  checksum: 10/cf30579d1dbd095e301458265fb6b3446d1ee0598c99b5e946afda8a72c035a6a7ebf2176168d5ca2541e6e522a88fb58d06f0eeec4ab378646960de9aea6584
   languageName: node
   linkType: hard
 

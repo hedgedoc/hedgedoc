@@ -126,7 +126,8 @@ app.use(csp.addNonceToLocals)
 // https://helmetjs.github.io/docs/csp/
 if (config.csp.enable) {
   app.use(helmet.contentSecurityPolicy({
-    directives: csp.computeDirectives()
+    directives: csp.computeDirectives(),
+    useDefaults: false
   }))
 } else {
   logger.info('Content-Security-Policy is disabled. This may be a security risk.')
