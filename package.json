@@ -37,7 +37,7 @@
     "deep-freeze": "0.0.1",
     "diff-match-patch": "git+https://github.com/hackmdio/diff-match-patch.git#commit=59a9395ad9fe143e601e7ae5765ed943bdd2b11e",
     "ejs": "3.1.10",
-    "express": "4.21.0",
+    "express": "4.21.2",
     "express-session": "1.18.1",
     "file-type": "18.7.0",
     "formidable": "2.1.2",
