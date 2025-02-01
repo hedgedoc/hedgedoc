@@ -1253,7 +1253,7 @@ __metadata:
     body-parser: "npm:1.20.3"
     bootstrap: "npm:3.4.1"
     bootstrap-validator: "npm:0.11.9"
-    bufferutil: "npm:4.0.8"
+    bufferutil: "npm:4.0.9"
     chance: "npm:1.1.12"
     cheerio: "npm:0.22.0"
     clean-webpack-plugin: "npm:4.0.0"
@@ -3222,13 +3222,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bufferutil@npm:4.0.8":
-  version: 4.0.8
-  resolution: "bufferutil@npm:4.0.8"
+"bufferutil@npm:4.0.9":
+  version: 4.0.9
+  resolution: "bufferutil@npm:4.0.9"
   dependencies:
     node-gyp: "npm:latest"
     node-gyp-build: "npm:^4.3.0"
-  checksum: 10/d9337badc960a19d5a031db5de47159d7d8a11b6bab399bdfbf464ffa9ecd2972fef19bb61a7d2827e0c55f912c20713e12343386b86cb013f2b99c2324ab6a3
+  checksum: 10/335bb716d4b3bf0cee9b65d309cc40c7f858b32c6a685088a54c45bdd6e229a7a1b8a1dde464d758d913d3dcc064beb46c58cfb1093b98618aa3d78dbea753d6
   languageName: node
   linkType: hard
 

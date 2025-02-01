@@ -206,7 +206,7 @@
     "wurl": "2.5.4"
   },
   "optionalDependencies": {
-    "bufferutil": "4.0.8",
+    "bufferutil": "4.0.9",
     "utf-8-validate": "6.0.5"
   },
   "packageManager": "yarn@4.4.1"
