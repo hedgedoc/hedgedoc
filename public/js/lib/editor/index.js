@@ -1,3 +1,4 @@
+/* global CodeMirror, inlineAttachment, editor, Cookies  */
 import '@hedgedoc/codemirror-5/addon/comment/comment.js'
 import '@hedgedoc/codemirror-5/addon/comment/continuecomment.js'
 import '@hedgedoc/codemirror-5/addon/dialog/dialog.js'
