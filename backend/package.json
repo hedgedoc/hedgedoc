@@ -71,7 +71,7 @@
     "yjs": "13.6.20"
   },
   "devDependencies": {
-    "@darraghor/eslint-plugin-nestjs-typed": "5.0.27",
+    "@darraghor/eslint-plugin-nestjs-typed": "5.0.32",
     "@nestjs/cli": "10.4.5",
     "@nestjs/schematics": "10.2.2",
     "@nestjs/testing": "10.4.5",
