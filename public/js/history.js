@@ -220,7 +220,7 @@ export function getStorageHistory (callback) {
     if (typeof data === 'string') { data = JSON.parse(data) }
     callback(data)
   }
-  // eslint-disable-next-line n/no-callback-literal
+
   callback([])
 }
 
