@@ -276,7 +276,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/eslintrc@npm:^3.2.0":
+"@eslint/eslintrc@npm:3.2.0, @eslint/eslintrc@npm:^3.2.0":
   version: 3.2.0
   resolution: "@eslint/eslintrc@npm:3.2.0"
   dependencies:
@@ -293,7 +293,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:9.19.0, @eslint/js@npm:^9.19.0":
+"@eslint/js@npm:9.19.0":
   version: 9.19.0
   resolution: "@eslint/js@npm:9.19.0"
   checksum: 10/d8133a83330676d5f0827713af2e9bbf35530631a93520fb59ead6b827a325c54fdd7ad99f2158f895fb393c47bbc55dfdaa945998a647f3b9230f1d5324a626
@@ -1392,8 +1392,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "HedgeDoc@workspace:."
   dependencies:
-    "@eslint/eslintrc": "npm:^3.2.0"
-    "@eslint/js": "npm:^9.19.0"
+    "@eslint/eslintrc": "npm:3.2.0"
+    "@eslint/js": "npm:9.19.0"
     "@hedgedoc/codemirror-5": "npm:5.65.12"
     "@hedgedoc/meta-marked": "npm:14.1.0"
     "@node-saml/passport-saml": "npm:4.0.4"
