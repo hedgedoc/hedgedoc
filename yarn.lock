@@ -1335,7 +1335,7 @@ __metadata:
     mock-require: "npm:3.0.3"
     moment: "npm:2.30.1"
     morgan: "npm:1.10.0"
-    mysql2: "npm:3.11.5"
+    mysql2: "npm:3.12.0"
     node-fetch: "npm:2.7.0"
     optimize-css-assets-webpack-plugin: "npm:6.0.1"
     passport: "patch:passport@npm%3A0.7.0#~/.yarn/patches/passport-npm-0.7.0-df02531736.patch"
@@ -10899,9 +10899,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mysql2@npm:3.11.5":
-  version: 3.11.5
-  resolution: "mysql2@npm:3.11.5"
+"mysql2@npm:3.12.0":
+  version: 3.12.0
+  resolution: "mysql2@npm:3.12.0"
   dependencies:
     aws-ssl-profiles: "npm:^1.1.1"
     denque: "npm:^2.1.0"
@@ -10912,7 +10912,7 @@ __metadata:
     named-placeholders: "npm:^1.1.3"
     seq-queue: "npm:^0.0.5"
     sqlstring: "npm:^2.3.2"
-  checksum: 10/912dc364f6f9684721add5474c732f5d7c2403ec17cb05b06f95adafab3cb32daa2798b283d48d0951d11af94a58558581ed22635803fc6baab651d3651c1cc9
+  checksum: 10/55faaa32abc4ae706d8e3b9205ef3f05767bb35ee8049c95bfa594a2d54fec439118b66bbde23205491593f697501a060cba834288cc75fd70fdf4247ab15435
   languageName: node
   linkType: hard
 
