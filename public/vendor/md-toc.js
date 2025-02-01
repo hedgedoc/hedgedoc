@@ -1,4 +1,3 @@
-/* eslint-env browser, jquery */
 /**
  * md-toc.js v1.0.2
  * https://github.com/yijian166/md-toc.js

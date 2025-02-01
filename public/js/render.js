@@ -1,4 +1,3 @@
-/* eslint-env browser, jquery */
 // allow some attributes
 
 const filterXSS = require('xss')

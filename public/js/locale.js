@@ -1,4 +1,3 @@
-/* eslint-env browser, jquery */
 /* global Cookies */
 const supportedLanguages = require('../../locales/_supported.json')
 

@@ -1,4 +1,3 @@
-/* eslint-env browser, jquery */
 /* global moment, serverurl */
 
 import {

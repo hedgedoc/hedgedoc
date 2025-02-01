@@ -1,4 +1,3 @@
-/* eslint-env browser, jquery */
 /* global _ */
 // Inject line numbers for sync scroll.
 
