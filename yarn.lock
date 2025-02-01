@@ -1367,7 +1367,7 @@ __metadata:
     scrypt-kdf: "npm:2.0.1"
     select2: "npm:3.5.2-browserify"
     sequelize: "npm:5.22.5"
-    shortid: "npm:2.2.16"
+    shortid: "npm:2.2.17"
     socket.io: "npm:2.5.1"
     socket.io-client: "npm:2.5.0"
     spin.js: "npm:4.1.2"
@@ -10934,19 +10934,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^2.1.0":
-  version: 2.1.11
-  resolution: "nanoid@npm:2.1.11"
-  checksum: 10/cf2a2eedcf9d8893a4687f11743ccf8381f047bc2b3d3887a23721bbef8fe64c5759b9cba6eb945e40efeb4a7e7379b3417e4dc5f6cc03050322d2c24a7ff69b
-  languageName: node
-  linkType: hard
-
 "nanoid@npm:^3.3.7":
   version: 3.3.7
   resolution: "nanoid@npm:3.3.7"
   bin:
     nanoid: bin/nanoid.cjs
   checksum: 10/ac1eb60f615b272bccb0e2b9cd933720dad30bf9708424f691b8113826bb91aca7e9d14ef5d9415a6ba15c266b37817256f58d8ce980c82b0ba3185352565679
+  languageName: node
+  linkType: hard
+
+"nanoid@npm:^3.3.8":
+  version: 3.3.8
+  resolution: "nanoid@npm:3.3.8"
+  bin:
+    nanoid: bin/nanoid.cjs
+  checksum: 10/2d1766606cf0d6f47b6f0fdab91761bb81609b2e3d367027aff45e6ee7006f660fb7e7781f4a34799fe6734f1268eeed2e37a5fdee809ade0c2d4eb11b0f9c40
   languageName: node
   linkType: hard
 
@@ -14616,12 +14618,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shortid@npm:2.2.16":
-  version: 2.2.16
-  resolution: "shortid@npm:2.2.16"
+"shortid@npm:2.2.17":
+  version: 2.2.17
+  resolution: "shortid@npm:2.2.17"
   dependencies:
-    nanoid: "npm:^2.1.0"
-  checksum: 10/0a00ce19fd319d9f3a2e646adf985a99f246475624f2e5d0d1811354b77d342e84c590ef5a7b22ea3e866f5c5821eac4905308f295fa95de74afccc8fed6ea2e
+    nanoid: "npm:^3.3.8"
+  checksum: 10/5c85635e31c08f8c6824b1802a0abb4cd26b39a5c84498dacc91b865f9a860979b010420423e5a4c0abf966aedf197a664a610e813745a6df1497f1376a72350
   languageName: node
   linkType: hard
 
