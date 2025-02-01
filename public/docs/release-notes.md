@@ -6,6 +6,10 @@ This release changes the default configuration of the HSTS preload attribute to 
 HSTS preload list requirements. This shouldn't impact any instance. However, if you intend to use HSTS preloading
 you should enable the config setting `hsts.preload` or set environment variable `CMD_HSTS_PRELOAD=true`.
 
+This release deprecates support for Node v18.
+As the LTS support for v18 runs out in April 2025, the next release will only work with Node v20 and upwards.
+Consider this your early warning to upgrade any running instances to at least Node v20.
+
 ### Enhancements
 - Add fixed rate-limiting to the login and register endpoints
 - Add configurable rate-limiting to the new notes endpoint
