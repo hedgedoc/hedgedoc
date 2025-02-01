@@ -2,13 +2,18 @@
 
 ## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
 
-### Features
+This release changes the default configuration of the HSTS preload attribute to false for compliance with the
+HSTS preload list requirements. This shouldn't impact any instance. However, if you intend to use HSTS preloading
+you should enable the config setting `hsts.preload` or set environment variable `CMD_HSTS_PRELOAD=true`.
+
+### Enhancements
 - Add fixed rate-limiting to the login and register endpoints
 - Add configurable rate-limiting to the new notes endpoint
 
 ### Bugfixes
 - Fix a crash when cannot read user profile in Oauth
 - Fix CSP Header for mermaid embedded images ([#5887](https://github.com/hedgedoc/hedgedoc/pull/5887) by [@domrim](https://github.com/domrim))
+- Change default of HSTS preload to false for compliance with the HSTS preload list requirements
 
 ## <i class="fa fa-tag"></i> 1.10.0 <i class="fa fa-calendar-o"></i> 2024-09-01
 
