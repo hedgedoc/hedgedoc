@@ -2591,7 +2591,7 @@ __metadata:
     "@types/diff": "npm:6.0.0"
     "@types/express": "npm:5.0.0"
     "@types/express-session": "npm:1.18.0"
-    "@types/jest": "npm:29.5.13"
+    "@types/jest": "npm:29.5.14"
     "@types/markdown-it": "npm:13.0.8"
     "@types/mysql": "npm:2.15.26"
     "@types/node": "npm:20.16.11"
@@ -2728,7 +2728,7 @@ __metadata:
     "@types/d3-graphviz": "npm:2.6.10"
     "@types/diff": "npm:6.0.0"
     "@types/dompurify": "npm:3.0.5"
-    "@types/jest": "npm:29.5.13"
+    "@types/jest": "npm:29.5.14"
     "@types/katex": "npm:0.16.7"
     "@types/luxon": "npm:3.4.2"
     "@types/markdown-it": "npm:13.0.8"
@@ -5702,13 +5702,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:29.5.13":
-  version: 29.5.13
-  resolution: "@types/jest@npm:29.5.13"
+"@types/jest@npm:29.5.14":
+  version: 29.5.14
+  resolution: "@types/jest@npm:29.5.14"
   dependencies:
     expect: "npm:^29.0.0"
     pretty-format: "npm:^29.0.0"
-  checksum: 10c0/9c31af0b155387b9860908830de63c6b79011d7c87c8b61b39da124e26e55423dd51b006749aafe4f0ef3a065016619a1f93ef4b055157d43727f448e67824b7
+  checksum: 10c0/18e0712d818890db8a8dab3d91e9ea9f7f19e3f83c2e50b312f557017dc81466207a71f3ed79cf4428e813ba939954fa26ffa0a9a7f153181ba174581b1c2aed
   languageName: node
   linkType: hard
 

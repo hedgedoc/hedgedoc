@@ -129,7 +129,7 @@
     "@types/d3-graphviz": "2.6.10",
     "@types/diff": "6.0.0",
     "@types/dompurify": "3.0.5",
-    "@types/jest": "29.5.13",
+    "@types/jest": "29.5.14",
     "@types/katex": "0.16.7",
     "@types/luxon": "3.4.2",
     "@types/markdown-it": "13.0.8",
