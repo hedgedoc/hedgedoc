@@ -48,6 +48,7 @@ nav:
       - 'Operational Transformation': dev/ot.md
       - Webpack: dev/webpack.md
       - 'Documentation': dev/documentation.md
+      - 'Release Checklist': dev/release_checklist.md
   - FAQ: faq.md
 markdown_extensions:
   - toc:
