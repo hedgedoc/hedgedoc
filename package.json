@@ -23,7 +23,7 @@
     "test": "dotenv -c test -- turbo --env-mode=loose run test --concurrency 1",
     "test:e2e:ci": "dotenv -c test -- turbo --env-mode=loose run test:e2e:ci"
   },
-  "packageManager": "yarn@4.5.1",
+  "packageManager": "yarn@4.5.3",
   "resolutions": {
     "@types/node": "20.16.11",
     "domhandler": "5.0.3",
