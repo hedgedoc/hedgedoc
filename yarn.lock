@@ -2790,7 +2790,7 @@ __metadata:
     markdown-it-mark: "npm:4.0.0"
     markdown-it-mathjax: "npm:2.0.0"
     markdown-it-plantuml: "npm:1.4.1"
-    markdown-it-regex: "npm:0.2.0"
+    markdown-it-regex: "npm:0.2.2"
     markdown-it-sub: "npm:2.0.0"
     markdown-it-sup: "npm:2.0.0"
     mermaid: "npm:11.4.0"
@@ -14337,10 +14337,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-it-regex@npm:0.2.0":
-  version: 0.2.0
-  resolution: "markdown-it-regex@npm:0.2.0"
-  checksum: 10c0/5e303a8477bf6d81796675e48e966f9f85efc0e643a25f2b9e95a34beb753b32e8a71958b859ea81da27e67ffd8ee5014d4d8297a060f97c45276ec3399555db
+"markdown-it-regex@npm:0.2.2":
+  version: 0.2.2
+  resolution: "markdown-it-regex@npm:0.2.2"
+  checksum: 10c0/637b5e9d0c2c162ffa421b55025b9b6b7f29f7aec76e9500c877c47d1e17a40753e58ab8107b2997945585c7e38abb8ece41574af1525a9c75e2428434e59972
   languageName: node
   linkType: hard
 
