@@ -13,6 +13,7 @@ Consider this your early warning to upgrade any running instances to at least No
 ### Enhancements
 - Add fixed rate-limiting to the login and register endpoints
 - Add configurable rate-limiting to the new notes endpoint
+- Failing OAuth2 logins return a plain error message instead of an HTTP 500 error with stack trace in the log
 
 ### Bugfixes
 - Fix a crash when cannot read user profile in Oauth
