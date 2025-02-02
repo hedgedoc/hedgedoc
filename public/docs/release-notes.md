@@ -2,6 +2,8 @@
 
 ## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
 
+## <i class="fa fa-tag"></i> 1.10.1 <i class="fa fa-calendar-o"></i> 2024-02-02
+
 This release changes the default configuration of the HSTS preload attribute to false for compliance with the
 HSTS preload list requirements. This shouldn't impact any instance. However, if you intend to use HSTS preloading
 you should enable the config setting `hsts.preload` or set environment variable `CMD_HSTS_PRELOAD=true`.
