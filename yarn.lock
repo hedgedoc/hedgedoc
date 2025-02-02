@@ -2607,7 +2607,7 @@ __metadata:
     class-validator: "npm:0.14.1"
     cli-color: "npm:2.0.4"
     connect-typeorm: "npm:2.0.0"
-    cookie: "npm:1.0.1"
+    cookie: "npm:1.0.2"
     diff: "npm:7.0.0"
     eslint: "npm:8.57.1"
     eslint-config-prettier: "npm:9.1.0"
@@ -8574,7 +8574,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:*, cookie@npm:1.0.1":
+"cookie@npm:*":
   version: 1.0.1
   resolution: "cookie@npm:1.0.1"
   checksum: 10c0/80afdcad7fe9cab7a0ea1802629f6f4cf9ff957e9489daa7a813e3ac4ca842b0e5ab3f8e6a6ddc1f3f5c771b81c229afd6f0f3c083025d68c48d214ea8fb1097
@@ -8599,6 +8599,13 @@ __metadata:
   version: 0.7.2
   resolution: "cookie@npm:0.7.2"
   checksum: 10c0/9596e8ccdbf1a3a88ae02cf5ee80c1c50959423e1022e4e60b91dd87c622af1da309253d8abdb258fb5e3eacb4f08e579dc58b4897b8087574eee0fd35dfa5d2
+  languageName: node
+  linkType: hard
+
+"cookie@npm:1.0.2":
+  version: 1.0.2
+  resolution: "cookie@npm:1.0.2"
+  checksum: 10c0/fd25fe79e8fbcfcaf6aa61cd081c55d144eeeba755206c058682257cb38c4bd6795c6620de3f064c740695bb65b7949ebb1db7a95e4636efb8357a335ad3f54b
   languageName: node
   linkType: hard
 
