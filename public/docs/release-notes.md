@@ -4,22 +4,32 @@
 
 ## <i class="fa fa-tag"></i> 1.10.1 <i class="fa fa-calendar-o"></i> 2024-02-02
 
+This release fixes a security issue where brute-forcing local email/passwords is possible because of missing rate-limits.
+We recommend upgrading as soon as possible, if you use local logins.
+
+See also <https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-6w39-x2c6-6mpf>
+
 This release changes the default configuration of the HSTS preload attribute to false for compliance with the
 HSTS preload list requirements. This shouldn't impact any instance. However, if you intend to use HSTS preloading
-you should enable the config setting `hsts.preload` or set environment variable `CMD_HSTS_PRELOAD=true`.
+you should enable the config setting `hsts.preload` to `true` or set environment variable `CMD_HSTS_PRELOAD=true`.
 
-This release deprecates support for Node v18.
-As the LTS support for v18 runs out in April 2025, the next release will only work with Node v20 and upwards.
-Consider this your early warning to upgrade any running instances to at least Node v20.
+This release deprecates support for Node 18.
+As the LTS support for 18 runs out in April 2025, the next release will only work with Node 20 and upwards.
+Consider this your early warning to upgrade any running instances to at least Node 20.
 
 ### Enhancements
 - Add fixed rate-limiting to the login and register endpoints
 - Add configurable rate-limiting to the new notes endpoint
 
 ### Bugfixes
-- Fix a crash when cannot read user profile in Oauth
+- Fix a crash when cannot read user profile in OAuth ([#5850](https://github.com/hedgedoc/hedgedoc/pull/5850) by [@lautaroalvarez](https://github.com/lautaroalvarez))
 - Fix CSP Header for mermaid embedded images ([#5887](https://github.com/hedgedoc/hedgedoc/pull/5887) by [@domrim](https://github.com/domrim))
-- Change default of HSTS preload to false for compliance with the HSTS preload list requirements
+- Change default of HSTS preload to false for compliance with the HSTS preload list requirements ([#5913](https://github.com/hedgedoc/hedgedoc/issues/5913) by [@SvizelPritula](https://github.com/SvizelPritula))
+
+### Contributors
+
+- [Dominik Rimpf](https://github.com/domrim)
+- [Lautaro Alvarez](https://github.com/lautaroalvarez)
 
 ## <i class="fa fa-tag"></i> 1.10.0 <i class="fa fa-calendar-o"></i> 2024-09-01
 
