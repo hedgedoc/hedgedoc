@@ -63,7 +63,7 @@
     "diff": "7.0.0",
     "dom-serializer": "2.0.0",
     "domhandler": "5.0.3",
-    "dompurify": "3.1.6",
+    "dompurify": "3.1.7",
     "emoji-picker-element": "1.23.0",
     "emoji-picker-element-data": "1.6.1",
     "eventemitter2": "6.4.9",
