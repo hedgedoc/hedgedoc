@@ -38,7 +38,7 @@
     "@nestjs/swagger": "8.0.5",
     "@nestjs/typeorm": "10.0.2",
     "@nestjs/websockets": "10.4.5",
-    "@node-rs/argon2": "2.0.0",
+    "@node-rs/argon2": "2.0.2",
     "@zxcvbn-ts/core": "3.0.4",
     "@zxcvbn-ts/language-common": "3.0.4",
     "@zxcvbn-ts/language-en": "3.0.2",
