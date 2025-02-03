@@ -55,7 +55,7 @@
     "joi": "17.13.3",
     "ldapauth-fork": "6.1.0",
     "markdown-it": "13.0.2",
-    "minio": "8.0.1",
+    "minio": "8.0.4",
     "mysql": "2.18.1",
     "node-fetch": "2.7.0",
     "openid-client": "5.7.0",
