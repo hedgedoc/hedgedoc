@@ -6,7 +6,7 @@
     - [Docker Compose](https://docs.docker.com/compose/install/)
 
 The official docker images are [available on quay.io](https://quay.io/repository/hedgedoc/hedgedoc).
-We currently only support the `amd64` architecture.
+We currently support the `amd64` and `arm64` architectures.
 
 
 The easiest way to get started with HedgeDoc and Docker is to use the following `docker-compose.yml`:
