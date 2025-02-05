@@ -5,10 +5,11 @@
  */
 
 import type { NextPage } from 'next'
-import { LandingLayout } from '../../../../components/landing-layout/landing-layout'
+import { ExploreNotesSection } from '../../../../components/explore-page/explore-notes-section/explore-notes-section'
+import { Mode } from '../../../../components/explore-page/mode-selection/mode'
 
 const ExploreSharedPage: NextPage = () => {
-  return <LandingLayout>Shared Notes</LandingLayout>
+  return <ExploreNotesSection mode={Mode.SHARED_WITH_ME} />
 }
 
 export default ExploreSharedPage

@@ -5,10 +5,11 @@
  */
 
 import type { NextPage } from 'next'
-import { LandingLayout } from '../../../../components/landing-layout/landing-layout'
+import { ExploreNotesSection } from '../../../../components/explore-page/explore-notes-section/explore-notes-section'
+import { Mode } from '../../../../components/explore-page/mode-selection/mode'
 
 const ExplorePublicPage: NextPage = () => {
-  return <LandingLayout>Public Notes</LandingLayout>
+  return <ExploreNotesSection mode={Mode.PUBLIC} />
 }
 
 export default ExplorePublicPage
