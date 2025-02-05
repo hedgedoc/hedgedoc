@@ -7,7 +7,7 @@ import React, { type MouseEvent, useMemo } from 'react'
 import { Badge, Card } from 'react-bootstrap'
 import { DateTime } from 'luxon'
 import { BookmarkStarFill as IconPinned } from 'react-bootstrap-icons'
-import styles from './pinned-note-card.module.css'
+import styles from './pinned-note-card.module.scss'
 import { useCallback } from 'react'
 import { NoteTypeIcon } from '../../common/note-type-icon/note-type-icon'
 import type { NoteType } from '@hedgedoc/commons'
@@ -60,23 +60,21 @@ export const PinnedNoteCard: React.FC<NoteCardProps> = ({ title, id, lastVisited
   }, [tags, onClickTag, labelTag])
 
   return (
-    <li className={'d-block'}>
-      <Card className={`${styles.card}`} as={Link} href={`/n/${primaryAddress}`}>
-        <Card.Body>
-          <div onClick={onClickUnpin} title={labelUnpinNote}>
-            <UiIcon icon={IconPinned} size={1.5} className={`${styles.bookmark}`} />
-            <div className={`${styles.star}`} />
-          </div>
-          <Card.Title className={`${styles.title}`}>
-            <NoteTypeIcon noteType={type} />
-            <span className={`${styles.titleText}`} title={title}>
-              {title}
-            </span>
-          </Card.Title>
-          <Card.Subtitle className='mb-2 text-muted'>{lastVisitedString}</Card.Subtitle>
-          {tagsChips}
-        </Card.Body>
-      </Card>
-    </li>
+    <Card className={`${styles.card}`} as={Link} href={`/n/${primaryAddress}`}>
+      <Card.Body className={`${styles.cardBody}`}>
+        <div onClick={onClickUnpin} title={labelUnpinNote}>
+          <UiIcon icon={IconPinned} size={1.5} className={`${styles.bookmark}`} />
+          <div className={`${styles.star}`} />
+        </div>
+        <Card.Title className={`${styles.title}`}>
+          <NoteTypeIcon noteType={type} />
+          <span className={`${styles.titleText}`} title={title}>
+            {title}
+          </span>
+        </Card.Title>
+        <Card.Subtitle className='mb-2 text-muted'>{lastVisitedString}</Card.Subtitle>
+        <div>{tagsChips}</div>
+      </Card.Body>
+    </Card>
   )
 }

@@ -1,11 +1,11 @@
-/*
+/*!
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 .card {
-    min-width: 25rem;
+    max-width: 25rem;
     height: 8rem;
     position: relative;
     text-decoration: none;
@@ -13,6 +13,12 @@
 
 .card:hover {
     background-color: var(--bs-card-border-color);
+}
+
+.cardBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .bookmark {
