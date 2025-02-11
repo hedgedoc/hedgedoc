@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ '20' ] # Are you changing this? Don't forget to update the min. and recommended node version in docs/content/how-to/develop/setup.md!
+        node: [ '20' ] # Are you changing this? Don't forget to update the min. and recommended node version in docs/content/development/guides/setup.md!
         include:
           - node: '20'
             coverage: true

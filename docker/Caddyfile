@@ -1,20 +1,15 @@
-#
-# SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
-#
-# SPDX-License-Identifier: AGPL-3.0-only
-#
+{$HD_BASE_URL} {
 
-{$HD_BASE_URL}
+    log {
+        output stdout
+        level WARN
+        format console
+    }
 
-log {
-	output stdout
-	level WARN
-	format console
+    reverse_proxy /realtime http://backend:{$HD_BACKEND_PORT:3000}
+    reverse_proxy /api/* http://backend:{$HD_BACKEND_PORT:3000}
+    reverse_proxy /public/* http://backend:{$HD_BACKEND_PORT:3000}
+    reverse_proxy /uploads/* http://backend:{$HD_BACKEND_PORT:3000}
+    reverse_proxy /media/* http://backend:{$HD_BACKEND_PORT:3000}
+    reverse_proxy /* http://frontend:{$HD_FRONTEND_PORT:3001}
 }
-
-reverse_proxy /realtime http://backend:3000
-reverse_proxy /api/* http://backend:3000
-reverse_proxy /public/* http://backend:3000
-reverse_proxy /uploads/* http://backend:3000
-reverse_proxy /apidoc/* http://backend:3000
-reverse_proxy /* http://frontend:3001
