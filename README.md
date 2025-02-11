@@ -36,7 +36,7 @@ We are currently working on HedgeDoc 2, a complete rewrite of HedgeDoc. Please n
 - HedgeDoc 2 will be split in two components. The backend and the frontend. Both are present in this repository.
 
 ## Development
-Information for setting up a local development environment can be found in the [developer documentation](https://docs.hedgedoc.dev/how-to/develop/setup/)
+Information for setting up a local development environment can be found in the [developer documentation](https://docs.hedgedoc.dev/development/guides/setup/)
 
 ## HedgeDoc 2 Alpha
 Curious about the new look and feel of HedgeDoc 2? We provide a demo of the alpha on [hedgedoc.dev](https://hedgedoc.dev).
