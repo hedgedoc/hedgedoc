@@ -1,5 +1,9 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalPassThroughEnv": [
+    "HD_*",
+    "CADDY_HOST"
+  ],
   "tasks": {
     "build": {},
     "@hedgedoc/html-to-react#build": {
