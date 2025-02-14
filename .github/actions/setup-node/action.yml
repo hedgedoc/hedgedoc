@@ -25,6 +25,21 @@ runs:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
         key: ${{ runner.os }}-yarn
 
+    - name: Get cypress version
+      id: cypress-version
+      run: echo "cyver=$(jq -r '.devDependencies.cypress' package.json)" >> $GITHUB_OUTPUT
+      working-directory: frontend/
+      shell: bash
+
+    - name: Cache cypress binaries
+      uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
+      id: cypress-cache
+      with:
+        path: /home/runner/.cache/cypress
+        key: cypress-${{ runner.os }}-${{ steps.cypress-version.outputs.cyver }}
+        restore-keys: |
+          cypress-${{ runner.os }}-${{ steps.cypress-version.outputs.cyver }}
+
     - name: Set up NodeJS
       uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
       with:
@@ -34,3 +49,5 @@ runs:
       run: yarn install --immutable
       working-directory: .
       shell: bash
+      env:
+        CYPRESS_CACHE_FOLDER: /home/runner/.cache/cypress
