@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { FormEvent } from 'react'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
@@ -36,18 +37,22 @@ export const NewUserCard: React.FC = () => {
   const onChangeUsername = useOnInputChange(setUsername)
   const onChangeDisplayName = useOnInputChange(setDisplayName)
 
-  const submitUserdata = useCallback(() => {
-    confirmPendingUser({
-      username,
-      displayName,
-      profilePicture: pictureChoice === ProfilePictureChoice.PROVIDER ? value?.photoUrl : undefined
-    })
-      .then(() => fetchAndSetUser())
-      .then(() => {
-        router.push('/')
+  const submitUserdata = useCallback(
+    (event: FormEvent) => {
+      event.preventDefault()
+      confirmPendingUser({
+        username,
+        displayName,
+        profilePicture: pictureChoice === ProfilePictureChoice.PROVIDER ? value?.photoUrl : undefined
       })
-      .catch(showErrorNotification('login.welcome.error'))
-  }, [username, displayName, pictureChoice, router, showErrorNotification, value?.photoUrl])
+        .then(() => fetchAndSetUser())
+        .then(() => {
+          router.push('/')
+        })
+        .catch(showErrorNotification('login.welcome.error'))
+    },
+    [username, displayName, pictureChoice, router, showErrorNotification, value?.photoUrl]
+  )
 
   const cancelUserCreation = useCallback(() => {
     cancelPendingUser()
