@@ -13,7 +13,7 @@ See: https://docs.hedgedoc.org/configuration/#saml-login `CMD_SAML_ATTRIBUTE_USE
 - Abort SAML login if NameID is undefined instead of logging in with a user named "undefined"
 - Set default values for username and email attribute mapping in SAML configuration
 
-## <i class="fa fa-tag"></i> 1.10.1 <i class="fa fa-calendar-o"></i> 2024-02-02
+## <i class="fa fa-tag"></i> 1.10.1 <i class="fa fa-calendar-o"></i> 2025-02-02
 
 This release fixes a security issue where brute-forcing local email/passwords is possible because of missing rate-limits.
 We recommend upgrading as soon as possible, if you use local logins.
