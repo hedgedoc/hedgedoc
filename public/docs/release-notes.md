@@ -2,6 +2,8 @@
 
 ## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
 
+## <i class="fa fa-tag"></i> 1.10.2 <i class="fa fa-calendar-o"></i> 2025-02-14
+
 **PLEASE CHECK THIS IF YOU USE SAML AUTHENTICATION:**
 This release had to set default values for the username and email address attribute mapping for SAML authentication for
 security reasons.
@@ -10,7 +12,7 @@ See: https://docs.hedgedoc.org/configuration/#saml-login `CMD_SAML_ATTRIBUTE_USE
 
 ### Bugfixes
 - Check if a valid user id is present when using OAuth2
-- Abort SAML login if NameID is undefined instead of logging in with a user named "undefined"
+- Abort SAML login if NameID is undefined instead of logging in with a user named "undefined" (Thanks [@Haanifee](https://github.com/Haanifee))
 - Set default values for username and email attribute mapping in SAML configuration
 
 ## <i class="fa fa-tag"></i> 1.10.1 <i class="fa fa-calendar-o"></i> 2025-02-02
