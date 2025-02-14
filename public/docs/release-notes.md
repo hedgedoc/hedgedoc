@@ -9,6 +9,7 @@ If you use SAML authentication, please make sure to update your SAML configurati
 See: https://docs.hedgedoc.org/configuration/#saml-login `CMD_SAML_ATTRIBUTE_USERNAME` or `CMD_SAML_ATTRIBUTE_EMAIL`  
 
 ### Bugfixes
+- Check if a valid user id is present when using OAuth2
 - Abort SAML login if NameID is undefined instead of logging in with a user named "undefined"
 - Set default values for username and email attribute mapping in SAML configuration
 
