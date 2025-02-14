@@ -2,6 +2,16 @@
 
 ## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
 
+**PLEASE CHECK THIS IF YOU USE SAML AUTHENTICATION:**
+This release had to set default values for the username and email address attribute mapping for SAML authentication for
+security reasons.
+If you use SAML authentication, please make sure to update your SAML configuration accordingly.  
+See: https://docs.hedgedoc.org/configuration/#saml-login `CMD_SAML_ATTRIBUTE_USERNAME` or `CMD_SAML_ATTRIBUTE_EMAIL`  
+
+### Bugfixes
+- Abort SAML login if NameID is undefined instead of logging in with a user named "undefined"
+- Set default values for username and email attribute mapping in SAML configuration
+
 ## <i class="fa fa-tag"></i> 1.10.1 <i class="fa fa-calendar-o"></i> 2024-02-02
 
 This release fixes a security issue where brute-forcing local email/passwords is possible because of missing rate-limits.
