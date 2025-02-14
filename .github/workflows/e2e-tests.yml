@@ -156,17 +156,11 @@ jobs:
     if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
     needs: frontend-build
     runs-on: ubuntu-latest
-    container:
-      image: cypress/browsers:node-20.18.0-chrome-130.0.6723.69-1-ff-131.0.3-edge-130.0.2849.52-1@sha256:3dd9d85309ed42d4befeda0b80e15b93c5ede2d419b6fc93a341ffc7337e3505
-      options: --shm-size=2g
     strategy:
       fail-fast: false
       matrix:
         containers: [ 1, 2, 3 ]
     steps:
-      - name: Install additional packages
-        run: apt-get update && apt-get install -y jq zstd screen curl
-
       - name: Check out repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -176,6 +170,12 @@ jobs:
         uses: ./.github/actions/setup-node
         with:
           NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
+
+      - name: Show cypress info
+        run: yarn cypress info
+        working-directory: frontend/
+        env:
+          CYPRESS_CACHE_FOLDER: /home/runner/.cache/cypress
 
       - name: Download build
         uses: actions/download-artifact@v4
@@ -203,6 +203,7 @@ jobs:
         run: yarn test:e2e:ci --filter=@hedgedoc/frontend
         shell: bash
         env:
+          CYPRESS_CACHE_FOLDER: /home/runner/.cache/cypress
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
