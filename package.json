@@ -12,16 +12,16 @@
     "markdown-it-plugins"
   ],
   "scripts": {
-    "build": "dotenv -c production -- turbo --env-mode=loose run build",
-    "build:test": "dotenv -c production -- turbo --env-mode=loose run build:test",
-    "lint": "dotenv -c development -- turbo --env-mode=loose run lint",
-    "lint:fix": "dotenv -c development -- turbo --env-mode=loose run lint:fix",
-    "format": "dotenv -c development -- turbo --env-mode=loose run format",
-    "start:dev": "dotenv -c development -- turbo --env-mode=loose run start:dev",
-    "start": "dotenv -c production -- turbo --env-mode=loose run start",
-    "test:ci": "dotenv -c test -- turbo --env-mode=loose run test:ci --concurrency 1",
-    "test": "dotenv -c test -- turbo --env-mode=loose run test --concurrency 1",
-    "test:e2e:ci": "dotenv -c test -- turbo --env-mode=loose run test:e2e:ci"
+    "build": "dotenv -c production -- turbo run build",
+    "build:test": "dotenv -c production -- turbo run build:test",
+    "lint": "dotenv -c development -- turbo run lint",
+    "lint:fix": "dotenv -c development -- turbo run lint:fix",
+    "format": "dotenv -c development -- turbo run format",
+    "start:dev": "dotenv -c development -- turbo run start:dev",
+    "start": "dotenv -c production -- turbo run start",
+    "test:ci": "dotenv -c test -- turbo run test:ci --concurrency 1",
+    "test": "dotenv -c test -- turbo run test --concurrency 1",
+    "test:e2e:ci": "dotenv -c test -- turbo run test:e2e:ci"
   },
   "packageManager": "yarn@4.5.3",
   "resolutions": {
