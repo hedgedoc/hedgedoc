@@ -1497,7 +1497,7 @@ __metadata:
     passport-oauth2: "npm:1.8.0"
     passport-twitter: "npm:1.0.4"
     passport.socketio: "npm:3.7.0"
-    pdfobject: "npm:2.3.0"
+    pdfobject: "npm:2.3.1"
     pg: "npm:8.13.1"
     pg-hstore: "npm:2.3.4"
     prismjs: "npm:1.29.0"
@@ -12317,10 +12317,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pdfobject@npm:2.3.0":
-  version: 2.3.0
-  resolution: "pdfobject@npm:2.3.0"
-  checksum: 10/d4443d65daf1950212ed4ccfec576b11607daa24c2528951849e5af87fb660023027c83a07789606f1edfc6777781a2f464a38693caee4e393e7dad6fe7b08bd
+"pdfobject@npm:2.3.1":
+  version: 2.3.1
+  resolution: "pdfobject@npm:2.3.1"
+  checksum: 10/d771805b361ff14eb41d2a1b68f62e7eb9c084be65971ea9790d45841d9d47c0d0b0654ca4d44207725c2a7f52e07077fa33d714b852fc5db9e9471bd8f71fe5
   languageName: node
   linkType: hard
 
