@@ -45,7 +45,7 @@ export const PinnedNoteCard: React.FC<NoteExploreEntryInterface> = ({
     (tag: string) => {
       return (event: MouseEvent<HTMLDivElement>) => {
         event.preventDefault()
-        router.push(`?search=tag:${tag}`)
+        router.push(`?search=${tag}`)
       }
     },
     [router]
