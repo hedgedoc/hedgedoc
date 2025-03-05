@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 export * from './dtos/index.js'
+export * from './explore-page/index.js'
 export * from './frontmatter-extractor/index.js'
 export * from './message-transporters/index.js'
 export * from './note-frontmatter/index.js'
