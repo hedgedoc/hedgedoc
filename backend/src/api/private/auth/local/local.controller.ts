@@ -25,8 +25,8 @@ import {
   RequestWithSession,
   SessionGuard,
 } from '../../../../auth/session.guard';
+import { User } from '../../../../database/user.entity';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
-import { User } from '../../../../users/user.entity';
 import { UsersService } from '../../../../users/users.service';
 import { LoginEnabledGuard } from '../../../utils/login-enabled.guard';
 import { OpenApi } from '../../../utils/openapi.decorator';

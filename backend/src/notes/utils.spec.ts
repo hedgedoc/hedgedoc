@@ -5,7 +5,7 @@
  */
 import { randomBytes } from 'crypto';
 
-import { User } from '../users/user.entity';
+import { User } from '../database/user.entity';
 import { Alias } from './alias.entity';
 import { Note } from './note.entity';
 import { generatePublicId, getPrimaryAlias } from './utils';

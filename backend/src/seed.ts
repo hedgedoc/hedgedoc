@@ -9,6 +9,7 @@ import { DataSource } from 'typeorm';
 import { ApiToken } from './api-token/api-token.entity';
 import { Identity } from './auth/identity.entity';
 import { Author } from './authors/author.entity';
+import { User } from './database/user.entity';
 import { Group } from './groups/group.entity';
 import { HistoryEntry } from './history/history-entry.entity';
 import { MediaUpload } from './media/media-upload.entity';
@@ -20,7 +21,6 @@ import { NoteUserPermission } from './permissions/note-user-permission.entity';
 import { Edit } from './revisions/edit.entity';
 import { Revision } from './revisions/revision.entity';
 import { Session } from './sessions/session.entity';
-import { User } from './users/user.entity';
 import { hashPassword } from './utils/password';
 
 /**

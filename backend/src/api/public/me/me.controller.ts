@@ -23,6 +23,7 @@ import {
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 import { ApiTokenGuard } from '../../../api-token/api-token.guard';
+import { User } from '../../../database/user.entity';
 import { HistoryEntryUpdateDto } from '../../../history/history-entry-update.dto';
 import { HistoryEntryDto } from '../../../history/history-entry.dto';
 import { HistoryService } from '../../../history/history.service';
@@ -30,7 +31,6 @@ import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
 import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
-import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
 import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
 import { OpenApi } from '../../utils/openapi.decorator';

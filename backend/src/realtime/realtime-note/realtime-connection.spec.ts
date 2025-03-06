@@ -11,8 +11,8 @@ import {
 import * as HedgeDocCommonsModule from '@hedgedoc/commons';
 import { Mock } from 'ts-mockery';
 
+import { User } from '../../database/user.entity';
 import { Note } from '../../notes/note.entity';
-import { User } from '../../users/user.entity';
 import * as NameRandomizerModule from './random-word-lists/name-randomizer';
 import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';

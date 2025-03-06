@@ -17,6 +17,7 @@ import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
 import noteConfigMock from '../config/mock/note.config.mock';
+import { User } from '../database/user.entity';
 import {
   AlreadyInDBError,
   ForbiddenIdError,
@@ -34,7 +35,6 @@ import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
 import { RevisionsModule } from '../revisions/revisions.module';
 import { Session } from '../sessions/session.entity';
-import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { mockSelectQueryBuilderInRepo } from '../utils/test-utils/mockSelectQueryBuilder';
 import { Alias } from './alias.entity';

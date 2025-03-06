@@ -6,7 +6,7 @@
 import { MessageTransporter, YDocSyncServerAdapter } from '@hedgedoc/commons';
 import { Logger } from '@nestjs/common';
 
-import { User } from '../../users/user.entity';
+import { User } from '../../database/user.entity';
 import { generateRandomName } from './random-word-lists/name-randomizer';
 import { RealtimeNote } from './realtime-note';
 import { RealtimeUserStatusAdapter } from './realtime-user-status-adapter';

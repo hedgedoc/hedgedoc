@@ -27,6 +27,7 @@ import {
   registerNoteConfig,
 } from '../config/mock/note.config.mock';
 import { NoteConfig } from '../config/note.config';
+import { User } from '../database/user.entity';
 import { PermissionsUpdateInconsistentError } from '../errors/errors';
 import { eventModuleConfig, NoteEvent } from '../events';
 import { Group } from '../groups/group.entity';
@@ -41,7 +42,6 @@ import { Tag } from '../notes/tag.entity';
 import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
 import { Session } from '../sessions/session.entity';
-import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { NoteGroupPermission } from './note-group-permission.entity';
 import {

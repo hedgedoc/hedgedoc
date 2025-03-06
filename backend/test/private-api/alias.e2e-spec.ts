@@ -6,8 +6,8 @@
 import { AliasCreateDto, AliasUpdateDto } from '@hedgedoc/commons';
 import request from 'supertest';
 
+import { User } from '../../src/database/user.entity';
 import { Note } from '../../src/notes/note.entity';
-import { User } from '../../src/users/user.entity';
 import {
   password1,
   password2,
