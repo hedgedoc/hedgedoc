@@ -5,9 +5,9 @@
  */
 import request from 'supertest';
 
+import { User } from '../../src/database/user.entity';
 import { AliasCreateDto } from '../../src/notes/alias-create.dto';
 import { AliasUpdateDto } from '../../src/notes/alias-update.dto';
-import { User } from '../../src/users/user.entity';
 import {
   password1,
   password2,

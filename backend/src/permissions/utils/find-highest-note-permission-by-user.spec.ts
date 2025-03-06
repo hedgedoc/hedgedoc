@@ -5,7 +5,7 @@
  */
 import { Mock } from 'ts-mockery';
 
-import { User } from '../../users/user.entity';
+import { User } from '../../database/user.entity';
 import { NotePermission } from '../note-permission.enum';
 import { NoteUserPermission } from '../note-user-permission.entity';
 import { findHighestNotePermissionByUser } from './find-highest-note-permission-by-user';

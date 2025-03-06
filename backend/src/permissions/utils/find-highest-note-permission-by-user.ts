@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { User } from '../../users/user.entity';
+import { User } from '../../database/user.entity';
 import { NotePermission } from '../note-permission.enum';
 import { NoteUserPermission } from '../note-user-permission.entity';
 

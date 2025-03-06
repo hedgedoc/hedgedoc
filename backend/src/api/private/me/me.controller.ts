@@ -7,11 +7,11 @@ import { Body, Controller, Delete, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../auth/session.guard';
+import { User } from '../../../database/user.entity';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
 import { UserLoginInfoDto } from '../../../users/user-info.dto';
-import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
 import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';

@@ -18,6 +18,7 @@ import {
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 import { ApiTokenGuard } from '../../../api-token/api-token.guard';
+import { User } from '../../../database/user.entity';
 import { NotInDBError } from '../../../errors/errors';
 import { GroupsService } from '../../../groups/groups.service';
 import { HistoryService } from '../../../history/history.service';
@@ -40,7 +41,6 @@ import { RequiredPermission } from '../../../permissions/required-permission.enu
 import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
 import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
-import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
 import { Username } from '../../../utils/username';
 import { GetNoteInterceptor } from '../../utils/get-note.interceptor';

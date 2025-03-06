@@ -7,12 +7,12 @@ import { Injectable } from '@nestjs/common';
 import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 
+import { User } from '../database/user.entity';
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Note } from '../notes/note.entity';
 import { NotesService } from '../notes/notes.service';
 import { RevisionsService } from '../revisions/revisions.service';
-import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { HistoryEntryImportDto } from './history-entry-import.dto';
 import { HistoryEntryUpdateDto } from './history-entry-update.dto';

@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import AuthConfiguration, { AuthConfig } from '../config/auth.config';
+import { User } from '../database/user.entity';
 import { AlreadyInDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Username } from '../utils/username';
@@ -18,7 +19,6 @@ import {
   UserLoginInfoDto,
 } from './user-info.dto';
 import { UserRelationEnum } from './user-relation.enum';
-import { User } from './user.entity';
 
 @Injectable()
 export class UsersService {

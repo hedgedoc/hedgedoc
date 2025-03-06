@@ -22,8 +22,8 @@ import {
 } from '../../../api-token/api-token.dto';
 import { ApiTokenService } from '../../../api-token/api-token.service';
 import { SessionGuard } from '../../../auth/session.guard';
+import { User } from '../../../database/user.entity';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { User } from '../../../users/user.entity';
 import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
 

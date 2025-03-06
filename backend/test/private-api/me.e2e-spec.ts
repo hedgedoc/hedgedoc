@@ -6,10 +6,10 @@
 import { promises as fs } from 'fs';
 import request from 'supertest';
 
+import { User } from '../../src/database/user.entity';
 import { NotInDBError } from '../../src/errors/errors';
 import { Note } from '../../src/notes/note.entity';
 import { UserLoginInfoDto } from '../../src/users/user-info.dto';
-import { User } from '../../src/users/user.entity';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Me', () => {

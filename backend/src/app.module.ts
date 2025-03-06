@@ -8,7 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { RouterModule, Routes } from '@nestjs/core';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ScheduleModule } from '@nestjs/schedule';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { KnexModule } from 'nestjs-knex';
 
 import { ApiTokenModule } from './api-token/api-token.module';
 import { PrivateApiModule } from './api/private/private-api.module';
@@ -19,7 +19,10 @@ import appConfig from './config/app.config';
 import authConfig from './config/auth.config';
 import cspConfig from './config/csp.config';
 import customizationConfig from './config/customization.config';
-import databaseConfig, { DatabaseConfig } from './config/database.config';
+import databaseConfig, {
+  DatabaseConfig,
+  getKnexConfig,
+} from './config/database.config';
 import externalConfig from './config/external-services.config';
 import mediaConfig from './config/media.config';
 import noteConfig from './config/note.config';
@@ -28,8 +31,8 @@ import { FrontendConfigModule } from './frontend-config/frontend-config.module';
 import { FrontendConfigService } from './frontend-config/frontend-config.service';
 import { GroupsModule } from './groups/groups.module';
 import { HistoryModule } from './history/history.module';
+import { KnexLoggerService } from './logger/knex-logger.service';
 import { LoggerModule } from './logger/logger.module';
-import { TypeormLoggerService } from './logger/typeorm-logger.service';
 import { MediaRedirectModule } from './media-redirect/media-redirect.module';
 import { MediaModule } from './media/media.module';
 import { MonitoringModule } from './monitoring/monitoring.module';
@@ -39,7 +42,6 @@ import { WebsocketModule } from './realtime/websocket/websocket.module';
 import { RevisionsModule } from './revisions/revisions.module';
 import { SessionModule } from './sessions/session.module';
 import { UsersModule } from './users/users.module';
-import { detectTsNode } from './utils/detectTsNode';
 
 const routes: Routes = [
   {
@@ -59,31 +61,23 @@ const routes: Routes = [
 @Module({
   imports: [
     RouterModule.register(routes),
-    TypeOrmModule.forRootAsync({
+    KnexModule.forRootAsync({
       imports: [ConfigModule, LoggerModule],
-      inject: [databaseConfig.KEY, TypeormLoggerService],
+      inject: [databaseConfig.KEY, KnexLoggerService],
       useFactory: (
         databaseConfig: DatabaseConfig,
-        logger: TypeormLoggerService,
-      ) => {
-        return {
-          type: databaseConfig.type,
-          host: databaseConfig.host,
-          port: databaseConfig.port,
-          username: databaseConfig.username,
-          password: databaseConfig.password,
-          database: databaseConfig.database,
-          autoLoadEntities: true,
-          logging: true,
-          logger: logger,
-          migrations: [
-            `**/migrations/${databaseConfig.type}-*.${
-              detectTsNode() ? 'ts' : 'js'
-            }`,
-          ],
-          migrationsRun: true,
-        };
-      },
+        knexLoggerService: KnexLoggerService,
+      ) => ({
+        config: {
+          ...getKnexConfig(databaseConfig),
+          log: {
+            warn: knexLoggerService.warn.bind(knexLoggerService),
+            error: knexLoggerService.error.bind(knexLoggerService),
+            deprecate: knexLoggerService.deprecate.bind(knexLoggerService),
+            debug: knexLoggerService.debug.bind(knexLoggerService),
+          },
+        },
+      }),
     }),
     ConfigModule.forRoot({
       load: [

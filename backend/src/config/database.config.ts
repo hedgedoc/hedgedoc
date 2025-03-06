@@ -5,6 +5,7 @@
  */
 import { registerAs } from '@nestjs/config';
 import * as Joi from 'joi';
+import { Knex } from 'knex';
 
 import { DatabaseType } from './database-type.enum';
 import { buildErrorMessage, parseOptionalNumber } from './utils';
@@ -71,3 +72,39 @@ export default registerAs('databaseConfig', () => {
   }
   return databaseConfig.value as DatabaseConfig;
 });
+
+export function getKnexConfig(databaseConfig: DatabaseConfig): Knex.Config {
+  switch (databaseConfig.type) {
+    case DatabaseType.SQLITE:
+      return {
+        client: 'better-sqlite3',
+        connection: {
+          filename: databaseConfig.database,
+        },
+      };
+    case DatabaseType.POSTGRES:
+      return {
+        client: 'pg',
+        connection: {
+          host: databaseConfig.host,
+          port: databaseConfig.port,
+          user: databaseConfig.username,
+          database: databaseConfig.database,
+          password: databaseConfig.password,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          application_name: 'HedgeDoc',
+        },
+      };
+    case DatabaseType.MARIADB:
+      return {
+        client: 'mysql',
+        connection: {
+          host: databaseConfig.host,
+          port: databaseConfig.port,
+          user: databaseConfig.username,
+          database: databaseConfig.database,
+          password: databaseConfig.password,
+        },
+      };
+  }
+}

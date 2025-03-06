@@ -16,13 +16,13 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../../auth/session.guard';
+import { User } from '../../../../database/user.entity';
 import { HistoryEntryImportListDto } from '../../../../history/history-entry-import.dto';
 import { HistoryEntryUpdateDto } from '../../../../history/history-entry-update.dto';
 import { HistoryEntryDto } from '../../../../history/history-entry.dto';
 import { HistoryService } from '../../../../history/history.service';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { Note } from '../../../../notes/note.entity';
-import { User } from '../../../../users/user.entity';
 import { GetNoteInterceptor } from '../../../utils/get-note.interceptor';
 import { OpenApi } from '../../../utils/openapi.decorator';
 import { RequestNote } from '../../../utils/request-note.decorator';

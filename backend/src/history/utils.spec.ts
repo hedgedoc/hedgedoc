@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { User } from '../database/user.entity';
 import { Alias } from '../notes/alias.entity';
 import { Note } from '../notes/note.entity';
-import { User } from '../users/user.entity';
 import { HistoryEntry } from './history-entry.entity';
 import { getIdentifier } from './utils';
 

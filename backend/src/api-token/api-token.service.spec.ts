@@ -13,6 +13,7 @@ import { Repository } from 'typeorm';
 import { Identity } from '../auth/identity.entity';
 import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
+import { User } from '../database/user.entity';
 import {
   NotInDBError,
   TokenNotValidError,
@@ -20,7 +21,6 @@ import {
 } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
 import { Session } from '../sessions/session.entity';
-import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { ApiToken } from './api-token.entity';
 import { ApiTokenService } from './api-token.service';

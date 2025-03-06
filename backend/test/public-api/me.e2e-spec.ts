@@ -7,10 +7,10 @@ import { promises as fs } from 'fs';
 import { join } from 'path';
 import request from 'supertest';
 
+import { User } from '../../src/database/user.entity';
 import { HistoryEntryUpdateDto } from '../../src/history/history-entry-update.dto';
 import { HistoryEntryDto } from '../../src/history/history-entry.dto';
 import { NoteMetadataDto } from '../../src/notes/note-metadata.dto';
-import { User } from '../../src/users/user.entity';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Me', () => {

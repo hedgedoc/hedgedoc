@@ -5,7 +5,7 @@
  */
 import { promises as fs } from 'fs';
 import { join } from 'path';
-import { User } from 'src/users/user.entity';
+import { User } from 'src/database/user.entity';
 import request from 'supertest';
 
 import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
