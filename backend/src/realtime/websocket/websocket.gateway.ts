@@ -12,12 +12,12 @@ import { OnGatewayConnection, WebSocketGateway } from '@nestjs/websockets';
 import { IncomingMessage } from 'http';
 import WebSocket from 'ws';
 
+import { User } from '../../database/user.entity';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { NotesService } from '../../notes/notes.service';
 import { NotePermission } from '../../permissions/note-permission.enum';
 import { PermissionsService } from '../../permissions/permissions.service';
 import { SessionService } from '../../sessions/session.service';
-import { User } from '../../users/user.entity';
 import { UsersService } from '../../users/users.service';
 import { RealtimeConnection } from '../realtime-note/realtime-connection';
 import { RealtimeNoteService } from '../realtime-note/realtime-note.service';

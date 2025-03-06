@@ -12,6 +12,7 @@ import { Body, Controller, Delete, Get, Put, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../auth/session.guard';
+import { User } from '../../../database/user.entity';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
 import { User } from '../../../users/user.entity';

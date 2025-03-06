@@ -6,8 +6,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { User } from '../database/user.entity';
 import { LoggerModule } from '../logger/logger.module';
-import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { Identity } from './identity.entity';
 import { IdentityService } from './identity.service';

@@ -7,9 +7,9 @@ import { promises as fs } from 'fs';
 import { join } from 'path';
 import request from 'supertest';
 
+import { User } from '../../src/database/user.entity';
 import { NotInDBError } from '../../src/errors/errors';
 import { Group } from '../../src/groups/group.entity';
-import { User } from '../../src/users/user.entity';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Notes', () => {

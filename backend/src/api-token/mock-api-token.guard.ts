@@ -6,7 +6,7 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 
 import { CompleteRequest } from '../api/utils/request.type';
-import { User } from '../users/user.entity';
+import { User } from '../database/user.entity';
 import { UsersService } from '../users/users.service';
 
 @Injectable()

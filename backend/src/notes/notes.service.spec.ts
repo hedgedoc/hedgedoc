@@ -27,6 +27,7 @@ import {
   registerNoteConfig,
 } from '../config/mock/note.config.mock';
 import { NoteConfig } from '../config/note.config';
+import { User } from '../database/user.entity';
 import {
   AlreadyInDBError,
   ForbiddenIdError,
@@ -46,7 +47,6 @@ import { Revision } from '../revisions/revision.entity';
 import { RevisionsModule } from '../revisions/revisions.module';
 import { RevisionsService } from '../revisions/revisions.service';
 import { Session } from '../sessions/session.entity';
-import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { mockSelectQueryBuilderInRepo } from '../utils/test-utils/mockSelectQueryBuilder';
 import { Alias } from './alias.entity';

@@ -7,13 +7,13 @@ import { SchedulerRegistry } from '@nestjs/schedule';
 import { Mock } from 'ts-mockery';
 
 import { AppConfig } from '../../config/app.config';
+import { User } from '../../database/user.entity';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { Note } from '../../notes/note.entity';
 import { NotePermission } from '../../permissions/note-permission.enum';
 import { PermissionsService } from '../../permissions/permissions.service';
 import { Revision } from '../../revisions/revision.entity';
 import { RevisionsService } from '../../revisions/revisions.service';
-import { User } from '../../users/user.entity';
 import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';
 import { RealtimeNoteStore } from './realtime-note-store';

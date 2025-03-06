@@ -17,9 +17,9 @@ import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 
 import AuthConfiguration, { AuthConfig } from '../config/auth.config';
+import { User } from '../database/user.entity';
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { Identity } from './identity.entity';
 
