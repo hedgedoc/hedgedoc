@@ -6,10 +6,10 @@
 import { Module } from '@nestjs/common';
 
 import { ConsoleLoggerService } from './console-logger.service';
-import { TypeormLoggerService } from './typeorm-logger.service';
+import { KnexLoggerService } from './knex-logger.service';
 
 @Module({
-  providers: [ConsoleLoggerService, TypeormLoggerService],
-  exports: [ConsoleLoggerService, TypeormLoggerService],
+  providers: [ConsoleLoggerService, KnexLoggerService],
+  exports: [ConsoleLoggerService, KnexLoggerService],
 })
 export class LoggerModule {}

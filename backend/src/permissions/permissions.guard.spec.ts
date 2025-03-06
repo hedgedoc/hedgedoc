@@ -9,9 +9,9 @@ import { Mock } from 'ts-mockery';
 
 import * as ExtractNoteIdOrAliasModule from '../api/utils/extract-note-from-request';
 import { CompleteRequest } from '../api/utils/request.type';
+import { User } from '../database/user.entity';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Note } from '../notes/note.entity';
-import { User } from '../users/user.entity';
 import {
   getNotePermissionDisplayName,
   NotePermission,

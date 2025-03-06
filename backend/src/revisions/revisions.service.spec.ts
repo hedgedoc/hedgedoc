@@ -23,6 +23,7 @@ import {
   registerNoteConfig,
 } from '../config/mock/note.config.mock';
 import { NoteConfig } from '../config/note.config';
+import { User } from '../database/user.entity';
 import { NotInDBError } from '../errors/errors';
 import { eventModuleConfig } from '../events';
 import { Group } from '../groups/group.entity';
@@ -34,7 +35,6 @@ import { Tag } from '../notes/tag.entity';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { Session } from '../sessions/session.entity';
-import { User } from '../users/user.entity';
 import { Edit } from './edit.entity';
 import { EditService } from './edit.service';
 import { Revision } from './revision.entity';

@@ -5,9 +5,9 @@
  */
 import { Mock } from 'ts-mockery';
 
+import { User } from '../../database/user.entity';
 import { Group } from '../../groups/group.entity';
 import { SpecialGroup } from '../../groups/groups.special';
-import { User } from '../../users/user.entity';
 import { NoteGroupPermission } from '../note-group-permission.entity';
 import { NotePermission } from '../note-permission.enum';
 import { findHighestNotePermissionByGroup } from './find-highest-note-permission-by-group';

@@ -16,6 +16,7 @@ import { Repository } from 'typeorm';
 
 import { DefaultAccessLevel } from '../config/default-access-level.enum';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
+import { User } from '../database/user.entity';
 import {
   AlreadyInDBError,
   ForbiddenIdError,
@@ -31,7 +32,6 @@ import { NoteGroupPermission } from '../permissions/note-group-permission.entity
 import { RealtimeNoteStore } from '../realtime/realtime-note/realtime-note-store';
 import { RealtimeNoteService } from '../realtime/realtime-note/realtime-note.service';
 import { RevisionsService } from '../revisions/revisions.service';
-import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { Alias } from './alias.entity';
 import { AliasService } from './alias.service';

@@ -10,6 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import noteConfiguration, { NoteConfig } from '../config/note.config';
+import { User } from '../database/user.entity';
 import { PermissionsUpdateInconsistentError } from '../errors/errors';
 import { NoteEvent, NoteEventMap } from '../events';
 import { Group } from '../groups/group.entity';
@@ -17,7 +18,6 @@ import { GroupsService } from '../groups/groups.service';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { MediaUpload } from '../media/media-upload.entity';
 import { Note } from '../notes/note.entity';
-import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { checkArrayForDuplicates } from '../utils/arrayDuplicatCheck';
 import { NoteGroupPermission } from './note-group-permission.entity';

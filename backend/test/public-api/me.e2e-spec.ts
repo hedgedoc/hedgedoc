@@ -6,11 +6,11 @@
 import { NoteMetadataDto } from '@hedgedoc/commons';
 import { promises as fs } from 'fs';
 import { join } from 'path';
-import { HistoryEntryDto } from 'src/history/history-entry.dto';
 import request from 'supertest';
 
+import { User } from '../../src/database/user.entity';
 import { HistoryEntryUpdateDto } from '../../src/history/history-entry-update.dto';
-import { User } from '../../src/users/user.entity';
+import { HistoryEntryDto } from '../../src/history/history-entry.dto';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Me', () => {

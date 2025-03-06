@@ -23,13 +23,13 @@ import {
 import { Repository } from 'typeorm';
 
 import authConfiguration, { AuthConfig } from '../../config/auth.config';
+import { User } from '../../database/user.entity';
 import {
   InvalidCredentialsError,
   NoLocalIdentityError,
   PasswordTooWeakError,
 } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
-import { User } from '../../users/user.entity';
 import { checkPassword, hashPassword } from '../../utils/password';
 import { Identity } from '../identity.entity';
 import { IdentityService } from '../identity.service';

@@ -60,6 +60,7 @@ import {
   registerNoteConfig,
 } from '../src/config/mock/note.config.mock';
 import { NoteConfig } from '../src/config/note.config';
+import { User } from '../src/database/user.entity';
 import { ErrorExceptionMapping } from '../src/errors/error-mapping';
 import { eventModuleConfig } from '../src/events';
 import { FrontendConfigModule } from '../src/frontend-config/frontend-config.module';
@@ -82,7 +83,6 @@ import { RevisionsModule } from '../src/revisions/revisions.module';
 import { RevisionsService } from '../src/revisions/revisions.service';
 import { SessionModule } from '../src/sessions/session.module';
 import { SessionService } from '../src/sessions/session.service';
-import { User } from '../src/users/user.entity';
 import { UsersModule } from '../src/users/users.module';
 import { UsersService } from '../src/users/users.service';
 

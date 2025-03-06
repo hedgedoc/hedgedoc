@@ -21,6 +21,7 @@ import { ApiBody, ApiConsumes, ApiHeader, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 
 import { SessionGuard } from '../../../auth/session.guard';
+import { User } from '../../../database/user.entity';
 import { PermissionError } from '../../../errors/errors';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
@@ -30,7 +31,6 @@ import { PermissionsGuard } from '../../../permissions/permissions.guard';
 import { PermissionsService } from '../../../permissions/permissions.service';
 import { RequirePermission } from '../../../permissions/require-permission.decorator';
 import { RequiredPermission } from '../../../permissions/required-permission.enum';
-import { User } from '../../../users/user.entity';
 import { NoteHeaderInterceptor } from '../../utils/note-header.interceptor';
 import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestNote } from '../../utils/request-note.decorator';

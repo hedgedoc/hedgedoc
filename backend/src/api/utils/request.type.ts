@@ -5,9 +5,9 @@
  */
 import { Request } from 'express';
 
+import { User } from '../../database/user.entity';
 import { Note } from '../../notes/note.entity';
 import { SessionState } from '../../sessions/session.service';
-import { User } from '../../users/user.entity';
 
 export type CompleteRequest = Request & {
   user?: User;

@@ -7,13 +7,13 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { User } from '../database/user.entity';
 import { GroupsModule } from '../groups/groups.module';
 import { LoggerModule } from '../logger/logger.module';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { RealtimeNoteModule } from '../realtime/realtime-note/realtime-note.module';
 import { RevisionsModule } from '../revisions/revisions.module';
-import { User } from '../users/user.entity';
 import { UsersModule } from '../users/users.module';
 import { Alias } from './alias.entity';
 import { AliasService } from './alias.service';

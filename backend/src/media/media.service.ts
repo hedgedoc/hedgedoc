@@ -12,10 +12,10 @@ import { Repository } from 'typeorm';
 import { v7 as uuidV7 } from 'uuid';
 
 import mediaConfiguration, { MediaConfig } from '../config/media.config';
+import { User } from '../database/user.entity';
 import { ClientError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Note } from '../notes/note.entity';
-import { User } from '../users/user.entity';
 import { AzureBackend } from './backends/azure-backend';
 import { BackendType } from './backends/backend-type.enum';
 import { FilesystemBackend } from './backends/filesystem-backend';

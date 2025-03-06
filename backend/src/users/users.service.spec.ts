@@ -10,9 +10,9 @@ import { Repository } from 'typeorm';
 
 import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
+import { User } from '../database/user.entity';
 import { AlreadyInDBError, NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
-import { User } from './user.entity';
 import { UsersService } from './users.service';
 
 describe('UsersService', () => {

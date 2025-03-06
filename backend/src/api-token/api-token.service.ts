@@ -10,13 +10,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { createHash, randomBytes, timingSafeEqual } from 'crypto';
 import { Repository } from 'typeorm';
 
+import { User } from '../database/user.entity';
 import {
   NotInDBError,
   TokenNotValidError,
   TooManyTokensError,
 } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { User } from '../users/user.entity';
 import { bufferToBase64Url } from '../utils/password';
 import { ApiToken } from './api-token.entity';
 
