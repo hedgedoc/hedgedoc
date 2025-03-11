@@ -5,10 +5,12 @@
  */
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import { useBaseUrl } from '../../../../../hooks/common/use-base-url'
-import { isMockMode } from '../../../../../utils/test-modes'
 import { useMemo } from 'react'
+import { Logger } from '../../../../../utils/logger'
 
 const LOCAL_FALLBACK_URL = 'ws://localhost:8080/realtime/'
+
+const logger = new Logger('WebsocketUrl')
 
 /**
  * Provides the URL for the realtime endpoint.
@@ -18,16 +20,13 @@ export const useWebsocketUrl = (): URL | null => {
   const baseUrl = useBaseUrl()
 
   const websocketUrl = useMemo(() => {
-    if (isMockMode) {
-      return LOCAL_FALLBACK_URL
-    }
     try {
       const backendBaseUrlParsed = new URL(baseUrl)
       backendBaseUrlParsed.protocol = backendBaseUrlParsed.protocol === 'https:' ? 'wss:' : 'ws:'
       backendBaseUrlParsed.pathname += 'realtime'
       return backendBaseUrlParsed.toString()
     } catch (e) {
-      console.error(e)
+      logger.error(e)
       return LOCAL_FALLBACK_URL
     }
   }, [baseUrl])

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-const { isMockMode, isTestMode, isProfilingMode, isBuildTime } = require('./src/utils/test-modes')
+const { isTestMode, isProfilingMode, isBuildTime } = require('./src/utils/test-modes')
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -18,14 +18,6 @@ if (isTestMode) {
  - Additional data-attributes for e2e tests added to DOM
  - Editor and renderer are running on the same origin
  - No frontend config caching
-`)
-}
-
-if (isMockMode) {
-  console.warn(`This build runs in mock mode. This means:
- - No real data. All API responses are mocked
- - No persistent data
- - No realtime editing
 `)
 }
 

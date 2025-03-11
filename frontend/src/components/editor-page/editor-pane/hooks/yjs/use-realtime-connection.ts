@@ -4,13 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
-import { getGlobalState } from '../../../../../redux'
 import { setRealtimeConnectionState } from '../../../../../redux/realtime/methods'
 import { Logger } from '../../../../../utils/logger'
-import { isMockMode } from '../../../../../utils/test-modes'
 import { FrontendWebsocketAdapter } from './frontend-websocket-adapter'
 import { useWebsocketUrl } from './use-websocket-url'
-import { DisconnectReason, MessageTransporter, MockedBackendTransportAdapter } from '@hedgedoc/commons'
+import { DisconnectReason, MessageTransporter } from '@hedgedoc/commons'
 import type { Listener } from 'eventemitter2'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
@@ -30,29 +28,25 @@ export const useRealtimeConnection = (): MessageTransporter => {
   const reconnectCount = useRef(0)
   const disconnectReason = useRef<DisconnectReason | undefined>(undefined)
   const establishWebsocketConnection = useCallback(() => {
-    if (isMockMode) {
-      logger.debug('Creating Loopback connection...')
-      messageTransporter.setAdapter(
-        new MockedBackendTransportAdapter(getGlobalState().noteDetails?.markdownContent.plain ?? '')
-      )
-    } else if (websocketUrl) {
-      logger.debug(`Connecting to ${websocketUrl.toString()}`)
-
-      const socket = new WebSocket(websocketUrl.toString())
-      socket.addEventListener('error', () => {
-        const timeout = WEBSOCKET_RECONNECT_INTERVAL + reconnectCount.current * 1000 + Math.random() * 1000
-        setTimeout(
-          () => {
-            reconnectCount.current += 1
-            establishWebsocketConnection()
-          },
-          Math.max(timeout, WEBSOCKET_RECONNECT_MAX_DURATION)
-        )
-      })
-      socket.addEventListener('open', () => {
-        messageTransporter.setAdapter(new FrontendWebsocketAdapter(socket))
-      })
+    if (!websocketUrl) {
+      return
     }
+
+    logger.debug(`Connecting to ${websocketUrl.toString()}`)
+    const socket = new WebSocket(websocketUrl.toString())
+    socket.addEventListener('error', () => {
+      const timeout = WEBSOCKET_RECONNECT_INTERVAL + reconnectCount.current * 1000 + Math.random() * 1000
+      setTimeout(
+        () => {
+          reconnectCount.current += 1
+          establishWebsocketConnection()
+        },
+        Math.max(timeout, WEBSOCKET_RECONNECT_MAX_DURATION)
+      )
+    })
+    socket.addEventListener('open', () => {
+      messageTransporter.setAdapter(new FrontendWebsocketAdapter(socket))
+    })
   }, [messageTransporter, websocketUrl])
 
   const isConnected = useApplicationState((state) => state.realtimeStatus.isConnected)

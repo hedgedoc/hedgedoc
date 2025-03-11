@@ -5,7 +5,6 @@
   "license": "AGPL-3.0",
   "scripts": {
     "build": "dotenv -v NODE_ENV=production -c production -- ./build.sh",
-    "build:mock": "dotenv -v NEXT_PUBLIC_USE_MOCK_API=true -- ./build.sh",
     "build:test": "dotenv -v NODE_ENV=test -v NEXT_PUBLIC_TEST_MODE=true -c test -- ./build.sh",
     "analyze": "cross-env ANALYZE=true yarn build --profile",
     "format": "prettier -c \"src/**/*.{ts,tsx,js}\" \"cypress/**/*.{ts,tsx}\"",
@@ -14,7 +13,6 @@
     "lint:fix": "eslint --fix --ext .ts,.tsx src",
     "start": "cross-env PORT=${HD_FRONTEND_PORT:-3001} node dist/frontend/server.js",
     "start:dev": "cross-env PORT=${HD_FRONTEND_PORT:-3001} next dev",
-    "start:dev:mock": "cross-env PORT=${HD_FRONTEND_PORT:-3001} NEXT_PUBLIC_USE_MOCK_API=true HD_BASE_URL=\"http://localhost:3001/\" HD_RENDERER_BASE_URL=\"http://127.0.0.1:3001/\" next dev",
     "start:dev:test": "cross-env PORT=${HD_FRONTEND_PORT:-3001} NODE_ENV=test NEXT_PUBLIC_TEST_MODE=true next dev",
     "test:e2e:open": "cypress open",
     "test:e2e": "cypress run --browser chrome",

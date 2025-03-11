@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-/**
+/*
  * This file is intentionally a js and not a ts file because it is used in `next.config.js`
  */
 
@@ -24,12 +24,6 @@ const isPositiveAnswer = (value) => {
  * @type boolean
  */
 const isTestMode = !!process.env.NEXT_PUBLIC_TEST_MODE && isPositiveAnswer(process.env.NEXT_PUBLIC_TEST_MODE)
-
-/**
- * Defines if the current runtime should use the mocked backend.
- * @type boolean
- */
-const isMockMode = !!process.env.NEXT_PUBLIC_USE_MOCK_API && isPositiveAnswer(process.env.NEXT_PUBLIC_USE_MOCK_API)
 
 /**
  * Defines if the current runtime was built in development mode.
@@ -52,7 +46,6 @@ const isBuildTime = !!process.env.BUILD_TIME && isPositiveAnswer(process.env.BUI
 
 module.exports = {
   isTestMode,
-  isMockMode,
   isDevMode,
   isProfilingMode,
   isBuildTime
