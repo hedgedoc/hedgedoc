@@ -10,29 +10,43 @@ import { NoteType } from '@hedgedoc/commons';
  */
 export interface Revision {
   /** The unique id of the revision for internal referencing */
-  id: number;
+  [FieldNameRevision.id]: number;
 
   /** The id of the note that this revision belongs to */
-  noteId: number;
+  [FieldNameRevision.noteId]: number;
 
   /** The changes between this revision and the previous one in patch file format */
-  patch: string;
+  [FieldNameRevision.patch]: string;
 
   /** The content of the note at this revision */
-  content: string;
+  [FieldNameRevision.content]: string;
 
   /** The stored Y.js state for realtime editing */
-  yjsStateVector: null | ArrayBuffer;
+  [FieldNameRevision.yjsStateVector]: null | ArrayBuffer;
 
   /** Whether the note is a document or presentation at this revision */
-  noteType: NoteType;
+  [FieldNameRevision.noteType]: NoteType;
 
   /** The extracted note title from this revision */
-  title: string;
+  [FieldNameRevision.title]: string;
 
   /** The extracted description from this revision */
-  description: string;
+  [FieldNameRevision.description]: string;
 
   /** Timestamp when this revision was created */
-  createdAt: Date;
+  [FieldNameRevision.createdAt]: Date;
 }
+
+export enum FieldNameRevision {
+  id = 'id',
+  noteId = 'note_id',
+  patch = 'patch',
+  content = 'content',
+  yjsStateVector = 'yjs_state_vector',
+  noteType = 'note_type',
+  title = 'title',
+  description = 'description',
+  createdAt = 'created_at',
+}
+
+export const TableRevision = 'revision';

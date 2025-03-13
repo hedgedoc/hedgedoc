@@ -8,11 +8,19 @@
  */
 export interface NoteUserPermission {
   /** The id of the {@link User} to give the {@link Note} permission to. */
-  noteId: number;
+  [FieldNameNoteUserPermission.userId]: number;
 
   /** The id of the {@link Note} to give the {@link User} permission to. */
-  userId: number;
+  [FieldNameNoteUserPermission.noteId]: number;
 
   /** Whether the {@link User} can edit the {@link Note} or not. */
-  canEdit: boolean;
+  [FieldNameNoteUserPermission.canEdit]: boolean;
 }
+
+export enum FieldNameNoteUserPermission {
+  userId = 'user_id',
+  noteId = 'note_id',
+  canEdit = 'can_edit',
+}
+
+export const TableNoteUserPermission = 'note_user_permission';

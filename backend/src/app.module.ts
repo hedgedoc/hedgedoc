@@ -76,6 +76,9 @@ const routes: Routes = [
             deprecate: knexLoggerService.deprecate.bind(knexLoggerService),
             debug: knexLoggerService.debug.bind(knexLoggerService),
           },
+          migrations: {
+            directory: 'src/database/migrations/',
+          },
         },
       }),
     }),
