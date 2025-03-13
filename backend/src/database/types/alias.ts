@@ -12,11 +12,19 @@
  */
 export interface Alias {
   /** The alias as defined by the user. Is unique.  */
-  alias: string;
+  [FieldNameAlias.alias]: string;
 
   /** The id of the associated {@link Note}. */
-  noteId: number;
+  [FieldNameAlias.noteId]: number;
 
   /** Whether the alias is the primary one for the note. */
-  isPrimary: boolean;
+  [FieldNameAlias.isPrimary]: boolean;
 }
+
+export enum FieldNameAlias {
+  alias = 'alias',
+  noteId = 'note_id',
+  isPrimary = 'is_primary',
+}
+
+export const TableAlias = 'alias';

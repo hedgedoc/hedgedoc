@@ -11,17 +11,23 @@
  */
 export interface AuthorshipInfo {
   /** The id of the {@link Revision} this belongs to. */
-  revisionId: number;
+  [FieldNameAuthorshipInfo.revisionId]: number;
 
   /** The id of the author of the edit. */
-  authorId: number;
+  [FieldNameAuthorshipInfo.authorId]: number;
 
   /** The start position of the change in the note as a positive index. */
-  startPos: number;
+  [FieldNameAuthorshipInfo.startPosition]: number;
 
   /** The end position of the change in the note as a positive index. */
-  endPos: number;
-
-  /** The creation datetime of the edit. */
-  createdAt: Date;
+  [FieldNameAuthorshipInfo.endPosition]: number;
 }
+
+export enum FieldNameAuthorshipInfo {
+  revisionId = 'revision_id',
+  authorId = 'author_id',
+  startPosition = 'start_position',
+  endPosition = 'end_position',
+}
+
+export const TableAuthorshipInfo = 'authorship_info';
