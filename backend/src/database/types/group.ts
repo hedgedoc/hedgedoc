@@ -11,14 +11,23 @@
  */
 export interface Group {
   /** The unique id for internal referencing */
-  id: number;
+  [FieldNameGroup.id]: number;
 
   /** The public identifier of the group (username for the group) */
-  name: string;
+  [FieldNameGroup.name]: string;
 
   /** The display name of the group */
-  displayName: string;
+  [FieldNameGroup.displayName]: string;
 
   /** Whether the group is one of the special groups */
-  isSpecial: boolean;
+  [FieldNameGroup.isSpecial]: boolean;
 }
+
+export enum FieldNameGroup {
+  id = 'id',
+  name = 'name',
+  displayName = 'display_name',
+  isSpecial = 'is_special',
+}
+
+export const TableGroup = 'group';

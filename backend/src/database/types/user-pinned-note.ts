@@ -10,8 +10,15 @@
  */
 export interface UserPinnedNote {
   /** The id of the {@link User} */
-  userId: number;
+  user_id: number;
 
   /** The id of the {@link Note} */
-  noteId: number;
+  note_id: number;
 }
+
+export enum FieldNameUserPinnedNote {
+  userId = 'user_id',
+  noteId = 'note_id',
+}
+
+export const TableUserPinnedNote = 'user_pinned_note';

@@ -11,20 +11,31 @@
  */
 export interface ApiToken {
   /** The id of the token, a short random ASCII string. Is unique */
-  id: string;
+  [FieldNameApiToken.id]: string;
 
   /** The {@link User} whose permissions the token has */
-  userId: number;
+  [FieldNameApiToken.userId]: number;
 
   /** The user-defined label for the token, such as "CLI" */
-  label: string;
+  [FieldNameApiToken.label]: string;
 
   /** Hashed version of the token's secret */
-  secretHash: string;
+  [FieldNameApiToken.secretHash]: string;
 
   /** Expiry date of the token */
-  validUntil: Date;
+  [FieldNameApiToken.validUntil]: Date;
 
   /** When the token was last used. When it was never used yet, this field is null */
-  lastUsedAt: Date | null;
+  [FieldNameApiToken.lastUsedAt]: Date | null;
 }
+
+export enum FieldNameApiToken {
+  id = 'id',
+  userId = 'user_id',
+  label = 'label',
+  secretHash = 'secret_hash',
+  validUntil = 'valid_until',
+  lastUsedAt = 'last_used_at',
+}
+
+export const TableApiToken = 'api_token';

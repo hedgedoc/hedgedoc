@@ -21,8 +21,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config jest-e2e.json && rimraf test_uploads*",
     "test:e2e:ci": "jest --config jest-e2e.json --coverage && rimraf test_uploads*",
-    "seed": "ts-node src/seed.ts",
-    "typeorm": "typeorm-ts-node-commonjs -d src/ormconfig.ts"
+    "knex": "tsx ../node_modules/.bin/knex --migrations-directory src/database/migrations --knexfile ./knexfile.ts"
   },
   "dependencies": {
     "@azure/storage-blob": "12.25.0",
@@ -108,8 +107,8 @@
     "supertest": "6.3.4",
     "ts-jest": "29.2.5",
     "ts-mockery": "1.2.0",
-    "ts-node": "11.0.0-beta.1",
     "tsconfig-paths": "4.2.0",
+    "tsx": "^4.19.3",
     "typescript": "5.6.3"
   },
   "jest": {

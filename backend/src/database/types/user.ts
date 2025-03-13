@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { Username } from '../utils/username';
+import type { Username } from '../../utils/username';
 
 /**
  * The user object represents either a registered user in the instance or a guest user.
@@ -18,26 +18,39 @@ import type { Username } from '../utils/username';
  */
 export interface User {
   /** The unique id of the user for internal referencing */
-  id: number;
+  [FieldNameUser.id]: number;
 
   /** The user's chosen username or null if it is a guest user */
-  username: Username | null;
+  [FieldNameUser.username]: Username | null;
 
   /** The guest user's UUID or null if it is a registered user */
-  guestUuid: string | null;
+  [FieldNameUser.guestUuid]: string | null;
 
   /** The user's chosen display name */
-  displayName: string;
+  [FieldNameUser.displayName]: string | null;
 
   /** Timestamp when the user was created */
-  createdAt: Date;
+  [FieldNameUser.createdAt]: Date;
 
   /** URL to the user's profile picture if present */
-  photoUrl: string | null;
+  [FieldNameUser.photoUrl]: string | null;
 
   /** The user's email address if present */
-  email: string | null;
+  [FieldNameUser.email]: string | null;
 
   /** The index which author style (e.g. color) should be used for this user */
-  authorStyle: number;
+  [FieldNameUser.authorStyle]: number;
 }
+
+export enum FieldNameUser {
+  id = 'id',
+  username = 'username',
+  guestUuid = 'guest_uuid',
+  displayName = 'display_name',
+  createdAt = 'created_at',
+  photoUrl = 'photo_url',
+  email = 'email',
+  authorStyle = 'author_style',
+}
+
+export const TableUser = 'user';
