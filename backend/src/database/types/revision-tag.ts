@@ -8,8 +8,15 @@
  */
 export interface RevisionTag {
   /** The id of {@link Revision} the {@link RevisionTag Tags} are asspcoated with. */
-  revisionId: number;
+  [FieldNameRevisionTag.revisionId]: number;
 
   /** The {@link RevisionTag Tag} text. */
-  tag: string;
+  [FieldNameRevisionTag.tag]: string;
 }
+
+export enum FieldNameRevisionTag {
+  revisionId = 'revision_id',
+  tag = 'tag',
+}
+
+export const TableRevisionTag = 'revision_tag';

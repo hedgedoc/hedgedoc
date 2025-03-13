@@ -11,14 +11,23 @@
  */
 export interface Note {
   /** The unique id of the note for internal referencing */
-  id: number;
+  [FieldNameNote.id]: number;
 
   /** The {@link User} id of the note owner */
-  ownerId: string;
+  [FieldNameNote.ownerId]: number;
 
   /** The HedgeDoc major version this note was created in. This is used to migrate certain features from HD1 to HD2 */
-  version: number;
+  [FieldNameNote.version]: number;
 
   /** Timestamp when the note was created */
-  createdAt: Date;
+  [FieldNameNote.createdAt]: Date;
 }
+
+export enum FieldNameNote {
+  id = 'id',
+  ownerId = 'owner_id',
+  version = 'version',
+  createdAt = 'created_at',
+}
+
+export const TableNote = 'note';
