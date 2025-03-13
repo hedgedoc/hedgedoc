@@ -1,11 +1,18 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import argon2 from '@node-rs/argon2';
+import { randomBytes } from 'crypto';
 
-import { bufferToBase64Url, checkPassword, hashPassword } from './password';
+import {
+  bufferToBase64Url,
+  checkPassword,
+  checkTokenEquality,
+  hashApiToken,
+  hashPassword,
+} from './password';
 
 const testPassword = 'thisIsATestPassword';
 const hashOfTestPassword =
@@ -71,5 +78,27 @@ describe('bufferToBase64Url', () => {
     expect(
       bufferToBase64Url(Buffer.from('testsentence is a test sentence')),
     ).toEqual('dGVzdHNlbnRlbmNlIGlzIGEgdGVzdCBzZW50ZW5jZQ');
+  });
+});
+
+describe('hashApiToken', () => {
+  it('correctly hashes a string', () => {
+    const testToken =
+      'LaD52wgw7pi5zVitv4gR5lxoUa6ncTQGASPmXDSdppB9xcd9kCtqjlrdQ8OOfmG9DNXGvfkIwaOCAv8nRp8IoQ';
+    expect(hashApiToken(testToken)).toEqual(
+      'd820de9eb5ace767c14c02f61b9522485f565201443fd366e6ca0d8a18dcffecf91cb27911b8cac566c3aaced44d02b0441a3b72380479f69eaea0f12e4bd73b',
+    );
+  });
+});
+
+describe('checkTokenEquality', () => {
+  const testToken =
+    'q72OIg1Y0sKvtsRmxtl86AwWfAF1V7LbVFt5PS0k73iyv3DtpG7Fdn2CADBlq5NsnSWMxGzYLeyux0cdFULmiw';
+  const hasedTestToken = hashApiToken(testToken);
+  it('returns true if the token hashes are the same', () => {
+    expect(checkTokenEquality(testToken, hasedTestToken)).toEqual(true);
+  });
+  it('returns false if the token hashes are the same', () => {
+    expect(checkTokenEquality(testToken, hashApiToken('test'))).toEqual(false);
   });
 });

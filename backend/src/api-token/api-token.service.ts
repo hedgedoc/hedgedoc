@@ -17,7 +17,7 @@ import {
   TooManyTokensError,
 } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { bufferToBase64Url } from '../utils/password';
+import { bufferToBase64Url, checkTokenEquality } from '../utils/password';
 import { ApiToken } from './api-token.entity';
 
 export const AUTH_TOKEN_PREFIX = 'hd2';
@@ -47,7 +47,7 @@ export class ApiTokenService {
     const token = await this.getToken(keyId);
     this.checkToken(secret, token);
     await this.setLastUsedToken(keyId);
-    return await token.user;
+    return token.user;
   }
 
   createToken(
@@ -126,16 +126,7 @@ export class ApiTokenService {
   }
 
   checkToken(secret: string, token: ApiToken): void {
-    const userHash = Buffer.from(
-      createHash('sha512').update(secret).digest('hex'),
-    );
-    const dbHash = Buffer.from(token.hash);
-    if (
-      // Normally, both hashes have the same length, as they are both SHA512
-      // This is only defense-in-depth, as timingSafeEqual throws if the buffers are not of the same length
-      userHash.length !== dbHash.length ||
-      !timingSafeEqual(userHash, dbHash)
-    ) {
+    if (!checkTokenEquality(secret, token.hash)) {
       // hashes are not the same
       throw new TokenNotValidError(
         `Secret does not match Token ${token.label}.`,
