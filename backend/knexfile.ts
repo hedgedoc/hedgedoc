@@ -5,7 +5,7 @@
  */
 import type { Knex } from 'knex';
 
-/** This is used for the Knex CLI to create migrations during development */
+/** This is used for the Knex CLI to create migrations and a seeded database during development */
 const config: { [key: string]: Knex.Config } = {
   development: {
     client: 'better-sqlite3',
@@ -14,6 +14,9 @@ const config: { [key: string]: Knex.Config } = {
     },
     migrations: {
       directory: './src/database/migrations',
+    },
+    seeds: {
+      directory: './src/database/seeds',
     },
   },
 };
