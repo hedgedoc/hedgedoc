@@ -7,7 +7,7 @@
 import React, { Fragment, useMemo } from 'react'
 import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
 import type { AuthProviderWithCustomNameDto } from '@hedgedoc/commons'
-import { ProviderType } from '@hedgedoc/commons'
+import { AuthProviderType } from '@hedgedoc/commons'
 import { LdapLoginCard } from './ldap-login-card'
 
 /**
@@ -18,7 +18,7 @@ export const LdapLoginCards: React.FC = () => {
 
   const ldapProviders = useMemo(() => {
     return authProviders
-      .filter((provider) => provider.type === ProviderType.LDAP)
+      .filter((provider) => provider.type === AuthProviderType.LDAP)
       .map((provider) => {
         const ldapProvider = provider as AuthProviderWithCustomNameDto
         return (

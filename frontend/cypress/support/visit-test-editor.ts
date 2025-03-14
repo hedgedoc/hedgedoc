@@ -15,12 +15,12 @@ const mockMetadata = {
       noteId: testNoteId
     }
   ],
-  primaryAddress: 'mock-note',
+  primaryAlias: 'mock-note',
   title: 'Mock Note',
   description: 'Mocked note for testing',
   tags: ['test', 'mock', 'cypress'],
   updatedAt: '2021-04-24T09:27:51.000Z',
-  updateUsername: null,
+  lastUpdatedBy: null,
   viewCount: 0,
   version: 2,
   createdAt: '2021-04-24T09:27:51.000Z',

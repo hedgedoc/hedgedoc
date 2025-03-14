@@ -29,8 +29,8 @@ export enum ConnectionStateEvent {
 }
 
 export interface MessagePayloads {
-  [MessageType.NOTE_CONTENT_STATE_REQUEST]: number[]
-  [MessageType.NOTE_CONTENT_UPDATE]: number[]
+  [MessageType.NOTE_CONTENT_STATE_REQUEST]: ArrayBuffer
+  [MessageType.NOTE_CONTENT_UPDATE]: ArrayBuffer
   [MessageType.REALTIME_USER_STATE_SET]: {
     users: RealtimeUser[]
     ownUser: {

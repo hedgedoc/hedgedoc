@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ProviderType } from '@hedgedoc/commons'
+import { AuthProviderType } from '@hedgedoc/commons'
 import { HttpMethod } from '../../src/handler-utils/respond-to-matching-request'
 import { IGNORE_MOTD, MOTD_LOCAL_STORAGE_KEY } from '../../src/components/global-dialogs/motd-modal/local-storage-keys'
 
@@ -22,15 +22,15 @@ export const branding = {
 
 export const authProviders = [
   {
-    type: ProviderType.LOCAL
+    type: AuthProviderType.LOCAL
   },
   {
-    type: ProviderType.LDAP,
+    type: AuthProviderType.LDAP,
     identifier: 'test-ldap',
     providerName: 'Test LDAP'
   },
   {
-    type: ProviderType.OIDC,
+    type: AuthProviderType.OIDC,
     identifier: 'test-oidc',
     providerName: 'Test OIDC'
   }

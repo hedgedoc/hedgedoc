@@ -22,14 +22,14 @@ import {
 } from '@nestjs/common';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
-import { ApiTokenGuard } from '../../../api-token/api-token.guard';
-import { User } from '../../../database/user.entity';
+import { AliasService } from '../../../alias/alias.service';
+import { User } from '../../../database/types';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { AliasService } from '../../../notes/alias.service';
-import { NotesService } from '../../../notes/notes.service';
-import { PermissionsService } from '../../../permissions/permissions.service';
-import { OpenApi } from '../../utils/openapi.decorator';
-import { RequestUser } from '../../utils/request-user.decorator';
+import { NoteService } from '../../../notes/note.service';
+import { PermissionService } from '../../../permissions/permission.service';
+import { OpenApi } from '../../utils/decorators/openapi.decorator';
+import { RequestUserId } from '../../utils/decorators/request-user-id.decorator';
+import { ApiTokenGuard } from '../../utils/guards/api-token.guard';
 
 @UseGuards(ApiTokenGuard)
 @OpenApi(401)
@@ -40,8 +40,8 @@ export class AliasController {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private aliasService: AliasService,
-    private noteService: NotesService,
-    private permissionsService: PermissionsService,
+    private noteService: NoteService,
+    private permissionsService: PermissionService,
   ) {
     this.logger.setContext(AliasController.name);
   }
@@ -57,68 +57,71 @@ export class AliasController {
     404,
   )
   async addAlias(
-    @RequestUser() user: User,
+    @RequestUserId() userId: number,
     @Body() newAliasDto: AliasCreateDto,
   ): Promise<AliasDto> {
-    const note = await this.noteService.getNoteByIdOrAlias(
-      newAliasDto.noteIdOrAlias,
+    const noteId = await this.noteService.getNoteIdByAlias(
+      newAliasDto.noteAlias,
     );
-    if (!(await this.permissionsService.isOwner(user, note))) {
-      throw new UnauthorizedException('Reading note denied!');
+    const isUserOwner = await this.permissionsService.isOwner(userId, noteId);
+    if (!isUserOwner) {
+      throw new UnauthorizedException(
+        'Only the owner of a note can modify its aliases',
+      );
     }
-    const updatedAlias = await this.aliasService.addAlias(
-      note,
-      newAliasDto.newAlias,
-    );
-    return this.aliasService.toAliasDto(updatedAlias, note);
+    await this.aliasService.addAlias(noteId, newAliasDto.newAlias);
+    return {
+      name: newAliasDto.newAlias,
+      isPrimaryAlias: false,
+    };
   }
 
   @Put(':alias')
   @OpenApi(
     {
       code: 200,
-      description: 'The updated alias',
+      description: 'The updated aliases',
       schema: AliasSchema,
     },
     403,
     404,
   )
   async makeAliasPrimary(
-    @RequestUser() user: User,
+    @RequestUserId() userId: number,
     @Param('alias') alias: string,
     @Body() changeAliasDto: AliasUpdateDto,
   ): Promise<AliasDto> {
     if (!changeAliasDto.primaryAlias) {
       throw new BadRequestException(
-        `The field 'primaryAlias' must be set to 'true'.`,
+        `This endpoint can only set an alias as primary, therefore the field 'primaryAlias' must be set to 'true'.`,
       );
     }
-    const note = await this.noteService.getNoteByIdOrAlias(alias);
-    if (!(await this.permissionsService.isOwner(user, note))) {
+    const noteId = await this.noteService.getNoteIdByAlias(alias);
+    if (!(await this.permissionsService.isOwner(userId, noteId))) {
       throw new UnauthorizedException('Reading note denied!');
     }
-    const updatedAlias = await this.aliasService.makeAliasPrimary(note, alias);
-    return this.aliasService.toAliasDto(updatedAlias, note);
+    await this.aliasService.makeAliasPrimary(noteId, alias);
+    return this.aliasService.toAliasDto(alias, changeAliasDto.primaryAlias);
   }
 
   @Delete(':alias')
   @OpenApi(
     {
       code: 204,
-      description: 'The alias was deleted',
+      description: 'The aliases was deleted',
     },
     400,
     403,
     404,
   )
   async removeAlias(
-    @RequestUser() user: User,
-    @Param('alias') alias: AliasDto['name'],
+    @RequestUserId() user: number,
+    @Param('alias') alias: string,
   ): Promise<void> {
-    const note = await this.noteService.getNoteByIdOrAlias(alias);
+    const note = await this.noteService.getNoteIdByAlias(alias);
     if (!(await this.permissionsService.isOwner(user, note))) {
       throw new UnauthorizedException('Reading note denied!');
     }
-    await this.aliasService.removeAlias(note, alias);
+    await this.aliasService.removeAlias(alias);
   }
 }

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { FullUserInfoWithIdDto } from '@hedgedoc/commons';
+import { PendingLdapUserInfoDto } from '@hedgedoc/commons';
 import {
   Inject,
   Injectable,
@@ -50,7 +50,7 @@ export class LdapService {
    * @param ldapConfig {LdapConfig} - the ldap config to use
    * @param username {string} - the username to log in with
    * @param password {string} - the password to log in with
-   * @returns {FullUserInfoWithIdDto} - the user info of the user that logged in
+   * @returns The user info of the user that logged in
    * @throws {UnauthorizedException} - the user has given us incorrect credentials
    * @throws {InternalServerErrorException} - if there are errors that we can't assign to wrong credentials
    * @private
@@ -59,8 +59,8 @@ export class LdapService {
     ldapConfig: LdapConfig,
     username: string, // This is not of type Username, because LDAP server may use mixed case usernames
     password: string,
-  ): Promise<FullUserInfoWithIdDto> {
-    return new Promise<FullUserInfoWithIdDto>((resolve, reject) => {
+  ): Promise<PendingLdapUserInfoDto> {
+    return new Promise<PendingLdapUserInfoDto>((resolve, reject) => {
       const auth = new LdapAuth({
         url: ldapConfig.url,
         searchBase: ldapConfig.searchBase,

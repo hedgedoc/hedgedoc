@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { FullUserInfoDto, ProviderType } from '@hedgedoc/commons';
+import { AuthProviderType, PendingUserInfoDto } from '@hedgedoc/commons';
 import {
   ForbiddenException,
   Inject,
@@ -14,16 +14,16 @@ import {
 import { Cron } from '@nestjs/schedule';
 import { Client, generators, Issuer, UserinfoResponse } from 'openid-client';
 
+import { RequestWithSession } from '../../api/utils/request.type';
 import appConfiguration, { AppConfig } from '../../config/app.config';
 import authConfiguration, {
   AuthConfig,
   OidcConfig,
 } from '../../config/auth.config';
+import { Identity } from '../../database/types';
 import { NotInDBError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
-import { Identity } from '../identity.entity';
 import { IdentityService } from '../identity.service';
-import { RequestWithSession } from '../session.guard';
 
 interface OidcClientConfigEntry {
   client: Client;
@@ -167,14 +167,14 @@ export class OidcService {
    * Extracts the user information from the callback and stores them in the session.
    * Afterward, the user information is returned.
    *
-   * @param {string} oidcIdentifier The identifier of the OIDC configuration
-   * @param {RequestWithSession} request The request containing the session
-   * @returns {FullUserInfoDto} The user information extracted from the callback
+   * @param oidcIdentifier The identifier of the OIDC configuration
+   * @param request The request containing the session
+   * @returns The user information extracted from the callback
    */
   async extractUserInfoFromCallback(
     oidcIdentifier: string,
     request: RequestWithSession,
-  ): Promise<FullUserInfoDto> {
+  ): Promise<PendingUserInfoDto> {
     const clientConfig = this.clientConfigs.get(oidcIdentifier);
     if (!clientConfig) {
       throw new NotFoundException(
@@ -259,7 +259,7 @@ export class OidcService {
     try {
       return await this.identityService.getIdentityFromUserIdAndProviderType(
         oidcUserId,
-        ProviderType.OIDC,
+        AuthProviderType.OIDC,
         oidcIdentifier,
       );
     } catch (e) {

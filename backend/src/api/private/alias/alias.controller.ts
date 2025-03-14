@@ -3,9 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { AliasCreateDto } from '@hedgedoc/commons';
-import { AliasUpdateDto } from '@hedgedoc/commons';
-import { AliasDto } from '@hedgedoc/commons';
+import { AliasCreateDto, AliasUpdateDto } from '@hedgedoc/commons';
 import {
   BadRequestException,
   Body,
@@ -19,15 +17,13 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
+import { AliasService } from '../../../alias/alias.service';
 import { SessionGuard } from '../../../auth/session.guard';
-import { User } from '../../../database/user.entity';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { AliasService } from '../../../notes/alias.service';
-import { NotesService } from '../../../notes/notes.service';
-import { PermissionsService } from '../../../permissions/permissions.service';
-import { UsersService } from '../../../users/users.service';
-import { OpenApi } from '../../utils/openapi.decorator';
-import { RequestUser } from '../../utils/request-user.decorator';
+import { NoteService } from '../../../notes/note.service';
+import { PermissionService } from '../../../permissions/permission.service';
+import { OpenApi } from '../../utils/decorators/openapi.decorator';
+import { RequestUserId } from '../../utils/decorators/request-user-id.decorator';
 
 @UseGuards(SessionGuard)
 @OpenApi(401)
@@ -37,63 +33,74 @@ export class AliasController {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private aliasService: AliasService,
-    private noteService: NotesService,
-    private userService: UsersService,
-    private permissionsService: PermissionsService,
+    private noteService: NoteService,
+    private permissionsService: PermissionService,
   ) {
     this.logger.setContext(AliasController.name);
+  }
+
+  /**
+   * Checks if the user has permission to modify the note with the given alias and returns the note ID.
+   *
+   * @param userId The ID of the user
+   * @param existingAlias The alias of the note
+   * @returns The ID of the note
+   * @throws UnauthorizedException if the user does not have permission to modify the note
+   */
+  private async getNoteIdWithPermissionCheck(
+    userId: number,
+    existingAlias: string,
+  ): Promise<number> {
+    const noteId = await this.noteService.getNoteIdByAlias(existingAlias);
+    const isUserNoteOwner = await this.permissionsService.isOwner(
+      userId,
+      noteId,
+    );
+    if (!isUserNoteOwner) {
+      throw new UnauthorizedException(
+        'Modifying aliases requires note ownership permissions',
+      );
+    }
+    return noteId;
   }
 
   @Post()
   @OpenApi(201, 400, 404, 409)
   async addAlias(
-    @RequestUser() user: User,
+    @RequestUserId() userId: number,
     @Body() newAliasDto: AliasCreateDto,
-  ): Promise<AliasDto> {
-    const note = await this.noteService.getNoteByIdOrAlias(
-      newAliasDto.noteIdOrAlias,
+  ): Promise<void> {
+    const noteId = await this.getNoteIdWithPermissionCheck(
+      userId,
+      newAliasDto.noteAlias,
     );
-    if (!(await this.permissionsService.isOwner(user, note))) {
-      throw new UnauthorizedException('Reading note denied!');
-    }
-    const updatedAlias = await this.aliasService.addAlias(
-      note,
-      newAliasDto.newAlias,
-    );
-    return this.aliasService.toAliasDto(updatedAlias, note);
+    await this.aliasService.ensureAliasIsAvailable(newAliasDto.newAlias);
+    await this.aliasService.addAlias(noteId, newAliasDto.newAlias);
   }
 
   @Put(':alias')
   @OpenApi(200, 400, 404)
   async makeAliasPrimary(
-    @RequestUser() user: User,
+    @RequestUserId() userId: number,
     @Param('alias') alias: string,
     @Body() changeAliasDto: AliasUpdateDto,
-  ): Promise<AliasDto> {
+  ): Promise<void> {
     if (!changeAliasDto.primaryAlias) {
       throw new BadRequestException(
-        `The field 'primaryAlias' must be set to 'true'.`,
+        `This endpoint can only set an alias as primary, therefore the field 'primaryAlias' must be set to 'true'.`,
       );
     }
-    const note = await this.noteService.getNoteByIdOrAlias(alias);
-    if (!(await this.permissionsService.isOwner(user, note))) {
-      throw new UnauthorizedException('Reading note denied!');
-    }
-    const updatedAlias = await this.aliasService.makeAliasPrimary(note, alias);
-    return this.aliasService.toAliasDto(updatedAlias, note);
+    const noteId = await this.getNoteIdWithPermissionCheck(userId, alias);
+    await this.aliasService.makeAliasPrimary(noteId, alias);
   }
 
   @Delete(':alias')
   @OpenApi(204, 400, 404)
   async removeAlias(
-    @RequestUser() user: User,
+    @RequestUserId() userId: number,
     @Param('alias') alias: string,
   ): Promise<void> {
-    const note = await this.noteService.getNoteByIdOrAlias(alias);
-    if (!(await this.permissionsService.isOwner(user, note))) {
-      throw new UnauthorizedException('Reading note denied!');
-    }
-    await this.aliasService.removeAlias(note, alias);
-    return;
+    await this.getNoteIdWithPermissionCheck(userId, alias);
+    await this.aliasService.removeAlias(alias);
   }
 }

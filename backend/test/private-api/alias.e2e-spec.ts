@@ -6,8 +6,9 @@
 import { AliasCreateDto, AliasUpdateDto } from '@hedgedoc/commons';
 import request from 'supertest';
 
+import { AliasCreateDto } from '../../src/alias/alias-create.dto';
+import { AliasUpdateDto } from '../../src/alias/alias-update.dto';
 import { User } from '../../src/database/user.entity';
-import { Note } from '../../src/notes/note.entity';
 import {
   password1,
   password2,
@@ -55,7 +56,7 @@ describe('Alias', () => {
   describe('POST /alias', () => {
     const testAlias = 'aliasTest';
     const newAliasDto: AliasCreateDto = {
-      noteIdOrAlias: testAlias,
+      alias: testAlias,
       newAlias: '',
     };
     let publicId = '';
@@ -87,7 +88,7 @@ describe('Alias', () => {
         primaryAlias: false,
         noteId: publicId,
       });
-      expect(note.body.metadata.primaryAddress).toEqual(testAlias);
+      expect(note.body.metadata.primaryAlias).toEqual(testAlias);
       expect(note.body.metadata.id).toEqual(publicId);
     });
 
@@ -158,7 +159,7 @@ describe('Alias', () => {
         primaryAlias: true,
         noteId: publicId,
       });
-      expect(note.body.metadata.primaryAddress).toEqual(newAlias);
+      expect(note.body.metadata.primaryAlias).toEqual(newAlias);
       expect(note.body.metadata.id).toEqual(publicId);
     });
 

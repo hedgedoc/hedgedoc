@@ -10,6 +10,7 @@ import {
   extractFrontmatter,
   generateNoteTitle,
   NoteFrontmatter,
+  NoteType,
   parseRawFrontmatterFromYaml,
 } from '@hedgedoc/commons';
 import { parseDocument } from 'htmlparser2';
@@ -19,6 +20,7 @@ interface FrontmatterExtractionResult {
   title: string;
   description: string;
   tags: string[];
+  noteType: NoteType;
 }
 
 interface FrontmatterParserResult {
@@ -45,8 +47,9 @@ export function extractRevisionMetadataFromContent(
   );
   const description = frontmatter?.description ?? '';
   const tags = frontmatter?.tags ?? [];
+  const noteType = frontmatter?.type ?? NoteType.DOCUMENT;
 
-  return { title, description, tags };
+  return { title, description, tags, noteType };
 }
 
 function generateContentWithoutFrontmatter(

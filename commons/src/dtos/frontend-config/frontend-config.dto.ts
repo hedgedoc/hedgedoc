@@ -5,7 +5,7 @@
  */
 
 import { z } from 'zod'
-import { GuestAccess } from '../permissions/index.js'
+import { PermissionLevel } from '../permissions/index.js'
 import { ServerVersionSchema } from '../monitoring/index.js'
 import { BrandingSchema } from './branding.dto.js'
 import { SpecialUrlSchema } from './special-urls.dto.js'
@@ -14,7 +14,7 @@ import { AuthProviderSchema } from './auth-provider.dto.js'
 export const FrontendConfigSchema = z
   .object({
     guestAccess: z
-      .nativeEnum(GuestAccess)
+      .nativeEnum(PermissionLevel)
       .describe('Maximum access level for guest users'),
     allowRegister: z
       .boolean()

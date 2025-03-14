@@ -187,7 +187,7 @@ describe('Media', () => {
       // upload a file with the default test user
       const testNote = await testSetup.notesService.createNote(
         'test content',
-        await testSetup.userService.getUserByUsername(username2),
+        await testSetup.userService.getUserDtoByUsername(username2),
         'test_delete_media_note',
       );
       const testImage = await fs.readFile('test/private-api/fixtures/test.png');

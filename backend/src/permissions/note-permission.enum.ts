@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,7 +7,7 @@
 /**
  * Defines if a user can access a note and if yes how much power they have.
  */
-export enum NotePermission {
+export enum NotePermissionLevel {
   DENY = 0,
   READ = 1,
   WRITE = 2,
@@ -15,20 +15,22 @@ export enum NotePermission {
 }
 
 /**
- * Returns the display name for the given {@link NotePermission}.
+ * Returns the display name for the given {@link NotePermissionLevel}.
  *
- * @param {NotePermission} value the note permission to display
+ * @param {NotePermissionLevel} value the note permission to display
  * @return {string} The display name
  */
-export function getNotePermissionDisplayName(value: NotePermission): string {
+export function getNotePermissionLevelDisplayName(
+  value: NotePermissionLevel,
+): string {
   switch (value) {
-    case NotePermission.DENY:
+    case NotePermissionLevel.DENY:
       return 'deny';
-    case NotePermission.READ:
+    case NotePermissionLevel.READ:
       return 'read';
-    case NotePermission.WRITE:
+    case NotePermissionLevel.WRITE:
       return 'write';
-    case NotePermission.OWNER:
+    case NotePermissionLevel.OWNER:
       return 'owner';
   }
 }

@@ -5,18 +5,12 @@
  */
 
 import { z } from 'zod'
-import { AliasSchema } from '../alias/index.js'
 import { NotePermissionsSchema } from '../permissions/index.js'
 
 export const NoteMetadataSchema = z
   .object({
-    id: z.string().describe('The id of the note'),
-    aliases: z.array(AliasSchema).describe('All aliases of the note'),
-    primaryAddress: z
-      .string()
-      .describe(
-        'The primary address/alias of the note. If at least one alias is set, this is the primary alias.',
-      ),
+    aliases: z.array(z.string()).describe('All aliases of the note'),
+    primaryAlias: z.string().describe('The primary address/alias of the note.'),
     title: z
       .string()
       .describe(
@@ -35,13 +29,10 @@ export const NoteMetadataSchema = z
       .string()
       .datetime()
       .describe('The timestamp when the note was last updated'),
-    updateUsername: z
+    lastUpdatedBy: z
       .string()
       .nullable()
       .describe('The user that last updated the note'),
-    viewCount: z
-      .number()
-      .describe('Counts how many times the note has been viewed'),
     createdAt: z
       .string()
       .datetime()

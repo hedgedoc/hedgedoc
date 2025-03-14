@@ -29,7 +29,7 @@ describe('realtime note', () => {
 
   it('can return the given note', () => {
     const sut = new RealtimeNote(mockedNote, 'nothing');
-    expect(sut.getNote()).toBe(mockedNote);
+    expect(sut.getNoteId()).toBe(mockedNote);
   });
 
   it('can connect and disconnect clients', () => {

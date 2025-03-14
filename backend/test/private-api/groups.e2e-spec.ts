@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { GuestAccess, LoginDto } from '@hedgedoc/commons';
+import { LoginDto, PermissionLevel } from '@hedgedoc/commons';
 import request from 'supertest';
 
 import { createDefaultMockNoteConfig } from '../../src/config/mock/note.config.mock';
@@ -66,7 +66,7 @@ describe('Groups', () => {
 
   describe('API requires authentication', () => {
     beforeAll(() => {
-      noteConfigMock.guestAccess = GuestAccess.DENY;
+      noteConfigMock.guestAccess = PermissionLevel.DENY;
     });
     test('get group', async () => {
       const response = await request(testSetup.app.getHttpServer()).get(

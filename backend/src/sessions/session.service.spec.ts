@@ -86,13 +86,13 @@ describe('SessionService', () => {
 
   it('can fetch a username for an existing session', async () => {
     await expect(
-      sessionService.fetchUsernameForSessionId(mockedExistingSessionId),
+      sessionService.getUserIdForSessionId(mockedExistingSessionId),
     ).resolves.toBe(mockUsername);
   });
 
   it("can't fetch a username for a non-existing session", async () => {
     await expect(
-      sessionService.fetchUsernameForSessionId("doesn't exist"),
+      sessionService.getUserIdForSessionId("doesn't exist"),
     ).rejects.toThrow();
   });
 

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ProviderType } from '@hedgedoc/commons';
+import { AuthProviderType } from '@hedgedoc/commons';
 import {
   Controller,
   Get,
@@ -18,10 +18,11 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { IdentityService } from '../../../../auth/identity.service';
 import { OidcService } from '../../../../auth/oidc/oidc.service';
-import { RequestWithSession } from '../../../../auth/session.guard';
+import { FieldNameIdentity } from '../../../../database/types';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { UsersService } from '../../../../users/users.service';
-import { OpenApi } from '../../../utils/openapi.decorator';
+import { OpenApi } from '../../../utils/decorators/openapi.decorator';
+import { RequestWithSession } from '../../../utils/request.type';
 
 @ApiTags('auth')
 @Controller('/auth/oidc')
@@ -46,7 +47,7 @@ export class OidcController {
     const state = this.oidcService.generateState();
     request.session.oidcLoginCode = code;
     request.session.oidcLoginState = state;
-    request.session.authProviderType = ProviderType.OIDC;
+    request.session.authProviderType = AuthProviderType.OIDC;
     request.session.authProviderIdentifier = oidcIdentifier;
     const authorizationUrl = this.oidcService.getAuthorizationUrl(
       oidcIdentifier,
@@ -73,7 +74,7 @@ export class OidcController {
         this.logger.log('No OIDC user identifier in callback', 'callback');
         throw new UnauthorizedException('No OIDC user identifier found');
       }
-      request.session.authProviderType = ProviderType.OIDC;
+      request.session.authProviderType = AuthProviderType.OIDC;
       const identity = await this.oidcService.getExistingOidcIdentity(
         oidcIdentifier,
         oidcUserIdentifier,
@@ -85,17 +86,17 @@ export class OidcController {
         return { url: '/new-user' };
       }
 
-      const user = await identity.user;
+      const userId = identity[FieldNameIdentity.userId];
       if (mayUpdate) {
         await this.usersService.updateUser(
-          user,
+          userId,
           userInfo.displayName,
           userInfo.email,
           userInfo.photoUrl,
         );
       }
 
-      request.session.username = user.username;
+      request.session.userId = userId;
       return { url: '/' };
     } catch (error) {
       if (error instanceof HttpException) {

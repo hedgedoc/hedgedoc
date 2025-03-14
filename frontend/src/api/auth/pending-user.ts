@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { FullUserInfoDto } from '@hedgedoc/commons'
+import type { PendingUserInfoDto } from '@hedgedoc/commons'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import type { PendingUserConfirmationDto } from '@hedgedoc/commons'
@@ -13,8 +13,8 @@ import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-requ
  * Fetches the pending user information.
  * @returns The pending user information.
  */
-export const getPendingUserInfo = async (): Promise<FullUserInfoDto> => {
-  const response = await new GetApiRequestBuilder<FullUserInfoDto>('auth/pending-user').sendRequest()
+export const getPendingUserInfo = async (): Promise<PendingUserInfoDto> => {
+  const response = await new GetApiRequestBuilder<PendingUserInfoDto>('auth/pending-user').sendRequest()
   return response.asParsedJsonObject()
 }
 

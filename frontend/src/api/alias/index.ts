@@ -11,15 +11,15 @@ import type { AliasDto, AliasCreateDto, AliasUpdateDto } from '@hedgedoc/commons
 /**
  * Adds an alias to an existing note.
  *
- * @param noteIdOrAlias The note id or an existing alias for a note.
+ * @param noteAlias The note id or an existing alias for a note.
  * @param newAlias The new alias.
  * @return Information about the newly created alias.
  * @throws {Error} when the api request wasn't successful
  */
-export const addAlias = async (noteIdOrAlias: string, newAlias: string): Promise<AliasDto> => {
+export const addAlias = async (noteAlias: string, newAlias: string): Promise<AliasDto> => {
   const response = await new PostApiRequestBuilder<AliasDto, AliasCreateDto>('alias')
     .withJsonBody({
-      noteIdOrAlias,
+      noteAlias,
       newAlias
     })
     .sendRequest()

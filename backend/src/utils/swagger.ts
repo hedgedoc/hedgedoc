@@ -8,7 +8,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { PrivateApiModule } from '../api/private/private-api.module';
 import { PublicApiModule } from '../api/public/public-api.module';
-import { getServerVersionFromPackageJson } from './serverVersion';
+import { getServerVersionFromPackageJson } from './server-version';
 
 export async function setupPublicApiDocs(app: INestApplication): Promise<void> {
   const version = await getServerVersionFromPackageJson();

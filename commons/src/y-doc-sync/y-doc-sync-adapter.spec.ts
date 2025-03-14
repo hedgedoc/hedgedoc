@@ -104,7 +104,7 @@ describe('y-doc-sync-adapter', () => {
       console.log('s>2 is connected'),
     )
 
-    docServer.on('update', (update: number[], origin: unknown) => {
+    docServer.on('update', (update: ArrayBuffer, origin: unknown) => {
       const message: Message<MessageType.NOTE_CONTENT_UPDATE> = {
         type: MessageType.NOTE_CONTENT_UPDATE,
         payload: update,
@@ -118,12 +118,12 @@ describe('y-doc-sync-adapter', () => {
         messageTransporterServerTo2.sendMessage(message)
       }
     })
-    docClient1.on('update', (update: number[], origin: unknown) => {
+    docClient1.on('update', (update: ArrayBuffer, origin: unknown) => {
       if (origin !== messageTransporterClient1) {
         console.log('YDoc on client 1 updated. Sending to Server')
       }
     })
-    docClient2.on('update', (update: number[], origin: unknown) => {
+    docClient2.on('update', (update: ArrayBuffer, origin: unknown) => {
       if (origin !== messageTransporterClient2) {
         console.log('YDoc on client 2 updated. Sending to Server')
       }

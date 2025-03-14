@@ -9,10 +9,9 @@ import { z } from 'zod'
 export const AliasSchema = z
   .object({
     name: z.string().describe('The name of the alias'),
-    primaryAlias: z.boolean().describe('Is the alias the primary alias or not'),
-    noteId: z
-      .string()
-      .describe('The public id of the note the alias is associated with'),
+    isPrimaryAlias: z
+      .boolean()
+      .describe('Is the alias the primary alias or not'),
   })
   .describe(
     'The alias of a note. A note can have multiple of these. Only one can be the primary alias.',

@@ -1,17 +1,25 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  forwardRef,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
-import { extractNoteFromRequest } from '../api/utils/extract-note-from-request';
+import { extractNoteIdFromRequest } from '../api/utils/extract-note-id-from-request';
 import { CompleteRequest } from '../api/utils/request.type';
+import { FieldNameUser } from '../database/types';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { NotesService } from '../notes/notes.service';
-import { NotePermission } from './note-permission.enum';
-import { PermissionsService } from './permissions.service';
+import { NoteService } from '../notes/note.service';
+import { UsersService } from '../users/users.service';
+import { NotePermissionLevel } from './note-permission.enum';
+import { PermissionService } from './permission.service';
 import { PERMISSION_METADATA_KEY } from './require-permission.decorator';
 import { RequiredPermission } from './required-permission.enum';
 
@@ -26,8 +34,10 @@ export class PermissionsGuard implements CanActivate {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private readonly reflector: Reflector,
-    private readonly permissionsService: PermissionsService,
-    private readonly noteService: NotesService,
+    private readonly permissionsService: PermissionService,
+    private readonly userService: UsersService,
+    @Inject(forwardRef(() => NoteService))
+    private readonly noteService: NoteService,
   ) {
     this.logger.setContext(PermissionsGuard.name);
   }
@@ -38,15 +48,21 @@ export class PermissionsGuard implements CanActivate {
       return false;
     }
     const request: CompleteRequest = context.switchToHttp().getRequest();
-    const user = request.user ?? null;
+    const userId = request.userId;
+    if (userId === undefined) {
+      return false;
+    }
 
     // handle CREATE requiredAccessLevel, as this does not need any note
     if (requiredAccessLevel === RequiredPermission.CREATE) {
-      return this.permissionsService.mayCreate(user);
+      const username = (await this.userService.getUserById(userId))[
+        FieldNameUser.username
+      ];
+      return this.permissionsService.mayCreate(username);
     }
 
-    const note = await extractNoteFromRequest(request, this.noteService);
-    if (note === undefined) {
+    const noteId = await extractNoteIdFromRequest(request, this.noteService);
+    if (noteId === undefined) {
       this.logger.error(
         'Could not find noteIdOrAlias metadata. This should never happen. If you see this, please open an issue at https://github.com/hedgedoc/hedgedoc/issues',
       );
@@ -55,7 +71,7 @@ export class PermissionsGuard implements CanActivate {
 
     return this.isNotePermissionFulfillingRequiredAccessLevel(
       requiredAccessLevel,
-      await this.permissionsService.determinePermission(user, note),
+      await this.permissionsService.determinePermission(userId, noteId),
     );
   }
 
@@ -78,15 +94,15 @@ export class PermissionsGuard implements CanActivate {
 
   private isNotePermissionFulfillingRequiredAccessLevel(
     requiredAccessLevel: Exclude<RequiredPermission, RequiredPermission.CREATE>,
-    actualNotePermission: NotePermission,
+    actualNotePermission: NotePermissionLevel,
   ): boolean {
     switch (requiredAccessLevel) {
       case RequiredPermission.READ:
-        return actualNotePermission >= NotePermission.READ;
+        return actualNotePermission >= NotePermissionLevel.READ;
       case RequiredPermission.WRITE:
-        return actualNotePermission >= NotePermission.WRITE;
+        return actualNotePermission >= NotePermissionLevel.WRITE;
       case RequiredPermission.OWNER:
-        return actualNotePermission >= NotePermission.OWNER;
+        return actualNotePermission >= NotePermissionLevel.OWNER;
     }
   }
 }

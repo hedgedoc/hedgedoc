@@ -4,16 +4,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
+  AuthProviderType,
   BrandingDto,
   FrontendConfigDto,
-  ProviderType,
   SpecialUrlDto,
 } from '@hedgedoc/commons';
 import { AuthProviderDto } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
 import { URL } from 'url';
 
-import appConfiguration, { AppConfig } from '../config/app.config';
 import authConfiguration, { AuthConfig } from '../config/auth.config';
 import customizationConfiguration, {
   CustomizationConfig,
@@ -23,14 +22,12 @@ import externalServicesConfiguration, {
 } from '../config/external-services.config';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { getServerVersionFromPackageJson } from '../utils/serverVersion';
+import { getServerVersionFromPackageJson } from '../utils/server-version';
 
 @Injectable()
 export class FrontendConfigService {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    @Inject(appConfiguration.KEY)
-    private appConfig: AppConfig,
     @Inject(noteConfiguration.KEY)
     private noteConfig: NoteConfig,
     @Inject(authConfiguration.KEY)
@@ -65,12 +62,12 @@ export class FrontendConfigService {
     const providers: AuthProviderDto[] = [];
     if (this.authConfig.local.enableLogin) {
       providers.push({
-        type: ProviderType.LOCAL,
+        type: AuthProviderType.LOCAL,
       });
     }
     this.authConfig.ldap.forEach((ldapEntry) => {
       providers.push({
-        type: ProviderType.LDAP,
+        type: AuthProviderType.LDAP,
         providerName: ldapEntry.providerName,
         identifier: ldapEntry.identifier,
         theme: null,
@@ -78,7 +75,7 @@ export class FrontendConfigService {
     });
     this.authConfig.oidc.forEach((openidConnectEntry) => {
       providers.push({
-        type: ProviderType.OIDC,
+        type: AuthProviderType.OIDC,
         providerName: openidConnectEntry.providerName,
         identifier: openidConnectEntry.identifier,
         theme: openidConnectEntry.theme ?? null,

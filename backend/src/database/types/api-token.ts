@@ -25,6 +25,9 @@ export interface ApiToken {
   /** Expiry date of the token */
   [FieldNameApiToken.validUntil]: Date;
 
+  /** Date when the API token was created */
+  [FieldNameApiToken.createdAt]: Date;
+
   /** When the token was last used. When it was never used yet, this field is null */
   [FieldNameApiToken.lastUsedAt]: Date | null;
 }
@@ -35,6 +38,7 @@ export enum FieldNameApiToken {
   label = 'label',
   secretHash = 'secret_hash',
   validUntil = 'valid_until',
+  createdAt = 'created_at',
   lastUsedAt = 'last_used_at',
 }
 

@@ -16,15 +16,13 @@ import type { NoteMetadataDto } from '@hedgedoc/commons'
 export const buildStateFromMetadataUpdate = (state: NoteDetails, noteMetadata: NoteMetadataDto): NoteDetails => {
   return {
     ...state,
-    updateUsername: noteMetadata.updateUsername,
+    lastUpdatedBy: noteMetadata.lastUpdatedBy,
     permissions: noteMetadata.permissions,
     editedBy: noteMetadata.editedBy,
-    primaryAddress: noteMetadata.primaryAddress,
-    id: noteMetadata.id,
+    primaryAlias: noteMetadata.primaryAlias,
     aliases: noteMetadata.aliases,
     title: noteMetadata.title,
     version: noteMetadata.version,
-    viewCount: noteMetadata.viewCount,
     createdAt: DateTime.fromISO(noteMetadata.createdAt).toSeconds(),
     updatedAt: DateTime.fromISO(noteMetadata.updatedAt).toSeconds()
   }

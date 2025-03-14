@@ -58,7 +58,7 @@ export const updateMetadata = async (): Promise<void> => {
   if (!noteDetails) {
     return
   }
-  const updatedMetadata = await getNoteMetadata(noteDetails.id)
+  const updatedMetadata = await getNoteMetadata(noteDetails.primaryAlias)
   const action = noteDetailsActionsCreator.updateMetadata(updatedMetadata)
   store.dispatch(action)
 }

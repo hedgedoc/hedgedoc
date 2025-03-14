@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,6 +9,7 @@ import {
   Catch,
   ConflictException,
   ForbiddenException,
+  HttpServer,
   InternalServerErrorException,
   NotFoundException,
   PayloadTooLargeException,
@@ -17,6 +18,8 @@ import {
 import { HttpException } from '@nestjs/common/exceptions/http.exception';
 import { BaseExceptionFilter } from '@nestjs/core';
 
+import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { ErrorWithContextDetails } from './errors';
 import {
   buildHttpExceptionObject,
   HttpExceptionObject,
@@ -84,14 +87,28 @@ const mapOfHedgeDocErrorsToHttpErrors: Map<string, HttpExceptionConstructor> =
 
 @Catch()
 export class ErrorExceptionMapping extends BaseExceptionFilter<Error> {
-  catch(error: Error, host: ArgumentsHost): void {
-    super.catch(ErrorExceptionMapping.transformError(error), host);
+  private readonly loggerService: ConsoleLoggerService;
+  constructor(logger: ConsoleLoggerService, applicationRef?: HttpServer) {
+    super(applicationRef);
+    this.loggerService = logger;
   }
 
-  private static transformError(error: Error): Error {
+  catch(error: Error, host: ArgumentsHost): void {
+    super.catch(this.transformError(error), host);
+  }
+
+  private transformError(error: Error): Error {
     const httpExceptionConstructor = mapOfHedgeDocErrorsToHttpErrors.get(
       error.name,
     );
+    if (error instanceof ErrorWithContextDetails) {
+      this.loggerService.error(
+        error.message,
+        undefined,
+        error.functionContext,
+        error.classContext,
+      );
+    }
     if (httpExceptionConstructor === undefined) {
       // We don't know how to map this error and just leave it be
       return error;

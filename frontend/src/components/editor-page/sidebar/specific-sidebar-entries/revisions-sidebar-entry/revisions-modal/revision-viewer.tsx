@@ -14,7 +14,7 @@ import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
 import { useAsync } from 'react-use'
 
 export interface RevisionViewerProps {
-  selectedRevisionId?: number
+  selectedRevisionId?: string
 }
 
 /**
@@ -24,7 +24,7 @@ export interface RevisionViewerProps {
  * @param allRevisions List of metadata for all available revisions.
  */
 export const RevisionViewer: React.FC<RevisionViewerProps> = ({ selectedRevisionId }) => {
-  const noteId = useApplicationState((state) => state.noteDetails?.id)
+  const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const darkModeEnabled = useDarkModeState()
 
   const {
@@ -32,10 +32,10 @@ export const RevisionViewer: React.FC<RevisionViewerProps> = ({ selectedRevision
     error,
     loading
   } = useAsync(async () => {
-    if (noteId && selectedRevisionId !== undefined) {
-      return await getRevision(noteId, selectedRevisionId)
+    if (noteAlias && selectedRevisionId !== undefined) {
+      return await getRevision(noteAlias, selectedRevisionId)
     }
-  }, [selectedRevisionId, noteId])
+  }, [selectedRevisionId, noteAlias])
 
   const previousRevisionContent = useMemo(() => {
     if (revision === undefined) {
@@ -49,7 +49,7 @@ export const RevisionViewer: React.FC<RevisionViewerProps> = ({ selectedRevision
     return applyPatch(revision.content, inversePatch) || ''
   }, [revision])
 
-  if (!noteId || selectedRevisionId === undefined) {
+  if (!noteAlias || selectedRevisionId === undefined) {
     return <Fragment />
   }
 

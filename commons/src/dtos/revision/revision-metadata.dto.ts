@@ -7,7 +7,7 @@ import { z } from 'zod'
 
 export const RevisionMetadataSchema = z
   .object({
-    id: z.number().describe('The id of the revision.'),
+    uuid: z.string().uuid().describe('The uuid of the revision.'),
     createdAt: z.string().datetime().describe('When the revision was created.'),
     length: z
       .number()
@@ -18,10 +18,9 @@ export const RevisionMetadataSchema = z
       .describe(
         'A list of all usernames of the users that worked on the revision.',
       ),
-    anonymousAuthorCount: z
-      .number()
-      .positive()
-      .describe('Number of anonymous users that worked on the revision.'),
+    authorGuestUuids: z
+      .array(z.string().uuid())
+      .describe('A list of all guest UUIDs that worked on the revision.'),
     title: z
       .string()
       .describe(
