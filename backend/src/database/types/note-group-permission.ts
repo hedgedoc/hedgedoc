@@ -24,3 +24,8 @@ export enum FieldNameNoteGroupPermission {
 }
 
 export const TableNoteGroupPermission = 'note_group_permission';
+
+export type TypeUpdateNoteGroupPermission = Pick<
+  NoteGroupPermission,
+  FieldNameNoteGroupPermission.canEdit
+>;

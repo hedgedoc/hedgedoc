@@ -42,7 +42,7 @@ export interface User {
   [FieldNameUser.authorStyle]: number;
 }
 
-export enum FieldNameUser {
+export const enum FieldNameUser {
   id = 'id',
   username = 'username',
   guestUuid = 'guest_uuid',
@@ -54,3 +54,15 @@ export enum FieldNameUser {
 }
 
 export const TableUser = 'user';
+
+export type TypeInsertUser = Omit<
+  User,
+  FieldNameUser.id | FieldNameUser.createdAt
+>;
+export type TypeUpdateUser = Pick<
+  User,
+  | FieldNameUser.displayName
+  | FieldNameUser.photoUrl
+  | FieldNameUser.email
+  | FieldNameUser.authorStyle
+>;

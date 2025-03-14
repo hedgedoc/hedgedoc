@@ -31,3 +31,9 @@ export enum FieldNameNote {
 }
 
 export const TableNote = 'note';
+
+export type TypeInsertNote = Omit<
+  Note,
+  FieldNameNote.createdAt | FieldNameNote.id
+>;
+export type TypeUpdateNote = Pick<Note, FieldNameNote.ownerId>;

@@ -44,3 +44,12 @@ export enum FieldNameMediaUpload {
 }
 
 export const TableMediaUpload = 'media_upload';
+
+export type TypeInsertMediaUpload = Omit<
+  MediaUpload,
+  FieldNameMediaUpload.createdAt | FieldNameMediaUpload.uuid
+>;
+export type TypeUpdateMediaUpload = Pick<
+  MediaUpload,
+  FieldNameMediaUpload.noteId
+>;
