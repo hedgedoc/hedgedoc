@@ -50,3 +50,8 @@ export enum FieldNameRevision {
 }
 
 export const TableRevision = 'revision';
+
+export type TypeInsertRevision = Omit<
+  Revision,
+  FieldNameRevision.createdAt | FieldNameRevision.id
+>;

@@ -42,3 +42,12 @@ export enum FieldNameIdentity {
 }
 
 export const TableIdentity = 'identity';
+
+export type TypeInsertIdentity = Omit<
+  Identity,
+  FieldNameIdentity.createdAt | FieldNameIdentity.updatedAt
+>;
+export type TypeUpdateIdentity = Pick<
+  Identity,
+  FieldNameIdentity.passwordHash | FieldNameIdentity.updatedAt
+>;

@@ -5,28 +5,13 @@
  */
 import { Knex } from 'knex';
 
+import { Alias, TypeUpdateAlias } from './alias';
+import { ApiToken, TypeInsertApiToken, TypeUpdateApiToken } from './api-token';
+import { Group, TypeInsertGroup, TypeUpdateGroup } from './group';
+import { Identity, TypeInsertIdentity, TypeUpdateIdentity } from './identity';
 import {
-  Alias,
-  ApiToken,
   AuthorshipInfo,
-  FieldNameAlias,
-  FieldNameApiToken,
-  FieldNameGroup,
-  FieldNameIdentity,
-  FieldNameMediaUpload,
-  FieldNameNote,
-  FieldNameNoteGroupPermission,
-  FieldNameNoteUserPermission,
-  FieldNameRevision,
-  FieldNameUser,
-  Group,
   GroupUser,
-  Identity,
-  MediaUpload,
-  Note,
-  NoteGroupPermission,
-  NoteUserPermission,
-  Revision,
   RevisionTag,
   TableAlias,
   TableApiToken,
@@ -42,77 +27,65 @@ import {
   TableRevisionTag,
   TableUser,
   TableUserPinnedNote,
-  User,
   UserPinnedNote,
 } from './index';
+import {
+  MediaUpload,
+  TypeInsertMediaUpload,
+  TypeUpdateMediaUpload,
+} from './media-upload';
+import { Note, TypeInsertNote, TypeUpdateNote } from './note';
+import {
+  NoteGroupPermission,
+  TypeUpdateNoteGroupPermission,
+} from './note-group-permission';
+import {
+  NoteUserPermission,
+  TypeUpdateNoteUserPermission,
+} from './note-user-permission';
+import { Revision, TypeInsertRevision } from './revision';
+import { TypeInsertUser, TypeUpdateUser, User } from './user';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 declare module 'knex/types/tables.js' {
   interface Tables {
-    [TableAlias]: Knex.CompositeTableType<
-      Alias,
-      Alias,
-      Pick<Alias, FieldNameAlias.isPrimary>
-    >;
+    [TableAlias]: Knex.CompositeTableType<Alias, Alias, TypeUpdateAlias>;
     [TableApiToken]: Knex.CompositeTableType<
       ApiToken,
-      Omit<ApiToken, FieldNameApiToken.lastUsedAt>,
-      Pick<ApiToken, FieldNameApiToken.lastUsedAt>
+      TypeInsertApiToken,
+      TypeUpdateApiToken
     >;
     [TableAuthorshipInfo]: AuthorshipInfo;
     [TableGroup]: Knex.CompositeTableType<
       Group,
-      Omit<Group, FieldNameGroup.id>,
-      Pick<Group, FieldNameGroup.name | FieldNameGroup.displayName>
+      TypeInsertGroup,
+      TypeUpdateGroup
     >;
     [TableGroupUser]: GroupUser;
     [TableIdentity]: Knex.CompositeTableType<
       Identity,
-      Omit<Identity, FieldNameIdentity.createdAt | FieldNameIdentity.updatedAt>,
-      Pick<
-        Identity,
-        FieldNameIdentity.passwordHash | FieldNameIdentity.updatedAt
-      >
+      TypeInsertIdentity,
+      TypeUpdateIdentity
     >;
     [TableMediaUpload]: Knex.CompositeTableType<
       MediaUpload,
-      Omit<
-        MediaUpload,
-        FieldNameMediaUpload.createdAt | FieldNameMediaUpload.uuid
-      >,
-      Pick<MediaUpload, FieldNameMediaUpload.noteId>
+      TypeInsertMediaUpload,
+      TypeUpdateMediaUpload
     >;
-    [TableNote]: Knex.CompositeTableType<
-      Note,
-      Omit<Note, FieldNameNote.createdAt | FieldNameNote.id>,
-      Pick<Note, FieldNameNote.ownerId>
-    >;
+    [TableNote]: Knex.CompositeTableType<Note, TypeInsertNote, TypeUpdateNote>;
     [TableNoteGroupPermission]: Knex.CompositeTableType<
       NoteGroupPermission,
       NoteGroupPermission,
-      Pick<NoteGroupPermission, FieldNameNoteGroupPermission.canEdit>
+      TypeUpdateNoteGroupPermission
     >;
     [TableNoteUserPermission]: Knex.CompositeTableType<
       NoteUserPermission,
       NoteUserPermission,
-      Pick<NoteUserPermission, FieldNameNoteUserPermission.canEdit>
+      TypeUpdateNoteUserPermission
     >;
-    [TableRevision]: Knex.CompositeTableType<
-      Revision,
-      Omit<Revision, FieldNameRevision.createdAt | FieldNameRevision.id>
-    >;
+    [TableRevision]: Knex.CompositeTableType<Revision, TypeInsertRevision>;
     [TableRevisionTag]: RevisionTag;
-    [TableUser]: Knex.CompositeTableType<
-      User,
-      Omit<User, FieldNameUser.id | FieldNameUser.createdAt>,
-      Pick<
-        User,
-        | FieldNameUser.displayName
-        | FieldNameUser.photoUrl
-        | FieldNameUser.email
-        | FieldNameUser.authorStyle
-      >
-    >;
+    [TableUser]: Knex.CompositeTableType<User, TypeInsertUser, TypeUpdateUser>;
     [TableUserPinnedNote]: UserPinnedNote;
   }
 }
