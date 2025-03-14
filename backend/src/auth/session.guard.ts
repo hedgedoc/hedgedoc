@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -58,7 +58,7 @@ export class SessionGuard implements CanActivate {
       throw new UnauthorizedException("You're not logged in");
     }
     try {
-      request.user = await this.userService.getUserByUsername(username);
+      request.userId = await this.userService.getUserIdByUsername(username);
       return true;
     } catch (e) {
       if (e instanceof NotInDBError) {

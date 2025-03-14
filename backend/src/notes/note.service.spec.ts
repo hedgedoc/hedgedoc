@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,6 +15,7 @@ import {
   Repository,
 } from 'typeorm';
 
+import { AliasService } from '../alias/alias.service';
 import { ApiToken } from '../api-token/api-token.entity';
 import { Identity } from '../auth/identity.entity';
 import { Author } from '../authors/author.entity';
@@ -49,16 +50,15 @@ import { RevisionsService } from '../revisions/revisions.service';
 import { Session } from '../sessions/session.entity';
 import { UsersModule } from '../users/users.module';
 import { mockSelectQueryBuilderInRepo } from '../utils/test-utils/mockSelectQueryBuilder';
-import { Alias } from './alias.entity';
-import { AliasService } from './alias.service';
+import { Alias } from './aliases.entity';
 import { Note } from './note.entity';
-import { NotesService } from './notes.service';
+import { NoteService } from './note.service';
 import { Tag } from './tag.entity';
 
 jest.mock('../revisions/revisions.service');
 
 describe('NotesService', () => {
-  let service: NotesService;
+  let service: NoteService;
   let revisionsService: RevisionsService;
   const noteMockConfig: NoteConfig = createDefaultMockNoteConfig();
   let noteRepo: Repository<Note>;
@@ -137,7 +137,7 @@ describe('NotesService', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        NotesService,
+        NoteService,
         {
           provide: RevisionsService,
           useValue: revisionsService,
@@ -219,7 +219,7 @@ describe('NotesService', () => {
     forbiddenNoteId = noteConfig.forbiddenNoteIds[0];
     everyoneDefaultAccessPermission = noteConfig.permissions.default.everyone;
     loggedinDefaultAccessPermission = noteConfig.permissions.default.loggedIn;
-    service = module.get<NotesService>(NotesService);
+    service = module.get<NoteService>(NoteService);
     noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));
     aliasRepo = module.get<Repository<Alias>>(getRepositoryToken(Alias));
     eventEmitter = module.get<EventEmitter2>(EventEmitter2);
@@ -376,7 +376,7 @@ describe('NotesService', () => {
 
         mockSelectQueryBuilderInRepo(noteRepo, null);
       });
-      it('without alias, without owner', async () => {
+      it('without aliases, without owner', async () => {
         const newNote = await service.createNote(content, null);
 
         expect(createRevisionSpy).toHaveBeenCalledWith(newNote, content);
@@ -402,7 +402,7 @@ describe('NotesService', () => {
         expect(await newNote.owner).toBeNull();
         expect(await newNote.aliases).toHaveLength(0);
       });
-      it('without alias, with owner', async () => {
+      it('without aliases, with owner', async () => {
         const newNote = await service.createNote(content, user);
         expect(createRevisionSpy).toHaveBeenCalledWith(newNote, content);
         expect(await newNote.revisions).toStrictEqual([newRevision]);
@@ -428,7 +428,7 @@ describe('NotesService', () => {
         expect(await newNote.owner).toEqual(user);
         expect(await newNote.aliases).toHaveLength(0);
       });
-      it('with alias, without owner', async () => {
+      it('with aliases, without owner', async () => {
         const newNote = await service.createNote(content, null, alias);
         expect(createRevisionSpy).toHaveBeenCalledWith(newNote, content);
         expect(await newNote.revisions).toStrictEqual([newRevision]);
@@ -453,7 +453,7 @@ describe('NotesService', () => {
         expect(await newNote.owner).toBeNull();
         expect(await newNote.aliases).toHaveLength(1);
       });
-      it('with alias, with owner', async () => {
+      it('with aliases, with owner', async () => {
         const newNote = await service.createNote(content, user, alias);
 
         expect(createRevisionSpy).toHaveBeenCalledWith(newNote, content);
@@ -548,7 +548,7 @@ describe('NotesService', () => {
         mockSelectQueryBuilderInRepo(noteRepo, null);
       });
 
-      it('alias is forbidden', async () => {
+      it('aliases is forbidden', async () => {
         jest.spyOn(noteRepo, 'existsBy').mockResolvedValueOnce(false);
         jest.spyOn(aliasRepo, 'existsBy').mockResolvedValueOnce(false);
         await expect(
@@ -556,7 +556,7 @@ describe('NotesService', () => {
         ).rejects.toThrow(ForbiddenIdError);
       });
 
-      it('alias is already used (as another alias)', async () => {
+      it('aliases is already used (as another aliases)', async () => {
         mockGroupRepo();
         jest.spyOn(noteRepo, 'existsBy').mockResolvedValueOnce(false);
         jest.spyOn(aliasRepo, 'existsBy').mockResolvedValueOnce(true);
@@ -568,7 +568,7 @@ describe('NotesService', () => {
         );
       });
 
-      it('alias is already used (as publicId)', async () => {
+      it('aliases is already used (as publicId)', async () => {
         mockGroupRepo();
         jest.spyOn(noteRepo, 'existsBy').mockResolvedValueOnce(true);
         jest.spyOn(aliasRepo, 'existsBy').mockResolvedValueOnce(false);
@@ -613,20 +613,20 @@ describe('NotesService', () => {
       const user = User.create('hardcoded', 'Testy') as User;
       const note = Note.create(user) as Note;
       mockSelectQueryBuilderInRepo(noteRepo, note);
-      const foundNote = await service.getNoteByIdOrAlias('noteThatExists');
+      const foundNote = await service.getNoteIdByAlias('noteThatExists');
       expect(foundNote).toEqual(note);
     });
     describe('fails:', () => {
       it('no note found', async () => {
         mockSelectQueryBuilderInRepo(noteRepo, null);
         await expect(
-          service.getNoteByIdOrAlias('noteThatDoesNoteExist'),
+          service.getNoteIdByAlias('noteThatDoesNoteExist'),
         ).rejects.toThrow(NotInDBError);
       });
       it('id is forbidden', async () => {
-        await expect(
-          service.getNoteByIdOrAlias(forbiddenNoteId),
-        ).rejects.toThrow(ForbiddenIdError);
+        await expect(service.getNoteIdByAlias(forbiddenNoteId)).rejects.toThrow(
+          ForbiddenIdError,
+        );
       });
     });
   });
@@ -703,7 +703,7 @@ describe('NotesService', () => {
       expect(metadataDto).toMatchSnapshot();
     });
 
-    it('returns publicId if no alias exists', async () => {
+    it('returns publicId if no aliases exists', async () => {
       const [note, ,] = await getMockData();
       const metadataDto = await service.toNoteMetadataDto(note);
       expect(metadataDto.primaryAddress).toEqual(note.publicId);

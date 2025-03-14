@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -24,8 +24,8 @@ import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
 import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
 import { Note } from '../../../notes/note.entity';
-import { NotesService } from '../../../notes/notes.service';
-import { FullUserInfoDto } from '../../../users/user-info.dto';
+import { NoteService } from '../../../notes/note.service';
+import { OwnUserInfoDto } from '../../../users/user-info.dto';
 import { UsersService } from '../../../users/users.service';
 import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
 import { OpenApi } from '../../utils/openapi.decorator';
@@ -42,7 +42,7 @@ export class MeController {
     private readonly logger: ConsoleLoggerService,
     private usersService: UsersService,
     private historyService: HistoryService,
-    private notesService: NotesService,
+    private notesService: NoteService,
     private mediaService: MediaService,
   ) {
     this.logger.setContext(MeController.name);
@@ -52,10 +52,10 @@ export class MeController {
   @OpenApi({
     code: 200,
     description: 'The user information',
-    dto: FullUserInfoDto,
+    dto: OwnUserInfoDto,
   })
-  getMe(@RequestUser() user: User): FullUserInfoDto {
-    return this.usersService.toFullUserDto(user);
+  getMe(@RequestUser() user: User): OwnUserInfoDto {
+    return this.usersService.toOwnUserDto(user);
   }
 
   @Get('history')

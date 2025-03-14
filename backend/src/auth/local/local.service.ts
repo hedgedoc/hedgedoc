@@ -1,10 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Inject, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import {
   OptionsGraph,
   OptionsType,
@@ -19,10 +18,11 @@ import {
   dictionary as zxcvbnEnDictionary,
   translations as zxcvbnEnTranslations,
 } from '@zxcvbn-ts/language-en';
-import { Repository } from 'typeorm';
+import { Knex } from 'knex';
+import { InjectConnection } from 'nest-knexjs';
 
 import authConfiguration, { AuthConfig } from '../../config/auth.config';
-import { User } from '../../database/user.entity';
+import { Identity, User } from '../../database/types';
 import {
   InvalidCredentialsError,
   NoLocalIdentityError,
@@ -30,7 +30,7 @@ import {
 } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { checkPassword, hashPassword } from '../../utils/password';
-import { Identity } from '../identity.entity';
+import { Username } from '../../utils/username';
 import { IdentityService } from '../identity.service';
 import { ProviderType } from '../provider-type.enum';
 
@@ -39,8 +39,10 @@ export class LocalService {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private identityService: IdentityService,
-    @InjectRepository(Identity)
-    private identityRepository: Repository<Identity>,
+
+    @InjectConnection()
+    private readonly knex: Knex,
+
     @Inject(authConfiguration.KEY)
     private authConfig: AuthConfig,
   ) {
@@ -102,27 +104,30 @@ export class LocalService {
   /**
    * @async
    * Checks if the user and password combination matches
-   * @param {User} user - the user to use
+   * @param {Username} username - the user to use
    * @param {string} password - the password to use
    * @throws {InvalidCredentialsError} the password and user do not match
    * @throws {NoLocalIdentityError} the specified user has no internal identity
    */
-  async checkLocalPassword(user: User, password: string): Promise<void> {
+  async checkLocalPassword(
+    username: Username,
+    password: string,
+  ): Promise<void> {
     const internalIdentity: Identity | undefined =
       await this.identityService.getIdentityFromUserIdAndProviderType(
-        user.username,
+        username,
         ProviderType.LOCAL,
       );
     if (internalIdentity === undefined) {
       this.logger.debug(
-        `The user with the username ${user.username} does not have an internal identity.`,
+        `The user with the username ${username} does not have an internal identity.`,
         'checkLocalPassword',
       );
       throw new NoLocalIdentityError('This user has no internal identity.');
     }
     if (!(await checkPassword(password, internalIdentity.passwordHash ?? ''))) {
       this.logger.debug(
-        `Password check for ${user.username} did not succeed.`,
+        `Password check for ${username} did not succeed.`,
         'checkLocalPassword',
       );
       throw new InvalidCredentialsError('Password is not correct');

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,7 +11,7 @@ import { HistoryEntryImportDto } from '../../src/history/history-entry-import.dt
 import { HistoryEntry } from '../../src/history/history-entry.entity';
 import { HistoryService } from '../../src/history/history.service';
 import { Note } from '../../src/notes/note.entity';
-import { NotesService } from '../../src/notes/notes.service';
+import { NoteService } from '../../src/notes/note.service';
 import { UsersService } from '../../src/users/users.service';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
@@ -43,7 +43,7 @@ describe('History', () => {
     localIdentityService = moduleRef.get(LocalService);
     user = await userService.createUser(username, 'Testy');
     await localIdentityService.createLocalIdentity(user, password);
-    const notesService = moduleRef.get(NotesService);
+    const notesService = moduleRef.get(NoteService);
     note = await notesService.createNote(content, user, 'note');
     note2 = await notesService.createNote(content, user, 'note2');
     agent = request.agent(testSetup.app.getHttpServer());

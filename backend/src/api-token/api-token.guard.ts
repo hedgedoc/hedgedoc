@@ -30,7 +30,9 @@ export class ApiTokenGuard implements CanActivate {
       return false;
     }
     try {
-      request.user = await this.apiTokenService.validateToken(token.trim());
+      request.userId = await this.apiTokenService.getUserIdForToken(
+        token.trim(),
+      );
       return true;
     } catch (error) {
       if (

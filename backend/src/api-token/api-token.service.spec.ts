@@ -105,13 +105,13 @@ describe('ApiTokenService', () => {
   describe('getTokensByUser', () => {
     it('works', async () => {
       createQueryBuilderFunc.getMany = () => [apiToken];
-      const tokens = await service.getTokensByUser(user);
+      const tokens = await service.getTokensOfUser(user);
       expect(tokens).toHaveLength(1);
       expect(tokens).toEqual([apiToken]);
     });
     it('should return empty array if token for user do not exists', async () => {
       jest.spyOn(apiTokenRepo, 'find').mockImplementationOnce(async () => []);
-      const tokens = await service.getTokensByUser(user);
+      const tokens = await service.getTokensOfUser(user);
       expect(tokens).toHaveLength(0);
       expect(tokens).toEqual([]);
     });
@@ -154,13 +154,13 @@ describe('ApiTokenService', () => {
       );
 
       expect(() =>
-        service.checkToken(secret, accessToken as ApiToken),
+        service.ensureTokenIsValid(secret, accessToken as ApiToken),
       ).not.toThrow();
     });
     it('AuthToken has wrong hash', () => {
       const [accessToken] = service.createToken(user, 'TestToken', undefined);
       expect(() =>
-        service.checkToken('secret', accessToken as ApiToken),
+        service.ensureTokenIsValid('secret', accessToken as ApiToken),
       ).toThrow(TokenNotValidError);
     });
     it('AuthToken has wrong validUntil Date', () => {
@@ -169,9 +169,9 @@ describe('ApiTokenService', () => {
         'Test',
         1549312452000,
       );
-      expect(() => service.checkToken(secret, accessToken as ApiToken)).toThrow(
-        TokenNotValidError,
-      );
+      expect(() =>
+        service.ensureTokenIsValid(secret, accessToken as ApiToken),
+      ).toThrow(TokenNotValidError);
     });
   });
 
@@ -223,7 +223,7 @@ describe('ApiTokenService', () => {
         .mockImplementationOnce(async (_, __): Promise<ApiToken> => {
           return apiToken;
         });
-      const userByToken = await service.validateToken(
+      const userByToken = await service.getUserIdForToken(
         `hd2.${apiToken.keyId}.${testSecret}`,
       );
       expect(userByToken).toEqual({
@@ -234,27 +234,27 @@ describe('ApiTokenService', () => {
     describe('fails:', () => {
       it('the prefix is missing', async () => {
         await expect(
-          service.validateToken(`${apiToken.keyId}.${'a'.repeat(73)}`),
+          service.getUserIdForToken(`${apiToken.keyId}.${'a'.repeat(73)}`),
         ).rejects.toThrow(TokenNotValidError);
       });
       it('the prefix is wrong', async () => {
         await expect(
-          service.validateToken(`hd1.${apiToken.keyId}.${'a'.repeat(73)}`),
+          service.getUserIdForToken(`hd1.${apiToken.keyId}.${'a'.repeat(73)}`),
         ).rejects.toThrow(TokenNotValidError);
       });
       it('the secret is missing', async () => {
         await expect(
-          service.validateToken(`hd2.${apiToken.keyId}`),
+          service.getUserIdForToken(`hd2.${apiToken.keyId}`),
         ).rejects.toThrow(TokenNotValidError);
       });
       it('the secret is too long', async () => {
         await expect(
-          service.validateToken(`hd2.${apiToken.keyId}.${'a'.repeat(73)}`),
+          service.getUserIdForToken(`hd2.${apiToken.keyId}.${'a'.repeat(73)}`),
         ).rejects.toThrow(TokenNotValidError);
       });
       it('the token contains sections after the secret', async () => {
         await expect(
-          service.validateToken(
+          service.getUserIdForToken(
             `hd2.${apiToken.keyId}.${'a'.repeat(73)}.extra`,
           ),
         ).rejects.toThrow(TokenNotValidError);

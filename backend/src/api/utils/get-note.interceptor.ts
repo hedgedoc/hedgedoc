@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
-import { NotesService } from '../../notes/notes.service';
+import { NoteService } from '../../notes/note.service';
 import { extractNoteFromRequest } from './extract-note-from-request';
 import { CompleteRequest } from './request.type';
 
@@ -21,16 +21,16 @@ import { CompleteRequest } from './request.type';
  */
 @Injectable()
 export class GetNoteInterceptor implements NestInterceptor {
-  constructor(private noteService: NotesService) {}
+  constructor(private noteService: NoteService) {}
 
   async intercept<T>(
     context: ExecutionContext,
     next: CallHandler,
   ): Promise<Observable<T>> {
     const request: CompleteRequest = context.switchToHttp().getRequest();
-    const note = await extractNoteFromRequest(request, this.noteService);
-    if (note !== undefined) {
-      request.note = note;
+    const noteId = await extractNoteFromRequest(request, this.noteService);
+    if (noteId !== undefined) {
+      request.noteId = noteId;
     }
     return next.handle();
   }

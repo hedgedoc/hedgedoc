@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -33,8 +33,8 @@ import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
 import { MulterFile } from '../../../media/multer-file.interface';
 import { Note } from '../../../notes/note.entity';
+import { PermissionService } from '../../../permissions/permission.service';
 import { PermissionsGuard } from '../../../permissions/permissions.guard';
-import { PermissionsService } from '../../../permissions/permissions.service';
 import { RequirePermission } from '../../../permissions/require-permission.decorator';
 import { RequiredPermission } from '../../../permissions/required-permission.enum';
 import { NoteHeaderInterceptor } from '../../utils/note-header.interceptor';
@@ -51,7 +51,7 @@ export class MediaController {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private mediaService: MediaService,
-    private permissionsService: PermissionsService,
+    private permissionsService: PermissionService,
   ) {
     this.logger.setContext(MediaController.name);
   }
@@ -71,7 +71,7 @@ export class MediaController {
   })
   @ApiHeader({
     name: 'HedgeDoc-Note',
-    description: 'ID or alias of the parent note',
+    description: 'ID or aliases of the parent note',
   })
   @OpenApi(
     {

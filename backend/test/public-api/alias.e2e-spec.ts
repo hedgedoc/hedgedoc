@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import request from 'supertest';
 
-import { AliasUpdateDto } from '../../src/notes/alias-update.dto';
+import { AliasUpdateDto } from '../../src/alias/alias-update.dto';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Alias', () => {

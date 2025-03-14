@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -111,6 +111,7 @@ export class LdapService {
             id: userInfo[ldapConfig.userIdField],
             displayName: userInfo[ldapConfig.displayNameField] ?? username,
             photoUrl: undefined, // TODO LDAP stores images as binaries,
+
             // we need to convert them into a data-URL or alike
           });
         },

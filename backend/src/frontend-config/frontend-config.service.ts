@@ -17,7 +17,7 @@ import externalServicesConfiguration, {
 } from '../config/external-services.config';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { getServerVersionFromPackageJson } from '../utils/serverVersion';
+import { getServerVersionFromPackageJson } from '../utils/server-version';
 import {
   AuthProviderDto,
   BrandingDto,

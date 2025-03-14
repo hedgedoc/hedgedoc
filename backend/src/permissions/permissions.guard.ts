@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,9 +9,9 @@ import { Reflector } from '@nestjs/core';
 import { extractNoteFromRequest } from '../api/utils/extract-note-from-request';
 import { CompleteRequest } from '../api/utils/request.type';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { NotesService } from '../notes/notes.service';
+import { NoteService } from '../notes/note.service';
 import { NotePermission } from './note-permission.enum';
-import { PermissionsService } from './permissions.service';
+import { PermissionService } from './permission.service';
 import { PERMISSION_METADATA_KEY } from './require-permission.decorator';
 import { RequiredPermission } from './required-permission.enum';
 
@@ -26,8 +26,8 @@ export class PermissionsGuard implements CanActivate {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private readonly reflector: Reflector,
-    private readonly permissionsService: PermissionsService,
-    private readonly noteService: NotesService,
+    private readonly permissionsService: PermissionService,
+    private readonly noteService: NoteService,
   ) {
     this.logger.setContext(PermissionsGuard.name);
   }

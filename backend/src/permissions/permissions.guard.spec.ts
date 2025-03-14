@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,8 +16,8 @@ import {
   getNotePermissionDisplayName,
   NotePermission,
 } from './note-permission.enum';
+import { PermissionService } from './permission.service';
 import { PermissionsGuard } from './permissions.guard';
-import { PermissionsService } from './permissions.service';
 import { PERMISSION_METADATA_KEY } from './require-permission.decorator';
 import { RequiredPermission } from './required-permission.enum';
 
@@ -27,7 +27,7 @@ describe('permissions guard', () => {
   let loggerService: ConsoleLoggerService;
   let reflector: Reflector;
   let handler: () => void;
-  let permissionsService: PermissionsService;
+  let permissionsService: PermissionService;
   let requiredPermission: RequiredPermission | undefined;
   let createAllowed = false;
   let requestUser: User | undefined;
@@ -48,7 +48,7 @@ describe('permissions guard', () => {
 
     handler = jest.fn();
 
-    permissionsService = Mock.of<PermissionsService>({
+    permissionsService = Mock.of<PermissionService>({
       mayCreate: jest.fn(() => createAllowed),
       determinePermission: jest.fn(() => Promise.resolve(determinedPermission)),
     });
@@ -133,7 +133,7 @@ describe('permissions guard', () => {
     });
   });
 
-  it('will deny if no note alias is present', async () => {
+  it('will deny if no note aliases is present', async () => {
     jest
       .spyOn(ExtractNoteIdOrAliasModule, 'extractNoteFromRequest')
       .mockReturnValue(Promise.resolve(undefined));

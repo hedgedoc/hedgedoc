@@ -5,7 +5,7 @@
  */
 import { Injectable } from '@nestjs/common';
 
-import { getServerVersionFromPackageJson } from '../utils/serverVersion';
+import { getServerVersionFromPackageJson } from '../utils/server-version';
 import { ServerStatusDto } from './server-status.dto';
 
 @Injectable()

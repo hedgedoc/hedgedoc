@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { Mock } from 'ts-mockery';
 
 import { Note } from '../../notes/note.entity';
-import { NotesService } from '../../notes/notes.service';
+import { NoteService } from '../../notes/note.service';
 import { GetNoteInterceptor } from './get-note.interceptor';
 import { CompleteRequest } from './request.type';
 
@@ -21,15 +21,15 @@ describe('get note interceptor', () => {
     handle: () => mockObservable,
   });
 
-  let notesService: NotesService;
+  let notesService: NoteService;
   let noteFetchSpy: jest.SpyInstance;
 
   beforeEach(() => {
-    notesService = Mock.of<NotesService>({
-      getNoteByIdOrAlias: (id) =>
+    notesService = Mock.of<NoteService>({
+      getNoteIdByAlias: (id) =>
         id === mockNoteId ? Promise.resolve(mockNote) : Promise.reject(),
     });
-    noteFetchSpy = jest.spyOn(notesService, 'getNoteByIdOrAlias');
+    noteFetchSpy = jest.spyOn(notesService, 'getNoteIdByAlias');
   });
 
   function mockExecutionContext(request: CompleteRequest) {

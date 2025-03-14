@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -49,7 +49,7 @@ describe('Notes', () => {
     expect(response.body.metadata?.id).toBeDefined();
     expect(
       await testSetup.notesService.getNoteContent(
-        await testSetup.notesService.getNoteByIdOrAlias(
+        await testSetup.notesService.getNoteIdByAlias(
           response.body.metadata.id,
         ),
       ),
@@ -96,7 +96,7 @@ describe('Notes', () => {
       expect(response.body.metadata?.id).toBeDefined();
       return expect(
         await testSetup.notesService.getNoteContent(
-          await testSetup.notesService.getNoteByIdOrAlias(
+          await testSetup.notesService.getNoteIdByAlias(
             response.body.metadata?.id,
           ),
         ),
@@ -172,7 +172,7 @@ describe('Notes', () => {
           })
           .expect(204);
         await expect(
-          testSetup.notesService.getNoteByIdOrAlias(noteId),
+          testSetup.notesService.getNoteIdByAlias(noteId),
         ).rejects.toEqual(
           new NotInDBError(`Note with id/alias '${noteId}' not found.`),
         );
@@ -202,7 +202,7 @@ describe('Notes', () => {
           })
           .expect(204);
         await expect(
-          testSetup.notesService.getNoteByIdOrAlias(noteId),
+          testSetup.notesService.getNoteIdByAlias(noteId),
         ).rejects.toEqual(
           new NotInDBError(`Note with id/alias '${noteId}' not found.`),
         );
@@ -231,7 +231,7 @@ describe('Notes', () => {
         note,
         updateNotePermission,
       );
-      const updatedNote = await testSetup.notesService.getNoteByIdOrAlias(
+      const updatedNote = await testSetup.notesService.getNoteIdByAlias(
         (await note.aliases).filter((alias) => alias.primary)[0].name,
       );
       expect(await updatedNote.userPermissions).toHaveLength(1);
@@ -248,7 +248,7 @@ describe('Notes', () => {
         .send({ keepMedia: false })
         .expect(204);
       await expect(
-        testSetup.notesService.getNoteByIdOrAlias('deleteTest3'),
+        testSetup.notesService.getNoteIdByAlias('deleteTest3'),
       ).rejects.toEqual(
         new NotInDBError("Note with id/alias 'deleteTest3' not found."),
       );
@@ -283,7 +283,7 @@ describe('Notes', () => {
         .expect(200);
       expect(
         await testSetup.notesService.getNoteContent(
-          await testSetup.notesService.getNoteByIdOrAlias('test4'),
+          await testSetup.notesService.getNoteIdByAlias('test4'),
         ),
       ).toEqual(changedContent);
       expect(response.body.content).toEqual(changedContent);
@@ -529,7 +529,7 @@ describe('Notes', () => {
         alias,
       );
       // Redact default read permissions
-      const note = await testSetup.notesService.getNoteByIdOrAlias(alias);
+      const note = await testSetup.notesService.getNoteIdByAlias(alias);
       const everyone = await testSetup.groupService.getEveryoneGroup();
       const loggedin = await testSetup.groupService.getLoggedInGroup();
       await testSetup.permissionsService.removeGroupPermission(note, everyone);

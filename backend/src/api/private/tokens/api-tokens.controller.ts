@@ -22,7 +22,7 @@ import {
 } from '../../../api-token/api-token.dto';
 import { ApiTokenService } from '../../../api-token/api-token.service';
 import { SessionGuard } from '../../../auth/session.guard';
-import { User } from '../../../database/user.entity';
+import { FieldNameUser, User } from '../../../database/types';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
@@ -42,7 +42,7 @@ export class ApiTokensController {
   @Get()
   @OpenApi(200)
   async getUserTokens(@RequestUser() user: User): Promise<ApiTokenDto[]> {
-    return (await this.publicAuthTokenService.getTokensByUser(user)).map(
+    return (await this.publicAuthTokenService.getTokensOfUser(user)).map(
       (token) => this.publicAuthTokenService.toAuthTokenDto(token),
     );
   }
@@ -51,10 +51,10 @@ export class ApiTokensController {
   @OpenApi(201)
   async postTokenRequest(
     @Body() createDto: ApiTokenCreateDto,
-    @RequestUser() user: User,
+    @RequestUser() userId: User[FieldNameUser.id],
   ): Promise<ApiTokenWithSecretDto> {
-    return await this.publicAuthTokenService.addToken(
-      user,
+    return await this.publicAuthTokenService.createToken(
+      userId,
       createDto.label,
       createDto.validUntil,
     );
@@ -66,7 +66,7 @@ export class ApiTokensController {
     @RequestUser() user: User,
     @Param('keyId') keyId: string,
   ): Promise<void> {
-    const tokens = await this.publicAuthTokenService.getTokensByUser(user);
+    const tokens = await this.publicAuthTokenService.getTokensOfUser(user);
     for (const token of tokens) {
       if (token.keyId == keyId) {
         return await this.publicAuthTokenService.removeToken(keyId);

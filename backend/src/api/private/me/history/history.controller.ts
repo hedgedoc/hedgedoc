@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -64,7 +64,7 @@ export class HistoryController {
     await this.historyService.deleteHistory(user);
   }
 
-  @Put(':noteIdOrAlias')
+  @Put(':noteAlias')
   @OpenApi(200, 404)
   @UseInterceptors(GetNoteInterceptor)
   async updateHistoryEntry(
@@ -80,7 +80,7 @@ export class HistoryController {
     return await this.historyService.toHistoryEntryDto(newEntry);
   }
 
-  @Delete(':noteIdOrAlias')
+  @Delete(':noteAlias')
   @OpenApi(204, 404)
   @UseInterceptors(GetNoteInterceptor)
   async deleteHistoryEntry(

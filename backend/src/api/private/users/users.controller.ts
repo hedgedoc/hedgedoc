@@ -32,7 +32,7 @@ export class UsersController {
   async checkUsername(
     @Body() usernameCheck: UsernameCheckDto,
   ): Promise<UsernameCheckResponseDto> {
-    const userExists = await this.userService.checkIfUserExists(
+    const userExists = await this.userService.isUsernameTaken(
       usernameCheck.username,
     );
     // TODO Check if username is blocked

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,6 +10,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Mock } from 'ts-mockery';
 import { DataSource, EntityManager, Repository } from 'typeorm';
 
+import { AliasModule } from '../alias/alias.module';
 import { ApiToken } from '../api-token/api-token.entity';
 import { Identity } from '../auth/identity.entity';
 import { Author } from '../authors/author.entity';
@@ -31,13 +32,12 @@ import { GroupsModule } from '../groups/groups.module';
 import { GroupsService } from '../groups/groups.service';
 import { LoggerModule } from '../logger/logger.module';
 import { MediaUpload } from '../media/media-upload.entity';
-import { Alias } from '../notes/alias.entity';
+import { Alias } from '../notes/aliases.entity';
 import {
   NoteGroupPermissionUpdateDto,
   NoteUserPermissionUpdateDto,
 } from '../notes/note-permissions.dto';
 import { Note } from '../notes/note.entity';
-import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
 import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
@@ -49,8 +49,8 @@ import {
   NotePermission,
 } from './note-permission.enum';
 import { NoteUserPermission } from './note-user-permission.entity';
+import { PermissionService } from './permission.service';
 import { PermissionsModule } from './permissions.module';
-import { PermissionsService } from './permissions.service';
 import { convertGuestAccessToNotePermission } from './utils/convert-guest-access-to-note-permission';
 import * as FindHighestNotePermissionByGroupModule from './utils/find-highest-note-permission-by-group';
 import * as FindHighestNotePermissionByUserModule from './utils/find-highest-note-permission-by-user';
@@ -89,7 +89,7 @@ function mockNoteRepo(noteRepo: Repository<Note>) {
 }
 
 describe('PermissionsService', () => {
-  let service: PermissionsService;
+  let service: PermissionService;
   let groupService: GroupsService;
   let noteRepo: Repository<Note>;
   let userRepo: Repository<User>;
@@ -128,7 +128,7 @@ describe('PermissionsService', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        PermissionsService,
+        PermissionService,
         {
           provide: getRepositoryToken(Note),
           useValue: noteRepo,
@@ -146,7 +146,7 @@ describe('PermissionsService', () => {
         LoggerModule,
         PermissionsModule,
         UsersModule,
-        NotesModule,
+        AliasModule,
         ConfigModule.forRoot({
           isGlobal: true,
           load: [
@@ -187,7 +187,7 @@ describe('PermissionsService', () => {
       .overrideProvider(getRepositoryToken(Alias))
       .useValue({})
       .compile();
-    service = module.get<PermissionsService>(PermissionsService);
+    service = module.get<PermissionService>(PermissionService);
     groupService = module.get<GroupsService>(GroupsService);
     groupRepo = module.get<Repository<Group>>(getRepositoryToken(Group));
     noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,16 +8,14 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { Knex } from 'knex';
+import { InjectConnection } from 'nest-knexjs';
 
 import AuthConfiguration, { AuthConfig } from '../config/auth.config';
-import { User } from '../database/user.entity';
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { FullUserInfoDto } from '../users/user-info.dto';
+import { OwnUserInfoDto } from '../users/user-info.dto';
 import { UsersService } from '../users/users.service';
-import { Identity } from './identity.entity';
 import { PendingUserConfirmationDto } from './pending-user-confirmation.dto';
 import { ProviderType } from './provider-type.enum';
 
@@ -26,12 +24,12 @@ export class IdentityService {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private usersService: UsersService,
-    @InjectDataSource()
-    private dataSource: DataSource,
+
     @Inject(AuthConfiguration.KEY)
     private authConfig: AuthConfig,
-    @InjectRepository(Identity)
-    private identityRepository: Repository<Identity>,
+
+    @InjectConnection()
+    private readonly knex: Knex,
   ) {
     this.logger.setContext(IdentityService.name);
   }
@@ -95,14 +93,14 @@ export class IdentityService {
   /**
    * Creates a new user with the given user data and the session data.
    *
-   * @param {FullUserInfoDto} sessionUserData The user data from the session
+   * @param {OwnUserInfoDto} sessionUserData The user data from the session
    * @param {PendingUserConfirmationDto} updatedUserData The updated user data from the API
    * @param {ProviderType} authProviderType The type of the auth provider
    * @param {string} authProviderIdentifier The identifier of the auth provider
    * @param {string} providerUserId The id of the user in the auth system
    */
   async createUserWithIdentity(
-    sessionUserData: FullUserInfoDto,
+    sessionUserData: OwnUserInfoDto,
     updatedUserData: PendingUserConfirmationDto,
     authProviderType: ProviderType,
     authProviderIdentifier: string,

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,8 +14,8 @@ import {
   ValidateNested,
 } from 'class-validator';
 
+import { AliasDto } from '../alias/alias.dto';
 import { BaseDto } from '../utils/base.dto.';
-import { AliasDto } from './alias.dto';
 import { NotePermissionsDto } from './note-permissions.dto';
 
 export class NoteMetadataDto extends BaseDto {
@@ -37,8 +37,8 @@ export class NoteMetadataDto extends BaseDto {
 
   /**
    * The primary adress of the note
-   * If at least one alias is set, this is the primary alias
-   * If no alias is set, this is the note's ID
+   * If at least one aliases is set, this is the primary aliases
+   * If no aliases is set, this is the note's ID
    */
   @IsString()
   @ApiProperty()

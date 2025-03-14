@@ -1,46 +1,47 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { REGEX_USERNAME } from '@hedgedoc/commons';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Knex } from 'knex';
+import { InjectConnection } from 'nest-knexjs';
 
 import AuthConfiguration, { AuthConfig } from '../config/auth.config';
-import { User } from '../database/user.entity';
-import { AlreadyInDBError, NotInDBError } from '../errors/errors';
+import { FieldNameUser, TableUser, User } from '../database/types';
+import { TypeUpdateUser } from '../database/types/user';
+import {
+  AlreadyInDBError,
+  GenericDBError,
+  NotInDBError,
+} from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Username } from '../utils/username';
-import {
-  FullUserInfoDto,
-  UserInfoDto,
-  UserLoginInfoDto,
-} from './user-info.dto';
-import { UserRelationEnum } from './user-relation.enum';
+import { OwnUserInfoDto, UserInfoDto } from './user-info.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    @Inject(AuthConfiguration.KEY)
-    private authConfig: AuthConfig,
-    @InjectRepository(User) private userRepository: Repository<User>,
+
+    @InjectConnection()
+    private readonly knex: Knex,
   ) {
     this.logger.setContext(UsersService.name);
   }
 
   /**
-   * @async
-   * Create a new user with a given username and displayName
-   * @param {Username} username - the username the new user shall have
-   * @param {string} displayName - the display name the new user shall have
-   * @param {string} [email] - the email the new user shall have
-   * @param {string} [photoUrl] - the photoUrl the new user shall have
-   * @return {User} the user
+   * Creates a new user with a given username and displayName
+   *
+   * @param username New user's username
+   * @param displayName New user's displayName
+   * @param [email] New user's email address if exists
+   * @param [photoUrl] URL of the user's profile picture if exists
+   * @return The newly created user
    * @throws {BadRequestException} if the username contains invalid characters or is too short
    * @throws {AlreadyInDBError} the username is already taken.
+   * @thorws {GenericDBError} the database returned a non-expected value
    */
   async createUser(
     username: Username,
@@ -53,145 +54,226 @@ export class UsersService {
         `The username '${username}' is not a valid username.`,
       );
     }
-    const user = User.create(username, displayName, email, photoUrl);
+
     try {
-      return await this.userRepository.save(user);
-    } catch {
-      this.logger.debug(
-        `A user with the username '${username}' already exists.`,
-        'createUser',
+      const newUsers = await this.knex(TableUser).insert(
+        {
+          [FieldNameUser.username]: username,
+          [FieldNameUser.displayName]: displayName,
+          [FieldNameUser.email]: email ?? null,
+          [FieldNameUser.photoUrl]: photoUrl ?? null,
+          [FieldNameUser.guestUuid]: null,
+          [FieldNameUser.authorStyle]: 0,
+          // FIXME Set unique authorStyle per user
+        },
+        [
+          FieldNameUser.id,
+          FieldNameUser.username,
+          FieldNameUser.displayName,
+          FieldNameUser.email,
+          FieldNameUser.photoUrl,
+          FieldNameUser.guestUuid,
+          FieldNameUser.authorStyle,
+          FieldNameUser.createdAt,
+        ],
       );
-      throw new AlreadyInDBError(
-        `A user with the username '${username}' already exists.`,
+      if (newUsers.length !== 1) {
+        throw new GenericDBError(
+          `Failed to create user '${username}', no user was created.`,
+        );
+      }
+      return newUsers[0];
+    } catch {
+      const message = `A user with the username '${username}' already exists.`;
+      this.logger.debug(message, 'createUser');
+      throw new AlreadyInDBError(message);
+    }
+  }
+
+  /**
+   * Deletes a user by its username
+   *
+   * @param username Username of the user to be deleted
+   * @throws {NotInDBError} the username has no user associated with it
+   */
+  async deleteUser(username: Username): Promise<void> {
+    const usersDeleted = await this.knex(TableUser)
+      .where(FieldNameUser.username, username)
+      .delete();
+    if (usersDeleted === 0) {
+      const message = `User with username '${username}' not found`;
+      this.logger.debug(message, 'deleteUser');
+      throw new NotInDBError(message);
+    }
+    if (usersDeleted > 1) {
+      this.logger.error(
+        `Deleted multiple (${usersDeleted}) users with the same username '${username}'. This should never happen!`,
+        'deleteUser',
       );
     }
   }
 
   /**
-   * @async
-   * Delete the user with the specified username
-   * @param {User} user - the username of the user to be delete
-   * @throws {NotInDBError} the username has no user associated with it.
-   */
-  async deleteUser(user: User): Promise<void> {
-    await this.userRepository.remove(user);
-    this.logger.debug(
-      `Successfully deleted user with username ${user.username}`,
-      'deleteUser',
-    );
-  }
-
-  /**
-   * @async
-   * Update the given User with the given information.
+   * Updates the given User with new information
    * Use {@code null} to clear the stored value (email or profilePicture).
    * Use {@code undefined} to keep the stored value.
-   * @param {User} user - the User to update
-   * @param {string | undefined} displayName - the displayName to update the user with
-   * @param {string | null | undefined} email - the email to update the user with
-   * @param {string | null | undefined} profilePicture - the profilePicture to update the user with
+   *
+   * @param username The username of the user to update
+   * @param displayName The new display name
+   * @param email The new email address
+   * @param profilePicture The new profile picture URL
    */
   async updateUser(
-    user: User,
+    username: Username,
     displayName?: string,
     email?: string | null,
     profilePicture?: string | null,
-  ): Promise<User> {
-    let shouldSave = false;
+  ): Promise<void> {
+    const updateData = {} as TypeUpdateUser;
     if (displayName !== undefined) {
-      user.displayName = displayName;
-      shouldSave = true;
+      updateData[FieldNameUser.displayName] = displayName;
     }
     if (email !== undefined) {
-      user.email = email;
-      shouldSave = true;
+      updateData[FieldNameUser.email] = email;
     }
     if (profilePicture !== undefined) {
-      user.photo = profilePicture;
-      shouldSave = true;
-      // ToDo: handle LDAP images (https://github.com/hedgedoc/hedgedoc/issues/5032)
+      updateData[FieldNameUser.photoUrl] = profilePicture;
     }
-    if (shouldSave) {
-      return await this.userRepository.save(user);
+    if (Object.keys(updateData).length === 0) {
+      this.logger.debug('No update data provided.', 'updateUser');
+      return;
     }
-    return user;
+    const result = await this.knex(TableUser)
+      .where(FieldNameUser.username, username)
+      .update(updateData);
+    if (result !== 1) {
+      const message = `Failed to update user '${username}'.`;
+      this.logger.debug(message, 'updateUser');
+      throw new NotInDBError(message);
+    }
   }
 
   /**
-   * @async
-   * Checks if the user with the specified username exists
-   * @param username - the username to check
-   * @return {boolean} true if the user exists, false otherwise
+   * Checks if a given username is already taken
+   *
+   * @param username The username to check
+   * @return true if the user exists, false otherwise
    */
-  async checkIfUserExists(username: Username): Promise<boolean> {
-    const user = await this.userRepository.findOne({
-      where: { username: username },
-    });
-    return user !== null;
+  async isUsernameTaken(username: Username): Promise<boolean> {
+    const result = await this.knex(TableUser)
+      .select(FieldNameUser.username)
+      .where(FieldNameUser.username, username);
+    return result.length === 1;
   }
 
   /**
-   * @async
-   * Get the user specified by the username
-   * @param {Username} username the username by which the user is specified
-   * @param {UserRelationEnum[]} [withRelations=[]] if the returned user object should contain certain relations
-   * @return {User} the specified user
+   * Checks if a given user is a registered user in contrast to a guest user
+   *
+   * @param userId The id of the user to check
+   * @param transaction the optional transaction to access the db
+   * @return true if the user is registered, false otherwise
    */
-  async getUserByUsername(
+  async isRegisteredUser(
+    userId: User[FieldNameUser.id],
+    transaction?: Knex,
+  ): Promise<boolean> {
+    const dbActor = transaction ? transaction : this.knex;
+    const username = await dbActor(TableUser)
+      .select(FieldNameUser.username)
+      .where(FieldNameUser.id, userId)
+      .first();
+    return username !== null && username !== undefined;
+  }
+
+  /**
+   * Fetches the userId for a given username from the database
+   *
+   * @param username The username to fetch
+   * @return The found user object
+   * @throws {NotInDBError} if the user could not be found
+   */
+  async getUserIdByUsername(
     username: Username,
-    withRelations: UserRelationEnum[] = [],
-  ): Promise<User> {
-    const user = await this.userRepository.findOne({
-      where: { username: username },
-      relations: withRelations,
-    });
-    if (user === null) {
-      throw new NotInDBError(`User with username '${username}' not found`);
+  ): Promise<User[FieldNameUser.id]> {
+    const userId = await this.knex(TableUser)
+      .select(FieldNameUser.id)
+      .where(FieldNameUser.username, username)
+      .first();
+    if (userId === undefined) {
+      throw new NotInDBError(`User with username "${username}" does not exist`);
+    }
+    return userId[FieldNameUser.id];
+  }
+
+  /**
+   * Fetches the user object for a given username from the database
+   *
+   * @param username The username to fetch
+   * @return The found user object
+   * @throws {NotInDBError} if the user could not be found
+   */
+  async getUserByUsername(username: Username): Promise<User> {
+    const user = await this.knex(TableUser)
+      .select()
+      .where(FieldNameUser.username, username)
+      .first();
+    if (!user) {
+      throw new NotInDBError(`User with username "${username}" does not exist`);
     }
     return user;
   }
 
   /**
-   * Extract the photoUrl of the user or in case no photo url is present generate a deterministic user photo
-   * @param {User} user - the specified User
-   * @return the url of the photo
+   * Extract the photoUrl of the user or falls back to libravatar if enabled
+   *
+   * @param user The user of which to get the photo url
+   * @return A URL to the user's profile picture. If the user has no photo and libravatar support is enabled,
+   * a URL to that is returned. Otherwise, undefined is returned to indicate that the frontend needs to generate
+   * a random avatar image based on the username.
    */
-  getPhotoUrl(user: User): string {
-    if (user.photo) {
-      return user.photo;
+  getPhotoUrl(user: User): string | undefined {
+    if (user[FieldNameUser.photoUrl]) {
+      return user[FieldNameUser.photoUrl];
     } else {
-      return '';
+      // TODO If libravatar is enabled and the user has an email address, use it to fetch the profile picture from there
+      //  Otherwise return undefined to let the frontend generate a random avatar image (#5010)
+      return undefined;
     }
   }
 
   /**
-   * Build UserInfoDto from a user.
-   * @param {User=} user - the user to use
-   * @return {(UserInfoDto)} the built UserInfoDto
+   * Build UserInfoDto from a user object
+   *
+   * @param user The user object to transform
+   * @return The built UserInfoDto
    */
   toUserDto(user: User): UserInfoDto {
+    if (user[FieldNameUser.username] === null) {
+      throw new BadRequestException(
+        `Cannot create UserInfoDto from a guest user.`,
+      );
+    }
     return {
-      username: user.username,
-      displayName: user.displayName,
+      username: user[FieldNameUser.username],
+      displayName:
+        user[FieldNameUser.displayName] ??
+        (user[FieldNameUser.username] as string),
       photoUrl: this.getPhotoUrl(user),
     };
   }
 
   /**
-   * Build FullUserInfoDto from a user.
-   * @param {User=} user - the user to use
-   * @return {(UserInfoDto)} the built FullUserInfoDto
+   * Builds a DTO for the user used when the user requests their own data
+   *
+   * @param user The user to fetch their data for
+   * @param authProvider The
+   * @return The built OwnUserInfoDto
    */
-  toFullUserDto(user: User): FullUserInfoDto {
+  toOwnUserDto(user: User, authProvider?: string): OwnUserInfoDto {
     return {
-      username: user.username,
-      displayName: user.displayName,
-      photoUrl: this.getPhotoUrl(user),
-      email: user.email ?? '',
+      ...this.toUserDto(user),
+      email: user[FieldNameUser.email] ?? undefined,
+      authProvider,
     };
-  }
-
-  toUserLoginInfoDto(user: User, authProvider: string): UserLoginInfoDto {
-    return { ...this.toUserDto(user), authProvider };
   }
 }

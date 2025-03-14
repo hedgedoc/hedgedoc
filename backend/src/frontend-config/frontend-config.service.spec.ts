@@ -17,7 +17,7 @@ import { GuestAccess } from '../config/guest_access.enum';
 import { Loglevel } from '../config/loglevel.enum';
 import { NoteConfig } from '../config/note.config';
 import { LoggerModule } from '../logger/logger.module';
-import { getServerVersionFromPackageJson } from '../utils/serverVersion';
+import { getServerVersionFromPackageJson } from '../utils/server-version';
 import { FrontendConfigService } from './frontend-config.service';
 
 /* eslint-disable

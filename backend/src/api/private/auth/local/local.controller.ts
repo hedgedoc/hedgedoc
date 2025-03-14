@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -89,9 +89,8 @@ export class LocalController {
     @Body() loginDto: LoginDto,
   ): Promise<void> {
     try {
-      const user = await this.usersService.getUserByUsername(loginDto.username);
       await this.localIdentityService.checkLocalPassword(
-        user,
+        loginDto.username,
         loginDto.password,
       );
       request.session.username = loginDto.username;

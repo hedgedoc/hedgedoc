@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -30,16 +30,16 @@ import { NotePermissionsDto } from '../../../notes/note-permissions.dto';
 import { NoteDto } from '../../../notes/note.dto';
 import { Note } from '../../../notes/note.entity';
 import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
-import { NotesService } from '../../../notes/notes.service';
+import { NoteService } from '../../../notes/note.service';
+import { PermissionService } from '../../../permissions/permission.service';
 import { PermissionsGuard } from '../../../permissions/permissions.guard';
-import { PermissionsService } from '../../../permissions/permissions.service';
 import { RequirePermission } from '../../../permissions/require-permission.decorator';
 import { RequiredPermission } from '../../../permissions/required-permission.enum';
 import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
 import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
 import { UsersService } from '../../../users/users.service';
-import { Username } from '../../../utils/username';
+import { makeUsernameLowercase, Username } from '../../../utils/username';
 import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
 import { MarkdownBody } from '../../utils/markdown-body.decorator';
 import { OpenApi } from '../../utils/openapi.decorator';
@@ -53,12 +53,12 @@ import { RequestUser } from '../../utils/request-user.decorator';
 export class NotesController {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    private noteService: NotesService,
+    private noteService: NoteService,
     private historyService: HistoryService,
     private userService: UsersService,
     private mediaService: MediaService,
     private revisionsService: RevisionsService,
-    private permissionService: PermissionsService,
+    private permissionService: PermissionService,
     private groupService: GroupsService,
   ) {
     this.logger.setContext(NotesController.name);
@@ -104,7 +104,7 @@ export class NotesController {
   @OpenApi(201, 400, 404, 409, 413)
   @RequirePermission(RequiredPermission.CREATE)
   async createNamedNote(
-    @RequestUser({ guestsAllowed: true }) user: User | null,
+    @RequestUser({ guestsAllowed: true }) userId: User | null,
     @Param('noteAlias') noteAlias: string,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
@@ -155,7 +155,7 @@ export class NotesController {
     @RequestUser({ guestsAllowed: true }) user: User | null,
     @RequestNote() note: Note,
   ): Promise<RevisionMetadataDto[]> {
-    const revisions = await this.revisionsService.getAllRevisions(note);
+    const revisions = await this.revisionsService.getAllRevisionMetadata(note);
     return await Promise.all(
       revisions.map((revision) =>
         this.revisionsService.toRevisionMetadataDto(revision),
@@ -189,11 +189,10 @@ export class NotesController {
   @UseInterceptors(GetNoteInterceptor)
   async getNoteRevision(
     @RequestUser({ guestsAllowed: true }) user: User | null,
-    @RequestNote() note: Note,
     @Param('revisionId') revisionId: number,
   ): Promise<RevisionDto> {
     return await this.revisionsService.toRevisionDto(
-      await this.revisionsService.getRevision(note, revisionId),
+      await this.revisionsService.getRevision(revisionId),
     );
   }
 
@@ -207,10 +206,9 @@ export class NotesController {
     @Param('userName') username: Username,
     @Body('canEdit') canEdit: boolean,
   ): Promise<NotePermissionsDto> {
-    const permissionUser = await this.userService.getUserByUsername(username);
     const returnedNote = await this.permissionService.setUserPermission(
       note,
-      permissionUser,
+      makeUsernameLowercase(username),
       canEdit,
     );
     return await this.noteService.toNotePermissionsDto(returnedNote);
@@ -225,10 +223,9 @@ export class NotesController {
     @Param('userName') username: Username,
   ): Promise<NotePermissionsDto> {
     try {
-      const permissionUser = await this.userService.getUserByUsername(username);
       const returnedNote = await this.permissionService.removeUserPermission(
         note,
-        permissionUser,
+        username,
       );
       return await this.noteService.toNotePermissionsDto(returnedNote);
     } catch (e) {
@@ -250,10 +247,9 @@ export class NotesController {
     @Param('groupName') groupName: string,
     @Body('canEdit') canEdit: boolean,
   ): Promise<NotePermissionsDto> {
-    const permissionGroup = await this.groupService.getGroupByName(groupName);
     const returnedNote = await this.permissionService.setGroupPermission(
       note,
-      permissionGroup,
+      groupName,
       canEdit,
     );
     return await this.noteService.toNotePermissionsDto(returnedNote);
@@ -268,10 +264,9 @@ export class NotesController {
     @RequestNote() note: Note,
     @Param('groupName') groupName: string,
   ): Promise<NotePermissionsDto> {
-    const permissionGroup = await this.groupService.getGroupByName(groupName);
     const returnedNote = await this.permissionService.removeGroupPermission(
       note,
-      permissionGroup,
+      groupName,
     );
     return await this.noteService.toNotePermissionsDto(returnedNote);
   }
@@ -284,9 +279,8 @@ export class NotesController {
     @RequestNote() note: Note,
     @Body('newOwner') newOwner: Username,
   ): Promise<NoteDto> {
-    const owner = await this.userService.getUserByUsername(newOwner);
     return await this.noteService.toNoteDto(
-      await this.permissionService.changeOwner(note, owner),
+      await this.permissionService.changeOwner(note, newOwner),
     );
   }
 }

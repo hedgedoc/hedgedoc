@@ -8,7 +8,7 @@ import { promises as fs } from 'fs';
 import {
   clearCachedVersion,
   getServerVersionFromPackageJson,
-} from './serverVersion';
+} from './server-version';
 
 jest.mock('fs', () => ({
   promises: {

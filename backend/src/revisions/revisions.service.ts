@@ -5,78 +5,118 @@
  */
 import { Inject, Injectable } from '@nestjs/common';
 import { Cron, Timeout } from '@nestjs/schedule';
-import { InjectRepository } from '@nestjs/typeorm';
 import { createPatch } from 'diff';
-import { Repository } from 'typeorm';
 
 import noteConfiguration, { NoteConfig } from '../config/note.config';
+import {
+  FieldNameAuthorshipInfo,
+  FieldNameNote,
+  FieldNameRevision,
+  FieldNameUser,
+  Note,
+  Revision,
+  TableAuthorshipInfo,
+  TableRevision, TableUser,
+} from '../database/types';
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { Note } from '../notes/note.entity';
-import { Tag } from '../notes/tag.entity';
-import { EditService } from './edit.service';
 import { RevisionMetadataDto } from './revision-metadata.dto';
 import { RevisionDto } from './revision.dto';
-import { Revision } from './revision.entity';
 import { extractRevisionMetadataFromContent } from './utils/extract-revision-metadata-from-content';
 
-class RevisionUserInfo {
-  usernames: string[];
+interface RevisionUserInfo {
+  usernames: User[FieldNameUser.username][];
   anonymousUserCount: number;
 }
+
+interface RevisionContentLength {
+  length: number;
+}
+
+type RevisionMetadata = Pick<
+  Revision,
+  FieldNameRevision.id | FieldNameRevision.createdAt
+> &
+  RevisionUserInfo &
+  RevisionContentLength;
+type FullRevision = Pick<
+  Revision,
+  | FieldNameRevision.id
+  | FieldNameRevision.createdAt
+  | FieldNameRevision.content
+  | FieldNameRevision.patch
+> &
+  RevisionUserInfo;
 
 @Injectable()
 export class RevisionsService {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    @InjectRepository(Revision)
-    private revisionRepository: Repository<Revision>,
-    @InjectRepository(Note)
-    private noteRepository: Repository<Note>,
+    @InjectConnection
+    private readonly knex: Knex,
     @Inject(noteConfiguration.KEY) private noteConfig: NoteConfig,
-    private editService: EditService,
   ) {
     this.logger.setContext(RevisionsService.name);
   }
 
-  async getAllRevisions(note: Note): Promise<Revision[]> {
-    this.logger.debug(`Getting all revisions for note ${note.id}`);
-    return await this.revisionRepository
-      .createQueryBuilder('revision')
-      .where('revision.note = :note', { note: note.id })
-      .getMany();
+  /**
+   * Returns all revisions of a note
+   *
+   * @param noteId The id of the note
+   * @param withContent
+   * @return The list of revisions
+   */
+  async getAllRevisionMetadata(
+    noteId: Note[FieldNameNote.id],
+  ): Promise<RevisionMetadata[]> {
+    this.logger.debug(`Getting all revisions for note ${noteId}`);
+    const data = await this.knex(TableRevision)
+      .select(`${TableRevision}.${FieldNameRevision.id}`, `${TableRevision}.${FieldNameRevision.createdAt}`)
+    const usernamesAndGuestUuids = await this.knex(TableAuthorshipInfo)
+      .distinct<Pick<User, FieldNameUser.username | FieldNameUser.guestUuid>[]>(`${TableUser}.${FieldNameUser.username}`, `${TableUser}.${FieldNameUser.guestUuid}`)
+      .where(FieldNameAuthorshipInfo.revisionId, revisionId)
+      .join(
+        TableUser,
+        `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.authorId}`
+          `${TableUser}.${FieldNameUser.id}`,
+      );
   }
 
   /**
-   * @async
-   * Purge revision history of a note.
-   * @param {Note} note - the note to purge the history
-   * @return {Revision[]} an array of purged revisions
+   * Purge revision history of a note
+   *
+   * @param noteId Id of the note to purge the history
+   * @return An array of purged revisions
    */
-  async purgeRevisions(note: Note): Promise<Revision[]> {
-    const revisions = await this.revisionRepository.find({
-      where: {
-        note: { id: note.id },
-      },
-    });
-    const latestRevision = await this.getLatestRevision(note);
-    // get all revisions except the latest
-    const oldRevisions = revisions.filter(
-      (item) => item.id !== latestRevision.id,
-    );
-
-    // update content diff
-    if (oldRevisions.length > 0) {
-      latestRevision.patch = createPatch(
-        note.publicId,
-        '',
-        latestRevision.content,
+  async purgeRevisions(noteId: Note[FieldNameNote.id]): Promise<Revision[]> {
+    return await this.knex.transaction((transaction) => {
+      const allRevisions = await transaction(TableRevision)
+        .select()
+        .where(FieldNameRevision.noteId, noteId)
+        .orderBy(FieldNameRevision.createdAt, 'desc');
+      if (allRevisions.length === 0) {
+        this.logger.debug(`No revisions found for note ${noteId}`);
+        return [];
+      }
+      const latestRevision = allRevisions[0];
+      const revisionsToDelete = allRevisions.filter(
+        (revision) =>
+          revision[FieldNameRevision.id] !== latestRevision[FieldNameRevision.id],
       );
-      await this.revisionRepository.save(latestRevision);
-    }
-
-    // delete the old revisions
-    return await this.revisionRepository.remove(oldRevisions);
+      const idsToDelete = revisionsToDelete.map(
+        (revision) => revision[FieldNameRevision.id],
+      );
+      await transaction(TableRevision)
+        .whereIn(FieldNameRevision.id, idsToDelete)
+        .delete();
+      const newPatch = createPatch(
+        noteId,
+        '',
+        latestRevision[FieldNameRevision.content],
+      );
+      await transaction(TableRevision).update(FieldNameRevision.patch, newPatch).where(FieldNameRevision.id, latestRevision[FieldNameRevision.id]);
+      return revisionsToDelete;
+    });
   }
 
   async getRevision(note: Note, revisionId: number): Promise<Revision> {

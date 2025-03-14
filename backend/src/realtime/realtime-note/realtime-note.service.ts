@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,7 +13,7 @@ import { NoteEvent } from '../../events';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { Note } from '../../notes/note.entity';
 import { NotePermission } from '../../permissions/note-permission.enum';
-import { PermissionsService } from '../../permissions/permissions.service';
+import { PermissionService } from '../../permissions/permission.service';
 import { RevisionsService } from '../../revisions/revisions.service';
 import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';
@@ -28,7 +28,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
     private schedulerRegistry: SchedulerRegistry,
     @Inject(appConfiguration.KEY)
     private appConfig: AppConfig,
-    private permissionService: PermissionsService,
+    private permissionService: PermissionService,
   ) {}
 
   beforeApplicationShutdown(): void {

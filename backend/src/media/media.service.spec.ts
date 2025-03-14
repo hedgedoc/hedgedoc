@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,7 @@ import { promises as fs } from 'fs';
 import { Repository } from 'typeorm';
 
 import appConfigMock from '../../src/config/mock/app.config.mock';
+import { AliasModule } from '../alias/alias.module';
 import { ApiToken } from '../api-token/api-token.entity';
 import { Identity } from '../auth/identity.entity';
 import { Author } from '../authors/author.entity';
@@ -23,9 +24,8 @@ import { ClientError, NotInDBError } from '../errors/errors';
 import { eventModuleConfig } from '../events';
 import { Group } from '../groups/group.entity';
 import { LoggerModule } from '../logger/logger.module';
-import { Alias } from '../notes/alias.entity';
+import { Alias } from '../notes/aliases.entity';
 import { Note } from '../notes/note.entity';
-import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
@@ -77,7 +77,7 @@ describe('MediaService', () => {
           ],
         }),
         LoggerModule,
-        NotesModule,
+        AliasModule,
         UsersModule,
         EventEmitterModule.forRoot(eventModuleConfig),
       ],

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -28,6 +28,7 @@ import { eventModuleConfig } from '../events';
 import { Group } from '../groups/group.entity';
 import { GroupsModule } from '../groups/groups.module';
 import { LoggerModule } from '../logger/logger.module';
+import { NoteService } from '../notes/note.service';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
 import { RealtimeNoteModule } from '../realtime/realtime-note/realtime-note.module';
@@ -37,11 +38,10 @@ import { RevisionsModule } from '../revisions/revisions.module';
 import { Session } from '../sessions/session.entity';
 import { UsersModule } from '../users/users.module';
 import { mockSelectQueryBuilderInRepo } from '../utils/test-utils/mockSelectQueryBuilder';
-import { Alias } from './alias.entity';
+import { AliasModule } from './alias.module';
 import { AliasService } from './alias.service';
+import { Alias } from './aliases.entity';
 import { Note } from './note.entity';
-import { NotesModule } from './notes.module';
-import { NotesService } from './notes.service';
 import { Tag } from './tag.entity';
 
 describe('AliasService', () => {
@@ -73,7 +73,7 @@ describe('AliasService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AliasService,
-        NotesService,
+        NoteService,
         {
           provide: getRepositoryToken(Note),
           useValue: noteRepo,
@@ -105,7 +105,7 @@ describe('AliasService', () => {
         UsersModule,
         GroupsModule,
         RevisionsModule,
-        NotesModule,
+        AliasModule,
         RealtimeNoteModule,
         EventEmitterModule.forRoot(eventModuleConfig),
       ],
@@ -149,7 +149,7 @@ describe('AliasService', () => {
     const alias2 = 'testAlias2';
     const user = User.create('hardcoded', 'Testy') as User;
     describe('creates', () => {
-      it('an primary alias if no alias is already present', async () => {
+      it('an primary aliases if no aliases is already present', async () => {
         const note = Note.create(user) as Note;
         jest
           .spyOn(noteRepo, 'save')
@@ -160,7 +160,7 @@ describe('AliasService', () => {
         expect(savedAlias.name).toEqual(alias);
         expect(savedAlias.primary).toBeTruthy();
       });
-      it('an non-primary alias if an primary alias is already present', async () => {
+      it('an non-primary aliases if an primary aliases is already present', async () => {
         const note = Note.create(user, alias) as Note;
         jest
           .spyOn(noteRepo, 'save')
@@ -172,7 +172,7 @@ describe('AliasService', () => {
         expect(savedAlias.primary).toBeFalsy();
       });
     });
-    describe('does not create an alias', () => {
+    describe('does not create an aliases', () => {
       const note = Note.create(user, alias2) as Note;
       it('with an already used name', async () => {
         jest.spyOn(noteRepo, 'existsBy').mockResolvedValueOnce(false);
@@ -193,7 +193,7 @@ describe('AliasService', () => {
     const alias = 'testAlias';
     const alias2 = 'testAlias2';
     const user = User.create('hardcoded', 'Testy') as User;
-    describe('removes one alias correctly', () => {
+    describe('removes one aliases correctly', () => {
       let note: Note;
       beforeAll(async () => {
         note = Note.create(user, alias) as Note;
@@ -214,7 +214,7 @@ describe('AliasService', () => {
         expect(aliases[0].name).toEqual(alias);
         expect(aliases[0].primary).toBeTruthy();
       });
-      it('with one alias, that is primary', async () => {
+      it('with one aliases, that is primary', async () => {
         jest
           .spyOn(noteRepo, 'save')
           .mockImplementationOnce(async (note: Note): Promise<Note> => note);
@@ -227,13 +227,13 @@ describe('AliasService', () => {
         expect(await savedNote.aliases).toHaveLength(0);
       });
     });
-    describe('does not remove one alias', () => {
+    describe('does not remove one aliases', () => {
       let note: Note;
       beforeEach(async () => {
         note = Note.create(user, alias) as Note;
         (await note.aliases).push(Alias.create(alias2, note, false) as Alias);
       });
-      it('if the alias is unknown', async () => {
+      it('if the aliases is unknown', async () => {
         await expect(service.removeAlias(note, 'non existent')).rejects.toThrow(
           NotInDBError,
         );
@@ -261,7 +261,7 @@ describe('AliasService', () => {
       );
     });
 
-    it('mark the alias as primary', async () => {
+    it('mark the aliases as primary', async () => {
       jest
         .spyOn(aliasRepo, 'findOneByOrFail')
         .mockResolvedValueOnce(alias)
@@ -293,7 +293,7 @@ describe('AliasService', () => {
       expect(savedAlias.name).toEqual(alias2.name);
       expect(savedAlias.primary).toBeTruthy();
     });
-    it('does not mark the alias as primary, if the alias does not exist', async () => {
+    it('does not mark the aliases as primary, if the aliases does not exist', async () => {
       await expect(
         service.makeAliasPrimary(note, 'i_dont_exist'),
       ).rejects.toThrow(NotInDBError);

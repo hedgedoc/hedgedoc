@@ -88,10 +88,10 @@ export async function up(knex: Knex): Promise<void> {
       .inTable(TableUser);
   });
 
-  // Create alias table
+  // Create aliases table
   await knex.schema.createTable(TableAlias, (table) => {
     table.comment(
-      'Stores aliases of notes, only on alias per note can be is_primary == true, all other need to have is_primary == null ',
+      'Stores aliases of notes, only on aliases per note can be is_primary == true, all other need to have is_primary == null ',
     );
     table.string(FieldNameAlias.alias).primary();
     table
@@ -120,6 +120,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string(FieldNameApiToken.secretHash).notNullable();
     table.timestamp(FieldNameApiToken.validUntil).notNullable();
     table.timestamp(FieldNameApiToken.lastUsedAt).nullable();
+    table.timestamp(FieldNameApiToken.createdAt).notNullable();
   });
 
   // Create identity table
@@ -201,6 +202,7 @@ export async function up(knex: Knex): Promise<void> {
       .unsigned()
       .notNullable()
       .references(FieldNameRevision.id)
+      .onDelete('CASCADE')
       .inTable(TableRevision);
     table.string(FieldNameRevisionTag.tag).notNullable();
     table.primary([FieldNameRevisionTag.revisionId, FieldNameRevisionTag.tag]);
@@ -213,12 +215,14 @@ export async function up(knex: Knex): Promise<void> {
       .unsigned()
       .notNullable()
       .references(FieldNameRevision.id)
+      .onDelete('CASCADE')
       .inTable(TableRevision);
     table
       .integer(FieldNameAuthorshipInfo.authorId)
       .unsigned()
       .notNullable()
       .references(FieldNameUser.id)
+      .onDelete('CASCADE')
       .inTable(TableUser);
     table
       .integer(FieldNameAuthorshipInfo.startPosition)
@@ -234,12 +238,14 @@ export async function up(knex: Knex): Promise<void> {
       .unsigned()
       .notNullable()
       .references(FieldNameNote.id)
+      .onDelete('CASCADE')
       .inTable(TableNote);
     table
       .integer(FieldNameNoteUserPermission.userId)
       .unsigned()
       .notNullable()
       .references(FieldNameUser.id)
+      .onDelete('CASCADE')
       .inTable(TableUser);
     table
       .boolean(FieldNameNoteUserPermission.canEdit)
@@ -258,12 +264,14 @@ export async function up(knex: Knex): Promise<void> {
       .unsigned()
       .notNullable()
       .references(FieldNameNote.id)
+      .onDelete('CASCADE')
       .inTable(TableNote);
     table
       .integer(FieldNameNoteGroupPermission.groupId)
       .unsigned()
       .notNullable()
       .references(FieldNameGroup.id)
+      .onDelete('CASCADE')
       .inTable(TableGroup);
     table
       .boolean(FieldNameNoteGroupPermission.canEdit)

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -35,7 +35,7 @@ describe('Me', () => {
   });
 
   it(`GET /me`, async () => {
-    const userInfo = testSetup.userService.toFullUserDto(user);
+    const userInfo = testSetup.userService.toOwnUserDto(user);
     const response = await request(testSetup.app.getHttpServer())
       .get('/api/v2/me')
       .expect('Content-Type', /json/)

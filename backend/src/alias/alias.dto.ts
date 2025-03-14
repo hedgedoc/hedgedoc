@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -17,16 +17,9 @@ export class AliasDto extends BaseDto {
   name: string;
 
   /**
-   * Is the alias the primary alias or not
+   * Whether the alias if the primary one
    */
   @IsBoolean()
   @ApiProperty()
-  primaryAlias: boolean;
-
-  /**
-   * The public id of the note the alias is associated with
-   */
-  @IsString()
-  @ApiProperty()
-  noteId: string;
+  isPrimary: boolean;
 }

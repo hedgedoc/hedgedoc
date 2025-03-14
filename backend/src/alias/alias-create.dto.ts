@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,11 +10,11 @@ import { BaseDto } from '../utils/base.dto.';
 
 export class AliasCreateDto extends BaseDto {
   /**
-   * The note id or alias, which identifies the note the alias should be added to
+   * An alias pointing to the note for which the new aliases should be added to
    */
   @IsString()
   @ApiProperty()
-  noteIdOrAlias: string;
+  alias: string;
 
   /**
    * The new alias

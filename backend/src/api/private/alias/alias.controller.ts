@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,15 +16,15 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
+import { AliasCreateDto } from '../../../alias/alias-create.dto';
+import { AliasUpdateDto } from '../../../alias/alias-update.dto';
+import { AliasDto } from '../../../alias/alias.dto';
+import { AliasService } from '../../../alias/alias.service';
 import { SessionGuard } from '../../../auth/session.guard';
-import { User } from '../../../database/user.entity';
+import { FieldNameUser, User } from '../../../database/types';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { AliasCreateDto } from '../../../notes/alias-create.dto';
-import { AliasUpdateDto } from '../../../notes/alias-update.dto';
-import { AliasDto } from '../../../notes/alias.dto';
-import { AliasService } from '../../../notes/alias.service';
-import { NotesService } from '../../../notes/notes.service';
-import { PermissionsService } from '../../../permissions/permissions.service';
+import { NoteService } from '../../../notes/note.service';
+import { PermissionService } from '../../../permissions/permission.service';
 import { UsersService } from '../../../users/users.service';
 import { OpenApi } from '../../utils/openapi.decorator';
 import { RequestUser } from '../../utils/request-user.decorator';
@@ -37,9 +37,8 @@ export class AliasController {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private aliasService: AliasService,
-    private noteService: NotesService,
-    private userService: UsersService,
-    private permissionsService: PermissionsService,
+    private noteService: NoteService,
+    private permissionsService: PermissionService,
   ) {
     this.logger.setContext(AliasController.name);
   }
@@ -47,23 +46,25 @@ export class AliasController {
   @Post()
   @OpenApi(201, 400, 404, 409)
   async addAlias(
-    @RequestUser() user: User,
+    @RequestUser() userId: User[FieldNameUser.id],
     @Body() newAliasDto: AliasCreateDto,
   ): Promise<AliasDto> {
-    const note = await this.noteService.getNoteByIdOrAlias(
-      newAliasDto.noteIdOrAlias,
+    const isUserNoteOwner = await this.permissionsService.isOwner(
+      userId,
+      newAliasDto.noteId,
     );
     if (!(await this.permissionsService.isOwner(user, note))) {
       throw new UnauthorizedException('Reading note denied!');
     }
-    const updatedAlias = await this.aliasService.addAlias(
+    await this.aliasService.ensureAliasIsAvailable(alias);
+    const updatedAlias = await this.aliasesService.addAlias(
       note,
       newAliasDto.newAlias,
     );
-    return this.aliasService.toAliasDto(updatedAlias, note);
+    return this.aliasesService.toAliasDto(updatedAlias, note);
   }
 
-  @Put(':alias')
+  @Put(':aliases')
   @OpenApi(200, 400, 404)
   async makeAliasPrimary(
     @RequestUser() user: User,
@@ -75,7 +76,7 @@ export class AliasController {
         `The field 'primaryAlias' must be set to 'true'.`,
       );
     }
-    const note = await this.noteService.getNoteByIdOrAlias(alias);
+    const note = await this.noteService.getNoteIdByAlias(alias);
     if (!(await this.permissionsService.isOwner(user, note))) {
       throw new UnauthorizedException('Reading note denied!');
     }
@@ -83,13 +84,13 @@ export class AliasController {
     return this.aliasService.toAliasDto(updatedAlias, note);
   }
 
-  @Delete(':alias')
+  @Delete(':aliases')
   @OpenApi(204, 400, 404)
   async removeAlias(
     @RequestUser() user: User,
     @Param('alias') alias: string,
   ): Promise<void> {
-    const note = await this.noteService.getNoteByIdOrAlias(alias);
+    const note = await this.noteService.getNoteIdByAlias(alias);
     if (!(await this.permissionsService.isOwner(user, note))) {
       throw new UnauthorizedException('Reading note denied!');
     }

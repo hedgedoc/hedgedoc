@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -60,11 +60,8 @@ export class LdapController {
         ldapIdentifier,
       );
       if (this.identityService.mayUpdateIdentity(ldapIdentifier)) {
-        const user = await this.usersService.getUserByUsername(
-          makeUsernameLowercase(loginDto.username),
-        );
         await this.usersService.updateUser(
-          user,
+          makeUsernameLowercase(loginDto.username),
           userInfo.displayName,
           userInfo.email,
           userInfo.photoUrl,

@@ -1,39 +1,41 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Inject, Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InjectKnex, Knex } from 'nestjs-knex';
 
 import { GuestAccess } from '../config/guest_access.enum';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
-import { User } from '../database/user.entity';
+import {
+  FieldNameGroup,
+  FieldNameNote,
+  Group,
+  MediaUpload,
+  Note,
+  User,
+} from '../database/types';
 import { PermissionsUpdateInconsistentError } from '../errors/errors';
 import { NoteEvent, NoteEventMap } from '../events';
-import { Group } from '../groups/group.entity';
 import { GroupsService } from '../groups/groups.service';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { MediaUpload } from '../media/media-upload.entity';
 import { NotePermissionsUpdateDto } from '../notes/note-permissions.dto';
-import { Note } from '../notes/note.entity';
 import { UsersService } from '../users/users.service';
-import { checkArrayForDuplicates } from '../utils/arrayDuplicatCheck';
-import { NoteGroupPermission } from './note-group-permission.entity';
+import { hasArrayDuplicates } from '../utils/array-duplicate-check';
+import { Username } from '../utils/username';
 import { NotePermission } from './note-permission.enum';
-import { NoteUserPermission } from './note-user-permission.entity';
 import { convertGuestAccessToNotePermission } from './utils/convert-guest-access-to-note-permission';
 import { findHighestNotePermissionByGroup } from './utils/find-highest-note-permission-by-group';
 import { findHighestNotePermissionByUser } from './utils/find-highest-note-permission-by-user';
 
 @Injectable()
-export class PermissionsService {
+export class PermissionService {
   constructor(
     private usersService: UsersService,
     private groupsService: GroupsService,
-    @InjectRepository(Note) private noteRepository: Repository<Note>,
+    @InjectKnex() private readonly knex: Knex,
     private readonly logger: ConsoleLoggerService,
     @Inject(noteConfiguration.KEY)
     private noteConfig: NoteConfig,
@@ -148,7 +150,7 @@ export class PermissionsService {
    * @param {Note} note - the note
    * @param {NotePermissionsUpdateDto} newPermissions - the permissions that should be applied to the note
    * @return {Note} the note with the new permissions
-   * @throws {NotInDBError} there is no note with this id or alias
+   * @throws {NotInDBError} there is no note with this id or aliases
    * @throws {PermissionsUpdateInconsistentError} the new permissions specify a user or group twice.
    */
   async updateNotePermissions(
@@ -163,7 +165,7 @@ export class PermissionsService {
       (groupPermission) => groupPermission.groupName,
     );
 
-    if (checkArrayForDuplicates(users) || checkArrayForDuplicates(groups)) {
+    if (hasArrayDuplicates(users) || hasArrayDuplicates(groups)) {
       this.logger.debug(
         `The PermissionUpdate requested specifies the same user or group multiple times.`,
         'updateNotePermissions',
@@ -208,16 +210,15 @@ export class PermissionsService {
   }
 
   /**
-   * @async
    * Set permission for a specific user on a note.
-   * @param {Note} note - the note
-   * @param {User} permissionUser - the user for which the permission should be set
-   * @param {boolean} canEdit - specifies if the user can edit the note
-   * @return {Note} the note with the new permission
+   * @param note the note
+   * @param username the user for which the permission should be set
+   * @param canEdit specifies if the user can edit the note
+   * @return the note with the new permission
    */
   async setUserPermission(
     note: Note,
-    permissionUser: User,
+    username: Username,
     canEdit: boolean,
   ): Promise<Note> {
     if (await this.isOwner(permissionUser, note)) {
@@ -255,13 +256,12 @@ export class PermissionsService {
   }
 
   /**
-   * @async
    * Remove permission for a specific user on a note.
-   * @param {Note} note - the note
-   * @param {User} permissionUser - the user for which the permission should be set
-   * @return {Note} the note with the new permission
+   * @param note the note
+   * @param username - the username for which the permission should be set
+   * @return the note with the new permission
    */
-  async removeUserPermission(note: Note, permissionUser: User): Promise<Note> {
+  async removeUserPermission(note: Note, username: Username): Promise<Note> {
     const permissions = await note.userPermissions;
     const newPermissions = [];
     for (const permission of permissions) {
@@ -275,17 +275,18 @@ export class PermissionsService {
   }
 
   /**
-   * @async
    * Set permission for a specific group on a note.
-   * @param {Note} note - the note
-   * @param {Group} permissionGroup - the group for which the permission should be set
-   * @param {boolean} canEdit - specifies if the group can edit the note
-   * @return {Note} the note with the new permission
+   * @param noteId - the if of the note
+   * @param permissionGroupName - the name of the group for which the permission should be set
+   * @param canEdit - specifies if the group can edit the note
+   * @param transaction the optional transaction to access the db
+   * @return the note with the new permission
    */
   async setGroupPermission(
-    note: Note,
-    permissionGroup: Group,
+    noteId: Note[FieldNameNote.id],
+    permissionGroupName: Group[FieldNameGroup.name],
     canEdit: boolean,
+    transaction?: Knex,
   ): Promise<Note> {
     this.logger.debug(
       `Setting group permission for group ${permissionGroup.name} on note ${note.id}`,
@@ -327,11 +328,10 @@ export class PermissionsService {
   }
 
   /**
-   * @async
    * Remove permission for a specific group on a note.
-   * @param {Note} note - the note
-   * @param {Group} permissionGroup - the group for which the permission should be set
-   * @return {Note} the note with the new permission
+   * @param note - the note
+   * @param permissionGroup - the group for which the permission should be set
+   * @return the note with the new permission
    */
   async removeGroupPermission(
     note: Note,
@@ -350,11 +350,10 @@ export class PermissionsService {
   }
 
   /**
-   * @async
    * Updates the owner of a note.
-   * @param {Note} note - the note to use
-   * @param {User} owner - the new owner
-   * @return {Note} the updated note
+   * @param note - the note to use
+   * @param owner - the new owner
+   * @return the updated note
    */
   async changeOwner(note: Note, owner: User): Promise<Note> {
     note.owner = Promise.resolve(owner);

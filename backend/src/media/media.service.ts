@@ -5,16 +5,23 @@
  */
 import { Inject, Injectable } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
-import { InjectRepository } from '@nestjs/typeorm';
 import * as FileType from 'file-type';
-import { Repository } from 'typeorm';
+import { Knex } from 'knex';
+import { InjectConnection } from 'nest-knexjs';
 import { v7 as uuidV7 } from 'uuid';
 
 import mediaConfiguration, { MediaConfig } from '../config/media.config';
-import { User } from '../database/user.entity';
+import {
+  FieldNameMediaUpload,
+  FieldNameNote,
+  FieldNameUser,
+  MediaUpload,
+  Note,
+  TableMediaUpload,
+  User,
+} from '../database/types';
 import { ClientError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { Note } from '../notes/note.entity';
 import { AzureBackend } from './backends/azure-backend';
 import { BackendType } from './backends/backend-type.enum';
 import { FilesystemBackend } from './backends/filesystem-backend';
@@ -23,7 +30,6 @@ import { S3Backend } from './backends/s3-backend';
 import { WebdavBackend } from './backends/webdav-backend';
 import { MediaBackend } from './media-backend.interface';
 import { MediaUploadDto } from './media-upload.dto';
-import { MediaUpload } from './media-upload.entity';
 
 @Injectable()
 export class MediaService {
@@ -32,9 +38,12 @@ export class MediaService {
 
   constructor(
     private readonly logger: ConsoleLoggerService,
-    @InjectRepository(MediaUpload)
-    private mediaUploadRepository: Repository<MediaUpload>,
+
+    @InjectConnection()
+    private readonly knex: Knex,
+
     private moduleRef: ModuleRef,
+
     @Inject(mediaConfiguration.KEY)
     private mediaConfig: MediaConfig,
   ) {
@@ -62,34 +71,28 @@ export class MediaService {
   }
 
   /**
-   * @async
-   * Save the given buffer to the configured MediaBackend and create a MediaUploadEntity to track where the file is, who uploaded it and to which note.
-   * @param {string} fileName - the original file name
-   * @param {Buffer} fileBuffer - the buffer of the file to save.
-   * @param {User} user - the user who uploaded this file
-   * @param {Note} note - the note which will be associated with the new file.
-   * @return {MediaUpload} the created MediaUpload entity
-   * @throws {ClientError} the MIME type of the file is not supported.
-   * @throws {NotInDBError} - the note or user is not in the database
-   * @throws {MediaBackendError} - there was an error saving the file
+   * Saves the given buffer to the configured MediaBackend and creates a MediaUploadEntity
+   * to track where the file is, who uploaded it and to which note
+   *
+   * @param fileName The original file name
+   * @param fileBuffer The buffer with the file contents to save
+   * @param userId Id of the user who uploaded this file
+   * @param noteId Id of the note which will be associated with the new file
+   * @return The created MediaUpload entity
+   * @throws {ClientError} if the MIME type of the file is not supported
+   * @throws {NotInDBError} if the note or user is not in the database
+   * @throws {MediaBackendError} if there was an error saving the file
    */
   async saveFile(
     fileName: string,
     fileBuffer: Buffer,
-    user: User | null,
-    note: Note,
+    userId: User[FieldNameUser.id],
+    noteId: Note[FieldNameNote.id],
   ): Promise<MediaUpload> {
-    if (user) {
-      this.logger.debug(
-        `Saving file for note '${note.id}' and user '${user.username}'`,
-        'saveFile',
-      );
-    } else {
-      this.logger.debug(
-        `Saving file for note '${note.id}' and not logged in user`,
-        'saveFile',
-      );
-    }
+    this.logger.debug(
+      `Saving file for note '${noteId}' and user '${userId}'`,
+      'saveFile',
+    );
     const fileTypeResult = await FileType.fromBuffer(fileBuffer);
     if (!fileTypeResult) {
       throw new ClientError('Could not detect file type.');
@@ -103,15 +106,25 @@ export class MediaService {
       fileBuffer,
       fileTypeResult,
     );
-    const mediaUpload = MediaUpload.create(
-      uuid,
-      fileName,
-      note,
-      user,
-      this.mediaBackendType,
-      backendData,
+    const mediaUploads = await this.knex(TableMediaUpload).insert(
+      {
+        [FieldNameMediaUpload.fileName]: fileName,
+        [FieldNameMediaUpload.userId]: userId,
+        [FieldNameMediaUpload.noteId]: noteId,
+        [FieldNameMediaUpload.backendType]: this.mediaBackendType,
+        [FieldNameMediaUpload.backendData]: backendData,
+      },
+      [
+        FieldNameMediaUpload.uuid,
+        FieldNameMediaUpload.fileName,
+        FieldNameMediaUpload.userId,
+        FieldNameMediaUpload.noteId,
+        FieldNameMediaUpload.backendType,
+        FieldNameMediaUpload.backendData,
+        FieldNameMediaUpload.createdAt,
+      ],
     );
-    return await this.mediaUploadRepository.save(mediaUpload);
+    return mediaUploads[0];
   }
 
   /**

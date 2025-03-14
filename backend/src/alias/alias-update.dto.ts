@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,7 +10,7 @@ import { BaseDto } from '../utils/base.dto.';
 
 export class AliasUpdateDto extends BaseDto {
   /**
-   * Whether the alias should become the primary alias or not
+   * Set to true to make this alias the primary one
    */
   @IsBoolean()
   @ApiProperty()

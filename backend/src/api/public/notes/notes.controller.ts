@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -33,9 +33,9 @@ import {
 import { NoteDto } from '../../../notes/note.dto';
 import { Note } from '../../../notes/note.entity';
 import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
-import { NotesService } from '../../../notes/notes.service';
+import { NoteService } from '../../../notes/note.service';
+import { PermissionService } from '../../../permissions/permission.service';
 import { PermissionsGuard } from '../../../permissions/permissions.guard';
-import { PermissionsService } from '../../../permissions/permissions.service';
 import { RequirePermission } from '../../../permissions/require-permission.decorator';
 import { RequiredPermission } from '../../../permissions/required-permission.enum';
 import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
@@ -57,13 +57,13 @@ import { RequestUser } from '../../utils/request-user.decorator';
 export class NotesController {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    private noteService: NotesService,
+    private noteService: NoteService,
     private userService: UsersService,
     private groupService: GroupsService,
     private revisionsService: RevisionsService,
     private historyService: HistoryService,
     private mediaService: MediaService,
-    private permissionService: PermissionsService,
+    private permissionService: PermissionService,
   ) {
     this.logger.setContext(NotesController.name);
   }
@@ -403,7 +403,7 @@ export class NotesController {
     @RequestUser() user: User,
     @RequestNote() note: Note,
   ): Promise<RevisionMetadataDto[]> {
-    const revisions = await this.revisionsService.getAllRevisions(note);
+    const revisions = await this.revisionsService.getAllRevisionMetadata(note);
     return await Promise.all(
       revisions.map((revision) =>
         this.revisionsService.toRevisionMetadataDto(revision),
@@ -417,7 +417,7 @@ export class NotesController {
   @OpenApi(
     {
       code: 200,
-      description: 'Revision of the note for the given id or alias',
+      description: 'Revision of the note for the given id or aliases',
       dto: RevisionDto,
     },
     403,

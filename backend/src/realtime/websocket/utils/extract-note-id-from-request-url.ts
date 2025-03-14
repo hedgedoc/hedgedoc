@@ -17,7 +17,7 @@ export function extractNoteIdFromRequestUrl(request: IncomingMessage): string {
     throw new Error('No URL found in request');
   }
   // A valid domain name is needed for the URL constructor, although not being used here.
-  // The example.org domain should be safe to use according to RFC 6761 §6.5.
+  // The example.org domain should be safe to use, according to RFC 6761 §6.5.
   const url = new URL(request.url, 'https://example.org');
   const noteId = url.searchParams.get('noteId');
   if (noteId === null || noteId === '') {

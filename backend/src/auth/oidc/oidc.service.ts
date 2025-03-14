@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -18,10 +18,10 @@ import authConfiguration, {
   AuthConfig,
   OidcConfig,
 } from '../../config/auth.config';
+import { Identity } from '../../database/types';
 import { NotInDBError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
-import { FullUserInfoDto } from '../../users/user-info.dto';
-import { Identity } from '../identity.entity';
+import { OwnUserInfoDto } from '../../users/user-info.dto';
 import { IdentityService } from '../identity.service';
 import { ProviderType } from '../provider-type.enum';
 import { RequestWithSession } from '../session.guard';
@@ -170,12 +170,12 @@ export class OidcService {
    *
    * @param {string} oidcIdentifier The identifier of the OIDC configuration
    * @param {RequestWithSession} request The request containing the session
-   * @returns {FullUserInfoDto} The user information extracted from the callback
+   * @returns {OwnUserInfoDto} The user information extracted from the callback
    */
   async extractUserInfoFromCallback(
     oidcIdentifier: string,
     request: RequestWithSession,
-  ): Promise<FullUserInfoDto> {
+  ): Promise<OwnUserInfoDto> {
     const clientConfig = this.clientConfigs.get(oidcIdentifier);
     if (!clientConfig) {
       throw new NotFoundException(

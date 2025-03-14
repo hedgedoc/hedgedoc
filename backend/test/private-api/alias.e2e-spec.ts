@@ -1,13 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import request from 'supertest';
 
+import { AliasCreateDto } from '../../src/alias/alias-create.dto';
+import { AliasUpdateDto } from '../../src/alias/alias-update.dto';
 import { User } from '../../src/database/user.entity';
-import { AliasCreateDto } from '../../src/notes/alias-create.dto';
-import { AliasUpdateDto } from '../../src/notes/alias-update.dto';
 import {
   password1,
   password2,
@@ -55,7 +55,7 @@ describe('Alias', () => {
   describe('POST /alias', () => {
     const testAlias = 'aliasTest';
     const newAliasDto: AliasCreateDto = {
-      noteIdOrAlias: testAlias,
+      alias: testAlias,
       newAlias: '',
     };
     let publicId = '';

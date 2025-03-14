@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -21,7 +21,7 @@ import { PendingUserConfirmationDto } from '../../../auth/pending-user-confirmat
 import { ProviderType } from '../../../auth/provider-type.enum';
 import { RequestWithSession, SessionGuard } from '../../../auth/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { FullUserInfoDto } from '../../../users/user-info.dto';
+import { OwnUserInfoDto } from '../../../users/user-info.dto';
 import { OpenApi } from '../../utils/openapi.decorator';
 
 @ApiTags('auth')
@@ -62,7 +62,7 @@ export class AuthController {
   @OpenApi(200, 400)
   getPendingUserData(
     @Req() request: RequestWithSession,
-  ): Partial<FullUserInfoDto> {
+  ): Partial<OwnUserInfoDto> {
     if (
       !request.session.newUserData ||
       !request.session.authProviderIdentifier ||

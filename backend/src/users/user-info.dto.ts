@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -45,7 +45,7 @@ export class UserInfoDto extends BaseDto {
  * This DTO contains all attributes of the standard UserInfoDto
  * in addition to the email address.
  */
-export class FullUserInfoDto extends UserInfoDto {
+export class OwnUserInfoDto extends UserInfoDto {
   /**
    * Email address of the user
    * @example "john.smith@example.com"
@@ -56,22 +56,22 @@ export class FullUserInfoDto extends UserInfoDto {
   @IsOptional()
   @IsString()
   email?: string;
+
+  /**
+   * Identifier of the auth provider that was used to log in
+   */
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  authProvider?: string;
 }
 
-export class FullUserInfoWithIdDto extends FullUserInfoDto {
+// ToDo: This calls seems to be only used internally, Why is it an DTO?
+export class FullUserInfoWithIdDto extends OwnUserInfoDto {
   /**
    * The user's ID
    * @example 42
    */
   @IsString()
   id: string;
-}
-
-export class UserLoginInfoDto extends UserInfoDto {
-  /**
-   * Identifier of the auth provider that was used to log in
-   */
-  @ApiProperty()
-  @IsString()
-  authProvider: string;
 }

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -20,12 +20,10 @@ import { CompleteRequest } from './request.type';
 export const RequestNote = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
     const request: CompleteRequest = ctx.switchToHttp().getRequest();
-    if (!request.note) {
+    if (!request.noteId) {
       // We should have a note here, otherwise something is wrong
-      throw new InternalServerErrorException(
-        'Request is missing a note object',
-      );
+      throw new InternalServerErrorException('Request is missing a noteId');
     }
-    return request.note;
+    return request.noteId;
   },
 );

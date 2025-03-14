@@ -1,12 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Mock } from 'ts-mockery';
 
 import { Note } from '../../notes/note.entity';
-import { NotesService } from '../../notes/notes.service';
+import { NoteService } from '../../notes/note.service';
 import { extractNoteFromRequest } from './extract-note-from-request';
 import { CompleteRequest } from './request.type';
 
@@ -17,11 +17,11 @@ describe('extract note from request', () => {
   const mockNote1 = Mock.of<Note>({ id: 1 });
   const mockNote2 = Mock.of<Note>({ id: 2 });
 
-  let notesService: NotesService;
+  let notesService: NoteService;
 
   beforeEach(() => {
-    notesService = Mock.of<NotesService>({
-      getNoteByIdOrAlias: async (id) => {
+    notesService = Mock.of<NoteService>({
+      getNoteIdByAlias: async (id) => {
         if (id === mockNoteIdOrAlias1) {
           return mockNote1;
         } else if (id === mockNoteIdOrAlias2) {
