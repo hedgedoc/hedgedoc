@@ -6,162 +6,283 @@
 import { RevisionDto, RevisionMetadataDto } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
 import { Cron, Timeout } from '@nestjs/schedule';
-import { InjectRepository } from '@nestjs/typeorm';
 import { createPatch } from 'diff';
-import { Repository } from 'typeorm';
+import { Knex } from 'knex';
+import { InjectConnection } from 'nest-knexjs';
+import { v7 as uuidv7 } from 'uuid';
 
+import { AliasService } from '../alias/alias.service';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
-import { NotInDBError } from '../errors/errors';
+import {
+  AuthorshipInfo,
+  FieldNameAlias,
+  FieldNameAuthorshipInfo,
+  FieldNameNote,
+  FieldNameRevision,
+  FieldNameRevisionTag,
+  FieldNameUser,
+  Note,
+  Revision,
+  RevisionTag,
+  TableAlias,
+  TableAuthorshipInfo,
+  TableRevision,
+  TableRevisionTag,
+  TableUser,
+  User,
+} from '../database/types';
+import { GenericDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { Note } from '../notes/note.entity';
-import { Tag } from '../notes/tag.entity';
-import { EditService } from './edit.service';
-import { Revision } from './revision.entity';
 import { extractRevisionMetadataFromContent } from './utils/extract-revision-metadata-from-content';
 
-class RevisionUserInfo {
-  usernames: string[];
-  anonymousUserCount: number;
+interface RevisionUserInfo {
+  users: {
+    username: string;
+    createdAt: AuthorshipInfo[FieldNameAuthorshipInfo.createdAt];
+  }[];
+  guestUserCount: number;
 }
 
 @Injectable()
 export class RevisionsService {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    @InjectRepository(Revision)
-    private revisionRepository: Repository<Revision>,
-    @InjectRepository(Note)
-    private noteRepository: Repository<Note>,
+    private readonly aliasService: AliasService,
+    @InjectConnection()
+    private readonly knex: Knex,
     @Inject(noteConfiguration.KEY) private noteConfig: NoteConfig,
-    private editService: EditService,
   ) {
     this.logger.setContext(RevisionsService.name);
   }
 
-  async getAllRevisions(note: Note): Promise<Revision[]> {
-    this.logger.debug(`Getting all revisions for note ${note.id}`);
-    return await this.revisionRepository
-      .createQueryBuilder('revision')
-      .where('revision.note = :note', { note: note.id })
-      .getMany();
+  /**
+   * Returns all revisions of a note
+   *
+   * @param noteId The id of the note
+   * @return The list of revisions
+   */
+  async getAllRevisionMetadataDto(
+    noteId: number,
+  ): Promise<RevisionMetadataDto[]> {
+    const noteRevisions = await this.knex(TableRevision)
+      .distinct<
+        (Pick<
+          Revision,
+          | FieldNameRevision.uuid
+          | FieldNameRevision.createdAt
+          | FieldNameRevision.content
+          | FieldNameRevision.title
+          | FieldNameRevision.description
+        > &
+          Pick<User, FieldNameUser.username | FieldNameUser.guestUuid> &
+          Pick<RevisionTag, FieldNameRevisionTag.tag>)[]
+      >(`${TableRevision}.${FieldNameRevision.uuid}`, `${TableRevision}.${FieldNameRevision.createdAt}`, `${TableRevision}.${FieldNameRevision.description}`, `${TableRevision}.${FieldNameRevision.content}`, `${TableRevision}.${FieldNameRevision.title}`, `${TableUser}.${FieldNameUser.username}`, `${TableUser}.${FieldNameUser.guestUuid}`, `${TableRevisionTag}.${FieldNameRevisionTag.tag}`)
+      .join(
+        TableRevisionTag,
+        `${TableRevision}.${FieldNameRevision.uuid}`,
+        `${TableRevisionTag}.${FieldNameRevisionTag.revisionUuid}`,
+      )
+      .join(
+        TableAuthorshipInfo,
+        `${TableRevision}.${FieldNameRevision.uuid}`,
+        `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.revisionUuid}`,
+      )
+      .join(
+        TableUser,
+        `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.authorId}`,
+        `${TableUser}.${FieldNameUser.id}`,
+      )
+      .orderBy(`${TableRevision}.${FieldNameRevision.createdAt}`, 'desc')
+      .orderBy(`${TableRevision}.${FieldNameRevision.uuid}`)
+      .where(FieldNameRevision.noteId, noteId);
+
+    const revisionMap = noteRevisions.reduce((recordMap, revision) => {
+      const currentMappedRevision = recordMap.get(
+        revision[FieldNameRevision.uuid],
+      );
+      if (currentMappedRevision !== undefined) {
+        const authorUsernames = currentMappedRevision.authorUsernames;
+        const authorGuestUuids = currentMappedRevision.authorGuestUuids;
+        const tags = currentMappedRevision.tags;
+        if (revision[FieldNameUser.username] !== null) {
+          if (!authorUsernames.includes(revision[FieldNameUser.username])) {
+            authorUsernames.push(revision[FieldNameUser.username]);
+          }
+        }
+        if (revision[FieldNameUser.guestUuid] !== null) {
+          if (!authorGuestUuids.includes(revision[FieldNameUser.guestUuid])) {
+            authorGuestUuids.push(revision[FieldNameUser.guestUuid]);
+          }
+        }
+        if (revision[FieldNameRevisionTag.tag] !== null) {
+          if (!tags.includes(revision[FieldNameRevisionTag.tag])) {
+            tags.push(revision[FieldNameRevisionTag.tag]);
+          }
+        }
+        recordMap.set(revision[FieldNameRevision.uuid], {
+          ...currentMappedRevision,
+          authorUsernames,
+          authorGuestUuids,
+          tags,
+        });
+      } else {
+        recordMap.set(revision[FieldNameRevision.uuid], {
+          uuid: revision[FieldNameRevision.uuid],
+          length: (revision[FieldNameRevision.content] ?? '').length,
+          createdAt: revision[FieldNameRevision.createdAt].toISOString(),
+          authorUsernames:
+            revision[FieldNameUser.username] !== null
+              ? [revision[FieldNameUser.username]]
+              : [],
+          authorGuestUuids:
+            revision[FieldNameUser.guestUuid] !== null
+              ? [revision[FieldNameUser.guestUuid]]
+              : [],
+          title: revision[FieldNameRevision.title],
+          description: revision[FieldNameRevision.description],
+          tags:
+            revision[FieldNameRevisionTag.tag] !== null
+              ? [revision[FieldNameRevisionTag.tag]]
+              : [],
+        });
+      }
+      return recordMap;
+    }, new Map<string, RevisionMetadataDto>());
+
+    return [...revisionMap.values()];
   }
 
   /**
-   * @async
    * Purge revision history of a note.
-   * @param {Note} note - the note to purge the history
-   * @return {Revision[]} an array of purged revisions
+   * After this we don't know how anyone came to the content of the note.
+   * We only know the content of the note.
+   *
+   * @param noteId Id of the note to purge the history
    */
-  async purgeRevisions(note: Note): Promise<Revision[]> {
-    const revisions = await this.revisionRepository.find({
-      where: {
-        note: { id: note.id },
-      },
-    });
-    const latestRevision = await this.getLatestRevision(note);
-    // get all revisions except the latest
-    const oldRevisions = revisions.filter(
-      (item) => item.id !== latestRevision.id,
-    );
-
-    // update content diff
-    if (oldRevisions.length > 0) {
-      latestRevision.patch = createPatch(
-        note.publicId,
+  async purgeRevisions(noteId: Note[FieldNameNote.id]): Promise<void> {
+    await this.knex.transaction(async (transaction) => {
+      const allRevisions = await transaction(TableRevision)
+        .select()
+        .where(FieldNameRevision.noteId, noteId)
+        .orderBy(FieldNameRevision.createdAt, 'desc');
+      if (allRevisions.length === 0) {
+        this.logger.debug(`No revisions found for note ${noteId}`);
+        return [];
+      }
+      const latestRevision = allRevisions[0];
+      const revisionsToDelete = allRevisions.filter(
+        (revision) =>
+          revision[FieldNameRevision.uuid] !==
+          latestRevision[FieldNameRevision.uuid],
+      );
+      const idsToDelete = revisionsToDelete.map(
+        (revision) => revision[FieldNameRevision.uuid],
+      );
+      await transaction(TableRevision)
+        .whereIn(FieldNameRevision.uuid, idsToDelete)
+        .delete();
+      const notePrimaryAlias =
+        await this.aliasService.getPrimaryAliasByNoteId(noteId);
+      const newPatch = createPatch(
+        notePrimaryAlias,
         '',
-        latestRevision.content,
+        latestRevision[FieldNameRevision.content],
       );
-      await this.revisionRepository.save(latestRevision);
-    }
-
-    // delete the old revisions
-    return await this.revisionRepository.remove(oldRevisions);
+      await transaction(TableRevision)
+        .update(FieldNameRevision.patch, newPatch)
+        .where(FieldNameRevision.uuid, latestRevision[FieldNameRevision.uuid]);
+    });
   }
 
-  async getRevision(note: Note, revisionId: number): Promise<Revision> {
-    const revision = await this.revisionRepository.findOne({
-      where: {
-        id: revisionId,
-        note: { id: note.id },
-      },
-    });
-    if (revision === null) {
+  async getRevisionDto(revisionUuid: string): Promise<RevisionDto> {
+    const revision = await this.knex(TableRevision)
+      .select(
+        FieldNameRevision.uuid,
+        FieldNameRevision.createdAt,
+        FieldNameRevision.description,
+        FieldNameRevision.content,
+        FieldNameRevision.title,
+        FieldNameRevision.patch,
+      )
+      .where(FieldNameRevision.uuid, revisionUuid)
+      .first();
+    if (revision === undefined) {
       throw new NotInDBError(
-        `Revision with ID ${revisionId} for note ${note.id} not found.`,
+        `Revision with ID ${revisionUuid} not found.`,
+        this.logger.getContext(),
+        'getRevision',
+      );
+    }
+    return {
+      uuid: revision[FieldNameRevision.uuid],
+      content: revision[FieldNameRevision.content],
+      length: (revision[FieldNameRevision.content] ?? '').length,
+      createdAt: revision[FieldNameRevision.createdAt].toISOString(),
+      title: revision[FieldNameRevision.title],
+      description: revision[FieldNameRevision.description],
+      patch: revision.patch,
+    };
+  }
+
+  /**
+   * Get the latest
+   * @param noteId
+   * @param transaction
+   */
+  async getLatestRevision(
+    noteId: number,
+    transaction?: Knex,
+  ): Promise<Revision> {
+    const dbActor = transaction ?? this.knex;
+    const revision = await dbActor(TableRevision)
+      .select()
+      .where(FieldNameRevision.noteId, noteId)
+      .orderBy(FieldNameRevision.createdAt, 'desc')
+      .first();
+    if (revision === undefined) {
+      throw new NotInDBError(
+        `No revisions for note ${noteId} found`,
+        this.logger.getContext(),
+        'getLatestRevision',
       );
     }
     return revision;
   }
 
-  async getLatestRevision(note: Note): Promise<Revision> {
-    const revision = await this.revisionRepository.findOne({
-      where: {
-        note: { id: note.id },
-      },
-      order: {
-        createdAt: 'DESC',
-        id: 'DESC',
-      },
-    });
-    if (revision === null) {
-      throw new NotInDBError(`Revision for note ${note.id} not found.`);
+  async getRevisionUserInfo(revisionUuid: string): Promise<RevisionUserInfo> {
+    const authorUsernamesAndGuestUuids = (await this.knex(TableAuthorshipInfo)
+      .join(
+        TableUser,
+        `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.authorId}`,
+        `${TableUser}.${FieldNameUser.id}`,
+      )
+      .select(
+        `${TableUser}.${FieldNameUser.username}`,
+        `${TableUser}.${FieldNameUser.guestUuid}`,
+        `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.createdAt}`,
+      )
+      .distinct(`${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.authorId}`)
+      .where(FieldNameAuthorshipInfo.revisionUuid, revisionUuid)) as {
+      username: User[FieldNameUser.username];
+      guestUuid: User[FieldNameUser.guestUuid];
+      createdAt: AuthorshipInfo[FieldNameAuthorshipInfo.createdAt];
+    }[];
+    const users: RevisionUserInfo['users'] = [];
+    let guestUserCount = 0;
+    for (const author of authorUsernamesAndGuestUuids) {
+      if (author.guestUuid !== null) {
+        guestUserCount++;
+      }
+      if (author.username !== null) {
+        users.push({
+          username: author.username,
+          createdAt: author.createdAt,
+        });
+      }
     }
-    return revision;
-  }
-
-  async getRevisionUserInfo(revision: Revision): Promise<RevisionUserInfo> {
-    // get a deduplicated list of all authors
-    let authors = await Promise.all(
-      (await revision.edits).map(async (edit) => await edit.author),
-    );
-    authors = [...new Set(authors)]; // remove duplicates with Set
-
-    // retrieve user objects of the authors
-    const users = await Promise.all(
-      authors.map(async (author) => await author.user),
-    );
-    // collect usernames of the users
-    const usernames = users.flatMap((user) => (user ? [user.username] : []));
     return {
-      usernames: usernames,
-      anonymousUserCount: users.length - usernames.length,
-    };
-  }
-
-  async toRevisionMetadataDto(
-    revision: Revision,
-  ): Promise<RevisionMetadataDto> {
-    const revisionUserInfo = await this.getRevisionUserInfo(revision);
-    return {
-      id: revision.id,
-      length: revision.length,
-      createdAt: revision.createdAt.toISOString(),
-      authorUsernames: revisionUserInfo.usernames,
-      anonymousAuthorCount: revisionUserInfo.anonymousUserCount,
-      title: revision.title,
-      description: revision.description,
-      tags: (await revision.tags).map((tag) => tag.name),
-    };
-  }
-
-  async toRevisionDto(revision: Revision): Promise<RevisionDto> {
-    const revisionUserInfo = await this.getRevisionUserInfo(revision);
-    return {
-      id: revision.id,
-      content: revision.content,
-      length: revision.length,
-      createdAt: revision.createdAt.toISOString(),
-      title: revision.title,
-      tags: (await revision.tags).map((tag) => tag.name),
-      description: revision.description,
-      authorUsernames: revisionUserInfo.usernames,
-      anonymousAuthorCount: revisionUserInfo.anonymousUserCount,
-      patch: revision.patch,
-      edits: await Promise.all(
-        (await revision.edits).map(
-          async (edit) => await this.editService.toEditDto(edit),
-        ),
-      ),
+      users,
+      guestUserCount,
     };
   }
 
@@ -170,69 +291,101 @@ export class RevisionsService {
    * Useful if the revision is saved together with the note in one action.
    *
    * @async
-   * @param note The note for which the revision should be created
+   * @param noteId The note for which the revision should be created
    * @param newContent The new note content
+   * @param transaction The optional pre-existing database transaction to use
    * @param yjsStateVector The yjs state vector that describes the new content
    * @return {Revision} the created revision
    * @return {undefined} if the revision couldn't be created because e.g. the content hasn't changed
    */
   async createRevision(
-    note: Note,
+    noteId: number,
     newContent: string,
-    yjsStateVector?: number[],
-  ): Promise<Revision | undefined> {
+    transaction?: Knex,
+    yjsStateVector?: ArrayBuffer,
+  ): Promise<void> {
+    if (!transaction) {
+      await this.knex.transaction(async (newTransaction) => {
+        await this.innerCreateRevision(
+          noteId,
+          newContent,
+          newTransaction,
+          yjsStateVector,
+        );
+      });
+      return;
+    }
+    await this.innerCreateRevision(
+      noteId,
+      newContent,
+      transaction,
+      yjsStateVector,
+    );
+  }
+
+  private async innerCreateRevision(
+    noteId: number,
+    newContent: string,
+    transaction: Knex,
+    yjsStateVector?: ArrayBuffer,
+  ): Promise<void> {
     const latestRevision =
-      note.id === undefined ? undefined : await this.getLatestRevision(note);
+      noteId === undefined
+        ? null
+        : await this.getLatestRevision(noteId, transaction);
     const oldContent = latestRevision?.content;
     if (oldContent === newContent) {
       return undefined;
     }
+    const primaryAlias = await this.aliasService.getPrimaryAliasByNoteId(
+      noteId,
+      transaction,
+    );
     const patch = createPatch(
-      note.publicId,
+      primaryAlias,
       latestRevision?.content ?? '',
       newContent,
     );
-    const { title, description, tags } =
+    const { title, description, tags, noteType } =
       extractRevisionMetadataFromContent(newContent);
-
-    const tagEntities = tags.map((tagName) => {
-      const entity = new Tag();
-      entity.name = tagName;
-      return entity;
-    });
-
-    return Revision.create(
-      newContent,
-      patch,
-      note,
-      yjsStateVector ?? null,
-      title,
-      description,
-      tagEntities,
-    ) as Revision;
+    const revisionIds = await transaction(TableRevision).insert(
+      {
+        [FieldNameRevision.uuid]: uuidv7(),
+        [FieldNameRevision.noteId]: noteId,
+        [FieldNameRevision.noteType]: noteType,
+        [FieldNameRevision.content]: newContent,
+        [FieldNameRevision.patch]: patch,
+        [FieldNameRevision.title]: title,
+        [FieldNameRevision.description]: description,
+        [FieldNameRevision.yjsStateVector]: yjsStateVector ?? null,
+      },
+      [FieldNameRevision.uuid],
+    );
+    if (revisionIds.length !== 1) {
+      throw new GenericDBError(
+        'Failed to insert revision',
+        this.logger.getContext(),
+        'createRevision',
+      );
+    }
+    const revisionId = revisionIds[0][FieldNameRevision.uuid];
+    await transaction(TableRevisionTag).insert(
+      tags.map((tag) => ({
+        [FieldNameRevisionTag.tag]: tag,
+        [FieldNameRevisionTag.revisionUuid]: revisionId,
+      })),
+    );
   }
 
-  /**
-   * Creates and saves a new {@link Revision} for the given {@link Note}.
-   *
-   * @async
-   * @param note The note for which the revision should be created
-   * @param newContent The new note content
-   * @param yjsStateVector The yjs state vector that describes the new content
-   */
-  async createAndSaveRevision(
-    note: Note,
-    newContent: string,
-    yjsStateVector?: number[],
-  ): Promise<void> {
-    const revision = await this.createRevision(
-      note,
-      newContent,
-      yjsStateVector,
-    );
-    if (revision) {
-      await this.revisionRepository.save(revision);
-    }
+  async getTagsByRevisionUuid(
+    revisionUuid: string,
+    transaction?: Knex,
+  ): Promise<string[]> {
+    const dbActor = transaction ?? this.knex;
+    const tags = await dbActor(TableRevisionTag)
+      .select(FieldNameRevisionTag.tag)
+      .where(FieldNameRevisionTag.revisionUuid, revisionUuid);
+    return tags.map((tag) => tag[FieldNameRevisionTag.tag]);
   }
 
   // Delete all old revisions everyday on 0:00 AM
@@ -241,16 +394,14 @@ export class RevisionsService {
     return await this.removeOldRevisions();
   }
 
-  // Delete all old revisions 5 sec after startup
-  @Timeout(5000)
+  // Delete all old revisions 90 sec after startup
+  @Timeout(90 * 1000)
   async handleRevisionCleanupTimeout(): Promise<void> {
     return await this.removeOldRevisions();
   }
 
   /**
    * Delete old {@link Revision}s except the latest one.
-   *
-   * @async
    */
   async removeOldRevisions(): Promise<void> {
     const currentTime = new Date().getTime();
@@ -258,56 +409,82 @@ export class RevisionsService {
     if (revisionRetentionDays <= 0) {
       return;
     }
-    const revisionRetentionSeconds =
+    const revisionRetentionMilliSeconds =
       revisionRetentionDays * 24 * 60 * 60 * 1000;
 
-    const notes: Note[] = await this.noteRepository.find();
-    for (const note of notes) {
-      const revisions: Revision[] = await this.revisionRepository.find({
-        where: {
-          note: { id: note.id },
-        },
-        order: {
-          createdAt: 'ASC',
-        },
-      });
+    await this.knex.transaction(async (transaction) => {
+      // Delete old revisions
+      const noteIdsWhereRevisionWereDeleted = await transaction(TableRevision)
+        .where(
+          FieldNameRevision.createdAt,
+          '<=',
+          currentTime - revisionRetentionMilliSeconds,
+        )
+        .delete(FieldNameRevision.noteId);
 
-      const oldRevisions = revisions
-        .slice(0, -1) // always keep the latest revision
-        .filter(
-          (revision) =>
-            new Date(revision.createdAt).getTime() <=
-            currentTime - revisionRetentionSeconds,
-        );
-      const remainedRevisions = revisions.filter(
-        (val) => !oldRevisions.includes(val),
-      );
-
-      if (!oldRevisions.length) {
-        continue;
-      } else if (oldRevisions.length === revisions.length - 1) {
-        const beUpdatedRevision = revisions.slice(-1)[0];
-        beUpdatedRevision.patch = createPatch(
-          note.publicId,
-          '', // there is no older revision
-          beUpdatedRevision.content,
-        );
-        await this.revisionRepository.save(beUpdatedRevision);
-      } else {
-        const beUpdatedRevision = remainedRevisions.slice(0)[0];
-        beUpdatedRevision.patch = createPatch(
-          note.publicId,
-          oldRevisions.slice(-1)[0].content,
-          beUpdatedRevision.content,
-        );
-        await this.revisionRepository.save(beUpdatedRevision);
-      }
-
-      await this.revisionRepository.remove(oldRevisions);
       this.logger.log(
-        `${oldRevisions.length} old revisions of the note '${note.id}' were removed from the DB`,
+        `${noteIdsWhereRevisionWereDeleted.length} old revisions were removed from the DB`,
         'removeOldRevisions',
       );
-    }
+
+      if (noteIdsWhereRevisionWereDeleted.length === 0) {
+        return;
+      }
+
+      const uniqueNoteIds = Array.from(
+        new Set(
+          noteIdsWhereRevisionWereDeleted.map(
+            (entry) => entry[FieldNameRevision.noteId],
+          ),
+        ),
+      );
+
+      const revisionsToUpdate = await transaction(TableRevision)
+        .join(
+          TableAlias,
+          `${TableAlias}.${FieldNameAlias.noteId}`,
+          `${TableRevision}.${FieldNameRevision.noteId}`,
+        )
+        .select(
+          FieldNameRevision.uuid,
+          FieldNameRevision.noteId,
+          FieldNameRevision.content,
+          FieldNameAlias.alias,
+        )
+        .whereIn(FieldNameRevision.noteId, uniqueNoteIds)
+        .andWhere(FieldNameAlias.isPrimary, true)
+        .orderBy([
+          { column: FieldNameRevision.noteId },
+          { column: FieldNameRevision.createdAt, order: 'ASC' },
+        ]);
+
+      let lastNoteId = -1;
+      let lastContent = '';
+
+      for (const revisionToUpdate of revisionsToUpdate) {
+        const id = revisionToUpdate[FieldNameRevision.uuid];
+        const noteId = revisionToUpdate[FieldNameRevision.noteId];
+        const primaryAlias = revisionToUpdate[FieldNameAlias.alias];
+        const content = revisionToUpdate[FieldNameRevision.content];
+
+        let newPatch = '';
+        if (noteId !== lastNoteId) {
+          newPatch = createPatch(
+            primaryAlias,
+            '', // There is no older Revision
+            content,
+          );
+        } else {
+          newPatch = createPatch(primaryAlias, lastContent, content);
+        }
+
+        await transaction(TableRevision)
+          .update(FieldNameRevision.patch, newPatch)
+          .where(FieldNameRevision.uuid, id);
+
+        lastNoteId = noteId;
+        lastContent = content;
+      }
+    });
   }
 }

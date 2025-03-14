@@ -10,7 +10,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { SessionGuard } from '../../../auth/session.guard';
 import { GroupsService } from '../../../groups/groups.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { OpenApi } from '../../utils/openapi.decorator';
+import { OpenApi } from '../../utils/decorators/openapi.decorator';
 
 @UseGuards(SessionGuard)
 @OpenApi(401, 403)
@@ -27,8 +27,6 @@ export class GroupsController {
   @Get(':groupName')
   @OpenApi(200)
   async getGroup(@Param('groupName') groupName: string): Promise<GroupInfoDto> {
-    return this.groupService.toGroupDto(
-      await this.groupService.getGroupByName(groupName),
-    );
+    return await this.groupService.getGroupInfoDtoByName(groupName);
   }
 }

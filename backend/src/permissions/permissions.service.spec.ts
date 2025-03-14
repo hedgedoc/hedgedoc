@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
-  GuestAccess,
   NoteGroupPermissionUpdateDto,
   NoteUserPermissionUpdateDto,
+  PermissionLevel,
 } from '@hedgedoc/commons';
 import { ConfigModule } from '@nestjs/config';
 import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
@@ -15,6 +15,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Mock } from 'ts-mockery';
 import { DataSource, EntityManager, Repository } from 'typeorm';
 
+import { AliasModule } from '../alias/alias.module';
 import { ApiToken } from '../api-token/api-token.entity';
 import { Identity } from '../auth/identity.entity';
 import { Author } from '../authors/author.entity';
@@ -35,9 +36,8 @@ import { GroupsModule } from '../groups/groups.module';
 import { GroupsService } from '../groups/groups.service';
 import { LoggerModule } from '../logger/logger.module';
 import { MediaUpload } from '../media/media-upload.entity';
-import { Alias } from '../notes/alias.entity';
+import { Alias } from '../notes/aliases.entity';
 import { Note } from '../notes/note.entity';
-import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
 import { Edit } from '../revisions/edit.entity';
 import { Revision } from '../revisions/revision.entity';
@@ -45,13 +45,13 @@ import { Session } from '../sessions/session.entity';
 import { UsersModule } from '../users/users.module';
 import { NoteGroupPermission } from './note-group-permission.entity';
 import {
-  getNotePermissionDisplayName,
-  NotePermission,
+  getNotePermissionLevelDisplayName,
+  NotePermissionLevel,
 } from './note-permission.enum';
 import { NoteUserPermission } from './note-user-permission.entity';
+import { PermissionService } from './permission.service';
 import { PermissionsModule } from './permissions.module';
-import { PermissionsService } from './permissions.service';
-import { convertGuestAccessToNotePermission } from './utils/convert-guest-access-to-note-permission';
+import { convertPermissionLevelToNotePermissionLevel } from './utils/convert-guest-access-to-note-permission-level';
 import * as FindHighestNotePermissionByGroupModule from './utils/find-highest-note-permission-by-group';
 import * as FindHighestNotePermissionByUserModule from './utils/find-highest-note-permission-by-user';
 
@@ -89,7 +89,7 @@ function mockNoteRepo(noteRepo: Repository<Note>) {
 }
 
 describe('PermissionsService', () => {
-  let service: PermissionsService;
+  let service: PermissionService;
   let groupService: GroupsService;
   let noteRepo: Repository<Note>;
   let userRepo: Repository<User>;
@@ -128,7 +128,7 @@ describe('PermissionsService', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        PermissionsService,
+        PermissionService,
         {
           provide: getRepositoryToken(Note),
           useValue: noteRepo,
@@ -146,7 +146,7 @@ describe('PermissionsService', () => {
         LoggerModule,
         PermissionsModule,
         UsersModule,
-        NotesModule,
+        AliasModule,
         ConfigModule.forRoot({
           isGlobal: true,
           load: [
@@ -187,7 +187,7 @@ describe('PermissionsService', () => {
       .overrideProvider(getRepositoryToken(Alias))
       .useValue({})
       .compile();
-    service = module.get<PermissionsService>(PermissionsService);
+    service = module.get<PermissionService>(PermissionService);
     groupService = module.get<GroupsService>(GroupsService);
     groupRepo = module.get<Repository<Group>>(getRepositoryToken(Group));
     noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));
@@ -229,13 +229,13 @@ describe('PermissionsService', () => {
       expect(service.mayCreate(user1)).toBeTruthy();
     });
     it('allows creation of notes for guests with permission', () => {
-      noteMockConfig.guestAccess = GuestAccess.CREATE;
+      noteMockConfig.guestAccess = PermissionLevel.CREATE;
       noteMockConfig.permissions.default.loggedIn = DefaultAccessLevel.WRITE;
       noteMockConfig.permissions.default.everyone = DefaultAccessLevel.WRITE;
       expect(service.mayCreate(null)).toBeTruthy();
     });
     it('denies creation of notes for guests without permission', () => {
-      noteMockConfig.guestAccess = GuestAccess.WRITE;
+      noteMockConfig.guestAccess = PermissionLevel.WRITE;
       noteMockConfig.permissions.default.loggedIn = DefaultAccessLevel.WRITE;
       noteMockConfig.permissions.default.everyone = DefaultAccessLevel.WRITE;
       expect(service.mayCreate(null)).toBeFalsy();
@@ -318,34 +318,34 @@ describe('PermissionsService', () => {
       it(`with no everyone permission will deny`, async () => {
         const note = mockNote(user1, [], [loggedInReadPermission]);
         const foundPermission = await service.determinePermission(null, note);
-        expect(foundPermission).toBe(NotePermission.DENY);
+        expect(foundPermission).toBe(NotePermissionLevel.DENY);
       });
 
       describe.each([
-        GuestAccess.DENY,
-        GuestAccess.READ,
-        GuestAccess.WRITE,
-        GuestAccess.CREATE,
+        PermissionLevel.DENY,
+        PermissionLevel.READ,
+        PermissionLevel.WRITE,
+        PermissionLevel.CREATE,
       ])('with configured guest access %s', (guestAccess) => {
         beforeEach(() => {
           noteMockConfig.guestAccess = guestAccess;
         });
 
         const guestAccessNotePermission =
-          convertGuestAccessToNotePermission(guestAccess);
+          convertPermissionLevelToNotePermissionLevel(guestAccess);
 
         describe.each([false, true])(
           'with everybody group permission with edit set to %s',
           (canEdit) => {
             const editPermission = canEdit
-              ? NotePermission.WRITE
-              : NotePermission.READ;
+              ? NotePermissionLevel.WRITE
+              : NotePermissionLevel.READ;
             const expectedLimitedPermission =
               guestAccessNotePermission >= editPermission
                 ? editPermission
                 : guestAccessNotePermission;
 
-            const permissionDisplayName = getNotePermissionDisplayName(
+            const permissionDisplayName = getNotePermissionLevelDisplayName(
               expectedLimitedPermission,
             );
             it(`will ${permissionDisplayName}`, async () => {
@@ -381,7 +381,7 @@ describe('PermissionsService', () => {
             note,
           );
 
-          expect(foundPermission).toBe(NotePermission.OWNER);
+          expect(foundPermission).toBe(NotePermissionLevel.OWNER);
         });
         it('with other lower permissions', async () => {
           const userPermission = Mock.of<NoteUserPermission>({
@@ -407,7 +407,7 @@ describe('PermissionsService', () => {
             note,
           );
 
-          expect(foundPermission).toBe(NotePermission.OWNER);
+          expect(foundPermission).toBe(NotePermissionLevel.OWNER);
         });
       });
       describe('as non owner', () => {
@@ -417,13 +417,13 @@ describe('PermissionsService', () => {
               FindHighestNotePermissionByUserModule,
               'findHighestNotePermissionByUser',
             )
-            .mockReturnValue(Promise.resolve(NotePermission.DENY));
+            .mockReturnValue(Promise.resolve(NotePermissionLevel.DENY));
           jest
             .spyOn(
               FindHighestNotePermissionByGroupModule,
               'findHighestNotePermissionByGroup',
             )
-            .mockReturnValue(Promise.resolve(NotePermission.WRITE));
+            .mockReturnValue(Promise.resolve(NotePermissionLevel.WRITE));
 
           const note = mockNote(user2);
 
@@ -431,7 +431,7 @@ describe('PermissionsService', () => {
             user1,
             note,
           );
-          expect(foundPermission).toBe(NotePermission.WRITE);
+          expect(foundPermission).toBe(NotePermissionLevel.WRITE);
         });
 
         it('with group permission higher than user permission', async () => {
@@ -440,13 +440,13 @@ describe('PermissionsService', () => {
               FindHighestNotePermissionByUserModule,
               'findHighestNotePermissionByUser',
             )
-            .mockReturnValue(Promise.resolve(NotePermission.WRITE));
+            .mockReturnValue(Promise.resolve(NotePermissionLevel.WRITE));
           jest
             .spyOn(
               FindHighestNotePermissionByGroupModule,
               'findHighestNotePermissionByGroup',
             )
-            .mockReturnValue(Promise.resolve(NotePermission.DENY));
+            .mockReturnValue(Promise.resolve(NotePermissionLevel.DENY));
 
           const note = mockNote(user2);
 
@@ -454,7 +454,7 @@ describe('PermissionsService', () => {
             user1,
             note,
           );
-          expect(foundPermission).toBe(NotePermission.WRITE);
+          expect(foundPermission).toBe(NotePermissionLevel.WRITE);
         });
       });
     });
@@ -479,7 +479,7 @@ describe('PermissionsService', () => {
     const note = Note.create(user) as Note;
     it('emits PERMISSION_CHANGE event', async () => {
       expect(eventEmitterEmitSpy).not.toHaveBeenCalled();
-      await service.updateNotePermissions(note, {
+      await service.replaceNotePermissions(note, {
         sharedToUsers: [],
         sharedToGroups: [],
       });
@@ -487,7 +487,7 @@ describe('PermissionsService', () => {
     });
     describe('works', () => {
       it('with empty GroupPermissions and with empty UserPermissions', async () => {
-        const savedNote = await service.updateNotePermissions(note, {
+        const savedNote = await service.replaceNotePermissions(note, {
           sharedToUsers: [],
           sharedToGroups: [],
         });
@@ -496,7 +496,7 @@ describe('PermissionsService', () => {
       });
       it('with empty GroupPermissions and with new UserPermissions', async () => {
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
-        const savedNote = await service.updateNotePermissions(note, {
+        const savedNote = await service.replaceNotePermissions(note, {
           sharedToUsers: [userPermissionUpdate],
           sharedToGroups: [],
         });
@@ -521,7 +521,7 @@ describe('PermissionsService', () => {
         ]);
 
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
-        const savedNote = await service.updateNotePermissions(note, {
+        const savedNote = await service.replaceNotePermissions(note, {
           sharedToUsers: [userPermissionUpdate],
           sharedToGroups: [],
         });
@@ -536,7 +536,7 @@ describe('PermissionsService', () => {
       });
       it('with new GroupPermissions and with empty UserPermissions', async () => {
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
-        const savedNote = await service.updateNotePermissions(note, {
+        const savedNote = await service.replaceNotePermissions(note, {
           sharedToUsers: [],
           sharedToGroups: [groupPermissionUpdate],
         });
@@ -551,7 +551,7 @@ describe('PermissionsService', () => {
       it('with new GroupPermissions and with new UserPermissions', async () => {
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
-        const savedNote = await service.updateNotePermissions(note, {
+        const savedNote = await service.replaceNotePermissions(note, {
           sharedToUsers: [userPermissionUpdate],
           sharedToGroups: [groupPermissionUpdate],
         });
@@ -581,7 +581,7 @@ describe('PermissionsService', () => {
 
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
-        const savedNote = await service.updateNotePermissions(
+        const savedNote = await service.replaceNotePermissions(
           noteWithUserPermission,
           {
             sharedToUsers: [userPermissionUpdate],
@@ -612,7 +612,7 @@ describe('PermissionsService', () => {
           },
         ]);
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
-        const savedNote = await service.updateNotePermissions(
+        const savedNote = await service.replaceNotePermissions(
           noteWithPreexistingPermissions,
           {
             sharedToUsers: [],
@@ -640,7 +640,7 @@ describe('PermissionsService', () => {
 
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
-        const savedNote = await service.updateNotePermissions(
+        const savedNote = await service.replaceNotePermissions(
           noteWithPreexistingPermissions,
           {
             sharedToUsers: [userPermissionUpdate],
@@ -681,7 +681,7 @@ describe('PermissionsService', () => {
 
         jest.spyOn(userRepo, 'findOne').mockResolvedValueOnce(user);
         jest.spyOn(groupRepo, 'findOne').mockResolvedValueOnce(group);
-        const savedNote = await service.updateNotePermissions(
+        const savedNote = await service.replaceNotePermissions(
           noteWithPreexistingPermissions,
           {
             sharedToUsers: [userPermissionUpdate],
@@ -705,7 +705,7 @@ describe('PermissionsService', () => {
     describe('fails:', () => {
       it('userPermissions has duplicate entries', async () => {
         await expect(
-          service.updateNotePermissions(note, {
+          service.replaceNotePermissions(note, {
             sharedToUsers: [userPermissionUpdate, userPermissionUpdate],
             sharedToGroups: [],
           }),
@@ -714,7 +714,7 @@ describe('PermissionsService', () => {
 
       it('groupPermissions has duplicate entries', async () => {
         await expect(
-          service.updateNotePermissions(note, {
+          service.replaceNotePermissions(note, {
             sharedToUsers: [],
             sharedToGroups: [groupPermissionUpdate, groupPermissionUpdate],
           }),
@@ -723,7 +723,7 @@ describe('PermissionsService', () => {
 
       it('userPermissions and groupPermissions have duplicate entries', async () => {
         await expect(
-          service.updateNotePermissions(note, {
+          service.replaceNotePermissions(note, {
             sharedToUsers: [userPermissionUpdate, userPermissionUpdate],
             sharedToGroups: [groupPermissionUpdate, groupPermissionUpdate],
           }),

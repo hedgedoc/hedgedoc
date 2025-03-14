@@ -49,7 +49,7 @@ describe('Notes', () => {
     expect(response.body.metadata?.id).toBeDefined();
     expect(
       await testSetup.notesService.getNoteContent(
-        await testSetup.notesService.getNoteByIdOrAlias(
+        await testSetup.notesService.getNoteIdByAlias(
           response.body.metadata.id,
         ),
       ),
@@ -96,7 +96,7 @@ describe('Notes', () => {
       expect(response.body.metadata?.id).toBeDefined();
       return expect(
         await testSetup.notesService.getNoteContent(
-          await testSetup.notesService.getNoteByIdOrAlias(
+          await testSetup.notesService.getNoteIdByAlias(
             response.body.metadata?.id,
           ),
         ),
@@ -172,12 +172,14 @@ describe('Notes', () => {
           })
           .expect(204);
         await expect(
-          testSetup.notesService.getNoteByIdOrAlias(noteId),
+          testSetup.notesService.getNoteIdByAlias(noteId),
         ).rejects.toEqual(
           new NotInDBError(`Note with id/alias '${noteId}' not found.`),
         );
         expect(
-          await testSetup.mediaService.listUploadsByUser(testSetup.users[0]),
+          await testSetup.mediaService.getMediaUploadUuidsByUserId(
+            testSetup.users[0],
+          ),
         ).toHaveLength(0);
       });
       it('with an existing alias and keepMedia true', async () => {
@@ -202,12 +204,14 @@ describe('Notes', () => {
           })
           .expect(204);
         await expect(
-          testSetup.notesService.getNoteByIdOrAlias(noteId),
+          testSetup.notesService.getNoteIdByAlias(noteId),
         ).rejects.toEqual(
           new NotInDBError(`Note with id/alias '${noteId}' not found.`),
         );
         expect(
-          await testSetup.mediaService.listUploadsByUser(testSetup.users[0]),
+          await testSetup.mediaService.getMediaUploadUuidsByUserId(
+            testSetup.users[0],
+          ),
         ).toHaveLength(1);
         // delete the file afterwards
         await fs.unlink(join(uploadPath, upload.uuid + '.png'));
@@ -228,11 +232,11 @@ describe('Notes', () => {
         ],
         sharedToGroups: [],
       };
-      await testSetup.permissionsService.updateNotePermissions(
+      await testSetup.permissionsService.replaceNotePermissions(
         note,
         updateNotePermission,
       );
-      const updatedNote = await testSetup.notesService.getNoteByIdOrAlias(
+      const updatedNote = await testSetup.notesService.getNoteIdByAlias(
         (await note.aliases).filter((alias) => alias.primary)[0].name,
       );
       expect(await updatedNote.userPermissions).toHaveLength(1);
@@ -249,7 +253,7 @@ describe('Notes', () => {
         .send({ keepMedia: false })
         .expect(204);
       await expect(
-        testSetup.notesService.getNoteByIdOrAlias('deleteTest3'),
+        testSetup.notesService.getNoteIdByAlias('deleteTest3'),
       ).rejects.toEqual(
         new NotInDBError("Note with id/alias 'deleteTest3' not found."),
       );
@@ -284,7 +288,7 @@ describe('Notes', () => {
         .expect(200);
       expect(
         await testSetup.notesService.getNoteContent(
-          await testSetup.notesService.getNoteByIdOrAlias('test4'),
+          await testSetup.notesService.getNoteIdByAlias('test4'),
         ),
       ).toEqual(changedContent);
       expect(response.body.content).toEqual(changedContent);
@@ -320,7 +324,7 @@ describe('Notes', () => {
         .expect(200);
       expect(typeof metadata.body.id).toEqual('string');
       expect(metadata.body.aliases[0].name).toEqual('test5');
-      expect(metadata.body.primaryAddress).toEqual('test5');
+      expect(metadata.body.primaryAlias).toEqual('test5');
       expect(metadata.body.title).toEqual('');
       expect(metadata.body.description).toEqual('');
       expect(typeof metadata.body.createdAt).toEqual('string');
@@ -329,7 +333,7 @@ describe('Notes', () => {
       expect(metadata.body.permissions.sharedToUsers).toEqual([]);
       expect(metadata.body.tags).toEqual([]);
       expect(typeof metadata.body.updatedAt).toEqual('string');
-      expect(typeof metadata.body.updateUsername).toEqual('string');
+      expect(typeof metadata.body.lastUpdatedBy).toEqual('string');
       expect(typeof metadata.body.viewCount).toEqual('number');
       expect(metadata.body.editedBy).toEqual([]);
     });
@@ -530,7 +534,7 @@ describe('Notes', () => {
         alias,
       );
       // Redact default read permissions
-      const note = await testSetup.notesService.getNoteByIdOrAlias(alias);
+      const note = await testSetup.notesService.getNoteIdByAlias(alias);
       const everyone = await testSetup.groupService.getEveryoneGroup();
       const loggedin = await testSetup.groupService.getLoggedInGroup();
       await testSetup.permissionsService.removeGroupPermission(note, everyone);

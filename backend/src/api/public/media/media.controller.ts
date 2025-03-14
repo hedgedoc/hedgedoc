@@ -11,7 +11,6 @@ import {
   Get,
   Param,
   Post,
-  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -24,23 +23,27 @@ import {
   ApiSecurity,
   ApiTags,
 } from '@nestjs/swagger';
-import { Response } from 'express';
 
-import { ApiTokenGuard } from '../../../api-token/api-token.guard';
-import { User } from '../../../database/user.entity';
+import {
+  FieldNameMediaUpload,
+  FieldNameNote,
+  FieldNameUser,
+  Note,
+  User,
+} from '../../../database/types';
 import { PermissionError } from '../../../errors/errors';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
 import { MulterFile } from '../../../media/multer-file.interface';
-import { Note } from '../../../notes/note.entity';
+import { PermissionService } from '../../../permissions/permission.service';
 import { PermissionsGuard } from '../../../permissions/permissions.guard';
-import { PermissionsService } from '../../../permissions/permissions.service';
 import { RequirePermission } from '../../../permissions/require-permission.decorator';
 import { RequiredPermission } from '../../../permissions/required-permission.enum';
-import { NoteHeaderInterceptor } from '../../utils/note-header.interceptor';
-import { OpenApi } from '../../utils/openapi.decorator';
-import { RequestNote } from '../../utils/request-note.decorator';
-import { RequestUser } from '../../utils/request-user.decorator';
+import { OpenApi } from '../../utils/decorators/openapi.decorator';
+import { RequestNoteId } from '../../utils/decorators/request-note-id.decorator';
+import { RequestUserId } from '../../utils/decorators/request-user-id.decorator';
+import { ApiTokenGuard } from '../../utils/guards/api-token.guard';
+import { NoteHeaderInterceptor } from '../../utils/interceptors/note-header.interceptor';
 
 @UseGuards(ApiTokenGuard)
 @OpenApi(401)
@@ -51,7 +54,7 @@ export class MediaController {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private mediaService: MediaService,
-    private permissionsService: PermissionsService,
+    private permissionsService: PermissionService,
   ) {
     this.logger.setContext(MediaController.name);
   }
@@ -71,7 +74,7 @@ export class MediaController {
   })
   @ApiHeader({
     name: 'HedgeDoc-Note',
-    description: 'ID or alias of the parent note',
+    description: 'ID or aliases of the parent note',
   })
   @OpenApi(
     {
@@ -89,65 +92,57 @@ export class MediaController {
   @UseInterceptors(NoteHeaderInterceptor)
   @RequirePermission(RequiredPermission.WRITE)
   async uploadMedia(
-    @RequestUser() user: User,
+    @RequestUserId() user: User,
     @UploadedFile() file: MulterFile,
-    @RequestNote() note: Note,
+    @RequestNoteId() note: Note,
   ): Promise<MediaUploadDto> {
     if (file === undefined) {
       throw new BadRequestException('Request does not contain a file');
     }
     this.logger.debug(
-      `Received filename '${file.originalname}' for note '${note.publicId}' from user '${user.username}'`,
+      `Received filename '${file.originalname}' for note '${note[FieldNameNote.id]}' from user '${user.username}'`,
       'uploadMedia',
     );
-    const upload = await this.mediaService.saveFile(
+    const uploadUuid = await this.mediaService.saveFile(
       file.originalname,
       file.buffer,
-      user,
-      note,
+      user[FieldNameUser.id],
+      note[FieldNameNote.id],
     );
-    return await this.mediaService.toMediaUploadDto(upload);
+    return (await this.mediaService.getMediaUploadDtosByUuids([uploadUuid]))[0];
   }
 
   @Get(':uuid')
   @OpenApi(200, 404, 500)
-  async getMedia(
-    @Param('uuid') uuid: string,
-    @Res() response: Response,
-  ): Promise<void> {
-    const mediaUpload = await this.mediaService.findUploadByUuid(uuid);
-    const dto = await this.mediaService.toMediaUploadDto(mediaUpload);
-    response.send(dto);
+  async getMedia(@Param('uuid') uuid: string): Promise<MediaUploadDto> {
+    return (await this.mediaService.getMediaUploadDtosByUuids([uuid]))[0];
   }
 
   @Delete(':uuid')
   @OpenApi(204, 403, 404, 500)
   async deleteMedia(
-    @RequestUser() user: User,
+    @RequestUserId() userId: number,
     @Param('uuid') uuid: string,
   ): Promise<void> {
     const mediaUpload = await this.mediaService.findUploadByUuid(uuid);
     if (
-      await this.permissionsService.checkMediaDeletePermission(
-        user,
-        mediaUpload,
-      )
+      await this.permissionsService.checkMediaDeletePermission(userId, uuid)
     ) {
       this.logger.debug(
-        `Deleting '${uuid}' for user '${user.username}'`,
+        `Deleting '${uuid}' for user '${userId}'`,
         'deleteMedia',
       );
-      await this.mediaService.deleteFile(mediaUpload);
+      await this.mediaService.deleteFile(uuid);
     } else {
       this.logger.warn(
-        `${user.username} tried to delete '${uuid}', but is not the owner of upload or connected note`,
+        `${userId} tried to delete '${uuid}', but is not the owner of upload or connected note`,
         'deleteMedia',
       );
-      const mediaUploadNote = await mediaUpload.note;
+      const mediaUploadNote = mediaUpload[FieldNameMediaUpload.noteId];
       throw new PermissionError(
         `Neither file '${uuid}' nor note '${
-          mediaUploadNote?.publicId ?? 'unknown'
-        }'is owned by '${user.username}'`,
+          mediaUploadNote ?? 'unknown'
+        }'is owned by '${userId}'`,
       );
     }
   }

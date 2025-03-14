@@ -11,8 +11,7 @@ import {
 import * as HedgeDocCommonsModule from '@hedgedoc/commons';
 import { Mock } from 'ts-mockery';
 
-import { User } from '../../database/user.entity';
-import { Note } from '../../notes/note.entity';
+import { FieldNameUser, User } from '../../database/types';
 import * as NameRandomizerModule from './random-word-lists/name-randomizer';
 import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';
@@ -41,12 +40,15 @@ describe('websocket connection', () => {
 
   const mockedUserName: string = 'mocked-user-name';
   const mockedDisplayName = 'mockedDisplayName';
+  const mockedAuthorStyle = 42;
 
   beforeEach(() => {
-    mockedRealtimeNote = new RealtimeNote(Mock.of<Note>({}), '');
+    mockedRealtimeNote = new RealtimeNote(1, '');
     mockedUser = Mock.of<User>({
-      username: mockedUserName,
-      displayName: mockedDisplayName,
+      [FieldNameUser.id]: 0,
+      [FieldNameUser.username]: mockedUserName,
+      [FieldNameUser.displayName]: mockedDisplayName,
+      [FieldNameUser.authorStyle]: mockedAuthorStyle,
     });
 
     mockedMessageTransporter = new MessageTransporter();
@@ -61,7 +63,10 @@ describe('websocket connection', () => {
   it('returns the correct transporter', () => {
     const sut = new RealtimeConnection(
       mockedMessageTransporter,
-      mockedUser,
+      mockedUser[FieldNameUser.id],
+      mockedUser[FieldNameUser.username],
+      mockedUser[FieldNameUser.displayName],
+      mockedUser[FieldNameUser.authorStyle],
       mockedRealtimeNote,
       true,
     );
@@ -71,7 +76,10 @@ describe('websocket connection', () => {
   it('returns the correct realtime note', () => {
     const sut = new RealtimeConnection(
       mockedMessageTransporter,
-      mockedUser,
+      mockedUser[FieldNameUser.id],
+      mockedUser[FieldNameUser.username],
+      mockedUser[FieldNameUser.displayName],
+      mockedUser[FieldNameUser.authorStyle],
       mockedRealtimeNote,
       true,
     );
@@ -107,12 +115,14 @@ describe('websocket connection', () => {
           (
             username,
             displayName,
+            authorStyle,
             otherAdapterCollector: OtherAdapterCollector,
             messageTransporter,
             acceptCursorUpdateProvider,
           ) => {
             expect(username).toBe(mockedUserName);
             expect(displayName).toBe(mockedDisplayName);
+            expect(authorStyle).toBe(mockedAuthorStyle);
             expect(otherAdapterCollector()).toStrictEqual([
               realtimeUserStatus1,
               realtimeUserStatus2,
@@ -126,7 +136,10 @@ describe('websocket connection', () => {
 
       const sut = new RealtimeConnection(
         mockedMessageTransporter,
-        mockedUser,
+        mockedUser[FieldNameUser.id],
+        mockedUser[FieldNameUser.username],
+        mockedUser[FieldNameUser.displayName],
+        mockedUser[FieldNameUser.authorStyle],
         mockedRealtimeNote,
         acceptEdits,
       );
@@ -157,7 +170,10 @@ describe('websocket connection', () => {
 
       const sut = new RealtimeConnection(
         mockedMessageTransporter,
-        mockedUser,
+        mockedUser[FieldNameUser.id],
+        mockedUser[FieldNameUser.username],
+        mockedUser[FieldNameUser.displayName],
+        mockedUser[FieldNameUser.authorStyle],
         mockedRealtimeNote,
         acceptEdits,
       );
@@ -169,7 +185,10 @@ describe('websocket connection', () => {
   it('removes the client from the note on transporter disconnect', () => {
     const sut = new RealtimeConnection(
       mockedMessageTransporter,
-      mockedUser,
+      mockedUser[FieldNameUser.id],
+      mockedUser[FieldNameUser.username],
+      mockedUser[FieldNameUser.displayName],
+      mockedUser[FieldNameUser.authorStyle],
       mockedRealtimeNote,
       true,
     );
@@ -181,46 +200,59 @@ describe('websocket connection', () => {
     expect(removeClientSpy).toHaveBeenCalledWith(sut);
   });
 
-  it('saves the correct user', () => {
+  it('correctly return user id', () => {
     const sut = new RealtimeConnection(
       mockedMessageTransporter,
-      mockedUser,
+      mockedUser[FieldNameUser.id],
+      mockedUser[FieldNameUser.username],
+      mockedUser[FieldNameUser.displayName],
+      mockedUser[FieldNameUser.authorStyle],
       mockedRealtimeNote,
       true,
     );
 
-    expect(sut.getUser()).toBe(mockedUser);
+    expect(sut.getUserId()).toBe(mockedUser[FieldNameUser.id]);
   });
 
-  it('returns the correct username', () => {
-    const mockedUserWithUsername = Mock.of<User>({ displayName: 'MockUser' });
-
+  it('correctly return username', () => {
     const sut = new RealtimeConnection(
       mockedMessageTransporter,
-      mockedUserWithUsername,
+      mockedUser[FieldNameUser.id],
+      mockedUser[FieldNameUser.username],
+      mockedUser[FieldNameUser.displayName],
+      mockedUser[FieldNameUser.authorStyle],
       mockedRealtimeNote,
       true,
     );
 
-    expect(sut.getDisplayName()).toBe('MockUser');
+    expect(sut.getUsername()).toBe(mockedUser[FieldNameUser.username]);
   });
 
-  it('returns a random fallback display name if the provided user has no display name', () => {
-    const randomName = 'I am a random name';
-
-    jest
-      .spyOn(NameRandomizerModule, 'generateRandomName')
-      .mockReturnValue(randomName);
-
-    mockedUser = Mock.of<User>({});
-
+  it('correctly return displayName', () => {
     const sut = new RealtimeConnection(
       mockedMessageTransporter,
-      mockedUser,
+      mockedUser[FieldNameUser.id],
+      mockedUser[FieldNameUser.username],
+      mockedUser[FieldNameUser.displayName],
+      mockedUser[FieldNameUser.authorStyle],
       mockedRealtimeNote,
       true,
     );
 
-    expect(sut.getDisplayName()).toBe(randomName);
+    expect(sut.getDisplayName()).toBe(mockedUser[FieldNameUser.displayName]);
+  });
+
+  it('correctly return authorStyle', () => {
+    const sut = new RealtimeConnection(
+      mockedMessageTransporter,
+      mockedUser[FieldNameUser.id],
+      mockedUser[FieldNameUser.username],
+      mockedUser[FieldNameUser.displayName],
+      mockedUser[FieldNameUser.authorStyle],
+      mockedRealtimeNote,
+      true,
+    );
+
+    expect(sut.getAuthorStyle()).toBe(mockedUser[FieldNameUser.authorStyle]);
   });
 });

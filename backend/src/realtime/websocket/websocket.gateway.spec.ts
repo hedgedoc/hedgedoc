@@ -13,6 +13,7 @@ import { Mock } from 'ts-mockery';
 import { Repository } from 'typeorm';
 import WebSocket from 'ws';
 
+import { AliasModule } from '../../alias/alias.module';
 import { ApiToken } from '../../api-token/api-token.entity';
 import { Identity } from '../../auth/identity.entity';
 import { Author } from '../../authors/author.entity';
@@ -24,16 +25,15 @@ import { User } from '../../database/user.entity';
 import { eventModuleConfig } from '../../events';
 import { Group } from '../../groups/group.entity';
 import { LoggerModule } from '../../logger/logger.module';
-import { Alias } from '../../notes/alias.entity';
+import { Alias } from '../../notes/aliases.entity';
 import { Note } from '../../notes/note.entity';
-import { NotesModule } from '../../notes/notes.module';
-import { NotesService } from '../../notes/notes.service';
+import { NoteService } from '../../notes/note.service';
 import { Tag } from '../../notes/tag.entity';
 import { NoteGroupPermission } from '../../permissions/note-group-permission.entity';
-import { NotePermission } from '../../permissions/note-permission.enum';
+import { NotePermissionLevel } from '../../permissions/note-permission.enum';
 import { NoteUserPermission } from '../../permissions/note-user-permission.entity';
+import { PermissionService } from '../../permissions/permission.service';
 import { PermissionsModule } from '../../permissions/permissions.module';
-import { PermissionsService } from '../../permissions/permissions.service';
 import { Edit } from '../../revisions/edit.entity';
 import { Revision } from '../../revisions/revision.entity';
 import { Session } from '../../sessions/session.entity';
@@ -55,9 +55,9 @@ describe('Websocket gateway', () => {
   let gateway: WebsocketGateway;
   let sessionService: SessionService;
   let usersService: UsersService;
-  let notesService: NotesService;
+  let notesService: NoteService;
   let realtimeNoteService: RealtimeNoteService;
-  let permissionsService: PermissionsService;
+  let permissionsService: PermissionService;
   let mockedWebsocketConnection: RealtimeConnection;
   let mockedWebsocket: WebSocket;
   let mockedWebsocketCloseSpy: jest.SpyInstance;
@@ -102,7 +102,7 @@ describe('Websocket gateway', () => {
       ],
       imports: [
         LoggerModule,
-        NotesModule,
+        AliasModule,
         PermissionsModule,
         RealtimeNoteModule,
         UsersModule,
@@ -150,9 +150,9 @@ describe('Websocket gateway', () => {
     gateway = module.get<WebsocketGateway>(WebsocketGateway);
     sessionService = module.get<SessionService>(SessionService);
     usersService = module.get<UsersService>(UsersService);
-    notesService = module.get<NotesService>(NotesService);
+    notesService = module.get<NoteService>(NoteService);
     realtimeNoteService = module.get<RealtimeNoteService>(RealtimeNoteService);
-    permissionsService = module.get<PermissionsService>(PermissionsService);
+    permissionsService = module.get<PermissionService>(PermissionService);
 
     jest
       .spyOn(sessionService, 'extractSessionIdFromRequest')
@@ -209,7 +209,7 @@ describe('Websocket gateway', () => {
       groupPermissions: Promise.resolve([]),
     });
     jest
-      .spyOn(notesService, 'getNoteByIdOrAlias')
+      .spyOn(notesService, 'getNoteIdByAlias')
       .mockImplementation((noteId: string) => {
         if (noteExistsForNoteId && noteId === mockedValidNoteId) {
           return Promise.resolve(mockedNote);
@@ -224,13 +224,13 @@ describe('Websocket gateway', () => {
     jest
       .spyOn(permissionsService, 'determinePermission')
       .mockImplementation(
-        async (user: User | null, note: Note): Promise<NotePermission> =>
+        async (user: User | null, note: Note): Promise<NotePermissionLevel> =>
           (user === mockUser &&
             note === mockedNote &&
             userHasReadPermissions) ||
           (user === null && note === mockedGuestNote)
-            ? NotePermission.READ
-            : NotePermission.DENY,
+            ? NotePermissionLevel.READ
+            : NotePermissionLevel.DENY,
       );
 
     const mockedRealtimeNote = Mock.of<RealtimeNote>({

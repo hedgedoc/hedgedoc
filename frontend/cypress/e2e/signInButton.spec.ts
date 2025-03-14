@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { ProviderType } from '../../src/api/config/types'
-import { ProviderType } from '../../src/api/config/types'
+import type { AuthProviderType } from '../../src/api/config/types'
+import { AuthProviderType } from '../../src/api/config/types'
 
-const initLoggedOutTestWithCustomAuthProviders = (cy: Cypress.cy, enabledProviders: ProviderType[]) => {
+const initLoggedOutTestWithCustomAuthProviders = (cy: Cypress.cy, enabledProviders: AuthProviderType[]) => {
   cy.logOut()
   cy.loadConfig({
     authProviders: enabledProviders
@@ -48,7 +48,7 @@ describe('When logged-out ', () => {
     it('sign-in button points to login route: internal', () => {
       initLoggedOutTestWithCustomAuthProviders(cy, [
         {
-          type: ProviderType.LOCAL
+          type: AuthProviderType.LOCAL
         }
       ])
       cy.getByCypressId('sign-in-button')
@@ -60,7 +60,7 @@ describe('When logged-out ', () => {
     it('sign-in button points to login route: ldap', () => {
       initLoggedOutTestWithCustomAuthProviders(cy, [
         {
-          type: ProviderType.LDAP,
+          type: AuthProviderType.LDAP,
           identifier: 'cy-ldap',
           providerName: 'cy LDAP'
         }
@@ -76,7 +76,7 @@ describe('When logged-out ', () => {
     it('sign-in button points to auth-provider', () => {
       initLoggedOutTestWithCustomAuthProviders(cy, [
         {
-          type: ProviderType.OIDC,
+          type: AuthProviderType.OIDC,
           identifier: 'github',
           providerName: 'GitHub',
           theme: 'github'
@@ -94,13 +94,13 @@ describe('When logged-out ', () => {
     it('sign-in button points to login route', () => {
       initLoggedOutTestWithCustomAuthProviders(cy, [
         {
-          type: ProviderType.OIDC,
+          type: AuthProviderType.OIDC,
           identifier: 'github',
           providerName: 'GitHub',
           theme: 'github'
         },
         {
-          type: ProviderType.OIDC,
+          type: AuthProviderType.OIDC,
           identifier: 'gitlab',
           providerName: 'GitLab',
           theme: 'gitlab'
@@ -117,13 +117,13 @@ describe('When logged-out ', () => {
     it('sign-in button points to login route', () => {
       initLoggedOutTestWithCustomAuthProviders(cy, [
         {
-          type: ProviderType.OIDC,
+          type: AuthProviderType.OIDC,
           identifier: 'github',
           providerName: 'GitHub',
           theme: 'github'
         },
         {
-          type: ProviderType.LOCAL
+          type: AuthProviderType.LOCAL
         }
       ])
       cy.getByCypressId('sign-in-button')

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,8 +10,8 @@ import { AppConfig } from '../../config/app.config';
 import { User } from '../../database/user.entity';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { Note } from '../../notes/note.entity';
-import { NotePermission } from '../../permissions/note-permission.enum';
-import { PermissionsService } from '../../permissions/permissions.service';
+import { NotePermissionLevel } from '../../permissions/note-permission.enum';
+import { PermissionService } from '../../permissions/permission.service';
 import { Revision } from '../../revisions/revision.entity';
 import { RevisionsService } from '../../revisions/revisions.service';
 import { RealtimeConnection } from './realtime-connection';
@@ -29,7 +29,7 @@ describe('RealtimeNoteService', () => {
   let realtimeNoteService: RealtimeNoteService;
   let revisionsService: RevisionsService;
   let realtimeNoteStore: RealtimeNoteStore;
-  let mockedPermissionService: PermissionsService;
+  let mockedPermissionService: PermissionService;
   let consoleLoggerService: ConsoleLoggerService;
   let mockedAppConfig: AppConfig;
   let addIntervalSpy: jest.SpyInstance;
@@ -91,14 +91,14 @@ describe('RealtimeNoteService', () => {
     });
 
     mockedAppConfig = Mock.of<AppConfig>({ persistInterval: 0 });
-    mockedPermissionService = Mock.of<PermissionsService>({
+    mockedPermissionService = Mock.of<PermissionService>({
       determinePermission: async (user: User | null) => {
         if (user?.username === readWriteUsername) {
-          return NotePermission.WRITE;
+          return NotePermissionLevel.WRITE;
         } else if (user?.username === onlyReadUsername) {
-          return NotePermission.READ;
+          return NotePermissionLevel.READ;
         } else {
-          return NotePermission.DENY;
+          return NotePermissionLevel.DENY;
         }
       },
     });

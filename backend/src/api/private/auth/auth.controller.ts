@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
-  FullUserInfoDto,
+  AuthProviderType,
   LogoutResponseDto,
   PendingUserConfirmationDto,
-  ProviderType,
+  PendingUserInfoDto,
 } from '@hedgedoc/commons';
 import {
   BadRequestException,
@@ -15,6 +15,7 @@ import {
   Controller,
   Delete,
   Get,
+  InternalServerErrorException,
   Put,
   Req,
   UseGuards,
@@ -23,9 +24,10 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { IdentityService } from '../../../auth/identity.service';
 import { OidcService } from '../../../auth/oidc/oidc.service';
-import { RequestWithSession, SessionGuard } from '../../../auth/session.guard';
+import { SessionGuard } from '../../../auth/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { OpenApi } from '../../utils/openapi.decorator';
+import { OpenApi } from '../../utils/decorators/openapi.decorator';
+import { RequestWithSession } from '../../utils/request.type';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -43,7 +45,7 @@ export class AuthController {
   @OpenApi(200, 400, 401)
   logout(@Req() request: RequestWithSession): LogoutResponseDto {
     let logoutUrl: string | null = null;
-    if (request.session.authProviderType === ProviderType.OIDC) {
+    if (request.session.authProviderType === AuthProviderType.OIDC) {
       logoutUrl = this.oidcService.getLogoutUrl(request);
     }
     request.session.destroy((err) => {
@@ -53,7 +55,7 @@ export class AuthController {
           undefined,
           'logout',
         );
-        throw new BadRequestException('Unable to log out');
+        throw new InternalServerErrorException('Unable to log out');
       }
     });
     return {
@@ -63,7 +65,9 @@ export class AuthController {
 
   @Get('pending-user')
   @OpenApi(200, 400)
-  getPendingUserData(@Req() request: RequestWithSession): FullUserInfoDto {
+  getPendingUserData(
+    @Req() request: RequestWithSession,
+  ): Partial<PendingUserInfoDto> {
     if (
       !request.session.newUserData ||
       !request.session.authProviderIdentifier ||
@@ -78,7 +82,7 @@ export class AuthController {
   @OpenApi(204, 400)
   async confirmPendingUserData(
     @Req() request: RequestWithSession,
-    @Body() updatedUserInfo: PendingUserConfirmationDto,
+    @Body() pendingUserConfirmationData: PendingUserConfirmationDto,
   ): Promise<void> {
     if (
       !request.session.newUserData ||
@@ -88,14 +92,14 @@ export class AuthController {
     ) {
       throw new BadRequestException('No pending user data');
     }
-    const identity = await this.identityService.createUserWithIdentity(
-      request.session.newUserData,
-      updatedUserInfo,
-      request.session.authProviderType,
-      request.session.authProviderIdentifier,
-      request.session.providerUserId,
-    );
-    request.session.username = (await identity.user).username;
+    request.session.userId =
+      await this.identityService.createUserWithIdentityFromPendingUserConfirmation(
+        request.session.newUserData,
+        pendingUserConfirmationData,
+        request.session.authProviderType,
+        request.session.authProviderIdentifier,
+        request.session.providerUserId,
+      );
     // Cleanup
     request.session.newUserData = undefined;
   }

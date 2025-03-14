@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
+  AuthProviderType,
   LdapLoginDto,
   LdapLoginResponseDto,
-  ProviderType,
 } from '@hedgedoc/commons';
 import {
   Body,
@@ -20,11 +20,12 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { IdentityService } from '../../../../auth/identity.service';
 import { LdapService } from '../../../../auth/ldap/ldap.service';
-import { RequestWithSession } from '../../../../auth/session.guard';
+import { FieldNameIdentity } from '../../../../database/types';
 import { NotInDBError } from '../../../../errors/errors';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { UsersService } from '../../../../users/users.service';
-import { OpenApi } from '../../../utils/openapi.decorator';
+import { OpenApi } from '../../../utils/decorators/openapi.decorator';
+import { RequestWithSession } from '../../../utils/request.type';
 
 @ApiTags('auth')
 @Controller('/auth/ldap')
@@ -53,26 +54,24 @@ export class LdapController {
       loginDto.password,
     );
     try {
-      request.session.authProviderType = ProviderType.LDAP;
+      request.session.authProviderType = AuthProviderType.LDAP;
       request.session.authProviderIdentifier = ldapIdentifier;
       request.session.providerUserId = userInfo.id;
-      await this.identityService.getIdentityFromUserIdAndProviderType(
-        userInfo.id,
-        ProviderType.LDAP,
-        ldapIdentifier,
-      );
-      if (this.identityService.mayUpdateIdentity(ldapIdentifier)) {
-        const user = await this.usersService.getUserByUsername(
-          loginDto.username.toLowerCase(),
+      const identity =
+        await this.identityService.getIdentityFromUserIdAndProviderType(
+          userInfo.id,
+          AuthProviderType.LDAP,
+          ldapIdentifier,
         );
+      if (this.identityService.mayUpdateIdentity(ldapIdentifier)) {
         await this.usersService.updateUser(
-          user,
+          identity[FieldNameIdentity.userId],
           userInfo.displayName,
           userInfo.email,
           userInfo.photoUrl,
         );
       }
-      request.session.username = loginDto.username;
+      request.session.userId = identity[FieldNameIdentity.userId];
       return { newUser: false };
     } catch (error) {
       if (error instanceof NotInDBError) {

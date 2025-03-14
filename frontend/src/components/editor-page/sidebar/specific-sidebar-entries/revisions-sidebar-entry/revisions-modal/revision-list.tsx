@@ -12,11 +12,11 @@ import React, { useMemo } from 'react'
 import { ListGroup } from 'react-bootstrap'
 
 interface RevisionListProps {
-  selectedRevisionId?: number
+  selectedRevisionId?: string
   revisions?: RevisionMetadataDto[]
   loadingRevisions: boolean
   error?: Error | boolean
-  onRevisionSelect: (selectedRevisionId: number) => void
+  onRevisionSelect: (selectedRevisionId: string) => void
 }
 
 /**
@@ -47,10 +47,10 @@ export const RevisionList: React.FC<RevisionListProps> = ({
       })
       .map((revisionListEntry) => (
         <RevisionListEntry
-          active={selectedRevisionId === revisionListEntry.id}
-          onSelect={() => onRevisionSelect(revisionListEntry.id)}
+          active={selectedRevisionId === revisionListEntry.uuid}
+          onSelect={() => onRevisionSelect(revisionListEntry.uuid)}
           revision={revisionListEntry}
-          key={revisionListEntry.id}
+          key={revisionListEntry.uuid}
         />
       ))
   }, [loadingRevisions, onRevisionSelect, revisions, selectedRevisionId])

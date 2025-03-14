@@ -7,7 +7,10 @@ import { z } from 'zod'
 
 export const UserInfoSchema = z
   .object({
-    username: z.string().describe("The user's username"),
+    username: z
+      .string()
+      .nullable()
+      .describe("The user's username. If null this is a guest."),
     displayName: z.string().describe('The display name of the user'),
     photoUrl: z
       .string()

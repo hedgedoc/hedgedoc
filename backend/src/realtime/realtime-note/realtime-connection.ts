@@ -6,8 +6,6 @@
 import { MessageTransporter, YDocSyncServerAdapter } from '@hedgedoc/commons';
 import { Logger } from '@nestjs/common';
 
-import { User } from '../../database/user.entity';
-import { generateRandomName } from './random-word-lists/name-randomizer';
 import { RealtimeNote } from './realtime-note';
 import { RealtimeUserStatusAdapter } from './realtime-user-status-adapter';
 
@@ -19,24 +17,28 @@ export class RealtimeConnection {
   private readonly transporter: MessageTransporter;
   private readonly yDocSyncAdapter: YDocSyncServerAdapter;
   private readonly realtimeUserStateAdapter: RealtimeUserStatusAdapter;
-  private readonly displayName: string;
 
   /**
    * Instantiates the connection wrapper.
    *
    * @param messageTransporter The message transporter that handles the communication with the client.
-   * @param user The user of the client
+   * @param userId The id of the user of the client
+   * @param username The username of the user of the client
+   * @param displayName The displayName of the user of the client
+   * @param authorStyle The authorStyle of the user of the client
    * @param realtimeNote The {@link RealtimeNote} that the client connected to.
    * @param acceptEdits If edits by this connection should be accepted.
    * @throws Error if the socket is not open
    */
   constructor(
     messageTransporter: MessageTransporter,
-    private user: User | null,
+    private userId: number,
+    private username: string | null,
+    private displayName: string,
+    private authorStyle: number,
     private realtimeNote: RealtimeNote,
     public acceptEdits: boolean,
   ) {
-    this.displayName = user?.displayName ?? generateRandomName();
     this.transporter = messageTransporter;
 
     this.transporter.on('disconnected', () => {
@@ -48,8 +50,9 @@ export class RealtimeConnection {
       () => acceptEdits,
     );
     this.realtimeUserStateAdapter = new RealtimeUserStatusAdapter(
-      this.user?.username ?? null,
-      this.getDisplayName(),
+      this.username ?? null,
+      this.displayName,
+      this.authorStyle,
       () =>
         this.realtimeNote
           .getConnections()
@@ -67,16 +70,24 @@ export class RealtimeConnection {
     return this.transporter;
   }
 
-  public getUser(): User | null {
-    return this.user;
-  }
-
   public getSyncAdapter(): YDocSyncServerAdapter {
     return this.yDocSyncAdapter;
   }
 
+  public getUserId(): number {
+    return this.userId;
+  }
+
   public getDisplayName(): string {
     return this.displayName;
+  }
+
+  public getUsername(): string | null {
+    return this.username;
+  }
+
+  public getAuthorStyle(): number {
+    return this.authorStyle;
   }
 
   public getRealtimeNote(): RealtimeNote {

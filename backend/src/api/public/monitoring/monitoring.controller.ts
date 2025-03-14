@@ -7,9 +7,9 @@ import { ServerStatusDto, ServerStatusSchema } from '@hedgedoc/commons';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
-import { ApiTokenGuard } from '../../../api-token/api-token.guard';
 import { MonitoringService } from '../../../monitoring/monitoring.service';
-import { OpenApi } from '../../utils/openapi.decorator';
+import { OpenApi } from '../../utils/decorators/openapi.decorator';
+import { ApiTokenGuard } from '../../utils/guards/api-token.guard';
 
 @UseGuards(ApiTokenGuard)
 @OpenApi(401)

@@ -57,7 +57,7 @@ describe('Alias', () => {
         primaryAlias: false,
         noteId: publicId,
       });
-      expect(note.body.metadata.primaryAddress).toEqual(testAlias);
+      expect(note.body.metadata.primaryAlias).toEqual(testAlias);
       expect(note.body.metadata.id).toEqual(publicId);
     });
 
@@ -136,7 +136,7 @@ describe('Alias', () => {
         primaryAlias: true,
         noteId: publicId,
       });
-      expect(note.body.metadata.primaryAddress).toEqual(testAlias);
+      expect(note.body.metadata.primaryAlias).toEqual(testAlias);
       expect(note.body.metadata.id).toEqual(publicId);
     });
 

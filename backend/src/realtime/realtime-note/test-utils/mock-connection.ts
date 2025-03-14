@@ -9,7 +9,7 @@ import {
 } from '@hedgedoc/commons';
 import { Mock } from 'ts-mockery';
 
-import { User } from '../../../database/user.entity';
+import { FieldNameUser, User } from '../../../database/types';
 import { RealtimeConnection } from '../realtime-connection';
 import { RealtimeNote } from '../realtime-note';
 import { RealtimeUserStatusAdapter } from '../realtime-user-status-adapter';
@@ -21,14 +21,14 @@ enum RealtimeUserState {
   WITH_READONLY,
 }
 
-const MOCK_FALLBACK_USERNAME: string = 'mock';
-
 /**
  * Creates a mocked {@link RealtimeConnection realtime connection}.
  */
 export class MockConnectionBuilder {
+  private userId: number;
   private username: string | null;
-  private displayName: string | undefined;
+  private displayName: string;
+  private authorStyle: number;
   private includeRealtimeUserStatus: RealtimeUserState =
     RealtimeUserState.WITHOUT;
 
@@ -42,6 +42,8 @@ export class MockConnectionBuilder {
   public withGuestUser(displayName: string): this {
     this.username = null;
     this.displayName = displayName;
+    this.authorStyle = 8;
+    this.userId = 1000;
     return this;
   }
 
@@ -50,10 +52,11 @@ export class MockConnectionBuilder {
    *
    * @param username the username of the mocked user. If this value is omitted then the builder will user a {@link MOCK_FALLBACK_USERNAME fallback}.
    */
-  public withLoggedInUser(username?: string): this {
-    const newUsername = username ?? MOCK_FALLBACK_USERNAME;
-    this.username = newUsername;
-    this.displayName = newUsername;
+  public withLoggedInUser(username: string): this {
+    this.username = username;
+    this.displayName = username;
+    this.userId = 1001;
+    this.authorStyle = 1;
     return this;
   }
 
@@ -80,16 +83,15 @@ export class MockConnectionBuilder {
    * @throws Error if neither withGuestUser nor withLoggedInUser has been called.
    */
   public build(): RealtimeConnection {
-    const displayName = this.deriveDisplayName();
-
     const transporter = new MockMessageTransporter();
     transporter.setAdapter(new MockedBackendTransportAdapter(''));
     const realtimeUserStateAdapter: RealtimeUserStatusAdapter =
       this.includeRealtimeUserStatus === RealtimeUserState.WITHOUT
         ? Mock.of<RealtimeUserStatusAdapter>({})
         : new RealtimeUserStatusAdapter(
-            this.username ?? null,
-            displayName,
+            this.username,
+            this.displayName,
+            this.authorStyle,
             () =>
               this.realtimeNote
                 .getConnections()
@@ -100,18 +102,19 @@ export class MockConnectionBuilder {
               RealtimeUserState.WITH_READWRITE,
           );
 
-    const mockUser =
-      this.username === null
-        ? null
-        : Mock.of<User>({
-            username: this.username,
-            displayName: this.displayName,
-          });
+    const mockUser = Mock.of<User>({
+      [FieldNameUser.username]: this.username,
+      [FieldNameUser.displayName]: this.displayName,
+      [FieldNameUser.id]: this.userId,
+      [FieldNameUser.authorStyle]: this.authorStyle,
+    });
     const yDocSyncServerAdapter = Mock.of<YDocSyncServerAdapter>({});
 
     const connection = Mock.of<RealtimeConnection>({
-      getUser: jest.fn(() => mockUser),
-      getDisplayName: jest.fn(() => displayName),
+      getUserId: jest.fn(() => mockUser[FieldNameUser.id]),
+      getUsername: jest.fn(() => mockUser[FieldNameUser.username]),
+      getAuthorStyle: jest.fn(() => mockUser[FieldNameUser.authorStyle]),
+      getDisplayName: jest.fn(() => mockUser[FieldNameUser.displayName]),
       getSyncAdapter: jest.fn(() => yDocSyncServerAdapter),
       getTransporter: jest.fn(() => transporter),
       getRealtimeUserStateAdapter: () => realtimeUserStateAdapter,
@@ -128,15 +131,5 @@ export class MockConnectionBuilder {
     jest.advanceTimersByTime(0);
 
     return connection;
-  }
-
-  private deriveDisplayName(): string {
-    if (this.displayName === undefined) {
-      throw new Error(
-        'Neither withGuestUser nor withLoggedInUser has been called.',
-      );
-    }
-
-    return this.displayName;
   }
 }

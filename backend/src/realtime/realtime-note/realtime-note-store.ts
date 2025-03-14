@@ -5,7 +5,6 @@
  */
 import { Injectable } from '@nestjs/common';
 
-import { Note } from '../../notes/note.entity';
 import { RealtimeNote } from './realtime-note';
 
 @Injectable()
@@ -15,29 +14,29 @@ export class RealtimeNoteStore {
   /**
    * Creates a new {@link RealtimeNote} for the given {@link Note} and memorizes it.
    *
-   * @param note The note for which the realtime note should be created
+   * @param noteId The note for which the realtime note should be created
    * @param initialTextContent the initial text content of realtime doc
    * @param initialYjsState the initial yjs state. If provided this will be used instead of the text content
    * @throws Error if there is already an realtime note for the given note.
    * @return The created realtime note
    */
   public create(
-    note: Note,
+    noteId: number,
     initialTextContent: string,
-    initialYjsState?: number[],
+    initialYjsState?: ArrayBuffer,
   ): RealtimeNote {
-    if (this.noteIdToRealtimeNote.has(note.id)) {
-      throw new Error(`Realtime note for note ${note.id} already exists.`);
+    if (this.noteIdToRealtimeNote.has(noteId)) {
+      throw new Error(`Realtime note for note ${noteId} already exists.`);
     }
     const realtimeNote = new RealtimeNote(
-      note,
+      noteId,
       initialTextContent,
       initialYjsState,
     );
     realtimeNote.on('destroy', () => {
-      this.noteIdToRealtimeNote.delete(note.id);
+      this.noteIdToRealtimeNote.delete(noteId);
     });
-    this.noteIdToRealtimeNote.set(note.id, realtimeNote);
+    this.noteIdToRealtimeNote.set(noteId, realtimeNote);
     return realtimeNote;
   }
 

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import argon2 from '@node-rs/argon2';
-import { randomBytes } from 'crypto';
 
 import {
   bufferToBase64Url,

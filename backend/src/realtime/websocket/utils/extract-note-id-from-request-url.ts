@@ -12,17 +12,19 @@ import { IncomingMessage } from 'http';
  * @return The extracted note id
  * @throws Error if the given string isn't a valid realtime URL path
  */
-export function extractNoteIdFromRequestUrl(request: IncomingMessage): string {
+export function extractNoteAliasFromRequestUrl(
+  request: IncomingMessage,
+): string {
   if (request.url === undefined) {
     throw new Error('No URL found in request');
   }
   // A valid domain name is needed for the URL constructor, although not being used here.
-  // The example.org domain should be safe to use according to RFC 6761 §6.5.
+  // The example.org domain should be safe to use, according to RFC 6761 §6.5.
   const url = new URL(request.url, 'https://example.org');
-  const noteId = url.searchParams.get('noteId');
-  if (noteId === null || noteId === '') {
-    throw new Error("Path doesn't contain parameter noteId");
+  const noteAlias = url.searchParams.get('noteAlias');
+  if (noteAlias === null || noteAlias === '') {
+    throw new Error("Path doesn't contain parameter noteAlias");
   } else {
-    return noteId;
+    return noteAlias;
   }
 }

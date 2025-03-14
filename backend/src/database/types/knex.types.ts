@@ -5,7 +5,7 @@
  */
 import { Knex } from 'knex';
 
-import { Alias, TypeUpdateAlias } from './alias';
+import { Alias, TypeInsertAlias, TypeUpdateAlias } from './alias';
 import { ApiToken, TypeInsertApiToken, TypeUpdateApiToken } from './api-token';
 import { Group, TypeInsertGroup, TypeUpdateGroup } from './group';
 import { Identity, TypeInsertIdentity, TypeUpdateIdentity } from './identity';
@@ -49,7 +49,11 @@ import { TypeInsertUser, TypeUpdateUser, User } from './user';
 /* eslint-disable @typescript-eslint/naming-convention */
 declare module 'knex/types/tables.js' {
   interface Tables {
-    [TableAlias]: Knex.CompositeTableType<Alias, Alias, TypeUpdateAlias>;
+    [TableAlias]: Knex.CompositeTableType<
+      Alias,
+      TypeInsertAlias,
+      TypeUpdateAlias
+    >;
     [TableApiToken]: Knex.CompositeTableType<
       ApiToken,
       TypeInsertApiToken,

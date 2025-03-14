@@ -8,7 +8,7 @@ import { z } from 'zod'
 
 export const AliasCreateSchema = z
   .object({
-    noteIdOrAlias: z
+    noteAlias: z
       .string()
       .describe(
         'The note id, which identifies the note the alias should be added to',

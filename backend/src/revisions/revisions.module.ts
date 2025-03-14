@@ -5,24 +5,15 @@
  */
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { KnexModule } from 'nest-knexjs';
 
-import { AuthorsModule } from '../authors/authors.module';
+import { AliasModule } from '../alias/alias.module';
 import { LoggerModule } from '../logger/logger.module';
-import { Note } from '../notes/note.entity';
-import { Edit } from './edit.entity';
-import { EditService } from './edit.service';
-import { Revision } from './revision.entity';
 import { RevisionsService } from './revisions.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Revision, Edit, Note]),
-    LoggerModule,
-    ConfigModule,
-    AuthorsModule,
-  ],
-  providers: [RevisionsService, EditService],
-  exports: [RevisionsService, EditService],
+  imports: [KnexModule, LoggerModule, ConfigModule, AliasModule],
+  providers: [RevisionsService],
+  exports: [RevisionsService],
 })
 export class RevisionsModule {}

@@ -12,12 +12,14 @@ import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Connection, createConnection } from 'typeorm';
 
-import { ApiTokenGuard } from '../src/api-token/api-token.guard';
+import { AliasModule } from '../src/alias/alias.module';
+import { AliasService } from '../src/alias/alias.service';
 import { ApiTokenModule } from '../src/api-token/api-token.module';
 import { ApiTokenService } from '../src/api-token/api-token.service';
-import { MockApiTokenGuard } from '../src/api-token/mock-api-token.guard';
 import { PrivateApiModule } from '../src/api/private/private-api.module';
 import { PublicApiModule } from '../src/api/public/public-api.module';
+import { ApiTokenGuard } from '../src/api/utils/guards/api-token.guard';
+import { MockApiTokenGuard } from '../src/api/utils/guards/mock-api-token.guard';
 import { setupApp } from '../src/app-init';
 import { AuthModule } from '../src/auth/auth.module';
 import { IdentityService } from '../src/auth/identity.service';
@@ -73,12 +75,10 @@ import { LoggerModule } from '../src/logger/logger.module';
 import { MediaModule } from '../src/media/media.module';
 import { MediaService } from '../src/media/media.service';
 import { MonitoringModule } from '../src/monitoring/monitoring.module';
-import { AliasService } from '../src/notes/alias.service';
 import { Note } from '../src/notes/note.entity';
-import { NotesModule } from '../src/notes/notes.module';
-import { NotesService } from '../src/notes/notes.service';
+import { NoteService } from '../src/notes/note.service';
+import { PermissionService } from '../src/permissions/permission.service';
 import { PermissionsModule } from '../src/permissions/permissions.module';
-import { PermissionsService } from '../src/permissions/permissions.service';
 import { RevisionsModule } from '../src/revisions/revisions.module';
 import { RevisionsService } from '../src/revisions/revisions.service';
 import { SessionModule } from '../src/sessions/session.module';
@@ -107,7 +107,7 @@ export class TestSetup {
   localIdentityService: LocalService;
   ldapService: LdapService;
   oidcService: OidcService;
-  notesService: NotesService;
+  notesService: NoteService;
   mediaService: MediaService;
   historyService: HistoryService;
   aliasService: AliasService;
@@ -119,7 +119,7 @@ export class TestSetup {
   authTokens: ApiTokenWithSecretDto[] = [];
   anonymousNotes: Note[] = [];
   ownedNotes: Note[] = [];
-  permissionsService: PermissionsService;
+  permissionsService: PermissionService;
 
   /**
    * Cleans up remnants from a test run from the database
@@ -282,7 +282,7 @@ export class TestSetupBuilder {
             ),
           ],
         }),
-        NotesModule,
+        AliasModule,
         UsersModule,
         RevisionsModule,
         AuthorsModule,
@@ -333,7 +333,7 @@ export class TestSetupBuilder {
     this.testSetup.localIdentityService =
       this.testSetup.moduleRef.get<LocalService>(LocalService);
     this.testSetup.notesService =
-      this.testSetup.moduleRef.get<NotesService>(NotesService);
+      this.testSetup.moduleRef.get<NoteService>(NoteService);
     this.testSetup.mediaService =
       this.testSetup.moduleRef.get<MediaService>(MediaService);
     this.testSetup.historyService =
@@ -343,7 +343,7 @@ export class TestSetupBuilder {
     this.testSetup.publicAuthTokenService =
       this.testSetup.moduleRef.get<ApiTokenService>(ApiTokenService);
     this.testSetup.permissionsService =
-      this.testSetup.moduleRef.get<PermissionsService>(PermissionsService);
+      this.testSetup.moduleRef.get<PermissionService>(PermissionService);
     this.testSetup.sessionService =
       this.testSetup.moduleRef.get<SessionService>(SessionService);
     this.testSetup.revisionsService =
