@@ -24,3 +24,8 @@ export enum FieldNameNoteUserPermission {
 }
 
 export const TableNoteUserPermission = 'note_user_permission';
+
+export type TypeUpdateNoteUserPermission = Pick<
+  NoteUserPermission,
+  FieldNameNoteUserPermission.canEdit
+>;
