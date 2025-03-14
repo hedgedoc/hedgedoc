@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { Username } from '../../utils/username';
 
 /**
  * The user object represents either a registered user in the instance or a guest user.
@@ -21,13 +20,13 @@ export interface User {
   [FieldNameUser.id]: number;
 
   /** The user's chosen username or null if it is a guest user */
-  [FieldNameUser.username]: Username | null;
+  [FieldNameUser.username]: string | null;
 
   /** The guest user's UUID or null if it is a registered user */
   [FieldNameUser.guestUuid]: string | null;
 
   /** The user's chosen display name */
-  [FieldNameUser.displayName]: string | null;
+  [FieldNameUser.displayName]: string;
 
   /** Timestamp when the user was created */
   [FieldNameUser.createdAt]: Date;

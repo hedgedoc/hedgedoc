@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,7 +14,6 @@ import { ErrorExceptionMapping } from './errors/error-mapping';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 import { BackendType } from './media/backends/backend-type.enum';
 import { SessionService } from './sessions/session.service';
-import { setupSpecialGroups } from './utils/createSpecialGroups';
 import { setupSessionMiddleware } from './utils/session';
 import { setupValidationPipe } from './utils/setup-pipes';
 import { setupPrivateApiDocs, setupPublicApiDocs } from './utils/swagger';
@@ -29,12 +28,12 @@ export async function setupApp(
   mediaConfig: MediaConfig,
   logger: ConsoleLoggerService,
 ): Promise<void> {
+  // Setup OpenAPI documentation
   await setupPublicApiDocs(app);
   logger.log(
     `Serving OpenAPI docs for public API under '/api/doc/v2'`,
     'AppBootstrap',
   );
-
   if (process.env.NODE_ENV === 'development') {
     await setupPrivateApiDocs(app);
     logger.log(
@@ -43,14 +42,14 @@ export async function setupApp(
     );
   }
 
-  await setupSpecialGroups(app);
-
+  // Setup session handling
   setupSessionMiddleware(
     app,
     authConfig,
-    app.get(SessionService).getTypeormStore(),
+    app.get(SessionService).getSessionStore(),
   );
 
+  // Enable web security aspects
   app.enableCors({
     origin: appConfig.rendererBaseUrl,
   });
@@ -58,9 +57,14 @@ export async function setupApp(
     `Enabling CORS for '${appConfig.rendererBaseUrl}'`,
     'AppBootstrap',
   );
+  // TODO Add rate limiting (#442)
+  // TODO Add CSP (#1309)
+  // TODO Add common security headers and CSRF (#201)
 
+  // Setup class-validator for incoming API request data
   app.useGlobalPipes(setupValidationPipe(logger));
 
+  // Map URL paths to directories
   if (mediaConfig.backend.use === BackendType.FILESYSTEM) {
     logger.log(
       `Serving the local folder '${mediaConfig.backend.filesystem.uploadPath}' under '/uploads'`,
@@ -70,7 +74,6 @@ export async function setupApp(
       prefix: '/uploads/',
     });
   }
-
   logger.log(
     `Serving the local folder 'public' under '/public'`,
     'AppBootstrap',
@@ -78,9 +81,14 @@ export async function setupApp(
   app.useStaticAssets('public', {
     prefix: '/public/',
   });
+  // TODO Evaluate whether we really need this folder,
+  //  only use-cases for now are intro.md and motd.md which could be API endpoints as well
 
+  // Configure WebSocket and error message handling
   const { httpAdapter } = app.get(HttpAdapterHost);
-  app.useGlobalFilters(new ErrorExceptionMapping(httpAdapter));
+  app.useGlobalFilters(new ErrorExceptionMapping(logger, httpAdapter));
   app.useWebSocketAdapter(new WsAdapter(app));
+
+  // Enable hooks on app shutdown, like saving notes into the database
   app.enableShutdownHooks();
 }

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { GuestAccess } from '@hedgedoc/commons';
+import { PermissionLevel } from '@hedgedoc/commons';
 import { ConfigFactoryKeyHost, registerAs } from '@nestjs/config';
 import { ConfigFactory } from '@nestjs/config/dist/interfaces';
 
@@ -20,7 +20,7 @@ export function createDefaultMockNoteConfig(): NoteConfig {
         loggedIn: DefaultAccessLevel.WRITE,
       },
     },
-    guestAccess: GuestAccess.CREATE,
+    guestAccess: PermissionLevel.CREATE,
     revisionRetentionDays: 0,
   };
 }

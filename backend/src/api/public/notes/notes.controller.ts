@@ -12,7 +12,6 @@ import {
   NoteMetadataSchema,
   NotePermissionsDto,
   NotePermissionsSchema,
-  NotePermissionsUpdateDto,
   NoteSchema,
   RevisionDto,
   RevisionMetadataDto,
@@ -20,7 +19,6 @@ import {
   RevisionSchema,
 } from '@hedgedoc/commons';
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -33,26 +31,22 @@ import {
 } from '@nestjs/common';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
-import { ApiTokenGuard } from '../../../api-token/api-token.guard';
-import { User } from '../../../database/user.entity';
-import { NotInDBError } from '../../../errors/errors';
 import { GroupsService } from '../../../groups/groups.service';
-import { HistoryService } from '../../../history/history.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
-import { Note } from '../../../notes/note.entity';
-import { NotesService } from '../../../notes/notes.service';
+import { NoteService } from '../../../notes/note.service';
+import { PermissionService } from '../../../permissions/permission.service';
 import { PermissionsGuard } from '../../../permissions/permissions.guard';
-import { PermissionsService } from '../../../permissions/permissions.service';
 import { RequirePermission } from '../../../permissions/require-permission.decorator';
 import { RequiredPermission } from '../../../permissions/required-permission.enum';
 import { RevisionsService } from '../../../revisions/revisions.service';
 import { UsersService } from '../../../users/users.service';
-import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
-import { MarkdownBody } from '../../utils/markdown-body.decorator';
-import { OpenApi } from '../../utils/openapi.decorator';
-import { RequestNote } from '../../utils/request-note.decorator';
-import { RequestUser } from '../../utils/request-user.decorator';
+import { MarkdownBody } from '../../utils/decorators/markdown-body.decorator';
+import { OpenApi } from '../../utils/decorators/openapi.decorator';
+import { RequestNoteId } from '../../utils/decorators/request-note-id.decorator';
+import { RequestUserId } from '../../utils/decorators/request-user-id.decorator';
+import { ApiTokenGuard } from '../../utils/guards/api-token.guard';
+import { GetNoteIdInterceptor } from '../../utils/interceptors/get-note-id.interceptor';
 
 @UseGuards(ApiTokenGuard, PermissionsGuard)
 @OpenApi(401)
@@ -62,13 +56,12 @@ import { RequestUser } from '../../utils/request-user.decorator';
 export class NotesController {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    private noteService: NotesService,
+    private noteService: NoteService,
     private userService: UsersService,
     private groupService: GroupsService,
     private revisionsService: RevisionsService,
-    private historyService: HistoryService,
     private mediaService: MediaService,
-    private permissionService: PermissionsService,
+    private permissionService: PermissionService,
   ) {
     this.logger.setContext(NotesController.name);
   }
@@ -77,16 +70,15 @@ export class NotesController {
   @Post()
   @OpenApi(201, 403, 409, 413)
   async createNote(
-    @RequestUser() user: User,
+    @RequestUserId() userId: number,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
     this.logger.debug('Got raw markdown:\n' + text);
-    return await this.noteService.toNoteDto(
-      await this.noteService.createNote(text, user),
-    );
+    const newNote = await this.noteService.createNote(text, userId);
+    return await this.noteService.toNoteDto(newNote);
   }
 
-  @UseInterceptors(GetNoteInterceptor)
+  @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(RequiredPermission.READ)
   @Get(':noteIdOrAlias')
   @OpenApi(
@@ -99,11 +91,10 @@ export class NotesController {
     404,
   )
   async getNote(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
+    @RequestUserId() _userId: number,
+    @RequestNoteId() noteId: number,
   ): Promise<NoteDto> {
-    await this.historyService.updateHistoryEntryTimestamp(note, user);
-    return await this.noteService.toNoteDto(note);
+    return await this.noteService.toNoteDto(noteId);
   }
 
   @RequirePermission(RequiredPermission.CREATE)
@@ -120,26 +111,26 @@ export class NotesController {
     413,
   )
   async createNamedNote(
-    @RequestUser() user: User,
+    @RequestUserId() userId: number,
     @Param('noteAlias') noteAlias: string,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
     this.logger.debug('Got raw markdown:\n' + text, 'createNamedNote');
-    return await this.noteService.toNoteDto(
-      await this.noteService.createNote(text, user, noteAlias),
-    );
+    const noteId = await this.noteService.createNote(text, userId, noteAlias);
+    return await this.noteService.toNoteDto(noteId);
   }
 
-  @UseInterceptors(GetNoteInterceptor)
+  @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(RequiredPermission.OWNER)
   @Delete(':noteIdOrAlias')
   @OpenApi(204, 403, 404, 500)
   async deleteNote(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
+    @RequestUserId() userId: number,
+    @RequestNoteId() noteId: number,
     @Body() noteMediaDeletionDto: NoteMediaDeletionDto,
   ): Promise<void> {
-    const mediaUploads = await this.mediaService.listUploadsByNote(note);
+    const mediaUploads =
+      await this.mediaService.getMediaUploadUuidsByNoteId(noteId);
     for (const mediaUpload of mediaUploads) {
       if (!noteMediaDeletionDto.keepMedia) {
         await this.mediaService.deleteFile(mediaUpload);
@@ -147,13 +138,13 @@ export class NotesController {
         await this.mediaService.removeNoteFromMediaUpload(mediaUpload);
       }
     }
-    this.logger.debug(`Deleting note: ${note.id}`, 'deleteNote');
-    await this.noteService.deleteNote(note);
-    this.logger.debug(`Successfully deleted ${note.id}`, 'deleteNote');
+    this.logger.debug(`Deleting note: ${noteId}`, 'deleteNote');
+    await this.noteService.deleteNote(noteId);
+    this.logger.debug(`Successfully deleted ${noteId}`, 'deleteNote');
     return;
   }
 
-  @UseInterceptors(GetNoteInterceptor)
+  @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(RequiredPermission.WRITE)
   @Put(':noteIdOrAlias')
   @OpenApi(
@@ -166,17 +157,16 @@ export class NotesController {
     404,
   )
   async updateNote(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
+    @RequestUserId() userId: number,
+    @RequestNoteId() noteId: number,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
     this.logger.debug('Got raw markdown:\n' + text, 'updateNote');
-    return await this.noteService.toNoteDto(
-      await this.noteService.updateNote(note, text),
-    );
+    await this.noteService.updateNote(noteId, text);
+    return await this.noteService.toNoteDto(noteId);
   }
 
-  @UseInterceptors(GetNoteInterceptor)
+  @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(RequiredPermission.READ)
   @Get(':noteIdOrAlias/content')
   @OpenApi(
@@ -189,13 +179,13 @@ export class NotesController {
     404,
   )
   async getNoteContent(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
+    @RequestUserId() userId: number,
+    @RequestNoteId() noteId: number,
   ): Promise<string> {
-    return await this.noteService.getNoteContent(note);
+    return await this.noteService.getNoteContent(noteId);
   }
 
-  @UseInterceptors(GetNoteInterceptor)
+  @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(RequiredPermission.READ)
   @Get(':noteIdOrAlias/metadata')
   @OpenApi(
@@ -208,35 +198,12 @@ export class NotesController {
     404,
   )
   async getNoteMetadata(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
+    @RequestNoteId() noteId: number,
   ): Promise<NoteMetadataDto> {
-    return await this.noteService.toNoteMetadataDto(note);
+    return await this.noteService.toNoteMetadataDto(noteId);
   }
 
-  @UseInterceptors(GetNoteInterceptor)
-  @RequirePermission(RequiredPermission.OWNER)
-  @Put(':noteIdOrAlias/metadata/permissions')
-  @OpenApi(
-    {
-      code: 200,
-      description: 'The updated permissions of the note',
-      schema: NotePermissionsSchema,
-    },
-    403,
-    404,
-  )
-  async updateNotePermissions(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
-    @Body() updateDto: NotePermissionsUpdateDto,
-  ): Promise<NotePermissionsDto> {
-    return await this.noteService.toNotePermissionsDto(
-      await this.permissionService.updateNotePermissions(note, updateDto),
-    );
-  }
-
-  @UseInterceptors(GetNoteInterceptor)
+  @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(RequiredPermission.READ)
   @Get(':noteIdOrAlias/metadata/permissions')
   @OpenApi(
@@ -249,13 +216,12 @@ export class NotesController {
     404,
   )
   async getPermissions(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
+    @RequestNoteId() noteId: number,
   ): Promise<NotePermissionsDto> {
-    return await this.noteService.toNotePermissionsDto(note);
+    return await this.permissionService.getPermissionsForNote(noteId);
   }
 
-  @UseInterceptors(GetNoteInterceptor)
+  @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(RequiredPermission.OWNER)
   @Put(':noteIdOrAlias/metadata/permissions/users/:userName')
   @OpenApi(
@@ -268,21 +234,21 @@ export class NotesController {
     404,
   )
   async setUserPermission(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
+    @RequestUserId() userId: number,
+    @RequestNoteId() noteId: number,
     @Param('userName') username: string,
     @Body('canEdit') canEdit: boolean,
   ): Promise<NotePermissionsDto> {
-    const permissionUser = await this.userService.getUserByUsername(username);
-    const returnedNote = await this.permissionService.setUserPermission(
-      note,
-      permissionUser,
+    const targetUserId = await this.userService.getUserIdByUsername(username);
+    await this.permissionService.setUserPermission(
+      noteId,
+      targetUserId,
       canEdit,
     );
-    return await this.noteService.toNotePermissionsDto(returnedNote);
+    return await this.permissionService.getPermissionsForNote(noteId);
   }
 
-  @UseInterceptors(GetNoteInterceptor)
+  @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(RequiredPermission.OWNER)
   @Delete(':noteIdOrAlias/metadata/permissions/users/:userName')
   @OpenApi(
@@ -295,28 +261,16 @@ export class NotesController {
     404,
   )
   async removeUserPermission(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
+    @RequestUserId() userId: number,
+    @RequestNoteId() noteId: number,
     @Param('userName') username: string,
   ): Promise<NotePermissionsDto> {
-    try {
-      const permissionUser = await this.userService.getUserByUsername(username);
-      const returnedNote = await this.permissionService.removeUserPermission(
-        note,
-        permissionUser,
-      );
-      return await this.noteService.toNotePermissionsDto(returnedNote);
-    } catch (e) {
-      if (e instanceof NotInDBError) {
-        throw new BadRequestException(
-          "Can't remove user from permissions. User not known.",
-        );
-      }
-      throw e;
-    }
+    const targetUserId = await this.userService.getUserIdByUsername(username);
+    await this.permissionService.removeUserPermission(noteId, targetUserId);
+    return await this.permissionService.getPermissionsForNote(noteId);
   }
 
-  @UseInterceptors(GetNoteInterceptor)
+  @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(RequiredPermission.OWNER)
   @Put(':noteIdOrAlias/metadata/permissions/groups/:groupName')
   @OpenApi(
@@ -329,21 +283,17 @@ export class NotesController {
     404,
   )
   async setGroupPermission(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
+    @RequestUserId() userId: number,
+    @RequestNoteId() noteId: number,
     @Param('groupName') groupName: string,
     @Body('canEdit') canEdit: boolean,
   ): Promise<NotePermissionsDto> {
-    const permissionGroup = await this.groupService.getGroupByName(groupName);
-    const returnedNote = await this.permissionService.setGroupPermission(
-      note,
-      permissionGroup,
-      canEdit,
-    );
-    return await this.noteService.toNotePermissionsDto(returnedNote);
+    const groupId = await this.groupService.getGroupIdByName(groupName);
+    await this.permissionService.setGroupPermission(noteId, groupId, canEdit);
+    return await this.permissionService.getPermissionsForNote(noteId);
   }
 
-  @UseInterceptors(GetNoteInterceptor)
+  @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(RequiredPermission.OWNER)
   @Delete(':noteIdOrAlias/metadata/permissions/groups/:groupName')
   @OpenApi(
@@ -356,19 +306,15 @@ export class NotesController {
     404,
   )
   async removeGroupPermission(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
+    @RequestNoteId() noteId: number,
     @Param('groupName') groupName: string,
   ): Promise<NotePermissionsDto> {
-    const permissionGroup = await this.groupService.getGroupByName(groupName);
-    const returnedNote = await this.permissionService.removeGroupPermission(
-      note,
-      permissionGroup,
-    );
-    return await this.noteService.toNotePermissionsDto(returnedNote);
+    const groupId = await this.groupService.getGroupIdByName(groupName);
+    await this.permissionService.removeGroupPermission(noteId, groupId);
+    return await this.permissionService.getPermissionsForNote(noteId);
   }
 
-  @UseInterceptors(GetNoteInterceptor)
+  @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(RequiredPermission.OWNER)
   @Put(':noteIdOrAlias/metadata/permissions/owner')
   @OpenApi(
@@ -381,17 +327,16 @@ export class NotesController {
     404,
   )
   async changeOwner(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
+    @RequestNoteId() noteId: number,
     @Body('newOwner') newOwner: string,
-  ): Promise<NoteDto> {
-    const owner = await this.userService.getUserByUsername(newOwner);
-    return await this.noteService.toNoteDto(
-      await this.permissionService.changeOwner(note, owner),
-    );
+  ): Promise<NoteMetadataDto> {
+    const ownerUserId = await this.userService.getUserIdByUsername(newOwner);
+    await this.permissionService.changeOwner(noteId, ownerUserId);
+
+    return await this.noteService.toNoteMetadataDto(noteId);
   }
 
-  @UseInterceptors(GetNoteInterceptor)
+  @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(RequiredPermission.READ)
   @Get(':noteIdOrAlias/revisions')
   @OpenApi(
@@ -405,40 +350,30 @@ export class NotesController {
     404,
   )
   async getNoteRevisions(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
+    @RequestNoteId() noteId: number,
   ): Promise<RevisionMetadataDto[]> {
-    const revisions = await this.revisionsService.getAllRevisions(note);
-    return await Promise.all(
-      revisions.map((revision) =>
-        this.revisionsService.toRevisionMetadataDto(revision),
-      ),
-    );
+    return await this.revisionsService.getAllRevisionMetadataDto(noteId);
   }
 
-  @UseInterceptors(GetNoteInterceptor)
+  @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(RequiredPermission.READ)
-  @Get(':noteIdOrAlias/revisions/:revisionId')
+  @Get(':noteIdOrAlias/revisions/:revisionUuid')
   @OpenApi(
     {
       code: 200,
-      description: 'Revision of the note for the given id or alias',
+      description: 'Revision of the note for the given id or aliases',
       schema: RevisionSchema,
     },
     403,
     404,
   )
   async getNoteRevision(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
-    @Param('revisionId') revisionId: number,
+    @Param('revisionUuid') revisionUuid: string,
   ): Promise<RevisionDto> {
-    return await this.revisionsService.toRevisionDto(
-      await this.revisionsService.getRevision(note, revisionId),
-    );
+    return await this.revisionsService.getRevisionDto(revisionUuid);
   }
 
-  @UseInterceptors(GetNoteInterceptor)
+  @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(RequiredPermission.READ)
   @Get(':noteIdOrAlias/media')
   @OpenApi({
@@ -448,12 +383,10 @@ export class NotesController {
     schema: MediaUploadSchema,
   })
   async getNotesMedia(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
+    @RequestNoteId() noteId: number,
   ): Promise<MediaUploadDto[]> {
-    const media = await this.mediaService.listUploadsByNote(note);
-    return await Promise.all(
-      media.map((media) => this.mediaService.toMediaUploadDto(media)),
-    );
+    const mediaUuids =
+      await this.mediaService.getMediaUploadUuidsByNoteId(noteId);
+    return await this.mediaService.getMediaUploadDtosByUuids(mediaUuids);
   }
 }

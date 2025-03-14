@@ -17,7 +17,7 @@ export class YDocSyncServerAdapter extends YDocSyncAdapter {
     this.markAsSynced()
   }
 
-  protected applyIncomingUpdatePayload(update: number[]): void {
+  protected applyIncomingUpdatePayload(update: ArrayBuffer): void {
     if (!this.acceptEditsProvider()) {
       return
     }

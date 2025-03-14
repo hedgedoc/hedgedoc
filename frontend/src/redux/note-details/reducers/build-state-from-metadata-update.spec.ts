@@ -12,14 +12,14 @@ describe('build state from server permissions', () => {
   it('creates a new state with the given permissions', () => {
     const state: NoteDetails = { ...initialState }
     const metadata: NoteMetadataDto = {
-      updateUsername: 'test',
+      lastUpdatedBy: 'test',
       permissions: {
         owner: null,
         sharedToGroups: [],
         sharedToUsers: []
       },
       editedBy: [],
-      primaryAddress: 'test-id',
+      primaryAlias: 'test-id',
       tags: ['test'],
       description: 'test',
       id: 'test-id',
@@ -32,14 +32,14 @@ describe('build state from server permissions', () => {
     }
     expect(buildStateFromMetadataUpdate(state, metadata)).toStrictEqual({
       ...state,
-      updateUsername: 'test',
+      lastUpdatedBy: 'test',
       permissions: {
         owner: null,
         sharedToGroups: [],
         sharedToUsers: []
       },
       editedBy: [],
-      primaryAddress: 'test-id',
+      primaryAlias: 'test-id',
       id: 'test-id',
       aliases: [],
       title: 'test',

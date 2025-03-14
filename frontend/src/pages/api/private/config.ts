@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { FrontendConfigDto } from '@hedgedoc/commons'
-import { ProviderType, GuestAccess } from '@hedgedoc/commons'
+import { AuthProviderType, GuestAccess } from '@hedgedoc/commons'
 import {
   HttpMethod,
   respondToMatchingRequest,
@@ -40,16 +40,16 @@ const initialConfig: FrontendConfigDto = {
   maxDocumentLength: isTestMode ? 200 : 1000000,
   authProviders: [
     {
-      type: ProviderType.LOCAL
+      type: AuthProviderType.LOCAL
     },
     {
-      type: ProviderType.LDAP,
+      type: AuthProviderType.LDAP,
       identifier: 'test-ldap',
       providerName: 'Test LDAP',
       theme: null
     },
     {
-      type: ProviderType.OIDC,
+      type: AuthProviderType.OIDC,
       identifier: 'test-oidc',
       providerName: 'Test OIDC',
       theme: null

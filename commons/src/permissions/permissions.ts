@@ -23,19 +23,19 @@ export const userIsOwner = (
  * Checks if the given user may edit a note.
  *
  * @param permissions The permissions of the note to check
- * @param user The username of the user
+ * @param username The username of the user
  * @return True if the user has the permission to edit the note
  */
 export const userCanEdit = (
   permissions: NotePermissionsDto,
-  user?: string,
+  username?: string,
 ): boolean => {
-  const isOwner = userIsOwner(permissions, user)
+  const isOwner = userIsOwner(permissions, username)
   const mayWriteViaUserPermission = permissions.sharedToUsers.some(
-    (value) => value.canEdit && value.username === user,
+    (value) => value.canEdit && value.username === username,
   )
   const mayWriteViaGroupPermission =
-    !!user &&
+    !!username &&
     permissions.sharedToGroups.some(
       (value) =>
         value.groupName === (SpecialGroup.LOGGED_IN as string) && value.canEdit,

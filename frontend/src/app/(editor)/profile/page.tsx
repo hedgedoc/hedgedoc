@@ -11,7 +11,7 @@
 
  SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ProviderType } from '@hedgedoc/commons'
+import { AuthProviderType } from '@hedgedoc/commons'
 import { Redirect } from '../../../components/common/redirect'
 import { LandingLayout } from '../../../components/landing-layout/landing-layout'
 import { ProfileAccessTokens } from '../../../components/profile-page/access-tokens/profile-access-tokens'
@@ -40,7 +40,7 @@ const ProfilePage: NextPage = () => {
         <Row className='h-100 flex justify-content-center'>
           <Col lg={6}>
             <ProfileDisplayName />
-            {userProvider === ProviderType.LOCAL && <ProfileChangePassword />}
+            {userProvider === AuthProviderType.LOCAL && <ProfileChangePassword />}
             <ProfileAccessTokens />
             <ProfileAccountManagement />
           </Col>

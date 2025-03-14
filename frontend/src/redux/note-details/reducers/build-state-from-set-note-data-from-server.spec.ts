@@ -32,7 +32,7 @@ describe('build state from set note data from server', () => {
     const noteDto: NoteDto = {
       content: 'line1\nline2',
       metadata: {
-        primaryAddress: 'alias',
+        primaryAlias: 'alias',
         version: 5678,
         aliases: [
           {
@@ -64,7 +64,7 @@ describe('build state from set note data from server', () => {
         tags: ['tag'],
         title: 'title',
         updatedAt: '2020-05-25T09:08:34.123',
-        updateUsername: 'updateusername'
+        lastUpdatedBy: 'updateusername'
       },
       editedByAtPosition: [
         {
@@ -110,7 +110,7 @@ describe('build state from set note data from server', () => {
       id: 'id',
       createdAt: DateTime.fromISO('2012-05-25T09:08:34.123').toSeconds(),
       updatedAt: DateTime.fromISO('2020-05-25T09:08:34.123').toSeconds(),
-      updateUsername: 'updateusername',
+      lastUpdatedBy: 'updateusername',
       viewCount: 987,
       aliases: [
         {
@@ -119,7 +119,7 @@ describe('build state from set note data from server', () => {
           primaryAlias: true
         }
       ],
-      primaryAddress: 'alias',
+      primaryAlias: 'alias',
       version: 5678,
       editedBy: ['editedBy'],
       permissions: {

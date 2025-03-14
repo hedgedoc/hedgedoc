@@ -34,7 +34,7 @@ export const MediaBrowserSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   selectedMenuId
 }) => {
   useTranslation()
-  const noteId = useApplicationState((state) => state.noteDetails?.id ?? '')
+  const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias ?? '')
   const [mediaEntryForDeletion, setMediaEntryForDeletion] = useState<MediaUploadDto | null>(null)
 
   const hide = selectedMenuId !== DocumentSidebarMenuSelection.NONE && selectedMenuId !== menuId
@@ -43,7 +43,7 @@ export const MediaBrowserSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
     onClick(menuId)
   }, [menuId, onClick])
 
-  const { value, loading, error } = useAsync(() => getMediaForNote(noteId), [expand, noteId])
+  const { value, loading, error } = useAsync(() => getMediaForNote(noteAlias), [expand, noteAlias])
 
   const mediaEntries = useMemo(() => {
     if (loading || error || !value) {

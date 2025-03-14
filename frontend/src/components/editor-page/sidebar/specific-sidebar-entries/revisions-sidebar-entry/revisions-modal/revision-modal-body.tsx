@@ -26,18 +26,18 @@ import { useAsync } from 'react-use'
 export const RevisionModalBody = ({ onShowDeleteModal, onHide }: RevisionModal) => {
   useTranslation()
   const isOwner = useIsOwner()
-  const [selectedRevisionId, setSelectedRevisionId] = useState<number>()
-  const noteId = useApplicationState((state) => state.noteDetails?.id)
+  const [selectedRevisionId, setSelectedRevisionId] = useState<string>()
+  const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const {
     value: revisions,
     error,
     loading
   } = useAsync(async () => {
-    if (!noteId) {
+    if (!noteAlias) {
       return []
     }
-    return getAllRevisions(noteId)
-  }, [noteId])
+    return getAllRevisions(noteAlias)
+  }, [noteAlias])
 
   const revisionLength = revisions?.length ?? 0
   const enableDeleteRevisions = revisionLength > 1 && isOwner

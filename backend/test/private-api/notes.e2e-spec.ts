@@ -81,7 +81,7 @@ describe('Notes', () => {
     expect(response.body.metadata?.id).toBeDefined();
     expect(
       await testSetup.notesService.getNoteContent(
-        await testSetup.notesService.getNoteByIdOrAlias(
+        await testSetup.notesService.getNoteIdByAlias(
           response.body.metadata.id,
         ),
       ),
@@ -108,7 +108,7 @@ describe('Notes', () => {
   });
 
   describe('POST /notes/{note}', () => {
-    it('works with a non-existing alias', async () => {
+    it('works with a non-existing aliases', async () => {
       const response = await agent
         .post('/api/private/notes/test2')
         .set('Content-Type', 'text/markdown')
@@ -118,14 +118,14 @@ describe('Notes', () => {
       expect(response.body.metadata?.id).toBeDefined();
       return expect(
         await testSetup.notesService.getNoteContent(
-          await testSetup.notesService.getNoteByIdOrAlias(
+          await testSetup.notesService.getNoteIdByAlias(
             response.body.metadata?.id,
           ),
         ),
       ).toEqual(content);
     });
 
-    it('fails with a forbidden alias', async () => {
+    it('fails with a forbidden aliases', async () => {
       await agent
         .post(`/api/private/notes/${forbiddenNoteId}`)
         .set('Content-Type', 'text/markdown')
@@ -134,7 +134,7 @@ describe('Notes', () => {
         .expect(400);
     });
 
-    it('fails with a existing alias', async () => {
+    it('fails with a existing aliases', async () => {
       await agent
         .post('/api/private/notes/test2')
         .set('Content-Type', 'text/markdown')
@@ -156,7 +156,7 @@ describe('Notes', () => {
         .expect(413);
     });
 
-    it('cannot create an alias equal to a note publicId', async () => {
+    it('cannot create an aliases equal to a note publicId', async () => {
       await agent
         .post(`/api/private/notes/${testSetup.anonymousNotes[0].publicId}`)
         .set('Content-Type', 'text/markdown')
@@ -168,7 +168,7 @@ describe('Notes', () => {
 
   describe('DELETE /notes/{note}', () => {
     describe('works', () => {
-      it('with an existing alias and keepMedia false', async () => {
+      it('with an existing aliases and keepMedia false', async () => {
         const noteId = 'test3';
         const note = await testSetup.notesService.createNote(
           content,
@@ -189,16 +189,16 @@ describe('Notes', () => {
           })
           .expect(204);
         await expect(
-          testSetup.notesService.getNoteByIdOrAlias(noteId),
+          testSetup.notesService.getNoteIdByAlias(noteId),
         ).rejects.toEqual(
           new NotInDBError(`Note with id/alias '${noteId}' not found.`),
         );
         expect(
-          await testSetup.mediaService.listUploadsByUser(user1),
+          await testSetup.mediaService.getMediaUploadUuidsByUserId(user1),
         ).toHaveLength(0);
         await fs.rmdir(uploadPath);
       });
-      it('with an existing alias and keepMedia true', async () => {
+      it('with an existing aliases and keepMedia true', async () => {
         const noteId = 'test3a';
         const note = await testSetup.notesService.createNote(
           content,
@@ -219,22 +219,22 @@ describe('Notes', () => {
           })
           .expect(204);
         await expect(
-          testSetup.notesService.getNoteByIdOrAlias(noteId),
+          testSetup.notesService.getNoteIdByAlias(noteId),
         ).rejects.toEqual(
           new NotInDBError(`Note with id/alias '${noteId}' not found.`),
         );
         expect(
-          await testSetup.mediaService.listUploadsByUser(user1),
+          await testSetup.mediaService.getMediaUploadUuidsByUserId(user1),
         ).toHaveLength(1);
         // delete the file afterwards
         await fs.unlink(join(uploadPath, upload.uuid + '.png'));
         await fs.rmdir(uploadPath);
       });
     });
-    it('fails with a forbidden alias', async () => {
+    it('fails with a forbidden aliases', async () => {
       await agent.delete(`/api/private/notes/${forbiddenNoteId}`).expect(400);
     });
-    it('fails with a non-existing alias', async () => {
+    it('fails with a non-existing aliases', async () => {
       await agent.delete('/api/private/notes/i_dont_exist').expect(404);
     });
   });
@@ -249,7 +249,7 @@ describe('Notes', () => {
         .expect(200);
       expect(typeof metadata.body.id).toEqual('string');
       expect(metadata.body.aliases[0].name).toEqual(noteAlias);
-      expect(metadata.body.primaryAddress).toEqual(noteAlias);
+      expect(metadata.body.primaryAlias).toEqual(noteAlias);
       expect(metadata.body.title).toEqual('');
       expect(metadata.body.description).toEqual('');
       expect(typeof metadata.body.createdAt).toEqual('string');
@@ -259,19 +259,19 @@ describe('Notes', () => {
       expect(metadata.body.permissions.sharedToUsers).toEqual([]);
       expect(metadata.body.tags).toEqual([]);
       expect(typeof metadata.body.updatedAt).toEqual('string');
-      expect(typeof metadata.body.updateUsername).toEqual('string');
+      expect(typeof metadata.body.lastUpdatedBy).toEqual('string');
       expect(typeof metadata.body.viewCount).toEqual('number');
       expect(metadata.body.editedBy).toEqual([]);
     });
 
-    it('fails with a forbidden alias', async () => {
+    it('fails with a forbidden aliases', async () => {
       await agent
         .get(`/api/private/notes/${forbiddenNoteId}/metadata`)
         .expect('Content-Type', /json/)
         .expect(400);
     });
 
-    it('fails with non-existing alias', async () => {
+    it('fails with non-existing aliases', async () => {
       // check if a missing note correctly returns 404
       await agent
         .get('/api/private/notes/i_dont_exist/metadata')
@@ -305,7 +305,7 @@ describe('Notes', () => {
   });
 
   describe('GET /notes/{note}/revisions', () => {
-    it('works with existing alias', async () => {
+    it('works with existing aliases', async () => {
       await testSetup.notesService.createNote(content, user1, 'test4');
       // create a second note to check for a regression, where typeorm always returned
       // all revisions in the database
@@ -317,13 +317,13 @@ describe('Notes', () => {
       expect(response.body).toHaveLength(1);
     });
 
-    it('fails with a forbidden alias', async () => {
+    it('fails with a forbidden aliases', async () => {
       await agent
         .get(`/api/private/notes/${forbiddenNoteId}/revisions`)
         .expect(400);
     });
 
-    it('fails with non-existing alias', async () => {
+    it('fails with non-existing aliases', async () => {
       // check if a missing note correctly returns 404
       await agent
         .get('/api/private/notes/i_dont_exist/revisions')
@@ -333,7 +333,7 @@ describe('Notes', () => {
   });
 
   describe('DELETE /notes/{note}/revisions', () => {
-    it('works with an existing alias', async () => {
+    it('works with an existing aliases', async () => {
       const noteId = 'test8';
       const note = await testSetup.notesService.createNote(
         content,
@@ -356,12 +356,12 @@ describe('Notes', () => {
         .expect(200);
       expect(responseAfterDeleting.body).toHaveLength(1);
     });
-    it('fails with a forbidden alias', async () => {
+    it('fails with a forbidden aliases', async () => {
       await agent
         .delete(`/api/private/notes/${forbiddenNoteId}/revisions`)
         .expect(400);
     });
-    it('fails with non-existing alias', async () => {
+    it('fails with non-existing aliases', async () => {
       // check if a missing note correctly returns 404
       await agent
         .delete('/api/private/notes/i_dont_exist/revisions')
@@ -371,7 +371,7 @@ describe('Notes', () => {
   });
 
   describe('GET /notes/{note}/revisions/{revision-id}', () => {
-    it('works with an existing alias', async () => {
+    it('works with an existing aliases', async () => {
       const note = await testSetup.notesService.createNote(
         content,
         user1,
@@ -384,12 +384,12 @@ describe('Notes', () => {
         .expect(200);
       expect(response.body.content).toEqual(content);
     });
-    it('fails with a forbidden alias', async () => {
+    it('fails with a forbidden aliases', async () => {
       await agent
         .get(`/api/private/notes/${forbiddenNoteId}/revisions/1`)
         .expect(400);
     });
-    it('fails with non-existing alias', async () => {
+    it('fails with non-existing aliases', async () => {
       // check if a missing note correctly returns 404
       await agent
         .get('/api/private/notes/i_dont_exist/revisions/1')
@@ -459,7 +459,7 @@ describe('Notes', () => {
         alias,
       );
       // Redact default read permissions
-      const note = await testSetup.notesService.getNoteByIdOrAlias(alias);
+      const note = await testSetup.notesService.getNoteIdByAlias(alias);
       const everyone = await testSetup.groupService.getEveryoneGroup();
       const loggedin = await testSetup.groupService.getLoggedInGroup();
       await testSetup.permissionsService.removeGroupPermission(note, everyone);
@@ -510,7 +510,7 @@ describe('Notes', () => {
 
         it("doesn't do anything if the user is the owner", async () => {
           const note =
-            await testSetup.notesService.getNoteByIdOrAlias(user1NoteAlias);
+            await testSetup.notesService.getNoteIdByAlias(user1NoteAlias);
           await testSetup.permissionsService.removeUserPermission(note, user2);
 
           const response = await agent
@@ -557,7 +557,7 @@ describe('Notes', () => {
 
         it('works', async () => {
           const note =
-            await testSetup.notesService.getNoteByIdOrAlias(user1NoteAlias);
+            await testSetup.notesService.getNoteIdByAlias(user1NoteAlias);
           await testSetup.permissionsService.setUserPermission(
             note,
             user2,
@@ -630,7 +630,7 @@ describe('Notes', () => {
 
         it('works', async () => {
           const note =
-            await testSetup.notesService.getNoteByIdOrAlias(user1NoteAlias);
+            await testSetup.notesService.getNoteIdByAlias(user1NoteAlias);
           await testSetup.permissionsService.setGroupPermission(
             note,
             group1,

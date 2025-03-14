@@ -55,7 +55,8 @@ export function bufferToBase64Url(text: Buffer): string {
 }
 
 /**
- * Hash an api token.
+ * Hashes an api token
+ * More about the choice of SHA-512 in the dev docs
  *
  * @param token the token to be hashed
  * @returns the hashed token
@@ -65,23 +66,23 @@ export function hashApiToken(token: string): string {
 }
 
 /**
- * Check if the given token is the same as what we have in the database.
+ * Check if the given token is the same as what we have in the database
  *
  * Normally, both hashes have the same length, as they are both SHA512
  * This is only defense-in-depth, as timingSafeEqual throws if the buffers are not of the same length
  *
- * @param givenToken The token the user gave us.
- * @param databaseToken The token we have saved in the database.
+ * @param userSecret The secret of the token the user gave us
+ * @param databaseSecretHash The secret hash we have saved in the database.
  * @returns Wether or not the tokens are the equal
  */
 export function checkTokenEquality(
-  givenToken: string,
-  databaseToken: string,
+  userSecret: string,
+  databaseSecretHash: string,
 ): boolean {
-  const givenHash = Buffer.from(hashApiToken(givenToken));
-  const databaseHash = Buffer.from(databaseToken);
+  const userSecretHashBuffer = Buffer.from(hashApiToken(userSecret));
+  const databaseHashBuffer = Buffer.from(databaseSecretHash);
   return (
-    databaseHash.length === givenHash.length &&
-    timingSafeEqual(givenHash, databaseHash)
+    databaseHashBuffer.length === userSecretHashBuffer.length &&
+    timingSafeEqual(userSecretHashBuffer, databaseHashBuffer)
   );
 }

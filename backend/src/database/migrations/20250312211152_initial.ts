@@ -3,11 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { NoteType } from '@hedgedoc/commons';
+import { AuthProviderType, NoteType, SpecialGroup } from '@hedgedoc/commons';
 import type { Knex } from 'knex';
 
-import { ProviderType } from '../../auth/provider-type.enum';
-import { SpecialGroup } from '../../groups/groups.special';
 import { BackendType } from '../../media/backends/backend-type.enum';
 import {
   FieldNameAlias,
@@ -41,16 +39,18 @@ import {
 } from '../types';
 
 export async function up(knex: Knex): Promise<void> {
-  // Create user table first as it's referenced by other tables
+  // Create the user table first as it's referenced by other tables
   await knex.schema.createTable(TableUser, (table) => {
     table.increments(FieldNameUser.id).primary();
     table.string(FieldNameUser.username).nullable().unique();
-    table.string(FieldNameUser.displayName).nullable();
+    table.string(FieldNameUser.displayName).notNullable();
     table.string(FieldNameUser.photoUrl).nullable();
     table.string(FieldNameUser.email).nullable();
     table.integer(FieldNameUser.authorStyle).notNullable();
     table.uuid(FieldNameUser.guestUuid).nullable().unique();
-    table.timestamp(FieldNameUser.createdAt).defaultTo(knex.fn.now());
+    table
+      .timestamp(FieldNameUser.createdAt, { useTz: true })
+      .defaultTo(knex.fn.now());
   });
 
   // Create group table
@@ -79,7 +79,9 @@ export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable(TableNote, (table) => {
     table.increments(FieldNameNote.id).primary();
     table.integer(FieldNameNote.version).notNullable().defaultTo(2);
-    table.timestamp(FieldNameNote.createdAt).defaultTo(knex.fn.now());
+    table
+      .timestamp(FieldNameNote.createdAt, { useTz: true })
+      .defaultTo(knex.fn.now());
     table
       .integer(FieldNameNote.ownerId)
       .unsigned()
@@ -88,10 +90,10 @@ export async function up(knex: Knex): Promise<void> {
       .inTable(TableUser);
   });
 
-  // Create alias table
+  // Create aliases table
   await knex.schema.createTable(TableAlias, (table) => {
     table.comment(
-      'Stores aliases of notes, only on alias per note can be is_primary == true, all other need to have is_primary == null ',
+      'Stores aliases of notes, only on aliases per note can be is_primary == true, all other need to have is_primary == null ',
     );
     table.string(FieldNameAlias.alias).primary();
     table
@@ -118,8 +120,11 @@ export async function up(knex: Knex): Promise<void> {
       .inTable(TableUser);
     table.string(FieldNameApiToken.label).notNullable();
     table.string(FieldNameApiToken.secretHash).notNullable();
-    table.timestamp(FieldNameApiToken.validUntil).notNullable();
-    table.timestamp(FieldNameApiToken.lastUsedAt).nullable();
+    table
+      .timestamp(FieldNameApiToken.validUntil, { useTz: true })
+      .notNullable();
+    table.timestamp(FieldNameApiToken.lastUsedAt, { useTz: true }).nullable();
+    table.timestamp(FieldNameApiToken.createdAt, { useTz: true }).notNullable();
   });
 
   // Create identity table
@@ -132,7 +137,7 @@ export async function up(knex: Knex): Promise<void> {
       .inTable(TableUser);
     table.enu(
       FieldNameIdentity.providerType,
-      [ProviderType.LDAP, ProviderType.LOCAL, ProviderType.OIDC], // ProviderType.GUEST is not relevant for the DB
+      [AuthProviderType.LDAP, AuthProviderType.LOCAL, AuthProviderType.OIDC], // AuthProviderType.GUEST is not relevant for the DB
       {
         useNative: true,
         enumName: FieldNameIdentity.providerType,
@@ -141,8 +146,12 @@ export async function up(knex: Knex): Promise<void> {
     table.string(FieldNameIdentity.providerIdentifier).nullable();
     table.string(FieldNameIdentity.providerUserId).nullable();
     table.string(FieldNameIdentity.passwordHash).nullable();
-    table.timestamp(FieldNameIdentity.createdAt).defaultTo(knex.fn.now());
-    table.timestamp(FieldNameIdentity.updatedAt).defaultTo(knex.fn.now());
+    table
+      .timestamp(FieldNameIdentity.createdAt, { useTz: true })
+      .defaultTo(knex.fn.now());
+    table
+      .timestamp(FieldNameIdentity.updatedAt, { useTz: true })
+      .defaultTo(knex.fn.now());
     table.unique(
       [
         FieldNameIdentity.userId,
@@ -175,7 +184,7 @@ export async function up(knex: Knex): Promise<void> {
 
   // Create revision table
   await knex.schema.createTable(TableRevision, (table) => {
-    table.increments(FieldNameRevision.id).primary();
+    table.uuid(FieldNameRevision.uuid).primary();
     table
       .integer(FieldNameRevision.noteId)
       .unsigned()
@@ -191,40 +200,51 @@ export async function up(knex: Knex): Promise<void> {
       useNative: true,
       enumName: FieldNameRevision.noteType,
     });
-    table.timestamp(FieldNameRevision.createdAt).defaultTo(knex.fn.now());
+    table
+      .timestamp(FieldNameRevision.createdAt, { useTz: true })
+      .defaultTo(knex.fn.now());
   });
 
   // Create revision_tag table
   await knex.schema.createTable(TableRevisionTag, (table) => {
     table
-      .integer(FieldNameRevisionTag.revisionId)
+      .uuid(FieldNameRevisionTag.revisionUuid)
       .unsigned()
       .notNullable()
-      .references(FieldNameRevision.id)
+      .references(FieldNameRevision.uuid)
+      .onDelete('CASCADE')
       .inTable(TableRevision);
     table.string(FieldNameRevisionTag.tag).notNullable();
-    table.primary([FieldNameRevisionTag.revisionId, FieldNameRevisionTag.tag]);
+    table.primary([
+      FieldNameRevisionTag.revisionUuid,
+      FieldNameRevisionTag.tag,
+    ]);
   });
 
   // Create authorship_info table
   await knex.schema.createTable(TableAuthorshipInfo, (table) => {
     table
-      .integer(FieldNameAuthorshipInfo.revisionId)
+      .uuid(FieldNameAuthorshipInfo.revisionUuid)
       .unsigned()
       .notNullable()
-      .references(FieldNameRevision.id)
+      .references(FieldNameRevision.uuid)
+      .onDelete('CASCADE')
       .inTable(TableRevision);
     table
       .integer(FieldNameAuthorshipInfo.authorId)
       .unsigned()
       .notNullable()
       .references(FieldNameUser.id)
+      .onDelete('CASCADE')
       .inTable(TableUser);
     table
       .integer(FieldNameAuthorshipInfo.startPosition)
       .unsigned()
       .notNullable();
     table.integer(FieldNameAuthorshipInfo.endPosition).unsigned().notNullable();
+    table
+      .timestamp(FieldNameAuthorshipInfo.createdAt, { useTz: true })
+      .defaultTo(knex.fn.now());
   });
 
   // Create note_user_permission table
@@ -234,12 +254,14 @@ export async function up(knex: Knex): Promise<void> {
       .unsigned()
       .notNullable()
       .references(FieldNameNote.id)
+      .onDelete('CASCADE')
       .inTable(TableNote);
     table
       .integer(FieldNameNoteUserPermission.userId)
       .unsigned()
       .notNullable()
       .references(FieldNameUser.id)
+      .onDelete('CASCADE')
       .inTable(TableUser);
     table
       .boolean(FieldNameNoteUserPermission.canEdit)
@@ -258,12 +280,14 @@ export async function up(knex: Knex): Promise<void> {
       .unsigned()
       .notNullable()
       .references(FieldNameNote.id)
+      .onDelete('CASCADE')
       .inTable(TableNote);
     table
       .integer(FieldNameNoteGroupPermission.groupId)
       .unsigned()
       .notNullable()
       .references(FieldNameGroup.id)
+      .onDelete('CASCADE')
       .inTable(TableGroup);
     table
       .boolean(FieldNameNoteGroupPermission.canEdit)
@@ -308,7 +332,9 @@ export async function up(knex: Knex): Promise<void> {
       )
       .notNullable();
     table.text(FieldNameMediaUpload.backendData).nullable();
-    table.timestamp(FieldNameMediaUpload.createdAt).defaultTo(knex.fn.now());
+    table
+      .timestamp(FieldNameMediaUpload.createdAt, { useTz: true })
+      .defaultTo(knex.fn.now());
   });
 
   // Create user_pinned_note table

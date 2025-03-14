@@ -6,8 +6,10 @@
 import { measurePerformance } from '../../../utils/measure-performance'
 import type { ParserOptions } from '@hedgedoc/html-to-react'
 import { convertHtmlToReact } from '@hedgedoc/html-to-react'
-import type DOMPurify from 'dompurify'
-import { sanitize } from 'dompurify'
+import DOMPurify from 'dompurify'
+// see https://github.com/cure53/DOMPurify/issues/1034#issuecomment-2493211056
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const { sanitize } = DOMPurify
 import React, { Fragment, useMemo } from 'react'
 
 export interface HtmlToReactProps {
