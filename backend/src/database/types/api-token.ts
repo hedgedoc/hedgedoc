@@ -39,3 +39,6 @@ export enum FieldNameApiToken {
 }
 
 export const TableApiToken = 'api_token';
+
+export type TypeInsertApiToken = Omit<ApiToken, FieldNameApiToken.lastUsedAt>;
+export type TypeUpdateApiToken = Pick<ApiToken, FieldNameApiToken.lastUsedAt>;
