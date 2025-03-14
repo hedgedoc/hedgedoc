@@ -29,4 +29,5 @@ export enum FieldNameAlias {
 
 export const TableAlias = 'alias';
 
+export type TypeInsertAlias = Alias;
 export type TypeUpdateAlias = Pick<Alias, FieldNameAlias.isPrimary>;

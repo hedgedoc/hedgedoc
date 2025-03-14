@@ -11,7 +11,7 @@ import { useUiNotifications } from '../../../../../notifications/ui-notification
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionEntryButtons, PermissionType } from './permission-entry-buttons'
 import type { NoteUserPermissionEntryDto } from '@hedgedoc/commons'
-import { GuestAccess, SpecialGroup } from '@hedgedoc/commons'
+import { PermissionLevel, SpecialGroup } from '@hedgedoc/commons'
 import React, { useCallback, useMemo } from 'react'
 import { useAsync } from 'react-use'
 import { PermissionInconsistentAlert } from './permission-inconsistent-alert'
@@ -33,7 +33,7 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
   entry,
   disabled
 }) => {
-  const noteId = useApplicationState((state) => state.noteDetails?.primaryAddress)
+  const noteId = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const { showErrorNotification } = useUiNotifications()
   const { [SpecialGroup.EVERYONE]: everyonePermission, [SpecialGroup.LOGGED_IN]: loggedInPermission } =
     useGetSpecialPermissions()
@@ -94,7 +94,7 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
           <PermissionInconsistentAlert show={permissionInconsistent ?? false} />
           <PermissionEntryButtons
             type={PermissionType.USER}
-            currentSetting={entry.canEdit ? GuestAccess.WRITE : GuestAccess.READ}
+            currentSetting={entry.canEdit ? PermissionLevel.WRITE : PermissionLevel.READ}
             name={value.displayName}
             onSetReadOnly={onSetEntryReadOnly}
             onSetWriteable={onSetEntryWriteable}

@@ -36,6 +36,10 @@ export async function seed(knex: Knex): Promise<void> {
   await knex(TableNoteGroupPermission).del();
   await knex(TableNoteUserPermission).del();
 
+  const guestNoteRevisionUuid = '0196a6e7-9669-7ef3-9c10-520734c61593';
+  const userNoteRevisionUuid = '0196a6e8-f63e-7473-bf58-ea97e937fde2';
+  const userSlideRevisionUuid = '0196a6e9-1152-7940-a531-01b9527321c0';
+
   const guestNoteAlias = 'guest-note';
   const userNoteAlias = 'user-note';
   const userSlideAlias = 'user-slide';
@@ -94,6 +98,7 @@ export async function seed(knex: Knex): Promise<void> {
   ]);
   await knex(TableRevision).insert([
     {
+      [FieldNameRevision.uuid]: guestNoteRevisionUuid,
       [FieldNameRevision.noteId]: 1,
       [FieldNameRevision.patch]: createPatch(
         guestNoteAlias,
@@ -107,6 +112,7 @@ export async function seed(knex: Knex): Promise<void> {
       [FieldNameRevision.description]: guestNoteDescription,
     },
     {
+      [FieldNameRevision.uuid]: userNoteRevisionUuid,
       [FieldNameRevision.noteId]: 1,
       [FieldNameRevision.patch]: createPatch(
         userNoteAlias,
@@ -120,6 +126,7 @@ export async function seed(knex: Knex): Promise<void> {
       [FieldNameRevision.description]: userNoteDescription,
     },
     {
+      [FieldNameRevision.uuid]: userSlideRevisionUuid,
       [FieldNameRevision.noteId]: 1,
       [FieldNameRevision.patch]: createPatch(
         userSlideAlias,
@@ -135,33 +142,33 @@ export async function seed(knex: Knex): Promise<void> {
   ]);
   await knex(TableRevisionTag).insert([
     ...guestNoteTags.map((tag) => ({
-      [FieldNameRevisionTag.revisionId]: 1,
+      [FieldNameRevisionTag.revisionUuid]: guestNoteRevisionUuid,
       [FieldNameRevisionTag.tag]: tag,
     })),
     ...userNoteTags.map((tag) => ({
-      [FieldNameRevisionTag.revisionId]: 2,
+      [FieldNameRevisionTag.revisionUuid]: userNoteRevisionUuid,
       [FieldNameRevisionTag.tag]: tag,
     })),
     ...userSlideTags.map((tag) => ({
-      [FieldNameRevisionTag.revisionId]: 3,
+      [FieldNameRevisionTag.revisionUuid]: userSlideRevisionUuid,
       [FieldNameRevisionTag.tag]: tag,
     })),
   ]);
   await knex(TableAuthorshipInfo).insert([
     {
-      [FieldNameAuthorshipInfo.revisionId]: 1,
+      [FieldNameAuthorshipInfo.revisionUuid]: guestNoteRevisionUuid,
       [FieldNameAuthorshipInfo.authorId]: 1,
       [FieldNameAuthorshipInfo.startPosition]: 0,
       [FieldNameAuthorshipInfo.endPosition]: guestNoteContent.length,
     },
     {
-      [FieldNameAuthorshipInfo.revisionId]: 2,
+      [FieldNameAuthorshipInfo.revisionUuid]: userNoteRevisionUuid,
       [FieldNameAuthorshipInfo.authorId]: 2,
       [FieldNameAuthorshipInfo.startPosition]: 0,
       [FieldNameAuthorshipInfo.endPosition]: userNoteContent.length,
     },
     {
-      [FieldNameAuthorshipInfo.revisionId]: 3,
+      [FieldNameAuthorshipInfo.revisionUuid]: userSlideRevisionUuid,
       [FieldNameAuthorshipInfo.authorId]: 2,
       [FieldNameAuthorshipInfo.startPosition]: 0,
       [FieldNameAuthorshipInfo.endPosition]: userSlideContent.length,

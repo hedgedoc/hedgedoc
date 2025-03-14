@@ -15,7 +15,7 @@ import { Button, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 
 interface RevisionModalFooter {
-  selectedRevisionId?: number
+  selectedRevisionId?: string
   disableDeleteRevisions: boolean
 }
 
@@ -37,7 +37,7 @@ export const RevisionModalFooter: React.FC<RevisionModalFooterProps> = ({
   disableDeleteRevisions
 }) => {
   useTranslation()
-  const noteId = useApplicationState((state) => state.noteDetails?.id)
+  const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const { showErrorNotification } = useUiNotifications()
 
   const onRevertToRevision = useCallback(() => {
@@ -47,15 +47,15 @@ export const RevisionModalFooter: React.FC<RevisionModalFooterProps> = ({
   }, [])
 
   const onDownloadRevision = useCallback(() => {
-    if (selectedRevisionId === undefined || noteId === undefined) {
+    if (selectedRevisionId === undefined || noteAlias === undefined) {
       return
     }
-    getRevision(noteId, selectedRevisionId)
+    getRevision(noteAlias, selectedRevisionId)
       .then((revision) => {
-        downloadRevision(noteId, revision)
+        downloadRevision(noteAlias, revision)
       })
       .catch(showErrorNotification(''))
-  }, [noteId, selectedRevisionId, showErrorNotification])
+  }, [noteAlias, selectedRevisionId, showErrorNotification])
 
   const openDeleteModal = useCallback(() => {
     onHide?.()

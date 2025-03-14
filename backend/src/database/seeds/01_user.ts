@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { AuthProviderType } from '@hedgedoc/commons';
 import { Knex } from 'knex';
 
-import { ProviderType } from '../../auth/provider-type.enum';
 import { hashPassword } from '../../utils/password';
 import {
   FieldNameIdentity,
@@ -24,7 +24,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       [FieldNameUser.username]: null,
       [FieldNameUser.guestUuid]: '55b4618a-d5f3-4320-93d3-f3501c73d72b',
-      [FieldNameUser.displayName]: null,
+      [FieldNameUser.displayName]: 'Gast 1',
       [FieldNameUser.photoUrl]: null,
       [FieldNameUser.email]: null,
       [FieldNameUser.authorStyle]: 1,
@@ -40,7 +40,7 @@ export async function seed(knex: Knex): Promise<void> {
   ]);
   await knex(TableIdentity).insert({
     [FieldNameIdentity.userId]: 2,
-    [FieldNameIdentity.providerType]: ProviderType.LOCAL,
+    [FieldNameIdentity.providerType]: AuthProviderType.LOCAL,
     [FieldNameIdentity.providerIdentifier]: null,
     [FieldNameIdentity.providerUserId]: null,
     [FieldNameIdentity.passwordHash]: await hashPassword('test123'),

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { GuestAccess, ProviderType } from '@hedgedoc/commons';
+import { AuthProviderType, PermissionLevel } from '@hedgedoc/commons';
 import { ConfigModule, registerAs } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { URL } from 'url';
@@ -16,7 +16,7 @@ import { ExternalServicesConfig } from '../config/external-services.config';
 import { Loglevel } from '../config/loglevel.enum';
 import { NoteConfig } from '../config/note.config';
 import { LoggerModule } from '../logger/logger.module';
-import { getServerVersionFromPackageJson } from '../utils/serverVersion';
+import { getServerVersionFromPackageJson } from '../utils/server-version';
 import { FrontendConfigService } from './frontend-config.service';
 
 /* eslint-disable
@@ -108,7 +108,7 @@ describe('FrontendConfigService', () => {
                   return {
                     forbiddenNoteIds: [],
                     maxDocumentLength: 200,
-                    guestAccess: GuestAccess.CREATE,
+                    guestAccess: PermissionLevel.CREATE,
                     permissions: {
                       default: {
                         everyone: DefaultAccessLevel.READ,
@@ -128,26 +128,26 @@ describe('FrontendConfigService', () => {
         const config = await service.getFrontendConfig();
         if (authConfig.local.enableLogin) {
           expect(config.authProviders).toContainEqual({
-            type: ProviderType.LOCAL,
+            type: AuthProviderType.LOCAL,
           });
         }
         expect(
           config.authProviders.filter(
-            (provider) => provider.type === ProviderType.LDAP,
+            (provider) => provider.type === AuthProviderType.LDAP,
           ).length,
         ).toEqual(authConfig.ldap.length);
         expect(
           config.authProviders.filter(
-            (provider) => provider.type === ProviderType.OIDC,
+            (provider) => provider.type === AuthProviderType.OIDC,
           ).length,
         ).toEqual(authConfig.oidc.length);
         if (authConfig.ldap.length > 0) {
           expect(
             config.authProviders.find(
-              (provider) => provider.type === ProviderType.LDAP,
+              (provider) => provider.type === AuthProviderType.LDAP,
             ),
           ).toEqual({
-            type: ProviderType.LDAP,
+            type: AuthProviderType.LDAP,
             providerName: authConfig.ldap[0].providerName,
             identifier: authConfig.ldap[0].identifier,
           });
@@ -155,10 +155,10 @@ describe('FrontendConfigService', () => {
         if (authConfig.oidc.length > 0) {
           expect(
             config.authProviders.find(
-              (provider) => provider.type === ProviderType.OIDC,
+              (provider) => provider.type === AuthProviderType.OIDC,
             ),
           ).toEqual({
-            type: ProviderType.OIDC,
+            type: AuthProviderType.OIDC,
             providerName: authConfig.oidc[0].providerName,
             identifier: authConfig.oidc[0].identifier,
           });
@@ -213,7 +213,7 @@ describe('FrontendConfigService', () => {
               const noteConfig: NoteConfig = {
                 forbiddenNoteIds: [],
                 maxDocumentLength: maxDocumentLength,
-                guestAccess: GuestAccess.CREATE,
+                guestAccess: PermissionLevel.CREATE,
                 permissions: {
                   default: {
                     everyone: DefaultAccessLevel.READ,

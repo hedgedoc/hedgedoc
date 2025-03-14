@@ -40,7 +40,7 @@ describe('Me', () => {
   });
 
   it(`GET /me`, async () => {
-    const userInfo = testSetup.userService.toFullUserDto(user);
+    const userInfo = testSetup.userService.toLoginUserInfoDto(user);
     const response = await request(testSetup.app.getHttpServer())
       .get('/api/v2/me')
       .expect('Content-Type', /json/)
@@ -181,19 +181,19 @@ describe('Me', () => {
       .expect(200);
     const noteMetaDtos = response.body as NoteMetadataDto[];
     expect(noteMetaDtos).toHaveLength(1);
-    expect(noteMetaDtos[0].primaryAddress).toEqual(noteName);
-    expect(noteMetaDtos[0].updateUsername).toEqual(user.username);
+    expect(noteMetaDtos[0].primaryAlias).toEqual(noteName);
+    expect(noteMetaDtos[0].lastUpdatedBy).toEqual(user.username);
   });
 
   it('GET /me/media', async () => {
     const note1 = await testSetup.notesService.createNote(
       'This is a test note.',
-      await testSetup.userService.getUserByUsername('hardcoded'),
+      await testSetup.userService.getUserDtoByUsername('hardcoded'),
       'test8',
     );
     const note2 = await testSetup.notesService.createNote(
       'This is a test note.',
-      await testSetup.userService.getUserByUsername('hardcoded'),
+      await testSetup.userService.getUserDtoByUsername('hardcoded'),
       'test9',
     );
     const httpServer = testSetup.app.getHttpServer();

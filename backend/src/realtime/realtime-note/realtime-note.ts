@@ -7,7 +7,6 @@ import { Message, MessageType, RealtimeDoc } from '@hedgedoc/commons';
 import { Logger } from '@nestjs/common';
 import { EventEmitter2, EventMap, Listener } from 'eventemitter2';
 
-import { Note } from '../../notes/note.entity';
 import { RealtimeConnection } from './realtime-connection';
 
 export interface RealtimeNoteEventMap extends EventMap {
@@ -33,16 +32,16 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   private destroyEventTimer: NodeJS.Timeout | null = null;
 
   constructor(
-    private readonly note: Note,
+    private readonly noteId: number,
     initialTextContent: string,
-    initialYjsState?: number[],
+    initialYjsState?: ArrayBuffer,
   ) {
     super();
-    this.logger = new Logger(`${RealtimeNote.name} ${note.id}`);
+    this.logger = new Logger(`${RealtimeNote.name} ${noteId}`);
     this.doc = new RealtimeDoc(initialTextContent, initialYjsState);
     const length = this.doc.getCurrentContent().length;
     this.logger.debug(
-      `New realtime session for note ${note.id} created. Length of initial content: ${length} characters`,
+      `New realtime session for note ${noteId} created. Length of initial content: ${length} characters`,
     );
     this.clientAddedListener = this.on(
       'clientAdded',
@@ -74,7 +73,7 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   /**
    * Disconnects the given websocket client while cleaning-up if it was the last user in the realtime note.
    *
-   * @param {WebSocket} client The websocket client that disconnects.
+   * @param client The websocket client that disconnects.
    */
   public removeClient(client: RealtimeConnection): void {
     this.clients.delete(client);
@@ -144,8 +143,8 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
    *
    * @return the {@link Note note}
    */
-  public getNote(): Note {
-    return this.note;
+  public getNoteId(): number {
+    return this.noteId;
   }
 
   /**

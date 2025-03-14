@@ -4,38 +4,26 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
-  FullUserInfoDto,
-  FullUserInfoSchema,
+  AuthProviderType,
+  LoginUserInfoDto,
+  LoginUserInfoSchema,
   MediaUploadDto,
   MediaUploadSchema,
   NoteMetadataDto,
   NoteMetadataSchema,
 } from '@hedgedoc/commons';
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Put,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { User } from 'src/database/types';
 
-import { ApiTokenGuard } from '../../../api-token/api-token.guard';
-import { User } from '../../../database/user.entity';
-import { HistoryEntryUpdateDto } from '../../../history/history-entry-update.dto';
-import { HistoryEntryDto } from '../../../history/history-entry.dto';
-import { HistoryService } from '../../../history/history.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
-import { Note } from '../../../notes/note.entity';
-import { NotesService } from '../../../notes/notes.service';
+import { NoteService } from '../../../notes/note.service';
 import { UsersService } from '../../../users/users.service';
-import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
-import { OpenApi } from '../../utils/openapi.decorator';
-import { RequestNote } from '../../utils/request-note.decorator';
-import { RequestUser } from '../../utils/request-user.decorator';
+import { OpenApi } from '../../utils/decorators/openapi.decorator';
+import { RequestUserId } from '../../utils/decorators/request-user-id.decorator';
+import { SessionAuthProvider } from '../../utils/decorators/session-authprovider.decorator';
+import { ApiTokenGuard } from '../../utils/guards/api-token.guard';
 
 @UseGuards(ApiTokenGuard)
 @OpenApi(401)
@@ -46,8 +34,7 @@ export class MeController {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private usersService: UsersService,
-    private historyService: HistoryService,
-    private notesService: NotesService,
+    private notesService: NoteService,
     private mediaService: MediaService,
   ) {
     this.logger.setContext(MeController.name);
@@ -57,69 +44,14 @@ export class MeController {
   @OpenApi({
     code: 200,
     description: 'The user information',
-    schema: FullUserInfoSchema,
+    schema: LoginUserInfoSchema,
   })
-  getMe(@RequestUser() user: User): FullUserInfoDto {
-    return this.usersService.toFullUserDto(user);
-  }
-
-  @Get('history')
-  @OpenApi({
-    code: 200,
-    description: 'The history entries of the user',
-    isArray: true,
-  })
-  async getUserHistory(@RequestUser() user: User): Promise<HistoryEntryDto[]> {
-    const foundEntries = await this.historyService.getEntriesByUser(user);
-    return await Promise.all(
-      foundEntries.map((entry) => this.historyService.toHistoryEntryDto(entry)),
-    );
-  }
-
-  @UseInterceptors(GetNoteInterceptor)
-  @Get('history/:noteIdOrAlias')
-  @OpenApi(
-    {
-      code: 200,
-      description: 'The history entry of the user which points to the note',
-    },
-    404,
-  )
-  async getHistoryEntry(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
-  ): Promise<HistoryEntryDto> {
-    const foundEntry = await this.historyService.getEntryByNote(note, user);
-    return await this.historyService.toHistoryEntryDto(foundEntry);
-  }
-
-  @UseInterceptors(GetNoteInterceptor)
-  @Put('history/:noteIdOrAlias')
-  @OpenApi(
-    {
-      code: 200,
-      description: 'The updated history entry',
-    },
-    404,
-  )
-  async updateHistoryEntry(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
-    @Body() entryUpdateDto: HistoryEntryUpdateDto,
-  ): Promise<HistoryEntryDto> {
-    return await this.historyService.toHistoryEntryDto(
-      await this.historyService.updateHistoryEntry(note, user, entryUpdateDto),
-    );
-  }
-
-  @UseInterceptors(GetNoteInterceptor)
-  @Delete('history/:noteIdOrAlias')
-  @OpenApi(204, 404)
-  async deleteHistoryEntry(
-    @RequestUser() user: User,
-    @RequestNote() note: Note,
-  ): Promise<void> {
-    await this.historyService.deleteHistoryEntry(note, user);
+  async getMe(
+    @RequestUserId() userId: number,
+    @SessionAuthProvider() authProvider: AuthProviderType,
+  ): Promise<LoginUserInfoDto> {
+    const user: User = await this.usersService.getUserById(userId);
+    return this.usersService.toLoginUserInfoDto(user, authProvider);
   }
 
   @Get('notes')
@@ -129,10 +61,12 @@ export class MeController {
     isArray: true,
     schema: NoteMetadataSchema,
   })
-  async getMyNotes(@RequestUser() user: User): Promise<NoteMetadataDto[]> {
-    const notes = this.notesService.getUserNotes(user);
+  async getMyNotes(
+    @RequestUserId() userId: number,
+  ): Promise<NoteMetadataDto[]> {
+    const noteIds = await this.notesService.getUserNoteIds(userId);
     return await Promise.all(
-      (await notes).map((note) => this.notesService.toNoteMetadataDto(note)),
+      noteIds.map((note) => this.notesService.toNoteMetadataDto(note)),
     );
   }
 
@@ -143,10 +77,8 @@ export class MeController {
     isArray: true,
     schema: MediaUploadSchema,
   })
-  async getMyMedia(@RequestUser() user: User): Promise<MediaUploadDto[]> {
-    const media = await this.mediaService.listUploadsByUser(user);
-    return await Promise.all(
-      media.map((media) => this.mediaService.toMediaUploadDto(media)),
-    );
+  async getMyMedia(@RequestUserId() userId: number): Promise<MediaUploadDto[]> {
+    const media = await this.mediaService.getMediaUploadUuidsByUserId(userId);
+    return await this.mediaService.getMediaUploadDtosByUuids(media);
   }
 }

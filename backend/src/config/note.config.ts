@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { GuestAccess } from '@hedgedoc/commons';
+import { PermissionLevel } from '@hedgedoc/commons';
 import { registerAs } from '@nestjs/config';
 import z from 'zod';
 
@@ -31,9 +31,9 @@ const schema = z.object({
     .default(100000)
     .describe('HD_MAX_DOCUMENT_LENGTH'),
   guestAccess: z
-    .nativeEnum(GuestAccess)
+    .nativeEnum(PermissionLevel)
     .optional()
-    .default(GuestAccess.WRITE)
+    .default(PermissionLevel.WRITE)
     .describe('HD_GUEST_ACCESS'),
   permissions: z.object({
     default: z.object({
@@ -63,7 +63,7 @@ export type NoteConfig = z.infer<typeof schema>;
 function checkEveryoneConfigIsConsistent(config: NoteConfig): void {
   const everyoneDefaultSet =
     process.env.HD_PERMISSIONS_DEFAULT_EVERYONE !== undefined;
-  if (config.guestAccess === GuestAccess.DENY && everyoneDefaultSet) {
+  if (config.guestAccess === PermissionLevel.DENY && everyoneDefaultSet) {
     throw new Error(
       `'HD_GUEST_ACCESS' is set to '${config.guestAccess}', but 'HD_PERMISSIONS_DEFAULT_EVERYONE' is also configured. Please remove 'HD_PERMISSIONS_DEFAULT_EVERYONE'.`,
     );

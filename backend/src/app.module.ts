@@ -8,20 +8,20 @@ import { ConfigModule } from '@nestjs/config';
 import { RouterModule, Routes } from '@nestjs/core';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ScheduleModule } from '@nestjs/schedule';
-import { KnexModule } from 'nestjs-knex';
+import { KnexModule } from 'nest-knexjs';
 
+import { AliasModule } from './alias/alias.module';
 import { ApiTokenModule } from './api-token/api-token.module';
 import { PrivateApiModule } from './api/private/private-api.module';
 import { PublicApiModule } from './api/public/public-api.module';
 import { AuthModule } from './auth/auth.module';
-import { AuthorsModule } from './authors/authors.module';
 import appConfig from './config/app.config';
 import authConfig from './config/auth.config';
 import cspConfig from './config/csp.config';
 import customizationConfig from './config/customization.config';
 import databaseConfig, {
-  PostgresDatabaseConfig,
   getKnexConfig,
+  PostgresDatabaseConfig,
 } from './config/database.config';
 import externalConfig from './config/external-services.config';
 import mediaConfig from './config/media.config';
@@ -30,13 +30,11 @@ import { eventModuleConfig } from './events';
 import { FrontendConfigModule } from './frontend-config/frontend-config.module';
 import { FrontendConfigService } from './frontend-config/frontend-config.service';
 import { GroupsModule } from './groups/groups.module';
-import { HistoryModule } from './history/history.module';
 import { KnexLoggerService } from './logger/knex-logger.service';
 import { LoggerModule } from './logger/logger.module';
 import { MediaRedirectModule } from './media-redirect/media-redirect.module';
 import { MediaModule } from './media/media.module';
 import { MonitoringModule } from './monitoring/monitoring.module';
-import { NotesModule } from './notes/notes.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { WebsocketModule } from './realtime/websocket/websocket.module';
 import { RevisionsModule } from './revisions/revisions.module';
@@ -97,13 +95,11 @@ const routes: Routes = [
     }),
     EventEmitterModule.forRoot(eventModuleConfig),
     ScheduleModule.forRoot(),
-    NotesModule,
+    AliasModule,
     UsersModule,
     RevisionsModule,
-    AuthorsModule,
     PublicApiModule,
     PrivateApiModule,
-    HistoryModule,
     MonitoringModule,
     PermissionsModule,
     GroupsModule,

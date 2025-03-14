@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { EventEmitter2 } from 'eventemitter2'
 import type { EventMap } from 'eventemitter2'
+import { EventEmitter2 } from 'eventemitter2'
 import {
   applyUpdate,
   Doc,
@@ -16,7 +16,7 @@ import {
 const MARKDOWN_CONTENT_CHANNEL_NAME = 'markdownContent'
 
 export interface RealtimeDocEvents extends EventMap {
-  update: (update: number[], origin: unknown) => void
+  update: (update: ArrayBuffer, origin: unknown) => void
 }
 
 /**
@@ -37,7 +37,7 @@ export class RealtimeDoc extends EventEmitter2<RealtimeDocEvents> {
    * @param initialTextContent the initial text content of the {@link Doc YDoc}
    * @param initialYjsState the initial yjs state. If provided this will be used instead of the text content
    */
-  constructor(initialTextContent?: string, initialYjsState?: number[]) {
+  constructor(initialTextContent?: string, initialYjsState?: ArrayBuffer) {
     super()
     if (initialYjsState) {
       this.applyUpdate(initialYjsState, this)
@@ -46,7 +46,7 @@ export class RealtimeDoc extends EventEmitter2<RealtimeDocEvents> {
     }
 
     this.docUpdateListener = (update, origin) => {
-      this.emit('update', Array.from(update), origin)
+      this.emit('update', update, origin)
     }
     this.doc.on('update', this.docUpdateListener)
   }
@@ -77,11 +77,13 @@ export class RealtimeDoc extends EventEmitter2<RealtimeDocEvents> {
    *
    * @param encodedTargetStateVector The current state vector of the other y-doc. If provided the update will contain only the differences.
    */
-  public encodeStateAsUpdate(encodedTargetStateVector?: number[]): number[] {
+  public encodeStateAsUpdate(
+    encodedTargetStateVector?: ArrayBuffer,
+  ): ArrayBuffer {
     const update = encodedTargetStateVector
       ? new Uint8Array(encodedTargetStateVector)
       : undefined
-    return Array.from(encodeStateAsUpdate(this.doc, update))
+    return encodeStateAsUpdate(this.doc, update)
   }
 
   public destroy(): void {
@@ -95,11 +97,11 @@ export class RealtimeDoc extends EventEmitter2<RealtimeDocEvents> {
    * @param payload The update to apply
    * @param origin A reference that triggered the update
    */
-  public applyUpdate(payload: number[], origin: unknown): void {
+  public applyUpdate(payload: ArrayBuffer, origin: unknown): void {
     applyUpdate(this.doc, new Uint8Array(payload), origin)
   }
 
-  public encodeStateVector(): number[] {
-    return Array.from(encodeStateVector(this.doc))
+  public encodeStateVector(): ArrayBuffer {
+    return encodeStateVector(this.doc)
   }
 }

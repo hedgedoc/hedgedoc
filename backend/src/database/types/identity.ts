@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ProviderType } from '../../auth/provider-type.enum';
+import { AuthProviderType } from '@hedgedoc/commons';
 
 /**
  * An auth identity holds the information how a {@link User} can authenticate themselves using a certain auth provider
@@ -13,7 +13,7 @@ export interface Identity {
   [FieldNameIdentity.userId]: number;
 
   /** The type of the auth provider */
-  [FieldNameIdentity.providerType]: ProviderType;
+  [FieldNameIdentity.providerType]: AuthProviderType;
 
   /** The identifier of the auth provider, e.g. gitlab */
   [FieldNameIdentity.providerIdentifier]: string | null;

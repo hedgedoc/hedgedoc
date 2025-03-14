@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,11 +9,11 @@ import { OnEvent } from '@nestjs/event-emitter';
 import { SchedulerRegistry } from '@nestjs/schedule';
 
 import appConfiguration, { AppConfig } from '../../config/app.config';
+import { FieldNameRevision } from '../../database/types';
 import { NoteEvent } from '../../events';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
-import { Note } from '../../notes/note.entity';
-import { NotePermission } from '../../permissions/note-permission.enum';
-import { PermissionsService } from '../../permissions/permissions.service';
+import { NotePermissionLevel } from '../../permissions/note-permission.enum';
+import { PermissionService } from '../../permissions/permission.service';
 import { RevisionsService } from '../../revisions/revisions.service';
 import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';
@@ -28,7 +28,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
     private schedulerRegistry: SchedulerRegistry,
     @Inject(appConfiguration.KEY)
     private appConfig: AppConfig,
-    private permissionService: PermissionsService,
+    private permissionService: PermissionService,
   ) {}
 
   beforeApplicationShutdown(): void {
@@ -44,9 +44,10 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
    */
   public saveRealtimeNote(realtimeNote: RealtimeNote): void {
     this.revisionsService
-      .createAndSaveRevision(
-        realtimeNote.getNote(),
+      .createRevision(
+        realtimeNote.getNoteId(),
         realtimeNote.getRealtimeDoc().getCurrentContent(),
+        undefined,
         realtimeNote.getRealtimeDoc().encodeStateAsUpdate(),
       )
       .then(() => {
@@ -57,30 +58,30 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
 
   /**
    * Creates or reuses a {@link RealtimeNote} that is handling the real time editing of the {@link Note} which is identified by the given note id.
-   * @param note The {@link Note} for which a {@link RealtimeNote realtime note} should be retrieved.
+   * @param noteId The {@link Note} for which a {@link RealtimeNote realtime note} should be retrieved.
    * @throws NotInDBError if note doesn't exist or has no revisions.
    * @return A {@link RealtimeNote} that is linked to the given note.
    */
-  public async getOrCreateRealtimeNote(note: Note): Promise<RealtimeNote> {
+  public async getOrCreateRealtimeNote(noteId: number): Promise<RealtimeNote> {
     return (
-      this.realtimeNoteStore.find(note.id) ??
-      (await this.createNewRealtimeNote(note))
+      this.realtimeNoteStore.find(noteId) ??
+      (await this.createNewRealtimeNote(noteId))
     );
   }
 
   /**
    * Creates a new {@link RealtimeNote} for the given {@link Note}.
    *
-   * @param note The note for which the realtime note should be created
+   * @param noteId The note for which the realtime note should be created
    * @throws NotInDBError if note doesn't exist or has no revisions.
    * @return The created realtime note
    */
-  private async createNewRealtimeNote(note: Note): Promise<RealtimeNote> {
-    const lastRevision = await this.revisionsService.getLatestRevision(note);
+  private async createNewRealtimeNote(noteId: number): Promise<RealtimeNote> {
+    const lastRevision = await this.revisionsService.getLatestRevision(noteId);
     const realtimeNote = this.realtimeNoteStore.create(
-      note,
+      noteId,
       lastRevision.content,
-      lastRevision.yjsStateVector ?? undefined,
+      lastRevision[FieldNameRevision.yjsStateVector] ?? undefined,
     );
     realtimeNote.on('beforeDestroy', () => {
       this.saveRealtimeNote(realtimeNote);
@@ -103,47 +104,47 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
           persistInterval * 60 * 1000,
         );
         this.schedulerRegistry.addInterval(
-          `periodic-persist-${realtimeNote.getNote().id}`,
+          `periodic-persist-${realtimeNote.getNoteId()}`,
           intervalId,
         );
         realtimeNote.on('destroy', () => {
           clearInterval(intervalId);
           this.schedulerRegistry.deleteInterval(
-            `periodic-persist-${realtimeNote.getNote().id}`,
+            `periodic-persist-${realtimeNote.getNoteId()}`,
           );
         });
       });
   }
 
   @OnEvent(NoteEvent.PERMISSION_CHANGE)
-  public async handleNotePermissionChanged(note: Note): Promise<void> {
-    const realtimeNote = this.realtimeNoteStore.find(note.id);
+  public async handleNotePermissionChanged(noteId: number): Promise<void> {
+    const realtimeNote = this.realtimeNoteStore.find(noteId);
     if (!realtimeNote) return;
 
     realtimeNote.announceMetadataUpdate();
     const allConnections = realtimeNote.getConnections();
-    await this.updateOrCloseConnection(allConnections, note);
+    await this.updateOrCloseConnection(allConnections, noteId);
   }
 
   private async updateOrCloseConnection(
     connections: RealtimeConnection[],
-    note: Note,
+    noteId: number,
   ): Promise<void> {
     for (const connection of connections) {
       const permission = await this.permissionService.determinePermission(
-        connection.getUser(),
-        note,
+        connection.getUserId(),
+        noteId,
       );
-      if (permission === NotePermission.DENY) {
+      if (permission === NotePermissionLevel.DENY) {
         connection.getTransporter().disconnect();
       } else {
-        connection.acceptEdits = permission > NotePermission.READ;
+        connection.acceptEdits = permission > NotePermissionLevel.READ;
       }
     }
   }
 
   @OnEvent(NoteEvent.DELETION)
-  public handleNoteDeleted(noteId: Note['id']): void {
+  public handleNoteDeleted(noteId: number): void {
     const realtimeNote = this.realtimeNoteStore.find(noteId);
     if (realtimeNote) {
       realtimeNote.announceNoteDeletion();
