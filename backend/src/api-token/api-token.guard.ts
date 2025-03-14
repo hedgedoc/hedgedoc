@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { AuthProviderType } from '@hedgedoc/commons';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 
 import { CompleteRequest } from '../api/utils/request.type';
@@ -30,7 +31,10 @@ export class ApiTokenGuard implements CanActivate {
       return false;
     }
     try {
-      request.user = await this.apiTokenService.validateToken(token.trim());
+      request.userId = await this.apiTokenService.getUserIdForToken(
+        token.trim(),
+      );
+      request.authProviderType = AuthProviderType.TOKEN;
       return true;
     } catch (error) {
       if (

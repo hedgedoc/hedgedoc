@@ -10,7 +10,7 @@ import { NoteType } from '@hedgedoc/commons';
  */
 export interface Revision {
   /** The unique id of the revision for internal referencing */
-  [FieldNameRevision.id]: number;
+  [FieldNameRevision.uuid]: string;
 
   /** The id of the note that this revision belongs to */
   [FieldNameRevision.noteId]: number;
@@ -38,7 +38,7 @@ export interface Revision {
 }
 
 export enum FieldNameRevision {
-  id = 'id',
+  uuid = 'uuid',
   noteId = 'note_id',
   patch = 'patch',
   content = 'content',
@@ -51,7 +51,4 @@ export enum FieldNameRevision {
 
 export const TableRevision = 'revision';
 
-export type TypeInsertRevision = Omit<
-  Revision,
-  FieldNameRevision.createdAt | FieldNameRevision.id
->;
+export type TypeInsertRevision = Omit<Revision, FieldNameRevision.createdAt>;

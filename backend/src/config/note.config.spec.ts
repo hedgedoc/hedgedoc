@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { GuestAccess } from '@hedgedoc/commons';
+import { PermissionLevel } from '@hedgedoc/commons';
 import mockedEnv from 'mocked-env';
 
 import { DefaultAccessLevel } from './default-access-level.enum';
@@ -17,7 +17,7 @@ describe('noteConfig', () => {
   const negativeMaxDocumentLength = -123;
   const floatMaxDocumentLength = 2.71;
   const invalidMaxDocumentLength = 'not-a-max-document-length';
-  const guestAccess = GuestAccess.CREATE;
+  const guestAccess = PermissionLevel.CREATE;
   const wrongDefaultPermission = 'wrong';
   const retentionDays = 30;
 
@@ -221,7 +221,7 @@ describe('noteConfig', () => {
         DefaultAccessLevel.WRITE,
       );
 
-      expect(config.guestAccess).toEqual(GuestAccess.WRITE);
+      expect(config.guestAccess).toEqual(PermissionLevel.WRITE);
       restore();
     });
 

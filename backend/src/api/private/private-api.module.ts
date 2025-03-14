@@ -1,23 +1,24 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Module } from '@nestjs/common';
 
+import { AliasModule } from '../../alias/alias.module';
 import { ApiTokenModule } from '../../api-token/api-token.module';
 import { AuthModule } from '../../auth/auth.module';
 import { FrontendConfigModule } from '../../frontend-config/frontend-config.module';
 import { GroupsModule } from '../../groups/groups.module';
-import { HistoryModule } from '../../history/history.module';
 import { LoggerModule } from '../../logger/logger.module';
 import { MediaModule } from '../../media/media.module';
-import { NotesModule } from '../../notes/notes.module';
 import { PermissionsModule } from '../../permissions/permissions.module';
 import { RevisionsModule } from '../../revisions/revisions.module';
 import { UsersModule } from '../../users/users.module';
 import { AliasController } from './alias/alias.controller';
+import { ApiTokensController } from './api-tokens/api-tokens.controller';
 import { AuthController } from './auth/auth.controller';
+import { GuestController } from './auth/guest/guest.controller';
 import { LdapController } from './auth/ldap/ldap.controller';
 import { LocalController } from './auth/local/local.controller';
 import { OidcController } from './auth/oidc/oidc.controller';
@@ -27,7 +28,6 @@ import { HistoryController } from './me/history/history.controller';
 import { MeController } from './me/me.controller';
 import { MediaController } from './media/media.controller';
 import { NotesController } from './notes/notes.controller';
-import { ApiTokensController } from './tokens/api-tokens.controller';
 import { UsersController } from './users/users.controller';
 
 @Module({
@@ -36,9 +36,8 @@ import { UsersController } from './users/users.controller';
     UsersModule,
     ApiTokenModule,
     FrontendConfigModule,
-    HistoryModule,
     PermissionsModule,
-    NotesModule,
+    AliasModule,
     MediaModule,
     RevisionsModule,
     AuthModule,
@@ -47,6 +46,7 @@ import { UsersController } from './users/users.controller';
   controllers: [
     ApiTokensController,
     ConfigController,
+    GuestController,
     MediaController,
     HistoryController,
     MeController,

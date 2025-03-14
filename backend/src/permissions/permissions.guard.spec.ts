@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,33 +7,33 @@ import { ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Mock } from 'ts-mockery';
 
-import * as ExtractNoteIdOrAliasModule from '../api/utils/extract-note-from-request';
+import * as ExtractNoteIdOrAliasModule from '../api/utils/extract-note-id-from-request';
 import { CompleteRequest } from '../api/utils/request.type';
 import { User } from '../database/user.entity';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Note } from '../notes/note.entity';
 import {
-  getNotePermissionDisplayName,
-  NotePermission,
+  getNotePermissionLevelDisplayName,
+  NotePermissionLevel,
 } from './note-permission.enum';
+import { PermissionService } from './permission.service';
 import { PermissionsGuard } from './permissions.guard';
-import { PermissionsService } from './permissions.service';
 import { PERMISSION_METADATA_KEY } from './require-permission.decorator';
 import { RequiredPermission } from './required-permission.enum';
 
-jest.mock('../api/utils/extract-note-from-request');
+jest.mock('../api/utils/extract-note-id-from-request');
 
 describe('permissions guard', () => {
   let loggerService: ConsoleLoggerService;
   let reflector: Reflector;
   let handler: () => void;
-  let permissionsService: PermissionsService;
+  let permissionsService: PermissionService;
   let requiredPermission: RequiredPermission | undefined;
   let createAllowed = false;
   let requestUser: User | undefined;
   let context: ExecutionContext;
   let permissionGuard: PermissionsGuard;
-  let determinedPermission: NotePermission;
+  let determinedPermission: NotePermissionLevel;
   let mockedNote: Note;
 
   beforeEach(() => {
@@ -48,7 +48,7 @@ describe('permissions guard', () => {
 
     handler = jest.fn();
 
-    permissionsService = Mock.of<PermissionsService>({
+    permissionsService = Mock.of<PermissionService>({
       mayCreate: jest.fn(() => createAllowed),
       determinePermission: jest.fn(() => Promise.resolve(determinedPermission)),
     });
@@ -68,7 +68,7 @@ describe('permissions guard', () => {
     });
     mockedNote = Mock.of<Note>({});
     jest
-      .spyOn(ExtractNoteIdOrAliasModule, 'extractNoteFromRequest')
+      .spyOn(ExtractNoteIdOrAliasModule, 'extractNoteIdFromRequest')
       .mockReturnValue(Promise.resolve(mockedNote));
 
     permissionGuard = new PermissionsGuard(
@@ -133,9 +133,9 @@ describe('permissions guard', () => {
     });
   });
 
-  it('will deny if no note alias is present', async () => {
+  it('will deny if no note aliases is present', async () => {
     jest
-      .spyOn(ExtractNoteIdOrAliasModule, 'extractNoteFromRequest')
+      .spyOn(ExtractNoteIdOrAliasModule, 'extractNoteIdFromRequest')
       .mockReturnValue(Promise.resolve(undefined));
 
     requiredPermission = RequiredPermission.READ;
@@ -151,9 +151,21 @@ describe('permissions guard', () => {
   });
 
   describe.each([
-    [RequiredPermission.READ, NotePermission.READ, NotePermission.DENY],
-    [RequiredPermission.WRITE, NotePermission.WRITE, NotePermission.READ],
-    [RequiredPermission.OWNER, NotePermission.OWNER, NotePermission.WRITE],
+    [
+      RequiredPermission.READ,
+      NotePermissionLevel.READ,
+      NotePermissionLevel.DENY,
+    ],
+    [
+      RequiredPermission.WRITE,
+      NotePermissionLevel.WRITE,
+      NotePermissionLevel.READ,
+    ],
+    [
+      RequiredPermission.OWNER,
+      NotePermissionLevel.OWNER,
+      NotePermissionLevel.WRITE,
+    ],
   ])(
     'with required permission %s',
     (
@@ -161,12 +173,10 @@ describe('permissions guard', () => {
       sufficientNotePermission,
       notEnoughNotePermission,
     ) => {
-      const sufficientNotePermissionDisplayName = getNotePermissionDisplayName(
-        sufficientNotePermission,
-      );
-      const notEnoughNotePermissionDisplayName = getNotePermissionDisplayName(
-        notEnoughNotePermission,
-      );
+      const sufficientNotePermissionDisplayName =
+        getNotePermissionLevelDisplayName(sufficientNotePermission);
+      const notEnoughNotePermissionDisplayName =
+        getNotePermissionLevelDisplayName(notEnoughNotePermission);
 
       beforeEach(() => {
         requiredPermission = shouldRequiredPermission;

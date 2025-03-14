@@ -127,7 +127,8 @@ describe('Me', () => {
     expect(imageIds).toContain(response.body[1].uuid);
     expect(imageIds).toContain(response.body[2].uuid);
     expect(imageIds).toContain(response.body[3].uuid);
-    const mediaUploads = await testSetup.mediaService.listUploadsByUser(user);
+    const mediaUploads =
+      await testSetup.mediaService.getMediaUploadUuidsByUserId(user);
     for (const upload of mediaUploads) {
       await testSetup.mediaService.deleteFile(upload);
     }
@@ -157,7 +158,8 @@ describe('Me', () => {
     );
     const dbUser = await testSetup.userService.getUserByUsername('hardcoded');
     expect(dbUser).toBeInstanceOf(User);
-    const mediaUploads = await testSetup.mediaService.listUploadsByUser(dbUser);
+    const mediaUploads =
+      await testSetup.mediaService.getMediaUploadUuidsByUserId(dbUser);
     expect(mediaUploads).toHaveLength(1);
     expect(mediaUploads[0].uuid).toEqual(upload.uuid);
     await agent.delete('/api/private/me').expect(204);
@@ -165,7 +167,7 @@ describe('Me', () => {
       testSetup.userService.getUserByUsername('hardcoded'),
     ).rejects.toThrow(NotInDBError);
     const mediaUploadsAfter =
-      await testSetup.mediaService.listUploadsByNote(note1);
+      await testSetup.mediaService.getMediaUploadUuidsByNoteId(note1);
     expect(mediaUploadsAfter).toHaveLength(0);
   });
 });

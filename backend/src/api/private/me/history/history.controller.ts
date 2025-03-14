@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -23,10 +23,10 @@ import { HistoryEntryDto } from '../../../../history/history-entry.dto';
 import { HistoryService } from '../../../../history/history.service';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { Note } from '../../../../notes/note.entity';
-import { GetNoteInterceptor } from '../../../utils/get-note.interceptor';
+import { GetNoteIdInterceptor } from '../../../utils/get-note-id.interceptor';
 import { OpenApi } from '../../../utils/openapi.decorator';
-import { RequestNote } from '../../../utils/request-note.decorator';
-import { RequestUser } from '../../../utils/request-user.decorator';
+import { RequestNoteId } from '../../../utils/request-note-id.decorator';
+import { RequestUserId } from '../../../utils/request-user.decorator';
 
 @UseGuards(SessionGuard)
 @OpenApi(401)
@@ -42,7 +42,7 @@ export class HistoryController {
 
   @Get()
   @OpenApi(200, 404)
-  async getHistory(@RequestUser() user: User): Promise<HistoryEntryDto[]> {
+  async getHistory(@RequestUserId() user: User): Promise<HistoryEntryDto[]> {
     const foundEntries = await this.historyService.getEntriesByUser(user);
     return await Promise.all(
       foundEntries.map((entry) => this.historyService.toHistoryEntryDto(entry)),
@@ -52,7 +52,7 @@ export class HistoryController {
   @Post()
   @OpenApi(201, 404)
   async setHistory(
-    @RequestUser() user: User,
+    @RequestUserId() user: User,
     @Body() historyImport: HistoryEntryImportListDto,
   ): Promise<void> {
     await this.historyService.setHistory(user, historyImport.history);
@@ -60,16 +60,16 @@ export class HistoryController {
 
   @Delete()
   @OpenApi(204, 404)
-  async deleteHistory(@RequestUser() user: User): Promise<void> {
+  async deleteHistory(@RequestUserId() user: User): Promise<void> {
     await this.historyService.deleteHistory(user);
   }
 
-  @Put(':noteIdOrAlias')
+  @Put(':noteAlias')
   @OpenApi(200, 404)
-  @UseInterceptors(GetNoteInterceptor)
+  @UseInterceptors(GetNoteIdInterceptor)
   async updateHistoryEntry(
-    @RequestNote() note: Note,
-    @RequestUser() user: User,
+    @RequestNoteId() note: Note,
+    @RequestUserId() user: User,
     @Body() entryUpdateDto: HistoryEntryUpdateDto,
   ): Promise<HistoryEntryDto> {
     const newEntry = await this.historyService.updateHistoryEntry(
@@ -80,12 +80,12 @@ export class HistoryController {
     return await this.historyService.toHistoryEntryDto(newEntry);
   }
 
-  @Delete(':noteIdOrAlias')
+  @Delete(':noteAlias')
   @OpenApi(204, 404)
-  @UseInterceptors(GetNoteInterceptor)
+  @UseInterceptors(GetNoteIdInterceptor)
   async deleteHistoryEntry(
-    @RequestNote() note: Note,
-    @RequestUser() user: User,
+    @RequestNoteId() note: Note,
+    @RequestUserId() user: User,
   ): Promise<void> {
     await this.historyService.deleteHistoryEntry(note, user);
   }

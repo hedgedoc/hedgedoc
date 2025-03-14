@@ -23,9 +23,10 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { IdentityService } from '../../../auth/identity.service';
 import { OidcService } from '../../../auth/oidc/oidc.service';
-import { RequestWithSession, SessionGuard } from '../../../auth/session.guard';
+import { SessionGuard } from '../../../auth/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { OpenApi } from '../../utils/openapi.decorator';
+import { RequestWithSession } from '../../utils/request.type';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -63,7 +64,9 @@ export class AuthController {
 
   @Get('pending-user')
   @OpenApi(200, 400)
-  getPendingUserData(@Req() request: RequestWithSession): FullUserInfoDto {
+  getPendingUserData(
+    @Req() request: RequestWithSession,
+  ): Partial<FullUserInfoDto> {
     if (
       !request.session.newUserData ||
       !request.session.authProviderIdentifier ||
@@ -78,7 +81,7 @@ export class AuthController {
   @OpenApi(204, 400)
   async confirmPendingUserData(
     @Req() request: RequestWithSession,
-    @Body() updatedUserInfo: PendingUserConfirmationDto,
+    @Body() pendingUserConfirmationData: PendingUserConfirmationDto,
   ): Promise<void> {
     if (
       !request.session.newUserData ||
@@ -88,13 +91,14 @@ export class AuthController {
     ) {
       throw new BadRequestException('No pending user data');
     }
-    const identity = await this.identityService.createUserWithIdentity(
-      request.session.newUserData,
-      updatedUserInfo,
-      request.session.authProviderType,
-      request.session.authProviderIdentifier,
-      request.session.providerUserId,
-    );
+    const identity =
+      await this.identityService.createUserWithIdentityFromPendingUserConfirmation(
+        request.session.newUserData,
+        pendingUserConfirmationData,
+        request.session.authProviderType,
+        request.session.authProviderIdentifier,
+        request.session.providerUserId,
+      );
     request.session.username = (await identity.user).username;
     // Cleanup
     request.session.newUserData = undefined;

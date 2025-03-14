@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -37,66 +37,90 @@ export class ConsoleLoggerService implements LoggerService {
     this.classContext = context;
   }
 
+  getContext(): string | undefined {
+    return this.classContext;
+  }
+
   setSkipColor(skipColor: boolean): void {
     this.skipColor = skipColor;
   }
 
-  error(message: unknown, trace = '', functionContext?: string): void {
+  error(
+    message: unknown,
+    trace = '',
+    functionContext?: string,
+    classContext?: string,
+  ): void {
     this.printMessage(
       message,
       red,
-      this.makeContextString(functionContext),
+      this.makeContextString(functionContext, classContext),
       false,
     );
     ConsoleLoggerService.printStackTrace(trace);
   }
 
-  log(message: unknown, functionContext?: string): void {
+  log(message: unknown, functionContext?: string, classContext?: string): void {
     if (needToLog(this.appConfig.loglevel, Loglevel.INFO)) {
       this.printMessage(
         message,
         green,
-        this.makeContextString(functionContext),
+        this.makeContextString(functionContext, classContext),
         false,
       );
     }
   }
 
-  warn(message: unknown, functionContext?: string): void {
+  warn(
+    message: unknown,
+    functionContext?: string,
+    classContext?: string,
+  ): void {
     if (needToLog(this.appConfig.loglevel, Loglevel.WARN)) {
       this.printMessage(
         message,
         yellow,
-        this.makeContextString(functionContext),
+        this.makeContextString(functionContext, classContext),
         false,
       );
     }
   }
 
-  debug(message: unknown, functionContext?: string): void {
+  debug(
+    message: unknown,
+    functionContext?: string,
+    classContext?: string,
+  ): void {
     if (needToLog(this.appConfig.loglevel, Loglevel.DEBUG)) {
       this.printMessage(
         message,
         magentaBright,
-        this.makeContextString(functionContext),
+        this.makeContextString(functionContext, classContext),
         false,
       );
     }
   }
 
-  verbose(message: unknown, functionContext?: string): void {
+  verbose(
+    message: unknown,
+    functionContext?: string,
+    classContext?: string,
+  ): void {
     if (needToLog(this.appConfig.loglevel, Loglevel.TRACE)) {
       this.printMessage(
         message,
         cyanBright,
-        this.makeContextString(functionContext),
+        this.makeContextString(functionContext, classContext),
         false,
       );
     }
   }
 
-  private makeContextString(functionContext?: string): string {
-    let context = this.classContext;
+  private makeContextString(
+    functionContext?: string,
+    classContext?: string,
+  ): string {
+    let context = classContext ?? this.classContext;
     if (!context) {
       context = 'HedgeDoc';
     }

@@ -22,14 +22,14 @@ import {
 } from '@nestjs/common';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
+import { AliasService } from '../../../alias/alias.service';
 import { ApiTokenGuard } from '../../../api-token/api-token.guard';
-import { User } from '../../../database/user.entity';
+import { User } from '../../../database/types';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { AliasService } from '../../../notes/alias.service';
-import { NotesService } from '../../../notes/notes.service';
-import { PermissionsService } from '../../../permissions/permissions.service';
+import { NoteService } from '../../../notes/note.service';
+import { PermissionService } from '../../../permissions/permission.service';
+import { RequestUserId } from '../../utils/decorator/request-user.decorator';
 import { OpenApi } from '../../utils/openapi.decorator';
-import { RequestUser } from '../../utils/request-user.decorator';
 
 @UseGuards(ApiTokenGuard)
 @OpenApi(401)
@@ -40,8 +40,8 @@ export class AliasController {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private aliasService: AliasService,
-    private noteService: NotesService,
-    private permissionsService: PermissionsService,
+    private noteService: NoteService,
+    private permissionsService: PermissionService,
   ) {
     this.logger.setContext(AliasController.name);
   }
@@ -50,20 +50,20 @@ export class AliasController {
   @OpenApi(
     {
       code: 200,
-      description: 'The new alias',
+      description: 'The new aliases',
       schema: AliasSchema,
     },
     403,
     404,
   )
   async addAlias(
-    @RequestUser() user: User,
+    @RequestUserId() userId: number,
     @Body() newAliasDto: AliasCreateDto,
   ): Promise<AliasDto> {
-    const note = await this.noteService.getNoteByIdOrAlias(
+    const note = await this.noteService.getNoteIdByAlias(
       newAliasDto.noteIdOrAlias,
     );
-    if (!(await this.permissionsService.isOwner(user, note))) {
+    if (!(await this.permissionsService.isOwner(userId, note))) {
       throw new UnauthorizedException('Reading note denied!');
     }
     const updatedAlias = await this.aliasService.addAlias(
@@ -73,18 +73,18 @@ export class AliasController {
     return this.aliasService.toAliasDto(updatedAlias, note);
   }
 
-  @Put(':alias')
+  @Put(':aliases')
   @OpenApi(
     {
       code: 200,
-      description: 'The updated alias',
+      description: 'The updated aliases',
       schema: AliasSchema,
     },
     403,
     404,
   )
   async makeAliasPrimary(
-    @RequestUser() user: User,
+    @RequestUserId() user: User,
     @Param('alias') alias: string,
     @Body() changeAliasDto: AliasUpdateDto,
   ): Promise<AliasDto> {
@@ -93,7 +93,7 @@ export class AliasController {
         `The field 'primaryAlias' must be set to 'true'.`,
       );
     }
-    const note = await this.noteService.getNoteByIdOrAlias(alias);
+    const note = await this.noteService.getNoteIdByAlias(alias);
     if (!(await this.permissionsService.isOwner(user, note))) {
       throw new UnauthorizedException('Reading note denied!');
     }
@@ -101,21 +101,21 @@ export class AliasController {
     return this.aliasService.toAliasDto(updatedAlias, note);
   }
 
-  @Delete(':alias')
+  @Delete(':aliases')
   @OpenApi(
     {
       code: 204,
-      description: 'The alias was deleted',
+      description: 'The aliases was deleted',
     },
     400,
     403,
     404,
   )
   async removeAlias(
-    @RequestUser() user: User,
+    @RequestUserId() user: User,
     @Param('alias') alias: AliasDto['name'],
   ): Promise<void> {
-    const note = await this.noteService.getNoteByIdOrAlias(alias);
+    const note = await this.noteService.getNoteIdByAlias(alias);
     if (!(await this.permissionsService.isOwner(user, note))) {
       throw new UnauthorizedException('Reading note denied!');
     }

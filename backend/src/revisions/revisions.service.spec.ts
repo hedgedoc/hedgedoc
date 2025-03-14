@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,6 +11,7 @@ import { createPatch } from 'diff';
 import { Mock } from 'ts-mockery';
 import { DataSource, EntityManager, Repository } from 'typeorm';
 
+import { AliasModule } from '../alias/alias.module';
 import { ApiToken } from '../api-token/api-token.entity';
 import { Identity } from '../auth/identity.entity';
 import { Author } from '../authors/author.entity';
@@ -28,9 +29,8 @@ import { NotInDBError } from '../errors/errors';
 import { eventModuleConfig } from '../events';
 import { Group } from '../groups/group.entity';
 import { LoggerModule } from '../logger/logger.module';
-import { Alias } from '../notes/alias.entity';
+import { Alias } from '../notes/aliases.entity';
 import { Note } from '../notes/note.entity';
-import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
@@ -72,7 +72,7 @@ describe('RevisionsService', () => {
         },
       ],
       imports: [
-        NotesModule,
+        AliasModule,
         LoggerModule,
         ConfigModule.forRoot({
           isGlobal: true,
@@ -232,7 +232,7 @@ describe('RevisionsService', () => {
 
       const userInfo = await service.getRevisionUserInfo(revision);
       expect(userInfo.usernames.length).toEqual(1);
-      expect(userInfo.anonymousUserCount).toEqual(2);
+      expect(userInfo.guestUserCount).toEqual(2);
     });
   });
 

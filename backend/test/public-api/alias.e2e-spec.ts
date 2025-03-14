@@ -5,7 +5,6 @@
  */
 import { AliasUpdateDto } from '@hedgedoc/commons';
 import request from 'supertest';
-
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Alias', () => {

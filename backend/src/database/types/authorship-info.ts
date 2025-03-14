@@ -11,7 +11,7 @@
  */
 export interface AuthorshipInfo {
   /** The id of the {@link Revision} this belongs to. */
-  [FieldNameAuthorshipInfo.revisionId]: number;
+  [FieldNameAuthorshipInfo.revisionUuid]: string;
 
   /** The id of the author of the edit. */
   [FieldNameAuthorshipInfo.authorId]: number;
@@ -24,7 +24,7 @@ export interface AuthorshipInfo {
 }
 
 export enum FieldNameAuthorshipInfo {
-  revisionId = 'revision_id',
+  revisionUuid = 'revision_id',
   authorId = 'author_id',
   startPosition = 'start_position',
   endPosition = 'end_position',

@@ -66,7 +66,7 @@ export class LdapController {
           loginDto.username.toLowerCase(),
         );
         await this.usersService.updateUser(
-          user,
+          makeUsernameLowercase(loginDto.username),
           userInfo.displayName,
           userInfo.email,
           userInfo.photoUrl,

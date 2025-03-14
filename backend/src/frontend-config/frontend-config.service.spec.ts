@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { GuestAccess, ProviderType } from '@hedgedoc/commons';
+import { PermissionLevel, ProviderType } from '@hedgedoc/commons';
 import { ConfigModule, registerAs } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { URL } from 'url';
@@ -16,7 +16,7 @@ import { ExternalServicesConfig } from '../config/external-services.config';
 import { Loglevel } from '../config/loglevel.enum';
 import { NoteConfig } from '../config/note.config';
 import { LoggerModule } from '../logger/logger.module';
-import { getServerVersionFromPackageJson } from '../utils/serverVersion';
+import { getServerVersionFromPackageJson } from '../utils/server-version';
 import { FrontendConfigService } from './frontend-config.service';
 
 /* eslint-disable
@@ -108,7 +108,7 @@ describe('FrontendConfigService', () => {
                   return {
                     forbiddenNoteIds: [],
                     maxDocumentLength: 200,
-                    guestAccess: GuestAccess.CREATE,
+                    guestAccess: PermissionLevel.CREATE,
                     permissions: {
                       default: {
                         everyone: DefaultAccessLevel.READ,
@@ -213,7 +213,7 @@ describe('FrontendConfigService', () => {
               const noteConfig: NoteConfig = {
                 forbiddenNoteIds: [],
                 maxDocumentLength: maxDocumentLength,
-                guestAccess: GuestAccess.CREATE,
+                guestAccess: PermissionLevel.CREATE,
                 permissions: {
                   default: {
                     everyone: DefaultAccessLevel.READ,

@@ -19,9 +19,9 @@ import authConfiguration, {
   AuthConfig,
   OidcConfig,
 } from '../../config/auth.config';
+import { Identity } from '../../database/types';
 import { NotInDBError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
-import { Identity } from '../identity.entity';
 import { IdentityService } from '../identity.service';
 import { RequestWithSession } from '../session.guard';
 
@@ -169,12 +169,12 @@ export class OidcService {
    *
    * @param {string} oidcIdentifier The identifier of the OIDC configuration
    * @param {RequestWithSession} request The request containing the session
-   * @returns {FullUserInfoDto} The user information extracted from the callback
+   * @returns {OwnUserInfoDto} The user information extracted from the callback
    */
   async extractUserInfoFromCallback(
     oidcIdentifier: string,
     request: RequestWithSession,
-  ): Promise<FullUserInfoDto> {
+  ): Promise<OwnUserInfoDto> {
     const clientConfig = this.clientConfigs.get(oidcIdentifier);
     if (!clientConfig) {
       throw new NotFoundException(

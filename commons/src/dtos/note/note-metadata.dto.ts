@@ -14,9 +14,7 @@ export const NoteMetadataSchema = z
     aliases: z.array(AliasSchema).describe('All aliases of the note'),
     primaryAddress: z
       .string()
-      .describe(
-        'The primary address/alias of the note. If at least one alias is set, this is the primary alias.',
-      ),
+      .describe('The primary address/alias of the note.'),
     title: z
       .string()
       .describe(
