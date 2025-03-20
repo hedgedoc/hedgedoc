@@ -48,7 +48,8 @@
     "js-yaml": "4.1.0",
     "reveal.js": "5.1.0",
     "ws": "8.18.0",
-    "yjs": "13.6.23"
+    "yjs": "13.6.23",
+    "zod": "3.24.2"
   },
   "devDependencies": {
     "@jest/types": "29.6.3",
