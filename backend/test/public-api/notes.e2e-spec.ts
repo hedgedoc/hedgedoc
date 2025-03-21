@@ -1,14 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { NotePermissionsUpdateDto } from '@hedgedoc/commons';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import request from 'supertest';
 
 import { NotInDBError } from '../../src/errors/errors';
-import { NotePermissionsUpdateDto } from '../../src/notes/note-permissions.dto';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Notes', () => {
@@ -219,14 +219,15 @@ describe('Notes', () => {
         testSetup.users[0],
         'deleteTest3',
       );
-      const updateNotePermission = new NotePermissionsUpdateDto();
-      updateNotePermission.sharedToUsers = [
-        {
-          username: testSetup.users[0].username,
-          canEdit: true,
-        },
-      ];
-      updateNotePermission.sharedToGroups = [];
+      const updateNotePermission: NotePermissionsUpdateDto = {
+        sharedToUsers: [
+          {
+            username: testSetup.users[0].username,
+            canEdit: true,
+          },
+        ],
+        sharedToGroups: [],
+      };
       await testSetup.permissionsService.updateNotePermissions(
         note,
         updateNotePermission,

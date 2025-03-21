@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -271,6 +271,7 @@ describe('NotesService', () => {
     const note = Mock.of<Note>({
       revisions: Promise.resolve([revision]),
       aliases: Promise.resolve([]),
+      createdAt: new Date(1549312452000),
     });
 
     mockRevisionService(note, revision);

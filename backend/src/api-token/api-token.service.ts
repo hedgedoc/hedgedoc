@@ -1,8 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { ApiTokenDto, ApiTokenWithSecretDto } from '@hedgedoc/commons';
 import { Injectable } from '@nestjs/common';
 import { Cron, Timeout } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -17,8 +18,6 @@ import {
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { User } from '../users/user.entity';
 import { bufferToBase64Url } from '../utils/password';
-import { TimestampMillis } from '../utils/timestamp';
-import { ApiTokenDto, ApiTokenWithSecretDto } from './api-token.dto';
 import { ApiToken } from './api-token.entity';
 
 export const AUTH_TOKEN_PREFIX = 'hd2';
@@ -54,19 +53,19 @@ export class ApiTokenService {
   createToken(
     user: User,
     identifier: string,
-    userDefinedValidUntil: TimestampMillis | undefined,
+    userDefinedValidUntil: Date | null,
   ): [Omit<ApiToken, 'id' | 'createdAt'>, string] {
     const secret = bufferToBase64Url(randomBytes(64));
     const keyId = bufferToBase64Url(randomBytes(8));
     // More about the choice of SHA-512 in the dev docs
     const accessTokenHash = createHash('sha512').update(secret).digest('hex');
     // Tokens can only be valid for a maximum of 2 years
-    const maximumTokenValidity =
-      new Date().getTime() + 2 * 365 * 24 * 60 * 60 * 1000;
+    const maximumTokenValidity = new Date();
+    maximumTokenValidity.setTime(
+      maximumTokenValidity.getTime() + 2 * 365 * 24 * 60 * 60 * 1000,
+    );
     const isTokenLimitedToMaximumValidity =
-      !userDefinedValidUntil ||
-      userDefinedValidUntil === 0 ||
-      userDefinedValidUntil > maximumTokenValidity;
+      !userDefinedValidUntil || userDefinedValidUntil > maximumTokenValidity;
     const validUntil = isTokenLimitedToMaximumValidity
       ? maximumTokenValidity
       : userDefinedValidUntil;
@@ -83,7 +82,7 @@ export class ApiTokenService {
   async addToken(
     user: User,
     identifier: string,
-    validUntil: TimestampMillis | undefined,
+    validUntil: Date | null,
   ): Promise<ApiTokenWithSecretDto> {
     user.apiTokens = this.getTokensByUser(user);
 
@@ -176,13 +175,13 @@ export class ApiTokenService {
     const tokenDto: ApiTokenDto = {
       label: authToken.label,
       keyId: authToken.keyId,
-      createdAt: authToken.createdAt,
-      validUntil: authToken.validUntil,
+      createdAt: authToken.createdAt.toISOString(),
+      validUntil: authToken.validUntil.toISOString(),
       lastUsedAt: null,
     };
 
     if (authToken.lastUsedAt) {
-      tokenDto.lastUsedAt = new Date(authToken.lastUsedAt);
+      tokenDto.lastUsedAt = new Date(authToken.lastUsedAt).toISOString();
     }
 
     return tokenDto;

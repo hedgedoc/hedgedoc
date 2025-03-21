@@ -1,15 +1,15 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { NoteMetadataDto } from '@hedgedoc/commons';
 import { promises as fs } from 'fs';
 import { join } from 'path';
+import { HistoryEntryDto } from 'src/history/history-entry.dto';
 import request from 'supertest';
 
 import { HistoryEntryUpdateDto } from '../../src/history/history-entry-update.dto';
-import { HistoryEntryDto } from '../../src/history/history-entry.dto';
-import { NoteMetadataDto } from '../../src/notes/note-metadata.dto';
 import { User } from '../../src/users/user.entity';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
@@ -25,7 +25,12 @@ describe('Me', () => {
     uploadPath =
       testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
 
-    user = await testSetup.userService.createUser('hardcoded', 'Testy');
+    user = await testSetup.userService.createUser(
+      'hardcoded',
+      'Testy',
+      null,
+      null,
+    );
     await testSetup.app.init();
   });
 

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,7 +10,6 @@ import {
 import { Mock } from 'ts-mockery';
 
 import { User } from '../../../users/user.entity';
-import { Username } from '../../../utils/username';
 import { RealtimeConnection } from '../realtime-connection';
 import { RealtimeNote } from '../realtime-note';
 import { RealtimeUserStatusAdapter } from '../realtime-user-status-adapter';
@@ -22,13 +21,13 @@ enum RealtimeUserState {
   WITH_READONLY,
 }
 
-const MOCK_FALLBACK_USERNAME: Username = 'mock';
+const MOCK_FALLBACK_USERNAME: string = 'mock';
 
 /**
  * Creates a mocked {@link RealtimeConnection realtime connection}.
  */
 export class MockConnectionBuilder {
-  private username: Username | null;
+  private username: string | null;
   private displayName: string | undefined;
   private includeRealtimeUserStatus: RealtimeUserState =
     RealtimeUserState.WITHOUT;
@@ -51,7 +50,7 @@ export class MockConnectionBuilder {
    *
    * @param username the username of the mocked user. If this value is omitted then the builder will user a {@link MOCK_FALLBACK_USERNAME fallback}.
    */
-  public withLoggedInUser(username?: Username): this {
+  public withLoggedInUser(username?: string): this {
     const newUsername = username ?? MOCK_FALLBACK_USERNAME;
     this.username = newUsername;
     this.displayName = newUsername;

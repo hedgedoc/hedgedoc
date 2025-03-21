@@ -1,9 +1,8 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { DeepPartial } from '@hedgedoc/commons';
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
@@ -150,7 +149,7 @@ describe('ApiTokenService', () => {
       const [accessToken, secret] = service.createToken(
         user,
         'TestToken',
-        undefined,
+        null,
       );
 
       expect(() =>
@@ -158,7 +157,7 @@ describe('ApiTokenService', () => {
       ).not.toThrow();
     });
     it('AuthToken has wrong hash', () => {
-      const [accessToken] = service.createToken(user, 'TestToken', undefined);
+      const [accessToken] = service.createToken(user, 'TestToken', null);
       expect(() =>
         service.checkToken('secret', accessToken as ApiToken),
       ).toThrow(TokenNotValidError);
@@ -167,7 +166,7 @@ describe('ApiTokenService', () => {
       const [accessToken, secret] = service.createToken(
         user,
         'Test',
-        1549312452000,
+        new Date(1549312452000),
       );
       expect(() => service.checkToken(secret, accessToken as ApiToken)).toThrow(
         TokenNotValidError,
@@ -295,18 +294,16 @@ describe('ApiTokenService', () => {
         jest
           .spyOn(apiTokenRepo, 'save')
           .mockImplementationOnce(
-            async (
-              apiTokenSaved: DeepPartial<ApiToken>,
-              _,
-            ): Promise<ApiToken> => {
+            async (apiTokenSaved: ApiToken, _): Promise<ApiToken> => {
               expect(apiTokenSaved.lastUsedAt).toBeNull();
+              apiTokenSaved.createdAt = new Date(1);
               return apiTokenSaved;
             },
           );
-        const token = await service.addToken(user, identifier, 0);
+        const token = await service.addToken(user, identifier, new Date(0));
         expect(token.label).toEqual(identifier);
         expect(
-          token.validUntil.getTime() -
+          new Date(token.validUntil).getTime() -
             (new Date().getTime() + 2 * 365 * 24 * 60 * 60 * 1000),
         ).toBeLessThanOrEqual(10000);
         expect(token.lastUsedAt).toBeNull();
@@ -317,18 +314,17 @@ describe('ApiTokenService', () => {
         jest
           .spyOn(apiTokenRepo, 'save')
           .mockImplementationOnce(
-            async (
-              apiTokenSaved: DeepPartial<ApiToken>,
-              _,
-            ): Promise<ApiToken> => {
+            async (apiTokenSaved: ApiToken, _): Promise<ApiToken> => {
               expect(apiTokenSaved.lastUsedAt).toBeNull();
+              apiTokenSaved.createdAt = new Date(1);
               return apiTokenSaved;
             },
           );
-        const validUntil = new Date().getTime() + 30000;
+        const validUntil = new Date();
+        validUntil.setTime(validUntil.getTime() + 30000);
         const token = await service.addToken(user, identifier, validUntil);
         expect(token.label).toEqual(identifier);
-        expect(token.validUntil.getTime()).toEqual(validUntil);
+        expect(new Date(token.validUntil)).toEqual(validUntil);
         expect(token.lastUsedAt).toBeNull();
         expect(token.secret.startsWith('hd2.' + token.keyId)).toBeTruthy();
       });
@@ -340,7 +336,8 @@ describe('ApiTokenService', () => {
             inValidToken.length = 201;
             return inValidToken;
           });
-        const validUntil = new Date().getTime() + 30000;
+        const validUntil = new Date();
+        validUntil.setTime(validUntil.getTime() + 30000);
         await expect(
           service.addToken(user, identifier, validUntil),
         ).rejects.toThrow(TooManyTokensError);
@@ -400,17 +397,17 @@ describe('ApiTokenService', () => {
       expect(tokenDto.keyId).toEqual(apiToken.keyId);
       expect(tokenDto.lastUsedAt).toBeNull();
       expect(tokenDto.label).toEqual(apiToken.label);
-      expect(tokenDto.validUntil.getTime()).toEqual(
+      expect(new Date(tokenDto.validUntil).getTime()).toEqual(
         apiToken.validUntil.getTime(),
       );
-      expect(tokenDto.createdAt.getTime()).toEqual(
+      expect(new Date(tokenDto.createdAt).getTime()).toEqual(
         apiToken.createdAt.getTime(),
       );
     });
     it('should have lastUsedAt', () => {
       apiToken.lastUsedAt = new Date();
       const tokenDto = service.toAuthTokenDto(apiToken);
-      expect(tokenDto.lastUsedAt).toEqual(apiToken.lastUsedAt);
+      expect(tokenDto.lastUsedAt).toEqual(apiToken.lastUsedAt.toISOString());
     });
   });
 });

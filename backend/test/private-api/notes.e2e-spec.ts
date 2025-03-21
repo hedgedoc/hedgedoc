@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -39,9 +39,19 @@ describe('Notes', () => {
     const password2 = 'AHardcodedStrongP@ssword12';
     const groupname1 = 'groupname1';
 
-    user1 = await testSetup.userService.createUser(username1, 'Testy');
+    user1 = await testSetup.userService.createUser(
+      username1,
+      'Testy',
+      null,
+      null,
+    );
     await testSetup.localIdentityService.createLocalIdentity(user1, password1);
-    user2 = await testSetup.userService.createUser(username2, 'Max Mustermann');
+    user2 = await testSetup.userService.createUser(
+      username2,
+      'Max Mustermann',
+      null,
+      null,
+    );
     await testSetup.localIdentityService.createLocalIdentity(user2, password2);
 
     group1 = await testSetup.groupService.createGroup(groupname1, 'Group 1');
@@ -668,7 +678,7 @@ describe('Notes', () => {
             .put(`/api/private/notes/${alias}/metadata/permissions/owner`)
             .expect('Content-Type', /json/)
             .expect(200)
-            .send({ newOwner: user2.username });
+            .send({ owner: user2.username });
           expect(response.body.metadata.permissions.owner).toBe(user2.username);
         });
       });

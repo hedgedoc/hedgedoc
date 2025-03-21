@@ -1,8 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { AliasDto } from '@hedgedoc/commons';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -12,7 +13,6 @@ import {
   PrimaryAliasDeletionForbiddenError,
 } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { AliasDto } from './alias.dto';
 import { Alias } from './alias.entity';
 import { Note } from './note.entity';
 import { NotesService } from './notes.service';

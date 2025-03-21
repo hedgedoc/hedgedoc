@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,7 +9,7 @@ import * as Joi from 'joi';
 import { buildErrorMessage } from './utils';
 
 export interface ExternalServicesConfig {
-  plantUmlServer: string;
+  plantUmlServer: string | null;
   imageProxy: string;
 }
 
@@ -18,7 +18,7 @@ const schema = Joi.object({
     .uri({
       scheme: /https?/,
     })
-    .optional()
+    .allow(null)
     .label('HD_PLANTUML_SERVER'),
   imageProxy: Joi.string()
     .uri({
@@ -36,7 +36,7 @@ export default registerAs('externalServicesConfig', () => {
   }
   const externalConfig = schema.validate(
     {
-      plantUmlServer: process.env.HD_PLANTUML_SERVER,
+      plantUmlServer: process.env.HD_PLANTUML_SERVER ?? null,
       imageProxy: process.env.HD_IMAGE_PROXY,
     },
     {

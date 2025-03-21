@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,10 +14,12 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiProduces,
+  ApiResponseNoStatusOptions,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { zodToOpenAPI } from 'nestjs-zod';
+import { ZodSchema } from 'zod';
 
-import { BaseDto } from '../../utils/base.dto.';
 import {
   badRequestDescription,
   conflictDescription,
@@ -57,7 +59,7 @@ export interface HttpStatusCodeWithExtraInformation {
   code: HttpStatusCodes;
   description?: string;
   isArray?: boolean;
-  dto?: BaseDto;
+  schema?: ZodSchema;
   mimeType?: string;
 }
 
@@ -89,7 +91,8 @@ export const OpenApi = (
     let code: HttpStatusCodes = 200;
     let description: string | undefined = undefined;
     let isArray: boolean | undefined = undefined;
-    let dto: BaseDto | undefined = undefined;
+    let schema: ZodSchema | undefined = undefined;
+
     if (typeof entry == 'number') {
       code = entry;
     } else {
@@ -97,7 +100,7 @@ export const OpenApi = (
       code = entry.code;
       description = entry.description;
       isArray = entry.isArray;
-      dto = entry.dto;
+      schema = entry.schema;
       if (entry.mimeType) {
         decoratorsToApply.push(
           ApiProduces(entry.mimeType),
@@ -105,22 +108,32 @@ export const OpenApi = (
         );
       }
     }
+
+    let defaultResponseObject: ApiResponseNoStatusOptions = {
+      description: description ?? createdDescription,
+      isArray: isArray,
+    };
+    if (schema) {
+      defaultResponseObject = {
+        ...defaultResponseObject,
+        schema: zodToOpenAPI(schema),
+      };
+    }
+
     switch (code) {
       case 200:
         decoratorsToApply.push(
           ApiOkResponse({
+            ...defaultResponseObject,
             description: description ?? okDescription,
-            isArray: isArray,
-            type: dto ? (): BaseDto => dto : undefined,
           }),
         );
         break;
       case 201:
         decoratorsToApply.push(
           ApiCreatedResponse({
+            ...defaultResponseObject,
             description: description ?? createdDescription,
-            isArray: isArray,
-            type: dto ? (): BaseDto => dto : undefined,
           }),
           HttpCode(201),
         );

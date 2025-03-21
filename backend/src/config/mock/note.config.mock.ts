@@ -1,13 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { GuestAccess } from '@hedgedoc/commons';
 import { ConfigFactoryKeyHost, registerAs } from '@nestjs/config';
 import { ConfigFactory } from '@nestjs/config/dist/interfaces';
 
 import { DefaultAccessLevel } from '../default-access-level.enum';
-import { GuestAccess } from '../guest_access.enum';
 import { NoteConfig } from '../note.config';
 
 export function createDefaultMockNoteConfig(): NoteConfig {

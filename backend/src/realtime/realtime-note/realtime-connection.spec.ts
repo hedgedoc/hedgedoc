@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,7 +13,6 @@ import { Mock } from 'ts-mockery';
 
 import { Note } from '../../notes/note.entity';
 import { User } from '../../users/user.entity';
-import { Username } from '../../utils/username';
 import * as NameRandomizerModule from './random-word-lists/name-randomizer';
 import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';
@@ -40,7 +39,7 @@ describe('websocket connection', () => {
   let mockedUser: User;
   let mockedMessageTransporter: MessageTransporter;
 
-  const mockedUserName: Username = 'mocked-user-name';
+  const mockedUserName: string = 'mocked-user-name';
   const mockedDisplayName = 'mockedDisplayName';
 
   beforeEach(() => {

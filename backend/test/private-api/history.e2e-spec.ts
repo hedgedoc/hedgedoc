@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -41,7 +41,7 @@ describe('History', () => {
     historyService = moduleRef.get(HistoryService);
     const userService = moduleRef.get(UsersService);
     localIdentityService = moduleRef.get(LocalService);
-    user = await userService.createUser(username, 'Testy');
+    user = await userService.createUser(username, 'Testy', null, null);
     await localIdentityService.createLocalIdentity(user, password);
     const notesService = moduleRef.get(NotesService);
     note = await notesService.createNote(content, user, 'note');

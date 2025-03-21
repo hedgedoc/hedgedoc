@@ -1,13 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { ProviderType } from '@hedgedoc/commons';
 import { DataSource } from 'typeorm';
 
 import { ApiToken } from './api-token/api-token.entity';
 import { Identity } from './auth/identity.entity';
-import { ProviderType } from './auth/provider-type.enum';
 import { Author } from './authors/author.entity';
 import { Group } from './groups/group.entity';
 import { HistoryEntry } from './history/history-entry.entity';

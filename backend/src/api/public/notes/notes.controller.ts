@@ -1,8 +1,24 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  MediaUploadDto,
+  MediaUploadSchema,
+  NoteDto,
+  NoteMediaDeletionDto,
+  NoteMetadataDto,
+  NoteMetadataSchema,
+  NotePermissionsDto,
+  NotePermissionsSchema,
+  NotePermissionsUpdateDto,
+  NoteSchema,
+  RevisionDto,
+  RevisionMetadataDto,
+  RevisionMetadataSchema,
+  RevisionSchema,
+} from '@hedgedoc/commons';
 import {
   BadRequestException,
   Body,
@@ -22,27 +38,16 @@ import { NotInDBError } from '../../../errors/errors';
 import { GroupsService } from '../../../groups/groups.service';
 import { HistoryService } from '../../../history/history.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
-import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
-import {
-  NotePermissionsDto,
-  NotePermissionsUpdateDto,
-} from '../../../notes/note-permissions.dto';
-import { NoteDto } from '../../../notes/note.dto';
 import { Note } from '../../../notes/note.entity';
-import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
 import { NotesService } from '../../../notes/notes.service';
 import { PermissionsGuard } from '../../../permissions/permissions.guard';
 import { PermissionsService } from '../../../permissions/permissions.service';
 import { RequirePermission } from '../../../permissions/require-permission.decorator';
 import { RequiredPermission } from '../../../permissions/required-permission.enum';
-import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
-import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
-import { Username } from '../../../utils/username';
 import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
 import { MarkdownBody } from '../../utils/markdown-body.decorator';
 import { OpenApi } from '../../utils/openapi.decorator';
@@ -88,7 +93,7 @@ export class NotesController {
     {
       code: 200,
       description: 'Get information about the newly created note',
-      dto: NoteDto,
+      schema: NoteSchema,
     },
     403,
     404,
@@ -107,7 +112,7 @@ export class NotesController {
     {
       code: 201,
       description: 'Get information about the newly created note',
-      dto: NoteDto,
+      schema: NoteSchema,
     },
     400,
     403,
@@ -155,7 +160,7 @@ export class NotesController {
     {
       code: 200,
       description: 'The new, changed note',
-      dto: NoteDto,
+      schema: NoteSchema,
     },
     403,
     404,
@@ -197,7 +202,7 @@ export class NotesController {
     {
       code: 200,
       description: 'The metadata of the note',
-      dto: NoteMetadataDto,
+      schema: NoteMetadataSchema,
     },
     403,
     404,
@@ -216,7 +221,7 @@ export class NotesController {
     {
       code: 200,
       description: 'The updated permissions of the note',
-      dto: NotePermissionsDto,
+      schema: NotePermissionsSchema,
     },
     403,
     404,
@@ -238,7 +243,7 @@ export class NotesController {
     {
       code: 200,
       description: 'Get the permissions for a note',
-      dto: NotePermissionsDto,
+      schema: NotePermissionsSchema,
     },
     403,
     404,
@@ -257,7 +262,7 @@ export class NotesController {
     {
       code: 200,
       description: 'Set the permissions for a user on a note',
-      dto: NotePermissionsDto,
+      schema: NotePermissionsSchema,
     },
     403,
     404,
@@ -265,7 +270,7 @@ export class NotesController {
   async setUserPermission(
     @RequestUser() user: User,
     @RequestNote() note: Note,
-    @Param('userName') username: Username,
+    @Param('userName') username: string,
     @Body('canEdit') canEdit: boolean,
   ): Promise<NotePermissionsDto> {
     const permissionUser = await this.userService.getUserByUsername(username);
@@ -284,7 +289,7 @@ export class NotesController {
     {
       code: 200,
       description: 'Remove the permission for a user on a note',
-      dto: NotePermissionsDto,
+      schema: NotePermissionsSchema,
     },
     403,
     404,
@@ -292,7 +297,7 @@ export class NotesController {
   async removeUserPermission(
     @RequestUser() user: User,
     @RequestNote() note: Note,
-    @Param('userName') username: Username,
+    @Param('userName') username: string,
   ): Promise<NotePermissionsDto> {
     try {
       const permissionUser = await this.userService.getUserByUsername(username);
@@ -318,7 +323,7 @@ export class NotesController {
     {
       code: 200,
       description: 'Set the permissions for a group on a note',
-      dto: NotePermissionsDto,
+      schema: NotePermissionsSchema,
     },
     403,
     404,
@@ -345,7 +350,7 @@ export class NotesController {
     {
       code: 200,
       description: 'Remove the permission for a group on a note',
-      dto: NotePermissionsDto,
+      schema: NotePermissionsSchema,
     },
     403,
     404,
@@ -370,7 +375,7 @@ export class NotesController {
     {
       code: 200,
       description: 'Changes the owner of the note',
-      dto: NoteDto,
+      schema: NoteSchema,
     },
     403,
     404,
@@ -378,7 +383,7 @@ export class NotesController {
   async changeOwner(
     @RequestUser() user: User,
     @RequestNote() note: Note,
-    @Body('newOwner') newOwner: Username,
+    @Body('newOwner') newOwner: string,
   ): Promise<NoteDto> {
     const owner = await this.userService.getUserByUsername(newOwner);
     return await this.noteService.toNoteDto(
@@ -394,7 +399,7 @@ export class NotesController {
       code: 200,
       description: 'Revisions of the note',
       isArray: true,
-      dto: RevisionMetadataDto,
+      schema: RevisionMetadataSchema,
     },
     403,
     404,
@@ -418,7 +423,7 @@ export class NotesController {
     {
       code: 200,
       description: 'Revision of the note for the given id or alias',
-      dto: RevisionDto,
+      schema: RevisionSchema,
     },
     403,
     404,
@@ -440,7 +445,7 @@ export class NotesController {
     code: 200,
     description: 'All media uploads of the note',
     isArray: true,
-    dto: MediaUploadDto,
+    schema: MediaUploadSchema,
   })
   async getNotesMedia(
     @RequestUser() user: User,

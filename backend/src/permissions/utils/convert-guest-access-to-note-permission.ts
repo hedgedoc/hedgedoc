@@ -1,9 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { GuestAccess } from '../../config/guest_access.enum';
+import { GuestAccess } from '@hedgedoc/commons';
+
 import { NotePermission } from '../note-permission.enum';
 
 /**

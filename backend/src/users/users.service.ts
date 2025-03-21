@@ -1,9 +1,15 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { REGEX_USERNAME } from '@hedgedoc/commons';
+import {
+  FullUserInfoDto,
+  LoginUserInfoDto,
+  ProviderType,
+  REGEX_USERNAME,
+  UserInfoDto,
+} from '@hedgedoc/commons';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -11,12 +17,6 @@ import { Repository } from 'typeorm';
 import AuthConfiguration, { AuthConfig } from '../config/auth.config';
 import { AlreadyInDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { Username } from '../utils/username';
-import {
-  FullUserInfoDto,
-  UserInfoDto,
-  UserLoginInfoDto,
-} from './user-info.dto';
 import { UserRelationEnum } from './user-relation.enum';
 import { User } from './user.entity';
 
@@ -34,7 +34,7 @@ export class UsersService {
   /**
    * @async
    * Create a new user with a given username and displayName
-   * @param {Username} username - the username the new user shall have
+   * @param {string} username - the username the new user shall have
    * @param {string} displayName - the display name the new user shall have
    * @param {string} [email] - the email the new user shall have
    * @param {string} [photoUrl] - the photoUrl the new user shall have
@@ -43,17 +43,22 @@ export class UsersService {
    * @throws {AlreadyInDBError} the username is already taken.
    */
   async createUser(
-    username: Username,
+    username: string,
     displayName: string,
-    email?: string,
-    photoUrl?: string,
+    email: string | null,
+    photoUrl: string | null,
   ): Promise<User> {
     if (!REGEX_USERNAME.test(username)) {
       throw new BadRequestException(
         `The username '${username}' is not a valid username.`,
       );
     }
-    const user = User.create(username, displayName, email, photoUrl);
+    const user = User.create(
+      username,
+      displayName,
+      email || undefined,
+      photoUrl || undefined,
+    );
     try {
       return await this.userRepository.save(user);
     } catch {
@@ -123,7 +128,7 @@ export class UsersService {
    * @param username - the username to check
    * @return {boolean} true if the user exists, false otherwise
    */
-  async checkIfUserExists(username: Username): Promise<boolean> {
+  async checkIfUserExists(username: string): Promise<boolean> {
     const user = await this.userRepository.findOne({
       where: { username: username },
     });
@@ -133,12 +138,12 @@ export class UsersService {
   /**
    * @async
    * Get the user specified by the username
-   * @param {Username} username the username by which the user is specified
+   * @param {string} username the username by which the user is specified
    * @param {UserRelationEnum[]} [withRelations=[]] if the returned user object should contain certain relations
    * @return {User} the specified user
    */
   async getUserByUsername(
-    username: Username,
+    username: string,
     withRelations: UserRelationEnum[] = [],
   ): Promise<User> {
     const user = await this.userRepository.findOne({
@@ -191,7 +196,7 @@ export class UsersService {
     };
   }
 
-  toUserLoginInfoDto(user: User, authProvider: string): UserLoginInfoDto {
-    return { ...this.toUserDto(user), authProvider };
+  toLoginUserInfoDto(user: User, authProvider: ProviderType): LoginUserInfoDto {
+    return { ...this.toFullUserDto(user), authProvider };
   }
 }

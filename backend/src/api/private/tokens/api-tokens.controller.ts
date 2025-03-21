@@ -1,8 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  ApiTokenCreateDto,
+  ApiTokenDto,
+  ApiTokenWithSecretDto,
+} from '@hedgedoc/commons';
 import {
   Body,
   Controller,
@@ -15,11 +20,6 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import {
-  ApiTokenCreateDto,
-  ApiTokenDto,
-  ApiTokenWithSecretDto,
-} from '../../../api-token/api-token.dto';
 import { ApiTokenService } from '../../../api-token/api-token.service';
 import { SessionGuard } from '../../../auth/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';

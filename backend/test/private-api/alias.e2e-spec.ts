@@ -1,12 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { AliasCreateDto, AliasUpdateDto } from '@hedgedoc/commons';
 import request from 'supertest';
 
-import { AliasCreateDto } from '../../src/notes/alias-create.dto';
-import { AliasUpdateDto } from '../../src/notes/alias-update.dto';
+import { Note } from '../../src/notes/note.entity';
 import { User } from '../../src/users/user.entity';
 import {
   password1,
@@ -183,11 +183,12 @@ describe('Alias', () => {
           });
       });
       it('if the property primaryAlias is false', async () => {
-        changeAliasDto.primaryAlias = false;
         await agent1
           .put(`/api/private/alias/${newAlias}`)
           .set('Content-Type', 'application/json')
-          .send(changeAliasDto)
+          .send({
+            primaryAlias: false,
+          })
           .expect(400);
       });
       it('if the user is not an owner', async () => {
@@ -204,7 +205,7 @@ describe('Alias', () => {
   describe('DELETE /alias/{alias}', () => {
     const testAlias = 'aliasTest3';
     const newAlias = 'normalAlias3';
-    let note;
+    let note: Note;
 
     beforeEach(async () => {
       note = await testSetup.notesService.createNote(

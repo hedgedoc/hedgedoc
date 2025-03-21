@@ -1,8 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { MediaUploadDto } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -22,7 +23,6 @@ import { ImgurBackend } from './backends/imgur-backend';
 import { S3Backend } from './backends/s3-backend';
 import { WebdavBackend } from './backends/webdav-backend';
 import { MediaBackend } from './media-backend.interface';
-import { MediaUploadDto } from './media-upload.dto';
 import { MediaUpload } from './media-upload.entity';
 
 @Injectable()
@@ -268,7 +268,7 @@ export class MediaService {
       uuid: mediaUpload.uuid,
       fileName: mediaUpload.fileName,
       noteId: (await mediaUpload.note)?.publicId ?? null,
-      createdAt: mediaUpload.createdAt,
+      createdAt: mediaUpload.createdAt.toISOString(),
       username: user?.username ?? null,
     };
   }

@@ -1,8 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  AliasCreateDto,
+  AliasDto,
+  AliasSchema,
+  AliasUpdateDto,
+} from '@hedgedoc/commons';
 import {
   BadRequestException,
   Body,
@@ -18,9 +24,6 @@ import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 import { ApiTokenGuard } from '../../../api-token/api-token.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { AliasCreateDto } from '../../../notes/alias-create.dto';
-import { AliasUpdateDto } from '../../../notes/alias-update.dto';
-import { AliasDto } from '../../../notes/alias.dto';
 import { AliasService } from '../../../notes/alias.service';
 import { NotesService } from '../../../notes/notes.service';
 import { PermissionsService } from '../../../permissions/permissions.service';
@@ -48,7 +51,7 @@ export class AliasController {
     {
       code: 200,
       description: 'The new alias',
-      dto: AliasDto,
+      schema: AliasSchema,
     },
     403,
     404,
@@ -75,7 +78,7 @@ export class AliasController {
     {
       code: 200,
       description: 'The updated alias',
-      dto: AliasDto,
+      schema: AliasSchema,
     },
     403,
     404,
@@ -110,7 +113,7 @@ export class AliasController {
   )
   async removeAlias(
     @RequestUser() user: User,
-    @Param('alias') alias: string,
+    @Param('alias') alias: AliasDto['name'],
   ): Promise<void> {
     const note = await this.noteService.getNoteByIdOrAlias(alias);
     if (!(await this.permissionsService.isOwner(user, note))) {

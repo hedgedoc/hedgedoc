@@ -1,8 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { ProviderType } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -32,7 +33,6 @@ import { User } from '../../users/user.entity';
 import { checkPassword, hashPassword } from '../../utils/password';
 import { Identity } from '../identity.entity';
 import { IdentityService } from '../identity.service';
-import { ProviderType } from '../provider-type.enum';
 
 @Injectable()
 export class LocalService {

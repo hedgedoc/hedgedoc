@@ -1,16 +1,19 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Body, Controller, Delete, Get, Post, UseGuards } from '@nestjs/common';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import {
+  LoginUserInfoDto,
+  MediaUploadDto,
+  ProviderType,
+} from '@hedgedoc/commons';
+import { Body, Controller, Delete, Get, Put, UseGuards } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../auth/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
-import { UserLoginInfoDto } from '../../../users/user-info.dto';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
 import { OpenApi } from '../../utils/openapi.decorator';
@@ -34,9 +37,9 @@ export class MeController {
   @OpenApi(200)
   getMe(
     @RequestUser() user: User,
-    @SessionAuthProvider() authProvider: string,
-  ): UserLoginInfoDto {
-    return this.userService.toUserLoginInfoDto(user, authProvider);
+    @SessionAuthProvider() authProvider: ProviderType,
+  ): LoginUserInfoDto {
+    return this.userService.toLoginUserInfoDto(user, authProvider);
   }
 
   @Get('media')
@@ -60,18 +63,9 @@ export class MeController {
     this.logger.debug(`Deleted ${user.username}`);
   }
 
-  @Post('profile')
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        displayName: { type: 'string', nullable: false },
-      },
-      required: ['displayName'],
-    },
-  })
+  @Put('profile')
   @OpenApi(200)
-  async updateDisplayName(
+  async updateProfile(
     @RequestUser() user: User,
     @Body('displayName') newDisplayName: string,
   ): Promise<void> {

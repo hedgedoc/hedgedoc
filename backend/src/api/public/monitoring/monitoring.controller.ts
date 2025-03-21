@@ -1,14 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { ServerStatusDto, ServerStatusSchema } from '@hedgedoc/commons';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 import { ApiTokenGuard } from '../../../api-token/api-token.guard';
 import { MonitoringService } from '../../../monitoring/monitoring.service';
-import { ServerStatusDto } from '../../../monitoring/server-status.dto';
 import { OpenApi } from '../../utils/openapi.decorator';
 
 @UseGuards(ApiTokenGuard)
@@ -24,7 +24,7 @@ export class MonitoringController {
     {
       code: 200,
       description: 'The server info',
-      dto: ServerStatusDto,
+      schema: ServerStatusSchema,
     },
     403,
   )

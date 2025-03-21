@@ -1,8 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { FullUserInfoDto, ProviderType } from '@hedgedoc/commons';
 import { Optional } from '@mrdrogdrog/optional';
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -12,16 +13,13 @@ import { unsign } from 'cookie-signature';
 import { IncomingMessage } from 'http';
 import { Repository } from 'typeorm';
 
-import { ProviderType } from '../auth/provider-type.enum';
 import authConfiguration, { AuthConfig } from '../config/auth.config';
 import { DatabaseType } from '../config/database-type.enum';
 import databaseConfiguration, {
   DatabaseConfig,
 } from '../config/database.config';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { FullUserInfoDto } from '../users/user-info.dto';
 import { HEDGEDOC_SESSION } from '../utils/session';
-import { Username } from '../utils/username';
 import { Session } from './session.entity';
 
 export interface SessionState {
@@ -29,7 +27,7 @@ export interface SessionState {
   cookie: unknown;
 
   /** Contains the username if logged in completely, is undefined when not being logged in */
-  username?: Username;
+  username?: string;
 
   /** The auth provider that is used for the current login or pending login */
   authProviderType?: ProviderType;
@@ -87,7 +85,7 @@ export class SessionService {
    * @param sessionId The session id for which the owning user should be found
    * @return A Promise that either resolves with the username or rejects with an error
    */
-  fetchUsernameForSessionId(sessionId: string): Promise<Username | undefined> {
+  fetchUsernameForSessionId(sessionId: string): Promise<string | undefined> {
     return new Promise((resolve, reject) => {
       this.logger.debug(
         `Fetching username for sessionId ${sessionId}`,
@@ -102,7 +100,7 @@ export class SessionService {
             'fetchUsernameForSessionId',
           );
           if (error) return reject(error);
-          return resolve(result?.username as Username);
+          return resolve(result?.username);
         },
       );
     });
