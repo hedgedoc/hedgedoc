@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,7 +14,7 @@ const headlineTagRegex = /^h[1-6]$/gi
  * @return the plain text representation of the first headline. {@code undefined} if no headline has been found.
  */
 export function extractFirstHeading(
-  nodes: NodeWithChildren
+  nodes: NodeWithChildren,
 ): string | undefined {
   const foundHeadlineNode = checkNodesForHeadline(nodes.children)
   if (!foundHeadlineNode) {

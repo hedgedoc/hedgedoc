@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,7 +14,7 @@ import { NotePermissions, SpecialGroup } from './permissions.types.js'
  */
 export const userIsOwner = (
   permissions: NotePermissions,
-  user?: string
+  user?: string,
 ): boolean => {
   return !!user && permissions.owner === user
 }
@@ -28,21 +28,21 @@ export const userIsOwner = (
  */
 export const userCanEdit = (
   permissions: NotePermissions,
-  user?: string
+  user?: string,
 ): boolean => {
   const isOwner = userIsOwner(permissions, user)
   const mayWriteViaUserPermission = permissions.sharedToUsers.some(
-    (value) => value.canEdit && value.username === user
+    (value) => value.canEdit && value.username === user,
   )
   const mayWriteViaGroupPermission =
     !!user &&
     permissions.sharedToGroups.some(
       (value) =>
-        value.groupName === (SpecialGroup.LOGGED_IN as string) && value.canEdit
+        value.groupName === (SpecialGroup.LOGGED_IN as string) && value.canEdit,
     )
   const everyoneMayWriteViaGroupPermission = permissions.sharedToGroups.some(
     (value) =>
-      value.groupName === (SpecialGroup.EVERYONE as string) && value.canEdit
+      value.groupName === (SpecialGroup.EVERYONE as string) && value.canEdit,
   )
   return (
     isOwner ||

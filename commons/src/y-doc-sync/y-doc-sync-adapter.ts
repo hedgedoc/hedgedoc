@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -23,7 +23,7 @@ export abstract class YDocSyncAdapter {
 
   constructor(
     protected readonly messageTransporter: MessageTransporter,
-    protected readonly doc: RealtimeDoc
+    protected readonly doc: RealtimeDoc,
   ) {
     this.yDocUpdateListener = doc.on(
       'update',
@@ -31,8 +31,8 @@ export abstract class YDocSyncAdapter {
         this.distributeDocUpdate(update, origin)
       },
       {
-        objectify: true
-      }
+        objectify: true,
+      },
     ) as Listener
 
     this.destroyEventListenerCallback = this.bindDocumentSyncMessageEvents()
@@ -50,7 +50,7 @@ export abstract class YDocSyncAdapter {
       callback()
     }
     return this.eventEmitter.on('synced', callback, {
-      objectify: true
+      objectify: true,
     }) as Listener
   }
 
@@ -69,10 +69,10 @@ export abstract class YDocSyncAdapter {
       (payload) => {
         this.messageTransporter.sendMessage({
           type: MessageType.NOTE_CONTENT_UPDATE,
-          payload: this.doc.encodeStateAsUpdate(payload.payload)
+          payload: this.doc.encodeStateAsUpdate(payload.payload),
         })
       },
-      { objectify: true }
+      { objectify: true },
     ) as Listener
 
     const disconnectedListener = this.messageTransporter.on(
@@ -81,13 +81,13 @@ export abstract class YDocSyncAdapter {
         this.synced = false
         this.eventEmitter.emit('desynced')
       },
-      { objectify: true }
+      { objectify: true },
     ) as Listener
 
     const noteContentUpdateListener = this.messageTransporter.on(
       MessageType.NOTE_CONTENT_UPDATE,
       (payload) => this.applyIncomingUpdatePayload(payload.payload),
-      { objectify: true }
+      { objectify: true },
     ) as Listener
 
     return () => {
@@ -107,7 +107,7 @@ export abstract class YDocSyncAdapter {
     }
     const message: Message<MessageType.NOTE_CONTENT_UPDATE> = {
       type: MessageType.NOTE_CONTENT_UPDATE,
-      payload: update
+      payload: update,
     }
 
     this.messageTransporter.sendMessage(message)
@@ -124,7 +124,7 @@ export abstract class YDocSyncAdapter {
   public requestDocumentState(): void {
     this.messageTransporter.sendMessage({
       type: MessageType.NOTE_CONTENT_STATE_REQUEST,
-      payload: this.doc.encodeStateVector()
+      payload: this.doc.encodeStateVector(),
     })
   }
 }

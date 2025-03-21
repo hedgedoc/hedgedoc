@@ -1,12 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
   NoteFrontmatter,
   NoteTextDirection,
-  NoteType
+  NoteType,
 } from '../note-frontmatter/frontmatter.js'
 import { generateNoteTitle } from './generate-note-title.js'
 import { describe, expect, it } from '@jest/globals'
@@ -27,8 +27,8 @@ const testFrontmatter: NoteFrontmatter = {
     autoSlide: 0,
     autoSlideStoppable: true,
     backgroundTransition: 'fade',
-    slideNumber: false
-  }
+    slideNumber: false,
+  },
 }
 
 describe('generate note title', () => {
@@ -37,9 +37,9 @@ describe('generate note title', () => {
       {
         ...testFrontmatter,
         title: 'frontmatter',
-        opengraph: { title: 'opengraph' }
+        opengraph: { title: 'opengraph' },
       },
-      () => 'first-heading'
+      () => 'first-heading',
     )
     expect(actual).toEqual('frontmatter')
   })
@@ -47,7 +47,7 @@ describe('generate note title', () => {
   it('will choose the opengraph title second', () => {
     const actual = generateNoteTitle(
       { ...testFrontmatter, opengraph: { title: 'opengraph' } },
-      () => 'first-heading'
+      () => 'first-heading',
     )
     expect(actual).toEqual('opengraph')
   })
@@ -55,7 +55,7 @@ describe('generate note title', () => {
   it('will choose the first heading third', () => {
     const actual = generateNoteTitle(
       { ...testFrontmatter },
-      () => 'first-heading'
+      () => 'first-heading',
     )
     expect(actual).toEqual('first-heading')
   })

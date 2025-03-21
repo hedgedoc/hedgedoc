@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -20,7 +20,7 @@ const FRONTMATTER_INCOMPLETE_END_REGEX = /^-{1,2}$/
  *                                given multiline string for retrieving the non-frontmatter content.
  */
 export const extractFrontmatter = (
-  lines: string[]
+  lines: string[],
 ): FrontmatterExtractionResult | undefined => {
   if (lines.length < 2 || !FRONTMATTER_BEGIN_REGEX.test(lines[0])) {
     return undefined
@@ -30,7 +30,7 @@ export const extractFrontmatter = (
       return {
         rawText: '',
         lineOffset: i + 1,
-        incomplete: true
+        incomplete: true,
       }
     }
     if (
@@ -40,7 +40,7 @@ export const extractFrontmatter = (
       return {
         rawText: lines.slice(1, i).join('\n'),
         lineOffset: i + 1,
-        incomplete: false
+        incomplete: false,
       }
     }
   }

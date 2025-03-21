@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,7 +10,7 @@ import {
   Doc,
   encodeStateAsUpdate,
   encodeStateVector,
-  Text as YText
+  Text as YText,
 } from 'yjs'
 
 const MARKDOWN_CONTENT_CHANNEL_NAME = 'markdownContent'
@@ -26,7 +26,7 @@ export class RealtimeDoc extends EventEmitter2<RealtimeDocEvents> {
   private doc: Doc = new Doc()
   private readonly docUpdateListener: (
     update: Uint8Array,
-    origin: unknown
+    origin: unknown,
   ) => void
 
   /**

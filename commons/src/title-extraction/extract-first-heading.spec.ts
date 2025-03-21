@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -19,8 +19,8 @@ describe('extract first heading', () => {
     it("doesn't extract heading-anchor", () => {
       const headline = new Element(`h${headlineIndex}`, {}, [
         new Element('a', { class: 'class1 heading-anchor class2' }, [
-          new Text('invalid link content')
-        ])
+          new Text('invalid link content'),
+        ]),
       ])
       const document = new Document([headline])
       expect(extractFirstHeading(document)).toBe('')
@@ -31,8 +31,8 @@ describe('extract first heading', () => {
         new Element('a', {}, [
           new Text('Valid'),
           new Element('div', {}, [new Text('Text')]),
-          new Text(`${headlineIndex}`)
-        ])
+          new Text(`${headlineIndex}`),
+        ]),
       ])
       const document = new Document([headline])
       expect(extractFirstHeading(document)).toBe(`ValidText${headlineIndex}`)
@@ -40,7 +40,7 @@ describe('extract first heading', () => {
 
     it('extracts image alt texts', () => {
       const headline = new Element(`h${headlineIndex}`, {}, [
-        new Element('img', { alt: 'Image Alt' })
+        new Element('img', { alt: 'Image Alt' }),
       ])
       const document = new Document([headline])
       expect(extractFirstHeading(document)).toBe('Image Alt')
@@ -48,10 +48,10 @@ describe('extract first heading', () => {
 
     it('extracts only the first found headline', () => {
       const headline1 = new Element(`h${headlineIndex}`, {}, [
-        new Text(`headline${headlineIndex}`)
+        new Text(`headline${headlineIndex}`),
       ])
       const headline2 = new Element(`h${headlineIndex}`, {}, [
-        new Text('headline1')
+        new Text('headline1'),
       ])
       const document = new Document([headline1, headline2])
       expect(extractFirstHeading(document)).toBe(`headline${headlineIndex}`)

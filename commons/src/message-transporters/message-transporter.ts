@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,7 +7,7 @@ import {
   ConnectionStateEvent,
   Message,
   MessagePayloads,
-  MessageType
+  MessageType,
 } from './message.js'
 import { TransportAdapter } from './transport-adapter.js'
 import { EventEmitter2, Listener } from 'eventemitter2'
@@ -26,7 +26,7 @@ type MessageEventPayloadMap = {
 export enum ConnectionState {
   DISCONNECTED = 'DISCONNECTED',
   CONNECTING = 'CONNECTING',
-  CONNECTED = 'CONNECTED'
+  CONNECTED = 'CONNECTED',
 }
 
 /**
@@ -53,7 +53,7 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
     if (this.transportAdapter === undefined) {
       console.debug(
         "Can't send message without transport adapter. Message that couldn't be sent was",
-        content
+        content,
       )
       return
     }
@@ -62,7 +62,7 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
       this.onDisconnecting()
       console.debug(
         "Can't send message over closed connection. Triggering onDisconencted event. Message that couldn't be sent was",
-        content
+        content,
       )
       return
     }
@@ -105,7 +105,7 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
       this.onConnected()
     } else {
       this.destroyOnConnectedEventHandler = websocket.bindOnConnectedEvent(
-        this.onConnected.bind(this)
+        this.onConnected.bind(this),
       )
     }
   }
@@ -167,13 +167,13 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
 
   private bindWebsocketEvents(transportAdapter: TransportAdapter) {
     this.destroyOnErrorEventHandler = transportAdapter.bindOnErrorEvent(
-      this.onDisconnecting.bind(this)
+      this.onDisconnecting.bind(this),
     )
     this.destroyOnCloseEventHandler = transportAdapter.bindOnCloseEvent(
-      this.onDisconnecting.bind(this)
+      this.onDisconnecting.bind(this),
     )
     this.destroyOnMessageEventHandler = transportAdapter.bindOnMessageEvent(
-      this.receiveMessage.bind(this)
+      this.receiveMessage.bind(this),
     )
   }
 
@@ -221,7 +221,7 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
       callback()
     }
     return this.on('ready', callback, {
-      objectify: true
+      objectify: true,
     }) as Listener
   }
 
@@ -237,7 +237,7 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
       callback()
     }
     return this.on('connected', callback, {
-      objectify: true
+      objectify: true,
     }) as Listener
   }
 
@@ -253,11 +253,11 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
   protected startSendingOfReadyRequests(): void {
     this.readyInterval = setInterval(() => {
       this.sendMessage({
-        type: MessageType.READY_REQUEST
+        type: MessageType.READY_REQUEST,
       })
     }, 400)
     this.sendMessage({
-      type: MessageType.READY_REQUEST
+      type: MessageType.READY_REQUEST,
     })
   }
 }
