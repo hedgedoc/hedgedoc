@@ -57,6 +57,7 @@
     "markdown-it": "13.0.2",
     "minio": "8.0.4",
     "mysql": "2.18.1",
+    "nestjs-zod": "4.3.1",
     "node-fetch": "2.7.0",
     "openid-client": "5.7.1",
     "pg": "8.13.1",
@@ -68,7 +69,8 @@
     "typeorm": "0.3.20",
     "uuid": "11.0.5",
     "ws": "8.18.0",
-    "yjs": "13.6.23"
+    "yjs": "13.6.23",
+    "zod": "3.24.2"
   },
   "devDependencies": {
     "@darraghor/eslint-plugin-nestjs-typed": "5.0.32",

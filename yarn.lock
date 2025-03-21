@@ -2602,6 +2602,7 @@ __metadata:
     minio: "npm:8.0.4"
     mocked-env: "npm:1.3.5"
     mysql: "npm:2.18.1"
+    nestjs-zod: "npm:4.3.1"
     node-fetch: "npm:2.7.0"
     openid-client: "npm:5.7.1"
     pg: "npm:8.13.1"
@@ -2622,6 +2623,7 @@ __metadata:
     uuid: "npm:11.0.5"
     ws: "npm:8.18.0"
     yjs: "npm:13.6.23"
+    zod: "npm:3.24.2"
   languageName: unknown
   linkType: soft
 
@@ -2650,7 +2652,7 @@ __metadata:
     typescript: "npm:5.6.3"
     ws: "npm:8.18.0"
     yjs: "npm:13.6.23"
-    zod: "npm:^3.24.2"
+    zod: "npm:3.24.2"
   languageName: unknown
   linkType: soft
 
@@ -3732,6 +3734,27 @@ __metadata:
     "@emnapi/runtime": "npm:^1.3.1"
     "@tybys/wasm-util": "npm:^0.9.0"
   checksum: 10c0/f921676c1d5c75494bd704c6c0837fd05fe95f5d1cb7373e32987ef5e00c3a1e90b5052352bd4b60ee20c3fe592af2dbba3b0de0c637218c25590828dbc4067e
+  languageName: node
+  linkType: hard
+
+"@nest-zod/z@npm:*":
+  version: 2.0.0
+  resolution: "@nest-zod/z@npm:2.0.0"
+  peerDependencies:
+    "@nestjs/common": ^10.0.0 || ^11.0.0
+    "@nestjs/core": ^10.0.0 || ^11.0.0
+    "@nestjs/swagger": ^7.4.2 || ^8.0.0 || ^11.0.0
+    zod: ">= 3.14.3"
+  peerDependenciesMeta:
+    "@nestjs/common":
+      optional: true
+    "@nestjs/core":
+      optional: true
+    "@nestjs/swagger":
+      optional: true
+    zod:
+      optional: false
+  checksum: 10c0/6fde5a73bc7aa49531ee91d12bc8ffea08dbf4ac803fb3c644066ec9467210ad04194e5d05defa23f913cd55d59ee7c66c3fcf190a16dc73ce331a7ac9721e77
   languageName: node
   linkType: hard
 
@@ -15075,6 +15098,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nestjs-zod@npm:4.3.1":
+  version: 4.3.1
+  resolution: "nestjs-zod@npm:4.3.1"
+  dependencies:
+    "@nest-zod/z": "npm:*"
+    deepmerge: "npm:^4.3.1"
+  peerDependencies:
+    "@nestjs/common": ^10.0.0 || ^11.0.0
+    "@nestjs/core": ^10.0.0 || ^11.0.0
+    "@nestjs/swagger": ^7.4.2 || ^8.0.0 || ^11.0.0
+    zod: ">= 3.14.3"
+  peerDependenciesMeta:
+    "@nestjs/common":
+      optional: true
+    "@nestjs/core":
+      optional: true
+    "@nestjs/swagger":
+      optional: true
+    zod:
+      optional: false
+  checksum: 10c0/0206185973c51801afa9d6118aa24b5df7f74a19815c2cc7a5408127450e2f7b4ae0f538f34b0bea023708f9e39d72f5c8cbe5ce09818ceae473ee94bb0f27cd
+  languageName: node
+  linkType: hard
+
 "next-tick@npm:1, next-tick@npm:^1.1.0":
   version: 1.1.0
   resolution: "next-tick@npm:1.1.0"
@@ -20655,7 +20702,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.24.2":
+"zod@npm:3.24.2":
   version: 3.24.2
   resolution: "zod@npm:3.24.2"
   checksum: 10c0/c638c7220150847f13ad90635b3e7d0321b36cce36f3fc6050ed960689594c949c326dfe2c6fa87c14b126ee5d370ccdebd6efb304f41ef5557a4aaca2824565
