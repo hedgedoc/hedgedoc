@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,7 +14,7 @@ import {
 // This needs to be here because of weird import-behaviour during tests
 import 'reflect-metadata';
 
-import { BaseDto } from '../utils/base.dto.';
+import { BaseDto } from '../utils/base.dto';
 
 export class HistoryEntryImportDto extends BaseDto {
   /**
