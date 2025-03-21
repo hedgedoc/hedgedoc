@@ -1,12 +1,18 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  BrandingDto,
+  FrontendConfigDto,
+  ProviderType,
+  SpecialUrlDto,
+} from '@hedgedoc/commons';
+import { AuthProviderDto } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
 import { URL } from 'url';
 
-import { ProviderType } from '../auth/provider-type.enum';
 import appConfiguration, { AppConfig } from '../config/app.config';
 import authConfiguration, { AuthConfig } from '../config/auth.config';
 import customizationConfiguration, {
@@ -18,12 +24,6 @@ import externalServicesConfiguration, {
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { getServerVersionFromPackageJson } from '../utils/serverVersion';
-import {
-  AuthProviderDto,
-  BrandingDto,
-  FrontendConfigDto,
-  SpecialUrlsDto,
-} from './frontend-config.dto';
 
 @Injectable()
 export class FrontendConfigService {
@@ -53,8 +53,8 @@ export class FrontendConfigService {
       branding: this.getBranding(),
       maxDocumentLength: this.noteConfig.maxDocumentLength,
       plantUmlServer: this.externalServicesConfig.plantUmlServer
-        ? new URL(this.externalServicesConfig.plantUmlServer)
-        : undefined,
+        ? new URL(this.externalServicesConfig.plantUmlServer).toString()
+        : null,
       specialUrls: this.getSpecialUrls(),
       useImageProxy: !!this.externalServicesConfig.imageProxy,
       version: await getServerVersionFromPackageJson(),
@@ -73,6 +73,7 @@ export class FrontendConfigService {
         type: ProviderType.LDAP,
         providerName: ldapEntry.providerName,
         identifier: ldapEntry.identifier,
+        theme: null,
       });
     });
     this.authConfig.oidc.forEach((openidConnectEntry) => {
@@ -80,7 +81,7 @@ export class FrontendConfigService {
         type: ProviderType.OIDC,
         providerName: openidConnectEntry.providerName,
         identifier: openidConnectEntry.identifier,
-        theme: openidConnectEntry.theme,
+        theme: openidConnectEntry.theme ?? null,
       });
     });
     return providers;
@@ -89,23 +90,23 @@ export class FrontendConfigService {
   private getBranding(): BrandingDto {
     return {
       logo: this.customizationConfig.branding.customLogo
-        ? new URL(this.customizationConfig.branding.customLogo)
-        : undefined,
+        ? new URL(this.customizationConfig.branding.customLogo).toString()
+        : null,
       name: this.customizationConfig.branding.customName,
     };
   }
 
-  private getSpecialUrls(): SpecialUrlsDto {
+  private getSpecialUrls(): SpecialUrlDto {
     return {
       imprint: this.customizationConfig.specialUrls.imprint
-        ? new URL(this.customizationConfig.specialUrls.imprint)
-        : undefined,
+        ? new URL(this.customizationConfig.specialUrls.imprint).toString()
+        : null,
       privacy: this.customizationConfig.specialUrls.privacy
-        ? new URL(this.customizationConfig.specialUrls.privacy)
-        : undefined,
+        ? new URL(this.customizationConfig.specialUrls.privacy).toString()
+        : null,
       termsOfUse: this.customizationConfig.specialUrls.termsOfUse
-        ? new URL(this.customizationConfig.specialUrls.termsOfUse)
-        : undefined,
+        ? new URL(this.customizationConfig.specialUrls.termsOfUse).toString()
+        : null,
     };
   }
 }

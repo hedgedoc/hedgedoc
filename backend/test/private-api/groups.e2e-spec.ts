@@ -1,12 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { GuestAccess, LoginDto } from '@hedgedoc/commons';
 import request from 'supertest';
 
-import { LoginDto } from '../../src/auth/local/login.dto';
-import { GuestAccess } from '../../src/config/guest_access.enum';
 import { createDefaultMockNoteConfig } from '../../src/config/mock/note.config.mock';
 import { NoteConfig } from '../../src/config/note.config';
 import {

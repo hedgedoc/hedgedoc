@@ -1,8 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  GuestAccess,
+  NoteGroupPermissionUpdateDto,
+  NoteUserPermissionUpdateDto,
+} from '@hedgedoc/commons';
 import { ConfigModule } from '@nestjs/config';
 import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -14,7 +19,6 @@ import { ApiToken } from '../api-token/api-token.entity';
 import { Identity } from '../auth/identity.entity';
 import { Author } from '../authors/author.entity';
 import { DefaultAccessLevel } from '../config/default-access-level.enum';
-import { GuestAccess } from '../config/guest_access.enum';
 import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
@@ -31,10 +35,6 @@ import { GroupsService } from '../groups/groups.service';
 import { LoggerModule } from '../logger/logger.module';
 import { MediaUpload } from '../media/media-upload.entity';
 import { Alias } from '../notes/alias.entity';
-import {
-  NoteGroupPermissionUpdateDto,
-  NoteUserPermissionUpdateDto,
-} from '../notes/note-permissions.dto';
 import { Note } from '../notes/note.entity';
 import { NotesModule } from '../notes/notes.module';
 import { Tag } from '../notes/tag.entity';
@@ -461,12 +461,15 @@ describe('PermissionsService', () => {
   });
 
   describe('updateNotePermissions', () => {
-    const userPermissionUpdate = new NoteUserPermissionUpdateDto();
-    userPermissionUpdate.username = 'hardcoded';
-    userPermissionUpdate.canEdit = true;
-    const groupPermissionUpdate = new NoteGroupPermissionUpdateDto();
-    groupPermissionUpdate.groupName = 'testGroup';
-    groupPermissionUpdate.canEdit = false;
+    const userPermissionUpdate: NoteUserPermissionUpdateDto = {
+      username: 'hardcoded',
+      canEdit: true,
+    };
+
+    const groupPermissionUpdate: NoteGroupPermissionUpdateDto = {
+      groupName: 'testGroup',
+      canEdit: false,
+    };
     const user = User.create(userPermissionUpdate.username, 'Testy') as User;
     const group = Group.create(
       groupPermissionUpdate.groupName,

@@ -1,8 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  LoginDto,
+  ProviderType,
+  RegisterDto,
+  UpdatePasswordDto,
+} from '@hedgedoc/commons';
 import {
   Body,
   Controller,
@@ -15,10 +21,6 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 
 import { LocalService } from '../../../../auth/local/local.service';
-import { LoginDto } from '../../../../auth/local/login.dto';
-import { RegisterDto } from '../../../../auth/local/register.dto';
-import { UpdatePasswordDto } from '../../../../auth/local/update-password.dto';
-import { ProviderType } from '../../../../auth/provider-type.enum';
 import {
   RequestWithSession,
   SessionGuard,
@@ -53,6 +55,8 @@ export class LocalController {
     const user = await this.usersService.createUser(
       registerDto.username,
       registerDto.displayName,
+      null,
+      null,
     );
     await this.localIdentityService.createLocalIdentity(
       user,

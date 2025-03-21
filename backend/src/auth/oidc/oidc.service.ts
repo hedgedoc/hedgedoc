@@ -1,8 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { FullUserInfoDto, ProviderType } from '@hedgedoc/commons';
 import {
   ForbiddenException,
   Inject,
@@ -20,10 +21,8 @@ import authConfiguration, {
 } from '../../config/auth.config';
 import { NotInDBError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
-import { FullUserInfoDto } from '../../users/user-info.dto';
 import { Identity } from '../identity.entity';
 import { IdentityService } from '../identity.service';
-import { ProviderType } from '../provider-type.enum';
 import { RequestWithSession } from '../session.guard';
 
 interface OidcClientConfigEntry {
@@ -227,8 +226,8 @@ export class OidcService {
     const newUserData = {
       username,
       displayName,
-      photoUrl,
-      email,
+      photoUrl: photoUrl ?? null,
+      email: email ?? null,
     };
     request.session.providerUserId = userId;
     request.session.newUserData = newUserData;

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -54,7 +54,7 @@ describe('UsersService', () => {
         .mockImplementationOnce(async (user: User): Promise<User> => user);
     });
     it('successfully creates a user', async () => {
-      const user = await service.createUser(username, displayname);
+      const user = await service.createUser(username, displayname, null, null);
       expect(user.username).toEqual(username);
       expect(user.displayName).toEqual(displayname);
     });
@@ -64,11 +64,11 @@ describe('UsersService', () => {
         throw new Error();
       });
       // create first user with username
-      await service.createUser(username, displayname);
+      await service.createUser(username, displayname, null, null);
       // attempt to create second user with username
-      await expect(service.createUser(username, displayname)).rejects.toThrow(
-        AlreadyInDBError,
-      );
+      await expect(
+        service.createUser(username, displayname, null, null),
+      ).rejects.toThrow(AlreadyInDBError);
     });
   });
 
@@ -134,7 +134,7 @@ describe('UsersService', () => {
       expect(photoUrl).toEqual(photo);
     });
     it('works if a user no photoUrl', () => {
-      user.photo = undefined;
+      user.photo = null;
       const photoUrl = service.getPhotoUrl(user);
       expect(photoUrl).toEqual('');
     });

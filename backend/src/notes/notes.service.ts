@@ -1,8 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  NoteDto,
+  NoteMetadataDto,
+  NotePermissionsDto,
+} from '@hedgedoc/commons';
 import { Optional } from '@mrdrogdrog/optional';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
@@ -30,9 +35,6 @@ import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { Alias } from './alias.entity';
 import { AliasService } from './alias.service';
-import { NoteMetadataDto } from './note-metadata.dto';
-import { NotePermissionsDto } from './note-permissions.dto';
-import { NoteDto } from './note.dto';
 import { Note } from './note.entity';
 import { Tag } from './tag.entity';
 import { getPrimaryAlias } from './utils';
@@ -427,11 +429,11 @@ export class NotesService {
       title: latestRevision.title,
       description: latestRevision.description,
       tags: (await latestRevision.tags).map((tag) => tag.name),
-      createdAt: note.createdAt,
+      createdAt: note.createdAt.toISOString(),
       editedBy: (await this.getAuthorUsers(note)).map((user) => user.username),
       permissions: await this.toNotePermissionsDto(note),
       version: note.version,
-      updatedAt: latestRevision.createdAt,
+      updatedAt: latestRevision.createdAt.toISOString(),
       updateUsername: updateUser ? updateUser.username : null,
       viewCount: note.viewCount,
     };

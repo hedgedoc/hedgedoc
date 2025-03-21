@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,21 +8,18 @@
 @typescript-eslint/no-unsafe-assignment,
 @typescript-eslint/no-unsafe-member-access
 */
+import { LoginDto, RegisterDto, UpdatePasswordDto } from '@hedgedoc/commons';
 import request from 'supertest';
 
-import { LoginDto } from '../../src/auth/local/login.dto';
-import { RegisterDto } from '../../src/auth/local/register.dto';
-import { UpdatePasswordDto } from '../../src/auth/local/update-password.dto';
 import { NotInDBError } from '../../src/errors/errors';
 import { UserRelationEnum } from '../../src/users/user-relation.enum';
 import { checkPassword } from '../../src/utils/password';
-import { Username } from '../../src/utils/username';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Auth', () => {
   let testSetup: TestSetup;
 
-  let username: Username;
+  let username: string;
   let displayName: string;
   let password: string;
 
@@ -75,6 +72,8 @@ describe('Auth', () => {
         const conflictingUser = await testSetup.userService.createUser(
           conflictingUserName,
           displayName,
+          null,
+          null,
         );
         const registrationDto: RegisterDto = {
           displayName: displayName,

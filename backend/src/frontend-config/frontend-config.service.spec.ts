@@ -1,19 +1,18 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { GuestAccess, ProviderType } from '@hedgedoc/commons';
 import { ConfigModule, registerAs } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { URL } from 'url';
 
-import { ProviderType } from '../auth/provider-type.enum';
 import { AppConfig } from '../config/app.config';
 import { AuthConfig } from '../config/auth.config';
 import { CustomizationConfig } from '../config/customization.config';
 import { DefaultAccessLevel } from '../config/default-access-level.enum';
 import { ExternalServicesConfig } from '../config/external-services.config';
-import { GuestAccess } from '../config/guest_access.enum';
 import { Loglevel } from '../config/loglevel.enum';
 import { NoteConfig } from '../config/note.config';
 import { LoggerModule } from '../logger/logger.module';
@@ -174,14 +173,11 @@ describe('FrontendConfigService', () => {
   const customName = 'Test Branding Name';
 
   let index = 1;
-  for (const customLogo of [undefined, 'https://example.com/logo.png']) {
-    for (const privacyLink of [undefined, 'https://example.com/privacy']) {
-      for (const termsOfUseLink of [undefined, 'https://example.com/terms']) {
-        for (const imprintLink of [undefined, 'https://example.com/imprint']) {
-          for (const plantUmlServer of [
-            undefined,
-            'https://plantuml.example.com',
-          ]) {
+  for (const customLogo of [null, 'https://example.com/logo.png']) {
+    for (const privacyLink of [null, 'https://example.com/privacy']) {
+      for (const termsOfUseLink of [null, 'https://example.com/terms']) {
+        for (const imprintLink of [null, 'https://example.com/imprint']) {
+          for (const plantUmlServer of [null, 'https://plantuml.example.com']) {
             it(`combination #${index} works`, async () => {
               const appConfig: AppConfig = {
                 baseUrl: domain,
@@ -255,20 +251,24 @@ describe('FrontendConfigService', () => {
               expect(config.guestAccess).toEqual(noteConfig.guestAccess);
               expect(config.branding.name).toEqual(customName);
               expect(config.branding.logo).toEqual(
-                customLogo ? new URL(customLogo) : undefined,
+                customLogo !== null ? new URL(customLogo).toString() : null,
               );
               expect(config.maxDocumentLength).toEqual(maxDocumentLength);
               expect(config.plantUmlServer).toEqual(
-                plantUmlServer ? new URL(plantUmlServer) : undefined,
+                plantUmlServer !== null
+                  ? new URL(plantUmlServer).toString()
+                  : null,
               );
               expect(config.specialUrls.imprint).toEqual(
-                imprintLink ? new URL(imprintLink) : undefined,
+                imprintLink !== null ? new URL(imprintLink).toString() : null,
               );
               expect(config.specialUrls.privacy).toEqual(
-                privacyLink ? new URL(privacyLink) : undefined,
+                privacyLink !== null ? new URL(privacyLink).toString() : null,
               );
               expect(config.specialUrls.termsOfUse).toEqual(
-                termsOfUseLink ? new URL(termsOfUseLink) : undefined,
+                termsOfUseLink !== null
+                  ? new URL(termsOfUseLink).toString()
+                  : null,
               );
               expect(config.useImageProxy).toEqual(!!imageProxy);
               expect(config.version).toEqual(

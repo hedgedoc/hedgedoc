@@ -1,8 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { FullUserInfoWithIdDto } from '@hedgedoc/commons';
 import {
   Inject,
   Injectable,
@@ -18,8 +19,6 @@ import authConfiguration, {
   LDAPConfig,
 } from '../../config/auth.config';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
-import { FullUserInfoWithIdDto } from '../../users/user-info.dto';
-import { Username } from '../../utils/username';
 
 const LDAP_ERROR_MAP: Record<string, string> = {
   /* eslint-disable @typescript-eslint/naming-convention */
@@ -96,7 +95,7 @@ export class LdapService {
             return reject(new UnauthorizedException(LDAP_ERROR_MAP['default']));
           }
 
-          let email: string | undefined = undefined;
+          let email: string | null = null;
           if (userInfo['mail']) {
             if (Array.isArray(userInfo['mail'])) {
               email = userInfo['mail'][0] as string;
@@ -107,10 +106,10 @@ export class LdapService {
 
           return resolve({
             email,
-            username: username as Username,
+            username: username,
             id: userInfo[ldapConfig.userIdField],
             displayName: userInfo[ldapConfig.displayNameField] ?? username,
-            photoUrl: undefined, // TODO LDAP stores images as binaries,
+            photoUrl: null, // TODO LDAP stores images as binaries,
             // we need to convert them into a data-URL or alike
           });
         },

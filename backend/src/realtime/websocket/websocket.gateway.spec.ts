@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -41,7 +41,6 @@ import { SessionService } from '../../sessions/session.service';
 import { User } from '../../users/user.entity';
 import { UsersModule } from '../../users/users.module';
 import { UsersService } from '../../users/users.service';
-import { Username } from '../../utils/username';
 import * as websocketConnectionModule from '../realtime-note/realtime-connection';
 import { RealtimeConnection } from '../realtime-note/realtime-connection';
 import { RealtimeNote } from '../realtime-note/realtime-note';
@@ -166,7 +165,7 @@ describe('Websocket gateway', () => {
           ),
       );
 
-    const mockUsername: Username = 'mock-username';
+    const mockUsername: string = 'mock-username';
     jest
       .spyOn(sessionService, 'fetchUsernameForSessionId')
       .mockImplementation((sessionId: string) =>

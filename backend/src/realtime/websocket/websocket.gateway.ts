@@ -6,7 +6,6 @@
 import {
   DisconnectReason,
   MessageTransporter,
-  NotePermissions,
   userCanEdit,
 } from '@hedgedoc/commons';
 import { OnGatewayConnection, WebSocketGateway } from '@nestjs/websockets';
@@ -92,10 +91,7 @@ export class WebsocketGateway implements OnGatewayConnection {
       );
 
       const permissions = await this.noteService.toNotePermissionsDto(note);
-      const acceptEdits: boolean = userCanEdit(
-        permissions as NotePermissions,
-        user?.username,
-      );
+      const acceptEdits: boolean = userCanEdit(permissions, user?.username);
 
       const connection = new RealtimeConnection(
         websocketTransporter,

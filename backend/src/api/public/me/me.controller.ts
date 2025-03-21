@@ -1,8 +1,16 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  FullUserInfoDto,
+  FullUserInfoSchema,
+  MediaUploadDto,
+  MediaUploadSchema,
+  NoteMetadataDto,
+  NoteMetadataSchema,
+} from '@hedgedoc/commons';
 import {
   Body,
   Controller,
@@ -19,12 +27,9 @@ import { HistoryEntryUpdateDto } from '../../../history/history-entry-update.dto
 import { HistoryEntryDto } from '../../../history/history-entry.dto';
 import { HistoryService } from '../../../history/history.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
-import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
 import { Note } from '../../../notes/note.entity';
 import { NotesService } from '../../../notes/notes.service';
-import { FullUserInfoDto } from '../../../users/user-info.dto';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
 import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
@@ -52,7 +57,7 @@ export class MeController {
   @OpenApi({
     code: 200,
     description: 'The user information',
-    dto: FullUserInfoDto,
+    schema: FullUserInfoSchema,
   })
   getMe(@RequestUser() user: User): FullUserInfoDto {
     return this.usersService.toFullUserDto(user);
@@ -63,7 +68,6 @@ export class MeController {
     code: 200,
     description: 'The history entries of the user',
     isArray: true,
-    dto: HistoryEntryDto,
   })
   async getUserHistory(@RequestUser() user: User): Promise<HistoryEntryDto[]> {
     const foundEntries = await this.historyService.getEntriesByUser(user);
@@ -78,7 +82,6 @@ export class MeController {
     {
       code: 200,
       description: 'The history entry of the user which points to the note',
-      dto: HistoryEntryDto,
     },
     404,
   )
@@ -96,7 +99,6 @@ export class MeController {
     {
       code: 200,
       description: 'The updated history entry',
-      dto: HistoryEntryDto,
     },
     404,
   )
@@ -125,7 +127,7 @@ export class MeController {
     code: 200,
     description: 'Metadata of all notes of the user',
     isArray: true,
-    dto: NoteMetadataDto,
+    schema: NoteMetadataSchema,
   })
   async getMyNotes(@RequestUser() user: User): Promise<NoteMetadataDto[]> {
     const notes = this.notesService.getUserNotes(user);
@@ -139,7 +141,7 @@ export class MeController {
     code: 200,
     description: 'All media uploads of the user',
     isArray: true,
-    dto: MediaUploadDto,
+    schema: MediaUploadSchema,
   })
   async getMyMedia(@RequestUser() user: User): Promise<MediaUploadDto[]> {
     const media = await this.mediaService.listUploadsByUser(user);

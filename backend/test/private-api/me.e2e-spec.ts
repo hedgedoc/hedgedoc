@@ -1,14 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { LoginUserInfoDto, ProviderType } from '@hedgedoc/commons';
 import { promises as fs } from 'fs';
 import request from 'supertest';
 
 import { NotInDBError } from '../../src/errors/errors';
 import { Note } from '../../src/notes/note.entity';
-import { UserLoginInfoDto } from '../../src/users/user-info.dto';
 import { User } from '../../src/users/user.entity';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
@@ -32,7 +32,12 @@ describe('Me', () => {
     const password = 'AHardcodedStrongP@ssword123';
     await testSetup.app.init();
 
-    user = await testSetup.userService.createUser(username, 'Testy');
+    user = await testSetup.userService.createUser(
+      username,
+      'Testy',
+      null,
+      null,
+    );
     await testSetup.localIdentityService.createLocalIdentity(user, password);
 
     content = 'This is a test note.';
@@ -51,12 +56,15 @@ describe('Me', () => {
   });
 
   it('GET /me', async () => {
-    const userInfo = testSetup.userService.toUserLoginInfoDto(user, 'local');
+    const userInfo = testSetup.userService.toLoginUserInfoDto(
+      user,
+      ProviderType.LOCAL,
+    );
     const response = await agent
       .get('/api/private/me')
       .expect('Content-Type', /json/)
       .expect(200);
-    const gotUser = response.body as UserLoginInfoDto;
+    const gotUser = response.body as LoginUserInfoDto;
     expect(gotUser).toEqual(userInfo);
   });
 
@@ -126,15 +134,15 @@ describe('Me', () => {
     await fs.rmdir(uploadPath);
   });
 
-  it('POST /me/profile', async () => {
+  it('PUT /me/profile', async () => {
     const newDisplayName = 'Another name';
     expect(user.displayName).not.toEqual(newDisplayName);
     await agent
-      .post('/api/private/me/profile')
+      .put('/api/private/me/profile')
       .send({
         displayName: newDisplayName,
       })
-      .expect(201);
+      .expect(200);
     const dbUser = await testSetup.userService.getUserByUsername('hardcoded');
     expect(dbUser.displayName).toEqual(newDisplayName);
   });

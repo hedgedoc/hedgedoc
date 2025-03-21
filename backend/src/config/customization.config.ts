@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,24 +10,24 @@ import { buildErrorMessage } from './utils';
 
 export interface CustomizationConfig {
   branding: {
-    customName: string;
-    customLogo: string;
+    customName: string | null;
+    customLogo: string | null;
   };
   specialUrls: {
-    privacy: string;
-    termsOfUse: string;
-    imprint: string;
+    privacy: string | null;
+    termsOfUse: string | null;
+    imprint: string | null;
   };
 }
 
 const schema = Joi.object({
   branding: Joi.object({
-    customName: Joi.string().optional().label('HD_CUSTOM_NAME'),
+    customName: Joi.string().allow(null).label('HD_CUSTOM_NAME'),
     customLogo: Joi.string()
       .uri({
         scheme: [/https?/],
       })
-      .optional()
+      .allow(null)
       .label('HD_CUSTOM_LOGO'),
   }),
   specialUrls: Joi.object({
@@ -35,19 +35,19 @@ const schema = Joi.object({
       .uri({
         scheme: /https?/,
       })
-      .optional()
+      .allow(null)
       .label('HD_PRIVACY_URL'),
     termsOfUse: Joi.string()
       .uri({
         scheme: /https?/,
       })
-      .optional()
+      .allow(null)
       .label('HD_TERMS_OF_USE_URL'),
     imprint: Joi.string()
       .uri({
         scheme: /https?/,
       })
-      .optional()
+      .allow(null)
       .label('HD_IMPRINT_URL'),
   }),
 });
@@ -56,13 +56,13 @@ export default registerAs('customizationConfig', () => {
   const customizationConfig = schema.validate(
     {
       branding: {
-        customName: process.env.HD_CUSTOM_NAME,
-        customLogo: process.env.HD_CUSTOM_LOGO,
+        customName: process.env.HD_CUSTOM_NAME ?? null,
+        customLogo: process.env.HD_CUSTOM_LOGO ?? null,
       },
       specialUrls: {
-        privacy: process.env.HD_PRIVACY_URL,
-        termsOfUse: process.env.HD_TERMS_OF_USE_URL,
-        imprint: process.env.HD_IMPRINT_URL,
+        privacy: process.env.HD_PRIVACY_URL ?? null,
+        termsOfUse: process.env.HD_TERMS_OF_USE_URL ?? null,
+        imprint: process.env.HD_IMPRINT_URL ?? null,
       },
     },
     {

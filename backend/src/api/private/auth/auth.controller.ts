@@ -1,8 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  FullUserInfoDto,
+  LogoutResponseDto,
+  PendingUserConfirmationDto,
+  ProviderType,
+} from '@hedgedoc/commons';
 import {
   BadRequestException,
   Body,
@@ -17,11 +23,8 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { IdentityService } from '../../../auth/identity.service';
 import { OidcService } from '../../../auth/oidc/oidc.service';
-import { PendingUserConfirmationDto } from '../../../auth/pending-user-confirmation.dto';
-import { ProviderType } from '../../../auth/provider-type.enum';
 import { RequestWithSession, SessionGuard } from '../../../auth/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { FullUserInfoDto } from '../../../users/user-info.dto';
 import { OpenApi } from '../../utils/openapi.decorator';
 
 @ApiTags('auth')
@@ -38,7 +41,7 @@ export class AuthController {
   @UseGuards(SessionGuard)
   @Delete('logout')
   @OpenApi(200, 400, 401)
-  logout(@Req() request: RequestWithSession): { redirect: string } {
+  logout(@Req() request: RequestWithSession): LogoutResponseDto {
     let logoutUrl: string | null = null;
     if (request.session.authProviderType === ProviderType.OIDC) {
       logoutUrl = this.oidcService.getLogoutUrl(request);
@@ -60,9 +63,7 @@ export class AuthController {
 
   @Get('pending-user')
   @OpenApi(200, 400)
-  getPendingUserData(
-    @Req() request: RequestWithSession,
-  ): Partial<FullUserInfoDto> {
+  getPendingUserData(@Req() request: RequestWithSession): FullUserInfoDto {
     if (
       !request.session.newUserData ||
       !request.session.authProviderIdentifier ||

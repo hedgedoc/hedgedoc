@@ -1,8 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { ApiTokenWithSecretDto } from '@hedgedoc/commons';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RouterModule, Routes } from '@nestjs/core';
 import { EventEmitterModule } from '@nestjs/event-emitter';
@@ -11,7 +12,6 @@ import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Connection, createConnection } from 'typeorm';
 
-import { ApiTokenWithSecretDto } from '../src/api-token/api-token.dto';
 import { ApiTokenGuard } from '../src/api-token/api-token.guard';
 import { ApiTokenModule } from '../src/api-token/api-token.module';
 import { ApiTokenService } from '../src/api-token/api-token.service';
@@ -389,13 +389,28 @@ export class TestSetupBuilder {
     this.setupPostCompile.push(async () => {
       // Create users
       this.testSetup.users.push(
-        await this.testSetup.userService.createUser(username1, 'Test User 1'),
+        await this.testSetup.userService.createUser(
+          username1,
+          'Test User 1',
+          null,
+          null,
+        ),
       );
       this.testSetup.users.push(
-        await this.testSetup.userService.createUser(username2, 'Test User 2'),
+        await this.testSetup.userService.createUser(
+          username2,
+          'Test User 2',
+          null,
+          null,
+        ),
       );
       this.testSetup.users.push(
-        await this.testSetup.userService.createUser(username3, 'Test User 3'),
+        await this.testSetup.userService.createUser(
+          username3,
+          'Test User 3',
+          null,
+          null,
+        ),
       );
 
       // Create identities for login
@@ -415,10 +430,12 @@ export class TestSetupBuilder {
       // create auth tokens
       this.testSetup.authTokens = await Promise.all(
         this.testSetup.users.map(async (user) => {
+          const validUntil = new Date();
+          validUntil.setTime(validUntil.getTime() + 60 * 60 * 1000);
           return await this.testSetup.publicAuthTokenService.addToken(
             user,
             'test',
-            new Date().getTime() + 60 * 60 * 1000,
+            validUntil,
           );
         }),
       );

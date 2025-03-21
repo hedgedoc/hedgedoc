@@ -1,8 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  FullUserInfoDto,
+  PendingUserConfirmationDto,
+  ProviderType,
+} from '@hedgedoc/commons';
 import {
   Inject,
   Injectable,
@@ -14,12 +19,9 @@ import { DataSource, Repository } from 'typeorm';
 import AuthConfiguration, { AuthConfig } from '../config/auth.config';
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { FullUserInfoDto } from '../users/user-info.dto';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { Identity } from './identity.entity';
-import { PendingUserConfirmationDto } from './pending-user-confirmation.dto';
-import { ProviderType } from './provider-type.enum';
 
 @Injectable()
 export class IdentityService {

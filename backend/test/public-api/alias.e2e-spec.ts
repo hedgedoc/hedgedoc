@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { AliasUpdateDto } from '@hedgedoc/commons';
 import request from 'supertest';
 
-import { AliasUpdateDto } from '../../src/notes/alias-update.dto';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Alias', () => {
@@ -166,13 +166,13 @@ describe('Alias', () => {
           .expect(401);
       });
       it('if the property primaryAlias is false', async () => {
-        changeAliasDto.primaryAlias = false;
-
         await request(testSetup.app.getHttpServer())
           .put(`/api/v2/alias/${testAlias}`)
           .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
           .set('Content-Type', 'application/json')
-          .send(changeAliasDto)
+          .send({
+            primaryAlias: false,
+          })
           .expect(400);
       });
     });

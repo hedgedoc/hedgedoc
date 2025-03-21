@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,8 +11,6 @@ import {
 } from '@hedgedoc/commons';
 import { Listener } from 'eventemitter2';
 
-import { Username } from '../../utils/username';
-
 export type OtherAdapterCollector = () => RealtimeUserStatusAdapter[];
 
 /**
@@ -22,7 +20,7 @@ export class RealtimeUserStatusAdapter {
   private readonly realtimeUser: RealtimeUser;
 
   constructor(
-    private readonly username: Username | null,
+    private readonly username: string | null,
     private readonly displayName: string,
     private collectOtherAdapters: OtherAdapterCollector,
     private messageTransporter: MessageTransporter,

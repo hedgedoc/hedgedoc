@@ -1,8 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { MediaUploadDto, MediaUploadSchema } from '@hedgedoc/commons';
 import {
   BadRequestException,
   Controller,
@@ -28,7 +29,6 @@ import { Response } from 'express';
 import { ApiTokenGuard } from '../../../api-token/api-token.guard';
 import { PermissionError } from '../../../errors/errors';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
 import { MulterFile } from '../../../media/multer-file.interface';
 import { Note } from '../../../notes/note.entity';
@@ -77,7 +77,7 @@ export class MediaController {
     {
       code: 201,
       description: 'The file was uploaded successfully',
-      dto: MediaUploadDto,
+      schema: MediaUploadSchema,
     },
     400,
     403,

@@ -1,14 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { GuestAccess, NotePermissionsUpdateDto } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { GuestAccess } from '../config/guest_access.enum';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import { PermissionsUpdateInconsistentError } from '../errors/errors';
 import { NoteEvent, NoteEventMap } from '../events';
@@ -16,7 +16,6 @@ import { Group } from '../groups/group.entity';
 import { GroupsService } from '../groups/groups.service';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { MediaUpload } from '../media/media-upload.entity';
-import { NotePermissionsUpdateDto } from '../notes/note-permissions.dto';
 import { Note } from '../notes/note.entity';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';

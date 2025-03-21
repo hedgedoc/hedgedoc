@@ -1,8 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  LdapLoginDto,
+  LdapLoginResponseDto,
+  ProviderType,
+} from '@hedgedoc/commons';
 import {
   Body,
   Controller,
@@ -14,14 +19,11 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 
 import { IdentityService } from '../../../../auth/identity.service';
-import { LdapLoginDto } from '../../../../auth/ldap/ldap-login.dto';
 import { LdapService } from '../../../../auth/ldap/ldap.service';
-import { ProviderType } from '../../../../auth/provider-type.enum';
 import { RequestWithSession } from '../../../../auth/session.guard';
 import { NotInDBError } from '../../../../errors/errors';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { UsersService } from '../../../../users/users.service';
-import { makeUsernameLowercase } from '../../../../utils/username';
 import { OpenApi } from '../../../utils/openapi.decorator';
 
 @ApiTags('auth')
@@ -43,7 +45,7 @@ export class LdapController {
     request: RequestWithSession,
     @Param('ldapIdentifier') ldapIdentifier: string,
     @Body() loginDto: LdapLoginDto,
-  ): Promise<{ newUser: boolean }> {
+  ): Promise<LdapLoginResponseDto> {
     const ldapConfig = this.ldapService.getLdapConfig(ldapIdentifier);
     const userInfo = await this.ldapService.getUserInfoFromLdap(
       ldapConfig,
@@ -61,7 +63,7 @@ export class LdapController {
       );
       if (this.identityService.mayUpdateIdentity(ldapIdentifier)) {
         const user = await this.usersService.getUserByUsername(
-          makeUsernameLowercase(loginDto.username),
+          loginDto.username.toLowerCase(),
         );
         await this.usersService.updateUser(
           user,
@@ -70,7 +72,7 @@ export class LdapController {
           userInfo.photoUrl,
         );
       }
-      request.session.username = makeUsernameLowercase(loginDto.username);
+      request.session.username = loginDto.username;
       return { newUser: false };
     } catch (error) {
       if (error instanceof NotInDBError) {

@@ -1,8 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { RevisionDto, RevisionMetadataDto } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
 import { Cron, Timeout } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,8 +16,6 @@ import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { Note } from '../notes/note.entity';
 import { Tag } from '../notes/tag.entity';
 import { EditService } from './edit.service';
-import { RevisionMetadataDto } from './revision-metadata.dto';
-import { RevisionDto } from './revision.dto';
 import { Revision } from './revision.entity';
 import { extractRevisionMetadataFromContent } from './utils/extract-revision-metadata-from-content';
 
@@ -136,7 +135,7 @@ export class RevisionsService {
     return {
       id: revision.id,
       length: revision.length,
-      createdAt: revision.createdAt,
+      createdAt: revision.createdAt.toISOString(),
       authorUsernames: revisionUserInfo.usernames,
       anonymousAuthorCount: revisionUserInfo.anonymousUserCount,
       title: revision.title,
@@ -151,7 +150,7 @@ export class RevisionsService {
       id: revision.id,
       content: revision.content,
       length: revision.length,
-      createdAt: revision.createdAt,
+      createdAt: revision.createdAt.toISOString(),
       title: revision.title,
       tags: (await revision.tags).map((tag) => tag.name),
       description: revision.description,

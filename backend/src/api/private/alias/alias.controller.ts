@@ -1,8 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { AliasCreateDto } from '@hedgedoc/commons';
+import { AliasUpdateDto } from '@hedgedoc/commons';
+import { AliasDto } from '@hedgedoc/commons';
 import {
   BadRequestException,
   Body,
@@ -18,9 +21,6 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../auth/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { AliasCreateDto } from '../../../notes/alias-create.dto';
-import { AliasUpdateDto } from '../../../notes/alias-update.dto';
-import { AliasDto } from '../../../notes/alias.dto';
 import { AliasService } from '../../../notes/alias.service';
 import { NotesService } from '../../../notes/notes.service';
 import { PermissionsService } from '../../../permissions/permissions.service';

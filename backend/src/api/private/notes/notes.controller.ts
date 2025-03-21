@@ -1,8 +1,22 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  ChangeNoteOwnerDto,
+  MediaUploadDto,
+  NoteDto,
+  NoteGroupPermissionEntryDto,
+  NoteGroupPermissionUpdateDto,
+  NoteMediaDeletionDto,
+  NoteMetadataDto,
+  NotePermissionsDto,
+  NoteUserPermissionEntryDto,
+  NoteUserPermissionUpdateDto,
+  RevisionDto,
+  RevisionMetadataDto,
+} from '@hedgedoc/commons';
 import {
   BadRequestException,
   Body,
@@ -22,24 +36,16 @@ import { NotInDBError } from '../../../errors/errors';
 import { GroupsService } from '../../../groups/groups.service';
 import { HistoryService } from '../../../history/history.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { MediaUploadDto } from '../../../media/media-upload.dto';
 import { MediaService } from '../../../media/media.service';
-import { NoteMetadataDto } from '../../../notes/note-metadata.dto';
-import { NotePermissionsDto } from '../../../notes/note-permissions.dto';
-import { NoteDto } from '../../../notes/note.dto';
 import { Note } from '../../../notes/note.entity';
-import { NoteMediaDeletionDto } from '../../../notes/note.media-deletion.dto';
 import { NotesService } from '../../../notes/notes.service';
 import { PermissionsGuard } from '../../../permissions/permissions.guard';
 import { PermissionsService } from '../../../permissions/permissions.service';
 import { RequirePermission } from '../../../permissions/require-permission.decorator';
 import { RequiredPermission } from '../../../permissions/required-permission.enum';
-import { RevisionMetadataDto } from '../../../revisions/revision-metadata.dto';
-import { RevisionDto } from '../../../revisions/revision.dto';
 import { RevisionsService } from '../../../revisions/revisions.service';
 import { User } from '../../../users/user.entity';
 import { UsersService } from '../../../users/users.service';
-import { Username } from '../../../utils/username';
 import { GetNoteInterceptor } from '../../utils/get-note.interceptor';
 import { MarkdownBody } from '../../utils/markdown-body.decorator';
 import { OpenApi } from '../../utils/openapi.decorator';
@@ -197,15 +203,15 @@ export class NotesController {
     );
   }
 
-  @Put(':noteIdOrAlias/metadata/permissions/users/:userName')
+  @Put(':noteIdOrAlias/metadata/permissions/users/:username')
   @OpenApi(200, 403, 404)
   @UseInterceptors(GetNoteInterceptor)
   @RequirePermission(RequiredPermission.OWNER)
   async setUserPermission(
     @RequestUser() user: User,
     @RequestNote() note: Note,
-    @Param('userName') username: Username,
-    @Body('canEdit') canEdit: boolean,
+    @Param('username') username: NoteUserPermissionUpdateDto['username'],
+    @Body('canEdit') canEdit: NoteUserPermissionUpdateDto['canEdit'],
   ): Promise<NotePermissionsDto> {
     const permissionUser = await this.userService.getUserByUsername(username);
     const returnedNote = await this.permissionService.setUserPermission(
@@ -218,11 +224,11 @@ export class NotesController {
 
   @UseInterceptors(GetNoteInterceptor)
   @RequirePermission(RequiredPermission.OWNER)
-  @Delete(':noteIdOrAlias/metadata/permissions/users/:userName')
+  @Delete(':noteIdOrAlias/metadata/permissions/users/:username')
   async removeUserPermission(
     @RequestUser() user: User,
     @RequestNote() note: Note,
-    @Param('userName') username: Username,
+    @Param('username') username: NoteUserPermissionEntryDto['username'],
   ): Promise<NotePermissionsDto> {
     try {
       const permissionUser = await this.userService.getUserByUsername(username);
@@ -247,8 +253,8 @@ export class NotesController {
   async setGroupPermission(
     @RequestUser() user: User,
     @RequestNote() note: Note,
-    @Param('groupName') groupName: string,
-    @Body('canEdit') canEdit: boolean,
+    @Param('groupName') groupName: NoteGroupPermissionUpdateDto['groupName'],
+    @Body('canEdit') canEdit: NoteGroupPermissionUpdateDto['canEdit'],
   ): Promise<NotePermissionsDto> {
     const permissionGroup = await this.groupService.getGroupByName(groupName);
     const returnedNote = await this.permissionService.setGroupPermission(
@@ -266,7 +272,7 @@ export class NotesController {
   async removeGroupPermission(
     @RequestUser() user: User,
     @RequestNote() note: Note,
-    @Param('groupName') groupName: string,
+    @Param('groupName') groupName: NoteGroupPermissionEntryDto['groupName'],
   ): Promise<NotePermissionsDto> {
     const permissionGroup = await this.groupService.getGroupByName(groupName);
     const returnedNote = await this.permissionService.removeGroupPermission(
@@ -282,9 +288,11 @@ export class NotesController {
   async changeOwner(
     @RequestUser() user: User,
     @RequestNote() note: Note,
-    @Body('newOwner') newOwner: Username,
+    @Body() changeNoteOwnerDto: ChangeNoteOwnerDto,
   ): Promise<NoteDto> {
-    const owner = await this.userService.getUserByUsername(newOwner);
+    const owner = await this.userService.getUserByUsername(
+      changeNoteOwnerDto.owner,
+    );
     return await this.noteService.toNoteDto(
       await this.permissionService.changeOwner(note, owner),
     );

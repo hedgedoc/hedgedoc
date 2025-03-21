@@ -1,30 +1,29 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { ServerVersionDto } from '@hedgedoc/commons';
 import { Optional } from '@mrdrogdrog/optional';
 import { promises as fs } from 'fs';
 import { join as joinPath } from 'path';
 
-import { ServerVersion } from '../monitoring/server-status.dto';
-
-let versionCache: ServerVersion | undefined = undefined;
+let versionCache: ServerVersionDto | undefined = undefined;
 
 /**
  * Reads the HedgeDoc version from the root package.json. This is done only once per run.
  *
- * @return {Promise<ServerVersion>} A Promise that contains the parsed server version.
+ * @return {Promise<ServerVersionDto>} A Promise that contains the parsed server version.
  * @throws {Error} if the package.json couldn't be found or doesn't contain a correct version.
  */
-export async function getServerVersionFromPackageJson(): Promise<ServerVersion> {
+export async function getServerVersionFromPackageJson(): Promise<ServerVersionDto> {
   if (!versionCache) {
     versionCache = await parseVersionFromPackageJson();
   }
   return versionCache;
 }
 
-async function parseVersionFromPackageJson(): Promise<ServerVersion> {
+async function parseVersionFromPackageJson(): Promise<ServerVersionDto> {
   const rawFileContent: string = await fs.readFile(
     joinPath(__dirname, '../../../package.json'),
     { encoding: 'utf8' },

@@ -1,8 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { GuestAccess } from '@hedgedoc/commons';
 import { registerAs } from '@nestjs/config';
 import * as Joi from 'joi';
 
@@ -10,7 +11,6 @@ import {
   DefaultAccessLevel,
   getDefaultAccessLevelOrdinal,
 } from './default-access-level.enum';
-import { GuestAccess } from './guest_access.enum';
 import { buildErrorMessage, parseOptionalNumber, toArrayConfig } from './utils';
 
 export interface NoteConfig {

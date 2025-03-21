@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -20,7 +20,6 @@ import { Group } from '../groups/group.entity';
 import { HistoryEntry } from '../history/history-entry.entity';
 import { MediaUpload } from '../media/media-upload.entity';
 import { Note } from '../notes/note.entity';
-import { Username } from '../utils/username';
 
 @Entity()
 export class User {
@@ -30,7 +29,7 @@ export class User {
   @Column({
     unique: true,
   })
-  username: Username;
+  username: string;
 
   @Column()
   displayName: string;
@@ -78,7 +77,7 @@ export class User {
   private constructor() {}
 
   public static create(
-    username: Username,
+    username: string,
     displayName: string,
     email?: string,
     photoUrl?: string,

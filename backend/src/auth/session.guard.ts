@@ -1,8 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { ProviderType } from '@hedgedoc/commons';
+import { GuestAccess } from '@hedgedoc/commons';
 import {
   CanActivate,
   ExecutionContext,
@@ -13,13 +15,11 @@ import {
 import { Request } from 'express';
 
 import { CompleteRequest } from '../api/utils/request.type';
-import { GuestAccess } from '../config/guest_access.enum';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { SessionState } from '../sessions/session.service';
 import { UsersService } from '../users/users.service';
-import { ProviderType } from './provider-type.enum';
 
 export type RequestWithSession = Request & {
   session: SessionState;

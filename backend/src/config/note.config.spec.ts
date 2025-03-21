@@ -1,12 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { GuestAccess } from '@hedgedoc/commons';
 import mockedEnv from 'mocked-env';
 
 import { DefaultAccessLevel } from './default-access-level.enum';
-import { GuestAccess } from './guest_access.enum';
 import noteConfig from './note.config';
 
 describe('noteConfig', () => {

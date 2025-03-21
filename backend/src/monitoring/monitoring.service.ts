@@ -1,12 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { ServerStatusDto } from '@hedgedoc/commons';
 import { Injectable } from '@nestjs/common';
 
 import { getServerVersionFromPackageJson } from '../utils/serverVersion';
-import { ServerStatusDto } from './server-status.dto';
 
 @Injectable()
 export class MonitoringService {
