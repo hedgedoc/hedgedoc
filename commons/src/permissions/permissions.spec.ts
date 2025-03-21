@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { userCanEdit, userIsOwner } from './permissions.js'
-import { NotePermissions, SpecialGroup } from './permissions.types.js'
 import { describe, expect, it } from '@jest/globals'
+import { NotePermissionsDto, SpecialGroup } from '../dtos/index.js'
 
 describe('Permissions', () => {
-  const testPermissions: NotePermissions = {
+  const testPermissions: NotePermissionsDto = {
     owner: 'owner',
     sharedToUsers: [
       {
