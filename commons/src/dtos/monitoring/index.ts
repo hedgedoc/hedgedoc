@@ -3,5 +3,5 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-export * from './permissions.js'
+export * from './server-status.dto.js'
+export * from './server-version.dto.js'

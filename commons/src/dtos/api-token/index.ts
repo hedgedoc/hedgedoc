@@ -4,4 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export * from './permissions.js'
+export * from './api-token.dto.js'
+export * from './api-token-create.dto.js'
+export * from './api-token-with-secret.dto.js'

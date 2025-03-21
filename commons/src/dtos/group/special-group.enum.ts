@@ -4,4 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export * from './permissions.js'
+export enum SpecialGroup {
+  EVERYONE = '_EVERYONE',
+  LOGGED_IN = '_LOGGED_IN',
+}
