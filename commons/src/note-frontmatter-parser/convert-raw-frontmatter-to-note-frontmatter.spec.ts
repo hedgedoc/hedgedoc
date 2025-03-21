@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,7 +7,7 @@ import {
   NoteFrontmatter,
   NoteTextDirection,
   NoteType,
-  OpenGraph
+  OpenGraph,
 } from '../note-frontmatter/frontmatter.js'
 import { SlideOptions } from '../note-frontmatter/slide-show-options.js'
 import { convertRawFrontmatterToNoteFrontmatter } from './convert-raw-frontmatter-to-note-frontmatter.js'
@@ -31,8 +31,8 @@ describe('convertRawFrontmatterToNoteFrontmatter', () => {
           breaks: breaks,
           opengraph: opengraph,
           slideOptions: slideOptions,
-          tags: 'tags'
-        })
+          tags: 'tags',
+        }),
       ).toStrictEqual({
         title: 'title',
         description: 'description',
@@ -44,8 +44,8 @@ describe('convertRawFrontmatterToNoteFrontmatter', () => {
         opengraph: opengraph,
         slideOptions: slideOptions,
         license: 'license',
-        tags: ['tags']
+        tags: ['tags'],
       } as NoteFrontmatter)
-    }
+    },
   )
 })

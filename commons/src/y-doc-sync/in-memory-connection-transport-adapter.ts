@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -42,7 +42,7 @@ export class InMemoryConnectionTransportAdapter implements TransportAdapter {
   }
 
   bindOnMessageEvent(
-    handler: (value: Message<MessageType>) => void
+    handler: (value: Message<MessageType>) => void,
   ): () => void {
     this.onMessageHandler = handler
     return () => (this.onMessageHandler = undefined)

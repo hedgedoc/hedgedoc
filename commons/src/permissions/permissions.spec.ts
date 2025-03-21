@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,19 +13,19 @@ describe('Permissions', () => {
     sharedToUsers: [
       {
         username: 'logged_in',
-        canEdit: true
-      }
+        canEdit: true,
+      },
     ],
     sharedToGroups: [
       {
         groupName: SpecialGroup.EVERYONE,
-        canEdit: true
+        canEdit: true,
       },
       {
         groupName: SpecialGroup.LOGGED_IN,
-        canEdit: true
-      }
-    ]
+        canEdit: true,
+      },
+    ],
   }
   describe('userIsOwner', () => {
     it('returns true, if user is owner', () => {
@@ -45,25 +45,25 @@ describe('Permissions', () => {
     })
     it('returns true, if user is logged in and this is user specifically may edit', () => {
       expect(
-        userCanEdit({ ...testPermissions, sharedToGroups: [] }, 'logged_in')
+        userCanEdit({ ...testPermissions, sharedToGroups: [] }, 'logged_in'),
       ).toBeTruthy()
     })
     it('returns true, if user is logged in and loggedIn users may edit', () => {
       expect(
-        userCanEdit({ ...testPermissions, sharedToUsers: [] }, 'logged_in')
+        userCanEdit({ ...testPermissions, sharedToUsers: [] }, 'logged_in'),
       ).toBeTruthy()
     })
     it('returns true, if user is guest and guests are allowed to edit', () => {
       expect(
-        userCanEdit({ ...testPermissions, sharedToUsers: [] }, undefined)
+        userCanEdit({ ...testPermissions, sharedToUsers: [] }, undefined),
       ).toBeTruthy()
     })
     it('returns false, if user is logged in and loggedIn users may not edit', () => {
       expect(
         userCanEdit(
           { ...testPermissions, sharedToUsers: [], sharedToGroups: [] },
-          'logged_in'
-        )
+          'logged_in',
+        ),
       ).toBeFalsy()
     })
     it('returns false, if user is guest and guests are not allowed to edit', () => {
@@ -75,12 +75,12 @@ describe('Permissions', () => {
             sharedToGroups: [
               {
                 groupName: SpecialGroup.LOGGED_IN,
-                canEdit: true
-              }
-            ]
+                canEdit: true,
+              },
+            ],
           },
-          undefined
-        )
+          undefined,
+        ),
       ).toBeFalsy()
     })
   })

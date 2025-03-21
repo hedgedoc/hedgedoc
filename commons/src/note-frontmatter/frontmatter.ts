@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,12 +12,12 @@ export type OpenGraph = Record<string, string>
 
 export enum NoteTextDirection {
   LTR = 'ltr',
-  RTL = 'rtl'
+  RTL = 'rtl',
 }
 
 export enum NoteType {
   DOCUMENT = 'document',
-  SLIDE = 'slide'
+  SLIDE = 'slide',
 }
 export interface NoteFrontmatter {
   title: string

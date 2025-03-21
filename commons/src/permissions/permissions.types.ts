@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -22,10 +22,10 @@ export interface NoteGroupPermissionEntry {
 export enum AccessLevel {
   NONE,
   READ_ONLY,
-  WRITEABLE
+  WRITEABLE,
 }
 
 export enum SpecialGroup {
   EVERYONE = '_EVERYONE',
-  LOGGED_IN = '_LOGGED_IN'
+  LOGGED_IN = '_LOGGED_IN',
 }

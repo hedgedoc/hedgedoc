@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -18,11 +18,11 @@ export function parseUrl(url: string | undefined): Optional<URL> {
   return createOptionalUrl(url)
     .guard(
       (value) => value.protocol === 'https:' || value.protocol === 'http:',
-      () => new WrongProtocolError()
+      () => new WrongProtocolError(),
     )
     .guard(
       (value) => value.pathname === '/',
-      () => new NoSubdirectoryAllowedError()
+      () => new NoSubdirectoryAllowedError(),
     )
 }
 

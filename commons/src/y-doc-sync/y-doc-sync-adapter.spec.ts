@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -30,28 +30,28 @@ describe('y-doc-sync-adapter', () => {
 
     textServer.observe(() =>
       // eslint-disable-next-line @typescript-eslint/no-base-to-string
-      console.log('textServer', new Date(), textServer.toString())
+      console.log('textServer', new Date(), textServer.toString()),
     )
     textClient1.observe(() =>
       // eslint-disable-next-line @typescript-eslint/no-base-to-string
-      console.log('textClient1', new Date(), textClient1.toString())
+      console.log('textClient1', new Date(), textClient1.toString()),
     )
     textClient2.observe(() =>
       // eslint-disable-next-line @typescript-eslint/no-base-to-string
-      console.log('textClient2', new Date(), textClient2.toString())
+      console.log('textClient2', new Date(), textClient2.toString()),
     )
 
     const transporterAdapterServerTo1 = new InMemoryConnectionTransportAdapter(
-      's>1'
+      's>1',
     )
     const transporterAdapterServerTo2 = new InMemoryConnectionTransportAdapter(
-      's>2'
+      's>2',
     )
     const transporterAdapterClient1 = new InMemoryConnectionTransportAdapter(
-      '1>s'
+      '1>s',
     )
     const transporterAdapterClient2 = new InMemoryConnectionTransportAdapter(
-      '2>s'
+      '2>s',
     )
 
     const messageTransporterServerTo1 = new MessageTransporter()
@@ -60,54 +60,54 @@ describe('y-doc-sync-adapter', () => {
     const messageTransporterClient2 = new MessageTransporter()
 
     messageTransporterServerTo1.on(MessageType.NOTE_CONTENT_UPDATE, () =>
-      console.log('Received NOTE_CONTENT_UPDATE from client 1 to server')
+      console.log('Received NOTE_CONTENT_UPDATE from client 1 to server'),
     )
     messageTransporterServerTo2.on(MessageType.NOTE_CONTENT_UPDATE, () =>
-      console.log('Received NOTE_CONTENT_UPDATE from client 2 to server')
+      console.log('Received NOTE_CONTENT_UPDATE from client 2 to server'),
     )
     messageTransporterClient1.on(MessageType.NOTE_CONTENT_UPDATE, () =>
-      console.log('Received NOTE_CONTENT_UPDATE from server to client 1')
+      console.log('Received NOTE_CONTENT_UPDATE from server to client 1'),
     )
     messageTransporterClient2.on(MessageType.NOTE_CONTENT_UPDATE, () =>
-      console.log('Received NOTE_CONTENT_UPDATE from server to client 2')
+      console.log('Received NOTE_CONTENT_UPDATE from server to client 2'),
     )
     messageTransporterServerTo1.on(MessageType.NOTE_CONTENT_STATE_REQUEST, () =>
-      console.log('Received NOTE_CONTENT_REQUEST from client 1 to server')
+      console.log('Received NOTE_CONTENT_REQUEST from client 1 to server'),
     )
     messageTransporterServerTo2.on(MessageType.NOTE_CONTENT_STATE_REQUEST, () =>
-      console.log('Received NOTE_CONTENT_REQUEST from client 2 to server')
+      console.log('Received NOTE_CONTENT_REQUEST from client 2 to server'),
     )
     messageTransporterClient1.on(MessageType.NOTE_CONTENT_STATE_REQUEST, () =>
-      console.log('Received NOTE_CONTENT_REQUEST from server to client 1')
+      console.log('Received NOTE_CONTENT_REQUEST from server to client 1'),
     )
     messageTransporterClient2.on(MessageType.NOTE_CONTENT_STATE_REQUEST, () =>
-      console.log('Received NOTE_CONTENT_REQUEST from server to client 2')
+      console.log('Received NOTE_CONTENT_REQUEST from server to client 2'),
     )
     messageTransporterClient1.doAsSoonAsConnected(() =>
-      console.log('1>s is connected')
+      console.log('1>s is connected'),
     )
     messageTransporterClient2.doAsSoonAsConnected(() =>
-      console.log('2>s is connected')
+      console.log('2>s is connected'),
     )
     messageTransporterServerTo1.doAsSoonAsConnected(() =>
-      console.log('s>1 is connected')
+      console.log('s>1 is connected'),
     )
     messageTransporterServerTo2.doAsSoonAsConnected(() =>
-      console.log('s>2 is connected')
+      console.log('s>2 is connected'),
     )
     messageTransporterClient1.doAsSoonAsReady(() => console.log('1>s is ready'))
     messageTransporterClient2.doAsSoonAsReady(() => console.log('2>s is ready'))
     messageTransporterServerTo1.doAsSoonAsReady(() =>
-      console.log('s>1 is connected')
+      console.log('s>1 is connected'),
     )
     messageTransporterServerTo2.doAsSoonAsReady(() =>
-      console.log('s>2 is connected')
+      console.log('s>2 is connected'),
     )
 
     docServer.on('update', (update: number[], origin: unknown) => {
       const message: Message<MessageType.NOTE_CONTENT_UPDATE> = {
         type: MessageType.NOTE_CONTENT_UPDATE,
-        payload: update
+        payload: update,
       }
       if (origin !== messageTransporterServerTo1) {
         console.log('YDoc on Server updated. Sending to Client 1')
@@ -131,23 +131,23 @@ describe('y-doc-sync-adapter', () => {
 
     const yDocSyncAdapter1 = new YDocSyncClientAdapter(
       messageTransporterClient1,
-      docClient1
+      docClient1,
     )
     const yDocSyncAdapter2 = new YDocSyncClientAdapter(
       messageTransporterClient2,
-      docClient2
+      docClient2,
     )
 
     const yDocSyncAdapterServerTo1 = new YDocSyncServerAdapter(
       messageTransporterServerTo1,
       docServer,
-      () => true
+      () => true,
     )
 
     const yDocSyncAdapterServerTo2 = new YDocSyncServerAdapter(
       messageTransporterServerTo2,
       docServer,
-      () => true
+      () => true,
     )
 
     const waitForClient1Sync = new Promise<void>((resolve) => {
@@ -202,7 +202,7 @@ describe('y-doc-sync-adapter', () => {
       waitForClient1Sync,
       waitForClient2Sync,
       waitForServerTo11Sync,
-      waitForServerTo21Sync
+      waitForServerTo21Sync,
     ])
 
     textClient1.insert(0, 'test2')

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,7 +12,7 @@ import { RawNoteFrontmatter } from './types.js'
  * @param rawData A {@link RawNoteFrontmatter} object containing the properties of the parsed yaml frontmatter.
  */
 export const convertRawFrontmatterToNoteFrontmatter = (
-  rawData: RawNoteFrontmatter
+  rawData: RawNoteFrontmatter,
 ): NoteFrontmatter => {
   return {
     title: rawData.title,
@@ -25,6 +25,6 @@ export const convertRawFrontmatterToNoteFrontmatter = (
     opengraph: rawData.opengraph,
     slideOptions: rawData.slideOptions,
     license: rawData.license,
-    tags: parseTags(rawData.tags)
+    tags: parseTags(rawData.tags),
   }
 }

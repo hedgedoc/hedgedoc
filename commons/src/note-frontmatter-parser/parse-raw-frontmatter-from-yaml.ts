@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,7 +7,7 @@ import { defaultNoteFrontmatter } from '../note-frontmatter/index.js'
 import {
   NoteTextDirection,
   NoteType,
-  OpenGraph
+  OpenGraph,
 } from '../note-frontmatter/index.js'
 import { SlideOptions } from '../note-frontmatter/index.js'
 import { ISO6391 } from '../note-frontmatter/iso6391.js'
@@ -24,7 +24,7 @@ const schema = Joi.object<RawNoteFrontmatter>({
   tags: Joi.alternatives(
     Joi.array().items(Joi.string()),
     Joi.string(),
-    Joi.number().cast('string')
+    Joi.number().cast('string'),
   )
     .optional()
     .default(defaultNoteFrontmatter.tags),
@@ -51,17 +51,17 @@ const schema = Joi.object<RawNoteFrontmatter>({
     transition: Joi.string().optional(),
     backgroundTransition: Joi.string().optional(),
     autoSlideStoppable: Joi.boolean().optional(),
-    slideNumber: Joi.boolean().optional()
+    slideNumber: Joi.boolean().optional(),
   })
     .optional()
     .default(defaultNoteFrontmatter.slideOptions),
   opengraph: Joi.object<OpenGraph>({
     title: Joi.string().optional(),
-    image: Joi.string().uri().optional()
+    image: Joi.string().uri().optional(),
   })
     .unknown(true)
     .optional()
-    .default(defaultNoteFrontmatter.opengraph)
+    .default(defaultNoteFrontmatter.opengraph),
 })
   .default(defaultNoteFrontmatter)
   .unknown(true)

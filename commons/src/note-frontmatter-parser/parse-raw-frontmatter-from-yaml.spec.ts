@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -32,7 +32,7 @@ describe('yaml frontmatter', () => {
 
   it('should parse the tag inline-list syntax', () => {
     const noteFrontmatter = parseRawFrontmatterFromYaml(
-      "tags: ['test123', 'abc']"
+      "tags: ['test123', 'abc']",
     )
     expect(noteFrontmatter.value?.tags).toEqual(['test123', 'abc'])
   })
@@ -57,7 +57,7 @@ describe('yaml frontmatter', () => {
     `)
     expect(noteFrontmatter.value?.opengraph.title).toEqual('Testtitle')
     expect(noteFrontmatter.value?.opengraph.image).toEqual(
-      'https://dummyimage.com/48.png'
+      'https://dummyimage.com/48.png',
     )
     expect(noteFrontmatter.value?.opengraph['image:type']).toEqual('image/png')
   })

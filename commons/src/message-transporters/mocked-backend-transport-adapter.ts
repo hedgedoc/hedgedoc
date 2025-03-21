@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -46,7 +46,7 @@ export class MockedBackendTransportAdapter implements TransportAdapter {
   }
 
   bindOnMessageEvent(
-    handler: (value: Message<MessageType>) => void
+    handler: (value: Message<MessageType>) => void,
   ): () => void {
     this.messageHandler = handler
     return () => {
@@ -74,17 +74,17 @@ export class MockedBackendTransportAdapter implements TransportAdapter {
         () =>
           this.messageHandler?.({
             type: MessageType.NOTE_CONTENT_UPDATE,
-            payload: this.doc.encodeStateAsUpdate(value.payload)
+            payload: this.doc.encodeStateAsUpdate(value.payload),
           }),
-        0
+        0,
       )
     } else if (value.type === MessageType.READY_REQUEST) {
       setTimeout(
         () =>
           this.messageHandler?.({
-            type: MessageType.READY_ANSWER
+            type: MessageType.READY_ANSWER,
           }),
-        0
+        0,
       )
     }
   }

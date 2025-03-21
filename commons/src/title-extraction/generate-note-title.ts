@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,7 +14,7 @@ import type { NoteFrontmatter } from '../note-frontmatter/frontmatter.js'
  */
 export const generateNoteTitle = (
   frontmatter: NoteFrontmatter | undefined,
-  firstHeadingProvider: () => string | undefined
+  firstHeadingProvider: () => string | undefined,
 ): string => {
   if (frontmatter?.title) {
     return frontmatter.title.trim()

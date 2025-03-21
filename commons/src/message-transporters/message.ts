@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -19,13 +19,13 @@ export enum MessageType {
   REALTIME_USER_SET_ACTIVITY = 'REALTIME_USER_SET_ACTIVITY',
 
   READY_REQUEST = 'READY_REQUEST',
-  READY_ANSWER = 'READY_ANSWER'
+  READY_ANSWER = 'READY_ANSWER',
 }
 
 export enum ConnectionStateEvent {
   READY = 'ready',
   CONNECTED = 'connected',
-  DISCONNECTED = 'disconnected'
+  DISCONNECTED = 'disconnected',
 }
 
 export interface MessagePayloads {
