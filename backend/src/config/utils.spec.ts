@@ -1,11 +1,15 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import assert from 'assert';
+import z from 'zod';
+
 import { Loglevel } from './loglevel.enum';
 import {
   ensureNoDuplicatesExist,
+  extractDescriptionFromZodSchema,
   findDuplicatesInArray,
   needToLog,
   parseOptionalBoolean,
@@ -153,6 +157,44 @@ describe('config utils', () => {
       expect(parseOptionalBoolean('false')).toEqual(false);
       expect(parseOptionalBoolean('0')).toEqual(false);
       expect(parseOptionalBoolean('HedgeDoc')).toEqual(false);
+    });
+  });
+  describe('extractDescriptionFromZodSchema', () => {
+    it('correctly builds an error message on a simple object', () => {
+      const schema = z.object({
+        port: z.number().describe('port').positive(),
+      });
+
+      const results = schema.safeParse({
+        port: -1,
+      });
+
+      expect(results.error).toBeDefined();
+
+      const errorMessages = results.error!.errors.map((issue) =>
+        extractDescriptionFromZodSchema(schema, issue),
+      );
+      expect(errorMessages).toHaveLength(1);
+      expect(errorMessages[0]).toEqual('port: Number must be greater than 0');
+    });
+    it('correctly builds an error message on an array object', () => {
+      const schema = z.object({
+        array: z.array(z.number().positive()).describe('array'),
+      });
+
+      const results = schema.safeParse({
+        array: [1, -1],
+      });
+
+      expect(results.error).toBeDefined();
+
+      const errorMessages = results.error!.errors.map((issue) =>
+        extractDescriptionFromZodSchema(schema, issue),
+      );
+      expect(errorMessages).toHaveLength(1);
+      expect(errorMessages[0]).toEqual(
+        'array[1]: Number must be greater than 0',
+      );
     });
   });
 });

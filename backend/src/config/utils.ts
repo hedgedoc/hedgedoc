@@ -1,8 +1,20 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+  ZodArray,
+  ZodDiscriminatedUnion,
+  ZodDiscriminatedUnionOption,
+  ZodEffects,
+  ZodIssue,
+  ZodObject,
+  ZodOptional,
+  ZodRawShape,
+  ZodTypeAny,
+} from 'zod';
+
 import { Loglevel } from './loglevel.enum';
 
 export function findDuplicatesInArray<T>(array: T[]): T[] {
@@ -22,7 +34,7 @@ export function ensureNoDuplicatesExist(
     throw new Error(
       `Your ${authName} names '${names.join(
         ',',
-      )}' contain duplicates '${duplicates.join(',')}'`,
+      )}' contain duplicates: '${duplicates.join(',')}'`,
     );
   }
 }
@@ -39,6 +51,57 @@ export function toArrayConfig(
   return configValue.split(separator).map((arrayItem) => arrayItem.trim());
 }
 
+export function extractDescriptionFromZodSchema(
+  schema:
+    | ZodEffects<ZodObject<ZodRawShape>>
+    | ZodObject<ZodRawShape>
+    | ZodDiscriminatedUnion<string, ZodDiscriminatedUnionOption<string>[]>,
+  issue: ZodIssue,
+): string {
+  // ZodEffects are wrapped schemas on which transformations or refinements are applied.
+  // If we get a ZodEffect here, we need to extract the underlying schema object to get the description.
+  const rootSchema: ZodObject<ZodRawShape> =
+    schema instanceof ZodEffects
+      ? schema._def.schema
+      : schema instanceof ZodDiscriminatedUnion
+        ? schema._def.options[0] // TODO How do we get the correct schema here?
+        : schema;
+  const lengthOfPath = issue.path.length;
+  let field = rootSchema.shape[issue.path[0]] as
+    | ZodObject<ZodRawShape>
+    | ZodArray<ZodObject<ZodRawShape>>
+    | ZodOptional<ZodTypeAny>;
+  let description: string | undefined = undefined;
+  if (lengthOfPath > 1) {
+    let counter = 1;
+    while (counter < lengthOfPath) {
+      description = field.description;
+      if (field instanceof ZodOptional) {
+        field = field.unwrap() as
+          | ZodObject<ZodRawShape>
+          | ZodArray<ZodObject<ZodRawShape>>;
+        if (field.description) {
+          description = field.description;
+        }
+      }
+      if (field instanceof ZodArray) {
+        // We encountered an array
+        description = `${description}[${issue.path[counter]}]`;
+        //@ts-ignore
+        field = field.element._def.schema;
+        counter += 1;
+        continue;
+      }
+      field = field.shape[issue.path[counter]] as ZodObject<ZodRawShape>;
+      counter += 1;
+    }
+  }
+  if (!description) {
+    description = field.description ?? '(unknown field)';
+  }
+  return `${description}: ${issue.message}`;
+}
+
 export function buildErrorMessage(errorMessages: string[]): string {
   let totalErrorMessage = 'There were some errors with your configuration:';
   for (const message of errorMessages) {
@@ -46,7 +109,7 @@ export function buildErrorMessage(errorMessages: string[]): string {
     totalErrorMessage += message;
   }
   totalErrorMessage +=
-    '\nFor further information, have a look at our configuration docs at https://docs.hedgedoc.org/configuration';
+    '\nFor further information, have a look at our configuration docs at https://docs.hedgedoc.org/configuration\n';
   return totalErrorMessage;
 }
 

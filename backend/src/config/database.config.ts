@@ -1,73 +1,54 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { registerAs } from '@nestjs/config';
-import * as Joi from 'joi';
+import z from 'zod';
 
 import { DatabaseType } from './database-type.enum';
-import { buildErrorMessage, parseOptionalNumber } from './utils';
+import {
+  buildErrorMessage,
+  extractDescriptionFromZodSchema,
+  parseOptionalNumber,
+} from './utils';
 
-export interface DatabaseConfig {
-  username: string;
-  password: string;
-  database: string;
-  host: string;
-  port: number;
-  type: DatabaseType;
-}
-
-const databaseSchema = Joi.object({
-  type: Joi.string()
-    .valid(...Object.values(DatabaseType))
-    .label('HD_DATABASE_TYPE'),
-
-  // This is the database name, except for SQLite,
-  // where it is the path to the database file.
-  database: Joi.string().label('HD_DATABASE_NAME'),
-  username: Joi.when('type', {
-    is: Joi.invalid(DatabaseType.SQLITE),
-    then: Joi.string(),
-    otherwise: Joi.optional(),
-  }).label('HD_DATABASE_USER'),
-  password: Joi.when('type', {
-    is: Joi.invalid(DatabaseType.SQLITE),
-    then: Joi.string(),
-    otherwise: Joi.optional(),
-  }).label('HD_DATABASE_PASS'),
-  host: Joi.when('type', {
-    is: Joi.invalid(DatabaseType.SQLITE),
-    then: Joi.string(),
-    otherwise: Joi.optional(),
-  }).label('HD_DATABASE_HOST'),
-  port: Joi.when('type', {
-    is: Joi.invalid(DatabaseType.SQLITE),
-    then: Joi.number(),
-    otherwise: Joi.optional(),
-  }).label('HD_DATABASE_PORT'),
+const sqliteDbSchema = z.object({
+  type: z.literal(DatabaseType.SQLITE).describe('HD_DATABASE_TYPE'),
+  database: z.string().describe('HD_DATABASE_NAME'),
 });
 
+const otherDbSchema = z.object({
+  type: z
+    .literal(DatabaseType.MARIADB)
+    .or(z.literal(DatabaseType.MYSQL))
+    .or(z.literal(DatabaseType.POSTGRES))
+    .describe('HD_DATABASE_TYPE'),
+  database: z.string().describe('HD_DATABASE_NAME'),
+  username: z.string().describe('HD_DATABASE_USER'),
+  password: z.string().describe('HD_DATABASE_PASS'),
+  host: z.string().describe('HD_DATABASE_HOST'),
+  port: z.number().positive().max(65535).describe('HD_DATABASE_PORT'),
+});
+
+const dbSchema = z.discriminatedUnion('type', [sqliteDbSchema, otherDbSchema]);
+
+export type DatabaseConfig = z.infer<typeof dbSchema>;
+
 export default registerAs('databaseConfig', () => {
-  const databaseConfig = databaseSchema.validate(
-    {
-      type: process.env.HD_DATABASE_TYPE,
-      username: process.env.HD_DATABASE_USER,
-      password: process.env.HD_DATABASE_PASS,
-      database: process.env.HD_DATABASE_NAME,
-      host: process.env.HD_DATABASE_HOST,
-      port: parseOptionalNumber(process.env.HD_DATABASE_PORT),
-    },
-    {
-      abortEarly: false,
-      presence: 'required',
-    },
-  );
+  const databaseConfig = dbSchema.safeParse({
+    type: process.env.HD_DATABASE_TYPE,
+    username: process.env.HD_DATABASE_USER,
+    password: process.env.HD_DATABASE_PASS,
+    database: process.env.HD_DATABASE_NAME,
+    host: process.env.HD_DATABASE_HOST,
+    port: parseOptionalNumber(process.env.HD_DATABASE_PORT),
+  });
   if (databaseConfig.error) {
-    const errorMessages = databaseConfig.error.details.map(
-      (detail) => detail.message,
+    const errorMessages = databaseConfig.error.errors.map((issue) =>
+      extractDescriptionFromZodSchema(dbSchema, issue),
     );
     throw new Error(buildErrorMessage(errorMessages));
   }
-  return databaseConfig.value as DatabaseConfig;
+  return databaseConfig.data;
 });

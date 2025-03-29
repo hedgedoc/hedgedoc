@@ -273,7 +273,7 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        '"forbiddenNoteIds[0]" is not allowed to be empty',
+        'HD_FORBIDDEN_NOTE_IDS[0]: String must contain at least 1 character(s)\n - HD_FORBIDDEN_NOTE_IDS[1]: String must contain at least 1 character(s)',
       );
       restore();
     });
@@ -294,7 +294,7 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        '"HD_MAX_DOCUMENT_LENGTH" must be a positive number',
+        'HD_MAX_DOCUMENT_LENGTH: Number must be greater than 0',
       );
       restore();
     });
@@ -315,7 +315,7 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        '"HD_MAX_DOCUMENT_LENGTH" must be an integer',
+        'HD_MAX_DOCUMENT_LENGTH: Expected integer, received float',
       );
       restore();
     });
@@ -336,7 +336,7 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        '"HD_MAX_DOCUMENT_LENGTH" must be a number',
+        'HD_MAX_DOCUMENT_LENGTH: Expected number, received nan',
       );
       restore();
     });
@@ -357,7 +357,7 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        '"HD_PERMISSION_DEFAULT_EVERYONE" must be one of [none, read, write]',
+        "HD_PERMISSION_DEFAULT_EVERYONE: Invalid enum value. Expected 'none' | 'read' | 'write', received 'wrong'",
       );
       restore();
     });
@@ -378,7 +378,7 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        '"HD_PERMISSION_DEFAULT_LOGGED_IN" must be one of [none, read, write]',
+        "HD_PERMISSION_DEFAULT_LOGGED_IN: Invalid enum value. Expected 'none' | 'read' | 'write', received 'wrong'",
       );
       restore();
     });
@@ -399,7 +399,7 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        '"HD_GUEST_ACCESS" must be one of [deny, read, write, create]',
+        "HD_GUEST_ACCESS: Invalid enum value. Expected 'deny' | 'read' | 'write' | 'create', received 'wrong'",
       );
       restore();
     });
@@ -505,7 +505,7 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        '"HD_REVISION_RETENTION_DAYS" must be greater than or equal to 0',
+        'HD_REVISION_RETENTION_DAYS: Number must be greater than or equal to 0',
       );
       restore();
     });

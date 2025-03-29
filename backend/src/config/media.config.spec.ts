@@ -1,12 +1,18 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import mockedEnv from 'mocked-env';
 
 import { BackendType } from '../media/backends/backend-type.enum';
-import mediaConfig from './media.config';
+import mediaConfig, {
+  AzureMediaConfig,
+  FilesystemMediaConfig,
+  ImgurMediaConfig,
+  S3MediaConfig,
+  WebdavMediaConfig,
+} from './media.config';
 
 describe('mediaConfig', () => {
   // Filesystem
@@ -41,7 +47,7 @@ describe('mediaConfig', () => {
           clear: true,
         },
       );
-      const config = mediaConfig();
+      const config = mediaConfig() as { backend: FilesystemMediaConfig };
       expect(config.backend.use).toEqual(BackendType.FILESYSTEM);
       expect(config.backend.filesystem.uploadPath).toEqual(uploadPath);
       restore();
@@ -64,7 +70,7 @@ describe('mediaConfig', () => {
           clear: true,
         },
       );
-      const config = mediaConfig();
+      const config = mediaConfig() as { backend: S3MediaConfig };
       expect(config.backend.use).toEqual(BackendType.S3);
       expect(config.backend.s3.accessKeyId).toEqual(accessKeyId);
       expect(config.backend.s3.secretAccessKey).toEqual(secretAccessKey);
@@ -88,7 +94,7 @@ describe('mediaConfig', () => {
           clear: true,
         },
       );
-      const config = mediaConfig();
+      const config = mediaConfig() as { backend: AzureMediaConfig };
       expect(config.backend.use).toEqual(BackendType.AZURE);
       expect(config.backend.azure.connectionString).toEqual(
         azureConnectionString,
@@ -109,7 +115,7 @@ describe('mediaConfig', () => {
           clear: true,
         },
       );
-      const config = mediaConfig();
+      const config = mediaConfig() as { backend: ImgurMediaConfig };
       expect(config.backend.use).toEqual(BackendType.IMGUR);
       expect(config.backend.imgur.clientID).toEqual(clientID);
       restore();
@@ -129,7 +135,7 @@ describe('mediaConfig', () => {
           clear: true,
         },
       );
-      const config = mediaConfig();
+      const config = mediaConfig() as { backend: WebdavMediaConfig };
       expect(config.backend.use).toEqual(BackendType.WEBDAV);
       expect(config.backend.webdav.connectionString).toEqual(
         webdavConnectionString,

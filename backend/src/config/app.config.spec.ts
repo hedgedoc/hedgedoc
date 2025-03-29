@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -232,7 +232,7 @@ describe('appConfig', () => {
         },
       );
       expect(() => appConfig()).toThrow(
-        '"HD_BASE_URL" must not contain a subdirectory',
+        'HD_BASE_URL: baseUrl must not contain a subdirectory',
       );
       restore();
     });
@@ -252,7 +252,7 @@ describe('appConfig', () => {
         },
       );
       expect(() => appConfig()).toThrow(
-        '"HD_BACKEND_PORT" must be a positive number',
+        'HD_BACKEND_PORT: Number must be greater than 0',
       );
       restore();
     });
@@ -272,7 +272,7 @@ describe('appConfig', () => {
         },
       );
       expect(() => appConfig()).toThrow(
-        '"HD_BACKEND_PORT" must be less than or equal to 65535',
+        'HD_BACKEND_PORT: Number must be less than or equal to 65535',
       );
       restore();
     });
@@ -291,7 +291,9 @@ describe('appConfig', () => {
           clear: true,
         },
       );
-      expect(() => appConfig()).toThrow('"HD_BACKEND_PORT" must be an integer');
+      expect(() => appConfig()).toThrow(
+        'HD_BACKEND_PORT: Expected integer, received float',
+      );
       restore();
     });
 
@@ -309,7 +311,9 @@ describe('appConfig', () => {
           clear: true,
         },
       );
-      expect(() => appConfig()).toThrow('"HD_BACKEND_PORT" must be a number');
+      expect(() => appConfig()).toThrow(
+        'HD_BACKEND_PORT: Expected number, received nan',
+      );
       restore();
     });
 
