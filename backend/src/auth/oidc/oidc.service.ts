@@ -94,7 +94,7 @@ export class OidcService {
     const redirectUri = `${this.appConfig.baseUrl}/api/private/auth/oidc/${oidcConfig.identifier}/callback`;
     const client = new issuer.Client({
       /* eslint-disable @typescript-eslint/naming-convention */
-      client_id: oidcConfig.clientID,
+      client_id: oidcConfig.clientId,
       client_secret: oidcConfig.clientSecret,
       redirect_uris: [redirectUri],
       response_types: ['code'],
@@ -205,7 +205,7 @@ export class OidcService {
     );
     const username = OidcService.getResponseFieldValue(
       userInfoResponse,
-      oidcConfig.userNameField,
+      oidcConfig.usernameField,
       userId,
     ).toLowerCase() as Lowercase<string>;
     const displayName = OidcService.getResponseFieldValue(

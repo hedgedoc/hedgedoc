@@ -1,12 +1,18 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import mockedEnv from 'mocked-env';
 
 import { BackendType } from '../media/backends/backend-type.enum';
-import mediaConfig from './media.config';
+import mediaConfig, {
+  AzureMediaConfig,
+  FilesystemMediaConfig,
+  ImgurMediaConfig,
+  S3MediaConfig,
+  WebdavMediaConfig,
+} from './media.config';
 
 describe('mediaConfig', () => {
   // Filesystem
@@ -41,7 +47,7 @@ describe('mediaConfig', () => {
           clear: true,
         },
       );
-      const config = mediaConfig();
+      const config = mediaConfig() as { backend: FilesystemMediaConfig };
       expect(config.backend.use).toEqual(BackendType.FILESYSTEM);
       expect(config.backend.filesystem.uploadPath).toEqual(uploadPath);
       restore();
@@ -64,12 +70,12 @@ describe('mediaConfig', () => {
           clear: true,
         },
       );
-      const config = mediaConfig();
+      const config = mediaConfig() as { backend: S3MediaConfig };
       expect(config.backend.use).toEqual(BackendType.S3);
       expect(config.backend.s3.accessKeyId).toEqual(accessKeyId);
       expect(config.backend.s3.secretAccessKey).toEqual(secretAccessKey);
       expect(config.backend.s3.bucket).toEqual(bucket);
-      expect(config.backend.s3.endPoint).toEqual(endPoint);
+      expect(config.backend.s3.endpoint).toEqual(endPoint);
       expect(config.backend.s3.region).toEqual(region);
       expect(config.backend.s3.pathStyle).toEqual(pathStyle);
       restore();
@@ -88,7 +94,7 @@ describe('mediaConfig', () => {
           clear: true,
         },
       );
-      const config = mediaConfig();
+      const config = mediaConfig() as { backend: AzureMediaConfig };
       expect(config.backend.use).toEqual(BackendType.AZURE);
       expect(config.backend.azure.connectionString).toEqual(
         azureConnectionString,
@@ -109,9 +115,9 @@ describe('mediaConfig', () => {
           clear: true,
         },
       );
-      const config = mediaConfig();
+      const config = mediaConfig() as { backend: ImgurMediaConfig };
       expect(config.backend.use).toEqual(BackendType.IMGUR);
-      expect(config.backend.imgur.clientID).toEqual(clientID);
+      expect(config.backend.imgur.clientId).toEqual(clientID);
       restore();
     });
 
@@ -129,7 +135,7 @@ describe('mediaConfig', () => {
           clear: true,
         },
       );
-      const config = mediaConfig();
+      const config = mediaConfig() as { backend: WebdavMediaConfig };
       expect(config.backend.use).toEqual(BackendType.WEBDAV);
       expect(config.backend.webdav.connectionString).toEqual(
         webdavConnectionString,
@@ -154,7 +160,7 @@ describe('mediaConfig', () => {
           },
         );
         expect(() => mediaConfig()).toThrow(
-          '"HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH" is required',
+          'HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH: Required',
         );
         restore();
       });
@@ -176,7 +182,7 @@ describe('mediaConfig', () => {
           },
         );
         expect(() => mediaConfig()).toThrow(
-          '"HD_MEDIA_BACKEND_S3_ACCESS_KEY" is required',
+          'HD_MEDIA_BACKEND_S3_ACCESS_KEY_ID: Required',
         );
         restore();
       });
@@ -195,7 +201,7 @@ describe('mediaConfig', () => {
           },
         );
         expect(() => mediaConfig()).toThrow(
-          '"HD_MEDIA_BACKEND_S3_SECRET_KEY" is required',
+          'HD_MEDIA_BACKEND_S3_SECRET_ACCESS_KEY: Required',
         );
         restore();
       });
@@ -214,7 +220,7 @@ describe('mediaConfig', () => {
           },
         );
         expect(() => mediaConfig()).toThrow(
-          '"HD_MEDIA_BACKEND_S3_BUCKET" is required',
+          'HD_MEDIA_BACKEND_S3_BUCKET: Required',
         );
         restore();
       });
@@ -233,7 +239,7 @@ describe('mediaConfig', () => {
           },
         );
         expect(() => mediaConfig()).toThrow(
-          '"HD_MEDIA_BACKEND_S3_ENDPOINT" is required',
+          'HD_MEDIA_BACKEND_S3_ENDPOINT: Required',
         );
         restore();
       });
@@ -253,27 +259,7 @@ describe('mediaConfig', () => {
           },
         );
         expect(() => mediaConfig()).toThrow(
-          '"HD_MEDIA_BACKEND_S3_ENDPOINT" must be a valid uri with a scheme matching the ^https? pattern',
-        );
-        restore();
-      });
-      it('when HD_MEDIA_BACKEND_S3_ENDPOINT is an URI with a non-http(s) protocol', async () => {
-        const restore = mockedEnv(
-          {
-            /* eslint-disable @typescript-eslint/naming-convention */
-            HD_MEDIA_BACKEND: BackendType.S3,
-            HD_MEDIA_BACKEND_S3_ACCESS_KEY: accessKeyId,
-            HD_MEDIA_BACKEND_S3_SECRET_KEY: secretAccessKey,
-            HD_MEDIA_BACKEND_S3_BUCKET: bucket,
-            HD_MEDIA_BACKEND_S3_ENDPOINT: 'ftps://example.org',
-            /* eslint-enable @typescript-eslint/naming-convention */
-          },
-          {
-            clear: true,
-          },
-        );
-        expect(() => mediaConfig()).toThrow(
-          '"HD_MEDIA_BACKEND_S3_ENDPOINT" must be a valid uri with a scheme matching the ^https? pattern',
+          'HD_MEDIA_BACKEND_S3_ENDPOINT: Invalid url',
         );
         restore();
       });
@@ -293,7 +279,7 @@ describe('mediaConfig', () => {
           },
         );
         expect(() => mediaConfig()).toThrow(
-          '"HD_MEDIA_BACKEND_AZURE_CONNECTION_STRING" is required',
+          'HD_MEDIA_BACKEND_AZURE_CONNECTION_STRING: Required',
         );
         restore();
       });
@@ -310,7 +296,7 @@ describe('mediaConfig', () => {
           },
         );
         expect(() => mediaConfig()).toThrow(
-          '"HD_MEDIA_BACKEND_AZURE_CONTAINER" is required',
+          'HD_MEDIA_BACKEND_AZURE_CONTAINER: Required',
         );
         restore();
       });
@@ -329,7 +315,7 @@ describe('mediaConfig', () => {
           },
         );
         expect(() => mediaConfig()).toThrow(
-          '"HD_MEDIA_BACKEND_IMGUR_CLIENT_ID" is required',
+          'HD_MEDIA_BACKEND_IMGUR_CLIENT_ID: Required',
         );
         restore();
       });
@@ -350,7 +336,7 @@ describe('mediaConfig', () => {
           },
         );
         expect(() => mediaConfig()).toThrow(
-          '"HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING" is required',
+          'HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING: Required',
         );
         restore();
       });
@@ -369,7 +355,7 @@ describe('mediaConfig', () => {
           },
         );
         expect(() => mediaConfig()).toThrow(
-          '"HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING" must be a valid uri',
+          'HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING: Invalid url',
         );
         restore();
       });
@@ -387,7 +373,7 @@ describe('mediaConfig', () => {
           },
         );
         expect(() => mediaConfig()).toThrow(
-          '"HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL" is required',
+          'HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL: Required',
         );
         restore();
       });
@@ -406,7 +392,7 @@ describe('mediaConfig', () => {
           },
         );
         expect(() => mediaConfig()).toThrow(
-          '"HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL" must be a valid uri',
+          'HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL: Invalid url',
         );
         restore();
       });

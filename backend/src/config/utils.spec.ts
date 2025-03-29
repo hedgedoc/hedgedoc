@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,7 +10,6 @@ import {
   needToLog,
   parseOptionalBoolean,
   parseOptionalNumber,
-  replaceAuthErrorsWithEnvironmentVariables,
   toArrayConfig,
 } from './utils';
 
@@ -39,13 +38,13 @@ describe('config utils', () => {
     });
     it('throws error if there is a duplicate', () => {
       expect(() => ensureNoDuplicatesExist('Test', ['A', 'A'])).toThrow(
-        "Your Test names 'A,A' contain duplicates 'A'",
+        "Your Test names 'A,A' contain duplicates: 'A'",
       );
     });
     it('throws error if there are multiple duplicates', () => {
       expect(() =>
         ensureNoDuplicatesExist('Test', ['A', 'A', 'B', 'B']),
-      ).toThrow("Your Test names 'A,A,B,B' contain duplicates 'A,B'");
+      ).toThrow("Your Test names 'A,A,B,B' contain duplicates: 'A,B'");
     });
   });
   describe('toArrayConfig', () => {
@@ -65,28 +64,6 @@ describe('config utils', () => {
         'two',
         'three',
       ]);
-    });
-  });
-  describe('replaceAuthErrorsWithEnvironmentVariables', () => {
-    it('"ldap[0].url', () => {
-      expect(
-        replaceAuthErrorsWithEnvironmentVariables(
-          '"ldap[0].url',
-          'ldap',
-          'HD_AUTH_LDAP_',
-          ['test'],
-        ),
-      ).toEqual('"HD_AUTH_LDAP_test_URL');
-    });
-    it('"ldap[0].url is not changed by gitlab call', () => {
-      expect(
-        replaceAuthErrorsWithEnvironmentVariables(
-          '"ldap[0].url',
-          'gitlab',
-          'HD_AUTH_GITLAB_',
-          ['test'],
-        ),
-      ).toEqual('"ldap[0].url');
     });
   });
   describe('needToLog', () => {

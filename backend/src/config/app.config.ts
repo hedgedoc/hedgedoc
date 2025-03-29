@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,94 +9,104 @@ import {
   WrongProtocolError,
 } from '@hedgedoc/commons';
 import { registerAs } from '@nestjs/config';
-import * as Joi from 'joi';
-import { CustomHelpers, ErrorReport } from 'joi';
+import z, { RefinementCtx } from 'zod';
 
 import { Loglevel } from './loglevel.enum';
-import { buildErrorMessage, parseOptionalNumber } from './utils';
+import { parseOptionalBoolean, parseOptionalNumber } from './utils';
+import {
+  buildErrorMessage,
+  extractDescriptionFromZodIssue,
+} from './zod-error-message';
 
-export interface AppConfig {
-  baseUrl: string;
-  rendererBaseUrl: string;
-  port: number;
-  loglevel: Loglevel;
-  showLogTimestamp: boolean;
-  persistInterval: number;
-}
-
-function validateUrl(
-  value: string,
-  helpers: CustomHelpers,
-): string | ErrorReport {
+function validateUrl(value: string | undefined, ctx: RefinementCtx): void {
+  if (!value) {
+    return z.NEVER;
+  }
   try {
-    return parseUrl(value).isPresent() ? value : helpers.error('string.uri');
+    if (!parseUrl(value).isPresent()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.invalid_string,
+        message: "Can't parse as URL",
+        fatal: true,
+        validation: 'url',
+      });
+      return z.NEVER;
+    }
   } catch (error) {
     if (error instanceof NoSubdirectoryAllowedError) {
-      return helpers.error('url.noSubDirectoryAllowed');
+      ctx.addIssue({
+        code: z.ZodIssueCode.invalid_string,
+        message: ctx.path[0] + ' must not contain a subdirectory',
+        fatal: true,
+        validation: 'url',
+      });
     } else if (error instanceof WrongProtocolError) {
-      return helpers.error('url.wrongProtocol');
+      ctx.addIssue({
+        code: z.ZodIssueCode.invalid_string,
+        message: ctx.path[0] + ' protocol must be HTTP or HTTPS',
+        fatal: true,
+        validation: 'url',
+      });
     } else {
       throw error;
     }
   }
 }
 
-const schema = Joi.object({
-  baseUrl: Joi.string().custom(validateUrl).label('HD_BASE_URL'),
-  rendererBaseUrl: Joi.string()
-    .custom(validateUrl)
-    .default(Joi.ref('baseUrl'))
-    .optional()
-    .label('HD_RENDERER_BASE_URL'),
-  port: Joi.number()
-    .positive()
-    .integer()
-    .default(3000)
-    .max(65535)
-    .optional()
-    .label('HD_BACKEND_PORT'),
-  loglevel: Joi.string()
-    .valid(...Object.values(Loglevel))
-    .default(Loglevel.WARN)
-    .optional()
-    .label('HD_LOGLEVEL'),
-  showLogTimestamp: Joi.boolean()
-    .default(true)
-    .optional()
-    .label('HD_SHOW_LOG_TIMESTAMP'),
-  persistInterval: Joi.number()
-    .integer()
-    .min(0)
-    .default(10)
-    .optional()
-    .label('HD_PERSIST_INTERVAL'),
-}).messages({
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  'url.noSubDirectoryAllowed': '{{#label}} must not contain a subdirectory',
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  'url.wrongProtocol': '{{#label}} protocol must be HTTP or HTTPS',
-});
+const schema = z
+  .object({
+    baseUrl: z.string().superRefine(validateUrl).describe('HD_BASE_URL'),
+    rendererBaseUrl: z
+      .string()
+      .superRefine(validateUrl)
+      .default('')
+      .describe('HD_RENDERER_BASE_URL'),
+    backendPort: z
+      .number()
+      .positive()
+      .int()
+      .max(65535)
+      .default(3000)
+      .describe('HD_BACKEND_PORT'),
+    loglevel: z
+      .enum(Object.values(Loglevel) as [Loglevel, ...Loglevel[]])
+      .default(Loglevel.WARN)
+      .describe('HD_LOGLEVEL'),
+    showLogTimestamp: z
+      .boolean()
+      .default(true)
+      .describe('HD_SHOW_LOG_TIMESTAMP'),
+    persistInterval: z.coerce
+      .number()
+      .int()
+      .min(0)
+      .default(10)
+      .describe('HD_PERSIST_INTERVAL'),
+  })
+  .transform((data) => {
+    // Handle the default reference for rendererBaseUrl
+    if (data.rendererBaseUrl === '') {
+      data.rendererBaseUrl = data.baseUrl;
+    }
+    return data;
+  });
+
+export type AppConfig = z.infer<typeof schema>;
 
 export default registerAs('appConfig', () => {
-  const appConfig = schema.validate(
-    {
-      baseUrl: process.env.HD_BASE_URL,
-      rendererBaseUrl: process.env.HD_RENDERER_BASE_URL,
-      port: parseOptionalNumber(process.env.HD_BACKEND_PORT),
-      loglevel: process.env.HD_LOGLEVEL,
-      showLogTimestamp: process.env.HD_SHOW_LOG_TIMESTAMP,
-      persistInterval: process.env.HD_PERSIST_INTERVAL,
-    },
-    {
-      abortEarly: false,
-      presence: 'required',
-    },
-  );
+  const appConfig = schema.safeParse({
+    baseUrl: process.env.HD_BASE_URL,
+    rendererBaseUrl: process.env.HD_RENDERER_BASE_URL,
+    backendPort: parseOptionalNumber(process.env.HD_BACKEND_PORT),
+    loglevel: process.env.HD_LOGLEVEL,
+    showLogTimestamp: parseOptionalBoolean(process.env.HD_SHOW_LOG_TIMESTAMP),
+    persistInterval: process.env.HD_PERSIST_INTERVAL,
+  });
   if (appConfig.error) {
-    const errorMessages = appConfig.error.details.map(
-      (detail) => detail.message,
+    const errorMessages = appConfig.error.errors.map((issue) =>
+      extractDescriptionFromZodIssue(issue, 'HD'),
     );
     throw new Error(buildErrorMessage(errorMessages));
   }
-  return appConfig.value as AppConfig;
+  return appConfig.data;
 });

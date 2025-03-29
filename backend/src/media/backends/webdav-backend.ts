@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,7 +8,10 @@ import { FileTypeResult } from 'file-type';
 import fetch, { Response } from 'node-fetch';
 import { URL } from 'url';
 
-import mediaConfiguration, { MediaConfig } from '../../config/media.config';
+import mediaConfiguration, {
+  MediaConfig,
+  WebdavMediaConfig,
+} from '../../config/media.config';
 import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
@@ -16,7 +19,7 @@ import { BackendType } from './backend-type.enum';
 
 @Injectable()
 export class WebdavBackend implements MediaBackend {
-  private config: MediaConfig['backend']['webdav'];
+  private config: WebdavMediaConfig['webdav'];
   private authHeader: string;
   private readonly baseUrl: string;
 

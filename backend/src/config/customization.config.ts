@@ -4,77 +4,44 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { registerAs } from '@nestjs/config';
-import * as Joi from 'joi';
+import z from 'zod';
 
-import { buildErrorMessage } from './utils';
+import {
+  buildErrorMessage,
+  extractDescriptionFromZodIssue,
+} from './zod-error-message';
 
-export interface CustomizationConfig {
-  branding: {
-    customName: string | null;
-    customLogo: string | null;
-  };
-  specialUrls: {
-    privacy: string | null;
-    termsOfUse: string | null;
-    imprint: string | null;
-  };
-}
-
-const schema = Joi.object({
-  branding: Joi.object({
-    customName: Joi.string().allow(null).label('HD_CUSTOM_NAME'),
-    customLogo: Joi.string()
-      .uri({
-        scheme: [/https?/],
-      })
-      .allow(null)
-      .label('HD_CUSTOM_LOGO'),
+const schema = z.object({
+  branding: z.object({
+    customName: z.string().or(z.null()).describe('HD_CUSTOM_NAME'),
+    customLogo: z.string().url().or(z.null()).describe('HD_CUSTOM_LOGO'),
   }),
-  specialUrls: Joi.object({
-    privacy: Joi.string()
-      .uri({
-        scheme: /https?/,
-      })
-      .allow(null)
-      .label('HD_PRIVACY_URL'),
-    termsOfUse: Joi.string()
-      .uri({
-        scheme: /https?/,
-      })
-      .allow(null)
-      .label('HD_TERMS_OF_USE_URL'),
-    imprint: Joi.string()
-      .uri({
-        scheme: /https?/,
-      })
-      .allow(null)
-      .label('HD_IMPRINT_URL'),
+  specialUrls: z.object({
+    privacy: z.string().url().or(z.null()).describe('HD_PRIVACY_URL'),
+    termsOfUse: z.string().url().or(z.null()).describe('HD_TERMS_OF_USE_URL'),
+    imprint: z.string().url().or(z.null()).describe('HD_IMPRINT_URL'),
   }),
 });
 
+export type CustomizationConfig = z.infer<typeof schema>;
+
 export default registerAs('customizationConfig', () => {
-  const customizationConfig = schema.validate(
-    {
-      branding: {
-        customName: process.env.HD_CUSTOM_NAME ?? null,
-        customLogo: process.env.HD_CUSTOM_LOGO ?? null,
-      },
-      specialUrls: {
-        privacy: process.env.HD_PRIVACY_URL ?? null,
-        termsOfUse: process.env.HD_TERMS_OF_USE_URL ?? null,
-        imprint: process.env.HD_IMPRINT_URL ?? null,
-      },
+  const customizationConfig = schema.safeParse({
+    branding: {
+      customName: process.env.HD_CUSTOM_NAME ?? null,
+      customLogo: process.env.HD_CUSTOM_LOGO ?? null,
     },
-    {
-      abortEarly: false,
-      presence: 'required',
+    specialUrls: {
+      privacy: process.env.HD_PRIVACY_URL ?? null,
+      termsOfUse: process.env.HD_TERMS_OF_USE_URL ?? null,
+      imprint: process.env.HD_IMPRINT_URL ?? null,
     },
-  );
+  });
   if (customizationConfig.error) {
-    const errorMessages = customizationConfig.error.details.map(
-      (detail) => detail.message,
+    const errorMessages = customizationConfig.error.errors.map((issue) =>
+      extractDescriptionFromZodIssue(issue, 'HD'),
     );
     throw new Error(buildErrorMessage(errorMessages));
   }
-  return customizationConfig.value as CustomizationConfig;
+  return customizationConfig.data;
 });

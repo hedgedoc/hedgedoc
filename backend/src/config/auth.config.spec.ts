@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -129,7 +129,7 @@ describe('authConfig', () => {
           },
         );
         expect(() => authConfig()).toThrow(
-          '"HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH" must be less than or equal to 4',
+          'HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH: Number must be less than or equal to 4',
         );
         restore();
       });
@@ -147,7 +147,7 @@ describe('authConfig', () => {
           },
         );
         expect(() => authConfig()).toThrow(
-          '"HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH" must be greater than or equal to 0',
+          'HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH: Number must be greater than or equal to 0',
         );
         restore();
       });
@@ -200,6 +200,7 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.ldap).toBeDefined();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
         expect(firstLdap.identifier).toEqual(ldapNames[0]);
@@ -232,6 +233,7 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.ldap).toBeDefined();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
         expect(firstLdap.identifier).toEqual(ldapNames[0]);
@@ -263,6 +265,7 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.ldap).toBeDefined();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
         expect(firstLdap.identifier).toEqual(ldapNames[0]);
@@ -294,6 +297,7 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.ldap).toBeDefined();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
         expect(firstLdap.identifier).toEqual(ldapNames[0]);
@@ -325,6 +329,7 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.ldap).toBeDefined();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
         expect(firstLdap.identifier).toEqual(ldapNames[0]);
@@ -356,6 +361,7 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.ldap).toBeDefined();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
         expect(firstLdap.identifier).toEqual(ldapNames[0]);
@@ -387,6 +393,7 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.ldap).toBeDefined();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
         expect(firstLdap.identifier).toEqual(ldapNames[0]);
@@ -418,6 +425,7 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.ldap).toBeDefined();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
         expect(firstLdap.identifier).toEqual(ldapNames[0]);
@@ -449,6 +457,7 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.ldap).toBeDefined();
         expect(config.ldap).toHaveLength(1);
         const firstLdap = config.ldap[0];
         expect(firstLdap.identifier).toEqual(ldapNames[0]);
@@ -481,7 +490,7 @@ describe('authConfig', () => {
           },
         );
         expect(() => authConfig()).toThrow(
-          '"HD_AUTH_LDAP_FUTURAMA_URL" is required',
+          'HD_AUTH_LDAP_FUTURAMA_URL: Required',
         );
         restore();
       });
@@ -499,7 +508,7 @@ describe('authConfig', () => {
           },
         );
         expect(() => authConfig()).toThrow(
-          '"HD_AUTH_LDAP_FUTURAMA_SEARCH_BASE" is required',
+          'HD_AUTH_LDAP_FUTURAMA_SEARCH_BASE: Required',
         );
         restore();
       });
@@ -517,7 +526,7 @@ describe('authConfig', () => {
           },
         );
         expect(() => authConfig()).toThrow(
-          '"HD_AUTH_LDAP_FUTURAMA_TLS_CERT_PATHS[0]" must not be a sparse array item',
+          'HD_AUTH_LDAP_FUTURAMA_TLS_CA_CERTS[0]: File not found',
         );
         restore();
       });
@@ -582,11 +591,12 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.oidc).toBeDefined();
         expect(config.oidc).toHaveLength(1);
         const firstOidc = config.oidc[0];
         expect(firstOidc.identifier).toEqual(oidcNames[0]);
         expect(firstOidc.issuer).toEqual(issuer);
-        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientId).toEqual(clientId);
         expect(firstOidc.clientSecret).toEqual(clientSecret);
         expect(firstOidc.theme).toEqual(theme);
         expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
@@ -595,7 +605,7 @@ describe('authConfig', () => {
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(userNameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -616,11 +626,12 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.oidc).toBeDefined();
         expect(config.oidc).toHaveLength(1);
         const firstOidc = config.oidc[0];
         expect(firstOidc.identifier).toEqual(oidcNames[0]);
         expect(firstOidc.issuer).toEqual(issuer);
-        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientId).toEqual(clientId);
         expect(firstOidc.clientSecret).toEqual(clientSecret);
         expect(firstOidc.theme).toBeUndefined();
         expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
@@ -629,7 +640,7 @@ describe('authConfig', () => {
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(userNameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -650,11 +661,12 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.oidc).toBeDefined();
         expect(config.oidc).toHaveLength(1);
         const firstOidc = config.oidc[0];
         expect(firstOidc.identifier).toEqual(oidcNames[0]);
         expect(firstOidc.issuer).toEqual(issuer);
-        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientId).toEqual(clientId);
         expect(firstOidc.clientSecret).toEqual(clientSecret);
         expect(firstOidc.theme).toEqual(theme);
         expect(firstOidc.authorizeUrl).toBeUndefined();
@@ -663,7 +675,7 @@ describe('authConfig', () => {
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(userNameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -684,11 +696,12 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.oidc).toBeDefined();
         expect(config.oidc).toHaveLength(1);
         const firstOidc = config.oidc[0];
         expect(firstOidc.identifier).toEqual(oidcNames[0]);
         expect(firstOidc.issuer).toEqual(issuer);
-        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientId).toEqual(clientId);
         expect(firstOidc.clientSecret).toEqual(clientSecret);
         expect(firstOidc.theme).toEqual(theme);
         expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
@@ -697,7 +710,7 @@ describe('authConfig', () => {
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(userNameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -718,11 +731,12 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.oidc).toBeDefined();
         expect(config.oidc).toHaveLength(1);
         const firstOidc = config.oidc[0];
         expect(firstOidc.identifier).toEqual(oidcNames[0]);
         expect(firstOidc.issuer).toEqual(issuer);
-        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientId).toEqual(clientId);
         expect(firstOidc.clientSecret).toEqual(clientSecret);
         expect(firstOidc.theme).toEqual(theme);
         expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
@@ -731,7 +745,7 @@ describe('authConfig', () => {
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(userNameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -752,11 +766,12 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.oidc).toBeDefined();
         expect(config.oidc).toHaveLength(1);
         const firstOidc = config.oidc[0];
         expect(firstOidc.identifier).toEqual(oidcNames[0]);
         expect(firstOidc.issuer).toEqual(issuer);
-        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientId).toEqual(clientId);
         expect(firstOidc.clientSecret).toEqual(clientSecret);
         expect(firstOidc.theme).toEqual(theme);
         expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
@@ -765,7 +780,7 @@ describe('authConfig', () => {
         expect(firstOidc.endSessionUrl).toBeUndefined();
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(userNameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -786,11 +801,12 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.oidc).toBeDefined();
         expect(config.oidc).toHaveLength(1);
         const firstOidc = config.oidc[0];
         expect(firstOidc.identifier).toEqual(oidcNames[0]);
         expect(firstOidc.issuer).toEqual(issuer);
-        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientId).toEqual(clientId);
         expect(firstOidc.clientSecret).toEqual(clientSecret);
         expect(firstOidc.theme).toEqual(theme);
         expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
@@ -799,7 +815,7 @@ describe('authConfig', () => {
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.scope).toEqual(defaultScope);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(userNameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -820,11 +836,12 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.oidc).toBeDefined();
         expect(config.oidc).toHaveLength(1);
         const firstOidc = config.oidc[0];
         expect(firstOidc.identifier).toEqual(oidcNames[0]);
         expect(firstOidc.issuer).toEqual(issuer);
-        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientId).toEqual(clientId);
         expect(firstOidc.clientSecret).toEqual(clientSecret);
         expect(firstOidc.theme).toEqual(theme);
         expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
@@ -833,7 +850,7 @@ describe('authConfig', () => {
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.userIdField).toEqual(defaultUserIdField);
-        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(userNameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -854,11 +871,12 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.oidc).toBeDefined();
         expect(config.oidc).toHaveLength(1);
         const firstOidc = config.oidc[0];
         expect(firstOidc.identifier).toEqual(oidcNames[0]);
         expect(firstOidc.issuer).toEqual(issuer);
-        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientId).toEqual(clientId);
         expect(firstOidc.clientSecret).toEqual(clientSecret);
         expect(firstOidc.theme).toEqual(theme);
         expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
@@ -867,7 +885,7 @@ describe('authConfig', () => {
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(userNameField);
         expect(firstOidc.displayNameField).toEqual(defaultDisplayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -888,11 +906,12 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.oidc).toBeDefined();
         expect(config.oidc).toHaveLength(1);
         const firstOidc = config.oidc[0];
         expect(firstOidc.identifier).toEqual(oidcNames[0]);
         expect(firstOidc.issuer).toEqual(issuer);
-        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientId).toEqual(clientId);
         expect(firstOidc.clientSecret).toEqual(clientSecret);
         expect(firstOidc.theme).toEqual(theme);
         expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
@@ -901,7 +920,7 @@ describe('authConfig', () => {
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(userNameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(
           defaultProfilePictureField,
@@ -924,11 +943,12 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.oidc).toBeDefined();
         expect(config.oidc).toHaveLength(1);
         const firstOidc = config.oidc[0];
         expect(firstOidc.identifier).toEqual(oidcNames[0]);
         expect(firstOidc.issuer).toEqual(issuer);
-        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientId).toEqual(clientId);
         expect(firstOidc.clientSecret).toEqual(clientSecret);
         expect(firstOidc.theme).toEqual(theme);
         expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
@@ -937,7 +957,7 @@ describe('authConfig', () => {
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(userNameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(defaultEmailField);
@@ -958,11 +978,12 @@ describe('authConfig', () => {
           },
         );
         const config = authConfig();
+        expect(config.oidc).toBeDefined();
         expect(config.oidc).toHaveLength(1);
         const firstOidc = config.oidc[0];
         expect(firstOidc.identifier).toEqual(oidcNames[0]);
         expect(firstOidc.issuer).toEqual(issuer);
-        expect(firstOidc.clientID).toEqual(clientId);
+        expect(firstOidc.clientId).toEqual(clientId);
         expect(firstOidc.clientSecret).toEqual(clientSecret);
         expect(firstOidc.theme).toEqual(theme);
         expect(firstOidc.authorizeUrl).toEqual(authorizeUrl);
@@ -971,7 +992,7 @@ describe('authConfig', () => {
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.userNameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(userNameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -994,7 +1015,7 @@ describe('authConfig', () => {
           },
         );
         expect(() => authConfig()).toThrow(
-          '"HD_AUTH_OIDC_GITLAB_ISSUER" is required',
+          'HD_AUTH_OIDC_GITLAB_ISSUER: Required',
         );
         restore();
       });
@@ -1012,7 +1033,7 @@ describe('authConfig', () => {
           },
         );
         expect(() => authConfig()).toThrow(
-          '"HD_AUTH_OIDC_GITLAB_CLIENT_ID" is required',
+          'HD_AUTH_OIDC_GITLAB_CLIENT_ID: Required',
         );
         restore();
       });
@@ -1030,7 +1051,7 @@ describe('authConfig', () => {
           },
         );
         expect(() => authConfig()).toThrow(
-          '"HD_AUTH_OIDC_GITLAB_CLIENT_SECRET" is required',
+          'HD_AUTH_OIDC_GITLAB_CLIENT_SECRET: Required',
         );
         restore();
       });
@@ -1047,7 +1068,9 @@ describe('authConfig', () => {
             clear: true,
           },
         );
-        expect(() => authConfig()).toThrow('"HD_AUTH_OIDC_GITLAB_THEME"');
+        expect(() => authConfig()).toThrow(
+          "HD_AUTH_OIDC_GITLAB_THEME: Invalid enum value. Expected 'google' | 'github' | 'gitlab' | 'facebook' | 'discord' | 'mastodon' | 'azure', received 'something else'",
+        );
         restore();
       });
     });

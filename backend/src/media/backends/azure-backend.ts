@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -14,7 +14,10 @@ import {
 import { Inject, Injectable } from '@nestjs/common';
 import { FileTypeResult } from 'file-type';
 
-import mediaConfiguration, { MediaConfig } from '../../config/media.config';
+import mediaConfiguration, {
+  AzureMediaConfig,
+  MediaConfig,
+} from '../../config/media.config';
 import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
@@ -22,7 +25,7 @@ import { BackendType } from './backend-type.enum';
 
 @Injectable()
 export class AzureBackend implements MediaBackend {
-  private config: MediaConfig['backend']['azure'];
+  private config: AzureMediaConfig['azure'];
   private client: ContainerClient;
   private readonly credential: StorageSharedKeyCredential;
 
@@ -32,7 +35,7 @@ export class AzureBackend implements MediaBackend {
     private mediaConfig: MediaConfig,
   ) {
     this.logger.setContext(AzureBackend.name);
-    this.config = this.mediaConfig.backend.azure;
+    this.config = (this.mediaConfig.backend as AzureMediaConfig).azure;
     if (this.mediaConfig.backend.use === BackendType.AZURE) {
       // only create the client if the backend is configured to azure
       const blobServiceClient = BlobServiceClient.fromConnectionString(
