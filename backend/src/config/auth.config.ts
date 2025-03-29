@@ -1,174 +1,220 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { registerAs } from '@nestjs/config';
-import * as fs from 'fs';
-import * as Joi from 'joi';
+import fs from 'fs';
+import z from 'zod';
 
 import { Theme } from './theme.enum';
 import {
-  buildErrorMessage,
   ensureNoDuplicatesExist,
   parseOptionalBoolean,
   parseOptionalNumber,
-  replaceAuthErrorsWithEnvironmentVariables,
   toArrayConfig,
 } from './utils';
+import {
+  buildErrorMessage,
+  extractDescriptionFromZodIssue,
+} from './zod-error-message';
 
-export interface InternalIdentifier {
-  identifier: string;
-  providerName: string;
-}
-
-export interface LDAPConfig extends InternalIdentifier {
-  url: string;
-  bindDn?: string;
-  bindCredentials?: string;
-  searchBase: string;
-  searchFilter: string;
-  searchAttributes: string[];
-  userIdField: string;
-  displayNameField: string;
-  emailField: string;
-  profilePictureField: string;
-  tlsCaCerts?: string[];
-}
-
-export interface OidcConfig extends InternalIdentifier {
-  issuer: string;
-  clientID: string;
-  clientSecret: string;
-  theme?: string;
-  authorizeUrl?: string;
-  tokenUrl?: string;
-  userinfoUrl?: string;
-  endSessionUrl?: string;
-  scope: string;
-  userNameField: string;
-  userIdField: string;
-  displayNameField: string;
-  profilePictureField: string;
-  emailField: string;
-  enableRegistration?: boolean;
-}
-
-export interface AuthConfig {
-  common: {
-    allowProfileEdits: boolean;
-    allowChooseUsername: boolean;
-    syncSource?: string;
-  };
-  session: {
-    secret: string;
-    lifetime: number;
-  };
-  local: {
-    enableLogin: boolean;
-    enableRegister: boolean;
-    minimalPasswordStrength: number;
-  };
-  // ToDo: tlsOptions exist in config.json.example. See https://nodejs.org/api/tls.html#tls_tls_connect_options_callback
-  ldap: LDAPConfig[];
-  oidc: OidcConfig[];
-}
-
-const authSchema = Joi.object({
-  common: {
-    allowProfileEdits: Joi.boolean()
+const ldapSchema = z
+  .object({
+    identifier: z.string().describe('HD_AUTH_LDAP_SERVERS'),
+    providerName: z
+      .string()
+      .default('LDAP')
+      .describe('HD_AUTH_LDAP_*_PROVIDER_NAME'),
+    url: z.string().describe('HD_AUTH_LDAP_*_URL'),
+    bindDn: z.string().optional().describe('HD_AUTH_LDAP_*_BIND_DN'),
+    bindCredentials: z
+      .string()
+      .optional()
+      .describe('HD_AUTH_LDAP_*_BIND_CREDENTIALS'),
+    searchBase: z.string().describe('HD_AUTH_LDAP_*_SEARCH_BASE'),
+    searchFilter: z
+      .string()
+      .default('(uid={{username}})')
+      .describe('HD_AUTH_LDAP_*_SEARCH_FILTER'),
+    searchAttributes: z
+      .array(z.string())
+      .optional()
+      .describe('HD_AUTH_LDAP_*_SEARCH_ATTRIBUTES'),
+    userIdField: z
+      .string()
+      .default('uid')
+      .describe('HD_AUTH_LDAP_*_USER_ID_FIELD'),
+    displayNameField: z
+      .string()
+      .default('displayName')
+      .describe('HD_AUTH_LDAP_*_DISPLAY_NAME_FIELD'),
+    emailField: z
+      .string()
+      .default('mail')
+      .describe('HD_AUTH_LDAP_*_EMAIL_FIELD'),
+    profilePictureField: z
+      .string()
+      .default('jpegPhoto')
+      .describe('HD_AUTH_LDAP_*_PROFILE_PICTURE_FIELD'),
+    tlsCaCerts: z
+      .array(
+        z.string({
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          required_error: 'File not found',
+        }),
+      )
+      .optional()
+      .describe('HD_AUTH_LDAP_*_TLS_CA_CERTS'),
+    tlsRejectUnauthorized: z
+      .boolean()
       .default(true)
+      .describe('HD_AUTH_LDAP_*_TLS_REJECT_UNAUTHORIZED'),
+    tlsSniName: z.string().optional().describe('HD_AUTH_LDAP_*_TLS_SNI_NAME'),
+    tlsAllowPartialTrustChain: z
+      .boolean()
       .optional()
-      .label('HD_AUTH_ALLOW_PROFILE_EDITS'),
-    allowChooseUsername: Joi.boolean()
-      .default(true)
+      .describe('HD_AUTH_LDAP_*_TLS_ALLOW_PARTIAL_TRUST_CHAIN'),
+    tlsMinVersion: z
+      .enum(['TLSv1', 'TLSv1.1', 'TLSv1.2', 'TLSv1.3'])
       .optional()
-      .label('HD_AUTH_ALLOW_CHOOSE_USERNAME'),
-    syncSource: Joi.string().optional().label('HD_AUTH_SYNC_SOURCE'),
-  },
-  session: {
-    secret: Joi.string().label('HD_SESSION_SECRET'),
-    lifetime: Joi.number()
-      .default(1209600) // 14 * 24 * 60 * 60s = 14 days
+      .describe('HD_AUTH_LDAP_*_TLS_MIN_VERSION'),
+    tlsMaxVersion: z
+      .enum(['TLSv1', 'TLSv1.1', 'TLSv1.2', 'TLSv1.3'])
       .optional()
-      .label('HD_SESSION_LIFETIME'),
-  },
-  local: {
-    enableLogin: Joi.boolean()
-      .default(false)
-      .optional()
-      .label('HD_AUTH_LOCAL_ENABLE_LOGIN'),
-    enableRegister: Joi.boolean()
-      .default(false)
-      .optional()
-      .label('HD_AUTH_LOCAL_ENABLE_REGISTER'),
-    minimalPasswordStrength: Joi.number()
-      .default(2)
-      .min(0)
-      .max(4)
-      .optional()
-      .label('HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH'),
-  },
-  ldap: Joi.array()
-    .items(
-      Joi.object({
-        identifier: Joi.string(),
-        providerName: Joi.string().default('LDAP').optional(),
-        url: Joi.string(),
-        bindDn: Joi.string().optional(),
-        bindCredentials: Joi.string().optional(),
-        searchBase: Joi.string(),
-        searchFilter: Joi.string().default('(uid={{username}})').optional(),
-        searchAttributes: Joi.array().items(Joi.string()).optional(),
-        userIdField: Joi.string().default('uid').optional(),
-        displayNameField: Joi.string().default('displayName').optional(),
-        emailField: Joi.string().default('mail').optional(),
-        profilePictureField: Joi.string().default('jpegPhoto').optional(),
-        tlsCaCerts: Joi.array().items(Joi.string()).optional(),
-      }).optional(),
-    )
-    .optional(),
-  oidc: Joi.array()
-    .items(
-      Joi.object({
-        identifier: Joi.string(),
-        providerName: Joi.string().default('OpenID Connect').optional(),
-        issuer: Joi.string(),
-        clientID: Joi.string(),
-        clientSecret: Joi.string(),
-        theme: Joi.string()
-          .valid(...Object.values(Theme))
-          .optional(),
-        authorizeUrl: Joi.string().optional(),
-        tokenUrl: Joi.string().optional(),
-        userinfoUrl: Joi.string().optional(),
-        endSessionUrl: Joi.string().optional(),
-        scope: Joi.string().default('openid profile email').optional(),
-        userIdField: Joi.string().default('sub').optional(),
-        userNameField: Joi.string().default('preferred_username').optional(),
-        displayNameField: Joi.string().default('name').optional(),
-        profilePictureField: Joi.string().default('picture').optional(),
-        emailField: Joi.string().default('email').optional(),
-        enableRegistration: Joi.boolean().default(true).optional(),
-      }).optional(),
-    )
-    .optional(),
+      .describe('HD_AUTH_LDAP_*_TLS_MAX_VERSION'),
+  })
+  .superRefine((config, ctx) => {
+    const tlsMin = config.tlsMinVersion?.replace('TLSv', '');
+    const tlsMax = config.tlsMaxVersion?.replace('TLSv', '');
+    if (tlsMin && tlsMax && tlsMin > tlsMax) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message:
+          'TLS min version must be less than or equal to TLS max version',
+        fatal: true,
+      });
+    }
+    if ((tlsMin && tlsMin < '1.2') || (tlsMax && tlsMax < '1.2')) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message:
+          'For security reasons, consider using TLS version 1.2 or higher',
+        fatal: false,
+      });
+    }
+  });
+
+const oidcSchema = z.object({
+  identifier: z.string().describe('HD_AUTH_OIDC_SERVERS'),
+  providerName: z
+    .string()
+    .default('OpenID Connect')
+    .describe('HD_AUTH_OIDC_*_PROVIDER_NAME'),
+  issuer: z.string().url().describe('HD_AUTH_OIDC_*_ISSUER'),
+  clientId: z.string().describe('HD_AUTH_OIDC_*_CLIENT_ID'),
+  clientSecret: z.string().describe('HD_AUTH_OIDC_*_CLIENT_SECRET'),
+  theme: z.nativeEnum(Theme).optional().describe('HD_AUTH_OIDC_*_THEME'),
+  authorizeUrl: z
+    .string()
+    .url()
+    .optional()
+    .describe('HD_AUTH_OIDC_*_AUTHORIZE_URL'),
+  tokenUrl: z.string().url().optional().describe('HD_AUTH_OIDC_*_TOKEN_URL'),
+  userinfoUrl: z
+    .string()
+    .url()
+    .optional()
+    .describe('HD_AUTH_OIDC_*_USERINFO_URL'),
+  endSessionUrl: z
+    .string()
+    .url()
+    .optional()
+    .describe('HD_AUTH_OIDC_*_END_SESSION_URL'),
+  scope: z
+    .string()
+    .default('openid profile email')
+    .describe('HD_AUTH_OIDC_*_SCOPE'),
+  usernameField: z
+    .string()
+    .default('preferred_username')
+    .describe('HD_AUTH_OIDC_*_USERNAME_FIELD'),
+  userIdField: z
+    .string()
+    .default('sub')
+    .describe('HD_AUTH_OIDC_*_USER_ID_FIELD'),
+  displayNameField: z
+    .string()
+    .default('name')
+    .describe('HD_AUTH_OIDC_*_DISPLAY_NAME_FIELD'),
+  profilePictureField: z
+    .string()
+    .default('picture')
+    .describe('HD_AUTH_OIDC_*_PROFILE_PICTURE_FIELD'),
+  emailField: z
+    .string()
+    .default('email')
+    .describe('HD_AUTH_OIDC_*_EMAIL_FIELD'),
+  enableRegistration: z
+    .boolean()
+    .default(true)
+    .describe('HD_AUTH_OIDC_*_ENABLE_REGISTRATION'),
 });
 
+const schema = z.object({
+  common: z.object({
+    allowProfileEdits: z
+      .boolean()
+      .default(true)
+      .describe('HD_AUTH_ALLOW_PROFILE_EDITS'),
+    allowChooseUsername: z
+      .boolean()
+      .default(true)
+      .describe('HD_AUTH_ALLOW_CHOOSE_USERNAME'),
+    syncSource: z.string().optional().describe('HD_AUTH_SYNC_SOURCE'),
+  }),
+  session: z.object({
+    secret: z.string().describe('HD_SESSION_SECRET'),
+    lifetime: z.number().default(1209600).describe('HD_SESSION_LIFETIME'), // 14 * 24 * 60 * 60s = 14 days
+  }),
+  local: z.object({
+    enableLogin: z
+      .boolean()
+      .default(false)
+      .describe('HD_AUTH_LOCAL_ENABLE_LOGIN'),
+    enableRegister: z
+      .boolean()
+      .default(false)
+      .describe('HD_AUTH_LOCAL_ENABLE_REGISTER'),
+    minimalPasswordStrength: z.coerce
+      .number()
+      .min(0)
+      .max(4)
+      .default(2)
+      .describe('HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH'),
+  }),
+  ldap: z.array(ldapSchema).describe('HD_AUTH_LDAP_*'),
+  oidc: z.array(oidcSchema).describe('HD_AUTH_OIDC_*'),
+});
+
+export type AuthConfig = z.infer<typeof schema>;
+export type LdapConfig = z.infer<typeof ldapSchema>;
+export type OidcConfig = z.infer<typeof oidcSchema>;
+
 export default registerAs('authConfig', () => {
-  const ldapNames = (
-    toArrayConfig(process.env.HD_AUTH_LDAP_SERVERS, ',') ?? []
-  ).map((name) => name.toUpperCase());
-  ensureNoDuplicatesExist('LDAP', ldapNames);
+  const ldapServers = (process.env.HD_AUTH_LDAP_SERVERS?.split(',') ?? []).map(
+    (name) => name.toUpperCase(),
+  );
+  ensureNoDuplicatesExist('LDAP', ldapServers);
 
-  const oidcNames = (
-    toArrayConfig(process.env.HD_AUTH_OIDC_SERVERS, ',') ?? []
-  ).map((name) => name.toUpperCase());
-  ensureNoDuplicatesExist('OIDC', oidcNames);
+  const oidcServers = (process.env.HD_AUTH_OIDC_SERVERS?.split(',') ?? []).map(
+    (name) => name.toUpperCase(),
+  );
+  ensureNoDuplicatesExist('OIDC', oidcServers);
 
-  const ldapInstances = ldapNames.map((ldapName) => {
+  const ldapConfig: Partial<LdapConfig>[] = ldapServers.map((name) => {
     const caFiles = toArrayConfig(
-      process.env[`HD_AUTH_LDAP_${ldapName}_TLS_CERT_PATHS`],
+      process.env[`HD_AUTH_LDAP_${name}_TLS_CERT_PATHS`],
       ',',
     );
     let tlsCaCerts = undefined;
@@ -180,106 +226,97 @@ export default registerAs('authConfig', () => {
       });
     }
     return {
-      identifier: ldapName.toLowerCase(),
-      providerName: process.env[`HD_AUTH_LDAP_${ldapName}_PROVIDER_NAME`],
-      url: process.env[`HD_AUTH_LDAP_${ldapName}_URL`],
-      bindDn: process.env[`HD_AUTH_LDAP_${ldapName}_BIND_DN`],
-      bindCredentials: process.env[`HD_AUTH_LDAP_${ldapName}_BIND_CREDENTIALS`],
-      searchBase: process.env[`HD_AUTH_LDAP_${ldapName}_SEARCH_BASE`],
-      searchFilter: process.env[`HD_AUTH_LDAP_${ldapName}_SEARCH_FILTER`],
-      searchAttributes: toArrayConfig(
-        process.env[`HD_AUTH_LDAP_${ldapName}_SEARCH_ATTRIBUTES`],
-        ',',
-      ),
-      userIdField: process.env[`HD_AUTH_LDAP_${ldapName}_USER_ID_FIELD`],
-      displayNameField:
-        process.env[`HD_AUTH_LDAP_${ldapName}_DISPLAY_NAME_FIELD`],
-      emailField: process.env[`HD_AUTH_LDAP_${ldapName}_EMAIL_FIELD`],
+      identifier: name.toLowerCase(),
+      providerName: process.env[`HD_AUTH_LDAP_${name}_PROVIDER_NAME`],
+      url: process.env[`HD_AUTH_LDAP_${name}_URL`],
+      bindDn: process.env[`HD_AUTH_LDAP_${name}_BIND_DN`],
+      bindCredentials: process.env[`HD_AUTH_LDAP_${name}_BIND_CREDENTIALS`],
+      searchBase: process.env[`HD_AUTH_LDAP_${name}_SEARCH_BASE`],
+      searchFilter: process.env[`HD_AUTH_LDAP_${name}_SEARCH_FILTER`],
+      searchAttributes:
+        process.env[`HD_AUTH_LDAP_${name}_SEARCH_ATTRIBUTES`]?.split(','),
+      userIdField: process.env[`HD_AUTH_LDAP_${name}_USER_ID_FIELD`],
+      displayNameField: process.env[`HD_AUTH_LDAP_${name}_DISPLAY_NAME_FIELD`],
+      emailField: process.env[`HD_AUTH_LDAP_${name}_EMAIL_FIELD`],
       profilePictureField:
-        process.env[`HD_AUTH_LDAP_${ldapName}_PROFILE_PICTURE_FIELD`],
-      tlsCaCerts: tlsCaCerts,
+        process.env[`HD_AUTH_LDAP_${name}_PROFILE_PICTURE_FIELD`],
+      // Technically this can be (string | undefined)[] | undefined, but an undefined array element tells us that the file is not there and the user input is invalid
+      tlsCaCerts: tlsCaCerts as string[] | undefined,
+      tlsRejectUnauthorized: parseOptionalBoolean(
+        process.env[`HD_AUTH_LDAP_${name}_TLS_REJECT_UNAUTHORIZED`],
+      ),
+      tlsSniName: process.env[`HD_AUTH_LDAP_${name}_TLS_SNI_NAME`],
+      tlsAllowPartialTrustChain: parseOptionalBoolean(
+        process.env[`HD_AUTH_LDAP_${name}_TLS_ALLOW_PARTIAL_TRUST_CHAIN`],
+      ),
+      tlsMinVersion: process.env[`HD_AUTH_LDAP_${name}_TLS_MIN_VERSION`] as
+        | 'TLSv1' // This typecast is required since zod validates the input later but TypeScript already expects valid input
+        | undefined,
+      tlsMaxVersion: process.env[`HD_AUTH_LDAP_${name}_TLS_MAX_VERSION`] as
+        | 'TLSv1'
+        | undefined,
     };
   });
 
-  const oidcInstances = oidcNames.map((oidcName) => ({
-    identifier: oidcName.toLowerCase(),
-    providerName: process.env[`HD_AUTH_OIDC_${oidcName}_PROVIDER_NAME`],
-    issuer: process.env[`HD_AUTH_OIDC_${oidcName}_ISSUER`],
-    clientID: process.env[`HD_AUTH_OIDC_${oidcName}_CLIENT_ID`],
-    clientSecret: process.env[`HD_AUTH_OIDC_${oidcName}_CLIENT_SECRET`],
-    theme: process.env[`HD_AUTH_OIDC_${oidcName}_THEME`],
-    authorizeUrl: process.env[`HD_AUTH_OIDC_${oidcName}_AUTHORIZE_URL`],
-    tokenUrl: process.env[`HD_AUTH_OIDC_${oidcName}_TOKEN_URL`],
-    userinfoUrl: process.env[`HD_AUTH_OIDC_${oidcName}_USERINFO_URL`],
-    endSessionUrl: process.env[`HD_AUTH_OIDC_${oidcName}_END_SESSION_URL`],
-    scope: process.env[`HD_AUTH_OIDC_${oidcName}_SCOPE`],
-    userIdField: process.env[`HD_AUTH_OIDC_${oidcName}_USER_ID_FIELD`],
-    userNameField: process.env[`HD_AUTH_OIDC_${oidcName}_USER_NAME_FIELD`],
-    displayNameField:
-      process.env[`HD_AUTH_OIDC_${oidcName}_DISPLAY_NAME_FIELD`],
+  const oidcConfig: Partial<OidcConfig>[] = oidcServers.map((name) => ({
+    identifier: name.toLowerCase(),
+    providerName: process.env[`HD_AUTH_OIDC_${name}_PROVIDER_NAME`],
+    issuer: process.env[`HD_AUTH_OIDC_${name}_ISSUER`],
+    clientId: process.env[`HD_AUTH_OIDC_${name}_CLIENT_ID`],
+    clientSecret: process.env[`HD_AUTH_OIDC_${name}_CLIENT_SECRET`],
+    theme: process.env[`HD_AUTH_OIDC_${name}_THEME`] as Theme | undefined,
+    authorizeUrl: process.env[`HD_AUTH_OIDC_${name}_AUTHORIZE_URL`],
+    tokenUrl: process.env[`HD_AUTH_OIDC_${name}_TOKEN_URL`],
+    userinfoUrl: process.env[`HD_AUTH_OIDC_${name}_USERINFO_URL`],
+    endSessionUrl: process.env[`HD_AUTH_OIDC_${name}_END_SESSION_URL`],
+    scope: process.env[`HD_AUTH_OIDC_${name}_SCOPE`],
+    userIdField: process.env[`HD_AUTH_OIDC_${name}_USER_ID_FIELD`],
+    userNameField: process.env[`HD_AUTH_OIDC_${name}_USER_NAME_FIELD`],
+    displayNameField: process.env[`HD_AUTH_OIDC_${name}_DISPLAY_NAME_FIELD`],
     profilePictureField:
-      process.env[`HD_AUTH_OIDC_${oidcName}_PROFILE_PICTURE_FIELD`],
-    emailField: process.env[`HD_AUTH_OIDC_${oidcName}_EMAIL_FIELD`],
+      process.env[`HD_AUTH_OIDC_${name}_PROFILE_PICTURE_FIELD`],
+    emailField: process.env[`HD_AUTH_OIDC_${name}_EMAIL_FIELD`],
     enableRegistration: parseOptionalBoolean(
-      process.env[`HD_AUTH_OIDC_${oidcName}_ENABLE_REGISTER`],
+      process.env[`HD_AUTH_OIDC_${name}_ENABLE_REGISTER`],
     ),
   }));
 
-  let syncSource = process.env.HD_AUTH_SYNC_SOURCE;
-  if (syncSource !== undefined) {
-    syncSource = syncSource.toLowerCase();
-  }
+  const authConfig = schema.safeParse({
+    common: {
+      allowProfileEdits: parseOptionalBoolean(
+        process.env.HD_AUTH_ALLOW_PROFILE_EDITS,
+      ),
+      allowChooseUsername: parseOptionalBoolean(
+        process.env.HD_AUTH_ALLOW_CHOOSE_USERNAME,
+      ),
+      syncSource: process.env.HD_AUTH_SYNC_SOURCE?.toLowerCase(),
+    },
+    session: {
+      secret: process.env.HD_SESSION_SECRET,
+      lifetime: parseOptionalNumber(process.env.HD_SESSION_LIFETIME),
+    },
+    local: {
+      enableLogin: parseOptionalBoolean(process.env.HD_AUTH_LOCAL_ENABLE_LOGIN),
+      enableRegister: parseOptionalBoolean(
+        process.env.HD_AUTH_LOCAL_ENABLE_REGISTER,
+      ),
+      minimalPasswordStrength: parseOptionalNumber(
+        process.env.HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH,
+      ),
+    },
+    ldap: ldapConfig,
+    oidc: oidcConfig,
+  });
 
-  const authConfig = authSchema.validate(
-    {
-      common: {
-        allowProfileEdits: process.env.HD_AUTH_ALLOW_PROFILE_EDITS,
-        allowChooseUsername: process.env.HD_AUTH_ALLOW_CHOOSE_USERNAME,
-        syncSource: syncSource,
-      },
-      session: {
-        secret: process.env.HD_SESSION_SECRET,
-        lifetime: parseOptionalNumber(process.env.HD_SESSION_LIFETIME),
-      },
-      local: {
-        enableLogin: parseOptionalBoolean(
-          process.env.HD_AUTH_LOCAL_ENABLE_LOGIN,
-        ),
-        enableRegister: parseOptionalBoolean(
-          process.env.HD_AUTH_LOCAL_ENABLE_REGISTER,
-        ),
-        minimalPasswordStrength: parseOptionalNumber(
-          process.env.HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH,
-        ),
-      },
-      ldap: ldapInstances,
-      oidc: oidcInstances,
-    },
-    {
-      abortEarly: false,
-      presence: 'required',
-    },
-  );
   if (authConfig.error) {
-    const errorMessages = authConfig.error.details
-      .map((detail) => detail.message)
-      .map((error) =>
-        replaceAuthErrorsWithEnvironmentVariables(
-          error,
-          'ldap',
-          'HD_AUTH_LDAP_',
-          ldapNames,
-        ),
-      )
-      .map((error) =>
-        replaceAuthErrorsWithEnvironmentVariables(
-          error,
-          'oidc',
-          'HD_AUTH_OIDC_',
-          oidcNames,
-        ),
-      );
+    const errorMessages = authConfig.error.errors.map((issue) =>
+      extractDescriptionFromZodIssue(issue, 'HD_AUTH', {
+        ldap: ldapServers,
+        oidc: oidcServers,
+      }),
+    );
     throw new Error(buildErrorMessage(errorMessages));
   }
-  return authConfig.value as AuthConfig;
+
+  return authConfig.data;
 });

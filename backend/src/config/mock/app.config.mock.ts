@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,7 +13,7 @@ export function createDefaultMockAppConfig(): AppConfig {
   return {
     baseUrl: 'md.example.com',
     rendererBaseUrl: 'md-renderer.example.com',
-    port: 3000,
+    backendPort: 3000,
     loglevel: Loglevel.ERROR,
     showLogTimestamp: true,
     persistInterval: 10,

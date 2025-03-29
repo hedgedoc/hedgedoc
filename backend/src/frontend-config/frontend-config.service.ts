@@ -52,8 +52,8 @@ export class FrontendConfigService {
       authProviders: this.getAuthProviders(),
       branding: this.getBranding(),
       maxDocumentLength: this.noteConfig.maxDocumentLength,
-      plantUmlServer: this.externalServicesConfig.plantUmlServer
-        ? new URL(this.externalServicesConfig.plantUmlServer).toString()
+      plantUmlServer: this.externalServicesConfig.plantumlServer
+        ? new URL(this.externalServicesConfig.plantumlServer).toString()
         : null,
       specialUrls: this.getSpecialUrls(),
       useImageProxy: !!this.externalServicesConfig.imageProxy,

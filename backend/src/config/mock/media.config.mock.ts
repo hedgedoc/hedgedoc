@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,26 +16,6 @@ export function createDefaultMockMediaConfig(): MediaConfig {
       filesystem: {
         uploadPath:
           'test_uploads' + Math.floor(Math.random() * 100000).toString(),
-      },
-      s3: {
-        accessKeyId: '',
-        secretAccessKey: '',
-        bucket: '',
-        endPoint: '',
-        pathStyle: false,
-        region: '',
-      },
-      azure: {
-        connectionString: '',
-        container: '',
-      },
-      imgur: {
-        clientID: '',
-      },
-      webdav: {
-        connectionString: '',
-        uploadDir: '',
-        publicUrl: '',
       },
     },
   };

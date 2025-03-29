@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,7 +8,10 @@ import { FileTypeResult } from 'file-type';
 import { Client } from 'minio';
 import { URL } from 'url';
 
-import mediaConfiguration, { MediaConfig } from '../../config/media.config';
+import mediaConfiguration, {
+  MediaConfig,
+  S3MediaConfig,
+} from '../../config/media.config';
 import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
@@ -16,7 +19,7 @@ import { BackendType } from './backend-type.enum';
 
 @Injectable()
 export class S3Backend implements MediaBackend {
-  private config: MediaConfig['backend']['s3'];
+  private config: S3MediaConfig['s3'];
   private client: Client;
 
   private static determinePort(url: URL): number | undefined {
@@ -34,7 +37,7 @@ export class S3Backend implements MediaBackend {
       return;
     }
     this.config = this.mediaConfig.backend.s3;
-    const url = new URL(this.config.endPoint);
+    const url = new URL(this.config.endpoint);
     const isSecure = url.protocol === 'https:';
     this.client = new Client({
       endPoint: url.hostname,

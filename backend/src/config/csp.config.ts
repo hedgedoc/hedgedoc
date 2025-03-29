@@ -1,22 +1,24 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { registerAs } from '@nestjs/config';
-import * as Joi from 'joi';
+import * as process from 'node:process';
+import z from 'zod';
 
-import { buildErrorMessage } from './utils';
+import { parseOptionalBoolean } from './utils';
+import {
+  buildErrorMessage,
+  extractDescriptionFromZodIssue,
+} from './zod-error-message';
 
-export interface CspConfig {
-  enable: boolean;
-  reportURI: string;
-}
-
-const cspSchema = Joi.object({
-  enable: Joi.boolean().default(true).optional().label('HD_CSP_ENABLE'),
-  reportURI: Joi.string().optional().label('HD_CSP_REPORT_URI'),
+const cspSchema = z.object({
+  enable: z.boolean().default(true).describe('HD_CSP_ENABLED'),
+  reportURI: z.string().optional().describe('HD_CSP_REPORT_URI'),
 });
+
+export type CspConfig = z.infer<typeof cspSchema>;
 
 export default registerAs('cspConfig', () => {
   if (
@@ -28,21 +30,15 @@ export default registerAs('cspConfig', () => {
     );
   }
 
-  const cspConfig = cspSchema.validate(
-    {
-      enable: process.env.HD_CSP_ENABLE || true,
-      reportURI: process.env.HD_CSP_REPORT_URI,
-    },
-    {
-      abortEarly: false,
-      presence: 'required',
-    },
-  );
+  const cspConfig = cspSchema.safeParse({
+    enable: parseOptionalBoolean(process.env.HD_CSP_ENABLED),
+    reportURI: process.env.HD_CSP_REPORT_URI,
+  });
   if (cspConfig.error) {
-    const errorMessages = cspConfig.error.details.map(
-      (detail) => detail.message,
+    const errorMessages = cspConfig.error.errors.map((issue) =>
+      extractDescriptionFromZodIssue(issue, 'HD_CSP'),
     );
     throw new Error(buildErrorMessage(errorMessages));
   }
-  return cspConfig.value as CspConfig;
+  return cspConfig.data;
 });

@@ -16,7 +16,7 @@ import LdapAuth from 'ldapauth-fork';
 
 import authConfiguration, {
   AuthConfig,
-  LDAPConfig,
+  LdapConfig,
 } from '../../config/auth.config';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 
@@ -47,7 +47,7 @@ export class LdapService {
   /**
    * Try to log in the user with the given credentials.
    *
-   * @param ldapConfig {LDAPConfig} - the ldap config to use
+   * @param ldapConfig {LdapConfig} - the ldap config to use
    * @param username {string} - the username to log in with
    * @param password {string} - the password to log in with
    * @returns {FullUserInfoWithIdDto} - the user info of the user that logged in
@@ -56,7 +56,7 @@ export class LdapService {
    * @private
    */
   getUserInfoFromLdap(
-    ldapConfig: LDAPConfig,
+    ldapConfig: LdapConfig,
     username: string, // This is not of type Username, because LDAP server may use mixed case usernames
     password: string,
   ): Promise<FullUserInfoWithIdDto> {
@@ -120,12 +120,12 @@ export class LdapService {
   /**
    * Get and return the correct ldap config from the list of available configs.
    * @param {string}  ldapIdentifier the identifier for the ldap config to be used
-   * @returns {LDAPConfig} - the ldap config with the given identifier
+   * @returns {LdapConfig} - the ldap config with the given identifier
    * @throws {NotFoundException} - there is no ldap config with the given identifier
    * @private
    */
-  getLdapConfig(ldapIdentifier: string): LDAPConfig {
-    const ldapConfig: LDAPConfig | undefined = this.authConfig.ldap.find(
+  getLdapConfig(ldapIdentifier: string): LdapConfig {
+    const ldapConfig = this.authConfig.ldap.find(
       (config) => config.identifier === ldapIdentifier,
     );
     if (!ldapConfig) {

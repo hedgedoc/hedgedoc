@@ -4,29 +4,19 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { registerAs } from '@nestjs/config';
-import * as Joi from 'joi';
+import z from 'zod';
 
-import { buildErrorMessage } from './utils';
+import {
+  buildErrorMessage,
+  extractDescriptionFromZodIssue,
+} from './zod-error-message';
 
-export interface ExternalServicesConfig {
-  plantUmlServer: string | null;
-  imageProxy: string;
-}
-
-const schema = Joi.object({
-  plantUmlServer: Joi.string()
-    .uri({
-      scheme: /https?/,
-    })
-    .allow(null)
-    .label('HD_PLANTUML_SERVER'),
-  imageProxy: Joi.string()
-    .uri({
-      scheme: /https?/,
-    })
-    .optional()
-    .label('HD_IMAGE_PROXY'),
+const schema = z.object({
+  plantumlServer: z.string().url().or(z.null()).describe('HD_PLANTUML_SERVER'),
+  imageProxy: z.string().url().or(z.null()).describe('HD_IMAGE_PROXY'),
 });
+
+export type ExternalServicesConfig = z.infer<typeof schema>;
 
 export default registerAs('externalServicesConfig', () => {
   if (process.env.HD_IMAGE_PROXY !== undefined) {
@@ -34,21 +24,15 @@ export default registerAs('externalServicesConfig', () => {
       "HD_IMAGE_PROXY is currently not yet supported. Please don't configure it",
     );
   }
-  const externalConfig = schema.validate(
-    {
-      plantUmlServer: process.env.HD_PLANTUML_SERVER ?? null,
-      imageProxy: process.env.HD_IMAGE_PROXY,
-    },
-    {
-      abortEarly: false,
-      presence: 'required',
-    },
-  );
+  const externalConfig = schema.safeParse({
+    plantumlServer: process.env.HD_PLANTUML_SERVER ?? null,
+    imageProxy: process.env.HD_IMAGE_PROXY ?? null,
+  });
   if (externalConfig.error) {
-    const errorMessages = externalConfig.error.details.map(
-      (detail) => detail.message,
+    const errorMessages = externalConfig.error.errors.map((issue) =>
+      extractDescriptionFromZodIssue(issue, 'HD'),
     );
     throw new Error(buildErrorMessage(errorMessages));
   }
-  return externalConfig.value as ExternalServicesConfig;
+  return externalConfig.data;
 });

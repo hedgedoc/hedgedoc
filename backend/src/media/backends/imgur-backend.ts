@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,7 +7,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import fetch, { Response } from 'node-fetch';
 import { URLSearchParams } from 'url';
 
-import mediaConfiguration, { MediaConfig } from '../../config/media.config';
+import mediaConfiguration, {
+  ImgurMediaConfig,
+  MediaConfig,
+} from '../../config/media.config';
 import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
@@ -26,7 +29,7 @@ interface ImgurBackendData {
 
 @Injectable()
 export class ImgurBackend implements MediaBackend {
-  private config: MediaConfig['backend']['imgur'];
+  private config: ImgurMediaConfig['imgur'];
 
   constructor(
     private readonly logger: ConsoleLoggerService,
@@ -34,7 +37,7 @@ export class ImgurBackend implements MediaBackend {
     private mediaConfig: MediaConfig,
   ) {
     this.logger.setContext(ImgurBackend.name);
-    this.config = this.mediaConfig.backend.imgur;
+    this.config = (this.mediaConfig.backend as ImgurMediaConfig).imgur;
   }
 
   async saveFile(uuid: string, buffer: Buffer): Promise<string> {
@@ -46,7 +49,7 @@ export class ImgurBackend implements MediaBackend {
         method: 'POST',
         body: params,
         // eslint-disable-next-line @typescript-eslint/naming-convention
-        headers: { Authorization: `Client-ID ${this.config.clientID}` },
+        headers: { Authorization: `Client-ID ${this.config.clientId}` },
       })
         .then((res) => ImgurBackend.checkStatus(res))
         .then((res) => res.json())) as UploadResult;
@@ -80,7 +83,7 @@ export class ImgurBackend implements MediaBackend {
         {
           method: 'DELETE',
           // eslint-disable-next-line @typescript-eslint/naming-convention
-          headers: { Authorization: `Client-ID ${this.config.clientID}` },
+          headers: { Authorization: `Client-ID ${this.config.clientId}` },
         },
       );
       ImgurBackend.checkStatus(result);

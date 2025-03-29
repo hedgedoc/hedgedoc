@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,7 +8,10 @@ import { FileTypeResult } from 'file-type';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 
-import mediaConfiguration, { MediaConfig } from '../../config/media.config';
+import mediaConfiguration, {
+  FilesystemMediaConfig,
+  MediaConfig,
+} from '../../config/media.config';
 import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
@@ -23,7 +26,9 @@ export class FilesystemBackend implements MediaBackend {
     private mediaConfig: MediaConfig,
   ) {
     this.logger.setContext(FilesystemBackend.name);
-    this.uploadDirectory = this.mediaConfig.backend.filesystem.uploadPath;
+    this.uploadDirectory = (
+      this.mediaConfig.backend as FilesystemMediaConfig
+    ).filesystem.uploadPath;
   }
 
   async saveFile(

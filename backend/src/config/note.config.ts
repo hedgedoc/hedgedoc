@@ -5,72 +5,67 @@
  */
 import { GuestAccess } from '@hedgedoc/commons';
 import { registerAs } from '@nestjs/config';
-import * as Joi from 'joi';
+import z from 'zod';
 
 import {
   DefaultAccessLevel,
   getDefaultAccessLevelOrdinal,
 } from './default-access-level.enum';
-import { buildErrorMessage, parseOptionalNumber, toArrayConfig } from './utils';
+import { parseOptionalNumber, toArrayConfig } from './utils';
+import {
+  buildErrorMessage,
+  extractDescriptionFromZodIssue,
+} from './zod-error-message';
 
-export interface NoteConfig {
-  forbiddenNoteIds: string[];
-  maxDocumentLength: number;
-  guestAccess: GuestAccess;
-  permissions: {
-    default: {
-      everyone: DefaultAccessLevel;
-      loggedIn: DefaultAccessLevel;
-    };
-  };
-  revisionRetentionDays: number;
-}
-
-const schema = Joi.object<NoteConfig>({
-  forbiddenNoteIds: Joi.array()
-    .items(Joi.string())
+const schema = z.object({
+  forbiddenNoteIds: z
+    .array(z.string().min(1))
     .optional()
     .default([])
-    .label('HD_FORBIDDEN_NOTE_IDS'),
-  maxDocumentLength: Joi.number()
-    .default(100000)
+    .describe('HD_FORBIDDEN_NOTE_IDS'),
+  maxDocumentLength: z
+    .number()
+    .int()
     .positive()
-    .integer()
     .optional()
-    .label('HD_MAX_DOCUMENT_LENGTH'),
-  guestAccess: Joi.string()
-    .valid(...Object.values(GuestAccess))
+    .default(100000)
+    .describe('HD_MAX_DOCUMENT_LENGTH'),
+  guestAccess: z
+    .nativeEnum(GuestAccess)
     .optional()
     .default(GuestAccess.WRITE)
-    .label('HD_GUEST_ACCESS'),
-  permissions: {
-    default: {
-      everyone: Joi.string()
-        .valid(...Object.values(DefaultAccessLevel))
+    .describe('HD_GUEST_ACCESS'),
+  permissions: z.object({
+    default: z.object({
+      everyone: z
+        .nativeEnum(DefaultAccessLevel)
         .optional()
         .default(DefaultAccessLevel.READ)
-        .label('HD_PERMISSION_DEFAULT_EVERYONE'),
-      loggedIn: Joi.string()
-        .valid(...Object.values(DefaultAccessLevel))
+        .describe('HD_PERMISSIONS_DEFAULT_EVERYONE'),
+      loggedIn: z
+        .nativeEnum(DefaultAccessLevel)
         .optional()
         .default(DefaultAccessLevel.WRITE)
-        .label('HD_PERMISSION_DEFAULT_LOGGED_IN'),
-    },
-  },
-  revisionRetentionDays: Joi.number()
-    .integer()
-    .default(0)
-    .min(0)
+        .describe('HD_PERMISSIONS_DEFAULT_LOGGED_IN'),
+    }),
+  }),
+  revisionRetentionDays: z
+    .number()
+    .int()
+    .nonnegative()
     .optional()
-    .label('HD_REVISION_RETENTION_DAYS'),
+    .default(0)
+    .describe('HD_REVISION_RETENTION_DAYS'),
 });
+
+export type NoteConfig = z.infer<typeof schema>;
 
 function checkEveryoneConfigIsConsistent(config: NoteConfig): void {
   const everyoneDefaultSet =
-    process.env.HD_PERMISSION_DEFAULT_EVERYONE !== undefined;
+    process.env.HD_PERMISSIONS_DEFAULT_EVERYONE !== undefined;
   if (config.guestAccess === GuestAccess.DENY && everyoneDefaultSet) {
     throw new Error(
-      `'HD_GUEST_ACCESS' is set to '${config.guestAccess}', but 'HD_PERMISSION_DEFAULT_EVERYONE' is also configured. Please remove 'HD_PERMISSION_DEFAULT_EVERYONE'.`,
+      `'HD_GUEST_ACCESS' is set to '${config.guestAccess}', but 'HD_PERMISSIONS_DEFAULT_EVERYONE' is also configured. Please remove 'HD_PERMISSIONS_DEFAULT_EVERYONE'.`,
     );
   }
 }
@@ -85,41 +80,33 @@ function checkLoggedInUsersHaveHigherDefaultPermissionsThanGuests(
     getDefaultAccessLevelOrdinal(loggedIn)
   ) {
     throw new Error(
-      `'HD_PERMISSION_DEFAULT_EVERYONE' is set to '${everyone}', but 'HD_PERMISSION_DEFAULT_LOGGED_IN' is set to '${loggedIn}'. This gives everyone greater permissions than logged-in users which is not allowed.`,
+      `'HD_PERMISSIONS_DEFAULT_EVERYONE' is set to '${everyone}', but 'HD_PERMISSIONS_DEFAULT_LOGGED_IN' is set to '${loggedIn}'. This gives everyone greater permissions than logged-in users which is not allowed.`,
     );
   }
 }
 
 export default registerAs('noteConfig', () => {
-  const noteConfig = schema.validate(
-    {
-      forbiddenNoteIds: toArrayConfig(process.env.HD_FORBIDDEN_NOTE_IDS, ','),
-      maxDocumentLength: parseOptionalNumber(
-        process.env.HD_MAX_DOCUMENT_LENGTH,
-      ),
-      guestAccess: process.env.HD_GUEST_ACCESS,
-      permissions: {
-        default: {
-          everyone: process.env.HD_PERMISSION_DEFAULT_EVERYONE,
-          loggedIn: process.env.HD_PERMISSION_DEFAULT_LOGGED_IN,
-        },
+  const noteConfig = schema.safeParse({
+    forbiddenNoteIds: toArrayConfig(process.env.HD_FORBIDDEN_NOTE_IDS, ','),
+    maxDocumentLength: parseOptionalNumber(process.env.HD_MAX_DOCUMENT_LENGTH),
+    guestAccess: process.env.HD_GUEST_ACCESS,
+    permissions: {
+      default: {
+        everyone: process.env.HD_PERMISSIONS_DEFAULT_EVERYONE,
+        loggedIn: process.env.HD_PERMISSIONS_DEFAULT_LOGGED_IN,
       },
-      revisionRetentionDays: parseOptionalNumber(
-        process.env.HD_REVISION_RETENTION_DAYS,
-      ),
-    } as NoteConfig,
-    {
-      abortEarly: false,
-      presence: 'required',
     },
-  );
+    revisionRetentionDays: parseOptionalNumber(
+      process.env.HD_REVISION_RETENTION_DAYS,
+    ),
+  });
   if (noteConfig.error) {
-    const errorMessages = noteConfig.error.details.map(
-      (detail) => detail.message,
+    const errorMessages = noteConfig.error.errors.map((issue) =>
+      extractDescriptionFromZodIssue(issue, 'HD'),
     );
     throw new Error(buildErrorMessage(errorMessages));
   }
-  const config = noteConfig.value;
+  const config = noteConfig.data;
   checkEveryoneConfigIsConsistent(config);
   checkLoggedInUsersHaveHigherDefaultPermissionsThanGuests(config);
   return config;

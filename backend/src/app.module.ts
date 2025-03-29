@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -19,7 +19,9 @@ import appConfig from './config/app.config';
 import authConfig from './config/auth.config';
 import cspConfig from './config/csp.config';
 import customizationConfig from './config/customization.config';
-import databaseConfig, { DatabaseConfig } from './config/database.config';
+import databaseConfig, {
+  PostgresDatabaseConfig,
+} from './config/database.config';
 import externalConfig from './config/external-services.config';
 import mediaConfig from './config/media.config';
 import noteConfig from './config/note.config';
@@ -63,7 +65,7 @@ const routes: Routes = [
       imports: [ConfigModule, LoggerModule],
       inject: [databaseConfig.KEY, TypeormLoggerService],
       useFactory: (
-        databaseConfig: DatabaseConfig,
+        databaseConfig: PostgresDatabaseConfig,
         logger: TypeormLoggerService,
       ) => {
         return {
@@ -72,7 +74,7 @@ const routes: Routes = [
           port: databaseConfig.port,
           username: databaseConfig.username,
           password: databaseConfig.password,
-          database: databaseConfig.database,
+          database: databaseConfig.name,
           autoLoadEntities: true,
           logging: true,
           logger: logger,
