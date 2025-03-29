@@ -1,11 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { RevisionMetadata } from '../../../../../../api/revisions/types'
+import type { RevisionMetadataDto } from '@hedgedoc/commons'
 import { UiIcon } from '../../../../../common/icons/ui-icon'
-import { UserAvatarForUser } from '../../../../../common/user-avatar/user-avatar-for-user'
 import { WaitSpinner } from '../../../../../common/wait-spinner/wait-spinner'
 import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
 import styles from './revision-list-entry.module.scss'
@@ -21,11 +20,12 @@ import {
 } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 import { useAsync } from 'react-use'
+import { UserAvatar } from '../../../../../common/user-avatar/user-avatar'
 
 export interface RevisionListEntryProps {
   active: boolean
   onSelect: () => void
-  revision: RevisionMetadata
+  revision: RevisionMetadataDto
 }
 
 /**
@@ -47,7 +47,7 @@ export const RevisionListEntry: React.FC<RevisionListEntryProps> = ({ active, on
     try {
       const authorDetails = await getUserDataForRevision(revision.authorUsernames)
       return authorDetails.map((author) => (
-        <UserAvatarForUser user={author} key={author.username} showName={false} additionalClasses={'mx-1'} />
+        <UserAvatar user={author} key={author.username} showName={false} additionalClasses={'mx-1'} />
       ))
     } catch (error) {
       showErrorNotification('editor.modal.revision.errorUser')(error as Error)

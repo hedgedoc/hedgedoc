@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,9 +15,9 @@ import { useApplicationState } from '../../../../../hooks/common/use-application
 import { getMediaForNote } from '../../../../../api/notes'
 import { AsyncLoadingBoundary } from '../../../../common/async-loading-boundary/async-loading-boundary'
 import { MediaEntry } from './media-entry'
-import type { MediaUpload } from '../../../../../api/media/types'
 import { MediaEntryDeletionModal } from './media-entry-deletion-modal'
 import { MediaBrowserEmpty } from './media-browser-empty'
+import type { MediaUploadDto } from '@hedgedoc/commons'
 
 /**
  * Renders the media browser "menu" for the sidebar.
@@ -35,7 +35,7 @@ export const MediaBrowserSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
 }) => {
   useTranslation()
   const noteId = useApplicationState((state) => state.noteDetails?.id ?? '')
-  const [mediaEntryForDeletion, setMediaEntryForDeletion] = useState<MediaUpload | null>(null)
+  const [mediaEntryForDeletion, setMediaEntryForDeletion] = useState<MediaUploadDto | null>(null)
 
   const hide = selectedMenuId !== DocumentSidebarMenuSelection.NONE && selectedMenuId !== menuId
   const expand = selectedMenuId === menuId

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -40,10 +40,15 @@ export const NewUserCard: React.FC = () => {
   const submitUserdata = useCallback(
     (event: FormEvent) => {
       event.preventDefault()
+      let profilePicture: string | null = null
+      if (pictureChoice === ProfilePictureChoice.PROVIDER && value) {
+        profilePicture = value.photoUrl
+      }
+
       confirmPendingUser({
         username,
         displayName,
-        profilePicture: pictureChoice === ProfilePictureChoice.PROVIDER ? value?.photoUrl : undefined
+        profilePicture
       })
         .then(() => fetchAndSetUser())
         .then(() => {
@@ -51,7 +56,7 @@ export const NewUserCard: React.FC = () => {
         })
         .catch(showErrorNotification('login.welcome.error'))
     },
-    [username, displayName, pictureChoice, router, showErrorNotification, value?.photoUrl]
+    [pictureChoice, value, username, displayName, showErrorNotification, router]
   )
 
   const cancelUserCreation = useCallback(() => {
@@ -111,7 +116,7 @@ export const NewUserCard: React.FC = () => {
           <ProfilePictureSelectField
             onChange={setPictureChoice}
             value={pictureChoice}
-            pictureUrl={value?.photoUrl}
+            photoUrl={value?.photoUrl ?? null}
             username={username}
           />
           <div className={'d-flex gap-3'}>

@@ -1,14 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { Note } from '../../../../api/notes/types'
 import { HttpMethod, respondToMatchingRequest } from '../../../../handler-utils/respond-to-matching-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NoteDto } from '@hedgedoc/commons'
 
 const handler = (req: NextApiRequest, res: NextApiResponse): void => {
-  respondToMatchingRequest<Note>(
+  respondToMatchingRequest<NoteDto>(
     HttpMethod.POST,
     req,
     res,

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,7 +12,7 @@ import React, { useCallback } from 'react'
 import { FileEarmarkPlus as IconPlus } from 'react-bootstrap-icons'
 import { Trans } from 'react-i18next'
 import { useFrontendConfig } from '../frontend-config-context/use-frontend-config'
-import { GuestAccessLevel } from '../../../api/config/types'
+import { GuestAccess } from '@hedgedoc/commons'
 import { useIsLoggedIn } from '../../../hooks/common/use-is-logged-in'
 
 /**
@@ -34,7 +34,7 @@ export const NewNoteButton: React.FC = () => {
       })
   }, [router, showErrorNotification])
 
-  if (!isLoggedIn && guestAccessLevel !== GuestAccessLevel.CREATE) {
+  if (!isLoggedIn && guestAccessLevel !== GuestAccess.CREATE) {
     return null
   }
 

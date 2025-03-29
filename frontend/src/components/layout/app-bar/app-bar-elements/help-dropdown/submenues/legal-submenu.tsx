@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -28,13 +28,13 @@ export const LegalSubmenu: React.FC = (): null | ReactElement => {
     <Fragment>
       <Dropdown.Divider />
       <DropdownHeader i18nKey={'appbar.help.legal.header'} />
-      {specialUrls.privacy !== undefined && (
+      {specialUrls.privacy !== null && (
         <TranslatedDropdownItem href={specialUrls.privacy} i18nKey={'appbar.help.legal.privacy'} />
       )}
-      {specialUrls.termsOfUse !== undefined && (
+      {specialUrls.termsOfUse !== null && (
         <TranslatedDropdownItem href={specialUrls.termsOfUse} i18nKey={'appbar.help.legal.termsOfUse'} />
       )}
-      {specialUrls.imprint !== undefined && (
+      {specialUrls.imprint !== null && (
         <TranslatedDropdownItem href={specialUrls.imprint} i18nKey={'appbar.help.legal.imprint'} />
       )}
     </Fragment>

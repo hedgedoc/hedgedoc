@@ -1,13 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 import React, { Fragment, useMemo } from 'react'
 import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
-import type { AuthProviderWithCustomName } from '../../../api/config/types'
-import { AuthProviderType } from '../../../api/config/types'
+import type { AuthProviderWithCustomNameDto } from '@hedgedoc/commons'
+import { ProviderType } from '@hedgedoc/commons'
 import { LdapLoginCard } from './ldap-login-card'
 
 /**
@@ -18,9 +18,9 @@ export const LdapLoginCards: React.FC = () => {
 
   const ldapProviders = useMemo(() => {
     return authProviders
-      .filter((provider) => provider.type === AuthProviderType.LDAP)
+      .filter((provider) => provider.type === ProviderType.LDAP)
       .map((provider) => {
-        const ldapProvider = provider as AuthProviderWithCustomName
+        const ldapProvider = provider as AuthProviderWithCustomNameDto
         return (
           <LdapLoginCard
             providerName={ldapProvider.providerName}

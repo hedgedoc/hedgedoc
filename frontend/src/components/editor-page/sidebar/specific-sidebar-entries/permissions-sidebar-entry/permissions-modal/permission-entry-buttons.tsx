@@ -1,12 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
 import { UiIcon } from '../../../../../common/icons/ui-icon'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
-import { AccessLevel } from '@hedgedoc/commons'
+import { GuestAccess } from '@hedgedoc/commons'
 import React, { useMemo } from 'react'
 import { Button, ToggleButtonGroup } from 'react-bootstrap'
 import { Eye as IconEye, Pencil as IconPencil, X as IconX } from 'react-bootstrap-icons'
@@ -24,7 +24,7 @@ export enum PermissionType {
 
 export interface PermissionEntryButtonsProps {
   type: PermissionType
-  currentSetting: AccessLevel
+  currentSetting: GuestAccess
   name: string
   onSetReadOnly: () => void
   onSetWriteable: () => void
@@ -79,14 +79,14 @@ export const PermissionEntryButtons: React.FC<PermissionEntryButtonsProps & Perm
         <Button
           disabled={disabled}
           title={setReadOnlyTitle}
-          variant={currentSetting === AccessLevel.READ_ONLY ? 'secondary' : 'outline-secondary'}
+          variant={currentSetting === GuestAccess.READ ? 'secondary' : 'outline-secondary'}
           onClick={onSetReadOnly}>
           <UiIcon icon={IconEye} />
         </Button>
         <Button
           disabled={disabled}
           title={setWritableTitle}
-          variant={currentSetting === AccessLevel.WRITEABLE ? 'secondary' : 'outline-secondary'}
+          variant={currentSetting === GuestAccess.WRITE ? 'secondary' : 'outline-secondary'}
           onClick={onSetWriteable}>
           <UiIcon icon={IconPencil} />
         </Button>

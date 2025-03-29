@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -18,7 +18,7 @@ export enum ProfilePictureChoice {
 export interface ProfilePictureSelectFieldProps extends CommonFieldProps<ProfilePictureChoice> {
   onChange: (choice: ProfilePictureChoice) => void
   value: ProfilePictureChoice
-  pictureUrl?: string
+  photoUrl: string | null
   username: string
 }
 
@@ -31,11 +31,15 @@ export interface ProfilePictureSelectFieldProps extends CommonFieldProps<Profile
  */
 export const ProfilePictureSelectField: React.FC<ProfilePictureSelectFieldProps> = ({
   onChange,
-  pictureUrl,
+  photoUrl,
   username,
   value
 }) => {
-  const fallbackUrl = useAvatarUrl(undefined, username)
+  const fallbackUrl = useAvatarUrl({
+    username,
+    photoUrl,
+    displayName: username
+  })
   const profileEditsAllowed = useFrontendConfig().allowProfileEdits
   const onSetProviderPicture = useCallback(() => {
     if (value !== ProfilePictureChoice.PROVIDER) {
@@ -57,7 +61,7 @@ export const ProfilePictureSelectField: React.FC<ProfilePictureSelectFieldProps>
       <Form.Label>
         <Trans i18nKey='profile.selectProfilePicture.title' />
       </Form.Label>
-      {pictureUrl && (
+      {photoUrl && (
         <Form.Check className={'d-flex gap-2 align-items-center mb-3'} type='radio'>
           <Form.Check.Input
             type={'radio'}
@@ -66,7 +70,7 @@ export const ProfilePictureSelectField: React.FC<ProfilePictureSelectFieldProps>
           />
           <Form.Check.Label>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={pictureUrl} alt={'Profile picture provided by the identity provider'} height={48} width={48} />
+            <img src={photoUrl} alt={'Profile picture provided by the identity provider'} height={48} width={48} />
           </Form.Check.Label>
         </Form.Check>
       )}

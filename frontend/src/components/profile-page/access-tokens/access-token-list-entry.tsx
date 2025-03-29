@@ -1,9 +1,8 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { AccessToken } from '../../../api/tokens/types'
 import { useBooleanState } from '../../../hooks/common/use-boolean-state'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { IconButton } from '../../common/icon-button/icon-button'
@@ -14,9 +13,10 @@ import React, { useCallback, useMemo } from 'react'
 import { Col, ListGroup, Row } from 'react-bootstrap'
 import { Trash as IconTrash } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
+import type { ApiTokenDto } from '@hedgedoc/commons'
 
 export interface AccessTokenListEntryProps {
-  token: AccessToken
+  token: ApiTokenDto
 }
 
 /**

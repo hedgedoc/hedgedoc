@@ -1,12 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
-import type { Alias, NewAliasDto, PrimaryAliasDto } from './types'
+import type { AliasDto, AliasCreateDto, AliasUpdateDto } from '@hedgedoc/commons'
 
 /**
  * Adds an alias to an existing note.
@@ -16,8 +16,8 @@ import type { Alias, NewAliasDto, PrimaryAliasDto } from './types'
  * @return Information about the newly created alias.
  * @throws {Error} when the api request wasn't successful
  */
-export const addAlias = async (noteIdOrAlias: string, newAlias: string): Promise<Alias> => {
-  const response = await new PostApiRequestBuilder<Alias, NewAliasDto>('alias')
+export const addAlias = async (noteIdOrAlias: string, newAlias: string): Promise<AliasDto> => {
+  const response = await new PostApiRequestBuilder<AliasDto, AliasCreateDto>('alias')
     .withJsonBody({
       noteIdOrAlias,
       newAlias
@@ -34,8 +34,8 @@ export const addAlias = async (noteIdOrAlias: string, newAlias: string): Promise
  * @return The updated information about the alias.
  * @throws {Error} when the api request wasn't successfull
  */
-export const markAliasAsPrimary = async (alias: string): Promise<Alias> => {
-  const response = await new PutApiRequestBuilder<Alias, PrimaryAliasDto>('alias/' + alias)
+export const markAliasAsPrimary = async (alias: string): Promise<AliasDto> => {
+  const response = await new PutApiRequestBuilder<AliasDto, AliasUpdateDto>('alias/' + alias)
     .withJsonBody({
       primaryAlias: true
     })

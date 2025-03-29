@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,15 +7,11 @@ import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import styles from './user-avatar.module.scss'
 import React, { useMemo } from 'react'
 import { useAvatarUrl } from './hooks/use-avatar-url'
+import type { UserInfoDto } from '@hedgedoc/commons'
+import type { CommonUserAvatarProps } from './types'
 
-export interface UserAvatarProps {
-  size?: 'sm' | 'lg'
-  additionalClasses?: string
-  showName?: boolean
-  photoUrl?: string
-  displayName: string
-  username?: string | null
-  photoComponent?: React.ReactNode
+interface UserAvatarProps extends CommonUserAvatarProps {
+  user: UserInfoDto
 }
 
 /**
@@ -25,17 +21,16 @@ export interface UserAvatarProps {
  * @param size The size in which the user image should be shown.
  * @param additionalClasses Additional CSS classes that will be added to the container.
  * @param showName true when the name should be displayed alongside the image, false otherwise. Defaults to true.
- * @param username The username to use for generating the fallback avatar image.
  * @param photoComponent A custom component to use as the user's photo.
+ * @param overrideDisplayName Used to override the used display name, for example for setting random guest names
  */
 export const UserAvatar: React.FC<UserAvatarProps> = ({
-  photoUrl,
-  displayName,
   size,
   additionalClasses = '',
   showName = true,
-  username,
-  photoComponent
+  photoComponent,
+  user,
+  overrideDisplayName
 }) => {
   const imageSize = useMemo(() => {
     switch (size) {
@@ -48,13 +43,21 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
     }
   }, [size])
 
-  const avatarUrl = useAvatarUrl(photoUrl, username ?? displayName)
+  const modifiedUser: UserInfoDto = useMemo(
+    () => ({
+      ...user,
+      displayName: overrideDisplayName ?? user.displayName
+    }),
+    [user, overrideDisplayName]
+  )
+
+  const avatarUrl = useAvatarUrl(modifiedUser)
 
   const imageTranslateOptions = useMemo(
     () => ({
-      name: displayName
+      name: modifiedUser.displayName
     }),
-    [displayName]
+    [modifiedUser.displayName]
   )
   const imgDescription = useTranslatedText('common.avatarOf', imageTranslateOptions)
 
@@ -71,7 +74,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
           width={imageSize}
         />
       )}
-      {showName && <span className={`ms-2 me-1 ${styles['user-line-name']}`}>{displayName}</span>}
+      {showName && <span className={`ms-2 me-1 ${styles['user-line-name']}`}>{modifiedUser.displayName}</span>}
     </span>
   )
 }

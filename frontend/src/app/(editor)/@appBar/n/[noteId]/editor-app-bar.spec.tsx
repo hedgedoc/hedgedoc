@@ -1,16 +1,15 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { mockI18n } from '../../../../../test-utils/mock-i18n'
 import { EditorAppBar } from './editor-app-bar'
-import type { NoteGroupPermissionEntry, NoteUserPermissionEntry } from '@hedgedoc/commons'
+import type { LoginUserInfoDto, NoteGroupPermissionEntryDto, NoteUserPermissionEntryDto } from '@hedgedoc/commons'
 import { render } from '@testing-library/react'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
 import { mockAppState } from '../../../../../test-utils/mock-app-state'
-import type { LoginUserInfo } from '../../../../../api/me/types'
 
 jest.mock('../../../../../components/layout/app-bar/base-app-bar', () => ({
   __esModule: true,
@@ -34,13 +33,13 @@ const mockedCommonAppState = {
           groupName: '_EVERYONE',
           canEdit: false
         }
-      ] as NoteGroupPermissionEntry[],
-      sharedToUsers: [] as NoteUserPermissionEntry[]
+      ] as NoteGroupPermissionEntryDto[],
+      sharedToUsers: [] as NoteUserPermissionEntryDto[]
     }
   },
   user: {
     username: 'test'
-  } as LoginUserInfo
+  } as LoginUserInfoDto
 }
 
 describe('app bar', () => {

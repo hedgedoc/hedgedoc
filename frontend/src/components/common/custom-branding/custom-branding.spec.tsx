@@ -1,9 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { FrontendConfig } from '../../../api/config/types'
+import type { FrontendConfigDto } from '@hedgedoc/commons'
 import * as UseFrontendConfigMock from '../frontend-config-context/use-frontend-config'
 import { CustomBranding } from './custom-branding'
 import { render } from '@testing-library/react'
@@ -12,10 +12,10 @@ import { Mock } from 'ts-mockery'
 jest.mock('../frontend-config-context/use-frontend-config')
 
 describe('custom branding', () => {
-  const mockFrontendConfigHook = (logo?: string, name?: string) => {
+  const mockFrontendConfigHook = (logo: string | null = null, name: string | null = null) => {
     jest
       .spyOn(UseFrontendConfigMock, 'useFrontendConfig')
-      .mockReturnValue(Mock.of<FrontendConfig>({ branding: { logo, name } }))
+      .mockReturnValue(Mock.of<FrontendConfigDto>({ branding: { logo, name } }))
   }
 
   it("doesn't show anything if no branding is defined", () => {
@@ -32,7 +32,7 @@ describe('custom branding', () => {
     })
 
     it('shows an text if branding text is defined', () => {
-      mockFrontendConfigHook(undefined, 'mockedBranding')
+      mockFrontendConfigHook(null, 'mockedBranding')
       const view = render(<CustomBranding inline={inline} />)
       expect(view.container).toMatchSnapshot()
     })

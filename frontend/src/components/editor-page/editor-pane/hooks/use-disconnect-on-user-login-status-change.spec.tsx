@@ -1,11 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { LoginUserInfo } from '../../../../api/me/types'
 import { useDisconnectOnUserLoginStatusChange } from './use-disconnect-on-user-login-status-change'
-import type { MessageTransporter } from '@hedgedoc/commons'
+import type { LoginUserInfoDto, MessageTransporter } from '@hedgedoc/commons'
 import { render } from '@testing-library/react'
 import React, { Fragment } from 'react'
 import { Mock } from 'ts-mockery'
@@ -21,7 +20,7 @@ describe('use logout on user change', () => {
 
   const mockUseApplicationState = (userLoggedIn: boolean) => {
     mockAppState({
-      user: userLoggedIn ? Mock.of<LoginUserInfo>({}) : null
+      user: userLoggedIn ? Mock.of<LoginUserInfoDto>({}) : null
     })
   }
 

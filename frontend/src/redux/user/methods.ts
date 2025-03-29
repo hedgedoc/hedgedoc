@@ -1,17 +1,17 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { store } from '..'
-import type { LoginUserInfo } from '../../api/me/types'
 import { userActionsCreator } from './slice'
+import type { LoginUserInfoDto } from '@hedgedoc/commons'
 
 /**
  * Sets the given user state into the redux.
  * @param state The user state to set into the redux.
  */
-export const setUser = (state: LoginUserInfo): void => {
+export const setUser = (state: LoginUserInfoDto): void => {
   const action = userActionsCreator.setUser(state)
   store.dispatch(action)
 }

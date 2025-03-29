@@ -1,9 +1,8 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { AccessTokenWithSecret } from '../../../../api/tokens/types'
 import { AccessTokenCreatedModal } from '../access-token-created-modal'
 import type { AccessTokenUpdateProps } from '../profile-access-tokens'
 import { AccessTokenCreationFormExpiryField } from './access-token-creation-form-expiry-field'
@@ -15,6 +14,7 @@ import type { ChangeEvent } from 'react'
 import React, { Fragment, useCallback, useMemo, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
+import type { ApiTokenWithSecretDto } from '@hedgedoc/commons'
 
 interface NewTokenFormValues {
   label: string
@@ -38,7 +38,7 @@ export const AccessTokenCreationForm: React.FC<AccessTokenUpdateProps> = ({ onUp
   }, [expiryDates])
 
   const [formValues, setFormValues] = useState<NewTokenFormValues>(() => formValuesInitialState)
-  const [newTokenWithSecret, setNewTokenWithSecret] = useState<AccessTokenWithSecret>()
+  const [newTokenWithSecret, setNewTokenWithSecret] = useState<ApiTokenWithSecretDto>()
 
   const onHideCreatedModal = useCallback(() => {
     setFormValues(formValuesInitialState)

@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
-import type { LogoutResponseDto, UsernameCheckDto, UsernameCheckResponseDto } from './types'
+import type { LogoutResponseDto, UsernameCheckDto, UsernameCheckResponseDto } from '@hedgedoc/commons'
 
 /**
  * Requests to log out the current user.

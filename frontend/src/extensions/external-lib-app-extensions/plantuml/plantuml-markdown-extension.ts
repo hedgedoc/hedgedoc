@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -19,7 +19,7 @@ import type Token from 'markdown-it/lib/token'
  * @see https://plantuml.com
  */
 export class PlantumlMarkdownExtension extends MarkdownRendererExtension {
-  constructor(private plantumlServerUrl: string | undefined) {
+  constructor(private plantumlServerUrl: string | null) {
     super()
   }
 

@@ -1,12 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useIsOwner } from '../../../../../../hooks/common/use-is-owner'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionEntrySpecialGroup } from './permission-entry-special-group'
-import { AccessLevel, SpecialGroup } from '@hedgedoc/commons'
+import { GuestAccess, SpecialGroup } from '@hedgedoc/commons'
 import React, { Fragment, useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { useGetSpecialPermissions } from './hooks/use-get-special-permissions'
@@ -23,16 +23,8 @@ export const PermissionSectionSpecialGroups: React.FC<PermissionDisabledProps> =
 
   const specialGroupEntries = useMemo(() => {
     return {
-      everyoneLevel: groupEveryone
-        ? groupEveryone.canEdit
-          ? AccessLevel.WRITEABLE
-          : AccessLevel.READ_ONLY
-        : AccessLevel.NONE,
-      loggedInLevel: groupLoggedIn
-        ? groupLoggedIn.canEdit
-          ? AccessLevel.WRITEABLE
-          : AccessLevel.READ_ONLY
-        : AccessLevel.NONE,
+      everyoneLevel: groupEveryone ? (groupEveryone.canEdit ? GuestAccess.WRITE : GuestAccess.READ) : GuestAccess.DENY,
+      loggedInLevel: groupLoggedIn ? (groupLoggedIn.canEdit ? GuestAccess.WRITE : GuestAccess.READ) : GuestAccess.DENY,
       loggedInInconsistentAlert: groupEveryone && (!groupLoggedIn || (groupEveryone.canEdit && !groupLoggedIn.canEdit))
     }
   }, [groupEveryone, groupLoggedIn])

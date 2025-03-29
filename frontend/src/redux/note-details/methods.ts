@@ -1,13 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { store } from '..'
 import { getNoteMetadata } from '../../api/notes'
-import type { Note } from '../../api/notes/types'
 import type { CursorSelection } from '../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
-import type { NotePermissions } from '@hedgedoc/commons'
+import type { NoteDto, NotePermissionsDto } from '@hedgedoc/commons'
 import { noteDetailsActionsCreator } from './slice'
 
 /**
@@ -23,7 +22,7 @@ export const setNoteContent = (content: string): void => {
  * Sets the note metadata for the current note from an API response DTO to the redux.
  * @param apiResponse The NoteDTO received from the API to store into redux.
  */
-export const setNoteDataFromServer = (apiResponse: Note): void => {
+export const setNoteDataFromServer = (apiResponse: NoteDto): void => {
   const action = noteDetailsActionsCreator.setNoteDataFromServer(apiResponse)
   store.dispatch(action)
 }
@@ -32,7 +31,7 @@ export const setNoteDataFromServer = (apiResponse: Note): void => {
  * Sets the note permissions for the current note from an API response DTO to the redux.
  * @param apiResponse The NotePermissionsDTO received from the API to store into redux.
  */
-export const setNotePermissionsFromServer = (apiResponse: NotePermissions): void => {
+export const setNotePermissionsFromServer = (apiResponse: NotePermissionsDto): void => {
   const action = noteDetailsActionsCreator.setNotePermissionsFromServer(apiResponse)
   store.dispatch(action)
 }

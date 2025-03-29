@@ -116,7 +116,7 @@ exports[`UserAvatar uses custom photo component if provided 1`] = `
     <span
       class="ms-2 me-1 user-line-name"
     >
-      test
+      No face user
     </span>
   </span>
 </div>
@@ -133,7 +133,7 @@ exports[`UserAvatar uses custom photo component preferred over photoUrl 1`] = `
     <span
       class="ms-2 me-1 user-line-name"
     >
-      test
+      Boaty McBoatFace
     </span>
   </span>
 </div>
@@ -155,7 +155,7 @@ exports[`UserAvatar uses identicon when empty photoUrl is given 1`] = `
     <span
       class="ms-2 me-1 user-line-name"
     >
-      test
+      Empty
     </span>
   </span>
 </div>
@@ -177,7 +177,7 @@ exports[`UserAvatar uses identicon when no photoUrl is given 1`] = `
     <span
       class="ms-2 me-1 user-line-name"
     >
-      test
+      No face user
     </span>
   </span>
 </div>

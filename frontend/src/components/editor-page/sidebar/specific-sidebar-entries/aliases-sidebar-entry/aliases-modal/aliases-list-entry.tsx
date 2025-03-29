@@ -1,10 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { deleteAlias, markAliasAsPrimary } from '../../../../../../api/alias'
-import type { Alias } from '../../../../../../api/alias/types'
 import { useIsOwner } from '../../../../../../hooks/common/use-is-owner'
 import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
 import { updateMetadata } from '../../../../../../redux/note-details/methods'
@@ -16,9 +15,10 @@ import { Badge } from 'react-bootstrap'
 import { Button } from 'react-bootstrap'
 import { Star as IconStar, X as IconX } from 'react-bootstrap-icons'
 import { useTranslation, Trans } from 'react-i18next'
+import type { AliasDto } from '@hedgedoc/commons'
 
 export interface AliasesListEntryProps {
-  alias: Alias
+  alias: AliasDto
 }
 
 /**

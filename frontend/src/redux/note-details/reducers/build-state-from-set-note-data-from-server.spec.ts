@@ -1,15 +1,15 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { Note } from '../../../api/notes/types'
 import * as buildStateFromUpdatedMarkdownContentModule from '../build-state-from-updated-markdown-content'
 import type { NoteDetails } from '../types'
 import { buildStateFromServerDto } from './build-state-from-set-note-data-from-server'
 import { NoteTextDirection, NoteType } from '@hedgedoc/commons'
 import { DateTime } from 'luxon'
 import { Mock } from 'ts-mockery'
+import type { NoteDto } from '@hedgedoc/commons'
 
 jest.mock('../build-state-from-updated-markdown-content')
 
@@ -29,7 +29,7 @@ describe('build state from set note data from server', () => {
   })
 
   it('builds a new state from the given note dto', () => {
-    const noteDto: Note = {
+    const noteDto: NoteDto = {
       content: 'line1\nline2',
       metadata: {
         primaryAddress: 'alias',
@@ -68,9 +68,9 @@ describe('build state from set note data from server', () => {
       },
       editedByAtPosition: [
         {
-          endPos: 5,
+          endPosition: 5,
           createdAt: 'createdAt',
-          startPos: 9,
+          startPosition: 9,
           updatedAt: 'updatedAt',
           username: 'userName'
         }

@@ -1,14 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { MediaUpload } from '../../../../api/media/types'
 import { HttpMethod, respondToMatchingRequest } from '../../../../handler-utils/respond-to-matching-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import type { MediaUploadDto } from '@hedgedoc/commons'
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
-  respondToMatchingRequest<MediaUpload[]>(HttpMethod.GET, req, res, [
+  respondToMatchingRequest<MediaUploadDto[]>(HttpMethod.GET, req, res, [
     {
       username: 'tilman',
       createdAt: '2022-03-20T20:36:32Z',
