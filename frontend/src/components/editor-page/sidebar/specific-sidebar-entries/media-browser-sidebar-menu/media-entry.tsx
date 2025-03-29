@@ -1,10 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import React, { useCallback, useMemo } from 'react'
-import type { MediaUpload } from '../../../../../api/media/types'
 import { useBaseUrl } from '../../../../../hooks/common/use-base-url'
 import { Button, ButtonGroup } from 'react-bootstrap'
 import {
@@ -20,10 +19,11 @@ import { UserAvatarForUsername } from '../../../../common/user-avatar/user-avata
 import { useChangeEditorContentCallback } from '../../../change-content-context/use-change-editor-content-callback'
 import { replaceSelection } from '../../../editor-pane/tool-bar/formatters/replace-selection'
 import styles from './media-entry.module.css'
+import type { MediaUploadDto } from '@hedgedoc/commons'
 
 export interface MediaEntryProps {
-  entry: MediaUpload
-  onDelete: (entry: MediaUpload) => void
+  entry: MediaUploadDto
+  onDelete: (entry: MediaUploadDto) => void
 }
 
 /**

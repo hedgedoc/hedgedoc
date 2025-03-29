@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -30,8 +30,8 @@ export const respondToMatchingRequest = <T>(
   req: NextApiRequest,
   res: NextApiResponse,
   response: T,
-  statusCode = 200,
-  respondMethodNotAllowedOnMismatch = true
+  statusCode: number = 200,
+  respondMethodNotAllowedOnMismatch: boolean = true
 ): boolean => {
   if (!isMockMode) {
     res.status(404).send('Mock API is disabled')

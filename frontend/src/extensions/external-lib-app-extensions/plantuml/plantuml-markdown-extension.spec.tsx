@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -33,7 +33,7 @@ describe('PlantUML markdown extensions', () => {
   it('renders an error if no server is defined', () => {
     const view = render(
       <TestMarkdownRenderer
-        extensions={[new PlantumlMarkdownExtension(undefined)]}
+        extensions={[new PlantumlMarkdownExtension(null)]}
         content={'```plantuml\nclass Example\n```'}
       />
     )

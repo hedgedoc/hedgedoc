@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,7 +10,7 @@ import { setNotePermissionsFromServer } from '../../../../../../redux/note-detai
 import { IconButton } from '../../../../../common/icon-button/icon-button'
 import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
-import { AccessLevel, SpecialGroup } from '@hedgedoc/commons'
+import { GuestAccess, SpecialGroup } from '@hedgedoc/commons'
 import React, { useCallback, useMemo } from 'react'
 import { ToggleButtonGroup } from 'react-bootstrap'
 import { Eye as IconEye, Pencil as IconPencil, SlashCircle as IconSlashCircle } from 'react-bootstrap-icons'
@@ -19,7 +19,7 @@ import { PermissionInconsistentAlert } from './permission-inconsistent-alert'
 import { cypressId } from '../../../../../../utils/cypress-attribute'
 
 export interface PermissionEntrySpecialGroupProps {
-  level: AccessLevel
+  level: GuestAccess
   type: SpecialGroup
   inconsistent?: boolean
 }
@@ -98,7 +98,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
           <IconButton
             icon={IconSlashCircle}
             title={denyGroupText}
-            variant={level === AccessLevel.NONE ? 'secondary' : 'outline-secondary'}
+            variant={level === GuestAccess.DENY ? 'secondary' : 'outline-secondary'}
             onClick={onSetEntryDenied}
             disabled={disabled}
             className={'p-1'}
@@ -107,7 +107,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
           <IconButton
             icon={IconEye}
             title={viewOnlyGroupText}
-            variant={level === AccessLevel.READ_ONLY ? 'secondary' : 'outline-secondary'}
+            variant={level === GuestAccess.READ ? 'secondary' : 'outline-secondary'}
             onClick={onSetEntryReadOnly}
             disabled={disabled}
             className={'p-1'}
@@ -116,7 +116,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
           <IconButton
             icon={IconPencil}
             title={editGroupText}
-            variant={level === AccessLevel.WRITEABLE ? 'secondary' : 'outline-secondary'}
+            variant={level === GuestAccess.WRITE ? 'secondary' : 'outline-secondary'}
             onClick={onSetEntryWriteable}
             disabled={disabled}
             className={'p-1'}

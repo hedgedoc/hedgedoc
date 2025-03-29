@@ -1,11 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ApiError } from '../../../api/common/api-error'
 import * as getNoteModule from '../../../api/notes'
-import type { Note } from '../../../api/notes/types'
 import * as LoadingScreenModule from '../../../components/application-loader/loading-screen/loading-screen'
 import * as setNoteDataFromServerModule from '../../../redux/note-details/methods'
 import { mockI18n } from '../../../test-utils/mock-i18n'
@@ -16,6 +15,7 @@ import { NoteLoadingBoundary } from './note-loading-boundary'
 import { render, screen } from '@testing-library/react'
 import { Fragment } from 'react'
 import { Mock } from 'ts-mockery'
+import type { NoteDto } from '@hedgedoc/commons'
 
 jest.mock('../../../hooks/common/use-single-string-url-parameter')
 jest.mock('../../../api/notes')
@@ -65,7 +65,7 @@ describe('Note loading boundary', () => {
       })
   })
 
-  const mockGetNoteApiCall = (returnValue: Note) => {
+  const mockGetNoteApiCall = (returnValue: NoteDto) => {
     jest.spyOn(getNoteModule, 'getNote').mockImplementation((id) => {
       expect(id).toBe(mockedNoteId)
       return new Promise((resolve) => {
@@ -83,14 +83,14 @@ describe('Note loading boundary', () => {
     })
   }
 
-  const mockSetNoteInRedux = (expectedNote: Note): jest.SpyInstance<void, [apiResponse: Note]> => {
+  const mockSetNoteInRedux = (expectedNote: NoteDto): jest.SpyInstance<void, [apiResponse: NoteDto]> => {
     return jest.spyOn(setNoteDataFromServerModule, 'setNoteDataFromServer').mockImplementation((givenNote) => {
       expect(givenNote).toBe(expectedNote)
     })
   }
 
   it('loads a note', async () => {
-    const mockedNote: Note = Mock.of<Note>()
+    const mockedNote: NoteDto = Mock.of<NoteDto>()
     mockGetNoteApiCall(mockedNote)
     const setNoteInReduxFunctionMock = mockSetNoteInRedux(mockedNote)
 
@@ -106,7 +106,7 @@ describe('Note loading boundary', () => {
   })
 
   it('shows an error', async () => {
-    const mockedNote: Note = Mock.of<Note>()
+    const mockedNote: NoteDto = Mock.of<NoteDto>()
     mockCrashingNoteApiCall()
     const setNoteInReduxFunctionMock = mockSetNoteInRedux(mockedNote)
 

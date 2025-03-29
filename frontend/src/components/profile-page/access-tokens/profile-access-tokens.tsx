@@ -1,16 +1,16 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { getAccessTokenList } from '../../../api/tokens'
-import type { AccessToken } from '../../../api/tokens/types'
+import { getAccessTokenList } from '../../../api/api-tokens'
 import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 import { AccessTokenCreationForm } from './access-token-creation-form/access-token-creation-form'
 import { AccessTokenListEntry } from './access-token-list-entry'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Card, ListGroup } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
+import type { ApiTokenDto } from '@hedgedoc/commons'
 
 export interface AccessTokenUpdateProps {
   onUpdateList: () => void
@@ -21,7 +21,7 @@ export interface AccessTokenUpdateProps {
  */
 export const ProfileAccessTokens: React.FC = () => {
   useTranslation()
-  const [accessTokens, setAccessTokens] = useState<AccessToken[]>([])
+  const [accessTokens, setAccessTokens] = useState<ApiTokenDto[]>([])
   const { showErrorNotification } = useUiNotifications()
 
   const refreshAccessTokens = useCallback(() => {

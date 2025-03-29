@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { NoteMetadata } from '../../../api/notes/types'
 import type { NoteDetails } from '../types'
 import { DateTime } from 'luxon'
+import type { NoteMetadataDto } from '@hedgedoc/commons'
 
 /**
  * Builds a {@link NoteDetails} redux state from a note metadata DTO received from the HTTP API.
@@ -13,7 +13,7 @@ import { DateTime } from 'luxon'
  * @param noteMetadata The updated metadata from the API.
  * @return An updated {@link NoteDetails} redux state.
  */
-export const buildStateFromMetadataUpdate = (state: NoteDetails, noteMetadata: NoteMetadata): NoteDetails => {
+export const buildStateFromMetadataUpdate = (state: NoteDetails, noteMetadata: NoteMetadataDto): NoteDetails => {
   return {
     ...state,
     updateUsername: noteMetadata.updateUsername,

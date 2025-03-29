@@ -1,9 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { updateDisplayName } from '../../../api/me'
+import { updateUser } from '../../../api/me'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { useOnInputChange } from '../../../hooks/common/use-on-input-change'
 import { DisplayNameField } from '../../common/fields/display-name-field'
@@ -27,7 +27,7 @@ export const ProfileDisplayName: React.FC = () => {
   const onSubmitNameChange = useCallback(
     (event: FormEvent) => {
       event.preventDefault()
-      updateDisplayName(displayName)
+      updateUser(displayName, null)
         .then(fetchAndSetUser)
         .catch(showErrorNotification('profile.changeDisplayNameFailed'))
     },

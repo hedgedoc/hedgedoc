@@ -1,13 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
-import type { MediaUpload } from '../media/types'
-import type { ChangeDisplayNameDto, LoginUserInfo } from './types'
+import type { UpdateUserInfoDto, LoginUserInfoDto, MediaUploadDto } from '@hedgedoc/commons'
 
 /**
  * Returns metadata about the currently signed-in user from the API.
@@ -15,8 +14,8 @@ import type { ChangeDisplayNameDto, LoginUserInfo } from './types'
  * @return The user metadata.
  * @throws {Error} when the user is not signed-in.
  */
-export const getMe = async (): Promise<LoginUserInfo> => {
-  const response = await new GetApiRequestBuilder<LoginUserInfo>('me').sendRequest()
+export const getMe = async (): Promise<LoginUserInfoDto> => {
+  const response = await new GetApiRequestBuilder<LoginUserInfoDto>('me').sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -33,12 +32,14 @@ export const deleteUser = async (): Promise<void> => {
  * Changes the display name of the current user.
  *
  * @param displayName The new display name to set.
+ * @param email The new email to set.
  * @throws {Error} when the api request wasn't successful.
  */
-export const updateDisplayName = async (displayName: string): Promise<void> => {
-  await new PostApiRequestBuilder<void, ChangeDisplayNameDto>('me/profile')
+export const updateUser = async (displayName: string | null, email: string | null): Promise<void> => {
+  await new PostApiRequestBuilder<void, UpdateUserInfoDto>('me/profile')
     .withJsonBody({
-      displayName
+      displayName,
+      email
     })
     .sendRequest()
 }
@@ -49,7 +50,7 @@ export const updateDisplayName = async (displayName: string): Promise<void> => {
  * @return List of media object information.
  * @throws {Error} when the api request wasn't successful.
  */
-export const getMyMedia = async (): Promise<MediaUpload[]> => {
-  const response = await new GetApiRequestBuilder<MediaUpload[]>('me/media').sendRequest()
+export const getMyMedia = async (): Promise<MediaUploadDto[]> => {
+  const response = await new GetApiRequestBuilder<MediaUploadDto[]>('me/media').sendRequest()
   return response.asParsedJsonObject()
 }

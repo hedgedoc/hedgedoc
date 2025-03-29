@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -61,18 +61,56 @@ describe('Splitter', () => {
       const view = render(<Splitter left={<>left</>} right={<>right</>} />)
       expect(view.container).toMatchSnapshot()
       const divider = await screen.findByTestId('splitter-divider')
+      const target: EventTarget = Mock.of<EventTarget>()
+      const defaultTouchEvent: Omit<Touch, 'clientX'> = {
+        clientY: 0,
+        target: target,
+        identifier: 0,
+        pageX: 0,
+        pageY: 0,
+        screenX: 0,
+        screenY: 0,
+        force: 0,
+        radiusX: 0,
+        radiusY: 0,
+        rotationAngle: 0
+      }
 
       fireEvent.touchStart(divider, {})
-      fireEvent.touchMove(window, Mock.of<TouchEvent>({ touches: [{ clientX: 1920 }, { clientX: 200 }] }))
+      fireEvent.touchMove(
+        window,
+        Mock.of<TouchEvent>({
+          touches: [
+            { ...defaultTouchEvent, clientX: 1920 },
+            { ...defaultTouchEvent, clientX: 200 }
+          ]
+        })
+      )
       fireEvent.touchEnd(window)
       expect(view.container).toMatchSnapshot()
 
       fireEvent.touchStart(divider, {})
-      fireEvent.touchMove(window, Mock.of<TouchEvent>({ touches: [{ clientX: 0 }, { clientX: 100 }] }))
+      fireEvent.touchMove(
+        window,
+        Mock.of<TouchEvent>({
+          touches: [
+            { ...defaultTouchEvent, clientX: 0 },
+            { ...defaultTouchEvent, clientX: 100 }
+          ]
+        })
+      )
       fireEvent.touchCancel(window)
       expect(view.container).toMatchSnapshot()
 
-      fireEvent.touchMove(window, Mock.of<TouchEvent>({ touches: [{ clientX: 500 }, { clientX: 900 }] }))
+      fireEvent.touchMove(
+        window,
+        Mock.of<TouchEvent>({
+          touches: [
+            { ...defaultTouchEvent, clientX: 500 },
+            { ...defaultTouchEvent, clientX: 900 }
+          ]
+        })
+      )
       expect(view.container).toMatchSnapshot()
     })
   })

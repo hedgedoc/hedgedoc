@@ -1,9 +1,8 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { AccessTokenWithSecret } from '../../../api/tokens/types'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { CopyableField } from '../../common/copyable/copyable-field/copyable-field'
 import type { ModalVisibilityProps } from '../../common/modals/common-modal'
@@ -11,9 +10,10 @@ import { CommonModal } from '../../common/modals/common-modal'
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
+import type { ApiTokenWithSecretDto } from '@hedgedoc/commons'
 
 export interface AccessTokenCreatedModalProps extends ModalVisibilityProps {
-  tokenWithSecret?: AccessTokenWithSecret
+  tokenWithSecret?: ApiTokenWithSecretDto
 }
 
 /**

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,9 +10,7 @@ import { initialState as initialStateEditorConfig } from '../redux/editor-config
 import { initialState as initialStateNoteDetails } from '../redux/note-details/initial-state'
 import { initialState as initialStateRealtimeStatus } from '../redux/realtime/initial-state'
 import { initialState as initialStateRendererStatus } from '../redux/renderer-status/initial-state'
-import type { NoteDetails } from '../redux/note-details/types'
-import type { RealtimeStatus } from '../redux/realtime/types'
-import type { DeepPartial } from '@hedgedoc/commons'
+import { type DeepPartial, ProviderType } from '@hedgedoc/commons'
 
 jest.mock('../redux/editor-config/methods', () => ({
   loadFromLocalStorage: jest.fn().mockReturnValue(undefined)
@@ -32,25 +30,33 @@ export const mockAppState = (state?: DeepPartial<ApplicationState>) => {
         ...initialStateDarkMode,
         ...state?.darkMode
       },
-      printMode: false,
       editorConfig: {
         ...initialStateEditorConfig,
         ...state?.editorConfig
       },
-      history: state?.history ?? [],
+      history: [], // Yes this allows no mocking and is therefore technically not correct, but the type is difficult to fix and we will remove it soon anyway.
       noteDetails: {
         ...initialStateNoteDetails,
         ...state?.noteDetails
-      } as NoteDetails,
+      },
+      printMode: false,
       realtimeStatus: {
         ...initialStateRealtimeStatus,
         ...state?.realtimeStatus
-      } as RealtimeStatus,
+      },
       rendererStatus: {
         ...initialStateRendererStatus,
         ...state?.rendererStatus
       },
-      user: state?.user ?? null
+      user: state?.user
+        ? {
+            username: state.user.username ?? '',
+            email: state.user.email ?? null,
+            displayName: state.user.displayName ?? '',
+            photoUrl: state.user.photoUrl ?? null,
+            authProvider: state.user.authProvider ?? ProviderType.LOCAL
+          }
+        : null
     })
   })
 }

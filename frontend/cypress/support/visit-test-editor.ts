@@ -1,9 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { Note } from '../../src/api/notes/types'
+import type { NoteDto } from '@hedgedoc/commons'
 
 export const testNoteId = 'test'
 const mockMetadata = {
@@ -37,6 +37,6 @@ beforeEach(() => {
     content: '',
     metadata: mockMetadata,
     editedByAtPosition: []
-  } as Note)
+  } as NoteDto)
   cy.intercept(`api/private/notes/${testNoteId}/metadata`, mockMetadata)
 })

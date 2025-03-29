@@ -1,10 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import * as AliasModule from '../../../../../../api/alias'
-import type { Alias } from '../../../../../../api/alias/types'
 import * as NoteDetailsReduxModule from '../../../../../../redux/note-details/methods'
 import { mockI18n } from '../../../../../../test-utils/mock-i18n'
 import { mockNotePermissions } from '../../../../../../test-utils/mock-note-permissions'
@@ -12,6 +11,7 @@ import { AliasesListEntry } from './aliases-list-entry'
 import { act, render, screen } from '@testing-library/react'
 import React from 'react'
 import { mockUiNotifications } from '../../../../../../test-utils/mock-ui-notifications'
+import type { AliasDto } from '@hedgedoc/commons'
 
 jest.mock('../../../../../../api/alias')
 jest.mock('../../../../../../redux/note-details/methods')
@@ -37,7 +37,7 @@ describe('AliasesListEntry', () => {
 
   it('renders an AliasesListEntry that is primary', async () => {
     mockNotePermissions('test', 'test')
-    const testAlias: Alias = {
+    const testAlias: AliasDto = {
       name: 'test-primary',
       primaryAlias: true,
       noteId: 'test-note-id'
@@ -55,7 +55,7 @@ describe('AliasesListEntry', () => {
 
   it("adds aliasPrimaryBadge & removes aliasButtonMakePrimary in AliasesListEntry if it's primary", () => {
     mockNotePermissions('test2', 'test')
-    const testAlias: Alias = {
+    const testAlias: AliasDto = {
       name: 'test-primary',
       primaryAlias: true,
       noteId: 'test-note-id'
@@ -66,7 +66,7 @@ describe('AliasesListEntry', () => {
 
   it('renders an AliasesListEntry that is not primary', async () => {
     mockNotePermissions('test', 'test')
-    const testAlias: Alias = {
+    const testAlias: AliasDto = {
       name: 'test-non-primary',
       primaryAlias: false,
       noteId: 'test-note-id'
@@ -91,7 +91,7 @@ describe('AliasesListEntry', () => {
 
   it("removes aliasPrimaryBadge & adds aliasButtonMakePrimary in AliasesListEntry if it's not primary", () => {
     mockNotePermissions('test2', 'test')
-    const testAlias: Alias = {
+    const testAlias: AliasDto = {
       name: 'test-primary',
       primaryAlias: false,
       noteId: 'test-note-id'

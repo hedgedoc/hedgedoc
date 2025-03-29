@@ -1,9 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { RevisionMetadata } from '../../../../../../api/revisions/types'
+import type { RevisionMetadataDto } from '@hedgedoc/commons'
 import { cypressId } from '../../../../../../utils/cypress-attribute'
 import { AsyncLoadingBoundary } from '../../../../../common/async-loading-boundary/async-loading-boundary'
 import { RevisionListEntry } from './revision-list-entry'
@@ -13,7 +13,7 @@ import { ListGroup } from 'react-bootstrap'
 
 interface RevisionListProps {
   selectedRevisionId?: number
-  revisions?: RevisionMetadata[]
+  revisions?: RevisionMetadataDto[]
   loadingRevisions: boolean
   error?: Error | boolean
   onRevisionSelect: (selectedRevisionId: number) => void

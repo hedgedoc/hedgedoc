@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,20 +7,20 @@ import { removeUserPermission, setUserPermission } from '../../../../../../api/p
 import { getUserInfo } from '../../../../../../api/users'
 import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
 import { setNotePermissionsFromServer } from '../../../../../../redux/note-details/methods'
-import { UserAvatarForUser } from '../../../../../common/user-avatar/user-avatar-for-user'
 import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionEntryButtons, PermissionType } from './permission-entry-buttons'
-import type { NoteUserPermissionEntry } from '@hedgedoc/commons'
-import { AccessLevel, SpecialGroup } from '@hedgedoc/commons'
+import type { NoteUserPermissionEntryDto } from '@hedgedoc/commons'
+import { GuestAccess, SpecialGroup } from '@hedgedoc/commons'
 import React, { useCallback, useMemo } from 'react'
 import { useAsync } from 'react-use'
 import { PermissionInconsistentAlert } from './permission-inconsistent-alert'
 import { useGetSpecialPermissions } from './hooks/use-get-special-permissions'
 import { AsyncLoadingBoundary } from '../../../../../common/async-loading-boundary/async-loading-boundary'
+import { UserAvatar } from '../../../../../common/user-avatar/user-avatar'
 
 export interface PermissionEntryUserProps {
-  entry: NoteUserPermissionEntry
+  entry: NoteUserPermissionEntryDto
 }
 
 /**
@@ -89,12 +89,12 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
   return (
     <AsyncLoadingBoundary loading={loading} error={error} componentName={'PermissionEntryUser'}>
       <li className={'list-group-item d-flex flex-row justify-content-between align-items-center'}>
-        <UserAvatarForUser user={value} />
+        <UserAvatar user={value} />
         <div className={'d-flex flex-row align-items-center'}>
           <PermissionInconsistentAlert show={permissionInconsistent ?? false} />
           <PermissionEntryButtons
             type={PermissionType.USER}
-            currentSetting={entry.canEdit ? AccessLevel.WRITEABLE : AccessLevel.READ_ONLY}
+            currentSetting={entry.canEdit ? GuestAccess.WRITE : GuestAccess.READ}
             name={value.displayName}
             onSetReadOnly={onSetEntryReadOnly}
             onSetWriteable={onSetEntryWriteable}

@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
-import type { ChangePasswordDto, LoginDto, RegisterDto } from './types'
+import type { UpdatePasswordDto, LoginDto, RegisterDto } from '@hedgedoc/commons'
 
 /**
  * Requests to do a local login with a provided username and password.
@@ -54,7 +54,7 @@ export const doLocalRegister = async (username: string, displayName: string, pas
  * @throws {AuthError.LOGIN_DISABLED} when local login is disabled on the backend.
  */
 export const doLocalPasswordChange = async (currentPassword: string, newPassword: string): Promise<void> => {
-  await new PutApiRequestBuilder<void, ChangePasswordDto>('auth/local')
+  await new PutApiRequestBuilder<void, UpdatePasswordDto>('auth/local')
     .withJsonBody({
       currentPassword,
       newPassword

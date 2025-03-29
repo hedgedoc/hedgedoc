@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
-import type { RevisionDetails, RevisionMetadata } from './types'
+import type { RevisionDto, RevisionMetadataDto } from '@hedgedoc/commons'
 
 /**
  * Retrieves a note revision while using a cache for often retrieved revisions.
@@ -15,10 +15,8 @@ import type { RevisionDetails, RevisionMetadata } from './types'
  * @return The revision.
  * @throws {Error} when the api request wasn't successful.
  */
-export const getRevision = async (noteId: string, revisionId: number): Promise<RevisionDetails> => {
-  const response = await new GetApiRequestBuilder<RevisionDetails>(
-    `notes/${noteId}/revisions/${revisionId}`
-  ).sendRequest()
+export const getRevision = async (noteId: string, revisionId: number): Promise<RevisionDto> => {
+  const response = await new GetApiRequestBuilder<RevisionDto>(`notes/${noteId}/revisions/${revisionId}`).sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -29,8 +27,8 @@ export const getRevision = async (noteId: string, revisionId: number): Promise<R
  * @return A list of revision ids.
  * @throws {Error} when the api request wasn't successful.
  */
-export const getAllRevisions = async (noteId: string): Promise<RevisionMetadata[]> => {
-  const response = await new GetApiRequestBuilder<RevisionMetadata[]>(`notes/${noteId}/revisions`).sendRequest()
+export const getAllRevisions = async (noteId: string): Promise<RevisionMetadataDto[]> => {
+  const response = await new GetApiRequestBuilder<RevisionMetadataDto[]>(`notes/${noteId}/revisions`).sendRequest()
   return response.asParsedJsonObject()
 }
 

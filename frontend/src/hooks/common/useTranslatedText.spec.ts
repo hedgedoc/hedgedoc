@@ -1,27 +1,25 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useTranslatedText } from './use-translated-text'
 import { renderHook } from '@testing-library/react'
-import type { Namespace } from 'i18next'
 import * as ReactI18NextModule from 'react-i18next'
-import type { UseTranslationResponse } from 'react-i18next'
 import { Mock } from 'ts-mockery'
+import type { UseTranslationResponse } from 'react-i18next'
 
 jest.mock('react-i18next')
 
 describe('useTranslatedText', () => {
   const mockTranslation = 'mockTranslation'
   const mockKey = 'mockKey'
-  let translateFunction: jest.Mock
+  const translateFunction = jest.fn(() => mockTranslation)
 
   beforeEach(() => {
-    translateFunction = jest.fn(() => mockTranslation)
-    const useTranslateMock = Mock.of<UseTranslationResponse<Namespace, unknown>>({
+    const useTranslateMock = Mock.of({
       t: translateFunction
-    })
+    }) as unknown as UseTranslationResponse<never, never>
     jest.spyOn(ReactI18NextModule, 'useTranslation').mockReturnValue(useTranslateMock)
   })
 

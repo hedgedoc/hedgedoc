@@ -1,9 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { AuthProviderType } from '../../src/api/config/types'
+import { ProviderType } from '@hedgedoc/commons'
 import { HttpMethod } from '../../src/handler-utils/respond-to-matching-request'
 import { IGNORE_MOTD, MOTD_LOCAL_STORAGE_KEY } from '../../src/components/global-dialogs/motd-modal/local-storage-keys'
 
@@ -22,15 +22,15 @@ export const branding = {
 
 export const authProviders = [
   {
-    type: AuthProviderType.LOCAL
+    type: ProviderType.LOCAL
   },
   {
-    type: AuthProviderType.LDAP,
+    type: ProviderType.LDAP,
     identifier: 'test-ldap',
     providerName: 'Test LDAP'
   },
   {
-    type: AuthProviderType.OIDC,
+    type: ProviderType.OIDC,
     identifier: 'test-oidc',
     providerName: 'Test OIDC'
   }

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -36,7 +36,8 @@ describe('frontend websocket', () => {
     mockSocket()
     const handler = jest.fn((reason?: DisconnectReason) => console.log(reason))
 
-    let modifiedHandler: (event: CloseEvent) => void = jest.fn()
+    let modifiedHandler: EventListenerOrEventListenerObject = jest.fn()
+
     jest.spyOn(mockedSocket, 'addEventListener').mockImplementation((event, handler_) => {
       modifiedHandler = handler_
     })

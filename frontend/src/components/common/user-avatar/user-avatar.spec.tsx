@@ -1,13 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { UserInfo } from '../../../api/users/types'
 import { mockI18n } from '../../../test-utils/mock-i18n'
-import { UserAvatarForUser } from './user-avatar-for-user'
 import { render } from '@testing-library/react'
 import { UserAvatar } from './user-avatar'
+import type { UserInfoDto } from '@hedgedoc/commons'
 
 jest.mock('@dicebear/identicon', () => null)
 jest.mock('@dicebear/core', () => ({
@@ -17,10 +16,22 @@ jest.mock('@dicebear/core', () => ({
 }))
 
 describe('UserAvatar', () => {
-  const user: UserInfo = {
+  const user: UserInfoDto = {
     username: 'boatface',
     displayName: 'Boaty McBoatFace',
     photoUrl: 'https://example.com/test.png'
+  }
+
+  const userWithoutPhoto: UserInfoDto = {
+    username: 'pictureless',
+    displayName: 'No face user',
+    photoUrl: null
+  }
+
+  const userWithEmptyPhoto: UserInfoDto = {
+    username: 'void',
+    displayName: 'Empty',
+    photoUrl: ''
   }
 
   beforeEach(async () => {
@@ -28,47 +39,45 @@ describe('UserAvatar', () => {
   })
 
   it('renders the user avatar correctly', () => {
-    const view = render(<UserAvatarForUser user={user} />)
+    const view = render(<UserAvatar user={user} />)
     expect(view.container).toMatchSnapshot()
   })
   describe('renders the user avatar in size', () => {
     it('sm', () => {
-      const view = render(<UserAvatarForUser user={user} size={'sm'} />)
+      const view = render(<UserAvatar user={user} size={'sm'} />)
       expect(view.container).toMatchSnapshot()
     })
     it('lg', () => {
-      const view = render(<UserAvatarForUser user={user} size={'lg'} />)
+      const view = render(<UserAvatar user={user} size={'lg'} />)
       expect(view.container).toMatchSnapshot()
     })
   })
   it('adds additionalClasses props to wrapping span', () => {
-    const view = render(<UserAvatarForUser user={user} additionalClasses={'testClass'} />)
+    const view = render(<UserAvatar user={user} additionalClasses={'testClass'} />)
     expect(view.container).toMatchSnapshot()
   })
   it('does not show names if showName prop is false', () => {
-    const view = render(<UserAvatarForUser user={user} showName={false} />)
+    const view = render(<UserAvatar user={user} showName={false} />)
     expect(view.container).toMatchSnapshot()
   })
 
   it('uses identicon when no photoUrl is given', () => {
-    const view = render(<UserAvatar displayName={'test'} />)
+    const view = render(<UserAvatar user={userWithoutPhoto} />)
     expect(view.container).toMatchSnapshot()
   })
 
   it('uses identicon when empty photoUrl is given', () => {
-    const view = render(<UserAvatar displayName={'test'} photoUrl={''} />)
+    const view = render(<UserAvatar user={userWithEmptyPhoto} />)
     expect(view.container).toMatchSnapshot()
   })
 
   it('uses custom photo component if provided', () => {
-    const view = render(<UserAvatar displayName={'test'} photoComponent={<div>Custom Photo</div>} />)
+    const view = render(<UserAvatar user={userWithoutPhoto} photoComponent={<div>Custom Photo</div>} />)
     expect(view.container).toMatchSnapshot()
   })
 
   it('uses custom photo component preferred over photoUrl', () => {
-    const view = render(
-      <UserAvatar displayName={'test'} photoComponent={<div>Custom Photo</div>} photoUrl={user.photoUrl} />
-    )
+    const view = render(<UserAvatar user={user} photoComponent={<div>Custom Photo</div>} />)
     expect(view.container).toMatchSnapshot()
   })
 })

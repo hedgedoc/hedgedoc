@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -20,7 +20,7 @@ describe('Copy to clipboard button', () => {
   beforeAll(async () => {
     await mockI18n()
     originalClipboard = window.navigator.clipboard
-    jest.spyOn(uuidModule, 'v4').mockReturnValue(uuidMock)
+    jest.spyOn(uuidModule, 'v4').mockReturnValue(Buffer.from(uuidMock))
   })
 
   afterAll(() => {

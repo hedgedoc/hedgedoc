@@ -1,17 +1,17 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { initialState } from '../initial-state'
 import type { NoteDetails } from '../types'
 import { buildStateFromServerPermissions } from './build-state-from-server-permissions'
-import type { NotePermissions } from '@hedgedoc/commons'
+import type { NotePermissionsDto } from '@hedgedoc/commons'
 
 describe('build state from server permissions', () => {
   it('creates a new state with the given permissions', () => {
     const state: NoteDetails = { ...initialState }
-    const permissions: NotePermissions = {
+    const permissions: NotePermissionsDto = {
       owner: 'test-owner',
       sharedToUsers: [
         {

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -36,7 +36,12 @@ export const CustomBranding: React.FC<BrandingProps> = ({ inline = false }) => {
   } else if (branding.logo) {
     return (
       /* eslint-disable-next-line @next/next/no-img-element */
-      <img src={branding.logo} alt={branding.name} title={branding.name} className={className} />
+      <img
+        src={branding.logo}
+        alt={branding.name !== null ? branding.name : undefined}
+        title={branding.name !== null ? branding.name : undefined}
+        className={className}
+      />
     )
   } else {
     return <span className={className}>{branding.name}</span>

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -21,7 +21,7 @@ import type { CompletionSource } from '@codemirror/autocomplete'
  */
 export class PlantumlAppExtension extends AppExtension {
   buildMarkdownRendererExtensions(options: MarkdownRendererExtensionOptions): MarkdownRendererExtension[] {
-    return [new PlantumlMarkdownExtension(options.frontendConfig.plantumlServer)]
+    return [new PlantumlMarkdownExtension(options.frontendConfig.plantUmlServer)]
   }
 
   buildCheatsheetExtensions(): CheatsheetExtension[] {

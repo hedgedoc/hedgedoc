@@ -1,10 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { FrontendConfig } from '../../../api/config/types'
-import { AuthProviderType, GuestAccessLevel } from '../../../api/config/types'
+import type { FrontendConfigDto } from '@hedgedoc/commons'
+import { ProviderType, GuestAccess } from '@hedgedoc/commons'
 import {
   HttpMethod,
   respondToMatchingRequest,
@@ -13,7 +13,7 @@ import {
 import { isTestMode } from '../../../utils/test-modes'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-const initialConfig: FrontendConfig = {
+const initialConfig: FrontendConfigDto = {
   allowRegister: true,
   allowProfileEdits: true,
   allowChooseUsername: true,
@@ -21,7 +21,7 @@ const initialConfig: FrontendConfig = {
     name: 'DEMO Corp',
     logo: '/public/img/demo.png'
   },
-  guestAccess: GuestAccessLevel.WRITE,
+  guestAccess: GuestAccess.WRITE,
   useImageProxy: false,
   specialUrls: {
     privacy: 'https://example.com/privacy',
@@ -33,31 +33,34 @@ const initialConfig: FrontendConfig = {
     minor: 0,
     patch: 0,
     preRelease: isTestMode ? undefined : '',
-    commit: 'mock'
+    commit: 'mock',
+    fullString: `${isTestMode ? 0 : 2}.0.0`
   },
-  plantumlServer: isTestMode ? 'http://mock-plantuml.local' : 'https://www.plantuml.com/plantuml',
+  plantUmlServer: isTestMode ? 'http://mock-plantuml.local' : 'https://www.plantuml.com/plantuml',
   maxDocumentLength: isTestMode ? 200 : 1000000,
   authProviders: [
     {
-      type: AuthProviderType.LOCAL
+      type: ProviderType.LOCAL
     },
     {
-      type: AuthProviderType.LDAP,
+      type: ProviderType.LDAP,
       identifier: 'test-ldap',
-      providerName: 'Test LDAP'
+      providerName: 'Test LDAP',
+      theme: null
     },
     {
-      type: AuthProviderType.OIDC,
+      type: ProviderType.OIDC,
       identifier: 'test-oidc',
-      providerName: 'Test OIDC'
+      providerName: 'Test OIDC',
+      theme: null
     }
   ]
 }
 
-let currentConfig: FrontendConfig = initialConfig
+let currentConfig: FrontendConfigDto = initialConfig
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
-  const responseSuccessful = respondToMatchingRequest<FrontendConfig>(
+  const responseSuccessful = respondToMatchingRequest<FrontendConfigDto>(
     HttpMethod.GET,
     req,
     res,
@@ -66,10 +69,10 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     false
   )
   if (!responseSuccessful) {
-    respondToTestRequest<FrontendConfig>(req, res, () => {
+    respondToTestRequest<FrontendConfigDto>(req, res, () => {
       currentConfig = {
         ...initialConfig,
-        ...(req.body as FrontendConfig)
+        ...(req.body as FrontendConfigDto)
       }
       return currentConfig
     })

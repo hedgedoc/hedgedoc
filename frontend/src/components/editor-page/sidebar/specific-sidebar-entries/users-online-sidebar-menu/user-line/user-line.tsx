@@ -1,9 +1,8 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { UserAvatar } from '../../../../../common/user-avatar/user-avatar'
 import { UserAvatarForUsername } from '../../../../../common/user-avatar/user-avatar-for-username'
 import { createCursorCssClass } from '../../../../editor-pane/codemirror-extensions/remote-cursors/create-cursor-css-class'
 import { ActiveIndicator } from '../active-indicator'
@@ -12,6 +11,7 @@ import React, { useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Incognito as IconIncognito } from 'react-bootstrap-icons'
 import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
+import { GuestUserAvatar } from '../../../../../common/user-avatar/guest-user-avatar'
 
 export interface UserLineProps {
   username: string | null
@@ -38,7 +38,10 @@ export const UserLine: React.FC<UserLineProps> = ({ username, displayName, activ
     return username ? (
       <UserAvatarForUsername username={username} additionalClasses={'flex-fill overflow-hidden px-2 text-nowrap'} />
     ) : (
-      <UserAvatar displayName={displayName} additionalClasses={'flex-fill overflow-hidden px-2 text-nowrap'} />
+      <GuestUserAvatar
+        overrideDisplayName={displayName}
+        additionalClasses={'flex-fill overflow-hidden px-2 text-nowrap'}
+      />
     )
   }, [displayName, username])
 

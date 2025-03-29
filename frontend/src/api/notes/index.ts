@@ -1,13 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
-import type { MediaUpload } from '../media/types'
-import type { Note, NoteDeletionOptions, NoteMetadata } from './types'
+import type { MediaUploadDto, NoteDto, NoteMetadataDto } from '@hedgedoc/commons'
+import type { NoteMediaDeletionDto } from '@hedgedoc/commons/dist/esm'
 
 /**
  * Retrieves the content and metadata about the specified note.
@@ -16,8 +16,8 @@ import type { Note, NoteDeletionOptions, NoteMetadata } from './types'
  * @return Content and metadata of the specified note.
  * @throws {Error} when the api request wasn't successful.
  */
-export const getNote = async (noteIdOrAlias: string, baseUrl?: string): Promise<Note> => {
-  const response = await new GetApiRequestBuilder<Note>('notes/' + noteIdOrAlias, baseUrl).sendRequest()
+export const getNote = async (noteIdOrAlias: string, baseUrl?: string): Promise<NoteDto> => {
+  const response = await new GetApiRequestBuilder<NoteDto>('notes/' + noteIdOrAlias, baseUrl).sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -27,8 +27,8 @@ export const getNote = async (noteIdOrAlias: string, baseUrl?: string): Promise<
  * @param noteIdOrAlias The id or alias of the note.
  * @return Metadata of the specified note.
  */
-export const getNoteMetadata = async (noteIdOrAlias: string): Promise<NoteMetadata> => {
-  const response = await new GetApiRequestBuilder<NoteMetadata>(`notes/${noteIdOrAlias}/metadata`).sendRequest()
+export const getNoteMetadata = async (noteIdOrAlias: string): Promise<NoteMetadataDto> => {
+  const response = await new GetApiRequestBuilder<NoteMetadataDto>(`notes/${noteIdOrAlias}/metadata`).sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -39,8 +39,8 @@ export const getNoteMetadata = async (noteIdOrAlias: string): Promise<NoteMetada
  * @return List of media object metadata associated with specified note.
  * @throws {Error} when the api request wasn't successful.
  */
-export const getMediaForNote = async (noteIdOrAlias: string): Promise<MediaUpload[]> => {
-  const response = await new GetApiRequestBuilder<MediaUpload[]>(`notes/${noteIdOrAlias}/media`).sendRequest()
+export const getMediaForNote = async (noteIdOrAlias: string): Promise<MediaUploadDto[]> => {
+  const response = await new GetApiRequestBuilder<MediaUploadDto[]>(`notes/${noteIdOrAlias}/media`).sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -51,8 +51,8 @@ export const getMediaForNote = async (noteIdOrAlias: string): Promise<MediaUploa
  * @return Content and metadata of the new note.
  * @throws {Error} when the api request wasn't successful.
  */
-export const createNote = async (markdown: string): Promise<Note> => {
-  const response = await new PostApiRequestBuilder<Note, void>('notes')
+export const createNote = async (markdown: string): Promise<NoteDto> => {
+  const response = await new PostApiRequestBuilder<NoteDto, void>('notes')
     .withHeader('Content-Type', 'text/markdown')
     .withBody(markdown)
     .sendRequest()
@@ -67,8 +67,8 @@ export const createNote = async (markdown: string): Promise<Note> => {
  * @return Content and metadata of the new note.
  * @throws {Error} when the api request wasn't successful.
  */
-export const createNoteWithPrimaryAlias = async (markdown: string, primaryAlias: string): Promise<Note> => {
-  const response = await new PostApiRequestBuilder<Note, void>('notes/' + primaryAlias)
+export const createNoteWithPrimaryAlias = async (markdown: string, primaryAlias: string): Promise<NoteDto> => {
+  const response = await new PostApiRequestBuilder<NoteDto, void>('notes/' + primaryAlias)
     .withHeader('Content-Type', 'text/markdown')
     .withBody(markdown)
     .sendRequest()
@@ -83,7 +83,7 @@ export const createNoteWithPrimaryAlias = async (markdown: string, primaryAlias:
  * @throws {Error} when the api request wasn't successful.
  */
 export const deleteNote = async (noteIdOrAlias: string, keepMedia: boolean): Promise<void> => {
-  await new DeleteApiRequestBuilder<void, NoteDeletionOptions>('notes/' + noteIdOrAlias)
+  await new DeleteApiRequestBuilder<void, NoteMediaDeletionDto>('notes/' + noteIdOrAlias)
     .withJsonBody({
       keepMedia
     })

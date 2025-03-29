@@ -1,10 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { addLink } from './add-link'
-import type { ContentEdits } from './changes'
+import type { ContentEdits } from './types/changes'
 
 describe('add link', () => {
   describe('without to-cursor', () => {
