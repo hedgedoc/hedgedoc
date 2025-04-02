@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -72,7 +72,7 @@ const routes: Routes = [
           port: databaseConfig.port,
           username: databaseConfig.username,
           password: databaseConfig.password,
-          database: databaseConfig.database,
+          database: databaseConfig.name,
           autoLoadEntities: true,
           logging: true,
           logger: logger,

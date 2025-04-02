@@ -490,7 +490,7 @@ describe('authConfig', () => {
           },
         );
         expect(() => authConfig()).toThrow(
-          '"HD_AUTH_LDAP_FUTURAMA_URL" is required',
+          'HD_AUTH_LDAP_FUTURAMA_URL: Required',
         );
         restore();
       });
@@ -508,7 +508,7 @@ describe('authConfig', () => {
           },
         );
         expect(() => authConfig()).toThrow(
-          '"HD_AUTH_LDAP_FUTURAMA_SEARCH_BASE" is required',
+          'HD_AUTH_LDAP_FUTURAMA_SEARCH_BASE: Required',
         );
         restore();
       });
@@ -526,7 +526,7 @@ describe('authConfig', () => {
           },
         );
         expect(() => authConfig()).toThrow(
-          '"HD_AUTH_LDAP_FUTURAMA_TLS_CERT_PATHS[0]" must not be a sparse array item',
+          'HD_AUTH_LDAP_FUTURAMA_TLS_CA_CERTS[0]: File not found',
         );
         restore();
       });
@@ -1015,7 +1015,7 @@ describe('authConfig', () => {
           },
         );
         expect(() => authConfig()).toThrow(
-          '"HD_AUTH_OIDC_GITLAB_ISSUER" is required',
+          'HD_AUTH_OIDC_GITLAB_ISSUER: Required',
         );
         restore();
       });
@@ -1033,7 +1033,7 @@ describe('authConfig', () => {
           },
         );
         expect(() => authConfig()).toThrow(
-          '"HD_AUTH_OIDC_GITLAB_CLIENT_ID" is required',
+          'HD_AUTH_OIDC_GITLAB_CLIENT_ID: Required',
         );
         restore();
       });
@@ -1051,7 +1051,7 @@ describe('authConfig', () => {
           },
         );
         expect(() => authConfig()).toThrow(
-          '"HD_AUTH_OIDC_GITLAB_CLIENT_SECRET" is required',
+          'HD_AUTH_OIDC_GITLAB_CLIENT_SECRET: Required',
         );
         restore();
       });
@@ -1068,7 +1068,9 @@ describe('authConfig', () => {
             clear: true,
           },
         );
-        expect(() => authConfig()).toThrow('"HD_AUTH_OIDC_GITLAB_THEME"');
+        expect(() => authConfig()).toThrow(
+          "HD_AUTH_OIDC_GITLAB_THEME: Invalid enum value. Expected 'google' | 'github' | 'gitlab' | 'facebook' | 'discord' | 'mastodon' | 'azure', received 'something else'",
+        );
         restore();
       });
     });

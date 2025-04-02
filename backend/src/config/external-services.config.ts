@@ -6,10 +6,13 @@
 import { registerAs } from '@nestjs/config';
 import z from 'zod';
 
-import { buildErrorMessage, extractDescriptionFromZodSchema } from './utils';
+import {
+  buildErrorMessage,
+  extractDescriptionFromZodIssue,
+} from './zod-error-message';
 
 const schema = z.object({
-  plantUmlServer: z.string().url().or(z.null()).describe('HD_PLANTUML_SERVER'),
+  plantumlServer: z.string().url().or(z.null()).describe('HD_PLANTUML_SERVER'),
   imageProxy: z.string().url().or(z.null()).describe('HD_IMAGE_PROXY'),
 });
 
@@ -22,12 +25,12 @@ export default registerAs('externalServicesConfig', () => {
     );
   }
   const externalConfig = schema.safeParse({
-    plantUmlServer: process.env.HD_PLANTUML_SERVER ?? null,
-    imageProxy: process.env.HD_IMAGE_PROXY,
+    plantumlServer: process.env.HD_PLANTUML_SERVER ?? null,
+    imageProxy: process.env.HD_IMAGE_PROXY ?? null,
   });
   if (externalConfig.error) {
     const errorMessages = externalConfig.error.errors.map((issue) =>
-      extractDescriptionFromZodSchema(schema, issue),
+      extractDescriptionFromZodIssue(issue, 'HD'),
     );
     throw new Error(buildErrorMessage(errorMessages));
   }

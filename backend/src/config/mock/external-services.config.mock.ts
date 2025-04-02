@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,7 +10,7 @@ import { ExternalServicesConfig } from '../external-services.config';
 
 export function createDefaultMockExternalServicesConfig(): ExternalServicesConfig {
   return {
-    plantUmlServer: 'https://plantuml.example.com',
+    plantumlServer: 'https://plantuml.example.com',
     imageProxy: 'https://imageProxy.example.com',
   };
 }

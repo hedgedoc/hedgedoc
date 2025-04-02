@@ -7,11 +7,11 @@ import { registerAs } from '@nestjs/config';
 import z from 'zod';
 
 import { BackendType } from '../media/backends/backend-type.enum';
+import { parseOptionalBoolean } from './utils';
 import {
   buildErrorMessage,
-  extractDescriptionFromZodSchema,
-  parseOptionalBoolean,
-} from './utils';
+  extractDescriptionFromZodIssue,
+} from './zod-error-message';
 
 const azureSchema = z.object({
   use: z.literal(BackendType.AZURE),
@@ -33,7 +33,7 @@ const filesystemSchema = z.object({
 const imgurSchema = z.object({
   use: z.literal(BackendType.IMGUR),
   imgur: z.object({
-    clientID: z.string().describe('HD_MEDIA_BACKEND_IMGUR_CLIENT_ID'),
+    clientId: z.string().describe('HD_MEDIA_BACKEND_IMGUR_CLIENT_ID'),
   }),
 });
 
@@ -43,7 +43,7 @@ const s3Schema = z.object({
     accessKeyId: z.string().describe('HD_MEDIA_BACKEND_S3_ACCESS_KEY'),
     secretAccessKey: z.string().describe('HD_MEDIA_BACKEND_S3_SECRET_KEY'),
     bucket: z.string().describe('HD_MEDIA_BACKEND_S3_BUCKET'),
-    endPoint: z.string().url().describe('HD_MEDIA_BACKEND_S3_ENDPOINT'),
+    endpoint: z.string().url().describe('HD_MEDIA_BACKEND_S3_ENDPOINT'),
     region: z.string().optional().describe('HD_MEDIA_BACKEND_S3_REGION'),
     pathStyle: z
       .boolean()
@@ -95,7 +95,7 @@ export default registerAs('mediaConfig', () => {
         accessKeyId: process.env.HD_MEDIA_BACKEND_S3_ACCESS_KEY,
         secretAccessKey: process.env.HD_MEDIA_BACKEND_S3_SECRET_KEY,
         bucket: process.env.HD_MEDIA_BACKEND_S3_BUCKET,
-        endPoint: process.env.HD_MEDIA_BACKEND_S3_ENDPOINT,
+        endpoint: process.env.HD_MEDIA_BACKEND_S3_ENDPOINT,
         region: process.env.HD_MEDIA_BACKEND_S3_REGION,
         pathStyle: parseOptionalBoolean(
           process.env.HD_MEDIA_BACKEND_S3_PATH_STYLE,
@@ -106,7 +106,7 @@ export default registerAs('mediaConfig', () => {
         container: process.env.HD_MEDIA_BACKEND_AZURE_CONTAINER,
       },
       imgur: {
-        clientID: process.env.HD_MEDIA_BACKEND_IMGUR_CLIENT_ID,
+        clientId: process.env.HD_MEDIA_BACKEND_IMGUR_CLIENT_ID,
       },
       webdav: {
         connectionString: process.env.HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING,
@@ -117,7 +117,7 @@ export default registerAs('mediaConfig', () => {
   });
   if (mediaConfig.error) {
     const errorMessages = mediaConfig.error.errors.map((issue) =>
-      extractDescriptionFromZodSchema(schema, issue),
+      extractDescriptionFromZodIssue(issue, 'HD_MEDIA'),
     );
     throw new Error(buildErrorMessage(errorMessages));
   }

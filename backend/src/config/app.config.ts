@@ -12,12 +12,11 @@ import { registerAs } from '@nestjs/config';
 import z, { RefinementCtx } from 'zod';
 
 import { Loglevel } from './loglevel.enum';
+import { parseOptionalBoolean, parseOptionalNumber } from './utils';
 import {
   buildErrorMessage,
-  extractDescriptionFromZodSchema,
-  parseOptionalBoolean,
-  parseOptionalNumber,
-} from './utils';
+  extractDescriptionFromZodIssue,
+} from './zod-error-message';
 
 function validateUrl(value: string | undefined, ctx: RefinementCtx): void {
   if (!value) {
@@ -62,7 +61,7 @@ const schema = z
       .superRefine(validateUrl)
       .default('')
       .describe('HD_RENDERER_BASE_URL'),
-    port: z
+    backendPort: z
       .number()
       .positive()
       .int()
@@ -98,14 +97,14 @@ export default registerAs('appConfig', () => {
   const appConfig = schema.safeParse({
     baseUrl: process.env.HD_BASE_URL,
     rendererBaseUrl: process.env.HD_RENDERER_BASE_URL,
-    port: parseOptionalNumber(process.env.HD_BACKEND_PORT),
+    backendPort: parseOptionalNumber(process.env.HD_BACKEND_PORT),
     loglevel: process.env.HD_LOGLEVEL,
     showLogTimestamp: parseOptionalBoolean(process.env.HD_SHOW_LOG_TIMESTAMP),
     persistInterval: process.env.HD_PERSIST_INTERVAL,
   });
   if (appConfig.error) {
     const errorMessages = appConfig.error.errors.map((issue) =>
-      extractDescriptionFromZodSchema(schema, issue),
+      extractDescriptionFromZodIssue(issue, 'HD'),
     );
     throw new Error(buildErrorMessage(errorMessages));
   }

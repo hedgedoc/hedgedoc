@@ -67,11 +67,11 @@ describe('FrontendConfigService', () => {
         identifier: 'oidcTestIdentifier',
         providerName: 'oidcTestProviderName',
         issuer: 'oidcTestIssuer',
-        clientID: 'oidcTestId',
+        clientId: 'oidcTestId',
         clientSecret: 'oidcTestSecret',
         scope: 'openid profile email',
         userIdField: '',
-        userNameField: '',
+        usernameField: '',
         displayNameField: '',
         profilePictureField: '',
         emailField: '',
@@ -82,7 +82,7 @@ describe('FrontendConfigService', () => {
         const appConfig: AppConfig = {
           baseUrl: domain,
           rendererBaseUrl: 'https://renderer.example.org',
-          port: 3000,
+          backendPort: 3000,
           loglevel: Loglevel.ERROR,
           showLogTimestamp: false,
           persistInterval: 10,
@@ -182,7 +182,7 @@ describe('FrontendConfigService', () => {
               const appConfig: AppConfig = {
                 baseUrl: domain,
                 rendererBaseUrl: 'https://renderer.example.org',
-                port: 3000,
+                backendPort: 3000,
                 loglevel: Loglevel.ERROR,
                 showLogTimestamp: false,
                 persistInterval: 10,
@@ -207,7 +207,7 @@ describe('FrontendConfigService', () => {
                 },
               };
               const externalServicesConfig: ExternalServicesConfig = {
-                plantUmlServer: plantUmlServer,
+                plantumlServer: plantUmlServer,
                 imageProxy: imageProxy,
               };
               const noteConfig: NoteConfig = {

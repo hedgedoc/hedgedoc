@@ -3,18 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import assert from 'assert';
 import z from 'zod';
 
 import { Loglevel } from './loglevel.enum';
 import {
   ensureNoDuplicatesExist,
-  extractDescriptionFromZodSchema,
   findDuplicatesInArray,
   needToLog,
   parseOptionalBoolean,
   parseOptionalNumber,
-  replaceAuthErrorsWithEnvironmentVariables,
   toArrayConfig,
 } from './utils';
 
@@ -43,13 +40,13 @@ describe('config utils', () => {
     });
     it('throws error if there is a duplicate', () => {
       expect(() => ensureNoDuplicatesExist('Test', ['A', 'A'])).toThrow(
-        "Your Test names 'A,A' contain duplicates 'A'",
+        "Your Test names 'A,A' contain duplicates: 'A'",
       );
     });
     it('throws error if there are multiple duplicates', () => {
       expect(() =>
         ensureNoDuplicatesExist('Test', ['A', 'A', 'B', 'B']),
-      ).toThrow("Your Test names 'A,A,B,B' contain duplicates 'A,B'");
+      ).toThrow("Your Test names 'A,A,B,B' contain duplicates: 'A,B'");
     });
   });
   describe('toArrayConfig', () => {
@@ -69,28 +66,6 @@ describe('config utils', () => {
         'two',
         'three',
       ]);
-    });
-  });
-  describe('replaceAuthErrorsWithEnvironmentVariables', () => {
-    it('"ldap[0].url', () => {
-      expect(
-        replaceAuthErrorsWithEnvironmentVariables(
-          '"ldap[0].url',
-          'ldap',
-          'HD_AUTH_LDAP_',
-          ['test'],
-        ),
-      ).toEqual('"HD_AUTH_LDAP_test_URL');
-    });
-    it('"ldap[0].url is not changed by gitlab call', () => {
-      expect(
-        replaceAuthErrorsWithEnvironmentVariables(
-          '"ldap[0].url',
-          'gitlab',
-          'HD_AUTH_GITLAB_',
-          ['test'],
-        ),
-      ).toEqual('"ldap[0].url');
     });
   });
   describe('needToLog', () => {
@@ -157,44 +132,6 @@ describe('config utils', () => {
       expect(parseOptionalBoolean('false')).toEqual(false);
       expect(parseOptionalBoolean('0')).toEqual(false);
       expect(parseOptionalBoolean('HedgeDoc')).toEqual(false);
-    });
-  });
-  describe('extractDescriptionFromZodSchema', () => {
-    it('correctly builds an error message on a simple object', () => {
-      const schema = z.object({
-        port: z.number().describe('port').positive(),
-      });
-
-      const results = schema.safeParse({
-        port: -1,
-      });
-
-      expect(results.error).toBeDefined();
-
-      const errorMessages = results.error!.errors.map((issue) =>
-        extractDescriptionFromZodSchema(schema, issue),
-      );
-      expect(errorMessages).toHaveLength(1);
-      expect(errorMessages[0]).toEqual('port: Number must be greater than 0');
-    });
-    it('correctly builds an error message on an array object', () => {
-      const schema = z.object({
-        array: z.array(z.number().positive()).describe('array'),
-      });
-
-      const results = schema.safeParse({
-        array: [1, -1],
-      });
-
-      expect(results.error).toBeDefined();
-
-      const errorMessages = results.error!.errors.map((issue) =>
-        extractDescriptionFromZodSchema(schema, issue),
-      );
-      expect(errorMessages).toHaveLength(1);
-      expect(errorMessages[0]).toEqual(
-        'array[1]: Number must be greater than 0',
-      );
     });
   });
 });

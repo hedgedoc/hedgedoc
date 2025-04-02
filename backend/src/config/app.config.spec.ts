@@ -42,7 +42,7 @@ describe('appConfig', () => {
       const config = appConfig();
       expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
-      expect(config.port).toEqual(port);
+      expect(config.backendPort).toEqual(port);
       expect(config.loglevel).toEqual(loglevel);
       expect(config.showLogTimestamp).toEqual(showLogTimestamp);
       expect(config.persistInterval).toEqual(100);
@@ -67,7 +67,7 @@ describe('appConfig', () => {
       const config = appConfig();
       expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(baseUrl);
-      expect(config.port).toEqual(port);
+      expect(config.backendPort).toEqual(port);
       expect(config.loglevel).toEqual(loglevel);
       expect(config.showLogTimestamp).toEqual(showLogTimestamp);
       expect(config.persistInterval).toEqual(100);
@@ -92,7 +92,7 @@ describe('appConfig', () => {
       const config = appConfig();
       expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
-      expect(config.port).toEqual(3000);
+      expect(config.backendPort).toEqual(3000);
       expect(config.loglevel).toEqual(loglevel);
       expect(config.showLogTimestamp).toEqual(showLogTimestamp);
       expect(config.persistInterval).toEqual(100);
@@ -117,7 +117,7 @@ describe('appConfig', () => {
       const config = appConfig();
       expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
-      expect(config.port).toEqual(port);
+      expect(config.backendPort).toEqual(port);
       expect(config.loglevel).toEqual(Loglevel.WARN);
       expect(config.showLogTimestamp).toEqual(showLogTimestamp);
       expect(config.persistInterval).toEqual(100);
@@ -142,7 +142,7 @@ describe('appConfig', () => {
       const config = appConfig();
       expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
-      expect(config.port).toEqual(port);
+      expect(config.backendPort).toEqual(port);
       expect(config.loglevel).toEqual(Loglevel.TRACE);
       expect(config.showLogTimestamp).toEqual(showLogTimestamp);
       expect(config.persistInterval).toEqual(10);
@@ -168,7 +168,7 @@ describe('appConfig', () => {
       const config = appConfig();
       expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
-      expect(config.port).toEqual(port);
+      expect(config.backendPort).toEqual(port);
       expect(config.loglevel).toEqual(Loglevel.TRACE);
       expect(config.showLogTimestamp).toEqual(showLogTimestamp);
       expect(config.persistInterval).toEqual(0);
@@ -192,7 +192,7 @@ describe('appConfig', () => {
       const config = appConfig();
       expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
-      expect(config.port).toEqual(port);
+      expect(config.backendPort).toEqual(port);
       expect(config.loglevel).toEqual(Loglevel.TRACE);
       expect(config.showLogTimestamp).toEqual(true);
       expect(config.persistInterval).toEqual(0);

@@ -5,19 +5,17 @@
  */
 import { GuestAccess } from '@hedgedoc/commons';
 import { registerAs } from '@nestjs/config';
-import * as Joi from 'joi';
 import z from 'zod';
 
 import {
   DefaultAccessLevel,
   getDefaultAccessLevelOrdinal,
 } from './default-access-level.enum';
+import { parseOptionalNumber, toArrayConfig } from './utils';
 import {
   buildErrorMessage,
-  extractDescriptionFromZodSchema,
-  parseOptionalNumber,
-  toArrayConfig,
-} from './utils';
+  extractDescriptionFromZodIssue,
+} from './zod-error-message';
 
 const schema = z.object({
   forbiddenNoteIds: z
@@ -43,12 +41,12 @@ const schema = z.object({
         .nativeEnum(DefaultAccessLevel)
         .optional()
         .default(DefaultAccessLevel.READ)
-        .describe('HD_PERMISSION_DEFAULT_EVERYONE'),
+        .describe('HD_PERMISSIONS_DEFAULT_EVERYONE'),
       loggedIn: z
         .nativeEnum(DefaultAccessLevel)
         .optional()
         .default(DefaultAccessLevel.WRITE)
-        .describe('HD_PERMISSION_DEFAULT_LOGGED_IN'),
+        .describe('HD_PERMISSIONS_DEFAULT_LOGGED_IN'),
     }),
   }),
   revisionRetentionDays: z
@@ -64,10 +62,10 @@ export type NoteConfig = z.infer<typeof schema>;
 
 function checkEveryoneConfigIsConsistent(config: NoteConfig): void {
   const everyoneDefaultSet =
-    process.env.HD_PERMISSION_DEFAULT_EVERYONE !== undefined;
+    process.env.HD_PERMISSIONS_DEFAULT_EVERYONE !== undefined;
   if (config.guestAccess === GuestAccess.DENY && everyoneDefaultSet) {
     throw new Error(
-      `'HD_GUEST_ACCESS' is set to '${config.guestAccess}', but 'HD_PERMISSION_DEFAULT_EVERYONE' is also configured. Please remove 'HD_PERMISSION_DEFAULT_EVERYONE'.`,
+      `'HD_GUEST_ACCESS' is set to '${config.guestAccess}', but 'HD_PERMISSIONS_DEFAULT_EVERYONE' is also configured. Please remove 'HD_PERMISSIONS_DEFAULT_EVERYONE'.`,
     );
   }
 }
@@ -82,7 +80,7 @@ function checkLoggedInUsersHaveHigherDefaultPermissionsThanGuests(
     getDefaultAccessLevelOrdinal(loggedIn)
   ) {
     throw new Error(
-      `'HD_PERMISSION_DEFAULT_EVERYONE' is set to '${everyone}', but 'HD_PERMISSION_DEFAULT_LOGGED_IN' is set to '${loggedIn}'. This gives everyone greater permissions than logged-in users which is not allowed.`,
+      `'HD_PERMISSIONS_DEFAULT_EVERYONE' is set to '${everyone}', but 'HD_PERMISSIONS_DEFAULT_LOGGED_IN' is set to '${loggedIn}'. This gives everyone greater permissions than logged-in users which is not allowed.`,
     );
   }
 }
@@ -94,8 +92,8 @@ export default registerAs('noteConfig', () => {
     guestAccess: process.env.HD_GUEST_ACCESS,
     permissions: {
       default: {
-        everyone: process.env.HD_PERMISSION_DEFAULT_EVERYONE,
-        loggedIn: process.env.HD_PERMISSION_DEFAULT_LOGGED_IN,
+        everyone: process.env.HD_PERMISSIONS_DEFAULT_EVERYONE,
+        loggedIn: process.env.HD_PERMISSIONS_DEFAULT_LOGGED_IN,
       },
     },
     revisionRetentionDays: parseOptionalNumber(
@@ -104,7 +102,7 @@ export default registerAs('noteConfig', () => {
   });
   if (noteConfig.error) {
     const errorMessages = noteConfig.error.errors.map((issue) =>
-      extractDescriptionFromZodSchema(schema, issue),
+      extractDescriptionFromZodIssue(issue, 'HD'),
     );
     throw new Error(buildErrorMessage(errorMessages));
   }

@@ -7,11 +7,11 @@ import { registerAs } from '@nestjs/config';
 import * as process from 'node:process';
 import z from 'zod';
 
+import { parseOptionalBoolean } from './utils';
 import {
   buildErrorMessage,
-  extractDescriptionFromZodSchema,
-  parseOptionalBoolean,
-} from './utils';
+  extractDescriptionFromZodIssue,
+} from './zod-error-message';
 
 const cspSchema = z.object({
   enable: z.boolean().default(true).describe('HD_CSP_ENABLED'),
@@ -36,7 +36,7 @@ export default registerAs('cspConfig', () => {
   });
   if (cspConfig.error) {
     const errorMessages = cspConfig.error.errors.map((issue) =>
-      extractDescriptionFromZodSchema(cspSchema, issue),
+      extractDescriptionFromZodIssue(issue, 'HD_CSP'),
     );
     throw new Error(buildErrorMessage(errorMessages));
   }

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -44,8 +44,8 @@ async function bootstrap(): Promise<void> {
   await setupApp(app, appConfig, authConfig, mediaConfig, logger);
 
   // Start the server
-  await app.listen(appConfig.port);
-  logger.warn(`Listening on port ${appConfig.port}`, 'AppBootstrap');
+  await app.listen(appConfig.backendPort);
+  logger.warn(`Listening on port ${appConfig.backendPort}`, 'AppBootstrap');
 }
 
 void bootstrap();

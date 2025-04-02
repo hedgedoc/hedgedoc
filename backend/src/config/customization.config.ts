@@ -6,7 +6,10 @@
 import { registerAs } from '@nestjs/config';
 import z from 'zod';
 
-import { buildErrorMessage, extractDescriptionFromZodSchema } from './utils';
+import {
+  buildErrorMessage,
+  extractDescriptionFromZodIssue,
+} from './zod-error-message';
 
 const schema = z.object({
   branding: z.object({
@@ -36,7 +39,7 @@ export default registerAs('customizationConfig', () => {
   });
   if (customizationConfig.error) {
     const errorMessages = customizationConfig.error.errors.map((issue) =>
-      extractDescriptionFromZodSchema(schema, issue),
+      extractDescriptionFromZodIssue(issue, 'HD'),
     );
     throw new Error(buildErrorMessage(errorMessages));
   }

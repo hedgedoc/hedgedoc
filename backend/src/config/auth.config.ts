@@ -9,13 +9,15 @@ import z from 'zod';
 
 import { Theme } from './theme.enum';
 import {
-  buildErrorMessage,
   ensureNoDuplicatesExist,
-  extractDescriptionFromZodSchema,
   parseOptionalBoolean,
   parseOptionalNumber,
   toArrayConfig,
 } from './utils';
+import {
+  buildErrorMessage,
+  extractDescriptionFromZodIssue,
+} from './zod-error-message';
 
 const ldapSchema = z
   .object({
@@ -56,7 +58,12 @@ const ldapSchema = z
       .default('jpegPhoto')
       .describe('HD_AUTH_LDAP_*_PROFILE_PICTURE_FIELD'),
     tlsCaCerts: z
-      .array(z.string())
+      .array(
+        z.string({
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          required_error: 'File not found',
+        }),
+      )
       .optional()
       .describe('HD_AUTH_LDAP_*_TLS_CA_CERTS'),
     tlsRejectUnauthorized: z
@@ -210,14 +217,13 @@ export default registerAs('authConfig', () => {
       process.env[`HD_AUTH_LDAP_${name}_TLS_CERT_PATHS`],
       ',',
     );
-    let tlsCaCerts: string[] | undefined;
+    let tlsCaCerts = undefined;
     if (caFiles) {
-      tlsCaCerts = [];
-      for (const fileName of caFiles) {
+      tlsCaCerts = caFiles.map((fileName) => {
         if (fs.existsSync(fileName)) {
-          tlsCaCerts.push(fs.readFileSync(fileName, 'utf8'));
+          return fs.readFileSync(fileName, 'utf8');
         }
-      }
+      });
     }
     return {
       identifier: name.toLowerCase(),
@@ -234,7 +240,8 @@ export default registerAs('authConfig', () => {
       emailField: process.env[`HD_AUTH_LDAP_${name}_EMAIL_FIELD`],
       profilePictureField:
         process.env[`HD_AUTH_LDAP_${name}_PROFILE_PICTURE_FIELD`],
-      tlsCaCerts,
+      // Technically this can be (string | undefined)[] | undefined, but an undefined array element tells us that the file is not there and the user input is invalid
+      tlsCaCerts: tlsCaCerts as string[] | undefined,
       tlsRejectUnauthorized: parseOptionalBoolean(
         process.env[`HD_AUTH_LDAP_${name}_TLS_REJECT_UNAUTHORIZED`],
       ),
@@ -243,7 +250,7 @@ export default registerAs('authConfig', () => {
         process.env[`HD_AUTH_LDAP_${name}_TLS_ALLOW_PARTIAL_TRUST_CHAIN`],
       ),
       tlsMinVersion: process.env[`HD_AUTH_LDAP_${name}_TLS_MIN_VERSION`] as
-        | 'TLSv1'
+        | 'TLSv1' // This typecast is required since zod validates the input later but TypeScript already expects valid input
         | undefined,
       tlsMaxVersion: process.env[`HD_AUTH_LDAP_${name}_TLS_MAX_VERSION`] as
         | 'TLSv1'
@@ -255,7 +262,7 @@ export default registerAs('authConfig', () => {
     identifier: name.toLowerCase(),
     providerName: process.env[`HD_AUTH_OIDC_${name}_PROVIDER_NAME`],
     issuer: process.env[`HD_AUTH_OIDC_${name}_ISSUER`],
-    clientID: process.env[`HD_AUTH_OIDC_${name}_CLIENT_ID`],
+    clientId: process.env[`HD_AUTH_OIDC_${name}_CLIENT_ID`],
     clientSecret: process.env[`HD_AUTH_OIDC_${name}_CLIENT_SECRET`],
     theme: process.env[`HD_AUTH_OIDC_${name}_THEME`] as Theme | undefined,
     authorizeUrl: process.env[`HD_AUTH_OIDC_${name}_AUTHORIZE_URL`],
@@ -303,7 +310,10 @@ export default registerAs('authConfig', () => {
 
   if (authConfig.error) {
     const errorMessages = authConfig.error.errors.map((issue) =>
-      extractDescriptionFromZodSchema(schema, issue),
+      extractDescriptionFromZodIssue(issue, 'HD_AUTH', {
+        ldap: ldapServers,
+        oidc: oidcServers,
+      }),
     );
     throw new Error(buildErrorMessage(errorMessages));
   }
