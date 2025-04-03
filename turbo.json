@@ -100,7 +100,8 @@
       ],
       "env": [
         "CYPRESS_CONTAINER_ID"
-      ]
+      ],
+      "passThroughEnv": ["*"]
     },
     "@hedgedoc/backend#test:e2e:ci": {
       "dependsOn": [
