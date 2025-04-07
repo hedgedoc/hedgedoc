@@ -147,10 +147,29 @@ app.use(i18n.init)
 
 // routes without sessions
 // static files
-app.use('/', express.static(path.join(__dirname, '/public'), { maxAge: config.staticCacheTime, index: false, redirect: false }))
-app.use('/docs', express.static(path.resolve(__dirname, config.docsPath), { maxAge: config.staticCacheTime, redirect: false }))
-app.use('/uploads', express.static(path.resolve(__dirname, config.uploadsPath), { maxAge: config.staticCacheTime, redirect: false }))
-app.use('/default.md', express.static(path.resolve(__dirname, config.defaultNotePath), { maxAge: config.staticCacheTime }))
+app.use('/', express.static(path.join(__dirname, '/public'), {
+  maxAge: config.staticCacheTime,
+  index: false,
+  redirect: false
+}))
+app.use('/docs', express.static(path.resolve(__dirname, config.docsPath), {
+  maxAge: config.staticCacheTime,
+  redirect: false
+}))
+// This is done by an additional middleware, instead of setHeaders of express.static, because for what ever reason
+// the latter did not work
+app.use('/uploads', (req, res, next) => {
+  res.set('Content-Disposition', 'attachment')
+  res.set('Content-Security-Policy', "default-src 'none'")
+  next()
+})
+app.use('/uploads', express.static(path.resolve(__dirname, config.uploadsPath), {
+  maxAge: config.staticCacheTime,
+  redirect: false
+}))
+app.use('/default.md', express.static(path.resolve(__dirname, config.defaultNotePath), {
+  maxAge: config.staticCacheTime
+}))
 
 // session
 app.use(useUnless(['/status', '/metrics', '/_health'], session({
