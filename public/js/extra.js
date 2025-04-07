@@ -15,8 +15,6 @@ import markdownitContainer from 'markdown-it-container'
 /* Defined regex markdown it plugins */
 import Plugin from 'markdown-it-regexp'
 
-import 'gist-embed'
-
 require('prismjs/themes/prism.css')
 require('prismjs/components/prism-wiki')
 require('prismjs/components/prism-haskell')
@@ -304,10 +302,6 @@ export function finishView (view) {
         }
       })
     })
-    // gist
-  view.find('code[data-gist-id]').each((key, value) => {
-    if ($(value).children().length === 0) { $(value).gist(window.viewAjaxCallback) }
-  })
   // sequence diagram
   const sequences = view.find('div.sequence-diagram.raw').removeClass('raw')
   sequences.each((key, value) => {
@@ -639,8 +633,6 @@ function generateCleanHTML (view) {
   src.find('*[class=""]').removeAttr('class')
   eles.removeAttr('data-startline data-endline')
   src.find("a[href^='#'][smoothhashscroll]").removeAttr('smoothhashscroll')
-  // remove gist content
-  src.find('code[data-gist-id]').children().remove()
   // disable todo list
   src.find('input.task-list-item-checkbox').attr('disabled', '')
   // replace emoji image path
@@ -1156,8 +1148,7 @@ const gistPlugin = new Plugin(
 
   (match, utils) => {
     const gistid = match[1]
-    const code = `<code data-gist-id="${gistid}"></code>`
-    return code
+    return `<iframe sandbox class="github-gist-frame" src="https://gist.github.com/${gistid}.pibb"></iframe>`
   }
 )
 // TOC
