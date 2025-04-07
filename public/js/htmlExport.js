@@ -22,4 +22,3 @@ const $ = require('jquery')
 window.jQuery = $
 window.$ = $
 require('bootstrap')
-require('gist-embed/gist-embed.min')

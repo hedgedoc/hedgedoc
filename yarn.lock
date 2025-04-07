@@ -1395,7 +1395,6 @@ __metadata:
     flowchart.js: "npm:1.18.0"
     fork-awesome: "npm:1.2.0"
     formidable: "npm:2.1.2"
-    gist-embed: "npm:2.6.0"
     globals: "npm:16.0.0"
     graceful-fs: "npm:4.2.11"
     helmet: "npm:8.1.0"
@@ -7418,13 +7417,6 @@ __metadata:
   dependencies:
     assert-plus: "npm:^1.0.0"
   checksum: 10/ab18d55661db264e3eac6012c2d3daeafaab7a501c035ae0ccb193c3c23e9849c6e29b6ac762b9c2adae460266f925d55a3a2a3a3c8b94be2f222df94d70c046
-  languageName: node
-  linkType: hard
-
-"gist-embed@npm:2.6.0":
-  version: 2.6.0
-  resolution: "gist-embed@npm:2.6.0"
-  checksum: 10/6b9e1266e86f856a0ba64f27fe735748f1754b8a945b629ff5ab7705554a274d06ead0c177f503d4d94490851abb4caf533ef076c9d794ecc34c142491b4aff6
   languageName: node
   linkType: hard
 
