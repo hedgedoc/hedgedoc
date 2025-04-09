@@ -41,7 +41,7 @@
     "express": "4.21.2",
     "express-rate-limit": "7.5.0",
     "express-session": "1.18.1",
-    "file-type": "20.0.1",
+    "file-type": "20.4.1",
     "formidable": "2.1.2",
     "graceful-fs": "4.2.11",
     "helmet": "8.0.0",
