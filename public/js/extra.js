@@ -289,18 +289,14 @@ export function finishView (view) {
       imgPlayiframe(this, 'https://player.vimeo.com/video/')
     })
     .each((key, value) => {
-      const vimeoLink = `https://vimeo.com/${$(value).attr('data-videoid')}`
-      $.ajax({
-        type: 'GET',
-        url: `https://vimeo.com/api/oembed.json?url=${encodeURIComponent(vimeoLink)}`,
-        jsonp: 'callback',
-        dataType: 'jsonp',
-        success (data) {
-          const image = `<img src="${data.thumbnail_url}" />`
+      fetch(`https://vimeo.com/api/v2/video/${$(value).attr('data-videoid')}.json`)
+        .then(response => response.json())
+        .then(data => {
+          const image = `<img src="${data[0].thumbnail_large}" />`
           $(value).prepend(image)
           if (window.viewAjaxCallback) window.viewAjaxCallback()
-        }
-      })
+        })
+        .catch(console.error)
     })
   // sequence diagram
   const sequences = view.find('div.sequence-diagram.raw').removeClass('raw')
@@ -444,26 +440,14 @@ export function finishView (view) {
   // slideshare
   view.find('div.slideshare.raw').removeClass('raw')
     .each((key, value) => {
-      $.ajax({
-        type: 'GET',
-        url: `https://www.slideshare.net/api/oembed/2?url=https://www.slideshare.net/${$(value).attr('data-slideshareid')}&format=json`,
-        jsonp: 'callback',
-        dataType: 'jsonp',
-        success (data) {
-          const $html = $(data.html)
-          const iframe = $html.closest('iframe')
-          const caption = $html.closest('div')
-          const inner = $('<div class="inner"></div>').append(iframe)
-          const height = iframe.attr('height')
-          const width = iframe.attr('width')
-          const ratio = (height / width) * 100
-          inner.css('padding-bottom', `${ratio}%`)
-          $(value).html(inner).append(caption)
-          if (window.viewAjaxCallback) window.viewAjaxCallback()
-        }
-      })
+      const url = `https://slideshare.com/${$(value).attr('data-slideshareid')}`
+      const inner = $('<a>Slideshare</a>')
+      inner.attr('href', url)
+      inner.attr('rel', 'noopener noreferrer')
+      inner.attr('target', '_blank')
+      $(value).append(inner)
     })
-    // speakerdeck
+  // speakerdeck
   view.find('div.speakerdeck.raw').removeClass('raw')
     .each((key, value) => {
       const url = `https://speakerdeck.com/${$(value).attr('data-speakerdeckid')}`
@@ -828,7 +812,7 @@ export function smoothHashScroll () {
 
 function imgPlayiframe (element, src) {
   if (!$(element).attr('data-videoid')) return
-  const iframe = $("<iframe frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>")
+  const iframe = $("<iframe style='border: none' allowfullscreen></iframe>")
   $(iframe).attr('src', `${src + $(element).attr('data-videoid')}?autoplay=1`)
   $(element).find('img').css('visibility', 'hidden')
   $(element).append(iframe)
