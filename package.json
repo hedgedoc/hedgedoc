@@ -174,7 +174,7 @@
     "imports-loader": "1.2.0",
     "ionicons": "2.0.1",
     "jquery": "3.7.1",
-    "jquery-mousewheel": "3.1.13",
+    "jquery-mousewheel": "3.2.2",
     "jquery-ui": "1.14.1",
     "js-cookie": "3.0.5",
     "js-sequence-diagrams": "git+https://github.com/hedgedoc/js-sequence-diagrams.git",
