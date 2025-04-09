@@ -2,19 +2,30 @@
 
 You can choose to configure HedgeDoc with either a config file or with environment variables.
 
-Environment variables take precedence over configurations from the config files. They generally start with `CMD_` for our own options, but we also list node-specific options you can configure this way.
+Environment variables take precedence over configurations from the config files. They generally start with `CMD_` for
+our own options, but we also list node-specific options you can configure this way.
 
-- Environment variables are processed in [`lib/config/environment.js`](https://github.com/hedgedoc/hedgedoc/tree/master/lib/config/environment.js) - so this is the first place to look if anything is missing not obvious from this document. The default values are defined in [`lib/config/default.js`](https://github.com/hedgedoc/hedgedoc/tree/master/lib/config/default.js), in case you wonder if you even need to override it.
+- Environment variables are processed in [
+  `lib/config/environment.js`](https://github.com/hedgedoc/hedgedoc/tree/master/lib/config/environment.js) - so this is
+  the first place to look if anything is missing not obvious from this document. The default values are defined in [
+  `lib/config/default.js`](https://github.com/hedgedoc/hedgedoc/tree/master/lib/config/default.js), in case you wonder
+  if you even need to override it.
 
-- The config file is processed in [`lib/config/index.js`](https://github.com/hedgedoc/hedgedoc/tree/master/lib/config/index.js) - so this is the first place to look if anything is missing not obvious from this document. The default values are defined in [`lib/config/default.js`](https://github.com/hedgedoc/hedgedoc/tree/master/lib/config/default.js), in case you wonder if you even need to override it. To get started, it is a good idea to take the [`config.json.example`](https://github.com/hedgedoc/hedgedoc/tree/master/config.json.example) and copy it
-to `config.json` before filling in your own details.
+- The config file is processed in [
+  `lib/config/index.js`](https://github.com/hedgedoc/hedgedoc/tree/master/lib/config/index.js) - so this is the first
+  place to look if anything is missing not obvious from this document. The default values are defined in [
+  `lib/config/default.js`](https://github.com/hedgedoc/hedgedoc/tree/master/lib/config/default.js), in case you wonder
+  if you even need to override it. To get started, it is a good idea to take the [
+  `config.json.example`](https://github.com/hedgedoc/hedgedoc/tree/master/config.json.example) and copy it
+  to `config.json` before filling in your own details.
 
-**Note:** *Due to the rename process we renamed all `HMD_`-prefix variables to be `CMD_`-prefixed. The old ones continue to work.*
+**Note:** *Due to the rename process we renamed all `HMD_`-prefix variables to be `CMD_`-prefixed. The old ones continue
+to work.*
 
 ## Node.JS
 
 | config file | environment | **default** and example value | description                                                                      |
-| ----------- | ----------- | ----------------------------- | -------------------------------------------------------------------------------- |
+|-------------|-------------|-------------------------------|----------------------------------------------------------------------------------|
 |             | `NODE_ENV`  | `production` or `development` | set current environment (will apply corresponding settings in the `config.json`) |
 | `debug`     | `DEBUG`     | `true` or `false`             | set debug mode, show more logs                                                   |
 
@@ -48,11 +59,11 @@ to `config.json` before filling in your own details.
 these are rarely used for various reasons.
 
 | config file       | environment | **default** and example values                        | description                                                                                      |
-| ----------------- | ----------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+|-------------------|-------------|-------------------------------------------------------|--------------------------------------------------------------------------------------------------|
 | `defaultNotePath` |             | **`./public/default.md`**                             | default note file path<sup>1</sup>, empty notes will be created with this template.              |
 | `dhParamPath`     |             | **`undefined`**, `./cert/dhparam.pem`                 | SSL dhparam path<sup>1</sup> (only need when you set `useSSL`)                                   |
 | `sslCAPath`       |             | **`undefined`**, `['./cert/COMODORSAAddTrustCA.crt']` | SSL ca chain<sup>1</sup> (only need when you set `useSSL`)                                       |
-| `sslCertPath`     |             | **`undefined`**, `./cert/hedgedoc_io.crt`               | SSL cert path<sup>1</sup> (only need when you set `useSSL`)                                      |
+| `sslCertPath`     |             | **`undefined`**, `./cert/hedgedoc_io.crt`             | SSL cert path<sup>1</sup> (only need when you set `useSSL`)                                      |
 | `sslKeyPath`      |             | **`undefined`**, `./cert/client.key`                  | SSL key path<sup>1</sup> (only need when you set `useSSL`)                                       |
 | `tmpPath`         |             | **`os.tmpdir()`**, `./tmp/`                           | temp directory path<sup>1</sup>                                                                  |
 | `docsPath`        |             | **`./public/docs`**                                   | docs directory path<sup>1</sup>                                                                  |
@@ -63,16 +74,16 @@ these are rarely used for various reasons.
 
 ## HedgeDoc Location
 
-| config file      | environment           | **default** and example value                                    | description                                                                                                       |
-| ---------------- | --------------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `domain`         | `CMD_DOMAIN`          | **`null`**, `localhost`, `hedgedoc.org`                            | domain name                                                                                                       |
-| `urlPath`        | `CMD_URL_PATH`        | **`null`**, `hedgedoc`                                             | If HedgeDoc is run from a subdirectory like `www.example.com/<urlpath>`                                             |
-| `host`           | `CMD_HOST`            | **`0.0.0.0`**, `localhost`                                       | interface/ip to listen on                                                                                         |
-| `port`           | `CMD_PORT`            | **`3000`**, `80`                                                 | port to listen on                                                                                                 |
-| `path`           | `CMD_PATH`            | **no default**, `/var/run/hedgedoc.sock`                           | path to UNIX domain socket to listen on (if specified, `host` or `CMD_HOST` and `port` or `CMD_PORT` are ignored) |
-| `protocolUseSSL` | `CMD_PROTOCOL_USESSL` | **`false`** or `true`                                            | set to use SSL protocol for resources path (only applied when domain is set)                                      |
-| `useSSL`         |                       | **`false`** or `true`                                            | set to use SSL server (if `true`, will auto turn on `protocolUseSSL`)                                             |
-| `urlAddPort`     | `CMD_URL_ADDPORT`     | **`false`** or `true`                                            | set to add port on callback URL (ports `80` or `443` won't be applied) (only applied when domain is set)          |
+| config file      | environment           | **default** and example value                                            | description                                                                                                       |
+|------------------|-----------------------|--------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| `domain`         | `CMD_DOMAIN`          | **`null`**, `localhost`, `hedgedoc.org`                                  | domain name                                                                                                       |
+| `urlPath`        | `CMD_URL_PATH`        | **`null`**, `hedgedoc`                                                   | If HedgeDoc is run from a subdirectory like `www.example.com/<urlpath>`                                           |
+| `host`           | `CMD_HOST`            | **`0.0.0.0`**, `localhost`                                               | interface/ip to listen on                                                                                         |
+| `port`           | `CMD_PORT`            | **`3000`**, `80`                                                         | port to listen on                                                                                                 |
+| `path`           | `CMD_PATH`            | **no default**, `/var/run/hedgedoc.sock`                                 | path to UNIX domain socket to listen on (if specified, `host` or `CMD_HOST` and `port` or `CMD_PORT` are ignored) |
+| `protocolUseSSL` | `CMD_PROTOCOL_USESSL` | **`false`** or `true`                                                    | set to use SSL protocol for resources path (only applied when domain is set)                                      |
+| `useSSL`         |                       | **`false`** or `true`                                                    | set to use SSL server (if `true`, will auto turn on `protocolUseSSL`)                                             |
+| `urlAddPort`     | `CMD_URL_ADDPORT`     | **`false`** or `true`                                                    | set to add port on callback URL (ports `80` or `443` won't be applied) (only applied when domain is set)          |
 | `allowOrigin`    | `CMD_ALLOW_ORIGIN`    | **`['localhost']`**, `['hedgedoc.org']`, `['localhost', 'hedgedoc.org']` | domain name whitelist (use comma to separate)                                                                     |
 
 ## Web security aspects
@@ -100,7 +111,7 @@ these are rarely used for various reasons.
 ## Privacy and External Requests
 
 | config file     | environment          | **default** and example value | description                                                                                                                                                                    |
-| --------------- | -------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|-----------------|----------------------|-------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `allowGravatar` | `CMD_ALLOW_GRAVATAR` | **`true`** or `false`         | set to `false` to disable [Libravatar](https://www.libravatar.org/) as profile picture source on your instance. Libravatar is a federated open-source alternative to Gravatar. |
 
 ## Users and Privileges
@@ -111,7 +122,7 @@ these are rarely used for various reasons.
 | `allowAnonymousEdits`          | `CMD_ALLOW_ANONYMOUS_EDITS`          | **`false`** or `true`                                                   | If `allowAnonymous` is `false`: allow users to select `freely` permission, allowing guests to edit existing notes (default is `false`).                                                                    |
 | `allowFreeURL`                 | `CMD_ALLOW_FREEURL`                  | **`false`** or `true`                                                   | Set to allow new note creation by accessing a nonexistent note URL. This is the behavior familiar from [Etherpad](https://github.com/ether/etherpad-lite).                                                 |
 | `requireFreeURLAuthentication` | `CMD_REQUIRE_FREEURL_AUTHENTICATION` | **`false`** or `true`                                                   | Set to require authentication for FreeURL mode style note creation.                                                                                                                                        |
-| `disableNoteCreation`          | `CMD_DISABLE_NOTE_CREATION`          | **`false`** or `true`                                                   | Set to `true` to disallow any person to create notes.                                                                                                |
+| `disableNoteCreation`          | `CMD_DISABLE_NOTE_CREATION`          | **`false`** or `true`                                                   | Set to `true` to disallow any person to create notes.                                                                                                                                                      |
 | `defaultPermission`            | `CMD_DEFAULT_PERMISSION`             | **`editable`**, `freely`, `limited`, `locked`, `protected` or `private` | Set notes default permission (only applied on signed-in users).                                                                                                                                            |
 | `sessionName`                  |                                      | **`connect.sid`**                                                       | Cookie session name.                                                                                                                                                                                       |
 | `sessionLife`                  | `CMD_SESSION_LIFE`                   | **`14 * 24 * 60 * 60 * 1000`**, `1209600000` (14 days)                  | Cookie session life time in milliseconds.                                                                                                                                                                  |
@@ -122,14 +133,14 @@ these are rarely used for various reasons.
 ### Email (local account)
 
 | config file          | environment                | **default** and example value | description                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| -------------------- | -------------------------- | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|----------------------|----------------------------|-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `email`              | `CMD_EMAIL`                | **`true`** or `false`         | Set to allow email sign-in. The default is `true`.                                                                                                                                                                                                                                                                                                                                                                            |
 | `allowEmailRegister` | `CMD_ALLOW_EMAIL_REGISTER` | **`true`** or `false`         | Set to allow registration of new accounts using an email address. If set to `false`, you can still create accounts using the command line - see `bin/manage_users` for details (In production mode, remember to run it with `NODE_ENV` set as `production` in the enviroment). This setting has no effect if `email` or `CMD_EMAIL` is `false`. The default for `allowEmailRegister` or `CMD_ALLOW_EMAIL_REGISTER` is `true`. |
 
 ### Dropbox Login
 
 | config file | environment                | **default** and example value        | description                                                                                                                                 |
-| ----------- | -------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+|-------------|----------------------------|--------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
 | `dropbox`   |                            | `{clientID: ..., clientSecret: ...}` | An object containing the client ID and the client secret obtained by the [Dropbox developer tools](https://www.dropbox.com/developers/apps) |
 |             | `CMD_DROPBOX_CLIENTID`     | **no default**                       | Dropbox API client id                                                                                                                       |
 |             | `CMD_DROPBOX_CLIENTSECRET` | **no default**                       | Dropbox API client secret                                                                                                                   |
@@ -137,7 +148,7 @@ these are rarely used for various reasons.
 ### Facebook Login
 
 | config file | environment                 | **default** and example value        | description                                                                                                                           |
-| ----------- | --------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+|-------------|-----------------------------|--------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
 | `facebook`  |                             | `{clientID: ..., clientSecret: ...}` | An object containing the client ID and the client secret obtained by the [Facebook app console](https://developers.facebook.com/apps) |
 |             | `CMD_FACEBOOK_CLIENTID`     | **no default**                       | Facebook API client id                                                                                                                |
 |             | `CMD_FACEBOOK_CLIENTSECRET` | **no default**                       | Facebook API client secret                                                                                                            |
@@ -145,7 +156,7 @@ these are rarely used for various reasons.
 ### GitHub Login
 
 | config file | environment               | **default** and example value        | description                                                                                                                                                                     |
-| ----------- | ------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|-------------|---------------------------|--------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `github`    |                           | `{clientID: ..., clientSecret: ...}` | An object containing the client ID and the client secret obtained by the GitHub developer page. For more details have a look at the [GitHub auth guide](guides/auth/github.md). |
 |             | `CMD_GITHUB_CLIENTID`     | **no default**                       | GitHub API client id                                                                                                                                                            |
 |             | `CMD_GITHUB_CLIENTSECRET` | **no default**                       | GitHub API client secret                                                                                                                                                        |
@@ -153,7 +164,7 @@ these are rarely used for various reasons.
 ### GitLab Login
 
 | config file | environment               | **default** and example value                                                | description                                                                                                                         |
-| ----------- | ------------------------- | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+|-------------|---------------------------|------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | `gitlab`    |                           | `{baseURL: ..., scope: ..., version: ..., clientID: ..., clientSecret: ...}` | An object containing your GitLab application data. Refer to the [GitLab guide](guides/auth/gitlab-self-hosted.md) for more details! |
 |             | `CMD_GITLAB_SCOPE`        | **no default**, `read_user` or `api`                                         | GitLab API requested scope (default is `api`) (GitLab snippet import/export need `api` scope)                                       |
 |             | `CMD_GITLAB_BASEURL`      | **no default**                                                               | GitLab authentication endpoint, set to use other endpoint than GitLab.com (optional)                                                |
@@ -164,7 +175,7 @@ these are rarely used for various reasons.
 ### Google Login
 
 | config file | environment               | **default** and example value                           | description                                                                                                                          |
-| ----------- | ------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+|-------------|---------------------------|---------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
 | `google`    |                           | `{clientID: ..., clientSecret: ..., hostedDomain: ...}` | An object containing the client ID and the client secret obtained by the [Google API console](https://console.cloud.google.com/apis) |
 |             | `CMD_GOOGLE_CLIENTID`     | **no default**                                          | Google API client id                                                                                                                 |
 |             | `CMD_GOOGLE_CLIENTSECRET` | **no default**                                          | Google API client secret                                                                                                             |
@@ -173,7 +184,7 @@ these are rarely used for various reasons.
 ### LDAP Login
 
 | config file | environment                 | **default** and example value                                                                                                                                                   | description                                                                                                     |
-| ----------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+|-------------|-----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
 | `ldap`      |                             | `{providerName: ..., url: ..., bindDn: ..., bindCredentials: ..., searchBase: ..., searchFilter: ..., searchAttributes: ..., usernameField: ..., useridField: ..., tlsca: ...}` | An object detailing the LDAP connection. Refer to the [LDAP-AD guide](guides/auth/ldap-ad.md) for more details! |
 |             | `CMD_LDAP_URL`              | **no default**, `ldap://example.com`                                                                                                                                            | URL of LDAP server                                                                                              |
 |             | `CMD_LDAP_BINDDN`           | **no default**                                                                                                                                                                  | bindDn for LDAP access                                                                                          |
@@ -181,15 +192,15 @@ these are rarely used for various reasons.
 |             | `CMD_LDAP_SEARCHBASE`       | **no default**, `o=users,dc=example,dc=com`                                                                                                                                     | LDAP directory to begin search from                                                                             |
 |             | `CMD_LDAP_SEARCHFILTER`     | **no default**, `(uid={{username}})`                                                                                                                                            | LDAP filter to search with                                                                                      |
 |             | `CMD_LDAP_SEARCHATTRIBUTES` | **no default**, `displayName, mail`                                                                                                                                             | LDAP attributes to search with (use comma to separate)                                                          |
-|             | `CMD_LDAP_USERIDFIELD`      | **no default**, `uidNumber` or `uid` or `sAMAccountName`                                                                                                                        | The LDAP field which is used uniquely identify a user on HedgeDoc                                                 |
-|             | `CMD_LDAP_USERNAMEFIELD`    | **no default**, fallback to userid                                                                                                                                              | The LDAP field which is used as the username on HedgeDoc                                                          |
+|             | `CMD_LDAP_USERIDFIELD`      | **no default**, `uidNumber` or `uid` or `sAMAccountName`                                                                                                                        | The LDAP field which is used uniquely identify a user on HedgeDoc                                               |
+|             | `CMD_LDAP_USERNAMEFIELD`    | **no default**, fallback to userid                                                                                                                                              | The LDAP field which is used as the username on HedgeDoc                                                        |
 |             | `CMD_LDAP_TLS_CA`           | **no default**, `server-cert.pem, root.pem`                                                                                                                                     | Root CA for LDAP TLS in PEM format (use comma to separate)                                                      |
 |             | `CMD_LDAP_PROVIDERNAME`     | **no default**, `My institution`                                                                                                                                                | Optional name to be displayed at login form indicating the LDAP provider                                        |
 
 ### Mattermost Login
 
 | config file  | environment                   | **default** and example value                      | description                                                                                                                                                     |
-| ------------ | ----------------------------- | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|--------------|-------------------------------|----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `mattermost` |                               | `{baseURL: ..., clientID: ..., clientSecret: ...}` | An object containing the base URL of your Mattermost application data. Refer to the [Mattermost guide](guides/auth/mattermost-self-hosted.md) for more details! |
 |              | `CMD_MATTERMOST_BASEURL`      | **no default**                                     | Mattermost authentication endpoint for versions below 5.0. For Mattermost version 5.0 and above, see [guide](guides/auth/mattermost-self-hosted.md).            |
 |              | `CMD_MATTERMOST_CLIENTID`     | **no default**                                     | Mattermost API client id                                                                                                                                        |
@@ -198,7 +209,7 @@ these are rarely used for various reasons.
 ### OAuth2 Login
 
 | config file | environment                                 | **default** and example value                                                                                                                                                                                       | description                                                                                                                                                                                                                                                                            |
-| ----------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|-------------|---------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `oauth2`    |                                             | `{baseURL: ..., userProfileURL: ..., userProfileUsernameAttr: ..., userProfileDisplayNameAttr: ..., userProfileEmailAttr: ..., tokenURL: ..., authorizationURL: ..., clientID: ..., clientSecret: ..., scope: ...}` | An object detailing your OAuth2 provider. Refer to the [Mattermost](guides/auth/mattermost-self-hosted.md) or [Nextcloud](guides/auth/nextcloud.md) examples for more details!                                                                                                         |
 |             | `CMD_OAUTH2_USER_PROFILE_URL`               | **no default**, `https://example.com`                                                                                                                                                                               | Where to retrieve information about a user after successful login. Needs to output JSON. (no default value) Refer to the [Mattermost](guides/auth/mattermost-self-hosted.md) or [Nextcloud](guides/auth/nextcloud.md) examples for more details on all of the `CMD_OAUTH2...` options. |
 |             | `CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR`     | **no default**, `name`                                                                                                                                                                                              | where to find the username in the JSON from the user profile URL. (no default value)                                                                                                                                                                                                   |
@@ -215,9 +226,11 @@ these are rarely used for various reasons.
 |             | `CMD_OAUTH2_ACCESS_ROLE`                    | **no default**, `role/hedgedoc`                                                                                                                                                                                     | The role which should be included in the ID token roles claim to grant access                                                                                                                                                                                                          |
 
 !!! info
-    If you are using a [CA not trusted by Node.js](https://github.com/nodejs/node/issues/4175) (like Let's Encrypt e.g) for your OAuth2 provider you can set the [`NODE_EXTRA_CA_CERTS`](https://nodejs.org/api/cli.html#cli_node_extra_ca_certs_file) environment variable to the CA certificate file path of your CA.  
-    Remember to also make the file available inside the Docker container, if you're running HedgeDoc in Docker container.
-
+If you are using a [CA not trusted by Node.js](https://github.com/nodejs/node/issues/4175) (like Let's Encrypt e.g) for
+your OAuth2 provider you can set the [
+`NODE_EXTRA_CA_CERTS`](https://nodejs.org/api/cli.html#cli_node_extra_ca_certs_file) environment variable to the CA
+certificate file path of your CA.  
+Remember to also make the file available inside the Docker container, if you're running HedgeDoc in Docker container.
 
 ### SAML Login
 
@@ -229,6 +242,8 @@ these are rarely used for various reasons.
 |             | `CMD_SAML_CLIENTCERT`                   | **no default**, `/path/to/privatecert.pem`                                                                                                                                                                                             | certificate file path for the client in PEM format (optional)                                                                                                           |
 |             | `CMD_SAML_ISSUER`                       | **no default**                                                                                                                                                                                                                         | Issuer to supply to identity provider (optional, default: `serverURL` config)"                                                                                          |
 |             | `CMD_SAML_DISABLEREQUESTEDAUTHNCONTEXT` | **no default**, `true` or `false`                                                                                                                                                                                                      | true to allow any authentication method, false restricts to password authentication (PasswordProtectedTransport) method (default: false)                                |
+|             | `CMD_SAML_WANT_ASSERTIONS_SIGNED`       | **`true`** or `false`                                                                                                                                                                                                                  | true to enforce signed assertions, false allows unsigned assertions                                                                                                     |
+|             | `CMD_SAML_WANT_AUTHN_RESPONSE_SIGNED`   | **`true`** or `false`                                                                                                                                                                                                                  | true to enforce signed response, false allows unsigned response                                                                                                         |
 |             | `CMD_SAML_IDENTIFIERFORMAT`             | **`urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress`**                                                                                                                                                                           | name identifier format (optional, if using `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress`, ensure that the IdP returns an unique email address for each user) |
 |             | `CMD_SAML_GROUPATTRIBUTE`               | **no default**, `http://schemas.xmlsoap.org/claims/Group`                                                                                                                                                                              | attribute name for group list (optional)                                                                                                                                |
 |             | `CMD_SAML_REQUIREDGROUPS`               | **no default**, `hedgedoc-users`                                                                                                                                                                                                       | group names that allowed (use vertical bar to separate) (optional)                                                                                                      |
@@ -241,7 +256,7 @@ these are rarely used for various reasons.
 ### Twitter Login
 
 | config file | environment                  | **default** and example value             | description                                                                                                                                                                                                      |
-| ----------- | ---------------------------- | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|-------------|------------------------------|-------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `twitter`   |                              | `{consumerKey: ..., consumerSecret: ...}` | An object containing the consumer key and secret obtained by the [Twitter developer tools](https://developer.twitter.com/apps). For more details have a look at the [Twitter auth guide](guides/auth/twitter.md) |
 |             | `CMD_TWITTER_CONSUMERKEY`    | **no default**                            | Twitter API consumer key                                                                                                                                                                                         |
 |             | `CMD_TWITTER_CONSUMERSECRET` | **no default**                            | Twitter API consumer secret                                                                                                                                                                                      |
@@ -255,7 +270,7 @@ you don't have to use either of these.
 ### Amazon S3
 
 | config file     | environment                | **default** and example value                                                                                     | description                                                                                                                                |
-| --------------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+|-----------------|----------------------------|-------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
 | `s3`            |                            | `{ "accessKeyId": "YOUR_S3_ACCESS_KEY_ID", "secretAccessKey": "YOUR_S3_ACCESS_KEY", "region": "YOUR_S3_REGION" }` | When `imageuploadtype` be set to `s3`, you would also need to setup this key, check our [S3 Image Upload Guide](guides/s3-image-upload.md) |
 |                 | `CMD_S3_ACCESS_KEY_ID`     | **no default**                                                                                                    | AWS access key id                                                                                                                          |
 |                 | `CMD_S3_SECRET_ACCESS_KEY` | **no default**                                                                                                    | AWS secret key                                                                                                                             |
@@ -268,20 +283,20 @@ you don't have to use either of these.
 ### Azure Blob Storage
 
 | config file | environment                   | **default** and example value | description                                                               |
-| ----------- | ----------------------------- | ----------------------------- | ------------------------------------------------------------------------- |
+|-------------|-------------------------------|-------------------------------|---------------------------------------------------------------------------|
 |             | `CMD_AZURE_CONNECTION_STRING` | **no default**                | Azure Blob Storage connection string                                      |
 |             | `CMD_AZURE_CONTAINER`         | **no default**                | Azure Blob Storage container name (automatically created if non existent) |
 
 ### imgur
 
-| config file | environment          | **default** and example value  | description         |
-| ----------- | -------------------- | ------------------------------ | ------------------- |
-|             | `CMD_IMGUR_CLIENTID` | **no default**                 | Imgur API client id |
+| config file | environment          | **default** and example value | description         |
+|-------------|----------------------|-------------------------------|---------------------|
+|             | `CMD_IMGUR_CLIENTID` | **no default**                | Imgur API client id |
 
 ### Minio
 
 | config file | environment            | **default** and example value                                                                                                             | description                                                                                                                                     |
-| ----------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+|-------------|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
 | `minio`     |                        | `{ "accessKey": "YOUR_MINIO_ACCESS_KEY", "secretKey": "YOUR_MINIO_SECRET_KEY", "endpoint": "YOUR_MINIO_HOST", port: 9000, secure: true }` | When `imageUploadType` is set to `minio`, you need to set this key. Also check out our [Minio Image Upload Guide](guides/minio-image-upload.md) |
 |             | `CMD_MINIO_ACCESS_KEY` | **no default**                                                                                                                            | Minio access key                                                                                                                                |
 |             | `CMD_MINIO_SECRET_KEY` | **no default**                                                                                                                            | Minio secret key                                                                                                                                |
@@ -292,6 +307,6 @@ you don't have to use either of these.
 ### Lutim
 
 | config file | environment     | **default** and example value | description                                                                 |
-| ----------- | --------------- | ----------------------------- | --------------------------------------------------------------------------- |
+|-------------|-----------------|-------------------------------|-----------------------------------------------------------------------------|
 | `lutim`     |                 | `{"url": "YOUR_LUTIM_URL"}`   | When `imageUploadType` is set to `lutim`, you can setup the lutim url       |
 |             | `CMD_LUTIM_URL` | **`https://framapic.org/`**   | When `CMD_IMAGE_UPLOAD_TYPE` is set to `lutim`, you can setup the lutim url |
