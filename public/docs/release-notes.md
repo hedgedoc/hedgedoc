@@ -2,6 +2,12 @@
 
 ## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
 
+## <i class="fa fa-tag"></i> 1.10.3 <i class="fa fa-calendar-o"></i> 2025-04-09
+
+### Enhancements
+- Add config options `CMD_SAML_WANT_ASSERTIONS_SIGNED` and `CMD_SAML_WANT_AUTHN_RESPONSE_SIGNED` for SAML auth, since
+  some instances didn't comply with the new defaults of `@node-saml/passport-saml`
+
 ## <i class="fa fa-tag"></i> 1.10.2 <i class="fa fa-calendar-o"></i> 2025-02-14
 
 **PLEASE CHECK THIS IF YOU USE SAML AUTHENTICATION:**
