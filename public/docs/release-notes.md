@@ -4,6 +4,12 @@
 
 ## <i class="fa fa-tag"></i> 1.10.3 <i class="fa fa-calendar-o"></i> 2025-04-09
 
+### Security fixes
+
+This release fixes a security issue of a possible XSS exploit which can be planted via a malicous SVG file upload.
+
+See [GHSA-3983-rrqh-mvx5](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-3983-rrqh-mvx5) for more details
+
 ### Enhancements
 - Add config options `CMD_SAML_WANT_ASSERTIONS_SIGNED` and `CMD_SAML_WANT_AUTHN_RESPONSE_SIGNED` for SAML auth, since
   some instances didn't comply with the new defaults of `@node-saml/passport-saml`
