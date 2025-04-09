@@ -1468,7 +1468,7 @@ __metadata:
     express-session: "npm:1.18.1"
     file-loader: "npm:6.2.0"
     file-saver: "npm:2.0.5"
-    file-type: "npm:20.0.1"
+    file-type: "npm:20.4.1"
     flowchart.js: "npm:1.18.0"
     fork-awesome: "npm:1.2.0"
     formidable: "npm:2.1.2"
@@ -6899,15 +6899,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"file-type@npm:20.0.1":
-  version: 20.0.1
-  resolution: "file-type@npm:20.0.1"
+"file-type@npm:20.4.1":
+  version: 20.4.1
+  resolution: "file-type@npm:20.4.1"
   dependencies:
     "@tokenizer/inflate": "npm:^0.2.6"
     strtok3: "npm:^10.2.0"
     token-types: "npm:^6.0.0"
     uint8array-extras: "npm:^1.4.0"
-  checksum: 10/afafaac57b1f461682dd0e2a10fa12f8ebfe25d737ddc7ec39c1e08ac2636af924e306dd4f158aecf313bac73c7e61fb5957f244f9f3381e3a020ff312102375
+  checksum: 10/efbb81c69c84ea4d83ea86dc1c95a45bc6830d5455deb7666e0dbefde2dbfe2bcee4e5398bfc5a8fc1ac55a80a27a3ec4f2bff4b53d4af20be799db4fae324b6
   languageName: node
   linkType: hard
 
