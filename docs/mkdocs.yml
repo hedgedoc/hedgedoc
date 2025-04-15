@@ -7,52 +7,56 @@ docs_dir: content
 edit_uri: https://github.com/hedgedoc/hedgedoc/edit/develop/docs/content/
 nav:
   - Home: index.md
-  - Tutorials:
-    - Overview: tutorials/index.md
-    - Setup: tutorials/setup.md
-    - 'Create a user': tutorials/user.md
-    - 'Create a note': tutorials/first-note.md
-    - 'Create a presentation': tutorials/first-presentation.md
+  - 'Getting started':
+    - Overview: getting-started/index.md
+    - 'Install HedgeDoc': getting-started/setup.md
+    - 'Create a user': getting-started/user.md
+    - 'Create a note': getting-started/first-note.md
+    - 'Explore notes': getting-started/explore.md
+    - 'Create a presentation': getting-started/first-presentation.md
   - 'How-to guides':
-    - Overview: how-to/index.md
-    - 'Reverse Proxy': how-to/reverse-proxy.md
-    - Backup: how-to/backup.md
-    - Authentication: how-to/auth.md
-    - Database: how-to/database.md
-    - Develop:
-      - Setup: how-to/develop/setup.md
-      - 'Frontend setup': how-to/develop/frontend.md
-      - 'Build docker images': how-to/develop/docker.md
-      - 'Build Documentation': how-to/develop/documentation.md
-      - 'LDAP test environment': how-to/develop/auth/ldap.md
-  - 'Core concepts':
-    - Overview: concepts/index.md
-    - Notes: concepts/notes.md
-    - 'User Profiles': concepts/user-profiles.md
-    - Config: concepts/config.md
-    - 'API Auth': concepts/api-auth.md
-    - Events: concepts/events.md
+    - Overview: guides/index.md
+    - 'Reverse Proxy': guides/reverse-proxy.md
+    - Backup: guides/backup.md
+    - Authentication: guides/auth.md
+    - Database: guides/database.md
+  - 'Configuration':
+    - Overview: config/index.md
+    - General: config/general.md
+    - Notes: config/notes.md
+    - Database: config/database.md
+    - Authentication:
+      - Overview: config/auth/index.md
+      - 'Local accounts': config/auth/local.md
+      - LDAP: config/auth/ldap.md
+      - 'OpenID Connect (OIDC)': config/auth/oidc.md
+    - Customization: config/customization.md
+    - Media Backends:
+      - Azure: config/media/azure.md
+      - Filesystem: config/media/filesystem.md
+      - imgur: config/media/imgur.md
+      - S3: config/media/s3.md
+      - WebDAV: config/media/webdav.md
+    - Integrations: config/integrations.md
+  - Development:
+    - Overview: development/index.md
+    - Guides:
+      - Setup: development/guides/setup.md
+      - 'Frontend setup': development/guides/frontend.md
+      - 'Build docker images': development/guides/docker.md
+      - 'Build Documentation': development/guides/documentation.md
+      - 'LDAP test environment': development/guides/auth/ldap.md
+    - Concepts:
+      - Overview: development/concepts/index.md
+      - Notes: development/concepts/notes.md
+      - 'User Profiles': development/concepts/user-profiles.md
+      - Config: development/concepts/config.md
+      - 'API Auth': development/concepts/api-auth.md
+      - Events: development/concepts/events.md
   - References:
       - Overview: references/index.md
       - 'HFM Syntax': references/hfm.md
-      - Configuration:
-        - Overview: references/config/index.md
-        - General: references/config/general.md
-        - Notes: references/config/notes.md
-        - Database: references/config/database.md
-        - Authentication:
-          - Overview: references/config/auth/index.md
-          - 'Local accounts': references/config/auth/local.md
-          - LDAP: references/config/auth/ldap.md
-          - 'OpenID Connect (OIDC)': references/config/auth/oidc.md
-        - Customization: references/config/customization.md
-        - Media Backends:
-          - Azure: references/config/media/azure.md
-          - Filesystem: references/config/media/filesystem.md
-          - imgur: references/config/media/imgur.md
-          - S3: references/config/media/s3.md
-          - WebDAV: references/config/media/webdav.md
-        - Integrations: references/config/integrations.md
+      - API: references/api.md
   - FAQ: faq/index.md
 markdown_extensions:
   - toc:

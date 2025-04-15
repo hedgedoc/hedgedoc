@@ -163,5 +163,5 @@ set `CADDY_HOST` to your domain (for example `CADDY_HOST=http://my-hedgedoc.home
 [hedgedoc-repo]: https://github.com/hedgedoc/hedgedoc
 [yarn]: https://yarnpkg.com/getting-started/install
 [caddy]: https://caddyserver.com/
-[config-docs]: ../../references/config/index.md
+[config-docs]: ../../config/index.md
 [frontend-setup]: ./frontend.md

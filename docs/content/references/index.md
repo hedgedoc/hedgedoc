@@ -11,7 +11,7 @@ These include for example configuration options or API methods.
             <span>HedgeDoc Flavoured Markdown</span>
         </div>
     </a>
-    <a href='/references/config/'>
+    <a href='/config/'>
         <div class='topic'>
             <span>🛠</span>
             <span>Configuration</span>
