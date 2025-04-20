@@ -8,7 +8,7 @@ import type { ComponentReplacer } from '../../../components/markdown-renderer/re
 import { CustomTagWithIdComponentReplacer } from '../../../components/markdown-renderer/replace-components/custom-tag-with-id-component-replacer'
 import { AsciinemaFrame } from './asciinema-frame'
 import { replaceAsciinemaLinkMarkdownItPlugin } from './replace-asciinema-link'
-import type MarkdownIt from 'markdown-it/lib'
+import type MarkdownIt from 'markdown-it'
 
 /**
  * Adds asciinema embeddings to the markdown rendering by detecting asciinema.org links.

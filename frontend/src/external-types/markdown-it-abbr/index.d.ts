@@ -5,7 +5,7 @@
  */
 
 declare module 'markdown-it-abbr' {
-  import type MarkdownIt from 'markdown-it/lib'
+  import type MarkdownIt from 'markdown-it'
   const markdownItAbbreviation: MarkdownIt.PluginSimple
   export = markdownItAbbreviation
 }

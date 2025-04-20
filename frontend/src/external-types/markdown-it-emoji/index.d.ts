@@ -5,7 +5,7 @@
  */
 
 declare module 'markdown-it-emoji' {
-  import type MarkdownIt from 'markdown-it/lib'
+  import type MarkdownIt from 'markdown-it'
   import type { EmojiOptions } from './interface'
   const markdownItEmoji: MarkdownIt.PluginWithOptions<EmojiOptions>
   const pluginVariations = {

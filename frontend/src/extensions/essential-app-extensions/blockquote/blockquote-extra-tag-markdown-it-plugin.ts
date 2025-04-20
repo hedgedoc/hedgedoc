@@ -6,10 +6,10 @@
 import type { BootstrapIconName } from '../../../components/common/icons/bootstrap-icons'
 import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-markdown-extension'
 import { Optional } from '@mrdrogdrog/optional'
-import type MarkdownIt from 'markdown-it/lib'
-import type { RuleInline } from 'markdown-it/lib/parser_inline'
-import type StateInline from 'markdown-it/lib/rules_inline/state_inline'
-import type Token from 'markdown-it/lib/token'
+import type MarkdownIt from 'markdown-it'
+import type StateInline from 'markdown-it/lib/rules_inline/state_inline.mjs'
+import type Token from 'markdown-it/lib/token.mjs'
+import type { RuleInline } from 'markdown-it/lib/parser_inline.mjs'
 
 export interface QuoteExtraTagValues {
   labelStartIndex: number

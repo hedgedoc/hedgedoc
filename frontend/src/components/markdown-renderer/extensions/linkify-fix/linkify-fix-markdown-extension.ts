@@ -17,7 +17,8 @@ export class LinkifyFixMarkdownExtension extends MarkdownRendererExtension {
     markdownIt.core.ruler.push('linkify', (state) => {
       try {
         state.md.options.linkify = true
-        return linkify(state)
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        linkify(state)
       } finally {
         state.md.options.linkify = false
       }

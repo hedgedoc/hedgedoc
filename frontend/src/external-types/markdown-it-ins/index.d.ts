@@ -5,7 +5,7 @@
  */
 
 declare module 'markdown-it-ins' {
-  import type MarkdownIt from 'markdown-it/lib'
+  import type MarkdownIt from 'markdown-it'
   const markdownItInserted: MarkdownIt.PluginSimple
   export = markdownItInserted
 }

@@ -9,7 +9,7 @@ import type { ComponentReplacer } from '../../replace-components/component-repla
 import { TestNodeProcessor } from './test-node-processor'
 import { TestReplacer } from './test-replacer'
 import type MarkdownIt from 'markdown-it'
-import Token from 'markdown-it/lib/token'
+import Token from 'markdown-it/lib/token.mjs'
 
 export class TestMarkdownRendererExtension extends MarkdownRendererExtension {
   constructor(private doAfterCallback: () => void) {

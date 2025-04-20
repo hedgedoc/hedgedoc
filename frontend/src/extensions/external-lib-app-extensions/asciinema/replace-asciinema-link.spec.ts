@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { replaceAsciinemaLinkMarkdownItPlugin } from './replace-asciinema-link'
-import MarkdownIt from 'markdown-it/lib'
+import MarkdownIt from 'markdown-it'
 
 describe('Replace asciinema link', () => {
   let markdownIt: MarkdownIt

@@ -5,7 +5,7 @@
  */
 
 declare module 'markdown-it-sub' {
-  import type MarkdownIt from 'markdown-it/lib'
+  import type MarkdownIt from 'markdown-it'
   const markdownItSubscript: MarkdownIt.PluginSimple
   export = markdownItSubscript
 }

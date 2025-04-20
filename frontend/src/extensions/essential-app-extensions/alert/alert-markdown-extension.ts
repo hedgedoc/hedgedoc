@@ -6,8 +6,8 @@
 import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/_base-classes/markdown-renderer-extension'
 import type MarkdownIt from 'markdown-it'
 import markdownItContainer from 'markdown-it-container'
-import type Renderer from 'markdown-it/lib/renderer'
-import type Token from 'markdown-it/lib/token'
+import type Renderer from 'markdown-it/lib/renderer.mjs'
+import type Token from 'markdown-it/lib/token.mjs'
 
 export const alertLevels = ['success', 'danger', 'info', 'warning']
 

@@ -6,8 +6,8 @@
 import { MarkdownRendererExtension } from '../../../components/markdown-renderer/extensions/_base-classes/markdown-renderer-extension'
 import type MarkdownIt from 'markdown-it'
 import markdownItContainer from 'markdown-it-container'
-import { escapeHtml } from 'markdown-it/lib/common/utils'
-import type Token from 'markdown-it/lib/token'
+import { escapeHtml } from 'markdown-it/lib/common/utils.mjs'
+import type Token from 'markdown-it/lib/token.mjs'
 
 /**
  * Adds support for html spoiler tags.

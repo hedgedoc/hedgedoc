@@ -5,7 +5,7 @@
  */
 
 declare module 'markdown-it-regex' {
-  import type MarkdownIt from 'markdown-it/lib'
+  import type MarkdownIt from 'markdown-it'
   import type { RegexOptions } from './interface'
   const markdownItRegex: MarkdownIt.PluginWithOptions<RegexOptions>
   export = markdownItRegex

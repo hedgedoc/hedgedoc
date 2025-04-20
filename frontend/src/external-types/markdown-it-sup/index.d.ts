@@ -5,7 +5,7 @@
  */
 
 declare module 'markdown-it-sup' {
-  import type MarkdownIt from 'markdown-it/lib'
+  import type MarkdownIt from 'markdown-it'
   const markdownItSuperscript: MarkdownIt.PluginSimple
   export = markdownItSuperscript
 }

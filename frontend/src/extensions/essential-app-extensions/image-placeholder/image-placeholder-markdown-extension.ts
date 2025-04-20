@@ -7,7 +7,7 @@ import { MarkdownRendererExtension } from '../../../components/markdown-renderer
 import type { ComponentReplacer } from '../../../components/markdown-renderer/replace-components/component-replacer'
 import { addLineToPlaceholderImageTags } from './add-line-to-placeholder-image-tags'
 import { ImagePlaceholderReplacer } from './image-placeholder-replacer'
-import type MarkdownIt from 'markdown-it/lib'
+import type MarkdownIt from 'markdown-it'
 
 /**
  * Adds support for {@link ImagePlaceholder}.

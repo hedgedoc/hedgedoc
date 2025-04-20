@@ -5,7 +5,7 @@
  */
 
 declare module 'markdown-it-mathjax' {
-  import type MarkdownIt from 'markdown-it/lib'
+  import type MarkdownIt from 'markdown-it'
   const markdownItMathJax: (MathJaxOptions) => MarkdownIt.PluginSimple
   export = markdownItMathJax
 }

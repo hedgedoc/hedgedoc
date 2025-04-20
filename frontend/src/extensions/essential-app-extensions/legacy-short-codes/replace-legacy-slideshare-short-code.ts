@@ -5,7 +5,7 @@
  */
 import type { RegexOptions } from '../../../external-types/markdown-it-regex/interface'
 import markdownItRegex from 'markdown-it-regex'
-import type MarkdownIt from 'markdown-it/lib'
+import type MarkdownIt from 'markdown-it'
 
 export const legacySlideshareRegex = /^{%slideshare\s+(\w+\/[\w-]+)\s*%}$/
 

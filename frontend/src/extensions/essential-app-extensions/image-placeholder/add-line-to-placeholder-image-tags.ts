@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ImagePlaceholderMarkdownExtension } from './image-placeholder-markdown-extension'
-import type MarkdownIt from 'markdown-it/lib'
+import type MarkdownIt from 'markdown-it'
 
 /**
  * A {@link MarkdownIt.PluginSimple markdown it plugin} that adds the line number of the markdown code to every placeholder image.

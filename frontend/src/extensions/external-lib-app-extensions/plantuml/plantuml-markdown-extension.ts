@@ -9,9 +9,10 @@ import { PlantumlNotConfiguredComponentReplacer } from './plantuml-not-configure
 import { Optional } from '@mrdrogdrog/optional'
 import type MarkdownIt from 'markdown-it'
 import plantuml from 'markdown-it-plantuml'
-import type { Options } from 'markdown-it/lib'
-import type Renderer from 'markdown-it/lib/renderer'
-import type Token from 'markdown-it/lib/token'
+import type { Options } from 'markdown-it'
+import type { RenderRule } from 'markdown-it/lib/renderer.mjs'
+import type Renderer from 'markdown-it/lib/renderer.mjs'
+import type Token from 'markdown-it/lib/token.mjs'
 
 /**
  * Adds support for chart rendering using plantuml to the markdown rendering using code fences with "plantuml" as language.
@@ -24,7 +25,7 @@ export class PlantumlMarkdownExtension extends MarkdownRendererExtension {
   }
 
   private plantumlError(markdownIt: MarkdownIt): void {
-    const defaultRenderer: Renderer.RenderRule = markdownIt.renderer.rules.fence || (() => '')
+    const defaultRenderer: RenderRule = markdownIt.renderer.rules.fence || (() => '')
     markdownIt.renderer.rules.fence = (tokens: Token[], idx: number, options: Options, env, slf: Renderer) => {
       return tokens[idx].info === 'plantuml'
         ? '<plantuml-not-configured></plantuml-not-configured>'
