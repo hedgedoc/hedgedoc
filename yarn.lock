@@ -2596,7 +2596,6 @@ __metadata:
     file-type: "npm:16.5.4"
     htmlparser2: "npm:9.1.0"
     jest: "npm:29.7.0"
-    joi: "npm:17.13.3"
     ldapauth-fork: "npm:6.1.0"
     markdown-it: "npm:13.0.2"
     minio: "npm:8.0.4"
