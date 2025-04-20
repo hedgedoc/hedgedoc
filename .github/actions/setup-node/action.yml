@@ -19,7 +19,7 @@ runs:
       shell: bash
 
     - name: Cache yarn cache
-      uses: actions/cache@0c907a75c2c80ebcb7f088228285e798b750cf8f # v4.2.1
+      uses: actions/cache@v4.2.3 # v4.2.1
       id: yarn-cache
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -32,7 +32,7 @@ runs:
       shell: bash
 
     - name: Cache cypress binaries
-      uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
+      uses: actions/cache@v4.2.3 # v4.1.2
       id: cypress-cache
       with:
         path: /home/runner/.cache/cypress
@@ -41,7 +41,7 @@ runs:
           cypress-${{ runner.os }}-${{ steps.cypress-version.outputs.cyver }}
 
     - name: Set up NodeJS
-      uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+      uses: actions/setup-node@v4.4.0 # v4.1.0
       with:
         node-version: ${{ inputs.NODEJS_VERSION }}
 
