@@ -109,7 +109,7 @@
   },
   "devDependencies": {
     "@jest/types": "29.6.3",
-    "@types/markdown-it": "13.0.8",
+    "@types/markdown-it": "13.0.9",
     "@typescript-eslint/eslint-plugin": "8.14.0",
     "@typescript-eslint/parser": "8.14.0",
     "eslint": "8.57.1",
