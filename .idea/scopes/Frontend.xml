@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Frontend" pattern="file[hedgedoc]:frontend//*" />
+</component>

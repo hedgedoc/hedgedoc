@@ -11,6 +11,10 @@ composer.lock
 .DS_Store
 .idea/
 !.idea/copyright/
+!.idea/scopes/
+!.idea/modules.xml
+!.idea/hedgedoc.iml
+!.idea/icon.svg
 Thumbs.db
 npm-debug.log
 newrelic_agent.log
