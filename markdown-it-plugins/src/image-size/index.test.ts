@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import MarkdownIt from 'markdown-it/lib'
+import MarkdownIt from 'markdown-it'
 
 import { imageSize } from './index.js'
 import { describe, expect, it } from '@jest/globals'
