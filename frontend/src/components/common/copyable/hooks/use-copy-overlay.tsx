@@ -27,7 +27,7 @@ enum SHOW_STATE {
  * @return the copy function and the overlay
  */
 export const useCopyOverlay = (
-  clickComponent: RefObject<HTMLElement>,
+  clickComponent: RefObject<HTMLElement | null>,
   content: string
 ): [copyToCliphoard: () => void, overlayElement: ReactElement] => {
   useTranslation()

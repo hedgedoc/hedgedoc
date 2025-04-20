@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import styles from './animations.module.scss'
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState, type JSX } from 'react'
 import type { Icon } from 'react-bootstrap-icons'
 import {
   File as IconFile,

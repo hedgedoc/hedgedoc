@@ -14,7 +14,7 @@ import { useEffect, useRef } from 'react'
  * @param onChange The callback to call if something changes
  */
 export const useOnRefChange = <T>(reference: MutableRefObject<T>, onChange?: (newValue: T) => void): void => {
-  const lastValue = useRef<T>()
+  const lastValue = useRef<T>(undefined)
   useEffect(() => {
     if (onChange && !equal(reference.current, lastValue.current)) {
       lastValue.current = reference.current

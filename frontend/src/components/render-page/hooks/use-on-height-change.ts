@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from 'react'
  * @param onHeightChange The callback that should be executed if the height changes
  */
 export const useOnHeightChange = (
-  elementRef: RefObject<HTMLElement>,
+  elementRef: RefObject<HTMLElement | null>,
   onHeightChange: undefined | ((value: number) => void)
 ): void => {
   const [rendererSize, setRendererSize] = useState<number>(0)

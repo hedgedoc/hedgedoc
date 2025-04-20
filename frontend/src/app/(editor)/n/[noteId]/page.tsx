@@ -9,16 +9,17 @@ import { NoteLoadingBoundary } from '../../../../components/common/note-loading-
 import { EditorPageContent } from '../../../../components/editor-page/editor-page-content'
 import { EditorToRendererCommunicatorContextProvider } from '../../../../components/editor-page/render-context/editor-to-renderer-communicator-context-provider'
 import type { NextPage } from 'next'
-import React from 'react'
+import React, { use } from 'react'
 
 interface PageParams {
-  params: NoteIdProps
+  params: Promise<NoteIdProps>
 }
 
 /**
  * Renders a page that is used by the user to edit markdown notes. It contains the editor and a renderer.
  */
-const EditorPage: NextPage<PageParams> = ({ params }) => {
+const EditorPage: NextPage<PageParams> = (props: PageParams) => {
+  const params = use(props.params)
   return (
     <NoteLoadingBoundary noteId={params.noteId}>
       <EditorToRendererCommunicatorContextProvider>

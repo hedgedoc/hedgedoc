@@ -40,7 +40,7 @@ export const EmojiPickerPopover = React.forwardRef<HTMLDivElement, EmojiPickerPr
   ({ onEmojiSelected, ...props }, ref) => {
     const darkModeEnabled = useDarkModeState()
     const pickerContainerRef = useRef<HTMLDivElement>(null)
-    const pickerRef = useRef<Picker>()
+    const pickerRef = useRef<Picker>(undefined)
 
     useEffect(() => {
       if (!pickerContainerRef.current) {

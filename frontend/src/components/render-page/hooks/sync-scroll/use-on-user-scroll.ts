@@ -18,7 +18,7 @@ import { useCallback } from 'react'
  */
 export const useOnUserScroll = (
   lineMarks: LineMarkerPosition[] | undefined,
-  scrollContainer: React.RefObject<HTMLElement>,
+  scrollContainer: React.RefObject<HTMLElement | null>,
   onScroll: ((newScrollState: ScrollState) => void) | null
 ): React.UIEventHandler<HTMLElement> => {
   return useCallback(() => {

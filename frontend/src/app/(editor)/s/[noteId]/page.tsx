@@ -10,16 +10,17 @@ import { DocumentReadOnlyPageContent } from '../../../../components/document-rea
 import { useNoteAndAppTitle } from '../../../../components/editor-page/head-meta-properties/use-note-and-app-title'
 import { EditorToRendererCommunicatorContextProvider } from '../../../../components/editor-page/render-context/editor-to-renderer-communicator-context-provider'
 import type { NextPage } from 'next'
-import React from 'react'
+import React, { use } from 'react'
 
 interface PageParams {
-  params: NoteIdProps
+  params: Promise<NoteIdProps>
 }
 
 /**
  * Renders a page that contains only the rendered document without an editor or realtime updates.
  */
-const DocumentReadOnlyPage: NextPage<PageParams> = ({ params }) => {
+const DocumentReadOnlyPage: NextPage<PageParams> = (props) => {
+  const params = use(props.params)
   useNoteAndAppTitle()
 
   return (

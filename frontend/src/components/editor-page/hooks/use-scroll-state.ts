@@ -20,7 +20,7 @@ const log = new Logger('useScrollState')
  * @return the created scroll state and the update function. The update function accepts only new values if the given scroll source isn't active to prevent callback loops.
  */
 export const useScrollState = (
-  scrollSourceRef: RefObject<ScrollSource>,
+  scrollSourceRef: RefObject<ScrollSource | null>,
   scrollSource: ScrollSource
 ): [scrollState: ScrollState, onScroll: (newScrollState: ScrollState) => void] => {
   const editorSyncScroll: boolean = useApplicationState((state) => state.editorConfig.syncScroll)

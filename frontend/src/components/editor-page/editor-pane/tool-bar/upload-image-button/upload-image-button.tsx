@@ -21,7 +21,7 @@ const logger = new Logger('Upload image button')
  * Shows a button that uploads a chosen file to the backend and adds the link to the note.
  */
 export const UploadImageButton: React.FC = () => {
-  const clickRef = useRef<() => void>()
+  const clickRef = useRef<() => void>(undefined)
   const buttonClick = useCallback(() => {
     clickRef.current?.()
   }, [])

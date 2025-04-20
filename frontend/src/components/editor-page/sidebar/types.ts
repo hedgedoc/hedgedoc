@@ -15,7 +15,7 @@ export interface SpecificSidebarEntryProps {
 
 export interface SidebarEntryProps extends PropsWithDataCypressId {
   icon?: Icon
-  buttonRef?: RefObject<HTMLButtonElement>
+  buttonRef?: RefObject<HTMLButtonElement | null>
   hide?: boolean
   className?: string
   onClick?: () => void

@@ -15,7 +15,7 @@ import { useMemo, useRef } from 'react'
  * @return the generated callback
  */
 export const useCursorActivityCallback = (): Extension => {
-  const lastMainSelection = useRef<SelectionRange>()
+  const lastMainSelection = useRef<SelectionRange>(undefined)
 
   return useMemo(
     () =>

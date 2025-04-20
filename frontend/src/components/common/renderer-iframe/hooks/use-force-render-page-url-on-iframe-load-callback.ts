@@ -19,7 +19,7 @@ const log = new Logger('IframeLoader')
  * @param onNavigateAway An optional callback that is executed when the iframe leaves the enforced URL.
  */
 export const useForceRenderPageUrlOnIframeLoadCallback = (
-  iFrameReference: RefObject<HTMLIFrameElement>,
+  iFrameReference: RefObject<HTMLIFrameElement | null>,
   onNavigateAway: () => void
 ): (() => void) => {
   const iframeCommunicator = useEditorToRendererCommunicator()

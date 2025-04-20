@@ -23,8 +23,8 @@ import { useCallback, useMemo, useState } from 'react'
  *         The second one should be executed if the user actually scrolls. Usually it should be attached to the DOM element that the user scrolls.
  */
 export const useDocumentSyncScrolling = (
-  outerContainerRef: React.RefObject<HTMLElement>,
-  rendererRef: React.RefObject<HTMLElement>,
+  outerContainerRef: React.RefObject<HTMLElement | null>,
+  rendererRef: React.RefObject<HTMLElement | null>,
   numberOfLines: number,
   scrollState: ScrollState | null,
   onScroll: null | ((scrollState: ScrollState) => void)

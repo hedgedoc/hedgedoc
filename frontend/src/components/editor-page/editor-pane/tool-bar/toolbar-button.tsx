@@ -16,7 +16,7 @@ export interface ToolbarButtonProps {
   icon: Icon
   onClick: () => void
   disabled?: boolean
-  buttonRef?: RefObject<HTMLButtonElement>
+  buttonRef?: RefObject<HTMLButtonElement | null>
 }
 
 /**

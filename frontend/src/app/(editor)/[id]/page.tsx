@@ -9,13 +9,14 @@ import { baseUrlFromEnvExtractor } from '../../../utils/base-url-from-env-extrac
 import { notFound } from 'next/navigation'
 
 interface PageProps {
-  params: { id: string | undefined }
+  params: Promise<{ id: string | undefined }>
 }
 
 /**
  * Redirects the user to the editor if the link is a root level direct link to a version 1 note.
  */
-const DirectLinkFallback = async ({ params }: PageProps) => {
+const DirectLinkFallback = async (props: PageProps) => {
+  const params = await props.params
   const baseUrl = baseUrlFromEnvExtractor.extractBaseUrls().editor
 
   if (params.id === undefined) {

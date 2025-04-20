@@ -13,7 +13,7 @@ import { useEffect, useRef } from 'react'
  * @param messageTransporter the message transporter to disconnect
  */
 export const useDisconnectOnUserLoginStatusChange = (messageTransporter: MessageTransporter): void => {
-  const previousIsLoggedIn = useRef<boolean | undefined>()
+  const previousIsLoggedIn = useRef<boolean | undefined>(undefined)
   const isLoggedIn = useApplicationState((state) => state.user !== null)
   useEffect(() => {
     if (previousIsLoggedIn.current === undefined) {

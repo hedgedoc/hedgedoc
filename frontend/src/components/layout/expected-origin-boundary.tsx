@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { headers } from 'next/headers'
+import { headers, type UnsafeUnwrappedHeaders } from 'next/headers'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
 
@@ -17,7 +17,7 @@ export interface ExpectedOriginBoundaryProps extends PropsWithChildren {
  * @return the calculated request origin or {@code undefined} if no host header has been found
  */
 export const buildOriginFromHeaders = (): string | undefined => {
-  const currentHeader = headers()
+  const currentHeader = headers() as unknown as UnsafeUnwrappedHeaders
   const host = currentHeader.get('x-forwarded-host') ?? currentHeader.get('host')
   if (host === null) {
     return undefined

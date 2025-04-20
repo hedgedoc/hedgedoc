@@ -21,9 +21,9 @@ export const useScrollToLineMark = (
   scrollState: ScrollState | null,
   lineMarks: LineMarkerPosition[],
   contentLineCount: number,
-  scrollContainer: RefObject<HTMLElement>
+  scrollContainer: RefObject<HTMLElement | null>
 ): void => {
-  const lastScrollPosition = useRef<number>()
+  const lastScrollPosition = useRef<number>(undefined)
 
   const scrollTo = useCallback(
     (targetPosition: number): void => {

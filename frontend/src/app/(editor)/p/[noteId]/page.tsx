@@ -11,16 +11,17 @@ import { useNoteAndAppTitle } from '../../../../components/editor-page/head-meta
 import { EditorToRendererCommunicatorContextProvider } from '../../../../components/editor-page/render-context/editor-to-renderer-communicator-context-provider'
 import { SlideShowPageContent } from '../../../../components/slide-show-page/slide-show-page-content'
 import type { NextPage } from 'next'
-import React from 'react'
+import React, { use } from 'react'
 
 interface PageParams {
-  params: NoteIdProps
+  params: Promise<NoteIdProps>
 }
 
 /**
  * Renders a page that is used by the user to hold a presentation. It contains the renderer for the presentation.
  */
-const SlideShowPage: NextPage<PageParams> = ({ params }) => {
+const SlideShowPage: NextPage<PageParams> = (props) => {
+  const params = use(props.params)
   useNoteAndAppTitle()
 
   return (

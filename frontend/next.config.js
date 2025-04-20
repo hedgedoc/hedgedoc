@@ -95,10 +95,7 @@ const rawNextConfig = {
     ])
   },
   output: 'standalone',
-  swcMinify: true,
-  experimental: {
-    outputFileTracingRoot: path.join(__dirname, '../')
-  },
+  outputFileTracingRoot: path.join(__dirname, '../'),
   productionBrowserSourceMaps: true
 }
 const completeNextConfig = withBundleAnalyzer(rawNextConfig)

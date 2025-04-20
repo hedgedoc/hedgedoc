@@ -36,7 +36,7 @@ const applyScrollState = (view: EditorView, scrollState: ScrollState): void => {
  * @param scrollState The scroll state that should be monitored
  */
 export const useApplyScrollState = (scrollState: ScrollState | null): void => {
-  const lastScrollPosition = useRef<ScrollState>()
+  const lastScrollPosition = useRef<ScrollState>(undefined)
   const [codeMirrorRef] = useCodemirrorReferenceContext()
 
   useEffect(() => {

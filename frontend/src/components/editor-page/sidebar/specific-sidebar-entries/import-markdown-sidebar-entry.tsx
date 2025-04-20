@@ -39,7 +39,7 @@ export const ImportMarkdownSidebarEntry: React.FC = () => {
     [changeEditorContent]
   )
 
-  const clickRef = useRef<() => void>()
+  const clickRef = useRef<() => void>(undefined)
   const buttonClick = useCallback(() => {
     clickRef.current?.()
   }, [])
