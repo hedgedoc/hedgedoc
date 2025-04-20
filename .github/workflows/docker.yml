@@ -25,11 +25,11 @@ jobs:
       matrix:
         component: [ 'backend', 'frontend' ]
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@v4.2.2 # v4.2.2
 
       - name: Generate Docker metadata for ${{ matrix.component }}
         id: meta-data
-        uses: docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81 # v5.5.1
+        uses: docker/metadata-action@v5.7.0 # v5.5.1
         with:
           images: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}/${{ matrix.component }}
           tags: |
@@ -39,20 +39,20 @@ jobs:
             type=semver,pattern={{major}}
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@49b3bc8e6bdd4a60e6116a5414239cba5943d3cf # v3.2.0
+        uses: docker/setup-qemu-action@v3.6.0 # v3.2.0
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@988b5a0280414f521da01fcc63a27aeeb4b104db # v3.6.1
+        uses: docker/setup-buildx-action@v3.10.0 # v3.6.1
 
       - name: Login to GHCR
-        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+        uses: docker/login-action@v3.4.0 # v3.3.0
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push
-        uses: docker/build-push-action@5cd11c3a4ced054e52742c5fd54dca954e0edd85 # v6.7.0
+        uses: docker/build-push-action@v6.15.0 # v6.7.0
         with:
           push: true
           file: ${{ matrix.component}}/docker/Dockerfile
