@@ -2731,7 +2731,7 @@ __metadata:
     diff: "npm:7.0.0"
     dom-serializer: "npm:2.0.0"
     domhandler: "npm:5.0.3"
-    dompurify: "npm:3.1.7"
+    dompurify: "npm:3.2.4"
     dotenv-cli: "npm:7.4.4"
     emoji-picker-element: "npm:1.23.0"
     emoji-picker-element-data: "npm:1.6.1"
@@ -9913,14 +9913,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:3.1.7":
-  version: 3.1.7
-  resolution: "dompurify@npm:3.1.7"
-  checksum: 10c0/fcceef2e9f824d712a056fa699b0538f3337f5cf00ccb7227bdc7eba5463823e15d9aecc00a2fd81c726b28a71e7b09f0eb8a2fde1021c40e35f12dc67b66394
-  languageName: node
-  linkType: hard
-
-"dompurify@npm:^3.2.1":
+"dompurify@npm:3.2.4, dompurify@npm:^3.2.1":
   version: 3.2.4
   resolution: "dompurify@npm:3.2.4"
   dependencies:
