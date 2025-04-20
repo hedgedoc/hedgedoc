@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: MIT
  */
 
-import MarkdownIt from 'markdown-it'
-import ParserInline from 'markdown-it/lib/parser_inline.js'
-import StateInline from 'markdown-it/lib/rules_inline/state_inline.js'
+import MarkdownIt, { PluginSimple } from 'markdown-it'
+import { RuleInline } from 'markdown-it/lib/parser_inline.mjs'
+import StateInline from 'markdown-it/lib/rules_inline/state_inline.mjs'
 import { ParseImageSize, parseImageSize } from './parse-image-size.js'
 import { SpecialCharacters } from './specialCharacters.js'
 
@@ -121,7 +121,7 @@ function parseLink(state: StateInline, startPosition: number): ParseLinkResult |
   }
 }
 
-const imageWithSize: ParserInline.RuleInline = (state, silent) => {
+const imageWithSize: RuleInline = (state, silent) => {
   let position,
     title,
     start,
@@ -249,6 +249,6 @@ const imageWithSize: ParserInline.RuleInline = (state, silent) => {
   return true
 }
 
-export const imageSize: MarkdownIt.PluginSimple = (md: MarkdownIt) => {
+export const imageSize: PluginSimple = (md: MarkdownIt) => {
   md.inline.ruler.before('emphasis', 'image', imageWithSize)
 }

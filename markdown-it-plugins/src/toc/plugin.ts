@@ -6,9 +6,9 @@
 
 import { Optional } from '@mrdrogdrog/optional'
 import { encode as htmlencode } from 'html-entities'
-import MarkdownIt from 'markdown-it'
-import StateBlock from 'markdown-it/lib/rules_block/state_block.js'
-import Token from 'markdown-it/lib/token.js'
+import MarkdownIt, { PluginWithOptions } from 'markdown-it'
+import StateBlock from 'markdown-it/lib/rules_block/state_block.mjs'
+import Token from 'markdown-it/lib/token.mjs'
 import { TocAst } from './toc-ast.js'
 import { renderAstToHtml } from './toc-body-renderer.js'
 import { defaultOptions, TocOptions } from './toc-options.js'
@@ -154,4 +154,4 @@ class Plugin {
  * @param md The markdown-it instance that should be configured
  * @param options The additional options that configure the plugin
  */
-export const toc: MarkdownIt.PluginWithOptions<Partial<TocOptions>> = (md, options) => new Plugin(md, options)
+export const toc: PluginWithOptions<Partial<TocOptions>> = (md, options) => new Plugin(md, options)
