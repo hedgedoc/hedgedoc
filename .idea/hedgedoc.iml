@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/.yarn" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/coverage" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/coverage-e2e" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/uploads" />
+      <excludeFolder url="file://$MODULE_DIR$/commons/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/commons/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/commons/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/docs/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/docs/site" />
+      <excludeFolder url="file://$MODULE_DIR$/docs/venv" />
+      <excludeFolder url="file://$MODULE_DIR$/frontend/.next" />
+      <excludeFolder url="file://$MODULE_DIR$/frontend/.swc" />
+      <excludeFolder url="file://$MODULE_DIR$/frontend/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/frontend/coverage" />
+      <excludeFolder url="file://$MODULE_DIR$/frontend/cypress/downloads" />
+      <excludeFolder url="file://$MODULE_DIR$/frontend/cypress/screenshots" />
+      <excludeFolder url="file://$MODULE_DIR$/frontend/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/frontend/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/html-to-react/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/html-to-react/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/html-to-react/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/markdown-it-plugins/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/markdown-it-plugins/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/markdown-it-plugins/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/tmp" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
