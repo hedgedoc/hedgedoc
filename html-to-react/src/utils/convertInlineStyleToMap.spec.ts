@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { convertInlineStyleToMap } from './convertInlineStyleToMap.js'
+import { describe, it, expect } from 'vitest'
 
 describe('convertInlineStyleToMap', () => {
   it('should split on normal ;', () => {
