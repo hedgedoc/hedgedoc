@@ -22,7 +22,6 @@ export class AnchorNodePreprocessor extends TravelerNodeProcessor {
 
     const url = node.attribs.href.trim()
 
-    // eslint-disable-next-line no-script-url
     if (url.startsWith('data:') || url.startsWith('javascript:') || url.startsWith('vbscript:')) {
       delete node.attribs.href
       return

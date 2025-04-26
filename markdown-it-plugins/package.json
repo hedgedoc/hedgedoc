@@ -90,7 +90,7 @@
     "test:ci": "vitest --run",
     "prepublish": "rm -rf dist && yarn lint && yarn build && yarn test",
     "lint": "eslint src --ext .ts",
-    "lint:fix": "eslint --fix --ext .ts src"
+    "lint:fix": "eslint src --ext .ts --fix"
   },
   "keywords": [
     "markdown",
@@ -108,15 +108,16 @@
     "html-entities": "2.5.2"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "3.3.1",
+    "@eslint/js": "9.25.1",
     "@types/markdown-it": "13.0.8",
-    "@typescript-eslint/eslint-plugin": "8.14.0",
-    "@typescript-eslint/parser": "8.14.0",
-    "eslint": "8.57.1",
-    "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-prettier": "5.2.3",
+    "@vitest/eslint-plugin": "1.1.43",
+    "eslint-config-prettier": "10.1.2",
+    "eslint-plugin-prettier": "5.2.6",
     "markdown-it": "13.0.2",
     "prettier": "3.3.3",
     "typescript": "5.6.3",
+    "typescript-eslint": "8.31.0",
     "vitest": "3.1.2"
   },
   "repository": {
