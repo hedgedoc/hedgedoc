@@ -6,7 +6,7 @@
 
 import MarkdownIt from 'markdown-it/lib'
 import { toc } from './plugin.js'
-import { describe, expect, it, jest } from '@jest/globals'
+import { describe, expect, it, vitest } from 'vitest'
 
 describe('toc', () => {
   const simpleContent = `
@@ -143,7 +143,7 @@ describe('toc', () => {
   })
 
   it('renders a toc and executes the callback', () => {
-    const callback = jest.fn()
+    const callback = vitest.fn()
     const markdownIt = new MarkdownIt().use(toc, { callback })
     markdownIt.render(simpleContent)
     expect(callback).toBeCalledWith({

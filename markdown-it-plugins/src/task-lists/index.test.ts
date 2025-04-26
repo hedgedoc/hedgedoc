@@ -6,7 +6,7 @@
 
 import MarkdownIt from 'markdown-it/lib'
 import { taskLists } from './index.js'
-import { describe, expect, it } from '@jest/globals'
+import { describe, expect, it } from 'vitest'
 
 describe('markdown-it-task-lists', () => {
   it('renders bullet correctly', () => {
