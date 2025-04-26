@@ -62,7 +62,7 @@ export const DocumentMarkdownRenderer: React.FC<DocumentMarkdownRendererProps> =
   )
 
   const markdownBodyRef = useRef<HTMLDivElement>(null)
-  const currentLineMarkers = useRef<LineMarkers[]>()
+  const currentLineMarkers = useRef<LineMarkers[]>([])
 
   const extensions = useMarkdownExtensions(
     baseUrl,

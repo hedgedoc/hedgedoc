@@ -4,11 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { headers } from 'next/headers'
-import type { PropsWithChildren } from 'react'
+import type { AwaitedReactNode } from 'react'
 import React from 'react'
 
-export interface ExpectedOriginBoundaryProps extends PropsWithChildren {
+export interface ExpectedOriginBoundaryProps {
   expectedOrigin: string
+  children?: AwaitedReactNode | undefined
 }
 
 /**
@@ -16,8 +17,8 @@ export interface ExpectedOriginBoundaryProps extends PropsWithChildren {
  *
  * @return the calculated request origin or {@code undefined} if no host header has been found
  */
-export const buildOriginFromHeaders = (): string | undefined => {
-  const currentHeader = headers()
+export const buildOriginFromHeaders = async (): Promise<string | undefined> => {
+  const currentHeader = await headers()
   const host = currentHeader.get('x-forwarded-host') ?? currentHeader.get('host')
   if (host === null) {
     return undefined
@@ -34,8 +35,11 @@ export const buildOriginFromHeaders = (): string | undefined => {
  * @param children the children to show if the origin passes
  * @param expectedOrigin The origin that should match the request's origin
  */
-export const ExpectedOriginBoundary: React.FC<ExpectedOriginBoundaryProps> = ({ children, expectedOrigin }) => {
-  const currentOrigin = buildOriginFromHeaders()
+export async function ExpectedOriginBoundary({
+  children,
+  expectedOrigin
+}: ExpectedOriginBoundaryProps): Promise<React.AwaitedReactNode> {
+  const currentOrigin = await buildOriginFromHeaders()
 
   if (new URL(expectedOrigin).origin !== currentOrigin) {
     return (

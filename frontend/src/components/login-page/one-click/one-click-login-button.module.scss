@@ -1,3 +1,4 @@
+@use "sass:color";
 /*!
  * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
  *
@@ -5,7 +6,7 @@
  */
 
 @function brightness($color) {
-  @return ((red($color) * 299) + (green($color) * 587) + (blue($color) * 114)) / 1000;
+  @return ((color.red($color) * 299) + (color.green($color) * 587) + (color.blue($color) * 114)) / 1000;
 }
 
 @mixin button($color) {
@@ -13,7 +14,7 @@
   color: $font-color;
   background-color: $color;
   &:hover {
-    background-color: darken($color, 15%);
+    background-color: color.adjust($color, $lightness: -15%);
   }
 }
 

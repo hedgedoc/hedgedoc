@@ -1,3 +1,4 @@
+@use "sass:color";
 /*!
  * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
  *
@@ -7,9 +8,9 @@
 .alert {
   $color: #5A0F04;
   display: flex;
-  --bs-alert-color: #{lighten($color, 80%)};
+  --bs-alert-color: #{color.adjust($color, $lightness: 80%)};
   --bs-alert-bg: #{$color};
-  --bs-alert-border-color: #{lighten($color, 20%)};
+  --bs-alert-border-color: #{color.adjust($color, $lightness: 20%)};
   flex-direction: row;
 }
 

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-@import "keyframes";
+@use "keyframes";
 
 .rows {
   transition: opacity 0.2s;

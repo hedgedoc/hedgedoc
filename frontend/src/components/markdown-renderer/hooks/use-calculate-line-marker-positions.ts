@@ -55,13 +55,13 @@ const calculateLineMarkerPositions = (
  */
 export const useCalculateLineMarkerPosition = (
   documentElement: RefObject<HTMLDivElement>,
-  lineMarkers: LineMarkers[] | undefined,
+  lineMarkers: LineMarkers[],
   onLineMarkerPositionChanged?: (lineMarkerPosition: LineMarkerPosition[]) => void
 ): void => {
   const lastLineMarkerPositions = useRef<LineMarkerPosition[]>()
 
   const calculateNewLineMarkerPositions = useCallback(() => {
-    if (!documentElement.current || !onLineMarkerPositionChanged || !lineMarkers) {
+    if (!documentElement.current || !onLineMarkerPositionChanged) {
       return
     }
 
