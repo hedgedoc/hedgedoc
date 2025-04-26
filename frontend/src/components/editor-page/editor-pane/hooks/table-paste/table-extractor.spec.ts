@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { convertClipboardTableToMarkdown, isTable } from './table-extractor'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('isTable detection: ', () => {
   it('empty string is no table', () => {

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`katex frame renders a valid latex expression as explicit block 1`] = `
+exports[`katex frame > renders a valid latex expression > as explicit block 1`] = `
 <div>
   <p
     data-testid="katex-block"
@@ -28,7 +28,7 @@ exports[`katex frame renders a valid latex expression as explicit block 1`] = `
 </div>
 `;
 
-exports[`katex frame renders a valid latex expression as explicit inline 1`] = `
+exports[`katex frame > renders a valid latex expression > as explicit inline 1`] = `
 <div>
   <span
     data-testid="katex-inline"
@@ -56,7 +56,7 @@ exports[`katex frame renders a valid latex expression as explicit inline 1`] = `
 </div>
 `;
 
-exports[`katex frame renders a valid latex expression as implicit inline 1`] = `
+exports[`katex frame > renders a valid latex expression > as implicit inline 1`] = `
 <div>
   <span
     data-testid="katex-inline"
@@ -84,7 +84,7 @@ exports[`katex frame renders a valid latex expression as implicit inline 1`] = `
 </div>
 `;
 
-exports[`katex frame renders an error for an invalid latex expression as explicit block 1`] = `
+exports[`katex frame > renders an error for an invalid latex expression > as explicit block 1`] = `
 <div>
   <p
     data-testid="katex-block"
@@ -106,7 +106,7 @@ exports[`katex frame renders an error for an invalid latex expression as explici
 </div>
 `;
 
-exports[`katex frame renders an error for an invalid latex expression as explicit inline 1`] = `
+exports[`katex frame > renders an error for an invalid latex expression > as explicit inline 1`] = `
 <div>
   <span
     data-testid="katex-inline"
@@ -128,7 +128,7 @@ exports[`katex frame renders an error for an invalid latex expression as explici
 </div>
 `;
 
-exports[`katex frame renders an error for an invalid latex expression as implicit inline 1`] = `
+exports[`katex frame > renders an error for an invalid latex expression > as implicit inline 1`] = `
 <div>
   <span
     data-testid="katex-inline"

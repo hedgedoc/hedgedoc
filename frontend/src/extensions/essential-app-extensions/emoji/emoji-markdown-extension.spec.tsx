@@ -8,6 +8,7 @@ import { mockI18n } from '../../../test-utils/mock-i18n'
 import { EmojiMarkdownRendererExtension } from './emoji-markdown-renderer-extension'
 import { render } from '@testing-library/react'
 import React from 'react'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
 
 describe('Emoji Markdown Extension', () => {
   beforeAll(async () => {
@@ -15,8 +16,8 @@ describe('Emoji Markdown Extension', () => {
   })
 
   afterAll(() => {
-    jest.resetModules()
-    jest.restoreAllMocks()
+    vitest.resetModules()
+    vitest.restoreAllMocks()
   })
 
   it('renders an emoji code', () => {

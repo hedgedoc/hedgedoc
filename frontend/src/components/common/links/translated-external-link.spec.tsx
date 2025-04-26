@@ -6,6 +6,7 @@
 import { mockI18n } from '../../../test-utils/mock-i18n'
 import { TranslatedExternalLink } from './translated-external-link'
 import { render } from '@testing-library/react'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('TranslatedExternalLink', () => {
   const href = 'https://example.com'

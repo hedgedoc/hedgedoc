@@ -4,17 +4,18 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import * as useUiNotificationsModule from '../components/notifications/ui-notification-boundary'
+import { vi } from 'vitest'
 
-jest.mock('../components/notifications/ui-notification-boundary')
+vi.mock('../components/notifications/ui-notification-boundary')
 
 /**
  * Mocks the {@link useUiNotifications} hook with stub functions for tests.
  */
 export const mockUiNotifications = () => {
-  jest.spyOn(useUiNotificationsModule, 'useUiNotifications').mockReturnValue({
-    showErrorNotification: jest.fn(),
-    dismissNotification: jest.fn(),
-    dispatchUiNotification: jest.fn(),
-    pruneNotification: jest.fn()
+  vi.spyOn(useUiNotificationsModule, 'useUiNotifications').mockReturnValue({
+    showErrorNotification: vi.fn(),
+    dismissNotification: vi.fn(),
+    dispatchUiNotification: vi.fn(),
+    pruneNotification: vi.fn()
   })
 }

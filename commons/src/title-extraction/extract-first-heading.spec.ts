@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { extractFirstHeading } from './extract-first-heading.js'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
 import { Document, Element, Text } from 'domhandler'
 
 describe('extract first heading', () => {

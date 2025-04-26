@@ -9,8 +9,10 @@ import { mockI18n } from '../../../test-utils/mock-i18n'
 import { TranslatedApplicationErrorAlert } from './translated-application-error-alert'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('./application-error-alert', () => ({
+vi.mock('./application-error-alert', () => ({
   ApplicationErrorAlert: ({ children, ...props }: PropsWithChildren) => (
     <div>
       <h3>This is a mock for ApplicationErrorAlert.</h3>

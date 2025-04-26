@@ -6,6 +6,7 @@
 import { useIsDocumentVisible } from './use-is-document-visible'
 import { fireEvent, render } from '@testing-library/react'
 import React, { Fragment } from 'react'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('use is document visible', () => {
   const TestComponent: React.FC = () => {

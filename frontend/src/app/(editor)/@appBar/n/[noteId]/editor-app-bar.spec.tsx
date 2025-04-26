@@ -10,8 +10,9 @@ import { render } from '@testing-library/react'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
 import { mockAppState } from '../../../../../test-utils/mock-app-state'
+import { vi, describe, it, beforeAll, afterAll, expect } from 'vitest'
 
-jest.mock('../../../../../components/layout/app-bar/base-app-bar', () => ({
+vi.mock('../../../../../components/layout/app-bar/base-app-bar', () => ({
   __esModule: true,
   BaseAppBar: ({ children }: PropsWithChildren) => (
     <div>
@@ -21,7 +22,7 @@ jest.mock('../../../../../components/layout/app-bar/base-app-bar', () => ({
     </div>
   )
 }))
-jest.mock('../../../../../hooks/common/use-application-state')
+vi.mock('../../../../../hooks/common/use-application-state')
 
 const mockedCommonAppState = {
   noteDetails: {
@@ -44,7 +45,7 @@ const mockedCommonAppState = {
 
 describe('app bar', () => {
   beforeAll(mockI18n)
-  afterAll(() => jest.restoreAllMocks())
+  afterAll(() => vi.restoreAllMocks())
 
   it('contains note title when editor is synced', () => {
     mockAppState({

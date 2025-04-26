@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AbcJs Markdown Extension renders an abc codeblock 1`] = `
+exports[`AbcJs Markdown Extension > renders an abc codeblock 1`] = `
 <div>
   <pre>
     <span>

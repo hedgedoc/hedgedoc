@@ -5,6 +5,7 @@
  */
 import { legacySlideshareShortCode } from './replace-legacy-slideshare-short-code'
 import MarkdownIt from 'markdown-it'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('Legacy slideshare short code', () => {
   it('replaces with link', () => {

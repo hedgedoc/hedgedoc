@@ -6,6 +6,7 @@
 import { ExternalLink } from './external-link'
 import { render } from '@testing-library/react'
 import { Heart as IconHeart } from 'react-bootstrap-icons'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('ExternalLink', () => {
   const href = 'https://example.com'

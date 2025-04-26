@@ -7,8 +7,10 @@
 import { render } from '@testing-library/react'
 import { ApplicationErrorAlert } from './application-error-alert'
 import type { AlertIconProps } from './alert-icon'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('./alert-icon', () => ({
+vi.mock('./alert-icon', () => ({
   AlertIcon: (props: AlertIconProps) => `This is a mock for "AlertIcon". Props: ${JSON.stringify(props)}`
 }))
 

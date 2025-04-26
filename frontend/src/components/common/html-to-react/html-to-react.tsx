@@ -6,13 +6,13 @@
 import { measurePerformance } from '../../../utils/measure-performance'
 import type { ParserOptions } from '@hedgedoc/html-to-react'
 import { convertHtmlToReact } from '@hedgedoc/html-to-react'
-import type DOMPurify from 'dompurify'
-import { sanitize } from 'dompurify'
+import type { Config } from 'dompurify'
+import DOMPurify from 'dompurify'
 import React, { Fragment, useMemo } from 'react'
 
 export interface HtmlToReactProps {
   htmlCode: string
-  domPurifyConfig?: DOMPurify.Config
+  domPurifyConfig?: Config
   parserOptions?: ParserOptions
 }
 
@@ -28,7 +28,7 @@ const REGEX_URI_SCHEME_NO_SCRIPTS = /^(?!.*script:).+:?/i
 export const HtmlToReact: React.FC<HtmlToReactProps> = ({ htmlCode, domPurifyConfig, parserOptions }) => {
   const elements = useMemo(() => {
     const sanitizedHtmlCode = measurePerformance('html-to-react: sanitize', () => {
-      return sanitize(htmlCode, {
+      return DOMPurify.sanitize(htmlCode, {
         ...domPurifyConfig,
         RETURN_DOM_FRAGMENT: false,
         RETURN_DOM: false,

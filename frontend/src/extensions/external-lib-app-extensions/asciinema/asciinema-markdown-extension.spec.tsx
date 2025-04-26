@@ -10,12 +10,14 @@ import * as AsciinemaFrameModule from './asciinema-frame'
 import { AsciinemaMarkdownExtension } from './asciinema-markdown-extension'
 import { render } from '@testing-library/react'
 import React from 'react'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('./asciinema-frame')
+vi.mock('./asciinema-frame')
 
 describe('asciinema markdown extension', () => {
   beforeAll(async () => {
-    jest
+    vi
       .spyOn(AsciinemaFrameModule, 'AsciinemaFrame')
       .mockImplementation((({ id }) => (
         <span>this is a mock for the asciinema frame with id {id}</span>
@@ -24,8 +26,8 @@ describe('asciinema markdown extension', () => {
   })
 
   afterAll(() => {
-    jest.resetAllMocks()
-    jest.resetModules()
+    vitest.resetAllMocks()
+    vitest.resetModules()
   })
 
   it('renders plain asciinema URLs', () => {

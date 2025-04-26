@@ -10,13 +10,15 @@ import { mockI18n } from '../../../test-utils/mock-i18n'
 import { HighlightedCodeMarkdownExtension } from './highlighted-code-markdown-extension'
 import { render } from '@testing-library/react'
 import React from 'react'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../../../components/common/highlighted-code/highlighted-code')
+vi.mock('../../../components/common/highlighted-code/highlighted-code')
 
 describe('Highlighted code markdown extension', () => {
   describe('renders', () => {
     beforeAll(async () => {
-      jest.spyOn(HighlightedCodeModule, 'HighlightedCode').mockImplementation((({
+      vitest.spyOn(HighlightedCodeModule, 'HighlightedCode').mockImplementation((({
         code,
         language,
         startLineNumber,

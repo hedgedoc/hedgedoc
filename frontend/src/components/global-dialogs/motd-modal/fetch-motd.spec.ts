@@ -5,6 +5,7 @@
  */
 import { fetchMotd } from './fetch-motd'
 import { Mock } from 'ts-mockery'
+import { afterEach, beforeEach, describe, expect, it, vitest, beforeAll } from 'vitest'
 
 describe('fetch motd', () => {
   const baseUrl = 'https://example.org/'
@@ -14,19 +15,19 @@ describe('fetch motd', () => {
     window.localStorage.clear()
   })
   afterEach(() => {
-    jest.resetAllMocks()
-    jest.resetModules()
+    vitest.resetAllMocks()
+    vitest.resetModules()
   })
   beforeAll(() => {
-    global.fetch = jest.fn()
+    global.fetch = vitest.fn()
   })
 
   const mockFetch = (
     responseText: string,
     lastModified: string | null,
     etag?: string | null
-  ): jest.SpyInstance<Promise<Response>> => {
-    return jest.spyOn(global, 'fetch').mockImplementation((url: RequestInfo | URL) => {
+  ): vitest.SpyInstance<Promise<Response>> => {
+    return vitest.spyOn(global, 'fetch').mockImplementation((url: RequestInfo | URL) => {
       if (url !== motdUrl) {
         return Promise.reject(new Error('wrong url'))
       }
@@ -45,7 +46,7 @@ describe('fetch motd', () => {
   }
 
   const mockFileNotFoundFetch = () => {
-    jest.spyOn(global, 'fetch').mockImplementation(() =>
+    vitest.spyOn(global, 'fetch').mockImplementation(() =>
       Promise.resolve(
         Mock.of<Response>({
           status: 404

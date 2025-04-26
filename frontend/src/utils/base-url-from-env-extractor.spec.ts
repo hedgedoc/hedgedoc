@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { BaseUrlFromEnvExtractor } from './base-url-from-env-extractor'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('BaseUrlFromEnvExtractor', () => {
   it('should return the base urls if all are valid urls', () => {

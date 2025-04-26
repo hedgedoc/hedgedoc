@@ -7,38 +7,49 @@ import { FrontendWebsocketAdapter } from './frontend-websocket-adapter'
 import type { Message } from '@hedgedoc/commons'
 import { ConnectionState, DisconnectReason, MessageType } from '@hedgedoc/commons'
 import { Mock } from 'ts-mockery'
+import { describe, expect, it, vi, MockInstance, Mock as ViMock } from 'vitest'
+
+interface MockedSocket {
+  addEventListenerSpy: ViMock
+  removeEventListenerSpy: ViMock
+  closeSpy: ViMock
+  sendSpy: ViMock
+  adapter: FrontendWebsocketAdapter
+  socket: WebSocket
+}
 
 describe('frontend websocket', () => {
-  let addEventListenerSpy: jest.Mock
-  let removeEventListenerSpy: jest.Mock
-  let closeSpy: jest.Mock
-  let sendSpy: jest.Mock
-  let adapter: FrontendWebsocketAdapter
-  let mockedSocket: WebSocket
+  function mockSocket(readyState: 0 | 1 | 2 | 3 = WebSocket.OPEN): MockedSocket {
+    const addEventListenerSpy = vi.fn()
+    const removeEventListenerSpy = vi.fn()
+    const closeSpy = vi.fn()
+    const sendSpy = vi.fn()
 
-  function mockSocket(readyState: 0 | 1 | 2 | 3 = WebSocket.OPEN) {
-    addEventListenerSpy = jest.fn()
-    removeEventListenerSpy = jest.fn()
-    closeSpy = jest.fn()
-    sendSpy = jest.fn()
-
-    mockedSocket = Mock.of<WebSocket>({
+    const socket = Mock.of<WebSocket>({
       addEventListener: addEventListenerSpy,
       removeEventListener: removeEventListenerSpy,
       close: closeSpy,
       send: sendSpy,
       readyState: readyState
     })
-    adapter = new FrontendWebsocketAdapter(mockedSocket)
+    const adapter = new FrontendWebsocketAdapter(socket)
+    return {
+      adapter,
+      addEventListenerSpy,
+      removeEventListenerSpy,
+      closeSpy,
+      sendSpy,
+      socket
+    }
   }
 
   it('can bind and unbind the close event', () => {
-    mockSocket()
-    const handler = jest.fn((reason?: DisconnectReason) => console.log(reason))
+    const { adapter, socket, removeEventListenerSpy } = mockSocket()
+    const handler = vi.fn((reason?: DisconnectReason) => console.log(reason))
 
-    let modifiedHandler: EventListenerOrEventListenerObject = jest.fn()
+    let modifiedHandler: EventListenerOrEventListenerObject = vi.fn()
 
-    jest.spyOn(mockedSocket, 'addEventListener').mockImplementation((event, handler_) => {
+    vi.spyOn(socket, 'addEventListener').mockImplementation((event, handler_) => {
       modifiedHandler = handler_
     })
 
@@ -54,8 +65,8 @@ describe('frontend websocket', () => {
   })
 
   it('can bind and unbind the connect event', () => {
-    mockSocket()
-    const handler = jest.fn()
+    const { adapter, addEventListenerSpy, removeEventListenerSpy } = mockSocket()
+    const handler = vi.fn()
     const unbind = adapter.bindOnConnectedEvent(handler)
     expect(addEventListenerSpy).toHaveBeenCalledWith('open', handler)
     unbind()
@@ -63,8 +74,8 @@ describe('frontend websocket', () => {
   })
 
   it('can bind and unbind the error event', () => {
-    mockSocket()
-    const handler = jest.fn()
+    const { adapter, addEventListenerSpy, removeEventListenerSpy } = mockSocket()
+    const handler = vi.fn()
     const unbind = adapter.bindOnErrorEvent(handler)
     expect(addEventListenerSpy).toHaveBeenCalledWith('error', handler)
     unbind()
@@ -72,11 +83,11 @@ describe('frontend websocket', () => {
   })
 
   it('can bind, unbind and translate the message event', () => {
-    mockSocket()
-    const handler = jest.fn()
+    const { adapter, socket, addEventListenerSpy, removeEventListenerSpy } = mockSocket()
+    const handler = vi.fn()
 
-    let modifiedHandler: EventListenerOrEventListenerObject = jest.fn()
-    jest.spyOn(mockedSocket, 'addEventListener').mockImplementation((event, handler_) => {
+    let modifiedHandler: EventListenerOrEventListenerObject = vi.fn()
+    addEventListenerSpy.mockImplementation((event, handler_) => {
       modifiedHandler = handler_
     })
 
@@ -94,35 +105,35 @@ describe('frontend websocket', () => {
   })
 
   it('can disconnect the socket', () => {
-    mockSocket()
+    const { adapter, closeSpy } = mockSocket()
     adapter.disconnect()
     expect(closeSpy).toHaveBeenCalled()
   })
 
   it('can send messages', () => {
-    mockSocket()
+    const { adapter, sendSpy } = mockSocket()
     const value: Message<MessageType> = { type: MessageType.READY_REQUEST }
     adapter.send(value)
     expect(sendSpy).toHaveBeenCalledWith('{"type":"READY_REQUEST"}')
   })
 
   it('can read the connection state when open', () => {
-    mockSocket(WebSocket.OPEN)
+    const { adapter } = mockSocket(WebSocket.OPEN)
     expect(adapter.getConnectionState()).toBe(ConnectionState.CONNECTED)
   })
 
   it('can read the connection state when connecting', () => {
-    mockSocket(WebSocket.CONNECTING)
+    const { adapter } = mockSocket(WebSocket.CONNECTING)
     expect(adapter.getConnectionState()).toBe(ConnectionState.CONNECTING)
   })
 
   it('can read the connection state when closing', () => {
-    mockSocket(WebSocket.CLOSING)
+    const { adapter } = mockSocket(WebSocket.CLOSING)
     expect(adapter.getConnectionState()).toBe(ConnectionState.DISCONNECTED)
   })
 
   it('can read the connection state when closed', () => {
-    mockSocket(WebSocket.CLOSED)
+    const { adapter } = mockSocket(WebSocket.CLOSED)
     expect(adapter.getConnectionState()).toBe(ConnectionState.DISCONNECTED)
   })
 })

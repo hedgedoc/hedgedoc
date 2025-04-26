@@ -5,6 +5,7 @@
  */
 import { replaceAsciinemaLinkMarkdownItPlugin } from './replace-asciinema-link'
 import MarkdownIt from 'markdown-it/lib'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('Replace asciinema link', () => {
   let markdownIt: MarkdownIt

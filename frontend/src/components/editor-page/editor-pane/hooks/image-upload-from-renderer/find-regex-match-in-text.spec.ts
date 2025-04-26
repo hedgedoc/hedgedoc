@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { findRegexMatchInText } from './find-regex-match-in-text'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('find regex index in line', function () {
   it('finds the first occurrence', () => {

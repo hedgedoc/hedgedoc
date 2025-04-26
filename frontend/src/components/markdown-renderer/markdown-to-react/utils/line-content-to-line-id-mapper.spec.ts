@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { LineContentToLineIdMapper } from './line-content-to-line-id-mapper'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('line id mapper', () => {
   let lineIdMapper: LineContentToLineIdMapper

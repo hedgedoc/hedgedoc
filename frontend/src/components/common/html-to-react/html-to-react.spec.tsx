@@ -5,6 +5,7 @@
  */
 import { HtmlToReact } from './html-to-react'
 import { render } from '@testing-library/react'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('HTML to React', () => {
   it('renders basic html correctly', () => {

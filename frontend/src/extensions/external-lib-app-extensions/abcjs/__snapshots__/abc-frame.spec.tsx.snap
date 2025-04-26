@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AbcFrame renders a music sheet 1`] = `
+exports[`AbcFrame > renders a music sheet 1`] = `
 <div>
   <div
     class="m-3 d-flex align-items-center justify-content-center"
@@ -10,10 +10,10 @@ exports[`AbcFrame renders a music sheet 1`] = `
 </div>
 `;
 
-exports[`AbcFrame renders a music sheet 2`] = `
+exports[`AbcFrame > renders a music sheet 2`] = `
 <div>
   <div
-    class="abcjs-score bg-white text-black svg-container"
+    class="_abcjs-score_4f913d bg-white text-black svg-container"
     style="overflow: hidden; height: 454.4200000000001px;"
   >
     <svg
@@ -2444,7 +2444,7 @@ exports[`AbcFrame renders a music sheet 2`] = `
 </div>
 `;
 
-exports[`AbcFrame renders an error if abcjs file can't be loaded 1`] = `
+exports[`AbcFrame > renders an error if abcjs file can't be loaded 1`] = `
 <div>
   <div
     class="m-3 d-flex align-items-center justify-content-center"
@@ -2454,7 +2454,7 @@ exports[`AbcFrame renders an error if abcjs file can't be loaded 1`] = `
 </div>
 `;
 
-exports[`AbcFrame renders an error if abcjs file can't be loaded 2`] = `
+exports[`AbcFrame > renders an error if abcjs file can't be loaded 2`] = `
 <div>
   <div
     class="fade alert alert-danger show"
@@ -2465,7 +2465,7 @@ exports[`AbcFrame renders an error if abcjs file can't be loaded 2`] = `
 </div>
 `;
 
-exports[`AbcFrame renders an error if abcjs render function crashes 1`] = `
+exports[`AbcFrame > renders an error if abcjs render function crashes 1`] = `
 <div>
   <div
     class="m-3 d-flex align-items-center justify-content-center"
@@ -2475,7 +2475,7 @@ exports[`AbcFrame renders an error if abcjs render function crashes 1`] = `
 </div>
 `;
 
-exports[`AbcFrame renders an error if abcjs render function crashes 2`] = `
+exports[`AbcFrame > renders an error if abcjs render function crashes 2`] = `
 <div>
   <div>
     <h3>
@@ -2491,7 +2491,7 @@ exports[`AbcFrame renders an error if abcjs render function crashes 2`] = `
     </div>
   </div>
   <div
-    class="abcjs-score bg-white text-black svg-container"
+    class="_abcjs-score_4f913d bg-white text-black svg-container"
   >
     <div
       class="m-3 d-flex align-items-center justify-content-center"

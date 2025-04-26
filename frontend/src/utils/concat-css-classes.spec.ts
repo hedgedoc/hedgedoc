@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { concatCssClasses } from './concat-css-classes'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('concat css classes', () => {
   it('works with a map', () => {

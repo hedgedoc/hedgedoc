@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { isCursorInCodeFence } from './codefenceDetection'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('Check whether cursor is in codefence', () => {
   it('returns false for empty document', () => {

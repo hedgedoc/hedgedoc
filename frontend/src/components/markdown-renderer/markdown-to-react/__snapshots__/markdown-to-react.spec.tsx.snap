@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`markdown to react can render html if allowed 1`] = `
+exports[`markdown to react > can render html if allowed 1`] = `
 <div>
   <p>
     <span>
@@ -12,7 +12,7 @@ exports[`markdown to react can render html if allowed 1`] = `
 </div>
 `;
 
-exports[`markdown to react can render markdown with newlines as line breaks 1`] = `
+exports[`markdown to react > can render markdown with newlines as line breaks 1`] = `
 <div>
   <h1>
     This is a headline
@@ -30,7 +30,7 @@ This Too
 </div>
 `;
 
-exports[`markdown to react will use markdown render extensions 1`] = `
+exports[`markdown to react > will use markdown render extensions 1`] = `
 <div>
   <p>
     &lt;span&gt;test&lt;/span&gt;
@@ -65,7 +65,7 @@ exports[`markdown to react will use markdown render extensions 1`] = `
 </div>
 `;
 
-exports[`markdown to react won't render html if forbidden 1`] = `
+exports[`markdown to react > won't render html if forbidden 1`] = `
 <div>
   <p>
     &lt;span&gt;test&lt;/span&gt;
@@ -75,7 +75,7 @@ exports[`markdown to react won't render html if forbidden 1`] = `
 </div>
 `;
 
-exports[`markdown to react won't render markdown with newlines as line breaks if forbidden 1`] = `
+exports[`markdown to react > won't render markdown with newlines as line breaks if forbidden 1`] = `
 <div>
   <h1>
     This is a headline

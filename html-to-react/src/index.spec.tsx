@@ -10,7 +10,7 @@ import { convertNodeToReactElement } from './convertNodeToReactElement.js'
 import { Document, isTag, isText } from 'domhandler'
 import { NodeToReactElementTransformer } from './NodeToReactElementTransformer.js'
 import React, { ReactElement } from 'react'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
 import { ElementType } from 'htmlparser2'
 
 function parseHtmlToReactHtml(html: string, options: ParserOptions = {}) {

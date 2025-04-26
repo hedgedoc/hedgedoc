@@ -7,6 +7,7 @@ import { mockI18n } from '../../../test-utils/mock-i18n'
 import { TableOfContents } from './table-of-contents'
 import type { TocAst } from '@hedgedoc/markdown-it-plugins'
 import { render } from '@testing-library/react'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('Table of contents', () => {
   beforeAll(async () => {

@@ -16,34 +16,36 @@ import { render, screen } from '@testing-library/react'
 import { Fragment } from 'react'
 import { Mock } from 'ts-mockery'
 import type { NoteDto } from '@hedgedoc/commons'
+import { afterEach, beforeEach, describe, expect, it, vitest } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../../../hooks/common/use-single-string-url-parameter')
-jest.mock('../../../api/notes')
-jest.mock('../../../redux/note-details/methods')
-jest.mock('../../error-pages/common-error-page', () => ({
-  CommonErrorPage: jest.fn()
+vi.mock('../../../hooks/common/use-single-string-url-parameter')
+vi.mock('../../../api/notes')
+vi.mock('../../../redux/note-details/methods')
+vi.mock('../../error-pages/common-error-page', () => ({
+  CommonErrorPage: vitest.fn()
 }))
-jest.mock('../../../components/application-loader/loading-screen/loading-screen')
-jest.mock('./create-non-existing-note-hint')
+vi.mock('../../../components/application-loader/loading-screen/loading-screen')
+vi.mock('./create-non-existing-note-hint')
 
 describe('Note loading boundary', () => {
   const mockedNoteId = 'mockedNoteId'
 
   afterEach(() => {
-    jest.resetAllMocks()
-    jest.resetModules()
+    vitest.resetAllMocks()
+    vitest.resetModules()
   })
 
   beforeEach(async () => {
     await mockI18n()
-    jest.spyOn(CreateNonExistingNoteHintModule, 'CreateNonExistingNoteHint').mockImplementation(() => {
+    vitest.spyOn(CreateNonExistingNoteHintModule, 'CreateNonExistingNoteHint').mockImplementation(() => {
       return (
         <Fragment>
           <span>This is a mock for CreateNonExistingNoteHint</span>
         </Fragment>
       )
     })
-    jest.spyOn(LoadingScreenModule, 'LoadingScreen').mockImplementation(({ errorMessage }) => {
+    vitest.spyOn(LoadingScreenModule, 'LoadingScreen').mockImplementation(({ errorMessage }) => {
       return (
         <Fragment>
           <span {...testId('LoadingScreen')}>This is a mock for LoadingScreen.</span>
@@ -51,7 +53,7 @@ describe('Note loading boundary', () => {
         </Fragment>
       )
     })
-    jest
+    vi
       .spyOn(CommonErrorPageModule, 'CommonErrorPage')
       .mockImplementation(({ titleI18nKey, descriptionI18nKey, children }) => {
         return (
@@ -66,7 +68,7 @@ describe('Note loading boundary', () => {
   })
 
   const mockGetNoteApiCall = (returnValue: NoteDto) => {
-    jest.spyOn(getNoteModule, 'getNote').mockImplementation((id) => {
+    vitest.spyOn(getNoteModule, 'getNote').mockImplementation((id) => {
       expect(id).toBe(mockedNoteId)
       return new Promise((resolve) => {
         setTimeout(() => resolve(returnValue), 0)
@@ -75,7 +77,7 @@ describe('Note loading boundary', () => {
   }
 
   const mockCrashingNoteApiCall = () => {
-    jest.spyOn(getNoteModule, 'getNote').mockImplementation((id) => {
+    vitest.spyOn(getNoteModule, 'getNote').mockImplementation((id) => {
       expect(id).toBe(mockedNoteId)
       return new Promise((resolve, reject) => {
         setTimeout(() => reject(new ApiError(404, undefined, undefined)), 0)
@@ -83,8 +85,8 @@ describe('Note loading boundary', () => {
     })
   }
 
-  const mockSetNoteInRedux = (expectedNote: NoteDto): jest.SpyInstance<void, [apiResponse: NoteDto]> => {
-    return jest.spyOn(setNoteDataFromServerModule, 'setNoteDataFromServer').mockImplementation((givenNote) => {
+  const mockSetNoteInRedux = (expectedNote: NoteDto): vitest.SpyInstance<void, [apiResponse: NoteDto]> => {
+    return vitest.spyOn(setNoteDataFromServerModule, 'setNoteDataFromServer').mockImplementation((givenNote) => {
       expect(givenNote).toBe(expectedNote)
     })
   }

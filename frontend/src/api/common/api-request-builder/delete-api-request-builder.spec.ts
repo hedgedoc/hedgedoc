@@ -7,6 +7,7 @@ import { ApiError } from '../api-error'
 import type { ApiErrorResponse } from '../api-error-response'
 import { DeleteApiRequestBuilder } from './delete-api-request-builder'
 import { expectFetch } from './test-utils/expect-fetch'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('DeleteApiRequestBuilder', () => {
   let originalFetch: (typeof global)['fetch']

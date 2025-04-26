@@ -9,7 +9,7 @@ import {
   NoteType,
 } from '../note-frontmatter/frontmatter.js'
 import { generateNoteTitle } from './generate-note-title.js'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
 
 const testFrontmatter: NoteFrontmatter = {
   title: '',

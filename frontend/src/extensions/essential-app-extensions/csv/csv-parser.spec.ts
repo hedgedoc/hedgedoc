@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { parseCsv } from './csv-parser'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('test CSV parser', () => {
   it('normal table', () => {

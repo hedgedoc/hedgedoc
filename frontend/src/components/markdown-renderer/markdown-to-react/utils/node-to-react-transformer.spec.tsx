@@ -8,6 +8,7 @@ import { ComponentReplacer, DO_NOT_REPLACE, ReplacerPriority } from '../../repla
 import { NodeToReactTransformer } from './node-to-react-transformer'
 import { Element } from 'domhandler'
 import type { ReactElement, ReactHTMLElement } from 'react'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('node to react transformer', () => {
   let nodeToReactTransformer: NodeToReactTransformer

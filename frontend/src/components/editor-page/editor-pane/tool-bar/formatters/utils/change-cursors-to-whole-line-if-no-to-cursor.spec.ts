@@ -9,6 +9,7 @@ import {
   searchForEndOfLine,
   searchForStartOfLine
 } from './change-cursors-to-whole-line-if-no-to-cursor'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('changeCursorsToWholeLineIfNoToCursor', () => {
   it(`returns the given selection if to cursor is present`, () => {

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AliasesListEntry adds aliasPrimaryBadge & removes aliasButtonMakePrimary in AliasesListEntry if it's primary 1`] = `
+exports[`AliasesListEntry > adds aliasPrimaryBadge & removes aliasButtonMakePrimary in AliasesListEntry if it's primary 1`] = `
 <div>
   <li
     class="list-group-item d-flex flex-row justify-content-between align-items-center"
@@ -30,7 +30,7 @@ exports[`AliasesListEntry adds aliasPrimaryBadge & removes aliasButtonMakePrimar
 </div>
 `;
 
-exports[`AliasesListEntry removes aliasPrimaryBadge & adds aliasButtonMakePrimary in AliasesListEntry if it's not primary 1`] = `
+exports[`AliasesListEntry > removes aliasPrimaryBadge & adds aliasButtonMakePrimary in AliasesListEntry if it's not primary 1`] = `
 <div>
   <li
     class="list-group-item d-flex flex-row justify-content-between align-items-center"
@@ -62,7 +62,7 @@ exports[`AliasesListEntry removes aliasPrimaryBadge & adds aliasButtonMakePrimar
 </div>
 `;
 
-exports[`AliasesListEntry renders an AliasesListEntry that is not primary 1`] = `
+exports[`AliasesListEntry > renders an AliasesListEntry that is not primary 1`] = `
 <div>
   <li
     class="list-group-item d-flex flex-row justify-content-between align-items-center"
@@ -92,7 +92,7 @@ exports[`AliasesListEntry renders an AliasesListEntry that is not primary 1`] = 
 </div>
 `;
 
-exports[`AliasesListEntry renders an AliasesListEntry that is primary 1`] = `
+exports[`AliasesListEntry > renders an AliasesListEntry that is primary 1`] = `
 <div>
   <li
     class="list-group-item d-flex flex-row justify-content-between align-items-center"

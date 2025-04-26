@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { createNumberRangeArray } from './number-range'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('number range', () => {
   it('creates an empty number range', () => {

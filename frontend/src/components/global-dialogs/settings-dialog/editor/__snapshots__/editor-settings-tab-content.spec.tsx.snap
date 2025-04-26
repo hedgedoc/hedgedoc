@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`EditorSettingsTabContent hides space settings indentWithTabs is true 1`] = `
+exports[`EditorSettingsTabContent > hides space settings indentWithTabs is true 1`] = `
 <div>
   <div
     class="list-group"
@@ -279,7 +279,7 @@ exports[`EditorSettingsTabContent hides space settings indentWithTabs is true 1`
 </div>
 `;
 
-exports[`EditorSettingsTabContent renders space settings when indentWithTabs is false 1`] = `
+exports[`EditorSettingsTabContent > renders space settings when indentWithTabs is false 1`] = `
 <div>
   <div
     class="list-group"

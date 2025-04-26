@@ -5,6 +5,7 @@
  */
 import { legacyPdfShortCode } from './replace-legacy-pdf-short-code'
 import MarkdownIt from 'markdown-it'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('Legacy pdf short code', () => {
   it('replaces with link', () => {

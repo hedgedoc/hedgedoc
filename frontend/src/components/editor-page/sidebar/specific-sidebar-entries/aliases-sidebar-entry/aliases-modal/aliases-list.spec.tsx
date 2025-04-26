@@ -10,9 +10,11 @@ import * as AliasesListEntryModule from './aliases-list-entry'
 import { render } from '@testing-library/react'
 import React from 'react'
 import { mockAppState } from '../../../../../../test-utils/mock-app-state'
+import { beforeEach, describe, expect, it, vitest, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../../../../../../hooks/common/use-application-state')
-jest.mock('./aliases-list-entry')
+vi.mock('../../../../../../hooks/common/use-application-state')
+vi.mock('./aliases-list-entry')
 
 describe('AliasesList', () => {
   beforeEach(async () => {
@@ -38,7 +40,7 @@ describe('AliasesList', () => {
         ]
       }
     })
-    jest.spyOn(AliasesListEntryModule, 'AliasesListEntry').mockImplementation((({ alias }) => {
+    vitest.spyOn(AliasesListEntryModule, 'AliasesListEntry').mockImplementation((({ alias }) => {
       return (
         <span>
           Alias: {alias.name} ({alias.primaryAlias ? 'primary' : 'non-primary'})
@@ -48,8 +50,8 @@ describe('AliasesList', () => {
   })
 
   afterAll(() => {
-    jest.resetAllMocks()
-    jest.resetModules()
+    vitest.resetAllMocks()
+    vitest.resetModules()
   })
 
   it('renders the AliasList sorted', () => {

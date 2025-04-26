@@ -8,12 +8,14 @@ import * as ClickShieldModule from '../../../components/markdown-renderer/replac
 import { YouTubeFrame } from './youtube-frame'
 import { render } from '@testing-library/react'
 import React from 'react'
+import { beforeEach, describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../../../components/markdown-renderer/replace-components/click-shield/click-shield')
+vi.mock('../../../components/markdown-renderer/replace-components/click-shield/click-shield')
 
 describe('YoutubeFrame', () => {
   beforeEach(() => {
-    jest.spyOn(ClickShieldModule, 'ClickShield').mockImplementation((({ children }) => {
+    vitest.spyOn(ClickShieldModule, 'ClickShield').mockImplementation((({ children }) => {
       return <span>This is a click shield for {children}</span>
     }) as React.FC<ClickShieldProps>)
   })

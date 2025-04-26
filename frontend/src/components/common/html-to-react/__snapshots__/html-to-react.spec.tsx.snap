@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`HTML to React renders basic html correctly 1`] = `
+exports[`HTML to React > renders basic html correctly 1`] = `
 <div>
   <p>
     This is a test 
@@ -11,7 +11,7 @@ exports[`HTML to React renders basic html correctly 1`] = `
 </div>
 `;
 
-exports[`HTML to React will forward the DomPurify settings 1`] = `
+exports[`HTML to React > will forward the DomPurify settings 1`] = `
 <div>
   <test-tag>
     Test!
@@ -19,7 +19,7 @@ exports[`HTML to React will forward the DomPurify settings 1`] = `
 </div>
 `;
 
-exports[`HTML to React will forward the parser options 1`] = `
+exports[`HTML to React > will forward the parser options 1`] = `
 <div>
   <p>
     Hijacked!
@@ -27,7 +27,7 @@ exports[`HTML to React will forward the parser options 1`] = `
 </div>
 `;
 
-exports[`HTML to React will render links with non-http protocols 1`] = `
+exports[`HTML to React > will render links with non-http protocols 1`] = `
 <div>
   <a
     href="tel:+1234567890"
@@ -52,7 +52,7 @@ exports[`HTML to React will render links with non-http protocols 1`] = `
 </div>
 `;
 
-exports[`HTML to React won't render script links 1`] = `
+exports[`HTML to React > won't render script links 1`] = `
 <div>
   <a>
     js
@@ -63,4 +63,4 @@ exports[`HTML to React won't render script links 1`] = `
 </div>
 `;
 
-exports[`HTML to React won't render script tags 1`] = `<div />`;
+exports[`HTML to React > won't render script tags 1`] = `<div />`;

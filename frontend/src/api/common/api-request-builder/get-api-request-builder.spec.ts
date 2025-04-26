@@ -7,6 +7,7 @@ import { ApiError } from '../api-error'
 import type { ApiErrorResponse } from '../api-error-response'
 import { GetApiRequestBuilder } from './get-api-request-builder'
 import { expectFetch } from './test-utils/expect-fetch'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('GetApiRequestBuilder', () => {
   let originalFetch: (typeof global)['fetch']

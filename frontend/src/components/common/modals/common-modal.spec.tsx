@@ -8,11 +8,12 @@ import { CommonModal } from './common-modal'
 import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
 import { Heart as IconHeart } from 'react-bootstrap-icons'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
 
 describe('CommonModal', () => {
   afterAll(() => {
-    jest.resetAllMocks()
-    jest.resetModules()
+    vitest.resetAllMocks()
+    vitest.resetModules()
   })
 
   beforeAll(async () => {
@@ -25,7 +26,7 @@ describe('CommonModal', () => {
   })
 
   it('renders correctly and calls onHide, when close button is clicked', async () => {
-    const onHide = jest.fn()
+    const onHide = vitest.fn()
     render(
       <CommonModal show={true} onHide={onHide} showCloseButton={true}>
         testText

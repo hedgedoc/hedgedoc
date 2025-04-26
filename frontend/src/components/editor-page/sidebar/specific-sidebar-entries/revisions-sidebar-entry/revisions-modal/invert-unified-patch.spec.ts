@@ -5,6 +5,7 @@
  */
 import { invertUnifiedPatch } from './invert-unified-patch'
 import { parsePatch } from 'diff'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('invert unified patch', () => {
   it('inverts a patch correctly', () => {

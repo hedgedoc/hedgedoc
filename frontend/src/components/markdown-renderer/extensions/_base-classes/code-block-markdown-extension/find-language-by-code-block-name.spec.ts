@@ -6,6 +6,7 @@
 import { findLanguageByCodeBlockName } from './find-language-by-code-block-name'
 import type { LanguageDescription } from '@codemirror/language'
 import { Mock } from 'ts-mockery'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('filter language name', () => {
   const mockedLanguage1 = Mock.of<LanguageDescription>({ name: 'Mocky', alias: ['mocky'] })

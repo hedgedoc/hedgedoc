@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PlantUML markdown extensions renders a plantuml codeblock 1`] = `
+exports[`PlantUML markdown extensions > renders a plantuml codeblock 1`] = `
 <div>
   <img
     alt="uml diagram"
@@ -11,7 +11,7 @@ exports[`PlantUML markdown extensions renders a plantuml codeblock 1`] = `
 </div>
 `;
 
-exports[`PlantUML markdown extensions renders an error if no server is defined 1`] = `
+exports[`PlantUML markdown extensions > renders an error if no server is defined 1`] = `
 <div>
   This is a mock for "TranslatedApplicationErrorAlert". Props: {"errorI18nKey":"renderer.plantuml.notConfigured"}
 </div>

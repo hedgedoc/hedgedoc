@@ -7,6 +7,7 @@ import type { CursorSelection } from '../../../components/editor-page/editor-pan
 import { initialState } from '../initial-state'
 import { buildStateFromUpdateCursorPosition } from './build-state-from-update-cursor-position'
 import { Mock } from 'ts-mockery'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('build state from update cursor position', () => {
   it('creates a new state with the given cursor', () => {

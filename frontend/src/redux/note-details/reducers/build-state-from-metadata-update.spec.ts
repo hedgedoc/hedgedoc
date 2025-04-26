@@ -7,6 +7,7 @@ import { initialState } from '../initial-state'
 import type { NoteDetails } from '../types'
 import { buildStateFromMetadataUpdate } from './build-state-from-metadata-update'
 import type { NoteMetadataDto } from '@hedgedoc/commons'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('build state from server permissions', () => {
   it('creates a new state with the given permissions', () => {

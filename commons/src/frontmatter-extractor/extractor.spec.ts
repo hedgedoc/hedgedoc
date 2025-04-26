@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { extractFrontmatter } from './extractor.js'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
 
 describe('frontmatter extraction', () => {
   describe('isPresent property', () => {

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Flowchart handles error if lib loading failed 1`] = `
+exports[`Flowchart > handles error if lib loading failed 1`] = `
 <div>
   <div
     class="fade alert alert-danger show"
@@ -11,7 +11,7 @@ exports[`Flowchart handles error if lib loading failed 1`] = `
 </div>
 `;
 
-exports[`Flowchart handles error while rendering 1`] = `
+exports[`Flowchart > handles error while rendering 1`] = `
 <div>
   <div>
     <h3>
@@ -33,7 +33,7 @@ exports[`Flowchart handles error while rendering 1`] = `
 </div>
 `;
 
-exports[`Flowchart renders correctly 1`] = `
+exports[`Flowchart > renders correctly 1`] = `
 <div>
   <div
     class="text-center"

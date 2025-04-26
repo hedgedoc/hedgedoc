@@ -9,8 +9,10 @@ import { render } from '@testing-library/react'
 import React, { Fragment } from 'react'
 import { Mock } from 'ts-mockery'
 import { mockAppState } from '../../../../test-utils/mock-app-state'
+import { beforeEach, describe, expect, it, vitest, beforeAll, afterAll, MockInstance } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../../../../hooks/common/use-application-state')
+vi.mock('../../../../hooks/common/use-application-state')
 
 describe('use logout on user change', () => {
   const TestComponent: React.FC<{ messageTransporter: MessageTransporter }> = ({ messageTransporter }) => {
@@ -24,11 +26,11 @@ describe('use logout on user change', () => {
     })
   }
 
-  let disconnectCallback: jest.Mock
+  let disconnectCallback: () => void
   let messageTransporter: MessageTransporter
 
   beforeEach(() => {
-    disconnectCallback = jest.fn()
+    disconnectCallback = vi.fn()
     messageTransporter = Mock.of<MessageTransporter>({ disconnect: disconnectCallback })
   })
 

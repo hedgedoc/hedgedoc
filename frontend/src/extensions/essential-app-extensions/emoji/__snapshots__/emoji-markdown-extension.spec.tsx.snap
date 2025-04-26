@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Emoji Markdown Extension renders a skin tone code 1`] = `
+exports[`Emoji Markdown Extension > renders a skin tone code 1`] = `
 <div>
   <p>
     🏽
@@ -10,7 +10,7 @@ exports[`Emoji Markdown Extension renders a skin tone code 1`] = `
 </div>
 `;
 
-exports[`Emoji Markdown Extension renders an emoji code 1`] = `
+exports[`Emoji Markdown Extension > renders an emoji code 1`] = `
 <div>
   <p>
     😄

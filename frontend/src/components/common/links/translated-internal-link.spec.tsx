@@ -6,6 +6,7 @@
 import { mockI18n } from '../../../test-utils/mock-i18n'
 import { TranslatedInternalLink } from './translated-internal-link'
 import { render } from '@testing-library/react'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('TranslatedInternalLink', () => {
   const href = '/test'

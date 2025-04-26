@@ -11,9 +11,11 @@ import { VegaLiteMarkdownExtension } from './vega-lite-markdown-extension'
 import { render } from '@testing-library/react'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
+import { beforeEach, describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../vega-lite/vega-lite-chart')
-jest.mock('../../../components/common/application-error-alert/application-error-alert', () => ({
+vi.mock('../vega-lite/vega-lite-chart')
+vi.mock('../../../components/common/application-error-alert/application-error-alert', () => ({
   ApplicationErrorAlert: ({ children, ...props }: PropsWithChildren) => (
     <div>
       <h3>This is a mock for ApplicationErrorAlert.</h3>
@@ -26,7 +28,7 @@ jest.mock('../../../components/common/application-error-alert/application-error-
 
 describe('Vega-Lite markdown extensions', () => {
   beforeAll(async () => {
-    jest.spyOn(VegaLiteChartModule, 'VegaLiteChart').mockImplementation((({ code }) => {
+    vi.spyOn(VegaLiteChartModule, 'VegaLiteChart').mockImplementation((({ code }) => {
       return (
         <span>
           this is a mock for vega lite

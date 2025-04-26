@@ -10,12 +10,14 @@ import * as Flowchart from '../flowchart/flowchart'
 import { FlowchartMarkdownExtension } from './flowchart-markdown-extension'
 import { render } from '@testing-library/react'
 import React from 'react'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../flowchart/flowchart')
+vi.mock('../flowchart/flowchart')
 
 describe('Flowchart markdown extensions', () => {
   beforeAll(async () => {
-    jest.spyOn(Flowchart, 'FlowChart').mockImplementation((({ code }) => {
+    vitest.spyOn(Flowchart, 'FlowChart').mockImplementation((({ code }) => {
       return (
         <span>
           this is a mock for flowchart frame
@@ -27,8 +29,8 @@ describe('Flowchart markdown extensions', () => {
   })
 
   afterAll(() => {
-    jest.resetModules()
-    jest.restoreAllMocks()
+    vitest.resetModules()
+    vitest.restoreAllMocks()
   })
 
   it('renders a flowchart codeblock', () => {

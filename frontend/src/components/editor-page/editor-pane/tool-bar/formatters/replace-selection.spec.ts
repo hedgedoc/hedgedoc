@@ -5,6 +5,7 @@
  */
 import { replaceSelection } from './replace-selection'
 import type { ContentEdits } from './types/changes'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('replace selection', () => {
   it('inserts a text after the from-cursor if no to-cursor is present', () => {

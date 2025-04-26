@@ -1,20 +1,20 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`UserAvatar adds additionalClasses props to wrapping span 1`] = `
+exports[`UserAvatar > adds additionalClasses props to wrapping span 1`] = `
 <div>
   <span
     class="d-inline-flex align-items-center testClass"
   >
     <img
       alt="common.avatarOf"
-      class="rounded user-image"
+      class="rounded _user-image_b75d65"
       height="20"
       src="https://example.com/test.png"
       title="common.avatarOf"
       width="20"
     />
     <span
-      class="ms-2 me-1 user-line-name"
+      class="ms-2 me-1 _user-line-name_b75d65"
     >
       Boaty McBoatFace
     </span>
@@ -22,14 +22,14 @@ exports[`UserAvatar adds additionalClasses props to wrapping span 1`] = `
 </div>
 `;
 
-exports[`UserAvatar does not show names if showName prop is false 1`] = `
+exports[`UserAvatar > does not show names if showName prop is false 1`] = `
 <div>
   <span
     class="d-inline-flex align-items-center "
   >
     <img
       alt="common.avatarOf"
-      class="rounded user-image"
+      class="rounded _user-image_b75d65"
       height="20"
       src="https://example.com/test.png"
       title="common.avatarOf"
@@ -39,21 +39,21 @@ exports[`UserAvatar does not show names if showName prop is false 1`] = `
 </div>
 `;
 
-exports[`UserAvatar renders the user avatar correctly 1`] = `
+exports[`UserAvatar > renders the user avatar correctly 1`] = `
 <div>
   <span
     class="d-inline-flex align-items-center "
   >
     <img
       alt="common.avatarOf"
-      class="rounded user-image"
+      class="rounded _user-image_b75d65"
       height="20"
       src="https://example.com/test.png"
       title="common.avatarOf"
       width="20"
     />
     <span
-      class="ms-2 me-1 user-line-name"
+      class="ms-2 me-1 _user-line-name_b75d65"
     >
       Boaty McBoatFace
     </span>
@@ -61,21 +61,21 @@ exports[`UserAvatar renders the user avatar correctly 1`] = `
 </div>
 `;
 
-exports[`UserAvatar renders the user avatar in size lg 1`] = `
+exports[`UserAvatar > renders the user avatar in size > lg 1`] = `
 <div>
   <span
     class="d-inline-flex align-items-center "
   >
     <img
       alt="common.avatarOf"
-      class="rounded user-image"
+      class="rounded _user-image_b75d65"
       height="30"
       src="https://example.com/test.png"
       title="common.avatarOf"
       width="30"
     />
     <span
-      class="ms-2 me-1 user-line-name"
+      class="ms-2 me-1 _user-line-name_b75d65"
     >
       Boaty McBoatFace
     </span>
@@ -83,21 +83,21 @@ exports[`UserAvatar renders the user avatar in size lg 1`] = `
 </div>
 `;
 
-exports[`UserAvatar renders the user avatar in size sm 1`] = `
+exports[`UserAvatar > renders the user avatar in size > sm 1`] = `
 <div>
   <span
     class="d-inline-flex align-items-center "
   >
     <img
       alt="common.avatarOf"
-      class="rounded user-image"
+      class="rounded _user-image_b75d65"
       height="16"
       src="https://example.com/test.png"
       title="common.avatarOf"
       width="16"
     />
     <span
-      class="ms-2 me-1 user-line-name"
+      class="ms-2 me-1 _user-line-name_b75d65"
     >
       Boaty McBoatFace
     </span>
@@ -105,7 +105,7 @@ exports[`UserAvatar renders the user avatar in size sm 1`] = `
 </div>
 `;
 
-exports[`UserAvatar uses custom photo component if provided 1`] = `
+exports[`UserAvatar > uses custom photo component if provided 1`] = `
 <div>
   <span
     class="d-inline-flex align-items-center "
@@ -114,7 +114,7 @@ exports[`UserAvatar uses custom photo component if provided 1`] = `
       Custom Photo
     </div>
     <span
-      class="ms-2 me-1 user-line-name"
+      class="ms-2 me-1 _user-line-name_b75d65"
     >
       No face user
     </span>
@@ -122,7 +122,7 @@ exports[`UserAvatar uses custom photo component if provided 1`] = `
 </div>
 `;
 
-exports[`UserAvatar uses custom photo component preferred over photoUrl 1`] = `
+exports[`UserAvatar > uses custom photo component preferred over photoUrl 1`] = `
 <div>
   <span
     class="d-inline-flex align-items-center "
@@ -131,7 +131,7 @@ exports[`UserAvatar uses custom photo component preferred over photoUrl 1`] = `
       Custom Photo
     </div>
     <span
-      class="ms-2 me-1 user-line-name"
+      class="ms-2 me-1 _user-line-name_b75d65"
     >
       Boaty McBoatFace
     </span>
@@ -139,21 +139,21 @@ exports[`UserAvatar uses custom photo component preferred over photoUrl 1`] = `
 </div>
 `;
 
-exports[`UserAvatar uses identicon when empty photoUrl is given 1`] = `
+exports[`UserAvatar > uses identicon when empty photoUrl is given 1`] = `
 <div>
   <span
     class="d-inline-flex align-items-center "
   >
     <img
       alt="common.avatarOf"
-      class="rounded user-image"
+      class="rounded _user-image_b75d65"
       height="20"
       src="data:image/x-other,identicon-mock"
       title="common.avatarOf"
       width="20"
     />
     <span
-      class="ms-2 me-1 user-line-name"
+      class="ms-2 me-1 _user-line-name_b75d65"
     >
       Empty
     </span>
@@ -161,21 +161,21 @@ exports[`UserAvatar uses identicon when empty photoUrl is given 1`] = `
 </div>
 `;
 
-exports[`UserAvatar uses identicon when no photoUrl is given 1`] = `
+exports[`UserAvatar > uses identicon when no photoUrl is given 1`] = `
 <div>
   <span
     class="d-inline-flex align-items-center "
   >
     <img
       alt="common.avatarOf"
-      class="rounded user-image"
+      class="rounded _user-image_b75d65"
       height="20"
       src="data:image/x-other,identicon-mock"
       title="common.avatarOf"
       width="20"
     />
     <span
-      class="ms-2 me-1 user-line-name"
+      class="ms-2 me-1 _user-line-name_b75d65"
     >
       No face user
     </span>

@@ -5,6 +5,7 @@
  */
 import { CsvTable } from './csv-table'
 import { render } from '@testing-library/react'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('CSV Table', () => {
   it('renders correctly with header', () => {

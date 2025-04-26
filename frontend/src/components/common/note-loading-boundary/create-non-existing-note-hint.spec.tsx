@@ -10,15 +10,17 @@ import type { NoteDto, NoteMetadataDto } from '@hedgedoc/commons'
 import { waitForOtherPromisesToFinish } from '@hedgedoc/commons'
 import { act, render, screen, waitFor } from '@testing-library/react'
 import { Mock } from 'ts-mockery'
+import { afterEach, describe, expect, it, vitest, beforeAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../../../api/notes')
-jest.mock('../../../hooks/common/use-single-string-url-parameter')
+vi.mock('../../../api/notes')
+vi.mock('../../../hooks/common/use-single-string-url-parameter')
 
 describe('create non existing note hint', () => {
   const mockedNoteId = 'mockedNoteId'
 
   const mockCreateNoteWithPrimaryAlias = () => {
-    jest
+    vi
       .spyOn(createNoteWithPrimaryAliasModule, 'createNoteWithPrimaryAlias')
       .mockImplementation(async (markdown, primaryAlias): Promise<NoteDto> => {
         expect(markdown).toBe('')
@@ -31,7 +33,7 @@ describe('create non existing note hint', () => {
   }
 
   const mockFailingCreateNoteWithPrimaryAlias = () => {
-    jest
+    vi
       .spyOn(createNoteWithPrimaryAliasModule, 'createNoteWithPrimaryAlias')
       .mockImplementation(async (markdown, primaryAlias): Promise<NoteDto> => {
         expect(markdown).toBe('')
@@ -46,12 +48,12 @@ describe('create non existing note hint', () => {
   })
 
   afterEach(() => {
-    jest.resetAllMocks()
-    jest.resetModules()
+    vitest.resetAllMocks()
+    vitest.resetModules()
   })
 
   it('renders nothing if no note id has been provided', async () => {
-    const onNoteCreatedCallback = jest.fn()
+    const onNoteCreatedCallback = vitest.fn()
     const view = render(
       <CreateNonExistingNoteHint noteId={undefined} onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>
     )
@@ -62,7 +64,7 @@ describe('create non existing note hint', () => {
 
   it('renders an button as initial state', async () => {
     mockCreateNoteWithPrimaryAlias()
-    const onNoteCreatedCallback = jest.fn()
+    const onNoteCreatedCallback = vitest.fn()
     const view = render(
       <CreateNonExistingNoteHint
         noteId={mockedNoteId}
@@ -76,7 +78,7 @@ describe('create non existing note hint', () => {
 
   it('renders a waiting message when button is clicked', async () => {
     mockCreateNoteWithPrimaryAlias()
-    const onNoteCreatedCallback = jest.fn()
+    const onNoteCreatedCallback = vitest.fn()
     const view = render(
       <CreateNonExistingNoteHint
         noteId={mockedNoteId}
@@ -96,7 +98,7 @@ describe('create non existing note hint', () => {
 
   it('shows success message when the note has been created', async () => {
     mockCreateNoteWithPrimaryAlias()
-    const onNoteCreatedCallback = jest.fn()
+    const onNoteCreatedCallback = vitest.fn()
     const view = render(
       <CreateNonExistingNoteHint
         noteId={mockedNoteId}
@@ -116,7 +118,7 @@ describe('create non existing note hint', () => {
 
   it("shows an error message if note couldn't be created", async () => {
     mockFailingCreateNoteWithPrimaryAlias()
-    const onNoteCreatedCallback = jest.fn()
+    const onNoteCreatedCallback = vitest.fn()
     const view = render(
       <CreateNonExistingNoteHint
         noteId={mockedNoteId}

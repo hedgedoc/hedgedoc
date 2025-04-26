@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { calculatePlaceholderContainerSize, parseSizeNumber } from './build-placeholder-size-css'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('parseSizeNumber', () => {
   it('undefined', () => {

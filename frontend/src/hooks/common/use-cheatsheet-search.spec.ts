@@ -6,6 +6,7 @@
 import type { CheatsheetSearchIndexEntry } from './use-cheatsheet-search'
 import { useCheatsheetSearch } from './use-cheatsheet-search'
 import { renderHook, waitFor } from '@testing-library/react'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('useDocumentSearch', () => {
   const searchEntries: CheatsheetSearchIndexEntry[] = [

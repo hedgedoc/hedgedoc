@@ -10,12 +10,14 @@ import * as AbcFrameModule from './abc-frame'
 import { AbcjsMarkdownExtension } from './abcjs-markdown-extension'
 import { render } from '@testing-library/react'
 import React from 'react'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('./abc-frame')
+vi.mock('./abc-frame')
 
 describe('AbcJs Markdown Extension', () => {
   beforeAll(async () => {
-    jest.spyOn(AbcFrameModule, 'AbcFrame').mockImplementation((({ code }) => {
+    vitest.spyOn(AbcFrameModule, 'AbcFrame').mockImplementation((({ code }) => {
       return (
         <span>
           this is a mock for abc js frame
@@ -27,8 +29,8 @@ describe('AbcJs Markdown Extension', () => {
   })
 
   afterAll(() => {
-    jest.resetModules()
-    jest.restoreAllMocks()
+    vitest.resetModules()
+    vitest.restoreAllMocks()
   })
 
   it('renders an abc codeblock', () => {

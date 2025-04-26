@@ -1,19 +1,19 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`IconButton correctly uses the onClick callback 1`] = `
+exports[`IconButton > correctly uses the onClick callback 1`] = `
 <div>
   <button
-    class="btn-icon d-inline-flex align-items-stretch btn btn-primary"
+    class="_btn-icon_efc75b d-inline-flex align-items-stretch btn btn-primary"
     data-testid="icon-button"
     type="button"
   >
     <span
-      class="icon-part"
+      class="_icon-part_efc75b"
     >
       BootstrapIconMock_Heart
     </span>
     <span
-      class="text-part"
+      class="_text-part_efc75b"
     >
       test with onClick
     </span>
@@ -21,20 +21,20 @@ exports[`IconButton correctly uses the onClick callback 1`] = `
 </div>
 `;
 
-exports[`IconButton renders heart icon 1`] = `
+exports[`IconButton > renders heart icon 1`] = `
 <div>
   <button
-    class="btn-icon d-inline-flex align-items-stretch btn btn-primary"
+    class="_btn-icon_efc75b d-inline-flex align-items-stretch btn btn-primary"
     data-testid="icon-button"
     type="button"
   >
     <span
-      class="icon-part"
+      class="_icon-part_efc75b"
     >
       BootstrapIconMock_Heart
     </span>
     <span
-      class="text-part"
+      class="_text-part_efc75b"
     >
       test
     </span>
@@ -42,20 +42,20 @@ exports[`IconButton renders heart icon 1`] = `
 </div>
 `;
 
-exports[`IconButton renders with additional className 1`] = `
+exports[`IconButton > renders with additional className 1`] = `
 <div>
   <button
-    class="btn-icon d-inline-flex align-items-stretch testClass btn btn-primary"
+    class="_btn-icon_efc75b d-inline-flex align-items-stretch testClass btn btn-primary"
     data-testid="icon-button"
     type="button"
   >
     <span
-      class="icon-part"
+      class="_icon-part_efc75b"
     >
       BootstrapIconMock_Heart
     </span>
     <span
-      class="text-part"
+      class="_text-part_efc75b"
     >
       test with additional className
     </span>
@@ -63,20 +63,20 @@ exports[`IconButton renders with additional className 1`] = `
 </div>
 `;
 
-exports[`IconButton renders with border 1`] = `
+exports[`IconButton > renders with border 1`] = `
 <div>
   <button
-    class="btn-icon d-inline-flex align-items-stretch with-border btn btn-primary"
+    class="_btn-icon_efc75b d-inline-flex align-items-stretch _with-border_efc75b btn btn-primary"
     data-testid="icon-button"
     type="button"
   >
     <span
-      class="icon-part"
+      class="_icon-part_efc75b"
     >
       BootstrapIconMock_Heart
     </span>
     <span
-      class="text-part"
+      class="_text-part_efc75b"
     >
       test with border
     </span>

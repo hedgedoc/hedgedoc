@@ -5,6 +5,7 @@
  */
 import { prependLinesOfSelection } from './prepend-lines-of-selection'
 import type { ContentEdits } from './types/changes'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('replace lines of selection', () => {
   it('replaces only the from-cursor line if no to-cursor is present', () => {

@@ -3,8 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import * as AliasModule from '../../../../../../api/alias'
-import * as NoteDetailsReduxModule from '../../../../../../redux/note-details/methods'
 import { mockI18n } from '../../../../../../test-utils/mock-i18n'
 import { mockNotePermissions } from '../../../../../../test-utils/mock-note-permissions'
 import { AliasesListEntry } from './aliases-list-entry'
@@ -12,27 +10,36 @@ import { act, render, screen } from '@testing-library/react'
 import React from 'react'
 import { mockUiNotifications } from '../../../../../../test-utils/mock-ui-notifications'
 import type { AliasDto } from '@hedgedoc/commons'
+import { afterEach, beforeEach, describe, expect, it, vitest } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../../../../../../api/alias')
-jest.mock('../../../../../../redux/note-details/methods')
-jest.mock('../../../../../notifications/ui-notification-boundary')
-jest.mock('../../../../../../hooks/common/use-application-state')
+const { updateMetadata, markAliasAsPrimary, deleteAlias } = vi.hoisted(() => ({
+  deleteAlias: vi.fn(() => Promise.resolve()),
+  markAliasAsPrimary: vi.fn(() => Promise.resolve({ name: 'mock', primaryAlias: true, noteId: 'mock' })),
+  updateMetadata: vi.fn(() => Promise.resolve())
+}))
 
-const deletePromise = Promise.resolve()
-const markAsPrimaryPromise = Promise.resolve({ name: 'mock', primaryAlias: true, noteId: 'mock' })
+vi.mock('../../../../../../api/alias', () => ({
+  deleteAlias,
+  markAliasAsPrimary
+}))
+vi.mock('../../../../../../redux/note-details/methods', () => ({
+  updateMetadata
+}))
+vi.mock('../../../../../notifications/ui-notification-boundary', () => ({
+  useUiNotifications: vi.fn(() => ({ showErrorNotification: vi.fn() }))
+}))
+vi.mock('../../../../../../hooks/common/use-application-state')
 
 describe('AliasesListEntry', () => {
   beforeEach(async () => {
     await mockI18n()
     mockUiNotifications()
-    jest.spyOn(AliasModule, 'deleteAlias').mockImplementation(() => deletePromise)
-    jest.spyOn(AliasModule, 'markAliasAsPrimary').mockImplementation(() => markAsPrimaryPromise)
-    jest.spyOn(NoteDetailsReduxModule, 'updateMetadata').mockImplementation(() => Promise.resolve())
   })
 
   afterEach(() => {
-    jest.resetAllMocks()
-    jest.resetModules()
+    vitest.resetAllMocks()
+    vitest.resetModules()
   })
 
   it('renders an AliasesListEntry that is primary', async () => {
@@ -48,9 +55,8 @@ describe('AliasesListEntry', () => {
     await act<void>(() => {
       button.click()
     })
-    expect(AliasModule.deleteAlias).toBeCalledWith(testAlias.name)
-    await deletePromise
-    expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
+    expect(deleteAlias).toBeCalledWith(testAlias.name)
+    expect(updateMetadata).toBeCalled()
   })
 
   it("adds aliasPrimaryBadge & removes aliasButtonMakePrimary in AliasesListEntry if it's primary", () => {
@@ -77,16 +83,14 @@ describe('AliasesListEntry', () => {
     await act<void>(() => {
       buttonRemove.click()
     })
-    expect(AliasModule.deleteAlias).toBeCalledWith(testAlias.name)
-    await deletePromise
-    expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
+    expect(deleteAlias).toBeCalledWith(testAlias.name)
+    expect(updateMetadata).toBeCalled()
     const buttonMakePrimary = await screen.findByTestId('aliasButtonMakePrimary')
     await act<void>(() => {
       buttonMakePrimary.click()
     })
-    expect(AliasModule.markAliasAsPrimary).toBeCalledWith(testAlias.name)
-    await markAsPrimaryPromise
-    expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
+    expect(markAliasAsPrimary).toBeCalledWith(testAlias.name)
+    expect(updateMetadata).toBeCalled()
   })
 
   it("removes aliasPrimaryBadge & adds aliasButtonMakePrimary in AliasesListEntry if it's not primary", () => {

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Note loading boundary loads a note 1`] = `
+exports[`Note loading boundary > loads a note 1`] = `
 <div>
   <span
     data-testid="success"
@@ -10,7 +10,7 @@ exports[`Note loading boundary loads a note 1`] = `
 </div>
 `;
 
-exports[`Note loading boundary shows an error 1`] = `
+exports[`Note loading boundary > shows an error 1`] = `
 <div>
   <span
     data-testid="CommonErrorPage"

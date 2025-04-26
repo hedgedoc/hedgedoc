@@ -5,6 +5,7 @@
  */
 import { defaultConfig } from '../../default-config'
 import { Mock } from 'ts-mockery'
+import { vi, expect } from 'vitest'
 
 /**
  * Mock fetch api for tests.
@@ -20,7 +21,7 @@ export const expectFetch = (
   expectedOptions: RequestInit,
   responseBody?: unknown
 ): void => {
-  global.fetch = jest.fn((fetchUrl: RequestInfo | URL, fetchOptions?: RequestInit): Promise<Response> => {
+  global.fetch = vi.fn((fetchUrl: RequestInfo | URL, fetchOptions?: RequestInit): Promise<Response> => {
     expect(fetchUrl).toEqual(expectedUrl)
     expect(fetchOptions).toStrictEqual({
       ...defaultConfig,
@@ -32,7 +33,7 @@ export const expectFetch = (
       Mock.of<Response>({
         status: requestStatusCode,
         statusText: mapCodeToText(requestStatusCode),
-        json: jest.fn(() => (responseBody ? Promise.resolve(responseBody) : Promise.reject(new Error())))
+        json: vi.fn(() => (responseBody ? Promise.resolve(responseBody) : Promise.reject(new Error())))
       })
     )
   }) as typeof global.fetch

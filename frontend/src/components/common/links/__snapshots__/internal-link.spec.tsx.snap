@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`InternalLink renders an internal link correctly 1`] = `
+exports[`InternalLink > renders an internal link correctly 1`] = `
 <div>
   <a
     class=""
@@ -11,7 +11,7 @@ exports[`InternalLink renders an internal link correctly 1`] = `
 </div>
 `;
 
-exports[`InternalLink renders an internal link with a title 1`] = `
+exports[`InternalLink > renders an internal link with a title 1`] = `
 <div>
   <a
     class=""
@@ -23,7 +23,7 @@ exports[`InternalLink renders an internal link with a title 1`] = `
 </div>
 `;
 
-exports[`InternalLink renders an internal link with additional className 1`] = `
+exports[`InternalLink > renders an internal link with additional className 1`] = `
 <div>
   <a
     class="testClass"
@@ -34,7 +34,7 @@ exports[`InternalLink renders an internal link with additional className 1`] = `
 </div>
 `;
 
-exports[`InternalLink renders an internal link with an icon 1`] = `
+exports[`InternalLink > renders an internal link with an icon 1`] = `
 <div>
   <a
     class=""
@@ -47,7 +47,7 @@ exports[`InternalLink renders an internal link with an icon 1`] = `
 </div>
 `;
 
-exports[`InternalLink renders an internal link with an id 1`] = `
+exports[`InternalLink > renders an internal link with an id 1`] = `
 <div>
   <a
     class=""

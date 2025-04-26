@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`GuestUserAvatar renders the guest user avatar correctly 1`] = `
+exports[`GuestUserAvatar > renders the guest user avatar correctly 1`] = `
 <div>
   <span
     class="d-inline-flex align-items-center "
   >
     BootstrapIconMock_Person
     <span
-      class="ms-2 me-1 user-line-name"
+      class="ms-2 me-1 _user-line-name_b75d65"
     >
       common.guestUser
     </span>

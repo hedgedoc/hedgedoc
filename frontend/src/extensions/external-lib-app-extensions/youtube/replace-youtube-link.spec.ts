@@ -5,6 +5,7 @@
  */
 import { replaceYouTubeLinkMarkdownItPlugin } from './replace-youtube-link'
 import MarkdownIt from 'markdown-it'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('Replace youtube link', () => {
   let markdownIt: MarkdownIt

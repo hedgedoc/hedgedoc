@@ -10,12 +10,14 @@ import * as GraphvizFrameModule from '../graphviz/graphviz-frame'
 import { GraphvizMarkdownExtension } from './graphviz-markdown-extension'
 import { render } from '@testing-library/react'
 import React from 'react'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../graphviz/graphviz-frame')
+vi.mock('../graphviz/graphviz-frame')
 
 describe('PlantUML markdown extensions', () => {
   beforeAll(async () => {
-    jest.spyOn(GraphvizFrameModule, 'GraphvizFrame').mockImplementation((({ code }) => {
+    vitest.spyOn(GraphvizFrameModule, 'GraphvizFrame').mockImplementation((({ code }) => {
       return (
         <span>
           this is a mock for graphviz frame
@@ -27,8 +29,8 @@ describe('PlantUML markdown extensions', () => {
   })
 
   afterAll(() => {
-    jest.resetModules()
-    jest.restoreAllMocks()
+    vitest.resetModules()
+    vitest.restoreAllMocks()
   })
 
   it('renders a plantuml codeblock', () => {

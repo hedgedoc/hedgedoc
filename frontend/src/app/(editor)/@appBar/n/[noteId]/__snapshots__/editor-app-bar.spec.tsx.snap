@@ -1,20 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`app bar contains alert when editor is not synced 1`] = `
+exports[`app bar > contains alert when editor is not synced 1`] = `
 <div>
   <div>
     <span>
       first part
     </span>
-    <div>
-      <div
-        class="fade w-100 m-0 px-2 py-1 border-top-0 border-bottom-0 d-flex align-items-center alert alert-warning show"
-        role="alert"
-      >
-        realtime.connecting
-        BootstrapIconMock_ArrowRepeat
-      </div>
-    </div>
+    <div />
     <span>
       last part
     </span>
@@ -22,24 +14,13 @@ exports[`app bar contains alert when editor is not synced 1`] = `
 </div>
 `;
 
-exports[`app bar contains note title and read-only marker when having only read permissions 1`] = `
+exports[`app bar > contains note title and read-only marker when having only read permissions 1`] = `
 <div>
   <div>
     <span>
       first part
     </span>
-    <div>
-      <span
-        class="m-0 text-truncate"
-      >
-        <span
-          class="text-secondary me-2"
-        >
-          BootstrapIconMock_Lock
-        </span>
-        Note Title Test
-      </span>
-    </div>
+    <div />
     <span>
       last part
     </span>
@@ -47,19 +28,13 @@ exports[`app bar contains note title and read-only marker when having only read 
 </div>
 `;
 
-exports[`app bar contains note title when editor is synced 1`] = `
+exports[`app bar > contains note title when editor is synced 1`] = `
 <div>
   <div>
     <span>
       first part
     </span>
-    <div>
-      <span
-        class="m-0 text-truncate"
-      >
-        Note Title Test
-      </span>
-    </div>
+    <div />
     <span>
       last part
     </span>

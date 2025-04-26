@@ -1,17 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Highlighted Code can hide the line numbers 1`] = `
+exports[`Highlighted Code > can hide the line numbers 1`] = `
 <code
-  class="hljs wrapLines"
+  class="hljs _wrapLines_15d654"
   data-testid="code-highlighter"
 >
   <span
-    class="linenumber"
+    class="_linenumber_15d654"
   >
     1
   </span>
   <div
-    class="codeline"
+    class="_codeline_15d654"
   >
     <span>
       const a = 1
@@ -20,18 +20,18 @@ exports[`Highlighted Code can hide the line numbers 1`] = `
 </code>
 `;
 
-exports[`Highlighted Code highlights code 1`] = `
+exports[`Highlighted Code > highlights code 1`] = `
 <code
-  class="hljs showGutter"
+  class="hljs _showGutter_15d654"
   data-testid="code-highlighter"
 >
   <span
-    class="linenumber"
+    class="_linenumber_15d654"
   >
     1
   </span>
   <div
-    class="codeline"
+    class="_codeline_15d654"
   >
     <span
       class="hljs-keyword"
@@ -48,42 +48,42 @@ exports[`Highlighted Code highlights code 1`] = `
 </code>
 `;
 
-exports[`Highlighted Code renders plain text 1`] = `
+exports[`Highlighted Code > renders plain text 1`] = `
 <code
-  class="hljs showGutter"
+  class="hljs _showGutter_15d654"
   data-testid="code-highlighter"
 >
   <span
-    class="linenumber"
+    class="_linenumber_15d654"
   >
     1
   </span>
   <div
-    class="codeline"
+    class="_codeline_15d654"
   >
     <span>
       a
     </span>
   </div>
   <span
-    class="linenumber"
+    class="_linenumber_15d654"
   >
     2
   </span>
   <div
-    class="codeline"
+    class="_codeline_15d654"
   >
     <span>
       b
     </span>
   </div>
   <span
-    class="linenumber"
+    class="_linenumber_15d654"
   >
     3
   </span>
   <div
-    class="codeline"
+    class="_codeline_15d654"
   >
     <span>
       c
@@ -92,18 +92,18 @@ exports[`Highlighted Code renders plain text 1`] = `
 </code>
 `;
 
-exports[`Highlighted Code starts with a specific line 1`] = `
+exports[`Highlighted Code > starts with a specific line 1`] = `
 <code
-  class="hljs showGutter wrapLines"
+  class="hljs _showGutter_15d654 _wrapLines_15d654"
   data-testid="code-highlighter"
 >
   <span
-    class="linenumber"
+    class="_linenumber_15d654"
   >
     100
   </span>
   <div
-    class="codeline"
+    class="_codeline_15d654"
   >
     <span>
       const a = 1
@@ -112,18 +112,18 @@ exports[`Highlighted Code starts with a specific line 1`] = `
 </code>
 `;
 
-exports[`Highlighted Code wraps code 1`] = `
+exports[`Highlighted Code > wraps code 1`] = `
 <code
-  class="hljs showGutter wrapLines"
+  class="hljs _showGutter_15d654 _wrapLines_15d654"
   data-testid="code-highlighter"
 >
   <span
-    class="linenumber"
+    class="_linenumber_15d654"
   >
     1
   </span>
   <div
-    class="codeline"
+    class="_codeline_15d654"
   >
     <span>
       const a = 1

@@ -7,9 +7,11 @@ import { mockI18n } from '../../../../test-utils/mock-i18n'
 import { LanguagePicker } from './language-picker'
 import { fireEvent, render, screen } from '@testing-library/react'
 import i18n from 'i18next'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('./available-languages', () => ({
-  availableLanguages: jest.fn(() => ['de', 'en'])
+vi.mock('./available-languages', () => ({
+  availableLanguages: vitest.fn(() => ['de', 'en'])
 }))
 
 describe('language picker', () => {

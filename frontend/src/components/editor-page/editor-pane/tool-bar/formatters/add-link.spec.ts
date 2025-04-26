@@ -5,6 +5,7 @@
  */
 import { addLink } from './add-link'
 import type { ContentEdits } from './types/changes'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('add link', () => {
   describe('without to-cursor', () => {

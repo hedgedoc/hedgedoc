@@ -5,22 +5,24 @@
  */
 import { useTranslatedText } from './use-translated-text'
 import { renderHook } from '@testing-library/react'
+import type { UseTranslationResponse } from 'react-i18next'
 import * as ReactI18NextModule from 'react-i18next'
 import { Mock } from 'ts-mockery'
-import type { UseTranslationResponse } from 'react-i18next'
+import { beforeEach, describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('react-i18next')
+vi.mock('react-i18next')
 
 describe('useTranslatedText', () => {
   const mockTranslation = 'mockTranslation'
   const mockKey = 'mockKey'
-  const translateFunction = jest.fn(() => mockTranslation)
+  const translateFunction = vitest.fn(() => mockTranslation)
 
   beforeEach(() => {
     const useTranslateMock = Mock.of({
       t: translateFunction
     }) as unknown as UseTranslationResponse<never, never>
-    jest.spyOn(ReactI18NextModule, 'useTranslation').mockReturnValue(useTranslateMock)
+    vitest.spyOn(ReactI18NextModule, 'useTranslation').mockReturnValue(useTranslateMock)
   })
 
   it('translates text', () => {

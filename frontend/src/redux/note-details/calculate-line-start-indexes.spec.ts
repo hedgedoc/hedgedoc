@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { calculateLineStartIndexes } from './calculate-line-start-indexes'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('calculateLineStartIndexes', () => {
   it('works with an empty list', () => {

@@ -6,6 +6,7 @@
 import { mockI18n } from '../../../test-utils/mock-i18n'
 import HighlightedCode from './highlighted-code'
 import { render, screen } from '@testing-library/react'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('Highlighted Code', () => {
   beforeAll(() => mockI18n())

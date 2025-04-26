@@ -10,12 +10,14 @@ import * as CsvTableModule from '../csv/csv-table'
 import { CsvTableMarkdownExtension } from './csv-table-markdown-extension'
 import { render } from '@testing-library/react'
 import React from 'react'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../csv/csv-table')
+vi.mock('../csv/csv-table')
 
 describe('CSV Table Markdown Extension', () => {
   beforeAll(async () => {
-    jest.spyOn(CsvTableModule, 'CsvTable').mockImplementation((({ code }) => {
+    vitest.spyOn(CsvTableModule, 'CsvTable').mockImplementation((({ code }) => {
       return (
         <span>
           this is a mock for csv frame
@@ -27,8 +29,8 @@ describe('CSV Table Markdown Extension', () => {
   })
 
   afterAll(() => {
-    jest.resetModules()
-    jest.restoreAllMocks()
+    vitest.resetModules()
+    vitest.restoreAllMocks()
   })
 
   it('renders a csv codeblock', () => {

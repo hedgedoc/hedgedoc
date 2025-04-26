@@ -8,11 +8,13 @@ import { initialState } from '../initial-state'
 import type { NoteDetails } from '../types'
 import { buildStateFromTaskListUpdate } from './build-state-from-task-list-update'
 import { Mock } from 'ts-mockery'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../build-state-from-updated-markdown-content')
+vi.mock('../build-state-from-updated-markdown-content')
 
 describe('build state from task list update', () => {
-  const buildStateFromUpdatedMarkdownContentLinesMock = jest.spyOn(
+  const buildStateFromUpdatedMarkdownContentLinesMock = vitest.spyOn(
     buildStateFromUpdatedMarkdownContentLinesModule,
     'buildStateFromUpdatedMarkdownContentLines'
   )

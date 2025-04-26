@@ -9,8 +9,10 @@ import { PlantumlMarkdownExtension } from './plantuml-markdown-extension'
 import { render } from '@testing-library/react'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../../../components/common/application-error-alert/translated-application-error-alert', () => ({
+vi.mock('../../../components/common/application-error-alert/translated-application-error-alert', () => ({
   TranslatedApplicationErrorAlert: (props: PropsWithChildren) =>
     `This is a mock for "TranslatedApplicationErrorAlert". Props: ${JSON.stringify(props)}`
 }))

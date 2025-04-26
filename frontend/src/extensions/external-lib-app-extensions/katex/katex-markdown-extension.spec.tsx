@@ -10,9 +10,11 @@ import type { KatexOptions } from 'katex'
 import { default as KatexDefault } from 'katex'
 import type { PropsWithChildren } from 'react'
 import React, { Suspense } from 'react'
+import { beforeEach, describe, expect, it, vitest, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('katex')
-jest.mock('../../../components/common/application-error-alert/application-error-alert', () => ({
+vi.mock('katex')
+vi.mock('../../../components/common/application-error-alert/application-error-alert', () => ({
   ApplicationErrorAlert: ({ children, ...props }: PropsWithChildren) => (
     <div>
       <h3>This is a mock for ApplicationErrorAlert.</h3>
@@ -25,12 +27,12 @@ jest.mock('../../../components/common/application-error-alert/application-error-
 
 describe('KaTeX markdown extensions', () => {
   afterAll(() => {
-    jest.resetAllMocks()
-    jest.resetModules()
+    vitest.resetAllMocks()
+    vitest.resetModules()
   })
 
   beforeEach(() => {
-    jest.spyOn(KatexDefault, 'renderToString').mockImplementation(
+    vitest.spyOn(KatexDefault, 'renderToString').mockImplementation(
       (tex: string, options?: KatexOptions) => `<span>This is a mock for lib katex with this parameters:</span>
 <span>
   <span>tex: ${tex}</span>
@@ -70,7 +72,7 @@ describe('KaTeX markdown extensions', () => {
   })
 
   it('renders an error message for an invalid LaTeX expression', async () => {
-    jest.spyOn(KatexDefault, 'renderToString').mockImplementation(() => {
+    vitest.spyOn(KatexDefault, 'renderToString').mockImplementation(() => {
       throw new Error('mocked parseerror')
     })
 

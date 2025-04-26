@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`KaTeX markdown extensions renders a valid block LaTeX expression in a single line 1`] = `
+exports[`KaTeX markdown extensions > renders a valid block LaTeX expression in a single line 1`] = `
 <div>
   <p
     data-testid="katex-block"
@@ -30,7 +30,7 @@ exports[`KaTeX markdown extensions renders a valid block LaTeX expression in a s
 </div>
 `;
 
-exports[`KaTeX markdown extensions renders a valid block LaTeX expression in multi line 1`] = `
+exports[`KaTeX markdown extensions > renders a valid block LaTeX expression in multi line 1`] = `
 <div>
   <p
     data-testid="katex-block"
@@ -62,7 +62,7 @@ exports[`KaTeX markdown extensions renders a valid block LaTeX expression in mul
 </div>
 `;
 
-exports[`KaTeX markdown extensions renders a valid inline LaTeX expression 1`] = `
+exports[`KaTeX markdown extensions > renders a valid inline LaTeX expression 1`] = `
 <div>
   <p>
     <span
@@ -94,7 +94,7 @@ exports[`KaTeX markdown extensions renders a valid inline LaTeX expression 1`] =
 </div>
 `;
 
-exports[`KaTeX markdown extensions renders an error message for an invalid LaTeX expression 1`] = `
+exports[`KaTeX markdown extensions > renders an error message for an invalid LaTeX expression 1`] = `
 <div>
   <p>
     <span

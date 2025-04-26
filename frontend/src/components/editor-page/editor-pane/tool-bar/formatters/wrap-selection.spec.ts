@@ -5,6 +5,7 @@
  */
 import type { ContentEdits } from './types/changes'
 import { wrapSelection } from './wrap-selection'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('wrap selection', () => {
   it(`doesn't modify any line if no to-cursor is present`, () => {

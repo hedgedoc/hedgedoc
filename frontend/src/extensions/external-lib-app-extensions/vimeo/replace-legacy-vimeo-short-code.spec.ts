@@ -5,6 +5,7 @@
  */
 import { replaceLegacyVimeoShortCodeMarkdownItPlugin } from './replace-legacy-vimeo-short-code'
 import MarkdownIt from 'markdown-it'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('Replace legacy youtube short codes', () => {
   let markdownIt: MarkdownIt

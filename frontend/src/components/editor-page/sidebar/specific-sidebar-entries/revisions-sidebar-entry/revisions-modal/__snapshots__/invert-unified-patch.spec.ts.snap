@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`invert unified patch inverts a patch correctly 1`] = `
+exports[`invert unified patch > inverts a patch correctly 1`] = `
 {
   "hunks": [
     {

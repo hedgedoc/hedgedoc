@@ -7,11 +7,13 @@ import { mockI18n } from '../../../test-utils/mock-i18n'
 import { render } from '@testing-library/react'
 import { UserAvatar } from './user-avatar'
 import type { UserInfoDto } from '@hedgedoc/commons'
+import { beforeEach, describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('@dicebear/identicon', () => null)
-jest.mock('@dicebear/core', () => ({
-  createAvatar: jest.fn(() => ({
-    toDataUri: jest.fn(() => 'data:image/x-other,identicon-mock')
+vi.mock('@dicebear/identicon')
+vi.mock('@dicebear/core', () => ({
+  createAvatar: vitest.fn(() => ({
+    toDataUri: vitest.fn(() => 'data:image/x-other,identicon-mock')
   }))
 }))
 

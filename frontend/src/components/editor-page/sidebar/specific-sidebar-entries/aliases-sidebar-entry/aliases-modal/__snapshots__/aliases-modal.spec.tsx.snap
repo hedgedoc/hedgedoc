@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AliasesModal renders the modal 1`] = `
+exports[`AliasesModal > renders the modal 1`] = `
 <div>
   <span>
     This is a mock implementation of a Modal: 

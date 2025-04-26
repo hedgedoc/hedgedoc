@@ -6,10 +6,13 @@
 import { Logger } from './logger'
 import { Settings } from 'luxon'
 import { Mock } from 'ts-mockery'
+import { afterEach, beforeEach, describe, expect, it, vitest } from 'vitest'
+import type { MockInstance } from '@vitest/spy'
+import { vi } from 'vitest'
 
 let testMode = false
 let devMode = false
-jest.mock('./test-modes', () => ({
+vi.mock('./test-modes', () => ({
   get isTestMode() {
     return testMode
   },
@@ -22,11 +25,11 @@ describe('Logger', () => {
   let originalNow: () => number
   let dateShift = 0
 
-  let infoLogMock: jest.SpyInstance
-  let warnLogMock: jest.SpyInstance
-  let errorLogMock: jest.SpyInstance
-  let debugLogMock: jest.SpyInstance
-  let defaultLogMock: jest.SpyInstance
+  let infoLogMock: MockInstance
+  let warnLogMock: MockInstance
+  let errorLogMock: MockInstance
+  let debugLogMock: MockInstance
+  let defaultLogMock: MockInstance
   let isLocalStorageAccessDenied = false
 
   const mockLocalStorage = () => {
@@ -48,19 +51,19 @@ describe('Logger', () => {
   }
 
   beforeEach(() => {
-    jest.resetModules()
-    jest.restoreAllMocks()
+    vitest.resetModules()
+    vitest.restoreAllMocks()
 
     testMode = false
     devMode = false
     isLocalStorageAccessDenied = false
     mockLocalStorage()
 
-    infoLogMock = jest.spyOn(console, 'info').mockReturnValue()
-    warnLogMock = jest.spyOn(console, 'warn').mockReturnValue()
-    errorLogMock = jest.spyOn(console, 'error').mockReturnValue()
-    debugLogMock = jest.spyOn(console, 'debug').mockReturnValue()
-    defaultLogMock = jest.spyOn(console, 'log').mockReturnValue()
+    infoLogMock = vitest.spyOn(console, 'info').mockReturnValue()
+    warnLogMock = vitest.spyOn(console, 'warn').mockReturnValue()
+    errorLogMock = vitest.spyOn(console, 'error').mockReturnValue()
+    debugLogMock = vitest.spyOn(console, 'debug').mockReturnValue()
+    defaultLogMock = vitest.spyOn(console, 'log').mockReturnValue()
 
     originalNow = Settings.now
     Settings.now = () => new Date(2021, 9, 25, dateShift, 1 + dateShift, 2 + dateShift, 3 + dateShift).valueOf()

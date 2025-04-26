@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Vega-Lite markdown extensions renders a vega-lite codeblock 1`] = `
+exports[`Vega-Lite markdown extensions > renders a vega-lite codeblock 1`] = `
 <div>
   <pre>
     <span>

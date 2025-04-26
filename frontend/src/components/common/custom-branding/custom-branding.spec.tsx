@@ -8,12 +8,14 @@ import * as UseFrontendConfigMock from '../frontend-config-context/use-frontend-
 import { CustomBranding } from './custom-branding'
 import { render } from '@testing-library/react'
 import { Mock } from 'ts-mockery'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../frontend-config-context/use-frontend-config')
+vi.mock('../frontend-config-context/use-frontend-config')
 
 describe('custom branding', () => {
   const mockFrontendConfigHook = (logo: string | null = null, name: string | null = null) => {
-    jest
+    vi
       .spyOn(UseFrontendConfigMock, 'useFrontendConfig')
       .mockReturnValue(Mock.of<FrontendConfigDto>({ branding: { logo, name } }))
   }

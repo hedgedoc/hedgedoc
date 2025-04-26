@@ -5,12 +5,13 @@
  */
 import { measurePerformance } from './measure-performance'
 import { Mock } from 'ts-mockery'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
 
 describe('measure performance', () => {
   it('uses the global performance functions', () => {
     const measurementName = 'marker-name'
-    const markMock = jest.fn()
-    const measureMock = jest.fn()
+    const markMock = vitest.fn()
+    const measureMock = vitest.fn()
     const startMaker = `${measurementName} - start`
     const endMarker = `${measurementName} - end`
 

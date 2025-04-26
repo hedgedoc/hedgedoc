@@ -6,6 +6,7 @@
 import { mockI18n } from '../../../test-utils/mock-i18n'
 import { CustomAsyncLoadingBoundary } from './custom-async-loading-boundary'
 import { render } from '@testing-library/react'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('Custom error async loading boundary', () => {
   beforeAll(() => mockI18n())

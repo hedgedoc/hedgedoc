@@ -7,6 +7,7 @@ import { initialState } from '../initial-state'
 import type { NoteDetails } from '../types'
 import { buildStateFromServerPermissions } from './build-state-from-server-permissions'
 import type { NotePermissionsDto } from '@hedgedoc/commons'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('build state from server permissions', () => {
   it('creates a new state with the given permissions', () => {

@@ -5,6 +5,7 @@
  */
 import { BlockquoteExtraTagMarkdownItPlugin } from './blockquote-extra-tag-markdown-it-plugin'
 import MarkdownIt from 'markdown-it'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('Quote extra syntax parser', () => {
   let markdownIt: MarkdownIt

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { parseCodeBlockParameters } from './code-block-parameters'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('Code block parameter parsing', () => {
   it('should detect just the language', () => {

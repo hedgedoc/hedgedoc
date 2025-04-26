@@ -1,4 +1,5 @@
 import { validateToken } from './validate-token'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 /*
  * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)

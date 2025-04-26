@@ -13,11 +13,15 @@ import { act, render, screen } from '@testing-library/react'
 import testEvent from '@testing-library/user-event'
 import React from 'react'
 import { mockUiNotifications } from '../../../../../../test-utils/mock-ui-notifications'
+import { beforeEach, describe, expect, it, vitest, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../../../../../../api/alias')
-jest.mock('../../../../../../redux/note-details/methods')
-jest.mock('../../../../../../hooks/common/use-application-state')
-jest.mock('../../../../../notifications/ui-notification-boundary')
+vi.mock('../../../../../../api/alias')
+vi.mock('../../../../../../redux/note-details/methods')
+vi.mock('../../../../../../hooks/common/use-application-state')
+vi.mock('../../../../../notifications/ui-notification-boundary', () => ({
+  useUiNotifications: vi.fn(() => ({ showErrorNotification: vi.fn() }))
+}))
 
 const addPromise = Promise.resolve({ name: 'mock', primaryAlias: true, noteId: 'mock' })
 
@@ -25,14 +29,14 @@ describe('AliasesAddForm', () => {
   beforeEach(async () => {
     await mockI18n()
     mockUiNotifications()
-    jest.spyOn(AliasModule, 'addAlias').mockImplementation(() => addPromise)
-    jest.spyOn(NoteDetailsReduxModule, 'updateMetadata').mockImplementation(() => Promise.resolve())
+    vitest.spyOn(AliasModule, 'addAlias').mockImplementation(() => addPromise)
+    vitest.spyOn(NoteDetailsReduxModule, 'updateMetadata').mockImplementation(() => Promise.resolve())
     mockNotePermissions('test', 'test', undefined, { noteDetails: { id: 'mock-note' } as NoteDetails })
   })
 
   afterAll(() => {
-    jest.resetAllMocks()
-    jest.resetModules()
+    vitest.resetAllMocks()
+    vitest.resetModules()
   })
 
   it('renders the input form', async () => {

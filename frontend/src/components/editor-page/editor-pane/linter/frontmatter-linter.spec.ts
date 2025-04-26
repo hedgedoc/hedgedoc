@@ -8,6 +8,7 @@ import { FrontmatterLinter } from './frontmatter-linter'
 import { mockEditorView } from './single-line-regex-linter.spec'
 import type { Diagnostic } from '@codemirror/lint'
 import { t } from 'i18next'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
 
 const testFrontmatterLinter = (
   editorContent: string,
@@ -22,7 +23,7 @@ const testFrontmatterLinter = (
   expect(calculatedDiagnostics[0].to).toEqual(expectedDiagnostics.to)
   expect(calculatedDiagnostics[0].severity).toEqual(expectedDiagnostics.severity)
   if (expectedReplacement !== undefined) {
-    const spy = jest.spyOn(editorView, 'dispatch')
+    const spy = vitest.spyOn(editorView, 'dispatch')
     expect(calculatedDiagnostics[0].actions).toHaveLength(1)
     expect(calculatedDiagnostics[0].actions?.[0].name).toEqual(t('editor.linter.defaultAction'))
     calculatedDiagnostics[0].actions?.[0].apply(editorView, calculatedDiagnostics[0].from, calculatedDiagnostics[0].to)

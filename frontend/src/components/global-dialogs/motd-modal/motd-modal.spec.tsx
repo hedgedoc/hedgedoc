@@ -14,31 +14,33 @@ import type { PropsWithChildren } from 'react'
 import React from 'react'
 import { CachedMotdModal } from './cached-motd-modal'
 import { MotdProvider } from '../../motd/motd-context'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../../common/modals/common-modal')
-jest.mock('../../common/renderer-iframe/renderer-iframe')
-jest.mock('../../../hooks/common/use-base-url')
+vi.mock('../../common/modals/common-modal')
+vi.mock('../../common/renderer-iframe/renderer-iframe')
+vi.mock('../../../hooks/common/use-base-url')
 
 describe('motd modal', () => {
   beforeAll(async () => {
-    jest.spyOn(UseBaseUrlModule, 'useBaseUrl').mockImplementation(() => 'https://example.org')
+    vitest.spyOn(UseBaseUrlModule, 'useBaseUrl').mockImplementation(() => 'https://example.org')
     await mockI18n()
   })
 
   afterAll(() => {
-    jest.resetAllMocks()
-    jest.resetModules()
+    vitest.resetAllMocks()
+    vitest.resetModules()
   })
 
   beforeAll(() => {
-    jest.spyOn(CommonModalModule, 'CommonModal').mockImplementation((({ children, show }) => {
+    vitest.spyOn(CommonModalModule, 'CommonModal').mockImplementation((({ children, show }) => {
       return (
         <span>
           This is a mock implementation of a Modal: {show ? <dialog>{children}</dialog> : 'Modal is invisible'}
         </span>
       )
     }) as React.FC<PropsWithChildren<CommonModalProps>>)
-    jest.spyOn(RendererIframeModule, 'RendererIframe').mockImplementation((props) => {
+    vitest.spyOn(RendererIframeModule, 'RendererIframe').mockImplementation((props) => {
       return (
         <span {...testId('motd-renderer')}>
           This is a mock implementation of a iframe renderer. Props: {JSON.stringify(props)}

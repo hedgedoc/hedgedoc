@@ -7,6 +7,7 @@ import { mockI18n } from '../../../../test-utils/mock-i18n'
 import { TestMarkdownRenderer } from '../../test-utils/test-markdown-renderer'
 import { LinkifyFixMarkdownExtension } from './linkify-fix-markdown-extension'
 import { render } from '@testing-library/react'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('Linkify markdown extensions', () => {
   beforeAll(async () => {

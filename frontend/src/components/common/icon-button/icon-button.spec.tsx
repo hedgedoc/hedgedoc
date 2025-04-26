@@ -6,6 +6,7 @@
 import { IconButton } from './icon-button'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { Heart as IconHeart } from 'react-bootstrap-icons'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
 
 describe('IconButton', () => {
   it('renders heart icon', () => {
@@ -29,7 +30,7 @@ describe('IconButton', () => {
     expect(view.container).toMatchSnapshot()
   })
   it('correctly uses the onClick callback', async () => {
-    const onClick = jest.fn()
+    const onClick = vitest.fn()
     const view = render(
       <IconButton icon={IconHeart} onClick={onClick}>
         test with onClick

@@ -5,7 +5,7 @@
  */
 import { NoSubdirectoryAllowedError, WrongProtocolError } from './errors.js'
 import { parseUrl } from './parse-url.js'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
 
 describe('validate url', () => {
   it("doesn't accept non-urls", () => {

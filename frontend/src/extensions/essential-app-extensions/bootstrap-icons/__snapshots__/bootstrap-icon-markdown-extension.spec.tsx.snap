@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`bootstrap icon markdown extension doesn't render invalid icon 1`] = `
+exports[`bootstrap icon markdown extension > doesn't render invalid icon 1`] = `
 <div>
   <p>
     :bi-INVALIDICONNAME:
@@ -10,7 +10,7 @@ exports[`bootstrap icon markdown extension doesn't render invalid icon 1`] = `
 </div>
 `;
 
-exports[`bootstrap icon markdown extension doesn't render missing icon 1`] = `
+exports[`bootstrap icon markdown extension > doesn't render missing icon 1`] = `
 <div>
   <p>
     :bi-:
@@ -20,7 +20,7 @@ exports[`bootstrap icon markdown extension doesn't render missing icon 1`] = `
 </div>
 `;
 
-exports[`bootstrap icon markdown extension renders correct icon 1`] = `
+exports[`bootstrap icon markdown extension > renders correct icon 1`] = `
 <div>
   <p>
     <span

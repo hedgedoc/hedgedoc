@@ -1,91 +1,91 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`custom branding doesn't show anything if no branding is defined 1`] = `<div />`;
+exports[`custom branding > doesn't show anything if no branding is defined 1`] = `<div />`;
 
-exports[`custom branding with inline=false shows an image if branding logo is defined 1`] = `
+exports[`custom branding > with inline=false > shows an image if branding logo is defined 1`] = `
 <div>
   <img
-    class="regular-size"
+    class="_regular-size_4a21ce"
     src="mockBrandingUrl"
   />
 </div>
 `;
 
-exports[`custom branding with inline=false shows an text if branding text is defined 1`] = `
+exports[`custom branding > with inline=false > shows an text if branding text is defined 1`] = `
 <div>
   <span
-    class="regular-size"
+    class="_regular-size_4a21ce"
   >
     mockedBranding
   </span>
 </div>
 `;
 
-exports[`custom branding with inline=false will prefer the logo over the text 1`] = `
+exports[`custom branding > with inline=false > will prefer the logo over the text 1`] = `
 <div>
   <img
     alt="mockedBranding"
-    class="regular-size"
+    class="_regular-size_4a21ce"
     src="mockBrandingUrl"
     title="mockedBranding"
   />
 </div>
 `;
 
-exports[`custom branding with inline=true shows an image if branding logo is defined 1`] = `
+exports[`custom branding > with inline=true > shows an image if branding logo is defined 1`] = `
 <div>
   <img
-    class="inline-logo"
+    class="_inline-logo_4a21ce"
     src="mockBrandingUrl"
   />
 </div>
 `;
 
-exports[`custom branding with inline=true shows an text if branding text is defined 1`] = `
+exports[`custom branding > with inline=true > shows an text if branding text is defined 1`] = `
 <div>
   <span
-    class="inline-text"
+    class="_inline-text_4a21ce"
   >
     mockedBranding
   </span>
 </div>
 `;
 
-exports[`custom branding with inline=true will prefer the logo over the text 1`] = `
+exports[`custom branding > with inline=true > will prefer the logo over the text 1`] = `
 <div>
   <img
     alt="mockedBranding"
-    class="inline-logo"
+    class="_inline-logo_4a21ce"
     src="mockBrandingUrl"
     title="mockedBranding"
   />
 </div>
 `;
 
-exports[`custom branding with inline=undefined shows an image if branding logo is defined 1`] = `
+exports[`custom branding > with inline=undefined > shows an image if branding logo is defined 1`] = `
 <div>
   <img
-    class="regular-size"
+    class="_regular-size_4a21ce"
     src="mockBrandingUrl"
   />
 </div>
 `;
 
-exports[`custom branding with inline=undefined shows an text if branding text is defined 1`] = `
+exports[`custom branding > with inline=undefined > shows an text if branding text is defined 1`] = `
 <div>
   <span
-    class="regular-size"
+    class="_regular-size_4a21ce"
   >
     mockedBranding
   </span>
 </div>
 `;
 
-exports[`custom branding with inline=undefined will prefer the logo over the text 1`] = `
+exports[`custom branding > with inline=undefined > will prefer the logo over the text 1`] = `
 <div>
   <img
     alt="mockedBranding"
-    class="regular-size"
+    class="_regular-size_4a21ce"
     src="mockBrandingUrl"
     title="mockedBranding"
   />

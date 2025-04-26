@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { updateObject } from './update-object'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('updateObject', () => {
   it('should not update the object if newValues is not an object', () => {

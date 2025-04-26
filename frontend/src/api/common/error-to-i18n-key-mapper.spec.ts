@@ -5,6 +5,7 @@
  */
 import { ApiError } from './api-error'
 import { ErrorToI18nKeyMapper } from './error-to-i18n-key-mapper'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('ErrorToI18nKeyMapper', () => {
   it('returns fallback with namespace when no mapper is defined', () => {

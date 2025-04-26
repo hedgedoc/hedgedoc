@@ -8,8 +8,10 @@ import { CopyToClipboardButton } from './copy-to-clipboard-button'
 import { act, render, screen } from '@testing-library/react'
 import React from 'react'
 import * as uuidModule from 'uuid'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('uuid')
+vi.mock('uuid')
 
 describe('Copy to clipboard button', () => {
   const copyContent = 'Copy McCopy Content. Electric Copyloo'
@@ -20,15 +22,15 @@ describe('Copy to clipboard button', () => {
   beforeAll(async () => {
     await mockI18n()
     originalClipboard = window.navigator.clipboard
-    jest.spyOn(uuidModule, 'v4').mockReturnValue(Buffer.from(uuidMock))
+    vitest.spyOn(uuidModule, 'v4').mockReturnValue(Buffer.from(uuidMock))
   })
 
   afterAll(() => {
     Object.assign(global.navigator, {
       clipboard: originalClipboard
     })
-    jest.resetAllMocks()
-    jest.resetModules()
+    vitest.resetAllMocks()
+    vitest.resetModules()
   })
 
   const testButton = async (expectSuccess: boolean) => {
@@ -44,8 +46,8 @@ describe('Copy to clipboard button', () => {
     expect(view.container).toMatchSnapshot()
   }
 
-  const mockClipboard = (copyIsSuccessful: boolean): jest.Mock => {
-    const writeTextToClipboardSpy = jest.fn(() =>
+  const mockClipboard = (copyIsSuccessful: boolean): vi.mock => {
+    const writeTextToClipboardSpy = vitest.fn(() =>
       copyIsSuccessful ? Promise.resolve() : Promise.reject(new Error('mocked clipboard failed'))
     )
     Object.assign(global.navigator, {

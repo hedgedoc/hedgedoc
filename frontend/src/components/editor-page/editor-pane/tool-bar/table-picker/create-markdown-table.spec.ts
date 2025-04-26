@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { createMarkdownTable } from './create-markdown-table'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('create markdown table', () => {
   it('generates a valid table', () => {

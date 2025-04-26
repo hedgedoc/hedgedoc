@@ -6,15 +6,17 @@
 import * as buildStateFromUpdatedMarkdownContentModule from '../build-state-from-updated-markdown-content'
 import type { NoteDetails } from '../types'
 import { buildStateFromServerDto } from './build-state-from-set-note-data-from-server'
+import type { NoteDto } from '@hedgedoc/commons'
 import { NoteTextDirection, NoteType } from '@hedgedoc/commons'
 import { DateTime } from 'luxon'
 import { Mock } from 'ts-mockery'
-import type { NoteDto } from '@hedgedoc/commons'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../build-state-from-updated-markdown-content')
+vi.mock('../build-state-from-updated-markdown-content')
 
 describe('build state from set note data from server', () => {
-  const buildStateFromUpdatedMarkdownContentMock = jest.spyOn(
+  const buildStateFromUpdatedMarkdownContentMock = vitest.spyOn(
     buildStateFromUpdatedMarkdownContentModule,
     'buildStateFromUpdatedMarkdownContent'
   )

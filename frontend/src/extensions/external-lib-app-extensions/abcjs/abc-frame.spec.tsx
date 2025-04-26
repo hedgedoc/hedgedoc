@@ -8,8 +8,9 @@ import { AbcFrame } from './abc-frame'
 import { render, screen } from '@testing-library/react'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-jest.mock('../../../components/common/application-error-alert/application-error-alert', () => ({
+vi.mock('../../../components/common/application-error-alert/application-error-alert', () => ({
   ApplicationErrorAlert: ({ children, ...props }: PropsWithChildren) => (
     <div>
       <h3>This is a mock for ApplicationErrorAlert.</h3>
@@ -22,8 +23,8 @@ jest.mock('../../../components/common/application-error-alert/application-error-
 
 describe('AbcFrame', () => {
   afterEach(() => {
-    jest.resetModules()
-    jest.restoreAllMocks()
+    vi.resetModules()
+    vi.restoreAllMocks()
   })
   beforeEach(() => mockI18n())
 
@@ -42,7 +43,7 @@ describe('AbcFrame', () => {
   })
 
   it("renders an error if abcjs file can't be loaded", async () => {
-    jest.mock('abcjs', () => {
+    vi.doMock('abcjs', () => {
       throw new Error('abc is exploded!')
     })
     const element = (
@@ -59,7 +60,7 @@ describe('AbcFrame', () => {
   })
 
   it('renders an error if abcjs render function crashes', async () => {
-    jest.mock('abcjs', () => ({
+    vi.doMock('abcjs', () => ({
       renderAbc: () => {
         throw new Error('abc is exploded!')
       }

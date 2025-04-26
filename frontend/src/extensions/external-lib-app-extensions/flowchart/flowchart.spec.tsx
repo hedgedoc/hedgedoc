@@ -8,12 +8,12 @@ import { mockI18n } from '../../../test-utils/mock-i18n'
 import { FlowChart } from './flowchart'
 import * as useMediaQuery from '@restart/hooks/useMediaQuery'
 import { render, screen } from '@testing-library/react'
-import type * as flowchartJsModule from 'flowchart.js'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
+import { afterEach, describe, expect, it, vitest, beforeAll, Mock, vi } from 'vitest'
 
-jest.mock('@restart/hooks/useMediaQuery')
-jest.mock('../../../components/common/application-error-alert/application-error-alert', () => ({
+vi.mock('@restart/hooks/useMediaQuery')
+vi.mock('../../../components/common/application-error-alert/application-error-alert', () => ({
   ApplicationErrorAlert: ({ children, ...props }: PropsWithChildren) => (
     <div>
       <h3>This is a mock for ApplicationErrorAlert.</h3>
@@ -29,29 +29,29 @@ describe('Flowchart', () => {
   const expectedValidFlowchartCode = 'test code'
 
   beforeAll(async () => {
-    jest.spyOn(useMediaQuery, 'default').mockImplementation(() => false)
+    vitest.spyOn(useMediaQuery, 'default').mockImplementation(() => false)
     await mockI18n()
   })
 
   afterEach(() => {
-    jest.resetModules()
-    jest.restoreAllMocks()
+    vitest.resetModules()
+    vitest.restoreAllMocks()
   })
 
-  const mockFlowchartDraw = (): jest.Mock<void, Parameters<flowchartJsModule.Instance['drawSVG']>> => {
-    const drawSvg = jest.fn((container: HTMLElement | string) => {
+  const mockFlowchartDraw = () => {
+    const drawSvg = vitest.fn((container: HTMLElement | string) => {
       if (typeof container === 'string') {
         throw new Error('HTMLElement expected')
       } else {
         container.innerHTML = successText
       }
     })
-    jest.mock('flowchart.js', () => ({
-      parse: jest.fn((code) => {
+    vi.doMock('flowchart.js', () => ({
+      parse: vitest.fn((code) => {
         if (code !== expectedValidFlowchartCode) {
           throw new Error('invalid flowchart code')
         }
-        return { drawSVG: drawSvg, clean: jest.fn() }
+        return { drawSVG: drawSvg, clean: vitest.fn() }
       })
     }))
     return drawSvg
@@ -86,7 +86,7 @@ describe('Flowchart', () => {
   })
 
   it('handles error if lib loading failed', async () => {
-    jest.mock('flowchart.js', () => {
+    vi.doMock('flowchart.js', () => {
       throw new Error('flowchart.js import is exploded!')
     })
 

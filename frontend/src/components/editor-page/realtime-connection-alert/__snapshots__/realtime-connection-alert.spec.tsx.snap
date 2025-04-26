@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`realtime connection alert will render correctly 1`] = `
+exports[`realtime connection alert > will render correctly 1`] = `
 <div>
   <div
     class="fade w-100 m-0 px-2 py-1 border-top-0 border-bottom-0 d-flex align-items-center alert alert-warning show"

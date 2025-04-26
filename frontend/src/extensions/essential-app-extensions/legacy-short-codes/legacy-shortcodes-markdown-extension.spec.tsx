@@ -7,6 +7,7 @@ import { TestMarkdownRenderer } from '../../../components/markdown-renderer/test
 import { LegacyShortcodesMarkdownExtension } from './legacy-shortcodes-markdown-extension'
 import { render } from '@testing-library/react'
 import React from 'react'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('Legacy shortcodes markdown extension', () => {
   it('transforms a pdf short code into an URL', () => {

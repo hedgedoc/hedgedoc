@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TranslatedExternalLink renders with i18nKey 1`] = `
+exports[`TranslatedExternalLink > renders with i18nKey 1`] = `
 <div>
   <a
     class=""

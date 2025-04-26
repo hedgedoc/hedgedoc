@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Async loading boundary shows a waiting spinner if loading 1`] = `
+exports[`Async loading boundary > shows a waiting spinner if loading 1`] = `
 <div>
   <div
     class="m-3 d-flex align-items-center justify-content-center"
@@ -10,7 +10,7 @@ exports[`Async loading boundary shows a waiting spinner if loading 1`] = `
 </div>
 `;
 
-exports[`Async loading boundary shows an error if error is given with loading 1`] = `
+exports[`Async loading boundary > shows an error if error is given with loading 1`] = `
 <div>
   <div
     class="fade alert alert-danger show"
@@ -21,7 +21,7 @@ exports[`Async loading boundary shows an error if error is given with loading 1`
 </div>
 `;
 
-exports[`Async loading boundary shows an error if error is given without loading 1`] = `
+exports[`Async loading boundary > shows an error if error is given without loading 1`] = `
 <div>
   <div
     class="fade alert alert-danger show"
@@ -32,7 +32,7 @@ exports[`Async loading boundary shows an error if error is given without loading
 </div>
 `;
 
-exports[`Async loading boundary shows the children if not loading and no error 1`] = `
+exports[`Async loading boundary > shows the children if not loading and no error 1`] = `
 <div>
   children
 </div>

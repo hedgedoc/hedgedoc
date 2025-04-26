@@ -6,6 +6,7 @@
 import { mockI18n } from '../../../test-utils/mock-i18n'
 import { RealtimeConnectionAlert } from './realtime-connection-alert'
 import { render } from '@testing-library/react'
+import { describe, expect, it, beforeAll } from 'vitest'
 
 describe('realtime connection alert', () => {
   beforeAll(mockI18n)

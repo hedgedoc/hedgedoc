@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ExternalLink renders an external link correctly 1`] = `
+exports[`ExternalLink > renders an external link correctly 1`] = `
 <div>
   <a
     class=""
@@ -14,7 +14,7 @@ exports[`ExternalLink renders an external link correctly 1`] = `
 </div>
 `;
 
-exports[`ExternalLink renders an external link with a title 1`] = `
+exports[`ExternalLink > renders an external link with a title 1`] = `
 <div>
   <a
     class=""
@@ -29,7 +29,7 @@ exports[`ExternalLink renders an external link with a title 1`] = `
 </div>
 `;
 
-exports[`ExternalLink renders an external link with additional className 1`] = `
+exports[`ExternalLink > renders an external link with additional className 1`] = `
 <div>
   <a
     class="testClass"
@@ -43,7 +43,7 @@ exports[`ExternalLink renders an external link with additional className 1`] = `
 </div>
 `;
 
-exports[`ExternalLink renders an external link with an icon 1`] = `
+exports[`ExternalLink > renders an external link with an icon 1`] = `
 <div>
   <a
     class=""
@@ -59,7 +59,7 @@ exports[`ExternalLink renders an external link with an icon 1`] = `
 </div>
 `;
 
-exports[`ExternalLink renders an external link with an id 1`] = `
+exports[`ExternalLink > renders an external link with an id 1`] = `
 <div>
   <a
     class=""

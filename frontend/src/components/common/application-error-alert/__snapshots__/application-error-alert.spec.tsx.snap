@@ -1,15 +1,15 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ApplicationErrorAlert renders correctly 1`] = `
+exports[`ApplicationErrorAlert > renders correctly 1`] = `
 <div>
   <div
-    class="fade alert test-class alert alert-primary show"
+    class="fade _alert_663ce3 test-class alert alert-primary show"
     role="alert"
   >
     <p
       class="d-flex align-items-center"
     >
-      This is a mock for "AlertIcon". Props: {"className":"logo"}
+      This is a mock for "AlertIcon". Props: {"className":"_logo_663ce3"}
       <span>
         <span>
           Test Child

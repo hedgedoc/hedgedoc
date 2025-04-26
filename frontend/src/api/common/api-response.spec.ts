@@ -5,6 +5,7 @@
  */
 import { ApiResponse } from './api-response'
 import { Mock } from 'ts-mockery'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('ApiResponse', () => {
   it('getResponse returns input response', () => {

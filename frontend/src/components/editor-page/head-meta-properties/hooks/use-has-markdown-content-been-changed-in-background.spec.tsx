@@ -8,9 +8,11 @@ import * as UseNoteMarkdownContent from '../../../../hooks/common/use-note-markd
 import { useHasMarkdownContentBeenChangedInBackground } from './use-has-markdown-content-been-changed-in-background'
 import { render } from '@testing-library/react'
 import React, { Fragment } from 'react'
+import { beforeEach, describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../../../../hooks/common/use-is-document-visible')
-jest.mock('../../../../hooks/common/use-note-markdown-content')
+vi.mock('../../../../hooks/common/use-is-document-visible')
+vi.mock('../../../../hooks/common/use-note-markdown-content')
 
 describe('use has markdown content been changed in background', () => {
   const TestComponent: React.FC = () => {
@@ -22,8 +24,8 @@ describe('use has markdown content been changed in background', () => {
   let noteContent = 'content'
 
   beforeEach(() => {
-    jest.spyOn(UseIsDocumentVisibleModule, 'useIsDocumentVisible').mockImplementation(() => documentVisible)
-    jest.spyOn(UseNoteMarkdownContent, 'useNoteMarkdownContent').mockImplementation(() => noteContent)
+    vitest.spyOn(UseIsDocumentVisibleModule, 'useIsDocumentVisible').mockImplementation(() => documentVisible)
+    vitest.spyOn(UseNoteMarkdownContent, 'useNoteMarkdownContent').mockImplementation(() => noteContent)
   })
 
   it('returns the correct value', () => {

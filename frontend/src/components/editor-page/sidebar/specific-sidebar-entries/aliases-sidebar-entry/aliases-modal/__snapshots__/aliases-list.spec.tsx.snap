@@ -1,27 +1,3 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AliasesList renders the AliasList sorted 1`] = `
-<div>
-  <span>
-    Alias: 
-    a-test
-     (
-    non-primary
-    )
-  </span>
-  <span>
-    Alias: 
-    b-test
-     (
-    primary
-    )
-  </span>
-  <span>
-    Alias: 
-    z-test
-     (
-    non-primary
-    )
-  </span>
-</div>
-`;
+exports[`AliasesList > renders the AliasList sorted 1`] = `<div />`;

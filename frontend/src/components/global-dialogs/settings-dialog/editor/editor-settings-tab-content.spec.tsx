@@ -8,8 +8,10 @@ import { mockAppState } from '../../../../test-utils/mock-app-state'
 import { render } from '@testing-library/react'
 import { EditorSettingsTabContent } from './editor-settings-tab-content'
 import { mockI18n } from '../../../../test-utils/mock-i18n'
+import { afterEach, beforeEach, describe, expect, it, vitest } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../../../../hooks/common/use-application-state')
+vi.mock('../../../../hooks/common/use-application-state')
 
 describe('EditorSettingsTabContent', () => {
   beforeEach(async () => {
@@ -17,8 +19,8 @@ describe('EditorSettingsTabContent', () => {
   })
 
   afterEach(() => {
-    jest.resetAllMocks()
-    jest.resetModules()
+    vitest.resetAllMocks()
+    vitest.resetModules()
   })
 
   it('renders space settings when indentWithTabs is false', () => {

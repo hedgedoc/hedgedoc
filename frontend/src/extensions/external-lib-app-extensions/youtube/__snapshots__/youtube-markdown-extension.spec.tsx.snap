@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`youtube markdown extension doesn't render invalid youtube ids in short code syntax 1`] = `
+exports[`youtube markdown extension > doesn't render invalid youtube ids in short code syntax 1`] = `
 <div>
   <p>
     {%youtube a %}
@@ -10,7 +10,7 @@ exports[`youtube markdown extension doesn't render invalid youtube ids in short 
 </div>
 `;
 
-exports[`youtube markdown extension renders legacy youtube syntax 1`] = `
+exports[`youtube markdown extension > renders legacy youtube syntax 1`] = `
 <div>
   <p>
     <span>
@@ -23,7 +23,7 @@ exports[`youtube markdown extension renders legacy youtube syntax 1`] = `
 </div>
 `;
 
-exports[`youtube markdown extension renders plain youtube URLs 1`] = `
+exports[`youtube markdown extension > renders plain youtube URLs 1`] = `
 <div>
   <p>
     <span>

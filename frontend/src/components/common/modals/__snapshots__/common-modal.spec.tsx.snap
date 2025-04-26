@@ -1,8 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`CommonModal does not render if show is false 1`] = `<div />`;
+exports[`CommonModal > does not render if show is false 1`] = `<div />`;
 
-exports[`CommonModal render correctly in size lg 1`] = `
+exports[`CommonModal > render correctly in size > lg 1`] = `
 <div
   class="modal-dialog modal-lg"
   data-testid="commonModal"
@@ -24,7 +24,7 @@ exports[`CommonModal render correctly in size lg 1`] = `
 </div>
 `;
 
-exports[`CommonModal render correctly in size sm 1`] = `
+exports[`CommonModal > render correctly in size > sm 1`] = `
 <div
   class="modal-dialog modal-sm"
   data-testid="commonModal"
@@ -46,7 +46,7 @@ exports[`CommonModal render correctly in size sm 1`] = `
 </div>
 `;
 
-exports[`CommonModal render correctly in size xl 1`] = `
+exports[`CommonModal > render correctly in size > xl 1`] = `
 <div
   class="modal-dialog modal-xl"
   data-testid="commonModal"
@@ -68,7 +68,7 @@ exports[`CommonModal render correctly in size xl 1`] = `
 </div>
 `;
 
-exports[`CommonModal render correctly with additionalClasses 1`] = `
+exports[`CommonModal > render correctly with additionalClasses 1`] = `
 <div
   class="modal-dialog testClass"
   data-testid="commonModal"
@@ -90,7 +90,7 @@ exports[`CommonModal render correctly with additionalClasses 1`] = `
 </div>
 `;
 
-exports[`CommonModal render correctly with i18nTitle 1`] = `
+exports[`CommonModal > render correctly with i18nTitle 1`] = `
 <div
   class="modal-dialog"
   data-testid="commonModal"
@@ -112,7 +112,7 @@ exports[`CommonModal render correctly with i18nTitle 1`] = `
 </div>
 `;
 
-exports[`CommonModal render correctly with title 1`] = `
+exports[`CommonModal > render correctly with title 1`] = `
 <div
   class="modal-dialog"
   data-testid="commonModal"
@@ -134,7 +134,7 @@ exports[`CommonModal render correctly with title 1`] = `
 </div>
 `;
 
-exports[`CommonModal render correctly with title icon 1`] = `
+exports[`CommonModal > render correctly with title icon 1`] = `
 <div
   class="modal-dialog"
   data-testid="commonModal"
@@ -158,7 +158,7 @@ exports[`CommonModal render correctly with title icon 1`] = `
 </div>
 `;
 
-exports[`CommonModal renders correctly and calls onHide, when close button is clicked 1`] = `
+exports[`CommonModal > renders correctly and calls onHide, when close button is clicked 1`] = `
 <div
   class="modal-dialog"
   data-testid="commonModal"

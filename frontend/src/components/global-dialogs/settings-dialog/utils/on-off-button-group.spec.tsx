@@ -6,6 +6,7 @@
 import { mockI18n } from '../../../../test-utils/mock-i18n'
 import { OnOffButtonGroup } from './on-off-button-group'
 import { act, render, screen } from '@testing-library/react'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('Settings On-Off Button Group', () => {
   beforeAll(mockI18n)

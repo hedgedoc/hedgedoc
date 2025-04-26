@@ -1,31 +1,31 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Splitter resize can change size with mouse 1`] = `
+exports[`Splitter > resize > can change size with mouse 1`] = `
 <div>
   <div
     class="flex-fill flex-row d-flex "
   >
     <div
-      class="left"
+      class="_left_d43a0d"
       id="editor-edit-pane"
-      style="width: calc(50% - 5px);"
+      style="width: calc(-5px + (% * nan));"
     >
       <div
-        class="inner"
+        class="_inner_d43a0d"
       >
         left
       </div>
     </div>
     <div
-      class="divider"
+      class="_divider_e4e78e"
       data-testid="splitter-divider"
       id="editor-splitter"
     >
       <div
-        class="middle"
+        class="_middle_e4e78e"
       >
         <div
-          class="buttons"
+          class="_buttons_e4e78e"
         >
           <button
             class="btn btn-light"
@@ -34,7 +34,7 @@ exports[`Splitter resize can change size with mouse 1`] = `
             BootstrapIconMock_ArrowLeft
           </button>
           <span
-            class="grabber"
+            class="_grabber_e4e78e"
           >
             BootstrapIconMock_ArrowLeftRight
           </span>
@@ -48,12 +48,12 @@ exports[`Splitter resize can change size with mouse 1`] = `
       </div>
     </div>
     <div
-      class="right"
+      class="_right_d43a0d"
       id="editor-view-pane"
-      style="width: calc(100% - 50%);"
+      style="width: calc(100% - (% * nan));"
     >
       <div
-        class="inner"
+        class="_inner_d43a0d"
       >
         right
       </div>
@@ -62,32 +62,32 @@ exports[`Splitter resize can change size with mouse 1`] = `
 </div>
 `;
 
-exports[`Splitter resize can change size with touch 1`] = `
+exports[`Splitter > resize > can change size with touch 1`] = `
 <div>
   <div
     class="flex-fill flex-row d-flex "
   >
     <div
-      class="left"
+      class="_left_d43a0d"
       id="editor-edit-pane"
-      style="width: calc(50% - 5px);"
+      style="width: calc(-5px + (% * nan));"
     >
       <div
-        class="inner"
+        class="_inner_d43a0d"
       >
         left
       </div>
     </div>
     <div
-      class="divider"
+      class="_divider_e4e78e"
       data-testid="splitter-divider"
       id="editor-splitter"
     >
       <div
-        class="middle"
+        class="_middle_e4e78e"
       >
         <div
-          class="buttons"
+          class="_buttons_e4e78e"
         >
           <button
             class="btn btn-light"
@@ -96,7 +96,7 @@ exports[`Splitter resize can change size with touch 1`] = `
             BootstrapIconMock_ArrowLeft
           </button>
           <span
-            class="grabber"
+            class="_grabber_e4e78e"
           >
             BootstrapIconMock_ArrowLeftRight
           </span>
@@ -110,12 +110,12 @@ exports[`Splitter resize can change size with touch 1`] = `
       </div>
     </div>
     <div
-      class="right"
+      class="_right_d43a0d"
       id="editor-view-pane"
-      style="width: calc(100% - 50%);"
+      style="width: calc(100% - (% * nan));"
     >
       <div
-        class="inner"
+        class="_inner_d43a0d"
       >
         right
       </div>
@@ -124,32 +124,32 @@ exports[`Splitter resize can change size with touch 1`] = `
 </div>
 `;
 
-exports[`Splitter resize can change size with touch 2`] = `
+exports[`Splitter > resize > can change size with touch 2`] = `
 <div>
   <div
     class="flex-fill flex-row d-flex "
   >
     <div
-      class="left"
+      class="_left_d43a0d"
       id="editor-edit-pane"
-      style="width: calc(50% - 5px);"
+      style="width: calc(-5px + (% * nan));"
     >
       <div
-        class="inner"
+        class="_inner_d43a0d"
       >
         left
       </div>
     </div>
     <div
-      class="divider"
+      class="_divider_e4e78e"
       data-testid="splitter-divider"
       id="editor-splitter"
     >
       <div
-        class="middle"
+        class="_middle_e4e78e"
       >
         <div
-          class="buttons"
+          class="_buttons_e4e78e"
         >
           <button
             class="btn btn-light"
@@ -158,7 +158,7 @@ exports[`Splitter resize can change size with touch 2`] = `
             BootstrapIconMock_ArrowLeft
           </button>
           <span
-            class="grabber"
+            class="_grabber_e4e78e"
           >
             BootstrapIconMock_ArrowLeftRight
           </span>
@@ -172,12 +172,12 @@ exports[`Splitter resize can change size with touch 2`] = `
       </div>
     </div>
     <div
-      class="right"
+      class="_right_d43a0d"
       id="editor-view-pane"
-      style="width: calc(100% - 50%);"
+      style="width: calc(100% - (% * nan));"
     >
       <div
-        class="inner"
+        class="_inner_d43a0d"
       >
         right
       </div>
@@ -186,32 +186,32 @@ exports[`Splitter resize can change size with touch 2`] = `
 </div>
 `;
 
-exports[`Splitter resize can change size with touch 3`] = `
+exports[`Splitter > resize > can change size with touch 3`] = `
 <div>
   <div
     class="flex-fill flex-row d-flex "
   >
     <div
-      class="left"
+      class="_left_d43a0d"
       id="editor-edit-pane"
-      style="width: calc(50% - 5px);"
+      style="width: calc(-5px + (% * nan));"
     >
       <div
-        class="inner"
+        class="_inner_d43a0d"
       >
         left
       </div>
     </div>
     <div
-      class="divider"
+      class="_divider_e4e78e"
       data-testid="splitter-divider"
       id="editor-splitter"
     >
       <div
-        class="middle"
+        class="_middle_e4e78e"
       >
         <div
-          class="buttons"
+          class="_buttons_e4e78e"
         >
           <button
             class="btn btn-light"
@@ -220,7 +220,7 @@ exports[`Splitter resize can change size with touch 3`] = `
             BootstrapIconMock_ArrowLeft
           </button>
           <span
-            class="grabber"
+            class="_grabber_e4e78e"
           >
             BootstrapIconMock_ArrowLeftRight
           </span>
@@ -234,12 +234,12 @@ exports[`Splitter resize can change size with touch 3`] = `
       </div>
     </div>
     <div
-      class="right"
+      class="_right_d43a0d"
       id="editor-view-pane"
-      style="width: calc(100% - 50%);"
+      style="width: calc(100% - (% * nan));"
     >
       <div
-        class="inner"
+        class="_inner_d43a0d"
       >
         right
       </div>
@@ -248,32 +248,32 @@ exports[`Splitter resize can change size with touch 3`] = `
 </div>
 `;
 
-exports[`Splitter resize can change size with touch 4`] = `
+exports[`Splitter > resize > can change size with touch 4`] = `
 <div>
   <div
     class="flex-fill flex-row d-flex "
   >
     <div
-      class="left"
+      class="_left_d43a0d"
       id="editor-edit-pane"
-      style="width: calc(50% - 5px);"
+      style="width: calc(-5px + (% * nan));"
     >
       <div
-        class="inner"
+        class="_inner_d43a0d"
       >
         left
       </div>
     </div>
     <div
-      class="divider"
+      class="_divider_e4e78e"
       data-testid="splitter-divider"
       id="editor-splitter"
     >
       <div
-        class="middle"
+        class="_middle_e4e78e"
       >
         <div
-          class="buttons"
+          class="_buttons_e4e78e"
         >
           <button
             class="btn btn-light"
@@ -282,7 +282,7 @@ exports[`Splitter resize can change size with touch 4`] = `
             BootstrapIconMock_ArrowLeft
           </button>
           <span
-            class="grabber"
+            class="_grabber_e4e78e"
           >
             BootstrapIconMock_ArrowLeftRight
           </span>
@@ -296,12 +296,12 @@ exports[`Splitter resize can change size with touch 4`] = `
       </div>
     </div>
     <div
-      class="right"
+      class="_right_d43a0d"
       id="editor-view-pane"
-      style="width: calc(100% - 50%);"
+      style="width: calc(100% - (% * nan));"
     >
       <div
-        class="inner"
+        class="_inner_d43a0d"
       >
         right
       </div>

@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Table of contents renders correctly 1`] = `
+exports[`Table of contents > renders correctly 1`] = `
 <div>
   <div
-    class="toc customClassName"
+    class="_toc_e84bed customClassName"
   >
     <ul>
       <li>
@@ -39,10 +39,10 @@ exports[`Table of contents renders correctly 1`] = `
 </div>
 `;
 
-exports[`Table of contents renders only in requested max depth 1`] = `
+exports[`Table of contents > renders only in requested max depth 1`] = `
 <div>
   <div
-    class="toc customClassName"
+    class="_toc_e84bed customClassName"
   >
     <ul>
       <li>

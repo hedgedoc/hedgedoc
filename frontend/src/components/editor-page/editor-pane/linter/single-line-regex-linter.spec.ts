@@ -9,6 +9,7 @@ import type { Diagnostic } from '@codemirror/lint'
 import type { EditorState, Text } from '@codemirror/state'
 import type { EditorView } from '@codemirror/view'
 import { Mock } from 'ts-mockery'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
 
 export const mockEditorView = (content: string): EditorView => {
   const docMock = Mock.of<Text>()
@@ -17,7 +18,7 @@ export const mockEditorView = (content: string): EditorView => {
     state: Mock.of<EditorState>({
       doc: docMock
     }),
-    dispatch: jest.fn()
+    dispatch: vitest.fn()
   })
 }
 

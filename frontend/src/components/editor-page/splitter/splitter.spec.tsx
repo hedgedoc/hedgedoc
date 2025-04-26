@@ -9,11 +9,13 @@ import { Mock } from 'ts-mockery'
 import * as EditorConfigModule from '../../../redux/editor-config/methods'
 import { mockAppState } from '../../../test-utils/mock-app-state'
 import type { EditorConfig } from '../../../redux/editor-config/types'
+import { beforeEach, describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('../../../hooks/common/use-application-state')
-jest.mock('../../../redux/editor-config/methods')
+vi.mock('../../../hooks/common/use-application-state')
+vi.mock('../../../redux/editor-config/methods')
 
-const setEditorSplitPosition = jest.spyOn(EditorConfigModule, 'setEditorSplitPosition').mockReturnValue()
+const setEditorSplitPosition = vitest.spyOn(EditorConfigModule, 'setEditorSplitPosition').mockReturnValue()
 
 describe('Splitter', () => {
   describe('resize', () => {

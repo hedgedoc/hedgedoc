@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Legacy shortcodes markdown extension transforms a pdf short code into an URL 1`] = `
+exports[`Legacy shortcodes markdown extension > transforms a pdf short code into an URL 1`] = `
 <div>
   <p>
     <a
@@ -14,7 +14,7 @@ exports[`Legacy shortcodes markdown extension transforms a pdf short code into a
 </div>
 `;
 
-exports[`Legacy shortcodes markdown extension transforms a slideshare short code into an URL 1`] = `
+exports[`Legacy shortcodes markdown extension > transforms a slideshare short code into an URL 1`] = `
 <div>
   <p>
     <a
@@ -28,7 +28,7 @@ exports[`Legacy shortcodes markdown extension transforms a slideshare short code
 </div>
 `;
 
-exports[`Legacy shortcodes markdown extension transforms a speakerdeck short code into an URL 1`] = `
+exports[`Legacy shortcodes markdown extension > transforms a speakerdeck short code into an URL 1`] = `
 <div>
   <p>
     <a

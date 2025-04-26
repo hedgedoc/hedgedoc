@@ -10,12 +10,14 @@ import * as YouTubeFrameModule from './youtube-frame'
 import { YoutubeMarkdownExtension } from './youtube-markdown-extension'
 import { render } from '@testing-library/react'
 import React from 'react'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('./youtube-frame')
+vi.mock('./youtube-frame')
 
 describe('youtube markdown extension', () => {
   beforeAll(async () => {
-    jest
+    vi
       .spyOn(YouTubeFrameModule, 'YouTubeFrame')
       .mockImplementation((({ id }) => (
         <span>this is a mock for the youtube frame with id {id}</span>
@@ -24,8 +26,8 @@ describe('youtube markdown extension', () => {
   })
 
   afterAll(() => {
-    jest.resetAllMocks()
-    jest.resetModules()
+    vitest.resetAllMocks()
+    vitest.resetModules()
   })
 
   it('renders plain youtube URLs', () => {

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`motd modal doesn't render a modal if no motd has been fetched 1`] = `
+exports[`motd modal > doesn't render a modal if no motd has been fetched 1`] = `
 <div>
   <span
     data-testid="loaded not visible"
@@ -8,7 +8,7 @@ exports[`motd modal doesn't render a modal if no motd has been fetched 1`] = `
 </div>
 `;
 
-exports[`motd modal renders a modal if a motd was fetched and can dismiss it 1`] = `
+exports[`motd modal > renders a modal if a motd was fetched and can dismiss it 1`] = `
 <div>
   <span>
     This is a mock implementation of a Modal: 
@@ -39,7 +39,7 @@ exports[`motd modal renders a modal if a motd was fetched and can dismiss it 1`]
 </div>
 `;
 
-exports[`motd modal renders a modal if a motd was fetched and can dismiss it 2`] = `
+exports[`motd modal > renders a modal if a motd was fetched and can dismiss it 2`] = `
 <div>
   <span>
     This is a mock implementation of a Modal: 

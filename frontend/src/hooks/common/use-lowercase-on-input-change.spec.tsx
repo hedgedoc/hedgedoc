@@ -6,10 +6,11 @@
 import { useLowercaseOnInputChange } from './use-lowercase-on-input-change'
 import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
 
 describe('useOnInputChange', () => {
   it('executes the setter', async () => {
-    const callback = jest.fn()
+    const callback = vitest.fn()
     const testValue = 'TEST VALUE'
 
     const Test: React.FC = () => {

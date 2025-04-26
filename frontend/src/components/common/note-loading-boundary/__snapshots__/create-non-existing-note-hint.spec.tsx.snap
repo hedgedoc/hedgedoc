@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`create non existing note hint renders a waiting message when button is clicked 1`] = `
+exports[`create non existing note hint > renders a waiting message when button is clicked 1`] = `
 <div>
   <div
     class="fade mt-5 alert alert-info show"
@@ -13,7 +13,7 @@ exports[`create non existing note hint renders a waiting message when button is 
 </div>
 `;
 
-exports[`create non existing note hint renders an button as initial state 1`] = `
+exports[`create non existing note hint > renders an button as initial state 1`] = `
 <div>
   <div
     class="fade mt-5 alert alert-info show"
@@ -38,9 +38,9 @@ exports[`create non existing note hint renders an button as initial state 1`] = 
 </div>
 `;
 
-exports[`create non existing note hint renders nothing if no note id has been provided 1`] = `<div />`;
+exports[`create non existing note hint > renders nothing if no note id has been provided 1`] = `<div />`;
 
-exports[`create non existing note hint shows an error message if note couldn't be created 1`] = `
+exports[`create non existing note hint > shows an error message if note couldn't be created 1`] = `
 <div>
   <div
     class="fade mt-5 alert alert-danger show"
@@ -53,7 +53,7 @@ exports[`create non existing note hint shows an error message if note couldn't b
 </div>
 `;
 
-exports[`create non existing note hint shows success message when the note has been created 1`] = `
+exports[`create non existing note hint > shows success message when the note has been created 1`] = `
 <div>
   <div
     class="fade mt-5 alert alert-info show"

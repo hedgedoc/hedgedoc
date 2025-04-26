@@ -7,6 +7,7 @@ import { mockI18n } from '../../../test-utils/mock-i18n'
 import { mockNotePermissions } from '../../../test-utils/mock-note-permissions'
 import { DeletionModal } from './deletion-modal'
 import { render, screen } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it, vitest } from 'vitest'
 
 describe('DeletionModal', () => {
   beforeEach(async () => {
@@ -14,13 +15,13 @@ describe('DeletionModal', () => {
   })
 
   afterEach(() => {
-    jest.resetAllMocks()
-    jest.resetModules()
+    vitest.resetAllMocks()
+    vitest.resetModules()
   })
 
   it('renders correctly with deletionButtonI18nKey', async () => {
     mockNotePermissions('test', 'test')
-    const onConfirm = jest.fn()
+    const onConfirm = vitest.fn()
     render(
       <DeletionModal onConfirm={onConfirm} deletionButtonI18nKey={'testDeletionButton'} show={true}>
         testText

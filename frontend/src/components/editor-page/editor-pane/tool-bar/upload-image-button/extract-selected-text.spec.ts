@@ -6,6 +6,7 @@
 import { extractSelectedText } from './extract-selected-text'
 import type { EditorState, SelectionRange } from '@codemirror/state'
 import { Mock } from 'ts-mockery'
+import { describe, expect, it, beforeAll, afterAll } from 'vitest'
 
 describe('extract selected text', () => {
   const mockContent = "I'm a mock content!"

@@ -6,6 +6,7 @@
 import { MarkdownToReact } from './markdown-to-react'
 import { TestMarkdownRendererExtension } from './test-utils/test-markdown-renderer-extension'
 import { render } from '@testing-library/react'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
 
 describe('markdown to react', () => {
   it('can render markdown with newlines as line breaks', () => {
@@ -55,7 +56,7 @@ describe('markdown to react', () => {
   })
 
   it('will use markdown render extensions', () => {
-    const doAfterCallback = jest.fn()
+    const doAfterCallback = vitest.fn()
 
     const view = render(
       <MarkdownToReact

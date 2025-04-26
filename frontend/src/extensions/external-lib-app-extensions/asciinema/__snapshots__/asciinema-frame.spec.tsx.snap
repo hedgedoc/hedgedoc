@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Asciinema renders a click shield 1`] = `
+exports[`Asciinema > renders a click shield 1`] = `
 <div>
   <span>
     This is a click shield for 

@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`node to react transformer replacement will prioritize a high priority replacer over a normal priority replacer 1`] = `
+exports[`node to react transformer > replacement > will prioritize a high priority replacer over a normal priority replacer 1`] = `
 <span>
   Replacer X
 </span>
 `;
 
-exports[`node to react transformer replacement will prioritize a normal priority replacer over a low priority replacer 1`] = `
+exports[`node to react transformer > replacement > will prioritize a normal priority replacer over a low priority replacer 1`] = `
 <span>
   Replacer Y
 </span>

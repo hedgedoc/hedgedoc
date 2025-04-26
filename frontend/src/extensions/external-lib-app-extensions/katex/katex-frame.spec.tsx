@@ -9,10 +9,12 @@ import type { KatexOptions } from 'katex'
 import { default as KatexDefault } from 'katex'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
+import { beforeEach, describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
-jest.mock('katex')
+vi.mock('katex')
 
-jest.mock('../../../components/common/application-error-alert/application-error-alert', () => ({
+vi.mock('../../../components/common/application-error-alert/application-error-alert', () => ({
   ApplicationErrorAlert: ({ children, ...props }: PropsWithChildren) => (
     <div>
       <h3>This is a mock for ApplicationErrorAlert.</h3>
@@ -25,12 +27,12 @@ jest.mock('../../../components/common/application-error-alert/application-error-
 
 describe('katex frame', () => {
   afterAll(() => {
-    jest.resetAllMocks()
-    jest.resetModules()
+    vitest.resetAllMocks()
+    vitest.resetModules()
   })
 
   beforeEach(() => {
-    jest.spyOn(KatexDefault, 'renderToString').mockImplementation(
+    vitest.spyOn(KatexDefault, 'renderToString').mockImplementation(
       (tex: string, options?: KatexOptions) => `<span>This is a mock for lib katex with this parameters:</span>
 <span>
   <span>tex: ${tex}</span>
@@ -56,7 +58,7 @@ describe('katex frame', () => {
 
   describe('renders an error for an invalid latex expression', () => {
     beforeEach(() => {
-      jest.spyOn(KatexDefault, 'renderToString').mockImplementation(() => {
+      vitest.spyOn(KatexDefault, 'renderToString').mockImplementation(() => {
         throw new Error('mocked parseerror')
       })
     })

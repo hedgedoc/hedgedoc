@@ -5,13 +5,15 @@
  */
 import { initialState } from '../initial-state'
 import { buildStateFromFirstHeadingUpdate } from './build-state-from-first-heading-update'
+import { describe, expect, it, vitest, beforeAll, afterAll } from 'vitest'
+import { vi } from 'vitest'
 
 // noinspection JSUnusedGlobalSymbols
-jest.mock(
+vi.mock(
   '@hedgedoc/commons',
-  () =>
+  async (importOriginal) =>
     ({
-      ...jest.requireActual('@hedgedoc/commons'),
+      ...(await importOriginal()),
       generateNoteTitle: () => 'generated title'
     }) as Record<string, unknown>
 )
