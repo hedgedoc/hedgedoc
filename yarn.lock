@@ -2827,7 +2827,7 @@ __metadata:
     "@types/jest": "npm:29.5.14"
     "@types/markdown-it": "npm:13.0.8"
     "@types/mysql": "npm:2.15.26"
-    "@types/node": "npm:20.16.11"
+    "@types/node": "npm:22.15.2"
     "@types/node-fetch": "npm:2.6.11"
     "@types/pg": "npm:8.11.10"
     "@types/source-map-support": "npm:0.5.10"
@@ -2893,6 +2893,7 @@ __metadata:
     "@eslint/js": "npm:9.25.1"
     "@mrdrogdrog/optional": "npm:1.2.1"
     "@types/js-yaml": "npm:4.0.9"
+    "@types/node": "npm:22.15.2"
     "@types/ws": "npm:8.5.12"
     "@vitest/eslint-plugin": "npm:1.1.43"
     domhandler: "npm:5.0.3"
@@ -2970,7 +2971,7 @@ __metadata:
     "@types/markdown-it": "npm:13.0.8"
     "@types/markdown-it-container": "npm:2.0.9"
     "@types/markdown-it-plantuml": "npm:1.4.4"
-    "@types/node": "npm:20.16.11"
+    "@types/node": "npm:22.15.2"
     "@types/react": "npm:19.1.2"
     "@types/react-dom": "npm:19.1.2"
     "@types/ws": "npm:8.5.12"
@@ -6496,12 +6497,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.16.11":
-  version: 20.16.11
-  resolution: "@types/node@npm:20.16.11"
+"@types/node@npm:22.15.2":
+  version: 22.15.2
+  resolution: "@types/node@npm:22.15.2"
   dependencies:
-    undici-types: "npm:~6.19.2"
-  checksum: 10c0/bba43f447c3c80548513954dae174e18132e9149d572c09df4a282772960d33e229d05680fb5364997c03489c22fe377d1dbcd018a3d4ff1cfbcfcdaa594a9c3
+    undici-types: "npm:~6.21.0"
+  checksum: 10c0/39da31d5fc63b14fabd217bb8a921c4a7fc3d99f233440209f9fc2d5d736e8773f7efc65223e2fd0e8db8390b0baab9c0cd2e951c2ece8b237f07313ab3cf295
   languageName: node
   linkType: hard
 
@@ -21321,10 +21322,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.19.2":
-  version: 6.19.8
-  resolution: "undici-types@npm:6.19.8"
-  checksum: 10c0/078afa5990fba110f6824823ace86073b4638f1d5112ee26e790155f481f2a868cc3e0615505b6f4282bdf74a3d8caad715fd809e870c2bb0704e3ea6082f344
+"undici-types@npm:~6.21.0":
+  version: 6.21.0
+  resolution: "undici-types@npm:6.21.0"
+  checksum: 10c0/c01ed51829b10aa72fc3ce64b747f8e74ae9b60eafa19a7b46ef624403508a54c526ffab06a14a26b3120d055e1104d7abe7c9017e83ced038ea5cf52f8d5e04
   languageName: node
   linkType: hard
 
