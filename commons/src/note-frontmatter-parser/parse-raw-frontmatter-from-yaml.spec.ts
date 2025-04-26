@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { parseRawFrontmatterFromYaml } from './parse-raw-frontmatter-from-yaml.js'
-import { describe, expect, it } from '@jest/globals'
+import { describe, expect, it } from 'vitest'
 
 describe('yaml frontmatter', () => {
   it('should parse "title"', () => {

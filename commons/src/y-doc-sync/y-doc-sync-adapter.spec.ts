@@ -9,14 +9,14 @@ import { InMemoryConnectionTransportAdapter } from './in-memory-connection-trans
 import { RealtimeDoc } from './realtime-doc.js'
 import { YDocSyncClientAdapter } from './y-doc-sync-client-adapter.js'
 import { YDocSyncServerAdapter } from './y-doc-sync-server-adapter.js'
-import { describe, expect, it, beforeAll, jest, afterAll } from '@jest/globals'
+import { describe, expect, it, beforeAll, vitest, afterAll } from 'vitest'
 
 describe('y-doc-sync-adapter', () => {
   beforeAll(() => {
-    jest.useFakeTimers()
+    vitest.useFakeTimers()
   })
   afterAll(() => {
-    jest.useRealTimers()
+    vitest.useRealTimers()
   })
 
   it('server client communication', async () => {
@@ -188,7 +188,7 @@ describe('y-doc-sync-adapter', () => {
     messageTransporterServerTo1.markAsReady()
     messageTransporterServerTo2.markAsReady()
 
-    jest.advanceTimersByTime(1000)
+    vitest.advanceTimersByTime(1000)
 
     expect(messageTransporterClient1.isReady()).toBeTruthy()
     expect(messageTransporterClient2.isReady()).toBeTruthy()

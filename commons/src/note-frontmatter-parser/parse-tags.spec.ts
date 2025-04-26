@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { parseTags } from './parse-tags.js'
-import { expect, it, describe } from '@jest/globals'
+import { expect, it, describe } from 'vitest'
 
 describe('parse tags', () => {
   it('converts comma separated string tags into string list', () => {

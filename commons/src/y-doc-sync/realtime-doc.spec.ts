@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { RealtimeDoc } from './realtime-doc.js'
-import { describe, expect, it } from '@jest/globals'
+import { describe, expect, it } from 'vitest'
 
 describe('realtime doc', () => {
   it('saves an initial text content correctly', () => {

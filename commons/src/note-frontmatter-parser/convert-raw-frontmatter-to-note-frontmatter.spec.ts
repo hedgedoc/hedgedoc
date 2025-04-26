@@ -11,7 +11,7 @@ import {
 } from '../note-frontmatter/frontmatter.js'
 import { SlideOptions } from '../note-frontmatter/slide-show-options.js'
 import { convertRawFrontmatterToNoteFrontmatter } from './convert-raw-frontmatter-to-note-frontmatter.js'
-import { describe, expect, it } from '@jest/globals'
+import { describe, expect, it } from 'vitest'
 
 describe('convertRawFrontmatterToNoteFrontmatter', () => {
   it.each([false, true])(
