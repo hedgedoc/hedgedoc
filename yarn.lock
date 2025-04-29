@@ -1410,7 +1410,7 @@ __metadata:
     file-type: "npm:20.4.1"
     flowchart.js: "npm:1.18.0"
     fork-awesome: "npm:1.2.0"
-    formidable: "npm:2.1.3"
+    formidable: "npm:3.5.3"
     globals: "npm:16.0.0"
     graceful-fs: "npm:4.2.11"
     helmet: "npm:8.1.0"
@@ -7162,15 +7162,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"formidable@npm:2.1.3":
-  version: 2.1.3
-  resolution: "formidable@npm:2.1.3"
+"formidable@npm:3.5.3":
+  version: 3.5.3
+  resolution: "formidable@npm:3.5.3"
   dependencies:
     "@paralleldrive/cuid2": "npm:^2.2.2"
     dezalgo: "npm:^1.0.4"
     once: "npm:^1.4.0"
-    qs: "npm:^6.11.0"
-  checksum: 10/f0a1c0c96d85e375c6a3f979b3af02ba24a9fe98b26dcb820c0b1ad46b58b2c0d8cf0e52d1a1a6b4a3ab1c9e7adb1387ffac6fc5a62776c79f4282536c33e4ea
+  checksum: 10/df00eed293b5234a186a605dcd1662e03b57192d5cc956171f34397925745e54ce1c51ee95977a4c1e785df2c07c715373e04af67445806d43f6c2367dd6d7a5
   languageName: node
   linkType: hard
 
@@ -13248,7 +13247,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:^6.11.0, qs@npm:^6.12.3, qs@npm:^6.14.0, qs@npm:^6.5.2":
+"qs@npm:^6.12.3, qs@npm:^6.14.0, qs@npm:^6.5.2":
   version: 6.14.0
   resolution: "qs@npm:6.14.0"
   dependencies:
