@@ -3,15 +3,13 @@
 ## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
 
 ### Enhancements
-
 - Add `enableUploads` (`CMD_ENABLE_UPLOADS`) config option to restrict uploads to `registered` users, `all` users or
   `none` to completely disable uploads.
+- Allow links to protocols such as xmpp, webcal or geo
+- Switch from deprecated shortid to nanoid module, with 10 character long aliases in "public" links
 
 ### Bugfixes
 - Ignore the healthcheck endpoint in the "too busy" limiter
-
-### Enhancements
-- Allow links to protocols such as xmpp, webcal or geo
 
 ## <i class="fa fa-tag"></i> 1.10.3 <i class="fa fa-calendar-o"></i> 2025-04-09
 
