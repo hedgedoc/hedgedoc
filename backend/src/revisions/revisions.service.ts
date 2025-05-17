@@ -4,15 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { RevisionDto, RevisionMetadataDto } from '@hedgedoc/commons';
-import { Inject, Injectable } from '@nestjs/common';
-import { Cron, Timeout } from '@nestjs/schedule';
-import { createPatch } from 'diff';
-import { Knex } from 'knex';
-import { InjectConnection } from 'nest-knexjs';
-import { v7 as uuidv7 } from 'uuid';
-
-import { AliasService } from '../alias/alias.service';
-import noteConfiguration, { NoteConfig } from '../config/note.config';
 import {
   AuthorshipInfo,
   FieldNameAlias,
@@ -30,7 +21,16 @@ import {
   TableRevisionTag,
   TableUser,
   User,
-} from '../database/types';
+} from '@hedgedoc/database';
+import { Inject, Injectable } from '@nestjs/common';
+import { Cron, Timeout } from '@nestjs/schedule';
+import { createPatch } from 'diff';
+import { Knex } from 'knex';
+import { InjectConnection } from 'nest-knexjs';
+import { v7 as uuidv7 } from 'uuid';
+
+import { AliasService } from '../alias/alias.service';
+import noteConfiguration, { NoteConfig } from '../config/note.config';
 import { GenericDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { extractRevisionMetadataFromContent } from './utils/extract-revision-metadata-from-content';
@@ -129,7 +129,7 @@ export class RevisionsService {
         recordMap.set(revision[FieldNameRevision.uuid], {
           uuid: revision[FieldNameRevision.uuid],
           length: (revision[FieldNameRevision.content] ?? '').length,
-          createdAt: revision[FieldNameRevision.createdAt].toISOString(),
+          createdAt: revision[FieldNameRevision.createdAt],
           authorUsernames:
             revision[FieldNameUser.username] !== null
               ? [revision[FieldNameUser.username]]
@@ -217,7 +217,7 @@ export class RevisionsService {
       uuid: revision[FieldNameRevision.uuid],
       content: revision[FieldNameRevision.content],
       length: (revision[FieldNameRevision.content] ?? '').length,
-      createdAt: revision[FieldNameRevision.createdAt].toISOString(),
+      createdAt: revision[FieldNameRevision.createdAt],
       title: revision[FieldNameRevision.title],
       description: revision[FieldNameRevision.description],
       patch: revision.patch,
@@ -241,7 +241,7 @@ export class RevisionsService {
       .first();
     if (revision === undefined) {
       throw new NotInDBError(
-        `No revisions for note ${noteId} found`,
+        'No revisions for note found',
         this.logger.getContext(),
         'getLatestRevision',
       );
@@ -249,8 +249,12 @@ export class RevisionsService {
     return revision;
   }
 
-  async getRevisionUserInfo(revisionUuid: string): Promise<RevisionUserInfo> {
-    const authorUsernamesAndGuestUuids = (await this.knex(TableAuthorshipInfo)
+  async getRevisionUserInfo(
+    revisionUuid: string,
+    transaction?: Knex,
+  ): Promise<RevisionUserInfo> {
+    const dbActor = transaction ?? this.knex;
+    const authorUsernamesAndGuestUuids = (await dbActor(TableAuthorshipInfo)
       .join(
         TableUser,
         `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.authorId}`,
@@ -293,6 +297,7 @@ export class RevisionsService {
    * @async
    * @param noteId The note for which the revision should be created
    * @param newContent The new note content
+   * @param firstRevision Whether this is called for the first revision of a note
    * @param transaction The optional pre-existing database transaction to use
    * @param yjsStateVector The yjs state vector that describes the new content
    * @return {Revision} the created revision
@@ -301,6 +306,7 @@ export class RevisionsService {
   async createRevision(
     noteId: number,
     newContent: string,
+    firstRevision: boolean = false,
     transaction?: Knex,
     yjsStateVector?: ArrayBuffer,
   ): Promise<void> {
@@ -309,6 +315,7 @@ export class RevisionsService {
         await this.innerCreateRevision(
           noteId,
           newContent,
+          firstRevision,
           newTransaction,
           yjsStateVector,
         );
@@ -318,6 +325,7 @@ export class RevisionsService {
     await this.innerCreateRevision(
       noteId,
       newContent,
+      firstRevision,
       transaction,
       yjsStateVector,
     );
@@ -326,13 +334,13 @@ export class RevisionsService {
   private async innerCreateRevision(
     noteId: number,
     newContent: string,
+    firstRevision: boolean,
     transaction: Knex,
     yjsStateVector?: ArrayBuffer,
   ): Promise<void> {
-    const latestRevision =
-      noteId === undefined
-        ? null
-        : await this.getLatestRevision(noteId, transaction);
+    const latestRevision = firstRevision
+      ? null
+      : await this.getLatestRevision(noteId, transaction);
     const oldContent = latestRevision?.content;
     if (oldContent === newContent) {
       return undefined;
@@ -346,6 +354,7 @@ export class RevisionsService {
       latestRevision?.content ?? '',
       newContent,
     );
+
     const { title, description, tags, noteType } =
       extractRevisionMetadataFromContent(newContent);
     const revisionIds = await transaction(TableRevision).insert(
@@ -369,12 +378,14 @@ export class RevisionsService {
       );
     }
     const revisionId = revisionIds[0][FieldNameRevision.uuid];
-    await transaction(TableRevisionTag).insert(
-      tags.map((tag) => ({
-        [FieldNameRevisionTag.tag]: tag,
-        [FieldNameRevisionTag.revisionUuid]: revisionId,
-      })),
-    );
+    if (tags.length > 0) {
+      await transaction(TableRevisionTag).insert(
+        tags.map((tag) => ({
+          [FieldNameRevisionTag.tag]: tag,
+          [FieldNameRevisionTag.revisionUuid]: revisionId,
+        })),
+      );
+    }
   }
 
   async getTagsByRevisionUuid(

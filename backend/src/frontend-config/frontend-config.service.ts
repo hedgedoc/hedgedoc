@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
+  AuthProviderDto,
   AuthProviderType,
   BrandingDto,
   FrontendConfigDto,
   SpecialUrlDto,
 } from '@hedgedoc/commons';
-import { AuthProviderDto } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
 import { URL } from 'url';
 

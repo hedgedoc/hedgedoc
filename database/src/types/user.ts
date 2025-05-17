@@ -17,28 +17,28 @@
  */
 export interface User {
   /** The unique id of the user for internal referencing */
-  [FieldNameUser.id]: number;
+  [FieldNameUser.id]: number
 
   /** The user's chosen username or null if it is a guest user */
-  [FieldNameUser.username]: string | null;
+  [FieldNameUser.username]: string | null
 
   /** The guest user's UUID or null if it is a registered user */
-  [FieldNameUser.guestUuid]: string | null;
+  [FieldNameUser.guestUuid]: string | null
 
   /** The user's chosen display name */
-  [FieldNameUser.displayName]: string;
+  [FieldNameUser.displayName]: string
 
   /** Timestamp when the user was created */
-  [FieldNameUser.createdAt]: Date;
+  [FieldNameUser.createdAt]: string
 
   /** URL to the user's profile picture if present */
-  [FieldNameUser.photoUrl]: string | null;
+  [FieldNameUser.photoUrl]: string | null
 
   /** The user's email address if present */
-  [FieldNameUser.email]: string | null;
+  [FieldNameUser.email]: string | null
 
   /** The index which author style (e.g. color) should be used for this user */
-  [FieldNameUser.authorStyle]: number;
+  [FieldNameUser.authorStyle]: number
 }
 
 export const enum FieldNameUser {
@@ -52,16 +52,20 @@ export const enum FieldNameUser {
   authorStyle = 'author_style',
 }
 
-export const TableUser = 'user';
+export const TableUser = 'user'
+
+type TypeUserDate = Omit<User, FieldNameUser.createdAt> & {
+  [FieldNameUser.createdAt]: Date
+}
 
 export type TypeInsertUser = Omit<
-  User,
+  TypeUserDate,
   FieldNameUser.id | FieldNameUser.createdAt
->;
+>
 export type TypeUpdateUser = Pick<
   User,
   | FieldNameUser.displayName
   | FieldNameUser.photoUrl
   | FieldNameUser.email
   | FieldNameUser.authorStyle
->;
+>

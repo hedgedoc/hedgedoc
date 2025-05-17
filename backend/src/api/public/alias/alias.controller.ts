@@ -23,7 +23,6 @@ import {
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 import { AliasService } from '../../../alias/alias.service';
-import { User } from '../../../database/types';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { NoteService } from '../../../notes/note.service';
 import { PermissionService } from '../../../permissions/permission.service';

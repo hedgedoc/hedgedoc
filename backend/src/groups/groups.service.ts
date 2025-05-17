@@ -4,12 +4,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { GroupInfoDto } from '@hedgedoc/commons';
+import {
+  FieldNameGroup,
+  TableGroup,
+  TypeInsertGroup,
+} from '@hedgedoc/database';
 import { Injectable } from '@nestjs/common';
 import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
 
-import { FieldNameGroup, TableGroup } from '../database/types';
-import { TypeInsertGroup } from '../database/types/group';
 import { AlreadyInDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 
@@ -72,11 +75,13 @@ export class GroupsService {
    * Fetches a groupId by its identifier name
    *
    * @param name Name of the group to query
+   * @param transaction The optional database transaction to use
    * @return The groupId
    * @throws {NotInDBError} if there is no group with this name
    */
-  async getGroupIdByName(name: string): Promise<number> {
-    const group = await this.knex(TableGroup)
+  async getGroupIdByName(name: string, transaction?: Knex): Promise<number> {
+    const dbActor = transaction ?? this.knex;
+    const group = await dbActor(TableGroup)
       .select(FieldNameGroup.id)
       .where(FieldNameGroup.name, name)
       .first();

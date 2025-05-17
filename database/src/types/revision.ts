@@ -3,38 +3,42 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { NoteType } from '@hedgedoc/commons';
+
+export enum NoteType {
+  DOCUMENT = 'document',
+  SLIDE = 'slide',
+}
 
 /**
  * A revision represents the content of a {@link Note} at a specific point in time.
  */
 export interface Revision {
   /** The unique id of the revision for internal referencing */
-  [FieldNameRevision.uuid]: string;
+  [FieldNameRevision.uuid]: string
 
   /** The id of the note that this revision belongs to */
-  [FieldNameRevision.noteId]: number;
+  [FieldNameRevision.noteId]: number
 
   /** The changes between this revision and the previous one in patch file format */
-  [FieldNameRevision.patch]: string;
+  [FieldNameRevision.patch]: string
 
   /** The content of the note at this revision */
-  [FieldNameRevision.content]: string;
+  [FieldNameRevision.content]: string
 
   /** The stored Y.js state for realtime editing */
-  [FieldNameRevision.yjsStateVector]: null | ArrayBuffer;
+  [FieldNameRevision.yjsStateVector]: null | ArrayBuffer
 
   /** Whether the note is a document or presentation at this revision */
-  [FieldNameRevision.noteType]: NoteType;
+  [FieldNameRevision.noteType]: NoteType
 
   /** The extracted note title from this revision */
-  [FieldNameRevision.title]: string;
+  [FieldNameRevision.title]: string
 
   /** The extracted description from this revision */
-  [FieldNameRevision.description]: string;
+  [FieldNameRevision.description]: string
 
   /** Timestamp when this revision was created */
-  [FieldNameRevision.createdAt]: Date;
+  [FieldNameRevision.createdAt]: string
 }
 
 export enum FieldNameRevision {
@@ -49,6 +53,13 @@ export enum FieldNameRevision {
   createdAt = 'created_at',
 }
 
-export const TableRevision = 'revision';
+export const TableRevision = 'revision'
 
-export type TypeInsertRevision = Omit<Revision, FieldNameRevision.createdAt>;
+type TypeRevisionDate = Omit<Revision, FieldNameRevision.createdAt> & {
+  [FieldNameRevision.createdAt]: Date
+}
+
+export type TypeInsertRevision = Omit<
+  TypeRevisionDate,
+  FieldNameRevision.createdAt
+>

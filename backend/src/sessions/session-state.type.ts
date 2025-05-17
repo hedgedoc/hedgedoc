@@ -4,9 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { AuthProviderType, PendingUserInfoDto } from '@hedgedoc/commons';
+import { FieldNameUser, User } from '@hedgedoc/database';
 import { Cookie } from 'express-session';
-
-import { FieldNameUser, User } from '../database/types';
 
 export interface SessionState {
   /** Details about the currently used session cookie */

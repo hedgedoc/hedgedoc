@@ -3,13 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { FieldNameRevision } from '@hedgedoc/database';
 import { Optional } from '@mrdrogdrog/optional';
 import { BeforeApplicationShutdown, Inject, Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { SchedulerRegistry } from '@nestjs/schedule';
 
 import appConfiguration, { AppConfig } from '../../config/app.config';
-import { FieldNameRevision } from '../../database/types';
 import { NoteEvent } from '../../events';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { NotePermissionLevel } from '../../permissions/note-permission.enum';
@@ -47,6 +47,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
       .createRevision(
         realtimeNote.getNoteId(),
         realtimeNote.getRealtimeDoc().getCurrentContent(),
+        false,
         undefined,
         realtimeNote.getRealtimeDoc().encodeStateAsUpdate(),
       )

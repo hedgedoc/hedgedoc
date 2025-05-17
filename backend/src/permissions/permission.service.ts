@@ -8,12 +8,6 @@ import {
   PermissionLevel,
   SpecialGroup,
 } from '@hedgedoc/commons';
-import { Inject, Injectable } from '@nestjs/common';
-import { EventEmitter2 } from '@nestjs/event-emitter';
-import { Knex } from 'knex';
-import { InjectConnection } from 'nest-knexjs';
-
-import noteConfiguration, { NoteConfig } from '../config/note.config';
 import {
   FieldNameGroup,
   FieldNameGroupUser,
@@ -29,7 +23,13 @@ import {
   TableNoteGroupPermission,
   TableNoteUserPermission,
   TableUser,
-} from '../database/types';
+} from '@hedgedoc/database';
+import { Inject, Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { Knex } from 'knex';
+import { InjectConnection } from 'nest-knexjs';
+
+import noteConfiguration, { NoteConfig } from '../config/note.config';
 import { GenericDBError, NotInDBError } from '../errors/errors';
 import { NoteEvent, NoteEventMap } from '../events';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
@@ -334,6 +334,7 @@ export class PermissionService {
    * @param noteId - the if of the note
    * @param groupId - the name of the group for which the permission should be set
    * @param canEdit - specifies if the group can edit the note
+   * @param transaction The optional transaction for the database
    */
   async setGroupPermission(
     noteId: number,

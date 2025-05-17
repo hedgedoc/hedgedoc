@@ -3,15 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { Note } from '@hedgedoc/database';
 import { CallHandler, ExecutionContext } from '@nestjs/common';
 import { HttpArgumentsHost } from '@nestjs/common/interfaces/features/arguments-host.interface';
 import { Observable } from 'rxjs';
 import { Mock } from 'ts-mockery';
 
-import { Note } from '../../database/types';
-import { NoteService } from '../../notes/note.service';
+import { NoteService } from '../../../notes/note.service';
+import { CompleteRequest } from '../request.type';
 import { GetNoteIdInterceptor } from './get-note-id.interceptor';
-import { CompleteRequest } from './request.type';
 
 describe('get note interceptor', () => {
   const mockNote = Mock.of<Note>({});

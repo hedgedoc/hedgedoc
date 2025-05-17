@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { Note } from '@hedgedoc/database';
 import { Mock } from 'ts-mockery';
 
-import { Note } from '../../database/types';
 import { NoteService } from '../../notes/note.service';
 import { extractNoteIdFromRequest } from './extract-note-id-from-request';
 import { CompleteRequest } from './request.type';

@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { MediaBackendType } from '@hedgedoc/commons';
 import mockedEnv from 'mocked-env';
 
-import { BackendType } from '../media/backends/backend-type.enum';
 import mediaConfig, {
   AzureMediaConfig,
   FilesystemMediaConfig,
@@ -39,7 +39,7 @@ describe('mediaConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_MEDIA_BACKEND: BackendType.FILESYSTEM,
+          HD_MEDIA_BACKEND: MediaBackendType.FILESYSTEM,
           HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH: uploadPath,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -48,7 +48,7 @@ describe('mediaConfig', () => {
         },
       );
       const config = mediaConfig() as { backend: FilesystemMediaConfig };
-      expect(config.backend.use).toEqual(BackendType.FILESYSTEM);
+      expect(config.backend.use).toEqual(MediaBackendType.FILESYSTEM);
       expect(config.backend.filesystem.uploadPath).toEqual(uploadPath);
       restore();
     });
@@ -57,7 +57,7 @@ describe('mediaConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_MEDIA_BACKEND: BackendType.S3,
+          HD_MEDIA_BACKEND: MediaBackendType.S3,
           HD_MEDIA_BACKEND_S3_ACCESS_KEY: accessKeyId,
           HD_MEDIA_BACKEND_S3_SECRET_KEY: secretAccessKey,
           HD_MEDIA_BACKEND_S3_BUCKET: bucket,
@@ -71,7 +71,7 @@ describe('mediaConfig', () => {
         },
       );
       const config = mediaConfig() as { backend: S3MediaConfig };
-      expect(config.backend.use).toEqual(BackendType.S3);
+      expect(config.backend.use).toEqual(MediaBackendType.S3);
       expect(config.backend.s3.accessKeyId).toEqual(accessKeyId);
       expect(config.backend.s3.secretAccessKey).toEqual(secretAccessKey);
       expect(config.backend.s3.bucket).toEqual(bucket);
@@ -85,7 +85,7 @@ describe('mediaConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_MEDIA_BACKEND: BackendType.AZURE,
+          HD_MEDIA_BACKEND: MediaBackendType.AZURE,
           HD_MEDIA_BACKEND_AZURE_CONNECTION_STRING: azureConnectionString,
           HD_MEDIA_BACKEND_AZURE_CONTAINER: container,
           /* eslint-enable @typescript-eslint/naming-convention */
@@ -95,7 +95,7 @@ describe('mediaConfig', () => {
         },
       );
       const config = mediaConfig() as { backend: AzureMediaConfig };
-      expect(config.backend.use).toEqual(BackendType.AZURE);
+      expect(config.backend.use).toEqual(MediaBackendType.AZURE);
       expect(config.backend.azure.connectionString).toEqual(
         azureConnectionString,
       );
@@ -107,7 +107,7 @@ describe('mediaConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_MEDIA_BACKEND: BackendType.IMGUR,
+          HD_MEDIA_BACKEND: MediaBackendType.IMGUR,
           HD_MEDIA_BACKEND_IMGUR_CLIENT_ID: clientID,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -116,7 +116,7 @@ describe('mediaConfig', () => {
         },
       );
       const config = mediaConfig() as { backend: ImgurMediaConfig };
-      expect(config.backend.use).toEqual(BackendType.IMGUR);
+      expect(config.backend.use).toEqual(MediaBackendType.IMGUR);
       expect(config.backend.imgur.clientId).toEqual(clientID);
       restore();
     });
@@ -125,7 +125,7 @@ describe('mediaConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_MEDIA_BACKEND: BackendType.WEBDAV,
+          HD_MEDIA_BACKEND: MediaBackendType.WEBDAV,
           HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING: webdavConnectionString,
           HD_MEDIA_BACKEND_WEBDAV_UPLOAD_DIR: uploadDir,
           HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL: publicUrl,
@@ -136,7 +136,7 @@ describe('mediaConfig', () => {
         },
       );
       const config = mediaConfig() as { backend: WebdavMediaConfig };
-      expect(config.backend.use).toEqual(BackendType.WEBDAV);
+      expect(config.backend.use).toEqual(MediaBackendType.WEBDAV);
       expect(config.backend.webdav.connectionString).toEqual(
         webdavConnectionString,
       );
@@ -152,7 +152,7 @@ describe('mediaConfig', () => {
         const restore = mockedEnv(
           {
             /* eslint-disable @typescript-eslint/naming-convention */
-            HD_MEDIA_BACKEND: BackendType.FILESYSTEM,
+            HD_MEDIA_BACKEND: MediaBackendType.FILESYSTEM,
             /* eslint-enable @typescript-eslint/naming-convention */
           },
           {
@@ -171,7 +171,7 @@ describe('mediaConfig', () => {
         const restore = mockedEnv(
           {
             /* eslint-disable @typescript-eslint/naming-convention */
-            HD_MEDIA_BACKEND: BackendType.S3,
+            HD_MEDIA_BACKEND: MediaBackendType.S3,
             HD_MEDIA_BACKEND_S3_SECRET_KEY: secretAccessKey,
             HD_MEDIA_BACKEND_S3_BUCKET: bucket,
             HD_MEDIA_BACKEND_S3_ENDPOINT: endPoint,
@@ -190,7 +190,7 @@ describe('mediaConfig', () => {
         const restore = mockedEnv(
           {
             /* eslint-disable @typescript-eslint/naming-convention */
-            HD_MEDIA_BACKEND: BackendType.S3,
+            HD_MEDIA_BACKEND: MediaBackendType.S3,
             HD_MEDIA_BACKEND_S3_ACCESS_KEY: accessKeyId,
             HD_MEDIA_BACKEND_S3_BUCKET: bucket,
             HD_MEDIA_BACKEND_S3_ENDPOINT: endPoint,
@@ -209,7 +209,7 @@ describe('mediaConfig', () => {
         const restore = mockedEnv(
           {
             /* eslint-disable @typescript-eslint/naming-convention */
-            HD_MEDIA_BACKEND: BackendType.S3,
+            HD_MEDIA_BACKEND: MediaBackendType.S3,
             HD_MEDIA_BACKEND_S3_ACCESS_KEY: accessKeyId,
             HD_MEDIA_BACKEND_S3_SECRET_KEY: secretAccessKey,
             HD_MEDIA_BACKEND_S3_ENDPOINT: endPoint,
@@ -228,7 +228,7 @@ describe('mediaConfig', () => {
         const restore = mockedEnv(
           {
             /* eslint-disable @typescript-eslint/naming-convention */
-            HD_MEDIA_BACKEND: BackendType.S3,
+            HD_MEDIA_BACKEND: MediaBackendType.S3,
             HD_MEDIA_BACKEND_S3_ACCESS_KEY: accessKeyId,
             HD_MEDIA_BACKEND_S3_SECRET_KEY: secretAccessKey,
             HD_MEDIA_BACKEND_S3_BUCKET: bucket,
@@ -247,7 +247,7 @@ describe('mediaConfig', () => {
         const restore = mockedEnv(
           {
             /* eslint-disable @typescript-eslint/naming-convention */
-            HD_MEDIA_BACKEND: BackendType.S3,
+            HD_MEDIA_BACKEND: MediaBackendType.S3,
             HD_MEDIA_BACKEND_S3_ACCESS_KEY: accessKeyId,
             HD_MEDIA_BACKEND_S3_SECRET_KEY: secretAccessKey,
             HD_MEDIA_BACKEND_S3_BUCKET: bucket,
@@ -270,7 +270,7 @@ describe('mediaConfig', () => {
         const restore = mockedEnv(
           {
             /* eslint-disable @typescript-eslint/naming-convention */
-            HD_MEDIA_BACKEND: BackendType.AZURE,
+            HD_MEDIA_BACKEND: MediaBackendType.AZURE,
             HD_MEDIA_BACKEND_AZURE_CONTAINER: container,
             /* eslint-enable @typescript-eslint/naming-convention */
           },
@@ -287,7 +287,7 @@ describe('mediaConfig', () => {
         const restore = mockedEnv(
           {
             /* eslint-disable @typescript-eslint/naming-convention */
-            HD_MEDIA_BACKEND: BackendType.AZURE,
+            HD_MEDIA_BACKEND: MediaBackendType.AZURE,
             HD_MEDIA_BACKEND_AZURE_CONNECTION_STRING: azureConnectionString,
             /* eslint-enable @typescript-eslint/naming-convention */
           },
@@ -307,7 +307,7 @@ describe('mediaConfig', () => {
         const restore = mockedEnv(
           {
             /* eslint-disable @typescript-eslint/naming-convention */
-            HD_MEDIA_BACKEND: BackendType.IMGUR,
+            HD_MEDIA_BACKEND: MediaBackendType.IMGUR,
             /* eslint-enable @typescript-eslint/naming-convention */
           },
           {
@@ -326,7 +326,7 @@ describe('mediaConfig', () => {
         const restore = mockedEnv(
           {
             /* eslint-disable @typescript-eslint/naming-convention */
-            HD_MEDIA_BACKEND: BackendType.WEBDAV,
+            HD_MEDIA_BACKEND: MediaBackendType.WEBDAV,
             HD_MEDIA_BACKEND_WEBDAV_UPLOAD_DIR: uploadDir,
             HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL: publicUrl,
             /* eslint-enable @typescript-eslint/naming-convention */
@@ -344,7 +344,7 @@ describe('mediaConfig', () => {
         const restore = mockedEnv(
           {
             /* eslint-disable @typescript-eslint/naming-convention */
-            HD_MEDIA_BACKEND: BackendType.WEBDAV,
+            HD_MEDIA_BACKEND: MediaBackendType.WEBDAV,
             HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING: 'not-an-url',
             HD_MEDIA_BACKEND_WEBDAV_UPLOAD_DIR: uploadDir,
             HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL: publicUrl,
@@ -363,7 +363,7 @@ describe('mediaConfig', () => {
         const restore = mockedEnv(
           {
             /* eslint-disable @typescript-eslint/naming-convention */
-            HD_MEDIA_BACKEND: BackendType.WEBDAV,
+            HD_MEDIA_BACKEND: MediaBackendType.WEBDAV,
             HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING: webdavConnectionString,
             HD_MEDIA_BACKEND_WEBDAV_UPLOAD_DIR: uploadDir,
             /* eslint-enable @typescript-eslint/naming-convention */
@@ -381,7 +381,7 @@ describe('mediaConfig', () => {
         const restore = mockedEnv(
           {
             /* eslint-disable @typescript-eslint/naming-convention */
-            HD_MEDIA_BACKEND: BackendType.WEBDAV,
+            HD_MEDIA_BACKEND: MediaBackendType.WEBDAV,
             HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING: webdavConnectionString,
             HD_MEDIA_BACKEND_WEBDAV_UPLOAD_DIR: uploadDir,
             HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL: 'not-an-url',

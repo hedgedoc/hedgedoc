@@ -3,15 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MediaUploadDto } from '@hedgedoc/commons';
-import { Inject, Injectable } from '@nestjs/common';
-import { ModuleRef } from '@nestjs/core';
-import * as FileType from 'file-type';
-import { Knex } from 'knex';
-import { InjectConnection } from 'nest-knexjs';
-import { v7 as uuidV7 } from 'uuid';
-
-import mediaConfiguration, { MediaConfig } from '../config/media.config';
+import { MediaBackendType, MediaUploadDto } from '@hedgedoc/commons';
 import {
   Alias,
   FieldNameAlias,
@@ -24,12 +16,18 @@ import {
   TableMediaUpload,
   TableUser,
   User,
-} from '../database/types';
+} from '@hedgedoc/database';
+import { Inject, Injectable } from '@nestjs/common';
+import { ModuleRef } from '@nestjs/core';
+import * as FileType from 'file-type';
+import { Knex } from 'knex';
+import { InjectConnection } from 'nest-knexjs';
+import { v7 as uuidV7 } from 'uuid';
+
+import mediaConfiguration, { MediaConfig } from '../config/media.config';
 import { ClientError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { NoteService } from '../notes/note.service';
 import { AzureBackend } from './backends/azure-backend';
-import { BackendType } from './backends/backend-type.enum';
 import { FilesystemBackend } from './backends/filesystem-backend';
 import { ImgurBackend } from './backends/imgur-backend';
 import { S3Backend } from './backends/s3-backend';
@@ -39,7 +37,7 @@ import { MediaBackend } from './media-backend.interface';
 @Injectable()
 export class MediaService {
   mediaBackend: MediaBackend;
-  mediaBackendType: BackendType;
+  mediaBackendType: MediaBackendType;
 
   constructor(
     private readonly logger: ConsoleLoggerService,
@@ -246,18 +244,18 @@ export class MediaService {
       .where(FieldNameMediaUpload.uuid, uuid);
   }
 
-  private chooseBackendType(): BackendType {
+  private chooseBackendType(): MediaBackendType {
     switch (this.mediaConfig.backend.use as string) {
       case 'filesystem':
-        return BackendType.FILESYSTEM;
+        return MediaBackendType.FILESYSTEM;
       case 'azure':
-        return BackendType.AZURE;
+        return MediaBackendType.AZURE;
       case 'imgur':
-        return BackendType.IMGUR;
+        return MediaBackendType.IMGUR;
       case 's3':
-        return BackendType.S3;
+        return MediaBackendType.S3;
       case 'webdav':
-        return BackendType.WEBDAV;
+        return MediaBackendType.WEBDAV;
       default:
         throw new Error(
           `Unexpected media backend ${this.mediaConfig.backend.use}`,
@@ -265,17 +263,17 @@ export class MediaService {
     }
   }
 
-  private getBackendFromType(type: BackendType): MediaBackend {
+  private getBackendFromType(type: MediaBackendType): MediaBackend {
     switch (type) {
-      case BackendType.FILESYSTEM:
+      case MediaBackendType.FILESYSTEM:
         return this.moduleRef.get(FilesystemBackend);
-      case BackendType.S3:
+      case MediaBackendType.S3:
         return this.moduleRef.get(S3Backend);
-      case BackendType.AZURE:
+      case MediaBackendType.AZURE:
         return this.moduleRef.get(AzureBackend);
-      case BackendType.IMGUR:
+      case MediaBackendType.IMGUR:
         return this.moduleRef.get(ImgurBackend);
-      case BackendType.WEBDAV:
+      case MediaBackendType.WEBDAV:
         return this.moduleRef.get(WebdavBackend);
     }
   }
@@ -309,7 +307,9 @@ export class MediaService {
       uuid: mediaUpload[FieldNameMediaUpload.uuid],
       fileName: mediaUpload[FieldNameMediaUpload.fileName],
       noteId: mediaUpload[FieldNameAlias.alias],
-      createdAt: mediaUpload[FieldNameMediaUpload.createdAt].toISOString(),
+      createdAt: new Date(
+        mediaUpload[FieldNameMediaUpload.createdAt],
+      ).toISOString(),
       username: mediaUpload[FieldNameUser.username],
     }));
   }

@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { DisconnectReason, MessageTransporter } from '@hedgedoc/commons';
+import { FieldNameUser } from '@hedgedoc/database';
 import { OnGatewayConnection, WebSocketGateway } from '@nestjs/websockets';
 import { IncomingMessage } from 'http';
 import WebSocket from 'ws';
 
-import { FieldNameUser } from '../../database/types';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { NoteService } from '../../notes/note.service';
 import { NotePermissionLevel } from '../../permissions/note-permission.enum';

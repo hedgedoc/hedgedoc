@@ -8,6 +8,7 @@ import {
   ApiTokenDto,
   ApiTokenWithSecretDto,
 } from '@hedgedoc/commons';
+import { FieldNameUser, User } from '@hedgedoc/database';
 import {
   Body,
   Controller,
@@ -21,7 +22,6 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { ApiTokenService } from '../../../api-token/api-token.service';
 import { SessionGuard } from '../../../auth/session.guard';
-import { FieldNameUser, User } from '../../../database/types';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { OpenApi } from '../../utils/decorators/openapi.decorator';
 import { RequestUserId } from '../../utils/decorators/request-user-id.decorator';

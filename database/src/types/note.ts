@@ -11,16 +11,16 @@
  */
 export interface Note {
   /** The unique id of the note for internal referencing */
-  [FieldNameNote.id]: number;
+  [FieldNameNote.id]: number
 
   /** The {@link User} id of the note owner */
-  [FieldNameNote.ownerId]: number;
+  [FieldNameNote.ownerId]: number
 
   /** The HedgeDoc major version this note was created in. This is used to migrate certain features from HD1 to HD2 */
-  [FieldNameNote.version]: number;
+  [FieldNameNote.version]: number
 
   /** Timestamp when the note was created */
-  [FieldNameNote.createdAt]: Date;
+  [FieldNameNote.createdAt]: string
 }
 
 export enum FieldNameNote {
@@ -30,10 +30,14 @@ export enum FieldNameNote {
   createdAt = 'created_at',
 }
 
-export const TableNote = 'note';
+export const TableNote = 'note'
+
+type TypeNoteDate = Omit<Note, FieldNameNote.createdAt> & {
+  [FieldNameNote.createdAt]: Date
+}
 
 export type TypeInsertNote = Omit<
-  Note,
+  TypeNoteDate,
   FieldNameNote.createdAt | FieldNameNote.id
->;
-export type TypeUpdateNote = Pick<Note, FieldNameNote.ownerId>;
+>
+export type TypeUpdateNote = Pick<TypeNoteDate, FieldNameNote.ownerId>

@@ -1,0 +1,27 @@
+{
+  "testRegex" : "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+  "testPathIgnorePatterns" : [
+    "/dist/"
+  ],
+  "moduleFileExtensions" : [
+    "ts",
+    "tsx",
+    "js"
+  ],
+  "extensionsToTreatAsEsm" : [
+    ".ts"
+  ],
+  "moduleNameMapper" : {
+    "^(\\.{1,2}/.*)\\.js$" : "$1"
+  },
+  "transformIgnorePatterns": ["<rootDir>/node_modules/"],
+  "transform" : {
+    "^.+\\.tsx?$" : [
+      "ts-jest",
+      {
+        "tsconfig" : "tsconfig.test.json",
+        "useESM" : true
+      }
+    ]
+  }
+}

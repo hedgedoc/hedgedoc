@@ -4,6 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { AliasDto } from '@hedgedoc/commons';
+import {
+  Alias,
+  FieldNameAlias,
+  FieldNameNote,
+  Note,
+  TableAlias,
+  TypeInsertAlias,
+} from '@hedgedoc/database';
 import { Inject, Injectable } from '@nestjs/common';
 import base32Encode from 'base32-encode';
 import { randomBytes } from 'crypto';
@@ -11,14 +19,6 @@ import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
 
 import noteConfiguration, { NoteConfig } from '../config/note.config';
-import {
-  Alias,
-  FieldNameAlias,
-  FieldNameNote,
-  Note,
-  TableAlias,
-} from '../database/types';
-import { TypeInsertAlias } from '../database/types/alias';
 import {
   AlreadyInDBError,
   ForbiddenIdError,

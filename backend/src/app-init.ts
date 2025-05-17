@@ -3,16 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { MediaBackendType } from '@hedgedoc/commons';
 import { HttpAdapterHost } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { WsAdapter } from '@nestjs/platform-ws';
+import { Knex } from 'knex';
+import { getConnectionToken } from 'nest-knexjs';
 
 import { AppConfig } from './config/app.config';
 import { AuthConfig } from './config/auth.config';
 import { MediaConfig } from './config/media.config';
 import { ErrorExceptionMapping } from './errors/error-mapping';
 import { ConsoleLoggerService } from './logger/console-logger.service';
-import { BackendType } from './media/backends/backend-type.enum';
 import { SessionService } from './sessions/session.service';
 import { setupSessionMiddleware } from './utils/session';
 import { setupValidationPipe } from './utils/setup-pipes';
@@ -42,6 +44,12 @@ export async function setupApp(
     );
   }
 
+  logger.log('Starting database migrations... ', 'AppBootstrap');
+  const knexConnectionToken = getConnectionToken();
+  const knex: Knex = app.get<Knex>(knexConnectionToken);
+  await knex.migrate.latest();
+  logger.log('Finished database migrations... ', 'AppBootstrap');
+
   // Setup session handling
   setupSessionMiddleware(
     app,
@@ -65,7 +73,7 @@ export async function setupApp(
   app.useGlobalPipes(setupValidationPipe(logger));
 
   // Map URL paths to directories
-  if (mediaConfig.backend.use === BackendType.FILESYSTEM) {
+  if (mediaConfig.backend.use === MediaBackendType.FILESYSTEM) {
     logger.log(
       `Serving the local folder '${mediaConfig.backend.filesystem.uploadPath}' under '/uploads'`,
       'AppBootstrap',

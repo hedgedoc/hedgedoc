@@ -9,9 +9,9 @@ import {
   YDocSyncServerAdapter,
 } from '@hedgedoc/commons';
 import * as HedgeDocCommonsModule from '@hedgedoc/commons';
+import { FieldNameUser, User } from '@hedgedoc/database';
 import { Mock } from 'ts-mockery';
 
-import { FieldNameUser, User } from '../../database/types';
 import * as NameRandomizerModule from './random-word-lists/name-randomizer';
 import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';

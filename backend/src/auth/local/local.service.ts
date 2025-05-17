@@ -4,6 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { AuthProviderType } from '@hedgedoc/commons';
+import {
+  FieldNameIdentity,
+  FieldNameUser,
+  Identity,
+  TableIdentity,
+  User,
+} from '@hedgedoc/database';
 import { Inject, Injectable } from '@nestjs/common';
 import {
   OptionsGraph,
@@ -23,13 +30,6 @@ import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
 
 import authConfiguration, { AuthConfig } from '../../config/auth.config';
-import {
-  FieldNameIdentity,
-  FieldNameUser,
-  Identity,
-  TableIdentity,
-  User,
-} from '../../database/types';
 import {
   InvalidCredentialsError,
   PasswordTooWeakError,

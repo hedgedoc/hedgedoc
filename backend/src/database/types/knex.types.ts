@@ -3,15 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Knex } from 'knex';
-
-import { Alias, TypeInsertAlias, TypeUpdateAlias } from './alias';
-import { ApiToken, TypeInsertApiToken, TypeUpdateApiToken } from './api-token';
-import { Group, TypeInsertGroup, TypeUpdateGroup } from './group';
-import { Identity, TypeInsertIdentity, TypeUpdateIdentity } from './identity';
 import {
+  Alias,
+  ApiToken,
   AuthorshipInfo,
+  Group,
   GroupUser,
+  Identity,
+  MediaUpload,
+  Note,
+  NoteGroupPermission,
+  NoteUserPermission,
+  Revision,
   RevisionTag,
   TableAlias,
   TableApiToken,
@@ -27,24 +30,28 @@ import {
   TableRevisionTag,
   TableUser,
   TableUserPinnedNote,
-  UserPinnedNote,
-} from './index';
-import {
-  MediaUpload,
+  TypeInsertAlias,
+  TypeInsertApiToken,
+  TypeInsertAuthorshipInfo,
+  TypeInsertGroup,
+  TypeInsertIdentity,
   TypeInsertMediaUpload,
+  TypeInsertNote,
+  TypeInsertRevision,
+  TypeInsertUser,
+  TypeUpdateAlias,
+  TypeUpdateApiToken,
+  TypeUpdateGroup,
+  TypeUpdateIdentity,
   TypeUpdateMediaUpload,
-} from './media-upload';
-import { Note, TypeInsertNote, TypeUpdateNote } from './note';
-import {
-  NoteGroupPermission,
+  TypeUpdateNote,
   TypeUpdateNoteGroupPermission,
-} from './note-group-permission';
-import {
-  NoteUserPermission,
   TypeUpdateNoteUserPermission,
-} from './note-user-permission';
-import { Revision, TypeInsertRevision } from './revision';
-import { TypeInsertUser, TypeUpdateUser, User } from './user';
+  TypeUpdateUser,
+  User,
+  UserPinnedNote,
+} from '@hedgedoc/database';
+import { Knex } from 'knex';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 declare module 'knex/types/tables.js' {
@@ -59,7 +66,10 @@ declare module 'knex/types/tables.js' {
       TypeInsertApiToken,
       TypeUpdateApiToken
     >;
-    [TableAuthorshipInfo]: AuthorshipInfo;
+    [TableAuthorshipInfo]: Knex.CompositeTableType<
+      AuthorshipInfo,
+      TypeInsertAuthorshipInfo
+    >;
     [TableGroup]: Knex.CompositeTableType<
       Group,
       TypeInsertGroup,

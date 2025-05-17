@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { AuthProviderType, PendingUserInfoDto } from '@hedgedoc/commons';
+import { Identity } from '@hedgedoc/database';
 import {
   ForbiddenException,
   Inject,
@@ -20,7 +21,6 @@ import authConfiguration, {
   AuthConfig,
   OidcConfig,
 } from '../../config/auth.config';
-import { Identity } from '../../database/types';
 import { NotInDBError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { IdentityService } from '../identity.service';

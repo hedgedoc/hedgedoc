@@ -9,6 +9,7 @@ import {
   RegisterDto,
   UpdatePasswordDto,
 } from '@hedgedoc/commons';
+import { FieldNameIdentity, FieldNameUser } from '@hedgedoc/database';
 import {
   Body,
   Controller,
@@ -22,7 +23,6 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { LocalService } from '../../../../auth/local/local.service';
 import { SessionGuard } from '../../../../auth/session.guard';
-import { FieldNameIdentity, FieldNameUser } from '../../../../database/types';
 import { NoLocalIdentityError } from '../../../../errors/errors';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { UsersService } from '../../../../users/users.service';

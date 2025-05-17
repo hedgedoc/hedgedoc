@@ -2824,6 +2824,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@hedgedoc/database@workspace:database":
+  version: 0.0.0-use.local
+  resolution: "@hedgedoc/database@workspace:database"
+  dependencies:
+    "@typescript-eslint/eslint-plugin": "npm:8.14.0"
+    "@typescript-eslint/parser": "npm:8.14.0"
+    eslint: "npm:8.57.1"
+    eslint-config-prettier: "npm:9.1.0"
+    eslint-plugin-jest: "npm:28.9.0"
+    eslint-plugin-prettier: "npm:5.2.3"
+    prettier: "npm:3.3.3"
+    typescript: "npm:5.6.3"
+  languageName: unknown
+  linkType: soft
+
 "@hedgedoc/dev-reverse-proxy@workspace:dev-reverse-proxy":
   version: 0.0.0-use.local
   resolution: "@hedgedoc/dev-reverse-proxy@workspace:dev-reverse-proxy"
