@@ -33,6 +33,7 @@ export class S3Backend implements MediaBackend {
     private mediaConfig: MediaConfig,
   ) {
     this.logger.setContext(S3Backend.name);
+    // only create the backend if s3 is configured
     if (this.mediaConfig.backend.use !== BackendType.S3) {
       return;
     }

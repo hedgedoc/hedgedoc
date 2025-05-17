@@ -8,13 +8,11 @@ import { FileTypeResult } from 'file-type';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 
-import mediaConfiguration, {
-  FilesystemMediaConfig,
-  MediaConfig,
-} from '../../config/media.config';
+import mediaConfiguration, { MediaConfig } from '../../config/media.config';
 import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
+import { BackendType } from './backend-type.enum';
 
 @Injectable()
 export class FilesystemBackend implements MediaBackend {
@@ -26,9 +24,12 @@ export class FilesystemBackend implements MediaBackend {
     private mediaConfig: MediaConfig,
   ) {
     this.logger.setContext(FilesystemBackend.name);
-    this.uploadDirectory = (
-      this.mediaConfig.backend as FilesystemMediaConfig
-    ).filesystem.uploadPath;
+    // only create the backend if local filesystem is configured
+    if (this.mediaConfig.backend.use !== BackendType.FILESYSTEM) {
+      this.uploadDirectory = '';
+      return;
+    }
+    this.uploadDirectory = this.mediaConfig.backend.filesystem.uploadPath;
   }
 
   async saveFile(

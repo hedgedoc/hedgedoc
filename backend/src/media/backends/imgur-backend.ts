@@ -14,6 +14,7 @@ import mediaConfiguration, {
 import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
+import { BackendType } from './backend-type.enum';
 
 type UploadResult = {
   data: {
@@ -37,7 +38,11 @@ export class ImgurBackend implements MediaBackend {
     private mediaConfig: MediaConfig,
   ) {
     this.logger.setContext(ImgurBackend.name);
-    this.config = (this.mediaConfig.backend as ImgurMediaConfig).imgur;
+    // only create the backend if imgur is configured
+    if (this.mediaConfig.backend.use !== BackendType.IMGUR) {
+      return;
+    }
+    this.config = this.mediaConfig.backend.imgur;
   }
 
   async saveFile(uuid: string, buffer: Buffer): Promise<string> {

@@ -29,37 +29,37 @@ export class WebdavBackend implements MediaBackend {
     private mediaConfig: MediaConfig,
   ) {
     this.logger.setContext(WebdavBackend.name);
-    if (this.mediaConfig.backend.use === BackendType.WEBDAV) {
-      this.config = this.mediaConfig.backend.webdav;
-      const url = new URL(this.config.connectionString);
-      this.baseUrl = url.toString();
-      if (this.config.uploadDir && this.config.uploadDir !== '') {
-        this.baseUrl = WebdavBackend.joinURL(
-          this.baseUrl,
-          this.config.uploadDir,
-        );
-      }
-      this.authHeader = WebdavBackend.generateBasicAuthHeader(
-        url.username,
-        url.password,
-      );
-      fetch(this.baseUrl, {
-        method: 'PROPFIND',
-        headers: {
-          Accept: 'text/plain', // eslint-disable-line @typescript-eslint/naming-convention
-          Authorization: this.authHeader, // eslint-disable-line @typescript-eslint/naming-convention
-          Depth: '0', // eslint-disable-line @typescript-eslint/naming-convention
-        },
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`Can't access ${this.baseUrl}`);
-          }
-        })
-        .catch(() => {
-          throw new Error(`Can't access ${this.baseUrl}`);
-        });
+    // only create the backend if WebDAV is configured
+    if (this.mediaConfig.backend.use !== BackendType.WEBDAV) {
+      return;
     }
+
+    this.config = this.mediaConfig.backend.webdav;
+    const url = new URL(this.config.connectionString);
+    this.baseUrl = url.toString();
+    if (this.config.uploadDir && this.config.uploadDir !== '') {
+      this.baseUrl = WebdavBackend.joinURL(this.baseUrl, this.config.uploadDir);
+    }
+    this.authHeader = WebdavBackend.generateBasicAuthHeader(
+      url.username,
+      url.password,
+    );
+    fetch(this.baseUrl, {
+      method: 'PROPFIND',
+      headers: {
+        Accept: 'text/plain', // eslint-disable-line @typescript-eslint/naming-convention
+        Authorization: this.authHeader, // eslint-disable-line @typescript-eslint/naming-convention
+        Depth: '0', // eslint-disable-line @typescript-eslint/naming-convention
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Can't access ${this.baseUrl}`);
+        }
+      })
+      .catch(() => {
+        throw new Error(`Can't access ${this.baseUrl}`);
+      });
   }
 
   async saveFile(

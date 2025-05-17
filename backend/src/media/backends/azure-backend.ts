@@ -35,16 +35,17 @@ export class AzureBackend implements MediaBackend {
     private mediaConfig: MediaConfig,
   ) {
     this.logger.setContext(AzureBackend.name);
-    this.config = (this.mediaConfig.backend as AzureMediaConfig).azure;
-    if (this.mediaConfig.backend.use === BackendType.AZURE) {
-      // only create the client if the backend is configured to azure
-      const blobServiceClient = BlobServiceClient.fromConnectionString(
-        this.config.connectionString,
-      );
-      this.credential =
-        blobServiceClient.credential as StorageSharedKeyCredential;
-      this.client = blobServiceClient.getContainerClient(this.config.container);
+    // only create the backend if azure is configured
+    if (this.mediaConfig.backend.use !== BackendType.AZURE) {
+      return;
     }
+    this.config = this.mediaConfig.backend.azure;
+    const blobServiceClient = BlobServiceClient.fromConnectionString(
+      this.config.connectionString,
+    );
+    this.credential =
+      blobServiceClient.credential as StorageSharedKeyCredential;
+    this.client = blobServiceClient.getContainerClient(this.config.container);
   }
 
   async saveFile(
