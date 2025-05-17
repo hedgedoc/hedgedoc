@@ -7,7 +7,6 @@ import { useApplicationState } from '../../../../../../hooks/common/use-applicat
 import type { ApplicationState } from '../../../../../../redux'
 import { AliasesListEntry } from './aliases-list-entry'
 import React, { Fragment, useMemo } from 'react'
-import type { AliasDto } from '@hedgedoc/commons'
 
 /**
  * Renders the list of aliases.
@@ -18,8 +17,8 @@ export const AliasesList: React.FC = () => {
     return aliases === undefined
       ? null
       : Object.assign([], aliases)
-          .sort((a: AliasDto, b: AliasDto) => a.name.localeCompare(b.name))
-          .map((alias: AliasDto) => <AliasesListEntry alias={alias} key={alias.name} />)
+          .sort((a: string, b: string) => a.localeCompare(b))
+          .map((alias: string) => <AliasesListEntry alias={alias} key={alias} />)
   }, [aliases])
 
   return <Fragment>{aliasesDom}</Fragment>

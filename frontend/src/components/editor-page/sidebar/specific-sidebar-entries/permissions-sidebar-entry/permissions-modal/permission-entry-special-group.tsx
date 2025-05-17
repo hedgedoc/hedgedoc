@@ -38,42 +38,42 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
   disabled,
   inconsistent
 }) => {
-  const noteId = useApplicationState((state) => state.noteDetails?.primaryAlias)
+  const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const { t } = useTranslation()
   const { showErrorNotification } = useUiNotifications()
 
   const onSetEntryReadOnly = useCallback(() => {
-    if (!noteId) {
+    if (!noteAlias) {
       return
     }
-    setGroupPermission(noteId, type, false)
+    setGroupPermission(noteAlias, type, false)
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteId, showErrorNotification, type])
+  }, [noteAlias, showErrorNotification, type])
 
   const onSetEntryWriteable = useCallback(() => {
-    if (!noteId) {
+    if (!noteAlias) {
       return
     }
-    setGroupPermission(noteId, type, true)
+    setGroupPermission(noteAlias, type, true)
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteId, showErrorNotification, type])
+  }, [noteAlias, showErrorNotification, type])
 
   const onSetEntryDenied = useCallback(() => {
-    if (!noteId) {
+    if (!noteAlias) {
       return
     }
-    removeGroupPermission(noteId, type)
+    removeGroupPermission(noteAlias, type)
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteId, showErrorNotification, type])
+  }, [noteAlias, showErrorNotification, type])
 
   const name = useMemo(() => {
     switch (type) {

@@ -10,7 +10,6 @@ import { editorConfigReducer } from './editor-config/slice'
 import { userReducer } from './user/slice'
 import { rendererStatusReducer } from './renderer-status/slice'
 import { realtimeStatusReducer } from './realtime/slice'
-import { historyReducer } from './history/slice'
 import { noteDetailsReducer } from './note-details/slice'
 import { printModeReducer } from './print-mode/slice'
 
@@ -21,7 +20,6 @@ export const store = configureStore({
     user: userReducer,
     rendererStatus: rendererStatusReducer,
     realtimeStatus: realtimeStatusReducer,
-    history: historyReducer,
     noteDetails: noteDetailsReducer,
     printMode: printModeReducer
   },

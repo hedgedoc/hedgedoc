@@ -15,7 +15,6 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
       id: 'slideId',
       primaryAlias: 'slide-example',
       version: 2,
-      viewCount: 8,
       updatedAt: '2021-04-30T18:38:23.000Z',
       lastUpdatedBy: null,
       createdAt: '2021-04-30T18:38:14.000Z',
@@ -23,13 +22,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
       title: 'Slide example',
       tags: [],
       description: '',
-      aliases: [
-        {
-          noteId: 'slideId',
-          primaryAlias: true,
-          name: 'slide-example'
-        }
-      ],
+      aliases: ['slideId'],
       permissions: {
         owner: 'erik',
         sharedToUsers: [

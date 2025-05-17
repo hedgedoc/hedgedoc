@@ -76,7 +76,7 @@ export const RevisionListEntry: React.FC<RevisionListEntryProps> = ({ active, on
       </span>
       <span>
         <UiIcon icon={IconPersonPlus} className='mx-2' />
-        <Trans i18nKey={'editor.modal.revision.guestCount'} />: {revision.anonymousAuthorCount}
+        <Trans i18nKey={'editor.modal.revision.guestCount'} />: {revision.authorGuestUuids.length}
       </span>
     </ListGroup.Item>
   )

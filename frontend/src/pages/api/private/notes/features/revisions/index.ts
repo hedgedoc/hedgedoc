@@ -14,7 +14,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
       createdAt: '2021-12-29T17:54:11.000Z',
       length: 2788,
       authorUsernames: [],
-      anonymousAuthorCount: 4,
+      authorGuestUuids: ['1', '2', '3'],
       title: 'Features',
       description: 'Many features, such wow!',
       tags: ['hedgedoc', 'demo', 'react']
@@ -24,7 +24,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
       createdAt: '2021-12-21T16:59:42.000Z',
       length: 2782,
       authorUsernames: [],
-      anonymousAuthorCount: 2,
+      authorGuestUuids: ['1', '2', '3'],
       title: 'Features',
       description: 'Many more features, such wow!',
       tags: ['hedgedoc', 'demo', 'react']
