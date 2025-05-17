@@ -12,9 +12,9 @@ import {
   NoteMetadataDto,
   NoteMetadataSchema,
 } from '@hedgedoc/commons';
+import { User } from '@hedgedoc/database';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
-import { User } from 'src/database/types';
 
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';

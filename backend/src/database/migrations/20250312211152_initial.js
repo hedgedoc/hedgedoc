@@ -1,13 +1,6 @@
-/*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
- *
- * SPDX-License-Identifier: AGPL-3.0-only
- */
-import { AuthProviderType, NoteType, SpecialGroup } from '@hedgedoc/commons';
-import type { Knex } from 'knex';
-
-import { BackendType } from '../../media/backends/backend-type.enum';
-import {
+/* eslint-disable */
+const {
+  AuthProviderType,
   FieldNameAlias,
   FieldNameApiToken,
   FieldNameAuthorshipInfo,
@@ -22,6 +15,9 @@ import {
   FieldNameRevisionTag,
   FieldNameUser,
   FieldNameUserPinnedNote,
+  MediaBackendType,
+  NoteType,
+  SpecialGroup,
   TableAlias,
   TableApiToken,
   TableAuthorshipInfo,
@@ -36,9 +32,9 @@ import {
   TableRevisionTag,
   TableUser,
   TableUserPinnedNote,
-} from '../types';
+} = require('@hedgedoc/database');
 
-export async function up(knex: Knex): Promise<void> {
+const up = async function (knex) {
   // Create the user table first as it's referenced by other tables
   await knex.schema.createTable(TableUser, (table) => {
     table.increments(FieldNameUser.id).primary();
@@ -212,8 +208,8 @@ export async function up(knex: Knex): Promise<void> {
       .unsigned()
       .notNullable()
       .references(FieldNameRevision.uuid)
-      .onDelete('CASCADE')
-      .inTable(TableRevision);
+      .inTable(TableRevision)
+      .onDelete('CASCADE');
     table.string(FieldNameRevisionTag.tag).notNullable();
     table.primary([
       FieldNameRevisionTag.revisionUuid,
@@ -228,15 +224,15 @@ export async function up(knex: Knex): Promise<void> {
       .unsigned()
       .notNullable()
       .references(FieldNameRevision.uuid)
-      .onDelete('CASCADE')
-      .inTable(TableRevision);
+      .inTable(TableRevision)
+      .onDelete('CASCADE');
     table
       .integer(FieldNameAuthorshipInfo.authorId)
       .unsigned()
       .notNullable()
       .references(FieldNameUser.id)
-      .onDelete('CASCADE')
-      .inTable(TableUser);
+      .inTable(TableUser)
+      .onDelete('CASCADE');
     table
       .integer(FieldNameAuthorshipInfo.startPosition)
       .unsigned()
@@ -254,15 +250,15 @@ export async function up(knex: Knex): Promise<void> {
       .unsigned()
       .notNullable()
       .references(FieldNameNote.id)
-      .onDelete('CASCADE')
-      .inTable(TableNote);
+      .inTable(TableNote)
+      .onDelete('CASCADE');
     table
       .integer(FieldNameNoteUserPermission.userId)
       .unsigned()
       .notNullable()
       .references(FieldNameUser.id)
-      .onDelete('CASCADE')
-      .inTable(TableUser);
+      .inTable(TableUser)
+      .onDelete('CASCADE');
     table
       .boolean(FieldNameNoteUserPermission.canEdit)
       .notNullable()
@@ -280,15 +276,15 @@ export async function up(knex: Knex): Promise<void> {
       .unsigned()
       .notNullable()
       .references(FieldNameNote.id)
-      .onDelete('CASCADE')
-      .inTable(TableNote);
+      .inTable(TableNote)
+      .onDelete('CASCADE');
     table
       .integer(FieldNameNoteGroupPermission.groupId)
       .unsigned()
       .notNullable()
       .references(FieldNameGroup.id)
-      .onDelete('CASCADE')
-      .inTable(TableGroup);
+      .inTable(TableGroup)
+      .onDelete('CASCADE');
     table
       .boolean(FieldNameNoteGroupPermission.canEdit)
       .notNullable()
@@ -319,11 +315,11 @@ export async function up(knex: Knex): Promise<void> {
       .enu(
         FieldNameMediaUpload.backendType,
         [
-          BackendType.AZURE,
-          BackendType.FILESYSTEM,
-          BackendType.IMGUR,
-          BackendType.S3,
-          BackendType.WEBDAV,
+          MediaBackendType.AZURE,
+          MediaBackendType.FILESYSTEM,
+          MediaBackendType.IMGUR,
+          MediaBackendType.S3,
+          MediaBackendType.WEBDAV,
         ],
         {
           useNative: true,
@@ -356,9 +352,9 @@ export async function up(knex: Knex): Promise<void> {
       FieldNameUserPinnedNote.noteId,
     ]);
   });
-}
+};
 
-export async function down(knex: Knex): Promise<void> {
+const down = async function (knex) {
   // Drop tables in reverse order of creation to avoid integer key constraints
   await knex.schema.dropTableIfExists(TableUserPinnedNote);
   await knex.schema.dropTableIfExists(TableMediaUpload);
@@ -374,4 +370,9 @@ export async function down(knex: Knex): Promise<void> {
   await knex.schema.dropTableIfExists(TableNote);
   await knex.schema.dropTableIfExists(TableGroup);
   await knex.schema.dropTableIfExists(TableUser);
-}
+};
+
+module.exports = {
+  up,
+  down,
+};

@@ -4,3 +4,4 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 export * from './media-upload.dto.js'
+export * from './media-backend-type.enum.js'

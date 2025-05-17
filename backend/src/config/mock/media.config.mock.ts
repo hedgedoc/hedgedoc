@@ -3,16 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { MediaBackendType } from '@hedgedoc/commons';
 import { ConfigFactoryKeyHost, registerAs } from '@nestjs/config';
 import { ConfigFactory } from '@nestjs/config/dist/interfaces';
 
-import { BackendType } from '../../media/backends/backend-type.enum';
 import { MediaConfig } from '../media.config';
 
 export function createDefaultMockMediaConfig(): MediaConfig {
   return {
     backend: {
-      use: BackendType.FILESYSTEM,
+      use: MediaBackendType.FILESYSTEM,
       filesystem: {
         uploadPath:
           'test_uploads' + Math.floor(Math.random() * 100000).toString(),

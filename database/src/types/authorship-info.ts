@@ -3,6 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { FieldNameApiToken } from './api-token'
+
 /**
  * The AuthorshipInfo holds the information from where to where one {@link User} has changed a {@link Note}
  *
@@ -11,19 +13,19 @@
  */
 export interface AuthorshipInfo {
   /** The id of the {@link Revision} this belongs to. */
-  [FieldNameAuthorshipInfo.revisionUuid]: string;
+  [FieldNameAuthorshipInfo.revisionUuid]: string
 
   /** The id of the author of the edit. */
-  [FieldNameAuthorshipInfo.authorId]: number;
+  [FieldNameAuthorshipInfo.authorId]: number
 
   /** The start position of the change in the note as a positive index. */
-  [FieldNameAuthorshipInfo.startPosition]: number;
+  [FieldNameAuthorshipInfo.startPosition]: number
 
   /** The end position of the change in the note as a positive index. */
-  [FieldNameAuthorshipInfo.endPosition]: number;
+  [FieldNameAuthorshipInfo.endPosition]: number
 
   /** The timestamp when the authorship entry was created. */
-  [FieldNameAuthorshipInfo.createdAt]: Date;
+  [FieldNameAuthorshipInfo.createdAt]: string
 }
 
 export enum FieldNameAuthorshipInfo {
@@ -34,4 +36,12 @@ export enum FieldNameAuthorshipInfo {
   createdAt = 'created_at',
 }
 
-export const TableAuthorshipInfo = 'authorship_info';
+type TypeAuthorshipInfoDate = Omit<
+  AuthorshipInfo,
+  FieldNameAuthorshipInfo.createdAt
+> & {
+  [FieldNameAuthorshipInfo.createdAt]: Date
+}
+
+export type TypeInsertAuthorshipInfo = TypeAuthorshipInfoDate
+export const TableAuthorshipInfo = 'authorship_info'

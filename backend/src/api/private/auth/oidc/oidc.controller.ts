@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { AuthProviderType } from '@hedgedoc/commons';
+import { FieldNameIdentity } from '@hedgedoc/database';
 import {
   Controller,
   Get,
@@ -18,7 +19,6 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { IdentityService } from '../../../../auth/identity.service';
 import { OidcService } from '../../../../auth/oidc/oidc.service';
-import { FieldNameIdentity } from '../../../../database/types';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { UsersService } from '../../../../users/users.service';
 import { OpenApi } from '../../../utils/decorators/openapi.decorator';

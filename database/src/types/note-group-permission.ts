@@ -8,13 +8,13 @@
  */
 export interface NoteGroupPermission {
   /** The id of the {@link Group} to give the {@link Note} permission to. */
-  [FieldNameNoteGroupPermission.groupId]: number;
+  [FieldNameNoteGroupPermission.groupId]: number
 
   /** The id of the {@link Note} to give the {@link Group} permission to. */
-  [FieldNameNoteGroupPermission.noteId]: number;
+  [FieldNameNoteGroupPermission.noteId]: number
 
   /** Whether the {@link Group} can edit the {@link Note} or not. */
-  [FieldNameNoteGroupPermission.canEdit]: boolean;
+  [FieldNameNoteGroupPermission.canEdit]: boolean
 }
 
 export enum FieldNameNoteGroupPermission {
@@ -23,9 +23,9 @@ export enum FieldNameNoteGroupPermission {
   canEdit = 'can_edit',
 }
 
-export const TableNoteGroupPermission = 'note_group_permission';
+export const TableNoteGroupPermission = 'note_group_permission'
 
 export type TypeUpdateNoteGroupPermission = Pick<
   NoteGroupPermission,
   FieldNameNoteGroupPermission.canEdit
->;
+>

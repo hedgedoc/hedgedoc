@@ -11,6 +11,7 @@ import {
   generateBlobSASQueryParameters,
   StorageSharedKeyCredential,
 } from '@azure/storage-blob';
+import { MediaBackendType } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
 import { FileTypeResult } from 'file-type';
 
@@ -21,7 +22,6 @@ import mediaConfiguration, {
 import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
-import { BackendType } from './backend-type.enum';
 
 @Injectable()
 export class AzureBackend implements MediaBackend {
@@ -36,7 +36,7 @@ export class AzureBackend implements MediaBackend {
   ) {
     this.logger.setContext(AzureBackend.name);
     // only create the backend if azure is configured
-    if (this.mediaConfig.backend.use !== BackendType.AZURE) {
+    if (this.mediaConfig.backend.use !== MediaBackendType.AZURE) {
       return;
     }
     this.config = this.mediaConfig.backend.azure;

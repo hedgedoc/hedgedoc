@@ -9,10 +9,10 @@
  */
 export interface GroupUser {
   /** The id of the {@link Group} a {@link User} is part of */
-  [FieldNameGroupUser.groupId]: number;
+  [FieldNameGroupUser.groupId]: number
 
   /** The id of the {@link User} */
-  [FieldNameGroupUser.userId]: number;
+  [FieldNameGroupUser.userId]: number
 }
 
 export enum FieldNameGroupUser {
@@ -20,4 +20,4 @@ export enum FieldNameGroupUser {
   userId = 'user_id',
 }
 
-export const TableGroupUser = 'group_user';
+export const TableGroupUser = 'group_user'

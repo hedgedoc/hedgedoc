@@ -8,6 +8,7 @@ import {
   LdapLoginDto,
   LdapLoginResponseDto,
 } from '@hedgedoc/commons';
+import { FieldNameIdentity } from '@hedgedoc/database';
 import {
   Body,
   Controller,
@@ -20,7 +21,6 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { IdentityService } from '../../../../auth/identity.service';
 import { LdapService } from '../../../../auth/ldap/ldap.service';
-import { FieldNameIdentity } from '../../../../database/types';
 import { NotInDBError } from '../../../../errors/errors';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { UsersService } from '../../../../users/users.service';

@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { FieldNameNote, Note } from '@hedgedoc/database';
 import { isArray } from 'class-validator';
 
-import { FieldNameNote, Note } from '../../database/types';
 import { NoteService } from '../../notes/note.service';
 import { CompleteRequest } from './request.type';
 

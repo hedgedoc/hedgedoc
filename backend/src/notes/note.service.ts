@@ -9,14 +9,6 @@ import {
   NotePermissionsDto,
   SpecialGroup,
 } from '@hedgedoc/commons';
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { EventEmitter2 } from '@nestjs/event-emitter';
-import { Knex } from 'knex';
-import { InjectConnection } from 'nest-knexjs';
-
-import { AliasService } from '../alias/alias.service';
-import { DefaultAccessLevel } from '../config/default-access-level.enum';
-import noteConfiguration, { NoteConfig } from '../config/note.config';
 import {
   FieldNameAlias,
   FieldNameGroup,
@@ -36,7 +28,15 @@ import {
   TableNoteUserPermission,
   TableUser,
   User,
-} from '../database/types';
+} from '@hedgedoc/database';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { Knex } from 'knex';
+import { InjectConnection } from 'nest-knexjs';
+
+import { AliasService } from '../alias/alias.service';
+import { DefaultAccessLevel } from '../config/default-access-level.enum';
+import noteConfiguration, { NoteConfig } from '../config/note.config';
 import {
   ForbiddenIdError,
   GenericDBError,
@@ -141,6 +141,7 @@ export class NoteService {
       await this.revisionsService.createRevision(
         noteId,
         noteContent,
+        true,
         transaction,
       );
 
@@ -162,6 +163,7 @@ export class NoteService {
       if (everyoneAccessLevel !== DefaultAccessLevel.NONE) {
         const everyoneAccessGroupId = await this.groupsService.getGroupIdByName(
           SpecialGroup.EVERYONE,
+          transaction,
         );
         await this.permissionService.setGroupPermission(
           noteId,
@@ -173,7 +175,10 @@ export class NoteService {
 
       if (loggedInUsersAccessLevel !== DefaultAccessLevel.NONE) {
         const loggedInUsersAccessGroupId =
-          await this.groupsService.getGroupIdByName(SpecialGroup.LOGGED_IN);
+          await this.groupsService.getGroupIdByName(
+            SpecialGroup.LOGGED_IN,
+            transaction,
+          );
         await this.permissionService.setGroupPermission(
           noteId,
           loggedInUsersAccessGroupId,
@@ -415,6 +420,12 @@ export class NoteService {
         'toNoteMetadataDto',
       );
     }
+    const createdAtString = note[FieldNameNote.createdAt];
+    const version = note[FieldNameNote.version];
+    this.logger.debug(`createdAt: ${createdAtString}`);
+    this.logger.debug(`createversion: ${version}`);
+    const createdAt = new Date(createdAtString).toISOString();
+
     const latestRevision = await this.revisionsService.getLatestRevision(
       noteId,
       transaction,
@@ -423,28 +434,40 @@ export class NoteService {
       latestRevision[FieldNameRevision.uuid],
       transaction,
     );
+    const permissions = await this.toNotePermissionsDto(noteId, transaction);
+
     const updateUsers = await this.revisionsService.getRevisionUserInfo(
       latestRevision[FieldNameRevision.uuid],
+      transaction,
     );
-    updateUsers.users.sort(
-      (userA, userB) => userB.createdAt.getTime() - userA.createdAt.getTime(),
-    );
-    const lastEdit = updateUsers.users[0];
-    const editedBy = updateUsers.users.map((user) => user.username);
-    const permissions = await this.toNotePermissionsDto(noteId, transaction);
+    updateUsers.users.sort();
+
+    let lastUpdatedBy;
+    let editedBy;
+    let updatedAt;
+    if (updateUsers.users.length > 0) {
+      const lastEdit = updateUsers.users[0];
+      lastUpdatedBy = lastEdit.username;
+      editedBy = updateUsers.users.map((user) => user.username);
+      updatedAt = new Date(lastEdit.createdAt).toISOString();
+    } else {
+      lastUpdatedBy = permissions.owner;
+      editedBy = permissions.owner ? [permissions.owner] : [];
+      updatedAt = createdAt;
+    }
 
     return {
       aliases: aliases.map((alias) => alias[FieldNameAlias.alias]),
       primaryAlias: primaryAlias[FieldNameAlias.alias],
       title: latestRevision.title,
       description: latestRevision.description,
-      tags: tags,
-      createdAt: note[FieldNameNote.createdAt].toISOString(),
-      editedBy: editedBy,
-      permissions: permissions,
-      version: note[FieldNameNote.version],
-      updatedAt: lastEdit.createdAt.toISOString(),
-      lastUpdatedBy: lastEdit.username,
+      tags,
+      createdAt,
+      editedBy,
+      permissions,
+      version,
+      updatedAt,
+      lastUpdatedBy,
     };
   }
 

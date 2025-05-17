@@ -1,0 +1,47 @@
+{
+  "name": "@hedgedoc/database",
+  "private": true,
+  "version": "0.1.0",
+  "description": "CJS code required for the database migrations",
+  "author": "The HedgeDoc Authors",
+  "license": "AGPL-3.0",
+  "scripts": {
+    "build": "./build.sh",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint --fix --ext .ts src"
+  },
+  "type": "module",
+  "source": "src/index.ts",
+  "main": "dist/cjs/index.js",
+  "types": "dist/cjs/index.d.ts",
+  "exports": {
+    "require": {
+      "types": "./dist/cjs/index.d.ts",
+      "default": "./dist/cjs/index.js"
+    }
+  },
+  "files": [
+    "LICENSES/*",
+    "package.json",
+    "README.md",
+    "dist/**"
+  ],
+  "browserslist": [
+    "node> 12"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hedgedoc/hedgedoc.git"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "8.14.0",
+    "@typescript-eslint/parser": "8.14.0",
+    "eslint": "8.57.1",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-jest": "28.9.0",
+    "eslint-plugin-prettier": "5.2.3",
+    "prettier": "3.3.3",
+    "typescript": "5.6.3"
+  },
+  "packageManager": "yarn@4.5.3"
+}

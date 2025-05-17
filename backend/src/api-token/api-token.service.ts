@@ -4,14 +4,18 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ApiTokenDto, ApiTokenWithSecretDto } from '@hedgedoc/commons';
+import {
+  ApiToken,
+  FieldNameApiToken,
+  TableApiToken,
+  TypeInsertApiToken,
+} from '@hedgedoc/database';
 import { Injectable } from '@nestjs/common';
 import { Cron, Timeout } from '@nestjs/schedule';
 import { randomBytes } from 'crypto';
 import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
 
-import { ApiToken, FieldNameApiToken, TableApiToken } from '../database/types';
-import { TypeInsertApiToken } from '../database/types/api-token';
 import {
   NotInDBError,
   TokenNotValidError,
@@ -71,7 +75,7 @@ export class ApiTokenService {
       }
 
       const tokenHash = token[FieldNameApiToken.secretHash];
-      const validUntil = token[FieldNameApiToken.validUntil];
+      const validUntil = new Date(token[FieldNameApiToken.validUntil]);
       this.ensureTokenIsValid(secret, tokenHash, validUntil);
 
       await transaction(TableApiToken)
@@ -133,6 +137,10 @@ export class ApiTokenService {
       return this.toAuthTokenWithSecretDto(
         {
           ...token,
+          [FieldNameApiToken.validUntil]:
+            token[FieldNameApiToken.validUntil].toISOString(),
+          [FieldNameApiToken.createdAt]:
+            token[FieldNameApiToken.createdAt].toISOString(),
           [FieldNameApiToken.lastUsedAt]: null,
         },
         secret,
@@ -206,9 +214,13 @@ export class ApiTokenService {
     return {
       label: apiToken[FieldNameApiToken.label],
       keyId: apiToken[FieldNameApiToken.id],
-      createdAt: apiToken[FieldNameApiToken.createdAt].toISOString(),
-      validUntil: apiToken[FieldNameApiToken.validUntil].toISOString(),
-      lastUsedAt: apiToken[FieldNameApiToken.lastUsedAt]?.toISOString() ?? null,
+      createdAt: new Date(apiToken[FieldNameApiToken.createdAt]).toISOString(),
+      validUntil: new Date(
+        apiToken[FieldNameApiToken.validUntil],
+      ).toISOString(),
+      lastUsedAt: apiToken[FieldNameApiToken.lastUsedAt]
+        ? new Date(apiToken[FieldNameApiToken.lastUsedAt]).toISOString()
+        : null,
     };
   }
 

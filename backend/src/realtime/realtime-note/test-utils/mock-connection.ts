@@ -7,9 +7,9 @@ import {
   MockedBackendTransportAdapter,
   YDocSyncServerAdapter,
 } from '@hedgedoc/commons';
+import { FieldNameUser, User } from '@hedgedoc/database';
 import { Mock } from 'ts-mockery';
 
-import { FieldNameUser, User } from '../../../database/types';
 import { RealtimeConnection } from '../realtime-connection';
 import { RealtimeNote } from '../realtime-note';
 import { RealtimeUserStatusAdapter } from '../realtime-user-status-adapter';

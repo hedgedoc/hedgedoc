@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { FieldNameUser, User } from '@hedgedoc/database';
 import { Optional } from '@mrdrogdrog/optional';
 import { Inject, Injectable } from '@nestjs/common';
 import { parse as parseCookie } from 'cookie';
@@ -10,7 +11,6 @@ import { unsign } from 'cookie-signature';
 import { IncomingMessage } from 'http';
 
 import authConfiguration, { AuthConfig } from '../config/auth.config';
-import { FieldNameUser, User } from '../database/types';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { HEDGEDOC_SESSION } from '../utils/session';
 import { KeyvSessionStore } from './keyv-session-store';

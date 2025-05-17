@@ -3,7 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { BackendType } from '../../media/backends/backend-type.enum';
+
+export enum MediaBackendType {
+  FILESYSTEM = 'filesystem',
+  S3 = 's3',
+  IMGUR = 'imgur',
+  AZURE = 'azure',
+  WEBDAV = 'webdav',
+}
 
 /**
  * A media upload object represents an uploaded file. While the file itself is stored in the configured storage backend,
@@ -12,25 +19,25 @@ import { BackendType } from '../../media/backends/backend-type.enum';
  */
 export interface MediaUpload {
   /** UUID (v7) identifying the media upload. Is public and unique */
-  [FieldNameMediaUpload.uuid]: string;
+  [FieldNameMediaUpload.uuid]: string
 
   /** The id of the attached {@link Note} or null if the media upload was detached from a note */
-  [FieldNameMediaUpload.noteId]: number | null;
+  [FieldNameMediaUpload.noteId]: number | null
 
   /** The id of the {@link User} who uploaded the media file */
-  [FieldNameMediaUpload.userId]: number;
+  [FieldNameMediaUpload.userId]: number
 
   /** The name of the uploaded file */
-  [FieldNameMediaUpload.fileName]: string;
+  [FieldNameMediaUpload.fileName]: string
 
   /** The backend where this upload is stored */
-  [FieldNameMediaUpload.backendType]: BackendType;
+  [FieldNameMediaUpload.backendType]: MediaBackendType
 
   /** Additional data required by the backend storage to identify the uploaded file */
-  [FieldNameMediaUpload.backendData]: string | null;
+  [FieldNameMediaUpload.backendData]: string | null
 
   /** Timestamp when the file was uploaded */
-  [FieldNameMediaUpload.createdAt]: Date;
+  [FieldNameMediaUpload.createdAt]: string
 }
 
 export enum FieldNameMediaUpload {
@@ -43,13 +50,17 @@ export enum FieldNameMediaUpload {
   createdAt = 'created_at',
 }
 
-export const TableMediaUpload = 'media_upload';
+export const TableMediaUpload = 'media_upload'
+
+type TypeMediaUploadDate = Omit<MediaUpload, FieldNameMediaUpload.createdAt> & {
+  [FieldNameMediaUpload.createdAt]: Date
+}
 
 export type TypeInsertMediaUpload = Omit<
-  MediaUpload,
+  TypeMediaUploadDate,
   FieldNameMediaUpload.createdAt | FieldNameMediaUpload.uuid
->;
+>
 export type TypeUpdateMediaUpload = Pick<
-  MediaUpload,
+  TypeMediaUploadDate,
   FieldNameMediaUpload.noteId
->;
+>

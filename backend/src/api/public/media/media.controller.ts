@@ -5,6 +5,13 @@
  */
 import { MediaUploadDto, MediaUploadSchema } from '@hedgedoc/commons';
 import {
+  FieldNameMediaUpload,
+  FieldNameNote,
+  FieldNameUser,
+  Note,
+  User,
+} from '@hedgedoc/database';
+import {
   BadRequestException,
   Controller,
   Delete,
@@ -24,13 +31,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import {
-  FieldNameMediaUpload,
-  FieldNameNote,
-  FieldNameUser,
-  Note,
-  User,
-} from '../../../database/types';
 import { PermissionError } from '../../../errors/errors';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
