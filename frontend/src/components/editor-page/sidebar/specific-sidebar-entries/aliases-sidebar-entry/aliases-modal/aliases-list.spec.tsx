@@ -17,31 +17,17 @@ jest.mock('./aliases-list-entry')
 describe('AliasesList', () => {
   beforeEach(async () => {
     await mockI18n()
+    const primaryAlias = 'a-test'
     mockAppState({
       noteDetails: {
-        aliases: [
-          {
-            name: 'a-test',
-            noteId: 'note-id',
-            primaryAlias: false
-          },
-          {
-            name: 'z-test',
-            noteId: 'note-id',
-            primaryAlias: false
-          },
-          {
-            name: 'b-test',
-            noteId: 'note-id',
-            primaryAlias: true
-          }
-        ]
+        aliases: ['a-test', 'b-test', 'z-test'],
+        primaryAlias: primaryAlias
       }
     })
     jest.spyOn(AliasesListEntryModule, 'AliasesListEntry').mockImplementation((({ alias }) => {
       return (
         <span>
-          Alias: {alias.name} ({alias.primaryAlias ? 'primary' : 'non-primary'})
+          Alias: {alias} ({alias === primaryAlias ? 'primary' : 'non-primary'})
         </span>
       )
     }) as React.FC<AliasesListEntryProps>)

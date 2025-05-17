@@ -28,21 +28,21 @@ export const DeleteNoteSidebarEntry: React.FC<PropsWithChildren<SpecificSidebarE
   useTranslation()
   const userIsOwner = useIsOwner()
   const router = useRouter()
-  const noteId = useApplicationState((state) => state.noteDetails?.id)
+  const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const [modalVisibility, showModal, closeModal] = useBooleanState()
   const { showErrorNotification } = useUiNotifications()
 
   const deleteNoteAndCloseDialog = useCallback(
     (keepMedia: boolean) => {
-      if (noteId === undefined) {
+      if (noteAlias === undefined) {
         return
       }
-      deleteNote(noteId, keepMedia)
+      deleteNote(noteAlias, keepMedia)
         .then(() => router.push('/history'))
         .catch(showErrorNotification('landing.history.error.deleteNote.text'))
         .finally(closeModal)
     },
-    [closeModal, noteId, router, showErrorNotification]
+    [closeModal, noteAlias, router, showErrorNotification]
   )
 
   if (!userIsOwner) {

@@ -19,7 +19,7 @@ describe('Revision modal', () => {
       createdAt: defaultCreatedAt,
       length: 2788,
       authorUsernames: [],
-      anonymousAuthorCount: 4,
+      guestAuthorUuids: ['1', '2', '3', '4'],
       title: 'Features',
       description: 'Many features, such wow!',
       tags: ['hedgedoc', 'demo', 'react']
@@ -29,7 +29,7 @@ describe('Revision modal', () => {
       createdAt: defaultCreatedAt,
       length: 2782,
       authorUsernames: [],
-      anonymousAuthorCount: 2,
+      guestAuthorUuids: ['1', '2'],
       title: 'Features',
       description: 'Many more features, such wow!',
       tags: ['hedgedoc', 'demo', 'react']
@@ -81,7 +81,7 @@ describe('Revision modal', () => {
       edits: [],
       length: 2788,
       authorUsernames: [],
-      anonymousAuthorCount: 4,
+      authorGuestUuids: ['1', '2', '3'],
       content: testContent
     })
 

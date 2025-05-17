@@ -11,7 +11,6 @@ import { useComponentsFromAppExtensions } from './editor-pane/hooks/use-componen
 import { useNoteAndAppTitle } from './head-meta-properties/use-note-and-app-title'
 import { useScrollState } from './hooks/use-scroll-state'
 import { useSetScrollSource } from './hooks/use-set-scroll-source'
-import { useUpdateLocalHistoryEntry } from './hooks/use-update-local-history-entry'
 import { RendererPane } from './renderer-pane/renderer-pane'
 import { Sidebar } from './sidebar/sidebar'
 import { Splitter } from './splitter/splitter'
@@ -32,7 +31,6 @@ export enum ScrollSource {
 export const EditorPageContent: React.FC = () => {
   useTranslation()
   usePrintKeyboardShortcut()
-  useUpdateLocalHistoryEntry()
 
   const scrollSource = useRef<ScrollSource>(ScrollSource.EDITOR)
   const [editorScrollState, onMarkdownRendererScroll] = useScrollState(scrollSource, ScrollSource.EDITOR)

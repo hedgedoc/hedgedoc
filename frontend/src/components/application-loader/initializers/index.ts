@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { refreshHistoryState } from '../../../redux/history/methods'
 import { Logger } from '../../../utils/logger'
 import { isDevMode, isTestMode } from '../../../utils/test-modes'
 import { loadDarkMode } from './load-dark-mode'
@@ -65,10 +64,6 @@ export const createSetUpTaskList = (): InitTask[] => {
     {
       name: 'Fetch user information',
       task: fetchUserInformation
-    },
-    {
-      name: 'Load history state',
-      task: refreshHistoryState
     },
     {
       name: 'Load preferences',

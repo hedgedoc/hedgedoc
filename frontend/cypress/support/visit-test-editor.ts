@@ -8,20 +8,13 @@ import type { NoteDto } from '@hedgedoc/commons'
 export const testNoteId = 'test'
 const mockMetadata = {
   id: testNoteId,
-  aliases: [
-    {
-      name: 'mock-note',
-      primaryAlias: true,
-      noteId: testNoteId
-    }
-  ],
+  aliases: ['mock-note'],
   primaryAlias: 'mock-note',
   title: 'Mock Note',
   description: 'Mocked note for testing',
   tags: ['test', 'mock', 'cypress'],
   updatedAt: '2021-04-24T09:27:51.000Z',
   lastUpdatedBy: null,
-  viewCount: 0,
   version: 2,
   createdAt: '2021-04-24T09:27:51.000Z',
   editedBy: [],

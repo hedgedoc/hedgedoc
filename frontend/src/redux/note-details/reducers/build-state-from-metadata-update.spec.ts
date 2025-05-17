@@ -22,11 +22,9 @@ describe('build state from server permissions', () => {
       primaryAlias: 'test-id',
       tags: ['test'],
       description: 'test',
-      id: 'test-id',
       aliases: [],
       title: 'test',
       version: 2,
-      viewCount: 42,
       createdAt: '2022-09-18T18:51:00.000+02:00',
       updatedAt: '2022-09-18T18:52:00.000+02:00'
     }
@@ -40,11 +38,9 @@ describe('build state from server permissions', () => {
       },
       editedBy: [],
       primaryAlias: 'test-id',
-      id: 'test-id',
       aliases: [],
       title: 'test',
       version: 2,
-      viewCount: 42,
       createdAt: 1663519860,
       updatedAt: 1663519920
     })

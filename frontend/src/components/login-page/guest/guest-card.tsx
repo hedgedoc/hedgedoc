@@ -7,7 +7,6 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
 import { NewNoteButton } from '../../common/new-note-button/new-note-button'
-import { HistoryButton } from '../../layout/app-bar/app-bar-elements/help-dropdown/history-button'
 import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
 import { Trans, useTranslation } from 'react-i18next'
 import { PermissionLevel } from '@hedgedoc/commons'
@@ -32,7 +31,6 @@ export const GuestCard: React.FC = () => {
         </Card.Title>
         <div className={'d-flex flex-row gap-2'}>
           <NewNoteButton />
-          <HistoryButton />
         </div>
         {guestAccessLevel !== PermissionLevel.CREATE && (
           <div className={'text-muted mt-2 small'}>

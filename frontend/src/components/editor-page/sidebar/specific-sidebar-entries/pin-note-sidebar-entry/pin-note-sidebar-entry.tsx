@@ -4,9 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
-import { toggleHistoryEntryPinning } from '../../../../../redux/history/methods'
 import { concatCssClasses } from '../../../../../utils/concat-css-classes'
-import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
 import { SidebarButton } from '../../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../../types'
 import styles from './pin-note-sidebar-entry.module.css'
@@ -24,27 +22,19 @@ import { WaitSpinner } from '../../../../common/wait-spinner/wait-spinner'
 export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
   useTranslation()
   const [loading, setLoading] = useState(false)
-  const noteId = useApplicationState((state) => state.noteDetails?.id)
-  const history = useApplicationState((state) => state.history)
-  const { showErrorNotification } = useUiNotifications()
+  const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
 
   const isPinned = useMemo(() => {
-    const entry = history.find((entry) => entry.identifier === noteId)
-    if (!entry) {
-      return false
-    }
-    return entry.pinStatus
-  }, [history, noteId])
+    // TODO Fix this when implementing the explore page
+    return false
+  }, [])
 
   const onPinClicked = useCallback(() => {
-    if (!noteId) {
+    if (!noteAlias) {
       return
     }
     setLoading(true)
-    toggleHistoryEntryPinning(noteId)
-      .catch(showErrorNotification('landing.history.error.updateEntry.text'))
-      .finally(() => setLoading(false))
-  }, [noteId, setLoading, showErrorNotification])
+  }, [noteAlias, setLoading])
 
   if (loading) {
     return (
