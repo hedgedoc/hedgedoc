@@ -13,7 +13,7 @@ import { useMemo } from 'react'
  * @return True, if the current user is owner.
  */
 export const useIsOwner = (): boolean => {
-  const me: string | undefined = useApplicationState((state) => state.user?.username)
+  const me: string | null | undefined = useApplicationState((state) => state.user?.username)
   const permissions = useApplicationState((state) => state.noteDetails?.permissions)
 
   return useMemo(() => (permissions === undefined ? false : userIsOwner(permissions, me)), [permissions, me])

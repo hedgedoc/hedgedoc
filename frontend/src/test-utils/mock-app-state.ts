@@ -34,7 +34,6 @@ export const mockAppState = (state?: DeepPartial<ApplicationState>) => {
         ...initialStateEditorConfig,
         ...state?.editorConfig
       },
-      history: [], // Yes this allows no mocking and is therefore technically not correct, but the type is difficult to fix and we will remove it soon anyway.
       noteDetails: {
         ...initialStateNoteDetails,
         ...state?.noteDetails

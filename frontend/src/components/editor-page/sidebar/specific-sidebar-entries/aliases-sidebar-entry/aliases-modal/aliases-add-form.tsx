@@ -24,24 +24,24 @@ const validAliasRegex = /^[a-z0-9_-]*$/
  */
 export const AliasesAddForm: React.FC = () => {
   const { showErrorNotification } = useUiNotifications()
-  const noteId = useApplicationState((state) => state.noteDetails?.id)
+  const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const isOwner = useIsOwner()
   const [newAlias, setNewAlias] = useState('')
 
   const onAddAlias = useCallback(
     (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault()
-      if (noteId === undefined) {
+      if (noteAlias === undefined) {
         return
       }
-      addAlias(noteId, newAlias)
+      addAlias(noteAlias, newAlias)
         .then(updateMetadata)
         .catch(showErrorNotification('editor.modal.aliases.errorAddingAlias'))
         .finally(() => {
           setNewAlias('')
         })
     },
-    [noteId, newAlias, setNewAlias, showErrorNotification]
+    [noteAlias, newAlias, setNewAlias, showErrorNotification]
   )
 
   const onNewAliasInputChange = useOnInputChange(setNewAlias)

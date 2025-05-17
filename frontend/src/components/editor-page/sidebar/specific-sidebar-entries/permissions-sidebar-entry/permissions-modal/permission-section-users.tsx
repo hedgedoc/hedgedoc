@@ -21,7 +21,7 @@ import { Trans, useTranslation } from 'react-i18next'
 export const PermissionSectionUsers: React.FC<PermissionDisabledProps> = ({ disabled }) => {
   useTranslation()
   const userPermissions = useApplicationState((state) => state.noteDetails?.permissions.sharedToUsers)
-  const noteId = useApplicationState((state) => state.noteDetails?.id)
+  const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const { showErrorNotification } = useUiNotifications()
 
   const userEntries = useMemo(() => {
@@ -35,16 +35,16 @@ export const PermissionSectionUsers: React.FC<PermissionDisabledProps> = ({ disa
 
   const onAddEntry = useCallback(
     (username: string) => {
-      if (!noteId) {
+      if (!noteAlias) {
         return
       }
-      setUserPermission(noteId, username, false)
+      setUserPermission(noteAlias, username, false)
         .then((updatedPermissions) => {
           setNotePermissionsFromServer(updatedPermissions)
         })
         .catch(showErrorNotification('editor.modal.permissions.error'))
     },
-    [noteId, showErrorNotification]
+    [noteAlias, showErrorNotification]
   )
 
   return (

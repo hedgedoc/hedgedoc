@@ -13,7 +13,7 @@ import { useMemo } from 'react'
  * @return True, if the current user is allowed to write.
  */
 export const useMayEdit = (): boolean => {
-  const me: string | undefined = useApplicationState((state) => state.user?.username)
+  const me: string | undefined | null = useApplicationState((state) => state.user?.username)
   const permissions = useApplicationState((state) => state.noteDetails?.permissions)
 
   return useMemo(() => (!permissions ? false : userCanEdit(permissions, me)), [permissions, me])

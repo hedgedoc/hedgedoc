@@ -34,14 +34,7 @@ describe('build state from set note data from server', () => {
       metadata: {
         primaryAlias: 'alias',
         version: 5678,
-        aliases: [
-          {
-            noteId: 'id',
-            primaryAlias: true,
-            name: 'alias'
-          }
-        ],
-        id: 'id',
+        aliases: ['alias'],
         createdAt: '2012-05-25T09:08:34.123',
         description: 'description',
         editedBy: ['editedBy'],
@@ -60,7 +53,6 @@ describe('build state from set note data from server', () => {
             }
           ]
         },
-        viewCount: 987,
         tags: ['tag'],
         title: 'title',
         updatedAt: '2020-05-25T09:08:34.123',
@@ -107,18 +99,10 @@ describe('build state from set note data from server', () => {
       },
       firstHeading: '',
       rawFrontmatter: '',
-      id: 'id',
       createdAt: DateTime.fromISO('2012-05-25T09:08:34.123').toSeconds(),
       updatedAt: DateTime.fromISO('2020-05-25T09:08:34.123').toSeconds(),
       lastUpdatedBy: 'updateusername',
-      viewCount: 987,
-      aliases: [
-        {
-          name: 'alias',
-          noteId: 'id',
-          primaryAlias: true
-        }
-      ],
+      aliases: ['alias'],
       primaryAlias: 'alias',
       version: 5678,
       editedBy: ['editedBy'],

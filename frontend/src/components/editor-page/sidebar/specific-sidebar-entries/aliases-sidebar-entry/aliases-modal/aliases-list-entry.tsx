@@ -15,10 +15,10 @@ import { Badge } from 'react-bootstrap'
 import { Button } from 'react-bootstrap'
 import { Star as IconStar, X as IconX } from 'react-bootstrap-icons'
 import { useTranslation, Trans } from 'react-i18next'
-import type { AliasDto } from '@hedgedoc/commons'
+import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
 
 export interface AliasesListEntryProps {
-  alias: AliasDto
+  alias: string
 }
 
 /**
@@ -29,16 +29,17 @@ export interface AliasesListEntryProps {
 export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => {
   const { t } = useTranslation()
   const { showErrorNotification } = useUiNotifications()
+  const primaryAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const isOwner = useIsOwner()
 
   const onRemoveClick = useCallback(() => {
-    deleteAlias(alias.name)
+    deleteAlias(alias)
       .then(updateMetadata)
       .catch(showErrorNotification(t('editor.modal.aliases.errorRemovingAlias')))
   }, [alias, t, showErrorNotification])
 
   const onMakePrimaryClick = useCallback(() => {
-    markAliasAsPrimary(alias.name)
+    markAliasAsPrimary(alias)
       .then(updateMetadata)
       .catch(showErrorNotification(t('editor.modal.aliases.errorMakingPrimary')))
   }, [alias, t, showErrorNotification])
@@ -50,15 +51,15 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
   return (
     <li className={'list-group-item d-flex flex-row justify-content-between align-items-center'}>
       <div>
-        {alias.name}
-        {alias.primaryAlias && (
+        {alias}
+        {alias === primaryAlias && (
           <Badge bg='secondary' className={'ms-2'} title={isPrimaryText} {...testId('aliasPrimaryBadge')}>
             <Trans i18nKey={'editor.modal.aliases.primaryLabel'}></Trans>
           </Badge>
         )}
       </div>
       <div>
-        {!alias.primaryAlias && (
+        {alias !== primaryAlias && (
           <Button
             className={'me-2'}
             variant='secondary'
