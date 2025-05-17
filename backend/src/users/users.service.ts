@@ -5,17 +5,21 @@
  */
 import {
   AuthProviderType,
+  LoginUserInfoDto,
   REGEX_USERNAME,
   UserInfoDto,
 } from '@hedgedoc/commons';
-import { LoginUserInfoDto } from '@hedgedoc/commons';
+import {
+  FieldNameUser,
+  TableUser,
+  TypeUpdateUser,
+  User,
+} from '@hedgedoc/database';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
 import { v4 as uuidv4 } from 'uuid';
 
-import { FieldNameUser, TableUser, User } from '../database/types';
-import { TypeUpdateUser } from '../database/types/user';
 import { GenericDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { generateRandomName } from '../realtime/realtime-note/random-word-lists/name-randomizer';
@@ -209,11 +213,12 @@ export class UsersService {
     transaction?: Knex,
   ): Promise<boolean> {
     const dbActor = transaction ? transaction : this.knex;
-    const username = await dbActor(TableUser)
+    const usernameResponse = await dbActor(TableUser)
       .select(FieldNameUser.username)
       .where(FieldNameUser.id, userId)
       .first();
-    return username !== null && username !== undefined;
+    const username = usernameResponse?.[FieldNameUser.username] ?? null;
+    return username !== null;
   }
 
   /**

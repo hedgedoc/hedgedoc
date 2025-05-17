@@ -11,25 +11,25 @@
  */
 export interface ApiToken {
   /** The id of the token, a short random ASCII string. Is unique */
-  [FieldNameApiToken.id]: string;
+  [FieldNameApiToken.id]: string
 
   /** The {@link User} whose permissions the token has */
-  [FieldNameApiToken.userId]: number;
+  [FieldNameApiToken.userId]: number
 
   /** The user-defined label for the token, such as "CLI" */
-  [FieldNameApiToken.label]: string;
+  [FieldNameApiToken.label]: string
 
   /** Hashed version of the token's secret */
-  [FieldNameApiToken.secretHash]: string;
+  [FieldNameApiToken.secretHash]: string
 
   /** Expiry date of the token */
-  [FieldNameApiToken.validUntil]: Date;
+  [FieldNameApiToken.validUntil]: string
 
   /** Date when the API token was created */
-  [FieldNameApiToken.createdAt]: Date;
+  [FieldNameApiToken.createdAt]: string
 
   /** When the token was last used. When it was never used yet, this field is null */
-  [FieldNameApiToken.lastUsedAt]: Date | null;
+  [FieldNameApiToken.lastUsedAt]: string | null
 }
 
 export enum FieldNameApiToken {
@@ -42,7 +42,24 @@ export enum FieldNameApiToken {
   lastUsedAt = 'last_used_at',
 }
 
-export const TableApiToken = 'api_token';
+export const TableApiToken = 'api_token'
 
-export type TypeInsertApiToken = Omit<ApiToken, FieldNameApiToken.lastUsedAt>;
-export type TypeUpdateApiToken = Pick<ApiToken, FieldNameApiToken.lastUsedAt>;
+type TypeApiTokenDate = Omit<
+  ApiToken,
+  | FieldNameApiToken.validUntil
+  | FieldNameApiToken.createdAt
+  | FieldNameApiToken.lastUsedAt
+> & {
+  [FieldNameApiToken.validUntil]: Date
+  [FieldNameApiToken.createdAt]: Date
+  [FieldNameApiToken.lastUsedAt]: Date | null
+}
+
+export type TypeInsertApiToken = Omit<
+  TypeApiTokenDate,
+  FieldNameApiToken.lastUsedAt
+>
+export type TypeUpdateApiToken = Pick<
+  TypeApiTokenDate,
+  FieldNameApiToken.lastUsedAt
+>

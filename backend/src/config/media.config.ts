@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { MediaBackendType } from '@hedgedoc/commons';
 import { registerAs } from '@nestjs/config';
 import z from 'zod';
 
-import { BackendType } from '../media/backends/backend-type.enum';
 import { parseOptionalBoolean } from './utils';
 import {
   buildErrorMessage,
@@ -14,7 +14,7 @@ import {
 } from './zod-error-message';
 
 const azureSchema = z.object({
-  use: z.literal(BackendType.AZURE),
+  use: z.literal(MediaBackendType.AZURE),
   azure: z.object({
     connectionString: z
       .string()
@@ -24,21 +24,21 @@ const azureSchema = z.object({
 });
 
 const filesystemSchema = z.object({
-  use: z.literal(BackendType.FILESYSTEM),
+  use: z.literal(MediaBackendType.FILESYSTEM),
   filesystem: z.object({
     uploadPath: z.string().describe('HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH'),
   }),
 });
 
 const imgurSchema = z.object({
-  use: z.literal(BackendType.IMGUR),
+  use: z.literal(MediaBackendType.IMGUR),
   imgur: z.object({
     clientId: z.string().describe('HD_MEDIA_BACKEND_IMGUR_CLIENT_ID'),
   }),
 });
 
 const s3Schema = z.object({
-  use: z.literal(BackendType.S3),
+  use: z.literal(MediaBackendType.S3),
   s3: z.object({
     accessKeyId: z.string().describe('HD_MEDIA_BACKEND_S3_ACCESS_KEY'),
     secretAccessKey: z.string().describe('HD_MEDIA_BACKEND_S3_SECRET_KEY'),
@@ -53,7 +53,7 @@ const s3Schema = z.object({
 });
 
 const webdavSchema = z.object({
-  use: z.literal(BackendType.WEBDAV),
+  use: z.literal(MediaBackendType.WEBDAV),
   webdav: z.object({
     connectionString: z
       .string()

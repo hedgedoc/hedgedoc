@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { FieldNameUser } from '@hedgedoc/database';
 import {
   CanActivate,
   ExecutionContext,
@@ -14,7 +15,6 @@ import { Reflector } from '@nestjs/core';
 
 import { extractNoteIdFromRequest } from '../api/utils/extract-note-id-from-request';
 import { CompleteRequest } from '../api/utils/request.type';
-import { FieldNameUser } from '../database/types';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { NoteService } from '../notes/note.service';
 import { UsersService } from '../users/users.service';

@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { AuthProviderType } from '@hedgedoc/commons';
-import { Knex } from 'knex';
-
-import { hashPassword } from '../../utils/password';
 import {
   FieldNameIdentity,
   FieldNameUser,
   TableIdentity,
   TableUser,
-} from '../types';
+} from '@hedgedoc/database';
+import { Knex } from 'knex';
+
+import { hashPassword } from '../../utils/password';
 
 export async function seed(knex: Knex): Promise<void> {
   // Clear tables beforehand

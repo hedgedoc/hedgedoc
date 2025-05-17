@@ -8,18 +8,19 @@ import {
   PendingUserConfirmationDto,
   PendingUserInfoDto,
 } from '@hedgedoc/commons';
-import { Inject, Injectable } from '@nestjs/common';
-import { Knex } from 'knex';
-import { InjectConnection } from 'nest-knexjs';
-
-import AuthConfiguration, { AuthConfig } from '../config/auth.config';
 import {
   FieldNameIdentity,
   FieldNameUser,
   Identity,
   TableIdentity,
+  TypeInsertIdentity,
   User,
-} from '../database/types';
+} from '@hedgedoc/database';
+import { Inject, Injectable } from '@nestjs/common';
+import { Knex } from 'knex';
+import { InjectConnection } from 'nest-knexjs';
+
+import AuthConfiguration, { AuthConfig } from '../config/auth.config';
 import { NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { UsersService } from '../users/users.service';
@@ -52,7 +53,7 @@ export class IdentityService {
   /**
    * Retrieve an identity from the information received from an auth provider.
    *
-   * @param userId - the userId of the wanted identity
+   * @param authProviderUserId - the userId of the wanted identity
    * @param authProviderType - the providerType of the wanted identity
    * @param authProviderIdentifier - optional name of the provider if multiple exist
    * @return
@@ -96,15 +97,12 @@ export class IdentityService {
     transaction?: Knex,
   ): Promise<void> {
     const dbActor = transaction ?? this.knex;
-    const date = new Date();
-    const identity: Identity = {
+    const identity: TypeInsertIdentity = {
       [FieldNameIdentity.userId]: userId,
       [FieldNameIdentity.providerType]: authProviderType,
       [FieldNameIdentity.providerIdentifier]: authProviderIdentifier,
       [FieldNameIdentity.providerUserId]: authProviderUserId,
       [FieldNameIdentity.passwordHash]: passwordHash ?? null,
-      [FieldNameIdentity.createdAt]: date,
-      [FieldNameIdentity.updatedAt]: date,
     };
     await dbActor(TableIdentity).insert(identity);
   }

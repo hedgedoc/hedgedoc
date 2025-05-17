@@ -4,11 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { NoteType } from '@hedgedoc/commons';
-import { createPatch } from 'diff';
-import { readFileSync } from 'fs';
-import { Knex } from 'knex';
-
-import { extractRevisionMetadataFromContent } from '../../revisions/utils/extract-revision-metadata-from-content';
 import {
   FieldNameAlias,
   FieldNameAuthorshipInfo,
@@ -24,7 +19,12 @@ import {
   TableNoteUserPermission,
   TableRevision,
   TableRevisionTag,
-} from '../types';
+} from '@hedgedoc/database';
+import { createPatch } from 'diff';
+import { readFileSync } from 'fs';
+import { Knex } from 'knex';
+
+import { extractRevisionMetadataFromContent } from '../../revisions/utils/extract-revision-metadata-from-content';
 
 export async function seed(knex: Knex): Promise<void> {
   // Clear tables beforehand
@@ -160,18 +160,21 @@ export async function seed(knex: Knex): Promise<void> {
       [FieldNameAuthorshipInfo.authorId]: 1,
       [FieldNameAuthorshipInfo.startPosition]: 0,
       [FieldNameAuthorshipInfo.endPosition]: guestNoteContent.length,
+      [FieldNameAuthorshipInfo.createdAt]: new Date(),
     },
     {
       [FieldNameAuthorshipInfo.revisionUuid]: userNoteRevisionUuid,
       [FieldNameAuthorshipInfo.authorId]: 2,
       [FieldNameAuthorshipInfo.startPosition]: 0,
       [FieldNameAuthorshipInfo.endPosition]: userNoteContent.length,
+      [FieldNameAuthorshipInfo.createdAt]: new Date(),
     },
     {
       [FieldNameAuthorshipInfo.revisionUuid]: userSlideRevisionUuid,
       [FieldNameAuthorshipInfo.authorId]: 2,
       [FieldNameAuthorshipInfo.startPosition]: 0,
       [FieldNameAuthorshipInfo.endPosition]: userSlideContent.length,
+      [FieldNameAuthorshipInfo.createdAt]: new Date(),
     },
   ]);
   await knex(TableNoteGroupPermission).insert([

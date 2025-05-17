@@ -22,6 +22,14 @@
         "dist/**"
       ]
     },
+    "@hedgedoc/database#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
+    },
     "@hedgedoc/markdown-it-plugins#build": {
       "dependsOn": [
         "^build"

@@ -3,10 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { FieldNameApiToken, TableApiToken } from '@hedgedoc/database';
 import { createHash } from 'crypto';
 import { Knex } from 'knex';
-
-import { FieldNameApiToken, TableApiToken } from '../types';
 
 export async function seed(knex: Knex): Promise<void> {
   // Clear table beforehand

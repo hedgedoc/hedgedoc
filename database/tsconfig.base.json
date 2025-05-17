@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "lib": [
+      "es2022",
+      "dom"
+    ],
+    "declaration": true,
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "declarationMap":true,
+    "sourceMap": true,
+    "typeRoots": ["./types"]
+  },
+  "include": ["./src", "./types"],
+  "exclude": ["./dist", "**/*.test.ts"]
+}

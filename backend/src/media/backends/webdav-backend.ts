@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { MediaBackendType } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
 import { FileTypeResult } from 'file-type';
 import fetch, { Response } from 'node-fetch';
@@ -15,7 +16,6 @@ import mediaConfiguration, {
 import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
-import { BackendType } from './backend-type.enum';
 
 @Injectable()
 export class WebdavBackend implements MediaBackend {
@@ -30,7 +30,7 @@ export class WebdavBackend implements MediaBackend {
   ) {
     this.logger.setContext(WebdavBackend.name);
     // only create the backend if WebDAV is configured
-    if (this.mediaConfig.backend.use !== BackendType.WEBDAV) {
+    if (this.mediaConfig.backend.use !== MediaBackendType.WEBDAV) {
       return;
     }
 

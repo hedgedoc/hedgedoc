@@ -12,13 +12,13 @@
  */
 export interface Alias {
   /** The alias as defined by the user. Is unique.  */
-  [FieldNameAlias.alias]: string;
+  [FieldNameAlias.alias]: string
 
   /** The id of the associated {@link Note}. */
-  [FieldNameAlias.noteId]: number;
+  [FieldNameAlias.noteId]: number
 
   /** Whether the alias is the primary one for the note. */
-  [FieldNameAlias.isPrimary]: boolean;
+  [FieldNameAlias.isPrimary]: boolean
 }
 
 export enum FieldNameAlias {
@@ -27,7 +27,7 @@ export enum FieldNameAlias {
   isPrimary = 'is_primary',
 }
 
-export const TableAlias = 'alias';
+export const TableAlias = 'alias'
 
-export type TypeInsertAlias = Alias;
-export type TypeUpdateAlias = Pick<Alias, FieldNameAlias.isPrimary>;
+export type TypeInsertAlias = Alias
+export type TypeUpdateAlias = Pick<Alias, FieldNameAlias.isPrimary>

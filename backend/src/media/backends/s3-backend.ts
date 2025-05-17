@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { MediaBackendType } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
 import { FileTypeResult } from 'file-type';
 import { Client } from 'minio';
@@ -15,7 +16,6 @@ import mediaConfiguration, {
 import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
-import { BackendType } from './backend-type.enum';
 
 @Injectable()
 export class S3Backend implements MediaBackend {
@@ -34,7 +34,7 @@ export class S3Backend implements MediaBackend {
   ) {
     this.logger.setContext(S3Backend.name);
     // only create the backend if s3 is configured
-    if (this.mediaConfig.backend.use !== BackendType.S3) {
+    if (this.mediaConfig.backend.use !== MediaBackendType.S3) {
       return;
     }
     this.config = this.mediaConfig.backend.s3;
