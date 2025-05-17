@@ -1,44 +1,36 @@
-/*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
- *
- * SPDX-License-Identifier: AGPL-3.0-only
- */
+// noinspection ES6PreferShortImport
+
+/* eslint-disable */
 import { AuthProviderType, NoteType, SpecialGroup } from '@hedgedoc/commons';
-import type { Knex } from 'knex';
 
-import { BackendType } from '../../media/backends/backend-type.enum';
+import { FieldNameAlias, TableAlias } from '../types/alias';
+import { FieldNameApiToken, TableApiToken } from '../types/api-token';
 import {
-  FieldNameAlias,
-  FieldNameApiToken,
   FieldNameAuthorshipInfo,
-  FieldNameGroup,
-  FieldNameGroupUser,
-  FieldNameIdentity,
-  FieldNameMediaUpload,
-  FieldNameNote,
-  FieldNameNoteGroupPermission,
-  FieldNameNoteUserPermission,
-  FieldNameRevision,
-  FieldNameRevisionTag,
-  FieldNameUser,
-  FieldNameUserPinnedNote,
-  TableAlias,
-  TableApiToken,
   TableAuthorshipInfo,
-  TableGroup,
-  TableGroupUser,
-  TableIdentity,
-  TableMediaUpload,
-  TableNote,
+} from '../types/authorship-info';
+import { FieldNameGroup, TableGroup } from '../types/group';
+import { FieldNameGroupUser, TableGroupUser } from '../types/group-user';
+import { FieldNameIdentity, TableIdentity } from '../types/identity';
+import { FieldNameMediaUpload, TableMediaUpload } from '../types/media-upload';
+import { FieldNameNote, TableNote } from '../types/note';
+import {
+  FieldNameNoteGroupPermission,
   TableNoteGroupPermission,
+} from '../types/note-group-permission';
+import {
+  FieldNameNoteUserPermission,
   TableNoteUserPermission,
-  TableRevision,
-  TableRevisionTag,
-  TableUser,
+} from '../types/note-user-permission';
+import { FieldNameRevision, TableRevision } from '../types/revision';
+import { FieldNameRevisionTag, TableRevisionTag } from '../types/revision-tag';
+import { FieldNameUser, TableUser } from '../types/user';
+import {
+  FieldNameUserPinnedNote,
   TableUserPinnedNote,
-} from '../types';
+} from '../types/user-pinned-note';
 
-export async function up(knex: Knex): Promise<void> {
+export async function up(knex) {
   // Create the user table first as it's referenced by other tables
   await knex.schema.createTable(TableUser, (table) => {
     table.increments(FieldNameUser.id).primary();
@@ -319,11 +311,12 @@ export async function up(knex: Knex): Promise<void> {
       .enu(
         FieldNameMediaUpload.backendType,
         [
-          BackendType.AZURE,
-          BackendType.FILESYSTEM,
-          BackendType.IMGUR,
-          BackendType.S3,
-          BackendType.WEBDAV,
+          /* We need to use the strings here as this mirgation is js code and can't handle enums */
+          'azure', // BackendType.AZURE
+          'filesystem', //BackendType.FILESYSTEM
+          'imgur', // BackendType.IMGUR
+          's3', // BackendType.S3,
+          'webdav', //BackendType.WEBDAV
         ],
         {
           useNative: true,
@@ -358,7 +351,7 @@ export async function up(knex: Knex): Promise<void> {
   });
 }
 
-export async function down(knex: Knex): Promise<void> {
+export async function down(knex) {
   // Drop tables in reverse order of creation to avoid integer key constraints
   await knex.schema.dropTableIfExists(TableUserPinnedNote);
   await knex.schema.dropTableIfExists(TableMediaUpload);
