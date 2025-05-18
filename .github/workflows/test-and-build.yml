@@ -25,9 +25,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ '20' ] # Are you changing this? Don't forget to update the min. and recommended node version in docs/content/how-to/develop/setup.md!
+        node: [ '22' ] # Are you changing this? Don't forget to update the min. and recommended node version in docs/content/how-to/develop/setup.md!
         include:
-          - node: '20'
+          - node: '22'
             coverage: true
     name: Test and build with NodeJS ${{ matrix.node }}
     steps:
