@@ -6,4 +6,5 @@
 
 export enum DisconnectReason {
   USER_NOT_PERMITTED = 4000,
+  SESSION_NOT_FOUND = 4001,
 }

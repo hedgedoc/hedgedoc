@@ -9,7 +9,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { FrontendConfigService } from '../../../frontend-config/frontend-config.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { OpenApi } from '../../utils/openapi.decorator';
+import { OpenApi } from '../../utils/decorators/openapi.decorator';
 
 @ApiTags('config')
 @Controller('config')

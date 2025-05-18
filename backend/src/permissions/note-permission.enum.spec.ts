@@ -1,32 +1,32 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
-  getNotePermissionDisplayName,
-  NotePermission,
+  getNotePermissionLevelDisplayName,
+  NotePermissionLevel,
 } from './note-permission.enum';
 
 describe('note permission order', () => {
   it('DENY is less than READ', () => {
-    expect(NotePermission.DENY < NotePermission.READ).toBeTruthy();
+    expect(NotePermissionLevel.DENY < NotePermissionLevel.READ).toBeTruthy();
   });
   it('READ is less than WRITE', () => {
-    expect(NotePermission.READ < NotePermission.WRITE).toBeTruthy();
+    expect(NotePermissionLevel.READ < NotePermissionLevel.WRITE).toBeTruthy();
   });
   it('WRITE is less than OWNER', () => {
-    expect(NotePermission.WRITE < NotePermission.OWNER).toBeTruthy();
+    expect(NotePermissionLevel.WRITE < NotePermissionLevel.OWNER).toBeTruthy();
   });
 });
 
 describe('getNotePermissionDisplayName', () => {
   it.each([
-    ['deny', NotePermission.DENY],
-    ['read', NotePermission.READ],
-    ['write', NotePermission.WRITE],
-    ['owner', NotePermission.OWNER],
+    ['deny', NotePermissionLevel.DENY],
+    ['read', NotePermissionLevel.READ],
+    ['write', NotePermissionLevel.WRITE],
+    ['owner', NotePermissionLevel.OWNER],
   ])('displays %s correctly', (displayName, permission) => {
-    expect(getNotePermissionDisplayName(permission)).toBe(displayName);
+    expect(getNotePermissionLevelDisplayName(permission)).toBe(displayName);
   });
 });

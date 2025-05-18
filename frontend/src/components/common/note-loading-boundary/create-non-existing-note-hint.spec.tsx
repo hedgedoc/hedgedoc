@@ -23,7 +23,7 @@ describe('create non existing note hint', () => {
       .mockImplementation(async (markdown, primaryAlias): Promise<NoteDto> => {
         expect(markdown).toBe('')
         expect(primaryAlias).toBe(mockedNoteId)
-        const metadata: NoteMetadataDto = Mock.of<NoteMetadataDto>({ primaryAddress: 'mockedPrimaryAlias' })
+        const metadata: NoteMetadataDto = Mock.of<NoteMetadataDto>({ primaryAlias: 'mockedPrimaryAlias' })
         await new Promise((resolve) => setTimeout(resolve, 100))
         await waitForOtherPromisesToFinish()
         return Mock.of<NoteDto>({ metadata })

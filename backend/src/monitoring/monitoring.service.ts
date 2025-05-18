@@ -6,7 +6,7 @@
 import { ServerStatusDto } from '@hedgedoc/commons';
 import { Injectable } from '@nestjs/common';
 
-import { getServerVersionFromPackageJson } from '../utils/serverVersion';
+import { getServerVersionFromPackageJson } from '../utils/server-version';
 
 @Injectable()
 export class MonitoringService {

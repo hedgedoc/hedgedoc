@@ -14,22 +14,15 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
     metadata: {
       id: 'exampleId',
       version: 2,
-      viewCount: 0,
       updatedAt: '2021-04-24T09:27:51.000Z',
       createdAt: '2021-04-24T09:27:51.000Z',
-      updateUsername: null,
-      primaryAddress: 'features',
+      lastUpdatedBy: null,
+      primaryAlias: 'features',
       editedBy: [],
       title: 'Features',
       tags: ['hedgedoc', 'demo', 'react'],
       description: 'Many features, such wow!',
-      aliases: [
-        {
-          name: 'features',
-          primaryAlias: true,
-          noteId: 'exampleId'
-        }
-      ],
+      aliases: ['features'],
       permissions: {
         owner: 'tilman',
         sharedToUsers: [

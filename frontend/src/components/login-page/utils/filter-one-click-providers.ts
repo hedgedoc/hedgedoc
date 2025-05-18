@@ -5,7 +5,7 @@
  */
 
 import type { AuthProviderDto } from '@hedgedoc/commons'
-import { ProviderType } from '@hedgedoc/commons'
+import { AuthProviderType } from '@hedgedoc/commons'
 
 /**
  * Filters the given auth providers to one-click providers only.
@@ -13,5 +13,5 @@ import { ProviderType } from '@hedgedoc/commons'
  * @return only one click auth providers
  */
 export const filterOneClickProviders = (authProviders: AuthProviderDto[]) => {
-  return authProviders.filter((provider: AuthProviderDto): boolean => provider.type === ProviderType.OIDC)
+  return authProviders.filter((provider: AuthProviderDto): boolean => provider.type === AuthProviderType.OIDC)
 }

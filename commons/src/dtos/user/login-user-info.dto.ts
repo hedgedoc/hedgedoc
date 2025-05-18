@@ -5,14 +5,19 @@
  */
 
 import { z } from 'zod'
-import { ProviderType } from '../auth/index.js'
-import { FullUserInfoSchema } from './full-user-info.dto.js'
+import { AuthProviderType } from '../auth/index.js'
+import { UserInfoSchema } from './user-info.dto.js'
 
-export const LoginUserInfoSchema = FullUserInfoSchema.merge(
+export const LoginUserInfoSchema = UserInfoSchema.merge(
   z.object({
     authProvider: z
-      .nativeEnum(ProviderType)
+      .nativeEnum(AuthProviderType)
       .describe('The type of login provider used for the current session'),
+    email: z
+      .string()
+      .email()
+      .nullable()
+      .describe('The email address of the user if known'),
   }),
 ).describe(
   'Information about the user and their auth method for the current session',

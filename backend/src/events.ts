@@ -16,8 +16,19 @@ export const eventModuleConfig = {
 };
 
 export enum NoteEvent {
-  PERMISSION_CHANGE = 'note.permission_change' /** noteId: The id of the [@link Note], which permissions are changed. **/,
-  DELETION = 'note.deletion' /** noteId: The id of the [@link Note], which is being deleted. **/,
+  /**
+   * Event triggered when a note's permissions are changed.
+   * Payload:
+   *  noteId: The id of the {@link Note}, for which permissions are changed.
+   */
+  PERMISSION_CHANGE = 'note.permission_change',
+
+  /**
+   * Event triggered when a note is deleted
+   * Payload:
+   *   noteId: The id of the {@link Note}, which is being deleted.
+   */
+  DELETION = 'note.deletion',
 }
 
 export interface NoteEventMap extends EventMap {

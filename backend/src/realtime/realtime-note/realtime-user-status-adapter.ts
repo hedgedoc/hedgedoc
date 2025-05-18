@@ -22,6 +22,7 @@ export class RealtimeUserStatusAdapter {
   constructor(
     private readonly username: string | null,
     private readonly displayName: string,
+    private readonly authorStyle: number,
     private collectOtherAdapters: OtherAdapterCollector,
     private messageTransporter: MessageTransporter,
     private acceptCursorUpdateProvider: () => boolean,
@@ -35,9 +36,7 @@ export class RealtimeUserStatusAdapter {
       username: this.username,
       displayName: this.displayName,
       active: true,
-      styleIndex: this.findLeastUsedStyleIndex(
-        this.createStyleIndexToCountMap(),
-      ),
+      styleIndex: this.authorStyle,
       cursor: !this.acceptCursorUpdateProvider()
         ? null
         : {

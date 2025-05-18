@@ -53,9 +53,10 @@ describe('Auth', () => {
         .set('Content-Type', 'application/json')
         .send(JSON.stringify(registrationDto))
         .expect(201);
-      const newUser = await testSetup.userService.getUserByUsername(username, [
-        UserRelationEnum.IDENTITIES,
-      ]);
+      const newUser = await testSetup.userService.getUserDtoByUsername(
+        username,
+        [UserRelationEnum.IDENTITIES],
+      );
       expect(newUser.displayName).toEqual(displayName);
       await expect(newUser.identities).resolves.toHaveLength(1);
       await expect(
@@ -115,7 +116,7 @@ describe('Auth', () => {
         .expect(400);
       expect(response.text).toContain('PasswordTooWeakError');
       await expect(() =>
-        testSetup.userService.getUserByUsername(username, [
+        testSetup.userService.getUserDtoByUsername(username, [
           UserRelationEnum.IDENTITIES,
         ]),
       ).rejects.toThrow(NotInDBError);
