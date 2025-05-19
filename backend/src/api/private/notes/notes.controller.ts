@@ -202,6 +202,7 @@ export class NotesController {
     @RequestNoteId() noteId: number,
     @Param('username') username: NoteUserPermissionEntryDto['username'],
   ): Promise<NotePermissionsDto> {
+    // TODO Fix this removing wrong user permission!
     try {
       await this.permissionService.removeUserPermission(noteId, userId);
       return await this.noteService.toNotePermissionsDto(noteId);
