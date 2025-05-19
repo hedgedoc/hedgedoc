@@ -34,7 +34,7 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   constructor(
     private readonly noteId: number,
     initialTextContent: string,
-    initialYjsState?: ArrayBuffer,
+    initialYjsState?: number[],
   ) {
     super();
     this.logger = new Logger(`${RealtimeNote.name} ${noteId}`);
