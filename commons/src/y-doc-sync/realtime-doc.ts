@@ -16,7 +16,7 @@ import {
 const MARKDOWN_CONTENT_CHANNEL_NAME = 'markdownContent'
 
 export interface RealtimeDocEvents extends EventMap {
-  update: (update: ArrayBuffer, origin: unknown) => void
+  update: (update: number[], origin: unknown) => void
 }
 
 /**
@@ -37,16 +37,26 @@ export class RealtimeDoc extends EventEmitter2<RealtimeDocEvents> {
    * @param initialTextContent the initial text content of the {@link Doc YDoc}
    * @param initialYjsState the initial yjs state. If provided this will be used instead of the text content
    */
-  constructor(initialTextContent?: string, initialYjsState?: ArrayBuffer) {
+  constructor(initialTextContent?: string, initialYjsState?: number[]) {
     super()
-    if (initialYjsState) {
+    console.debug(
+      'Creating new RealtimeDoc',
+      'initialYjsState',
+      initialYjsState,
+      'initialTextContent',
+      initialTextContent,
+    )
+    if (initialYjsState !== undefined) {
+      console.debug('Applying update')
       this.applyUpdate(initialYjsState, this)
-    } else if (initialTextContent) {
+    } else if (initialTextContent !== undefined) {
+      console.debug('Setting initial text content')
       this.getMarkdownContentChannel().insert(0, initialTextContent)
     }
+    console.debug('Setting up listeners')
 
     this.docUpdateListener = (update, origin) => {
-      this.emit('update', update, origin)
+      this.emit('update', Array.from(update), origin)
     }
     this.doc.on('update', this.docUpdateListener)
   }
@@ -77,13 +87,12 @@ export class RealtimeDoc extends EventEmitter2<RealtimeDocEvents> {
    *
    * @param encodedTargetStateVector The current state vector of the other y-doc. If provided the update will contain only the differences.
    */
-  public encodeStateAsUpdate(
-    encodedTargetStateVector?: ArrayBuffer,
-  ): ArrayBuffer {
-    const update = encodedTargetStateVector
-      ? new Uint8Array(encodedTargetStateVector)
-      : undefined
-    return encodeStateAsUpdate(this.doc, update)
+  public encodeStateAsUpdate(encodedTargetStateVector?: number[]): number[] {
+    const update =
+      encodedTargetStateVector !== undefined
+        ? new Uint8Array(encodedTargetStateVector)
+        : undefined
+    return Array.from(encodeStateAsUpdate(this.doc, update))
   }
 
   public destroy(): void {
@@ -97,11 +106,11 @@ export class RealtimeDoc extends EventEmitter2<RealtimeDocEvents> {
    * @param payload The update to apply
    * @param origin A reference that triggered the update
    */
-  public applyUpdate(payload: ArrayBuffer, origin: unknown): void {
+  public applyUpdate(payload: number[], origin: unknown): void {
     applyUpdate(this.doc, new Uint8Array(payload), origin)
   }
 
-  public encodeStateVector(): ArrayBuffer {
-    return encodeStateVector(this.doc)
+  public encodeStateVector(): number[] {
+    return Array.from(encodeStateVector(this.doc))
   }
 }

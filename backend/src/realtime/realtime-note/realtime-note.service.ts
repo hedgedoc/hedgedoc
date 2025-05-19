@@ -49,7 +49,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
         realtimeNote.getRealtimeDoc().getCurrentContent(),
         false,
         undefined,
-        realtimeNote.getRealtimeDoc().encodeStateAsUpdate(),
+        new Uint8Array(realtimeNote.getRealtimeDoc().encodeStateAsUpdate()),
       )
       .then(() => {
         realtimeNote.announceMetadataUpdate();

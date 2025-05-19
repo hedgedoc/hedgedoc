@@ -21,12 +21,12 @@ describe('realtime doc', () => {
   it('restores a yjs state vector update correctly', () => {
     const realtimeDoc = new RealtimeDoc(
       'notTheVectorText',
-      new Uint8Array([
+      [
         1, 1, 221, 208, 165, 230, 3, 0, 4, 1, 15, 109, 97, 114, 107, 100, 111,
         119, 110, 67, 111, 110, 116, 101, 110, 116, 32, 116, 101, 120, 116, 67,
         111, 110, 116, 101, 110, 116, 70, 114, 111, 109, 83, 116, 97, 116, 101,
         86, 101, 99, 116, 111, 114, 85, 112, 100, 97, 116, 101, 0,
-      ]),
+      ],
     )
 
     expect(realtimeDoc.getCurrentContent()).toBe(

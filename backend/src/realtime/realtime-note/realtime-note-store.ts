@@ -31,7 +31,7 @@ export class RealtimeNoteStore {
     const realtimeNote = new RealtimeNote(
       noteId,
       initialTextContent,
-      initialYjsState,
+      initialYjsState ? Array.from(new Uint8Array(initialYjsState)) : undefined,
     );
     realtimeNote.on('destroy', () => {
       this.noteIdToRealtimeNote.delete(noteId);

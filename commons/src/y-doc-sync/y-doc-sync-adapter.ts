@@ -97,11 +97,11 @@ export abstract class YDocSyncAdapter {
     }
   }
 
-  protected applyIncomingUpdatePayload(update: ArrayBuffer): void {
+  protected applyIncomingUpdatePayload(update: number[]): void {
     this.doc.applyUpdate(update, this)
   }
 
-  private distributeDocUpdate(update: ArrayBuffer, origin: unknown): void {
+  private distributeDocUpdate(update: number[], origin: unknown): void {
     if (!this.isSynced() || origin === this) {
       return
     }
