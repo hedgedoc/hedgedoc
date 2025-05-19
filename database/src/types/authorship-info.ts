@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { FieldNameApiToken } from './api-token'
 
 /**
  * The AuthorshipInfo holds the information from where to where one {@link User} has changed a {@link Note}
