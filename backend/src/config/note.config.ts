@@ -60,6 +60,16 @@ const schema = z.object({
 
 export type NoteConfig = z.infer<typeof schema>;
 
+/**
+ * Checks if the configuration for guest access is consistent with the environment variable
+ * HD_PERMISSIONS_DEFAULT_EVERYONE.
+ *
+ * If HD_PERMISSIONS_DEFAULT_EVERYONE is set, it should not conflict with the guestAccess setting.
+ * If guestAccess is DENY, then HD_PERMISSIONS_DEFAULT_EVERYONE should not be set.
+ *
+ * @param config The NoteConfig to check.
+ * @throws Error if the configuration is inconsistent.
+ */
 function checkEveryoneConfigIsConsistent(config: NoteConfig): void {
   const everyoneDefaultSet =
     process.env.HD_PERMISSIONS_DEFAULT_EVERYONE !== undefined;
@@ -70,6 +80,15 @@ function checkEveryoneConfigIsConsistent(config: NoteConfig): void {
   }
 }
 
+/**
+ * Checks if the default permissions for logged-in users are higher than those for guests.
+ *
+ * If the default permissions for 'everyone' are set to a level that is higher than
+ * the default permissions for 'loggedIn', it throws an error.
+ *
+ * @param config The NoteConfig to check.
+ * @throws Error if the default permissions for 'everyone' are higher than those for 'loggedIn'.
+ */
 function checkLoggedInUsersHaveHigherDefaultPermissionsThanGuests(
   config: NoteConfig,
 ): void {
@@ -80,7 +99,7 @@ function checkLoggedInUsersHaveHigherDefaultPermissionsThanGuests(
     getDefaultAccessLevelOrdinal(loggedIn)
   ) {
     throw new Error(
-      `'HD_PERMISSIONS_DEFAULT_EVERYONE' is set to '${everyone}', but 'HD_PERMISSIONS_DEFAULT_LOGGED_IN' is set to '${loggedIn}'. This gives everyone greater permissions than logged-in users which is not allowed.`,
+      `'HD_PERMISSIONS_DEFAULT_EVERYONE' is set to '${everyone}', but 'HD_PERMISSIONS_DEFAULT_LOGGED_IN' is set to '${loggedIn}'. This would give everyone greater permissions than logged-in users, and is not allowed since it doesn't make sense.`,
     );
   }
 }

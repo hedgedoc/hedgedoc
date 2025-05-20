@@ -7,8 +7,6 @@ import { AliasDto } from '@hedgedoc/commons';
 import {
   Alias,
   FieldNameAlias,
-  FieldNameNote,
-  Note,
   TableAlias,
   TypeInsertAlias,
 } from '@hedgedoc/database';
@@ -60,12 +58,12 @@ export class AliasService {
    * @param noteId The id of the note to add the aliases to
    * @param alias The alias to add to the note
    * @param transaction The optional transaction to access the db
-   * @throws {AlreadyInDBError} The alias is already in use.
-   * @throws {ForbiddenIdError} The requested alias is forbidden
+   * @throws AlreadyInDBError The alias is already in use.
+   * @throws ForbiddenIdError The requested alias is forbidden
    */
   async addAlias(
-    noteId: Note[FieldNameNote.id],
-    alias: Alias[FieldNameAlias.alias],
+    noteId: number,
+    alias: string,
     transaction?: Knex,
   ): Promise<void> {
     const dbActor: Knex = transaction ? transaction : this.knex;
@@ -89,14 +87,11 @@ export class AliasService {
    *
    * @param noteId The id of the note to change the primary alias
    * @param alias The alias to be the new primary alias of the note
-   * @throws {ForbiddenIdError} when the requested alias is forbidden
-   * @throws {NotInDBError} when the alias is not assigned to this note
-   * @throws {GenericDBError} when the database has an inconsistent state
+   * @throws ForbiddenIdError when the requested alias is forbidden
+   * @throws NotInDBError when the alias is not assigned to this note
+   * @throws GenericDBError when the database has an inconsistent state
    */
-  async makeAliasPrimary(
-    noteId: Note[FieldNameNote.id],
-    alias: Alias[FieldNameAlias.alias],
-  ): Promise<void> {
+  async makeAliasPrimary(noteId: number, alias: string): Promise<void> {
     await this.knex.transaction(async (transaction) => {
       // First, set all existing aliases to not primary
       const numberOfUpdatedEntries = await transaction(TableAlias)
@@ -106,7 +101,7 @@ export class AliasService {
         .where(FieldNameAlias.noteId, noteId);
       if (numberOfUpdatedEntries === 0) {
         throw new GenericDBError(
-          `The note does not exist or has no primary alias. This should never happen`,
+          'The note does not exist or has no primary alias. This should never happen',
           this.logger.getContext(),
           'makeAliasPrimary',
         );
@@ -130,12 +125,12 @@ export class AliasService {
 
   /**
    * Removes the specified alias from the note
-   * This method only does not require the noteId since it can be obtained from the alias prior to deletion
+   * This method only requires the alias since it can obtain the noteId from the alias prior to deletion
    *
    * @param alias The alias to remove from the note
-   * @throws {ForbiddenIdError} The requested alias is forbidden
-   * @throws {NotInDBError} The alias is not assigned to this note
-   * @throws {PrimaryAliasDeletionForbiddenError} The primary alias cannot be deleted
+   * @throws ForbiddenIdError The requested alias is forbidden
+   * @throws NotInDBError The alias is not assigned to this note
+   * @throws PrimaryAliasDeletionForbiddenError The primary alias cannot be deleted
    */
   async removeAlias(alias: string): Promise<void> {
     await this.knex.transaction(async (transaction) => {
@@ -172,13 +167,14 @@ export class AliasService {
    * Gets the primary alias of the note specified by the noteId
    *
    * @param noteId The id of the note to get the primary alias of
+   * @param transaction The optional transaction to access the db
    * @returns The primary alias of the note
-   * @throws {NotInDBError} The note has no primary alias which should mean that the note does not exist
+   * @throws NotInDBError The note has no primary alias which should mean that the note does not exist
    */
   async getPrimaryAliasByNoteId(
     noteId: number,
     transaction?: Knex,
-  ): Promise<Alias[FieldNameAlias.alias]> {
+  ): Promise<string> {
     const dbActor = transaction ?? this.knex;
     const primaryAlias = await dbActor(TableAlias)
       .select(FieldNameAlias.alias)
@@ -187,7 +183,7 @@ export class AliasService {
       .first();
     if (primaryAlias === undefined) {
       throw new NotInDBError(
-        `The noteId '${noteId}' has no primary alias.`,
+        'The note does not exist or has no primary alias. This should never happen',
         this.logger.getContext(),
         'getPrimaryAliasByNoteId',
       );
@@ -198,9 +194,10 @@ export class AliasService {
   /**
    * Gets all aliases of the note specified by the noteId
    *
-   * @param noteId The id of the note to get the primary alias of
-   * @returns The primary alias of the note
-   * @throws {NotInDBError} The note has no primary alias which should mean that the note does not exist
+   * @param noteId The id of the note to get the list of aliases for
+   * @param transaction The optional transaction to access the db
+   * @returns The list of aliases for the note
+   * @throws NotInDBError The note with the specified id does not exist
    */
   async getAllAliases(
     noteId: number,
@@ -212,7 +209,7 @@ export class AliasService {
       .where(FieldNameAlias.noteId, noteId);
     if (aliases.length === 0) {
       throw new NotInDBError(
-        `The noteId '${noteId}' has no aliases. This should never happen.`,
+        'The note does not exist or has no aliases. This should never happen',
         this.logger.getContext(),
         'getAllAliases',
       );
@@ -226,11 +223,11 @@ export class AliasService {
    *
    * @param alias The alias to check
    * @param transaction The optional transaction to access the db
-   * @throws {ForbiddenIdError} The requested alias is not available
-   * @throws {AlreadyInDBError} The requested alias already exists
+   * @throws ForbiddenIdError The requested alias is not available
+   * @throws AlreadyInDBError The requested alias already exists
    */
   async ensureAliasIsAvailable(
-    alias: Alias[FieldNameAlias.alias],
+    alias: string,
     transaction?: Knex,
   ): Promise<void> {
     if (this.isAliasForbidden(alias)) {
@@ -243,7 +240,7 @@ export class AliasService {
     const isUsed = await this.isAliasUsed(alias, transaction);
     if (isUsed) {
       throw new AlreadyInDBError(
-        `A note with the id or alias '${alias}' already exists.`,
+        `A note with the alias '${alias}' already exists.`,
         this.logger.getContext(),
         'ensureAliasIsAvailable',
       );
@@ -254,17 +251,10 @@ export class AliasService {
    * Checks if the provided alias is forbidden by configuration
    *
    * @param alias The alias to check
-   * @return {boolean} true if the alias is forbidden, false otherwise
+   * @returns true if the alias is forbidden, false otherwise
    */
-  isAliasForbidden(alias: Alias[FieldNameAlias.alias]): boolean {
-    const forbidden = this.noteConfig.forbiddenNoteIds.includes(alias);
-    if (forbidden) {
-      this.logger.warn(
-        `A note with the alias '${alias}' is forbidden by the administrator.`,
-        'isAliasForbidden',
-      );
-    }
-    return forbidden;
+  isAliasForbidden(alias: string): boolean {
+    return this.noteConfig.forbiddenNoteIds.includes(alias);
   }
 
   /**
@@ -272,19 +262,16 @@ export class AliasService {
    *
    * @param alias The alias to check
    * @param transaction The optional transaction to access the db
-   * @return {boolean} true if the id or alias is already used, false otherwise
+   * @returns true if the alias is already used, false otherwise
    */
-  async isAliasUsed(
-    alias: Alias[FieldNameAlias.alias],
-    transaction?: Knex,
-  ): Promise<boolean> {
+  async isAliasUsed(alias: string, transaction?: Knex): Promise<boolean> {
     const dbActor = transaction ? transaction : this.knex;
     const result = await dbActor(TableAlias)
       .select(FieldNameAlias.alias)
       .where(FieldNameAlias.alias, alias);
     if (result.length === 1) {
       this.logger.log(
-        `A note with the id or alias '${alias}' already exists.`,
+        `A note with the alias '${alias}' already exists.`,
         'isAliasUsed',
       );
       return true;
@@ -293,11 +280,11 @@ export class AliasService {
   }
 
   /**
-   * Build the AliasDto from a note.
+   * Returns alias information in the AliasDto format
+   *
    * @param alias The alias to use
-   * @param isPrimaryAlias If the alias is the primary alias.
-   * @throws {NotInDBError} The specified alias does not exist
-   * @return {AliasDto} The built AliasDto
+   * @param isPrimaryAlias Whether the alias is the primary alias.
+   * @returns The built AliasDto
    */
   toAliasDto(alias: string, isPrimaryAlias: boolean): AliasDto {
     return {

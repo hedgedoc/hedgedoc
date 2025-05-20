@@ -13,7 +13,7 @@ let versionCache: ServerVersionDto | undefined = undefined;
 /**
  * Reads the HedgeDoc version from the root package.json. This is done only once per run.
  *
- * @return {Promise<ServerVersionDto>} A Promise that contains the parsed server version.
+ * @returns {Promise<ServerVersionDto>} A Promise that contains the parsed server version.
  * @throws {Error} if the package.json couldn't be found or doesn't contain a correct version.
  */
 export async function getServerVersionFromPackageJson(): Promise<ServerVersionDto> {

@@ -86,6 +86,9 @@ const mapOfHedgeDocErrorsToHttpErrors: Map<string, HttpExceptionConstructor> =
   ]);
 
 @Catch()
+/**
+ * Filters all errors that are not instances of HttpException and maps them to the appropriate HTTP error
+ */
 export class ErrorExceptionMapping extends BaseExceptionFilter<Error> {
   private readonly loggerService: ConsoleLoggerService;
   constructor(logger: ConsoleLoggerService, applicationRef?: HttpServer) {
@@ -97,6 +100,14 @@ export class ErrorExceptionMapping extends BaseExceptionFilter<Error> {
     super.catch(this.transformError(error), host);
   }
 
+  /**
+   * Transforms an error into an HttpException if it is a HedgeDoc error.
+   * Logs the error message to the console if it is an ErrorWithContextDetails.
+   * If the error is not a HedgeDoc error, it returns the original error.
+   *
+   * @param error The error to transform
+   * @returns An HttpException if the error is a HedgeDoc error, otherwise the original error
+   */
   private transformError(error: Error): Error {
     const httpExceptionConstructor = mapOfHedgeDocErrorsToHttpErrors.get(
       error.name,

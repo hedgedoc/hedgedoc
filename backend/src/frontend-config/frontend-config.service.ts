@@ -40,6 +40,11 @@ export class FrontendConfigService {
     this.logger.setContext(FrontendConfigService.name);
   }
 
+  /**
+   * Returns the config options for the frontend
+   *
+   * @returns A frontend config DTO
+   */
   async getFrontendConfig(): Promise<FrontendConfigDto> {
     return {
       guestAccess: this.noteConfig.guestAccess,
@@ -58,6 +63,11 @@ export class FrontendConfigService {
     };
   }
 
+  /**
+   * Reads the auth providers from the config and returns them
+   *
+   * @returns An array of auth provider DTOs
+   */
   private getAuthProviders(): AuthProviderDto[] {
     const providers: AuthProviderDto[] = [];
     if (this.authConfig.local.enableLogin) {
@@ -84,6 +94,11 @@ export class FrontendConfigService {
     return providers;
   }
 
+  /**
+   * Reads the branding from the config and returns it
+   *
+   * @returns A branding DTO
+   */
   private getBranding(): BrandingDto {
     return {
       logo: this.customizationConfig.branding.customLogo
@@ -93,6 +108,11 @@ export class FrontendConfigService {
     };
   }
 
+  /**
+   * Reads the special URLs like imprint or privacy policy from the config and returns them
+   *
+   * @returns A special URL DTO
+   */
   private getSpecialUrls(): SpecialUrlDto {
     return {
       imprint: this.customizationConfig.specialUrls.imprint

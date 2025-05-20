@@ -32,7 +32,7 @@ const LDAP_ERROR_MAP: Record<string, string> = {
   '775': 'User account locked',
   default: 'Invalid username/password',
   /* eslint-enable @typescript-eslint/naming-convention */
-};
+} as const;
 
 @Injectable()
 export class LdapService {
@@ -45,15 +45,14 @@ export class LdapService {
   }
 
   /**
-   * Try to log in the user with the given credentials.
+   * Tries to log in the user with the given credentials and returns the user info on success
    *
-   * @param ldapConfig {LdapConfig} - the ldap config to use
-   * @param username {string} - the username to log in with
-   * @param password {string} - the password to log in with
+   * @param ldapConfig The ldap config to use
+   * @param username The user-provided username
+   * @param password The user-provided password
    * @returns The user info of the user that logged in
-   * @throws {UnauthorizedException} - the user has given us incorrect credentials
-   * @throws {InternalServerErrorException} - if there are errors that we can't assign to wrong credentials
-   * @private
+   * @throws UnauthorizedException if the user has given us incorrect credentials
+   * @throws InternalServerErrorException if there are errors that we can't assign to wrong credentials
    */
   getUserInfoFromLdap(
     ldapConfig: LdapConfig,
@@ -119,11 +118,11 @@ export class LdapService {
   }
 
   /**
-   * Get and return the correct ldap config from the list of available configs.
-   * @param {string}  ldapIdentifier the identifier for the ldap config to be used
-   * @returns {LdapConfig} - the ldap config with the given identifier
-   * @throws {NotFoundException} - there is no ldap config with the given identifier
-   * @private
+   * Fetches the correct LDAP config from the list of available configs
+   *
+   * @param ldapIdentifier The identifier for the LDAP config to be used
+   * @returns The LDAP config with the given identifier
+   * @throws NotFoundException if there is no LDAP config with the given identifier
    */
   getLdapConfig(ldapIdentifier: string): LdapConfig {
     const ldapConfig = this.authConfig.ldap.find(
@@ -131,19 +130,22 @@ export class LdapService {
     );
     if (!ldapConfig) {
       this.logger.warn(
-        `The LDAP Config '${ldapIdentifier}' was requested, but doesn't exist`,
+        `The LDAP config '${ldapIdentifier}' was requested, but doesn't exist`,
       );
-      throw new NotFoundException(`There is no ldapConfig '${ldapIdentifier}'`);
+      throw new NotFoundException(
+        `There is no LDAP config '${ldapIdentifier}'`,
+      );
     }
     return ldapConfig;
   }
 
   /**
-   * This method transforms the ldap error codes we receive into correct errors.
+   * This method transforms the LDAP error codes we receive into correct errors.
    * It's very much inspired by https://github.com/vesse/passport-ldapauth/blob/b58c60000a7cc62165b112274b80c654adf59fff/lib/passport-ldapauth/strategy.js#L261
-   * @returns {HttpException} - the matching HTTP exception to throw to the client
-   * @throws {UnauthorizedException} if error indicates that the user is not allowed to log in
-   * @throws {InternalServerErrorException} in every other case
+   *
+   * @returns The matching HTTP exception to throw to the client
+   * @throws UnauthorizedException if the error indicates that the user is not allowed to log in
+   * @throws InternalServerErrorException in every other case
    */
   private getLdapException(
     username: string,

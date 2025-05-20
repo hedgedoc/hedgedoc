@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,7 +9,7 @@ import { IncomingMessage } from 'http';
  * Extracts the note id from the url of the given request.
  *
  * @param request The request whose URL should be extracted
- * @return The extracted note id
+ * @returns The extracted note id
  * @throws Error if the given string isn't a valid realtime URL path
  */
 export function extractNoteAliasFromRequestUrl(

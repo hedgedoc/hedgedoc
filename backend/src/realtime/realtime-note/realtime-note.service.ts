@@ -61,7 +61,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
    * Creates or reuses a {@link RealtimeNote} that is handling the real time editing of the {@link Note} which is identified by the given note id.
    * @param noteId The {@link Note} for which a {@link RealtimeNote realtime note} should be retrieved.
    * @throws NotInDBError if note doesn't exist or has no revisions.
-   * @return A {@link RealtimeNote} that is linked to the given note.
+   * @returns A {@link RealtimeNote} that is linked to the given note.
    */
   public async getOrCreateRealtimeNote(noteId: number): Promise<RealtimeNote> {
     return (
@@ -75,7 +75,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
    *
    * @param noteId The note for which the realtime note should be created
    * @throws NotInDBError if note doesn't exist or has no revisions.
-   * @return The created realtime note
+   * @returns The created realtime note
    */
   private async createNewRealtimeNote(noteId: number): Promise<RealtimeNote> {
     const lastRevision = await this.revisionsService.getLatestRevision(noteId);

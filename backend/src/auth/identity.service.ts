@@ -8,14 +8,7 @@ import {
   PendingUserConfirmationDto,
   PendingUserInfoDto,
 } from '@hedgedoc/commons';
-import {
-  FieldNameIdentity,
-  FieldNameUser,
-  Identity,
-  TableIdentity,
-  TypeInsertIdentity,
-  User,
-} from '@hedgedoc/database';
+import { FieldNameIdentity, Identity, TableIdentity } from '@hedgedoc/database';
 import { Inject, Injectable } from '@nestjs/common';
 import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
@@ -44,7 +37,7 @@ export class IdentityService {
    * Determines if the identity should be updated
    *
    * @param authProviderIdentifier The identifier of the auth source
-   * @return true if the authProviderIdentifier is the sync source, false otherwise
+   * @returns true if the authProviderIdentifier is the sync source, false otherwise
    */
   mayUpdateIdentity(authProviderIdentifier: string): boolean {
     return this.authConfig.common.syncSource === authProviderIdentifier;
@@ -53,10 +46,11 @@ export class IdentityService {
   /**
    * Retrieve an identity from the information received from an auth provider.
    *
-   * @param authProviderUserId - the userId of the wanted identity
-   * @param authProviderType - the providerType of the wanted identity
-   * @param authProviderIdentifier - optional name of the provider if multiple exist
-   * @return
+   * @param authProviderUserId the userId of the wanted identity
+   * @param authProviderType the providerType of the wanted identity
+   * @param authProviderIdentifier optional name of the provider if multiple exist
+   * @returns The found identity
+   * @throws NotInDBError if the identity is not found
    */
   async getIdentityFromUserIdAndProviderType(
     authProviderUserId: string,
@@ -78,15 +72,14 @@ export class IdentityService {
   }
 
   /**
-   * Creates a new generic identity.
+   * Creates a new generic identity
    *
-   * @param userId - the user the identity should be added to
-   * @param authProviderType - the providerType of the identity
-   * @param authProviderIdentifier - the providerIdentifier of the identity
-   * @param authProviderUserId - the userId the identity should have
-   * @param passwordHash - the password hash if the identiy uses that.
-   * @param transaction - the database transaction to use if any
-   * @return the new local identity
+   * @param userId the user the identity should be added to
+   * @param authProviderType the providerType of the identity
+   * @param authProviderIdentifier the providerIdentifier of the identity
+   * @param authProviderUserId the userId the identity should have
+   * @param passwordHash the password hash if the identity uses that
+   * @param transaction the database transaction to use if any
    */
   async createIdentity(
     userId: number,
@@ -97,28 +90,27 @@ export class IdentityService {
     transaction?: Knex,
   ): Promise<void> {
     const dbActor = transaction ?? this.knex;
-    const identity: TypeInsertIdentity = {
+    await dbActor(TableIdentity).insert({
       [FieldNameIdentity.userId]: userId,
       [FieldNameIdentity.providerType]: authProviderType,
       [FieldNameIdentity.providerIdentifier]: authProviderIdentifier,
       [FieldNameIdentity.providerUserId]: authProviderUserId,
       [FieldNameIdentity.passwordHash]: passwordHash ?? null,
-    };
-    await dbActor(TableIdentity).insert(identity);
+    });
   }
 
   /**
-   * Creates a new user with the given user data.
+   * Creates a new user with the given user data
    *
    * @param authProviderType The type of the auth provider
    * @param authProviderIdentifier The identifier of the auth provider
    * @param authProviderUserId The id of the user in the auth system
    * @param username The new username
-   * @param displayName The dispay name of the new user
+   * @param displayName The display name of the new user
    * @param email The email address of the new user
    * @param photoUrl The URL to the new user's profile picture
    * @param passwordHash The optional password hash, only required for local identities
-   * @return The id of the newly created user
+   * @returns The id of the newly created user
    */
   async createUserWithIdentity(
     authProviderType: AuthProviderType,
@@ -129,7 +121,7 @@ export class IdentityService {
     email: string | null,
     photoUrl: string | null,
     passwordHash?: string,
-  ): Promise<User[FieldNameUser.id]> {
+  ): Promise<number> {
     return await this.knex.transaction(async (transaction) => {
       const userId = await this.usersService.createUser(
         username,
@@ -151,14 +143,14 @@ export class IdentityService {
   }
 
   /**
-   * Create a user with identity from pending user confirmation data.
+   * Create a user with identity from pending user confirmation data
    *
    * @param sessionUserData The data we got from the authProvider itself
    * @param pendingUserConfirmationData The data the user entered while confirming their account
    * @param authProviderType The type of the auth provider
    * @param authProviderIdentifier The identifier of the auth provider
    * @param authProviderUserId The id of the user in the auth system
-   * @return The id of the newly created user
+   * @returns The id of the newly created user
    */
   async createUserWithIdentityFromPendingUserConfirmation(
     sessionUserData: PendingUserInfoDto,
@@ -166,7 +158,7 @@ export class IdentityService {
     authProviderType: AuthProviderType,
     authProviderIdentifier: string,
     authProviderUserId: string,
-  ): Promise<User[FieldNameUser.id]> {
+  ): Promise<number> {
     const profileEditsAllowed = this.authConfig.common.allowProfileEdits;
     const chooseUsernameAllowed = this.authConfig.common.allowChooseUsername;
 

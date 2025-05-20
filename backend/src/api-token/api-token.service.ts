@@ -4,12 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ApiTokenDto, ApiTokenWithSecretDto } from '@hedgedoc/commons';
-import {
-  ApiToken,
-  FieldNameApiToken,
-  TableApiToken,
-  TypeInsertApiToken,
-} from '@hedgedoc/database';
+import { ApiToken, FieldNameApiToken, TableApiToken } from '@hedgedoc/database';
 import { Injectable } from '@nestjs/common';
 import { Cron, Timeout } from '@nestjs/schedule';
 import { randomBytes } from 'crypto';
@@ -28,7 +23,8 @@ import {
   hashApiToken,
 } from '../utils/password';
 
-export const AUTH_TOKEN_PREFIX = 'hd2';
+const AUTH_TOKEN_PREFIX = 'hd2';
+const MESSAGE_TOKEN_INVALID = 'API token is invalid, expired or not found';
 
 @Injectable()
 export class ApiTokenService {
@@ -46,20 +42,21 @@ export class ApiTokenService {
    * The usage of this token is tracked in the database
    *
    * @param tokenString The token string to validate and parse
-   * @return The userId associated with the token
+   * @returns The userId associated with the token
    * @throws TokenNotValidError if the token is not valid
    */
   async getUserIdForToken(tokenString: string): Promise<number> {
     const [prefix, keyId, secret, ...rest] = tokenString.split('.');
-    if (!keyId || !secret || prefix !== AUTH_TOKEN_PREFIX || rest.length > 0) {
+    // We always expect 86 characters for the secret and 11 characters for the keyId
+    // as they are generated with 64 bytes and 8 bytes respectively and then converted to a base64url string
+    if (
+      keyId.length !== 11 ||
+      !secret ||
+      secret.length !== 86 ||
+      prefix !== AUTH_TOKEN_PREFIX ||
+      rest.length > 0
+    ) {
       throw new TokenNotValidError('Invalid API token format');
-    }
-    if (secret.length != 86) {
-      // We always expect 86 characters, as the secret is generated with 64 bytes
-      // and then converted to a base64url string
-      throw new TokenNotValidError(
-        `API token '${tokenString}' has incorrect length`,
-      );
     }
     return await this.knex.transaction(async (transaction) => {
       const token = await transaction(TableApiToken)
@@ -71,7 +68,7 @@ export class ApiTokenService {
         .where(FieldNameApiToken.id, keyId)
         .first();
       if (token === undefined) {
-        throw new TokenNotValidError('Token not found');
+        throw new TokenNotValidError(MESSAGE_TOKEN_INVALID);
       }
 
       const tokenHash = token[FieldNameApiToken.secretHash];
@@ -88,16 +85,20 @@ export class ApiTokenService {
 
   /**
    * Creates a new API token for the given user
+   * We limit the number of tokens to 200 per user to avoid users losing track over their tokens.
+   * There is no technical limit to this.
+   *
+   * The returned secret is stored hashed in the database and therefore cannot be retrieved again.
    *
    * @param userId The id of the user to create the token for
-   * @param tokenLabel The label of the token
+   * @param label The label of the token
    * @param userDefinedValidUntil Maximum date until the token is valid, will be truncated to 2 years
-   * @throws TooManyTokensError if the user already has 200 tokens
    * @returns The created token together with the secret
+   * @throws TooManyTokensError if the user already has 200 tokens
    */
   async createToken(
     userId: number,
-    tokenLabel: string,
+    label: string,
     userDefinedValidUntil?: Date,
   ): Promise<ApiTokenWithSecretDto> {
     return await this.knex.transaction(async (transaction) => {
@@ -105,16 +106,15 @@ export class ApiTokenService {
         .select(FieldNameApiToken.id)
         .where(FieldNameApiToken.userId, userId);
       if (existingTokensForUser.length >= 200) {
-        // This is a very high ceiling unlikely to hinder legitimate usage,
-        // but should prevent possible attack vectors
         throw new TooManyTokensError(
-          `User '${userId}' has already 200 API tokens and can't have more`,
+          'There is a maximum of 200 API tokens per user',
         );
       }
 
       const secret = bufferToBase64Url(randomBytes(64));
       const keyId = bufferToBase64Url(randomBytes(8));
-      const accessTokenHash = hashApiToken(secret);
+      const secretHash = hashApiToken(secret);
+      const fullToken = `${AUTH_TOKEN_PREFIX}.${keyId}.${secret}`;
       // Tokens can only be valid for a maximum of 2 years
       const maximumTokenValidity = new Date();
       maximumTokenValidity.setTime(
@@ -125,31 +125,28 @@ export class ApiTokenService {
       const validUntil = isTokenLimitedToMaximumValidity
         ? maximumTokenValidity
         : userDefinedValidUntil;
-      const token: TypeInsertApiToken = {
+      const createdAt = new Date();
+      await this.knex(TableApiToken).insert({
         [FieldNameApiToken.id]: keyId,
-        [FieldNameApiToken.label]: tokenLabel,
+        [FieldNameApiToken.label]: label,
         [FieldNameApiToken.userId]: userId,
-        [FieldNameApiToken.secretHash]: accessTokenHash,
+        [FieldNameApiToken.secretHash]: secretHash,
         [FieldNameApiToken.validUntil]: validUntil,
-        [FieldNameApiToken.createdAt]: new Date(),
+        [FieldNameApiToken.createdAt]: createdAt,
+      });
+      return {
+        label,
+        keyId,
+        createdAt: createdAt.toISOString(),
+        validUntil: validUntil.toISOString(),
+        lastUsedAt: null,
+        secret: fullToken,
       };
-      await this.knex(TableApiToken).insert(token);
-      return this.toAuthTokenWithSecretDto(
-        {
-          ...token,
-          [FieldNameApiToken.validUntil]:
-            token[FieldNameApiToken.validUntil].toISOString(),
-          [FieldNameApiToken.createdAt]:
-            token[FieldNameApiToken.createdAt].toISOString(),
-          [FieldNameApiToken.lastUsedAt]: null,
-        },
-        secret,
-      );
     });
   }
 
   /**
-   * Ensures that the given token secret is valid for the given token
+   * Ensures that a token is valid by evaluating the expiry date as well as comparing secret and stored hash
    * This method does not return any value but throws an error if the token is not valid
    *
    * @param secret The secret to compare against the hash from the database
@@ -164,14 +161,12 @@ export class ApiTokenService {
   ): void {
     // First, verify token expiry is not in the past (cheap operation)
     if (validUntil.getTime() < new Date().getTime()) {
-      throw new TokenNotValidError(
-        `Auth token is not valid since ${validUntil.toISOString()}`,
-      );
+      throw new TokenNotValidError(MESSAGE_TOKEN_INVALID);
     }
 
     // Second, verify the secret (costly operation)
     if (!checkTokenEquality(secret, tokenHash)) {
-      throw new TokenNotValidError(`Secret does not match token hash`);
+      throw new TokenNotValidError(MESSAGE_TOKEN_INVALID);
     }
   }
 
@@ -179,7 +174,7 @@ export class ApiTokenService {
    * Returns all tokens of a user
    *
    * @param userId The id of the user to get the tokens for
-   * @return The tokens of the user
+   * @returns A list of the user's tokens as ApiToken objects
    */
   getTokensOfUserById(userId: number): Promise<ApiToken[]> {
     return this.knex(TableApiToken)
@@ -205,10 +200,10 @@ export class ApiTokenService {
   }
 
   /**
-   * Converts an ApiToken to an ApiTokenDto
+   * Formats an ApiToken object from the database to an ApiTokenDto
    *
-   * @param apiToken The token to convert
-   * @return The converted token
+   * @param apiToken The token object to convert
+   * @returns The built ApiTokenDto
    */
   toAuthTokenDto(apiToken: ApiToken): ApiTokenDto {
     return {
@@ -221,25 +216,6 @@ export class ApiTokenService {
       lastUsedAt: apiToken[FieldNameApiToken.lastUsedAt]
         ? new Date(apiToken[FieldNameApiToken.lastUsedAt]).toISOString()
         : null,
-    };
-  }
-
-  /**
-   * Converts an ApiToken to an ApiTokenWithSecretDto
-   *
-   * @param apiToken The token to convert
-   * @param secret The secret of the token
-   * @return The converted token
-   */
-  toAuthTokenWithSecretDto(
-    apiToken: ApiToken,
-    secret: string,
-  ): ApiTokenWithSecretDto {
-    const tokenDto = this.toAuthTokenDto(apiToken);
-    const fullToken = `${AUTH_TOKEN_PREFIX}.${tokenDto.keyId}.${secret}`;
-    return {
-      ...tokenDto,
-      secret: fullToken,
     };
   }
 
@@ -264,7 +240,7 @@ export class ApiTokenService {
       .where(FieldNameApiToken.validUntil, '<', new Date())
       .delete();
     this.logger.log(
-      `${numberOfDeletedTokens} invalid AuthTokens were purged from the DB.`,
+      `${numberOfDeletedTokens} expired API tokens were purged from the DB`,
       'removeInvalidTokens',
     );
   }

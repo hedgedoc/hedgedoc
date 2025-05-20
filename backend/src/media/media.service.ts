@@ -55,6 +55,12 @@ export class MediaService {
     this.mediaBackend = this.getBackendFromType(this.mediaBackendType);
   }
 
+  /**
+   * Checks if the given MIME type is allowed for media uploads
+   *
+   * @param mimeType The MIME type to check
+   * @returns true if the MIME type is allowed, false otherwise
+   */
   private static isAllowedMimeType(mimeType: string): boolean {
     const allowedTypes = [
       'image/apng',
@@ -81,10 +87,10 @@ export class MediaService {
    * @param fileBuffer The buffer with the file contents to save
    * @param userId Id of the user who uploaded this file
    * @param noteId Id of the note which will be associated with the new file
-   * @return The created MediaUpload entity
-   * @throws {ClientError} if the MIME type of the file is not supported
-   * @throws {NotInDBError} if the note or user is not in the database
-   * @throws {MediaBackendError} if there was an error saving the file
+   * @returns The created MediaUpload entity
+   * @throws ClientError if the MIME type of the file is not supported
+   * @throws NotInDBError if the note or user is not in the database
+   * @throws MediaBackendError if there was an error saving the file
    */
   async saveFile(
     fileName: string,
@@ -123,10 +129,11 @@ export class MediaService {
   }
 
   /**
-   * @async
-   * Try to delete the specified file.
-   * @param {uuid} uuid - the name of the file to delete.
-   * @throws {MediaBackendError} - there was an error deleting the file
+   * Tries to delete the specified file
+   *
+   * @param uuid the uuid of the file to delete
+   * @throws NotInDBError if the file with the given uuid is not found in the database
+   * @throws MediaBackendError if there was an error deleting the file at the backend
    */
   async deleteFile(uuid: string): Promise<void> {
     const backendData = await this.knex(TableMediaUpload)
@@ -150,11 +157,11 @@ export class MediaService {
   }
 
   /**
-   * @async
-   * Get the URL of the file.
-   * @param {string} uuid - the uuid of the file to get the URL for.
-   * @return {string} the URL of the file.
-   * @throws {MediaBackendError} - there was an error retrieving the url
+   * Retrieves the URL to a media upload file
+   *
+   * @param uuid the uuid of the file to get the URL for
+   * @returns the URL of the file
+   * @throws MediaBackendError if there was an error retrieving the url
    */
   async getFileUrl(uuid: string): Promise<string> {
     const mediaUpload = await this.knex(TableMediaUpload)
@@ -178,11 +185,11 @@ export class MediaService {
   }
 
   /**
-   * @async
-   * Find a file entry by its UUID.
-   * @param {string} uuid - The UUID of the MediaUpload entity to find.
-   * @returns {MediaUpload} - the MediaUpload entity if found.
-   * @throws {NotInDBError} - the MediaUpload entity with the provided UUID is not found in the database.
+   * Finds a file entry by its UUID
+   *
+   * @param uuid The UUID of the MediaUpload entity to find
+   * @returns The MediaUpload entity if found
+   * @throws NotInDBError if the MediaUpload entity with the provided UUID is not found in the database
    */
   async findUploadByUuid(uuid: string): Promise<MediaUpload> {
     const mediaUpload = await this.knex(TableMediaUpload)
@@ -196,10 +203,10 @@ export class MediaService {
   }
 
   /**
-   * @async
-   * List all uploads by a specific user
-   * @param {number} userId - the specific user
-   * @return {MediaUpload[]} arary of media uploads owned by the user
+   * Lists all uploads by a specific user
+   *
+   * @param userId the id of the user
+   * @returns An array of media uploads owned by the user
    */
   async getMediaUploadUuidsByUserId(
     userId: number,
@@ -211,10 +218,10 @@ export class MediaService {
   }
 
   /**
-   * @async
-   * List all uploads to a specific note
-   * @param {number} noteId - the specific user
-   * @return {MediaUpload[]} array of media uploads owned by the user
+   * Lists all uploads to a specific note
+   *
+   * @param noteId the specific user
+   * @returns An array of media uploads owned by the user
    */
   async getMediaUploadUuidsByNoteId(
     noteId: number,
@@ -228,9 +235,9 @@ export class MediaService {
   }
 
   /**
-   * @async
-   * Set the note of a mediaUpload to null
-   * @param {string} uuid - the media upload to be changed
+   * Sets the note of a mediaUpload to null
+   *
+   * @param uuid the media upload to be changed
    */
   async removeNoteFromMediaUpload(uuid: string): Promise<void> {
     this.logger.debug(
@@ -244,6 +251,9 @@ export class MediaService {
       .where(FieldNameMediaUpload.uuid, uuid);
   }
 
+  /**
+   * Returns the backend type that is configured in the media configuration
+   */
   private chooseBackendType(): MediaBackendType {
     switch (this.mediaConfig.backend.use as string) {
       case 'filesystem':
@@ -263,6 +273,12 @@ export class MediaService {
     }
   }
 
+  /**
+   * Returns the MediaBackend instance for the given MediaBackendType
+   *
+   * @param type The MediaBackendType to get the backend for
+   * @returns The MediaBackend instance
+   */
   private getBackendFromType(type: MediaBackendType): MediaBackend {
     switch (type) {
       case MediaBackendType.FILESYSTEM:
@@ -278,6 +294,12 @@ export class MediaService {
     }
   }
 
+  /**
+   * Retrieves media upload DTOs by a list of their UUIDs
+   *
+   * @param uuids The UUIDs of the media uploads to retrieve
+   * @returns An array of MediaUploadDto objects containing the details of the media uploads
+   */
   async getMediaUploadDtosByUuids(uuids: string[]): Promise<MediaUploadDto[]> {
     const mediaUploads = await this.knex(TableMediaUpload)
       .select<
