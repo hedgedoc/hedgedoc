@@ -109,8 +109,9 @@ export class LdapService {
             username: username,
             id: userInfo[ldapConfig.userIdField],
             displayName: userInfo[ldapConfig.displayNameField] ?? username,
-            photoUrl: null, // TODO LDAP stores images as binaries,
-            // we need to convert them into a data-URL or alike
+            photoUrl: null,
+            // TODO LDAP stores images as binaries, we need to upload them to the media backend
+            // https://github.com/hedgedoc/hedgedoc/issues/5032
           });
         },
       );

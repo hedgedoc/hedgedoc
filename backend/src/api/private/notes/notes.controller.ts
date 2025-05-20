@@ -185,11 +185,11 @@ export class NotesController {
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(RequiredPermission.OWNER)
   async setUserPermission(
-    @RequestUserId() userId: number,
     @RequestNoteId() noteId: number,
     @Param('username') username: NoteUserPermissionUpdateDto['username'],
     @Body('canEdit') canEdit: NoteUserPermissionUpdateDto['canEdit'],
   ): Promise<NotePermissionsDto> {
+    const userId = await this.userService.getUserIdByUsername(username);
     await this.permissionService.setUserPermission(noteId, userId, canEdit);
     return await this.noteService.toNotePermissionsDto(noteId);
   }
@@ -198,12 +198,11 @@ export class NotesController {
   @RequirePermission(RequiredPermission.OWNER)
   @Delete(':noteAlias/metadata/permissions/users/:username')
   async removeUserPermission(
-    @RequestUserId() userId: number,
     @RequestNoteId() noteId: number,
     @Param('username') username: NoteUserPermissionEntryDto['username'],
   ): Promise<NotePermissionsDto> {
-    // TODO Fix this removing wrong user permission!
     try {
+      const userId = await this.userService.getUserIdByUsername(username);
       await this.permissionService.removeUserPermission(noteId, userId);
       return await this.noteService.toNotePermissionsDto(noteId);
     } catch (e) {

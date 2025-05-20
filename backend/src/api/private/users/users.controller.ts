@@ -34,7 +34,7 @@ export class UsersController {
     const userExists = await this.userService.isUsernameTaken(
       usernameCheck.username,
     );
-    // TODO Check if username is blocked
+    // TODO Check if username is blocked (https://github.com/hedgedoc/hedgedoc/issues/5794)
     return { usernameAvailable: !userExists };
   }
 
