@@ -51,7 +51,7 @@ export class LocalController {
     @Body() registerDto: RegisterDto,
   ): Promise<void> {
     await this.localIdentityService.checkPasswordStrength(registerDto.password);
-    const userId = await this.localIdentityService.createLocalIdentity(
+    const userId = await this.localIdentityService.createUserWithLocalIdentity(
       registerDto.username,
       registerDto.password,
       registerDto.displayName,

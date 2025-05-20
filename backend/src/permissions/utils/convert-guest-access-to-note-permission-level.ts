@@ -11,7 +11,7 @@ import { NotePermissionLevel } from '../note-permission.enum';
  * Converts the given guest access level to the highest possible {@link NotePermissionLevel}.
  *
  * @param guestAccess the guest access level to should be converted
- * @return the {@link NotePermissionLevel} representation
+ * @returns the {@link NotePermissionLevel} representation
  */
 export function convertPermissionLevelToNotePermissionLevel(
   guestAccess: PermissionLevel,

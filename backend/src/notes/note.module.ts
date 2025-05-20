@@ -25,7 +25,6 @@ import { NoteService } from './note.service';
     LoggerModule,
     forwardRef(() => PermissionsModule),
     ConfigModule,
-    RealtimeNoteModule,
     KnexModule,
   ],
   controllers: [],

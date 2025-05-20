@@ -48,7 +48,6 @@ import { GroupsService } from '../groups/groups.service';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { PermissionService } from '../permissions/permission.service';
 import { RealtimeNoteStore } from '../realtime/realtime-note/realtime-note-store';
-import { RealtimeNoteService } from '../realtime/realtime-note/realtime-note.service';
 import { RevisionsService } from '../revisions/revisions.service';
 import { UsersService } from '../users/users.service';
 
@@ -68,7 +67,6 @@ export class NoteService {
     private aliasService: AliasService,
     @Inject(forwardRef(() => PermissionService))
     private permissionService: PermissionService,
-    private realtimeNoteService: RealtimeNoteService,
     private realtimeNoteStore: RealtimeNoteStore,
     private eventEmitter: EventEmitter2<NoteEventMap>,
   ) {
@@ -79,7 +77,7 @@ export class NoteService {
    * Get all notes owned by a user
    *
    * @param userId The id of the user who owns the notes
-   * @return Array of notes owned by the user
+   * @returns Array of notes owned by the user
    */
   async getUserNoteIds(userId: number): Promise<number[]> {
     const result = await this.knex(TableNote)
@@ -94,18 +92,18 @@ export class NoteService {
    * @param noteContent The content of the new note, in most cases an empty string
    * @param givenAlias An optional alias the note should have
    * @param ownerUserId The owner of the note
-   * @return The newly created note
-   * @throws {AlreadyInDBError} a note with the requested id or aliases already exists
-   * @throws {ForbiddenIdError} the requested id or aliases is forbidden
-   * @throws {MaximumDocumentLengthExceededError} the noteContent is longer than the maxDocumentLength
-   * @thorws {GenericDBError} the database returned a non-expected value
+   * @returns The newly created note
+   * @throws AlreadyInDBError if a note with the requested id or aliases already exists
+   * @throws ForbiddenIdError if the requested id or aliases is forbidden
+   * @throws MaximumDocumentLengthExceededError if the noteContent is longer than the maxDocumentLength
+   * @throws GenericDBError if the database returned a non-expected value
    */
   async createNote(
     noteContent: string,
     ownerUserId: number,
     givenAlias?: string,
   ): Promise<number> {
-    // Check if new note doesn't violate application constraints
+    // Ensures that a new note doesn't violate application constraints
     if (noteContent.length > this.noteConfig.maxDocumentLength) {
       throw new MaximumDocumentLengthExceededError();
     }
@@ -192,12 +190,12 @@ export class NoteService {
   }
 
   /**
-   * Get the current content of the note
+   * Gets the current content of the note
    *
    * @param noteId the note to use
    * @param transaction The optional database transaction to use
-   * @throws {NotInDBError} the note is not in the DB
-   * @return {string} the content of the note
+   * @returns the content of the note
+   * @throws NotInDBError the note is not found in the database
    */
   async getNoteContent(noteId: number, transaction?: Knex): Promise<string> {
     const realtimeContent = this.realtimeNoteStore
@@ -216,13 +214,13 @@ export class NoteService {
   }
 
   /**
-   * Get a note by either their id or aliases
+   * Gets a note's id by their aliases
    *
-   * @param alias the notes id or aliases
+   * @param alias the alias
    * @param transaction The optional database transaction to use
-   * @return the note id
-   * @throws {NotInDBError} there is no note with this id or aliases
-   * @throws {ForbiddenIdError} the requested id or aliases is forbidden
+   * @returns the note id
+   * @throws NotInDBError if there is no note with this alias
+   * @throws ForbiddenIdError if the requested note with the alias is forbidden
    */
   async getNoteIdByAlias(alias: string, transaction?: Knex): Promise<number> {
     const dbActor = transaction ?? this.knex;
@@ -233,12 +231,6 @@ export class NoteService {
       );
     }
 
-    this.logger.debug(`Trying to find note '${alias}'`, 'getNoteIdByAlias');
-
-    /*
-     * This query gets the note's aliases, owner, groupPermissions (and the groups), userPermissions (and the users) and tags and
-     * then only selects the note, that has a alias with this name.
-     */
     const note = await dbActor(TableAlias)
       .select<Pick<Note, FieldNameNote.id>>(`${TableNote}.${FieldNameNote.id}`)
       .where(FieldNameAlias.alias, alias)
@@ -261,8 +253,8 @@ export class NoteService {
   /**
    * Deletes a note
    *
-   * @param noteId If of the note to delete
-   * @throws {NotInDBError} if there is no note with this id
+   * @param noteId Id of the note to delete
+   * @throws NotInDBError if there is no note with this id
    */
   async deleteNote(noteId: Note[FieldNameNote.id]): Promise<void> {
     this.eventEmitter.emit(NoteEvent.DELETION, noteId);
@@ -275,13 +267,12 @@ export class NoteService {
   }
 
   /**
+   * Updates the content of a note
+   * The realtime connection is closed in beforehand to ensure that realtime editing does not interfere with the update
    *
-   * Update the content of a note
-   *
-   * @param noteId - the note
-   * @param noteContent - the new content
-   * @return the note with a new revision and new content
-   * @throws {NotInDBError} there is no note with this id or aliases
+   * @param noteId the note id
+   * @param noteContent the new content
+   * @throws NotInDBError if there is no note with this id or aliases
    */
   async updateNote(noteId: number, noteContent: string): Promise<void> {
     this.eventEmitter.emit(NoteEvent.CLOSE_REALTIME, noteId);
@@ -289,10 +280,12 @@ export class NoteService {
   }
 
   /**
-   * Build NotePermissionsDto from a note.
-   * @param noteId The id of the ntoe to get the permissions for
+   * Builds a NotePermissionsDto for a note
+   * This method is a wrapper around the innerToNotePermissionsDto method to ensure a single transaction is used
+   *
+   * @param noteId The id of the note to get the permissions for
    * @param transaction The optional database transaction to use
-   * @return The built NotePermissionDto
+   * @returns The built NotePermissionDto
    */
   async toNotePermissionsDto(
     noteId: number,
@@ -306,7 +299,15 @@ export class NoteService {
     return await this.innerToNotePermissionsDto(noteId, transaction);
   }
 
-  async innerToNotePermissionsDto(
+  /**
+   * Builds a NotePermissionsDto for a note
+   *
+   * @param noteId The id of the note to get the permissions for
+   * @param transaction The database transaction to use
+   * @returns The built NotePermissionDto
+   * @throws NotInDBError if the note does not exist
+   */
+  private async innerToNotePermissionsDto(
     noteId: number,
     transaction: Knex,
   ): Promise<NotePermissionsDto> {
@@ -374,11 +375,12 @@ export class NoteService {
   }
 
   /**
-   * @async
-   * Build NoteMetadataDto from a note.
-   * @param noteId The if of the note to get the metadata for
+   * Builds a NoteMetadataDto for a note
+   * This method is a wrapper around the innerToNoteMetadataDto method to ensure a single transaction is used
+   *
+   * @param noteId The id of the note to get the metadata for
    * @param transaction The optional database transaction to use
-   * @return The built NoteMetadataDto
+   * @returns The built NoteMetadataDto
    */
   async toNoteMetadataDto(
     noteId: number,
@@ -392,6 +394,14 @@ export class NoteService {
     return await this.innerToNoteMetadataDto(noteId, transaction);
   }
 
+  /**
+   * Builds a NoteMetadataDto for a note
+   *
+   * @param noteId The id of the note to get the metadata for
+   * @param transaction The database transaction to use
+   * @returns The built NoteMetadataDto
+   * @throws NotInDBError if the note does not exist or has no primary alias
+   */
   private async innerToNoteMetadataDto(
     noteId: number,
     transaction: Knex,
@@ -473,7 +483,7 @@ export class NoteService {
    * Gets the note data for the note DTO
    *
    * @param noteId The id of the note to transform
-   * @return {NoteDto} the built NoteDto
+   * @returns The built NoteDto
    */
   async toNoteDto(noteId: number): Promise<NoteDto> {
     return await this.knex.transaction(async (transaction) => {

@@ -265,6 +265,7 @@ export class OidcService {
         oidcIdentifier,
       );
     } catch (e) {
+      // Catch not-found errors when registration via OIDC is enabled and return null instead
       if (e instanceof NotInDBError) {
         if (!clientConfig.config.enableRegistration) {
           throw new ForbiddenException(

@@ -18,6 +18,12 @@ import {
   extractDescriptionFromZodIssue,
 } from './zod-error-message';
 
+/**
+ * Validates that a given URL is valid, uses the HTTP or HTTPS protocol, and does not end with a slash
+ *
+ * @param value The URL string to validate.
+ * @param ctx The Zod refinement context.
+ */
 function validateUrl(value: string | undefined, ctx: RefinementCtx): void {
   if (!value) {
     return z.NEVER;

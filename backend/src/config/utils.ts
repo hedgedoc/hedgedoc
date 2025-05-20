@@ -5,14 +5,27 @@
  */
 import { Loglevel } from './loglevel.enum';
 
+/**
+ * Finds duplicates in an array
+ * This function uses the conversion of the array to a Set to find duplicates even if an item is present three or more times
+ *
+ * @param array The array to search for duplicates
+ * @returns An array containing the duplicate items
+ */
 export function findDuplicatesInArray<T>(array: T[]): T[] {
-  // This uses the Array-Set conversion to remove duplicates in the finding.
-  // This can happen if an entry is present three or more times
   return Array.from(
     new Set(array.filter((item, index) => array.indexOf(item) !== index)),
   );
 }
 
+/**
+ * Ensures that no duplicates exist in the provided array of names
+ * If duplicates are found, an error is thrown with a message containing the duplicate names
+ *
+ * @param authName The name of the authentication method
+ * @param names The array of names to check for duplicates
+ * @throws Error if duplicates are found in the names array
+ */
 export function ensureNoDuplicatesExist(
   authName: string,
   names: string[],
@@ -26,6 +39,14 @@ export function ensureNoDuplicatesExist(
     );
   }
 }
+
+/**
+ * Converts a (comma-)separated configuration value to an array of strings or undefined if it is undefined
+ *
+ * @param configValue The configuration value to convert
+ * @param separator The separator to use for splitting the value (default is ',')
+ * @returns An array of strings or undefined if configValue is undefined
+ */
 export function toArrayConfig(
   configValue?: string,
   separator = ',',
@@ -39,6 +60,13 @@ export function toArrayConfig(
   return configValue.split(separator).map((arrayItem) => arrayItem.trim());
 }
 
+/**
+ * Checks if the current log level is sufficient to log a message at the requested log level
+ *
+ * @param currentLoglevel The current log level
+ * @param requestedLoglevel The requested log level
+ * @returns true if the current log level is sufficient to log the requested log level, false otherwise
+ */
 export function needToLog(
   currentLoglevel: Loglevel,
   requestedLoglevel: Loglevel,
@@ -48,6 +76,12 @@ export function needToLog(
   return current >= requested;
 }
 
+/**
+ * Transforms a Loglevel value to an integer representation where a higher number means more log output
+ *
+ * @param loglevel The Loglevel to transform
+ * @returns The integer representation of the log level
+ */
 function transformLoglevelToInt(loglevel: Loglevel): number {
   switch (loglevel) {
     case Loglevel.TRACE:
@@ -63,6 +97,12 @@ function transformLoglevelToInt(loglevel: Loglevel): number {
   }
 }
 
+/**
+ * Parses a string to a number. If the value is undefined, it returns undefined.
+ *
+ * @param value The value to parse
+ * @returns The parsed number or undefined if the value is undefined
+ */
 export function parseOptionalNumber(value?: string): number | undefined {
   if (value === undefined) {
     return undefined;
@@ -81,5 +121,10 @@ export function parseOptionalBoolean(value?: string): boolean | undefined {
   if (value === undefined) {
     return undefined;
   }
-  return value === 'true' || value === '1' || value === 'y';
+  return (
+    value === '1' ||
+    value.toLowerCase() === 'y' ||
+    value.toLowerCase() === 'yes' ||
+    value.toLowerCase() === 'true'
+  );
 }

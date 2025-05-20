@@ -79,7 +79,7 @@ export class MockConnectionBuilder {
   /**
    * Creates a new connection based on the given configuration.
    *
-   * @return {RealtimeConnection} The constructed mocked connection
+   * @returns {RealtimeConnection} The constructed mocked connection
    * @throws Error if neither withGuestUser nor withLoggedInUser has been called.
    */
   public build(): RealtimeConnection {

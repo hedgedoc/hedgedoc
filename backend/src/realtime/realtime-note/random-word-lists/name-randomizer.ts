@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,7 +8,7 @@ import { adjectives, items } from './random-words';
 /**
  * Generates a random names based on an adjective and a noun.
  *
- * @return the generated name
+ * @returns the generated name
  */
 export function generateRandomName(): string {
   const adjective = generateRandomWord(adjectives);

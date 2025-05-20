@@ -4,13 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { AuthProviderType } from '@hedgedoc/commons';
-import {
-  FieldNameIdentity,
-  FieldNameUser,
-  Identity,
-  TableIdentity,
-  User,
-} from '@hedgedoc/database';
+import { FieldNameIdentity, Identity, TableIdentity } from '@hedgedoc/database';
 import { Inject, Injectable } from '@nestjs/common';
 import {
   OptionsGraph,
@@ -63,18 +57,18 @@ export class LocalService {
   }
 
   /**
-   * Create a new identity for internal auth
+   * Creates a new user with an identity for internal auth and returns the id of the newly created user
    *
    * @param username The username of the new identity
    * @param password The password the identity should have
    * @param displayName The display name of the new identity
-   * @returns {Identity} the new local identity
+   * @returns The id of the newly created user
    */
-  async createLocalIdentity(
+  async createUserWithLocalIdentity(
     username: string,
     password: string,
     displayName: string,
-  ): Promise<User[FieldNameUser.id]> {
+  ): Promise<number> {
     const passwordHash = await hashPassword(password);
     return await this.identityService.createUserWithIdentity(
       AuthProviderType.LOCAL,
@@ -89,12 +83,12 @@ export class LocalService {
   }
 
   /**
-   * @async
-   * Update the internal password of the specified the user
-   * @param {User} userId - the user, which identity should be updated
-   * @param {string} newPassword - the new password
-   * @throws {NoLocalIdentityError} the specified user has no internal identity
-   * @return {Identity} the changed identity
+   * Updates the password hash for the local identity of the specified the user
+   *
+   * @param userId The user, whose local identity should be updated
+   * @param newPassword The new password
+   * @throws NoLocalIdentityError if the specified user has no local identity
+   * @throws PasswordTooWeakError if the password is too weak
    */
   async updateLocalPassword(
     userId: number,
@@ -112,12 +106,12 @@ export class LocalService {
   }
 
   /**
-   * @async
-   * Checks if the user and password combination matches
-   * @param {string} username - the user to use
-   * @param {string} password - the password to use
-   * @throws {InvalidCredentialsError} the password and user do not match
-   * @throws {NoLocalIdentityError} the specified user has no internal identity
+   * Checks if the user and password combination matches for the local identity and returns the local identity on success
+   *
+   * @param username The user to use
+   * @param password The password to use
+   * @returns The identity of the user if the credentials are valid
+   * @throws InvalidCredentialsError if the credentials are invalid
    */
   async checkLocalPassword(
     username: string,
@@ -129,12 +123,11 @@ export class LocalService {
         AuthProviderType.LOCAL,
         null,
       );
-    if (
-      !(await checkPassword(
-        password,
-        identity[FieldNameIdentity.passwordHash] ?? '',
-      ))
-    ) {
+    const passwordValid = await checkPassword(
+      password,
+      identity[FieldNameIdentity.passwordHash] ?? '',
+    );
+    if (!passwordValid) {
       throw new InvalidCredentialsError(
         'Username or password is not correct',
         this.logger.getContext(),
@@ -145,11 +138,12 @@ export class LocalService {
   }
 
   /**
-   * @async
-   * Check if the password is strong and long enough.
+   * Checks if the password is strong and long enough
    * This check is performed against the minimalPasswordStrength of the {@link AuthConfig}.
-   * @param {string} password - the password to check
-   * @throws {PasswordTooWeakError} the password is too weak
+   * The method acts as a guard and therefore throws an error on failure instead of returning a boolean.
+   *
+   * @param password The password to check
+   * @throws PasswordTooWeakError if the password is too weak
    */
   async checkPasswordStrength(password: string): Promise<void> {
     if (password.length < 6) {
