@@ -18,7 +18,7 @@ export enum NotePermissionLevel {
  * Returns the display name for the given {@link NotePermissionLevel}.
  *
  * @param {NotePermissionLevel} value the note permission to display
- * @return {string} The display name
+ * @returns The display name
  */
 export function getNotePermissionLevelDisplayName(
   value: NotePermissionLevel,

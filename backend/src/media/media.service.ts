@@ -81,7 +81,7 @@ export class MediaService {
    * @param fileBuffer The buffer with the file contents to save
    * @param userId Id of the user who uploaded this file
    * @param noteId Id of the note which will be associated with the new file
-   * @return The created MediaUpload entity
+   * @returns The created MediaUpload entity
    * @throws {ClientError} if the MIME type of the file is not supported
    * @throws {NotInDBError} if the note or user is not in the database
    * @throws {MediaBackendError} if there was an error saving the file
@@ -123,7 +123,7 @@ export class MediaService {
   }
 
   /**
-   * @async
+   *
    * Try to delete the specified file.
    * @param {uuid} uuid - the name of the file to delete.
    * @throws {MediaBackendError} - there was an error deleting the file
@@ -150,10 +150,10 @@ export class MediaService {
   }
 
   /**
-   * @async
+   *
    * Get the URL of the file.
-   * @param {string} uuid - the uuid of the file to get the URL for.
-   * @return {string} the URL of the file.
+   * @param uuid - the uuid of the file to get the URL for.
+   * @returns the URL of the file.
    * @throws {MediaBackendError} - there was an error retrieving the url
    */
   async getFileUrl(uuid: string): Promise<string> {
@@ -178,9 +178,9 @@ export class MediaService {
   }
 
   /**
-   * @async
+   *
    * Find a file entry by its UUID.
-   * @param {string} uuid - The UUID of the MediaUpload entity to find.
+   * @param uuid - The UUID of the MediaUpload entity to find.
    * @returns {MediaUpload} - the MediaUpload entity if found.
    * @throws {NotInDBError} - the MediaUpload entity with the provided UUID is not found in the database.
    */
@@ -196,10 +196,10 @@ export class MediaService {
   }
 
   /**
-   * @async
+   *
    * List all uploads by a specific user
    * @param {number} userId - the specific user
-   * @return {MediaUpload[]} arary of media uploads owned by the user
+   * @returns {MediaUpload[]} arary of media uploads owned by the user
    */
   async getMediaUploadUuidsByUserId(
     userId: number,
@@ -211,10 +211,10 @@ export class MediaService {
   }
 
   /**
-   * @async
+   *
    * List all uploads to a specific note
    * @param {number} noteId - the specific user
-   * @return {MediaUpload[]} array of media uploads owned by the user
+   * @returns {MediaUpload[]} array of media uploads owned by the user
    */
   async getMediaUploadUuidsByNoteId(
     noteId: number,
@@ -228,9 +228,9 @@ export class MediaService {
   }
 
   /**
-   * @async
+   *
    * Set the note of a mediaUpload to null
-   * @param {string} uuid - the media upload to be changed
+   * @param uuid - the media upload to be changed
    */
   async removeNoteFromMediaUpload(uuid: string): Promise<void> {
     this.logger.debug(

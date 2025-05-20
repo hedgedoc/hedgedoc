@@ -118,7 +118,7 @@ export class WebsocketGateway implements OnGatewayConnection {
    * Finds the user id whose session cookie is saved in the given {@link IncomingMessage}.
    *
    * @param request The request that contains the session cookie
-   * @return The found user id
+   * @returns The found user id
    */
   private async findUserIdByRequestSession(
     request: IncomingMessage,

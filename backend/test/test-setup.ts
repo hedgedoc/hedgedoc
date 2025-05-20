@@ -414,17 +414,20 @@ export class TestSetupBuilder {
       );
 
       // Create identities for login
-      await this.testSetup.localIdentityService.createLocalIdentity(
+      await this.testSetup.localIdentityService.createUserWithLocalIdentity(
         this.testSetup.users[0],
         password1,
+        '',
       );
-      await this.testSetup.localIdentityService.createLocalIdentity(
+      await this.testSetup.localIdentityService.createUserWithLocalIdentity(
         this.testSetup.users[1],
         password2,
+        '',
       );
-      await this.testSetup.localIdentityService.createLocalIdentity(
+      await this.testSetup.localIdentityService.createUserWithLocalIdentity(
         this.testSetup.users[2],
         password3,
+        '',
       );
 
       // create auth tokens

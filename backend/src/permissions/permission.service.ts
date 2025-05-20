@@ -90,7 +90,7 @@ export class PermissionService {
    * Checks if the given {@link User} is allowed to create notes.
    *
    * @param username - The user whose permission should be checked. Value is null if guest access should be checked
-   * @return if the user is allowed to create notes
+   * @returns if the user is allowed to create notes
    */
   public mayCreate(username: string | null): boolean {
     return (
@@ -105,7 +105,7 @@ export class PermissionService {
    * @param userId The id of the user
    * @param noteId The id of the note
    * @param transaction Optional transaction to use
-   * @return true if the user is the owner of the note
+   * @returns true if the user is the owner of the note
    */
   async isOwner(
     userId: number | null,
@@ -135,7 +135,7 @@ export class PermissionService {
    *
    * @param {number | null} userId The user whose permission should be checked
    * @param {number} noteId The note that is accessed by the given user
-   * @return {Promise<NotePermissionLevel>} The determined permission
+   * @returns {Promise<NotePermissionLevel>} The determined permission
    */
   public async determinePermission(
     userId: number,
@@ -284,7 +284,7 @@ export class PermissionService {
    * @param noteId the note
    * @param userId the user for which the permission should be set
    * @param canEdit specifies if the user can edit the note
-   * @return the note with the new permission
+   * @returns the note with the new permission
    */
   async setUserPermission(
     noteId: number,
@@ -361,7 +361,7 @@ export class PermissionService {
    * Remove permission for a specific group on a note.
    * @param noteId - the note
    * @param groupId - the group for which the permission should be set
-   * @return the note with the new permission
+   * @returns the note with the new permission
    */
   async removeGroupPermission(noteId: number, groupId: number): Promise<void> {
     const result = await this.knex(TableNoteGroupPermission)
@@ -382,7 +382,7 @@ export class PermissionService {
    * Updates the owner of a note.
    * @param noteId - the note to use
    * @param newOwnerId - the new owner
-   * @return the updated note
+   * @returns the updated note
    */
   async changeOwner(noteId: number, newOwnerId: number): Promise<void> {
     const result = await this.knex(TableNote)

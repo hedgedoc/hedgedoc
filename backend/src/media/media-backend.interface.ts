@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -12,7 +12,7 @@ export interface MediaBackend {
    * @param buffer File data
    * @param fileType File type result
    * @throws {MediaBackendError} - there was an error saving the file
-   * @return The internal backend data, which should be saved
+   * @returns The internal backend data, which should be saved
    */
   saveFile(
     uuid: string,
@@ -33,7 +33,7 @@ export interface MediaBackend {
    * @param uuid Unique identifier of the uploaded file
    * @param backendData Internal backend data
    * @throws {MediaBackendError} - there was an error getting the file
-   * @return Public accessible URL of the file
+   * @returns Public accessible URL of the file
    */
   getFileUrl(uuid: string, backendData: string | null): Promise<string>;
 }

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -18,7 +18,7 @@ export class RealtimeNoteStore {
    * @param initialTextContent the initial text content of realtime doc
    * @param initialYjsState the initial yjs state. If provided this will be used instead of the text content
    * @throws Error if there is already an realtime note for the given note.
-   * @return The created realtime note
+   * @returns The created realtime note
    */
   public create(
     noteId: number,
@@ -43,7 +43,7 @@ export class RealtimeNoteStore {
   /**
    * Retrieves a {@link RealtimeNote} that is linked to the given {@link Note} id.
    * @param noteId The id of the {@link Note}
-   * @return A {@link RealtimeNote} or {@code undefined} if no instance is existing.
+   * @returns A {@link RealtimeNote} or {@code undefined} if no instance is existing.
    */
   public find(noteId: number): RealtimeNote | undefined {
     return this.noteIdToRealtimeNote.get(noteId);

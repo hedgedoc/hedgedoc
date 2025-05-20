@@ -24,7 +24,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       [FieldNameUser.username]: null,
       [FieldNameUser.guestUuid]: '55b4618a-d5f3-4320-93d3-f3501c73d72b',
-      [FieldNameUser.displayName]: 'Gast 1',
+      [FieldNameUser.displayName]: 'Guest 1',
       [FieldNameUser.photoUrl]: null,
       [FieldNameUser.email]: null,
       [FieldNameUser.authorStyle]: 1,

@@ -59,7 +59,7 @@ export class RevisionsService {
    * Returns all revisions of a note
    *
    * @param noteId The id of the note
-   * @return The list of revisions
+   * @returns The list of revisions
    */
   async getAllRevisionMetadataDto(
     noteId: number,
@@ -294,14 +294,14 @@ export class RevisionsService {
    * Creates (but does not persist(!)) a new {@link Revision} for the given {@link Note}.
    * Useful if the revision is saved together with the note in one action.
    *
-   * @async
+   *
    * @param noteId The note for which the revision should be created
    * @param newContent The new note content
    * @param firstRevision Whether this is called for the first revision of a note
    * @param transaction The optional pre-existing database transaction to use
    * @param yjsStateVector The yjs state vector that describes the new content
-   * @return {Revision} the created revision
-   * @return {undefined} if the revision couldn't be created because e.g. the content hasn't changed
+   * @returns {Revision} the created revision
+   * @returns {undefined} if the revision couldn't be created because e.g. the content hasn't changed
    */
   async createRevision(
     noteId: number,

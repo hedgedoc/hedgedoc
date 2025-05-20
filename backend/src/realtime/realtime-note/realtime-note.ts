@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -114,7 +114,7 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   /**
    * Checks if there's still clients connected to this note.
    *
-   * @return {@code true} if there a still clinets connected, otherwise {@code false}
+   * @returns {@code true} if there a still clinets connected, otherwise {@code false}
    */
   public hasConnections(): boolean {
     return this.clients.size !== 0;
@@ -123,7 +123,7 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   /**
    * Returns all {@link RealtimeConnection WebsocketConnections} currently hold by this note.
    *
-   * @return an array of {@link RealtimeConnection WebsocketConnections}
+   * @returns an array of {@link RealtimeConnection WebsocketConnections}
    */
   public getConnections(): RealtimeConnection[] {
     return [...this.clients];
@@ -132,7 +132,7 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   /**
    * Get the {@link RealtimeDoc realtime note} of the note.
    *
-   * @return the {@link RealtimeDoc realtime note} of the note
+   * @returns the {@link RealtimeDoc realtime note} of the note
    */
   public getRealtimeDoc(): RealtimeDoc {
     return this.doc;
@@ -141,7 +141,7 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   /**
    * Get the {@link Note note} that is edited.
    *
-   * @return the {@link Note note}
+   * @returns the {@link Note note}
    */
   public getNoteId(): number {
     return this.noteId;

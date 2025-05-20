@@ -44,7 +44,7 @@ export class UsersService {
    * @param [email] New user's email address if exists
    * @param [photoUrl] URL of the user's profile picture if exists
    * @param transaction The optional transaction to access the db
-   * @return The id of newly created user
+   * @returns The id of newly created user
    * @throws {BadRequestException} if the username contains invalid characters or is too short
    * @throws {AlreadyInDBError} the username is already taken.
    * @thorws {GenericDBError} the database returned a non-expected value
@@ -96,7 +96,7 @@ export class UsersService {
   /**
    * Creates a new guest user with a random displayName
    *
-   * @return The guest uuid and the id of the newly created user
+   * @returns The guest uuid and the id of the newly created user
    * @throws {GenericDBError} the database returned a non-expected value
    */
   async createGuestUser(): Promise<[string, number]> {
@@ -195,7 +195,7 @@ export class UsersService {
    * Checks if a given username is already taken
    *
    * @param username The username to check
-   * @return true if the user exists, false otherwise
+   * @returns true if the user exists, false otherwise
    */
   async isUsernameTaken(username: string): Promise<boolean> {
     const result = await this.knex(TableUser)
@@ -209,7 +209,7 @@ export class UsersService {
    *
    * @param userId The id of the user to check
    * @param transaction the optional transaction to access the db
-   * @return true if the user is registered, false otherwise
+   * @returns true if the user is registered, false otherwise
    */
   async isRegisteredUser(
     userId: User[FieldNameUser.id],
@@ -228,7 +228,7 @@ export class UsersService {
    * Fetches the userId for a given username from the database
    *
    * @param username The username to fetch
-   * @return The found user object
+   * @returns The found user object
    * @throws {NotInDBError} if the user could not be found
    */
   async getUserIdByUsername(username: string): Promise<number> {
@@ -250,7 +250,7 @@ export class UsersService {
    * Fetches the userId for a given username from the database
    *
    * @param uuid The uuid to fetch
-   * @return The found user object
+   * @returns The found user object
    * @throws {NotInDBError} if the user could not be found
    */
   async getUserIdByGuestUuid(uuid: string): Promise<User[FieldNameUser.id]> {
@@ -272,7 +272,7 @@ export class UsersService {
    * Fetches the user object for a given username from the database
    *
    * @param username The username to fetch
-   * @return The found user object
+   * @returns The found user object
    * @throws {NotInDBError} if the user could not be found
    */
   async getUserDtoByUsername(username: string): Promise<UserInfoDto> {
@@ -295,7 +295,7 @@ export class UsersService {
    * Fetches the user object for a given username from the database
    *
    * @param userId The username to fetch
-   * @return The found user object
+   * @returns The found user object
    * @throws {NotInDBError} if the user could not be found
    */
   async getUserById(userId: number): Promise<User> {
@@ -318,7 +318,7 @@ export class UsersService {
    * @param username The username to use as a seed when generating a random avatar
    * @param email The email address of the user for using livbravatar if configured
    * @param photoUrl The user-provided photo URL
-   * @return A URL to the user's profile picture.
+   * @returns A URL to the user's profile picture.
    */
   private generatePhotoUrl(
     username: string,
@@ -343,7 +343,7 @@ export class UsersService {
    * Creates a random author style index based on a hashing of the username
    *
    * @param username The username is used as input for the hash
-   * @return An index between 0 and 8 (including 0 and 8)
+   * @returns An index between 0 and 8 (including 0 and 8)
    */
   private generateAuthorStyleIndex(username: string): number {
     let hash = 0;
@@ -358,7 +358,7 @@ export class UsersService {
    *
    * @param user The user to fetch their data for
    * @param authProvider The auth provider used for the current login session
-   * @return The built OwnUserInfoDto
+   * @returns The built OwnUserInfoDto
    */
   toLoginUserInfoDto(
     user: User,

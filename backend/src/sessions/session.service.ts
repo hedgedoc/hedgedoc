@@ -40,7 +40,7 @@ export class SessionService {
    * Returns the currently used session store for usage outside of the HTTP session context
    * Note that this method is also used for connecting the session store with NestJS initially
    *
-   * @return The used session store
+   * @returns The used session store
    */
   getSessionStore(): KeyvSessionStore<SessionState> {
     return this.sessionStore;
@@ -50,7 +50,7 @@ export class SessionService {
    * Finds the username of the user that has the given session id
    *
    * @param sessionId The session id for which the owning user should be found
-   * @return A Promise that either resolves with the username or rejects with an error
+   * @returns A Promise that either resolves with the username or rejects with an error
    */
   async getUserIdForSessionId(
     sessionId: string,
@@ -63,7 +63,7 @@ export class SessionService {
    * Extracts the hedgedoc session cookie from the given {@link IncomingMessage request} and checks if the signature is correct.
    *
    * @param request The http request that contains a session cookie
-   * @return An {@link Optional optional} that either contains the extracted session id or is empty if no session cookie has been found
+   * @returns An {@link Optional optional} that either contains the extracted session id or is empty if no session cookie has been found
    * @throws Error if the cookie has been found but the content is malformed
    * @throws Error if the cookie has been found but the content isn't signed
    */
@@ -79,7 +79,7 @@ export class SessionService {
    * Parses the given session cookie content and extracts the session id
    *
    * @param rawCookie The cookie to parse
-   * @return The extracted session id
+   * @returns The extracted session id
    * @throws Error if the cookie has been found but the content is malformed
    * @throws Error if the cookie has been found but the content isn't signed
    */

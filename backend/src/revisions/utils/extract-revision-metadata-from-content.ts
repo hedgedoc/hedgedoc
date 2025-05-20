@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -31,7 +31,7 @@ interface FrontmatterParserResult {
 /**
  * Parses the frontmatter of the given content and extracts the metadata that are necessary to create a new revision..
  *
- * @param {string} content the revision content that contains the frontmatter.
+ * @param content the revision content that contains the frontmatter.
  */
 export function extractRevisionMetadataFromContent(
   content: string,
