@@ -151,4 +151,13 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
       realtimeNote.announceNoteDeletion();
     }
   }
+
+  @OnEvent(NoteEvent.CLOSE_REALTIME)
+  public closeRealtimeNote(noteId: number): void {
+    const realtimeNote = this.realtimeNoteStore.find(noteId);
+    if (realtimeNote) {
+      this.saveRealtimeNote(realtimeNote);
+      realtimeNote.destroy();
+    }
+  }
 }

@@ -43,7 +43,7 @@ import {
   MaximumDocumentLengthExceededError,
   NotInDBError,
 } from '../errors/errors';
-import { NoteEventMap } from '../events';
+import { NoteEvent, NoteEventMap } from '../events';
 import { GroupsService } from '../groups/groups.service';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { PermissionService } from '../permissions/permission.service';
@@ -265,14 +265,13 @@ export class NoteService {
    * @throws {NotInDBError} if there is no note with this id
    */
   async deleteNote(noteId: Note[FieldNameNote.id]): Promise<void> {
-    // TODO Disconnect realtime clients first
+    this.eventEmitter.emit(NoteEvent.DELETION, noteId);
     const numberOfDeletedNotes = await this.knex(TableNote)
       .where(FieldNameNote.id, noteId)
       .delete();
     if (numberOfDeletedNotes === 0) {
       throw new NotInDBError(`There is no note with the to delete.`);
     }
-    // TODO Message realtime clients
   }
 
   /**
@@ -285,9 +284,8 @@ export class NoteService {
    * @throws {NotInDBError} there is no note with this id or aliases
    */
   async updateNote(noteId: number, noteContent: string): Promise<void> {
-    // TODO Disconnect realtime clients first
+    this.eventEmitter.emit(NoteEvent.CLOSE_REALTIME, noteId);
     await this.revisionsService.createRevision(noteId, noteContent);
-    // TODO Reload realtime note
   }
 
   /**

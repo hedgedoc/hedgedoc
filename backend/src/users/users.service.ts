@@ -16,6 +16,7 @@ import {
   User,
 } from '@hedgedoc/database';
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { createHash } from 'crypto';
 import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
 import { v4 as uuidv4 } from 'uuid';
@@ -68,16 +69,19 @@ export class UsersService {
           [FieldNameUser.username]: username,
           [FieldNameUser.displayName]: displayName,
           [FieldNameUser.email]: email ?? null,
-          [FieldNameUser.photoUrl]: photoUrl ?? null,
+          [FieldNameUser.photoUrl]: this.generatePhotoUrl(
+            username,
+            email,
+            photoUrl,
+          ),
           // TODO Use generatePhotoUrl method to generate a random avatar image
           [FieldNameUser.guestUuid]: null,
-          [FieldNameUser.authorStyle]: 0,
-          // FIXME Set unique authorStyle per user
+          [FieldNameUser.authorStyle]: this.generateAuthorStyleIndex(username),
         },
         [FieldNameUser.id],
       );
       if (newUsers.length !== 1) {
-        throw new Error();
+        throw new Error('User was not added to the database');
       }
       return newUsers[0][FieldNameUser.id];
     } catch {
@@ -105,8 +109,7 @@ export class UsersService {
         [FieldNameUser.email]: null,
         [FieldNameUser.photoUrl]: null,
         [FieldNameUser.guestUuid]: uuid,
-        [FieldNameUser.authorStyle]: 0,
-        // FIXME Set unique authorStyle per user
+        [FieldNameUser.authorStyle]: this.generateAuthorStyleIndex(uuid),
       },
       [FieldNameUser.id],
     );
@@ -228,7 +231,7 @@ export class UsersService {
    * @return The found user object
    * @throws {NotInDBError} if the user could not be found
    */
-  async getUserIdByUsername(username: string): Promise<User[FieldNameUser.id]> {
+  async getUserIdByUsername(username: string): Promise<number> {
     const userId = await this.knex(TableUser)
       .select(FieldNameUser.id)
       .where(FieldNameUser.username, username)
@@ -307,21 +310,47 @@ export class UsersService {
   }
 
   /**
-   * Extract the photoUrl of the user or falls back to libravatar if enabled
+   * Generates the photo url for a user.
+   * When a valid photoUrl is provided, it will be used.
+   * When an email address is provided and libravatar is enabled, this will be used.
+   * Otherwise, a random image will be generated based on the username.
    *
-   * @param user The user of which to get the photo url
-   * @return A URL to the user's profile picture. If the user has no photo and libravatar support is enabled,
-   * a URL to that is returned. Otherwise, undefined is returned to indicate that the frontend needs to generate
-   * a random avatar image based on the username.
+   * @param username The username to use as a seed when generating a random avatar
+   * @param email The email address of the user for using livbravatar if configured
+   * @param photoUrl The user-provided photo URL
+   * @return A URL to the user's profile picture.
    */
-  getPhotoUrl(user: User): string | undefined {
-    if (user[FieldNameUser.photoUrl]) {
-      return user[FieldNameUser.photoUrl];
-    } else {
-      // TODO If libravatar is enabled and the user has an email address, use it to fetch the profile picture from there
-      //  Otherwise return undefined to let the frontend generate a random avatar image (#5010)
-      return undefined;
+  private generatePhotoUrl(
+    username: string,
+    email: string | null,
+    photoUrl: string | null,
+  ): string {
+    if (photoUrl && URL.canParse(photoUrl)) {
+      return photoUrl;
     }
+    if (email && email.length > 0) {
+      // TODO Add config option to enable or disable libravatar
+      const hash = createHash('sha256')
+        .update(email.toLowerCase())
+        .digest('hex');
+      return `https://seccdn.libravatar.org/avatar/${hash}`;
+    }
+    // TODO Generate random fallback image (data URL) with the username as seed
+    return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdj+L+E8T8ABu4CpDyuE+YAAAAASUVORK5CYII=';
+  }
+
+  /**
+   * Creates a random author style index based on a hashing of the username
+   *
+   * @param username The username is used as input for the hash
+   * @return An index between 0 and 8 (including 0 and 8)
+   */
+  private generateAuthorStyleIndex(username: string): number {
+    let hash = 0;
+    for (let i = 0; i < username.length; i++) {
+      hash = username.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return Math.abs(hash % 9);
   }
 
   /**
