@@ -15,6 +15,7 @@ import { AuthConfig } from './config/auth.config';
 import { MediaConfig } from './config/media.config';
 import { ErrorExceptionMapping } from './errors/error-mapping';
 import { ConsoleLoggerService } from './logger/console-logger.service';
+import { runMigrations } from './migrate';
 import { SessionService } from './sessions/session.service';
 import { setupSessionMiddleware } from './utils/session';
 import { setupValidationPipe } from './utils/setup-pipes';
@@ -44,11 +45,9 @@ export async function setupApp(
     );
   }
 
-  logger.log('Starting database migrations... ', 'AppBootstrap');
   const knexConnectionToken = getConnectionToken();
   const knex: Knex = app.get<Knex>(knexConnectionToken);
-  await knex.migrate.latest();
-  logger.log('Finished database migrations... ', 'AppBootstrap');
+  await runMigrations(knex, logger);
 
   // Setup session handling
   setupSessionMiddleware(
