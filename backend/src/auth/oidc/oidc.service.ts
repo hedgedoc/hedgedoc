@@ -69,16 +69,18 @@ export class OidcService {
   }
 
   /**
-   * @async
-   * Fetches the client and its config (issuer, metadata) for the given OIDC configuration.
+   * Fetches the client and its config (issuer, metadata) for the given OIDC configuration
    *
-   * @param {OidcConfig} oidcConfig The OIDC configuration to fetch the client config for
-   * @returns {OidcClientConfigEntry} A promise that resolves to the client configuration.
+   * @param oidcConfig The OIDC configuration to fetch the client config for
+   * @returns A promise that resolves to the client configuration.
    */
   private async fetchClientConfig(
     oidcConfig: OidcConfig,
   ): Promise<OidcClientConfigEntry> {
-    const useAutodiscover = oidcConfig.authorizeUrl === undefined;
+    const useAutodiscover =
+      oidcConfig.authorizeUrl === undefined ||
+      oidcConfig.tokenUrl === undefined ||
+      oidcConfig.userinfoUrl === undefined;
     const issuer = useAutodiscover
       ? await Issuer.discover(oidcConfig.issuer)
       : new Issuer({
@@ -117,7 +119,7 @@ export class OidcService {
   /**
    * Generates a secure code verifier for the OIDC login.
    *
-   * @returns {string} The generated code verifier.
+   * @returns The generated code verifier.
    */
   generateCode(): string {
     return generators.codeVerifier();
@@ -126,7 +128,7 @@ export class OidcService {
   /**
    * Generates a random state for the OIDC login.
    *
-   * @returns {string} The generated state.
+   * @returns The generated state.
    */
   generateState(): string {
     return generators.state();
@@ -135,10 +137,10 @@ export class OidcService {
   /**
    * Generates the authorization URL for the given OIDC identifier and code.
    *
-   * @param {string} oidcIdentifier The identifier of the OIDC configuration
-   * @param {string} code The code verifier generated for the login
-   * @param {string} state The state generated for the login
-   * @returns {string} The generated authorization URL
+   * @param oidcIdentifier The identifier of the OIDC configuration
+   * @param code The code verifier generated for the login
+   * @param state The state generated for the login
+   * @returns The generated authorization URL
    */
   getAuthorizationUrl(
     oidcIdentifier: string,
@@ -163,7 +165,6 @@ export class OidcService {
   }
 
   /**
-   * @async
    * Extracts the user information from the callback and stores them in the session.
    * Afterward, the user information is returned.
    *
@@ -184,8 +185,8 @@ export class OidcService {
     const client = clientConfig.client;
     const oidcConfig = clientConfig.config;
     const params = client.callbackParams(request);
-    const code = request.session.oidcLoginCode;
-    const state = request.session.oidcLoginState;
+    const code = request.session.oidc?.loginCode;
+    const state = request.session.oidc?.loginState;
     const isAutodiscovered = clientConfig.config.authorizeUrl === undefined;
     const callbackMethod = isAutodiscovered
       ? client.callback.bind(client)
@@ -196,7 +197,9 @@ export class OidcService {
       state,
     });
 
-    request.session.oidcIdToken = tokenSet.id_token;
+    request.session.oidc = {
+      idToken: tokenSet.id_token,
+    };
     const userInfoResponse = await client.userinfo(tokenSet);
     const userId = OidcService.getResponseFieldValue(
       userInfoResponse,
@@ -229,22 +232,21 @@ export class OidcService {
       photoUrl: photoUrl ?? null,
       email: email ?? null,
     };
-    request.session.providerUserId = userId;
-    request.session.newUserData = newUserData;
-    // Cleanup: The code isn't necessary anymore
-    request.session.oidcLoginCode = undefined;
-    request.session.oidcLoginState = undefined;
+    request.session.pendingUser = {
+      authProviderType: AuthProviderType.OIDC,
+      authProviderIdentifier: oidcIdentifier,
+      providerUserId: userId,
+      confirmationData: newUserData,
+    };
     return newUserData;
   }
 
   /**
-   * @async
-   * Checks if an identity exists for a given OIDC user and returns it if it does.
+   * Checks if an identity exists for a given OIDC user and returns it if it does
    *
-   * @param {string} oidcIdentifier The identifier of the OIDC configuration
-   * @param {string} oidcUserId The id of the user in the OIDC system
-   * @returns {Identity} The identity if it exists
-   * @returns {null} when the identity does not exist
+   * @param oidcIdentifier The identifier of the OIDC configuration
+   * @param oidcUserId The id of the user in the OIDC system
+   * @returns The identity if it exists, null otherwise
    */
   async getExistingOidcIdentity(
     oidcIdentifier: string,
@@ -277,11 +279,10 @@ export class OidcService {
   }
 
   /**
-   * Returns the logout URL for the given request if the user is logged in with OIDC.
+   * Returns the logout URL for the given request if the user is logged in with OIDC
    *
-   * @param {RequestWithSession} request The request containing the session
-   * @returns {string} The logout URL if the user is logged in with OIDC
-   * @returns {null} when there is no logout URL to redirect to
+   * @param request The request containing the session
+   * @returns The logout URL if the user is logged in with OIDC, or null if there is no URL to redirect to
    */
   getLogoutUrl(request: RequestWithSession): string | null {
     const oidcIdentifier = request.session.authProviderIdentifier;
@@ -296,7 +297,7 @@ export class OidcService {
     }
     const issuer = clientConfig.issuer;
     const endSessionEndpoint = issuer.metadata.end_session_endpoint;
-    const idToken = request.session.oidcIdToken;
+    const idToken = request.session.oidc?.idToken;
     if (!endSessionEndpoint) {
       return null;
     }
@@ -304,12 +305,12 @@ export class OidcService {
   }
 
   /**
-   * Returns a specific field from the userinfo object or a default value.
+   * Returns a specific field from the userinfo object or a default value
    *
-   * @param {UserinfoResponse} response The response from the OIDC userinfo endpoint
-   * @param {string} field The field to get from the response
-   * @param {string|undefined} defaultValue The default value to return if the value is empty
-   * @returns {string|undefined} The value of the field from the response or the default value
+   * @param response The response from the OIDC userinfo endpoint
+   * @param field The field to get from the response
+   * @param defaultValue The default value to return if the value is empty
+   * @returns The value of the field from the response or the default value
    */
   private static getResponseFieldValue<T extends string | undefined>(
     response: UserinfoResponse,

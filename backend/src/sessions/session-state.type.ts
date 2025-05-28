@@ -7,6 +7,31 @@ import { AuthProviderType, PendingUserInfoDto } from '@hedgedoc/commons';
 import { FieldNameUser, User } from '@hedgedoc/database';
 import { Cookie } from 'express-session';
 
+interface OidcAuthSessionState {
+  /** The id token to identify a user session with an OIDC auth provider, required for the logout */
+  idToken?: string;
+
+  /** The (random) OIDC code for verifying that OIDC responses match the OIDC requests */
+  loginCode?: string;
+
+  /** The (random) OIDC state for verifying that OIDC responses match the OIDC requests */
+  loginState?: string;
+}
+
+interface PendingUserSessionState {
+  /** The pending user confirmation data */
+  confirmationData?: PendingUserInfoDto;
+
+  /** The pending user auth provider type */
+  authProviderType?: AuthProviderType;
+
+  /** The pending user auth provider identifier */
+  authProviderIdentifier?: string;
+
+  /** The pending user id as provided from the external auth provider, required for matching to a HedgeDoc identity */
+  providerUserId?: string;
+}
+
 export interface SessionState {
   /** Details about the currently used session cookie */
   cookie: Cookie;
@@ -14,24 +39,15 @@ export interface SessionState {
   /** Contains the username if logged in completely, is undefined when not being logged in */
   userId?: User[FieldNameUser.id];
 
-  /** The auth provider that is used for the current login or pending login */
+  /** The auth provider that is used for the current login */
   authProviderType?: AuthProviderType;
 
-  /** The identifier of the auth provider that is used for the current login or pending login */
+  /** The identifier of the auth provider that is used for the current login */
   authProviderIdentifier?: string;
 
-  /** The id token to identify a user session with an OIDC auth provider, required for the logout */
-  oidcIdToken?: string;
-
-  /** The (random) OIDC code for verifying that OIDC responses match the OIDC requests */
-  oidcLoginCode?: string;
-
-  /** The (random) OIDC state for verifying that OIDC responses match the OIDC requests */
-  oidcLoginState?: string;
-
-  /** The user id as provided from the external auth provider, required for matching to a HedgeDoc identity */
-  providerUserId?: string;
+  /** Session data used on OIDC login */
+  oidc?: OidcAuthSessionState;
 
   /** The user data of the user that is currently being created */
-  newUserData?: PendingUserInfoDto;
+  pendingUser?: PendingUserSessionState;
 }
