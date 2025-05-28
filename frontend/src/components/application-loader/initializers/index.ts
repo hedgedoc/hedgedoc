@@ -9,6 +9,7 @@ import { loadDarkMode } from './load-dark-mode'
 import { setUpI18n } from './setupI18n'
 import { loadFromLocalStorage } from '../../../redux/editor-config/methods'
 import { fetchAndSetUser } from '../../login-page/utils/fetch-and-set-user'
+import { loginOrRegisterGuest } from './login-or-register-guest'
 
 const logger = new Logger('Application Loader')
 
@@ -64,6 +65,10 @@ export const createSetUpTaskList = (): InitTask[] => {
     {
       name: 'Fetch user information',
       task: fetchUserInformation
+    },
+    {
+      name: 'Register or login guest user',
+      task: loginOrRegisterGuest
     },
     {
       name: 'Load preferences',

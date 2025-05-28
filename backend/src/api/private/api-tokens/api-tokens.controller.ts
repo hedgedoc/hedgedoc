@@ -40,7 +40,9 @@ export class ApiTokensController {
 
   @Get()
   @OpenApi(200)
-  async getUserTokens(@RequestUserId() userId: number): Promise<ApiTokenDto[]> {
+  async getUserTokens(
+    @RequestUserId({ forbidGuests: true }) userId: number,
+  ): Promise<ApiTokenDto[]> {
     return (await this.apiTokenService.getTokensOfUserById(userId)).map(
       (token) => this.apiTokenService.toAuthTokenDto(token),
     );
@@ -50,7 +52,7 @@ export class ApiTokensController {
   @OpenApi(201)
   async postTokenRequest(
     @Body() createDto: ApiTokenCreateDto,
-    @RequestUserId() userId: User[FieldNameUser.id],
+    @RequestUserId({ forbidGuests: true }) userId: User[FieldNameUser.id],
   ): Promise<ApiTokenWithSecretDto> {
     return await this.apiTokenService.createToken(
       userId,
@@ -62,7 +64,7 @@ export class ApiTokensController {
   @Delete('/:keyId')
   @OpenApi(204, 404)
   async deleteToken(
-    @RequestUserId() userId: number,
+    @RequestUserId({ forbidGuests: true }) userId: number,
     @Param('keyId') keyId: string,
   ): Promise<void> {
     await this.apiTokenService.removeToken(keyId, userId);

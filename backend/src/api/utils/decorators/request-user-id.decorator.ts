@@ -13,7 +13,7 @@ import {
 import { CompleteRequest } from '../request.type';
 
 type RequestUserIdParameter = {
-  guestsAllowed: boolean;
+  forbidGuests: boolean;
 };
 
 /**
@@ -26,14 +26,13 @@ type RequestUserIdParameter = {
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const RequestUserId = createParamDecorator(
   (
-    data: RequestUserIdParameter = { guestsAllowed: false },
+    data: RequestUserIdParameter = { forbidGuests: false },
     ctx: ExecutionContext,
   ) => {
     const request: CompleteRequest = ctx.switchToHttp().getRequest();
     if (
       !request.authProviderType ||
-      (request.authProviderType === AuthProviderType.GUEST &&
-        !data.guestsAllowed)
+      (request.authProviderType === AuthProviderType.GUEST && data.forbidGuests)
     ) {
       throw new UnauthorizedException("You're not logged in");
     }

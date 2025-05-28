@@ -32,7 +32,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../auth/session.guard';
-import { NotInDBError } from '../../../errors/errors';
+import { NotInDBError, PermissionError } from '../../../errors/errors';
 import { GroupsService } from '../../../groups/groups.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
@@ -70,10 +70,7 @@ export class NotesController {
   @OpenApi(200)
   @RequirePermission(RequiredPermission.READ)
   @UseInterceptors(GetNoteIdInterceptor)
-  async getNote(
-    @RequestUserId({ guestsAllowed: true }) userId: number,
-    @RequestNoteId() noteId: number,
-  ): Promise<NoteDto> {
+  async getNote(@RequestNoteId() noteId: number): Promise<NoteDto> {
     return await this.noteService.toNoteDto(noteId);
   }
 
@@ -92,7 +89,7 @@ export class NotesController {
   @OpenApi(201, 413)
   @RequirePermission(RequiredPermission.CREATE)
   async createNote(
-    @RequestUserId({ guestsAllowed: true }) userId: number,
+    @RequestUserId() userId: number,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
     const createdNoteId = await this.noteService.createNote(text, userId);
@@ -103,7 +100,7 @@ export class NotesController {
   @OpenApi(201, 400, 404, 409, 413)
   @RequirePermission(RequiredPermission.CREATE)
   async createNamedNote(
-    @RequestUserId({ guestsAllowed: true }) userId: number,
+    @RequestUserId() userId: number,
     @Param('noteAlias') noteAlias: string,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
@@ -124,6 +121,12 @@ export class NotesController {
     @RequestNoteId() noteId: number,
     @Body() noteMediaDeletionDto: NoteMediaDeletionDto,
   ): Promise<void> {
+    const isOwner = await this.permissionService.isOwner(userId, noteId);
+    if (!isOwner) {
+      throw new PermissionError(
+        'You do not have the permission to delete this note.',
+      );
+    }
     const mediaUploads =
       await this.mediaService.getMediaUploadUuidsByNoteId(noteId);
     for (const mediaUpload of mediaUploads) {
@@ -141,7 +144,6 @@ export class NotesController {
   @RequirePermission(RequiredPermission.READ)
   @Get(':noteAlias/metadata')
   async getNoteMetadata(
-    @RequestUserId({ guestsAllowed: true }) userId: number,
     @RequestNoteId() noteId: number,
   ): Promise<NoteMetadataDto> {
     return await this.noteService.toNoteMetadataDto(noteId);
@@ -152,7 +154,6 @@ export class NotesController {
   @RequirePermission(RequiredPermission.READ)
   @UseInterceptors(GetNoteIdInterceptor)
   async getNoteRevisions(
-    @RequestUserId({ guestsAllowed: true }) userId: number,
     @RequestNoteId() noteId: number,
   ): Promise<RevisionMetadataDto[]> {
     return await this.revisionsService.getAllRevisionMetadataDto(noteId);
