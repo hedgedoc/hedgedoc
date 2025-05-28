@@ -45,10 +45,14 @@ export class OidcController {
   ): { url: string } {
     const code = this.oidcService.generateCode();
     const state = this.oidcService.generateState();
-    request.session.oidcLoginCode = code;
-    request.session.oidcLoginState = state;
-    request.session.authProviderType = AuthProviderType.OIDC;
-    request.session.authProviderIdentifier = oidcIdentifier;
+    request.session.oidc = {
+      loginCode: code,
+      loginState: state,
+    };
+    request.session.pendingUser = {
+      authProviderType: AuthProviderType.OIDC,
+      authProviderIdentifier: oidcIdentifier,
+    };
     const authorizationUrl = this.oidcService.getAuthorizationUrl(
       oidcIdentifier,
       code,
@@ -69,12 +73,11 @@ export class OidcController {
         oidcIdentifier,
         request,
       );
-      const oidcUserIdentifier = request.session.providerUserId;
+      const oidcUserIdentifier = request.session.pendingUser?.providerUserId;
       if (!oidcUserIdentifier) {
         this.logger.log('No OIDC user identifier in callback', 'callback');
         throw new UnauthorizedException('No OIDC user identifier found');
       }
-      request.session.authProviderType = AuthProviderType.OIDC;
       const identity = await this.oidcService.getExistingOidcIdentity(
         oidcIdentifier,
         oidcUserIdentifier,
@@ -82,7 +85,6 @@ export class OidcController {
       const mayUpdate = this.identityService.mayUpdateIdentity(oidcIdentifier);
 
       if (identity === null) {
-        request.session.newUserData = userInfo;
         return { url: '/new-user' };
       }
 
@@ -97,6 +99,9 @@ export class OidcController {
       }
 
       request.session.userId = userId;
+      request.session.authProviderType = AuthProviderType.OIDC;
+      request.session.authProviderIdentifier = oidcIdentifier;
+      request.session.pendingUser = undefined;
       return { url: '/' };
     } catch (error) {
       if (error instanceof HttpException) {

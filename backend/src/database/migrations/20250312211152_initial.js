@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 /* eslint-disable */
 const {
   AuthProviderType,
@@ -83,7 +89,8 @@ const up = async function (knex) {
       .unsigned()
       .notNullable()
       .references(FieldNameUser.id)
-      .inTable(TableUser);
+      .inTable(TableUser)
+      .onDelete('CASCADE');
   });
 
   // Create aliases table
@@ -97,7 +104,8 @@ const up = async function (knex) {
       .unsigned()
       .notNullable()
       .references(FieldNameNote.id)
-      .inTable(TableNote);
+      .inTable(TableNote)
+      .onDelete('CASCADE');
     table.boolean(FieldNameAlias.isPrimary).nullable();
     table.unique([FieldNameAlias.noteId, FieldNameAlias.isPrimary], {
       indexName: 'only_one_note_can_be_primary',
@@ -113,7 +121,8 @@ const up = async function (knex) {
       .unsigned()
       .notNullable()
       .references(FieldNameUser.id)
-      .inTable(TableUser);
+      .inTable(TableUser)
+      .onDelete('CASCADE');
     table.string(FieldNameApiToken.label).notNullable();
     table.string(FieldNameApiToken.secretHash).notNullable();
     table
@@ -130,7 +139,8 @@ const up = async function (knex) {
       .unsigned()
       .notNullable()
       .references(FieldNameUser.id)
-      .inTable(TableUser);
+      .inTable(TableUser)
+      .onDelete('CASCADE');
     table.enu(
       FieldNameIdentity.providerType,
       [AuthProviderType.LDAP, AuthProviderType.LOCAL, AuthProviderType.OIDC], // AuthProviderType.GUEST is not relevant for the DB
@@ -168,13 +178,15 @@ const up = async function (knex) {
       .unsigned()
       .notNullable()
       .references(FieldNameUser.id)
-      .inTable(TableUser);
+      .inTable(TableUser)
+      .onDelete('CASCADE');
     table
       .integer(FieldNameGroupUser.groupId)
       .unsigned()
       .notNullable()
       .references(FieldNameGroup.id)
-      .inTable(TableGroup);
+      .inTable(TableGroup)
+      .onDelete('CASCADE');
     table.primary([FieldNameGroupUser.userId, FieldNameGroupUser.groupId]);
   });
 
@@ -186,7 +198,8 @@ const up = async function (knex) {
       .unsigned()
       .notNullable()
       .references(FieldNameNote.id)
-      .inTable(TableNote);
+      .inTable(TableNote)
+      .onDelete('CASCADE');
     table.text(FieldNameRevision.patch).notNullable();
     table.text(FieldNameRevision.content).notNullable();
     table.string(FieldNameRevision.title).notNullable();
@@ -303,7 +316,8 @@ const up = async function (knex) {
       .unsigned()
       .nullable()
       .references(FieldNameNote.id)
-      .inTable(TableNote);
+      .inTable(TableNote)
+      .onDelete('SET NULL');
     table
       .integer(FieldNameMediaUpload.userId)
       .unsigned()
@@ -340,13 +354,15 @@ const up = async function (knex) {
       .unsigned()
       .notNullable()
       .references(FieldNameUser.id)
-      .inTable(TableUser);
+      .inTable(TableUser)
+      .onDelete('CASCADE');
     table
       .integer(FieldNameUserPinnedNote.noteId)
       .unsigned()
       .notNullable()
       .references(FieldNameNote.id)
-      .inTable(TableNote);
+      .inTable(TableNote)
+      .onDelete('CASCADE');
     table.primary([
       FieldNameUserPinnedNote.userId,
       FieldNameUserPinnedNote.noteId,

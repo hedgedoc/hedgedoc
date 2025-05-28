@@ -5,8 +5,8 @@
  */
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
-import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 import type { UpdateUserInfoDto, LoginUserInfoDto, MediaUploadDto } from '@hedgedoc/commons'
+import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
 
 /**
  * Returns metadata about the currently signed-in user from the API.
@@ -36,7 +36,7 @@ export const deleteUser = async (): Promise<void> => {
  * @throws {Error} when the api request wasn't successful.
  */
 export const updateUser = async (displayName: string | null, email: string | null): Promise<void> => {
-  await new PostApiRequestBuilder<void, UpdateUserInfoDto>('me/profile')
+  await new PutApiRequestBuilder<void, UpdateUserInfoDto>('me/profile')
     .withJsonBody({
       displayName,
       email

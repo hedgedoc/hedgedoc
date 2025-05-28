@@ -54,9 +54,6 @@ export class LdapController {
       loginDto.password,
     );
     try {
-      request.session.authProviderType = AuthProviderType.LDAP;
-      request.session.authProviderIdentifier = ldapIdentifier;
-      request.session.providerUserId = userInfo.id;
       const identity =
         await this.identityService.getIdentityFromUserIdAndProviderType(
           userInfo.id,
@@ -71,11 +68,18 @@ export class LdapController {
           userInfo.photoUrl,
         );
       }
+      request.session.authProviderType = AuthProviderType.LDAP;
+      request.session.authProviderIdentifier = ldapIdentifier;
       request.session.userId = identity[FieldNameIdentity.userId];
       return { newUser: false };
     } catch (error) {
       if (error instanceof NotInDBError) {
-        request.session.newUserData = userInfo;
+        request.session.pendingUser = {
+          authProviderType: AuthProviderType.LDAP,
+          authProviderIdentifier: ldapIdentifier,
+          confirmationData: userInfo,
+          providerUserId: userInfo.id,
+        };
         return { newUser: true };
       }
       this.logger.error(`Error during LDAP login: ${String(error)}`);

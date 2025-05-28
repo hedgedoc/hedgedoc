@@ -68,14 +68,10 @@ export class AuthController {
   getPendingUserData(
     @Req() request: RequestWithSession,
   ): Partial<PendingUserInfoDto> {
-    if (
-      !request.session.newUserData ||
-      !request.session.authProviderIdentifier ||
-      !request.session.authProviderType
-    ) {
+    if (!request.session.pendingUser?.confirmationData) {
       throw new BadRequestException('No pending user data');
     }
-    return request.session.newUserData;
+    return request.session.pendingUser.confirmationData;
   }
 
   @Put('pending-user')
@@ -85,32 +81,33 @@ export class AuthController {
     @Body() pendingUserConfirmationData: PendingUserConfirmationDto,
   ): Promise<void> {
     if (
-      !request.session.newUserData ||
-      !request.session.authProviderIdentifier ||
-      !request.session.authProviderType ||
-      !request.session.providerUserId
+      !request.session.pendingUser?.confirmationData ||
+      !request.session.pendingUser?.authProviderType ||
+      !request.session.pendingUser?.authProviderIdentifier ||
+      !request.session.pendingUser?.providerUserId
     ) {
       throw new BadRequestException('No pending user data');
     }
     request.session.userId =
       await this.identityService.createUserWithIdentityFromPendingUserConfirmation(
-        request.session.newUserData,
+        request.session.pendingUser.confirmationData,
         pendingUserConfirmationData,
-        request.session.authProviderType,
-        request.session.authProviderIdentifier,
-        request.session.providerUserId,
+        request.session.pendingUser.authProviderType,
+        request.session.pendingUser.authProviderIdentifier,
+        request.session.pendingUser.providerUserId,
       );
+    request.session.authProviderType =
+      request.session.pendingUser.authProviderType;
+    request.session.authProviderIdentifier =
+      request.session.pendingUser.authProviderIdentifier;
     // Cleanup
-    request.session.newUserData = undefined;
+    request.session.pendingUser = undefined;
   }
 
   @Delete('pending-user')
   @OpenApi(204, 400)
   deletePendingUserData(@Req() request: RequestWithSession): void {
-    request.session.newUserData = undefined;
-    request.session.authProviderIdentifier = undefined;
-    request.session.authProviderType = undefined;
-    request.session.providerUserId = undefined;
-    request.session.oidcIdToken = undefined;
+    request.session.pendingUser = undefined;
+    request.session.oidc = undefined;
   }
 }

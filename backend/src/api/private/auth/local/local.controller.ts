@@ -59,6 +59,7 @@ export class LocalController {
     // Log the user in after registration
     request.session.authProviderType = AuthProviderType.LOCAL;
     request.session.userId = userId;
+    request.session.pendingUser = undefined;
   }
 
   @UseGuards(LoginEnabledGuard, SessionGuard)
@@ -98,6 +99,7 @@ export class LocalController {
       );
       request.session.userId = identity[FieldNameIdentity.userId];
       request.session.authProviderType = AuthProviderType.LOCAL;
+      request.session.pendingUser = undefined;
     } catch (error) {
       this.logger.log(`Failed to log in user: ${String(error)}`, 'login');
       throw new UnauthorizedException('Invalid username or password');
