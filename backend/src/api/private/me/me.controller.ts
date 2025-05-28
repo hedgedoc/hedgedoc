@@ -66,7 +66,7 @@ export class MeController {
   @Put('profile')
   @OpenApi(200)
   async updateProfile(
-    @RequestUserId() userId: number,
+    @RequestUserId({ forbidGuests: true }) userId: number,
     @Body('displayName') newDisplayName: string,
   ): Promise<void> {
     await this.userService.updateUser(
