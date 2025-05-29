@@ -3,7 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { DisconnectReason, MessageTransporter } from '@hedgedoc/commons';
+import {
+  DisconnectReason,
+  MessageTransporter,
+  PermissionLevel,
+} from '@hedgedoc/commons';
 import { FieldNameUser } from '@hedgedoc/database';
 import { OnGatewayConnection, WebSocketGateway } from '@nestjs/websockets';
 import { IncomingMessage } from 'http';
@@ -11,7 +15,6 @@ import WebSocket from 'ws';
 
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { NoteService } from '../../notes/note.service';
-import { NotePermissionLevel } from '../../permissions/note-permission.enum';
 import { PermissionService } from '../../permissions/permission.service';
 import { SessionService } from '../../sessions/session.service';
 import { UsersService } from '../../users/users.service';
@@ -67,7 +70,7 @@ export class WebsocketGateway implements OnGatewayConnection {
         userId,
         noteId,
       );
-      if (notePermission < NotePermissionLevel.READ) {
+      if (notePermission < PermissionLevel.READ) {
         this.logger.log(
           `Access denied to note '${noteId}' for user '${userId}'`,
           'handleConnection',
@@ -75,7 +78,7 @@ export class WebsocketGateway implements OnGatewayConnection {
         clientSocket.close(DisconnectReason.USER_NOT_PERMITTED);
         return;
       }
-      const acceptEdits: boolean = notePermission >= NotePermissionLevel.WRITE;
+      const acceptEdits: boolean = notePermission >= PermissionLevel.WRITE;
 
       this.logger.debug(
         `New realtime connection to note '${noteId}' by user '${userId}' from ${

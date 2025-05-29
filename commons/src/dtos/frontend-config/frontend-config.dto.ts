@@ -5,7 +5,7 @@
  */
 
 import { z } from 'zod'
-import { PermissionLevel } from '../permissions/index.js'
+import { PermissionLevel } from '../../permissions/index.js'
 import { ServerVersionSchema } from '../monitoring/index.js'
 import { BrandingSchema } from './branding.dto.js'
 import { SpecialUrlSchema } from './special-urls.dto.js'

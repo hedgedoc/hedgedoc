@@ -13,6 +13,7 @@ import {
   NotePermissionsDto,
   NotePermissionsSchema,
   NoteSchema,
+  PermissionLevel,
   RevisionDto,
   RevisionMetadataDto,
   RevisionMetadataSchema,
@@ -38,7 +39,6 @@ import { NoteService } from '../../../notes/note.service';
 import { PermissionService } from '../../../permissions/permission.service';
 import { PermissionsGuard } from '../../../permissions/permissions.guard';
 import { RequirePermission } from '../../../permissions/require-permission.decorator';
-import { RequiredPermission } from '../../../permissions/required-permission.enum';
 import { RevisionsService } from '../../../revisions/revisions.service';
 import { UsersService } from '../../../users/users.service';
 import { MarkdownBody } from '../../utils/decorators/markdown-body.decorator';
@@ -66,7 +66,7 @@ export class NotesController {
     this.logger.setContext(NotesController.name);
   }
 
-  @RequirePermission(RequiredPermission.CREATE)
+  @RequirePermission(PermissionLevel.FULL)
   @Post()
   @OpenApi(201, 403, 409, 413)
   async createNote(
@@ -79,7 +79,7 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.READ)
+  @RequirePermission(PermissionLevel.READ)
   @Get(':noteIdOrAlias')
   @OpenApi(
     {
@@ -97,7 +97,7 @@ export class NotesController {
     return await this.noteService.toNoteDto(noteId);
   }
 
-  @RequirePermission(RequiredPermission.CREATE)
+  @RequirePermission(PermissionLevel.FULL)
   @Post(':noteAlias')
   @OpenApi(
     {
@@ -121,7 +121,7 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.OWNER)
+  @RequirePermission(PermissionLevel.FULL)
   @Delete(':noteIdOrAlias')
   @OpenApi(204, 403, 404, 500)
   async deleteNote(
@@ -145,7 +145,7 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.WRITE)
+  @RequirePermission(PermissionLevel.WRITE)
   @Put(':noteIdOrAlias')
   @OpenApi(
     {
@@ -167,7 +167,7 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.READ)
+  @RequirePermission(PermissionLevel.READ)
   @Get(':noteIdOrAlias/content')
   @OpenApi(
     {
@@ -186,7 +186,7 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.READ)
+  @RequirePermission(PermissionLevel.READ)
   @Get(':noteIdOrAlias/metadata')
   @OpenApi(
     {
@@ -204,7 +204,7 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.READ)
+  @RequirePermission(PermissionLevel.READ)
   @Get(':noteIdOrAlias/metadata/permissions')
   @OpenApi(
     {
@@ -218,11 +218,11 @@ export class NotesController {
   async getPermissions(
     @RequestNoteId() noteId: number,
   ): Promise<NotePermissionsDto> {
-    return await this.permissionService.getPermissionsForNote(noteId);
+    return await this.permissionService.getPermissionsDtoForNote(noteId);
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.OWNER)
+  @RequirePermission(PermissionLevel.FULL)
   @Put(':noteIdOrAlias/metadata/permissions/users/:userName')
   @OpenApi(
     {
@@ -245,11 +245,11 @@ export class NotesController {
       targetUserId,
       canEdit,
     );
-    return await this.permissionService.getPermissionsForNote(noteId);
+    return await this.permissionService.getPermissionsDtoForNote(noteId);
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.OWNER)
+  @RequirePermission(PermissionLevel.FULL)
   @Delete(':noteIdOrAlias/metadata/permissions/users/:userName')
   @OpenApi(
     {
@@ -267,11 +267,11 @@ export class NotesController {
   ): Promise<NotePermissionsDto> {
     const targetUserId = await this.userService.getUserIdByUsername(username);
     await this.permissionService.removeUserPermission(noteId, targetUserId);
-    return await this.permissionService.getPermissionsForNote(noteId);
+    return await this.permissionService.getPermissionsDtoForNote(noteId);
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.OWNER)
+  @RequirePermission(PermissionLevel.FULL)
   @Put(':noteIdOrAlias/metadata/permissions/groups/:groupName')
   @OpenApi(
     {
@@ -290,11 +290,11 @@ export class NotesController {
   ): Promise<NotePermissionsDto> {
     const groupId = await this.groupService.getGroupIdByName(groupName);
     await this.permissionService.setGroupPermission(noteId, groupId, canEdit);
-    return await this.permissionService.getPermissionsForNote(noteId);
+    return await this.permissionService.getPermissionsDtoForNote(noteId);
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.OWNER)
+  @RequirePermission(PermissionLevel.FULL)
   @Delete(':noteIdOrAlias/metadata/permissions/groups/:groupName')
   @OpenApi(
     {
@@ -311,11 +311,11 @@ export class NotesController {
   ): Promise<NotePermissionsDto> {
     const groupId = await this.groupService.getGroupIdByName(groupName);
     await this.permissionService.removeGroupPermission(noteId, groupId);
-    return await this.permissionService.getPermissionsForNote(noteId);
+    return await this.permissionService.getPermissionsDtoForNote(noteId);
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.OWNER)
+  @RequirePermission(PermissionLevel.FULL)
   @Put(':noteIdOrAlias/metadata/permissions/owner')
   @OpenApi(
     {
@@ -337,7 +337,7 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.READ)
+  @RequirePermission(PermissionLevel.READ)
   @Get(':noteIdOrAlias/revisions')
   @OpenApi(
     {
@@ -356,7 +356,7 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.READ)
+  @RequirePermission(PermissionLevel.READ)
   @Get(':noteIdOrAlias/revisions/:revisionUuid')
   @OpenApi(
     {
@@ -374,7 +374,7 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.READ)
+  @RequirePermission(PermissionLevel.READ)
   @Get(':noteIdOrAlias/media')
   @OpenApi({
     code: 200,

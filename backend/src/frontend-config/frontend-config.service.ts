@@ -47,7 +47,7 @@ export class FrontendConfigService {
    */
   async getFrontendConfig(): Promise<FrontendConfigDto> {
     return {
-      guestAccess: this.noteConfig.guestAccess,
+      guestAccess: this.noteConfig.permissions.maxGuestLevel,
       allowRegister: this.authConfig.local.enableRegister,
       allowProfileEdits: this.authConfig.common.allowProfileEdits,
       allowChooseUsername: this.authConfig.common.allowChooseUsername,

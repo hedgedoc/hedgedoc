@@ -7,7 +7,6 @@ import { PermissionLevel } from '@hedgedoc/commons';
 import { ConfigFactoryKeyHost, registerAs } from '@nestjs/config';
 import { ConfigFactory } from '@nestjs/config/dist/interfaces';
 
-import { DefaultAccessLevel } from '../default-access-level.enum';
 import { NoteConfig } from '../note.config';
 
 export function createDefaultMockNoteConfig(): NoteConfig {
@@ -15,12 +14,12 @@ export function createDefaultMockNoteConfig(): NoteConfig {
     maxDocumentLength: 100000,
     forbiddenNoteIds: ['forbiddenNoteId'],
     permissions: {
+      maxGuestLevel: PermissionLevel.FULL,
       default: {
-        everyone: DefaultAccessLevel.READ,
-        loggedIn: DefaultAccessLevel.WRITE,
+        everyone: PermissionLevel.READ,
+        loggedIn: PermissionLevel.WRITE,
       },
     },
-    guestAccess: PermissionLevel.CREATE,
     revisionRetentionDays: 0,
   };
 }

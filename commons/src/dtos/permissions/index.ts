@@ -5,7 +5,6 @@
  */
 
 export * from './change-note-owner.dto.js'
-export * from './permission-level.enum.js'
 export * from './note-group-permission-entry.dto.js'
 export * from './note-group-permission-update.dto.js'
 export * from './note-permissions-update.dto.js'

@@ -9,7 +9,7 @@ import { NotePermissionsDto, SpecialGroup } from '../dtos/index.js'
  * Checks if the given user is the owner of a note.
  *
  * @param permissions The permissions of the note to check
- * @param user The username of the user
+ * @param username The username of the user
  * @return True if the user is the owner of the note
  */
 export const userIsOwner = (
