@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { PermissionLevel } from '@hedgedoc/commons';
 import { FieldNameRevision } from '@hedgedoc/database';
 import { Optional } from '@mrdrogdrog/optional';
 import { BeforeApplicationShutdown, Inject, Injectable } from '@nestjs/common';
@@ -12,7 +13,6 @@ import { SchedulerRegistry } from '@nestjs/schedule';
 import appConfiguration, { AppConfig } from '../../config/app.config';
 import { NoteEvent } from '../../events';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
-import { NotePermissionLevel } from '../../permissions/note-permission.enum';
 import { PermissionService } from '../../permissions/permission.service';
 import { RevisionsService } from '../../revisions/revisions.service';
 import { RealtimeConnection } from './realtime-connection';
@@ -132,14 +132,15 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
     noteId: number,
   ): Promise<void> {
     for (const connection of connections) {
-      const permission = await this.permissionService.determinePermission(
-        connection.getUserId(),
-        noteId,
-      );
-      if (permission === NotePermissionLevel.DENY) {
+      const userPermissionLevel =
+        await this.permissionService.determinePermission(
+          connection.getUserId(),
+          noteId,
+        );
+      if (userPermissionLevel === PermissionLevel.DENY) {
         connection.getTransporter().disconnect();
       } else {
-        connection.acceptEdits = permission > NotePermissionLevel.READ;
+        connection.acceptEdits = userPermissionLevel > PermissionLevel.READ;
       }
     }
   }

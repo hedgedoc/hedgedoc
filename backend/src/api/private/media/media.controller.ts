@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { MediaUploadDto, MediaUploadSchema } from '@hedgedoc/commons';
+import { PermissionLevel } from '@hedgedoc/commons';
 import {
   BadRequestException,
   Controller,
@@ -26,7 +27,6 @@ import { MulterFile } from '../../../media/multer-file.interface';
 import { PermissionService } from '../../../permissions/permission.service';
 import { PermissionsGuard } from '../../../permissions/permissions.guard';
 import { RequirePermission } from '../../../permissions/require-permission.decorator';
-import { RequiredPermission } from '../../../permissions/required-permission.enum';
 import { OpenApi } from '../../utils/decorators/openapi.decorator';
 import { RequestNoteId } from '../../utils/decorators/request-note-id.decorator';
 import { RequestUserId } from '../../utils/decorators/request-user-id.decorator';
@@ -65,7 +65,7 @@ export class MediaController {
   @UseGuards(PermissionsGuard)
   @UseInterceptors(FileInterceptor('file'))
   @UseInterceptors(NoteHeaderInterceptor)
-  @RequirePermission(RequiredPermission.WRITE)
+  @RequirePermission(PermissionLevel.WRITE)
   @OpenApi(
     {
       code: 201,

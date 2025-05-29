@@ -34,7 +34,7 @@ export const NewNoteButton: React.FC = () => {
       })
   }, [router, showErrorNotification])
 
-  if (!isLoggedIn && guestAccessLevel !== PermissionLevel.CREATE) {
+  if (!isLoggedIn && guestAccessLevel !== PermissionLevel.FULL) {
     return null
   }
 

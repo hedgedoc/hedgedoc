@@ -7,6 +7,7 @@ import {
   NoteDto,
   NoteMetadataDto,
   NotePermissionsDto,
+  PermissionLevel,
   SpecialGroup,
 } from '@hedgedoc/commons';
 import {
@@ -35,7 +36,6 @@ import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
 
 import { AliasService } from '../alias/alias.service';
-import { DefaultAccessLevel } from '../config/default-access-level.enum';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import {
   ForbiddenIdError,
@@ -49,7 +49,6 @@ import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { PermissionService } from '../permissions/permission.service';
 import { RealtimeNoteStore } from '../realtime/realtime-note/realtime-note-store';
 import { RevisionsService } from '../revisions/revisions.service';
-import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class NoteService {
@@ -58,7 +57,6 @@ export class NoteService {
     private readonly knex: Knex,
 
     private readonly logger: ConsoleLoggerService,
-    @Inject(UsersService) private usersService: UsersService,
     @Inject(GroupsService) private groupsService: GroupsService,
     private revisionsService: RevisionsService,
     @Inject(noteConfiguration.KEY)
@@ -143,22 +141,12 @@ export class NoteService {
         transaction,
       );
 
-      const isUserRegistered = await this.usersService.isRegisteredUser(
-        ownerUserId,
-        transaction,
-      );
-
-      const everyoneAccessLevel = isUserRegistered
-        ? // Use the default access level from the config for registered users
-          this.noteConfig.permissions.default.everyone
-        : // If the owner is a guest, this is an anonymous note
-          // Anonymous notes are always writeable by everyone
-          DefaultAccessLevel.WRITE;
-
-      const loggedInUsersAccessLevel =
+      const everyoneDefaultAccessLevel =
+        this.noteConfig.permissions.default.everyone;
+      const loggedInUsersDefaultAccessLevel =
         this.noteConfig.permissions.default.loggedIn;
 
-      if (everyoneAccessLevel !== DefaultAccessLevel.NONE) {
+      if (everyoneDefaultAccessLevel !== PermissionLevel.DENY) {
         const everyoneAccessGroupId = await this.groupsService.getGroupIdByName(
           SpecialGroup.EVERYONE,
           transaction,
@@ -166,12 +154,12 @@ export class NoteService {
         await this.permissionService.setGroupPermission(
           noteId,
           everyoneAccessGroupId,
-          everyoneAccessLevel === DefaultAccessLevel.WRITE,
+          everyoneDefaultAccessLevel === PermissionLevel.WRITE,
           transaction,
         );
       }
 
-      if (loggedInUsersAccessLevel !== DefaultAccessLevel.NONE) {
+      if (loggedInUsersDefaultAccessLevel !== PermissionLevel.DENY) {
         const loggedInUsersAccessGroupId =
           await this.groupsService.getGroupIdByName(
             SpecialGroup.LOGGED_IN,
@@ -180,7 +168,7 @@ export class NoteService {
         await this.permissionService.setGroupPermission(
           noteId,
           loggedInUsersAccessGroupId,
-          loggedInUsersAccessLevel === DefaultAccessLevel.WRITE,
+          loggedInUsersDefaultAccessLevel === PermissionLevel.WRITE,
           transaction,
         );
       }

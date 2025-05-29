@@ -21,7 +21,7 @@ export class GuestsEnabledGuard implements CanActivate {
   }
 
   canActivate(): boolean {
-    if (this.noteConfig.guestAccess === PermissionLevel.DENY) {
+    if (this.noteConfig.permissions.maxGuestLevel === PermissionLevel.DENY) {
       throw new FeatureDisabledError(
         'Guest usage is disabled',
         this.logger.getContext(),

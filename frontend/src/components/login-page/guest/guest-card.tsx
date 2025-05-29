@@ -32,7 +32,7 @@ export const GuestCard: React.FC = () => {
         <div className={'d-flex flex-row gap-2'}>
           <NewNoteButton />
         </div>
-        {guestAccessLevel !== PermissionLevel.CREATE && (
+        {guestAccessLevel !== PermissionLevel.FULL && (
           <div className={'text-muted mt-2 small'}>
             <Trans i18nKey={'login.guest.noteCreationDisabled'} />
           </div>

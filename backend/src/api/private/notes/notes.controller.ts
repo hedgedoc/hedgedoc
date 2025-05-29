@@ -14,15 +14,19 @@ import {
   NotePermissionsDto,
   NoteUserPermissionEntryDto,
   NoteUserPermissionUpdateDto,
+  PermissionLevel,
+  PermissionLevelNames,
   RevisionDto,
   RevisionMetadataDto,
 } from '@hedgedoc/commons';
+import { SpecialGroup } from '@hedgedoc/database';
 import {
   BadRequestException,
   Body,
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Post,
   Put,
@@ -32,6 +36,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../auth/session.guard';
+import noteConfiguration, { NoteConfig } from '../../../config/note.config';
 import { NotInDBError, PermissionError } from '../../../errors/errors';
 import { GroupsService } from '../../../groups/groups.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
@@ -40,7 +45,7 @@ import { NoteService } from '../../../notes/note.service';
 import { PermissionService } from '../../../permissions/permission.service';
 import { PermissionsGuard } from '../../../permissions/permissions.guard';
 import { RequirePermission } from '../../../permissions/require-permission.decorator';
-import { RequiredPermission } from '../../../permissions/required-permission.enum';
+import { convertEditabilityToPermissionLevel } from '../../../permissions/utils/convert-editability-to-permission-level';
 import { RevisionsService } from '../../../revisions/revisions.service';
 import { UsersService } from '../../../users/users.service';
 import { MarkdownBody } from '../../utils/decorators/markdown-body.decorator';
@@ -62,13 +67,15 @@ export class NotesController {
     private revisionsService: RevisionsService,
     private permissionService: PermissionService,
     private groupService: GroupsService,
+    @Inject(noteConfiguration.KEY)
+    private noteConfig: NoteConfig,
   ) {
     this.logger.setContext(NotesController.name);
   }
 
   @Get(':noteAlias')
   @OpenApi(200)
-  @RequirePermission(RequiredPermission.READ)
+  @RequirePermission(PermissionLevel.READ)
   @UseInterceptors(GetNoteIdInterceptor)
   async getNote(@RequestNoteId() noteId: number): Promise<NoteDto> {
     return await this.noteService.toNoteDto(noteId);
@@ -76,7 +83,7 @@ export class NotesController {
 
   @Get(':noteAlias/media')
   @OpenApi(200)
-  @RequirePermission(RequiredPermission.READ)
+  @RequirePermission(PermissionLevel.READ)
   @UseInterceptors(GetNoteIdInterceptor)
   async getNotesMedia(
     @RequestNoteId() noteId: number,
@@ -87,7 +94,7 @@ export class NotesController {
 
   @Post()
   @OpenApi(201, 413)
-  @RequirePermission(RequiredPermission.CREATE)
+  @RequirePermission(PermissionLevel.FULL)
   async createNote(
     @RequestUserId() userId: number,
     @MarkdownBody() text: string,
@@ -98,7 +105,7 @@ export class NotesController {
 
   @Post(':noteAlias')
   @OpenApi(201, 400, 404, 409, 413)
-  @RequirePermission(RequiredPermission.CREATE)
+  @RequirePermission(PermissionLevel.FULL)
   async createNamedNote(
     @RequestUserId() userId: number,
     @Param('noteAlias') noteAlias: string,
@@ -114,7 +121,7 @@ export class NotesController {
 
   @Delete(':noteAlias')
   @OpenApi(204, 404, 500)
-  @RequirePermission(RequiredPermission.OWNER)
+  @RequirePermission(PermissionLevel.FULL)
   @UseInterceptors(GetNoteIdInterceptor)
   async deleteNote(
     @RequestUserId() userId: number,
@@ -141,7 +148,7 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.READ)
+  @RequirePermission(PermissionLevel.READ)
   @Get(':noteAlias/metadata')
   async getNoteMetadata(
     @RequestNoteId() noteId: number,
@@ -151,7 +158,7 @@ export class NotesController {
 
   @Get(':noteAlias/revisions')
   @OpenApi(200, 404)
-  @RequirePermission(RequiredPermission.READ)
+  @RequirePermission(PermissionLevel.READ)
   @UseInterceptors(GetNoteIdInterceptor)
   async getNoteRevisions(
     @RequestNoteId() noteId: number,
@@ -161,7 +168,7 @@ export class NotesController {
 
   @Delete(':noteAlias/revisions')
   @OpenApi(204, 404)
-  @RequirePermission(RequiredPermission.OWNER)
+  @RequirePermission(PermissionLevel.FULL)
   @UseInterceptors(GetNoteIdInterceptor)
   async purgeNoteRevisions(@RequestNoteId() noteId: number): Promise<void> {
     await this.revisionsService.purgeRevisions(noteId);
@@ -173,7 +180,7 @@ export class NotesController {
 
   @Get(':noteAlias/revisions/:revisionUuid')
   @OpenApi(200, 404)
-  @RequirePermission(RequiredPermission.READ)
+  @RequirePermission(PermissionLevel.READ)
   @UseInterceptors(GetNoteIdInterceptor)
   async getNoteRevision(
     @Param('revisionUuid') revisionUuid: string,
@@ -184,7 +191,7 @@ export class NotesController {
   @Put(':noteAlias/metadata/permissions/users/:username')
   @OpenApi(200, 403, 404)
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.OWNER)
+  @RequirePermission(PermissionLevel.FULL)
   async setUserPermission(
     @RequestNoteId() noteId: number,
     @Param('username') username: NoteUserPermissionUpdateDto['username'],
@@ -196,7 +203,7 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.OWNER)
+  @RequirePermission(PermissionLevel.FULL)
   @Delete(':noteAlias/metadata/permissions/users/:username')
   async removeUserPermission(
     @RequestNoteId() noteId: number,
@@ -217,20 +224,30 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.OWNER)
+  @RequirePermission(PermissionLevel.FULL)
   @Put(':noteAlias/metadata/permissions/groups/:groupName')
   async setGroupPermission(
     @RequestNoteId() noteId: number,
     @Param('groupName') groupName: NoteGroupPermissionUpdateDto['groupName'],
     @Body('canEdit') canEdit: NoteGroupPermissionUpdateDto['canEdit'],
   ): Promise<NotePermissionsDto> {
+    if ((groupName as SpecialGroup) === SpecialGroup.EVERYONE) {
+      const maxGuestPermissionLevel = this.noteConfig.permissions.maxGuestLevel;
+      const requestedPermissionLevel =
+        convertEditabilityToPermissionLevel(canEdit);
+      if (requestedPermissionLevel > maxGuestPermissionLevel) {
+        throw new BadRequestException(
+          `Cannot set permission for guest group to '${PermissionLevelNames[requestedPermissionLevel]}' since this is higher than the maximum allowed permission level.`,
+        );
+      }
+    }
     const groupId = await this.groupService.getGroupIdByName(groupName);
     await this.permissionService.setGroupPermission(noteId, groupId, canEdit);
     return await this.noteService.toNotePermissionsDto(noteId);
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.OWNER)
+  @RequirePermission(PermissionLevel.FULL)
   @UseGuards(PermissionsGuard)
   @Delete(':noteAlias/metadata/permissions/groups/:groupName')
   async removeGroupPermission(
@@ -243,7 +260,7 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
-  @RequirePermission(RequiredPermission.OWNER)
+  @RequirePermission(PermissionLevel.FULL)
   @Put(':noteAlias/metadata/permissions/owner')
   async changeOwner(
     @RequestNoteId() noteId: number,

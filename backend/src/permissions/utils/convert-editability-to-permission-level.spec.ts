@@ -3,18 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { NotePermissionLevel } from '../note-permission.enum';
-import { convertEditabilityToPermissionLevel } from './convert-editability-to-note-permission-level';
+import { PermissionLevel } from '@hedgedoc/commons';
+
+import { convertEditabilityToPermissionLevel } from './convert-editability-to-permission-level';
 
 describe('convert editability to note permission level', () => {
   it('canEdit false is converted to read', () => {
     expect(convertEditabilityToPermissionLevel(false)).toBe(
-      NotePermissionLevel.READ,
+      PermissionLevel.READ,
     );
   });
   it('canEdit true is converted to write', () => {
     expect(convertEditabilityToPermissionLevel(true)).toBe(
-      NotePermissionLevel.WRITE,
+      PermissionLevel.WRITE,
     );
   });
 });

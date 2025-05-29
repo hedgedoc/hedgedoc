@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { FieldNameUser } from '@hedgedoc/database';
+import { PermissionLevel } from '@hedgedoc/commons';
 import {
   CanActivate,
   ExecutionContext,
@@ -17,17 +17,18 @@ import { extractNoteIdFromRequest } from '../api/utils/extract-note-id-from-requ
 import { CompleteRequest } from '../api/utils/request.type';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { NoteService } from '../notes/note.service';
-import { UsersService } from '../users/users.service';
-import { NotePermissionLevel } from './note-permission.enum';
 import { PermissionService } from './permission.service';
 import { PERMISSION_METADATA_KEY } from './require-permission.decorator';
-import { RequiredPermission } from './required-permission.enum';
 
 /**
- * This guards controller methods from access, if the user has not the appropriate permissions.
- * The permissions are set via the {@link Permissions} decorator in addition to this guard.
- * If the check permission is not CREATE the method needs to extract the noteIdOrAlias from
- * request.params['noteIdOrAlias'] or request.headers['hedgedoc-note'] to check if the user has the permission.
+ * This guard protects controller methods from access if the user has not the appropriate permissions.
+ * The permissions are set via the RequiredPermission decorator in addition to this guard.
+ *
+ * The permission levels DENY, READ and WRITE are only evaluated when a noteId is present in the request.
+ * The meaning of the FULL permission level differs on the fact if the request contains a noteId or not:
+ * If there is a noteId present, the FULL permission level means ownership of the note is required.
+ * If there is no noteId present, the FULL permission level means that a note should be created.
+ * Since HedgeDoc can be configured to forbid note creation by guests, the config needs to be evaluated in that case.
  */
 @Injectable()
 export class PermissionsGuard implements CanActivate {
@@ -35,74 +36,69 @@ export class PermissionsGuard implements CanActivate {
     private readonly logger: ConsoleLoggerService,
     private readonly reflector: Reflector,
     private readonly permissionsService: PermissionService,
-    private readonly userService: UsersService,
     @Inject(forwardRef(() => NoteService))
     private readonly noteService: NoteService,
   ) {
     this.logger.setContext(PermissionsGuard.name);
   }
 
+  /**
+   * Checks if the user has the required permissions to access the requested resource (note).
+   * If the userId is not set, the request is considered unauthenticated and blocked.
+   * If no noteId can be extracted from the request and the required permission level is FULL
+   * (meaning the user wants to create a note), it checks if the user may create a note.
+   *
+   * @param context The execution context of the request
+   * @returns A promise that resolves to true if the user has the required permissions, false otherwise
+   */
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const requiredAccessLevel = this.extractRequiredPermission(context);
-    if (requiredAccessLevel === undefined) {
-      return false;
-    }
     const request: CompleteRequest = context.switchToHttp().getRequest();
     const userId = request.userId;
     if (userId === undefined) {
+      // If the userId is not set, the request is not authenticated
+      // This should never happen, as the SessionGuard should have protected this route
       return false;
-    }
-
-    // handle CREATE requiredAccessLevel, as this does not need any note
-    if (requiredAccessLevel === RequiredPermission.CREATE) {
-      const username = (await this.userService.getUserById(userId))[
-        FieldNameUser.username
-      ];
-      return this.permissionsService.mayCreate(username);
     }
 
     const noteId = await extractNoteIdFromRequest(request, this.noteService);
     if (noteId === undefined) {
-      this.logger.error(
-        'Could not find noteIdOrAlias metadata. This should never happen. If you see this, please open an issue at https://github.com/hedgedoc/hedgedoc/issues',
-      );
-      return false;
+      if (requiredAccessLevel === PermissionLevel.FULL) {
+        return await this.permissionsService.checkIfUserMayCreateNote(userId);
+      } else {
+        this.logger.error(
+          'Could not find noteId for permission check. This should never happen. If you see this, please open an issue at https://github.com/hedgedoc/hedgedoc/issues',
+        );
+        return false;
+      }
     }
 
-    return this.isNotePermissionFulfillingRequiredAccessLevel(
-      requiredAccessLevel,
-      await this.permissionsService.determinePermission(userId, noteId),
-    );
+    const userPermissionForNote =
+      await this.permissionsService.determinePermission(userId, noteId);
+    return userPermissionForNote >= requiredAccessLevel;
   }
 
+  /**
+   * Extracts the required permission level from the metadata of the handler.
+   * If no permission level is set, an error is thrown.
+   *
+   * @param context The execution context of the request
+   * @returns The required permission level as defined
+   */
   private extractRequiredPermission(
     context: ExecutionContext,
-  ): RequiredPermission | undefined {
-    const requiredPermission = this.reflector.get<RequiredPermission>(
+  ): PermissionLevel {
+    const requiredPermission = this.reflector.get<PermissionLevel>(
       PERMISSION_METADATA_KEY,
       context.getHandler(),
     );
     // If no requiredPermission are set this is probably an error and this guard should not let the request pass
-    if (!requiredPermission) {
-      this.logger.error(
-        'Could not find requiredPermission metadata. This should never happen. If you see this, please open an issue at https://github.com/hedgedoc/hedgedoc/issues',
-      );
-      return undefined;
+    if (requiredPermission === undefined) {
+      const message =
+        'Could not find requiredPermission metadata. This should never happen. If you see this, please open an issue at https://github.com/hedgedoc/hedgedoc/issues';
+      this.logger.error(message);
+      throw new Error(message);
     }
     return requiredPermission;
-  }
-
-  private isNotePermissionFulfillingRequiredAccessLevel(
-    requiredAccessLevel: Exclude<RequiredPermission, RequiredPermission.CREATE>,
-    actualNotePermission: NotePermissionLevel,
-  ): boolean {
-    switch (requiredAccessLevel) {
-      case RequiredPermission.READ:
-        return actualNotePermission >= NotePermissionLevel.READ;
-      case RequiredPermission.WRITE:
-        return actualNotePermission >= NotePermissionLevel.WRITE;
-      case RequiredPermission.OWNER:
-        return actualNotePermission >= NotePermissionLevel.OWNER;
-    }
   }
 }
