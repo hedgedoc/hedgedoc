@@ -23,7 +23,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { GenericDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { generateRandomName } from '../realtime/realtime-note/random-word-lists/name-randomizer';
+import { generateRandomName } from './random-word-lists/name-randomizer';
 
 @Injectable()
 export class UsersService {
@@ -41,13 +41,13 @@ export class UsersService {
    *
    * @param username New user's username
    * @param displayName New user's displayName
-   * @param [email] New user's email address if exists
-   * @param [photoUrl] URL of the user's profile picture if exists
+   * @param email New user's email address if exists
+   * @param photoUrl URL of the user's profile picture if exists
    * @param transaction The optional transaction to access the db
    * @returns The id of newly created user
-   * @throws {BadRequestException} if the username contains invalid characters or is too short
-   * @throws {AlreadyInDBError} the username is already taken.
-   * @thorws {GenericDBError} the database returned a non-expected value
+   * @throws BadRequestException if the username contains invalid characters or is too short
+   * @throws AlreadyInDBError if the username is already taken
+   * @thorws GenericDBError if the database returned a non-expected value
    */
   async createUser(
     username: string,
@@ -97,7 +97,7 @@ export class UsersService {
    * Creates a new guest user with a random displayName
    *
    * @returns The guest uuid and the id of the newly created user
-   * @throws {GenericDBError} the database returned a non-expected value
+   * @throws GenericDBError if the database returned a non-expected value
    */
   async createGuestUser(): Promise<[string, number]> {
     const randomName = generateRandomName();
@@ -128,7 +128,7 @@ export class UsersService {
    * Deletes a user by its id
    *
    * @param userId id of the user to be deleted
-   * @throws {NotInDBError} the username has no user associated with it
+   * @throws NotInDBError if the username has no user associated with it
    */
   async deleteUser(userId: number): Promise<void> {
     const usersDeleted = await this.knex(TableUser)
@@ -229,7 +229,7 @@ export class UsersService {
    *
    * @param username The username to fetch
    * @returns The found user object
-   * @throws {NotInDBError} if the user could not be found
+   * @throws NotInDBError if the user could not be found
    */
   async getUserIdByUsername(username: string): Promise<number> {
     const userId = await this.knex(TableUser)
@@ -247,11 +247,11 @@ export class UsersService {
   }
 
   /**
-   * Fetches the userId for a given username from the database
+   * Fetches the userId for a given guest uuid from the database
    *
-   * @param uuid The uuid to fetch
+   * @param uuid The guest uuid to fetch
    * @returns The found user object
-   * @throws {NotInDBError} if the user could not be found
+   * @throws NotInDBError if the guest user could not be found
    */
   async getUserIdByGuestUuid(uuid: string): Promise<User[FieldNameUser.id]> {
     const userId = await this.knex(TableUser)
@@ -273,7 +273,7 @@ export class UsersService {
    *
    * @param username The username to fetch
    * @returns The found user object
-   * @throws {NotInDBError} if the user could not be found
+   * @throws NotInDBError if the user could not be found
    */
   async getUserDtoByUsername(username: string): Promise<UserInfoDto> {
     const user = await this.knex(TableUser)

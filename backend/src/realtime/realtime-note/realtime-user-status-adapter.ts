@@ -19,6 +19,16 @@ export type OtherAdapterCollector = () => RealtimeUserStatusAdapter[];
 export class RealtimeUserStatusAdapter {
   private readonly realtimeUser: RealtimeUser;
 
+  /**
+   * Creates a new realtime user status adapter.
+   *
+   * @param username the username of the user, or null if the user is a guest
+   * @param displayName the display name of the user
+   * @param authorStyle the style index of the author
+   * @param collectOtherAdapters a function that returns all other adapters to send updates to
+   * @param messageTransporter the message transporter to use for sending messages
+   * @param acceptCursorUpdateProvider a function that returns whether cursor updates should be accepted
+   */
   constructor(
     private readonly username: string | null,
     private readonly displayName: string,
@@ -31,6 +41,11 @@ export class RealtimeUserStatusAdapter {
     this.bindRealtimeUserStateEvents();
   }
 
+  /**
+   * Returns the current realtime user state
+   *
+   * @returns the current realtime user state
+   */
   private createInitialRealtimeUserState(): RealtimeUser {
     return {
       username: this.username,
@@ -46,6 +61,9 @@ export class RealtimeUserStatusAdapter {
     };
   }
 
+  /**
+   * Registers the listeners for the realtime user state events
+   */
   private bindRealtimeUserStateEvents(): void {
     const transporterMessagesListener = this.messageTransporter.on(
       MessageType.REALTIME_USER_SINGLE_UPDATE,
@@ -102,10 +120,19 @@ export class RealtimeUserStatusAdapter {
     });
   }
 
+  /**
+   * Gets the current real-time user state if the message transporter is ready
+   *
+   * @returns the current real-time user state or undefined if the transporter is not ready
+   */
   private getSendableState(): RealtimeUser | undefined {
     return this.messageTransporter.isReady() ? this.realtimeUser : undefined;
   }
 
+  /**
+   * Sends the current real-time user state to all other clients
+   * This includes the own user state and the states of all other users
+   */
   public sendCompleteStateToClient(): void {
     if (!this.messageTransporter.isReady()) {
       return;
@@ -125,30 +152,5 @@ export class RealtimeUserStatusAdapter {
         },
       },
     });
-  }
-
-  private findLeastUsedStyleIndex(map: Map<number, number>): number {
-    let leastUsedStyleIndex = 0;
-    let leastUsedStyleIndexCount = map.get(0) ?? 0;
-    for (let styleIndex = 0; styleIndex < 8; styleIndex++) {
-      const count = map.get(styleIndex) ?? 0;
-      if (count < leastUsedStyleIndexCount) {
-        leastUsedStyleIndexCount = count;
-        leastUsedStyleIndex = styleIndex;
-      }
-    }
-    return leastUsedStyleIndex;
-  }
-
-  private createStyleIndexToCountMap(): Map<number, number> {
-    return this.collectOtherAdapters()
-      .map((adapter) => adapter.realtimeUser.styleIndex)
-      .reduce((map, styleIndex) => {
-        if (styleIndex !== undefined) {
-          const count = (map.get(styleIndex) ?? 0) + 1;
-          map.set(styleIndex, count);
-        }
-        return map;
-      }, new Map<number, number>());
   }
 }

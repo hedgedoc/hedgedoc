@@ -12,7 +12,7 @@ import * as HedgeDocCommonsModule from '@hedgedoc/commons';
 import { FieldNameUser, User } from '@hedgedoc/database';
 import { Mock } from 'ts-mockery';
 
-import * as NameRandomizerModule from './random-word-lists/name-randomizer';
+import * as NameRandomizerModule from '../../users/random-word-lists/name-randomizer';
 import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';
 import {
@@ -21,7 +21,7 @@ import {
 } from './realtime-user-status-adapter';
 import * as RealtimeUserStatusModule from './realtime-user-status-adapter';
 
-jest.mock('./random-word-lists/name-randomizer');
+jest.mock('../../users/random-word-lists/name-randomizer');
 jest.mock('./realtime-user-status-adapter');
 jest.mock(
   '@hedgedoc/commons',

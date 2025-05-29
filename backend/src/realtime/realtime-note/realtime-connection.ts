@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -26,8 +26,8 @@ export class RealtimeConnection {
    * @param username The username of the user of the client
    * @param displayName The displayName of the user of the client
    * @param authorStyle The authorStyle of the user of the client
-   * @param realtimeNote The {@link RealtimeNote} that the client connected to.
-   * @param acceptEdits If edits by this connection should be accepted.
+   * @param realtimeNote The {@link RealtimeNote} that the client connected to
+   * @param acceptEdits If edits by this connection should be accepted
    * @throws Error if the socket is not open
    */
   constructor(
@@ -62,34 +62,74 @@ export class RealtimeConnection {
     );
   }
 
+  /**
+   * Returns the realtime user state adapter of this connection.
+   *
+   * @returns the realtime user state adapter
+   */
   public getRealtimeUserStateAdapter(): RealtimeUserStatusAdapter {
     return this.realtimeUserStateAdapter;
   }
 
+  /**
+   * Returns the message transporter of this connection.
+   *
+   * @returns the message transporter
+   */
   public getTransporter(): MessageTransporter {
     return this.transporter;
   }
 
+  /**
+   * Returns the YDoc sync adapter of this connection.
+   *
+   * @returns the YDoc sync adapter
+   */
   public getSyncAdapter(): YDocSyncServerAdapter {
     return this.yDocSyncAdapter;
   }
 
+  /**
+   * Returns the user id of the user of this connection.
+   *
+   * @returns the user id
+   */
   public getUserId(): number {
     return this.userId;
   }
 
+  /**
+   * Returns the display name of the user of this connection.
+   *
+   * @returns the display name
+   */
   public getDisplayName(): string {
     return this.displayName;
   }
 
+  /**
+   * Returns the username of the user of this connection.
+   *
+   * @returns the username or null for guest users
+   */
   public getUsername(): string | null {
     return this.username;
   }
 
+  /**
+   * Returns the author style of the user of this connection.
+   *
+   * @returns the author style
+   */
   public getAuthorStyle(): number {
     return this.authorStyle;
   }
 
+  /**
+   * Returns the realtime note that this connection is connected to.
+   *
+   * @returns the realtime note
+   */
   public getRealtimeNote(): RealtimeNote {
     return this.realtimeNote;
   }

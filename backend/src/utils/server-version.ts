@@ -11,10 +11,10 @@ import { join as joinPath } from 'path';
 let versionCache: ServerVersionDto | undefined = undefined;
 
 /**
- * Reads the HedgeDoc version from the root package.json. This is done only once per run.
+ * Reads the HedgeDoc version from the root package.json. This is done only once per run and then cached for further calls
  *
- * @returns {Promise<ServerVersionDto>} A Promise that contains the parsed server version.
- * @throws {Error} if the package.json couldn't be found or doesn't contain a correct version.
+ * @returns A Promise that contains the parsed server version.
+ * @throws Error if the package.json couldn't be found or doesn't contain a correct version.
  */
 export async function getServerVersionFromPackageJson(): Promise<ServerVersionDto> {
   if (!versionCache) {
@@ -23,6 +23,12 @@ export async function getServerVersionFromPackageJson(): Promise<ServerVersionDt
   return versionCache;
 }
 
+/**
+ * Parses the version from the root package.json file.
+ *
+ * @returns A Promise that contains the parsed server version.
+ * @throws Error if the package.json couldn't be found or doesn't contain a correct version.
+ */
 async function parseVersionFromPackageJson(): Promise<ServerVersionDto> {
   const rawFileContent: string = await fs.readFile(
     joinPath(__dirname, '../../../package.json'),
@@ -47,6 +53,11 @@ async function parseVersionFromPackageJson(): Promise<ServerVersionDto> {
   };
 }
 
+/**
+ * Clears the cached version information
+ *
+ * This function is useful for testing purposes or when the version information needs to be reloaded
+ */
 export function clearCachedVersion(): void {
   versionCache = undefined;
 }

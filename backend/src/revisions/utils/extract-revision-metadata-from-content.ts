@@ -29,9 +29,10 @@ interface FrontmatterParserResult {
 }
 
 /**
- * Parses the frontmatter of the given content and extracts the metadata that are necessary to create a new revision..
+ * Parses the frontmatter of the given content and extracts the metadata that are necessary to create a new revision
  *
- * @param content the revision content that contains the frontmatter.
+ * @param content the revision content that contains the frontmatter
+ * @returns the extracted metadata, including the title, description, tags, and note type
  */
 export function extractRevisionMetadataFromContent(
   content: string,
@@ -52,6 +53,13 @@ export function extractRevisionMetadataFromContent(
   return { title, description, tags, noteType };
 }
 
+/**
+ * Generates the content of a revision without the frontmatter.
+ *
+ * @param firstLineOfContentIndex the index of the first line of content after the frontmatter
+ * @param content the full content including frontmatter
+ * @returns the content without frontmatter
+ */
 function generateContentWithoutFrontmatter(
   firstLineOfContentIndex: number | undefined,
   content: string,
@@ -61,6 +69,12 @@ function generateContentWithoutFrontmatter(
     : content.split('\n').slice(firstLineOfContentIndex).join('\n');
 }
 
+/**
+ * Parses the frontmatter from the given content and returns the parsed frontmatter and the index of the first line of content.
+ *
+ * @param content the content to parse
+ * @returns an object containing the parsed frontmatter and the index of the first line of content, or undefined if no frontmatter was found
+ */
 function parseFrontmatter(
   content: string,
 ): FrontmatterParserResult | undefined {
@@ -82,6 +96,12 @@ function parseFrontmatter(
   };
 }
 
+/**
+ * Extracts the first heading from the given markdown content
+ *
+ * @param content the content to extract the first heading from
+ * @returns the first heading or undefined if no heading was found
+ */
 function extractFirstHeadingFromContent(content: string): string | undefined {
   const markdownIt = new MarkdownIt('default');
   const html = markdownIt.render(content);

@@ -37,11 +37,11 @@ export async function checkPassword(
 }
 
 /**
- * Transform a {@link Buffer} into a base64Url encoded string
+ * Transforms a {@link Buffer} into a base64Url encoded string
  *
- * This is necessary as the is no base64url encoding in the toString method
+ * This is necessary as there is no base64url encoding in the toString method
  * but as can be seen on https://tools.ietf.org/html/rfc4648#page-7
- * base64url is quite easy buildable from base64
+ * base64url is quite easily buildable from base64
  *
  * @param text The buffer we want to decode
  * @returns The base64Url encoded string
@@ -73,7 +73,7 @@ export function hashApiToken(token: string): string {
  *
  * @param userSecret The secret of the token the user gave us
  * @param databaseSecretHash The secret hash we have saved in the database.
- * @returns Wether or not the tokens are the equal
+ * @returns Whether or not the tokens are equal
  */
 export function checkTokenEquality(
   userSecret: string,

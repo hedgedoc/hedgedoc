@@ -10,7 +10,8 @@ export const PERMISSION_METADATA_KEY = 'requiredPermission';
 
 /**
  * This decorator gathers the {@link PermissionLevel} a user must hold for the {@link PermissionsGuard}
- * @param permissionLevel the required permission for the decorated action.
+ * @param permissionLevel the required permission for the decorated action
+ * @returns The custom decorator action
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export function RequirePermission(
