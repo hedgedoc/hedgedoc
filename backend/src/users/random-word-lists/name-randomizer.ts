@@ -6,7 +6,7 @@
 import { adjectives, items } from './random-words';
 
 /**
- * Generates a random names based on an adjective and a noun.
+ * Generates a random name based on an adjective and a noun
  *
  * @returns the generated name
  */
@@ -16,6 +16,12 @@ export function generateRandomName(): string {
   return `${adjective} ${things}`;
 }
 
+/**
+ * Generates a random word from a given list and capitalizes the first letter
+ *
+ * @param list - The list of words to choose from
+ * @returns a randomly selected word with the first letter capitalized
+ */
 function generateRandomWord(list: string[]): string {
   const index = Math.floor(Math.random() * list.length);
   const word = list[index];

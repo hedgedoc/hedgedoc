@@ -194,6 +194,13 @@ export class RevisionsService {
     });
   }
 
+  /**
+   * Get a revision by its UUID
+   *
+   * @param revisionUuid The UUID of the revision to get
+   * @returns The revision DTO
+   * @throws NotInDBError if the revision with the given UUID does not exist
+   */
   async getRevisionDto(revisionUuid: string): Promise<RevisionDto> {
     const revision = await this.knex(TableRevision)
       .select(
@@ -225,9 +232,10 @@ export class RevisionsService {
   }
 
   /**
-   * Get the latest
-   * @param noteId
-   * @param transaction
+   * Gets the latest revision of a note
+   *
+   * @param noteId The id of the note for which the latest revision should be retrieved
+   * @param transaction The optional pre-existing database transaction to use
    */
   async getLatestRevision(
     noteId: number,
@@ -249,6 +257,13 @@ export class RevisionsService {
     return revision;
   }
 
+  /**
+   * Gets the user information of the authors of a revision
+   *
+   * @param revisionUuid The UUID of the revision for which the user information should be retrieved
+   * @param transaction The optional pre-existing database transaction to use
+   * @returns An object containing the usernames and guest UUIDs of the authors and the count of guest users
+   */
   async getRevisionUserInfo(
     revisionUuid: string,
     transaction?: Knex,
@@ -291,17 +306,15 @@ export class RevisionsService {
   }
 
   /**
-   * Creates (but does not persist(!)) a new {@link Revision} for the given {@link Note}.
-   * Useful if the revision is saved together with the note in one action.
-   *
+   * Creates a new revision for the given note
+   * This method wraps the actual action in a database transaction
    *
    * @param noteId The note for which the revision should be created
    * @param newContent The new note content
    * @param firstRevision Whether this is called for the first revision of a note
    * @param transaction The optional pre-existing database transaction to use
    * @param yjsStateVector The yjs state vector that describes the new content
-   * @returns {Revision} the created revision
-   * @returns {undefined} if the revision couldn't be created because e.g. the content hasn't changed
+   * @returns the created revision or undefined if the revision couldn't be created
    */
   async createRevision(
     noteId: number,
@@ -331,6 +344,16 @@ export class RevisionsService {
     );
   }
 
+  /**
+   * Internal method to create a revision for the given note
+   * This method is used by the public createRevision method and should not be called directly
+   *
+   * @param noteId The note for which the revision should be created
+   * @param newContent The new note content
+   * @param firstRevision Whether this is called for the first revision of a note
+   * @param transaction The database transaction to use
+   * @param yjsStateVector The yjs state vector that describes the new content
+   */
   private async innerCreateRevision(
     noteId: number,
     newContent: string,
@@ -388,6 +411,13 @@ export class RevisionsService {
     }
   }
 
+  /**
+   * Get all tags of a revision
+   *
+   * @param revisionUuid The UUID of the revision for which the tags should be retrieved
+   * @param transaction The optional pre-existing database transaction to use
+   * @returns An array of tags associated with the revision
+   */
   async getTagsByRevisionUuid(
     revisionUuid: string,
     transaction?: Knex,
@@ -412,7 +442,7 @@ export class RevisionsService {
   }
 
   /**
-   * Delete old {@link Revision}s except the latest one.
+   * Deletes old revisions except the latest one if the clean-up is enabled
    */
   async removeOldRevisions(): Promise<void> {
     const currentTime = new Date().getTime();

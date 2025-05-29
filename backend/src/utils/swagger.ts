@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,6 +10,11 @@ import { PrivateApiModule } from '../api/private/private-api.module';
 import { PublicApiModule } from '../api/public/public-api.module';
 import { getServerVersionFromPackageJson } from './server-version';
 
+/**
+ * Sets up the public API documentation for HedgeDoc.
+ *
+ * @param app The NestJS application instance to set up the Swagger module on.
+ */
 export async function setupPublicApiDocs(app: INestApplication): Promise<void> {
   const version = await getServerVersionFromPackageJson();
   const publicApiOptions = new DocumentBuilder()
@@ -26,6 +31,11 @@ export async function setupPublicApiDocs(app: INestApplication): Promise<void> {
   SwaggerModule.setup('api/doc/v2', app, publicApi);
 }
 
+/**
+ * Sets up the private API documentation for HedgeDoc.
+ *
+ * @param app The NestJS application instance to set up the Swagger module on.
+ */
 export async function setupPrivateApiDocs(
   app: INestApplication,
 ): Promise<void> {

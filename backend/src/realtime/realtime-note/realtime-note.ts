@@ -31,6 +31,13 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   private isClosing = false;
   private destroyEventTimer: NodeJS.Timeout | null = null;
 
+  /**
+   * Creates a new realtime note for the given note id and initial text content
+   *
+   * @param noteId the id of the note that is being edited
+   * @param initialTextContent the initial text content of the note
+   * @param initialYjsState the initial yjs state of the note, if available
+   */
   constructor(
     private readonly noteId: number,
     initialTextContent: string,
@@ -58,9 +65,8 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   }
 
   /**
-   * Connects a new client to the note.
-   *
-   * For this purpose a {@link RealtimeConnection} is created and added to the client map.
+   * Connects a new client to the note
+   * For this purpose a {@link RealtimeConnection} is created and added to the client map
    *
    * @param client the websocket connection to the client
    */
@@ -73,7 +79,7 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   /**
    * Disconnects the given websocket client while cleaning-up if it was the last user in the realtime note.
    *
-   * @param client The websocket client that disconnects.
+   * @param client The websocket client that disconnects
    */
   public removeClient(client: RealtimeConnection): void {
     this.clients.delete(client);
@@ -94,7 +100,7 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   }
 
   /**
-   * Destroys the current realtime note by deleting the y-js doc and disconnecting all clients.
+   * Destroys the current realtime note by deleting the yjs doc and disconnecting all clients
    *
    * @throws Error if note has already been destroyed
    */
@@ -112,60 +118,60 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   }
 
   /**
-   * Checks if there's still clients connected to this note.
+   * Checks if there are still clients connected to this note
    *
-   * @returns {@code true} if there a still clinets connected, otherwise {@code false}
+   * @returns true if there are still clients connected, otherwise false
    */
   public hasConnections(): boolean {
     return this.clients.size !== 0;
   }
 
   /**
-   * Returns all {@link RealtimeConnection WebsocketConnections} currently hold by this note.
+   * Returns all {@link RealtimeConnection} currently hold by this note
    *
-   * @returns an array of {@link RealtimeConnection WebsocketConnections}
+   * @returns an array of {@link RealtimeConnection}s
    */
   public getConnections(): RealtimeConnection[] {
     return [...this.clients];
   }
 
   /**
-   * Get the {@link RealtimeDoc realtime note} of the note.
+   * Gets the {@link RealtimeDoc} for the note.
    *
-   * @returns the {@link RealtimeDoc realtime note} of the note
+   * @returns the {@link RealtimeDoc} for the note
    */
   public getRealtimeDoc(): RealtimeDoc {
     return this.doc;
   }
 
   /**
-   * Get the {@link Note note} that is edited.
+   * Gets the id of the note that is edited.
    *
-   * @returns the {@link Note note}
+   * @returns the note id
    */
   public getNoteId(): number {
     return this.noteId;
   }
 
   /**
-   * Announce to all clients that the metadata of the note have been changed.
-   * This could for example be a permission change or a revision being saved.
+   * Announces to all clients that the metadata of the note has been changed,
+   * for example on a permission change or a revision being saved
    */
   public announceMetadataUpdate(): void {
     this.sendToAllClients({ type: MessageType.METADATA_UPDATED });
   }
 
   /**
-   * Announce to all clients that the note has been deleted.
+   * Announces to all clients that the note has been deleted
    */
   public announceNoteDeletion(): void {
     this.sendToAllClients({ type: MessageType.DOCUMENT_DELETED });
   }
 
   /**
-   * Broadcasts the given content to all connected clients.
+   * Broadcasts the given content to all connected clients
    *
-   * @param {Uint8Array} content The binary message to broadcast
+   * @param content The binary message to broadcast
    */
   private sendToAllClients(content: Message<MessageType>): void {
     this.getConnections().forEach((connection) => {
@@ -174,7 +180,9 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   }
 
   /**
-   * Indicates if a realtime note is ready to get destroyed.
+   * Indicates if a realtime note is ready to get destroyed
+   *
+   * @returns true if the note can be destroyed, otherwise false
    */
   private canBeDestroyed(): boolean {
     return !this.hasConnections() && !this.isClosing;

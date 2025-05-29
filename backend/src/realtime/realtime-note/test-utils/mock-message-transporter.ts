@@ -1,12 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { MessageTransporter, MessageType } from '@hedgedoc/commons';
 
 /**
- * A message transporter that is only used in testing where certain conditions like resending of requests isn't needed.
+ * A message transporter that is only used in testing where certain conditions like resending of requests aren't needed.
  */
 export class MockMessageTransporter extends MessageTransporter {
   protected startSendingOfReadyRequests(): void {

@@ -42,7 +42,7 @@ export class MockConnectionBuilder {
   public withGuestUser(displayName: string): this {
     this.username = null;
     this.displayName = displayName;
-    this.authorStyle = 8;
+    this.authorStyle = 2;
     this.userId = 1000;
     return this;
   }
@@ -50,7 +50,7 @@ export class MockConnectionBuilder {
   /**
    * Defines that the user who belongs to this connection is a logged-in user.
    *
-   * @param username the username of the mocked user. If this value is omitted then the builder will user a {@link MOCK_FALLBACK_USERNAME fallback}.
+   * @param username the username of the mocked user
    */
   public withLoggedInUser(username: string): this {
     this.username = username;
@@ -79,7 +79,7 @@ export class MockConnectionBuilder {
   /**
    * Creates a new connection based on the given configuration.
    *
-   * @returns {RealtimeConnection} The constructed mocked connection
+   * @returns The constructed mocked connection
    * @throws Error if neither withGuestUser nor withLoggedInUser has been called.
    */
   public build(): RealtimeConnection {

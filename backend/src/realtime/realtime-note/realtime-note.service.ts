@@ -31,6 +31,10 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
     private permissionService: PermissionService,
   ) {}
 
+  /**
+   * Cleans up all {@link RealtimeNote} instances before the application is shut down
+   * This method is called by NestJS when the application is shutting down
+   */
   beforeApplicationShutdown(): void {
     this.realtimeNoteStore
       .getAllRealtimeNotes()
@@ -38,7 +42,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
   }
 
   /**
-   * Reads the current content from the given {@link RealtimeNote} and creates a new {@link Revision} for the linked {@link Note}.
+   * Reads the current content from the given {@link RealtimeNote} and creates a new revision for the linked note.
    *
    * @param realtimeNote The realtime note for which a revision should be created
    */
@@ -58,10 +62,11 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
   }
 
   /**
-   * Creates or reuses a {@link RealtimeNote} that is handling the real time editing of the {@link Note} which is identified by the given note id.
-   * @param noteId The {@link Note} for which a {@link RealtimeNote realtime note} should be retrieved.
+   * Creates or reuses a {@link RealtimeNote} that is handling the real-time-editing of the note which is identified by the given note id
+   *
+   * @param noteId The id of the note for which a {@link RealtimeNote} should be retrieved
+   * @returns A RealtimeNote that is linked to the given note.
    * @throws NotInDBError if note doesn't exist or has no revisions.
-   * @returns A {@link RealtimeNote} that is linked to the given note.
    */
   public async getOrCreateRealtimeNote(noteId: number): Promise<RealtimeNote> {
     return (
@@ -71,11 +76,12 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
   }
 
   /**
-   * Creates a new {@link RealtimeNote} for the given {@link Note}.
+   * Creates a new {@link RealtimeNote} for the given note and registers event listeners
+   * to persist the note periodically and before it is destroyed
    *
-   * @param noteId The note for which the realtime note should be created
-   * @throws NotInDBError if note doesn't exist or has no revisions.
+   * @param noteId The id of the note for which the realtime note should be created
    * @returns The created realtime note
+   * @throws NotInDBError if the note doesn't exist or has no revisions
    */
   private async createNewRealtimeNote(noteId: number): Promise<RealtimeNote> {
     const lastRevision = await this.revisionsService.getLatestRevision(noteId);
@@ -117,16 +123,31 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
       });
   }
 
+  /**
+   * Reflects the changes of the note's permissions to all connections of the note
+   *
+   * @param noteId The id of the note for that permissions changed
+   */
   @OnEvent(NoteEvent.PERMISSION_CHANGE)
   public async handleNotePermissionChanged(noteId: number): Promise<void> {
     const realtimeNote = this.realtimeNoteStore.find(noteId);
-    if (!realtimeNote) return;
+    if (realtimeNote === undefined) {
+      return;
+    }
 
     realtimeNote.announceMetadataUpdate();
     const allConnections = realtimeNote.getConnections();
     await this.updateOrCloseConnection(allConnections, noteId);
   }
 
+  /**
+   * Updates the connections of the given note based on the current permissions of the user.
+   * If the user has no permission to edit the note, the connection is closed.
+   * Otherwise, it updates the acceptEdits property of the connection.
+   *
+   * @param connections The connections to update
+   * @param noteId The id of the note for which the connections should be updated
+   */
   private async updateOrCloseConnection(
     connections: RealtimeConnection[],
     noteId: number,
@@ -145,6 +166,11 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
     }
   }
 
+  /**
+   * Reflects the deletion of a note to all connections of the note
+   *
+   * @param noteId The id of the just deleted note
+   */
   @OnEvent(NoteEvent.DELETION)
   public handleNoteDeleted(noteId: number): void {
     const realtimeNote = this.realtimeNoteStore.find(noteId);
@@ -153,11 +179,16 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
     }
   }
 
+  /**
+   * Closes the realtime note for the given note id and saves its content
+   * This is called when the note is updated externally, e.g. by the API
+   *
+   * @param noteId The id of the note for which the realtime note should be closed
+   */
   @OnEvent(NoteEvent.CLOSE_REALTIME)
   public closeRealtimeNote(noteId: number): void {
     const realtimeNote = this.realtimeNoteStore.find(noteId);
     if (realtimeNote) {
-      this.saveRealtimeNote(realtimeNote);
       realtimeNote.destroy();
     }
   }

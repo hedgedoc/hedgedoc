@@ -60,7 +60,7 @@ export class SessionService {
   }
 
   /**
-   * Extracts the hedgedoc session cookie from the given {@link IncomingMessage request} and checks if the signature is correct.
+   * Extracts the HedgeDoc session cookie from the given {@link IncomingMessage request} and checks if the signature is correct.
    *
    * @param request The http request that contains a session cookie
    * @returns An {@link Optional optional} that either contains the extracted session id or is empty if no session cookie has been found
