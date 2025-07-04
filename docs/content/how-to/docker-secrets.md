@@ -10,6 +10,8 @@ Docker secrets provide a secure way to store sensitive information that your app
 
 HedgeDoc automatically checks for secrets in the standard Docker secrets location (`/run/secrets/`) and uses them to configure the application. This is handled by the `dockerSecret.js` module in the HedgeDoc codebase.
 
+Unlike some other Docker applications that use the `_FILE` suffix pattern for environment variables, HedgeDoc uses predefined secret names. This means you need to create secrets with specific names (listed below) rather than pointing environment variables to files.
+
 ## Available Secret Names
 
 HedgeDoc looks for the following secret names:
@@ -48,6 +50,8 @@ HedgeDoc looks for the following secret names:
 ## Setting Up Docker Secrets with Docker Compose
 
 Here's an example of how to use Docker secrets with HedgeDoc in a Docker Compose environment:
+
+> **Note:** Docker Compose file-based secrets are only available in Compose file format version 3.1 and higher.
 
 1. First, create a file for each secret you want to use. For example, to store your database URL:
 
@@ -146,3 +150,10 @@ If HedgeDoc isn't picking up your secrets:
 2. Check that the secret names match exactly what HedgeDoc expects (case-sensitive).
 
 3. Ensure the secrets have the correct permissions and are readable by the HedgeDoc process.
+
+4. Check the content of a secret file to verify it contains the expected value:
+   ```bash
+   docker exec -it your-hedgedoc-container cat /run/secrets/dbURL
+   ```
+
+5. If you're using Docker Compose, make sure your compose file version supports secrets (version 3.1 or higher).
