@@ -1,6 +1,6 @@
 # Configuration
 
-HedgeDoc can be configured via environment variables either directly or via an `.env` file.
+HedgeDoc can be configured via environment variables either directly or via an `.env` file. For Docker deployments, you can also use Docker secrets for sensitive configuration values.
 
 ## The `.env` file
 
@@ -27,3 +27,9 @@ in the root of the project. This should help you to write your own configuration
     The minimal configuration provided in `.env.example` is exactly that: minimal.  
     It will let you start HedgeDoc for local development,
     but it is **not** meant to be used in production without prior changes.
+
+## Docker Secrets
+
+When running HedgeDoc in Docker, you can use Docker secrets to securely store sensitive configuration values like database credentials, API keys, and session secrets. HedgeDoc automatically checks for secrets in the standard Docker secrets location (`/run/secrets/`).
+
+For detailed information on using Docker secrets with HedgeDoc, see the [Docker Secrets guide](/how-to/docker-secrets/).

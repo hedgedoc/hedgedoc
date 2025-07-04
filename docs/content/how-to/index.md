@@ -30,5 +30,11 @@ They are more advanced than tutorials and assume some knowledge of HedgeDoc.
             <span>Use another database</span>
         </div>
     </a>
+    <a href='/how-to/docker-secrets/'>
+        <div class='topic'>
+            <span>🔒</span>
+            <span>Use Docker secrets</span>
+        </div>
+    </a>
 </div>
 <!-- markdownlint-enable no-inline-html -->
