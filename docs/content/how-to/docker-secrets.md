@@ -12,9 +12,20 @@ HedgeDoc automatically checks for secrets in the standard Docker secrets locatio
 
 Unlike some other Docker applications that use the `_FILE` suffix pattern for environment variables, HedgeDoc uses predefined secret names. This means you need to create secrets with specific names (listed below) rather than pointing environment variables to files.
 
+### Implementation Details
+
+When HedgeDoc starts, it:
+
+1. Checks if the `/run/secrets/` directory exists
+2. If it exists, looks for files with specific names in that directory
+3. Reads the content of those files and uses them as configuration values
+4. Falls back to environment variables if a secret file is not found
+
+This approach is different from the common Docker pattern of using environment variables with a `_FILE` suffix (e.g., `DB_PASSWORD_FILE`), so it's important to use the exact secret names as specified in this documentation.
+
 ## Available Secret Names
 
-HedgeDoc looks for the following secret names:
+HedgeDoc looks for the following secret names. It's important to use these exact names (including case sensitivity) as they are hardcoded in the application:
 
 | Secret Name | Description |
 |-------------|-------------|
@@ -24,7 +35,7 @@ HedgeDoc looks for the following secret names:
 | `sslcertpath` | Path to SSL certificate file |
 | `sslcapath` | Path to SSL CA file |
 | `dhparampath` | Path to DH parameters file |
-| `s3_accessKeyId` | AWS S3 access key ID |
+| `s3_acccessKeyId` | AWS S3 access key ID |
 | `s3_secretAccessKey` | AWS S3 secret access key |
 | `azure_connectionString` | Azure storage connection string |
 | `facebook_clientID` | Facebook OAuth client ID |
@@ -53,11 +64,13 @@ Here's an example of how to use Docker secrets with HedgeDoc in a Docker Compose
 
 > **Note:** Docker Compose file-based secrets are only available in Compose file format version 3.1 and higher.
 
-1. First, create a file for each secret you want to use. For example, to store your database URL:
+1. First, create a file for each secret you want to use. For example, to store your database URL and other credentials:
 
    ```bash
    echo "postgres://username:password@postgres:5432/hedgedoc" > dbURL.secret
    echo "your-session-secret" > sessionsecret.secret
+   echo "your-s3-access-key" > s3_acccessKeyId.secret
+   echo "your-s3-secret-key" > s3_secretAccessKey.secret
    ```
 
 2. Update your `docker-compose.yml` file to use these secrets:
@@ -73,8 +86,13 @@ Here's an example of how to use Docker secrets with HedgeDoc in a Docker Compose
        secrets:
          - dbURL
          - sessionsecret
+         - s3_acccessKeyId
+         - s3_secretAccessKey
        environment:
          - CMD_DOMAIN=hedgedoc.example.com
+         - CMD_IMAGE_UPLOAD_TYPE=s3
+         - CMD_S3_BUCKET=hedgedoc-uploads
+         - CMD_S3_REGION=us-east-1
          # Other environment variables as needed
 
      postgres:
@@ -94,6 +112,10 @@ Here's an example of how to use Docker secrets with HedgeDoc in a Docker Compose
        file: ./dbURL.secret
      sessionsecret:
        file: ./sessionsecret.secret
+     s3_acccessKeyId:
+       file: ./s3_acccessKeyId.secret
+     s3_secretAccessKey:
+       file: ./s3_secretAccessKey.secret
    ```
 
 ## Using Docker Swarm Secrets
@@ -103,6 +125,8 @@ If you're using Docker Swarm, you can create secrets using the Docker CLI:
 ```bash
 echo "postgres://username:password@postgres:5432/hedgedoc" | docker secret create dbURL -
 echo "your-session-secret" | docker secret create sessionsecret -
+echo "your-s3-access-key" | docker secret create s3_acccessKeyId -
+echo "your-s3-secret-key" | docker secret create s3_secretAccessKey -
 ```
 
 Then reference these secrets in your stack configuration:
@@ -118,8 +142,13 @@ services:
     secrets:
       - dbURL
       - sessionsecret
+      - s3_acccessKeyId
+      - s3_secretAccessKey
     environment:
       - CMD_DOMAIN=hedgedoc.example.com
+      - CMD_IMAGE_UPLOAD_TYPE=s3
+      - CMD_S3_BUCKET=hedgedoc-uploads
+      - CMD_S3_REGION=us-east-1
       # Other environment variables as needed
 
 # ... rest of your stack configuration
@@ -129,7 +158,20 @@ secrets:
     external: true
   sessionsecret:
     external: true
+  s3_acccessKeyId:
+    external: true
+  s3_secretAccessKey:
+    external: true
 ```
+
+## How Docker Secrets Interact with Environment Variables
+
+When both Docker secrets and environment variables are configured for the same setting, HedgeDoc prioritizes them in the following order:
+
+1. Docker secrets take precedence if they exist
+2. Environment variables are used as fallback if the corresponding secret is not found
+
+This allows you to use a mix of both approaches, using secrets for sensitive information while still configuring non-sensitive settings through environment variables.
 
 ## Security Considerations
 
@@ -137,6 +179,7 @@ secrets:
 - The content of these files is never logged or exposed through container inspection.
 - For production deployments, consider using Docker Swarm's built-in secret management rather than file-based secrets in Docker Compose.
 - Regularly rotate your secrets as part of your security practices.
+- Docker secrets provide better security than environment variables, especially in production environments.
 
 ## Troubleshooting
 
