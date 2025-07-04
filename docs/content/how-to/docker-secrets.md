@@ -22,7 +22,7 @@ HedgeDoc looks for the following secret names:
 | `sslcertpath` | Path to SSL certificate file |
 | `sslcapath` | Path to SSL CA file |
 | `dhparampath` | Path to DH parameters file |
-| `s3_acccessKeyId` | AWS S3 access key ID |
+| `s3_accessKeyId` | AWS S3 access key ID |
 | `s3_secretAccessKey` | AWS S3 secret access key |
 | `azure_connectionString` | Azure storage connection string |
 | `facebook_clientID` | Facebook OAuth client ID |
