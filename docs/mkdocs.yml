@@ -19,6 +19,7 @@ nav:
     - Backup: how-to/backup.md
     - Authentication: how-to/auth.md
     - Database: how-to/database.md
+    - 'Docker Secrets': how-to/docker-secrets.md
     - Develop:
       - Setup: how-to/develop/setup.md
       - 'Frontend setup': how-to/develop/frontend.md
