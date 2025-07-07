@@ -1,0 +1,2 @@
+This is a placeholder for the MinIO policy configuration screenshot.
+The actual image should show the access policy configuration interface in the MinIO Console.

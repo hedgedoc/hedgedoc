@@ -1,0 +1,2 @@
+This is a placeholder for the MinIO bucket creation screenshot.
+The actual image should show the bucket creation interface in the MinIO Console.

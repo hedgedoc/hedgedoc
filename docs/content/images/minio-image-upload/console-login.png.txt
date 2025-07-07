@@ -1,0 +1,2 @@
+This is a placeholder for the MinIO Console login screenshot.
+The actual image should show the MinIO Console login page at http://localhost:9001.
