@@ -59,88 +59,8 @@
       "markdownWhileLoading": "Loading...",
       "markdownLoadingError": "Error while fetching intro content"
     },
-    "history": {
-      "error": {
-        "getHistory": {
-          "title": "Load History Error",
-          "text": "While trying to load the history form the server an error occurred"
-        },
-        "deleteHistory": {
-          "title": "Delete History Error",
-          "text": "While trying to delete the history on the server an error occurred"
-        },
-        "setHistory": {
-          "title": "Upload History Error",
-          "text": "While trying to upload the history to the server an error occurred"
-        },
-        "deleteNote": {
-          "title": "Delete Note Error",
-          "text": "While trying to delete a note on the server an error occurred"
-        },
-        "updateEntry": {
-          "title": "Update History Entry Error",
-          "text": "While trying to update a history entry on the server an error occurred"
-        },
-        "deleteEntry": {
-          "title": "Delete History Entry Error",
-          "text": "While trying to delete a history entry on the server an error occurred"
-        },
-        "notFoundEntry": {
-          "title": "History Entry not found",
-          "text": "We can't find the history entry you requested."
-        }
-      },
-      "noHistory": "No history",
-      "localHistory": "Below is history from this browser",
-      "toolbar": {
-        "cards": "Cards",
-        "table": "Table",
-        "selectTags": "Select tags…",
-        "searchKeywords": "Search keyword…",
-        "sortByTitle": "Sort by title",
-        "sortByLastVisited": "Sort by time",
-        "export": "Export history",
-        "import": "Import history",
-        "clear": "Clear history",
-        "refresh": "Refresh history",
-        "uploadAll": "Sync the complete history to the server"
-      },
-      "modal": {
-        "clearHistory": {
-          "title": "Delete history",
-          "question": "Do you want to clear the history?",
-          "disclaimer": "This won't delete any notes."
-        },
-        "importHistoryError": {
-          "title": "An error occurred",
-          "textWithFile": "While trying to import history from '{{fileName}}' an error occurred.",
-          "textWithoutFile": "You did not provide any files to upload the history from.",
-          "tooNewVersion": "The file '{{fileName}}' comes from a newer client and can't be imported."
-        },
-        "removeNote": {
-          "title": "Remove note from history",
-          "question": "Do you really want to remove this note from your history?",
-          "warning": "This just removes the history entry and won't delete the note itself.",
-          "button": "Remove note from history"
-        }
-      },
-      "tableHeader": {
-        "title": "Title",
-        "actions": "Actions",
-        "tags": "Tags",
-        "lastVisit": "Last Visit"
-      },
-      "menu": {
-        "recentNotes": "Recent notes",
-        "entryLocal": "Saved in your browser history",
-        "entryRemote": "Saved in your user history",
-        "removeEntry": "Remove from history",
-        "deleteNote": "Delete note"
-      }
-    },
     "navigation": {
       "intro": "Intro",
-      "history": "History",
       "newGuestNote": "New guest note",
       "newNote": "New note"
     },
@@ -509,7 +429,6 @@
   "views": {
     "presentation": {},
     "readOnly": {
-      "viewCount": "views",
       "editNote": "Edit this note"
     }
   },

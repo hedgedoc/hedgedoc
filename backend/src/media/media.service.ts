@@ -3,38 +3,50 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MediaUploadDto } from '@hedgedoc/commons';
+import { MediaBackendType, MediaUploadDto } from '@hedgedoc/commons';
+import {
+  Alias,
+  FieldNameAlias,
+  FieldNameMediaUpload,
+  FieldNameNote,
+  FieldNameUser,
+  MediaUpload,
+  Note,
+  TableAlias,
+  TableMediaUpload,
+  TableUser,
+  User,
+} from '@hedgedoc/database';
 import { Inject, Injectable } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
-import { InjectRepository } from '@nestjs/typeorm';
 import * as FileType from 'file-type';
-import { Repository } from 'typeorm';
+import { Knex } from 'knex';
+import { InjectConnection } from 'nest-knexjs';
 import { v7 as uuidV7 } from 'uuid';
 
 import mediaConfiguration, { MediaConfig } from '../config/media.config';
 import { ClientError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { Note } from '../notes/note.entity';
-import { User } from '../users/user.entity';
 import { AzureBackend } from './backends/azure-backend';
-import { BackendType } from './backends/backend-type.enum';
 import { FilesystemBackend } from './backends/filesystem-backend';
 import { ImgurBackend } from './backends/imgur-backend';
 import { S3Backend } from './backends/s3-backend';
 import { WebdavBackend } from './backends/webdav-backend';
 import { MediaBackend } from './media-backend.interface';
-import { MediaUpload } from './media-upload.entity';
 
 @Injectable()
 export class MediaService {
   mediaBackend: MediaBackend;
-  mediaBackendType: BackendType;
+  mediaBackendType: MediaBackendType;
 
   constructor(
     private readonly logger: ConsoleLoggerService,
-    @InjectRepository(MediaUpload)
-    private mediaUploadRepository: Repository<MediaUpload>,
+
+    @InjectConnection()
+    private readonly knex: Knex,
+
     private moduleRef: ModuleRef,
+
     @Inject(mediaConfiguration.KEY)
     private mediaConfig: MediaConfig,
   ) {
@@ -43,6 +55,12 @@ export class MediaService {
     this.mediaBackend = this.getBackendFromType(this.mediaBackendType);
   }
 
+  /**
+   * Checks if the given MIME type is allowed for media uploads
+   *
+   * @param mimeType The MIME type to check
+   * @returns true if the MIME type is allowed, false otherwise
+   */
   private static isAllowedMimeType(mimeType: string): boolean {
     const allowedTypes = [
       'image/apng',
@@ -62,34 +80,28 @@ export class MediaService {
   }
 
   /**
-   * @async
-   * Save the given buffer to the configured MediaBackend and create a MediaUploadEntity to track where the file is, who uploaded it and to which note.
-   * @param {string} fileName - the original file name
-   * @param {Buffer} fileBuffer - the buffer of the file to save.
-   * @param {User} user - the user who uploaded this file
-   * @param {Note} note - the note which will be associated with the new file.
-   * @return {MediaUpload} the created MediaUpload entity
-   * @throws {ClientError} the MIME type of the file is not supported.
-   * @throws {NotInDBError} - the note or user is not in the database
-   * @throws {MediaBackendError} - there was an error saving the file
+   * Saves the given buffer to the configured MediaBackend and creates a MediaUploadEntity
+   * to track where the file is, who uploaded it and to which note
+   *
+   * @param fileName The original file name
+   * @param fileBuffer The buffer with the file contents to save
+   * @param userId Id of the user who uploaded this file
+   * @param noteId Id of the note which will be associated with the new file
+   * @returns The created MediaUpload entity
+   * @throws ClientError if the MIME type of the file is not supported
+   * @throws NotInDBError if the note or user is not in the database
+   * @throws MediaBackendError if there was an error saving the file
    */
   async saveFile(
     fileName: string,
     fileBuffer: Buffer,
-    user: User | null,
-    note: Note,
-  ): Promise<MediaUpload> {
-    if (user) {
-      this.logger.debug(
-        `Saving file for note '${note.id}' and user '${user.username}'`,
-        'saveFile',
-      );
-    } else {
-      this.logger.debug(
-        `Saving file for note '${note.id}' and not logged in user`,
-        'saveFile',
-      );
-    }
+    userId: User[FieldNameUser.id],
+    noteId: Note[FieldNameNote.id],
+  ): Promise<MediaUpload[FieldNameMediaUpload.uuid]> {
+    this.logger.debug(
+      `Saving file for note '${noteId}' and user '${userId}'`,
+      'saveFile',
+    );
     const fileTypeResult = await FileType.fromBuffer(fileBuffer);
     if (!fileTypeResult) {
       throw new ClientError('Could not detect file type.');
@@ -103,143 +115,157 @@ export class MediaService {
       fileBuffer,
       fileTypeResult,
     );
-    const mediaUpload = MediaUpload.create(
-      uuid,
-      fileName,
-      note,
-      user,
-      this.mediaBackendType,
-      backendData,
+    const mediaUploads = await this.knex(TableMediaUpload).insert(
+      {
+        [FieldNameMediaUpload.fileName]: fileName,
+        [FieldNameMediaUpload.userId]: userId,
+        [FieldNameMediaUpload.noteId]: noteId,
+        [FieldNameMediaUpload.backendType]: this.mediaBackendType,
+        [FieldNameMediaUpload.backendData]: backendData,
+      },
+      [FieldNameMediaUpload.uuid],
     );
-    return await this.mediaUploadRepository.save(mediaUpload);
+    return mediaUploads[0][FieldNameMediaUpload.uuid];
   }
 
   /**
-   * @async
-   * Try to delete the specified file.
-   * @param {MediaUpload} mediaUpload - the name of the file to delete.
-   * @throws {MediaBackendError} - there was an error deleting the file
+   * Tries to delete the specified file
+   *
+   * @param uuid the uuid of the file to delete
+   * @throws NotInDBError if the file with the given uuid is not found in the database
+   * @throws MediaBackendError if there was an error deleting the file at the backend
    */
-  async deleteFile(mediaUpload: MediaUpload): Promise<void> {
-    await this.mediaBackend.deleteFile(
-      mediaUpload.uuid,
-      mediaUpload.backendData,
-    );
-    await this.mediaUploadRepository.remove(mediaUpload);
-  }
-
-  /**
-   * @async
-   * Get the URL of the file.
-   * @param {MediaUpload} mediaUpload - the file to get the URL for.
-   * @return {string} the URL of the file.
-   * @throws {MediaBackendError} - there was an error retrieving the url
-   */
-  async getFileUrl(mediaUpload: MediaUpload): Promise<string> {
-    const backendName = mediaUpload.backendType as BackendType;
-    const backend = this.getBackendFromType(backendName);
-    return await backend.getFileUrl(mediaUpload.uuid, mediaUpload.backendData);
-  }
-
-  /**
-   * @async
-   * Find a file entry by its filename.
-   * @param {string} filename - the name of the file entry to find
-   * @return {MediaUpload} the file entry, that was searched for
-   * @throws {NotInDBError} - the file entry specified is not in the database
-   * @throws {MediaBackendError} - there was an error retrieving the url
-   */
-  async findUploadByFilename(filename: string): Promise<MediaUpload> {
-    const mediaUpload = await this.mediaUploadRepository.findOne({
-      where: { fileName: filename },
-      relations: ['user'],
-    });
-    if (mediaUpload === null) {
+  async deleteFile(uuid: string): Promise<void> {
+    const backendData = await this.knex(TableMediaUpload)
+      .select(FieldNameMediaUpload.backendData)
+      .where(FieldNameMediaUpload.uuid, uuid)
+      .first();
+    if (backendData == undefined) {
       throw new NotInDBError(
-        `MediaUpload with filename '${filename}' not found`,
+        `Can't find backend data for '${uuid}'`,
+        this.logger.getContext(),
+        'deleteFile',
       );
     }
-    return mediaUpload;
+    await this.mediaBackend.deleteFile(
+      uuid,
+      backendData[FieldNameMediaUpload.backendData],
+    );
+    await this.knex(TableMediaUpload)
+      .where(FieldNameMediaUpload.uuid, uuid)
+      .delete();
   }
 
   /**
-   * @async
-   * Find a file entry by its UUID.
-   * @param {string} uuid - The UUID of the MediaUpload entity to find.
-   * @returns {MediaUpload} - the MediaUpload entity if found.
-   * @throws {NotInDBError} - the MediaUpload entity with the provided UUID is not found in the database.
+   * Retrieves the URL to a media upload file
+   *
+   * @param uuid the uuid of the file to get the URL for
+   * @returns the URL of the file
+   * @throws MediaBackendError if there was an error retrieving the url
+   */
+  async getFileUrl(uuid: string): Promise<string> {
+    const mediaUpload = await this.knex(TableMediaUpload)
+      .select(
+        FieldNameMediaUpload.backendType,
+        FieldNameMediaUpload.backendData,
+      )
+      .where(FieldNameMediaUpload.uuid, uuid)
+      .first();
+    if (mediaUpload === undefined) {
+      throw new NotInDBError(
+        `Can't find backend data for '${uuid}'`,
+        this.logger.getContext(),
+        'getFileUrl',
+      );
+    }
+    const backendName = mediaUpload[FieldNameMediaUpload.backendType];
+    const backend = this.getBackendFromType(backendName);
+    const backendData = mediaUpload[FieldNameMediaUpload.backendData];
+    return await backend.getFileUrl(uuid, backendData);
+  }
+
+  /**
+   * Finds a file entry by its UUID
+   *
+   * @param uuid The UUID of the MediaUpload entity to find
+   * @returns The MediaUpload entity if found
+   * @throws NotInDBError if the MediaUpload entity with the provided UUID is not found in the database
    */
   async findUploadByUuid(uuid: string): Promise<MediaUpload> {
-    const mediaUpload = await this.mediaUploadRepository.findOne({
-      where: { uuid },
-      relations: ['user'],
-    });
-    if (mediaUpload === null) {
+    const mediaUpload = await this.knex(TableMediaUpload)
+      .select()
+      .where(FieldNameMediaUpload.uuid, uuid)
+      .first();
+    if (mediaUpload === undefined) {
       throw new NotInDBError(`MediaUpload with uuid '${uuid}' not found`);
     }
     return mediaUpload;
   }
 
   /**
-   * @async
-   * List all uploads by a specific user
-   * @param {User} user - the specific user
-   * @return {MediaUpload[]} arary of media uploads owned by the user
+   * Lists all uploads by a specific user
+   *
+   * @param userId the id of the user
+   * @returns An array of media uploads owned by the user
    */
-  async listUploadsByUser(user: User): Promise<MediaUpload[]> {
-    const mediaUploads = await this.mediaUploadRepository
-      .createQueryBuilder('media')
-      .where('media.userId = :userId', { userId: user.id })
-      .getMany();
-    if (mediaUploads === null) {
-      return [];
-    }
-    return mediaUploads;
+  async getMediaUploadUuidsByUserId(
+    userId: number,
+  ): Promise<MediaUpload[FieldNameMediaUpload.uuid][]> {
+    const results = await this.knex(TableMediaUpload)
+      .select(FieldNameMediaUpload.uuid)
+      .where(FieldNameMediaUpload.userId, userId);
+    return results.map((result) => result[FieldNameMediaUpload.uuid]);
   }
 
   /**
-   * @async
-   * List all uploads to a specific note
-   * @param {Note} note - the specific user
-   * @return {MediaUpload[]} array of media uploads owned by the user
+   * Lists all uploads to a specific note
+   *
+   * @param noteId the specific user
+   * @returns An array of media uploads owned by the user
    */
-  async listUploadsByNote(note: Note): Promise<MediaUpload[]> {
-    const mediaUploads = await this.mediaUploadRepository
-      .createQueryBuilder('upload')
-      .where('upload.note = :note', { note: note.id })
-      .getMany();
-    if (mediaUploads === null) {
-      return [];
-    }
-    return mediaUploads;
+  async getMediaUploadUuidsByNoteId(
+    noteId: number,
+  ): Promise<MediaUpload[FieldNameMediaUpload.uuid][]> {
+    return await this.knex.transaction(async (transaction) => {
+      const results = await transaction(TableMediaUpload)
+        .select(FieldNameMediaUpload.uuid)
+        .where(FieldNameMediaUpload.noteId, noteId);
+      return results.map((result) => result[FieldNameMediaUpload.uuid]);
+    });
   }
 
   /**
-   * @async
-   * Set the note of a mediaUpload to null
-   * @param {MediaUpload} mediaUpload - the media upload to be changed
+   * Sets the note of a mediaUpload to null
+   *
+   * @param uuid the media upload to be changed
    */
-  async removeNoteFromMediaUpload(mediaUpload: MediaUpload): Promise<void> {
+  async removeNoteFromMediaUpload(uuid: string): Promise<void> {
     this.logger.debug(
-      'Setting note to null for mediaUpload: ' + mediaUpload.uuid,
+      'Setting note to null for mediaUpload: ' + uuid,
       'removeNoteFromMediaUpload',
     );
-    mediaUpload.note = Promise.resolve(null);
-    await this.mediaUploadRepository.save(mediaUpload);
+    await this.knex(TableMediaUpload)
+      .update({
+        [FieldNameMediaUpload.noteId]: null,
+      })
+      .where(FieldNameMediaUpload.uuid, uuid);
   }
 
-  private chooseBackendType(): BackendType {
+  /**
+   * Returns the backend type that is configured in the media configuration
+   */
+  private chooseBackendType(): MediaBackendType {
     switch (this.mediaConfig.backend.use as string) {
       case 'filesystem':
-        return BackendType.FILESYSTEM;
+        return MediaBackendType.FILESYSTEM;
       case 'azure':
-        return BackendType.AZURE;
+        return MediaBackendType.AZURE;
       case 'imgur':
-        return BackendType.IMGUR;
+        return MediaBackendType.IMGUR;
       case 's3':
-        return BackendType.S3;
+        return MediaBackendType.S3;
       case 'webdav':
-        return BackendType.WEBDAV;
+        return MediaBackendType.WEBDAV;
       default:
         throw new Error(
           `Unexpected media backend ${this.mediaConfig.backend.use}`,
@@ -247,29 +273,66 @@ export class MediaService {
     }
   }
 
-  private getBackendFromType(type: BackendType): MediaBackend {
+  /**
+   * Returns the MediaBackend instance for the given MediaBackendType
+   *
+   * @param type The MediaBackendType to get the backend for
+   * @returns The MediaBackend instance
+   */
+  private getBackendFromType(type: MediaBackendType): MediaBackend {
     switch (type) {
-      case BackendType.FILESYSTEM:
+      case MediaBackendType.FILESYSTEM:
         return this.moduleRef.get(FilesystemBackend);
-      case BackendType.S3:
+      case MediaBackendType.S3:
         return this.moduleRef.get(S3Backend);
-      case BackendType.AZURE:
+      case MediaBackendType.AZURE:
         return this.moduleRef.get(AzureBackend);
-      case BackendType.IMGUR:
+      case MediaBackendType.IMGUR:
         return this.moduleRef.get(ImgurBackend);
-      case BackendType.WEBDAV:
+      case MediaBackendType.WEBDAV:
         return this.moduleRef.get(WebdavBackend);
     }
   }
 
-  async toMediaUploadDto(mediaUpload: MediaUpload): Promise<MediaUploadDto> {
-    const user = await mediaUpload.user;
-    return {
-      uuid: mediaUpload.uuid,
-      fileName: mediaUpload.fileName,
-      noteId: (await mediaUpload.note)?.publicId ?? null,
-      createdAt: mediaUpload.createdAt.toISOString(),
-      username: user?.username ?? null,
-    };
+  /**
+   * Retrieves media upload DTOs by a list of their UUIDs
+   *
+   * @param uuids The UUIDs of the media uploads to retrieve
+   * @returns An array of MediaUploadDto objects containing the details of the media uploads
+   */
+  async getMediaUploadDtosByUuids(uuids: string[]): Promise<MediaUploadDto[]> {
+    const mediaUploads = await this.knex(TableMediaUpload)
+      .select<
+        (Pick<
+          MediaUpload,
+          | FieldNameMediaUpload.uuid
+          | FieldNameMediaUpload.fileName
+          | FieldNameMediaUpload.createdAt
+        > &
+          Pick<User, FieldNameUser.username> &
+          Pick<Alias, FieldNameAlias.alias>)[]
+      >(`${TableMediaUpload}.${FieldNameMediaUpload.uuid}`, `${TableMediaUpload}.${FieldNameMediaUpload.fileName}`, `${TableMediaUpload}.${FieldNameMediaUpload.createdAt}`, `${TableUser}.${FieldNameUser.username}`, `${TableAlias}.${FieldNameAlias.alias}`)
+      .join(
+        TableAlias,
+        `${TableAlias}.${FieldNameAlias.noteId}`,
+        `${TableMediaUpload}.${FieldNameMediaUpload.noteId}`,
+      )
+      .join(
+        TableUser,
+        `${TableUser}.${FieldNameUser.id}`,
+        `${TableMediaUpload}.${FieldNameMediaUpload.userId}`,
+      )
+      .whereIn(FieldNameMediaUpload.uuid, uuids)
+      .andWhere(FieldNameAlias.isPrimary, true);
+
+    return mediaUploads.map((mediaUpload) => ({
+      uuid: mediaUpload[FieldNameMediaUpload.uuid],
+      fileName: mediaUpload[FieldNameMediaUpload.fileName],
+      noteId: mediaUpload[FieldNameAlias.alias],
+      createdAt: new Date(
+        mediaUpload[FieldNameMediaUpload.createdAt],
+      ).toISOString(),
+      username: mediaUpload[FieldNameUser.username],
+    }));
   }
 }

@@ -3,13 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { MediaBackendType } from '@hedgedoc/commons';
 import * as MinioModule from 'minio';
 import { Client, ClientOptions } from 'minio';
 import { Mock } from 'ts-mockery';
 
 import { MediaConfig } from '../../config/media.config';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
-import { BackendType } from './backend-type.enum';
 import { S3Backend } from './s3-backend';
 
 jest.mock('minio');
@@ -43,7 +43,7 @@ describe('s3 backend', () => {
   function mockMediaConfig(endPoint: string): MediaConfig {
     return Mock.of<MediaConfig>({
       backend: {
-        use: BackendType.S3,
+        use: MediaBackendType.S3,
         s3: {
           accessKeyId: mockedS3AccessKeyId,
           secretAccessKey: mockedS3SecretAccessKey,

@@ -6,7 +6,7 @@
 import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
 import { UiIcon } from '../../../../../common/icons/ui-icon'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
-import { GuestAccess } from '@hedgedoc/commons'
+import { PermissionLevel } from '@hedgedoc/commons'
 import React, { useMemo } from 'react'
 import { Button, ToggleButtonGroup } from 'react-bootstrap'
 import { Eye as IconEye, Pencil as IconPencil, X as IconX } from 'react-bootstrap-icons'
@@ -24,7 +24,7 @@ export enum PermissionType {
 
 export interface PermissionEntryButtonsProps {
   type: PermissionType
-  currentSetting: GuestAccess
+  currentSetting: PermissionLevel
   name: string
   onSetReadOnly: () => void
   onSetWriteable: () => void
@@ -79,14 +79,14 @@ export const PermissionEntryButtons: React.FC<PermissionEntryButtonsProps & Perm
         <Button
           disabled={disabled}
           title={setReadOnlyTitle}
-          variant={currentSetting === GuestAccess.READ ? 'secondary' : 'outline-secondary'}
+          variant={currentSetting === PermissionLevel.READ ? 'secondary' : 'outline-secondary'}
           onClick={onSetReadOnly}>
           <UiIcon icon={IconEye} />
         </Button>
         <Button
           disabled={disabled}
           title={setWritableTitle}
-          variant={currentSetting === GuestAccess.WRITE ? 'secondary' : 'outline-secondary'}
+          variant={currentSetting === PermissionLevel.WRITE ? 'secondary' : 'outline-secondary'}
           onClick={onSetWriteable}>
           <UiIcon icon={IconPencil} />
         </Button>

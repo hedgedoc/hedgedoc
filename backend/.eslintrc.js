@@ -38,14 +38,25 @@ module.exports = {
         ],
       },
     },
+    {
+      files: ['src/database/**'],
+      rules: {
+        '@typescript-eslint/naming-convention': 'off',
+      },
+    },
   ],
-  plugins: ['@typescript-eslint', 'jest', 'eslint-plugin-local-rules','@darraghor/nestjs-typed'],
+  plugins: [
+    '@typescript-eslint',
+    'jest',
+    'eslint-plugin-local-rules',
+    '@darraghor/nestjs-typed',
+  ],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:prettier/recommended',
-    'plugin:@darraghor/nestjs-typed/recommended'
+    'plugin:@darraghor/nestjs-typed/recommended',
   ],
   root: true,
   env: {

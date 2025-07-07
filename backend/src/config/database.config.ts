@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { registerAs } from '@nestjs/config';
+import { Knex } from 'knex';
 import z from 'zod';
 
 import { DatabaseType } from './database-type.enum';
@@ -46,31 +47,15 @@ const mariaDbSchema = z.object({
     .describe('HD_DATABASE_PORT'),
 });
 
-const mysqlDbSchema = z.object({
-  type: z.literal(DatabaseType.MYSQL).describe('HD_DATABASE_TYPE'),
-  name: z.string().describe('HD_DATABASE_NAME'),
-  username: z.string().describe('HD_DATABASE_USERNAME'),
-  password: z.string().describe('HD_DATABASE_PASSWORD'),
-  host: z.string().describe('HD_DATABASE_HOST'),
-  port: z
-    .number()
-    .positive()
-    .max(65535)
-    .default(3306)
-    .describe('HD_DATABASE_PORT'),
-});
-
 const dbSchema = z.discriminatedUnion('type', [
   sqliteDbSchema,
   mariaDbSchema,
-  mysqlDbSchema,
   postgresDbSchema,
 ]);
 
 export type SqliteDatabaseConfig = z.infer<typeof sqliteDbSchema>;
 export type PostgresDatabaseConfig = z.infer<typeof postgresDbSchema>;
 export type MariadbDatabaseConfig = z.infer<typeof mariaDbSchema>;
-export type MySQLDatabaseConfig = z.infer<typeof mysqlDbSchema>;
 export type DatabaseConfig = z.infer<typeof dbSchema>;
 
 export default registerAs('databaseConfig', () => {
@@ -90,3 +75,40 @@ export default registerAs('databaseConfig', () => {
   }
   return databaseConfig.data;
 });
+
+export function getKnexConfig(databaseConfig: DatabaseConfig): Knex.Config {
+  switch (databaseConfig.type) {
+    case DatabaseType.SQLITE:
+      return {
+        client: 'better-sqlite3',
+        connection: {
+          filename: databaseConfig.name,
+        },
+      };
+    case DatabaseType.POSTGRES:
+      return {
+        client: 'pg',
+        connection: {
+          host: databaseConfig.host,
+          port: databaseConfig.port,
+          user: databaseConfig.username,
+          database: databaseConfig.name,
+          password: databaseConfig.password,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          application_name: 'HedgeDoc',
+        },
+      };
+    case DatabaseType.MARIADB:
+      return {
+        // Knex recommends using the mysql driver for MariaDB database instances
+        client: 'mysql',
+        connection: {
+          host: databaseConfig.host,
+          port: databaseConfig.port,
+          user: databaseConfig.username,
+          database: databaseConfig.name,
+          password: databaseConfig.password,
+        },
+      };
+  }
+}

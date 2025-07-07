@@ -1,0 +1,4 @@
+{
+  "extends" : "./tsconfig.cjs.json",
+  "exclude": ["./dist"]
+}

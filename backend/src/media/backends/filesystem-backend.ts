@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { MediaBackendType } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
 import { FileTypeResult } from 'file-type';
 import { promises as fs } from 'fs';
@@ -12,7 +13,6 @@ import mediaConfiguration, { MediaConfig } from '../../config/media.config';
 import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
-import { BackendType } from './backend-type.enum';
 
 @Injectable()
 export class FilesystemBackend implements MediaBackend {
@@ -25,7 +25,7 @@ export class FilesystemBackend implements MediaBackend {
   ) {
     this.logger.setContext(FilesystemBackend.name);
     // only create the backend if local filesystem is configured
-    if (this.mediaConfig.backend.use !== BackendType.FILESYSTEM) {
+    if (this.mediaConfig.backend.use !== MediaBackendType.FILESYSTEM) {
       this.uploadDirectory = '';
       return;
     }

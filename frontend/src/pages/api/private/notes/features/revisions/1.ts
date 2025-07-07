@@ -63,7 +63,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
     edits: [],
     length: 2788,
     authorUsernames: [],
-    anonymousAuthorCount: 4,
+    authorGuestUuids: ['1', '2', '3'],
     content: `---
 title: Features
 description: Many more features, such wow!

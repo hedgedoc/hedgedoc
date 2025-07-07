@@ -11,7 +11,7 @@ import {
 } from './message.js'
 import { TransportAdapter } from './transport-adapter.js'
 import { EventEmitter2, Listener } from 'eventemitter2'
-import { DisconnectReason } from './disconnect_reason.js'
+import { DisconnectReasonCode } from './disconnect_reason.js'
 
 export type AllEvents = MessageType | ConnectionStateEvent
 
@@ -19,7 +19,7 @@ type MessageEventPayloadMap = {
   [E in AllEvents]: E extends keyof MessagePayloads
     ? (message: Message<E>) => void
     : E extends ConnectionStateEvent.DISCONNECTED
-      ? (reason?: DisconnectReason) => void
+      ? (reason?: DisconnectReasonCode) => void
       : () => void
 }
 
@@ -183,7 +183,7 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
     this.emit(ConnectionStateEvent.CONNECTED)
   }
 
-  protected onDisconnecting(reason?: DisconnectReason): void {
+  protected onDisconnecting(reason?: DisconnectReasonCode): void {
     if (this.transportAdapter === undefined) {
       return
     }

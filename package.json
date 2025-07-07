@@ -6,6 +6,7 @@
     "backend",
     "frontend",
     "commons",
+    "database",
     "dev-reverse-proxy",
     "docs",
     "html-to-react",

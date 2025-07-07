@@ -20,7 +20,7 @@ import { cypressId } from '../../../../../../utils/cypress-attribute'
  * @param disabled If the user is not the owner, functionality is disabled.
  */
 export const PermissionSectionOwner: React.FC<PermissionDisabledProps> = ({ disabled }) => {
-  const noteId = useApplicationState((state) => state.noteDetails?.id)
+  const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const [changeOwner, setChangeOwner] = useState(false)
   const { showErrorNotification } = useUiNotifications()
 
@@ -30,10 +30,10 @@ export const PermissionSectionOwner: React.FC<PermissionDisabledProps> = ({ disa
 
   const onOwnerChange = useCallback(
     (newOwner: string) => {
-      if (!noteId) {
+      if (!noteAlias) {
         return
       }
-      setNoteOwner(noteId, newOwner)
+      setNoteOwner(noteAlias, newOwner)
         .then((updatedPermissions) => {
           setNotePermissionsFromServer(updatedPermissions)
         })
@@ -42,7 +42,7 @@ export const PermissionSectionOwner: React.FC<PermissionDisabledProps> = ({ disa
           setChangeOwner(false)
         })
     },
-    [noteId, showErrorNotification]
+    [noteAlias, showErrorNotification]
   )
 
   return (

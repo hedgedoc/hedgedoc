@@ -6,7 +6,7 @@
 import { useIsOwner } from '../../../../../../hooks/common/use-is-owner'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionEntrySpecialGroup } from './permission-entry-special-group'
-import { GuestAccess, SpecialGroup } from '@hedgedoc/commons'
+import { PermissionLevel, SpecialGroup } from '@hedgedoc/commons'
 import React, { Fragment, useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { useGetSpecialPermissions } from './hooks/use-get-special-permissions'
@@ -23,8 +23,16 @@ export const PermissionSectionSpecialGroups: React.FC<PermissionDisabledProps> =
 
   const specialGroupEntries = useMemo(() => {
     return {
-      everyoneLevel: groupEveryone ? (groupEveryone.canEdit ? GuestAccess.WRITE : GuestAccess.READ) : GuestAccess.DENY,
-      loggedInLevel: groupLoggedIn ? (groupLoggedIn.canEdit ? GuestAccess.WRITE : GuestAccess.READ) : GuestAccess.DENY,
+      everyoneLevel: groupEveryone
+        ? groupEveryone.canEdit
+          ? PermissionLevel.WRITE
+          : PermissionLevel.READ
+        : PermissionLevel.DENY,
+      loggedInLevel: groupLoggedIn
+        ? groupLoggedIn.canEdit
+          ? PermissionLevel.WRITE
+          : PermissionLevel.READ
+        : PermissionLevel.DENY,
       loggedInInconsistentAlert: groupEveryone && (!groupLoggedIn || (groupEveryone.canEdit && !groupLoggedIn.canEdit))
     }
   }, [groupEveryone, groupLoggedIn])

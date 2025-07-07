@@ -15,7 +15,7 @@ import type { RevisionDto, RevisionMetadataDto } from '@hedgedoc/commons'
  * @return The revision.
  * @throws {Error} when the api request wasn't successful.
  */
-export const getRevision = async (noteId: string, revisionId: number): Promise<RevisionDto> => {
+export const getRevision = async (noteId: string, revisionId: string): Promise<RevisionDto> => {
   const response = await new GetApiRequestBuilder<RevisionDto>(`notes/${noteId}/revisions/${revisionId}`).sendRequest()
   return response.asParsedJsonObject()
 }

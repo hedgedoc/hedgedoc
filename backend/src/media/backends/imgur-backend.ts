@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { MediaBackendType } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
 import fetch, { Response } from 'node-fetch';
 import { URLSearchParams } from 'url';
@@ -14,7 +15,6 @@ import mediaConfiguration, {
 import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
-import { BackendType } from './backend-type.enum';
 
 type UploadResult = {
   data: {
@@ -39,7 +39,7 @@ export class ImgurBackend implements MediaBackend {
   ) {
     this.logger.setContext(ImgurBackend.name);
     // only create the backend if imgur is configured
-    if (this.mediaConfig.backend.use !== BackendType.IMGUR) {
+    if (this.mediaConfig.backend.use !== MediaBackendType.IMGUR) {
       return;
     }
     this.config = this.mediaConfig.backend.imgur;

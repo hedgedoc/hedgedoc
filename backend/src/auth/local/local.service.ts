@@ -3,9 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ProviderType } from '@hedgedoc/commons';
+import { AuthProviderType } from '@hedgedoc/commons';
+import { FieldNameIdentity, Identity, TableIdentity } from '@hedgedoc/database';
 import { Inject, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import {
   OptionsGraph,
   OptionsType,
@@ -20,18 +20,16 @@ import {
   dictionary as zxcvbnEnDictionary,
   translations as zxcvbnEnTranslations,
 } from '@zxcvbn-ts/language-en';
-import { Repository } from 'typeorm';
+import { Knex } from 'knex';
+import { InjectConnection } from 'nest-knexjs';
 
 import authConfiguration, { AuthConfig } from '../../config/auth.config';
 import {
   InvalidCredentialsError,
-  NoLocalIdentityError,
   PasswordTooWeakError,
 } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
-import { User } from '../../users/user.entity';
 import { checkPassword, hashPassword } from '../../utils/password';
-import { Identity } from '../identity.entity';
 import { IdentityService } from '../identity.service';
 
 @Injectable()
@@ -39,8 +37,10 @@ export class LocalService {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private identityService: IdentityService,
-    @InjectRepository(Identity)
-    private identityRepository: Repository<Identity>,
+
+    @InjectConnection()
+    private readonly knex: Knex,
+
     @Inject(authConfiguration.KEY)
     private authConfig: AuthConfig,
   ) {
@@ -57,84 +57,93 @@ export class LocalService {
   }
 
   /**
-   * @async
-   * Create a new identity for internal auth
-   * @param {User} user - the user the identity should be added to
-   * @param {string} password - the password the identity should have
-   * @return {Identity} the new local identity
+   * Creates a new user with an identity for internal auth and returns the id of the newly created user
+   *
+   * @param username The username of the new identity
+   * @param password The password the identity should have
+   * @param displayName The display name of the new identity
+   * @returns The id of the newly created user
    */
-  async createLocalIdentity(user: User, password: string): Promise<Identity> {
-    const identity = Identity.create(user, ProviderType.LOCAL, null);
-    identity.passwordHash = await hashPassword(password);
-    identity.providerUserId = user.username;
-    return await this.identityRepository.save(identity);
+  async createUserWithLocalIdentity(
+    username: string,
+    password: string,
+    displayName: string,
+  ): Promise<number> {
+    const passwordHash = await hashPassword(password);
+    return await this.identityService.createUserWithIdentity(
+      AuthProviderType.LOCAL,
+      null,
+      username,
+      username,
+      displayName,
+      null,
+      null,
+      passwordHash,
+    );
   }
 
   /**
-   * @async
-   * Update the internal password of the specified the user
-   * @param {User} user - the user, which identity should be updated
-   * @param {string} newPassword - the new password
-   * @throws {NoLocalIdentityError} the specified user has no internal identity
-   * @return {Identity} the changed identity
+   * Updates the password hash for the local identity of the specified the user
+   *
+   * @param userId The user, whose local identity should be updated
+   * @param newPassword The new password
+   * @throws NoLocalIdentityError if the specified user has no local identity
+   * @throws PasswordTooWeakError if the password is too weak
    */
   async updateLocalPassword(
-    user: User,
+    userId: number,
     newPassword: string,
-  ): Promise<Identity> {
-    const internalIdentity: Identity | undefined =
-      await this.identityService.getIdentityFromUserIdAndProviderType(
-        user.username,
-        ProviderType.LOCAL,
-      );
-    if (internalIdentity === undefined) {
-      this.logger.debug(
-        `The user with the username ${user.username} does not have a internal identity.`,
-        'updateLocalPassword',
-      );
-      throw new NoLocalIdentityError('This user has no internal identity.');
-    }
+  ): Promise<void> {
     await this.checkPasswordStrength(newPassword);
-    internalIdentity.passwordHash = await hashPassword(newPassword);
-    return await this.identityRepository.save(internalIdentity);
+    const newPasswordHash = await hashPassword(newPassword);
+    await this.knex(TableIdentity)
+      .update({
+        [FieldNameIdentity.passwordHash]: newPasswordHash,
+        [FieldNameIdentity.updatedAt]: new Date(),
+      })
+      .where(FieldNameIdentity.providerType, AuthProviderType.LOCAL)
+      .andWhere(FieldNameIdentity.userId, userId);
   }
 
   /**
-   * @async
-   * Checks if the user and password combination matches
-   * @param {User} user - the user to use
-   * @param {string} password - the password to use
-   * @throws {InvalidCredentialsError} the password and user do not match
-   * @throws {NoLocalIdentityError} the specified user has no internal identity
+   * Checks if the user and password combination matches for the local identity and returns the local identity on success
+   *
+   * @param username The user to use
+   * @param password The password to use
+   * @returns The identity of the user if the credentials are valid
+   * @throws InvalidCredentialsError if the credentials are invalid
    */
-  async checkLocalPassword(user: User, password: string): Promise<void> {
-    const internalIdentity: Identity | undefined =
+  async checkLocalPassword(
+    username: string,
+    password: string,
+  ): Promise<Identity> {
+    const identity =
       await this.identityService.getIdentityFromUserIdAndProviderType(
-        user.username,
-        ProviderType.LOCAL,
+        username,
+        AuthProviderType.LOCAL,
+        null,
       );
-    if (internalIdentity === undefined) {
-      this.logger.debug(
-        `The user with the username ${user.username} does not have an internal identity.`,
+    const passwordValid = await checkPassword(
+      password,
+      identity[FieldNameIdentity.passwordHash] ?? '',
+    );
+    if (!passwordValid) {
+      throw new InvalidCredentialsError(
+        'Username or password is not correct',
+        this.logger.getContext(),
         'checkLocalPassword',
       );
-      throw new NoLocalIdentityError('This user has no internal identity.');
     }
-    if (!(await checkPassword(password, internalIdentity.passwordHash ?? ''))) {
-      this.logger.debug(
-        `Password check for ${user.username} did not succeed.`,
-        'checkLocalPassword',
-      );
-      throw new InvalidCredentialsError('Password is not correct');
-    }
+    return identity;
   }
 
   /**
-   * @async
-   * Check if the password is strong and long enough.
+   * Checks if the password is strong and long enough
    * This check is performed against the minimalPasswordStrength of the {@link AuthConfig}.
-   * @param {string} password - the password to check
-   * @throws {PasswordTooWeakError} the password is too weak
+   * The method acts as a guard and therefore throws an error on failure instead of returning a boolean.
+   *
+   * @param password The password to check
+   * @throws PasswordTooWeakError if the password is too weak
    */
   async checkPasswordStrength(password: string): Promise<void> {
     if (password.length < 6) {

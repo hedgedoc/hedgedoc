@@ -1,25 +1,24 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { forwardRef, Module } from '@nestjs/common';
+import { KnexModule } from 'nest-knexjs';
 
-import { GroupsModule } from '../groups/groups.module';
 import { LoggerModule } from '../logger/logger.module';
-import { Note } from '../notes/note.entity';
+import { NoteModule } from '../notes/note.module';
 import { UsersModule } from '../users/users.module';
-import { PermissionsService } from './permissions.service';
+import { PermissionService } from './permission.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Note]),
-    UsersModule,
-    GroupsModule,
+    KnexModule,
     LoggerModule,
+    forwardRef(() => NoteModule),
+    UsersModule,
   ],
-  exports: [PermissionsService],
-  providers: [PermissionsService],
+  exports: [PermissionService],
+  providers: [PermissionService],
 })
 export class PermissionsModule {}

@@ -1,0 +1,9 @@
+.idea
+.babelrc
+.eslintrc
+.travis.yml
+karma.conf.js
+tests.webpack.js
+webpack.config.*.js
+coverage/
+test/

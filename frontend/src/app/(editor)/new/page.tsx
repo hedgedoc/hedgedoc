@@ -36,7 +36,7 @@ const NewNotePage: NextPage = () => {
           descriptionI18nKey={'errors.noteCreationFailed.description'}
         />
       }>
-      {value !== undefined && <Redirect to={`/n/${value.metadata.primaryAddress}`} replace={true} />}
+      {value !== undefined && <Redirect to={`/n/${value.metadata.primaryAlias}`} replace={true} />}
     </CustomAsyncLoadingBoundary>
   )
 }

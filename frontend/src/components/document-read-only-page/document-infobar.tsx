@@ -11,7 +11,6 @@ import { NoteInfoLineUpdatedBy } from '../editor-page/sidebar/specific-sidebar-e
 import styles from './document-infobar.module.scss'
 import React from 'react'
 import { Pencil as IconPencil } from 'react-bootstrap-icons'
-import { Trans } from 'react-i18next'
 
 /**
  * Renders an info bar with metadata about the current note.
@@ -34,10 +33,9 @@ export const DocumentInfobar: React.FC = () => {
           <hr />
         </div>
         <span className={'ms-auto'}>
-          {noteDetails.viewCount} <Trans i18nKey={'views.readOnly.viewCount'} />
           <InternalLink
             text={''}
-            href={`/n/${noteDetails.primaryAddress}`}
+            href={`/n/${noteDetails.primaryAlias}`}
             icon={IconPencil}
             className={'text-primary text-decoration-none mx-1'}
             title={linkTitle}

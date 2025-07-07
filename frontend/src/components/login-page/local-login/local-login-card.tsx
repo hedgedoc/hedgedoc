@@ -7,7 +7,7 @@
 import React, { useMemo } from 'react'
 import { Card } from 'react-bootstrap'
 import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
-import { ProviderType } from '@hedgedoc/commons'
+import { AuthProviderType } from '@hedgedoc/commons'
 import { LocalLoginCardBody } from './local-login-card-body'
 import { LocalRegisterCardBody } from './register/local-register-card-body'
 
@@ -18,7 +18,7 @@ export const LocalLoginCard: React.FC = () => {
   const frontendConfig = useFrontendConfig()
 
   const localLoginEnabled = useMemo(() => {
-    return frontendConfig.authProviders.some((provider) => provider.type === ProviderType.LOCAL)
+    return frontendConfig.authProviders.some((provider) => provider.type === AuthProviderType.LOCAL)
   }, [frontendConfig])
 
   if (!localLoginEnabled) {

@@ -3,13 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { refreshHistoryState } from '../../../redux/history/methods'
 import { Logger } from '../../../utils/logger'
 import { isDevMode, isTestMode } from '../../../utils/test-modes'
 import { loadDarkMode } from './load-dark-mode'
 import { setUpI18n } from './setupI18n'
 import { loadFromLocalStorage } from '../../../redux/editor-config/methods'
 import { fetchAndSetUser } from '../../login-page/utils/fetch-and-set-user'
+import { loginOrRegisterGuest } from './login-or-register-guest'
 
 const logger = new Logger('Application Loader')
 
@@ -67,8 +67,8 @@ export const createSetUpTaskList = (): InitTask[] => {
       task: fetchUserInformation
     },
     {
-      name: 'Load history state',
-      task: refreshHistoryState
+      name: 'Register or login guest user',
+      task: loginOrRegisterGuest
     },
     {
       name: 'Load preferences',

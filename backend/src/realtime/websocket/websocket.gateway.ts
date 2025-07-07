@@ -1,28 +1,28 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
   DisconnectReason,
+  DisconnectReasonCode,
   MessageTransporter,
-  userCanEdit,
+  PermissionLevel,
 } from '@hedgedoc/commons';
+import { FieldNameUser } from '@hedgedoc/database';
 import { OnGatewayConnection, WebSocketGateway } from '@nestjs/websockets';
 import { IncomingMessage } from 'http';
 import WebSocket from 'ws';
 
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
-import { NotesService } from '../../notes/notes.service';
-import { NotePermission } from '../../permissions/note-permission.enum';
-import { PermissionsService } from '../../permissions/permissions.service';
+import { NoteService } from '../../notes/note.service';
+import { PermissionService } from '../../permissions/permission.service';
 import { SessionService } from '../../sessions/session.service';
-import { User } from '../../users/user.entity';
 import { UsersService } from '../../users/users.service';
 import { RealtimeConnection } from '../realtime-note/realtime-connection';
 import { RealtimeNoteService } from '../realtime-note/realtime-note.service';
 import { BackendWebsocketAdapter } from './backend-websocket-adapter';
-import { extractNoteIdFromRequestUrl } from './utils/extract-note-id-from-request-url';
+import { extractNoteAliasFromRequestUrl } from './utils/extract-note-id-from-request-url';
 
 /**
  * Gateway implementing the realtime logic required for realtime note editing.
@@ -31,10 +31,10 @@ import { extractNoteIdFromRequestUrl } from './utils/extract-note-id-from-reques
 export class WebsocketGateway implements OnGatewayConnection {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    private noteService: NotesService,
+    private noteService: NoteService,
     private realtimeNoteService: RealtimeNoteService,
     private userService: UsersService,
-    private permissionsService: PermissionsService,
+    private permissionsService: PermissionService,
     private sessionService: SessionService,
   ) {
     this.logger.setContext(WebsocketGateway.name);
@@ -54,48 +54,59 @@ export class WebsocketGateway implements OnGatewayConnection {
     request: IncomingMessage,
   ): Promise<void> {
     try {
-      const user = await this.findUserByRequestSession(request);
-      const note = await this.noteService.getNoteByIdOrAlias(
-        extractNoteIdFromRequestUrl(request),
-      );
-
-      const username = user?.username ?? 'guest';
-
-      const notePermission = await this.permissionsService.determinePermission(
-        user,
-        note,
-      );
-      if (notePermission < NotePermission.READ) {
-        this.logger.log(
-          `Access denied to note '${note.id}' for user '${username}'`,
-          'handleConnection',
+      const userId = await this.findUserIdByRequestSession(request);
+      if (userId === undefined) {
+        clientSocket.close(
+          DisconnectReasonCode.SESSION_NOT_FOUND,
+          DisconnectReason[DisconnectReasonCode.SESSION_NOT_FOUND],
         );
-        clientSocket.close(DisconnectReason.USER_NOT_PERMITTED);
         return;
       }
+      const noteId = await this.noteService.getNoteIdByAlias(
+        extractNoteAliasFromRequestUrl(request),
+      );
+      const user = await this.userService.getUserById(userId);
+      const username = user[FieldNameUser.username];
+      const displayName = user[FieldNameUser.displayName];
+      const authorStyle = user[FieldNameUser.authorStyle];
+
+      const notePermission = await this.permissionsService.determinePermission(
+        userId,
+        noteId,
+      );
+      if (notePermission < PermissionLevel.READ) {
+        this.logger.log(
+          `Access denied to note '${noteId}' for user '${userId}'`,
+          'handleConnection',
+        );
+        clientSocket.close(
+          DisconnectReasonCode.USER_NOT_PERMITTED,
+          DisconnectReason[DisconnectReasonCode.USER_NOT_PERMITTED],
+        );
+        return;
+      }
+      const acceptEdits: boolean = notePermission >= PermissionLevel.WRITE;
 
       this.logger.debug(
-        `New realtime connection to note '${note.id}' (${
-          note.publicId
-        }) by user '${username}' from ${
+        `New realtime connection to note '${noteId}' by user '${userId}' from ${
           request.socket.remoteAddress ?? 'unknown'
         }`,
       );
 
       const realtimeNote =
-        await this.realtimeNoteService.getOrCreateRealtimeNote(note);
+        await this.realtimeNoteService.getOrCreateRealtimeNote(noteId);
 
       const websocketTransporter = new MessageTransporter();
       websocketTransporter.setAdapter(
         new BackendWebsocketAdapter(clientSocket),
       );
 
-      const permissions = await this.noteService.toNotePermissionsDto(note);
-      const acceptEdits: boolean = userCanEdit(permissions, user?.username);
-
       const connection = new RealtimeConnection(
         websocketTransporter,
-        user,
+        userId,
+        username,
+        displayName,
+        authorStyle,
         realtimeNote,
         acceptEdits,
       );
@@ -109,35 +120,26 @@ export class WebsocketGateway implements OnGatewayConnection {
         (error as Error).stack,
         'handleConnection',
       );
-      clientSocket.close();
+      clientSocket.close(
+        DisconnectReasonCode.INTERNAL_ERROR,
+        DisconnectReason[DisconnectReasonCode.INTERNAL_ERROR],
+      );
     }
   }
 
   /**
-   * Finds the {@link User} whose session cookie is saved in the given {@link IncomingMessage}.
+   * Finds the user id whose session cookie is saved in the given {@link IncomingMessage}.
    *
    * @param request The request that contains the session cookie
-   * @return The found user
+   * @returns The found user id
    */
-  private async findUserByRequestSession(
+  private async findUserIdByRequestSession(
     request: IncomingMessage,
-  ): Promise<User | null> {
+  ): Promise<number | undefined> {
     const sessionId = this.sessionService.extractSessionIdFromRequest(request);
-
-    this.logger.debug(
-      'Checking if sessionId is empty',
-      'findUserByRequestSession',
-    );
     if (sessionId.isEmpty()) {
-      return null;
+      return undefined;
     }
-    this.logger.debug('sessionId is not empty', 'findUserByRequestSession');
-    const username = await this.sessionService.fetchUsernameForSessionId(
-      sessionId.get(),
-    );
-    if (username === undefined) {
-      return null;
-    }
-    return await this.userService.getUserByUsername(username);
+    return await this.sessionService.getUserIdForSessionId(sessionId.get());
   }
 }

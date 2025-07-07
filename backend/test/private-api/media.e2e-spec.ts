@@ -5,7 +5,7 @@
  */
 import { promises as fs } from 'fs';
 import { join } from 'path';
-import { User } from 'src/users/user.entity';
+import { User } from 'src/database/user.entity';
 import request from 'supertest';
 
 import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
@@ -187,7 +187,7 @@ describe('Media', () => {
       // upload a file with the default test user
       const testNote = await testSetup.notesService.createNote(
         'test content',
-        await testSetup.userService.getUserByUsername(username2),
+        await testSetup.userService.getUserDtoByUsername(username2),
         'test_delete_media_note',
       );
       const testImage = await fs.readFile('test/private-api/fixtures/test.png');

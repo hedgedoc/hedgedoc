@@ -5,13 +5,13 @@
  */
 
 import { z } from 'zod'
-import { ProviderType } from '../auth/index.js'
+import { AuthProviderType } from '../auth/index.js'
 
 export const AuthProviderWithCustomNameSchema = z
   .object({
     type: z
-      .literal(ProviderType.LDAP)
-      .or(z.literal(ProviderType.OIDC))
+      .literal(AuthProviderType.LDAP)
+      .or(z.literal(AuthProviderType.OIDC))
       .describe('The type of the auth provider'),
     identifier: z
       .string()

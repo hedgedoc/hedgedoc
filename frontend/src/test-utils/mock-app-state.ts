@@ -10,7 +10,7 @@ import { initialState as initialStateEditorConfig } from '../redux/editor-config
 import { initialState as initialStateNoteDetails } from '../redux/note-details/initial-state'
 import { initialState as initialStateRealtimeStatus } from '../redux/realtime/initial-state'
 import { initialState as initialStateRendererStatus } from '../redux/renderer-status/initial-state'
-import { type DeepPartial, ProviderType } from '@hedgedoc/commons'
+import { type DeepPartial, AuthProviderType } from '@hedgedoc/commons'
 
 jest.mock('../redux/editor-config/methods', () => ({
   loadFromLocalStorage: jest.fn().mockReturnValue(undefined)
@@ -34,7 +34,6 @@ export const mockAppState = (state?: DeepPartial<ApplicationState>) => {
         ...initialStateEditorConfig,
         ...state?.editorConfig
       },
-      history: [], // Yes this allows no mocking and is therefore technically not correct, but the type is difficult to fix and we will remove it soon anyway.
       noteDetails: {
         ...initialStateNoteDetails,
         ...state?.noteDetails
@@ -54,7 +53,7 @@ export const mockAppState = (state?: DeepPartial<ApplicationState>) => {
             email: state.user.email ?? null,
             displayName: state.user.displayName ?? '',
             photoUrl: state.user.photoUrl ?? null,
-            authProvider: state.user.authProvider ?? ProviderType.LOCAL
+            authProvider: state.user.authProvider ?? AuthProviderType.LOCAL
           }
         : null
     })

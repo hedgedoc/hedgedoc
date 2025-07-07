@@ -4,16 +4,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
+  AuthProviderDto,
+  AuthProviderType,
   BrandingDto,
   FrontendConfigDto,
-  ProviderType,
   SpecialUrlDto,
 } from '@hedgedoc/commons';
-import { AuthProviderDto } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
 import { URL } from 'url';
 
-import appConfiguration, { AppConfig } from '../config/app.config';
 import authConfiguration, { AuthConfig } from '../config/auth.config';
 import customizationConfiguration, {
   CustomizationConfig,
@@ -23,14 +22,12 @@ import externalServicesConfiguration, {
 } from '../config/external-services.config';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { getServerVersionFromPackageJson } from '../utils/serverVersion';
+import { getServerVersionFromPackageJson } from '../utils/server-version';
 
 @Injectable()
 export class FrontendConfigService {
   constructor(
     private readonly logger: ConsoleLoggerService,
-    @Inject(appConfiguration.KEY)
-    private appConfig: AppConfig,
     @Inject(noteConfiguration.KEY)
     private noteConfig: NoteConfig,
     @Inject(authConfiguration.KEY)
@@ -43,9 +40,14 @@ export class FrontendConfigService {
     this.logger.setContext(FrontendConfigService.name);
   }
 
+  /**
+   * Returns the config options for the frontend
+   *
+   * @returns A frontend config DTO
+   */
   async getFrontendConfig(): Promise<FrontendConfigDto> {
     return {
-      guestAccess: this.noteConfig.guestAccess,
+      guestAccess: this.noteConfig.permissions.maxGuestLevel,
       allowRegister: this.authConfig.local.enableRegister,
       allowProfileEdits: this.authConfig.common.allowProfileEdits,
       allowChooseUsername: this.authConfig.common.allowChooseUsername,
@@ -61,16 +63,21 @@ export class FrontendConfigService {
     };
   }
 
+  /**
+   * Reads the auth providers from the config and returns them
+   *
+   * @returns An array of auth provider DTOs
+   */
   private getAuthProviders(): AuthProviderDto[] {
     const providers: AuthProviderDto[] = [];
     if (this.authConfig.local.enableLogin) {
       providers.push({
-        type: ProviderType.LOCAL,
+        type: AuthProviderType.LOCAL,
       });
     }
     this.authConfig.ldap.forEach((ldapEntry) => {
       providers.push({
-        type: ProviderType.LDAP,
+        type: AuthProviderType.LDAP,
         providerName: ldapEntry.providerName,
         identifier: ldapEntry.identifier,
         theme: null,
@@ -78,7 +85,7 @@ export class FrontendConfigService {
     });
     this.authConfig.oidc.forEach((openidConnectEntry) => {
       providers.push({
-        type: ProviderType.OIDC,
+        type: AuthProviderType.OIDC,
         providerName: openidConnectEntry.providerName,
         identifier: openidConnectEntry.identifier,
         theme: openidConnectEntry.theme ?? null,
@@ -87,6 +94,11 @@ export class FrontendConfigService {
     return providers;
   }
 
+  /**
+   * Reads the branding from the config and returns it
+   *
+   * @returns A branding DTO
+   */
   private getBranding(): BrandingDto {
     return {
       logo: this.customizationConfig.branding.customLogo
@@ -96,6 +108,11 @@ export class FrontendConfigService {
     };
   }
 
+  /**
+   * Reads the special URLs like imprint or privacy policy from the config and returns them
+   *
+   * @returns A special URL DTO
+   */
   private getSpecialUrls(): SpecialUrlDto {
     return {
       imprint: this.customizationConfig.specialUrls.imprint

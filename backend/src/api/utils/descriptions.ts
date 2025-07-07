@@ -19,7 +19,7 @@ export const forbiddenDescription =
   'Access to the requested resource is not permitted';
 export const notFoundDescription = 'The requested resource was not found';
 export const successfullyDeletedDescription =
-  'The requested resource was sucessfully deleted';
+  'The requested resource was successfully deleted';
 export const unprocessableEntityDescription =
   "The request change can't be processed";
 export const conflictDescription =

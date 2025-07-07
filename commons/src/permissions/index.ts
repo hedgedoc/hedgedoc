@@ -5,3 +5,4 @@
  */
 
 export * from './permissions.js'
+export * from './permission-level.enum.js'

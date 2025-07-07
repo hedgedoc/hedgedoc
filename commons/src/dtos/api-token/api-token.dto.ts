@@ -14,7 +14,7 @@ export const ApiTokenSchema = z
     validUntil: z
       .string()
       .datetime()
-      .describe('How long this token is valid fro'),
+      .describe('How long this token is valid for'),
     lastUsedAt: z
       .string()
       .datetime()

@@ -19,10 +19,6 @@ Cypress.Commands.add('visitHome', () => {
   return cy.visit('/', { retryOnNetworkFailure: true, retryOnStatusCodeFailure: true })
 })
 
-Cypress.Commands.add('visitHistory', () => {
-  return cy.visit(`/history`, { retryOnNetworkFailure: true, retryOnStatusCodeFailure: true })
-})
-
 export enum PAGE_MODE {
   EDITOR = 'n',
   PRESENTATION = 'p',

@@ -10,7 +10,7 @@ import { setNotePermissionsFromServer } from '../../../../../../redux/note-detai
 import { IconButton } from '../../../../../common/icon-button/icon-button'
 import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
-import { GuestAccess, SpecialGroup } from '@hedgedoc/commons'
+import { PermissionLevel, SpecialGroup } from '@hedgedoc/commons'
 import React, { useCallback, useMemo } from 'react'
 import { ToggleButtonGroup } from 'react-bootstrap'
 import { Eye as IconEye, Pencil as IconPencil, SlashCircle as IconSlashCircle } from 'react-bootstrap-icons'
@@ -19,7 +19,7 @@ import { PermissionInconsistentAlert } from './permission-inconsistent-alert'
 import { cypressId } from '../../../../../../utils/cypress-attribute'
 
 export interface PermissionEntrySpecialGroupProps {
-  level: GuestAccess
+  level: PermissionLevel
   type: SpecialGroup
   inconsistent?: boolean
 }
@@ -38,42 +38,42 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
   disabled,
   inconsistent
 }) => {
-  const noteId = useApplicationState((state) => state.noteDetails?.primaryAddress)
+  const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const { t } = useTranslation()
   const { showErrorNotification } = useUiNotifications()
 
   const onSetEntryReadOnly = useCallback(() => {
-    if (!noteId) {
+    if (!noteAlias) {
       return
     }
-    setGroupPermission(noteId, type, false)
+    setGroupPermission(noteAlias, type, false)
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteId, showErrorNotification, type])
+  }, [noteAlias, showErrorNotification, type])
 
   const onSetEntryWriteable = useCallback(() => {
-    if (!noteId) {
+    if (!noteAlias) {
       return
     }
-    setGroupPermission(noteId, type, true)
+    setGroupPermission(noteAlias, type, true)
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteId, showErrorNotification, type])
+  }, [noteAlias, showErrorNotification, type])
 
   const onSetEntryDenied = useCallback(() => {
-    if (!noteId) {
+    if (!noteAlias) {
       return
     }
-    removeGroupPermission(noteId, type)
+    removeGroupPermission(noteAlias, type)
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteId, showErrorNotification, type])
+  }, [noteAlias, showErrorNotification, type])
 
   const name = useMemo(() => {
     switch (type) {
@@ -98,7 +98,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
           <IconButton
             icon={IconSlashCircle}
             title={denyGroupText}
-            variant={level === GuestAccess.DENY ? 'secondary' : 'outline-secondary'}
+            variant={level === PermissionLevel.DENY ? 'secondary' : 'outline-secondary'}
             onClick={onSetEntryDenied}
             disabled={disabled}
             className={'p-1'}
@@ -107,7 +107,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
           <IconButton
             icon={IconEye}
             title={viewOnlyGroupText}
-            variant={level === GuestAccess.READ ? 'secondary' : 'outline-secondary'}
+            variant={level === PermissionLevel.READ ? 'secondary' : 'outline-secondary'}
             onClick={onSetEntryReadOnly}
             disabled={disabled}
             className={'p-1'}
@@ -116,7 +116,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
           <IconButton
             icon={IconPencil}
             title={editGroupText}
-            variant={level === GuestAccess.WRITE ? 'secondary' : 'outline-secondary'}
+            variant={level === PermissionLevel.WRITE ? 'secondary' : 'outline-secondary'}
             onClick={onSetEntryWriteable}
             disabled={disabled}
             className={'p-1'}
