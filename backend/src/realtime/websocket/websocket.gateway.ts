@@ -5,6 +5,7 @@
  */
 import {
   DisconnectReason,
+  DisconnectReasonCode,
   MessageTransporter,
   PermissionLevel,
 } from '@hedgedoc/commons';
@@ -55,7 +56,10 @@ export class WebsocketGateway implements OnGatewayConnection {
     try {
       const userId = await this.findUserIdByRequestSession(request);
       if (userId === undefined) {
-        clientSocket.close(DisconnectReason.SESSION_NOT_FOUND);
+        clientSocket.close(
+          DisconnectReasonCode.SESSION_NOT_FOUND,
+          DisconnectReason[DisconnectReasonCode.SESSION_NOT_FOUND],
+        );
         return;
       }
       const noteId = await this.noteService.getNoteIdByAlias(
@@ -75,7 +79,10 @@ export class WebsocketGateway implements OnGatewayConnection {
           `Access denied to note '${noteId}' for user '${userId}'`,
           'handleConnection',
         );
-        clientSocket.close(DisconnectReason.USER_NOT_PERMITTED);
+        clientSocket.close(
+          DisconnectReasonCode.USER_NOT_PERMITTED,
+          DisconnectReason[DisconnectReasonCode.USER_NOT_PERMITTED],
+        );
         return;
       }
       const acceptEdits: boolean = notePermission >= PermissionLevel.WRITE;
@@ -113,7 +120,10 @@ export class WebsocketGateway implements OnGatewayConnection {
         (error as Error).stack,
         'handleConnection',
       );
-      clientSocket.close();
+      clientSocket.close(
+        DisconnectReasonCode.INTERNAL_ERROR,
+        DisconnectReason[DisconnectReasonCode.INTERNAL_ERROR],
+      );
     }
   }
 
