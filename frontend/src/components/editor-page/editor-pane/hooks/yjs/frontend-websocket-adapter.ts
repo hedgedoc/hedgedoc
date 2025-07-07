@@ -1,9 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { DisconnectReason, Message, MessageType, TransportAdapter } from '@hedgedoc/commons'
+import type { DisconnectReasonCode, Message, MessageType, TransportAdapter } from '@hedgedoc/commons'
 import { ConnectionState } from '@hedgedoc/commons'
 
 /**
@@ -12,7 +12,7 @@ import { ConnectionState } from '@hedgedoc/commons'
 export class FrontendWebsocketAdapter implements TransportAdapter {
   constructor(private socket: WebSocket) {}
 
-  bindOnCloseEvent(handler: (reason?: DisconnectReason) => void): () => void {
+  bindOnCloseEvent(handler: (reason?: DisconnectReasonCode) => void): () => void {
     const callback = (event: CloseEvent): void => handler(event.code)
     this.socket.addEventListener('close', callback)
     return () => {
