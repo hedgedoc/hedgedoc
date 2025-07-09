@@ -37,26 +37,28 @@ export class MockConnectionBuilder {
   /**
    * Defines that the user who belongs to the connection is a guest.
    *
-   * @param displayName the display name of the guest user
+   * @param userId the user id of the guest user, not the guestUuid
+   * @param styleIndex the authorStyle of the mocked user
    */
-  public withGuestUser(displayName: string): this {
+  public withGuestUser(userId: number, styleIndex = 0): this {
+    this.userId = userId;
     this.username = null;
-    this.displayName = displayName;
-    this.authorStyle = 2;
-    this.userId = 1000;
+    this.displayName = `Guest ${userId}`;
+    this.authorStyle = styleIndex;
     return this;
   }
 
   /**
    * Defines that the user who belongs to this connection is a logged-in user.
    *
-   * @param username the username of the mocked user
+   * @param userId the userId of the mocked user
+   * @param styleIndex the authorStyle of the mocked user
    */
-  public withLoggedInUser(username: string): this {
-    this.username = username;
-    this.displayName = username;
-    this.userId = 1001;
-    this.authorStyle = 1;
+  public withLoggedInUser(userId: number, styleIndex = 0): this {
+    this.userId = userId;
+    this.username = `logged-in-${userId}`;
+    this.displayName = `Logged-in user ${userId}`;
+    this.authorStyle = styleIndex;
     return this;
   }
 

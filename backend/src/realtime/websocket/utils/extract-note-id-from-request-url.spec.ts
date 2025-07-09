@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -16,7 +16,7 @@ describe('extract note id from path', () => {
 
   it('can find a note id', () => {
     const mockedRequest = Mock.of<IncomingMessage>({
-      url: '/realtime?noteId=somethingsomething',
+      url: '/realtime?noteAlias=somethingsomething',
     });
     expect(extractNoteAliasFromRequestUrl(mockedRequest)).toBe(
       'somethingsomething',
@@ -25,14 +25,14 @@ describe('extract note id from path', () => {
 
   it('fails if no note id is present', () => {
     const mockedRequest = Mock.of<IncomingMessage>({
-      url: '/realtime?nöteId=somethingsomething',
+      url: '/realtime?nöteAlias=somethingsomething',
     });
     expect(() => extractNoteAliasFromRequestUrl(mockedRequest)).toThrow();
   });
 
   it('fails if note id is empty', () => {
     const mockedRequest = Mock.of<IncomingMessage>({
-      url: '/realtime?noteId=',
+      url: '/realtime?noteAlias=',
     });
     expect(() => extractNoteAliasFromRequestUrl(mockedRequest)).toThrow();
   });

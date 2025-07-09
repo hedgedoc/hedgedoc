@@ -12,9 +12,9 @@ import {
 } from '@hedgedoc/database';
 import { Inject, Injectable } from '@nestjs/common';
 import base32Encode from 'base32-encode';
-import { randomBytes } from 'crypto';
 import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
+import { randomBytes } from 'node:crypto';
 
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import {
@@ -97,9 +97,9 @@ export class AliasService {
       const numberOfUpdatedEntries = await transaction(TableAlias)
         // This needs to be NULL in the database, as the constraints forbid multiple "false" values for the same note.
         // These are the same constraints that also ensure only one alias is primary ("true").
-        .update(FieldNameAlias.isPrimary, null)
-        .where(FieldNameAlias.noteId, noteId);
-      if (numberOfUpdatedEntries === 0) {
+        .where(FieldNameAlias.noteId, noteId)
+        .update(FieldNameAlias.isPrimary, null, [FieldNameAlias.alias]);
+      if (numberOfUpdatedEntries.length === 0) {
         throw new GenericDBError(
           'The note does not exist or has no primary alias. This should never happen',
           this.logger.getContext(),
@@ -264,7 +264,10 @@ export class AliasService {
    * @param transaction The optional transaction to access the db
    * @returns true if the alias is already used, false otherwise
    */
-  async isAliasUsed(alias: string, transaction?: Knex): Promise<boolean> {
+  private async isAliasUsed(
+    alias: string,
+    transaction?: Knex,
+  ): Promise<boolean> {
     const dbActor = transaction ? transaction : this.knex;
     const result = await dbActor(TableAlias)
       .select(FieldNameAlias.alias)

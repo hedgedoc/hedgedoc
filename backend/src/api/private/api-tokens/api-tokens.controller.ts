@@ -40,12 +40,10 @@ export class ApiTokensController {
 
   @Get()
   @OpenApi(200)
-  async getUserTokens(
+  getUserTokens(
     @RequestUserId({ forbidGuests: true }) userId: number,
   ): Promise<ApiTokenDto[]> {
-    return (await this.apiTokenService.getTokensOfUserById(userId)).map(
-      (token) => this.apiTokenService.toAuthTokenDto(token),
-    );
+    return this.apiTokenService.getTokensOfUserById(userId);
   }
 
   @Post()

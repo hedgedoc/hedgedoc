@@ -6,6 +6,7 @@
 import {
   ConnectionState,
   DisconnectReason,
+  DisconnectReasonCode,
   Message,
   MessageType,
 } from '@hedgedoc/commons';
@@ -14,7 +15,7 @@ import WebSocket, { CloseEvent, MessageEvent } from 'ws';
 
 import { BackendWebsocketAdapter } from './backend-websocket-adapter';
 
-describe('backend websocket adapter', () => {
+describe('Backend websocket adapter', () => {
   let sut: BackendWebsocketAdapter;
   let mockedSocket: WebSocket;
 
@@ -34,7 +35,11 @@ describe('backend websocket adapter', () => {
   });
 
   it('can bind and unbind the close event', () => {
-    const handler = jest.fn((reason?: DisconnectReason) => console.log(reason));
+    const handler = jest.fn((reason?: DisconnectReasonCode) =>
+      console.log(
+        DisconnectReason[reason ?? DisconnectReasonCode.INTERNAL_ERROR],
+      ),
+    );
 
     let modifiedHandler: (event: CloseEvent) => void = jest.fn();
     jest
@@ -46,10 +51,12 @@ describe('backend websocket adapter', () => {
     const unbind = sut.bindOnCloseEvent(handler);
 
     modifiedHandler(
-      Mock.of<CloseEvent>({ code: DisconnectReason.USER_NOT_PERMITTED }),
+      Mock.of<CloseEvent>({ code: DisconnectReasonCode.USER_NOT_PERMITTED }),
     );
     expect(handler).toHaveBeenCalledTimes(1);
-    expect(handler).toHaveBeenCalledWith(DisconnectReason.USER_NOT_PERMITTED);
+    expect(handler).toHaveBeenCalledWith(
+      DisconnectReasonCode.USER_NOT_PERMITTED,
+    );
 
     unbind();
 

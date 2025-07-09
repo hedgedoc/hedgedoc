@@ -12,7 +12,6 @@ import * as HedgeDocCommonsModule from '@hedgedoc/commons';
 import { FieldNameUser, User } from '@hedgedoc/database';
 import { Mock } from 'ts-mockery';
 
-import * as NameRandomizerModule from '../../users/random-word-lists/name-randomizer';
 import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';
 import {
@@ -147,6 +146,7 @@ describe('websocket connection', () => {
       expect(constructor).toHaveBeenCalledWith(
         mockedUserName,
         mockedDisplayName,
+        mockedAuthorStyle,
         expect.anything(),
         mockedMessageTransporter,
         expect.anything(),

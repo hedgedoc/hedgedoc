@@ -40,7 +40,7 @@ describe('extract note from request', () => {
     return Mock.of<CompleteRequest>({
       params: parameterValue
         ? {
-            noteIdOrAlias: parameterValue,
+            noteAlias: parameterValue,
           }
         : {},
       headers: headerValue

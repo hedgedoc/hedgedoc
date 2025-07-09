@@ -3,7 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { AuthProviderType, PermissionLevel } from '@hedgedoc/commons';
+import {
+  AuthProviderType,
+  PermissionLevel,
+  PermissionLevelNames,
+} from '@hedgedoc/commons';
 import { ConfigModule, registerAs } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { URL } from 'url';
@@ -11,7 +15,6 @@ import { URL } from 'url';
 import { AppConfig } from '../config/app.config';
 import { AuthConfig } from '../config/auth.config';
 import { CustomizationConfig } from '../config/customization.config';
-import { DefaultAccessLevel } from '../config/default-access-level.enum';
 import { ExternalServicesConfig } from '../config/external-services.config';
 import { Loglevel } from '../config/loglevel.enum';
 import { NoteConfig } from '../config/note.config';
@@ -19,10 +22,7 @@ import { LoggerModule } from '../logger/logger.module';
 import { getServerVersionFromPackageJson } from '../utils/server-version';
 import { FrontendConfigService } from './frontend-config.service';
 
-/* eslint-disable
- jest/no-conditional-expect
- */
-
+/* eslint-disable jest/no-conditional-expect */
 describe('FrontendConfigService', () => {
   const domain = 'http://md.example.com';
   const emptyAuthConfig: AuthConfig = {
@@ -60,6 +60,7 @@ describe('FrontendConfigService', () => {
         displayNameField: 'ldapTestDisplayName',
         profilePictureField: 'ldapTestProfilePicture',
         tlsCaCerts: ['ldapTestTlsCa'],
+        tlsRejectUnauthorized: false,
       },
     ];
     const oidc: AuthConfig['oidc'] = [
@@ -75,6 +76,7 @@ describe('FrontendConfigService', () => {
         displayNameField: '',
         profilePictureField: '',
         emailField: '',
+        enableRegistration: true,
       },
     ];
     for (const authConfigConfigured of [ldap, oidc]) {
@@ -108,15 +110,15 @@ describe('FrontendConfigService', () => {
                   return {
                     forbiddenNoteIds: [],
                     maxDocumentLength: 200,
-                    guestAccess: PermissionLevel.CREATE,
+                    guestAccess: PermissionLevel.FULL,
                     permissions: {
                       default: {
-                        everyone: DefaultAccessLevel.READ,
-                        loggedIn: DefaultAccessLevel.WRITE,
+                        everyone: PermissionLevelNames[PermissionLevel.READ],
+                        loggedIn: PermissionLevelNames[PermissionLevel.WRITE],
                       },
                     },
                     revisionRetentionDays: 0,
-                  } as NoteConfig;
+                  } as unknown as NoteConfig;
                 }),
               ],
             }),
@@ -213,12 +215,12 @@ describe('FrontendConfigService', () => {
               const noteConfig: NoteConfig = {
                 forbiddenNoteIds: [],
                 maxDocumentLength: maxDocumentLength,
-                guestAccess: PermissionLevel.CREATE,
                 permissions: {
                   default: {
-                    everyone: DefaultAccessLevel.READ,
-                    loggedIn: DefaultAccessLevel.WRITE,
+                    everyone: PermissionLevel.READ,
+                    loggedIn: PermissionLevel.WRITE,
                   },
+                  maxGuestLevel: PermissionLevel.FULL,
                 },
                 revisionRetentionDays: 0,
               };
@@ -248,7 +250,9 @@ describe('FrontendConfigService', () => {
               const service = module.get(FrontendConfigService);
               const config = await service.getFrontendConfig();
               expect(config.allowRegister).toEqual(enableRegister);
-              expect(config.guestAccess).toEqual(noteConfig.guestAccess);
+              expect(config.guestAccess).toEqual(
+                noteConfig.permissions.maxGuestLevel,
+              );
               expect(config.branding.name).toEqual(customName);
               expect(config.branding.logo).toEqual(
                 customLogo !== null ? new URL(customLogo).toString() : null,

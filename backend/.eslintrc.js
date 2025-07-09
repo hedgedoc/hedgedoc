@@ -1,6 +1,7 @@
-/* SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+/*
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
- *  SPDX-License-Identifier: CC0-1.0
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 module.exports = {
   parser: '@typescript-eslint/parser',
@@ -19,12 +20,15 @@ module.exports = {
         '@typescript-eslint/no-unsafe-member-access': 'off',
         '@typescript-eslint/require-await': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
+        // This rule seems to create trouble with our tests and mock-knex-client
+        '@darraghor/nestjs-typed/provided-injected-should-match-factory-parameters':
+          'off',
         'jest/unbound-method': 'error',
         'jest/expect-expect': [
           'error',
           {
             assertFunctionNames: [
-              'expect',
+              'expect**',
               'request.**.expect',
               'agent[0-9]?.**.expect',
             ],

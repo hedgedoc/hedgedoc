@@ -224,8 +224,8 @@ export class NoteService {
       .where(FieldNameAlias.alias, alias)
       .join(
         TableNote,
-        `${TableAlias}.${FieldNameAlias.noteId}`,
         `${TableNote}.${FieldNameNote.id}`,
+        `${TableAlias}.${FieldNameAlias.noteId}`,
       )
       .first();
 
@@ -302,14 +302,16 @@ export class NoteService {
     const ownerUsername = await transaction(TableNote)
       .join(
         TableUser,
-        `${TableNote}.${FieldNameNote.ownerId}`,
         `${TableUser}.${FieldNameUser.id}`,
+        `${TableNote}.${FieldNameNote.ownerId}`,
       )
       .select<
         Pick<User, FieldNameUser.username>
       >(`${TableUser}.${FieldNameUser.username}`)
       .where(`${TableNote}.${FieldNameNote.id}`, noteId)
       .first();
+    // As FieldNameUser.username is string (for registered users) or null (for guests),
+    // undefined indicates a missing entry here
     if (ownerUsername === undefined) {
       throw new NotInDBError(
         `The note does not exist.`,
@@ -320,8 +322,8 @@ export class NoteService {
     const userPermissions = await transaction(TableNoteUserPermission)
       .join(
         TableUser,
-        `${TableNoteUserPermission}.${FieldNameNoteUserPermission.userId}`,
         `${TableUser}.${FieldNameUser.id}`,
+        `${TableNoteUserPermission}.${FieldNameNoteUserPermission.userId}`,
       )
       .select<
         ({ [FieldNameUser.username]: string } & Pick<
@@ -337,8 +339,8 @@ export class NoteService {
     const groupPermissions = await transaction(TableNoteGroupPermission)
       .join(
         TableGroup,
-        `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.groupId}`,
         `${TableGroup}.${FieldNameGroup.id}`,
+        `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.groupId}`,
       )
       .select<
         (Pick<Group, FieldNameGroup.name> &
@@ -418,8 +420,6 @@ export class NoteService {
     }
     const createdAtString = note[FieldNameNote.createdAt];
     const version = note[FieldNameNote.version];
-    this.logger.debug(`createdAt: ${createdAtString}`);
-    this.logger.debug(`createversion: ${version}`);
     const createdAt = new Date(createdAtString).toISOString();
 
     const latestRevision = await this.revisionsService.getLatestRevision(

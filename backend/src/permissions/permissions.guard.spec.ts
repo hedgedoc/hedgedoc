@@ -3,38 +3,48 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { PermissionLevel, PermissionLevelNames } from '@hedgedoc/commons';
 import { ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Mock } from 'ts-mockery';
 
 import * as ExtractNoteIdOrAliasModule from '../api/utils/extract-note-id-from-request';
 import { CompleteRequest } from '../api/utils/request.type';
-import { User } from '../database/user.entity';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { Note } from '../notes/note.entity';
-import {
-  getNotePermissionLevelDisplayName,
-  NotePermissionLevel,
-} from './note-permission.enum';
 import { PermissionService } from './permission.service';
 import { PermissionsGuard } from './permissions.guard';
 import { PERMISSION_METADATA_KEY } from './require-permission.decorator';
-import { RequiredPermission } from './required-permission.enum';
 
 jest.mock('../api/utils/extract-note-id-from-request');
 
-describe('permissions guard', () => {
+// eslint-disable-next-line func-style
+const buildContext = (
+  userId: number | undefined,
+  handler: () => void,
+): ExecutionContext => {
+  const request = Mock.of<CompleteRequest>({
+    userId: userId,
+  });
+
+  return Mock.of<ExecutionContext>({
+    getHandler: () => handler,
+    switchToHttp: () =>
+      Mock.of({
+        getRequest: () => request,
+      }),
+  });
+};
+
+describe('PermissionsGuard', () => {
   let loggerService: ConsoleLoggerService;
   let reflector: Reflector;
   let handler: () => void;
   let permissionsService: PermissionService;
-  let requiredPermission: RequiredPermission | undefined;
-  let createAllowed = false;
-  let requestUser: User | undefined;
-  let context: ExecutionContext;
   let permissionGuard: PermissionsGuard;
-  let determinedPermission: NotePermissionLevel;
-  let mockedNote: Note;
+  let spyOnExtractNoteId: jest.SpyInstance;
+
+  const mockUserId = 42;
+  const mockNoteId = 23;
 
   beforeEach(() => {
     loggerService = Mock.of<ConsoleLoggerService>({
@@ -43,33 +53,20 @@ describe('permissions guard', () => {
     });
 
     reflector = Mock.of<Reflector>({
-      get: jest.fn(() => requiredPermission),
+      get: jest.fn(),
     });
 
     handler = jest.fn();
 
     permissionsService = Mock.of<PermissionService>({
-      mayCreate: jest.fn(() => createAllowed),
-      determinePermission: jest.fn(() => Promise.resolve(determinedPermission)),
+      checkIfUserMayCreateNote: jest.fn(),
+      determinePermission: jest.fn(),
     });
 
-    requestUser = Mock.of<User>({});
-
-    const request = Mock.of<CompleteRequest>({
-      user: requestUser,
-    });
-
-    context = Mock.of<ExecutionContext>({
-      getHandler: () => handler,
-      switchToHttp: () =>
-        Mock.of({
-          getRequest: () => request,
-        }),
-    });
-    mockedNote = Mock.of<Note>({});
-    jest
-      .spyOn(ExtractNoteIdOrAliasModule, 'extractNoteIdFromRequest')
-      .mockReturnValue(Promise.resolve(mockedNote));
+    spyOnExtractNoteId = jest.spyOn(
+      ExtractNoteIdOrAliasModule,
+      'extractNoteIdFromRequest',
+    );
 
     permissionGuard = new PermissionsGuard(
       loggerService,
@@ -77,8 +74,6 @@ describe('permissions guard', () => {
       permissionsService,
       Mock.of({}),
     );
-
-    createAllowed = false;
   });
 
   it('sets the correct logger context', () => {
@@ -87,11 +82,10 @@ describe('permissions guard', () => {
     );
   });
 
-  it('deny fail with no required permission', async () => {
-    requiredPermission = undefined;
-    requestUser = undefined;
-
-    expect(await permissionGuard.canActivate(context)).toBe(false);
+  it('fails with no required permission', async () => {
+    jest.spyOn(reflector, 'get').mockReturnValue(undefined);
+    const context = buildContext(undefined, handler);
+    await expect(permissionGuard.canActivate(context)).rejects.toThrow(Error);
     expect(loggerService.error).toHaveBeenCalledTimes(1);
     expect(reflector.get).toHaveBeenNthCalledWith(
       1,
@@ -100,15 +94,32 @@ describe('permissions guard', () => {
     );
   });
 
-  describe('with create permission required', () => {
-    it('will allow if user is allowed to create a note', async () => {
-      createAllowed = true;
-      requiredPermission = RequiredPermission.CREATE;
-
+  describe('with FULL permission required', () => {
+    beforeEach(() => {
+      jest.spyOn(reflector, 'get').mockReturnValue(PermissionLevel.FULL);
+      spyOnExtractNoteId.mockResolvedValue(undefined);
+    });
+    it('will allow if the user is allowed to create a note', async () => {
+      const context = buildContext(mockUserId, handler);
+      jest
+        .spyOn(permissionsService, 'checkIfUserMayCreateNote')
+        .mockResolvedValue(true);
       expect(await permissionGuard.canActivate(context)).toBe(true);
-      expect(permissionsService.mayCreate).toHaveBeenNthCalledWith(
+      expect(
+        permissionsService.checkIfUserMayCreateNote,
+      ).toHaveBeenNthCalledWith(1, mockUserId);
+      expect(reflector.get).toHaveBeenNthCalledWith(
         1,
-        requestUser,
+        PERMISSION_METADATA_KEY,
+        handler,
+      );
+    });
+
+    it('will deny if the user does not exist', async () => {
+      const context = buildContext(undefined, handler);
+      expect(await permissionGuard.canActivate(context)).toBe(false);
+      expect(permissionsService.checkIfUserMayCreateNote).toHaveBeenCalledTimes(
+        0,
       );
       expect(reflector.get).toHaveBeenNthCalledWith(
         1,
@@ -118,13 +129,14 @@ describe('permissions guard', () => {
     });
 
     it("will deny if user isn't allowed to create a note", async () => {
-      requiredPermission = RequiredPermission.CREATE;
-
+      const context = buildContext(mockUserId, handler);
+      jest
+        .spyOn(permissionsService, 'checkIfUserMayCreateNote')
+        .mockResolvedValue(false);
       expect(await permissionGuard.canActivate(context)).toBe(false);
-      expect(permissionsService.mayCreate).toHaveBeenNthCalledWith(
-        1,
-        requestUser,
-      );
+      expect(
+        permissionsService.checkIfUserMayCreateNote,
+      ).toHaveBeenNthCalledWith(1, mockUserId);
       expect(reflector.get).toHaveBeenNthCalledWith(
         1,
         PERMISSION_METADATA_KEY,
@@ -133,15 +145,17 @@ describe('permissions guard', () => {
     });
   });
 
-  it('will deny if no note aliases is present', async () => {
+  it('will deny if no note alias is present and required permission is not FULL', async () => {
+    jest.spyOn(reflector, 'get').mockReturnValue(PermissionLevel.WRITE);
+    spyOnExtractNoteId.mockResolvedValue(undefined);
     jest
       .spyOn(ExtractNoteIdOrAliasModule, 'extractNoteIdFromRequest')
-      .mockReturnValue(Promise.resolve(undefined));
-
-    requiredPermission = RequiredPermission.READ;
-
+      .mockResolvedValue(undefined);
+    const context = buildContext(mockUserId, handler);
     expect(await permissionGuard.canActivate(context)).toBe(false);
-    expect(permissionsService.mayCreate).toHaveBeenCalledTimes(0);
+    expect(permissionsService.checkIfUserMayCreateNote).toHaveBeenCalledTimes(
+      0,
+    );
     expect(reflector.get).toHaveBeenNthCalledWith(
       1,
       PERMISSION_METADATA_KEY,
@@ -151,21 +165,9 @@ describe('permissions guard', () => {
   });
 
   describe.each([
-    [
-      RequiredPermission.READ,
-      NotePermissionLevel.READ,
-      NotePermissionLevel.DENY,
-    ],
-    [
-      RequiredPermission.WRITE,
-      NotePermissionLevel.WRITE,
-      NotePermissionLevel.READ,
-    ],
-    [
-      RequiredPermission.OWNER,
-      NotePermissionLevel.OWNER,
-      NotePermissionLevel.WRITE,
-    ],
+    [PermissionLevel.READ, PermissionLevel.READ, PermissionLevel.DENY],
+    [PermissionLevel.WRITE, PermissionLevel.WRITE, PermissionLevel.READ],
+    [PermissionLevel.FULL, PermissionLevel.FULL, PermissionLevel.WRITE],
   ])(
     'with required permission %s',
     (
@@ -174,18 +176,25 @@ describe('permissions guard', () => {
       notEnoughNotePermission,
     ) => {
       const sufficientNotePermissionDisplayName =
-        getNotePermissionLevelDisplayName(sufficientNotePermission);
+        PermissionLevelNames[sufficientNotePermission];
       const notEnoughNotePermissionDisplayName =
-        getNotePermissionLevelDisplayName(notEnoughNotePermission);
+        PermissionLevelNames[notEnoughNotePermission];
+      let context: ExecutionContext;
 
       beforeEach(() => {
-        requiredPermission = shouldRequiredPermission;
+        jest.spyOn(reflector, 'get').mockReturnValue(shouldRequiredPermission);
+        spyOnExtractNoteId.mockResolvedValue(mockNoteId);
+        context = buildContext(mockUserId, handler);
       });
 
       it(`will allow for note permission ${sufficientNotePermissionDisplayName}`, async () => {
-        determinedPermission = sufficientNotePermission;
+        jest
+          .spyOn(permissionsService, 'determinePermission')
+          .mockResolvedValue(sufficientNotePermission);
         expect(await permissionGuard.canActivate(context)).toBe(true);
-        expect(permissionsService.mayCreate).toHaveBeenCalledTimes(0);
+        expect(
+          permissionsService.checkIfUserMayCreateNote,
+        ).toHaveBeenCalledTimes(0);
         expect(reflector.get).toHaveBeenNthCalledWith(
           1,
           PERMISSION_METADATA_KEY,
@@ -193,15 +202,19 @@ describe('permissions guard', () => {
         );
         expect(permissionsService.determinePermission).toHaveBeenNthCalledWith(
           1,
-          requestUser,
-          mockedNote,
+          mockUserId,
+          mockNoteId,
         );
       });
 
       it(`will deny for note permission ${notEnoughNotePermissionDisplayName}`, async () => {
-        determinedPermission = notEnoughNotePermission;
+        jest
+          .spyOn(permissionsService, 'determinePermission')
+          .mockResolvedValue(notEnoughNotePermission);
         expect(await permissionGuard.canActivate(context)).toBe(false);
-        expect(permissionsService.mayCreate).toHaveBeenCalledTimes(0);
+        expect(
+          permissionsService.checkIfUserMayCreateNote,
+        ).toHaveBeenCalledTimes(0);
         expect(reflector.get).toHaveBeenNthCalledWith(
           1,
           PERMISSION_METADATA_KEY,
@@ -209,8 +222,8 @@ describe('permissions guard', () => {
         );
         expect(permissionsService.determinePermission).toHaveBeenNthCalledWith(
           1,
-          requestUser,
-          mockedNote,
+          mockUserId,
+          mockNoteId,
         );
       });
     },

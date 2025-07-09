@@ -10,7 +10,7 @@ import { Logger } from '../../../../../utils/logger'
 import { isMockMode } from '../../../../../utils/test-modes'
 import { FrontendWebsocketAdapter } from './frontend-websocket-adapter'
 import { useWebsocketUrl } from './use-websocket-url'
-import { DisconnectReason, MessageTransporter, MockedBackendTransportAdapter } from '@hedgedoc/commons'
+import { DisconnectReasonCode, MessageTransporter, MockedBackendTransportAdapter } from '@hedgedoc/commons'
 import type { Listener } from 'eventemitter2'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
@@ -28,7 +28,7 @@ export const useRealtimeConnection = (): MessageTransporter => {
   const messageTransporter = useMemo(() => new MessageTransporter(), [])
 
   const reconnectCount = useRef(0)
-  const disconnectReason = useRef<DisconnectReason | undefined>(undefined)
+  const disconnectReason = useRef<DisconnectReasonCode | undefined>(undefined)
   const establishWebsocketConnection = useCallback(() => {
     if (isMockMode) {
       logger.debug('Creating Loopback connection...')
@@ -58,7 +58,11 @@ export const useRealtimeConnection = (): MessageTransporter => {
   const isConnected = useApplicationState((state) => state.realtimeStatus.isConnected)
 
   useEffect(() => {
-    if (isConnected || reconnectCount.current > 0 || disconnectReason.current === DisconnectReason.USER_NOT_PERMITTED) {
+    if (
+      isConnected ||
+      reconnectCount.current > 0 ||
+      disconnectReason.current === DisconnectReasonCode.USER_NOT_PERMITTED
+    ) {
       return
     }
     establishWebsocketConnection()
@@ -89,7 +93,7 @@ export const useRealtimeConnection = (): MessageTransporter => {
     const connectedListener = messageTransporter.doAsSoonAsReady(() => setRealtimeConnectionState(true))
     const disconnectedListener = messageTransporter.on(
       'disconnected',
-      (reason?: DisconnectReason) => {
+      (reason?: DisconnectReasonCode) => {
         disconnectReason.current = reason
         setRealtimeConnectionState(false)
       },

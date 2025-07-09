@@ -1,207 +1,124 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import * as ConnectTypeormModule from 'connect-typeorm';
-import { TypeormStore } from 'connect-typeorm';
-import * as parseCookieModule from 'cookie';
-import * as cookieSignatureModule from 'cookie-signature';
-import { IncomingMessage } from 'http';
+import { Provider } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { Test, TestingModule } from '@nestjs/testing';
+import { serialize } from 'cookie';
+import { sign } from 'cookie-signature';
+import { Cookie } from 'express-session';
+import type { Tracker } from 'knex-mock-client';
+import { IncomingMessage } from 'node:http';
+import { Socket } from 'node:net';
 import { Mock } from 'ts-mockery';
-import { Repository } from 'typeorm';
 
-import { AppConfig } from '../config/app.config';
-import { AuthConfig } from '../config/auth.config';
-import { DatabaseType } from '../config/database-type.enum';
-import { DatabaseConfig } from '../config/database.config';
-import { Loglevel } from '../config/loglevel.enum';
-import { ConsoleLoggerService } from '../logger/console-logger.service';
+import appConfigMock from '../config/mock/app.config.mock';
+import {
+  createDefaultMockAuthConfig,
+  registerAuthConfig,
+} from '../config/mock/auth.config.mock';
+import { mockKnexDb } from '../database/mock/provider';
+import { LoggerModule } from '../logger/logger.module';
 import { HEDGEDOC_SESSION } from '../utils/session';
-import { Session } from './session.entity';
-import { SessionService, SessionState } from './session.service';
-
-jest.mock('cookie');
-jest.mock('cookie-signature');
+import { SessionService } from './session.service';
 
 describe('SessionService', () => {
-  let mockedTypeormStore: TypeormStore;
-  let mockedSessionRepository: Repository<Session>;
-  let databaseConfigMock: DatabaseConfig;
-  let authConfigMock: AuthConfig;
-  let typeormStoreConstructorMock: jest.SpyInstance;
-  const mockedExistingSessionId = 'mockedExistingSessionId';
-  const mockUsername = 'mock-user';
-  const mockSecret = 'mockSecret';
-  let sessionService: SessionService;
+  let service: SessionService;
+  let tracker: Tracker;
+  let knexProvider: Provider;
+  const authConfig = createDefaultMockAuthConfig();
 
-  beforeEach(() => {
-    jest.resetModules();
-    jest.restoreAllMocks();
-    const mockedExistingSession = Mock.of<SessionState>({
-      username: mockUsername,
-    });
-    mockedTypeormStore = Mock.of<TypeormStore>({
-      connect: jest.fn(() => mockedTypeormStore),
-      get: jest.fn(((sessionId, callback) => {
-        if (sessionId === mockedExistingSessionId) {
-          callback(undefined, mockedExistingSession);
-        } else {
-          callback(new Error("Session doesn't exist"), undefined);
-        }
-      }) as TypeormStore['get']),
-    });
-    mockedSessionRepository = Mock.of<Repository<Session>>({});
-    databaseConfigMock = Mock.of<DatabaseConfig>({
-      type: DatabaseType.SQLITE,
-    });
-    authConfigMock = Mock.of<AuthConfig>({
-      session: {
-        secret: mockSecret,
-      },
-    });
+  beforeAll(async () => {
+    [tracker, knexProvider] = mockKnexDb();
 
-    typeormStoreConstructorMock = jest
-      .spyOn(ConnectTypeormModule, 'TypeormStore')
-      .mockReturnValue(mockedTypeormStore);
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [SessionService, knexProvider],
+      imports: [
+        LoggerModule,
+        await ConfigModule.forRoot({
+          isGlobal: true,
+          load: [appConfigMock, registerAuthConfig(authConfig)],
+        }),
+      ],
+    }).compile();
 
-    sessionService = new SessionService(
-      new ConsoleLoggerService({ loglevel: Loglevel.DEBUG } as AppConfig),
-      mockedSessionRepository,
-      databaseConfigMock,
-      authConfigMock,
-    );
+    service = module.get<SessionService>(SessionService);
   });
 
-  it('creates a new TypeormStore on create', () => {
-    expect(typeormStoreConstructorMock).toHaveBeenCalledWith({
-      cleanupLimit: 2,
-      limitSubquery: true,
-    });
-    expect(mockedTypeormStore.connect).toHaveBeenCalledWith(
-      mockedSessionRepository,
-    );
-    expect(sessionService.getTypeormStore()).toBe(mockedTypeormStore);
+  afterEach(() => {
+    tracker.reset();
   });
 
-  it('can fetch a username for an existing session', async () => {
-    await expect(
-      sessionService.getUserIdForSessionId(mockedExistingSessionId),
-    ).resolves.toBe(mockUsername);
+  it('getSessionStore', () => {
+    const store = service.getSessionStore();
+    expect(store).toBeDefined();
   });
 
-  it("can't fetch a username for a non-existing session", async () => {
-    await expect(
-      sessionService.getUserIdForSessionId("doesn't exist"),
-    ).rejects.toThrow();
-  });
-
-  describe('extract verified session id from request', () => {
-    const validCookieHeader = 'validCookieHeader';
-    const validSessionId = 'validSessionId';
-
-    function mockParseCookieModule(sessionCookieContent: string): void {
-      jest
-        .spyOn(parseCookieModule, 'parse')
-        .mockImplementation((header: string): Record<string, string> => {
-          if (header === validCookieHeader) {
-            return {
-              [HEDGEDOC_SESSION]: sessionCookieContent,
-            };
-          } else {
-            return {};
-          }
-        });
-    }
-
-    beforeEach(() => {
-      jest.spyOn(parseCookieModule, 'parse').mockImplementation(() => {
-        throw new Error('call not expected!');
-      });
-      jest
-        .spyOn(cookieSignatureModule, 'unsign')
-        .mockImplementation((value, secret) => {
-          if (value.endsWith('.validSignature') && secret === mockSecret) {
-            return 'decryptedValue';
-          } else {
-            return false;
-          }
-        });
-    });
-
-    it('fails if no cookie header is present', () => {
-      const mockedRequest = Mock.of<IncomingMessage>({
-        headers: {},
-      });
-      expect(
-        sessionService.extractSessionIdFromRequest(mockedRequest).isEmpty(),
-      ).toBeTruthy();
-    });
-
-    it("fails if the cookie header isn't valid", () => {
-      const mockedRequest = Mock.of<IncomingMessage>({
-        headers: { cookie: 'no' },
-      });
-      mockParseCookieModule(`s:anyValidSessionId.validSignature`);
-      expect(
-        sessionService.extractSessionIdFromRequest(mockedRequest).isEmpty(),
-      ).toBeTruthy();
-    });
-
-    it("fails if the hedgedoc session cookie isn't marked as signed", () => {
-      const mockedRequest = Mock.of<IncomingMessage>({
-        headers: { cookie: validCookieHeader },
-      });
-      mockParseCookieModule('sessionId.validSignature');
-      expect(() =>
-        sessionService.extractSessionIdFromRequest(mockedRequest),
-      ).toThrow(
-        'cookie "hedgedoc-session" doesn\'t look like a signed session cookie',
+  describe('getUserIdForSessionId', () => {
+    it('returns the correct user id for session id', async () => {
+      const testSessionId = 'testSessionId';
+      const testUserId = 1337;
+      const sessionsStore = service.getSessionStore();
+      sessionsStore.set(
+        testSessionId,
+        {
+          cookie: new Cookie(),
+          userId: testUserId,
+        },
+        async (error) => {
+          expect(error).toBeUndefined();
+          const result = await service.getUserIdForSessionId(testSessionId);
+          expect(result).toEqual(testUserId);
+        },
       );
     });
+    it('returns undefined for non-valid session id', async () => {
+      const testSessionId = 'non-valid-session-id';
+      const result = await service.getUserIdForSessionId(testSessionId);
+      expect(result).toBeUndefined();
+    });
+  });
 
-    it("fails if the hedgedoc session cookie doesn't contain a session id", () => {
-      const mockedRequest = Mock.of<IncomingMessage>({
-        headers: { cookie: validCookieHeader },
-      });
-      mockParseCookieModule('s:.validSignature');
-      expect(() =>
-        sessionService.extractSessionIdFromRequest(mockedRequest),
-      ).toThrow(
-        'cookie "hedgedoc-session" doesn\'t look like a signed session cookie',
+  describe('extractSessionIdFromRequest', () => {
+    const mockSocket = Mock.of<Socket>();
+    const sessionId = 'testSessionId';
+    it('returns empty Optional if no cookie header is set', () => {
+      const testRequest = new IncomingMessage(mockSocket);
+      expect(service.extractSessionIdFromRequest(testRequest).isEmpty()).toBe(
+        true,
       );
     });
-
-    it("fails if the hedgedoc session cookie doesn't contain a signature", () => {
-      const mockedRequest = Mock.of<IncomingMessage>({
-        headers: { cookie: validCookieHeader },
-      });
-      mockParseCookieModule('s:sessionId.');
-      expect(() =>
-        sessionService.extractSessionIdFromRequest(mockedRequest),
-      ).toThrow(
-        'cookie "hedgedoc-session" doesn\'t look like a signed session cookie',
+    it('returns empty Optional if cookie is malformed', async () => {
+      const testRequest = new IncomingMessage(mockSocket);
+      testRequest.headers.cookie = serialize(HEDGEDOC_SESSION, 'foo', {});
+      expect(() => service.extractSessionIdFromRequest(testRequest)).toThrow(
+        Error,
       );
     });
-
-    it("fails if the hedgedoc session cookie isn't signed correctly", () => {
-      const mockedRequest = Mock.of<IncomingMessage>({
-        headers: { cookie: validCookieHeader },
-      });
-      mockParseCookieModule('s:sessionId.invalidSignature');
-      expect(() =>
-        sessionService.extractSessionIdFromRequest(mockedRequest),
-      ).toThrow('signature of cookie "hedgedoc-session" isn\'t valid.');
+    it('returns empty Optional if cookie has invalid signature', async () => {
+      const testRequest = new IncomingMessage(mockSocket);
+      testRequest.headers.cookie = serialize(
+        HEDGEDOC_SESSION,
+        `s:${sessionId}:fakeSignature`,
+        {},
+      );
+      expect(() => service.extractSessionIdFromRequest(testRequest)).toThrow(
+        Error,
+      );
     });
-
-    it('can extract a session id from a valid request', () => {
-      const mockedRequest = Mock.of<IncomingMessage>({
-        headers: { cookie: validCookieHeader },
-      });
-      mockParseCookieModule(`s:${validSessionId}.validSignature`);
-      expect(
-        sessionService.extractSessionIdFromRequest(mockedRequest).get(),
-      ).toBe(validSessionId);
+    it('returns the correct id for session id', () => {
+      const signature = sign(sessionId, authConfig.session.secret);
+      const testRequest = new IncomingMessage(mockSocket);
+      testRequest.headers.cookie = serialize(
+        HEDGEDOC_SESSION,
+        `s:${signature}`,
+        {},
+      );
+      expect(service.extractSessionIdFromRequest(testRequest).get()).toEqual(
+        sessionId,
+      );
     });
   });
 });
