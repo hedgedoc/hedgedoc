@@ -79,18 +79,18 @@ export class RevisionsService {
       >(`${TableRevision}.${FieldNameRevision.uuid}`, `${TableRevision}.${FieldNameRevision.createdAt}`, `${TableRevision}.${FieldNameRevision.description}`, `${TableRevision}.${FieldNameRevision.content}`, `${TableRevision}.${FieldNameRevision.title}`, `${TableUser}.${FieldNameUser.username}`, `${TableUser}.${FieldNameUser.guestUuid}`, `${TableRevisionTag}.${FieldNameRevisionTag.tag}`)
       .join(
         TableRevisionTag,
-        `${TableRevision}.${FieldNameRevision.uuid}`,
         `${TableRevisionTag}.${FieldNameRevisionTag.revisionUuid}`,
+        `${TableRevision}.${FieldNameRevision.uuid}`,
       )
       .join(
         TableAuthorshipInfo,
-        `${TableRevision}.${FieldNameRevision.uuid}`,
         `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.revisionUuid}`,
+        `${TableRevision}.${FieldNameRevision.uuid}`,
       )
       .join(
         TableUser,
-        `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.authorId}`,
         `${TableUser}.${FieldNameUser.id}`,
+        `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.authorId}`,
       )
       .orderBy(`${TableRevision}.${FieldNameRevision.createdAt}`, 'desc')
       .orderBy(`${TableRevision}.${FieldNameRevision.uuid}`)
@@ -167,7 +167,7 @@ export class RevisionsService {
         .orderBy(FieldNameRevision.createdAt, 'desc');
       if (allRevisions.length === 0) {
         this.logger.debug(`No revisions found for note ${noteId}`);
-        return [];
+        return;
       }
       const latestRevision = allRevisions[0];
       const revisionsToDelete = allRevisions.filter(
@@ -269,33 +269,31 @@ export class RevisionsService {
     transaction?: Knex,
   ): Promise<RevisionUserInfo> {
     const dbActor = transaction ?? this.knex;
-    const authorUsernamesAndGuestUuids = (await dbActor(TableAuthorshipInfo)
+    const authorUsernamesAndGuestUuids = await dbActor(TableAuthorshipInfo)
       .join(
         TableUser,
         `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.authorId}`,
         `${TableUser}.${FieldNameUser.id}`,
       )
-      .select(
-        `${TableUser}.${FieldNameUser.username}`,
-        `${TableUser}.${FieldNameUser.guestUuid}`,
-        `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.createdAt}`,
-      )
-      .distinct(`${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.authorId}`)
-      .where(FieldNameAuthorshipInfo.revisionUuid, revisionUuid)) as {
-      username: User[FieldNameUser.username];
-      guestUuid: User[FieldNameUser.guestUuid];
-      createdAt: AuthorshipInfo[FieldNameAuthorshipInfo.createdAt];
-    }[];
+      .select()
+      .distinct<
+        (Pick<User, FieldNameUser.username | FieldNameUser.guestUuid> &
+          Pick<
+            AuthorshipInfo,
+            FieldNameAuthorshipInfo.authorId | FieldNameAuthorshipInfo.createdAt
+          >)[]
+      >(`${TableUser}.${FieldNameUser.username}`, `${TableUser}.${FieldNameUser.guestUuid}`, `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.createdAt}`, `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.authorId}`)
+      .where(FieldNameAuthorshipInfo.revisionUuid, revisionUuid);
     const users: RevisionUserInfo['users'] = [];
     let guestUserCount = 0;
     for (const author of authorUsernamesAndGuestUuids) {
-      if (author.guestUuid !== null) {
+      if (author[FieldNameUser.guestUuid] !== null) {
         guestUserCount++;
       }
-      if (author.username !== null) {
+      if (author[FieldNameUser.username] !== null) {
         users.push({
-          username: author.username,
-          createdAt: author.createdAt,
+          username: author[FieldNameUser.username],
+          createdAt: author[FieldNameAuthorshipInfo.createdAt],
         });
       }
     }
@@ -382,13 +380,13 @@ export class RevisionsService {
       extractRevisionMetadataFromContent(newContent);
     const revisionIds = await transaction(TableRevision).insert(
       {
-        [FieldNameRevision.uuid]: uuidv7(),
+        [FieldNameRevision.content]: newContent,
+        [FieldNameRevision.description]: description,
         [FieldNameRevision.noteId]: noteId,
         [FieldNameRevision.noteType]: noteType,
-        [FieldNameRevision.content]: newContent,
         [FieldNameRevision.patch]: patch,
         [FieldNameRevision.title]: title,
-        [FieldNameRevision.description]: description,
+        [FieldNameRevision.uuid]: uuidv7(),
         [FieldNameRevision.yjsStateVector]: yjsStateVector ?? null,
       },
       [FieldNameRevision.uuid],

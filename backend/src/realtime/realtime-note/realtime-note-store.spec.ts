@@ -3,16 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Mock } from 'ts-mockery';
-
-import { Note } from '../../notes/note.entity';
 import * as realtimeNoteModule from './realtime-note';
 import { RealtimeNote } from './realtime-note';
 import { RealtimeNoteStore } from './realtime-note-store';
 
 describe('RealtimeNoteStore', () => {
   let realtimeNoteStore: RealtimeNoteStore;
-  let mockedNote: Note;
   let mockedRealtimeNote: RealtimeNote;
   let realtimeNoteConstructorSpy: jest.SpyInstance;
   const mockedContent = 'mockedContent';
@@ -21,8 +17,7 @@ describe('RealtimeNoteStore', () => {
   beforeEach(async () => {
     realtimeNoteStore = new RealtimeNoteStore();
 
-    mockedNote = Mock.of<Note>({ id: mockedNoteId });
-    mockedRealtimeNote = new RealtimeNote(mockedNote, '');
+    mockedRealtimeNote = new RealtimeNote(mockedNoteId, '');
     realtimeNoteConstructorSpy = jest
       .spyOn(realtimeNoteModule, 'RealtimeNote')
       .mockReturnValue(mockedRealtimeNote);
@@ -35,11 +30,11 @@ describe('RealtimeNoteStore', () => {
   });
 
   it("can create a new realtime note if it doesn't exist yet", () => {
-    expect(realtimeNoteStore.create(mockedNote, mockedContent)).toBe(
+    expect(realtimeNoteStore.create(mockedNoteId, mockedContent)).toBe(
       mockedRealtimeNote,
     );
     expect(realtimeNoteConstructorSpy).toHaveBeenCalledWith(
-      mockedNote,
+      mockedNoteId,
       mockedContent,
       undefined,
     );
@@ -50,12 +45,16 @@ describe('RealtimeNoteStore', () => {
   });
 
   it("can create a new realtime note with a yjs state if it doesn't exist yet", () => {
-    const initialYjsState = [1, 2, 3];
+    const initialYjsState = [0];
     expect(
-      realtimeNoteStore.create(mockedNote, mockedContent, initialYjsState),
+      realtimeNoteStore.create(
+        mockedNoteId,
+        mockedContent,
+        new Uint8Array(initialYjsState).buffer,
+      ),
     ).toBe(mockedRealtimeNote);
     expect(realtimeNoteConstructorSpy).toHaveBeenCalledWith(
-      mockedNote,
+      mockedNoteId,
       mockedContent,
       initialYjsState,
     );
@@ -66,14 +65,16 @@ describe('RealtimeNoteStore', () => {
   });
 
   it('throws if a realtime note has already been created for the given note', () => {
-    expect(realtimeNoteStore.create(mockedNote, mockedContent)).toBe(
+    expect(realtimeNoteStore.create(mockedNoteId, mockedContent)).toBe(
       mockedRealtimeNote,
     );
-    expect(() => realtimeNoteStore.create(mockedNote, mockedContent)).toThrow();
+    expect(() =>
+      realtimeNoteStore.create(mockedNoteId, mockedContent),
+    ).toThrow();
   });
 
   it('deletes a note if it gets destroyed', () => {
-    expect(realtimeNoteStore.create(mockedNote, mockedContent)).toBe(
+    expect(realtimeNoteStore.create(mockedNoteId, mockedContent)).toBe(
       mockedRealtimeNote,
     );
     mockedRealtimeNote.emit('destroy');

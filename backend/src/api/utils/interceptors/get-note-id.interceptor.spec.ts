@@ -57,7 +57,7 @@ describe('get note interceptor', () => {
 
   it('extracts the note from the request parameters', async () => {
     const request = Mock.of<CompleteRequest>({
-      params: { noteIdOrAlias: mockNoteId },
+      params: { noteAlias: mockNoteId },
     });
     const context = mockExecutionContext(request);
     const sut: GetNoteIdInterceptor = new GetNoteIdInterceptor(notesService);

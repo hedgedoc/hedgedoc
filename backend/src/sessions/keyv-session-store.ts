@@ -46,7 +46,11 @@ export class KeyvSessionStore<T extends SessionData> extends Store {
       .catch((error: Error) => callback(error));
   }
 
-  set(sid: string, session: T, callback: (error?: Error) => void): void {
+  set(
+    sid: string,
+    session: T,
+    callback: (error?: Error) => void | Promise<void>,
+  ): void {
     this.dataStore
       .set(sid, session)
       .then(() => callback())

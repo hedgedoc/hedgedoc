@@ -3,48 +3,37 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { PermissionLevel } from '@hedgedoc/commons';
+import { FieldNameUser } from '@hedgedoc/database';
 import { Optional } from '@mrdrogdrog/optional';
+import { Provider } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { EventEmitterModule } from '@nestjs/event-emitter';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { SchedulerRegistry } from '@nestjs/schedule';
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
 import { IncomingMessage } from 'http';
 import { Mock } from 'ts-mockery';
-import { Repository } from 'typeorm';
 import WebSocket from 'ws';
 
-import { AliasModule } from '../../alias/alias.module';
-import { ApiToken } from '../../api-token/api-token.entity';
-import { Identity } from '../../auth/identity.entity';
-import { Author } from '../../authors/author.entity';
+import { AliasService } from '../../alias/alias.service';
 import appConfigMock from '../../config/mock/app.config.mock';
 import authConfigMock from '../../config/mock/auth.config.mock';
 import databaseConfigMock from '../../config/mock/database.config.mock';
 import noteConfigMock from '../../config/mock/note.config.mock';
-import { User } from '../../database/user.entity';
-import { eventModuleConfig } from '../../events';
-import { Group } from '../../groups/group.entity';
+import { mockKnexDb } from '../../database/mock/provider';
+import { NotInDBError } from '../../errors/errors';
+import { NoteEventMap } from '../../events';
+import { GroupsService } from '../../groups/groups.service';
 import { LoggerModule } from '../../logger/logger.module';
-import { Alias } from '../../notes/aliases.entity';
-import { Note } from '../../notes/note.entity';
 import { NoteService } from '../../notes/note.service';
-import { Tag } from '../../notes/tag.entity';
-import { NoteGroupPermission } from '../../permissions/note-group-permission.entity';
-import { NotePermissionLevel } from '../../permissions/note-permission.enum';
-import { NoteUserPermission } from '../../permissions/note-user-permission.entity';
 import { PermissionService } from '../../permissions/permission.service';
-import { PermissionsModule } from '../../permissions/permissions.module';
-import { Edit } from '../../revisions/edit.entity';
-import { Revision } from '../../revisions/revision.entity';
-import { Session } from '../../sessions/session.entity';
-import { SessionModule } from '../../sessions/session.module';
+import { RevisionsService } from '../../revisions/revisions.service';
 import { SessionService } from '../../sessions/session.service';
-import { UsersModule } from '../../users/users.module';
 import { UsersService } from '../../users/users.service';
 import * as websocketConnectionModule from '../realtime-note/realtime-connection';
 import { RealtimeConnection } from '../realtime-note/realtime-connection';
 import { RealtimeNote } from '../realtime-note/realtime-note';
-import { RealtimeNoteModule } from '../realtime-note/realtime-note.module';
+import { RealtimeNoteStore } from '../realtime-note/realtime-note-store';
 import { RealtimeNoteService } from '../realtime-note/realtime-note.service';
 import * as extractNoteIdFromRequestUrlModule from './utils/extract-note-id-from-request-url';
 import { WebsocketGateway } from './websocket.gateway';
@@ -67,46 +56,46 @@ describe('Websocket gateway', () => {
   const mockedSessionIdWithUser = 'mockedSessionIdWithUser';
   const mockedValidUrl = 'mockedValidUrl';
   const mockedValidGuestUrl = 'mockedValidGuestUrl';
-  const mockedValidNoteId = 'mockedValidNoteId';
-  const mockedValidGuestNoteId = 'mockedValidGuestNoteId';
+  const mockedValidNoteAlias = 'mockedValidNoteId';
+  const mockedValidNoteId = 20;
+  const mockedValidGuestNoteAlias = 'mockedValidGuestNoteId';
+  const mockedValidGuestNoteId = 21;
 
   let sessionExistsForUser = true;
   let noteExistsForNoteId = true;
-  let userExistsForUsername = true;
+  let userExistsForUserId = true;
   let userHasReadPermissions = true;
 
+  let knexProvider: Provider;
+
   beforeEach(async () => {
+    [, knexProvider] = mockKnexDb();
     jest.resetAllMocks();
     jest.resetModules();
 
     sessionExistsForUser = true;
     noteExistsForNoteId = true;
-    userExistsForUsername = true;
+    userExistsForUserId = true;
     userHasReadPermissions = true;
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         WebsocketGateway,
-        {
-          provide: getRepositoryToken(Note),
-          useClass: Repository,
-        },
-        {
-          provide: getRepositoryToken(Group),
-          useClass: Repository,
-        },
-        {
-          provide: getRepositoryToken(User),
-          useClass: Repository,
-        },
+        knexProvider,
+        NoteService,
+        AliasService,
+        GroupsService,
+        RevisionsService,
+        RealtimeNoteService,
+        UsersService,
+        PermissionService,
+        SessionService,
+        RealtimeNoteStore,
+        EventEmitter2<NoteEventMap>,
+        SchedulerRegistry,
       ],
       imports: [
         LoggerModule,
-        AliasModule,
-        PermissionsModule,
-        RealtimeNoteModule,
-        UsersModule,
-        SessionModule,
         ConfigModule.forRoot({
           isGlobal: true,
           load: [
@@ -116,36 +105,8 @@ describe('Websocket gateway', () => {
             noteConfigMock,
           ],
         }),
-        EventEmitterModule.forRoot(eventModuleConfig),
       ],
-    })
-      .overrideProvider(getRepositoryToken(User))
-      .useClass(Repository)
-      .overrideProvider(getRepositoryToken(ApiToken))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(Identity))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(Edit))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(Revision))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(Note))
-      .useClass(Repository)
-      .overrideProvider(getRepositoryToken(Tag))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(NoteGroupPermission))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(NoteUserPermission))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(Group))
-      .useClass(Repository)
-      .overrideProvider(getRepositoryToken(Session))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(Author))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(Alias))
-      .useValue({})
-      .compile();
+    }).compile();
 
     gateway = module.get<WebsocketGateway>(WebsocketGateway);
     sessionService = module.get<SessionService>(SessionService);
@@ -165,57 +126,61 @@ describe('Websocket gateway', () => {
           ),
       );
 
-    const mockUsername: string = 'mock-username';
+    const mockUsername = 'Testy';
+    const mockUserId = 42;
+    const mockAuthorStyle = 1;
+    const mockDisplayName = 'Testy McTestface';
+
     jest
-      .spyOn(sessionService, 'fetchUsernameForSessionId')
+      .spyOn(sessionService, 'getUserIdForSessionId')
       .mockImplementation((sessionId: string) =>
         sessionExistsForUser && sessionId === mockedSessionIdWithUser
-          ? Promise.resolve(mockUsername)
+          ? Promise.resolve(mockUserId)
           : Promise.reject('no user for session id found'),
       );
 
-    const mockUser = Mock.of<User>({ username: mockUsername });
     jest
-      .spyOn(usersService, 'getUserByUsername')
-      .mockImplementation(
-        (username: string): Promise<User> =>
-          userExistsForUsername && username === mockUsername
-            ? Promise.resolve(mockUser)
-            : Promise.reject('user not found'),
-      );
+      .spyOn(usersService, 'getUserById')
+      .mockImplementation((userId: number) => {
+        if (userExistsForUserId && userId === mockUserId) {
+          return Promise.resolve({
+            [FieldNameUser.id]: mockUserId,
+            [FieldNameUser.username]: mockUsername,
+            [FieldNameUser.displayName]: mockDisplayName,
+            [FieldNameUser.authorStyle]: mockAuthorStyle,
+            [FieldNameUser.email]: null,
+            [FieldNameUser.photoUrl]: null,
+            [FieldNameUser.guestUuid]: null,
+            [FieldNameUser.createdAt]: new Date().toISOString(),
+          });
+        } else {
+          throw new NotInDBError('User not found');
+        }
+      });
 
     jest
-      .spyOn(extractNoteIdFromRequestUrlModule, 'extractNoteIdFromRequestUrl')
+      .spyOn(
+        extractNoteIdFromRequestUrlModule,
+        'extractNoteAliasFromRequestUrl',
+      )
       .mockImplementation((request: IncomingMessage): string => {
         if (request.url === mockedValidUrl) {
-          return mockedValidNoteId;
+          return mockedValidNoteAlias;
         } else if (request.url === mockedValidGuestUrl) {
-          return mockedValidGuestNoteId;
+          return mockedValidGuestNoteAlias;
         } else {
           throw new Error('no valid note id found');
         }
       });
 
-    const mockedNote = Mock.of<Note>({
-      id: 4711,
-      owner: Promise.resolve(mockUser),
-      userPermissions: Promise.resolve([]),
-      groupPermissions: Promise.resolve([]),
-    });
-    const mockedGuestNote = Mock.of<Note>({
-      id: 1235,
-      owner: Promise.resolve(null),
-      userPermissions: Promise.resolve([]),
-      groupPermissions: Promise.resolve([]),
-    });
     jest
       .spyOn(notesService, 'getNoteIdByAlias')
-      .mockImplementation((noteId: string) => {
-        if (noteExistsForNoteId && noteId === mockedValidNoteId) {
-          return Promise.resolve(mockedNote);
+      .mockImplementation((noteAlias: string) => {
+        if (noteExistsForNoteId && noteAlias === mockedValidNoteAlias) {
+          return Promise.resolve(mockedValidNoteId);
         }
-        if (noteId === mockedValidGuestNoteId) {
-          return Promise.resolve(mockedGuestNote);
+        if (noteAlias === mockedValidGuestNoteAlias) {
+          return Promise.resolve(mockedValidGuestNoteId);
         } else {
           return Promise.reject('no note found');
         }
@@ -224,13 +189,13 @@ describe('Websocket gateway', () => {
     jest
       .spyOn(permissionsService, 'determinePermission')
       .mockImplementation(
-        async (user: User | null, note: Note): Promise<NotePermissionLevel> =>
-          (user === mockUser &&
-            note === mockedNote &&
+        async (userId: number, noteId: number): Promise<PermissionLevel> =>
+          (userId === mockUserId &&
+            noteId === mockedValidNoteId &&
             userHasReadPermissions) ||
-          (user === null && note === mockedGuestNote)
-            ? NotePermissionLevel.READ
-            : NotePermissionLevel.DENY,
+          (userId === null && noteId === mockedValidGuestNoteId)
+            ? PermissionLevel.READ
+            : PermissionLevel.DENY,
       );
 
     const mockedRealtimeNote = Mock.of<RealtimeNote>({
@@ -255,22 +220,6 @@ describe('Websocket gateway', () => {
 
     mockedWebsocketCloseSpy = jest.spyOn(mockedWebsocket, 'close');
     addClientSpy = jest.spyOn(mockedRealtimeNote, 'addClient');
-  });
-
-  it('adds a valid connection request without a session', async () => {
-    const request = Mock.of<IncomingMessage>({
-      socket: {
-        remoteAddress: 'mockHost',
-      },
-      url: mockedValidGuestUrl,
-      headers: {},
-    });
-
-    await expect(
-      gateway.handleConnection(mockedWebsocket, request),
-    ).resolves.not.toThrow();
-    expect(addClientSpy).toHaveBeenCalledWith(mockedWebsocketConnection);
-    expect(mockedWebsocketCloseSpy).not.toHaveBeenCalled();
   });
 
   it('adds a valid connection request', async () => {
@@ -330,7 +279,7 @@ describe('Websocket gateway', () => {
   });
 
   it("closes the connection if user doesn't exist for username", async () => {
-    userExistsForUsername = false;
+    userExistsForUserId = false;
 
     const request = Mock.of<IncomingMessage>({
       socket: {

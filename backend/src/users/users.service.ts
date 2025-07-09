@@ -55,7 +55,7 @@ export class UsersService {
     email: string | null,
     photoUrl: string | null,
     transaction?: Knex,
-  ): Promise<User[FieldNameUser.id]> {
+  ): Promise<number> {
     if (!REGEX_USERNAME.test(username)) {
       throw new BadRequestException(
         `The username '${username}' is not a valid username.`,

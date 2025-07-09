@@ -3,16 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { PermissionLevel } from '@hedgedoc/commons';
+import { FieldNameRevision, Revision } from '@hedgedoc/database';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import { Mock } from 'ts-mockery';
 
 import { AppConfig } from '../../config/app.config';
-import { User } from '../../database/user.entity';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
-import { Note } from '../../notes/note.entity';
-import { NotePermissionLevel } from '../../permissions/note-permission.enum';
 import { PermissionService } from '../../permissions/permission.service';
-import { Revision } from '../../revisions/revision.entity';
 import { RevisionsService } from '../../revisions/revisions.service';
 import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';
@@ -24,7 +22,7 @@ describe('RealtimeNoteService', () => {
   const mockedContent = 'mockedContent';
   const mockedYjsState = [1, 2, 3];
   const mockedNoteId = 4711;
-  let note: Note;
+
   let realtimeNote: RealtimeNote;
   let realtimeNoteService: RealtimeNoteService;
   let revisionsService: RevisionsService;
@@ -40,9 +38,9 @@ describe('RealtimeNoteService', () => {
   let clientWithoutReadWrite: RealtimeConnection;
   let deleteIntervalSpy: jest.SpyInstance;
 
-  const readWriteUsername = 'can-read-write-user';
-  const onlyReadUsername = 'can-only-read-user';
-  const noAccessUsername = 'no-read-write-user';
+  const readWriteUserId = 2;
+  const onlyReadUserId = 1;
+  const noAccessUserId = 0;
 
   afterAll(() => {
     jest.useRealTimers();
@@ -57,12 +55,14 @@ describe('RealtimeNoteService', () => {
   ) {
     jest
       .spyOn(revisionsService, 'getLatestRevision')
-      .mockImplementation((note: Note) =>
-        note.id === mockedNoteId && latestRevisionExists
+      .mockImplementation((noteId: number) =>
+        noteId === mockedNoteId && latestRevisionExists
           ? Promise.resolve(
               Mock.of<Revision>({
-                content: mockedContent,
-                ...(hasYjsState ? { yjsStateVector: mockedYjsState } : {}),
+                [FieldNameRevision.content]: mockedContent,
+                ...(hasYjsState
+                  ? { [FieldNameRevision.yjsStateVector]: mockedYjsState }
+                  : {}),
               }),
             )
           : Promise.reject('Revision for note mockedNoteId not found.'),
@@ -73,12 +73,11 @@ describe('RealtimeNoteService', () => {
     jest.resetAllMocks();
     jest.resetModules();
 
-    note = Mock.of<Note>({ id: mockedNoteId });
-    realtimeNote = new RealtimeNote(note, mockedContent);
+    realtimeNote = new RealtimeNote(mockedNoteId, mockedContent);
 
     revisionsService = Mock.of<RevisionsService>({
       getLatestRevision: jest.fn(),
-      createAndSaveRevision: jest.fn(),
+      createRevision: jest.fn(),
     });
 
     consoleLoggerService = Mock.of<ConsoleLoggerService>({
@@ -92,13 +91,13 @@ describe('RealtimeNoteService', () => {
 
     mockedAppConfig = Mock.of<AppConfig>({ persistInterval: 0 });
     mockedPermissionService = Mock.of<PermissionService>({
-      determinePermission: async (user: User | null) => {
-        if (user?.username === readWriteUsername) {
-          return NotePermissionLevel.WRITE;
-        } else if (user?.username === onlyReadUsername) {
-          return NotePermissionLevel.READ;
+      determinePermission: async (userId: number): Promise<PermissionLevel> => {
+        if (userId === readWriteUserId) {
+          return PermissionLevel.WRITE;
+        } else if (userId === onlyReadUserId) {
+          return PermissionLevel.READ;
         } else {
-          return NotePermissionLevel.DENY;
+          return PermissionLevel.DENY;
         }
       },
     });
@@ -115,17 +114,17 @@ describe('RealtimeNoteService', () => {
 
     clientWithReadWrite = new MockConnectionBuilder(realtimeNote)
       .withAcceptingRealtimeUserStatus()
-      .withLoggedInUser(readWriteUsername)
+      .withLoggedInUser(readWriteUserId)
       .build();
 
     clientWithRead = new MockConnectionBuilder(realtimeNote)
       .withDecliningRealtimeUserStatus()
-      .withLoggedInUser(onlyReadUsername)
+      .withLoggedInUser(onlyReadUserId)
       .build();
 
     clientWithoutReadWrite = new MockConnectionBuilder(realtimeNote)
       .withDecliningRealtimeUserStatus()
-      .withGuestUser(noAccessUsername)
+      .withGuestUser(noAccessUserId)
       .build();
 
     realtimeNoteService = new RealtimeNoteService(
@@ -149,7 +148,7 @@ describe('RealtimeNoteService', () => {
 
       jest.spyOn(loggedUserTransporter, 'disconnect');
 
-      await realtimeNoteService.handleNotePermissionChanged(note);
+      await realtimeNoteService.handleNotePermissionChanged(mockedNoteId);
 
       expect(loggedUserTransporter.disconnect).toHaveBeenCalledTimes(0);
     });
@@ -158,24 +157,24 @@ describe('RealtimeNoteService', () => {
       const guestUserTransporter = clientWithoutReadWrite.getTransporter();
       jest.spyOn(guestUserTransporter, 'disconnect');
 
-      await realtimeNoteService.handleNotePermissionChanged(note);
+      await realtimeNoteService.handleNotePermissionChanged(mockedNoteId);
 
       expect(guestUserTransporter.disconnect).toHaveBeenCalledTimes(1);
     });
 
     it('should change acceptEdits to true', async () => {
-      await realtimeNoteService.handleNotePermissionChanged(note);
+      await realtimeNoteService.handleNotePermissionChanged(mockedNoteId);
       expect(clientWithReadWrite.acceptEdits).toBeTruthy();
     });
     it('should change acceptEdits to false', async () => {
       clientWithRead.acceptEdits = true;
-      await realtimeNoteService.handleNotePermissionChanged(note);
+      await realtimeNoteService.handleNotePermissionChanged(mockedNoteId);
       expect(clientWithRead.acceptEdits).toBeFalsy();
     });
   });
 
   it("creates a new realtime note if it doesn't exist yet", async () => {
-    mockGetLatestRevision(true);
+    mockGetLatestRevision(true, false);
     jest.spyOn(realtimeNoteStore, 'find').mockImplementation(() => undefined);
     jest
       .spyOn(realtimeNoteStore, 'create')
@@ -183,12 +182,12 @@ describe('RealtimeNoteService', () => {
     mockedAppConfig.persistInterval = 0;
 
     await expect(
-      realtimeNoteService.getOrCreateRealtimeNote(note),
+      realtimeNoteService.getOrCreateRealtimeNote(mockedNoteId),
     ).resolves.toBe(realtimeNote);
 
     expect(realtimeNoteStore.find).toHaveBeenCalledWith(mockedNoteId);
     expect(realtimeNoteStore.create).toHaveBeenCalledWith(
-      note,
+      mockedNoteId,
       mockedContent,
       undefined,
     );
@@ -204,12 +203,12 @@ describe('RealtimeNoteService', () => {
     mockedAppConfig.persistInterval = 0;
 
     await expect(
-      realtimeNoteService.getOrCreateRealtimeNote(note),
+      realtimeNoteService.getOrCreateRealtimeNote(mockedNoteId),
     ).resolves.toBe(realtimeNote);
 
     expect(realtimeNoteStore.find).toHaveBeenCalledWith(mockedNoteId);
     expect(realtimeNoteStore.create).toHaveBeenCalledWith(
-      note,
+      mockedNoteId,
       mockedContent,
       mockedYjsState,
     );
@@ -225,7 +224,7 @@ describe('RealtimeNoteService', () => {
         .mockImplementation(() => realtimeNote);
       mockedAppConfig.persistInterval = 10;
 
-      await realtimeNoteService.getOrCreateRealtimeNote(note);
+      await realtimeNoteService.getOrCreateRealtimeNote(mockedNoteId);
 
       expect(setIntervalSpy).toHaveBeenCalledWith(
         expect.any(Function),
@@ -242,7 +241,7 @@ describe('RealtimeNoteService', () => {
         .mockImplementation(() => realtimeNote);
       mockedAppConfig.persistInterval = 10;
 
-      await realtimeNoteService.getOrCreateRealtimeNote(note);
+      await realtimeNoteService.getOrCreateRealtimeNote(mockedNoteId);
       realtimeNote.emit('destroy');
       expect(deleteIntervalSpy).toHaveBeenCalled();
       expect(clearIntervalSpy).toHaveBeenCalled();
@@ -255,7 +254,7 @@ describe('RealtimeNoteService', () => {
     jest.spyOn(realtimeNoteStore, 'find').mockImplementation(() => undefined);
 
     await expect(
-      realtimeNoteService.getOrCreateRealtimeNote(note),
+      realtimeNoteService.getOrCreateRealtimeNote(mockedNoteId),
     ).rejects.toBe(`Revision for note mockedNoteId not found.`);
     expect(realtimeNoteStore.create).not.toHaveBeenCalled();
     expect(realtimeNoteStore.find).toHaveBeenCalledWith(mockedNoteId);
@@ -270,7 +269,7 @@ describe('RealtimeNoteService', () => {
       .mockImplementation(() => realtimeNote);
 
     await expect(
-      realtimeNoteService.getOrCreateRealtimeNote(note),
+      realtimeNoteService.getOrCreateRealtimeNote(mockedNoteId),
     ).resolves.toBe(realtimeNote);
 
     jest
@@ -278,7 +277,7 @@ describe('RealtimeNoteService', () => {
       .mockImplementation(() => realtimeNote);
 
     await expect(
-      realtimeNoteService.getOrCreateRealtimeNote(note),
+      realtimeNoteService.getOrCreateRealtimeNote(mockedNoteId),
     ).resolves.toBe(realtimeNote);
     expect(realtimeNoteStore.create).toHaveBeenCalledTimes(1);
   });
@@ -291,17 +290,19 @@ describe('RealtimeNoteService', () => {
       .spyOn(realtimeNoteStore, 'create')
       .mockImplementation(() => realtimeNote);
 
-    await realtimeNoteService.getOrCreateRealtimeNote(note);
+    await realtimeNoteService.getOrCreateRealtimeNote(mockedNoteId);
 
     const createRevisionSpy = jest
-      .spyOn(revisionsService, 'createAndSaveRevision')
+      .spyOn(revisionsService, 'createRevision')
       .mockResolvedValue();
 
     realtimeNote.emit('beforeDestroy');
     expect(createRevisionSpy).toHaveBeenCalledWith(
-      note,
+      mockedNoteId,
       mockedContent,
-      expect.any(Array),
+      false, // this cannot be an initial revision, since this is created during note creation
+      undefined, // the test doesn't use knex transactions
+      expect.any(Uint8Array),
     );
   });
 

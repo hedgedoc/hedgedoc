@@ -7,14 +7,12 @@ import mockedEnv from 'mocked-env';
 
 import databaseConfig, {
   MariadbDatabaseConfig,
-  MySQLDatabaseConfig,
   PostgresDatabaseConfig,
   SqliteDatabaseConfig,
 } from './database.config';
 
 describe('databaseConfig', () => {
   const databaseTypeSqlite = 'sqlite';
-  const databaseTypeMysql = 'mysql';
   const databaseTypeMariadb = 'mariadb';
   const databaseTypePostgres = 'postgres';
   const databaseName = 'test-db';
@@ -42,32 +40,6 @@ describe('databaseConfig', () => {
       const config = databaseConfig() as SqliteDatabaseConfig;
       expect(config.type).toEqual(databaseTypeSqlite);
       expect(config.name).toEqual(databaseFileSqlite);
-      restore();
-    });
-
-    it('MySQL config', () => {
-      const restore = mockedEnv(
-        {
-          /* eslint-disable @typescript-eslint/naming-convention */
-          HD_DATABASE_TYPE: databaseTypeMysql,
-          HD_DATABASE_NAME: databaseName,
-          HD_DATABASE_USERNAME: databaseUser,
-          HD_DATABASE_PASSWORD: databasePass,
-          HD_DATABASE_HOST: databaseHost,
-          HD_DATABASE_PORT: String(databasePort),
-          /* eslint-enable @typescript-eslint/naming-convention */
-        },
-        {
-          clear: true,
-        },
-      );
-      const config = databaseConfig() as MySQLDatabaseConfig;
-      expect(config.type).toEqual(databaseTypeMysql);
-      expect(config.name).toEqual(databaseName);
-      expect(config.username).toEqual(databaseUser);
-      expect(config.password).toEqual(databasePass);
-      expect(config.host).toEqual(databaseHost);
-      expect(config.port).toEqual(databasePort);
       restore();
     });
 
