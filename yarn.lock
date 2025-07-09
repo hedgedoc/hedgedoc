@@ -2766,6 +2766,7 @@ __metadata:
     jest: "npm:29.7.0"
     keyv: "npm:^5.3.2"
     knex: "npm:3.1.0"
+    knex-mock-client: "npm:3.0.2"
     ldapauth-fork: "npm:6.1.0"
     markdown-it: "npm:13.0.2"
     minio: "npm:8.0.4"
@@ -13964,6 +13965,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"knex-mock-client@npm:3.0.2":
+  version: 3.0.2
+  resolution: "knex-mock-client@npm:3.0.2"
+  dependencies:
+    lodash.clonedeep: "npm:^4.5.0"
+  peerDependencies:
+    knex: ">=2.0.0"
+  checksum: 10c0/95b0430a7d5f074afb142644c0b60f8824f065608982a6321e816b9b1fcf6edb7c532cf8930372d8f5f86c57a407ab89bb076e4419cf5d0a10fb6df550dd7020
+  languageName: node
+  linkType: hard
+
 "knex@npm:3.1.0":
   version: 3.1.0
   resolution: "knex@npm:3.1.0"
@@ -14215,6 +14227,13 @@ __metadata:
   version: 4.17.21
   resolution: "lodash-es@npm:4.17.21"
   checksum: 10c0/fb407355f7e6cd523a9383e76e6b455321f0f153a6c9625e21a8827d10c54c2a2341bd2ae8d034358b60e07325e1330c14c224ff582d04612a46a4f0479ff2f2
+  languageName: node
+  linkType: hard
+
+"lodash.clonedeep@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "lodash.clonedeep@npm:4.5.0"
+  checksum: 10c0/2caf0e4808f319d761d2939ee0642fa6867a4bbf2cfce43276698828380756b99d4c4fa226d881655e6ac298dd453fe12a5ec8ba49861777759494c534936985
   languageName: node
   linkType: hard
 

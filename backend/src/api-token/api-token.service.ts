@@ -4,12 +4,17 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ApiTokenDto, ApiTokenWithSecretDto } from '@hedgedoc/commons';
-import { ApiToken, FieldNameApiToken, TableApiToken } from '@hedgedoc/database';
+import {
+  ApiToken,
+  FieldNameApiToken,
+  TableApiToken,
+  TypeInsertApiToken,
+} from '@hedgedoc/database';
 import { Injectable } from '@nestjs/common';
 import { Cron, Timeout } from '@nestjs/schedule';
-import { randomBytes } from 'crypto';
 import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
+import { randomBytes } from 'node:crypto';
 
 import {
   NotInDBError,
@@ -23,7 +28,7 @@ import {
   hashApiToken,
 } from '../utils/password';
 
-const AUTH_TOKEN_PREFIX = 'hd2';
+export const AUTH_TOKEN_PREFIX = 'hd2';
 const MESSAGE_TOKEN_INVALID = 'API token is invalid, expired or not found';
 
 @Injectable()
@@ -126,14 +131,15 @@ export class ApiTokenService {
         ? maximumTokenValidity
         : userDefinedValidUntil;
       const createdAt = new Date();
-      await this.knex(TableApiToken).insert({
+      const insertApiToken: TypeInsertApiToken = {
+        [FieldNameApiToken.createdAt]: createdAt,
         [FieldNameApiToken.id]: keyId,
         [FieldNameApiToken.label]: label,
-        [FieldNameApiToken.userId]: userId,
         [FieldNameApiToken.secretHash]: secretHash,
+        [FieldNameApiToken.userId]: userId,
         [FieldNameApiToken.validUntil]: validUntil,
-        [FieldNameApiToken.createdAt]: createdAt,
-      });
+      };
+      await transaction(TableApiToken).insert(insertApiToken);
       return {
         label,
         keyId,
@@ -176,10 +182,33 @@ export class ApiTokenService {
    * @param userId The id of the user to get the tokens for
    * @returns A list of the user's tokens as ApiToken objects
    */
-  getTokensOfUserById(userId: number): Promise<ApiToken[]> {
-    return this.knex(TableApiToken)
-      .select()
+  async getTokensOfUserById(userId: number): Promise<ApiTokenDto[]> {
+    const apiTokens = await this.knex(TableApiToken)
+      .select([
+        FieldNameApiToken.createdAt,
+        FieldNameApiToken.id,
+        FieldNameApiToken.label,
+        FieldNameApiToken.lastUsedAt,
+        FieldNameApiToken.validUntil,
+        FieldNameApiToken.userId,
+      ])
       .where(FieldNameApiToken.userId, userId);
+    return apiTokens.map(
+      (apiToken: Omit<ApiToken, FieldNameApiToken.secretHash>) => ({
+        label: apiToken[FieldNameApiToken.label],
+        userId: apiToken[FieldNameApiToken.userId],
+        keyId: apiToken[FieldNameApiToken.id],
+        createdAt: new Date(
+          apiToken[FieldNameApiToken.createdAt],
+        ).toISOString(),
+        validUntil: new Date(
+          apiToken[FieldNameApiToken.validUntil],
+        ).toISOString(),
+        lastUsedAt: apiToken[FieldNameApiToken.lastUsedAt]
+          ? new Date(apiToken[FieldNameApiToken.lastUsedAt]).toISOString()
+          : null,
+      }),
+    );
   }
 
   /**
@@ -197,26 +226,6 @@ export class ApiTokenService {
     if (numberOfDeletedTokens === 0) {
       throw new NotInDBError('Token not found');
     }
-  }
-
-  /**
-   * Formats an ApiToken object from the database to an ApiTokenDto
-   *
-   * @param apiToken The token object to convert
-   * @returns The built ApiTokenDto
-   */
-  toAuthTokenDto(apiToken: ApiToken): ApiTokenDto {
-    return {
-      label: apiToken[FieldNameApiToken.label],
-      keyId: apiToken[FieldNameApiToken.id],
-      createdAt: new Date(apiToken[FieldNameApiToken.createdAt]).toISOString(),
-      validUntil: new Date(
-        apiToken[FieldNameApiToken.validUntil],
-      ).toISOString(),
-      lastUsedAt: apiToken[FieldNameApiToken.lastUsedAt]
-        ? new Date(apiToken[FieldNameApiToken.lastUsedAt]).toISOString()
-        : null,
-    };
   }
 
   // Deletes all invalid tokens every sunday on 3:00 AM

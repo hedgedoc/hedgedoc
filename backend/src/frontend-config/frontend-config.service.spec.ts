@@ -60,6 +60,7 @@ describe('FrontendConfigService', () => {
         displayNameField: 'ldapTestDisplayName',
         profilePictureField: 'ldapTestProfilePicture',
         tlsCaCerts: ['ldapTestTlsCa'],
+        tlsRejectUnauthorized: false,
       },
     ];
     const oidc: AuthConfig['oidc'] = [
@@ -75,6 +76,7 @@ describe('FrontendConfigService', () => {
         displayNameField: '',
         profilePictureField: '',
         emailField: '',
+        enableRegistration: true,
       },
     ];
     for (const authConfigConfigured of [ldap, oidc]) {
@@ -108,7 +110,7 @@ describe('FrontendConfigService', () => {
                   return {
                     forbiddenNoteIds: [],
                     maxDocumentLength: 200,
-                    guestAccess: PermissionLevel.CREATE,
+                    guestAccess: PermissionLevel.FULL,
                     permissions: {
                       default: {
                         everyone: DefaultAccessLevel.READ,
@@ -116,7 +118,7 @@ describe('FrontendConfigService', () => {
                       },
                     },
                     revisionRetentionDays: 0,
-                  } as NoteConfig;
+                  } as unknown as NoteConfig;
                 }),
               ],
             }),
@@ -213,12 +215,12 @@ describe('FrontendConfigService', () => {
               const noteConfig: NoteConfig = {
                 forbiddenNoteIds: [],
                 maxDocumentLength: maxDocumentLength,
-                guestAccess: PermissionLevel.CREATE,
                 permissions: {
                   default: {
-                    everyone: DefaultAccessLevel.READ,
-                    loggedIn: DefaultAccessLevel.WRITE,
+                    everyone: PermissionLevel.READ,
+                    loggedIn: PermissionLevel.WRITE,
                   },
+                  maxGuestLevel: PermissionLevel.FULL,
                 },
                 revisionRetentionDays: 0,
               };
@@ -248,7 +250,9 @@ describe('FrontendConfigService', () => {
               const service = module.get(FrontendConfigService);
               const config = await service.getFrontendConfig();
               expect(config.allowRegister).toEqual(enableRegister);
-              expect(config.guestAccess).toEqual(noteConfig.guestAccess);
+              expect(config.guestAccess).toEqual(
+                noteConfig.permissions.maxGuestLevel,
+              );
               expect(config.branding.name).toEqual(customName);
               expect(config.branding.logo).toEqual(
                 customLogo !== null ? new URL(customLogo).toString() : null,

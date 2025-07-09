@@ -3,723 +3,698 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
-import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { Mock } from 'ts-mockery';
+import { NoteMetadataDto, PermissionLevel } from '@hedgedoc/commons';
 import {
-  DataSource,
-  EntityManager,
-  FindOptionsWhere,
-  Repository,
-} from 'typeorm';
+  FieldNameAlias,
+  FieldNameGroup,
+  FieldNameNote,
+  FieldNameNoteGroupPermission,
+  FieldNameNoteUserPermission,
+  FieldNameRevision,
+  FieldNameUser,
+  NoteType,
+  TableAlias,
+  TableGroup,
+  TableNote,
+  TableNoteGroupPermission,
+  TableNoteUserPermission,
+  TableUser,
+} from '@hedgedoc/database';
+import { Provider } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { Test, TestingModule } from '@nestjs/testing';
+import type { Tracker } from 'knex-mock-client';
 
 import { AliasService } from '../alias/alias.service';
-import { ApiToken } from '../api-token/api-token.entity';
-import { Identity } from '../auth/identity.entity';
-import { Author } from '../authors/author.entity';
-import { DefaultAccessLevel } from '../config/default-access-level.enum';
 import appConfigMock from '../config/mock/app.config.mock';
-import authConfigMock from '../config/mock/auth.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
 import {
   createDefaultMockNoteConfig,
   registerNoteConfig,
 } from '../config/mock/note.config.mock';
 import { NoteConfig } from '../config/note.config';
-import { User } from '../database/user.entity';
+import { expectBindings, IS_FIRST } from '../database/mock/expect-bindings';
 import {
-  AlreadyInDBError,
+  mockDelete,
+  mockInsert,
+  mockSelect,
+} from '../database/mock/mock-queries';
+import { mockKnexDb } from '../database/mock/provider';
+import {
   ForbiddenIdError,
+  GenericDBError,
   MaximumDocumentLengthExceededError,
   NotInDBError,
 } from '../errors/errors';
-import { eventModuleConfig, NoteEvent } from '../events';
-import { Group } from '../groups/group.entity';
-import { GroupsModule } from '../groups/groups.module';
-import { SpecialGroup } from '../groups/groups.special';
+import { NoteEvent, NoteEventMap } from '../events';
+import { GroupsService } from '../groups/groups.service';
 import { LoggerModule } from '../logger/logger.module';
-import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
-import { NoteUserPermission } from '../permissions/note-user-permission.entity';
-import { RealtimeNoteModule } from '../realtime/realtime-note/realtime-note.module';
-import { Edit } from '../revisions/edit.entity';
-import { Revision } from '../revisions/revision.entity';
-import { RevisionsModule } from '../revisions/revisions.module';
+import { PermissionService } from '../permissions/permission.service';
+import { RealtimeNoteStore } from '../realtime/realtime-note/realtime-note-store';
 import { RevisionsService } from '../revisions/revisions.service';
-import { Session } from '../sessions/session.entity';
-import { UsersModule } from '../users/users.module';
-import { mockSelectQueryBuilderInRepo } from '../utils/test-utils/mockSelectQueryBuilder';
-import { Alias } from './aliases.entity';
-import { Note } from './note.entity';
+import { UsersService } from '../users/users.service';
 import { NoteService } from './note.service';
-import { Tag } from './tag.entity';
 
-jest.mock('../revisions/revisions.service');
-
-describe('NotesService', () => {
+describe('NoteService', () => {
   let service: NoteService;
-  let revisionsService: RevisionsService;
   const noteMockConfig: NoteConfig = createDefaultMockNoteConfig();
-  let noteRepo: Repository<Note>;
-  let userRepo: Repository<User>;
-  let aliasRepo: Repository<Alias>;
-  let groupRepo: Repository<Group>;
-  let forbiddenNoteId: string;
-  let everyoneDefaultAccessPermission: string;
-  let loggedinDefaultAccessPermission: string;
-  let eventEmitter: EventEmitter2;
-  const everyone = Group.create(
-    SpecialGroup.EVERYONE,
-    SpecialGroup.EVERYONE,
-    true,
-  );
-  const loggedin = Group.create(
-    SpecialGroup.LOGGED_IN,
-    SpecialGroup.LOGGED_IN,
-    true,
-  );
+  let aliasService: AliasService;
+  let eventEmitter: EventEmitter2<NoteEventMap>;
+  let revisionService: RevisionsService;
+  let realtimeNoteStore: RealtimeNoteStore;
+  let groupsService: GroupsService;
+  let permissionService: PermissionService;
+  let tracker: Tracker;
+  let knexProvider: Provider;
 
-  beforeEach(async () => {
-    jest.resetAllMocks();
-    jest.resetModules();
+  const mockNoteId = 42;
+  const mockOwnerUserId = 7;
+  const mockNoteContent = 'Hello world!';
+  const mockAliasCustom = 'my-alias';
+  const mockAliasRandom = 'random-alias';
+  const everyoneGroupId = 1;
+  const loggedInGroupId = 1;
+  const mockUsername = 'TestyMcTestface';
+  const mockGroupName = 'Testers-Group';
+  const mockRevisionUuid = '0199110d-076f-7724-9229-bbeb32b53592';
+  const mockCreatedAt = new Date().toISOString();
+  const mockUpdatedAt = new Date(2025, 9, 3, 21, 35).toISOString();
+  const mockNoteType = NoteType.DOCUMENT;
+  const mockPatch = 'mockPatch';
+  const mockNoteTitle = 'mockNoteTitle';
+  const mockNoteDescription = 'mockNoteDescription';
+  const mockTags = ['tag1', 'tag2'];
+  const mockPermissions = {
+    owner: mockUsername,
+    sharedToUsers: [],
+    sharedToGroups: [],
+  };
 
-    /**
-     * We need to have *one* userRepo for both the providers array and
-     * the overrideProvider call, as otherwise we have two instances
-     * and the mock of createQueryBuilder replaces the wrong one
-     * **/
-    userRepo = new Repository<User>(
-      '',
-      new EntityManager(
-        new DataSource({
-          type: 'sqlite',
-          database: ':memory:',
-        }),
-      ),
-      undefined,
-    );
-    noteRepo = new Repository<Note>(
-      '',
-      new EntityManager(
-        new DataSource({
-          type: 'sqlite',
-          database: ':memory:',
-        }),
-      ),
-      undefined,
-    );
-    aliasRepo = new Repository<Alias>(
-      '',
-      new EntityManager(
-        new DataSource({
-          type: 'sqlite',
-          database: ':memory:',
-        }),
-      ),
-      undefined,
-    );
-    groupRepo = new Repository<Group>(
-      '',
-      new EntityManager(
-        new DataSource({
-          type: 'sqlite',
-          database: ':memory:',
-        }),
-      ),
-      undefined,
-    );
-
-    revisionsService = Mock.of<RevisionsService>({
-      getLatestRevision: jest.fn(),
-      createRevision: jest.fn(),
-    });
+  beforeAll(async () => {
+    [tracker, knexProvider] = mockKnexDb();
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         NoteService,
-        {
-          provide: RevisionsService,
-          useValue: revisionsService,
-        },
+        knexProvider,
+        GroupsService,
+        RevisionsService,
         AliasService,
-        {
-          provide: getRepositoryToken(Note),
-          useValue: noteRepo,
-        },
-        {
-          provide: getRepositoryToken(Tag),
-          useClass: Repository,
-        },
-        {
-          provide: getRepositoryToken(Revision),
-          useClass: Repository,
-        },
-        {
-          provide: getRepositoryToken(Alias),
-          useValue: aliasRepo,
-        },
-        {
-          provide: getRepositoryToken(User),
-          useValue: userRepo,
-        },
-        {
-          provide: getRepositoryToken(Group),
-          useValue: groupRepo,
-        },
+        PermissionService,
+        RealtimeNoteStore,
+        EventEmitter2<NoteEventMap>,
+        UsersService,
       ],
       imports: [
         LoggerModule,
-        UsersModule,
-        GroupsModule,
-        RevisionsModule,
-        RealtimeNoteModule,
-        ConfigModule.forRoot({
+        await ConfigModule.forRoot({
           isGlobal: true,
           load: [
             appConfigMock,
             databaseConfigMock,
-            authConfigMock,
             registerNoteConfig(noteMockConfig),
           ],
         }),
-        EventEmitterModule.forRoot(eventModuleConfig),
       ],
-    })
-      .overrideProvider(getRepositoryToken(Note))
-      .useValue(noteRepo)
-      .overrideProvider(getRepositoryToken(Tag))
-      .useClass(Repository)
-      .overrideProvider(getRepositoryToken(Alias))
-      .useValue(aliasRepo)
-      .overrideProvider(getRepositoryToken(User))
-      .useValue(userRepo)
-      .overrideProvider(getRepositoryToken(ApiToken))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(Identity))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(Edit))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(Revision))
-      .useClass(Repository)
-      .overrideProvider(getRepositoryToken(NoteGroupPermission))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(NoteUserPermission))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(Group))
-      .useValue(groupRepo)
-      .overrideProvider(getRepositoryToken(Session))
-      .useValue({})
-      .overrideProvider(getRepositoryToken(Author))
-      .useValue({})
-      .compile();
+    }).compile();
 
-    const config = module.get<ConfigService>(ConfigService);
-    const noteConfig = config.get<NoteConfig>('noteConfig') as NoteConfig;
-    forbiddenNoteId = noteConfig.forbiddenNoteIds[0];
-    everyoneDefaultAccessPermission = noteConfig.permissions.default.everyone;
-    loggedinDefaultAccessPermission = noteConfig.permissions.default.loggedIn;
     service = module.get<NoteService>(NoteService);
-    noteRepo = module.get<Repository<Note>>(getRepositoryToken(Note));
-    aliasRepo = module.get<Repository<Alias>>(getRepositoryToken(Alias));
-    eventEmitter = module.get<EventEmitter2>(EventEmitter2);
+    aliasService = module.get<AliasService>(AliasService);
+    eventEmitter = module.get<EventEmitter2<NoteEventMap>>(
+      EventEmitter2<NoteEventMap>,
+    );
+    revisionService = module.get<RevisionsService>(RevisionsService);
+    realtimeNoteStore = module.get<RealtimeNoteStore>(RealtimeNoteStore);
+    groupsService = module.get<GroupsService>(GroupsService);
+    permissionService = module.get<PermissionService>(PermissionService);
   });
 
-  /**
-   * Creates a Note and a corresponding User and Group for testing.
-   * The Note does not have any aliases.
-   */
-  async function getMockData(): Promise<[Note, User, Group, Revision]> {
-    const user = User.create('hardcoded', 'Testy') as User;
-    const author = Author.create(1);
-    author.user = Promise.resolve(user);
-    const group = Group.create('testGroup', 'testGroup', false) as Group;
-    jest
-      .spyOn(noteRepo, 'save')
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      .mockImplementation(async (note: Note): Promise<Note> => note);
-    mockGroupRepo();
-
-    const revision = Mock.of<Revision>({
-      edits: Promise.resolve([
-        {
-          startPos: 0,
-          endPos: 1,
-          updatedAt: new Date(1549312452000),
-          author: Promise.resolve(author),
-        } as Edit,
-        {
-          startPos: 0,
-          endPos: 1,
-          updatedAt: new Date(1549312452001),
-          author: Promise.resolve(author),
-        } as Edit,
-      ]),
-      createdAt: new Date(1549312452000),
-      tags: Promise.resolve([
-        {
-          id: 0,
-          name: 'tag1',
-        } as Tag,
-      ]),
-      content: 'mockContent',
-      description: 'mockDescription',
-      title: 'mockTitle',
-    });
-
-    const note = Mock.of<Note>({
-      revisions: Promise.resolve([revision]),
-      aliases: Promise.resolve([]),
-      createdAt: new Date(1549312452000),
-    });
-
-    mockRevisionService(note, revision);
-
-    mockSelectQueryBuilderInRepo(userRepo, user);
-    note.publicId = 'testId';
-    note.owner = Promise.resolve(user);
-    note.userPermissions = Promise.resolve([
-      {
-        id: 1,
-        note: Promise.resolve(note),
-        user: Promise.resolve(user),
-        canEdit: true,
-      },
-    ]);
-    note.groupPermissions = Promise.resolve([
-      {
-        id: 1,
-        note: Promise.resolve(note),
-        group: Promise.resolve(group),
-        canEdit: true,
-      },
-    ]);
-    note.viewCount = 1337;
-
-    return [note, user, group, revision];
-  }
-
-  function mockRevisionService(note: Note, revision: Revision) {
-    jest
-      .spyOn(revisionsService, 'getLatestRevision')
-      .mockImplementation((requestedNote) => {
-        expect(requestedNote).toBe(note);
-        return Promise.resolve(revision);
-      });
-  }
-
-  function mockGroupRepo() {
-    jest.spyOn(groupRepo, 'findOne').mockReset();
-    jest.spyOn(groupRepo, 'findOne').mockImplementation((args) => {
-      const groupName = (args.where as FindOptionsWhere<Group>).name;
-      if (groupName === loggedin.name) {
-        return Promise.resolve(loggedin as Group);
-      } else if (groupName === everyone.name) {
-        return Promise.resolve(everyone as Group);
-      } else {
-        return Promise.resolve(null);
-      }
-    });
-  }
-
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+  afterEach(() => {
+    tracker.reset();
+    jest.restoreAllMocks();
   });
 
-  describe('getUserNotes', () => {
-    describe('works', () => {
-      const user = User.create('hardcoded', 'Testy') as User;
-      const alias = 'alias';
-      const note = Note.create(user, alias) as Note;
-
-      it('with no note', async () => {
-        mockSelectQueryBuilderInRepo(noteRepo, null);
-        const notes = await service.getUserNoteIds(user);
-        expect(notes).toEqual([]);
-      });
-
-      it('with one note', async () => {
-        mockSelectQueryBuilderInRepo(noteRepo, note);
-        const notes = await service.getUserNoteIds(user);
-        expect(notes).toEqual([note]);
-      });
-
-      it('with multiple note', async () => {
-        mockSelectQueryBuilderInRepo(noteRepo, [note, note]);
-        const notes = await service.getUserNoteIds(user);
-        expect(notes).toEqual([note, note]);
-      });
+  describe('getUserNoteIds', () => {
+    it('correctly returns the note ids', async () => {
+      const rows = [
+        {
+          [FieldNameNote.id]: mockNoteId,
+        },
+      ];
+      mockSelect(
+        tracker,
+        [FieldNameNote.id],
+        TableNote,
+        FieldNameNote.ownerId,
+        rows,
+      );
+      const result = await service.getUserNoteIds(mockOwnerUserId);
+      expect(result).toHaveLength(1);
+      expect(result[0]).toEqual(mockNoteId);
+      expectBindings(tracker, 'select', [[mockOwnerUserId]]);
     });
   });
 
   describe('createNote', () => {
-    const user = User.create('hardcoded', 'Testy') as User;
-    const alias = 'alias';
-    const content = 'testContent';
-    const newRevision = Mock.of<Revision>({});
-    let createRevisionSpy: jest.SpyInstance;
-
-    describe('works', () => {
-      beforeEach(() => {
-        jest
-          .spyOn(noteRepo, 'save')
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .mockImplementation(async (note: Note): Promise<Note> => note);
-        jest.spyOn(noteRepo, 'existsBy').mockResolvedValueOnce(false);
-        jest.spyOn(aliasRepo, 'existsBy').mockResolvedValueOnce(false);
-        mockGroupRepo();
-
-        createRevisionSpy = jest
-          .spyOn(revisionsService, 'createRevision')
-          .mockResolvedValue(newRevision);
-
-        mockSelectQueryBuilderInRepo(noteRepo, null);
-      });
-      it('without aliases, without owner', async () => {
-        const newNote = await service.createNote(content, null);
-
-        expect(createRevisionSpy).toHaveBeenCalledWith(newNote, content);
-        expect(await newNote.revisions).toStrictEqual([newRevision]);
-        expect(await newNote.historyEntries).toHaveLength(0);
-        expect(await newNote.userPermissions).toHaveLength(0);
-        const groupPermissions = await newNote.groupPermissions;
-        expect(groupPermissions).toHaveLength(2);
-        expect(groupPermissions[0].canEdit).toEqual(
-          everyoneDefaultAccessPermission !==
-            (DefaultAccessLevel.WRITE as string),
-        );
-        expect((await groupPermissions[0].group).name).toEqual(
-          SpecialGroup.EVERYONE,
-        );
-        expect(groupPermissions[1].canEdit).toEqual(
-          loggedinDefaultAccessPermission ===
-            (DefaultAccessLevel.WRITE as string),
-        );
-        expect((await groupPermissions[1].group).name).toEqual(
-          SpecialGroup.LOGGED_IN,
-        );
-        expect(await newNote.owner).toBeNull();
-        expect(await newNote.aliases).toHaveLength(0);
-      });
-      it('without aliases, with owner', async () => {
-        const newNote = await service.createNote(content, user);
-        expect(createRevisionSpy).toHaveBeenCalledWith(newNote, content);
-        expect(await newNote.revisions).toStrictEqual([newRevision]);
-        expect(await newNote.historyEntries).toHaveLength(1);
-        expect(await (await newNote.historyEntries)[0].user).toEqual(user);
-        expect(await newNote.userPermissions).toHaveLength(0);
-        const groupPermissions = await newNote.groupPermissions;
-        expect(groupPermissions).toHaveLength(2);
-        expect(groupPermissions[0].canEdit).toEqual(
-          everyoneDefaultAccessPermission ===
-            (DefaultAccessLevel.WRITE as string),
-        );
-        expect((await groupPermissions[0].group).name).toEqual(
-          SpecialGroup.EVERYONE,
-        );
-        expect(groupPermissions[1].canEdit).toEqual(
-          loggedinDefaultAccessPermission ===
-            (DefaultAccessLevel.WRITE as string),
-        );
-        expect((await groupPermissions[1].group).name).toEqual(
-          SpecialGroup.LOGGED_IN,
-        );
-        expect(await newNote.owner).toEqual(user);
-        expect(await newNote.aliases).toHaveLength(0);
-      });
-      it('with aliases, without owner', async () => {
-        const newNote = await service.createNote(content, null, alias);
-        expect(createRevisionSpy).toHaveBeenCalledWith(newNote, content);
-        expect(await newNote.revisions).toStrictEqual([newRevision]);
-        expect(await newNote.historyEntries).toHaveLength(0);
-        expect(await newNote.userPermissions).toHaveLength(0);
-        const groupPermissions = await newNote.groupPermissions;
-        expect(groupPermissions).toHaveLength(2);
-        expect(groupPermissions[0].canEdit).toEqual(
-          everyoneDefaultAccessPermission !==
-            (DefaultAccessLevel.WRITE as string),
-        );
-        expect((await groupPermissions[0].group).name).toEqual(
-          SpecialGroup.EVERYONE,
-        );
-        expect(groupPermissions[1].canEdit).toEqual(
-          loggedinDefaultAccessPermission ===
-            (DefaultAccessLevel.WRITE as string),
-        );
-        expect((await groupPermissions[1].group).name).toEqual(
-          SpecialGroup.LOGGED_IN,
-        );
-        expect(await newNote.owner).toBeNull();
-        expect(await newNote.aliases).toHaveLength(1);
-      });
-      it('with aliases, with owner', async () => {
-        const newNote = await service.createNote(content, user, alias);
-
-        expect(createRevisionSpy).toHaveBeenCalledWith(newNote, content);
-        expect(await newNote.revisions).toStrictEqual([newRevision]);
-        expect(await newNote.historyEntries).toHaveLength(1);
-        expect(await (await newNote.historyEntries)[0].user).toEqual(user);
-        expect(await newNote.userPermissions).toHaveLength(0);
-        const groupPermissions = await newNote.groupPermissions;
-        expect(groupPermissions).toHaveLength(2);
-        expect(groupPermissions[0].canEdit).toEqual(
-          everyoneDefaultAccessPermission ===
-            (DefaultAccessLevel.WRITE as string),
-        );
-        expect((await groupPermissions[0].group).name).toEqual(
-          SpecialGroup.EVERYONE,
-        );
-        expect(groupPermissions[1].canEdit).toEqual(
-          loggedinDefaultAccessPermission ===
-            (DefaultAccessLevel.WRITE as string),
-        );
-        expect((await groupPermissions[1].group).name).toEqual(
-          SpecialGroup.LOGGED_IN,
-        );
-        expect(await newNote.owner).toEqual(user);
-        expect(await newNote.aliases).toHaveLength(1);
-        expect((await newNote.aliases)[0].name).toEqual(alias);
-      });
-      describe('with maxDocumentLength 1000', () => {
-        beforeEach(() => (noteMockConfig.maxDocumentLength = 1000));
-        it('and content has length maxDocumentLength', async () => {
-          const content = 'x'.repeat(noteMockConfig.maxDocumentLength);
-          const newNote = await service.createNote(content, user, alias);
-
-          expect(createRevisionSpy).toHaveBeenCalledWith(newNote, content);
-          expect(await newNote.revisions).toStrictEqual([newRevision]);
-          expect(await newNote.historyEntries).toHaveLength(1);
-          expect(await (await newNote.historyEntries)[0].user).toEqual(user);
-          expect(await newNote.userPermissions).toHaveLength(0);
-          const groupPermissions = await newNote.groupPermissions;
-          expect(groupPermissions).toHaveLength(2);
-          expect(groupPermissions[0].canEdit).toEqual(
-            everyoneDefaultAccessPermission ===
-              (DefaultAccessLevel.WRITE as string),
-          );
-          expect((await groupPermissions[0].group).name).toEqual(
-            SpecialGroup.EVERYONE,
-          );
-          expect(groupPermissions[1].canEdit).toEqual(
-            loggedinDefaultAccessPermission ===
-              (DefaultAccessLevel.WRITE as string),
-          );
-          expect((await groupPermissions[1].group).name).toEqual(
-            SpecialGroup.LOGGED_IN,
-          );
-          expect(await newNote.owner).toEqual(user);
-          expect(await newNote.aliases).toHaveLength(1);
-          expect((await newNote.aliases)[0].name).toEqual(alias);
-        });
-      });
-      describe('with other', () => {
-        beforeEach(
-          () =>
-            (noteMockConfig.permissions.default.everyone =
-              DefaultAccessLevel.NONE),
-        );
-        it('default permissions', async () => {
-          mockGroupRepo();
-          const newNote = await service.createNote(content, user, alias);
-
-          expect(createRevisionSpy).toHaveBeenCalledWith(newNote, content);
-          expect(await newNote.revisions).toStrictEqual([newRevision]);
-          expect(await newNote.historyEntries).toHaveLength(1);
-          expect(await (await newNote.historyEntries)[0].user).toEqual(user);
-          expect(await newNote.userPermissions).toHaveLength(0);
-          const groupPermissions = await newNote.groupPermissions;
-          expect(groupPermissions).toHaveLength(1);
-          expect(groupPermissions[0].canEdit).toEqual(
-            loggedinDefaultAccessPermission ===
-              (DefaultAccessLevel.WRITE as string),
-          );
-          expect((await groupPermissions[0].group).name).toEqual(
-            SpecialGroup.LOGGED_IN,
-          );
-          expect(await newNote.owner).toEqual(user);
-          expect(await newNote.aliases).toHaveLength(1);
-          expect((await newNote.aliases)[0].name).toEqual(alias);
-        });
-      });
+    it('throws a MaximumDocumentLengthExceededError', async () => {
+      const tooLongContent = 'a'.repeat(noteMockConfig.maxDocumentLength + 1);
+      await expect(
+        service.createNote(tooLongContent, mockOwnerUserId),
+      ).rejects.toThrow(MaximumDocumentLengthExceededError);
     });
-    describe('fails:', () => {
-      beforeEach(() => {
-        mockSelectQueryBuilderInRepo(noteRepo, null);
-      });
 
-      it('aliases is forbidden', async () => {
-        jest.spyOn(noteRepo, 'existsBy').mockResolvedValueOnce(false);
-        jest.spyOn(aliasRepo, 'existsBy').mockResolvedValueOnce(false);
-        await expect(
-          service.createNote(content, null, forbiddenNoteId),
-        ).rejects.toThrow(ForbiddenIdError);
-      });
-
-      it('aliases is already used (as another aliases)', async () => {
-        mockGroupRepo();
-        jest.spyOn(noteRepo, 'existsBy').mockResolvedValueOnce(false);
-        jest.spyOn(aliasRepo, 'existsBy').mockResolvedValueOnce(true);
-        jest.spyOn(noteRepo, 'save').mockImplementationOnce(async () => {
-          throw new Error();
-        });
-        await expect(service.createNote(content, null, alias)).rejects.toThrow(
-          AlreadyInDBError,
-        );
-      });
-
-      it('aliases is already used (as publicId)', async () => {
-        mockGroupRepo();
-        jest.spyOn(noteRepo, 'existsBy').mockResolvedValueOnce(true);
-        jest.spyOn(aliasRepo, 'existsBy').mockResolvedValueOnce(false);
-        jest.spyOn(noteRepo, 'save').mockImplementationOnce(async () => {
-          throw new Error();
-        });
-        await expect(service.createNote(content, null, alias)).rejects.toThrow(
-          AlreadyInDBError,
-        );
-      });
-      describe('with maxDocumentLength 1000', () => {
-        beforeEach(() => (noteMockConfig.maxDocumentLength = 1000));
-        it('document is too long', async () => {
-          mockGroupRepo();
-          jest.spyOn(noteRepo, 'existsBy').mockResolvedValueOnce(false);
-          jest.spyOn(aliasRepo, 'existsBy').mockResolvedValueOnce(false);
-          jest.spyOn(noteRepo, 'save').mockImplementationOnce(async () => {
-            throw new Error();
-          });
-          const content = 'x'.repeat(noteMockConfig.maxDocumentLength + 1);
-          await expect(
-            service.createNote(content, user, alias),
-          ).rejects.toThrow(MaximumDocumentLengthExceededError);
-        });
-      });
+    it('throws GenericDBError if insert fails', async () => {
+      mockInsert(
+        tracker,
+        TableNote,
+        [FieldNameNote.ownerId, FieldNameNote.version],
+        [],
+      );
+      await expect(
+        service.createNote(mockNoteContent, mockOwnerUserId, mockAliasCustom),
+      ).rejects.toThrow(GenericDBError);
+      expectBindings(tracker, 'insert', [[mockOwnerUserId, 2]]);
     });
+
+    /* eslint-disable jest/no-conditional-expect */
+    describe.each([
+      [
+        PermissionLevel.READ,
+        PermissionLevel.WRITE,
+        undefined,
+        mockAliasRandom,
+        'everyone read, loggedIn write, without alias',
+      ],
+      [
+        PermissionLevel.DENY,
+        PermissionLevel.READ,
+        undefined,
+        mockAliasRandom,
+        'everyone denied, loggedIn read, without alias',
+      ],
+      [
+        PermissionLevel.WRITE,
+        PermissionLevel.DENY,
+        undefined,
+        mockAliasRandom,
+        'everyone write, loggedIn denied, without alias',
+      ],
+      [
+        PermissionLevel.READ,
+        PermissionLevel.DENY,
+        mockAliasCustom,
+        mockAliasCustom,
+        'everyone read, loggedIn denied, with alias',
+      ],
+    ])(
+      'inserts a new note',
+      (everyoneLevel, loggedInLevel, inputAlias, outputAlias, descr) => {
+        let result: number;
+        let mockEnsureAliasIsAvailable: jest.SpyInstance;
+        let mockGenerateRandomAlias: jest.SpyInstance;
+        let mockAddAlias: jest.SpyInstance;
+        let mockCreateRevision: jest.SpyInstance;
+        let mockGetGroupIdByName: jest.SpyInstance;
+        let mockSetGroupPermission: jest.SpyInstance;
+        beforeEach(() => {
+          console.log('beforeEach');
+          mockEnsureAliasIsAvailable = jest
+            .spyOn(aliasService, 'ensureAliasIsAvailable')
+            .mockImplementation(async () => {});
+          mockGenerateRandomAlias = jest
+            .spyOn(aliasService, 'generateRandomAlias')
+            .mockImplementation(() => mockAliasRandom);
+          mockAddAlias = jest
+            .spyOn(aliasService, 'addAlias')
+            .mockImplementation(async () => {});
+          mockCreateRevision = jest
+            .spyOn(revisionService, 'createRevision')
+            .mockImplementation(async () => {});
+          mockGetGroupIdByName = jest.spyOn(groupsService, 'getGroupIdByName');
+          mockSetGroupPermission = jest
+            .spyOn(permissionService, 'setGroupPermission')
+            .mockImplementation(async () => {});
+          mockInsert(
+            tracker,
+            TableNote,
+            [FieldNameNote.ownerId, FieldNameNote.version],
+            [{ [FieldNameNote.id]: mockNoteId }],
+          );
+        });
+        afterEach(() => {
+          expect(mockCreateRevision).toHaveBeenCalledWith(
+            mockNoteId,
+            mockNoteContent,
+            true,
+            expect.anything(),
+          );
+          expect(result).toBe(mockNoteId);
+          expectBindings(tracker, 'insert', [[mockOwnerUserId, 2]]);
+        });
+
+        it(`with settings: ${descr}`, async () => {
+          noteMockConfig.permissions.default.everyone = everyoneLevel as
+            | PermissionLevel.DENY
+            | PermissionLevel.READ
+            | PermissionLevel.WRITE;
+          noteMockConfig.permissions.default.loggedIn = loggedInLevel as
+            | PermissionLevel.DENY
+            | PermissionLevel.READ
+            | PermissionLevel.WRITE;
+          let numberOfGroupIdByNameCalls = 0;
+          if (everyoneLevel !== PermissionLevel.DENY) {
+            mockGetGroupIdByName.mockImplementationOnce(
+              async () => everyoneGroupId,
+            );
+            numberOfGroupIdByNameCalls++;
+          }
+          if (loggedInLevel !== PermissionLevel.DENY) {
+            mockGetGroupIdByName.mockImplementationOnce(
+              async () => loggedInGroupId,
+            );
+            numberOfGroupIdByNameCalls++;
+          }
+          result = await service.createNote(
+            mockNoteContent,
+            mockOwnerUserId,
+            inputAlias,
+          );
+          if (inputAlias === undefined) {
+            expect(mockEnsureAliasIsAvailable).not.toHaveBeenCalled();
+            expect(mockGenerateRandomAlias).toHaveBeenCalled();
+          } else {
+            expect(mockEnsureAliasIsAvailable).toHaveBeenCalledWith(
+              outputAlias,
+              expect.anything(),
+            );
+            expect(mockGenerateRandomAlias).not.toHaveBeenCalled();
+          }
+          expect(mockAddAlias).toHaveBeenCalledWith(
+            mockNoteId,
+            outputAlias,
+            expect.anything(),
+          );
+          expect(mockGetGroupIdByName).toHaveBeenCalledTimes(
+            numberOfGroupIdByNameCalls,
+          );
+          if (everyoneLevel !== PermissionLevel.DENY) {
+            expect(mockSetGroupPermission).toHaveBeenCalledWith(
+              mockNoteId,
+              everyoneGroupId,
+              everyoneLevel === PermissionLevel.WRITE,
+              expect.anything(),
+            );
+          }
+          if (loggedInLevel !== PermissionLevel.DENY) {
+            expect(mockSetGroupPermission).toHaveBeenCalledWith(
+              mockNoteId,
+              loggedInGroupId,
+              loggedInLevel === PermissionLevel.WRITE,
+              expect.anything(),
+            );
+          }
+        });
+      },
+    );
   });
+  /* eslint-enable jest/no-conditional-expect */
 
   describe('getNoteContent', () => {
-    it('works', async () => {
-      const content = 'testContent';
-      const revision = Mock.of<Revision>({ content: content });
-      const newNote = Mock.of<Note>();
-      mockRevisionService(newNote, revision);
-      const result = await service.getNoteContent(newNote);
-      expect(result).toEqual(content);
+    let realtimeNoteStoreSpy: jest.SpyInstance;
+    let revsisionServiceSpy: jest.SpyInstance;
+
+    beforeEach(() => {
+      realtimeNoteStoreSpy = jest.spyOn(realtimeNoteStore, 'find');
+      revsisionServiceSpy = jest.spyOn(revisionService, 'getLatestRevision');
+    });
+    it('returns content from RealtimeNoteStore if note is active', async () => {
+      realtimeNoteStoreSpy.mockReturnValue({
+        getRealtimeDoc: () => ({
+          getCurrentContent: () => mockNoteContent,
+        }),
+      });
+      const result = await service.getNoteContent(mockNoteId);
+      expect(result).toEqual(mockNoteContent);
+    });
+
+    it('returns latest revision otherwise', async () => {
+      realtimeNoteStoreSpy.mockReturnValue(undefined);
+      revsisionServiceSpy.mockReturnValue({
+        content: mockNoteContent,
+      });
+      const result = await service.getNoteContent(mockNoteId);
+      expect(result).toEqual(mockNoteContent);
     });
   });
 
-  describe('getNoteByIdOrAlias', () => {
-    it('works', async () => {
-      const user = User.create('hardcoded', 'Testy') as User;
-      const note = Note.create(user) as Note;
-      mockSelectQueryBuilderInRepo(noteRepo, note);
-      const foundNote = await service.getNoteIdByAlias('noteThatExists');
-      expect(foundNote).toEqual(note);
+  describe('getNoteIdByAlias', () => {
+    let aliasServiceSpy: jest.SpyInstance;
+    // eslint-disable-next-line func-style
+    const buildMockSelect = (returnValues: unknown) => {
+      mockSelect(
+        tracker,
+        [`${TableNote}"."${FieldNameNote.id}`],
+        TableAlias,
+        FieldNameAlias.alias,
+        returnValues,
+        [
+          {
+            joinTable: TableNote,
+            keyLeft: FieldNameNote.id,
+            keyRight: FieldNameAlias.noteId,
+          },
+        ],
+      );
+    };
+
+    beforeEach(() => {
+      aliasServiceSpy = jest.spyOn(aliasService, 'isAliasForbidden');
     });
-    describe('fails:', () => {
-      it('no note found', async () => {
-        mockSelectQueryBuilderInRepo(noteRepo, null);
-        await expect(
-          service.getNoteIdByAlias('noteThatDoesNoteExist'),
-        ).rejects.toThrow(NotInDBError);
-      });
-      it('id is forbidden', async () => {
-        await expect(service.getNoteIdByAlias(forbiddenNoteId)).rejects.toThrow(
-          ForbiddenIdError,
-        );
-      });
+
+    it('throws a ForbiddenIdError if the alias is forbidden', async () => {
+      aliasServiceSpy.mockReturnValue(true);
+      await expect(service.getNoteIdByAlias(mockAliasRandom)).rejects.toThrow(
+        ForbiddenIdError,
+      );
+    });
+
+    it('throws a NotInDBError if the note is not found', async () => {
+      aliasServiceSpy.mockReturnValue(false);
+      buildMockSelect([]);
+      await expect(service.getNoteIdByAlias(mockAliasRandom)).rejects.toThrow(
+        NotInDBError,
+      );
+      expectBindings(tracker, 'select', [[mockAliasRandom]], true);
+    });
+
+    it('returns the note id on success', async () => {
+      aliasServiceSpy.mockReturnValue(false);
+      buildMockSelect([
+        {
+          [FieldNameNote.id]: mockNoteId,
+        },
+      ]);
+      const result = await service.getNoteIdByAlias(mockAliasRandom);
+      expect(result).toEqual(mockNoteId);
+      expectBindings(tracker, 'select', [[mockAliasRandom]], true);
     });
   });
 
   describe('deleteNote', () => {
-    it('works', async () => {
-      const user = User.create('hardcoded', 'Testy') as User;
-      const note = Note.create(user) as Note;
-      jest
-        .spyOn(noteRepo, 'remove')
-        .mockImplementationOnce(async (entry, _) => {
-          expect(entry).toEqual(note);
-          return entry;
-        });
-      const mockedEventEmitter = jest
-        .spyOn(eventEmitter, 'emit')
-        .mockImplementationOnce((event) => {
-          expect(event).toEqual(NoteEvent.DELETION);
-          return true;
-        });
-      expect(mockedEventEmitter).not.toHaveBeenCalled();
-      await service.deleteNote(note);
-      expect(mockedEventEmitter).toHaveBeenCalled();
+    let eventEmitterSpy: jest.SpyInstance;
+    beforeEach(() => {
+      eventEmitterSpy = jest.spyOn(eventEmitter, 'emit').mockReturnValue(true);
+    });
+    afterEach(() => {
+      expect(eventEmitterSpy).toHaveBeenCalledWith(
+        NoteEvent.DELETION,
+        mockNoteId,
+      );
+    });
+    it('throws NotInDBError if note not found', async () => {
+      mockDelete(tracker, TableNote, [FieldNameNote.id], 0);
+      await expect(service.deleteNote(mockNoteId)).rejects.toThrow(
+        NotInDBError,
+      );
+      expectBindings(tracker, 'delete', [[mockNoteId]]);
+    });
+
+    it('deletes a note by id', async () => {
+      mockDelete(tracker, TableNote, [FieldNameNote.id], 1);
+      await service.deleteNote(mockNoteId);
+      expectBindings(tracker, 'delete', [[mockNoteId]]);
     });
   });
 
   describe('updateNote', () => {
-    it('adds a new revision if content is different', async () => {
-      const [note, , , revision] = await getMockData();
-
-      const mockRevision = Mock.of<Revision>({});
-      const createRevisionSpy = jest
-        .spyOn(revisionsService, 'createRevision')
-        .mockReturnValue(Promise.resolve(mockRevision));
-
-      const newContent = 'newContent';
-      const updatedNote = await service.updateNote(note, newContent);
-      expect(await updatedNote.revisions).toStrictEqual([
-        revision,
-        mockRevision,
-      ]);
-      expect(createRevisionSpy).toHaveBeenCalledWith(note, newContent);
+    let eventEmitterSpy: jest.SpyInstance;
+    let revisionServiceSpy: jest.SpyInstance;
+    beforeEach(() => {
+      eventEmitterSpy = jest.spyOn(eventEmitter, 'emit').mockReturnValue(true);
+      revisionServiceSpy = jest
+        .spyOn(revisionService, 'createRevision')
+        .mockImplementation(async () => {});
     });
-
-    it("won't create a new revision if content is same", async () => {
-      const [note, , , revision] = await getMockData();
-      const createRevisionSpy = jest
-        .spyOn(revisionsService, 'createRevision')
-        .mockReturnValue(Promise.resolve(undefined));
-
-      const newContent = 'newContent';
-      const updatedNote = await service.updateNote(note, newContent);
-      expect(await updatedNote.revisions).toStrictEqual([revision]);
-      expect(createRevisionSpy).toHaveBeenCalledWith(note, newContent);
+    afterEach(() => {
+      expect(eventEmitterSpy).toHaveBeenCalledWith(
+        NoteEvent.CLOSE_REALTIME,
+        mockNoteId,
+      );
+    });
+    it('creates a new revision', async () => {
+      await service.updateNote(mockNoteId, mockNoteContent);
+      expect(revisionServiceSpy).toHaveBeenCalledWith(
+        mockNoteId,
+        mockNoteContent,
+      );
     });
   });
 
   describe('toNotePermissionsDto', () => {
-    it('works', async () => {
-      const [note] = await getMockData();
-      const permissions = await service.toNotePermissionsDto(note);
-      expect(permissions).toMatchSnapshot();
+    it('throws NotInDBError if a note does not exist', async () => {
+      mockSelect(
+        tracker,
+        [`${TableUser}"."${FieldNameUser.username}`],
+        TableNote,
+        `${TableNote}"."${FieldNameNote.id}`,
+        [],
+        [
+          {
+            joinTable: TableUser,
+            keyLeft: FieldNameUser.id,
+            keyRight: FieldNameNote.ownerId,
+          },
+        ],
+      );
+      await expect(service.toNotePermissionsDto(mockNoteId)).rejects.toThrow(
+        NotInDBError,
+      );
+    });
+
+    it('returns correct NotePermissionDto', async () => {
+      mockSelect(
+        tracker,
+        [`${TableUser}"."${FieldNameUser.username}`],
+        TableNote,
+        `${TableNote}"."${FieldNameNote.id}`,
+        [
+          {
+            [FieldNameUser.username]: mockUsername,
+          },
+        ],
+        [
+          {
+            joinTable: TableUser,
+            keyLeft: FieldNameUser.id,
+            keyRight: FieldNameNote.ownerId,
+          },
+        ],
+      );
+      mockSelect(
+        tracker,
+        [
+          `${TableUser}"."${FieldNameUser.username}`,
+          `${TableNoteUserPermission}"."${FieldNameNoteUserPermission.canEdit}`,
+        ],
+        TableNoteUserPermission,
+        [
+          `${TableUser}"."${FieldNameUser.username}`,
+          `${TableNoteUserPermission}"."${FieldNameNoteUserPermission.noteId}`,
+        ],
+        [
+          {
+            [FieldNameUser.username]: mockUsername,
+            [FieldNameNoteUserPermission.canEdit]: true,
+          },
+        ],
+        [
+          {
+            joinTable: TableUser,
+            keyLeft: FieldNameUser.id,
+            keyRight: FieldNameNoteUserPermission.userId,
+          },
+        ],
+      );
+      mockSelect(
+        tracker,
+        [
+          `${TableGroup}"."${FieldNameGroup.name}`,
+          `${TableNoteGroupPermission}"."${FieldNameNoteGroupPermission.canEdit}`,
+        ],
+        TableNoteGroupPermission,
+        `${TableNoteGroupPermission}"."${FieldNameNoteGroupPermission.noteId}`,
+        [
+          {
+            [FieldNameGroup.name]: mockGroupName,
+            [FieldNameNoteGroupPermission.canEdit]: false,
+          },
+        ],
+        [
+          {
+            joinTable: TableGroup,
+            keyLeft: FieldNameGroup.id,
+            keyRight: FieldNameNoteGroupPermission.groupId,
+          },
+        ],
+      );
+      const result = await service.toNotePermissionsDto(mockNoteId);
+      expectBindings(tracker, 'select', [
+        [mockNoteId, IS_FIRST],
+        [mockNoteId],
+        [mockNoteId],
+      ]);
+      expect(result).toEqual({
+        owner: mockUsername,
+        sharedToUsers: [
+          {
+            username: mockUsername,
+            canEdit: true,
+          },
+        ],
+        sharedToGroups: [
+          {
+            groupName: mockGroupName,
+            canEdit: false,
+          },
+        ],
+      });
     });
   });
-
   describe('toNoteMetadataDto', () => {
-    it('works', async () => {
-      const [note] = await getMockData();
-      note.aliases = Promise.resolve([
-        Alias.create('testAlias', note, true) as Alias,
-      ]);
+    let spyAliasService: jest.SpyInstance;
 
-      const metadataDto = await service.toNoteMetadataDto(note);
-      expect(metadataDto).toMatchSnapshot();
+    beforeEach(() => {
+      jest.useFakeTimers();
+      spyAliasService = jest.spyOn(aliasService, 'getAllAliases');
     });
 
-    it('returns publicId if no aliases exists', async () => {
-      const [note, ,] = await getMockData();
-      const metadataDto = await service.toNoteMetadataDto(note);
-      expect(metadataDto.primaryAlias).toEqual(note.publicId);
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    it('throws NotInDBError if the note does not have a primary alias', async () => {
+      spyAliasService.mockReturnValue([]);
+      await expect(service.toNoteMetadataDto(mockNoteId)).rejects.toThrow(
+        NotInDBError,
+      );
+    });
+    it('throws NotInDBError if the note does not exist', async () => {
+      spyAliasService.mockReturnValue([
+        {
+          [FieldNameAlias.alias]: mockAliasRandom,
+          [FieldNameAlias.isPrimary]: true,
+        },
+        {
+          [FieldNameAlias.alias]: mockAliasCustom,
+          [FieldNameAlias.isPrimary]: false,
+        },
+      ]);
+      mockSelect(
+        tracker,
+        [FieldNameNote.createdAt, FieldNameNote.version],
+        TableNote,
+        FieldNameNote.id,
+        [],
+      );
+      await expect(service.toNoteMetadataDto(mockNoteId)).rejects.toThrow(
+        NotInDBError,
+      );
+      expectBindings(tracker, 'select', [[mockNoteId]], true);
+    });
+    it('returns correct NoteMetadataDto', async () => {
+      spyAliasService.mockReturnValue([
+        {
+          [FieldNameAlias.alias]: mockAliasRandom,
+          [FieldNameAlias.isPrimary]: true,
+        },
+        {
+          [FieldNameAlias.alias]: mockAliasCustom,
+          [FieldNameAlias.isPrimary]: false,
+        },
+      ]);
+
+      jest.spyOn(revisionService, 'getLatestRevision').mockResolvedValue({
+        [FieldNameRevision.content]: mockNoteContent,
+        [FieldNameRevision.uuid]: mockRevisionUuid,
+        [FieldNameRevision.createdAt]: mockUpdatedAt,
+        [FieldNameRevision.noteId]: mockNoteId,
+        [FieldNameRevision.noteType]: mockNoteType,
+        [FieldNameRevision.patch]: mockPatch,
+        [FieldNameRevision.title]: mockNoteTitle,
+        [FieldNameRevision.description]: mockNoteDescription,
+        [FieldNameRevision.yjsStateVector]: null,
+      });
+      jest
+        .spyOn(revisionService, 'getTagsByRevisionUuid')
+        .mockResolvedValue(mockTags);
+      jest
+        .spyOn(service, 'toNotePermissionsDto')
+        .mockResolvedValue(mockPermissions);
+      jest.spyOn(revisionService, 'getRevisionUserInfo').mockResolvedValue({
+        users: [
+          {
+            username: mockUsername,
+            createdAt: mockUpdatedAt,
+          },
+        ],
+        guestUserCount: 0,
+      });
+
+      mockSelect(
+        tracker,
+        [FieldNameNote.createdAt, FieldNameNote.version],
+        TableNote,
+        FieldNameNote.id,
+        [
+          {
+            [FieldNameNote.version]: 2,
+            [FieldNameNote.createdAt]: mockCreatedAt,
+          },
+        ],
+      );
+      const result = await service.toNoteMetadataDto(mockNoteId);
+      expectBindings(tracker, 'select', [[mockNoteId]], true);
+      expect(result).toEqual({
+        aliases: [mockAliasRandom, mockAliasCustom],
+        primaryAlias: mockAliasRandom,
+        title: mockNoteTitle,
+        description: mockNoteDescription,
+        tags: mockTags,
+        createdAt: mockCreatedAt,
+        editedBy: [mockUsername],
+        permissions: mockPermissions,
+        version: 2,
+        updatedAt: mockUpdatedAt,
+        lastUpdatedBy: mockUsername,
+      });
     });
   });
-
   describe('toNoteDto', () => {
-    it('works', async () => {
-      const [note] = await getMockData();
-      note.aliases = Promise.resolve([
-        Alias.create('testAlias', note, true) as Alias,
-      ]);
-
-      const noteDto = await service.toNoteDto(note);
-      expect(noteDto).toMatchSnapshot();
+    it('correctly calls other methods', async () => {
+      const mockNoteMetadata: NoteMetadataDto = {
+        aliases: [mockAliasRandom, mockAliasCustom],
+        primaryAlias: mockAliasRandom,
+        title: mockNoteTitle,
+        description: mockNoteDescription,
+        tags: mockTags,
+        createdAt: mockCreatedAt,
+        editedBy: [mockUsername],
+        permissions: mockPermissions,
+        version: 2,
+        updatedAt: mockUpdatedAt,
+        lastUpdatedBy: mockUsername,
+      };
+      jest.spyOn(service, 'getNoteContent').mockResolvedValue(mockNoteContent);
+      jest
+        .spyOn(service, 'toNoteMetadataDto')
+        .mockResolvedValue(mockNoteMetadata);
+      const result = await service.toNoteDto(mockNoteId);
+      expect(result).toEqual({
+        content: mockNoteContent,
+        metadata: mockNoteMetadata,
+        editedByAtPosition: [],
+      });
     });
   });
 });
