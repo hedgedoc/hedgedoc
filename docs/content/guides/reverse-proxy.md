@@ -7,8 +7,8 @@ This documentation will cover HTTPS setup, with comments for HTTP setup.
 
 ## Cloudflare
 !!! warning
-    If you use Cloudflare as reverse proxy then you **MUST** disable the minify features for HTML, CSS and JS, or your HedgeDoc instance may be broken.
-    For more information please read the [Cloudflare documentation](https://support.cloudflare.com/hc/en-us/articles/200168196-How-do-I-minify-HTML-CSS-and-JavaScript-to-optimize-my-site-).
+    If you use Cloudflare as reverse proxy, then you **MUST** disable Rocket Loader, or your HedgeDoc instance may be broken.
+    For more information please read the [Cloudflare documentation](https://developers.cloudflare.com/speed/optimization/content/rocket-loader).
 
 ## HedgeDoc config
 
