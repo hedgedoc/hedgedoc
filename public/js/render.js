@@ -4,8 +4,10 @@ const filterXSS = require('xss')
 
 const whiteListAttr = ['id', 'class', 'style']
 window.whiteListAttr = whiteListAttr
-// allow link starts with '.', '/' and custom protocol with '://', exclude link starts with javascript://
-const linkRegex = /^(?!javascript:\/\/)([\w|-]+:\/\/)|^([.|/])+/i
+// allow links starting with '.', '/', '#', '?', 'http://', 'https://' and protocols supported by the navigator.registerProtocolHandler API
+// These schemes can be considered safe-enough for linking to since these are the ones that can be opened using a browser.
+// See: https://developer.mozilla.org/en-US/docs/Web/API/Navigator/registerProtocolHandler
+const linkRegex = /^(?:\?|#|\.|\/|https?:\/\/|(?:web\+[a-z]+|bitcoin|ftp|ftps|geo|im|irc|ircs|magnet|mailto|matrix|mms|news|nntp|openpgp4fpr|sftp|sip|sms|smsto|ssh|tel|urn|webcal|wtai|xmpp):)/i
 // allow data uri, from https://gist.github.com/bgrins/6194623
 const dataUriRegex = /^\s*data:([a-z]+\/[a-z0-9-+.]+(;[a-z-]+=[a-z0-9-]+)?)?(;base64)?,([a-z0-9!$&',()*+;=\-._~:@/?%\s]*)\s*$/i
 // custom white list

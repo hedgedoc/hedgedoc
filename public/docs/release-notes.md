@@ -10,6 +10,9 @@
 ### Bugfixes
 - Ignore the healthcheck endpoint in the "too busy" limiter
 
+### Enhancements
+- Allow links to protocols such as xmpp, webcal or geo
+
 ## <i class="fa fa-tag"></i> 1.10.3 <i class="fa fa-calendar-o"></i> 2025-04-09
 
 ### Security fixes
