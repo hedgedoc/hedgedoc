@@ -5,7 +5,7 @@ services:
   backend:
     image: ghcr.io/hedgedoc/hedgedoc/backend:develop
     volumes:
-      - $PWD/.env:/usr/src/app/backend/.env
+      - ./.env:/usr/src/app/backend/.env
       - hedgedoc_uploads:/usr/src/app/backend/uploads
 
   frontend:
@@ -16,8 +16,8 @@ services:
   db:
     image: postgres:15
     environment:
-      POSTGRES_USER: "${HD_DATABASE_USER}"
-      POSTGRES_PASSWORD: "${HD_DATABASE_PASS}"
+      POSTGRES_USER: "${HD_DATABASE_USERNAME}"
+      POSTGRES_PASSWORD: "${HD_DATABASE_PASSWORD}"
       POSTGRES_DB: "${HD_DATABASE_NAME}"
 
   proxy:
@@ -30,7 +30,7 @@ services:
       - "443:443"
       - "443:443/udp"
     volumes:
-      - $PWD/Caddyfile:/etc/caddy/Caddyfile
+      - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
 
 volumes:
