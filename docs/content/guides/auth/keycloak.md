@@ -4,7 +4,7 @@
 
 This guide assumes you have run and configured Keycloak.
 If you'd like to meet this prerequisite quickly, it can be achieved by running a `quay.io/keycloak/keycloak` container and attaching it to your network.
-iFor details and quick-start command, take a look at [the Keycloak Docker documentation](https://www.keycloak.org/getting-started/getting-started-docker).
+For details and quick-start command, take a look at [the Keycloak Docker documentation](https://www.keycloak.org/getting-started/getting-started-docker).
 Where HTTPS is specified throughout, use HTTP instead. You may also have to specify the exposed port, 8080.
 
 ## Steps
