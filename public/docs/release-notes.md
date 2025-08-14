@@ -2,6 +2,9 @@
 
 ## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
 
+### Bugfixes
+- Ignore the healthcheck endpoint in the "too busy" limiter
+
 ## <i class="fa fa-tag"></i> 1.10.3 <i class="fa fa-calendar-o"></i> 2025-04-09
 
 ### Security fixes
