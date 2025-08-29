@@ -2111,11 +2111,11 @@ function updatePermission (newPermission) {
       break
     case 'editable':
       label = '<i class="fa fa-shield"></i> Editable'
-      title = 'Signed people can edit'
+      title = 'Signed-in people can edit'
       break
     case 'limited':
       label = '<i class="fa fa-id-card"></i> Limited'
-      title = 'Signed people can edit (forbid guest)'
+      title = 'Signed-in people can edit (forbid guests)'
       break
     case 'locked':
       label = '<i class="fa fa-lock"></i> Locked'
@@ -2123,7 +2123,7 @@ function updatePermission (newPermission) {
       break
     case 'protected':
       label = '<i class="fa fa-umbrella"></i> Protected'
-      title = 'Only owner can edit (forbid guest)'
+      title = 'Only owner can edit (forbid guests)'
       break
     case 'private':
       label = '<i class="fa fa-hand-stop-o"></i> Private'
