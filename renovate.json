@@ -21,7 +21,7 @@
     "develop"
   ],
   "labels": [
-    "type: maintenance"
+    "dependencies"
   ],
   "ignorePaths": [
     "docker/docker-compose.yml"
