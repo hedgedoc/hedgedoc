@@ -1461,6 +1461,7 @@ __metadata:
     moment: "npm:2.30.1"
     morgan: "npm:1.10.0"
     mysql2: "npm:3.14.0"
+    nanoid: "npm:3.3.11"
     node-fetch: "npm:2.7.0"
     optimize-css-assets-webpack-plugin: "npm:6.0.1"
     passport: "patch:passport@npm%3A0.7.0#~/.yarn/patches/passport-npm-0.7.0-df02531736.patch"
@@ -1491,7 +1492,6 @@ __metadata:
     scrypt-kdf: "npm:2.0.1"
     select2: "npm:3.5.2-browserify"
     sequelize: "npm:5.22.5"
-    shortid: "npm:2.2.17"
     socket.io: "npm:2.5.1"
     socket.io-client: "npm:2.5.0"
     spin.js: "npm:4.1.2"
@@ -11233,7 +11233,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.3.8":
+"nanoid@npm:3.3.11, nanoid@npm:^3.3.8":
   version: 3.3.11
   resolution: "nanoid@npm:3.3.11"
   bin:
@@ -14960,15 +14960,6 @@ __metadata:
   version: 1.2.1
   resolution: "shimmer@npm:1.2.1"
   checksum: 10/aa0d6252ad1c682a4fdfda69e541be987f7a265ac7b00b1208e5e48cc68dc55f293955346ea4c71a169b7324b82c70f8400b3d3d2d60b2a7519f0a3522423250
-  languageName: node
-  linkType: hard
-
-"shortid@npm:2.2.17":
-  version: 2.2.17
-  resolution: "shortid@npm:2.2.17"
-  dependencies:
-    nanoid: "npm:^3.3.8"
-  checksum: 10/5c85635e31c08f8c6824b1802a0abb4cd26b39a5c84498dacc91b865f9a860979b010420423e5a4c0abf966aedf197a664a610e813745a6df1497f1376a72350
   languageName: node
   linkType: hard
 
