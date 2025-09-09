@@ -2568,7 +2568,7 @@ __metadata:
     "@types/jest": "npm:29.5.14"
     "@types/markdown-it": "npm:13.0.8"
     "@types/mysql": "npm:2.15.26"
-    "@types/node": "npm:20.16.11"
+    "@types/node": "npm:*"
     "@types/node-fetch": "npm:2.6.11"
     "@types/pg": "npm:8.11.10"
     "@types/source-map-support": "npm:0.5.10"
@@ -2710,7 +2710,7 @@ __metadata:
     "@types/markdown-it": "npm:13.0.8"
     "@types/markdown-it-container": "npm:2.0.9"
     "@types/markdown-it-plantuml": "npm:1.4.4"
-    "@types/node": "npm:20.16.11"
+    "@types/node": "npm:*"
     "@types/react": "npm:18.3.11"
     "@types/react-dom": "npm:18.3.1"
     "@types/ws": "npm:8.5.12"
@@ -5876,12 +5876,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.16.11":
-  version: 20.16.11
-  resolution: "@types/node@npm:20.16.11"
+"@types/node@npm:20.19.13":
+  version: 20.19.13
+  resolution: "@types/node@npm:20.19.13"
   dependencies:
-    undici-types: "npm:~6.19.2"
-  checksum: 10c0/bba43f447c3c80548513954dae174e18132e9149d572c09df4a282772960d33e229d05680fb5364997c03489c22fe377d1dbcd018a3d4ff1cfbcfcdaa594a9c3
+    undici-types: "npm:~6.21.0"
+  checksum: 10c0/25fba13d50c4f18ac56a50d4491502e7d095f09e44c17c0c6887aa5e4e6122e961e92fc3b682ed8c053ab87a05ce10f501345d23d96fdfba8002ecce6c8ced51
   languageName: node
   linkType: hard
 
@@ -19349,10 +19349,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.19.2":
-  version: 6.19.8
-  resolution: "undici-types@npm:6.19.8"
-  checksum: 10c0/078afa5990fba110f6824823ace86073b4638f1d5112ee26e790155f481f2a868cc3e0615505b6f4282bdf74a3d8caad715fd809e870c2bb0704e3ea6082f344
+"undici-types@npm:~6.21.0":
+  version: 6.21.0
+  resolution: "undici-types@npm:6.21.0"
+  checksum: 10c0/c01ed51829b10aa72fc3ce64b747f8e74ae9b60eafa19a7b46ef624403508a54c526ffab06a14a26b3120d055e1104d7abe7c9017e83ced038ea5cf52f8d5e04
   languageName: node
   linkType: hard
 

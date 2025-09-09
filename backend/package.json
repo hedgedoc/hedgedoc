@@ -87,7 +87,7 @@
     "@types/jest": "29.5.14",
     "@types/markdown-it": "13.0.8",
     "@types/mysql": "2.15.26",
-    "@types/node": "20.16.11",
+    "@types/node": "*",
     "@types/node-fetch": "2.6.11",
     "@types/pg": "8.11.10",
     "@types/source-map-support": "0.5.10",
