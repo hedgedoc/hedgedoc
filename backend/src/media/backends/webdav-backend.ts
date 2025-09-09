@@ -5,7 +5,6 @@
  */
 import { Inject, Injectable } from '@nestjs/common';
 import { FileTypeResult } from 'file-type';
-import fetch, { Response } from 'node-fetch';
 import { URL } from 'url';
 
 import mediaConfiguration, {
@@ -72,7 +71,7 @@ export class WebdavBackend implements MediaBackend {
       const remoteFileName = `${uuid}.${fileType.ext}`;
       await fetch(WebdavBackend.joinURL(this.baseUrl, '/', remoteFileName), {
         method: 'PUT',
-        body: buffer,
+        body: new Uint8Array(buffer),
         headers: {
           Authorization: this.authHeader, // eslint-disable-line @typescript-eslint/naming-convention
           'Content-Type': 'application/octet-stream', // eslint-disable-line @typescript-eslint/naming-convention
