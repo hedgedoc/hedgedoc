@@ -6,26 +6,26 @@
 # Therefore this commit suppresses this warning in test mode.
 
 diff --git a/dist/yjs.cjs b/dist/yjs.cjs
-index a296aa30408893dc8cc59a083f4dc716aded29d0..068e2b9dee30f9c59e6edb8285788be66b202978 100644
+index f25a7506d4b0529511b2660358c58c389c5a475b..7f85e6419f53fe8b81ee7c7bc152df1534d7399e 100644
 --- a/dist/yjs.cjs
 +++ b/dist/yjs.cjs
-@@ -9893,7 +9893,7 @@ const glo = /** @type {any} */ (typeof globalThis !== 'undefined'
-
+@@ -10307,7 +10307,7 @@ const glo = /** @type {any} */ (typeof globalThis !== 'undefined'
+ 
  const importIdentifier = '__ $YJS$ __';
-
+ 
 -if (glo[importIdentifier] === true) {
 +if (glo[importIdentifier] === true && process.env.NODE_ENV !== 'test') {
    /**
     * Dear reader of this message. Please take this seriously.
     *
 diff --git a/dist/yjs.mjs b/dist/yjs.mjs
-index 005cc66e8dcd8aef9b2adf7a0eadc5a61b86667e..cbf100dc0b91ff9f61b544cc5c7cbf1be1388a28 100644
+index 42b391674344195eacdea05dffe2a12daae59c73..7cc239e2ecc8c19c59948606fa10134ac28c2077 100644
 --- a/dist/yjs.mjs
 +++ b/dist/yjs.mjs
-@@ -9858,7 +9858,7 @@ const glo = /** @type {any} */ (typeof globalThis !== 'undefined'
-
+@@ -10270,7 +10270,7 @@ const glo = /** @type {any} */ (typeof globalThis !== 'undefined'
+ 
  const importIdentifier = '__ $YJS$ __';
-
+ 
 -if (glo[importIdentifier] === true) {
 +if (glo[importIdentifier] === true && process.env.NODE_ENV !== 'test') {
    /**
