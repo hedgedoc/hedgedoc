@@ -9,11 +9,9 @@
     "group:typescript-eslintMonorepo",
     "docker:enableMajor",
     "docker:pinDigests",
-    "default:automergeDigest",
     ":gitSignOff",
     ":prHourlyLimitNone",
     ":maintainLockFilesWeekly",
-    ":automergePatch",
     ":separateMajorReleases"
   ],
   "baseBranches": [
