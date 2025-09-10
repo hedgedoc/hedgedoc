@@ -38,7 +38,7 @@ In the `docker-compose.yml` add the following environment variables to `app.envi
       - CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR=name
       - CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR=email
       - CMD_OAUTH2_TOKEN_URL=https://keycloak.example.com/realms/your-realm/protocol/openid-connect/token
-      - CMD_OAUTH2_AUTHORIZATION_URL=https://keycloak.example.com/realms/your-realm/protocol/openid-connect/auth
+      - CMD_OAUTH2_AUTHORIZATION_URL=https://keycloak.example.com/realms/your-realm/protocol/openid-connect/
       - CMD_OAUTH2_CLIENT_ID=<your client ID>
       - CMD_OAUTH2_CLIENT_SECRET=<your client secret, which you can find under the Credentials tab for your client>
       - CMD_OAUTH2_PROVIDERNAME=Keycloak
