@@ -13,7 +13,8 @@
     "^.+\\.(t|j)s$": [
       "ts-jest",
       {
-        "tsconfig": "test/tsconfig.json"
+        "tsconfig": "test/tsconfig.json",
+        "transpilation": true
       }
     ]
   },
