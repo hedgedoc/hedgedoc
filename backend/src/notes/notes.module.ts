@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { GroupsModule } from '../groups/groups.module';
+import { HistoryEntry } from '../history/history-entry.entity';
 import { LoggerModule } from '../logger/logger.module';
 import { NoteGroupPermission } from '../permissions/note-group-permission.entity';
 import { NoteUserPermission } from '../permissions/note-user-permission.entity';
@@ -30,6 +31,7 @@ import { Tag } from './tag.entity';
       NoteUserPermission,
       User,
       Alias,
+      HistoryEntry,
     ]),
     RevisionsModule,
     UsersModule,

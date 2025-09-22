@@ -8,6 +8,10 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ## [Unreleased]
 
+### Bugfixes
+
+- Fixed API-created notes not appearing in frontend due to missing history entries
+
 ### Removals
 
 - Dropbox Login
