@@ -200,7 +200,7 @@ SPDX-FileCopyrightText = "2024 The HedgeDoc developers (see AUTHORS file)"
 SPDX-License-Identifier = "AGPL-3.0-only"
 
 [[annotations]]
-path = "backend/src/migrations/*"
+path = "backend/src/database/**.md"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2024 The HedgeDoc developers (see AUTHORS file)"
-SPDX-License-Identifier = "AGPL-3.0-only"
+SPDX-License-Identifier = "CC-BY-SA-4.0"
