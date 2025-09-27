@@ -9,10 +9,11 @@ import { KnexModule } from 'nest-knexjs';
 import { ApiTokenGuard } from '../api/utils/guards/api-token.guard';
 import { MockApiTokenGuard } from '../api/utils/guards/mock-api-token.guard';
 import { LoggerModule } from '../logger/logger.module';
+import { UsersModule } from '../users/users.module';
 import { ApiTokenService } from './api-token.service';
 
 @Module({
-  imports: [LoggerModule, KnexModule],
+  imports: [LoggerModule, KnexModule, UsersModule],
   providers: [ApiTokenService, ApiTokenGuard, MockApiTokenGuard],
   exports: [ApiTokenService, ApiTokenGuard],
 })

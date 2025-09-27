@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { NotePermissionsUpdateDto } from '@hedgedoc/commons';
+import { FieldNameRevision, SpecialGroup } from '@hedgedoc/database';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import request from 'supertest';
@@ -14,23 +15,31 @@ import { TestSetup, TestSetupBuilder } from '../test-setup';
 describe('Notes', () => {
   let testSetup: TestSetup;
 
+  let userId1: number;
+  let userId2: number;
+  let groupId1: number;
+  const groupName1 = 'groupname1';
+  const groupName2 = 'groupname2';
   let content: string;
   let forbiddenNoteId: string;
   let uploadPath: string;
   let testImage: Buffer;
+  let agent: request.SuperAgentTest;
 
   beforeAll(async () => {
     testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
-
     forbiddenNoteId =
       testSetup.configService.get('noteConfig').forbiddenNoteIds[0];
     uploadPath =
       testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
-
     await testSetup.app.init();
-
     content = 'This is a test note.';
     testImage = await fs.readFile('test/public-api/fixtures/test.png');
+    agent = request.agent(testSetup.app.getHttpServer());
+    await agent
+      .post('/api/v2/auth/local/login')
+      .send({ username: 'user1', password: 'password1' })
+      .expect(201);
   });
 
   afterAll(async () => {
@@ -39,9 +48,8 @@ describe('Notes', () => {
   });
 
   it('POST /notes', async () => {
-    const response = await request(testSetup.app.getHttpServer())
+    const response = await agent
       .post('/api/v2/notes')
-      .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
       .set('Content-Type', 'text/markdown')
       .send(content)
       .expect('Content-Type', /json/)
@@ -137,9 +145,9 @@ describe('Notes', () => {
         .expect(413);
     });
 
-    it('cannot create an alias equal to a note publicId', async () => {
+    it('cannot create an alias equal to an existing note alias', async () => {
       await request(testSetup.app.getHttpServer())
-        .post(`/api/v2/notes/${testSetup.anonymousNotes[0].publicId}`)
+        .post(`/api/v2/notes/${testSetup.anonymousNoteIds[0]}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .set('Content-Type', 'text/markdown')
         .send(content)
@@ -154,13 +162,13 @@ describe('Notes', () => {
         const noteId = 'deleteTest1';
         const note = await testSetup.notesService.createNote(
           content,
-          testSetup.users[0],
+          testSetup.userIds[0],
           noteId,
         );
         await testSetup.mediaService.saveFile(
           'test.png',
           testImage,
-          testSetup.users[0],
+          testSetup.userIds[0],
           note,
         );
         await request(testSetup.app.getHttpServer())
@@ -178,7 +186,7 @@ describe('Notes', () => {
         );
         expect(
           await testSetup.mediaService.getMediaUploadUuidsByUserId(
-            testSetup.users[0],
+            testSetup.userIds[0],
           ),
         ).toHaveLength(0);
       });
@@ -186,13 +194,13 @@ describe('Notes', () => {
         const noteId = 'deleteTest2';
         const note = await testSetup.notesService.createNote(
           content,
-          testSetup.users[0],
+          testSetup.userIds[0],
           noteId,
         );
         const upload = await testSetup.mediaService.saveFile(
           'test.png',
           testImage,
-          testSetup.users[0],
+          testSetup.userIds[0],
           note,
         );
         await request(testSetup.app.getHttpServer())
@@ -210,43 +218,40 @@ describe('Notes', () => {
         );
         expect(
           await testSetup.mediaService.getMediaUploadUuidsByUserId(
-            testSetup.users[0],
+            testSetup.userIds[0],
           ),
         ).toHaveLength(1);
         // delete the file afterwards
-        await fs.unlink(join(uploadPath, upload.uuid + '.png'));
+        await fs.unlink(join(uploadPath, upload + '.png'));
       });
     });
     it('works with an existing alias with permissions', async () => {
       const note = await testSetup.notesService.createNote(
         content,
-        testSetup.users[0],
+        testSetup.userIds[0],
         'deleteTest3',
       );
+      const username1 = (
+        await testSetup.usersService.getUserById(testSetup.userIds[0])
+      ).username;
       const updateNotePermission: NotePermissionsUpdateDto = {
         sharedToUsers: [
           {
-            username: testSetup.users[0].username,
+            username: username1,
             canEdit: true,
           },
         ],
         sharedToGroups: [],
       };
-      await testSetup.permissionsService.replaceNotePermissions(
-        note,
-        updateNotePermission,
-      );
-      const updatedNote = await testSetup.notesService.getNoteIdByAlias(
-        (await note.aliases).filter((alias) => alias.primary)[0].name,
-      );
-      expect(await updatedNote.userPermissions).toHaveLength(1);
-      expect((await updatedNote.userPermissions)[0].canEdit).toEqual(
+      const updatedNote = await testSetup.notesService.toNoteMetadataDto(note);
+      expect(updatedNote.permissions.sharedToUsers).toHaveLength(1);
+      expect(updatedNote.permissions.sharedToUsers[0].canEdit).toEqual(
         updateNotePermission.sharedToUsers[0].canEdit,
       );
-      expect(
-        (await (await updatedNote.userPermissions)[0].user).username,
-      ).toEqual(testSetup.users[0].username);
-      expect(await updatedNote.groupPermissions).toHaveLength(0);
+      expect(updatedNote.permissions.sharedToUsers[0].username).toEqual(
+        username1,
+      );
+      expect(updatedNote.permissions.sharedToGroups).toHaveLength(0);
       await request(testSetup.app.getHttpServer())
         .delete('/api/v2/notes/deleteTest3')
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
@@ -277,7 +282,7 @@ describe('Notes', () => {
     it('works with existing alias', async () => {
       await testSetup.notesService.createNote(
         content,
-        testSetup.users[0],
+        testSetup.userIds[0],
         'test4',
       );
       const response = await request(testSetup.app.getHttpServer())
@@ -315,7 +320,7 @@ describe('Notes', () => {
     it('returns complete metadata object', async () => {
       await testSetup.notesService.createNote(
         content,
-        testSetup.users[0],
+        testSetup.userIds[0],
         'test5',
       );
       const metadata = await request(testSetup.app.getHttpServer())
@@ -356,25 +361,27 @@ describe('Notes', () => {
 
     it('has the correct update/create dates', async () => {
       // create a note
-      const note = await testSetup.notesService.createNote(
+      const noteId = await testSetup.notesService.createNote(
         content,
-        testSetup.users[0],
+        testSetup.userIds[0],
         'test5a',
       );
       // save the creation time
+      const note = await testSetup.notesService.toNoteMetadataDto(noteId);
       const createDate = note.createdAt;
-      const revisions = await note.revisions;
+      const revisions =
+        await testSetup.revisionsService.getAllRevisionMetadataDto(noteId);
       const updatedDate = revisions[revisions.length - 1].createdAt;
       // wait one second
       await new Promise((r) => setTimeout(r, 1000));
       // update the note
-      await testSetup.notesService.updateNote(note, 'More test content');
+      await testSetup.notesService.updateNote(noteId, 'More test content');
       const metadata = await request(testSetup.app.getHttpServer())
         .get('/api/v2/notes/test5a/metadata')
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect(200);
-      expect(metadata.body.createdAt).toEqual(createDate.toISOString());
-      expect(metadata.body.updatedAt).not.toEqual(updatedDate.toISOString());
+      expect(metadata.body.createdAt).toEqual(createDate);
+      expect(metadata.body.updatedAt).not.toEqual(updatedDate);
     });
   });
 
@@ -382,7 +389,7 @@ describe('Notes', () => {
     it('works with existing alias', async () => {
       await testSetup.notesService.createNote(
         content,
-        testSetup.users[0],
+        testSetup.userIds[0],
         'test6',
       );
       const response = await request(testSetup.app.getHttpServer())
@@ -414,12 +421,14 @@ describe('Notes', () => {
     it('works with an existing alias', async () => {
       const note = await testSetup.notesService.createNote(
         content,
-        testSetup.users[0],
+        testSetup.userIds[0],
         'test7',
       );
       const revision = await testSetup.revisionsService.getLatestRevision(note);
       const response = await request(testSetup.app.getHttpServer())
-        .get(`/api/v2/notes/test7/revisions/${revision.id}`)
+        .get(
+          `/api/v2/notes/test7/revisions/${revision[FieldNameRevision.uuid]}`,
+        )
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
         .expect(200);
@@ -445,7 +454,7 @@ describe('Notes', () => {
     it('works with an existing alias', async () => {
       await testSetup.notesService.createNote(
         content,
-        testSetup.users[0],
+        testSetup.userIds[0],
         'test8',
       );
       const response = await request(testSetup.app.getHttpServer())
@@ -475,12 +484,12 @@ describe('Notes', () => {
       const extraAlias = 'test10';
       const note1 = await testSetup.notesService.createNote(
         content,
-        testSetup.users[0],
+        testSetup.userIds[0],
         alias,
       );
       const note2 = await testSetup.notesService.createNote(
         content,
-        testSetup.users[0],
+        testSetup.userIds[0],
         extraAlias,
       );
       const httpServer = testSetup.app.getHttpServer();
@@ -495,13 +504,13 @@ describe('Notes', () => {
       const upload0 = await testSetup.mediaService.saveFile(
         'test.png',
         testImage,
-        testSetup.users[0],
+        testSetup.userIds[0],
         note1,
       );
       const upload1 = await testSetup.mediaService.saveFile(
         'test.png',
         testImage,
-        testSetup.users[0],
+        testSetup.userIds[0],
         note2,
       );
 
@@ -511,11 +520,11 @@ describe('Notes', () => {
         .expect('Content-Type', /json/)
         .expect(200);
       expect(responseAfter.body).toHaveLength(1);
-      expect(responseAfter.body[0].uuid).toEqual(upload0.uuid);
-      expect(responseAfter.body[0].uuid).not.toEqual(upload1.uuid);
+      expect(responseAfter.body[0]).toEqual(upload0);
+      expect(responseAfter.body[0]).not.toEqual(upload1);
       for (const upload of [upload0, upload1]) {
         // delete the file afterwards
-        await fs.unlink(join(uploadPath, upload.uuid + '.png'));
+        await fs.unlink(join(uploadPath, upload + '.png'));
       }
       await fs.rm(uploadPath, { recursive: true });
     });
@@ -530,15 +539,19 @@ describe('Notes', () => {
       const alias = 'test11';
       await testSetup.notesService.createNote(
         'This is a test note.',
-        testSetup.users[1],
+        testSetup.userIds[1],
         alias,
       );
       // Redact default read permissions
       const note = await testSetup.notesService.getNoteIdByAlias(alias);
-      const everyone = await testSetup.groupService.getEveryoneGroup();
-      const loggedin = await testSetup.groupService.getLoggedInGroup();
+      const everyone = await testSetup.groupService.getGroupIdByName(
+        SpecialGroup.EVERYONE,
+      );
+      const loggedIn = await testSetup.groupService.getGroupIdByName(
+        SpecialGroup.LOGGED_IN,
+      );
       await testSetup.permissionsService.removeGroupPermission(note, everyone);
-      await testSetup.permissionsService.removeGroupPermission(note, loggedin);
+      await testSetup.permissionsService.removeGroupPermission(note, loggedIn);
       await request(testSetup.app.getHttpServer())
         .get(`/api/v2/notes/${alias}/media/`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)

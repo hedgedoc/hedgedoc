@@ -6,9 +6,6 @@
 import { AliasCreateDto, AliasUpdateDto } from '@hedgedoc/commons';
 import request from 'supertest';
 
-import { AliasCreateDto } from '../../src/alias/alias-create.dto';
-import { AliasUpdateDto } from '../../src/alias/alias-update.dto';
-import { User } from '../../src/database/user.entity';
 import {
   password1,
   password2,
@@ -21,7 +18,7 @@ import {
 describe('Alias', () => {
   let testSetup: TestSetup;
 
-  let users: User[];
+  let userIds: number[];
   const content = 'This is a test note.';
   let forbiddenNoteId: string;
 
@@ -34,7 +31,7 @@ describe('Alias', () => {
 
     forbiddenNoteId =
       testSetup.configService.get('noteConfig').forbiddenNoteIds[0];
-    users = testSetup.users;
+    userIds = testSetup.userIds;
 
     agent1 = request.agent(testSetup.app.getHttpServer());
     await agent1
@@ -56,17 +53,16 @@ describe('Alias', () => {
   describe('POST /alias', () => {
     const testAlias = 'aliasTest';
     const newAliasDto: AliasCreateDto = {
-      alias: testAlias,
+      noteAlias: testAlias,
       newAlias: '',
     };
-    let publicId = '';
+    let noteId: number = NaN;
     beforeAll(async () => {
-      const note = await testSetup.notesService.createNote(
+      noteId = await testSetup.notesService.createNote(
         content,
-        users[0],
+        userIds[0],
         testAlias,
       );
-      publicId = note.publicId;
     });
 
     it('create with normal alias', async () => {
@@ -78,18 +74,18 @@ describe('Alias', () => {
         .send(newAliasDto)
         .expect(201);
       expect(metadata.body.name).toEqual(newAlias);
-      expect(metadata.body.primaryAlias).toBeFalsy();
-      expect(metadata.body.noteId).toEqual(publicId);
+      expect(metadata.body.primaryAlias).toBe(false);
+      expect(metadata.body.noteId).toEqual(noteId);
       const note = await agent1
         .get(`/api/private/notes/${newAlias}`)
         .expect(200);
       expect(note.body.metadata.aliases).toContainEqual({
         name: 'normalAlias',
         primaryAlias: false,
-        noteId: publicId,
+        noteId: noteId,
       });
       expect(note.body.metadata.primaryAlias).toEqual(testAlias);
-      expect(note.body.metadata.id).toEqual(publicId);
+      expect(note.body.metadata.id).toEqual(noteId);
     });
 
     describe('does not create an alias', () => {
@@ -106,8 +102,9 @@ describe('Alias', () => {
             );
           });
       });
-      it('because of a alias that is a public id', async () => {
-        newAliasDto.newAlias = publicId;
+      it('because of an already existing alias', async () => {
+        await testSetup.aliasService.addAlias(noteId, 'existingAlias');
+        newAliasDto.newAlias = 'existingAlias';
         await agent1
           .post(`/api/private/alias`)
           .set('Content-Type', 'application/json')
@@ -115,7 +112,7 @@ describe('Alias', () => {
           .expect(409);
       });
       it('because the user is not an owner', async () => {
-        newAliasDto.newAlias = publicId;
+        newAliasDto.newAlias = 'normalAlias';
         await agent2
           .post(`/api/private/alias`)
           .set('Content-Type', 'application/json')
@@ -131,15 +128,14 @@ describe('Alias', () => {
     const changeAliasDto: AliasUpdateDto = {
       primaryAlias: true,
     };
-    let publicId = '';
+    let noteId: number = NaN;
     beforeAll(async () => {
-      const note = await testSetup.notesService.createNote(
+      noteId = await testSetup.notesService.createNote(
         content,
-        users[0],
+        userIds[0],
         testAlias,
       );
-      publicId = note.publicId;
-      await testSetup.aliasService.addAlias(note, newAlias);
+      await testSetup.aliasService.addAlias(noteId, newAlias);
     });
 
     it('updates a note with a normal alias', async () => {
@@ -150,17 +146,17 @@ describe('Alias', () => {
         .expect(200);
       expect(metadata.body.name).toEqual(newAlias);
       expect(metadata.body.primaryAlias).toBeTruthy();
-      expect(metadata.body.noteId).toEqual(publicId);
+      expect(metadata.body.noteId).toEqual(noteId);
       const note = await agent1
         .get(`/api/private/notes/${newAlias}`)
         .expect(200);
       expect(note.body.metadata.aliases).toContainEqual({
         name: newAlias,
         primaryAlias: true,
-        noteId: publicId,
+        noteId: noteId,
       });
       expect(note.body.metadata.primaryAlias).toEqual(newAlias);
-      expect(note.body.metadata.id).toEqual(publicId);
+      expect(note.body.metadata.id).toEqual(noteId);
     });
 
     describe('does not update', () => {
@@ -206,24 +202,24 @@ describe('Alias', () => {
   describe('DELETE /alias/{alias}', () => {
     const testAlias = 'aliasTest3';
     const newAlias = 'normalAlias3';
-    let note: Note;
+    let noteId: number = NaN;
 
     beforeEach(async () => {
-      note = await testSetup.notesService.createNote(
+      noteId = await testSetup.notesService.createNote(
         content,
-        users[0],
+        userIds[0],
         testAlias,
       );
-      await testSetup.aliasService.addAlias(note, newAlias);
+      await testSetup.aliasService.addAlias(noteId, newAlias);
     });
 
     afterEach(async () => {
       try {
-        await testSetup.aliasService.removeAlias(note, newAlias);
+        await testSetup.aliasService.removeAlias(newAlias);
         // Ignore errors on removing alias
         // eslint-disable-next-line no-empty
       } catch {}
-      await testSetup.notesService.deleteNote(note);
+      await testSetup.notesService.deleteNote(noteId);
     });
 
     it('deletes a normal alias', async () => {
