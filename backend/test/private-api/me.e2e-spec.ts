@@ -4,12 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { AuthProviderType, LoginUserInfoDto } from '@hedgedoc/commons';
+import { FieldNameUser, User } from '@hedgedoc/database';
 import { promises as fs } from 'fs';
 import request from 'supertest';
 
-import { User } from '../../src/database/user.entity';
 import { NotInDBError } from '../../src/errors/errors';
-import { Note } from '../../src/notes/note.entity';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Me', () => {
@@ -17,10 +16,11 @@ describe('Me', () => {
 
   let uploadPath: string;
   let user: User;
+  let userId: number;
   let content: string;
-  let note1: Note;
+  let noteId1: number;
   let alias2: string;
-  let note2: Note;
+  let noteId2: number;
   let agent: request.SuperAgentTest;
 
   beforeAll(async () => {
@@ -32,18 +32,17 @@ describe('Me', () => {
     const password = 'AHardcodedStrongP@ssword123';
     await testSetup.app.init();
 
-    user = await testSetup.userService.createUser(
+    userId = await testSetup.localIdentityService.createUserWithLocalIdentity(
       username,
+      password,
       'Testy',
-      null,
-      null,
     );
-    await testSetup.localIdentityService.createLocalIdentity(user, password);
+    user = await testSetup.usersService.getUserById(userId);
 
     content = 'This is a test note.';
     alias2 = 'note2';
-    note1 = await testSetup.notesService.createNote(content, user);
-    note2 = await testSetup.notesService.createNote(content, user, alias2);
+    noteId1 = await testSetup.notesService.createNote(content, userId);
+    noteId2 = await testSetup.notesService.createNote(content, userId, alias2);
     agent = request.agent(testSetup.app.getHttpServer());
     await agent
       .post('/api/private/auth/local/login')
@@ -56,7 +55,7 @@ describe('Me', () => {
   });
 
   it('GET /me', async () => {
-    const userInfo = testSetup.userService.toLoginUserInfoDto(
+    const userInfo = testSetup.usersService.toLoginUserInfoDto(
       user,
       AuthProviderType.LOCAL,
     );
@@ -76,46 +75,38 @@ describe('Me', () => {
     expect(responseBefore.body).toHaveLength(0);
 
     const testImage = await fs.readFile('test/public-api/fixtures/test.png');
-    const imageIds = [];
-    imageIds.push(
-      (
-        await testSetup.mediaService.saveFile(
-          'test.png',
-          testImage,
-          user,
-          note1,
-        )
-      ).uuid,
+    const imageUuids = [];
+    imageUuids.push(
+      await testSetup.mediaService.saveFile(
+        'test.png',
+        testImage,
+        userId,
+        noteId1,
+      ),
     );
-    imageIds.push(
-      (
-        await testSetup.mediaService.saveFile(
-          'test.png',
-          testImage,
-          user,
-          note1,
-        )
-      ).uuid,
+    imageUuids.push(
+      await testSetup.mediaService.saveFile(
+        'test.png',
+        testImage,
+        userId,
+        noteId1,
+      ),
     );
-    imageIds.push(
-      (
-        await testSetup.mediaService.saveFile(
-          'test.png',
-          testImage,
-          user,
-          note2,
-        )
-      ).uuid,
+    imageUuids.push(
+      await testSetup.mediaService.saveFile(
+        'test.png',
+        testImage,
+        userId,
+        noteId2,
+      ),
     );
-    imageIds.push(
-      (
-        await testSetup.mediaService.saveFile(
-          'test.png',
-          testImage,
-          user,
-          note2,
-        )
-      ).uuid,
+    imageUuids.push(
+      await testSetup.mediaService.saveFile(
+        'test.png',
+        testImage,
+        userId,
+        noteId2,
+      ),
     );
 
     const response = await agent
@@ -123,12 +114,12 @@ describe('Me', () => {
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body).toHaveLength(4);
-    expect(imageIds).toContain(response.body[0].uuid);
-    expect(imageIds).toContain(response.body[1].uuid);
-    expect(imageIds).toContain(response.body[2].uuid);
-    expect(imageIds).toContain(response.body[3].uuid);
+    expect(imageUuids).toContain(response.body[0].uuid);
+    expect(imageUuids).toContain(response.body[1].uuid);
+    expect(imageUuids).toContain(response.body[2].uuid);
+    expect(imageUuids).toContain(response.body[3].uuid);
     const mediaUploads =
-      await testSetup.mediaService.getMediaUploadUuidsByUserId(user);
+      await testSetup.mediaService.getMediaUploadUuidsByUserId(userId);
     for (const upload of mediaUploads) {
       await testSetup.mediaService.deleteFile(upload);
     }
@@ -137,7 +128,7 @@ describe('Me', () => {
 
   it('PUT /me/profile', async () => {
     const newDisplayName = 'Another name';
-    expect(user.displayName).not.toEqual(newDisplayName);
+    expect(user[FieldNameUser.displayName]).not.toEqual(newDisplayName);
     await agent
       .put('/api/private/me/profile')
       .send({
@@ -145,31 +136,30 @@ describe('Me', () => {
       })
       .expect(200);
     const dbUser =
-      await testSetup.userService.getUserDtoByUsername('hardcoded');
+      await testSetup.usersService.getUserDtoByUsername('hardcoded');
     expect(dbUser.displayName).toEqual(newDisplayName);
   });
 
   it('DELETE /me', async () => {
     const testImage = await fs.readFile('test/public-api/fixtures/test.png');
-    const upload = await testSetup.mediaService.saveFile(
+    const userId =
+      await testSetup.usersService.getUserIdByUsername('hardcoded');
+    const uploadUuid = await testSetup.mediaService.saveFile(
       'test.png',
       testImage,
-      user,
-      note1,
+      userId,
+      noteId1,
     );
-    const dbUser =
-      await testSetup.userService.getUserDtoByUsername('hardcoded');
-    expect(dbUser).toBeInstanceOf(User);
     const mediaUploads =
-      await testSetup.mediaService.getMediaUploadUuidsByUserId(dbUser);
+      await testSetup.mediaService.getMediaUploadUuidsByUserId(userId);
     expect(mediaUploads).toHaveLength(1);
-    expect(mediaUploads[0].uuid).toEqual(upload.uuid);
+    expect(mediaUploads[0]).toEqual(uploadUuid);
     await agent.delete('/api/private/me').expect(204);
     await expect(
-      testSetup.userService.getUserDtoByUsername('hardcoded'),
+      testSetup.usersService.getUserDtoByUsername('hardcoded'),
     ).rejects.toThrow(NotInDBError);
     const mediaUploadsAfter =
-      await testSetup.mediaService.getMediaUploadUuidsByNoteId(note1);
+      await testSetup.mediaService.getMediaUploadUuidsByNoteId(noteId1);
     expect(mediaUploadsAfter).toHaveLength(0);
   });
 });

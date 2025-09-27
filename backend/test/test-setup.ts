@@ -9,8 +9,9 @@ import { RouterModule, Routes } from '@nestjs/core';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { Connection, createConnection } from 'typeorm';
+import knex, { Knex } from 'knex';
+import { KnexModule } from 'nest-knexjs';
+import { v4 as uuidv4 } from 'uuid';
 
 import { AliasModule } from '../src/alias/alias.module';
 import { AliasService } from '../src/alias/alias.service';
@@ -26,7 +27,6 @@ import { IdentityService } from '../src/auth/identity.service';
 import { LdapService } from '../src/auth/ldap/ldap.service';
 import { LocalService } from '../src/auth/local/local.service';
 import { OidcService } from '../src/auth/oidc/oidc.service';
-import { AuthorsModule } from '../src/authors/authors.module';
 import { AppConfig } from '../src/config/app.config';
 import { AuthConfig } from '../src/config/auth.config';
 import { CustomizationConfig } from '../src/config/customization.config';
@@ -62,20 +62,16 @@ import {
   registerNoteConfig,
 } from '../src/config/mock/note.config.mock';
 import { NoteConfig } from '../src/config/note.config';
-import { User } from '../src/database/user.entity';
 import { ErrorExceptionMapping } from '../src/errors/error-mapping';
 import { eventModuleConfig } from '../src/events';
 import { FrontendConfigModule } from '../src/frontend-config/frontend-config.module';
 import { GroupsModule } from '../src/groups/groups.module';
 import { GroupsService } from '../src/groups/groups.service';
-import { HistoryModule } from '../src/history/history.module';
-import { HistoryService } from '../src/history/history.service';
 import { ConsoleLoggerService } from '../src/logger/console-logger.service';
 import { LoggerModule } from '../src/logger/logger.module';
 import { MediaModule } from '../src/media/media.module';
 import { MediaService } from '../src/media/media.service';
 import { MonitoringModule } from '../src/monitoring/monitoring.module';
-import { Note } from '../src/notes/note.entity';
 import { NoteService } from '../src/notes/note.service';
 import { PermissionService } from '../src/permissions/permission.service';
 import { PermissionsModule } from '../src/permissions/permissions.module';
@@ -99,8 +95,9 @@ interface CreateTestSetupParameters {
 export class TestSetup {
   moduleRef: TestingModule;
   app: NestExpressApplication;
+  knexInstance: Knex;
 
-  userService: UsersService;
+  usersService: UsersService;
   groupService: GroupsService;
   configService: ConfigService;
   identityService: IdentityService;
@@ -109,46 +106,23 @@ export class TestSetup {
   oidcService: OidcService;
   notesService: NoteService;
   mediaService: MediaService;
-  historyService: HistoryService;
   aliasService: AliasService;
-  publicAuthTokenService: ApiTokenService;
+  apiTokenService: ApiTokenService;
   sessionService: SessionService;
   revisionsService: RevisionsService;
 
-  users: User[] = [];
+  userIds: number[] = [];
   authTokens: ApiTokenWithSecretDto[] = [];
-  anonymousNotes: Note[] = [];
-  ownedNotes: Note[] = [];
+  anonymousNoteIds: number[] = [];
+  ownedNoteIds: number[] = [];
   permissionsService: PermissionService;
 
   /**
    * Cleans up remnants from a test run from the database
    */
   public async cleanup() {
-    const appConnection = this.app.get<Connection>(Connection);
-    const connectionOptions = appConnection.options;
-    if (!connectionOptions.database) {
-      throw new Error('Database name not set in connection options');
-    }
-    if (connectionOptions.type === 'sqlite') {
-      // Bail out early, as SQLite runs from memory anyway
-      await this.app.close();
-      return;
-    }
-    if (appConnection.isConnected) {
-      await appConnection.close();
-    }
-    switch (connectionOptions.type) {
-      case 'postgres':
-      case 'mariadb': {
-        const connection = await createConnection({
-          type: connectionOptions.type,
-          username: 'hedgedoc',
-          password: 'hedgedoc',
-        });
-        await connection.query(`DROP DATABASE ${connectionOptions.database}`);
-        await connection.close();
-      }
+    if (this.knexInstance) {
+      await this.knexInstance.destroy();
     }
     await this.app.close();
   }
@@ -157,10 +131,10 @@ export class TestSetup {
 /**
  * Builder class for TestSetup
  * Should be instantiated with the create() method
- * The useable TestSetup is genereated using build()
+ * The usable TestSetup is generated using build()
  */
 export class TestSetupBuilder {
-  // list of functions that should be executed before or after builing the TestingModule
+  // list of functions that should be executed before or after building the TestingModule
   private setupPreCompile: (() => Promise<void>)[] = [];
   private setupPostCompile: (() => Promise<void>)[] = [];
 
@@ -172,57 +146,60 @@ export class TestSetupBuilder {
   /**
    * Prepares a test database
    * @param dbName The name of the database to use
-   * @private
    */
-  private static async setupTestDB(dbName: string) {
-    const dbType = process.env.HEDGEDOC_TEST_DB_TYPE;
-    if (!dbType || dbType === 'sqlite') {
+  private static async createTestDatabase(dbName: string) {
+    const dbType = process.env.HEDGEDOC_TEST_DB_TYPE || 'sqlite';
+    if (dbType === 'sqlite') {
       return;
     }
-
-    if (!['postgres', 'mariadb'].includes(dbType)) {
-      throw new Error('Unknown database type in HEDGEDOC_TEST_DB_TYPE');
-    }
-
-    const connection = await createConnection({
-      type: dbType as 'postgres' | 'mariadb',
-      username: dbType === 'mariadb' ? 'root' : 'hedgedoc',
-      password: 'hedgedoc',
-    });
-
-    await connection.query(`CREATE DATABASE ${dbName}`);
+    const knexConfig = this.getTestDatabaseConfig(dbName);
+    const adminKnex = knex(knexConfig);
+    await adminKnex.raw(`DROP DATABASE IF EXISTS ${dbName}`);
+    await adminKnex.raw(`CREATE DATABASE ${dbName}`);
     if (dbType === 'mariadb') {
-      await connection.query(
+      await adminKnex.raw(
         `GRANT ALL PRIVILEGES ON ${dbName}.* TO 'hedgedoc'@'%'`,
       );
     }
-    await connection.close();
+    await adminKnex.destroy();
   }
 
-  private static getTestDBConf(dbName: string): TypeOrmModuleOptions {
-    switch (process.env.HEDGEDOC_TEST_DB_TYPE || 'sqlite') {
+  /**
+   * Returns the database configuration for the test database
+   *
+   * @param dbName The name of the database to use
+   * @returns The database configuration
+   */
+  private static getTestDatabaseConfig(dbName: string): Knex.Config {
+    const dbType = process.env.HEDGEDOC_TEST_DB_TYPE || 'sqlite';
+    switch (dbType) {
       case 'sqlite':
         return {
-          type: 'sqlite',
-          database: ':memory:',
-          autoLoadEntities: true,
-          dropSchema: true,
-          migrations: [`src/migrations/sqlite-*.ts`],
-          migrationsRun: true,
+          client: 'better-sqlite3',
+          connection: { filename: ':memory:' },
+          useNullAsDefault: true,
         };
       case 'postgres':
+        return {
+          client: 'pg',
+          connection: {
+            database: dbName,
+            user: 'hedgedoc',
+            password: 'hedgedoc',
+            host: process.env.HD_DATABASE_HOST || 'localhost',
+            port: parseInt(process.env.HD_DATABASE_PORT || '5432'),
+          },
+        };
       case 'mariadb':
         return {
-          type: process.env.HEDGEDOC_TEST_DB_TYPE as 'postgres' | 'mariadb',
-          database: dbName,
-          username: 'hedgedoc',
-          password: 'hedgedoc',
-          autoLoadEntities: true,
-          dropSchema: true,
-          migrations: [
-            `src/migrations/${process.env.HEDGEDOC_TEST_DB_TYPE}-*.ts`,
-          ],
-          migrationsRun: true,
+          client: 'mysql',
+          connection: {
+            database: dbName,
+            user: 'hedgedoc',
+            password: 'hedgedoc',
+            host: process.env.HD_DATABASE_HOST || 'localhost',
+            port: parseInt(process.env.HD_DATABASE_PORT || '3306'),
+          },
         };
       default:
         throw new Error('Unknown database type in HEDGEDOC_TEST_DB_TYPE');
@@ -234,8 +211,9 @@ export class TestSetupBuilder {
    */
   public static create(mocks?: CreateTestSetupParameters): TestSetupBuilder {
     const testSetupBuilder = new TestSetupBuilder();
-    testSetupBuilder.testId =
-      'hedgedoc_test_' + Math.random().toString(36).substring(2, 15);
+    const testId = `hedgedoc_test_${uuidv4()}`;
+    testSetupBuilder.testId = testId;
+
     const routes: Routes = [
       {
         path: '/api/v2',
@@ -246,14 +224,12 @@ export class TestSetupBuilder {
         module: PrivateApiModule,
       },
     ];
-    process.env.HD_BASE_URL =
-      'https://md-' + testSetupBuilder.testId + '.example.com';
+    process.env.HD_BASE_URL = `https://${testId}.example.com`;
+
+    const knexConfig = TestSetupBuilder.getTestDatabaseConfig(testId);
     testSetupBuilder.testingModuleBuilder = Test.createTestingModule({
       imports: [
         RouterModule.register(routes),
-        TypeOrmModule.forRoot(
-          TestSetupBuilder.getTestDBConf(testSetupBuilder.testId),
-        ),
         ConfigModule.forRoot({
           isGlobal: true,
           load: [
@@ -282,13 +258,19 @@ export class TestSetupBuilder {
             ),
           ],
         }),
+        KnexModule.forRoot({
+          config: {
+            ...knexConfig,
+            migrations: {
+              directory: 'src/database/migrations/',
+            },
+          },
+        }),
         AliasModule,
         UsersModule,
         RevisionsModule,
-        AuthorsModule,
         PublicApiModule,
         PrivateApiModule,
-        HistoryModule,
         MonitoringModule,
         PermissionsModule,
         GroupsModule,
@@ -314,7 +296,7 @@ export class TestSetupBuilder {
    * Builds the final TestSetup from the configured builder
    */
   public async build(): Promise<TestSetup> {
-    await TestSetupBuilder.setupTestDB(this.testId);
+    await TestSetupBuilder.createTestDatabase(this.testId);
 
     for (const setupFunction of this.setupPreCompile) {
       await setupFunction();
@@ -322,7 +304,7 @@ export class TestSetupBuilder {
 
     this.testSetup.moduleRef = await this.testingModuleBuilder.compile();
 
-    this.testSetup.userService =
+    this.testSetup.usersService =
       this.testSetup.moduleRef.get<UsersService>(UsersService);
     this.testSetup.groupService =
       this.testSetup.moduleRef.get<GroupsService>(GroupsService);
@@ -336,11 +318,9 @@ export class TestSetupBuilder {
       this.testSetup.moduleRef.get<NoteService>(NoteService);
     this.testSetup.mediaService =
       this.testSetup.moduleRef.get<MediaService>(MediaService);
-    this.testSetup.historyService =
-      this.testSetup.moduleRef.get<HistoryService>(HistoryService);
     this.testSetup.aliasService =
       this.testSetup.moduleRef.get<AliasService>(AliasService);
-    this.testSetup.publicAuthTokenService =
+    this.testSetup.apiTokenService =
       this.testSetup.moduleRef.get<ApiTokenService>(ApiTokenService);
     this.testSetup.permissionsService =
       this.testSetup.moduleRef.get<PermissionService>(PermissionService);
@@ -373,11 +353,11 @@ export class TestSetupBuilder {
    * Enable mock authentication for the public API
    */
   public withMockAuth() {
-    this.setupPreCompile.push(async () => {
+    this.setupPreCompile.push(() => {
       this.testingModuleBuilder
         .overrideGuard(ApiTokenGuard)
         .useClass(MockApiTokenGuard);
-      return await Promise.resolve();
+      return Promise.resolve();
     });
     return this;
   }
@@ -388,80 +368,61 @@ export class TestSetupBuilder {
   public withUsers() {
     this.setupPostCompile.push(async () => {
       // Create users
-      this.testSetup.users.push(
-        await this.testSetup.userService.createUser(
+      this.testSetup.userIds.push(
+        await this.testSetup.localIdentityService.createUserWithLocalIdentity(
           username1,
-          'Test User 1',
-          null,
-          null,
+          password1,
+          displayName1,
         ),
       );
-      this.testSetup.users.push(
-        await this.testSetup.userService.createUser(
+      this.testSetup.userIds.push(
+        await this.testSetup.localIdentityService.createUserWithLocalIdentity(
           username2,
-          'Test User 2',
-          null,
-          null,
+          password2,
+          displayName2,
         ),
       );
-      this.testSetup.users.push(
-        await this.testSetup.userService.createUser(
+      this.testSetup.userIds.push(
+        await this.testSetup.localIdentityService.createUserWithLocalIdentity(
           username3,
-          'Test User 3',
-          null,
-          null,
+          password3,
+          displayName3,
         ),
-      );
-
-      // Create identities for login
-      await this.testSetup.localIdentityService.createUserWithLocalIdentity(
-        this.testSetup.users[0],
-        password1,
-        '',
-      );
-      await this.testSetup.localIdentityService.createUserWithLocalIdentity(
-        this.testSetup.users[1],
-        password2,
-        '',
-      );
-      await this.testSetup.localIdentityService.createUserWithLocalIdentity(
-        this.testSetup.users[2],
-        password3,
-        '',
       );
 
       // create auth tokens
       this.testSetup.authTokens = await Promise.all(
-        this.testSetup.users.map(async (user) => {
+        this.testSetup.userIds.map(async (userId) => {
           const validUntil = new Date();
+          // Token is valid for 1 hour
           validUntil.setTime(validUntil.getTime() + 60 * 60 * 1000);
-          return await this.testSetup.publicAuthTokenService.addToken(
-            user,
+          return await this.testSetup.apiTokenService.createToken(
+            userId,
             'test',
             validUntil,
           );
         }),
       );
 
-      // create notes with owner
-      this.testSetup.ownedNotes.push(
+      // create notes owned by the test users
+      this.testSetup.ownedNoteIds.push(
         await this.testSetup.notesService.createNote(
           'Test Note 1',
-          this.testSetup.users[0],
+          this.testSetup.userIds[0],
           'testAlias1',
         ),
       );
-      this.testSetup.ownedNotes.push(
+      this.testSetup.ownedNoteIds.push(
         await this.testSetup.notesService.createNote(
           'Test Note 2',
-          this.testSetup.users[1],
+          this.testSetup.userIds[1],
           'testAlias2',
         ),
       );
-      this.testSetup.ownedNotes.push(
+      this.testSetup.ownedNoteIds.push(
         await this.testSetup.notesService.createNote(
           'Test Note 3',
-          this.testSetup.users[2],
+          this.testSetup.userIds[2],
           'testAlias3',
         ),
       );
@@ -470,25 +431,25 @@ export class TestSetupBuilder {
   }
 
   /**
-   * Generate a few anonymousNotes for testing
+   * Generate a few anonymous notes for testing
    */
   public withNotes(): TestSetupBuilder {
     this.setupPostCompile.push(async () => {
-      this.testSetup.anonymousNotes.push(
+      this.testSetup.anonymousNoteIds.push(
         await this.testSetup.notesService.createNote(
           'Anonymous Note 1',
           null,
           'anonAlias1',
         ),
       );
-      this.testSetup.anonymousNotes.push(
+      this.testSetup.anonymousNoteIds.push(
         await this.testSetup.notesService.createNote(
           'Anonymous Note 2',
           null,
           'anonAlias2',
         ),
       );
-      this.testSetup.anonymousNotes.push(
+      this.testSetup.anonymousNoteIds.push(
         await this.testSetup.notesService.createNote(
           'Anonymous Note 3',
           null,
@@ -502,7 +463,10 @@ export class TestSetupBuilder {
 
 export const username1 = 'testuser1';
 export const password1 = 'AStrongP@sswordForUser1';
+export const displayName1 = 'Test User 1';
 export const username2 = 'testuser2';
 export const password2 = 'AStrongP@sswordForUser2';
+export const displayName2 = 'Test User 2';
 export const username3 = 'testuser3';
 export const password3 = 'AStrongP@sswordForUser3';
+export const displayName3 = 'Test User 3';

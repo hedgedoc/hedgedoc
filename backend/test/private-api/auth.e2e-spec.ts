@@ -9,10 +9,14 @@
 @typescript-eslint/no-unsafe-member-access
 */
 import { LoginDto, RegisterDto, UpdatePasswordDto } from '@hedgedoc/commons';
+import {
+  AuthProviderType,
+  FieldNameIdentity,
+  FieldNameUser,
+} from '@hedgedoc/database';
 import request from 'supertest';
 
 import { NotInDBError } from '../../src/errors/errors';
-import { UserRelationEnum } from '../../src/users/user-relation.enum';
 import { checkPassword } from '../../src/utils/password';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 
@@ -53,24 +57,29 @@ describe('Auth', () => {
         .set('Content-Type', 'application/json')
         .send(JSON.stringify(registrationDto))
         .expect(201);
-      const newUser = await testSetup.userService.getUserDtoByUsername(
-        username,
-        [UserRelationEnum.IDENTITIES],
-      );
-      expect(newUser.displayName).toEqual(displayName);
-      await expect(newUser.identities).resolves.toHaveLength(1);
+      const newUserId =
+        await testSetup.usersService.getUserIdByUsername(username);
+      expect(newUserId).toBeDefined();
+      const newUser = await testSetup.usersService.getUserById(newUserId);
+      expect(newUser[FieldNameUser.displayName]).toEqual(displayName);
+      const newUserIdentity =
+        await testSetup.identityService.getIdentityFromUserIdAndProviderType(
+          username,
+          AuthProviderType.LOCAL,
+          null,
+        );
       await expect(
         checkPassword(
           password,
-          (await newUser.identities)[0].passwordHash ?? '',
+          newUserIdentity[FieldNameIdentity.passwordHash] ?? '',
         ),
-      ).resolves.toBeTruthy();
-      await testSetup.userService.deleteUser(newUser);
+      ).resolves.toBe(true);
+      await testSetup.usersService.deleteUser(newUserId);
     });
     describe('fails', () => {
       it('when the user already exits', async () => {
         const conflictingUserName = 'already_existing';
-        const conflictingUser = await testSetup.userService.createUser(
+        const conflictingUser = await testSetup.usersService.createUser(
           conflictingUserName,
           displayName,
           null,
@@ -86,7 +95,7 @@ describe('Auth', () => {
           .set('Content-Type', 'application/json')
           .send(JSON.stringify(registrationDto))
           .expect(409);
-        await testSetup.userService.deleteUser(conflictingUser);
+        await testSetup.usersService.deleteUser(conflictingUser);
       });
       it('when registration is disabled', async () => {
         testSetup.configService.get('authConfig').local.enableRegister = false;
@@ -116,9 +125,7 @@ describe('Auth', () => {
         .expect(400);
       expect(response.text).toContain('PasswordTooWeakError');
       await expect(() =>
-        testSetup.userService.getUserDtoByUsername(username, [
-          UserRelationEnum.IDENTITIES,
-        ]),
+        testSetup.usersService.getUserDtoByUsername(username),
       ).rejects.toThrow(NotInDBError);
     });
   });

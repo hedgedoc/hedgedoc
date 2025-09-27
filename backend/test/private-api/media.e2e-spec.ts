@@ -5,7 +5,6 @@
  */
 import { promises as fs } from 'fs';
 import { join } from 'path';
-import { User } from 'src/database/user.entity';
 import request from 'supertest';
 
 import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
@@ -24,7 +23,7 @@ describe('Media', () => {
 
   let uploadPath: string;
   let agent: request.SuperAgentTest;
-  let user: User;
+  let userId: number;
 
   beforeAll(async () => {
     testSetup = await TestSetupBuilder.create().withUsers().build();
@@ -46,7 +45,7 @@ describe('Media', () => {
       null,
       'test_upload_media',
     );
-    user = testSetup.users[0];
+    userId = testSetup.userIds[0];
 
     agent = request.agent(testSetup.app.getHttpServer());
     await agent
@@ -78,6 +77,11 @@ describe('Media', () => {
         const path = '/api/private/media/' + uuid;
         const apiResponse = await agent.get(path);
         expect(apiResponse.statusCode).toEqual(200);
+        const redirectResponse = await agent.get(`/media/${uuid}`);
+        expect(redirectResponse.statusCode).toEqual(302);
+        expect(redirectResponse.header.location).toContain(
+          `/uploads/${uuid}.png`,
+        );
         const downloadResponse = await agent.get(`/uploads/${uuid}.png`);
         expect(downloadResponse.body).toEqual(testImage);
         // delete the file afterwards
@@ -98,6 +102,11 @@ describe('Media', () => {
         const path = '/api/private/media/' + uuid;
         const apiResponse = await agent.get(path);
         expect(apiResponse.statusCode).toEqual(200);
+        const redirectResponse = await agent.get(`/media/${uuid}`);
+        expect(redirectResponse.statusCode).toEqual(302);
+        expect(redirectResponse.header.location).toContain(
+          `/uploads/${uuid}.png`,
+        );
         const downloadResponse = await agent.get(`/uploads/${uuid}.png`);
         expect(downloadResponse.body).toEqual(testImage);
         // delete the file afterwards
@@ -157,13 +166,12 @@ describe('Media', () => {
         'test_delete_media_file',
       );
       const testImage = await fs.readFile('test/private-api/fixtures/test.png');
-      const upload = await testSetup.mediaService.saveFile(
+      const uuid = await testSetup.mediaService.saveFile(
         'test.png',
         testImage,
-        user,
+        userId,
         testNote,
       );
-      const uuid = upload.uuid;
 
       // login with a different user;
       const agent2 = request.agent(testSetup.app.getHttpServer());
@@ -187,17 +195,16 @@ describe('Media', () => {
       // upload a file with the default test user
       const testNote = await testSetup.notesService.createNote(
         'test content',
-        await testSetup.userService.getUserDtoByUsername(username2),
+        await testSetup.usersService.getUserIdByUsername(username2),
         'test_delete_media_note',
       );
       const testImage = await fs.readFile('test/private-api/fixtures/test.png');
-      const upload = await testSetup.mediaService.saveFile(
+      const uuid = await testSetup.mediaService.saveFile(
         'test.png',
         testImage,
         null,
         testNote,
       );
-      const uuid = upload.uuid;
 
       // login with a different user;
       const agent2 = request.agent(testSetup.app.getHttpServer());

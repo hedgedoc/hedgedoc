@@ -29,7 +29,7 @@ describe('Groups', () => {
     await testSetup.app.init();
 
     // create a test group
-    await testSetup.groupService.createGroup('testgroup1', 'testgroup1', false);
+    await testSetup.groupService.createGroup('test_group_1', 'Test Group 1');
 
     // log in to create a session
     const loginDto: LoginDto = {
@@ -51,10 +51,10 @@ describe('Groups', () => {
 
   test('details for existing groups can be retrieved', async () => {
     const response = await testuser1Session.get(
-      '/api/private/groups/testgroup1',
+      '/api/private/groups/test_group_1',
     );
     expect(response.status).toBe(200);
-    expect(response.body.name).toBe('testgroup1');
+    expect(response.body.name).toBe('test_group_1');
   });
 
   test('details for non-existing groups cannot be retrieved', async () => {
@@ -66,11 +66,11 @@ describe('Groups', () => {
 
   describe('API requires authentication', () => {
     beforeAll(() => {
-      noteConfigMock.guestAccess = PermissionLevel.DENY;
+      noteConfigMock.permissions.maxGuestLevel = PermissionLevel.DENY;
     });
     test('get group', async () => {
       const response = await request(testSetup.app.getHttpServer()).get(
-        '/api/private/groups/testgroup1',
+        '/api/private/groups/test_group_1',
       );
       expect(response.status).toBe(401);
     });
