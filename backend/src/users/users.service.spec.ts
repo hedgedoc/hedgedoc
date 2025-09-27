@@ -181,7 +181,17 @@ describe('UsersService', () => {
 
   describe('updateUser', () => {
     it('updates user fields', async () => {
-      mockUpdate(tracker, TableUser, [FieldNameUser.id], String(userId), 1);
+      mockUpdate(
+        tracker,
+        TableUser,
+        [
+          FieldNameUser.displayName,
+          FieldNameUser.email,
+          FieldNameUser.photoUrl,
+        ],
+        FieldNameUser.id,
+        1,
+      );
       await service.updateUser(
         userId,
         'New Name',
@@ -189,25 +199,22 @@ describe('UsersService', () => {
         'https://new.url',
       );
       expectBindings(tracker, 'update', [
-        [
-          {
-            [FieldNameUser.displayName]: 'New Name',
-            [FieldNameUser.email]: 'new@example.com',
-            [FieldNameUser.photoUrl]: 'https://new.url',
-          },
-          userId,
-        ],
+        ['New Name', 'new@example.com', 'https://new.url', userId],
       ]);
     });
 
     it('throws NotInDBError if update fails', async () => {
-      mockUpdate(tracker, TableUser, [FieldNameUser.id], String(userId), 0);
+      mockUpdate(
+        tracker,
+        TableUser,
+        [FieldNameUser.displayName],
+        FieldNameUser.id,
+        0,
+      );
       await expect(service.updateUser(userId, 'New Name')).rejects.toThrow(
         NotInDBError,
       );
-      expectBindings(tracker, 'update', [
-        [{ [FieldNameUser.displayName]: 'New Name' }, userId],
-      ]);
+      expectBindings(tracker, 'update', [['New Name', userId]]);
     });
 
     it('does nothing if no fields are provided', async () => {
