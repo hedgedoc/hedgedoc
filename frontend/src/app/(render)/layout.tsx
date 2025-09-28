@@ -12,6 +12,7 @@ import { StoreProvider } from '../../redux/store-provider'
 import { baseUrlFromEnvExtractor } from '../../utils/base-url-from-env-extractor'
 import React from 'react'
 import { getConfig } from '../../api/config'
+import type { Metadata, Viewport } from 'next'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const baseUrls = baseUrlFromEnvExtractor.extractBaseUrls()
@@ -32,4 +33,34 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </body>
     </html>
   )
+}
+
+export const metadata: Metadata = {
+  applicationName: 'HedgeDoc',
+  appleWebApp: {
+    title: 'HedgeDoc',
+    capable: true,
+    statusBarStyle: 'default'
+  },
+  description: 'HedgeDoc - Ideas grow better together',
+  title: 'HedgeDoc',
+  manifest: '/icons/site.webmanifest',
+  icons: {
+    apple: [
+      { url: '/icons/apple-touch-icon-120x120.png', sizes: '120x120' },
+      { url: '/icons/apple-touch-icon-152x152.png', sizes: '152x152' },
+      { url: '/icons/apple-touch-icon-180x180.png', sizes: '180x180' },
+      { url: '/icons/android-chrome-192x192.png', sizes: '192x192' },
+      { url: '/icons/android-chrome-512x512.png', sizes: '512x512' }
+    ]
+  }
+}
+
+export const viewport: Viewport = {
+  themeColor: '#b51f08',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover'
 }

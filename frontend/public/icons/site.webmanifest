@@ -4,7 +4,7 @@
     "description": "HedgeDoc - Ideas grow better together",
     "start_url": "/",
     "scope": "/",
-    "display": "standalone",
+    "display": "fullscreen",
     "orientation": "any",
     "theme_color": "#b51f08",
     "background_color": "#303030",
