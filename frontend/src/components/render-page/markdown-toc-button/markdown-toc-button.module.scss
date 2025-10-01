@@ -6,8 +6,8 @@
 
 .markdown-toc-sidebar-button {
   position: fixed;
-  right: 70px;
-  bottom: 30px;
+  right: calc(70px + env(safe-area-inset-right));
+  bottom: calc(30px + env(safe-area-inset-bottom));
 
   & > :global(.dropup) {
     position: sticky;

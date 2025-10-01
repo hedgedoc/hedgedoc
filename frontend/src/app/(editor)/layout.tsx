@@ -36,6 +36,16 @@ export default async function RootLayout({ children, appBar }: RootLayoutProps) 
     <html lang='en'>
       <head>
         <link color='#b51f08' href='/icons/safari-pinned-tab.svg' rel='mask-icon' />
+        <meta name='apple-mobile-web-app-capable' content='yes' />
+        <meta name='apple-mobile-web-app-status-bar-style' content='black-translucent' />
+        <meta name='apple-mobile-web-app-title' content='HedgeDoc' />
+        <meta name='mobile-web-app-capable' content='yes' />
+        <link rel='apple-touch-icon' href='/icons/apple-touch-icon.png' />
+        <link rel='apple-touch-icon' sizes='120x120' href='/icons/apple-touch-icon-120x120.png' />
+        <link rel='apple-touch-icon' sizes='152x152' href='/icons/apple-touch-icon-152x152.png' />
+        <link rel='apple-touch-icon' sizes='180x180' href='/icons/apple-touch-icon-180x180.png' />
+        <link rel='apple-touch-icon' sizes='192x192' href='/icons/android-chrome-192x192.png' />
+        <link rel='apple-touch-icon' sizes='512x512' href='/icons/android-chrome-512x512.png' />
       </head>
       <body>
         <ExpectedOriginBoundary expectedOrigin={baseUrls.editor}>
@@ -66,15 +76,29 @@ export default async function RootLayout({ children, appBar }: RootLayoutProps) 
 export const metadata: Metadata = {
   applicationName: 'HedgeDoc',
   appleWebApp: {
-    title: 'HedgeDoc'
+    title: 'HedgeDoc',
+    capable: true,
+    statusBarStyle: 'black-translucent'
   },
   description: 'HedgeDoc - Ideas grow better together',
   title: 'HedgeDoc',
-  manifest: '/icons/site.webmanifest'
+  manifest: '/icons/site.webmanifest',
+  icons: {
+    apple: [
+      { url: '/icons/apple-touch-icon-120x120.png', sizes: '120x120' },
+      { url: '/icons/apple-touch-icon-152x152.png', sizes: '152x152' },
+      { url: '/icons/apple-touch-icon-180x180.png', sizes: '180x180' },
+      { url: '/icons/android-chrome-192x192.png', sizes: '192x192' },
+      { url: '/icons/android-chrome-512x512.png', sizes: '512x512' }
+    ]
+  }
 }
 
 export const viewport: Viewport = {
   themeColor: '#b51f08',
   width: 'device-width',
-  initialScale: 1
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover'
 }

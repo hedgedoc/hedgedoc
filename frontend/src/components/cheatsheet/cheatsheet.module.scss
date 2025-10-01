@@ -10,8 +10,8 @@
 
 .sticky {
   position: sticky;
-  top: 1rem;
-  bottom: 1rem;
+  top: calc(1rem + env(safe-area-inset-top));
+  bottom: calc(1rem + env(safe-area-inset-bottom));
 }
 
 .sidebar {

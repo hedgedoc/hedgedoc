@@ -13,7 +13,7 @@
 
   &.sticky {
     position: fixed;
-    top: 0;
+    top: env(safe-area-inset-top);
   }
 
   padding: 2px;

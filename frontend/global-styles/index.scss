@@ -19,6 +19,14 @@
 @import "./reveal";
 @import "./print";
 
+// iOS PWA safe area support
+html, body {
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+}
+
 .text-black, body[data-bs-theme=dark] .text-black {
   color: $black;
 }
