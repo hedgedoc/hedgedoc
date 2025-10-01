@@ -14,8 +14,8 @@
 
   .side {
     position: sticky;
-    top: 0;
-    bottom: 0;
+    top: env(safe-area-inset-top);
+    bottom: env(safe-area-inset-bottom);
     flex: 1 0 0;
   }
 

@@ -6,8 +6,8 @@
 
 .notifications-area {
   position: fixed;
-  top: 15px;
-  right: 15px;
+  top: calc(15px + env(safe-area-inset-top));
+  right: calc(15px + env(safe-area-inset-right));
   z-index: 2000;
 
   .toast {

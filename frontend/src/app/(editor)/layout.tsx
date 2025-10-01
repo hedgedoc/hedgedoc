@@ -37,7 +37,7 @@ export default async function RootLayout({ children, appBar }: RootLayoutProps) 
       <head>
         <link color='#b51f08' href='/icons/safari-pinned-tab.svg' rel='mask-icon' />
         <meta name='apple-mobile-web-app-capable' content='yes' />
-        <meta name='apple-mobile-web-app-status-bar-style' content='default' />
+        <meta name='apple-mobile-web-app-status-bar-style' content='black-translucent' />
         <meta name='apple-mobile-web-app-title' content='HedgeDoc' />
         <meta name='mobile-web-app-capable' content='yes' />
         <link rel='apple-touch-icon' href='/icons/apple-touch-icon.png' />
@@ -78,7 +78,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     title: 'HedgeDoc',
     capable: true,
-    statusBarStyle: 'default'
+    statusBarStyle: 'black-translucent'
   },
   description: 'HedgeDoc - Ideas grow better together',
   title: 'HedgeDoc',

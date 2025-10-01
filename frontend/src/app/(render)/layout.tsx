@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     title: 'HedgeDoc',
     capable: true,
-    statusBarStyle: 'default'
+    statusBarStyle: 'black-translucent'
   },
   description: 'HedgeDoc - Ideas grow better together',
   title: 'HedgeDoc',
