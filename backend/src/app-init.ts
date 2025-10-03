@@ -32,16 +32,8 @@ export async function setupApp(
 ): Promise<void> {
   // Setup OpenAPI documentation
   await setupPublicApiDocs(app);
-  logger.log(
-    `Serving OpenAPI docs for public API under '/api/doc/v2'`,
-    'AppBootstrap',
-  );
   if (isDevMode()) {
     await setupPrivateApiDocs(app);
-    logger.log(
-      `Serving OpenAPI docs for private API under '/api/doc/private'`,
-      'AppBootstrap',
-    );
   }
 
   await runMigrations(app, logger);
