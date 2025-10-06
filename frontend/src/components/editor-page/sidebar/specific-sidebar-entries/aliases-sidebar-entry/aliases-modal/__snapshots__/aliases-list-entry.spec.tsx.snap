@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AliasesListEntry adds aliasPrimaryBadge & removes aliasButtonMakePrimary in AliasesListEntry if it's primary 1`] = `
+exports[`AliasesListEntry allows primary alias not to be deleted 1`] = `
 <div>
   <li
     class="list-group-item d-flex flex-row justify-content-between align-items-center"
   >
     <div>
-      test-primary
+      mock-alias-primary
       <span
         class="ms-2 badge bg-secondary"
         data-testid="aliasPrimaryBadge"
@@ -30,19 +30,48 @@ exports[`AliasesListEntry adds aliasPrimaryBadge & removes aliasButtonMakePrimar
 </div>
 `;
 
-exports[`AliasesListEntry removes aliasPrimaryBadge & adds aliasButtonMakePrimary in AliasesListEntry if it's not primary 1`] = `
+exports[`AliasesListEntry disables remove button if not owner 1`] = `
 <div>
   <li
     class="list-group-item d-flex flex-row justify-content-between align-items-center"
   >
     <div>
-      test-primary
+      mock-alias-primary
+      <span
+        class="ms-2 badge bg-secondary"
+        data-testid="aliasPrimaryBadge"
+        title="editor.modal.aliases.isPrimary"
+      >
+        editor.modal.aliases.primaryLabel
+      </span>
+    </div>
+    <div>
+      <button
+        class="btn btn-danger"
+        data-testid="aliasButtonRemove"
+        disabled=""
+        title="editor.modal.aliases.removeAlias"
+        type="button"
+      >
+        BootstrapIconMock_X
+      </button>
+    </div>
+  </li>
+</div>
+`;
+
+exports[`AliasesListEntry marks alias as primary if non-primary 1`] = `
+<div>
+  <li
+    class="list-group-item d-flex flex-row justify-content-between align-items-center"
+  >
+    <div>
+      mock-alias-other
     </div>
     <div>
       <button
         class="me-2 btn btn-secondary"
         data-testid="aliasButtonMakePrimary"
-        disabled=""
         title="editor.modal.aliases.makePrimary"
         type="button"
       >
@@ -51,7 +80,36 @@ exports[`AliasesListEntry removes aliasPrimaryBadge & adds aliasButtonMakePrimar
       <button
         class="btn btn-danger"
         data-testid="aliasButtonRemove"
-        disabled=""
+        title="editor.modal.aliases.removeAlias"
+        type="button"
+      >
+        BootstrapIconMock_X
+      </button>
+    </div>
+  </li>
+</div>
+`;
+
+exports[`AliasesListEntry removes alias if non-primary 1`] = `
+<div>
+  <li
+    class="list-group-item d-flex flex-row justify-content-between align-items-center"
+  >
+    <div>
+      mock-alias-other
+    </div>
+    <div>
+      <button
+        class="me-2 btn btn-secondary"
+        data-testid="aliasButtonMakePrimary"
+        title="editor.modal.aliases.makePrimary"
+        type="button"
+      >
+        BootstrapIconMock_Star
+      </button>
+      <button
+        class="btn btn-danger"
+        data-testid="aliasButtonRemove"
         title="editor.modal.aliases.removeAlias"
         type="button"
       >
@@ -68,7 +126,7 @@ exports[`AliasesListEntry renders an AliasesListEntry that is not primary 1`] = 
     class="list-group-item d-flex flex-row justify-content-between align-items-center"
   >
     <div>
-      test-non-primary
+      mock-alias-other
     </div>
     <div>
       <button
@@ -111,6 +169,7 @@ exports[`AliasesListEntry renders an AliasesListEntry that is primary 1`] = `
       <button
         class="btn btn-danger"
         data-testid="aliasButtonRemove"
+        disabled=""
         title="editor.modal.aliases.removeAlias"
         type="button"
       >

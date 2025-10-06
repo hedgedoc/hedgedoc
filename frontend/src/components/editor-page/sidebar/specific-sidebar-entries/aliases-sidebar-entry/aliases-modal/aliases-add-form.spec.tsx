@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -19,7 +19,7 @@ jest.mock('../../../../../../redux/note-details/methods')
 jest.mock('../../../../../../hooks/common/use-application-state')
 jest.mock('../../../../../notifications/ui-notification-boundary')
 
-const addPromise = Promise.resolve({ name: 'mock', primaryAlias: true, noteId: 'mock' })
+const addPromise = Promise.resolve({ name: 'mock-alias-new', isPrimaryAlias: true })
 
 describe('AliasesAddForm', () => {
   beforeEach(async () => {
@@ -27,7 +27,9 @@ describe('AliasesAddForm', () => {
     mockUiNotifications()
     jest.spyOn(AliasModule, 'addAlias').mockImplementation(() => addPromise)
     jest.spyOn(NoteDetailsReduxModule, 'updateMetadata').mockImplementation(() => Promise.resolve())
-    mockNotePermissions('test', 'test', undefined, { noteDetails: { id: 'mock-note' } as NoteDetails })
+    mockNotePermissions('test', 'test', undefined, {
+      noteDetails: { primaryAlias: 'mock-alias-primary' } as NoteDetails
+    })
   })
 
   afterAll(() => {
@@ -41,12 +43,12 @@ describe('AliasesAddForm', () => {
     const button = await screen.findByTestId('addAliasButton')
     expect(button).toBeDisabled()
     const input = await screen.findByTestId('addAliasInput')
-    await testEvent.type(input, 'abc')
+    await testEvent.type(input, 'mock-alias-new')
     expect(button).toBeEnabled()
     await act<void>(() => {
       button.click()
     })
-    expect(AliasModule.addAlias).toBeCalledWith('mock-note', 'abc')
+    expect(AliasModule.addAlias).toBeCalledWith('mock-alias-primary', 'mock-alias-new')
     await addPromise
     expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
   })
