@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { FrontendConfigDto } from '@hedgedoc/commons'
-import { AuthProviderType, GuestAccess } from '@hedgedoc/commons'
+import { AuthProviderType, PermissionLevel } from '@hedgedoc/commons'
 import {
   HttpMethod,
   respondToMatchingRequest,
@@ -21,7 +21,7 @@ const initialConfig: FrontendConfigDto = {
     name: 'DEMO Corp',
     logo: '/public/img/demo.png'
   },
-  guestAccess: GuestAccess.WRITE,
+  guestAccess: PermissionLevel.WRITE,
   useImageProxy: false,
   specialUrls: {
     privacy: 'https://example.com/privacy',
