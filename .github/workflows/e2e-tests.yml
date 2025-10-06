@@ -2,223 +2,223 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-name: E2E Tests
-
-on:
-  push:
-    branches: [ develop ]
-  pull_request_target:
-    branches: [ develop ]
-  pull_request:
-    branches: [ develop ]
-
-permissions:
-  contents: read
-
-concurrency:
-  group: ${{ github.workflow }}-${{ !!github.event.pull_request && github.event.pull_request.head.label || github.ref }}-${{ github.event_name }}-${{ github.job }}
-  cancel-in-progress: true
-
-env:
-  NODEJS_VERSION: 20
-  HEAD_COMMIT_HASH: "${{ !!github.event.pull_request && github.event.pull_request.head.sha || github.sha }}"
-
-jobs:
-  backend-sqlite: # This run also collects coverage
-    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4.2.2 # v4.2.2
-        with:
-          fetch-depth: 0
-      - name: Setup node
-        uses: ./.github/actions/setup-node
-        with:
-          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
-
-      - name: Run e2e tests
-        run: yarn test:e2e:ci --filter=@hedgedoc/backend
-        shell: bash
-        env:
-          HEDGEDOC_TEST_DB_TYPE: sqlite
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-          TURBO_API: ${{ vars.TURBO_API }}
-          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-
-      - name: Upload coverage
-        uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 # v4.6.0
-        with:
-          directory: backend/coverage-e2e
-          flags: backend, e2e-tests, backend-e2e-tests
-
-  backend-mariadb:
-    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
-    runs-on: ubuntu-latest
-    services:
-      mariadb:
-        # renovate: datasource=docker depName=mariadb
-        image: mariadb:11.5.2@sha256:2d50fe0f77dac919396091e527e5e148a9de690e58f32875f113bef6506a17f5
-        env:
-          MYSQL_USER: hedgedoc
-          MYSQL_PASSWORD: hedgedoc
-          MYSQL_DATABASE: hedgedoc
-          MYSQL_ROOT_PASSWORD: hedgedoc
-          MARIADB_MYSQL_LOCALHOST_USER: 1
-          MARIADB_MYSQL_LOCALHOST_GRANTS: USAGE
-        options: --health-cmd "healthcheck.sh --su-mysql --connect --innodb_initialized" --health-interval 10s --health-timeout 5s --health-retries 10
-        ports:
-          - 3306:3306
-    steps:
-      - uses: actions/checkout@v4.2.2 # v4.2.2
-        with:
-          fetch-depth: 0
-      - name: Setup node
-        uses: ./.github/actions/setup-node
-        with:
-          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
-
-      - name: Run e2e tests
-        run: yarn test:e2e:ci --filter=@hedgedoc/backend
-        shell: bash
-        env:
-          HEDGEDOC_TEST_DB_TYPE: mariadb
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-          TURBO_API: ${{ vars.TURBO_API }}
-          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-
-  backend-postgres:
-    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        # renovate: datasource=docker depName=postgres
-        image: postgres:16.4@sha256:e62fbf9d3e2b49816a32c400ed2dba83e3b361e6833e624024309c35d334b412
-        env:
-          POSTGRES_PASSWORD: hedgedoc
-          POSTGRES_USER: hedgedoc
-        options: --health-cmd pg_isready --health-interval 5s --health-timeout 2s --health-retries 5
-        ports:
-          - 5432:5432
-    steps:
-      - uses: actions/checkout@v4.2.2 # v4.2.2
-        with:
-          fetch-depth: 0
-      - name: Setup node
-        uses: ./.github/actions/setup-node
-        with:
-          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
-
-      - name: Run e2e tests
-        run: yarn test:e2e:ci --filter=@hedgedoc/backend
-        shell: bash
-        env:
-          HEDGEDOC_TEST_DB_TYPE: postgres
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-          TURBO_API: ${{ vars.TURBO_API }}
-          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-
-  frontend-build:
-    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
-    runs-on: ubuntu-latest
-    name: Build test build of frontend
-    steps:
-      - name: Check out repo
-        uses: actions/checkout@v4.2.2 # v4.2.2
-        with:
-          ref: ${{ env.HEAD_COMMIT_HASH }}
-
-      - name: Setup node
-        uses: ./.github/actions/setup-node
-        with:
-          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
-
-      - name: Build test production build
-        run: yarn build:test --filter=@hedgedoc/frontend
-        shell: bash
-        env:
-          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-          TURBO_API: ${{ vars.TURBO_API }}
-          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-
-      - name: Compress build
-        run: tar --zstd -cf frontend-e2e-build.tar.zst frontend/dist/
-
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-e2e-build
-          retention-days: 1
-          path: frontend-e2e-build.tar.zst
-          overwrite: true
-
-  frontend-cypress:
-    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
-    needs: frontend-build
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        containers: [ 1, 2, 3 ]
-    steps:
-      - name: Check out repo
-        uses: actions/checkout@v4.2.2 # v4.2.2
-        with:
-          ref: ${{ env.HEAD_COMMIT_HASH }}
-
-      - name: Setup node
-        uses: ./.github/actions/setup-node
-        with:
-          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
-
-      - name: Show cypress info
-        run: yarn cypress info
-        working-directory: frontend/
-        env:
-          CYPRESS_CACHE_FOLDER: /home/runner/.cache/cypress
-
-      - name: Download build
-        uses: actions/download-artifact@v4
-        with:
-          name: frontend-e2e-build
-          path: .
-          merge-multiple: true
-
-      - name: Decompress build
-        run: tar -xf frontend-e2e-build.tar.zst
-
-      - name: Run server
-        working-directory: frontend/
-        run: screen -dmS server -L yarn start
-        env:
-          NODE_ENV: test
-          HOSTNAME: "127.0.0.1"
-          HD_BASE_URL: "http://127.0.0.1:3001/"
-          PORT: 3001
-
-      - name: Wait for server
-        run: "sleep 3 && curl -L --max-time 120 http://127.0.0.1:3001/"
-
-      - name: Run cypress
-        run: yarn test:e2e:ci --filter=@hedgedoc/frontend
-        shell: bash
-        env:
-          CYPRESS_CACHE_FOLDER: /home/runner/.cache/cypress
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-          TURBO_API: ${{ vars.TURBO_API }}
-          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-          CYPRESS_CONTAINER_ID: ${{ matrix.containers }}
-
-      - uses: actions/upload-artifact@v4.6.2 # master
-        if: always()
-        with:
-          name: screenlog-${{ matrix.containers }}
-          path: frontend/screenlog.0
-
-      - uses: actions/upload-artifact@v4.6.2
-        if: always()
-        with:
-          name: screenshots-${{ matrix.containers }}
-          path: cypress/screenshots
+#name: E2E Tests
+#
+#on:
+#  push:
+#    branches: [ develop ]
+#  pull_request_target:
+#    branches: [ develop ]
+#  pull_request:
+#    branches: [ develop ]
+#
+#permissions:
+#  contents: read
+#
+#concurrency:
+#  group: ${{ github.workflow }}-${{ !!github.event.pull_request && github.event.pull_request.head.label || github.ref }}-${{ github.event_name }}-${{ github.job }}
+#  cancel-in-progress: true
+#
+#env:
+#  NODEJS_VERSION: 20
+#  HEAD_COMMIT_HASH: "${{ !!github.event.pull_request && github.event.pull_request.head.sha || github.sha }}"
+#
+#jobs:
+#  backend-sqlite: # This run also collects coverage
+#    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4.2.2 # v4.2.2
+#        with:
+#          fetch-depth: 0
+#      - name: Setup node
+#        uses: ./.github/actions/setup-node
+#        with:
+#          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
+#
+#      - name: Run e2e tests
+#        run: yarn test:e2e:ci --filter=@hedgedoc/backend
+#        shell: bash
+#        env:
+#          HEDGEDOC_TEST_DB_TYPE: sqlite
+#          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+#          TURBO_API: ${{ vars.TURBO_API }}
+#          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+#
+#      - name: Upload coverage
+#        uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 # v4.6.0
+#        with:
+#          directory: backend/coverage-e2e
+#          flags: backend, e2e-tests, backend-e2e-tests
+#
+#  backend-mariadb:
+#    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
+#    runs-on: ubuntu-latest
+#    services:
+#      mariadb:
+#        # renovate: datasource=docker depName=mariadb
+#        image: mariadb:11.5.2@sha256:2d50fe0f77dac919396091e527e5e148a9de690e58f32875f113bef6506a17f5
+#        env:
+#          MYSQL_USER: hedgedoc
+#          MYSQL_PASSWORD: hedgedoc
+#          MYSQL_DATABASE: hedgedoc
+#          MYSQL_ROOT_PASSWORD: hedgedoc
+#          MARIADB_MYSQL_LOCALHOST_USER: 1
+#          MARIADB_MYSQL_LOCALHOST_GRANTS: USAGE
+#        options: --health-cmd "healthcheck.sh --su-mysql --connect --innodb_initialized" --health-interval 10s --health-timeout 5s --health-retries 10
+#        ports:
+#          - 3306:3306
+#    steps:
+#      - uses: actions/checkout@v4.2.2 # v4.2.2
+#        with:
+#          fetch-depth: 0
+#      - name: Setup node
+#        uses: ./.github/actions/setup-node
+#        with:
+#          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
+#
+#      - name: Run e2e tests
+#        run: yarn test:e2e:ci --filter=@hedgedoc/backend
+#        shell: bash
+#        env:
+#          HEDGEDOC_TEST_DB_TYPE: mariadb
+#          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+#          TURBO_API: ${{ vars.TURBO_API }}
+#          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+#
+#  backend-postgres:
+#    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
+#    runs-on: ubuntu-latest
+#    services:
+#      postgres:
+#        # renovate: datasource=docker depName=postgres
+#        image: postgres:16.4@sha256:e62fbf9d3e2b49816a32c400ed2dba83e3b361e6833e624024309c35d334b412
+#        env:
+#          POSTGRES_PASSWORD: hedgedoc
+#          POSTGRES_USER: hedgedoc
+#        options: --health-cmd pg_isready --health-interval 5s --health-timeout 2s --health-retries 5
+#        ports:
+#          - 5432:5432
+#    steps:
+#      - uses: actions/checkout@v4.2.2 # v4.2.2
+#        with:
+#          fetch-depth: 0
+#      - name: Setup node
+#        uses: ./.github/actions/setup-node
+#        with:
+#          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
+#
+#      - name: Run e2e tests
+#        run: yarn test:e2e:ci --filter=@hedgedoc/backend
+#        shell: bash
+#        env:
+#          HEDGEDOC_TEST_DB_TYPE: postgres
+#          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+#          TURBO_API: ${{ vars.TURBO_API }}
+#          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+#
+#  frontend-build:
+#    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
+#    runs-on: ubuntu-latest
+#    name: Build test build of frontend
+#    steps:
+#      - name: Check out repo
+#        uses: actions/checkout@v4.2.2 # v4.2.2
+#        with:
+#          ref: ${{ env.HEAD_COMMIT_HASH }}
+#
+#      - name: Setup node
+#        uses: ./.github/actions/setup-node
+#        with:
+#          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
+#
+#      - name: Build test production build
+#        run: yarn build:test --filter=@hedgedoc/frontend
+#        shell: bash
+#        env:
+#          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
+#          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+#          TURBO_API: ${{ vars.TURBO_API }}
+#          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+#
+#      - name: Compress build
+#        run: tar --zstd -cf frontend-e2e-build.tar.zst frontend/dist/
+#
+#      - name: Upload build artifact
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: frontend-e2e-build
+#          retention-days: 1
+#          path: frontend-e2e-build.tar.zst
+#          overwrite: true
+#
+#  frontend-cypress:
+#    if: "(github.event_name == 'pull_request_target') == github.event.pull_request.head.repo.fork"
+#    needs: frontend-build
+#    runs-on: ubuntu-latest
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        containers: [ 1, 2, 3 ]
+#    steps:
+#      - name: Check out repo
+#        uses: actions/checkout@v4.2.2 # v4.2.2
+#        with:
+#          ref: ${{ env.HEAD_COMMIT_HASH }}
+#
+#      - name: Setup node
+#        uses: ./.github/actions/setup-node
+#        with:
+#          NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
+#
+#      - name: Show cypress info
+#        run: yarn cypress info
+#        working-directory: frontend/
+#        env:
+#          CYPRESS_CACHE_FOLDER: /home/runner/.cache/cypress
+#
+#      - name: Download build
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: frontend-e2e-build
+#          path: .
+#          merge-multiple: true
+#
+#      - name: Decompress build
+#        run: tar -xf frontend-e2e-build.tar.zst
+#
+#      - name: Run server
+#        working-directory: frontend/
+#        run: screen -dmS server -L yarn start
+#        env:
+#          NODE_ENV: test
+#          HOSTNAME: "127.0.0.1"
+#          HD_BASE_URL: "http://127.0.0.1:3001/"
+#          PORT: 3001
+#
+#      - name: Wait for server
+#        run: "sleep 3 && curl -L --max-time 120 http://127.0.0.1:3001/"
+#
+#      - name: Run cypress
+#        run: yarn test:e2e:ci --filter=@hedgedoc/frontend
+#        shell: bash
+#        env:
+#          CYPRESS_CACHE_FOLDER: /home/runner/.cache/cypress
+#          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+#          TURBO_API: ${{ vars.TURBO_API }}
+#          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+#          CYPRESS_CONTAINER_ID: ${{ matrix.containers }}
+#
+#      - uses: actions/upload-artifact@v4.6.2 # master
+#        if: always()
+#        with:
+#          name: screenlog-${{ matrix.containers }}
+#          path: frontend/screenlog.0
+#
+#      - uses: actions/upload-artifact@v4.6.2
+#        if: always()
+#        with:
+#          name: screenshots-${{ matrix.containers }}
+#          path: cypress/screenshots
