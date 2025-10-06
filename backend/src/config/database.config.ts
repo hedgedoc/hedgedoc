@@ -101,7 +101,7 @@ export function getKnexConfig(databaseConfig: DatabaseConfig): Knex.Config {
     case DatabaseType.MARIADB:
       return {
         // Knex recommends using the mysql driver for MariaDB database instances
-        client: 'mysql',
+        client: 'mysql2',
         connection: {
           host: databaseConfig.host,
           port: databaseConfig.port,

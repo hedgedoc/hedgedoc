@@ -192,7 +192,7 @@ export class TestSetupBuilder {
         };
       case 'mariadb':
         return {
-          client: 'mysql',
+          client: 'mysql2',
           connection: {
             database: dbName,
             user: 'hedgedoc',
