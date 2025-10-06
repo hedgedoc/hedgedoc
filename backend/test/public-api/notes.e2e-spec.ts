@@ -15,11 +15,6 @@ import { TestSetup, TestSetupBuilder } from '../test-setup';
 describe('Notes', () => {
   let testSetup: TestSetup;
 
-  let userId1: number;
-  let userId2: number;
-  let groupId1: number;
-  const groupName1 = 'groupname1';
-  const groupName2 = 'groupname2';
   let content: string;
   let forbiddenNoteId: string;
   let uploadPath: string;
