@@ -11,7 +11,6 @@ import { AliasesListEntry } from './aliases-list-entry'
 import { act, render, screen } from '@testing-library/react'
 import React from 'react'
 import { mockUiNotifications } from '../../../../../../test-utils/mock-ui-notifications'
-import type { AliasDto } from '@hedgedoc/commons'
 
 jest.mock('../../../../../../api/alias')
 jest.mock('../../../../../../redux/note-details/methods')
@@ -19,7 +18,7 @@ jest.mock('../../../../../notifications/ui-notification-boundary')
 jest.mock('../../../../../../hooks/common/use-application-state')
 
 const deletePromise = Promise.resolve()
-const markAsPrimaryPromise = Promise.resolve({ name: 'mock', primaryAlias: true, noteId: 'mock' })
+const markAsPrimaryPromise = Promise.resolve({ name: 'mock-alias', isPrimaryAlias: true })
 
 describe('AliasesListEntry', () => {
   beforeEach(async () => {
@@ -35,68 +34,73 @@ describe('AliasesListEntry', () => {
     jest.resetModules()
   })
 
-  it('renders an AliasesListEntry that is primary', async () => {
-    mockNotePermissions('test', 'test')
-    const testAlias: AliasDto = {
-      name: 'test-primary',
-      primaryAlias: true,
-      noteId: 'test-note-id'
-    }
-    const view = render(<AliasesListEntry alias={testAlias} />)
+  it('allows primary alias not to be deleted', async () => {
+    mockNotePermissions('test', 'test', undefined, {
+      noteDetails: { primaryAlias: 'mock-alias-primary' }
+    })
+    const view = render(<AliasesListEntry alias={'mock-alias-primary'} />)
     expect(view.container).toMatchSnapshot()
     const button = await screen.findByTestId('aliasButtonRemove')
+    expect(button).toBeDisabled()
     await act<void>(() => {
       button.click()
     })
-    expect(AliasModule.deleteAlias).toBeCalledWith(testAlias.name)
-    await deletePromise
-    expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
+    expect(AliasModule.deleteAlias).not.toBeCalledWith('mock-alias-primary')
   })
 
-  it("adds aliasPrimaryBadge & removes aliasButtonMakePrimary in AliasesListEntry if it's primary", () => {
-    mockNotePermissions('test2', 'test')
-    const testAlias: AliasDto = {
-      name: 'test-primary',
-      primaryAlias: true,
-      noteId: 'test-note-id'
-    }
-    const view = render(<AliasesListEntry alias={testAlias} />)
+  it('renders an AliasesListEntry that is primary', () => {
+    mockNotePermissions('test', 'test', undefined, {
+      noteDetails: { primaryAlias: 'test-primary' }
+    })
+    const view = render(<AliasesListEntry alias={'test-primary'} />)
     expect(view.container).toMatchSnapshot()
   })
 
-  it('renders an AliasesListEntry that is not primary', async () => {
-    mockNotePermissions('test', 'test')
-    const testAlias: AliasDto = {
-      name: 'test-non-primary',
-      primaryAlias: false,
-      noteId: 'test-note-id'
-    }
-    const view = render(<AliasesListEntry alias={testAlias} />)
+  it('removes alias if non-primary', async () => {
+    mockNotePermissions('test', 'test', undefined, {
+      noteDetails: { primaryAlias: 'mock-alias-primary' }
+    })
+    const view = render(<AliasesListEntry alias={'mock-alias-other'} />)
     expect(view.container).toMatchSnapshot()
     const buttonRemove = await screen.findByTestId('aliasButtonRemove')
     await act<void>(() => {
       buttonRemove.click()
     })
-    expect(AliasModule.deleteAlias).toBeCalledWith(testAlias.name)
+    expect(AliasModule.deleteAlias).toBeCalledWith('mock-alias-other')
     await deletePromise
     expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
+  })
+
+  it('marks alias as primary if non-primary', async () => {
+    mockNotePermissions('test', 'test', undefined, {
+      noteDetails: { primaryAlias: 'mock-alias-primary' }
+    })
+    const view = render(<AliasesListEntry alias={'mock-alias-other'} />)
+    expect(view.container).toMatchSnapshot()
     const buttonMakePrimary = await screen.findByTestId('aliasButtonMakePrimary')
     await act<void>(() => {
       buttonMakePrimary.click()
     })
-    expect(AliasModule.markAliasAsPrimary).toBeCalledWith(testAlias.name)
+    expect(AliasModule.markAliasAsPrimary).toBeCalledWith('mock-alias-other')
     await markAsPrimaryPromise
     expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
   })
 
-  it("removes aliasPrimaryBadge & adds aliasButtonMakePrimary in AliasesListEntry if it's not primary", () => {
-    mockNotePermissions('test2', 'test')
-    const testAlias: AliasDto = {
-      name: 'test-primary',
-      primaryAlias: false,
-      noteId: 'test-note-id'
-    }
-    const view = render(<AliasesListEntry alias={testAlias} />)
+  it('renders an AliasesListEntry that is not primary', () => {
+    mockNotePermissions('test', 'test', undefined, {
+      noteDetails: { primaryAlias: 'mock-alias-primary' }
+    })
+    const view = render(<AliasesListEntry alias={'mock-alias-other'} />)
     expect(view.container).toMatchSnapshot()
+  })
+
+  it('disables remove button if not owner', async () => {
+    mockNotePermissions('test', 'read', undefined, {
+      noteDetails: { primaryAlias: 'mock-alias-primary' }
+    })
+    const view = render(<AliasesListEntry alias={'mock-alias-primary'} />)
+    expect(view.container).toMatchSnapshot()
+    const buttonRemove = await screen.findByTestId('aliasButtonRemove')
+    expect(buttonRemove).toBeDisabled()
   })
 })

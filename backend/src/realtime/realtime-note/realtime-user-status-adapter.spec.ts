@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -162,6 +162,33 @@ describe('realtime user status adapter', () => {
     messageTransporterDecline.markAsReady();
 
     jest.advanceTimersByTime(500);
+  });
+
+  afterEach(() => {
+    // Disconnect all message transporters to remove event listeners
+    messageTransporterLoggedIn1.disconnect();
+    messageTransporterLoggedIn2.disconnect();
+    messageTransporterGuest.disconnect();
+    messageTransporterNotReady.disconnect();
+    messageTransporterDecline.disconnect();
+
+    clientLoggedIn1 = undefined;
+    clientLoggedIn2 = undefined;
+    clientGuest = undefined;
+    clientNotReady = undefined;
+    clientDecline = undefined;
+
+    clientLoggedIn1SendMessageSpy?.mockRestore();
+    clientLoggedIn2SendMessageSpy?.mockRestore();
+    clientGuestSendMessageSpy?.mockRestore();
+    clientNotReadySendMessageSpy?.mockRestore();
+    clientDeclineSendMessageSpy?.mockRestore();
+
+    clientLoggedIn1SendMessageSpy = undefined as unknown as SendMessageSpy;
+    clientLoggedIn2SendMessageSpy = undefined as unknown as SendMessageSpy;
+    clientGuestSendMessageSpy = undefined as unknown as SendMessageSpy;
+    clientNotReadySendMessageSpy = undefined as unknown as SendMessageSpy;
+    clientDeclineSendMessageSpy = undefined as unknown as SendMessageSpy;
   });
 
   it('can answer a state request', () => {

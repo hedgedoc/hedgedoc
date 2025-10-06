@@ -72,7 +72,7 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
         )}
         <Button
           variant='danger'
-          disabled={!isOwner}
+          disabled={!isOwner || alias === primaryAlias}
           title={removeAliasText}
           onClick={onRemoveClick}
           {...testId('aliasButtonRemove')}>

@@ -8,6 +8,16 @@ import mockedEnv from 'mocked-env';
 import authConfig from './auth.config';
 import { Theme } from './theme.enum';
 
+jest.mock('fs', () => ({
+  existsSync: jest.fn((fileName) => fileName === './test.pem'),
+  readFileSync: jest.fn((fileName, encoding) => {
+    if (fileName === './test.pem' && encoding === 'utf8') {
+      return 'test-cert\n';
+    }
+    throw new Error('File not found');
+  }),
+}));
+
 describe('authConfig', () => {
   const secret = 'this-is-a-secret';
   const neededAuthConfig = {
@@ -167,7 +177,7 @@ describe('authConfig', () => {
     const profilePictureField = 'non_default_profile_picture';
     const bindDn = 'cn=admin,dc=planetexpress,dc=com';
     const bindCredentials = 'GoodNewsEveryone';
-    const tlsCa = ['./test/private-api/fixtures/hedgedoc.pem'];
+    const tlsCa = ['./test.pem'];
     const tlsCaContent = ['test-cert\n'];
     const completeLdapConfig = {
       /* eslint-disable @typescript-eslint/naming-convention */

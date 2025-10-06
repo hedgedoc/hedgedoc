@@ -6,14 +6,14 @@ exports[`AliasesList renders the AliasList sorted 1`] = `
     Alias: 
     a-test
      (
-    non-primary
+    primary
     )
   </span>
   <span>
     Alias: 
     b-test
      (
-    primary
+    non-primary
     )
   </span>
   <span>

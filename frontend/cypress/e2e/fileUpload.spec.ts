@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -90,10 +90,9 @@ describe('File upload', () => {
         },
         { force: true }
       )
-      cy.get('.cm-line')
-        .should(($el) => {
-          expect($el.text().trim()).equal('')
-        })
+      cy.get('.cm-line').should(($el) => {
+        expect($el.text().trim()).equal('')
+      })
       cy.getByCypressId('notification-toast').should('be.visible')
     })
 
@@ -117,10 +116,9 @@ describe('File upload', () => {
         },
         { force: true }
       )
-      cy.get('.cm-line')
-        .should(($el) => {
-          expect($el.text().trim()).equal('')
-        })
+      cy.get('.cm-line').should(($el) => {
+        expect($el.text().trim()).equal('')
+      })
       cy.getByCypressId('notification-toast').should('be.visible')
     })
   })
