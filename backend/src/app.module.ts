@@ -60,7 +60,7 @@ const routes: Routes = [
   imports: [
     RouterModule.register(routes),
     KnexModule.forRootAsync({
-      imports: [ConfigModule, LoggerModule],
+      imports: [],
       inject: [databaseConfig.KEY, KnexLoggerService],
       useFactory: (
         databaseConfig: PostgresDatabaseConfig,

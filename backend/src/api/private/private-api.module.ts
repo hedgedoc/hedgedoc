@@ -10,7 +10,6 @@ import { ApiTokenModule } from '../../api-token/api-token.module';
 import { AuthModule } from '../../auth/auth.module';
 import { FrontendConfigModule } from '../../frontend-config/frontend-config.module';
 import { GroupsModule } from '../../groups/groups.module';
-import { LoggerModule } from '../../logger/logger.module';
 import { MediaModule } from '../../media/media.module';
 import { NoteModule } from '../../notes/note.module';
 import { PermissionsModule } from '../../permissions/permissions.module';
@@ -32,7 +31,6 @@ import { UsersController } from './users/users.controller';
 
 @Module({
   imports: [
-    LoggerModule,
     UsersModule,
     ApiTokenModule,
     FrontendConfigModule,
