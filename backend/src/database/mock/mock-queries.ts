@@ -48,9 +48,8 @@ export function mockSelect(
     ? where.map((w) => `"${w}"`).join('.*')
     : `"${where}"`;
   const regex = `select(?: distinct)? ${selection} from "${table}" ${joinStatement}where .*${whereClause}.*`;
-  console.debug(regex);
   const selectRegex = new RegExp(regex);
-  tracker.on.select(selectRegex).response(returnValue);
+  tracker.on.select(selectRegex).responseOnce(returnValue);
 }
 
 export function mockInsert(
@@ -62,8 +61,7 @@ export function mockInsert(
   const insertRegex = new RegExp(
     `insert into "${table}" \\(${variables.map((v) => `"${v}"`).join(', ')}\\) values .*`,
   );
-  //console.debug(insertRegex);
-  tracker.on.insert(insertRegex).response(returnValue);
+  tracker.on.insert(insertRegex).responseOnce(returnValue);
 }
 
 export function mockUpdate(
@@ -74,9 +72,8 @@ export function mockUpdate(
   numberUpdatedEntries: number | unknown[] = 1,
 ): void {
   const regex = `update "${table}" set ${variables.map((v) => `"${v}" = (?:CURRENT_TIMESTAMP|\\$\\d+)`).join(', ')} where.*${where}.*`;
-  //console.debug(regex);
   const updateRegex = new RegExp(regex);
-  tracker.on.update(updateRegex).response(numberUpdatedEntries);
+  tracker.on.update(updateRegex).responseOnce(numberUpdatedEntries);
 }
 
 export function mockDelete(
@@ -88,6 +85,5 @@ export function mockDelete(
   const deleteRegex = new RegExp(
     `delete from "${table}" where ${wheres.map((w) => `"${w}"`).join('.*')}.*`,
   );
-  //console.debug(deleteRegex);
-  tracker.on.delete(deleteRegex).response(numberDeletedEntries);
+  tracker.on.delete(deleteRegex).responseOnce(numberDeletedEntries);
 }
