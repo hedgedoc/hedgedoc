@@ -7,8 +7,6 @@ import { MediaBackendType } from '@hedgedoc/commons';
 import { HttpAdapterHost } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { WsAdapter } from '@nestjs/platform-ws';
-import { Knex } from 'knex';
-import { getConnectionToken } from 'nest-knexjs';
 
 import { AppConfig } from './config/app.config';
 import { AuthConfig } from './config/auth.config';
@@ -45,9 +43,7 @@ export async function setupApp(
     );
   }
 
-  const knexConnectionToken = getConnectionToken();
-  const knex: Knex = app.get<Knex>(knexConnectionToken);
-  await runMigrations(knex, logger);
+  await runMigrations(app, logger);
 
   // Setup session handling
   setupSessionMiddleware(
