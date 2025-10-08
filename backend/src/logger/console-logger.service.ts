@@ -16,8 +16,15 @@ import { blue, cyanBright, green, magentaBright, red, yellow } from 'cli-color';
 import appConfiguration, { AppConfig } from '../config/app.config';
 import { Loglevel } from '../config/loglevel.enum';
 import { needToLog } from '../config/utils';
+import { isDevMode } from '../utils/dev-mode';
 
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions;
+
+const CONTEXTS_TO_IGNORE = [
+  'RouterExplorer',
+  'RoutesResolver',
+  'InstanceLoader',
+];
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class ConsoleLoggerService implements LoggerService {
@@ -61,6 +68,13 @@ export class ConsoleLoggerService implements LoggerService {
   }
 
   log(message: unknown, functionContext?: string, classContext?: string): void {
+    if (
+      !isDevMode() &&
+      functionContext &&
+      CONTEXTS_TO_IGNORE.includes(functionContext)
+    ) {
+      return;
+    }
     if (needToLog(this.appConfig.loglevel, Loglevel.INFO)) {
       this.printMessage(
         message,
