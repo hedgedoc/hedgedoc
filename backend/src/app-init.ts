@@ -15,6 +15,7 @@ import { ErrorExceptionMapping } from './errors/error-mapping';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 import { runMigrations } from './migrate';
 import { SessionService } from './sessions/session.service';
+import { isDevMode } from './utils/dev-mode';
 import { setupSessionMiddleware } from './utils/session';
 import { setupValidationPipe } from './utils/setup-pipes';
 import { setupPrivateApiDocs, setupPublicApiDocs } from './utils/swagger';
@@ -35,7 +36,7 @@ export async function setupApp(
     `Serving OpenAPI docs for public API under '/api/doc/v2'`,
     'AppBootstrap',
   );
-  if (process.env.NODE_ENV === 'development') {
+  if (isDevMode()) {
     await setupPrivateApiDocs(app);
     logger.log(
       `Serving OpenAPI docs for private API under '/api/doc/private'`,
