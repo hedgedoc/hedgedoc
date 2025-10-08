@@ -5,12 +5,13 @@
  */
 import { forwardRef, Module } from '@nestjs/common';
 
+import { GroupsModule } from '../groups/groups.module';
 import { NoteModule } from '../notes/note.module';
 import { UsersModule } from '../users/users.module';
 import { PermissionService } from './permission.service';
 
 @Module({
-  imports: [forwardRef(() => NoteModule), UsersModule],
+  imports: [forwardRef(() => NoteModule), UsersModule, GroupsModule],
   exports: [PermissionService],
   providers: [PermissionService],
 })

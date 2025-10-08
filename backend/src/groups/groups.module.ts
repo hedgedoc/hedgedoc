@@ -5,10 +5,11 @@
  */
 import { Module } from '@nestjs/common';
 
+import { UsersModule } from '../users/users.module';
 import { GroupsService } from './groups.service';
 
 @Module({
-  imports: [],
+  imports: [UsersModule],
   providers: [GroupsService],
   exports: [GroupsService],
 })

@@ -6,14 +6,12 @@
 import { NotePermissionsDto, PermissionLevel } from '@hedgedoc/commons';
 import {
   FieldNameGroup,
-  FieldNameGroupUser,
   FieldNameMediaUpload,
   FieldNameNote,
   FieldNameNoteGroupPermission,
   FieldNameNoteUserPermission,
   FieldNameUser,
   TableGroup,
-  TableGroupUser,
   TableMediaUpload,
   TableNote,
   TableNoteGroupPermission,
@@ -32,6 +30,7 @@ import {
   PermissionError,
 } from '../errors/errors';
 import { NoteEvent, NoteEventMap } from '../events';
+import { GroupsService } from '../groups/groups.service';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { UsersService } from '../users/users.service';
 import { convertEditabilityToPermissionLevel } from './utils/convert-editability-to-permission-level';
@@ -49,6 +48,9 @@ export class PermissionService {
 
     @Inject()
     private userService: UsersService,
+
+    @Inject()
+    private groupsService: GroupsService,
 
     private eventEmitter: EventEmitter2<NoteEventMap>,
   ) {}
@@ -194,46 +196,49 @@ export class PermissionService {
       // Determine GroupPermission
       let groupPermission: PermissionLevel;
 
-      // 1. Get all groups the user is member of
-      const groupsOfUser = await transaction(TableGroupUser)
-        .select(FieldNameGroupUser.groupId)
-        .where(FieldNameGroupUser.userId, userId);
-      if (groupsOfUser === undefined) {
-        // If the user is not a member of any group, they cannot have permissions
+      // 1. Get all groups the user is a member of
+      const groupsOfUser = await this.groupsService.getGroupsForUser(
+        userId,
+        transaction,
+      );
+      const groupIds = groupsOfUser.map(
+        (groupOfUser) => groupOfUser[FieldNameGroup.id],
+      );
+
+      // 2. Get all permissions on the note for groups the user is member of
+      const groupPermissions = await transaction(TableNoteGroupPermission)
+        .select(FieldNameNoteGroupPermission.canEdit)
+        .whereIn(FieldNameNoteGroupPermission.groupId, groupIds)
+        .andWhere(FieldNameNoteGroupPermission.noteId, noteId);
+      if (groupPermissions.length === 0) {
+        // If there are no permissions for the groups, the user cannot have permissions
         groupPermission = PermissionLevel.DENY;
       } else {
-        const groupIds = groupsOfUser.map(
-          (groupOfUser) => groupOfUser[FieldNameGroupUser.groupId],
-        );
-
-        // 2. Get all permissions on the note for groups the user is member of
-        const groupPermissions = await transaction(TableNoteGroupPermission)
-          .select(FieldNameNoteGroupPermission.canEdit)
-          .whereIn(FieldNameNoteGroupPermission.groupId, groupIds)
-          .andWhere(FieldNameNoteGroupPermission.noteId, noteId);
-        if (groupPermissions === undefined) {
-          // If there are no permissions for the groups, the user cannot have permissions
-          groupPermission = PermissionLevel.DENY;
-        } else {
-          const permissionLevels = groupPermissions.map((permission) =>
-            convertEditabilityToPermissionLevel(
-              permission[FieldNameNoteGroupPermission.canEdit],
-            ),
+        const permissionLevels = groupPermissions.map((permission) => {
+          if (permission === undefined) {
+            return PermissionLevel.DENY;
+          }
+          return convertEditabilityToPermissionLevel(
+            permission[FieldNameNoteGroupPermission.canEdit],
           );
-          groupPermission = Math.max(...permissionLevels);
-        }
+        });
+        groupPermission = Math.max(...permissionLevels);
       }
 
       const isRegisteredUser = await this.userService.isRegisteredUser(
         userId,
         transaction,
       );
+
+      // 3. If the user is a guest user, the highest permission level is the max guest permission
       if (!isRegisteredUser) {
         const maxGuestPermission = this.noteConfig.permissions.maxGuestLevel;
-        return maxGuestPermission > groupPermission
+        return groupPermission > maxGuestPermission
           ? maxGuestPermission
           : groupPermission;
       }
+
+      // 4. Use the highest permission available
       return groupPermission > userPermission
         ? groupPermission
         : userPermission;
@@ -261,12 +266,12 @@ export class PermissionService {
     userId: number,
     canEdit: boolean,
   ): Promise<void> {
-    const isOwner = await this.isOwner(userId, noteId);
-    if (isOwner) {
-      // If the user is the owner, they always have full permissions
-      return;
-    }
     await this.knex.transaction(async (transaction) => {
+      const isOwner = await this.isOwner(userId, noteId, transaction);
+      if (isOwner) {
+        // If the user is the owner, they always have full permissions
+        return;
+      }
       const isRegisteredUser = await this.userService.isRegisteredUser(
         userId,
         transaction,
@@ -278,7 +283,7 @@ export class PermissionService {
           'setUserPermission',
         );
       }
-      await this.knex(TableNoteUserPermission)
+      await transaction(TableNoteUserPermission)
         .insert({
           [FieldNameNoteUserPermission.userId]: userId,
           [FieldNameNoteUserPermission.noteId]: noteId,
