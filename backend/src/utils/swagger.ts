@@ -10,6 +10,9 @@ import { PrivateApiModule } from '../api/private/private-api.module';
 import { PublicApiModule } from '../api/public/public-api.module';
 import { getServerVersionFromPackageJson } from './server-version';
 
+export const PUBLIC_API_PATH = 'api/doc/v2';
+export const PRIVATE_API_PATH = 'api/doc/private';
+
 /**
  * Sets up the public API documentation for HedgeDoc.
  *
@@ -28,7 +31,7 @@ export async function setupPublicApiDocs(app: INestApplication): Promise<void> {
   const publicApi = SwaggerModule.createDocument(app, publicApiOptions, {
     include: [PublicApiModule],
   });
-  SwaggerModule.setup('api/doc/v2', app, publicApi);
+  SwaggerModule.setup(PUBLIC_API_PATH, app, publicApi);
 }
 
 /**
@@ -48,5 +51,5 @@ export async function setupPrivateApiDocs(
   const privateApi = SwaggerModule.createDocument(app, privateApiOptions, {
     include: [PrivateApiModule],
   });
-  SwaggerModule.setup('api/doc/private', app, privateApi);
+  SwaggerModule.setup(PRIVATE_API_PATH, app, privateApi);
 }
