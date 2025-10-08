@@ -39,6 +39,7 @@ async function bootstrap(): Promise<void> {
 
   if (!appConfig || !authConfig || !mediaConfig) {
     logger.error('Could not initialize config, aborting.', 'AppBootstrap');
+    await app.close();
     process.exit(1);
   }
 
