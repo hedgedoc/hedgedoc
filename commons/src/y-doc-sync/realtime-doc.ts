@@ -39,21 +39,11 @@ export class RealtimeDoc extends EventEmitter2<RealtimeDocEvents> {
    */
   constructor(initialTextContent?: string, initialYjsState?: number[]) {
     super()
-    console.debug(
-      'Creating new RealtimeDoc',
-      'initialYjsState',
-      initialYjsState,
-      'initialTextContent',
-      initialTextContent,
-    )
     if (initialYjsState !== undefined) {
-      console.debug('Applying update')
       this.applyUpdate(initialYjsState, this)
     } else if (initialTextContent !== undefined) {
-      console.debug('Setting initial text content')
       this.getMarkdownContentChannel().insert(0, initialTextContent)
     }
-    console.debug('Setting up listeners')
 
     this.docUpdateListener = (update, origin) => {
       this.emit('update', Array.from(update), origin)
