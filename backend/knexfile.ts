@@ -12,6 +12,7 @@ const config: { [key: string]: Knex.Config } = {
     connection: {
       filename: './hedgedoc.sqlite',
     },
+    useNullAsDefault: true,
     migrations: {
       directory: './src/database/migrations',
     },

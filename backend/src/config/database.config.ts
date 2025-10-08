@@ -84,6 +84,7 @@ export function getKnexConfig(databaseConfig: DatabaseConfig): Knex.Config {
         connection: {
           filename: databaseConfig.name,
         },
+        useNullAsDefault: true,
       };
     case DatabaseType.POSTGRES:
       return {
