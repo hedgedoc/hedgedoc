@@ -1,12 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { forwardRef, Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
 
-import { LoggerModule } from '../../logger/logger.module';
 import { PermissionsModule } from '../../permissions/permissions.module';
 import { RevisionsModule } from '../../revisions/revisions.module';
 import { SessionModule } from '../../sessions/session.module';
@@ -16,7 +15,6 @@ import { RealtimeNoteService } from './realtime-note.service';
 
 @Module({
   imports: [
-    LoggerModule,
     UsersModule,
     forwardRef(() => PermissionsModule),
     SessionModule,

@@ -1,13 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 
 import { ConsoleLoggerService } from './console-logger.service';
 import { KnexLoggerService } from './knex-logger.service';
 
+@Global()
 @Module({
   providers: [ConsoleLoggerService, KnexLoggerService],
   exports: [ConsoleLoggerService, KnexLoggerService],

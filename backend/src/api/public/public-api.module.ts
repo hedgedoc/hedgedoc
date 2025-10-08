@@ -8,7 +8,6 @@ import { Module } from '@nestjs/common';
 import { AliasModule } from '../../alias/alias.module';
 import { ApiTokenModule } from '../../api-token/api-token.module';
 import { GroupsModule } from '../../groups/groups.module';
-import { LoggerModule } from '../../logger/logger.module';
 import { MediaModule } from '../../media/media.module';
 import { MonitoringModule } from '../../monitoring/monitoring.module';
 import { NoteModule } from '../../notes/note.module';
@@ -29,7 +28,6 @@ import { NotesController } from './notes/notes.controller';
     AliasModule,
     RevisionsModule,
     MonitoringModule,
-    LoggerModule,
     MediaModule,
     PermissionsModule,
     NoteModule,

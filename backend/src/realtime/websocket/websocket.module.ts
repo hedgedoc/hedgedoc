@@ -6,7 +6,6 @@
 import { Module } from '@nestjs/common';
 
 import { AliasModule } from '../../alias/alias.module';
-import { LoggerModule } from '../../logger/logger.module';
 import { NoteModule } from '../../notes/note.module';
 import { PermissionsModule } from '../../permissions/permissions.module';
 import { SessionModule } from '../../sessions/session.module';
@@ -16,7 +15,6 @@ import { WebsocketGateway } from './websocket.gateway';
 
 @Module({
   imports: [
-    LoggerModule,
     AliasModule,
     RealtimeNoteModule,
     NoteModule,

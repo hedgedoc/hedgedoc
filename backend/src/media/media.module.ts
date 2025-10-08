@@ -4,10 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { KnexModule } from 'nest-knexjs';
 
-import { LoggerModule } from '../logger/logger.module';
 import { AzureBackend } from './backends/azure-backend';
 import { FilesystemBackend } from './backends/filesystem-backend';
 import { ImgurBackend } from './backends/imgur-backend';
@@ -16,7 +13,7 @@ import { WebdavBackend } from './backends/webdav-backend';
 import { MediaService } from './media.service';
 
 @Module({
-  imports: [LoggerModule, ConfigModule, KnexModule],
+  imports: [],
   providers: [
     MediaService,
     FilesystemBackend,
