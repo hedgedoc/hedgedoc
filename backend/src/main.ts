@@ -14,18 +14,21 @@ import { AuthConfig } from './config/auth.config';
 import { Loglevel } from './config/loglevel.enum';
 import { MediaConfig } from './config/media.config';
 import { ConsoleLoggerService } from './logger/console-logger.service';
+import { isDevMode } from './utils/dev-mode';
 
 async function bootstrap(): Promise<void> {
   // Initialize AppModule
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     // ConsoleLoggerService only uses the loglevel, so we can give it an incomplete AppConfig to log everything
     // This Logger instance will be replaced by a proper one with config from DI below
-    logger: new ConsoleLoggerService({ loglevel: Loglevel.TRACE } as AppConfig),
+    logger: isDevMode()
+      ? new ConsoleLoggerService({ loglevel: Loglevel.TRACE } as AppConfig)
+      : false,
   });
 
   // Set up our custom logger
   const logger = await app.resolve(ConsoleLoggerService);
-  logger.log('Switching logger', 'AppBootstrap');
+  logger.debug('Switching logger', 'AppBootstrap');
   app.useLogger(logger);
 
   // Initialize config and abort if we don't have a valid config
