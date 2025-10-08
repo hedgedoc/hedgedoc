@@ -6,14 +6,12 @@
 import { PermissionLevel } from '@hedgedoc/commons';
 import {
   FieldNameGroup,
-  FieldNameGroupUser,
   FieldNameMediaUpload,
   FieldNameNote,
   FieldNameNoteGroupPermission,
   FieldNameNoteUserPermission,
   FieldNameUser,
   TableGroup,
-  TableGroupUser,
   TableMediaUpload,
   TableNote,
   TableNoteGroupPermission,
@@ -56,10 +54,12 @@ import { RealtimeNoteStore } from '../realtime/realtime-note/realtime-note-store
 import { RevisionsService } from '../revisions/revisions.service';
 import { UsersService } from '../users/users.service';
 import { PermissionService } from './permission.service';
+import { determinePermissionTestCases } from './test/determine-permission.fixture';
 
 describe('PermissionsService', () => {
   let service: PermissionService;
-  let userService: UsersService;
+  let usersService: UsersService;
+  let groupsService: GroupsService;
   const noteMockConfig: NoteConfig = createDefaultMockNoteConfig();
   let tracker: Tracker;
   let knexProvider: Provider;
@@ -72,6 +72,8 @@ describe('PermissionsService', () => {
   const mockGroupName1 = 'TestGroup1';
   const mockMediaUploadUuid = '15207877-0780-4567-9f39-1082e6391afb';
   const mockNoteId = 42;
+  const mockGroupIdEveryone = 100;
+  const mockGroupIdLoggedIn = 101;
 
   beforeAll(async () => {
     [tracker, knexProvider] = mockKnexDb();
@@ -103,7 +105,8 @@ describe('PermissionsService', () => {
     }).compile();
 
     service = module.get<PermissionService>(PermissionService);
-    userService = module.get<UsersService>(UsersService);
+    usersService = module.get<UsersService>(UsersService);
+    groupsService = module.get<GroupsService>(GroupsService);
   });
 
   beforeEach(() => {});
@@ -239,7 +242,7 @@ describe('PermissionsService', () => {
     let spyUserServiceIsRegisteredUser: jest.SpyInstance;
     beforeEach(() => {
       spyUserServiceIsRegisteredUser = jest.spyOn(
-        userService,
+        usersService,
         'isRegisteredUser',
       );
     });
@@ -261,196 +264,102 @@ describe('PermissionsService', () => {
 
   describe('determinePermission', () => {
     let spyOnPermissionsServiceIsOwner: jest.SpyInstance;
-    let spyOnUserServerIsRegisteredUser: jest.SpyInstance;
+    let spyOnUserServiceIsRegisteredUser: jest.SpyInstance;
+    let spyOnGroupServiceGetGroupsForUser: jest.SpyInstance;
 
     beforeEach(() => {
       spyOnPermissionsServiceIsOwner = jest.spyOn(service, 'isOwner');
-      spyOnUserServerIsRegisteredUser = jest.spyOn(
-        userService,
+      spyOnUserServiceIsRegisteredUser = jest.spyOn(
+        usersService,
         'isRegisteredUser',
       );
+      spyOnGroupServiceGetGroupsForUser = jest.spyOn(
+        groupsService,
+        'getGroupsForUser',
+      );
     });
 
-    it('for the owner', async () => {
-      spyOnPermissionsServiceIsOwner.mockResolvedValue(true);
-      expect(
-        await service.determinePermission(mockUserId1, mockNoteId),
-      ).toEqual(PermissionLevel.FULL);
+    afterEach(() => {
+      jest.restoreAllMocks();
     });
 
-    // eslint-disable-next-line func-style
-    const buildUserPermissionsMockSelect = (returnValues: unknown) => {
-      mockSelect(
-        tracker,
-        [FieldNameNoteUserPermission.canEdit],
-        TableNoteUserPermission,
-        [
-          FieldNameNoteUserPermission.noteId,
-          FieldNameNoteUserPermission.userId,
-        ],
-        returnValues,
-      );
-    };
-
-    // eslint-disable-next-line func-style
-    const buildGroupPermissionsMockSelect = (
-      groupIds: number[],
-      returnValues: unknown,
-    ) => {
-      const groupIdRows = groupIds.map((value) => ({
-        [FieldNameGroupUser.groupId]: value,
-      }));
-      mockSelect(
-        tracker,
-        [FieldNameGroupUser.groupId],
-        TableGroupUser,
-        [FieldNameGroupUser.userId],
-        groupIdRows,
-      );
-      mockSelect(
-        tracker,
-        [FieldNameNoteGroupPermission.canEdit],
-        TableNoteGroupPermission,
-        [
-          FieldNameNoteGroupPermission.groupId,
-          FieldNameNoteGroupPermission.noteId,
-        ],
-        returnValues,
-      );
-    };
-
-    // eslint-disable-next-line func-style
-    const calculateExpectedPermission = (
-      userPermission: PermissionLevel | undefined,
-      groupPermission: PermissionLevel | undefined,
-    ) => {
-      const expectedUserPermissionLevel =
-        userPermission ?? PermissionLevel.DENY;
-      const expectedGroupPermissionLevel =
-        groupPermission ?? PermissionLevel.DENY;
-      console.debug(
-        `expectedUserPermissionLevel ${expectedUserPermissionLevel}`,
-      );
-      console.debug(
-        `expectedGroupPermissionLevel ${expectedGroupPermissionLevel}`,
-      );
-      if (expectedUserPermissionLevel >= expectedGroupPermissionLevel) {
-        return expectedUserPermissionLevel;
-      } else {
-        return expectedGroupPermissionLevel;
-      }
-    };
-
-    describe('for non-owner', () => {
-      beforeEach(() => {
-        spyOnPermissionsServiceIsOwner.mockResolvedValue(false);
-        spyOnUserServerIsRegisteredUser.mockResolvedValue(true);
-      });
-      describe.each([undefined, PermissionLevel.READ, PermissionLevel.WRITE])(
-        'as user with user permission level %s',
-        (userPermissionLevel: number | undefined) => {
-          beforeEach(() => {
-            if (userPermissionLevel === undefined) {
-              buildUserPermissionsMockSelect(userPermissionLevel);
-            } else {
-              buildUserPermissionsMockSelect([
-                {
-                  [FieldNameNoteUserPermission.canEdit]:
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-                    userPermissionLevel >= PermissionLevel.WRITE,
+    for (const testCase of determinePermissionTestCases) {
+      // eslint-disable-next-line jest/valid-title
+      it(testCase.description, async () => {
+        // Owner
+        spyOnPermissionsServiceIsOwner.mockResolvedValue(testCase.isOwner);
+        // RegisteredUser
+        spyOnUserServiceIsRegisteredUser.mockResolvedValue(
+          testCase.isRegisteredUser,
+        );
+        // maxGuestPermission
+        noteMockConfig.permissions.maxGuestLevel = testCase.maxGuestLevel;
+        // UserPermissions
+        mockSelect(
+          tracker,
+          [FieldNameNoteUserPermission.canEdit],
+          TableNoteUserPermission,
+          [
+            FieldNameNoteUserPermission.noteId,
+            FieldNameNoteUserPermission.userId,
+          ],
+          testCase.userPermission === PermissionLevel.DENY
+            ? undefined
+            : {
+                [FieldNameNoteUserPermission.canEdit]:
+                  testCase.userPermission >= PermissionLevel.WRITE,
+              },
+        );
+        // Groups
+        spyOnGroupServiceGetGroupsForUser.mockImplementation(() => {
+          const alwaysAvailableGroups = [
+            { [FieldNameGroup.id]: mockGroupIdEveryone },
+            { [FieldNameGroup.id]: mockGroupId1 },
+          ];
+          const loggedInGroup = {
+            [FieldNameGroup.id]: mockGroupIdLoggedIn,
+          };
+          if (testCase.isRegisteredUser) {
+            return [...alwaysAvailableGroups, loggedInGroup];
+          }
+          return alwaysAvailableGroups;
+        });
+        // GroupPermissions
+        mockSelect(
+          tracker,
+          [FieldNameNoteGroupPermission.canEdit],
+          TableNoteGroupPermission,
+          [
+            FieldNameNoteGroupPermission.groupId,
+            FieldNameNoteGroupPermission.noteId,
+          ],
+          [
+            testCase.everyoneGroupPermission === PermissionLevel.DENY
+              ? undefined
+              : {
+                  [FieldNameNoteGroupPermission.canEdit]:
+                    testCase.everyoneGroupPermission >= PermissionLevel.WRITE,
                 },
-              ]);
-            }
-          });
-          describe.each([
-            undefined,
-            PermissionLevel.READ,
-            PermissionLevel.WRITE,
-          ])(
-            'with group permission level %s',
-            (groupPermissionLevel: number | undefined) => {
-              beforeEach(() => {
-                if (groupPermissionLevel === undefined) {
-                  buildGroupPermissionsMockSelect(
-                    [mockGroupId1],
-                    groupPermissionLevel,
-                  );
-                } else {
-                  buildGroupPermissionsMockSelect(
-                    [mockGroupId1],
-                    [
-                      {
-                        [FieldNameNoteGroupPermission.canEdit]:
-                          // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-                          groupPermissionLevel >= PermissionLevel.WRITE,
-                      },
-                    ],
-                  );
-                }
-              });
-              const expectedResult = calculateExpectedPermission(
-                userPermissionLevel,
-                groupPermissionLevel,
-              );
-              it(`will result into ${PermissionLevel[expectedResult]}`, async () => {
-                expect(
-                  await service.determinePermission(mockUserId1, mockNoteId),
-                ).toEqual(expectedResult);
-                const bindings = [[mockNoteId, mockUserId1, IS_FIRST]];
-                if (userPermissionLevel !== PermissionLevel.WRITE) {
-                  // eslint-disable-next-line jest/no-conditional-expect
-                  expect(spyOnUserServerIsRegisteredUser).toHaveBeenCalledWith(
-                    mockUserId1,
-                    // eslint-disable-next-line jest/no-conditional-expect
-                    expect.anything(),
-                  );
-                  bindings.push([mockUserId1], [mockGroupId1, mockNoteId]);
-                }
-                expectBindings(tracker, 'select', bindings);
-              });
-            },
-          );
-        },
-      );
-    });
-
-    describe('for non-registered user', () => {
-      beforeEach(() => {
-        spyOnPermissionsServiceIsOwner.mockResolvedValue(false);
-        spyOnUserServerIsRegisteredUser.mockResolvedValue(false);
-        noteMockConfig.permissions.maxGuestLevel = PermissionLevel.READ;
+            testCase.groupPermission === PermissionLevel.DENY
+              ? undefined
+              : {
+                  [FieldNameNoteGroupPermission.canEdit]:
+                    testCase.groupPermission >= PermissionLevel.WRITE,
+                },
+            testCase.loggedInUserPermission === PermissionLevel.DENY ||
+            !testCase.isRegisteredUser
+              ? undefined
+              : {
+                  [FieldNameNoteGroupPermission.canEdit]:
+                    testCase.loggedInUserPermission >= PermissionLevel.WRITE,
+                },
+          ],
+        );
+        expect(
+          await service.determinePermission(mockUserId1, mockNoteId),
+        ).toEqual(testCase.result);
       });
-      describe.each([undefined, PermissionLevel.READ, PermissionLevel.WRITE])(
-        'with group permission level %s',
-        (groupPermissionLevel: number | undefined) => {
-          beforeEach(() => {
-            buildUserPermissionsMockSelect([undefined]);
-            if (groupPermissionLevel === undefined) {
-              buildGroupPermissionsMockSelect(
-                [mockGroupId1],
-                groupPermissionLevel,
-              );
-            } else {
-              buildGroupPermissionsMockSelect(
-                [mockGroupId1],
-                [
-                  {
-                    [FieldNameNoteGroupPermission.canEdit]:
-                      // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-                      groupPermissionLevel >= PermissionLevel.WRITE,
-                  },
-                ],
-              );
-            }
-          });
-          it('and maxGuestPermission READ', async () => {
-            expect(
-              await service.determinePermission(mockUserId1, mockNoteId),
-            ).toEqual(groupPermissionLevel ?? PermissionLevel.READ);
-          });
-        },
-      );
-    });
+    }
   });
 
   describe('setUserPermission', () => {
@@ -467,7 +376,7 @@ describe('PermissionsService', () => {
       let spyOnIsRegisteredUser: jest.SpyInstance;
       beforeEach(() => {
         spyOnIsOwner.mockResolvedValue(false);
-        spyOnIsRegisteredUser = jest.spyOn(userService, 'isRegisteredUser');
+        spyOnIsRegisteredUser = jest.spyOn(usersService, 'isRegisteredUser');
       });
       it('and not a registered user', async () => {
         spyOnIsRegisteredUser.mockResolvedValue(false);

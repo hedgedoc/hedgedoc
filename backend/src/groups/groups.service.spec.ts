@@ -3,7 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { FieldNameGroup, TableGroup } from '@hedgedoc/database';
+import {
+  FieldNameGroup,
+  FieldNameGroupUser,
+  Group,
+  TableGroup,
+  TableGroupUser,
+} from '@hedgedoc/database';
 import { Provider } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -16,6 +22,7 @@ import { mockInsert, mockSelect } from '../database/mock/mock-queries';
 import { mockKnexDb } from '../database/mock/provider';
 import { AlreadyInDBError, NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
+import { UsersService } from '../users/users.service';
 import { GroupsService } from './groups.service';
 
 describe('GroupsService', () => {
@@ -24,6 +31,7 @@ describe('GroupsService', () => {
   const groupId = 42;
 
   let service: GroupsService;
+  let usersService: UsersService;
   let tracker: Tracker;
   let knexProvider: Provider;
 
@@ -31,7 +39,7 @@ describe('GroupsService', () => {
     [tracker, knexProvider] = mockKnexDb();
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [GroupsService, knexProvider],
+      providers: [UsersService, GroupsService, knexProvider],
       imports: [
         LoggerModule,
         await ConfigModule.forRoot({
@@ -42,6 +50,7 @@ describe('GroupsService', () => {
     }).compile();
 
     service = module.get<GroupsService>(GroupsService);
+    usersService = module.get<UsersService>(UsersService);
   });
 
   afterEach(() => {
@@ -126,6 +135,88 @@ describe('GroupsService', () => {
         NotInDBError,
       );
       expectBindings(tracker, 'select', [[groupName]], true);
+    });
+  });
+
+  describe('getGroupsForUser', () => {
+    const mockEveryoneGroup: Group = {
+      [FieldNameGroup.id]: 1,
+      [FieldNameGroup.name]: 'EVERYONE',
+      [FieldNameGroup.displayName]: 'Everyone',
+      [FieldNameGroup.isSpecial]: true,
+    };
+    const mockLoggedInGroup: Group = {
+      [FieldNameGroup.id]: 2,
+      [FieldNameGroup.name]: 'LOGGED_IN',
+      [FieldNameGroup.displayName]: 'Logged-in',
+      [FieldNameGroup.isSpecial]: true,
+    };
+    const mockUserGroup1: Group = {
+      [FieldNameGroup.id]: 3,
+      [FieldNameGroup.name]: 'mock',
+      [FieldNameGroup.displayName]: 'Mock',
+      [FieldNameGroup.isSpecial]: false,
+    };
+
+    beforeEach(() => {
+      mockSelect(
+        tracker,
+        [],
+        TableGroup,
+        FieldNameGroup.name,
+        mockEveryoneGroup,
+      );
+    });
+
+    it('returns EVERYONE, LOGGED_IN, and user groups for registered user', async () => {
+      mockSelect(
+        tracker,
+        [],
+        TableGroup,
+        FieldNameGroupUser.userId,
+        [mockUserGroup1],
+        [
+          {
+            joinTable: TableGroupUser,
+            keyLeft: FieldNameGroupUser.groupId,
+            keyRight: FieldNameGroup.id,
+          },
+        ],
+      );
+      jest.spyOn(usersService, 'isRegisteredUser').mockResolvedValueOnce(true);
+      mockSelect(
+        tracker,
+        [],
+        TableGroup,
+        FieldNameGroup.name,
+        mockLoggedInGroup,
+      );
+      const result = await service.getGroupsForUser(123);
+      expect(result).toEqual([
+        mockEveryoneGroup,
+        mockLoggedInGroup,
+        mockUserGroup1,
+      ]);
+    });
+
+    it('returns EVERYONE and user groups for unregistered user', async () => {
+      mockSelect(
+        tracker,
+        [],
+        TableGroup,
+        FieldNameGroupUser.userId,
+        [mockUserGroup1],
+        [
+          {
+            joinTable: TableGroupUser,
+            keyLeft: FieldNameGroupUser.groupId,
+            keyRight: FieldNameGroup.id,
+          },
+        ],
+      );
+      jest.spyOn(usersService, 'isRegisteredUser').mockResolvedValueOnce(false);
+      const result = await service.getGroupsForUser(123);
+      expect(result).toEqual([mockEveryoneGroup, mockUserGroup1]);
     });
   });
 });
