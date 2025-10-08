@@ -166,6 +166,17 @@ describe('AliasService', () => {
           },
         ],
       );
+      mockUpdate(
+        tracker,
+        TableAlias,
+        [FieldNameAlias.isPrimary],
+        FieldNameAlias.noteId,
+        [
+          {
+            [FieldNameAlias.isPrimary]: null,
+          },
+        ],
+      );
       await expect(
         service.makeAliasPrimary(noteId1, 'i_dont_exist'),
       ).rejects.toThrow(NotInDBError);
