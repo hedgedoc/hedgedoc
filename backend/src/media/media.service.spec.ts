@@ -102,6 +102,7 @@ describe('MediaService', () => {
           FieldNameMediaUpload.fileName,
           FieldNameMediaUpload.noteId,
           FieldNameMediaUpload.userId,
+          FieldNameMediaUpload.uuid,
         ],
         [{ [FieldNameMediaUpload.uuid]: uuid }],
       );
@@ -128,7 +129,7 @@ describe('MediaService', () => {
       );
       expect(result).toBe(uuid);
       expectBindings(tracker, 'insert', [
-        [backendData, backendType, fileName, noteId, userId],
+        [backendData, backendType, fileName, noteId, userId, uuid],
       ]);
     });
 

@@ -58,7 +58,7 @@ type TypeMediaUploadDate = Omit<MediaUpload, FieldNameMediaUpload.createdAt> & {
 
 export type TypeInsertMediaUpload = Omit<
   TypeMediaUploadDate,
-  FieldNameMediaUpload.createdAt | FieldNameMediaUpload.uuid
+  FieldNameMediaUpload.createdAt
 >
 export type TypeUpdateMediaUpload = Pick<
   TypeMediaUploadDate,

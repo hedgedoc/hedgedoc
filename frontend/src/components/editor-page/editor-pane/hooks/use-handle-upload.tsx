@@ -61,7 +61,7 @@ export const useHandleUpload = (): handleUploadSignature => {
         return replaceSelection(cursorSelection ?? currentSelection, uploadPlaceholder, false)
       })
       uploadFile(noteAlias, file)
-        .then(({ uuid }) => {
+        .then((uuid) => {
           const fullUrl = `${baseUrl}media/${uuid}`
           const replacement = `![${description ?? file.name ?? ''}](${fullUrl}${additionalUrlText ?? ''})`
           changeContent(({ markdownContent }) => [
