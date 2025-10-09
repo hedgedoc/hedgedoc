@@ -97,7 +97,7 @@ export class MediaService {
     fileBuffer: Buffer,
     userId: User[FieldNameUser.id],
     noteId: Note[FieldNameNote.id],
-  ): Promise<MediaUpload[FieldNameMediaUpload.uuid]> {
+  ): Promise<string> {
     this.logger.debug(
       `Saving file for note '${noteId}' and user '${userId}'`,
       'saveFile',
@@ -115,17 +115,15 @@ export class MediaService {
       fileBuffer,
       fileTypeResult,
     );
-    const mediaUploads = await this.knex(TableMediaUpload).insert(
-      {
-        [FieldNameMediaUpload.fileName]: fileName,
-        [FieldNameMediaUpload.userId]: userId,
-        [FieldNameMediaUpload.noteId]: noteId,
-        [FieldNameMediaUpload.backendType]: this.mediaBackendType,
-        [FieldNameMediaUpload.backendData]: backendData,
-      },
-      [FieldNameMediaUpload.uuid],
-    );
-    return mediaUploads[0][FieldNameMediaUpload.uuid];
+    await this.knex(TableMediaUpload).insert({
+      [FieldNameMediaUpload.uuid]: uuid,
+      [FieldNameMediaUpload.fileName]: fileName,
+      [FieldNameMediaUpload.userId]: userId,
+      [FieldNameMediaUpload.noteId]: noteId,
+      [FieldNameMediaUpload.backendType]: this.mediaBackendType,
+      [FieldNameMediaUpload.backendData]: backendData,
+    });
+    return uuid;
   }
 
   /**

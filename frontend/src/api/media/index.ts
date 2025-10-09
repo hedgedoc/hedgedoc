@@ -6,7 +6,6 @@
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 import type { ImageProxyRequestDto, ImageProxyResponse } from './types'
-import type { MediaUploadDto } from '@hedgedoc/commons'
 
 /**
  * Requests an image-proxy URL from the backend for a given image URL.
@@ -25,21 +24,21 @@ export const getProxiedUrl = async (imageUrl: string): Promise<ImageProxyRespons
 }
 
 /**
- * Uploads a media file to the backend.
+ * Uploads a media file to the backend and returns the UUID of the uploaded media object.
  *
  * @param noteIdOrAlias The id or alias of the note from which the media is uploaded.
  * @param media The binary media content.
- * @return The URL of the uploaded media object.
+ * @return The UUID of the uploaded media object.
  * @throws {Error} when the api request wasn't successful.
  */
-export const uploadFile = async (noteIdOrAlias: string, media: File): Promise<MediaUploadDto> => {
+export const uploadFile = async (noteIdOrAlias: string, media: File): Promise<string> => {
   const postData = new FormData()
   postData.append('file', media)
-  const response = await new PostApiRequestBuilder<MediaUploadDto, void>('media')
+  const response = await new PostApiRequestBuilder<string, void>('media')
     .withHeader('HedgeDoc-Note', noteIdOrAlias)
     .withBody(postData)
     .sendRequest()
-  return response.asParsedJsonObject()
+  return response.getResponse().text()
 }
 
 /**
