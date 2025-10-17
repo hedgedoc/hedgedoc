@@ -5,10 +5,10 @@
  */
 import { userCanEdit, userIsOwner } from './permissions.js'
 import { describe, expect, it } from '@jest/globals'
-import { NotePermissionsDto, SpecialGroup } from '../dtos/index.js'
+import { NotePermissionsInterface, SpecialGroup } from '../dtos/index.js'
 
 describe('Permissions', () => {
-  const testPermissions: NotePermissionsDto = {
+  const testPermissions: NotePermissionsInterface = {
     owner: 'owner',
     sharedToUsers: [
       {

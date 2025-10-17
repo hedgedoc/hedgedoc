@@ -15,4 +15,4 @@ export const UpdatePasswordSchema = z
   })
   .describe('DTO to update the password of a local user account')
 
-export type UpdatePasswordDto = z.infer<typeof UpdatePasswordSchema>
+export type UpdatePasswordInterface = z.infer<typeof UpdatePasswordSchema>

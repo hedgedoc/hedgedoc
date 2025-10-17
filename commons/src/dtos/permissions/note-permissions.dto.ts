@@ -20,4 +20,4 @@ export const NotePermissionsSchema = z
   })
   .describe('Represents the permissions of a note')
 
-export type NotePermissionsDto = z.infer<typeof NotePermissionsSchema>
+export type NotePermissionsInterface = z.infer<typeof NotePermissionsSchema>

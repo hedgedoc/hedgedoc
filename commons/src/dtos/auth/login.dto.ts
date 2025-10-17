@@ -17,4 +17,4 @@ export const LoginSchema = z
   })
   .describe('DTO for the login form of local accounts')
 
-export type LoginDto = z.infer<typeof LoginSchema>
+export type LoginInterface = z.infer<typeof LoginSchema>

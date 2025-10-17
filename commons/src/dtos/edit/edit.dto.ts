@@ -25,4 +25,4 @@ export const EditSchema = z
   })
   .describe('A edit in a note by username from startPosition to endPosition.')
 
-export type EditDto = z.infer<typeof EditSchema>
+export type EditInterface = z.infer<typeof EditSchema>

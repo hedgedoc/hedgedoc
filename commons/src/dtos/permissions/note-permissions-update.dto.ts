@@ -18,6 +18,6 @@ export const NotePermissionsUpdateSchema = z
   })
   .describe('DTO to update the permissions of a note.')
 
-export type NotePermissionsUpdateDto = z.infer<
+export type NotePermissionsUpdateInterface = z.infer<
   typeof NotePermissionsUpdateSchema
 >

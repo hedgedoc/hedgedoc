@@ -14,4 +14,6 @@ export const PendingLdapUserInfoSchema = PendingUserInfoSchema.merge(
   'The full user information with id is only used during the LDAP login process',
 )
 
-export type PendingLdapUserInfoDto = z.infer<typeof PendingLdapUserInfoSchema>
+export type PendingLdapUserInfoInterface = z.infer<
+  typeof PendingLdapUserInfoSchema
+>

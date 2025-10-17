@@ -15,4 +15,4 @@ export const LogoutResponseSchema = z
   })
   .describe('Information the user gets after logging out.')
 
-export type LogoutResponseDto = z.infer<typeof LogoutResponseSchema>
+export type LogoutResponseInterface = z.infer<typeof LogoutResponseSchema>

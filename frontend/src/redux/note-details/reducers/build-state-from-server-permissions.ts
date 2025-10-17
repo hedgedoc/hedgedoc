@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { NoteDetails } from '../types'
-import type { NotePermissionsDto } from '@hedgedoc/commons'
+import type { NotePermissionsInterface } from '@hedgedoc/commons'
 
 /**
  * Builds the updated state from a given previous state and updated NotePermissions data.
@@ -13,7 +13,7 @@ import type { NotePermissionsDto } from '@hedgedoc/commons'
  */
 export const buildStateFromServerPermissions = (
   state: NoteDetails,
-  serverPermissions: NotePermissionsDto
+  serverPermissions: NotePermissionsInterface
 ): NoteDetails => {
   return {
     ...state,

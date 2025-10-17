@@ -17,4 +17,4 @@ export const AliasSchema = z
     'The alias of a note. A note can have multiple of these. Only one can be the primary alias.',
   )
 
-export type AliasDto = z.infer<typeof AliasSchema>
+export type AliasInterface = z.infer<typeof AliasSchema>

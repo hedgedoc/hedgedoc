@@ -3,11 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  MediaUploadDto,
-  MediaUploadSchema,
-  PermissionLevel,
-} from '@hedgedoc/commons';
+import { MediaUploadSchema, PermissionLevel } from '@hedgedoc/commons';
 import {
   FieldNameMediaUpload,
   FieldNameNote,
@@ -35,6 +31,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
+import { MediaUploadDto } from '../../../dtos/media-upload.dto';
 import { PermissionError } from '../../../errors/errors';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';

@@ -8,7 +8,7 @@ import { useUiNotifications } from '../../../../notifications/ui-notification-bo
 import { DateTime } from 'luxon'
 import type { FormEvent } from 'react'
 import { useCallback } from 'react'
-import type { ApiTokenWithSecretDto } from '@hedgedoc/commons'
+import type { ApiTokenWithSecretInterface } from '@hedgedoc/commons'
 
 /**
  * Callback for requesting a new access token from the API and returning the response token and secret.
@@ -21,7 +21,7 @@ import type { ApiTokenWithSecretDto } from '@hedgedoc/commons'
 export const useOnCreateToken = (
   label: string,
   expiryDateStr: string,
-  setNewTokenWithSecret: (token: ApiTokenWithSecretDto) => void
+  setNewTokenWithSecret: (token: ApiTokenWithSecretInterface) => void
 ): ((event: FormEvent) => void) => {
   const { showErrorNotification } = useUiNotifications()
 

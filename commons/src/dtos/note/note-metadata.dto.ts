@@ -44,4 +44,4 @@ export const NoteMetadataSchema = z
   })
   .describe('The metadata of a note')
 
-export type NoteMetadataDto = z.infer<typeof NoteMetadataSchema>
+export type NoteMetadataInterface = z.infer<typeof NoteMetadataSchema>

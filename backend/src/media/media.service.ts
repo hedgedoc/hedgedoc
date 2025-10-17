@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MediaBackendType, MediaUploadDto } from '@hedgedoc/commons';
+import { MediaBackendType } from '@hedgedoc/commons';
 import {
   Alias,
   FieldNameAlias,
@@ -25,6 +25,7 @@ import { InjectConnection } from 'nest-knexjs';
 import { v7 as uuidV7 } from 'uuid';
 
 import mediaConfiguration, { MediaConfig } from '../config/media.config';
+import { MediaUploadDto } from '../dtos/media-upload.dto';
 import { ClientError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { AzureBackend } from './backends/azure-backend';
@@ -323,14 +324,16 @@ export class MediaService {
       .whereIn(FieldNameMediaUpload.uuid, uuids)
       .andWhere(FieldNameAlias.isPrimary, true);
 
-    return mediaUploads.map((mediaUpload) => ({
-      uuid: mediaUpload[FieldNameMediaUpload.uuid],
-      fileName: mediaUpload[FieldNameMediaUpload.fileName],
-      noteId: mediaUpload[FieldNameAlias.alias],
-      createdAt: new Date(
-        mediaUpload[FieldNameMediaUpload.createdAt],
-      ).toISOString(),
-      username: mediaUpload[FieldNameUser.username],
-    }));
+    return mediaUploads.map((mediaUpload) =>
+      MediaUploadDto.create({
+        uuid: mediaUpload[FieldNameMediaUpload.uuid],
+        fileName: mediaUpload[FieldNameMediaUpload.fileName],
+        noteId: mediaUpload[FieldNameAlias.alias],
+        createdAt: new Date(
+          mediaUpload[FieldNameMediaUpload.createdAt],
+        ).toISOString(),
+        username: mediaUpload[FieldNameUser.username],
+      }),
+    );
   }
 }

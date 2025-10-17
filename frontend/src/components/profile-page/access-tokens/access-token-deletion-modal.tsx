@@ -11,10 +11,10 @@ import { useUiNotifications } from '../../notifications/ui-notification-boundary
 import React, { useCallback } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import type { ApiTokenDto } from '@hedgedoc/commons'
+import type { ApiTokenInterface } from '@hedgedoc/commons'
 
 export interface AccessTokenDeletionModalProps extends ModalVisibilityProps {
-  token: ApiTokenDto
+  token: ApiTokenInterface
 }
 
 /**

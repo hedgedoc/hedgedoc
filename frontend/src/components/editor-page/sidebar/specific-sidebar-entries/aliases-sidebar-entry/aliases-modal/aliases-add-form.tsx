@@ -35,7 +35,7 @@ export const AliasesAddForm: React.FC = () => {
         return
       }
       addAlias(noteAlias, newAlias)
-        .then(updateMetadata)
+        .then(() => updateMetadata)
         .catch(showErrorNotification('editor.modal.aliases.errorAddingAlias'))
         .finally(() => {
           setNewAlias('')

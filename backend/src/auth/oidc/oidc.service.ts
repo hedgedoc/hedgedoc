@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { AuthProviderType, PendingUserInfoDto } from '@hedgedoc/commons';
+import { AuthProviderType } from '@hedgedoc/commons';
 import { Identity } from '@hedgedoc/database';
 import {
   ForbiddenException,
@@ -21,6 +21,7 @@ import authConfiguration, {
   AuthConfig,
   OidcConfig,
 } from '../../config/auth.config';
+import { PendingUserInfoDto } from '../../dtos/pending-user-info.dto';
 import { NotInDBError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { IdentityService } from '../identity.service';
@@ -238,7 +239,7 @@ export class OidcService {
       providerUserId: userId,
       confirmationData: newUserData,
     };
-    return newUserData;
+    return PendingUserInfoDto.create(newUserData);
   }
 
   /**

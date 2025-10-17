@@ -17,6 +17,8 @@ import {
 } from '@nestjs/common';
 import { HttpException } from '@nestjs/common/exceptions/http.exception';
 import { BaseExceptionFilter } from '@nestjs/core';
+import { ZodSerializationException } from 'nestjs-zod';
+import { ZodError } from 'zod';
 
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { ErrorWithContextDetails } from './errors';
@@ -112,7 +114,14 @@ export class ErrorExceptionMapping extends BaseExceptionFilter<Error> {
     const httpExceptionConstructor = mapOfHedgeDocErrorsToHttpErrors.get(
       error.name,
     );
-    if (error instanceof ErrorWithContextDetails) {
+    if (error instanceof ZodSerializationException) {
+      const zodError = error.getZodError();
+      if (zodError instanceof ZodError) {
+        this.loggerService.error(
+          `ZodSerializationException: ${zodError.message}`,
+        );
+      }
+    } else if (error instanceof ErrorWithContextDetails) {
       this.loggerService.error(
         error.message,
         undefined,

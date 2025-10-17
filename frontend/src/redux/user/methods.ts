@@ -5,13 +5,13 @@
  */
 import { store } from '..'
 import { userActionsCreator } from './slice'
-import type { LoginUserInfoDto } from '@hedgedoc/commons'
+import type { LoginUserInfoInterface } from '@hedgedoc/commons'
 
 /**
  * Sets the given user state into the redux.
  * @param state The user state to set into the redux.
  */
-export const setUser = (state: LoginUserInfoDto): void => {
+export const setUser = (state: LoginUserInfoInterface): void => {
   const action = userActionsCreator.setUser(state)
   store.dispatch(action)
 }

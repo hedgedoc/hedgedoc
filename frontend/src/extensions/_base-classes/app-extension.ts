@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { FrontendConfigDto } from '@hedgedoc/commons'
+import type { FrontendConfigInterface } from '@hedgedoc/commons'
 import type { CheatsheetExtension } from '../../components/cheatsheet/cheatsheet-extension'
 import type { Linter } from '../../components/editor-page/editor-pane/linter/linter'
 import type { MarkdownRendererExtension } from '../../components/markdown-renderer/extensions/_base-classes/markdown-renderer-extension'
@@ -14,7 +14,7 @@ import type React from 'react'
 import { Fragment } from 'react'
 
 export interface MarkdownRendererExtensionOptions {
-  frontendConfig: FrontendConfigDto
+  frontendConfig: FrontendConfigInterface
   eventEmitter: EventEmitter2
   rendererType: RendererType
 }

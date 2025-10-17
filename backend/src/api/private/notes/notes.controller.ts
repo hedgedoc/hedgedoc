@@ -3,22 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  ChangeNoteOwnerDto,
-  MediaUploadDto,
-  NoteDto,
-  NoteGroupPermissionEntryDto,
-  NoteGroupPermissionUpdateDto,
-  NoteMediaDeletionDto,
-  NoteMetadataDto,
-  NotePermissionsDto,
-  NoteUserPermissionEntryDto,
-  NoteUserPermissionUpdateDto,
-  PermissionLevel,
-  PermissionLevelNames,
-  RevisionDto,
-  RevisionMetadataDto,
-} from '@hedgedoc/commons';
+import { PermissionLevel, PermissionLevelNames } from '@hedgedoc/commons';
 import { SpecialGroup } from '@hedgedoc/database';
 import {
   BadRequestException,
@@ -37,6 +22,18 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../auth/session.guard';
 import noteConfiguration, { NoteConfig } from '../../../config/note.config';
+import { ChangeNoteOwnerDto } from '../../../dtos/change-note-owner.dto';
+import { MediaUploadDto } from '../../../dtos/media-upload.dto';
+import { NoteGroupPermissionEntryDto } from '../../../dtos/note-group-permission-entry.dto';
+import { NoteGroupPermissionUpdateDto } from '../../../dtos/note-group-permission-update.dto';
+import { NoteMetadataDto } from '../../../dtos/note-metadata.dto';
+import { NotePermissionsDto } from '../../../dtos/note-permissions.dto';
+import { NoteUserPermissionEntryDto } from '../../../dtos/note-user-permission-entry.dto';
+import { NoteUserPermissionUpdateDto } from '../../../dtos/note-user-permission-update.dto';
+import { NoteDto } from '../../../dtos/note.dto';
+import { NoteMediaDeletionDto } from '../../../dtos/note.media-deletion.dto';
+import { RevisionMetadataDto } from '../../../dtos/revision-metadata.dto';
+import { RevisionDto } from '../../../dtos/revision.dto';
 import { NotInDBError, PermissionError } from '../../../errors/errors';
 import { GroupsService } from '../../../groups/groups.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';

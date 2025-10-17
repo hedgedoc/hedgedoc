@@ -5,7 +5,7 @@
  */
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
-import type { RevisionDto, RevisionMetadataDto } from '@hedgedoc/commons'
+import type { RevisionInterface, RevisionMetadataInterface } from '@hedgedoc/commons'
 
 /**
  * Retrieves a note revision while using a cache for often retrieved revisions.
@@ -15,8 +15,10 @@ import type { RevisionDto, RevisionMetadataDto } from '@hedgedoc/commons'
  * @return The revision.
  * @throws {Error} when the api request wasn't successful.
  */
-export const getRevision = async (noteId: string, revisionId: string): Promise<RevisionDto> => {
-  const response = await new GetApiRequestBuilder<RevisionDto>(`notes/${noteId}/revisions/${revisionId}`).sendRequest()
+export const getRevision = async (noteId: string, revisionId: string): Promise<RevisionInterface> => {
+  const response = await new GetApiRequestBuilder<RevisionInterface>(
+    `notes/${noteId}/revisions/${revisionId}`
+  ).sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -27,8 +29,10 @@ export const getRevision = async (noteId: string, revisionId: string): Promise<R
  * @return A list of revision ids.
  * @throws {Error} when the api request wasn't successful.
  */
-export const getAllRevisions = async (noteId: string): Promise<RevisionMetadataDto[]> => {
-  const response = await new GetApiRequestBuilder<RevisionMetadataDto[]>(`notes/${noteId}/revisions`).sendRequest()
+export const getAllRevisions = async (noteId: string): Promise<RevisionMetadataInterface[]> => {
+  const response = await new GetApiRequestBuilder<RevisionMetadataInterface[]>(
+    `notes/${noteId}/revisions`
+  ).sendRequest()
   return response.asParsedJsonObject()
 }
 

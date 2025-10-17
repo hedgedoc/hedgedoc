@@ -3,12 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  AuthProviderType,
-  LogoutResponseDto,
-  PendingUserConfirmationDto,
-  PendingUserInfoDto,
-} from '@hedgedoc/commons';
+import { AuthProviderType } from '@hedgedoc/commons';
 import {
   BadRequestException,
   Body,
@@ -25,6 +20,9 @@ import { ApiTags } from '@nestjs/swagger';
 import { IdentityService } from '../../../auth/identity.service';
 import { OidcService } from '../../../auth/oidc/oidc.service';
 import { SessionGuard } from '../../../auth/session.guard';
+import { LogoutResponseDto } from '../../../dtos/logout-response.dto';
+import { PendingUserConfirmationDto } from '../../../dtos/pending-user-confirmation.dto';
+import { PendingUserInfoDto } from '../../../dtos/pending-user-info.dto';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { OpenApi } from '../../utils/decorators/openapi.decorator';
 import { RequestWithSession } from '../../utils/request.type';
@@ -58,9 +56,9 @@ export class AuthController {
         throw new InternalServerErrorException('Unable to log out');
       }
     });
-    return {
+    return LogoutResponseDto.create({
       redirect: logoutUrl || '/',
-    };
+    });
   }
 
   @Get('pending-user')
@@ -71,7 +69,9 @@ export class AuthController {
     if (!request.session.pendingUser?.confirmationData) {
       throw new BadRequestException('No pending user data');
     }
-    return request.session.pendingUser.confirmationData;
+    return PendingUserInfoDto.create(
+      request.session.pendingUser.confirmationData,
+    );
   }
 
   @Put('pending-user')

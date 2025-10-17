@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { RevisionMetadataDto } from '@hedgedoc/commons'
+import type { RevisionMetadataInterface } from '@hedgedoc/commons'
 import { cypressId } from '../../../../../../utils/cypress-attribute'
 import { AsyncLoadingBoundary } from '../../../../../common/async-loading-boundary/async-loading-boundary'
 import { RevisionListEntry } from './revision-list-entry'
@@ -13,7 +13,7 @@ import { ListGroup } from 'react-bootstrap'
 
 interface RevisionListProps {
   selectedRevisionId?: string
-  revisions?: RevisionMetadataDto[]
+  revisions?: RevisionMetadataInterface[]
   loadingRevisions: boolean
   error?: Error | boolean
   onRevisionSelect: (selectedRevisionId: string) => void

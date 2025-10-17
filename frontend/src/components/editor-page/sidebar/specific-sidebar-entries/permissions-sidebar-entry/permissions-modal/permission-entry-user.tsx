@@ -10,7 +10,7 @@ import { setNotePermissionsFromServer } from '../../../../../../redux/note-detai
 import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionEntryButtons, PermissionType } from './permission-entry-buttons'
-import type { NoteUserPermissionEntryDto } from '@hedgedoc/commons'
+import type { NoteUserPermissionEntryInterface } from '@hedgedoc/commons'
 import { PermissionLevel, SpecialGroup } from '@hedgedoc/commons'
 import React, { useCallback, useMemo } from 'react'
 import { useAsync } from 'react-use'
@@ -20,7 +20,7 @@ import { AsyncLoadingBoundary } from '../../../../../common/async-loading-bounda
 import { UserAvatar } from '../../../../../common/user-avatar/user-avatar'
 
 export interface PermissionEntryUserProps {
-  entry: NoteUserPermissionEntryDto
+  entry: NoteUserPermissionEntryInterface
 }
 
 /**

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { BrandingDto } from '@hedgedoc/commons'
+import type { BrandingInterface } from '@hedgedoc/commons'
 import { useFrontendConfig } from '../frontend-config-context/use-frontend-config'
 import { useMemo } from 'react'
 
@@ -12,7 +12,7 @@ import { useMemo } from 'react'
  *
  * @return the branding configuration or null if no branding has been configured
  */
-export const useBrandingDetails = (): null | BrandingDto => {
+export const useBrandingDetails = (): null | BrandingInterface => {
   const branding = useFrontendConfig().branding
 
   return useMemo(() => {

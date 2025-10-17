@@ -5,17 +5,17 @@
  */
 import {
   AuthProviderType,
-  LoginUserInfoDto,
   LoginUserInfoSchema,
-  MediaUploadDto,
   MediaUploadSchema,
-  NoteMetadataDto,
   NoteMetadataSchema,
 } from '@hedgedoc/commons';
 import { User } from '@hedgedoc/database';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
+import { LoginUserInfoDto } from '../../../dtos/login-user-info.dto';
+import { MediaUploadDto } from '../../../dtos/media-upload.dto';
+import { NoteMetadataDto } from '../../../dtos/note-metadata.dto';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
 import { NoteService } from '../../../notes/note.service';

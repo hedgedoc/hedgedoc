@@ -37,4 +37,4 @@ export const RevisionMetadataSchema = z
   })
   .describe('DTO that describes the metadata of a revision.')
 
-export type RevisionMetadataDto = z.infer<typeof RevisionMetadataSchema>
+export type RevisionMetadataInterface = z.infer<typeof RevisionMetadataSchema>

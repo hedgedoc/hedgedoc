@@ -3,16 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ServerStatusDto } from '@hedgedoc/commons';
 import { Injectable } from '@nestjs/common';
 
+import { ServerStatusDto } from '../dtos/server-status.dto';
 import { getServerVersionFromPackageJson } from '../utils/server-version';
 
 @Injectable()
 export class MonitoringService {
   // TODO Implement Server Status and other routes (https://github.com/hedgedoc/hedgedoc/issues/478)
   async getServerStatus(): Promise<ServerStatusDto> {
-    return {
+    const mockMonitoringStats = {
       connectionSocketQueueLength: 0,
       distinctOnlineUsers: 0,
       disconnectSocketQueueLength: 0,
@@ -26,5 +26,6 @@ export class MonitoringService {
       registeredUsers: 0,
       serverVersion: await getServerVersionFromPackageJson(),
     };
+    return ServerStatusDto.create(mockMonitoringStats);
   }
 }

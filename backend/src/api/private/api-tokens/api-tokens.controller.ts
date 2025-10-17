@@ -3,11 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  ApiTokenCreateDto,
-  ApiTokenDto,
-  ApiTokenWithSecretDto,
-} from '@hedgedoc/commons';
 import { FieldNameUser, User } from '@hedgedoc/database';
 import {
   Body,
@@ -22,6 +17,9 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { ApiTokenService } from '../../../api-token/api-token.service';
 import { SessionGuard } from '../../../auth/session.guard';
+import { ApiTokenCreateDto } from '../../../dtos/api-token-create.dto';
+import { ApiTokenWithSecretDto } from '../../../dtos/api-token-with-secret.dto';
+import { ApiTokenDto } from '../../../dtos/api-token.dto';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { OpenApi } from '../../utils/decorators/openapi.decorator';
 import { RequestUserId } from '../../utils/decorators/request-user-id.decorator';

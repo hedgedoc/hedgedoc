@@ -14,7 +14,7 @@ import type { ChangeEvent } from 'react'
 import React, { Fragment, useCallback, useMemo, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import type { ApiTokenWithSecretDto } from '@hedgedoc/commons'
+import type { ApiTokenWithSecretInterface } from '@hedgedoc/commons'
 
 interface NewTokenFormValues {
   label: string
@@ -38,7 +38,7 @@ export const AccessTokenCreationForm: React.FC<AccessTokenUpdateProps> = ({ onUp
   }, [expiryDates])
 
   const [formValues, setFormValues] = useState<NewTokenFormValues>(() => formValuesInitialState)
-  const [newTokenWithSecret, setNewTokenWithSecret] = useState<ApiTokenWithSecretDto>()
+  const [newTokenWithSecret, setNewTokenWithSecret] = useState<ApiTokenWithSecretInterface>()
 
   const onHideCreatedModal = useCallback(() => {
     setFormValues(formValuesInitialState)

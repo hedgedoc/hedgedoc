@@ -50,4 +50,4 @@ export const FrontendConfigSchema = z
     'Config properties that are received by the frontend to adjust its own behaviour',
   )
 
-export type FrontendConfigDto = z.infer<typeof FrontendConfigSchema>
+export type FrontendConfigInterface = z.infer<typeof FrontendConfigSchema>

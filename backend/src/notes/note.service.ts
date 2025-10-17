@@ -3,13 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  NoteDto,
-  NoteMetadataDto,
-  NotePermissionsDto,
-  PermissionLevel,
-  SpecialGroup,
-} from '@hedgedoc/commons';
+import { PermissionLevel } from '@hedgedoc/commons';
 import {
   FieldNameAlias,
   FieldNameGroup,
@@ -30,6 +24,7 @@ import {
   TableUser,
   User,
 } from '@hedgedoc/database';
+import { SpecialGroup } from '@hedgedoc/database';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Knex } from 'knex';
@@ -37,6 +32,9 @@ import { InjectConnection } from 'nest-knexjs';
 
 import { AliasService } from '../alias/alias.service';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
+import { NoteMetadataDto } from '../dtos/note-metadata.dto';
+import { NotePermissionsDto } from '../dtos/note-permissions.dto';
+import { NoteDto } from '../dtos/note.dto';
 import {
   ForbiddenIdError,
   GenericDBError,
@@ -351,17 +349,21 @@ export class NoteService {
         noteId,
       );
 
-    return {
+    return NotePermissionsDto.create({
       owner: ownerUsername[FieldNameUser.username],
       sharedToUsers: userPermissions.map((noteUserPermission) => ({
         username: noteUserPermission[FieldNameUser.username],
-        canEdit: noteUserPermission[FieldNameNoteUserPermission.canEdit],
+        canEdit: Boolean(
+          noteUserPermission[FieldNameNoteUserPermission.canEdit],
+        ),
       })),
       sharedToGroups: groupPermissions.map((noteGroupPermission) => ({
         groupName: noteGroupPermission[FieldNameGroup.name],
-        canEdit: noteGroupPermission[FieldNameNoteGroupPermission.canEdit],
+        canEdit: Boolean(
+          noteGroupPermission[FieldNameNoteGroupPermission.canEdit],
+        ),
       })),
-    };
+    });
   }
 
   /**
@@ -452,7 +454,7 @@ export class NoteService {
       updatedAt = createdAt;
     }
 
-    return {
+    return NoteMetadataDto.create({
       aliases: aliases.map((alias) => alias[FieldNameAlias.alias]),
       primaryAlias: primaryAlias[FieldNameAlias.alias],
       title: latestRevision.title,
@@ -464,7 +466,7 @@ export class NoteService {
       version,
       updatedAt,
       lastUpdatedBy,
-    };
+    });
   }
 
   /**
@@ -475,11 +477,11 @@ export class NoteService {
    */
   async toNoteDto(noteId: number): Promise<NoteDto> {
     return await this.knex.transaction(async (transaction) => {
-      return {
+      return NoteDto.create({
         content: await this.getNoteContent(noteId, transaction),
         metadata: await this.toNoteMetadataDto(noteId, transaction),
         editedByAtPosition: [],
-      };
+      });
     });
   }
 }

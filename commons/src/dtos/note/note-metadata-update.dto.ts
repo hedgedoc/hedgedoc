@@ -21,4 +21,6 @@ export const NoteMetadataUpdateSchema = z
   })
   .describe('DTO for updating the note metadata')
 
-export type NoteMetadataUpdate = z.infer<typeof NoteMetadataUpdateSchema>
+export type NoteMetadataUpdateInterface = z.infer<
+  typeof NoteMetadataUpdateSchema
+>

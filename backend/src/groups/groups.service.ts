@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { GroupInfoDto } from '@hedgedoc/commons';
 import {
   FieldNameGroup,
   FieldNameGroupUser,
@@ -16,6 +15,7 @@ import { Injectable } from '@nestjs/common';
 import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
 
+import { GroupInfoDto } from '../dtos/group-info.dto';
 import { AlreadyInDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { UsersService } from '../users/users.service';
@@ -66,11 +66,11 @@ export class GroupsService {
     if (group === undefined) {
       throw new NotInDBError(`Group with name '${name}' not found`);
     }
-    return {
+    return GroupInfoDto.create({
       name: group[FieldNameGroup.name],
       displayName: group[FieldNameGroup.displayName],
-      special: group[FieldNameGroup.isSpecial],
-    };
+      isSpecial: group[FieldNameGroup.isSpecial],
+    });
   }
 
   /**

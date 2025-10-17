@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { FrontendConfigDto } from '@hedgedoc/commons';
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
+import { FrontendConfigDto } from '../../../dtos/frontend-config.dto';
 import { FrontendConfigService } from '../../../frontend-config/frontend-config.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { OpenApi } from '../../utils/decorators/openapi.decorator';

@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { AliasCreateDto, AliasUpdateDto } from '@hedgedoc/commons';
 import {
   BadRequestException,
   Body,
@@ -19,6 +18,8 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { AliasService } from '../../../alias/alias.service';
 import { SessionGuard } from '../../../auth/session.guard';
+import { AliasCreateDto } from '../../../dtos/alias-create.dto';
+import { AliasUpdateDto } from '../../../dtos/alias-update.dto';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { NoteService } from '../../../notes/note.service';
 import { PermissionService } from '../../../permissions/permission.service';

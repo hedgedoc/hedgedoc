@@ -21,4 +21,4 @@ export const RegisterSchema = z
   })
   .describe('DTO to register a local user account')
 
-export type RegisterDto = z.infer<typeof RegisterSchema>
+export type RegisterInterface = z.infer<typeof RegisterSchema>

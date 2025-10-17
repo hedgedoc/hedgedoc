@@ -23,4 +23,4 @@ export const ApiTokenCreateSchema = z
   })
   .describe('DTO for creating a new API access token')
 
-export type ApiTokenCreateDto = z.infer<typeof ApiTokenCreateSchema>
+export type ApiTokenCreateInterface = z.infer<typeof ApiTokenCreateSchema>

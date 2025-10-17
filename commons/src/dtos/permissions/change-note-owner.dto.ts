@@ -12,4 +12,4 @@ export const ChangeNoteOwnerSchema = z
   })
   .describe('DTO to change the owner of a note.')
 
-export type ChangeNoteOwnerDto = z.infer<typeof ChangeNoteOwnerSchema>
+export type ChangeNoteOwnerInterface = z.infer<typeof ChangeNoteOwnerSchema>

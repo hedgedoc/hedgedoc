@@ -29,6 +29,6 @@ export const PendingUserConfirmationSchema = z
     'DTO for the confirmation of a new user account. When a new user is created through OIDC login, they get asked to choose some details for their new account.',
   )
 
-export type PendingUserConfirmationDto = z.infer<
+export type PendingUserConfirmationInterface = z.infer<
   typeof PendingUserConfirmationSchema
 >

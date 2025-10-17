@@ -59,4 +59,4 @@ export const ServerStatusSchema = z
   })
   .describe('The server status of the HedgeDoc instance.')
 
-export type ServerStatusDto = z.infer<typeof ServerStatusSchema>
+export type ServerStatusInterface = z.infer<typeof ServerStatusSchema>

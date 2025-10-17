@@ -6,12 +6,12 @@
 import { initialState } from '../initial-state'
 import type { NoteDetails } from '../types'
 import { buildStateFromServerPermissions } from './build-state-from-server-permissions'
-import type { NotePermissionsDto } from '@hedgedoc/commons'
+import type { NotePermissionsInterface } from '@hedgedoc/commons'
 
 describe('build state from server permissions', () => {
   it('creates a new state with the given permissions', () => {
     const state: NoteDetails = { ...initialState }
-    const permissions: NotePermissionsDto = {
+    const permissions: NotePermissionsInterface = {
       owner: 'test-owner',
       sharedToUsers: [
         {

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { NotePermissionsDto, SpecialGroup } from '../dtos/index.js'
+import { NotePermissionsInterface, SpecialGroup } from '../dtos/index.js'
 
 /**
  * Checks if the given user is the owner of a note.
@@ -13,7 +13,7 @@ import { NotePermissionsDto, SpecialGroup } from '../dtos/index.js'
  * @return True if the user is the owner of the note
  */
 export const userIsOwner = (
-  permissions: NotePermissionsDto,
+  permissions: NotePermissionsInterface,
   username: string | null | undefined,
 ): boolean => {
   return !!username && permissions.owner === username
@@ -27,7 +27,7 @@ export const userIsOwner = (
  * @return True if the user has the permission to edit the note
  */
 export const userCanEdit = (
-  permissions: NotePermissionsDto,
+  permissions: NotePermissionsInterface,
   username: string | null | undefined,
 ): boolean => {
   const isOwner = userIsOwner(permissions, username)

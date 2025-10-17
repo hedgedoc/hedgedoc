@@ -13,4 +13,4 @@ export const LdapLoginSchema = z
   })
   .describe('DTO to login via a LDAP server.')
 
-export type LdapLoginDto = z.infer<typeof LdapLoginSchema>
+export type LdapLoginInterface = z.infer<typeof LdapLoginSchema>

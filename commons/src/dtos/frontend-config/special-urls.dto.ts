@@ -25,4 +25,4 @@ export const SpecialUrlSchema = z
   })
   .describe('The special urls an HedgeDoc instance can link to.')
 
-export type SpecialUrlDto = z.infer<typeof SpecialUrlSchema>
+export type SpecialUrlInterface = z.infer<typeof SpecialUrlSchema>

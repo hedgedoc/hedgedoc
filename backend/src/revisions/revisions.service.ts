@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { RevisionDto, RevisionMetadataDto } from '@hedgedoc/commons';
 import {
   AuthorshipInfo,
   FieldNameAlias,
@@ -31,6 +30,8 @@ import { v7 as uuidv7 } from 'uuid';
 
 import { AliasService } from '../alias/alias.service';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
+import { RevisionMetadataDto } from '../dtos/revision-metadata.dto';
+import { RevisionDto } from '../dtos/revision.dto';
 import { GenericDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { extractRevisionMetadataFromContent } from './utils/extract-revision-metadata-from-content';
@@ -119,12 +120,15 @@ export class RevisionsService {
             tags.push(revision[FieldNameRevisionTag.tag]);
           }
         }
-        recordMap.set(revision[FieldNameRevision.uuid], {
-          ...currentMappedRevision,
-          authorUsernames,
-          authorGuestUuids,
-          tags,
-        });
+        recordMap.set(
+          revision[FieldNameRevision.uuid],
+          RevisionMetadataDto.create({
+            ...currentMappedRevision,
+            authorUsernames,
+            authorGuestUuids,
+            tags,
+          }),
+        );
       } else {
         recordMap.set(revision[FieldNameRevision.uuid], {
           uuid: revision[FieldNameRevision.uuid],
@@ -220,7 +224,7 @@ export class RevisionsService {
         'getRevision',
       );
     }
-    return {
+    return RevisionDto.create({
       uuid: revision[FieldNameRevision.uuid],
       content: revision[FieldNameRevision.content],
       length: (revision[FieldNameRevision.content] ?? '').length,
@@ -228,7 +232,7 @@ export class RevisionsService {
       title: revision[FieldNameRevision.title],
       description: revision[FieldNameRevision.description],
       patch: revision.patch,
-    };
+    });
   }
 
   /**

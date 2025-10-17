@@ -6,7 +6,7 @@
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
-import type { AliasDto, AliasCreateDto, AliasUpdateDto } from '@hedgedoc/commons'
+import type { AliasCreateInterface, AliasUpdateInterface } from '@hedgedoc/commons'
 
 /**
  * Adds an alias to an existing note.
@@ -16,14 +16,13 @@ import type { AliasDto, AliasCreateDto, AliasUpdateDto } from '@hedgedoc/commons
  * @return Information about the newly created alias.
  * @throws {Error} when the api request wasn't successful
  */
-export const addAlias = async (noteAlias: string, newAlias: string): Promise<AliasDto> => {
-  const response = await new PostApiRequestBuilder<AliasDto, AliasCreateDto>('alias')
+export const addAlias = async (noteAlias: string, newAlias: string): Promise<void> => {
+  await new PostApiRequestBuilder<void, AliasCreateInterface>('alias')
     .withJsonBody({
       noteAlias,
       newAlias
     })
     .sendRequest()
-  return response.asParsedJsonObject()
 }
 
 /**
@@ -34,13 +33,12 @@ export const addAlias = async (noteAlias: string, newAlias: string): Promise<Ali
  * @return The updated information about the alias.
  * @throws {Error} when the api request wasn't successfull
  */
-export const markAliasAsPrimary = async (alias: string): Promise<AliasDto> => {
-  const response = await new PutApiRequestBuilder<AliasDto, AliasUpdateDto>('alias/' + alias)
+export const markAliasAsPrimary = async (alias: string): Promise<void> => {
+  await new PutApiRequestBuilder<void, AliasUpdateInterface>('alias/' + alias)
     .withJsonBody({
       primaryAlias: true
     })
     .sendRequest()
-  return response.asParsedJsonObject()
 }
 
 /**

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { RevisionMetadataDto } from '@hedgedoc/commons'
+import type { RevisionMetadataInterface } from '@hedgedoc/commons'
 import { UiIcon } from '../../../../../common/icons/ui-icon'
 import { WaitSpinner } from '../../../../../common/wait-spinner/wait-spinner'
 import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
@@ -25,7 +25,7 @@ import { UserAvatar } from '../../../../../common/user-avatar/user-avatar'
 export interface RevisionListEntryProps {
   active: boolean
   onSelect: () => void
-  revision: RevisionMetadataDto
+  revision: RevisionMetadataInterface
 }
 
 /**

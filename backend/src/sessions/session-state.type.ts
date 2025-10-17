@@ -3,9 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { AuthProviderType, PendingUserInfoDto } from '@hedgedoc/commons';
+import { AuthProviderType } from '@hedgedoc/commons';
 import { FieldNameUser, User } from '@hedgedoc/database';
 import { Cookie } from 'express-session';
+
+import { PendingUserInfoDto } from '../dtos/pending-user-info.dto';
 
 interface OidcAuthSessionState {
   /** The id token to identify a user session with an OIDC auth provider, required for the logout */

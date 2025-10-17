@@ -10,13 +10,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { FrontendConfigDto } from '@hedgedoc/commons'
+import type { FrontendConfigInterface } from '@hedgedoc/commons'
 import { frontendConfigContext } from './context'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
 
 interface FrontendConfigContextProviderProps extends PropsWithChildren {
-  config?: FrontendConfigDto
+  config?: FrontendConfigInterface
 }
 
 /**

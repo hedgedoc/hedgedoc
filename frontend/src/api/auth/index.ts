@@ -5,15 +5,15 @@
  */
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
-import type { LogoutResponseDto, UsernameCheckDto, UsernameCheckResponseDto } from '@hedgedoc/commons'
+import type { LogoutResponseInterface, UsernameCheckInterface, UsernameCheckResponseInterface } from '@hedgedoc/commons'
 
 /**
  * Requests to log out the current user.
  *
  * @throws {Error} if logout is not possible.
  */
-export const doLogout = async (): Promise<LogoutResponseDto> => {
-  const response = await new DeleteApiRequestBuilder<LogoutResponseDto>('auth/logout').sendRequest()
+export const doLogout = async (): Promise<LogoutResponseInterface> => {
+  const response = await new DeleteApiRequestBuilder<LogoutResponseInterface>('auth/logout').sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -24,7 +24,9 @@ export const doLogout = async (): Promise<LogoutResponseDto> => {
  * @returns {boolean} whether the username is available or not.
  */
 export const checkUsernameAvailability = async (username: string): Promise<boolean> => {
-  const response = await new PostApiRequestBuilder<UsernameCheckResponseDto, UsernameCheckDto>('users/check')
+  const response = await new PostApiRequestBuilder<UsernameCheckResponseInterface, UsernameCheckInterface>(
+    'users/check'
+  )
     .withJsonBody({ username })
     .sendRequest()
   const json = await response.asParsedJsonObject()

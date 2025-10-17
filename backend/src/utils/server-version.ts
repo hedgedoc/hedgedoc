@@ -3,10 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ServerVersionDto } from '@hedgedoc/commons';
 import { Optional } from '@mrdrogdrog/optional';
 import { promises as fs } from 'fs';
 import { join as joinPath } from 'path';
+
+import { ServerVersionDto } from '../dtos/server-version.dto';
 
 let versionCache: ServerVersionDto | undefined = undefined;
 
@@ -44,13 +45,13 @@ async function parseVersionFromPackageJson(): Promise<ServerVersionDto> {
           `Version from package.json is malformed. Got ${packageInfo.version}`,
         ),
     );
-  return {
+  return ServerVersionDto.create({
     major: parseInt(versionParts[1]),
     minor: parseInt(versionParts[2]),
     patch: parseInt(versionParts[3]),
     preRelease: versionParts[4],
     fullString: versionParts[0],
-  };
+  });
 }
 
 /**

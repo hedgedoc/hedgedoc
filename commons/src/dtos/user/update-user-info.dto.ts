@@ -16,4 +16,4 @@ export const UpdateUserInfoSchema = z
   })
   .describe('The update of a user profile.')
 
-export type UpdateUserInfoDto = z.infer<typeof UpdateUserInfoSchema>
+export type UpdateUserInfoInterface = z.infer<typeof UpdateUserInfoSchema>

@@ -3,12 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  AliasCreateDto,
-  AliasDto,
-  AliasSchema,
-  AliasUpdateDto,
-} from '@hedgedoc/commons';
+import { AliasSchema } from '@hedgedoc/commons';
 import {
   BadRequestException,
   Body,
@@ -23,6 +18,9 @@ import {
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 import { AliasService } from '../../../alias/alias.service';
+import { AliasCreateDto } from '../../../dtos/alias-create.dto';
+import { AliasUpdateDto } from '../../../dtos/alias-update.dto';
+import { AliasDto } from '../../../dtos/alias.dto';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { NoteService } from '../../../notes/note.service';
 import { PermissionService } from '../../../permissions/permission.service';
@@ -69,10 +67,7 @@ export class AliasController {
       );
     }
     await this.aliasService.addAlias(noteId, newAliasDto.newAlias);
-    return {
-      name: newAliasDto.newAlias,
-      isPrimaryAlias: false,
-    };
+    return this.aliasService.toAliasDto(newAliasDto.newAlias, false);
   }
 
   @Put(':alias')

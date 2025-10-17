@@ -13,10 +13,10 @@ import React, { useCallback, useMemo } from 'react'
 import { Col, ListGroup, Row } from 'react-bootstrap'
 import { Trash as IconTrash } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
-import type { ApiTokenDto } from '@hedgedoc/commons'
+import type { ApiTokenInterface } from '@hedgedoc/commons'
 
 export interface AccessTokenListEntryProps {
-  token: ApiTokenDto
+  token: ApiTokenInterface
 }
 
 /**

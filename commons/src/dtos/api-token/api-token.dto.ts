@@ -25,4 +25,4 @@ export const ApiTokenSchema = z
     'Represents an access token for the public API. Each API token is bound to a user account. A user can have multiple API tokens.',
   )
 
-export type ApiTokenDto = z.infer<typeof ApiTokenSchema>
+export type ApiTokenInterface = z.infer<typeof ApiTokenSchema>
