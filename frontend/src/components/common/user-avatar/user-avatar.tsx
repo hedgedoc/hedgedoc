@@ -7,11 +7,11 @@ import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import styles from './user-avatar.module.scss'
 import React, { useMemo } from 'react'
 import { useAvatarUrl } from './hooks/use-avatar-url'
-import type { UserInfoDto } from '@hedgedoc/commons'
+import type { UserInfoInterface } from '@hedgedoc/commons'
 import type { CommonUserAvatarProps } from './types'
 
 interface UserAvatarProps extends CommonUserAvatarProps {
-  user: UserInfoDto
+  user: UserInfoInterface
 }
 
 /**
@@ -43,7 +43,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
     }
   }, [size])
 
-  const modifiedUser: UserInfoDto = useMemo(
+  const modifiedUser: UserInfoInterface = useMemo(
     () => ({
       ...user,
       displayName: overrideDisplayName ?? user.displayName

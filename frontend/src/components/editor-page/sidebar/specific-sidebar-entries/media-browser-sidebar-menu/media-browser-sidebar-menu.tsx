@@ -17,7 +17,7 @@ import { AsyncLoadingBoundary } from '../../../../common/async-loading-boundary/
 import { MediaEntry } from './media-entry'
 import { MediaEntryDeletionModal } from './media-entry-deletion-modal'
 import { MediaBrowserEmpty } from './media-browser-empty'
-import type { MediaUploadDto } from '@hedgedoc/commons'
+import type { MediaUploadInterface } from '@hedgedoc/commons'
 
 /**
  * Renders the media browser "menu" for the sidebar.
@@ -35,7 +35,7 @@ export const MediaBrowserSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
 }) => {
   useTranslation()
   const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias ?? '')
-  const [mediaEntryForDeletion, setMediaEntryForDeletion] = useState<MediaUploadDto | null>(null)
+  const [mediaEntryForDeletion, setMediaEntryForDeletion] = useState<MediaUploadInterface | null>(null)
 
   const hide = selectedMenuId !== DocumentSidebarMenuSelection.NONE && selectedMenuId !== menuId
   const expand = selectedMenuId === menuId

@@ -6,7 +6,7 @@
 import { mockI18n } from '../../../test-utils/mock-i18n'
 import { render } from '@testing-library/react'
 import { UserAvatar } from './user-avatar'
-import type { UserInfoDto } from '@hedgedoc/commons'
+import type { UserInfoInterface } from '@hedgedoc/commons'
 
 jest.mock('@dicebear/identicon', () => null)
 jest.mock('@dicebear/core', () => ({
@@ -16,19 +16,19 @@ jest.mock('@dicebear/core', () => ({
 }))
 
 describe('UserAvatar', () => {
-  const user: UserInfoDto = {
+  const user: UserInfoInterface = {
     username: 'boatface',
     displayName: 'Boaty McBoatFace',
     photoUrl: 'https://example.com/test.png'
   }
 
-  const userWithoutPhoto: UserInfoDto = {
+  const userWithoutPhoto: UserInfoInterface = {
     username: 'pictureless',
     displayName: 'No face user',
     photoUrl: null
   }
 
-  const userWithEmptyPhoto: UserInfoDto = {
+  const userWithEmptyPhoto: UserInfoInterface = {
     username: 'void',
     displayName: 'Empty',
     photoUrl: ''

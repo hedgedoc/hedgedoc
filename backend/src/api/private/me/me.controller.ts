@@ -3,15 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  AuthProviderType,
-  LoginUserInfoDto,
-  MediaUploadDto,
-} from '@hedgedoc/commons';
+import { AuthProviderType } from '@hedgedoc/commons';
 import { Body, Controller, Delete, Get, Put, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../auth/session.guard';
+import { LoginUserInfoDto } from '../../../dtos/login-user-info.dto';
+import { MediaUploadDto } from '../../../dtos/media-upload.dto';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
 import { UsersService } from '../../../users/users.service';

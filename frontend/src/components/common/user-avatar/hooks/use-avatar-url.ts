@@ -6,7 +6,7 @@
 import { useMemo } from 'react'
 import { createAvatar } from '@dicebear/core'
 import * as identicon from '@dicebear/identicon'
-import type { UserInfoDto } from '@hedgedoc/commons'
+import type { UserInfoInterface } from '@hedgedoc/commons'
 
 /**
  * Returns the correct avatar url for a user.
@@ -15,7 +15,7 @@ import type { UserInfoDto } from '@hedgedoc/commons'
  * @param user The user for which to get the avatar URL
  * @return The correct avatar url for the user
  */
-export const useAvatarUrl = (user: UserInfoDto): string => {
+export const useAvatarUrl = (user: UserInfoInterface): string => {
   const { photoUrl, displayName } = user
 
   return useMemo(() => {

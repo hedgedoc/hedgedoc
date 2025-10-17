@@ -16,4 +16,4 @@ export const NoteSchema = z
   })
   .describe('DTO representing a note')
 
-export type NoteDto = z.infer<typeof NoteSchema>
+export type NoteInterface = z.infer<typeof NoteSchema>

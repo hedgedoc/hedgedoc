@@ -13,8 +13,8 @@ export const GroupInfoSchema = z
       .describe(
         'Display name of this group. This is used in the UI, when the group is mentioned.',
       ),
-    special: z.boolean().describe('Is this group special?'),
+    isSpecial: z.boolean().describe('Is this group special?'),
   })
   .describe('DTO that contains the information about a group.')
 
-export type GroupInfoDto = z.infer<typeof GroupInfoSchema>
+export type GroupInfoInterface = z.infer<typeof GroupInfoSchema>

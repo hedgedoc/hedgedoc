@@ -15,4 +15,4 @@ export const AuthProviderSchema = z
   ])
   .describe('A general type for all auth providers')
 
-export type AuthProviderDto = z.infer<typeof AuthProviderSchema>
+export type AuthProviderInterface = z.infer<typeof AuthProviderSchema>

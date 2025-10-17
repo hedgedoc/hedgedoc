@@ -12,4 +12,4 @@ export const GuestLoginSchema = z
   })
   .describe('DTO to login as a guest user.')
 
-export type GuestLoginDto = z.infer<typeof GuestLoginSchema>
+export type GuestLoginInterface = z.infer<typeof GuestLoginSchema>

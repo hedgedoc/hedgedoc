@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { FrontendConfigDto } from '@hedgedoc/commons'
+import type { FrontendConfigInterface } from '@hedgedoc/commons'
 import { createContext } from 'react'
 
-export const frontendConfigContext = createContext<FrontendConfigDto | undefined>(undefined)
+export const frontendConfigContext = createContext<FrontendConfigInterface | undefined>(undefined)

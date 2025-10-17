@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ApiTokenWithSecretDto } from '@hedgedoc/commons';
 import { FieldNameApiToken, TableApiToken } from '@hedgedoc/database';
 import { Provider } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -20,6 +19,7 @@ import {
   mockUpdate,
 } from '../database/mock/mock-queries';
 import { mockKnexDb } from '../database/mock/provider';
+import { ApiTokenWithSecretDto } from '../dtos/api-token-with-secret.dto';
 import {
   NotInDBError,
   TokenNotValidError,
@@ -330,14 +330,12 @@ describe('ApiTokenService', () => {
           FieldNameApiToken.label,
           FieldNameApiToken.lastUsedAt,
           FieldNameApiToken.validUntil,
-          FieldNameApiToken.userId,
         ],
         TableApiToken,
         FieldNameApiToken.userId,
         [
           {
             [FieldNameApiToken.id]: validKeyId,
-            [FieldNameApiToken.userId]: userId,
             [FieldNameApiToken.label]: label,
             [FieldNameApiToken.validUntil]: validUntil,
             [FieldNameApiToken.createdAt]: createdAt,

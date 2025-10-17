@@ -24,4 +24,4 @@ export const RevisionSchema = RevisionMetadataSchema.pick({
     'A revision is the state of a note content at a specific time. This is used to go back to previous version of a note.',
   )
 
-export type RevisionDto = z.infer<typeof RevisionSchema>
+export type RevisionInterface = z.infer<typeof RevisionSchema>

@@ -5,7 +5,7 @@
  */
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
-import type { UpdatePasswordDto, LoginDto, RegisterDto } from '@hedgedoc/commons'
+import type { UpdatePasswordInterface, LoginInterface, RegisterInterface } from '@hedgedoc/commons'
 
 /**
  * Requests to do a local login with a provided username and password.
@@ -17,7 +17,7 @@ import type { UpdatePasswordDto, LoginDto, RegisterDto } from '@hedgedoc/commons
  * @throws {Error} when the api request wasn't successful.
  */
 export const doLocalLogin = async (username: string, password: string): Promise<void> => {
-  await new PostApiRequestBuilder<void, LoginDto>('auth/local/login')
+  await new PostApiRequestBuilder<void, LoginInterface>('auth/local/login')
     .withJsonBody({
       username,
       password
@@ -37,7 +37,7 @@ export const doLocalLogin = async (username: string, password: string): Promise<
  * @throws {Error} when the api request wasn't successful.
  */
 export const doLocalRegister = async (username: string, displayName: string, password: string): Promise<void> => {
-  await new PostApiRequestBuilder<void, RegisterDto>('auth/local')
+  await new PostApiRequestBuilder<void, RegisterInterface>('auth/local')
     .withJsonBody({
       username,
       displayName,
@@ -54,7 +54,7 @@ export const doLocalRegister = async (username: string, displayName: string, pas
  * @throws {AuthError.LOGIN_DISABLED} when local login is disabled on the backend.
  */
 export const doLocalPasswordChange = async (currentPassword: string, newPassword: string): Promise<void> => {
-  await new PutApiRequestBuilder<void, UpdatePasswordDto>('auth/local')
+  await new PutApiRequestBuilder<void, UpdatePasswordInterface>('auth/local')
     .withJsonBody({
       currentPassword,
       newPassword

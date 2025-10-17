@@ -10,10 +10,10 @@ import { CommonModal } from '../../common/modals/common-modal'
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
-import type { ApiTokenWithSecretDto } from '@hedgedoc/commons'
+import type { ApiTokenWithSecretInterface } from '@hedgedoc/commons'
 
 export interface AccessTokenCreatedModalProps extends ModalVisibilityProps {
-  tokenWithSecret?: ApiTokenWithSecretDto
+  tokenWithSecret?: ApiTokenWithSecretInterface
 }
 
 /**

@@ -16,7 +16,7 @@ import {
   Mastodon as IconMastodon
 } from 'react-bootstrap-icons'
 import { Logger } from '../../../utils/logger'
-import type { AuthProviderDto } from '@hedgedoc/commons'
+import type { AuthProviderInterface } from '@hedgedoc/commons'
 import { AuthProviderType } from '@hedgedoc/commons'
 import { IconGitlab } from '../../common/icons/additional/icon-gitlab'
 import styles from './one-click-login-button.module.scss'
@@ -36,7 +36,7 @@ const logger = new Logger('GetOneClickProviderMetadata')
  * @param provider The provider for which to retrieve the metadata.
  * @return Name, icon, URL and CSS class of the given provider for rendering a login button.
  */
-export const getOneClickProviderMetadata = (provider: AuthProviderDto): OneClickMetadata => {
+export const getOneClickProviderMetadata = (provider: AuthProviderInterface): OneClickMetadata => {
   if (provider.type !== AuthProviderType.OIDC) {
     logger.warn('Metadata for one-click-provider does not exist', provider)
     return {

@@ -5,7 +5,7 @@
  */
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
-import type { UpdateUserInfoDto, LoginUserInfoDto, MediaUploadDto } from '@hedgedoc/commons'
+import type { UpdateUserInfoInterface, LoginUserInfoInterface, MediaUploadInterface } from '@hedgedoc/commons'
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
 
 /**
@@ -14,8 +14,8 @@ import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-requ
  * @return The user metadata.
  * @throws {Error} when the user is not signed-in.
  */
-export const getMe = async (): Promise<LoginUserInfoDto> => {
-  const response = await new GetApiRequestBuilder<LoginUserInfoDto>('me').sendRequest()
+export const getMe = async (): Promise<LoginUserInfoInterface> => {
+  const response = await new GetApiRequestBuilder<LoginUserInfoInterface>('me').sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -36,7 +36,7 @@ export const deleteUser = async (): Promise<void> => {
  * @throws {Error} when the api request wasn't successful.
  */
 export const updateUser = async (displayName: string | null, email: string | null): Promise<void> => {
-  await new PutApiRequestBuilder<void, UpdateUserInfoDto>('me/profile')
+  await new PutApiRequestBuilder<void, UpdateUserInfoInterface>('me/profile')
     .withJsonBody({
       displayName,
       email
@@ -50,7 +50,7 @@ export const updateUser = async (displayName: string | null, email: string | nul
  * @return List of media object information.
  * @throws {Error} when the api request wasn't successful.
  */
-export const getMyMedia = async (): Promise<MediaUploadDto[]> => {
-  const response = await new GetApiRequestBuilder<MediaUploadDto[]>('me/media').sendRequest()
+export const getMyMedia = async (): Promise<MediaUploadInterface[]> => {
+  const response = await new GetApiRequestBuilder<MediaUploadInterface[]>('me/media').sendRequest()
   return response.asParsedJsonObject()
 }

@@ -14,4 +14,4 @@ export const AliasUpdateSchema = z
   })
   .describe('DTO for making one alias primary')
 
-export type AliasUpdateDto = z.infer<typeof AliasUpdateSchema>
+export type AliasUpdateInterface = z.infer<typeof AliasUpdateSchema>

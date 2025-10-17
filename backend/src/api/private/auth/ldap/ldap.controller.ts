@@ -3,11 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  AuthProviderType,
-  LdapLoginDto,
-  LdapLoginResponseDto,
-} from '@hedgedoc/commons';
+import { AuthProviderType } from '@hedgedoc/commons';
 import { FieldNameIdentity } from '@hedgedoc/database';
 import {
   Body,
@@ -21,6 +17,8 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { IdentityService } from '../../../../auth/identity.service';
 import { LdapService } from '../../../../auth/ldap/ldap.service';
+import { LdapLoginResponseDto } from '../../../../dtos/ldap-login-response.dto';
+import { LdapLoginDto } from '../../../../dtos/ldap-login.dto';
 import { NotInDBError } from '../../../../errors/errors';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { UsersService } from '../../../../users/users.service';
@@ -71,7 +69,7 @@ export class LdapController {
       request.session.authProviderType = AuthProviderType.LDAP;
       request.session.authProviderIdentifier = ldapIdentifier;
       request.session.userId = identity[FieldNameIdentity.userId];
-      return { newUser: false };
+      return LdapLoginResponseDto.create({ newUser: false });
     } catch (error) {
       if (error instanceof NotInDBError) {
         request.session.pendingUser = {
@@ -80,7 +78,7 @@ export class LdapController {
           confirmationData: userInfo,
           providerUserId: userInfo.id,
         };
-        return { newUser: true };
+        return LdapLoginResponseDto.create({ newUser: true });
       }
       this.logger.error(`Error during LDAP login: ${String(error)}`);
       throw new InternalServerErrorException('Error during LDAP login');

@@ -14,4 +14,4 @@ export const UsernameCheckSchema = z
   })
   .describe('DTO to check if a username is available')
 
-export type UsernameCheckDto = z.infer<typeof UsernameCheckSchema>
+export type UsernameCheckInterface = z.infer<typeof UsernameCheckSchema>

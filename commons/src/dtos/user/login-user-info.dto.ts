@@ -23,4 +23,4 @@ export const LoginUserInfoSchema = UserInfoSchema.merge(
   'Information about the user and their auth method for the current session',
 )
 
-export type LoginUserInfoDto = z.infer<typeof LoginUserInfoSchema>
+export type LoginUserInfoInterface = z.infer<typeof LoginUserInfoSchema>

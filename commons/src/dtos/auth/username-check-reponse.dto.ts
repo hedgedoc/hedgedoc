@@ -13,6 +13,6 @@ export const UsernameCheckResponseSchema = z
   })
   .describe('Response to the username check on the register forms')
 
-export type UsernameCheckResponseDto = z.infer<
+export type UsernameCheckResponseInterface = z.infer<
   typeof UsernameCheckResponseSchema
 >

@@ -6,7 +6,7 @@
 import { HttpMethod, respondToMatchingRequest } from '../../../handler-utils/respond-to-matching-request'
 import { isMockMode, isTestMode } from '../../../utils/test-modes'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { MediaUploadDto } from '@hedgedoc/commons'
+import type { MediaUploadInterface } from '@hedgedoc/commons'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   if (isMockMode && !isTestMode) {
@@ -15,7 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
     })
   }
 
-  respondToMatchingRequest<MediaUploadDto>(
+  respondToMatchingRequest<MediaUploadInterface>(
     HttpMethod.POST,
     req,
     res,

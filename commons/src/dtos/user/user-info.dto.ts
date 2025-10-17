@@ -20,4 +20,4 @@ export const UserInfoSchema = z
   })
   .describe('Represents the public information about a user')
 
-export type UserInfoDto = z.infer<typeof UserInfoSchema>
+export type UserInfoInterface = z.infer<typeof UserInfoSchema>

@@ -12,6 +12,6 @@ export const NoteGroupPermissionEntrySchema = z
   })
   .describe('DTO for the permission a group has.')
 
-export type NoteGroupPermissionEntryDto = z.infer<
+export type NoteGroupPermissionEntryInterface = z.infer<
   typeof NoteGroupPermissionEntrySchema
 >

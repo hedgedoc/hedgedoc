@@ -5,11 +5,11 @@
  */
 import * as buildStateFromUpdatedMarkdownContentModule from '../build-state-from-updated-markdown-content'
 import type { NoteDetails } from '../types'
-import { buildStateFromServerDto } from './build-state-from-set-note-data-from-server'
+import { buildStateFromServerInterface } from './build-state-from-set-note-data-from-server'
 import { NoteTextDirection, NoteType } from '@hedgedoc/commons'
 import { DateTime } from 'luxon'
 import { Mock } from 'ts-mockery'
-import type { NoteDto } from '@hedgedoc/commons'
+import type { NoteInterface } from '@hedgedoc/commons'
 
 jest.mock('../build-state-from-updated-markdown-content')
 
@@ -29,7 +29,7 @@ describe('build state from set note data from server', () => {
   })
 
   it('builds a new state from the given note dto', () => {
-    const noteDto: NoteDto = {
+    const noteInterface: NoteInterface = {
       content: 'line1\nline2',
       metadata: {
         primaryAlias: 'alias',
@@ -123,7 +123,7 @@ describe('build state from set note data from server', () => {
       }
     }
 
-    const result = buildStateFromServerDto(noteDto)
+    const result = buildStateFromServerInterface(noteInterface)
     expect(result).toEqual(mockedNoteDetails)
     expect(buildStateFromUpdatedMarkdownContentMock).toHaveBeenCalledWith(convertedNoteDetails, 'line1\nline2')
   })

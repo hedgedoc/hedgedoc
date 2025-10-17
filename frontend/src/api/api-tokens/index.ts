@@ -6,7 +6,7 @@
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
-import type { ApiTokenCreateDto, ApiTokenDto, ApiTokenWithSecretDto } from '@hedgedoc/commons'
+import type { ApiTokenCreateInterface, ApiTokenInterface, ApiTokenWithSecretInterface } from '@hedgedoc/commons'
 
 /**
  * Retrieves the access tokens for the current user.
@@ -14,8 +14,8 @@ import type { ApiTokenCreateDto, ApiTokenDto, ApiTokenWithSecretDto } from '@hed
  * @return List of access token metadata.
  * @throws {Error} when the api request wasn't successful.
  */
-export const getAccessTokenList = async (): Promise<ApiTokenDto[]> => {
-  const response = await new GetApiRequestBuilder<ApiTokenDto[]>('tokens').sendRequest()
+export const getAccessTokenList = async (): Promise<ApiTokenInterface[]> => {
+  const response = await new GetApiRequestBuilder<ApiTokenInterface[]>('tokens').sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -27,8 +27,8 @@ export const getAccessTokenList = async (): Promise<ApiTokenDto[]> => {
  * @return The new access token metadata along with its secret.
  * @throws {Error} when the api request wasn't successful.
  */
-export const postNewAccessToken = async (label: string, validUntil: Date): Promise<ApiTokenWithSecretDto> => {
-  const response = await new PostApiRequestBuilder<ApiTokenWithSecretDto, ApiTokenCreateDto>('tokens')
+export const postNewAccessToken = async (label: string, validUntil: Date): Promise<ApiTokenWithSecretInterface> => {
+  const response = await new PostApiRequestBuilder<ApiTokenWithSecretInterface, ApiTokenCreateInterface>('tokens')
     .withJsonBody({
       label,
       validUntil

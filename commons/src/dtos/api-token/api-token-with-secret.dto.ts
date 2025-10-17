@@ -14,4 +14,6 @@ export const ApiTokenWithSecretSchema = ApiTokenSchema.merge(
   'This is returned once after an api token is created to let the user know what their token is.',
 )
 
-export type ApiTokenWithSecretDto = z.infer<typeof ApiTokenWithSecretSchema>
+export type ApiTokenWithSecretInterface = z.infer<
+  typeof ApiTokenWithSecretSchema
+>

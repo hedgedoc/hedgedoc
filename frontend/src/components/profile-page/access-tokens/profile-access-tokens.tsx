@@ -10,7 +10,7 @@ import { AccessTokenListEntry } from './access-token-list-entry'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Card, ListGroup } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-import type { ApiTokenDto } from '@hedgedoc/commons'
+import type { ApiTokenInterface } from '@hedgedoc/commons'
 
 export interface AccessTokenUpdateProps {
   onUpdateList: () => void
@@ -21,7 +21,7 @@ export interface AccessTokenUpdateProps {
  */
 export const ProfileAccessTokens: React.FC = () => {
   useTranslation()
-  const [accessTokens, setAccessTokens] = useState<ApiTokenDto[]>([])
+  const [accessTokens, setAccessTokens] = useState<ApiTokenInterface[]>([])
   const { showErrorNotification } = useUiNotifications()
 
   const refreshAccessTokens = useCallback(() => {

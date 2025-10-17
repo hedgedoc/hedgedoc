@@ -6,10 +6,10 @@
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
 import type {
-  ChangeNoteOwnerDto,
-  NoteGroupPermissionUpdateDto,
-  NotePermissionsDto,
-  NoteUserPermissionUpdateDto
+  ChangeNoteOwnerInterface,
+  NoteGroupPermissionUpdateInterface,
+  NotePermissionsInterface,
+  NoteUserPermissionUpdateInterface
 } from '@hedgedoc/commons'
 
 /**
@@ -17,11 +17,11 @@ import type {
  *
  * @param noteId The id of the note.
  * @param newOwner The username of the new owner.
- * @return The updated {@link NotePermissionsDto}.
+ * @return The updated {@link NotePermissionsInterface}.
  * @throws {Error} when the api request wasn't successful.
  */
-export const setNoteOwner = async (noteId: string, newOwner: string): Promise<NotePermissionsDto> => {
-  const response = await new PutApiRequestBuilder<NotePermissionsDto, ChangeNoteOwnerDto>(
+export const setNoteOwner = async (noteId: string, newOwner: string): Promise<NotePermissionsInterface> => {
+  const response = await new PutApiRequestBuilder<NotePermissionsInterface, ChangeNoteOwnerInterface>(
     `notes/${noteId}/metadata/permissions/owner`
   )
     .withJsonBody({
@@ -37,17 +37,18 @@ export const setNoteOwner = async (noteId: string, newOwner: string): Promise<No
  * @param noteId The id of the note.
  * @param username The username of the user to set the permission for.
  * @param canEdit true if the user should be able to update the note, false otherwise.
- * @return The updated {@link NotePermissionsDto}.
+ * @return The updated {@link NotePermissionsInterface}.
  * @throws {Error} when the api request wasn't successful.
  */
 export const setUserPermission = async (
   noteId: string,
   username: string,
   canEdit: boolean
-): Promise<NotePermissionsDto> => {
-  const response = await new PutApiRequestBuilder<NotePermissionsDto, Pick<NoteUserPermissionUpdateDto, 'canEdit'>>(
-    `notes/${noteId}/metadata/permissions/users/${username}`
-  )
+): Promise<NotePermissionsInterface> => {
+  const response = await new PutApiRequestBuilder<
+    NotePermissionsInterface,
+    Pick<NoteUserPermissionUpdateInterface, 'canEdit'>
+  >(`notes/${noteId}/metadata/permissions/users/${username}`)
     .withJsonBody({
       canEdit
     })
@@ -61,17 +62,18 @@ export const setUserPermission = async (
  * @param noteId The id of the note.
  * @param groupName The name of the group to set the permission for.
  * @param canEdit true if the group should be able to update the note, false otherwise.
- * @return The updated {@link NotePermissionsDto}.
+ * @return The updated {@link NotePermissionsInterface}.
  * @throws {Error} when the api request wasn't successful.
  */
 export const setGroupPermission = async (
   noteId: string,
   groupName: string,
   canEdit: boolean
-): Promise<NotePermissionsDto> => {
-  const response = await new PutApiRequestBuilder<NotePermissionsDto, Pick<NoteGroupPermissionUpdateDto, 'canEdit'>>(
-    `notes/${noteId}/metadata/permissions/groups/${groupName}`
-  )
+): Promise<NotePermissionsInterface> => {
+  const response = await new PutApiRequestBuilder<
+    NotePermissionsInterface,
+    Pick<NoteGroupPermissionUpdateInterface, 'canEdit'>
+  >(`notes/${noteId}/metadata/permissions/groups/${groupName}`)
     .withJsonBody({
       canEdit
     })
@@ -84,11 +86,11 @@ export const setGroupPermission = async (
  *
  * @param noteId The id of the note.
  * @param username The name of the user to remove the permission of.
- * @return The updated {@link NotePermissionsDto}.
+ * @return The updated {@link NotePermissionsInterface}.
  * @throws {Error} when the api request wasn't successful.
  */
-export const removeUserPermission = async (noteId: string, username: string): Promise<NotePermissionsDto> => {
-  const response = await new DeleteApiRequestBuilder<NotePermissionsDto>(
+export const removeUserPermission = async (noteId: string, username: string): Promise<NotePermissionsInterface> => {
+  const response = await new DeleteApiRequestBuilder<NotePermissionsInterface>(
     `notes/${noteId}/metadata/permissions/users/${username}`
   ).sendRequest()
   return response.asParsedJsonObject()
@@ -99,11 +101,11 @@ export const removeUserPermission = async (noteId: string, username: string): Pr
  *
  * @param noteId The id of the note.
  * @param groupName The name of the group to remove the permission of.
- * @return The updated {@link NotePermissionsDto}.
+ * @return The updated {@link NotePermissionsInterface}.
  * @throws {Error} when the api request wasn't successful.
  */
-export const removeGroupPermission = async (noteId: string, groupName: string): Promise<NotePermissionsDto> => {
-  const response = await new DeleteApiRequestBuilder<NotePermissionsDto>(
+export const removeGroupPermission = async (noteId: string, groupName: string): Promise<NotePermissionsInterface> => {
+  const response = await new DeleteApiRequestBuilder<NotePermissionsInterface>(
     `notes/${noteId}/metadata/permissions/groups/${groupName}`
   ).sendRequest()
   return response.asParsedJsonObject()

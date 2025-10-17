@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { NotePermissionsDto } from '@hedgedoc/commons'
+import type { NotePermissionsInterface } from '@hedgedoc/commons'
 
 const mockPermissionChangeApiRoutes = (permission: NotePermissionsDto) => {
   cy.intercept('PUT', 'api/private/notes/mock-note/metadata/permissions/groups/_EVERYONE', {

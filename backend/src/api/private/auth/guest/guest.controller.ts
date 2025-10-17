@@ -3,14 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  AuthProviderType,
-  GuestLoginDto,
-  GuestRegistrationResponseDto,
-} from '@hedgedoc/commons';
+import { AuthProviderType } from '@hedgedoc/commons';
 import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
+import { GuestLoginDto } from '../../../../dtos/guest-login.dto';
+import { GuestRegistrationResponseDto } from '../../../../dtos/guest-registration-response.dto';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { UsersService } from '../../../../users/users.service';
 import { OpenApi } from '../../../utils/decorators/openapi.decorator';
@@ -37,9 +35,9 @@ export class GuestController {
     // Log the user in after registration
     request.session.authProviderType = AuthProviderType.GUEST;
     request.session.userId = userId;
-    return {
+    return GuestRegistrationResponseDto.create({
       uuid,
-    };
+    });
   }
 
   @UseGuards(GuestsEnabledGuard)

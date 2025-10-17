@@ -25,4 +25,4 @@ export const MediaUploadSchema = z
   })
   .describe('Metadata for an uploaded file')
 
-export type MediaUploadDto = z.infer<typeof MediaUploadSchema>
+export type MediaUploadInterface = z.infer<typeof MediaUploadSchema>

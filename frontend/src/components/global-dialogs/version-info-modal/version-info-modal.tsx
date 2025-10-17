@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { ServerVersionDto } from '@hedgedoc/commons'
+import type { ServerVersionInterface } from '@hedgedoc/commons'
 import links from '../../../links.json'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { CopyableField } from '../../common/copyable/copyable-field/copyable-field'
@@ -21,7 +21,7 @@ import { Modal } from 'react-bootstrap'
  * @param show If the modal should be shown.
  */
 export const VersionInfoModal: React.FC<CommonModalProps> = ({ onHide, show }) => {
-  const serverVersion: ServerVersionDto = useFrontendConfig().version
+  const serverVersion: ServerVersionInterface = useFrontendConfig().version
   const backendVersion = useMemo(() => {
     const version = `${serverVersion.major}.${serverVersion.minor}.${serverVersion.patch}`
 

@@ -19,4 +19,4 @@ export const PendingUserInfoSchema = UserInfoSchema.merge(
   'The full user information is only presented to the logged in user itself. For privacy reasons the email address is only here',
 )
 
-export type PendingUserInfoDto = z.infer<typeof PendingUserInfoSchema>
+export type PendingUserInfoInterface = z.infer<typeof PendingUserInfoSchema>

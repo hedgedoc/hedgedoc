@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ApiTokenDto, ApiTokenWithSecretDto } from '@hedgedoc/commons';
 import {
   ApiToken,
   FieldNameApiToken,
@@ -16,6 +15,8 @@ import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
 import { randomBytes } from 'node:crypto';
 
+import { ApiTokenWithSecretDto } from '../dtos/api-token-with-secret.dto';
+import { ApiTokenDto } from '../dtos/api-token.dto';
 import {
   NotInDBError,
   TokenNotValidError,
@@ -91,7 +92,7 @@ export class ApiTokenService {
   /**
    * Creates a new API token for the given user
    * We limit the number of tokens to 200 per user to avoid users losing track over their tokens.
-   * There is no technical limit to this.
+   * There is no technical limit to this, this is mainly a security consideration.
    *
    * The returned secret is stored hashed in the database and therefore cannot be retrieved again.
    *
@@ -140,14 +141,14 @@ export class ApiTokenService {
         [FieldNameApiToken.validUntil]: validUntil,
       };
       await transaction(TableApiToken).insert(insertApiToken);
-      return {
+      return ApiTokenWithSecretDto.create({
         label,
         keyId,
         createdAt: createdAt.toISOString(),
         validUntil: validUntil.toISOString(),
         lastUsedAt: null,
         secret: fullToken,
-      };
+      });
     });
   }
 
@@ -190,24 +191,28 @@ export class ApiTokenService {
         FieldNameApiToken.label,
         FieldNameApiToken.lastUsedAt,
         FieldNameApiToken.validUntil,
-        FieldNameApiToken.userId,
       ])
       .where(FieldNameApiToken.userId, userId);
     return apiTokens.map(
-      (apiToken: Omit<ApiToken, FieldNameApiToken.secretHash>) => ({
-        label: apiToken[FieldNameApiToken.label],
-        userId: apiToken[FieldNameApiToken.userId],
-        keyId: apiToken[FieldNameApiToken.id],
-        createdAt: new Date(
-          apiToken[FieldNameApiToken.createdAt],
-        ).toISOString(),
-        validUntil: new Date(
-          apiToken[FieldNameApiToken.validUntil],
-        ).toISOString(),
-        lastUsedAt: apiToken[FieldNameApiToken.lastUsedAt]
-          ? new Date(apiToken[FieldNameApiToken.lastUsedAt]).toISOString()
-          : null,
-      }),
+      (
+        apiToken: Omit<
+          ApiToken,
+          FieldNameApiToken.secretHash | FieldNameApiToken.userId
+        >,
+      ) =>
+        ApiTokenDto.create({
+          label: apiToken[FieldNameApiToken.label],
+          keyId: apiToken[FieldNameApiToken.id],
+          createdAt: new Date(
+            apiToken[FieldNameApiToken.createdAt],
+          ).toISOString(),
+          validUntil: new Date(
+            apiToken[FieldNameApiToken.validUntil],
+          ).toISOString(),
+          lastUsedAt: apiToken[FieldNameApiToken.lastUsedAt]
+            ? new Date(apiToken[FieldNameApiToken.lastUsedAt]).toISOString()
+            : null,
+        }),
     );
   }
 

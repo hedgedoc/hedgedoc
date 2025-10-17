@@ -6,12 +6,12 @@
 import { initialState } from '../initial-state'
 import type { NoteDetails } from '../types'
 import { buildStateFromMetadataUpdate } from './build-state-from-metadata-update'
-import type { NoteMetadataDto } from '@hedgedoc/commons'
+import type { NoteMetadataInterface } from '@hedgedoc/commons'
 
 describe('build state from server permissions', () => {
   it('creates a new state with the given permissions', () => {
     const state: NoteDetails = { ...initialState }
-    const metadata: NoteMetadataDto = {
+    const metadata: NoteMetadataInterface = {
       lastUpdatedBy: 'test',
       permissions: {
         owner: null,

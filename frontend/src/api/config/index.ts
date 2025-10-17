@@ -5,7 +5,7 @@
  */
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
 import { isBuildTime } from '../../utils/test-modes'
-import type { FrontendConfigDto } from '@hedgedoc/commons'
+import type { FrontendConfigInterface } from '@hedgedoc/commons'
 
 /**
  * Fetches the frontend config from the backend.
@@ -13,10 +13,10 @@ import type { FrontendConfigDto } from '@hedgedoc/commons'
  * @return The frontend config.
  * @throws {Error} when the api request wasn't successful.
  */
-export const getConfig = async (baseUrl?: string): Promise<FrontendConfigDto | undefined> => {
+export const getConfig = async (baseUrl?: string): Promise<FrontendConfigInterface | undefined> => {
   if (isBuildTime) {
     return undefined
   }
-  const response = await new GetApiRequestBuilder<FrontendConfigDto>('config', baseUrl).sendRequest()
+  const response = await new GetApiRequestBuilder<FrontendConfigInterface>('config', baseUrl).sendRequest()
   return response.asParsedJsonObject()
 }

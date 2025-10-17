@@ -15,7 +15,7 @@ import { NoteLoadingBoundary } from './note-loading-boundary'
 import { render, screen } from '@testing-library/react'
 import { Fragment } from 'react'
 import { Mock } from 'ts-mockery'
-import type { NoteDto } from '@hedgedoc/commons'
+import type { NoteInterface } from '@hedgedoc/commons'
 
 jest.mock('../../../hooks/common/use-single-string-url-parameter')
 jest.mock('../../../api/notes')
@@ -65,7 +65,7 @@ describe('Note loading boundary', () => {
       })
   })
 
-  const mockGetNoteApiCall = (returnValue: NoteDto) => {
+  const mockGetNoteApiCall = (returnValue: NoteInterface) => {
     jest.spyOn(getNoteModule, 'getNote').mockImplementation((id) => {
       expect(id).toBe(mockedNoteId)
       return new Promise((resolve) => {
@@ -83,14 +83,14 @@ describe('Note loading boundary', () => {
     })
   }
 
-  const mockSetNoteInRedux = (expectedNote: NoteDto): jest.SpyInstance<void, [apiResponse: NoteDto]> => {
+  const mockSetNoteInRedux = (expectedNote: NoteInterface): jest.SpyInstance<void, [apiResponse: NoteInterface]> => {
     return jest.spyOn(setNoteDataFromServerModule, 'setNoteDataFromServer').mockImplementation((givenNote) => {
       expect(givenNote).toBe(expectedNote)
     })
   }
 
   it('loads a note', async () => {
-    const mockedNote: NoteDto = Mock.of<NoteDto>()
+    const mockedNote: NoteInterface = Mock.of<NoteInterface>()
     mockGetNoteApiCall(mockedNote)
     const setNoteInReduxFunctionMock = mockSetNoteInRedux(mockedNote)
 
@@ -106,7 +106,7 @@ describe('Note loading boundary', () => {
   })
 
   it('shows an error', async () => {
-    const mockedNote: NoteDto = Mock.of<NoteDto>()
+    const mockedNote: NoteInterface = Mock.of<NoteInterface>()
     mockCrashingNoteApiCall()
     const setNoteInReduxFunctionMock = mockSetNoteInRedux(mockedNote)
 

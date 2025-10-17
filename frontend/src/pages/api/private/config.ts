@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { FrontendConfigDto } from '@hedgedoc/commons'
+import type { FrontendConfigInterface } from '@hedgedoc/commons'
 import { AuthProviderType, PermissionLevel } from '@hedgedoc/commons'
 import {
   HttpMethod,
@@ -13,7 +13,7 @@ import {
 import { isTestMode } from '../../../utils/test-modes'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-const initialConfig: FrontendConfigDto = {
+const initialConfig: FrontendConfigInterface = {
   allowRegister: true,
   allowProfileEdits: true,
   allowChooseUsername: true,
@@ -57,10 +57,10 @@ const initialConfig: FrontendConfigDto = {
   ]
 }
 
-let currentConfig: FrontendConfigDto = initialConfig
+let currentConfig: FrontendConfigInterface = initialConfig
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
-  const responseSuccessful = respondToMatchingRequest<FrontendConfigDto>(
+  const responseSuccessful = respondToMatchingRequest<FrontendConfigInterface>(
     HttpMethod.GET,
     req,
     res,
@@ -69,10 +69,10 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     false
   )
   if (!responseSuccessful) {
-    respondToTestRequest<FrontendConfigDto>(req, res, () => {
+    respondToTestRequest<FrontendConfigInterface>(req, res, () => {
       currentConfig = {
         ...initialConfig,
-        ...(req.body as FrontendConfigDto)
+        ...(req.body as FrontendConfigInterface)
       }
       return currentConfig
     })

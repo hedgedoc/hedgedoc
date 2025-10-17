@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
-import type { GroupInfoDto } from '@hedgedoc/commons'
+import type { GroupInfoInterface } from '@hedgedoc/commons'
 
 /**
  * Retrieves information about a group with a given name.
@@ -13,7 +13,7 @@ import type { GroupInfoDto } from '@hedgedoc/commons'
  * @return Information about the group.
  * @throws {Error} when the api request wasn't successful.
  */
-export const getGroup = async (groupName: string): Promise<GroupInfoDto> => {
-  const response = await new GetApiRequestBuilder<GroupInfoDto>('groups/' + groupName).sendRequest()
+export const getGroup = async (groupName: string): Promise<GroupInfoInterface> => {
+  const response = await new GetApiRequestBuilder<GroupInfoInterface>('groups/' + groupName).sendRequest()
   return response.asParsedJsonObject()
 }

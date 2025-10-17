@@ -3,11 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { GroupInfoDto } from '@hedgedoc/commons';
 import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../auth/session.guard';
+import { GroupInfoDto } from '../../../dtos/group-info.dto';
 import { GroupsService } from '../../../groups/groups.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { OpenApi } from '../../utils/decorators/openapi.decorator';

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { AuthProviderDto } from '@hedgedoc/commons'
+import type { AuthProviderInterface } from '@hedgedoc/commons'
 import { AuthProviderType } from '@hedgedoc/commons'
 
 /**
@@ -12,6 +12,6 @@ import { AuthProviderType } from '@hedgedoc/commons'
  * @param authProviders The auth providers to filter
  * @return only one click auth providers
  */
-export const filterOneClickProviders = (authProviders: AuthProviderDto[]) => {
-  return authProviders.filter((provider: AuthProviderDto): boolean => provider.type === AuthProviderType.OIDC)
+export const filterOneClickProviders = (authProviders: AuthProviderInterface[]) => {
+  return authProviders.filter((provider: AuthProviderInterface): boolean => provider.type === AuthProviderType.OIDC)
 }

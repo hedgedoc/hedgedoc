@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
-import type { LdapLoginDto, LdapLoginResponseDto } from '@hedgedoc/commons'
+import type { LdapLoginInterface, LdapLoginResponseInterface } from '@hedgedoc/commons'
 
 /**
  * Requests to log in a user via LDAP credentials.
@@ -18,8 +18,10 @@ export const doLdapLogin = async (
   provider: string,
   username: string,
   password: string
-): Promise<LdapLoginResponseDto> => {
-  const response = await new PostApiRequestBuilder<LdapLoginResponseDto, LdapLoginDto>(`auth/ldap/${provider}/login`)
+): Promise<LdapLoginResponseInterface> => {
+  const response = await new PostApiRequestBuilder<LdapLoginResponseInterface, LdapLoginInterface>(
+    `auth/ldap/${provider}/login`
+  )
     .withJsonBody({
       username: username,
       password: password

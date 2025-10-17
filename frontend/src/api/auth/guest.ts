@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { GuestLoginDto } from '@hedgedoc/commons'
-import type { GuestRegistrationResponseDto } from '@hedgedoc/commons'
+import type { GuestLoginInterface } from '@hedgedoc/commons'
+import type { GuestRegistrationResponseInterface } from '@hedgedoc/commons'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 
 /**
@@ -13,7 +13,7 @@ import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-re
  * @param uuid The uuid of the guest user
  */
 export const logInGuest = async (uuid: string): Promise<void> => {
-  await new PostApiRequestBuilder<void, GuestLoginDto>('auth/guest/login').withJsonBody({ uuid }).sendRequest()
+  await new PostApiRequestBuilder<void, GuestLoginInterface>('auth/guest/login').withJsonBody({ uuid }).sendRequest()
 }
 
 /**
@@ -21,8 +21,8 @@ export const logInGuest = async (uuid: string): Promise<void> => {
  *
  * @return The uuid of the newly created guest user
  */
-export const registerGuest = async (): Promise<GuestRegistrationResponseDto> => {
-  const response = await new PostApiRequestBuilder<GuestRegistrationResponseDto, void>(
+export const registerGuest = async (): Promise<GuestRegistrationResponseInterface> => {
+  const response = await new PostApiRequestBuilder<GuestRegistrationResponseInterface, void>(
     `auth/guest/register`
   ).sendRequest()
   return await response.asParsedJsonObject()

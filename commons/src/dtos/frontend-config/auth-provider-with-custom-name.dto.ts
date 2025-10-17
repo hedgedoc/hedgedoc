@@ -26,6 +26,6 @@ export const AuthProviderWithCustomNameSchema = z
     'The configuration for an auth provider with a custom name. So you can have multiple of the same kind.',
   )
 
-export type AuthProviderWithCustomNameDto = z.infer<
+export type AuthProviderWithCustomNameInterface = z.infer<
   typeof AuthProviderWithCustomNameSchema
 >

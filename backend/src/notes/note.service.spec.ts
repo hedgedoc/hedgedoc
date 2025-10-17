@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { NoteMetadataDto, PermissionLevel } from '@hedgedoc/commons';
+import { PermissionLevel } from '@hedgedoc/commons';
 import {
   FieldNameAlias,
   FieldNameGroup,
@@ -41,6 +41,7 @@ import {
   mockSelect,
 } from '../database/mock/mock-queries';
 import { mockKnexDb } from '../database/mock/provider';
+import { NoteMetadataDto } from '../dtos/note-metadata.dto';
 import {
   ForbiddenIdError,
   GenericDBError,
@@ -672,7 +673,7 @@ describe('NoteService', () => {
   });
   describe('toNoteDto', () => {
     it('correctly calls other methods', async () => {
-      const mockNoteMetadata: NoteMetadataDto = {
+      const mockNoteMetadata: NoteMetadataDto = NoteMetadataDto.create({
         aliases: [mockAliasRandom, mockAliasCustom],
         primaryAlias: mockAliasRandom,
         title: mockNoteTitle,
@@ -684,7 +685,7 @@ describe('NoteService', () => {
         version: 2,
         updatedAt: mockUpdatedAt,
         lastUpdatedBy: mockUsername,
-      };
+      });
       jest.spyOn(service, 'getNoteContent').mockResolvedValue(mockNoteContent);
       jest
         .spyOn(service, 'toNoteMetadataDto')

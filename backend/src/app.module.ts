@@ -5,10 +5,11 @@
  */
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { RouterModule, Routes } from '@nestjs/core';
+import { APP_INTERCEPTOR, APP_PIPE, RouterModule, Routes } from '@nestjs/core';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ScheduleModule } from '@nestjs/schedule';
 import { KnexModule } from 'nest-knexjs';
+import { ZodSerializerInterceptor, ZodValidationPipe } from 'nestjs-zod';
 
 import { AliasModule } from './alias/alias.module';
 import { ApiTokenModule } from './api-token/api-token.module';
@@ -113,6 +114,16 @@ const routes: Routes = [
     MediaRedirectModule,
   ],
   controllers: [],
-  providers: [FrontendConfigService],
+  providers: [
+    FrontendConfigService,
+    {
+      provide: APP_PIPE,
+      useClass: ZodValidationPipe,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ZodSerializerInterceptor,
+    },
+  ],
 })
 export class AppModule {}

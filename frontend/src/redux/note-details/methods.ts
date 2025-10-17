@@ -6,7 +6,7 @@
 import { store } from '..'
 import { getNoteMetadata } from '../../api/notes'
 import type { CursorSelection } from '../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
-import type { NoteDto, NotePermissionsDto } from '@hedgedoc/commons'
+import type { NoteInterface, NotePermissionsInterface } from '@hedgedoc/commons'
 import { noteDetailsActionsCreator } from './slice'
 
 /**
@@ -22,7 +22,7 @@ export const setNoteContent = (content: string): void => {
  * Sets the note metadata for the current note from an API response DTO to the redux.
  * @param apiResponse The NoteDTO received from the API to store into redux.
  */
-export const setNoteDataFromServer = (apiResponse: NoteDto): void => {
+export const setNoteDataFromServer = (apiResponse: NoteInterface): void => {
   const action = noteDetailsActionsCreator.setNoteDataFromServer(apiResponse)
   store.dispatch(action)
 }
@@ -31,7 +31,7 @@ export const setNoteDataFromServer = (apiResponse: NoteDto): void => {
  * Sets the note permissions for the current note from an API response DTO to the redux.
  * @param apiResponse The NotePermissionsDTO received from the API to store into redux.
  */
-export const setNotePermissionsFromServer = (apiResponse: NotePermissionsDto): void => {
+export const setNotePermissionsFromServer = (apiResponse: NotePermissionsInterface): void => {
   const action = noteDetailsActionsCreator.setNotePermissionsFromServer(apiResponse)
   store.dispatch(action)
 }

@@ -18,4 +18,4 @@ export const NoteMediaDeletionSchema = z
     'DTO for deleting a note with the option to remove associated uploads as well',
   )
 
-export type NoteMediaDeletionDto = z.infer<typeof NoteMediaDeletionSchema>
+export type NoteMediaDeletionInterface = z.infer<typeof NoteMediaDeletionSchema>

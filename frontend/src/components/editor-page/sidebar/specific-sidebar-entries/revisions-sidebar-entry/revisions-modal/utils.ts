@@ -5,7 +5,7 @@
  */
 import { getUserInfo } from '../../../../../../api/users'
 import { download } from '../../../../../common/download/download'
-import type { RevisionDto, UserInfoDto } from '@hedgedoc/commons'
+import type { RevisionInterface, UserInfoInterface } from '@hedgedoc/commons'
 
 const DISPLAY_MAX_USERS_PER_REVISION = 9
 
@@ -15,7 +15,7 @@ const DISPLAY_MAX_USERS_PER_REVISION = 9
  * @param noteId The id of the note from which to download the revision.
  * @param revision The revision details object containing the content to download.
  */
-export const downloadRevision = (noteId: string, revision: RevisionDto | null): void => {
+export const downloadRevision = (noteId: string, revision: RevisionInterface | null): void => {
   if (!revision) {
     return
   }
@@ -29,8 +29,8 @@ export const downloadRevision = (noteId: string, revision: RevisionDto | null): 
  * @throws {Error} in case the user-data request failed.
  * @return An array of user details.
  */
-export const getUserDataForRevision = async (usernames: string[]): Promise<UserInfoDto[]> => {
-  const users: UserInfoDto[] = []
+export const getUserDataForRevision = async (usernames: string[]): Promise<UserInfoInterface[]> => {
+  const users: UserInfoInterface[] = []
   const usersToFetch = Math.min(usernames.length, DISPLAY_MAX_USERS_PER_REVISION) - 1
   for (let i = 0; i <= usersToFetch; i++) {
     const user = await getUserInfo(usernames[i])

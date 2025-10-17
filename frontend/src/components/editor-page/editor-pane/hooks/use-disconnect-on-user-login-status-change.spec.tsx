@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useDisconnectOnUserLoginStatusChange } from './use-disconnect-on-user-login-status-change'
-import type { LoginUserInfoDto, MessageTransporter } from '@hedgedoc/commons'
+import type { LoginUserInfoInterface, MessageTransporter } from '@hedgedoc/commons'
 import { render } from '@testing-library/react'
 import React, { Fragment } from 'react'
 import { Mock } from 'ts-mockery'
@@ -20,7 +20,7 @@ describe('use logout on user change', () => {
 
   const mockUseApplicationState = (userLoggedIn: boolean) => {
     mockAppState({
-      user: userLoggedIn ? Mock.of<LoginUserInfoDto>({}) : null
+      user: userLoggedIn ? Mock.of<LoginUserInfoInterface>({}) : null
     })
   }
 

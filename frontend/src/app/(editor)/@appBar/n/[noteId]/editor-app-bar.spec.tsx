@@ -5,7 +5,11 @@
  */
 import { mockI18n } from '../../../../../test-utils/mock-i18n'
 import { EditorAppBar } from './editor-app-bar'
-import type { LoginUserInfoDto, NoteGroupPermissionEntryDto, NoteUserPermissionEntryDto } from '@hedgedoc/commons'
+import type {
+  LoginUserInfoInterface,
+  NoteGroupPermissionEntryInterface,
+  NoteUserPermissionEntryInterface
+} from '@hedgedoc/commons'
 import { render } from '@testing-library/react'
 import type { PropsWithChildren } from 'react'
 import React from 'react'
@@ -33,13 +37,13 @@ const mockedCommonAppState = {
           groupName: '_EVERYONE',
           canEdit: false
         }
-      ] as NoteGroupPermissionEntryDto[],
-      sharedToUsers: [] as NoteUserPermissionEntryDto[]
+      ] as NoteGroupPermissionEntryInterface[],
+      sharedToUsers: [] as NoteUserPermissionEntryInterface[]
     }
   },
   user: {
     username: 'test'
-  } as LoginUserInfoDto
+  } as LoginUserInfoInterface
 }
 
 describe('app bar', () => {

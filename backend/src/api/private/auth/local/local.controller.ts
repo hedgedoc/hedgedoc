@@ -3,12 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  AuthProviderType,
-  LoginDto,
-  RegisterDto,
-  UpdatePasswordDto,
-} from '@hedgedoc/commons';
+import { AuthProviderType } from '@hedgedoc/commons';
 import { FieldNameIdentity, FieldNameUser } from '@hedgedoc/database';
 import {
   Body,
@@ -23,6 +18,9 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { LocalService } from '../../../../auth/local/local.service';
 import { SessionGuard } from '../../../../auth/session.guard';
+import { LoginDto } from '../../../../dtos/login.dto';
+import { RegisterDto } from '../../../../dtos/register.dto';
+import { UpdatePasswordDto } from '../../../../dtos/update-password.dto';
 import { NoLocalIdentityError } from '../../../../errors/errors';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { UsersService } from '../../../../users/users.service';

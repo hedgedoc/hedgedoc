@@ -3,18 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { PendingUserInfoDto } from '@hedgedoc/commons'
+import type { PendingUserInfoInterface } from '@hedgedoc/commons'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
-import type { PendingUserConfirmationDto } from '@hedgedoc/commons'
+import type { PendingUserConfirmationInterface } from '@hedgedoc/commons'
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
 
 /**
  * Fetches the pending user information.
  * @returns The pending user information.
  */
-export const getPendingUserInfo = async (): Promise<PendingUserInfoDto> => {
-  const response = await new GetApiRequestBuilder<PendingUserInfoDto>('auth/pending-user').sendRequest()
+export const getPendingUserInfo = async (): Promise<PendingUserInfoInterface> => {
+  const response = await new GetApiRequestBuilder<PendingUserInfoInterface>('auth/pending-user').sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -29,8 +29,8 @@ export const cancelPendingUser = async (): Promise<void> => {
  * Confirms the pending user with updated user information.
  * @param updatedUserInfo The updated user information.
  */
-export const confirmPendingUser = async (updatedUserInfo: PendingUserConfirmationDto): Promise<void> => {
-  await new PutApiRequestBuilder<void, PendingUserConfirmationDto>('auth/pending-user')
+export const confirmPendingUser = async (updatedUserInfo: PendingUserConfirmationInterface): Promise<void> => {
+  await new PutApiRequestBuilder<void, PendingUserConfirmationInterface>('auth/pending-user')
     .withJsonBody(updatedUserInfo)
     .sendRequest()
 }

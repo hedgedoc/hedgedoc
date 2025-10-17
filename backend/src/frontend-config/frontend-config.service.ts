@@ -3,13 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  AuthProviderDto,
-  AuthProviderType,
-  BrandingDto,
-  FrontendConfigDto,
-  SpecialUrlDto,
-} from '@hedgedoc/commons';
+import { AuthProviderInterface, AuthProviderType } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
 import { URL } from 'url';
 
@@ -21,6 +15,9 @@ import externalServicesConfiguration, {
   ExternalServicesConfig,
 } from '../config/external-services.config';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
+import { BrandingDto } from '../dtos/branding.dto';
+import { FrontendConfigDto } from '../dtos/frontend-config.dto';
+import { SpecialUrlDto } from '../dtos/special-urls.dto';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { getServerVersionFromPackageJson } from '../utils/server-version';
 
@@ -46,7 +43,7 @@ export class FrontendConfigService {
    * @returns A frontend config DTO
    */
   async getFrontendConfig(): Promise<FrontendConfigDto> {
-    return {
+    return FrontendConfigDto.create({
       guestAccess: this.noteConfig.permissions.maxGuestLevel,
       allowRegister: this.authConfig.local.enableRegister,
       allowProfileEdits: this.authConfig.common.allowProfileEdits,
@@ -60,7 +57,7 @@ export class FrontendConfigService {
       specialUrls: this.getSpecialUrls(),
       useImageProxy: !!this.externalServicesConfig.imageProxy,
       version: await getServerVersionFromPackageJson(),
-    };
+    });
   }
 
   /**
@@ -68,8 +65,8 @@ export class FrontendConfigService {
    *
    * @returns An array of auth provider DTOs
    */
-  private getAuthProviders(): AuthProviderDto[] {
-    const providers: AuthProviderDto[] = [];
+  private getAuthProviders(): AuthProviderInterface[] {
+    const providers: AuthProviderInterface[] = [];
     if (this.authConfig.local.enableLogin) {
       providers.push({
         type: AuthProviderType.LOCAL,
@@ -100,12 +97,12 @@ export class FrontendConfigService {
    * @returns A branding DTO
    */
   private getBranding(): BrandingDto {
-    return {
+    return BrandingDto.create({
       logo: this.customizationConfig.branding.customLogo
         ? new URL(this.customizationConfig.branding.customLogo).toString()
         : null,
       name: this.customizationConfig.branding.customName,
-    };
+    });
   }
 
   /**
@@ -114,7 +111,7 @@ export class FrontendConfigService {
    * @returns A special URL DTO
    */
   private getSpecialUrls(): SpecialUrlDto {
-    return {
+    return SpecialUrlDto.create({
       imprint: this.customizationConfig.specialUrls.imprint
         ? new URL(this.customizationConfig.specialUrls.imprint).toString()
         : null,
@@ -124,6 +121,6 @@ export class FrontendConfigService {
       termsOfUse: this.customizationConfig.specialUrls.termsOfUse
         ? new URL(this.customizationConfig.specialUrls.termsOfUse).toString()
         : null,
-    };
+    });
   }
 }

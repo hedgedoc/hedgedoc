@@ -5,10 +5,10 @@
  */
 import type { ApplicationState } from '../redux'
 import { mockAppState } from './mock-app-state'
-import type { DeepPartial, NotePermissionsDto } from '@hedgedoc/commons'
+import type { DeepPartial, NotePermissionsInterface } from '@hedgedoc/commons'
 
 /**
- * Mocks the {@link NotePermissionsDto} field of a note in the {@link ApplicationState }for a test.
+ * Mocks the {@link NotePermissionsInterface} field of a note in the {@link ApplicationState }for a test.
  * This test-util should not be used alongside {@link mockAppState} to avoid overwriting the mocked state.
  *
  * @param ownUsername The name of the own user to set in the state (for comparing note ownership)
@@ -19,7 +19,7 @@ import type { DeepPartial, NotePermissionsDto } from '@hedgedoc/commons'
 export const mockNotePermissions = (
   ownUsername: string,
   noteOwner: string,
-  permissions?: DeepPartial<NotePermissionsDto>,
+  permissions?: DeepPartial<NotePermissionsInterface>,
   additionalState?: DeepPartial<ApplicationState>
 ) => {
   mockAppState({

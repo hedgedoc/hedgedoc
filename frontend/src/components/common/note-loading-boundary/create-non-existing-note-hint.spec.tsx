@@ -6,7 +6,7 @@
 import * as createNoteWithPrimaryAliasModule from '../../../api/notes'
 import { mockI18n } from '../../../test-utils/mock-i18n'
 import { CreateNonExistingNoteHint } from './create-non-existing-note-hint'
-import type { NoteDto, NoteMetadataDto } from '@hedgedoc/commons'
+import type { NoteInterface, NoteMetadataInterface } from '@hedgedoc/commons'
 import { waitForOtherPromisesToFinish } from '@hedgedoc/commons'
 import { act, render, screen, waitFor } from '@testing-library/react'
 import { Mock } from 'ts-mockery'
@@ -20,20 +20,20 @@ describe('create non existing note hint', () => {
   const mockCreateNoteWithPrimaryAlias = () => {
     jest
       .spyOn(createNoteWithPrimaryAliasModule, 'createNoteWithPrimaryAlias')
-      .mockImplementation(async (markdown, primaryAlias): Promise<NoteDto> => {
+      .mockImplementation(async (markdown, primaryAlias): Promise<NoteInterface> => {
         expect(markdown).toBe('')
         expect(primaryAlias).toBe(mockedNoteId)
-        const metadata: NoteMetadataDto = Mock.of<NoteMetadataDto>({ primaryAlias: 'mockedPrimaryAlias' })
+        const metadata: NoteMetadataInterface = Mock.of<NoteMetadataInterface>({ primaryAlias: 'mockedPrimaryAlias' })
         await new Promise((resolve) => setTimeout(resolve, 100))
         await waitForOtherPromisesToFinish()
-        return Mock.of<NoteDto>({ metadata })
+        return Mock.of<NoteInterface>({ metadata })
       })
   }
 
   const mockFailingCreateNoteWithPrimaryAlias = () => {
     jest
       .spyOn(createNoteWithPrimaryAliasModule, 'createNoteWithPrimaryAlias')
-      .mockImplementation(async (markdown, primaryAlias): Promise<NoteDto> => {
+      .mockImplementation(async (markdown, primaryAlias): Promise<NoteInterface> => {
         expect(markdown).toBe('')
         expect(primaryAlias).toBe(mockedNoteId)
         await waitForOtherPromisesToFinish()

@@ -3,14 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  UserInfoDto,
-  UsernameCheckDto,
-  UsernameCheckResponseDto,
-} from '@hedgedoc/commons';
 import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
+import { UserInfoDto } from '../../../dtos/user-info.dto';
+import { UsernameCheckResponseDto } from '../../../dtos/username-check-response.dto';
+import { UsernameCheckDto } from '../../../dtos/username-check.dto';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { UsersService } from '../../../users/users.service';
 import { OpenApi } from '../../utils/decorators/openapi.decorator';
@@ -35,7 +33,7 @@ export class UsersController {
       usernameCheck.username,
     );
     // TODO Check if username is blocked (https://github.com/hedgedoc/hedgedoc/issues/5794)
-    return { usernameAvailable: !userExists };
+    return UsernameCheckResponseDto.create({ usernameAvailable: !userExists });
   }
 
   @Get('profile/:username')

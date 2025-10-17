@@ -17,4 +17,4 @@ export const AliasCreateSchema = z
   })
   .describe('DTO for creating a new alias')
 
-export type AliasCreateDto = z.infer<typeof AliasCreateSchema>
+export type AliasCreateInterface = z.infer<typeof AliasCreateSchema>

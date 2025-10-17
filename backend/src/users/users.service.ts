@@ -3,12 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  AuthProviderType,
-  LoginUserInfoDto,
-  REGEX_USERNAME,
-  UserInfoDto,
-} from '@hedgedoc/commons';
+import { AuthProviderType, REGEX_USERNAME } from '@hedgedoc/commons';
 import {
   FieldNameUser,
   TableUser,
@@ -21,6 +16,8 @@ import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
 import { v4 as uuidv4 } from 'uuid';
 
+import { LoginUserInfoDto } from '../dtos/login-user-info.dto';
+import { UserInfoDto } from '../dtos/user-info.dto';
 import { GenericDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { generateRandomName } from './random-word-lists/name-randomizer';
@@ -283,12 +280,12 @@ export class UsersService {
     if (!user) {
       throw new NotInDBError(`User with username "${username}" does not exist`);
     }
-    return {
+    return UserInfoDto.create({
       username: user[FieldNameUser.username],
       displayName:
         user[FieldNameUser.displayName] ?? user[FieldNameUser.username],
       photoUrl: user[FieldNameUser.photoUrl],
-    };
+    });
   }
 
   /**
@@ -364,13 +361,13 @@ export class UsersService {
     user: User,
     authProvider: AuthProviderType,
   ): LoginUserInfoDto {
-    return {
+    return LoginUserInfoDto.create({
       username: user[FieldNameUser.username],
       displayName:
         user[FieldNameUser.displayName] ?? user[FieldNameUser.username],
       photoUrl: user[FieldNameUser.photoUrl],
       email: user[FieldNameUser.email] ?? null,
       authProvider,
-    };
+    });
   }
 }

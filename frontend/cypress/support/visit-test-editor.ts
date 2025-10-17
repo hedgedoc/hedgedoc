@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { NoteDto } from '@hedgedoc/commons'
+import type { NoteInterface } from '@hedgedoc/commons'
 
 export const testNoteId = 'test'
 const mockMetadata = {
@@ -20,8 +20,8 @@ const mockMetadata = {
   editedBy: [],
   permissions: {
     owner: 'mock',
-    sharedToUsers: [],
-    sharedToGroups: []
+    shareInterfaceUsers: [],
+    shareInterfaceGroups: []
   }
 }
 
@@ -30,6 +30,6 @@ beforeEach(() => {
     content: '',
     metadata: mockMetadata,
     editedByAtPosition: []
-  } as NoteDto)
+  } as unknown as NoteInterface)
   cy.intercept(`api/private/notes/${testNoteId}/metadata`, mockMetadata)
 })

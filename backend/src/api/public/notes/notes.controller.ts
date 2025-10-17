@@ -3,19 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { PermissionLevel } from '@hedgedoc/commons';
 import {
-  MediaUploadDto,
   MediaUploadSchema,
-  NoteDto,
-  NoteMediaDeletionDto,
-  NoteMetadataDto,
   NoteMetadataSchema,
-  NotePermissionsDto,
   NotePermissionsSchema,
   NoteSchema,
-  PermissionLevel,
-  RevisionDto,
-  RevisionMetadataDto,
   RevisionMetadataSchema,
   RevisionSchema,
 } from '@hedgedoc/commons';
@@ -32,6 +25,13 @@ import {
 } from '@nestjs/common';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
+import { MediaUploadDto } from '../../../dtos/media-upload.dto';
+import { NoteMetadataDto } from '../../../dtos/note-metadata.dto';
+import { NotePermissionsDto } from '../../../dtos/note-permissions.dto';
+import { NoteDto } from '../../../dtos/note.dto';
+import { NoteMediaDeletionDto } from '../../../dtos/note.media-deletion.dto';
+import { RevisionMetadataDto } from '../../../dtos/revision-metadata.dto';
+import { RevisionDto } from '../../../dtos/revision.dto';
 import { GroupsService } from '../../../groups/groups.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';

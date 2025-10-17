@@ -10,7 +10,7 @@ import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAsync } from 'react-use'
 import type { CommonUserAvatarProps } from './types'
-import type { UserInfoDto } from '@hedgedoc/commons'
+import type { UserInfoInterface } from '@hedgedoc/commons'
 
 export interface UserAvatarForUsernameProps extends CommonUserAvatarProps {
   username: string | null
@@ -27,7 +27,7 @@ export interface UserAvatarForUsernameProps extends CommonUserAvatarProps {
  */
 export const UserAvatarForUsername: React.FC<UserAvatarForUsernameProps> = ({ username, ...props }) => {
   const { t } = useTranslation()
-  const { error, value, loading } = useAsync(async (): Promise<UserInfoDto> => {
+  const { error, value, loading } = useAsync(async (): Promise<UserInfoInterface> => {
     return username
       ? await getUserInfo(username)
       : {

@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { PendingLdapUserInfoDto } from '@hedgedoc/commons';
 import {
   Inject,
   Injectable,
@@ -18,6 +17,7 @@ import authConfiguration, {
   AuthConfig,
   LdapConfig,
 } from '../../config/auth.config';
+import { PendingLdapUserInfoDto } from '../../dtos/pending-ldap-user-info.dto';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 
 const LDAP_ERROR_MAP: Record<string, string> = {
@@ -103,15 +103,17 @@ export class LdapService {
             }
           }
 
-          return resolve({
-            email,
-            username: username,
-            id: userInfo[ldapConfig.userIdField],
-            displayName: userInfo[ldapConfig.displayNameField] ?? username,
-            photoUrl: null,
-            // TODO LDAP stores images as binaries, we need to upload them to the media backend
-            // https://github.com/hedgedoc/hedgedoc/issues/5032
-          });
+          return resolve(
+            PendingLdapUserInfoDto.create({
+              email,
+              username: username,
+              id: userInfo[ldapConfig.userIdField],
+              displayName: userInfo[ldapConfig.displayNameField] ?? username,
+              photoUrl: null,
+              // TODO LDAP stores images as binaries, we need to upload them to the media backend
+              // https://github.com/hedgedoc/hedgedoc/issues/5032
+            }),
+          );
         },
       );
     });

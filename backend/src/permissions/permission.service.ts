@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { NotePermissionsDto, PermissionLevel } from '@hedgedoc/commons';
+import { PermissionLevel } from '@hedgedoc/commons';
 import {
   FieldNameGroup,
   FieldNameMediaUpload,
@@ -24,6 +24,7 @@ import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
 
 import noteConfiguration, { NoteConfig } from '../config/note.config';
+import { NotePermissionsDto } from '../dtos/note-permissions.dto';
 import {
   GenericDBError,
   NotInDBError,
@@ -469,7 +470,7 @@ export class PermissionService {
         );
       }
 
-      return {
+      return NotePermissionsDto.create({
         owner: owner[FieldNameUser.username],
         sharedToUsers: userPermissions.map((userPermission) => ({
           username: userPermission[FieldNameUser.username],
@@ -479,7 +480,7 @@ export class PermissionService {
           groupName: groupPermission[FieldNameGroup.name],
           canEdit: groupPermission[FieldNameNoteGroupPermission.canEdit],
         })),
-      };
+      });
     });
   }
 }

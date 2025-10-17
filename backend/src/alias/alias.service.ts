@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { AliasDto } from '@hedgedoc/commons';
 import {
   Alias,
   FieldNameAlias,
@@ -17,6 +16,7 @@ import { InjectConnection } from 'nest-knexjs';
 import { randomBytes } from 'node:crypto';
 
 import noteConfiguration, { NoteConfig } from '../config/note.config';
+import { AliasDto } from '../dtos/alias.dto';
 import {
   AlreadyInDBError,
   ForbiddenIdError,
@@ -285,14 +285,14 @@ export class AliasService {
   /**
    * Returns alias information in the AliasDto format
    *
-   * @param alias The alias to use
+   * @param name The alias to use
    * @param isPrimaryAlias Whether the alias is the primary alias.
    * @returns The built AliasDto
    */
-  toAliasDto(alias: string, isPrimaryAlias: boolean): AliasDto {
-    return {
-      name: alias,
-      isPrimaryAlias: isPrimaryAlias,
-    };
+  toAliasDto(name: string, isPrimaryAlias: boolean): AliasDto {
+    return AliasDto.create({
+      name,
+      isPrimaryAlias,
+    });
   }
 }

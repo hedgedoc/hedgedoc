@@ -20,4 +20,4 @@ export const BrandingSchema = z
   })
   .describe('The configuration for branding of the HedgeDoc instance.')
 
-export type BrandingDto = z.infer<typeof BrandingSchema>
+export type BrandingInterface = z.infer<typeof BrandingSchema>

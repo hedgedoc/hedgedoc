@@ -14,6 +14,6 @@ export const AuthProviderWithoutCustomNameSchema = z
   })
   .describe('Represents the local authentication provider')
 
-export type AuthProviderWithoutCustomNameDto = z.infer<
+export type AuthProviderWithoutCustomNameInterface = z.infer<
   typeof AuthProviderWithoutCustomNameSchema
 >

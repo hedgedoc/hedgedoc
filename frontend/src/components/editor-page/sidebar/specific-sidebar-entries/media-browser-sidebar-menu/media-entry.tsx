@@ -19,11 +19,11 @@ import { UserAvatarForUsername } from '../../../../common/user-avatar/user-avata
 import { useChangeEditorContentCallback } from '../../../change-content-context/use-change-editor-content-callback'
 import { replaceSelection } from '../../../editor-pane/tool-bar/formatters/replace-selection'
 import styles from './media-entry.module.css'
-import type { MediaUploadDto } from '@hedgedoc/commons'
+import type { MediaUploadInterface } from '@hedgedoc/commons'
 
 export interface MediaEntryProps {
-  entry: MediaUploadDto
-  onDelete: (entry: MediaUploadDto) => void
+  entry: MediaUploadInterface
+  onDelete: (entry: MediaUploadInterface) => void
 }
 
 /**

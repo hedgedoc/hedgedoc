@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { FrontendConfigDto } from '@hedgedoc/commons'
+import type { FrontendConfigInterface } from '@hedgedoc/commons'
 import * as UseFrontendConfigMock from '../frontend-config-context/use-frontend-config'
 import { CustomBranding } from './custom-branding'
 import { render } from '@testing-library/react'
@@ -15,7 +15,7 @@ describe('custom branding', () => {
   const mockFrontendConfigHook = (logo: string | null = null, name: string | null = null) => {
     jest
       .spyOn(UseFrontendConfigMock, 'useFrontendConfig')
-      .mockReturnValue(Mock.of<FrontendConfigDto>({ branding: { logo, name } }))
+      .mockReturnValue(Mock.of<FrontendConfigInterface>({ branding: { logo, name } }))
   }
 
   it("doesn't show anything if no branding is defined", () => {
