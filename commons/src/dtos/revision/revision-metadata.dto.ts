@@ -11,7 +11,7 @@ export const RevisionMetadataSchema = z
     createdAt: z.string().datetime().describe('When the revision was created.'),
     length: z
       .number()
-      .positive()
+      .nonnegative()
       .describe('The length of the content of the revision.'),
     authorUsernames: z
       .array(z.string().toLowerCase())

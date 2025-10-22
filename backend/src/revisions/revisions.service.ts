@@ -34,6 +34,7 @@ import { RevisionMetadataDto } from '../dtos/revision-metadata.dto';
 import { RevisionDto } from '../dtos/revision.dto';
 import { GenericDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { interpretDateTimeAsIsoDateTime } from '../utils/date';
 import { extractRevisionMetadataFromContent } from './utils/extract-revision-metadata-from-content';
 
 interface RevisionUserInfo {
@@ -78,17 +79,17 @@ export class RevisionsService {
           Pick<User, FieldNameUser.username | FieldNameUser.guestUuid> &
           Pick<RevisionTag, FieldNameRevisionTag.tag>)[]
       >(`${TableRevision}.${FieldNameRevision.uuid}`, `${TableRevision}.${FieldNameRevision.createdAt}`, `${TableRevision}.${FieldNameRevision.description}`, `${TableRevision}.${FieldNameRevision.content}`, `${TableRevision}.${FieldNameRevision.title}`, `${TableUser}.${FieldNameUser.username}`, `${TableUser}.${FieldNameUser.guestUuid}`, `${TableRevisionTag}.${FieldNameRevisionTag.tag}`)
-      .join(
+      .leftJoin(
         TableRevisionTag,
         `${TableRevisionTag}.${FieldNameRevisionTag.revisionUuid}`,
         `${TableRevision}.${FieldNameRevision.uuid}`,
       )
-      .join(
+      .leftJoin(
         TableAuthorshipInfo,
         `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.revisionUuid}`,
         `${TableRevision}.${FieldNameRevision.uuid}`,
       )
-      .join(
+      .leftJoin(
         TableUser,
         `${TableUser}.${FieldNameUser.id}`,
         `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.authorId}`,
@@ -130,25 +131,30 @@ export class RevisionsService {
           }),
         );
       } else {
-        recordMap.set(revision[FieldNameRevision.uuid], {
-          uuid: revision[FieldNameRevision.uuid],
-          length: (revision[FieldNameRevision.content] ?? '').length,
-          createdAt: revision[FieldNameRevision.createdAt],
-          authorUsernames:
-            revision[FieldNameUser.username] !== null
-              ? [revision[FieldNameUser.username]]
-              : [],
-          authorGuestUuids:
-            revision[FieldNameUser.guestUuid] !== null
-              ? [revision[FieldNameUser.guestUuid]]
-              : [],
-          title: revision[FieldNameRevision.title],
-          description: revision[FieldNameRevision.description],
-          tags:
-            revision[FieldNameRevisionTag.tag] !== null
-              ? [revision[FieldNameRevisionTag.tag]]
-              : [],
-        });
+        recordMap.set(
+          revision[FieldNameRevision.uuid],
+          RevisionMetadataDto.create({
+            uuid: revision[FieldNameRevision.uuid],
+            length: (revision[FieldNameRevision.content] ?? '').length,
+            createdAt: interpretDateTimeAsIsoDateTime(
+              revision[FieldNameRevision.createdAt],
+            ),
+            authorUsernames:
+              revision[FieldNameUser.username] !== null
+                ? [revision[FieldNameUser.username]]
+                : [],
+            authorGuestUuids:
+              revision[FieldNameUser.guestUuid] !== null
+                ? [revision[FieldNameUser.guestUuid]]
+                : [],
+            title: revision[FieldNameRevision.title],
+            description: revision[FieldNameRevision.description],
+            tags:
+              revision[FieldNameRevisionTag.tag] !== null
+                ? [revision[FieldNameRevisionTag.tag]]
+                : [],
+          }),
+        );
       }
       return recordMap;
     }, new Map<string, RevisionMetadataDto>());
@@ -228,7 +234,9 @@ export class RevisionsService {
       uuid: revision[FieldNameRevision.uuid],
       content: revision[FieldNameRevision.content],
       length: (revision[FieldNameRevision.content] ?? '').length,
-      createdAt: revision[FieldNameRevision.createdAt],
+      createdAt: interpretDateTimeAsIsoDateTime(
+        revision[FieldNameRevision.createdAt],
+      ),
       title: revision[FieldNameRevision.title],
       description: revision[FieldNameRevision.description],
       patch: revision.patch,

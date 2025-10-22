@@ -101,7 +101,13 @@ describe('FrontendConfigService', () => {
                 registerAs('appConfig', () => appConfig),
                 registerAs('authConfig', () => authConfig),
                 registerAs('customizationConfig', () => {
-                  return { branding: {}, specialUrls: {} };
+                  return {
+                    branding: {
+                      customName: null,
+                      customLogo: null,
+                    },
+                    specialUrls: {},
+                  };
                 }),
                 registerAs('externalServicesConfig', () => {
                   return {};
@@ -110,8 +116,8 @@ describe('FrontendConfigService', () => {
                   return {
                     forbiddenNoteIds: [],
                     maxDocumentLength: 200,
-                    guestAccess: PermissionLevel.FULL,
                     permissions: {
+                      maxGuestLevel: PermissionLevel.FULL,
                       default: {
                         everyone: PermissionLevelNames[PermissionLevel.READ],
                         loggedIn: PermissionLevelNames[PermissionLevel.WRITE],

@@ -337,9 +337,10 @@ describe('ApiTokenService', () => {
           {
             [FieldNameApiToken.id]: validKeyId,
             [FieldNameApiToken.label]: label,
+            // ToDo: Fix this
             [FieldNameApiToken.validUntil]: validUntil,
-            [FieldNameApiToken.createdAt]: createdAt,
-            [FieldNameApiToken.lastUsedAt]: lastUsedAt,
+            [FieldNameApiToken.createdAt]: createdAt.toString(),
+            [FieldNameApiToken.lastUsedAt]: lastUsedAt.toString(),
           },
         ],
       );
@@ -348,7 +349,6 @@ describe('ApiTokenService', () => {
       expect(tokens).toEqual([
         {
           label: label,
-          userId: userId,
           validUntil: validUntil.toISOString(),
           keyId: validKeyId,
           createdAt: createdAt.toISOString(),
@@ -357,7 +357,7 @@ describe('ApiTokenService', () => {
       ]);
       expectBindings(tracker, 'select', [[userId]]);
     });
-    it('should return empty array if token for user do not exists', async () => {
+    it('should return empty array if token for user does not exist', async () => {
       mockSelect(
         tracker,
         [
@@ -366,7 +366,6 @@ describe('ApiTokenService', () => {
           FieldNameApiToken.label,
           FieldNameApiToken.lastUsedAt,
           FieldNameApiToken.validUntil,
-          FieldNameApiToken.userId,
         ],
         TableApiToken,
         FieldNameApiToken.userId,
