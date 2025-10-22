@@ -56,8 +56,8 @@ describe('RevisionsService', () => {
 
   const mockNoteId = 42;
   const mockPrimaryAlias = 'mock-note';
-  const mockCreatedAt1 = '2012-05-25T09:08:34.123';
-  const mockCreatedAt2 = '2025-09-23T18:04:08.957';
+  const mockCreatedAt1 = '2012-05-25T09:08:34.123Z';
+  const mockCreatedAt2 = '2025-09-23T18:04:08.957Z';
   const mockRevisionUuid1 = '84e72936-a851-4c4a-a729-36a851bc4a01';
   const mockRevisionUuid2 = '8573c04f-9e71-4b8f-b3c0-4f9e71db8ffd';
   const mockContent1 = 'Revision content';

@@ -47,6 +47,7 @@ import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { PermissionService } from '../permissions/permission.service';
 import { RealtimeNoteStore } from '../realtime/realtime-note/realtime-note-store';
 import { RevisionsService } from '../revisions/revisions.service';
+import { interpretDateTimeAsIsoDateTime } from '../utils/date';
 
 @Injectable()
 export class NoteService {
@@ -422,7 +423,7 @@ export class NoteService {
     }
     const createdAtString = note[FieldNameNote.createdAt];
     const version = note[FieldNameNote.version];
-    const createdAt = new Date(createdAtString).toISOString();
+    const createdAt = interpretDateTimeAsIsoDateTime(createdAtString);
 
     const latestRevision = await this.revisionsService.getLatestRevision(
       noteId,
@@ -447,7 +448,7 @@ export class NoteService {
       const lastEdit = updateUsers.users[0];
       lastUpdatedBy = lastEdit.username;
       editedBy = updateUsers.users.map((user) => user.username);
-      updatedAt = new Date(lastEdit.createdAt).toISOString();
+      updatedAt = interpretDateTimeAsIsoDateTime(lastEdit.createdAt);
     } else {
       lastUpdatedBy = permissions.owner;
       editedBy = permissions.owner ? [permissions.owner] : [];

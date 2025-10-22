@@ -23,6 +23,7 @@ import {
   TooManyTokensError,
 } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { interpretDateTimeAsIsoDateTime } from '../utils/date';
 import {
   bufferToBase64Url,
   checkTokenEquality,
@@ -203,14 +204,16 @@ export class ApiTokenService {
         ApiTokenDto.create({
           label: apiToken[FieldNameApiToken.label],
           keyId: apiToken[FieldNameApiToken.id],
-          createdAt: new Date(
+          createdAt: interpretDateTimeAsIsoDateTime(
             apiToken[FieldNameApiToken.createdAt],
-          ).toISOString(),
-          validUntil: new Date(
+          ),
+          validUntil: interpretDateTimeAsIsoDateTime(
             apiToken[FieldNameApiToken.validUntil],
-          ).toISOString(),
+          ),
           lastUsedAt: apiToken[FieldNameApiToken.lastUsedAt]
-            ? new Date(apiToken[FieldNameApiToken.lastUsedAt]).toISOString()
+            ? interpretDateTimeAsIsoDateTime(
+                apiToken[FieldNameApiToken.lastUsedAt],
+              )
             : null,
         }),
     );

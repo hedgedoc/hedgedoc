@@ -92,7 +92,7 @@ describe('GroupsService', () => {
       expect(result).toEqual({
         name: groupName,
         displayName: groupDisplayName,
-        special: false,
+        isSpecial: false,
       });
       expectBindings(tracker, 'select', [[groupName]], true);
     });

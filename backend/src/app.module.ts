@@ -16,7 +16,7 @@ import { ApiTokenModule } from './api-token/api-token.module';
 import { PrivateApiModule } from './api/private/private-api.module';
 import { PublicApiModule } from './api/public/public-api.module';
 import { AuthModule } from './auth/auth.module';
-import appConfig from './config/app.config';
+import appConfig, { AppConfig } from './config/app.config';
 import authConfig from './config/auth.config';
 import cspConfig from './config/csp.config';
 import customizationConfig from './config/customization.config';
@@ -25,6 +25,7 @@ import databaseConfig, {
   PostgresDatabaseConfig,
 } from './config/database.config';
 import externalConfig from './config/external-services.config';
+import { Loglevel } from './config/loglevel.enum';
 import mediaConfig from './config/media.config';
 import noteConfig from './config/note.config';
 import { eventModuleConfig } from './events';
@@ -41,6 +42,7 @@ import { WebsocketModule } from './realtime/websocket/websocket.module';
 import { RevisionsModule } from './revisions/revisions.module';
 import { SessionModule } from './sessions/session.module';
 import { UsersModule } from './users/users.module';
+import { isDevMode } from './utils/dev-mode';
 
 const routes: Routes = [
   {
@@ -62,8 +64,9 @@ const routes: Routes = [
     RouterModule.register(routes),
     KnexModule.forRootAsync({
       imports: [],
-      inject: [databaseConfig.KEY, KnexLoggerService],
+      inject: [appConfig.KEY, databaseConfig.KEY, KnexLoggerService],
       useFactory: (
+        appConfig: AppConfig,
         databaseConfig: PostgresDatabaseConfig,
         knexLoggerService: KnexLoggerService,
       ) => ({
@@ -78,6 +81,10 @@ const routes: Routes = [
           migrations: {
             directory: 'src/database/migrations/',
           },
+          debug:
+            isDevMode() &&
+            (appConfig.loglevel === Loglevel.DEBUG ||
+              appConfig.loglevel === Loglevel.TRACE),
         },
       }),
     }),

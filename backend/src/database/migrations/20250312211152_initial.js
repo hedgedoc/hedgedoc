@@ -50,9 +50,7 @@ const up = async function (knex) {
     table.string(FieldNameUser.email).nullable();
     table.integer(FieldNameUser.authorStyle).notNullable();
     table.uuid(FieldNameUser.guestUuid).nullable().unique();
-    table
-      .timestamp(FieldNameUser.createdAt, { useTz: true })
-      .defaultTo(knex.fn.now());
+    table.timestamp(FieldNameUser.createdAt).defaultTo(knex.fn.now());
     table.index(FieldNameUser.username);
     table.index(FieldNameUser.guestUuid);
   });
@@ -84,9 +82,7 @@ const up = async function (knex) {
   await knex.schema.createTable(TableNote, (table) => {
     table.increments(FieldNameNote.id).primary();
     table.integer(FieldNameNote.version).notNullable().defaultTo(2);
-    table
-      .timestamp(FieldNameNote.createdAt, { useTz: true })
-      .defaultTo(knex.fn.now());
+    table.timestamp(FieldNameNote.createdAt).defaultTo(knex.fn.now());
     table
       .integer(FieldNameNote.ownerId)
       .unsigned()
@@ -130,11 +126,9 @@ const up = async function (knex) {
       .onDelete('CASCADE');
     table.string(FieldNameApiToken.label).notNullable();
     table.string(FieldNameApiToken.secretHash).notNullable();
-    table
-      .timestamp(FieldNameApiToken.validUntil, { useTz: true })
-      .notNullable();
-    table.timestamp(FieldNameApiToken.lastUsedAt, { useTz: true }).nullable();
-    table.timestamp(FieldNameApiToken.createdAt, { useTz: true }).notNullable();
+    table.timestamp(FieldNameApiToken.validUntil).notNullable();
+    table.timestamp(FieldNameApiToken.lastUsedAt).nullable();
+    table.timestamp(FieldNameApiToken.createdAt).notNullable();
     table.index(FieldNameApiToken.userId);
   });
 
@@ -158,12 +152,8 @@ const up = async function (knex) {
     table.string(FieldNameIdentity.providerIdentifier).nullable();
     table.string(FieldNameIdentity.providerUserId).nullable();
     table.string(FieldNameIdentity.passwordHash).nullable();
-    table
-      .timestamp(FieldNameIdentity.createdAt, { useTz: true })
-      .defaultTo(knex.fn.now());
-    table
-      .timestamp(FieldNameIdentity.updatedAt, { useTz: true })
-      .defaultTo(knex.fn.now());
+    table.timestamp(FieldNameIdentity.createdAt).defaultTo(knex.fn.now());
+    table.timestamp(FieldNameIdentity.updatedAt).defaultTo(knex.fn.now());
     table.unique(
       [
         FieldNameIdentity.userId,
@@ -222,9 +212,7 @@ const up = async function (knex) {
       useNative: true,
       enumName: FieldNameRevision.noteType,
     });
-    table
-      .timestamp(FieldNameRevision.createdAt, { useTz: true })
-      .defaultTo(knex.fn.now());
+    table.timestamp(FieldNameRevision.createdAt).defaultTo(knex.fn.now());
     table.index(FieldNameRevision.noteId);
   });
 
@@ -266,9 +254,7 @@ const up = async function (knex) {
       .unsigned()
       .notNullable();
     table.integer(FieldNameAuthorshipInfo.endPosition).unsigned().notNullable();
-    table
-      .timestamp(FieldNameAuthorshipInfo.createdAt, { useTz: true })
-      .defaultTo(knex.fn.now());
+    table.timestamp(FieldNameAuthorshipInfo.createdAt).defaultTo(knex.fn.now());
     table.index(FieldNameAuthorshipInfo.revisionUuid);
     table.index(FieldNameAuthorshipInfo.authorId);
   });
@@ -363,9 +349,7 @@ const up = async function (knex) {
       )
       .notNullable();
     table.text(FieldNameMediaUpload.backendData).nullable();
-    table
-      .timestamp(FieldNameMediaUpload.createdAt, { useTz: true })
-      .defaultTo(knex.fn.now());
+    table.timestamp(FieldNameMediaUpload.createdAt).defaultTo(knex.fn.now());
     table.index(FieldNameMediaUpload.noteId);
     table.index(FieldNameMediaUpload.userId);
   });
