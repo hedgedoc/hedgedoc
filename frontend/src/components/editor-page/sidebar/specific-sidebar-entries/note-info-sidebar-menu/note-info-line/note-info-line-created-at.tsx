@@ -18,7 +18,7 @@ export const NoteInfoLineCreatedAt: React.FC = () => {
   useTranslation()
   const noteCreateTime = useApplicationState((state) => state.noteDetails?.createdAt)
   const noteCreateDateTime = useMemo(
-    () => (noteCreateTime === undefined ? null : DateTime.fromSeconds(noteCreateTime)),
+    () => (noteCreateTime === undefined ? null : DateTime.fromISO(noteCreateTime)),
     [noteCreateTime]
   )
 

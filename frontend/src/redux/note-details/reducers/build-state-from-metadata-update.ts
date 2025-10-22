@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { NoteDetails } from '../types'
-import { DateTime } from 'luxon'
 import type { NoteMetadataInterface } from '@hedgedoc/commons'
 
 /**
@@ -23,7 +22,7 @@ export const buildStateFromMetadataUpdate = (state: NoteDetails, noteMetadata: N
     aliases: noteMetadata.aliases,
     title: noteMetadata.title,
     version: noteMetadata.version,
-    createdAt: DateTime.fromISO(noteMetadata.createdAt).toSeconds(),
-    updatedAt: DateTime.fromISO(noteMetadata.updatedAt).toSeconds()
+    createdAt: noteMetadata.createdAt,
+    updatedAt: noteMetadata.updatedAt
   }
 }
