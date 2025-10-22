@@ -1,6 +1,8 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalPassThroughEnv": [
+    "NODE_ENV",
+    "DEBUG",
     "HD_*",
     "CADDY_HOST"
   ],
