@@ -17,8 +17,8 @@ export const initialState: NoteDetails = {
   selection: { from: 0 },
   rawFrontmatter: '',
   startOfContentLineOffset: 0,
-  createdAt: 0,
-  updatedAt: 0,
+  createdAt: '1970-01-01T00:00:00.000Z',
+  updatedAt: '1970-01-01T00:00:00.000Z',
   aliases: [],
   primaryAlias: '',
   permissions: {

@@ -6,14 +6,12 @@
 import type { CursorSelection } from '../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
 import type { NoteFrontmatter, NoteMetadataInterface } from '@hedgedoc/commons'
 
-type UnnecessaryNoteAttributes = 'updatedAt' | 'createdAt' | 'tags' | 'description'
+type UnnecessaryNoteAttributes = 'tags' | 'description'
 
 /**
  * Redux state containing the currently loaded note with its content and metadata.
  */
 export interface NoteDetails extends Omit<NoteMetadataInterface, UnnecessaryNoteAttributes> {
-  updatedAt: number
-  createdAt: number
   markdownContent: {
     plain: string
     lines: string[]

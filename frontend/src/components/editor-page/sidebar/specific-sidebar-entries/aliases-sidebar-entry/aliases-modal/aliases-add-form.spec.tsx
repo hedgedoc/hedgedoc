@@ -19,13 +19,11 @@ jest.mock('../../../../../../redux/note-details/methods')
 jest.mock('../../../../../../hooks/common/use-application-state')
 jest.mock('../../../../../notifications/ui-notification-boundary')
 
-const addPromise = Promise.resolve({ name: 'mock-alias-new', isPrimaryAlias: true })
-
 describe('AliasesAddForm', () => {
   beforeEach(async () => {
     await mockI18n()
     mockUiNotifications()
-    jest.spyOn(AliasModule, 'addAlias').mockImplementation(() => addPromise)
+    jest.spyOn(AliasModule, 'addAlias').mockImplementation(() => Promise.resolve())
     jest.spyOn(NoteDetailsReduxModule, 'updateMetadata').mockImplementation(() => Promise.resolve())
     mockNotePermissions('test', 'test', undefined, {
       noteDetails: { primaryAlias: 'mock-alias-primary' } as NoteDetails
@@ -48,8 +46,7 @@ describe('AliasesAddForm', () => {
     await act<void>(() => {
       button.click()
     })
-    expect(AliasModule.addAlias).toBeCalledWith('mock-alias-primary', 'mock-alias-new')
-    await addPromise
+    expect(AliasModule.addAlias).toHaveBeenCalledWith('mock-alias-primary', 'mock-alias-new')
     expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
   })
 })
