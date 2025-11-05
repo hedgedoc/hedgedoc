@@ -1,7 +1,7 @@
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
- * SPDX-License-Identifier: AGPL-3.0-only
+ * SPDX-License-Identifier: CC0-1.0
  */
 module.exports = {
   parser: '@typescript-eslint/parser',
