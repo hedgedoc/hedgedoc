@@ -41,8 +41,8 @@ describe('build state from server permissions', () => {
       aliases: [],
       title: 'test',
       version: 2,
-      createdAt: 1663519860,
-      updatedAt: 1663519920
+      createdAt: '2022-09-18T18:51:00.000+02:00',
+      updatedAt: '2022-09-18T18:52:00.000+02:00'
     })
   })
 })

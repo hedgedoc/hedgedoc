@@ -253,7 +253,7 @@ export class NoteService {
       .where(FieldNameNote.id, noteId)
       .delete();
     if (numberOfDeletedNotes === 0) {
-      throw new NotInDBError(`There is no note with the to delete.`);
+      throw new NotInDBError(`There is no note with the given id to delete.`);
     }
   }
 

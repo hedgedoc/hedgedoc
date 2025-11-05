@@ -3,14 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { RevisionMetadataDto } from '@hedgedoc/commons'
+import type { RevisionMetadataInterface } from '@hedgedoc/commons'
 import { HttpMethod, respondToMatchingRequest } from '../../../../../../handler-utils/respond-to-matching-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = (req: NextApiRequest, res: NextApiResponse): void => {
-  respondToMatchingRequest<RevisionMetadataDto[]>(HttpMethod.GET, req, res, [
+  respondToMatchingRequest<RevisionMetadataInterface[]>(HttpMethod.GET, req, res, [
     {
-      id: 1,
+      uuid: '019a5647-fc18-7e2d-9d8d-867be8a5ef28',
       createdAt: '2021-12-29T17:54:11.000Z',
       length: 2788,
       authorUsernames: [],
@@ -20,7 +20,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
       tags: ['hedgedoc', 'demo', 'react']
     },
     {
-      id: 0,
+      uuid: '019a5648-4986-7213-9067-a4a6859171c5',
       createdAt: '2021-12-21T16:59:42.000Z',
       length: 2782,
       authorUsernames: [],

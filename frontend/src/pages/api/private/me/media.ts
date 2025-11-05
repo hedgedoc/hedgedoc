@@ -5,10 +5,10 @@
  */
 import { HttpMethod, respondToMatchingRequest } from '../../../../handler-utils/respond-to-matching-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { MediaUploadDto } from '@hedgedoc/commons'
+import type { MediaUploadInterface } from '@hedgedoc/commons'
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
-  respondToMatchingRequest<MediaUploadDto[]>(HttpMethod.GET, req, res, [
+  respondToMatchingRequest<MediaUploadInterface[]>(HttpMethod.GET, req, res, [
     {
       username: 'tilman',
       createdAt: '2022-03-20T20:36:32Z',

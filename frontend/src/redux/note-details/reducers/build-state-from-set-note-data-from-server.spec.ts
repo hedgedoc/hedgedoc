@@ -7,7 +7,6 @@ import * as buildStateFromUpdatedMarkdownContentModule from '../build-state-from
 import type { NoteDetails } from '../types'
 import { buildStateFromServerInterface } from './build-state-from-set-note-data-from-server'
 import { NoteTextDirection, NoteType } from '@hedgedoc/commons'
-import { DateTime } from 'luxon'
 import { Mock } from 'ts-mockery'
 import type { NoteInterface } from '@hedgedoc/commons'
 
@@ -99,8 +98,8 @@ describe('build state from set note data from server', () => {
       },
       firstHeading: '',
       rawFrontmatter: '',
-      createdAt: DateTime.fromISO('2012-05-25T09:08:34.123').toSeconds(),
-      updatedAt: DateTime.fromISO('2020-05-25T09:08:34.123').toSeconds(),
+      createdAt: '2012-05-25T09:08:34.123',
+      updatedAt: '2020-05-25T09:08:34.123',
       lastUpdatedBy: 'updateusername',
       aliases: ['alias'],
       primaryAlias: 'alias',

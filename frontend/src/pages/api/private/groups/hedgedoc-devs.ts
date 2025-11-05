@@ -5,13 +5,13 @@
  */
 import { HttpMethod, respondToMatchingRequest } from '../../../../handler-utils/respond-to-matching-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { GroupInfoDto } from '@hedgedoc/commons'
+import type { GroupInfoInterface } from '@hedgedoc/commons'
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
-  respondToMatchingRequest<GroupInfoDto>(HttpMethod.GET, req, res, {
+  respondToMatchingRequest<GroupInfoInterface>(HttpMethod.GET, req, res, {
     name: 'hedgedoc-devs',
     displayName: 'HedgeDoc devs',
-    special: true
+    isSpecial: true
   })
 }
 
