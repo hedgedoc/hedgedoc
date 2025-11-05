@@ -39,9 +39,9 @@ export const getAllRevisions = async (noteId: string): Promise<RevisionMetadataI
 /**
  * Deletes all revisions for a note.
  *
- * @param noteIdOrAlias The id or alias of the note to delete all revisions for.
+ * @param noteAlias The id or alias of the note to delete all revisions for.
  * @throws {Error} when the api request wasn't successful.
  */
-export const deleteRevisionsForNote = async (noteIdOrAlias: string): Promise<void> => {
-  await new DeleteApiRequestBuilder(`notes/${noteIdOrAlias}/revisions`).sendRequest()
+export const deleteRevisionsForNote = async (noteAlias: string): Promise<void> => {
+  await new DeleteApiRequestBuilder(`notes/${noteAlias}/revisions`).sendRequest()
 }

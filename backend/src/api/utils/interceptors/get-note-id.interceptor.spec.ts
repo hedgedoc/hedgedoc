@@ -15,7 +15,7 @@ import { GetNoteIdInterceptor } from './get-note-id.interceptor';
 
 describe('get note interceptor', () => {
   const mockNote = Mock.of<Note>({});
-  const mockNoteId = 'noteIdOrAlias';
+  const mockNoteId = 'noteAlias';
   const mockObservable = Mock.of<Observable<unknown>>({});
   const nextCallHandler = Mock.of<CallHandler>({
     handle: () => mockObservable,

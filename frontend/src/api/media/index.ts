@@ -26,16 +26,16 @@ export const getProxiedUrl = async (imageUrl: string): Promise<ImageProxyRespons
 /**
  * Uploads a media file to the backend and returns the UUID of the uploaded media object.
  *
- * @param noteIdOrAlias The id or alias of the note from which the media is uploaded.
+ * @param noteAlias The id or alias of the note from which the media is uploaded.
  * @param media The binary media content.
  * @return The UUID of the uploaded media object.
  * @throws {Error} when the api request wasn't successful.
  */
-export const uploadFile = async (noteIdOrAlias: string, media: File): Promise<string> => {
+export const uploadFile = async (noteAlias: string, media: File): Promise<string> => {
   const postData = new FormData()
   postData.append('file', media)
   const response = await new PostApiRequestBuilder<string, void>('media')
-    .withHeader('HedgeDoc-Note', noteIdOrAlias)
+    .withHeader('HedgeDoc-Note', noteAlias)
     .withBody(postData)
     .sendRequest()
   return response.getResponse().text()

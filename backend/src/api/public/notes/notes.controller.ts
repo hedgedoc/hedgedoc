@@ -80,7 +80,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.READ)
-  @Get(':noteIdOrAlias')
+  @Get(':noteAlias')
   @OpenApi(
     {
       code: 200,
@@ -122,7 +122,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.FULL)
-  @Delete(':noteIdOrAlias')
+  @Delete(':noteAlias')
   @OpenApi(204, 403, 404, 500)
   async deleteNote(
     @RequestUserId() userId: number,
@@ -146,7 +146,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.WRITE)
-  @Put(':noteIdOrAlias')
+  @Put(':noteAlias')
   @OpenApi(
     {
       code: 200,
@@ -168,7 +168,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.READ)
-  @Get(':noteIdOrAlias/content')
+  @Get(':noteAlias/content')
   @OpenApi(
     {
       code: 200,
@@ -187,7 +187,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.READ)
-  @Get(':noteIdOrAlias/metadata')
+  @Get(':noteAlias/metadata')
   @OpenApi(
     {
       code: 200,
@@ -205,7 +205,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.READ)
-  @Get(':noteIdOrAlias/metadata/permissions')
+  @Get(':noteAlias/metadata/permissions')
   @OpenApi(
     {
       code: 200,
@@ -223,7 +223,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.FULL)
-  @Put(':noteIdOrAlias/metadata/permissions/users/:userName')
+  @Put(':noteAlias/metadata/permissions/users/:userName')
   @OpenApi(
     {
       code: 200,
@@ -250,7 +250,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.FULL)
-  @Delete(':noteIdOrAlias/metadata/permissions/users/:userName')
+  @Delete(':noteAlias/metadata/permissions/users/:userName')
   @OpenApi(
     {
       code: 200,
@@ -272,7 +272,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.FULL)
-  @Put(':noteIdOrAlias/metadata/permissions/groups/:groupName')
+  @Put(':noteAlias/metadata/permissions/groups/:groupName')
   @OpenApi(
     {
       code: 200,
@@ -295,7 +295,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.FULL)
-  @Delete(':noteIdOrAlias/metadata/permissions/groups/:groupName')
+  @Delete(':noteAlias/metadata/permissions/groups/:groupName')
   @OpenApi(
     {
       code: 200,
@@ -316,7 +316,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.FULL)
-  @Put(':noteIdOrAlias/metadata/permissions/owner')
+  @Put(':noteAlias/metadata/permissions/owner')
   @OpenApi(
     {
       code: 200,
@@ -338,7 +338,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.READ)
-  @Get(':noteIdOrAlias/revisions')
+  @Get(':noteAlias/revisions')
   @OpenApi(
     {
       code: 200,
@@ -357,7 +357,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.READ)
-  @Get(':noteIdOrAlias/revisions/:revisionUuid')
+  @Get(':noteAlias/revisions/:revisionUuid')
   @OpenApi(
     {
       code: 200,
@@ -375,7 +375,7 @@ export class NotesController {
 
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.READ)
-  @Get(':noteIdOrAlias/media')
+  @Get(':noteAlias/media')
   @OpenApi({
     code: 200,
     description: 'All media uploads of the note',

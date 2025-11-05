@@ -12,37 +12,35 @@ import type { NoteMediaDeletionInterface } from '@hedgedoc/commons/dist/esm'
 /**
  * Retrieves the content and metadata about the specified note.
  *
- * @param noteIdOrAlias The id or alias of the note.
+ * @param noteAlias The id or alias of the note.
  * @return Content and metadata of the specified note.
  * @throws {Error} when the api request wasn't successful.
  */
-export const getNote = async (noteIdOrAlias: string, baseUrl?: string): Promise<NoteInterface> => {
-  const response = await new GetApiRequestBuilder<NoteInterface>('notes/' + noteIdOrAlias, baseUrl).sendRequest()
+export const getNote = async (noteAlias: string, baseUrl?: string): Promise<NoteInterface> => {
+  const response = await new GetApiRequestBuilder<NoteInterface>('notes/' + noteAlias, baseUrl).sendRequest()
   return response.asParsedJsonObject()
 }
 
 /**
  * Retrieves the metadata of the specified note.
  *
- * @param noteIdOrAlias The id or alias of the note.
+ * @param noteAlias The id or alias of the note.
  * @return Metadata of the specified note.
  */
-export const getNoteMetadata = async (noteIdOrAlias: string): Promise<NoteMetadataInterface> => {
-  const response = await new GetApiRequestBuilder<NoteMetadataInterface>(
-    `notes/${noteIdOrAlias}/metadata`
-  ).sendRequest()
+export const getNoteMetadata = async (noteAlias: string): Promise<NoteMetadataInterface> => {
+  const response = await new GetApiRequestBuilder<NoteMetadataInterface>(`notes/${noteAlias}/metadata`).sendRequest()
   return response.asParsedJsonObject()
 }
 
 /**
  * Returns a list of media objects associated with the specified note.
  *
- * @param noteIdOrAlias The id or alias of the note.
+ * @param noteAlias The id or alias of the note.
  * @return List of media object metadata associated with specified note.
  * @throws {Error} when the api request wasn't successful.
  */
-export const getMediaForNote = async (noteIdOrAlias: string): Promise<MediaUploadInterface[]> => {
-  const response = await new GetApiRequestBuilder<MediaUploadInterface[]>(`notes/${noteIdOrAlias}/media`).sendRequest()
+export const getMediaForNote = async (noteAlias: string): Promise<MediaUploadInterface[]> => {
+  const response = await new GetApiRequestBuilder<MediaUploadInterface[]>(`notes/${noteAlias}/media`).sendRequest()
   return response.asParsedJsonObject()
 }
 
@@ -80,12 +78,12 @@ export const createNoteWithPrimaryAlias = async (markdown: string, primaryAlias:
 /**
  * Deletes the specified note.
  *
- * @param noteIdOrAlias The id or alias of the note to delete.
+ * @param noteAlias The id or alias of the note to delete.
  * @param keepMedia Whether to keep the uploaded media associated with the note.
  * @throws {Error} when the api request wasn't successful.
  */
-export const deleteNote = async (noteIdOrAlias: string, keepMedia: boolean): Promise<void> => {
-  await new DeleteApiRequestBuilder<void, NoteMediaDeletionInterface>('notes/' + noteIdOrAlias)
+export const deleteNote = async (noteAlias: string, keepMedia: boolean): Promise<void> => {
+  await new DeleteApiRequestBuilder<void, NoteMediaDeletionInterface>('notes/' + noteAlias)
     .withJsonBody({
       keepMedia
     })
