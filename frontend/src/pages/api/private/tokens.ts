@@ -5,10 +5,10 @@
  */
 import { HttpMethod, respondToMatchingRequest } from '../../../handler-utils/respond-to-matching-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { ApiTokenDto } from '@hedgedoc/commons'
+import type { ApiTokenInterface } from '@hedgedoc/commons'
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
-  respondToMatchingRequest<ApiTokenDto[]>(HttpMethod.GET, req, res, [
+  respondToMatchingRequest<ApiTokenInterface[]>(HttpMethod.GET, req, res, [
     {
       label: 'Demo-App',
       keyId: 'demo',

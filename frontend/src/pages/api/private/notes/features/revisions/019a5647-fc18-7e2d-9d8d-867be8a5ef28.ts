@@ -3,17 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { RevisionDto } from '@hedgedoc/commons'
+import type { RevisionInterface } from '@hedgedoc/commons'
 import { HttpMethod, respondToMatchingRequest } from '../../../../../../handler-utils/respond-to-matching-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = (req: NextApiRequest, res: NextApiResponse): void => {
-  respondToMatchingRequest<RevisionDto>(HttpMethod.GET, req, res, {
-    id: 1,
+  respondToMatchingRequest<RevisionInterface>(HttpMethod.GET, req, res, {
+    uuid: '019a5647-fc18-7e2d-9d8d-867be8a5ef28',
     createdAt: '2021-12-29T17:54:11.000Z',
     title: 'Features',
     description: 'Many more features, such wow!',
-    tags: ['hedgedoc', 'demo', 'react'],
     patch: `Index:
 ===================================================================
 ---
@@ -60,10 +59,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
  Bob -> Alice : ok
  note left
    This is **bold**`,
-    edits: [],
     length: 2788,
-    authorUsernames: [],
-    authorGuestUuids: ['1', '2', '3'],
     content: `---
 title: Features
 description: Many more features, such wow!

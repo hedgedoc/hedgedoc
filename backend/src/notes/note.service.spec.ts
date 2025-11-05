@@ -221,7 +221,6 @@ describe('NoteService', () => {
         let mockGetGroupIdByName: jest.SpyInstance;
         let mockSetGroupPermission: jest.SpyInstance;
         beforeEach(() => {
-          console.log('beforeEach');
           mockEnsureAliasIsAvailable = jest
             .spyOn(aliasService, 'ensureAliasIsAvailable')
             .mockImplementation(async () => {});
