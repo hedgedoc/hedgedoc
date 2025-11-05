@@ -16,7 +16,7 @@ import { extractNoteIdFromRequest } from '../extract-note-id-from-request';
 import { CompleteRequest } from '../request.type';
 
 /**
- * Saves the note identified by the `noteIdOrAlias` URL parameter
+ * Saves the note identified by the `noteAlias` URL parameter
  * under the `note` property of the request object.
  */
 @Injectable()

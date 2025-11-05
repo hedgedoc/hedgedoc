@@ -87,7 +87,7 @@ describe('Alias', () => {
           .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
           .set('Content-Type', 'application/json')
           .send({
-            noteIdOrAlias: testAlias,
+            noteAlias: testAlias,
             newAlias: noteId,
           })
           .expect(409);
