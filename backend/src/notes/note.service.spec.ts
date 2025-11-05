@@ -79,8 +79,10 @@ describe('NoteService', () => {
   const mockUsername = 'TestyMcTestface';
   const mockGroupName = 'Testers-Group';
   const mockRevisionUuid = '0199110d-076f-7724-9229-bbeb32b53592';
-  const mockCreatedAt = new Date().toISOString();
-  const mockUpdatedAt = new Date(2025, 9, 3, 21, 35).toISOString();
+  const mockCreatedAt = '2025-10-22 18:55:38';
+  const mockCreatedAtIso = '2025-10-22T18:55:38.000Z';
+  const mockUpdatedAt = '2025-10-22 19:34:21';
+  const mockUpdatedAtIso = '2025-10-22T19:34:21.000Z';
   const mockNoteType = NoteType.DOCUMENT;
   const mockPatch = 'mockPatch';
   const mockNoteTitle = 'mockNoteTitle';
@@ -662,11 +664,11 @@ describe('NoteService', () => {
         title: mockNoteTitle,
         description: mockNoteDescription,
         tags: mockTags,
-        createdAt: mockCreatedAt,
+        createdAt: mockCreatedAtIso,
         editedBy: [mockUsername],
         permissions: mockPermissions,
         version: 2,
-        updatedAt: mockUpdatedAt,
+        updatedAt: mockUpdatedAtIso,
         lastUpdatedBy: mockUsername,
       });
     });
@@ -679,11 +681,11 @@ describe('NoteService', () => {
         title: mockNoteTitle,
         description: mockNoteDescription,
         tags: mockTags,
-        createdAt: mockCreatedAt,
+        createdAt: mockCreatedAtIso,
         editedBy: [mockUsername],
         permissions: mockPermissions,
         version: 2,
-        updatedAt: mockUpdatedAt,
+        updatedAt: mockUpdatedAtIso,
         lastUpdatedBy: mockUsername,
       });
       jest.spyOn(service, 'getNoteContent').mockResolvedValue(mockNoteContent);

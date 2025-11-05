@@ -21,6 +21,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import * as FileType from 'file-type';
 import { Knex } from 'knex';
+import { DateTime } from 'luxon';
 import { InjectConnection } from 'nest-knexjs';
 import { v7 as uuidV7 } from 'uuid';
 
@@ -28,7 +29,6 @@ import mediaConfiguration, { MediaConfig } from '../config/media.config';
 import { MediaUploadDto } from '../dtos/media-upload.dto';
 import { ClientError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { interpretDateTimeAsIsoDateTime } from '../utils/date';
 import { AzureBackend } from './backends/azure-backend';
 import { FilesystemBackend } from './backends/filesystem-backend';
 import { ImgurBackend } from './backends/imgur-backend';
@@ -330,9 +330,10 @@ export class MediaService {
         uuid: mediaUpload[FieldNameMediaUpload.uuid],
         fileName: mediaUpload[FieldNameMediaUpload.fileName],
         noteId: mediaUpload[FieldNameAlias.alias],
-        createdAt: interpretDateTimeAsIsoDateTime(
+        createdAt: DateTime.fromSQL(
           mediaUpload[FieldNameMediaUpload.createdAt],
-        ),
+          { zone: 'UTC' },
+        ).toISO(),
         username: mediaUpload[FieldNameUser.username],
       }),
     );

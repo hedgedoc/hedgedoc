@@ -8,7 +8,10 @@ import { z } from 'zod'
 export const RevisionMetadataSchema = z
   .object({
     uuid: z.string().uuid().describe('The uuid of the revision.'),
-    createdAt: z.string().datetime().describe('When the revision was created.'),
+    createdAt: z
+      .string()
+      .datetime({ offset: false, local: false })
+      .describe('When the revision was created.'),
     length: z
       .number()
       .nonnegative()

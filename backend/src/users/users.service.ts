@@ -61,7 +61,9 @@ export class UsersService {
 
     const dbActor = transaction ? transaction : this.knex;
     try {
-      const newUsers = await dbActor(TableUser).insert(
+      const newUsers: number[] | Pick<User, FieldNameUser.id>[] = await dbActor(
+        TableUser,
+      ).insert(
         {
           [FieldNameUser.username]: username,
           [FieldNameUser.displayName]: displayName,
@@ -80,7 +82,9 @@ export class UsersService {
       if (newUsers.length !== 1) {
         throw new Error('User was not added to the database');
       }
-      return newUsers[0][FieldNameUser.id];
+      return typeof newUsers[0] === 'number'
+        ? newUsers[0]
+        : newUsers[0][FieldNameUser.id];
     } catch {
       throw new GenericDBError(
         `Failed to create user '${username}', no user was created.`,
@@ -99,17 +103,18 @@ export class UsersService {
   async createGuestUser(): Promise<[string, number]> {
     const randomName = generateRandomName();
     const uuid = uuidv4();
-    const createdUserIds = await this.knex(TableUser).insert(
-      {
-        [FieldNameUser.username]: null,
-        [FieldNameUser.displayName]: `Guest ${randomName}`,
-        [FieldNameUser.email]: null,
-        [FieldNameUser.photoUrl]: null,
-        [FieldNameUser.guestUuid]: uuid,
-        [FieldNameUser.authorStyle]: this.generateAuthorStyleIndex(uuid),
-      },
-      [FieldNameUser.id],
-    );
+    const createdUserIds: number[] | Pick<User, FieldNameUser.id>[] =
+      await this.knex(TableUser).insert(
+        {
+          [FieldNameUser.username]: null,
+          [FieldNameUser.displayName]: `Guest ${randomName}`,
+          [FieldNameUser.email]: null,
+          [FieldNameUser.photoUrl]: null,
+          [FieldNameUser.guestUuid]: uuid,
+          [FieldNameUser.authorStyle]: this.generateAuthorStyleIndex(uuid),
+        },
+        [FieldNameUser.id],
+      );
     if (createdUserIds.length !== 1) {
       throw new GenericDBError(
         'Failed to create guest user',
@@ -117,7 +122,10 @@ export class UsersService {
         'createGuestUser',
       );
     }
-    const newUserId = createdUserIds[0][FieldNameUser.id];
+    const newUserId =
+      typeof createdUserIds[0] === 'number'
+        ? createdUserIds[0]
+        : createdUserIds[0][FieldNameUser.id];
     return [uuid, newUserId];
   }
 

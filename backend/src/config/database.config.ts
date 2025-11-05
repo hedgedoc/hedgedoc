@@ -5,6 +5,7 @@
  */
 import { registerAs } from '@nestjs/config';
 import { Knex } from 'knex';
+import { types as pgTypes } from 'pg';
 import z from 'zod';
 
 import { DatabaseType } from './database-type.enum';
@@ -87,6 +88,16 @@ export function getKnexConfig(databaseConfig: DatabaseConfig): Knex.Config {
         useNullAsDefault: true,
       };
     case DatabaseType.POSTGRES:
+      // If we don't set the type parsers for TIMESTAMP and TIMESTAMPTZ, pg would return JSDate objects here
+      // This is not what we want, so we set them to the string representation of the timestamp
+      pgTypes.setTypeParser(
+        pgTypes.builtins.TIMESTAMP,
+        (value: string) => value,
+      );
+      pgTypes.setTypeParser(
+        pgTypes.builtins.TIMESTAMPTZ,
+        (value: string) => value,
+      );
       return {
         client: 'pg',
         connection: {
@@ -101,7 +112,6 @@ export function getKnexConfig(databaseConfig: DatabaseConfig): Knex.Config {
       };
     case DatabaseType.MARIADB:
       return {
-        // Knex recommends using the mysql driver for MariaDB database instances
         client: 'mysql2',
         connection: {
           host: databaseConfig.host,
@@ -109,6 +119,7 @@ export function getKnexConfig(databaseConfig: DatabaseConfig): Knex.Config {
           user: databaseConfig.username,
           database: databaseConfig.name,
           password: databaseConfig.password,
+          dateStrings: true,
         },
       };
   }

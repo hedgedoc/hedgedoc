@@ -12,6 +12,7 @@ import {
 import { Injectable } from '@nestjs/common';
 import { Cron, Timeout } from '@nestjs/schedule';
 import { Knex } from 'knex';
+import { DateTime } from 'luxon';
 import { InjectConnection } from 'nest-knexjs';
 import { randomBytes } from 'node:crypto';
 
@@ -23,7 +24,6 @@ import {
   TooManyTokensError,
 } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { interpretDateTimeAsIsoDateTime } from '../utils/date';
 import {
   bufferToBase64Url,
   checkTokenEquality,
@@ -204,16 +204,16 @@ export class ApiTokenService {
         ApiTokenDto.create({
           label: apiToken[FieldNameApiToken.label],
           keyId: apiToken[FieldNameApiToken.id],
-          createdAt: interpretDateTimeAsIsoDateTime(
-            apiToken[FieldNameApiToken.createdAt],
-          ),
-          validUntil: interpretDateTimeAsIsoDateTime(
-            apiToken[FieldNameApiToken.validUntil],
-          ),
+          createdAt: DateTime.fromSQL(apiToken[FieldNameApiToken.createdAt], {
+            zone: 'UTC',
+          }).toISO(),
+          validUntil: DateTime.fromSQL(apiToken[FieldNameApiToken.validUntil], {
+            zone: 'UTC',
+          }).toISO(),
           lastUsedAt: apiToken[FieldNameApiToken.lastUsedAt]
-            ? interpretDateTimeAsIsoDateTime(
-                apiToken[FieldNameApiToken.lastUsedAt],
-              )
+            ? DateTime.fromSQL(apiToken[FieldNameApiToken.lastUsedAt], {
+                zone: 'UTC',
+              }).toISO()
             : null,
         }),
     );

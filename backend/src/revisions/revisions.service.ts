@@ -25,6 +25,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Cron, Timeout } from '@nestjs/schedule';
 import { createPatch } from 'diff';
 import { Knex } from 'knex';
+import { DateTime } from 'luxon';
 import { InjectConnection } from 'nest-knexjs';
 import { v7 as uuidv7 } from 'uuid';
 
@@ -34,7 +35,6 @@ import { RevisionMetadataDto } from '../dtos/revision-metadata.dto';
 import { RevisionDto } from '../dtos/revision.dto';
 import { GenericDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { interpretDateTimeAsIsoDateTime } from '../utils/date';
 import { extractRevisionMetadataFromContent } from './utils/extract-revision-metadata-from-content';
 
 interface RevisionUserInfo {
@@ -136,9 +136,9 @@ export class RevisionsService {
           RevisionMetadataDto.create({
             uuid: revision[FieldNameRevision.uuid],
             length: (revision[FieldNameRevision.content] ?? '').length,
-            createdAt: interpretDateTimeAsIsoDateTime(
-              revision[FieldNameRevision.createdAt],
-            ),
+            createdAt: DateTime.fromSQL(revision[FieldNameRevision.createdAt], {
+              zone: 'UTC',
+            }).toISO(),
             authorUsernames:
               revision[FieldNameUser.username] !== null
                 ? [revision[FieldNameUser.username]]
@@ -234,9 +234,9 @@ export class RevisionsService {
       uuid: revision[FieldNameRevision.uuid],
       content: revision[FieldNameRevision.content],
       length: (revision[FieldNameRevision.content] ?? '').length,
-      createdAt: interpretDateTimeAsIsoDateTime(
-        revision[FieldNameRevision.createdAt],
-      ),
+      createdAt: DateTime.fromSQL(revision[FieldNameRevision.createdAt], {
+        zone: 'UTC',
+      }).toISO(),
       title: revision[FieldNameRevision.title],
       description: revision[FieldNameRevision.description],
       patch: revision.patch,
@@ -390,6 +390,7 @@ export class RevisionsService {
 
     const { title, description, tags, noteType } =
       extractRevisionMetadataFromContent(newContent);
+    const newUuid = uuidv7();
     const revisionIds = await transaction(TableRevision).insert(
       {
         [FieldNameRevision.content]: newContent,
@@ -398,8 +399,9 @@ export class RevisionsService {
         [FieldNameRevision.noteType]: noteType,
         [FieldNameRevision.patch]: patch,
         [FieldNameRevision.title]: title,
-        [FieldNameRevision.uuid]: uuidv7(),
-        [FieldNameRevision.yjsStateVector]: yjsStateVector ?? null,
+        [FieldNameRevision.uuid]: newUuid,
+        [FieldNameRevision.yjsStateVector]:
+          yjsStateVector !== undefined ? Buffer.from(yjsStateVector) : null,
       },
       [FieldNameRevision.uuid],
     );
@@ -410,12 +412,12 @@ export class RevisionsService {
         'createRevision',
       );
     }
-    const revisionId = revisionIds[0][FieldNameRevision.uuid];
+
     if (tags.length > 0) {
       await transaction(TableRevisionTag).insert(
         tags.map((tag) => ({
           [FieldNameRevisionTag.tag]: tag,
-          [FieldNameRevisionTag.revisionUuid]: revisionId,
+          [FieldNameRevisionTag.revisionUuid]: newUuid,
         })),
       );
     }

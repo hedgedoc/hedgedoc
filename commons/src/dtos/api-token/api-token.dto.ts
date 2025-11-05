@@ -10,14 +10,17 @@ export const ApiTokenSchema = z
   .object({
     label: z.string().describe('The label of the token'),
     keyId: z.string().describe('The id of the token'),
-    createdAt: z.string().datetime().describe('When this token was created'),
+    createdAt: z
+      .string()
+      .datetime({ offset: false, local: false })
+      .describe('When this token was created'),
     validUntil: z
       .string()
-      .datetime()
+      .datetime({ offset: false, local: false })
       .describe('How long this token is valid for'),
     lastUsedAt: z
       .string()
-      .datetime()
+      .datetime({ offset: false, local: false })
       .nullable()
       .describe('When this token was last used'),
   })

@@ -48,7 +48,8 @@ describe('MediaService', () => {
   const fileBuffer = Buffer.from('test');
   const username = 'testuser';
   const alias = 'note-alias';
-  const createdAt = new Date().toISOString();
+  const createdAt = '2025-11-05 20:39:25';
+  const createdAtIso = '2025-11-05T20:39:25.000Z';
 
   let service: MediaService;
   let fileSystemBackend: FilesystemBackend;
@@ -353,7 +354,7 @@ describe('MediaService', () => {
           uuid,
           fileName,
           noteId: alias,
-          createdAt: new Date(createdAt).toISOString(),
+          createdAt: createdAtIso,
           username,
         },
       ]);

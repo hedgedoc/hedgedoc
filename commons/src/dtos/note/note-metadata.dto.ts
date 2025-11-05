@@ -27,7 +27,7 @@ export const NoteMetadataSchema = z
       .describe('The HedgeDoc version this note was created in'),
     updatedAt: z
       .string()
-      .datetime()
+      .datetime({ offset: false })
       .describe('The timestamp when the note was last updated'),
     lastUpdatedBy: z
       .string()
@@ -35,7 +35,7 @@ export const NoteMetadataSchema = z
       .describe('The user that last updated the note'),
     createdAt: z
       .string()
-      .datetime()
+      .datetime({ offset: false })
       .describe('Timestamp when the note was created'),
     editedBy: z.array(z.string()).describe('List of users who edited the note'),
     permissions: NotePermissionsSchema.describe(

@@ -56,8 +56,9 @@ describe('RevisionsService', () => {
 
   const mockNoteId = 42;
   const mockPrimaryAlias = 'mock-note';
-  const mockCreatedAt1 = '2012-05-25T09:08:34.123Z';
-  const mockCreatedAt2 = '2025-09-23T18:04:08.957Z';
+  const mockCreatedAt1 = '2012-05-25 09:08:34';
+  const mockCreatedAt1Iso = '2012-05-25T09:08:34.000Z';
+  const mockCreatedAt2 = '2025-09-23 18:04:08';
   const mockRevisionUuid1 = '84e72936-a851-4c4a-a729-36a851bc4a01';
   const mockRevisionUuid2 = '8573c04f-9e71-4b8f-b3c0-4f9e71db8ffd';
   const mockContent1 = 'Revision content';
@@ -146,7 +147,7 @@ describe('RevisionsService', () => {
     const results = await service.getAllRevisionMetadataDto(mockNoteId);
     expect(results).toHaveLength(1);
     expect(results[0].uuid).toBe(mockRevisionUuid1);
-    expect(results[0].createdAt).toBe(mockCreatedAt1);
+    expect(results[0].createdAt).toBe(mockCreatedAt1Iso);
     expect(results[0].length).toBe(mockContent1.length);
     expect(results[0].authorUsernames).toHaveLength(1);
     expect(results[0].authorUsernames[0]).toBe(mockUsername);
@@ -281,7 +282,7 @@ describe('RevisionsService', () => {
         uuid: mockRevisionUuid1,
         content: mockContent1,
         length: mockContent1.length,
-        createdAt: mockCreatedAt1,
+        createdAt: mockCreatedAt1Iso,
         title: mockTitle,
         description: mockDescription,
         patch: mockPatch,

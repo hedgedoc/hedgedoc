@@ -50,9 +50,11 @@ const up = async function (knex) {
     table.string(FieldNameUser.email).nullable();
     table.integer(FieldNameUser.authorStyle).notNullable();
     table.uuid(FieldNameUser.guestUuid).nullable().unique();
-    table.timestamp(FieldNameUser.createdAt).defaultTo(knex.fn.now());
-    table.index(FieldNameUser.username);
-    table.index(FieldNameUser.guestUuid);
+    table
+      .timestamp(FieldNameUser.createdAt, { useTz: false })
+      .defaultTo(knex.fn.now());
+    table.index([FieldNameUser.username], 'idx_user_username');
+    table.index([FieldNameUser.guestUuid], 'idx_user_guest_uuid');
   });
 
   // Create group table
@@ -61,7 +63,7 @@ const up = async function (knex) {
     table.string(FieldNameGroup.name).notNullable();
     table.string(FieldNameGroup.displayName).notNullable();
     table.boolean(FieldNameGroup.isSpecial).notNullable().defaultTo(false);
-    table.index(FieldNameGroup.name);
+    table.index([FieldNameGroup.name], 'idx_group_name');
   });
 
   // Create special groups _EVERYONE and _LOGGED_IN
@@ -82,7 +84,9 @@ const up = async function (knex) {
   await knex.schema.createTable(TableNote, (table) => {
     table.increments(FieldNameNote.id).primary();
     table.integer(FieldNameNote.version).notNullable().defaultTo(2);
-    table.timestamp(FieldNameNote.createdAt).defaultTo(knex.fn.now());
+    table
+      .timestamp(FieldNameNote.createdAt, { useTz: false })
+      .defaultTo(knex.fn.now());
     table
       .integer(FieldNameNote.ownerId)
       .unsigned()
@@ -90,7 +94,7 @@ const up = async function (knex) {
       .references(FieldNameUser.id)
       .inTable(TableUser)
       .onDelete('CASCADE');
-    table.index(FieldNameNote.ownerId);
+    table.index([FieldNameNote.ownerId], 'idx_note_owner_id');
   });
 
   // Create aliases table
@@ -111,7 +115,7 @@ const up = async function (knex) {
       indexName: 'only_one_note_can_be_primary',
       useConstraint: true,
     });
-    table.index(FieldNameAlias.noteId);
+    table.index([FieldNameAlias.noteId], 'idx_alias_note_id');
   });
 
   // Create api_token table
@@ -126,10 +130,14 @@ const up = async function (knex) {
       .onDelete('CASCADE');
     table.string(FieldNameApiToken.label).notNullable();
     table.string(FieldNameApiToken.secretHash).notNullable();
-    table.timestamp(FieldNameApiToken.validUntil).notNullable();
-    table.timestamp(FieldNameApiToken.lastUsedAt).nullable();
-    table.timestamp(FieldNameApiToken.createdAt).notNullable();
-    table.index(FieldNameApiToken.userId);
+    table
+      .timestamp(FieldNameApiToken.validUntil, { useTz: false })
+      .notNullable();
+    table.timestamp(FieldNameApiToken.lastUsedAt, { useTz: false }).nullable();
+    table
+      .timestamp(FieldNameApiToken.createdAt, { useTz: false })
+      .notNullable();
+    table.index([FieldNameApiToken.userId], 'idx_api_token_user_id');
   });
 
   // Create identity table
@@ -152,8 +160,12 @@ const up = async function (knex) {
     table.string(FieldNameIdentity.providerIdentifier).nullable();
     table.string(FieldNameIdentity.providerUserId).nullable();
     table.string(FieldNameIdentity.passwordHash).nullable();
-    table.timestamp(FieldNameIdentity.createdAt).defaultTo(knex.fn.now());
-    table.timestamp(FieldNameIdentity.updatedAt).defaultTo(knex.fn.now());
+    table
+      .timestamp(FieldNameIdentity.createdAt, { useTz: false })
+      .defaultTo(knex.fn.now());
+    table
+      .timestamp(FieldNameIdentity.updatedAt, { useTz: false })
+      .defaultTo(knex.fn.now());
     table.unique(
       [
         FieldNameIdentity.userId,
@@ -165,11 +177,14 @@ const up = async function (knex) {
         useConstraint: true,
       },
     );
-    table.index([
-      FieldNameIdentity.providerUserId,
-      FieldNameIdentity.providerType,
-      FieldNameIdentity.providerIdentifier,
-    ]);
+    table.index(
+      [
+        FieldNameIdentity.providerUserId,
+        FieldNameIdentity.providerType,
+        FieldNameIdentity.providerIdentifier,
+      ],
+      'idx_identity_provider_user',
+    );
   });
 
   // Create group_user join table
@@ -189,8 +204,8 @@ const up = async function (knex) {
       .inTable(TableGroup)
       .onDelete('CASCADE');
     table.primary([FieldNameGroupUser.userId, FieldNameGroupUser.groupId]);
-    table.index(FieldNameGroupUser.userId);
-    table.index(FieldNameGroupUser.groupId);
+    table.index([FieldNameGroupUser.userId], 'idx_group_user_user_id');
+    table.index([FieldNameGroupUser.groupId], 'idx_group_user_group_id');
   });
 
   // Create revision table
@@ -212,15 +227,16 @@ const up = async function (knex) {
       useNative: true,
       enumName: FieldNameRevision.noteType,
     });
-    table.timestamp(FieldNameRevision.createdAt).defaultTo(knex.fn.now());
-    table.index(FieldNameRevision.noteId);
+    table
+      .timestamp(FieldNameRevision.createdAt, { useTz: false })
+      .defaultTo(knex.fn.now());
+    table.index([FieldNameRevision.noteId], 'idx_revision_note_id');
   });
 
   // Create revision_tag table
   await knex.schema.createTable(TableRevisionTag, (table) => {
     table
       .uuid(FieldNameRevisionTag.revisionUuid)
-      .unsigned()
       .notNullable()
       .references(FieldNameRevision.uuid)
       .inTable(TableRevision)
@@ -230,14 +246,16 @@ const up = async function (knex) {
       FieldNameRevisionTag.revisionUuid,
       FieldNameRevisionTag.tag,
     ]);
-    table.index(FieldNameRevisionTag.revisionUuid);
+    table.index(
+      [FieldNameRevisionTag.revisionUuid],
+      'idx_revision_tag_revision_uuid',
+    );
   });
 
   // Create authorship_info table
   await knex.schema.createTable(TableAuthorshipInfo, (table) => {
     table
       .uuid(FieldNameAuthorshipInfo.revisionUuid)
-      .unsigned()
       .notNullable()
       .references(FieldNameRevision.uuid)
       .inTable(TableRevision)
@@ -254,9 +272,17 @@ const up = async function (knex) {
       .unsigned()
       .notNullable();
     table.integer(FieldNameAuthorshipInfo.endPosition).unsigned().notNullable();
-    table.timestamp(FieldNameAuthorshipInfo.createdAt).defaultTo(knex.fn.now());
-    table.index(FieldNameAuthorshipInfo.revisionUuid);
-    table.index(FieldNameAuthorshipInfo.authorId);
+    table
+      .timestamp(FieldNameAuthorshipInfo.createdAt, { useTz: false })
+      .defaultTo(knex.fn.now());
+    table.index(
+      [FieldNameAuthorshipInfo.revisionUuid],
+      'idx_authorship_info_revision_uuid',
+    );
+    table.index(
+      [FieldNameAuthorshipInfo.authorId],
+      'idx_authorship_info_author_id',
+    );
   });
 
   // Create note_user_permission table
@@ -283,8 +309,14 @@ const up = async function (knex) {
       FieldNameNoteUserPermission.noteId,
       FieldNameNoteUserPermission.userId,
     ]);
-    table.index(FieldNameNoteUserPermission.noteId);
-    table.index(FieldNameNoteUserPermission.userId);
+    table.index(
+      [FieldNameNoteUserPermission.noteId],
+      'idx_note_user_permission_note_id',
+    );
+    table.index(
+      [FieldNameNoteUserPermission.userId],
+      'idx_note_user_permission_user_id',
+    );
   });
 
   // Create note_group_permission table
@@ -311,8 +343,14 @@ const up = async function (knex) {
       FieldNameNoteGroupPermission.noteId,
       FieldNameNoteGroupPermission.groupId,
     ]);
-    table.index(FieldNameNoteGroupPermission.noteId);
-    table.index(FieldNameNoteGroupPermission.groupId);
+    table.index(
+      [FieldNameNoteGroupPermission.noteId],
+      'idx_note_group_permission_note_id',
+    );
+    table.index(
+      [FieldNameNoteGroupPermission.groupId],
+      'idx_note_group_permission_group_id',
+    );
   });
 
   // Create media_upload table
@@ -349,9 +387,11 @@ const up = async function (knex) {
       )
       .notNullable();
     table.text(FieldNameMediaUpload.backendData).nullable();
-    table.timestamp(FieldNameMediaUpload.createdAt).defaultTo(knex.fn.now());
-    table.index(FieldNameMediaUpload.noteId);
-    table.index(FieldNameMediaUpload.userId);
+    table
+      .timestamp(FieldNameMediaUpload.createdAt, { useTz: false })
+      .defaultTo(knex.fn.now());
+    table.index([FieldNameMediaUpload.noteId], 'idx_media_upload_note_id');
+    table.index([FieldNameMediaUpload.userId], 'idx_media_upload_user_id');
   });
 
   // Create user_pinned_note table
@@ -374,8 +414,14 @@ const up = async function (knex) {
       FieldNameUserPinnedNote.userId,
       FieldNameUserPinnedNote.noteId,
     ]);
-    table.index(FieldNameUserPinnedNote.userId);
-    table.index(FieldNameUserPinnedNote.noteId);
+    table.index(
+      [FieldNameUserPinnedNote.userId],
+      'idx_user_pinned_note_user_id',
+    );
+    table.index(
+      [FieldNameUserPinnedNote.noteId],
+      'idx_user_pinned_note_note_id',
+    );
   });
 };
 
