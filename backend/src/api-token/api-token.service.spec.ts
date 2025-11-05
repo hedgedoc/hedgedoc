@@ -38,6 +38,21 @@ describe('ApiTokenService', () => {
   const userId = 1;
   const label = 'test token';
 
+  const mockCreatedAt = '2025-11-05 20:45:05';
+  const mockCreatedAtIso = '2025-11-05T20:45:05.000Z';
+
+  const mockValidUntil = '2025-12-24 23:59:59';
+  const mockValidUntilIso = '2025-12-24T23:59:59.000Z';
+
+  const mockValidUntilExactly2YearsIso = '2027-11-05T20:45:05.000Z';
+
+  const mockValidUntilOver2YearsIso = '2027-12-24T23:59:59.000Z';
+
+  const mockValidUntilOver1YearsIso = '2026-12-24T23:59:59.000Z';
+
+  const mockLastUsedAt = '2025-12-06 07:14:21';
+  const mockLastUsedAtIso = '2025-12-06T07:14:21.000Z';
+
   let service: ApiTokenService;
 
   let knexProvider: Provider;
@@ -180,8 +195,6 @@ describe('ApiTokenService', () => {
   });
 
   describe('createToken', () => {
-    const twoYearsMilliseconds = 2 * 365 * 24 * 60 * 60 * 1000;
-    const validUntil = new Date(Date.now() + 3600 * 1000);
     describe('fails if', () => {
       it('user has more than 200 tokens', async () => {
         mockSelect(
@@ -194,18 +207,18 @@ describe('ApiTokenService', () => {
           }),
         );
         await expect(
-          service.createToken(userId, label, validUntil),
+          service.createToken(userId, label, new Date(mockValidUntilIso)),
         ).rejects.toThrow(TooManyTokensError);
       });
     });
+
     describe('works', () => {
       let token: ApiTokenWithSecretDto;
-      let timeToCheckinMilliseconds: number;
       const mockSecretHash = 'a'.repeat(20);
-      const mockTime = new Date();
+      let expectedValidUntil: string;
 
       beforeEach(() => {
-        jest.useFakeTimers().setSystemTime(mockTime);
+        jest.useFakeTimers().setSystemTime(new Date(mockCreatedAtIso));
         jest
           .spyOn(passwordUtils, 'bufferToBase64Url')
           .mockReturnValue(validSecret)
@@ -214,7 +227,6 @@ describe('ApiTokenService', () => {
           .spyOn(passwordUtils, 'hashApiToken')
           .mockReturnValue(mockSecretHash);
         token = {} as ApiTokenWithSecretDto;
-        timeToCheckinMilliseconds = twoYearsMilliseconds;
         mockSelect(
           tracker,
           [FieldNameApiToken.id],
@@ -230,13 +242,11 @@ describe('ApiTokenService', () => {
           FieldNameApiToken.userId,
           FieldNameApiToken.validUntil,
         ]);
+        expectedValidUntil = mockValidUntilExactly2YearsIso;
       });
       afterEach(() => {
         expect(token.label).toEqual(label);
-        expect(
-          new Date(token.validUntil).getTime() -
-            (new Date().getTime() + timeToCheckinMilliseconds),
-        ).toBeLessThanOrEqual(10000);
+        expect(token.validUntil).toEqual(expectedValidUntil);
         expect(token.lastUsedAt).toBeNull();
         expect(
           token.secret.startsWith(AUTH_TOKEN_PREFIX + '.' + token.keyId),
@@ -244,12 +254,12 @@ describe('ApiTokenService', () => {
         expectBindings(tracker, 'select', [[userId]]);
         expectBindings(tracker, 'insert', [
           [
-            mockTime,
+            new Date(mockCreatedAtIso),
             validKeyId,
             label,
             mockSecretHash,
             userId,
-            new Date(mockTime.getTime() + timeToCheckinMilliseconds),
+            new Date(expectedValidUntil),
           ],
         ]);
         jest.useRealTimers();
@@ -266,7 +276,7 @@ describe('ApiTokenService', () => {
         token = await service.createToken(
           userId,
           label,
-          new Date(Date.now() + twoYearsMilliseconds + 1000 * 3600 * 24),
+          new Date(mockValidUntilOver2YearsIso),
         );
       });
 
@@ -275,9 +285,9 @@ describe('ApiTokenService', () => {
         token = await service.createToken(
           userId,
           label,
-          new Date(Date.now() + twoYearsMilliseconds / 2),
+          new Date(mockValidUntilOver1YearsIso),
         );
-        timeToCheckinMilliseconds = twoYearsMilliseconds / 2;
+        expectedValidUntil = mockValidUntilOver1YearsIso;
       });
     });
   });
@@ -317,10 +327,6 @@ describe('ApiTokenService', () => {
     });
   });
   describe('getTokensOfUserById', () => {
-    const validUntil = new Date(Date.now() + 3600 * 1000 * 2);
-    const createdAt = new Date(Date.now() - 3600 * 1000);
-    const lastUsedAt = new Date(Date.now() + 3600 * 1000);
-
     it('works', async () => {
       mockSelect(
         tracker,
@@ -337,10 +343,9 @@ describe('ApiTokenService', () => {
           {
             [FieldNameApiToken.id]: validKeyId,
             [FieldNameApiToken.label]: label,
-            // ToDo: Fix this
-            [FieldNameApiToken.validUntil]: validUntil,
-            [FieldNameApiToken.createdAt]: createdAt.toString(),
-            [FieldNameApiToken.lastUsedAt]: lastUsedAt.toString(),
+            [FieldNameApiToken.validUntil]: mockValidUntil,
+            [FieldNameApiToken.createdAt]: mockCreatedAt,
+            [FieldNameApiToken.lastUsedAt]: mockLastUsedAt,
           },
         ],
       );
@@ -349,10 +354,10 @@ describe('ApiTokenService', () => {
       expect(tokens).toEqual([
         {
           label: label,
-          validUntil: validUntil.toISOString(),
+          validUntil: mockValidUntilIso,
           keyId: validKeyId,
-          createdAt: createdAt.toISOString(),
-          lastUsedAt: lastUsedAt.toISOString(),
+          createdAt: mockCreatedAtIso,
+          lastUsedAt: mockLastUsedAtIso,
         },
       ]);
       expectBindings(tracker, 'select', [[userId]]);
@@ -404,7 +409,7 @@ describe('ApiTokenService', () => {
 
   describe('removeInvalidTokens', () => {
     it('works', async () => {
-      const mockTime = new Date();
+      const mockTime = new Date(mockCreatedAtIso);
       jest.useFakeTimers().setSystemTime(mockTime);
       mockDelete(tracker, TableApiToken, [FieldNameApiToken.validUntil], 1);
       await service.removeInvalidTokens();

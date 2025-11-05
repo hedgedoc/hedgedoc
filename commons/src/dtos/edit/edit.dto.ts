@@ -20,8 +20,14 @@ export const EditSchema = z
       .number()
       .positive()
       .describe('The offset where the change ends in the note'),
-    createdAt: z.string().datetime().describe('When this edit happened'),
-    updatedAt: z.string().datetime().describe('When this edit was updated?'),
+    createdAt: z
+      .string()
+      .datetime({ offset: false, local: false })
+      .describe('When this edit happened'),
+    updatedAt: z
+      .string()
+      .datetime({ offset: false, local: false })
+      .describe('When this edit was updated?'),
   })
   .describe('A edit in a note by username from startPosition to endPosition.')
 

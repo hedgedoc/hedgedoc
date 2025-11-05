@@ -28,6 +28,7 @@ import { SpecialGroup } from '@hedgedoc/database';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Knex } from 'knex';
+import { DateTime } from 'luxon';
 import { InjectConnection } from 'nest-knexjs';
 
 import { AliasService } from '../alias/alias.service';
@@ -47,7 +48,6 @@ import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { PermissionService } from '../permissions/permission.service';
 import { RealtimeNoteStore } from '../realtime/realtime-note/realtime-note-store';
 import { RevisionsService } from '../revisions/revisions.service';
-import { interpretDateTimeAsIsoDateTime } from '../utils/date';
 
 @Injectable()
 export class NoteService {
@@ -106,13 +106,14 @@ export class NoteService {
     }
     return await this.knex.transaction(async (transaction) => {
       // Create note itself in the database
-      const createdNotes = await transaction(TableNote).insert(
-        {
-          [FieldNameNote.ownerId]: ownerUserId,
-          [FieldNameNote.version]: 2,
-        },
-        [FieldNameNote.id],
-      );
+      const createdNotes: Pick<Note, FieldNameNote.id>[] | number[] =
+        await transaction(TableNote).insert(
+          {
+            [FieldNameNote.ownerId]: ownerUserId,
+            [FieldNameNote.version]: 2,
+          },
+          [FieldNameNote.id],
+        );
 
       if (createdNotes.length !== 1) {
         throw new GenericDBError(
@@ -122,7 +123,10 @@ export class NoteService {
         );
       }
 
-      const noteId = createdNotes[0][FieldNameNote.id];
+      const noteId =
+        typeof createdNotes[0] === 'number'
+          ? createdNotes[0]
+          : createdNotes[0][FieldNameNote.id];
 
       if (givenAlias !== undefined) {
         await this.aliasService.ensureAliasIsAvailable(givenAlias, transaction);
@@ -423,7 +427,9 @@ export class NoteService {
     }
     const createdAtString = note[FieldNameNote.createdAt];
     const version = note[FieldNameNote.version];
-    const createdAt = interpretDateTimeAsIsoDateTime(createdAtString);
+    const createdAt = DateTime.fromSQL(createdAtString, {
+      zone: 'UTC',
+    }).toISO();
 
     const latestRevision = await this.revisionsService.getLatestRevision(
       noteId,
@@ -448,7 +454,7 @@ export class NoteService {
       const lastEdit = updateUsers.users[0];
       lastUpdatedBy = lastEdit.username;
       editedBy = updateUsers.users.map((user) => user.username);
-      updatedAt = interpretDateTimeAsIsoDateTime(lastEdit.createdAt);
+      updatedAt = DateTime.fromSQL(lastEdit.createdAt, { zone: 'UTC' }).toISO();
     } else {
       lastUpdatedBy = permissions.owner;
       editedBy = permissions.owner ? [permissions.owner] : [];
