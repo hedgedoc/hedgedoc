@@ -45,13 +45,16 @@ import { SessionModule } from './sessions/session.module';
 import { UsersModule } from './users/users.module';
 import { isDevMode } from './utils/dev-mode';
 
+export const PUBLIC_API_PREFIX = '/api/v2';
+export const PRIVATE_API_PREFIX = '/api/private';
+
 const routes: Routes = [
   {
-    path: '/api/v2',
+    path: PUBLIC_API_PREFIX,
     module: PublicApiModule,
   },
   {
-    path: '/api/private',
+    path: PRIVATE_API_PREFIX,
     module: PrivateApiModule,
   },
   {
