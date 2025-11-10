@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
-import type { NoteType, SortMode, NoteExploreEntryInterface } from '@hedgedoc/commons'
+import { type NoteExploreEntryInterface, type NoteType, SortMode } from '@hedgedoc/commons'
 import { createURLSearchParams } from './utils'
-import type { Mode } from '../../components/explore-page/mode-selection/mode'
+import { Mode } from '../../components/explore-page/mode-selection/mode'
 
 /**
  * Fetches the pinned notes of a user
@@ -32,6 +32,9 @@ export const getExplorePageEntries = async (
   typeFilter: NoteType | null,
   page: number
 ): Promise<NoteExploreEntryInterface[]> => {
+  if (mode !== Mode.VISITED && (sort === SortMode.LAST_VISITED_DESC || sort === SortMode.LAST_VISITED_ASC)) {
+    throw new Error('Invalid sort mode for the selected explore mode')
+  }
   const params = createURLSearchParams(sort, searchFilter, typeFilter, page)
   const response = await new GetApiRequestBuilder<NoteExploreEntryInterface[]>(
     `explore/${mode}?${params}`

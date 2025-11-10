@@ -13,6 +13,7 @@ import {
   FieldNameRevisionTag,
   FieldNameUser,
   FieldNameUserPinnedNote,
+  FieldNameVisitedNote,
   SpecialGroup,
   TableAlias,
   TableNote,
@@ -22,6 +23,7 @@ import {
   TableRevisionTag,
   TableUser,
   TableUserPinnedNote,
+  TableVisitedNote,
 } from '@hedgedoc/database';
 import { Injectable } from '@nestjs/common';
 import { Knex } from 'knex';
@@ -40,6 +42,7 @@ interface QueryResult {
   noteType: NoteType;
   ownerUsername: string;
   lastChangedAt: string;
+  lastVisitedAt: string | null;
   revisionUuid: string;
   tag: string;
 }
@@ -144,6 +147,33 @@ export class ExploreService {
     return this.transformQueryResultIntoDtos(results);
   }
 
+  async getRecentlyVisitedNoteExploreEntries(
+    userId: number,
+    page: number,
+    noteType?: NoteType | '',
+    sortBy?: OptionalSortMode,
+    search?: string,
+  ): Promise<NoteExploreEntryDto[]> {
+    const queryBase = this.knex(TableVisitedNote).join(
+      TableNote,
+      `${TableVisitedNote}.${FieldNameVisitedNote.noteId}`,
+      `${TableNote}.${FieldNameNote.id}`,
+    );
+    let query = this.applyCommonQuery(queryBase);
+    query = query.select({
+      lastVisitedAt: `${TableVisitedNote}.${FieldNameVisitedNote.visitedAt}`,
+    });
+    query = query.andWhere(
+      `${TableVisitedNote}.${FieldNameVisitedNote.userId}`,
+      userId,
+    );
+    query = this.applyFiltersToQuery(query, noteType, search);
+    query = this.applySortingToQuery(query, sortBy);
+    query = this.applyPaginationToQuery(query, page);
+    const results = (await query) as QueryResult[];
+    return this.transformQueryResultIntoDtos(results);
+  }
+
   private transformQueryResultIntoDtos(
     results: QueryResult[],
   ): NoteExploreEntryDto[] {
@@ -156,6 +186,7 @@ export class ExploreService {
           noteType: result.noteType,
           ownerUsername: result.ownerUsername,
           lastChangedAt: result.lastChangedAt,
+          lastVisitedAt: result.lastVisitedAt ?? null,
           revisionUuid: result.revisionUuid,
           tags: result.tag ? [result.tag] : [],
         });
@@ -175,6 +206,11 @@ export class ExploreService {
         lastChangedAt: DateTime.fromSQL(result.lastChangedAt, {
           zone: 'UTC',
         }).toISO(),
+        lastVisitedAt: result.lastVisitedAt
+          ? DateTime.fromSQL(result.lastVisitedAt, {
+              zone: 'UTC',
+            }).toISO()
+          : null,
       }),
     );
   }
@@ -286,6 +322,16 @@ export class ExploreService {
       case SortMode.UPDATED_AT_ASC:
         return query.orderBy(
           `${TableRevision}.${FieldNameRevision.createdAt}`,
+          'asc',
+        ) as T;
+      case SortMode.LAST_VISITED_DESC:
+        return query.orderBy(
+          `${TableVisitedNote}.${FieldNameVisitedNote.visitedAt}`,
+          'desc',
+        ) as T;
+      case SortMode.LAST_VISITED_ASC:
+        return query.orderBy(
+          `${TableVisitedNote}.${FieldNameVisitedNote.visitedAt}`,
           'asc',
         ) as T;
       default:

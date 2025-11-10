@@ -20,16 +20,26 @@ import { useUiNotifications } from '../../../notifications/ui-notification-bound
 import type { NoteExploreEntryInterface } from '@hedgedoc/commons'
 import { useTranslatedText } from '../../../../hooks/common/use-translated-text'
 
-export const NoteListEntry: React.FC<NoteExploreEntryInterface> = ({
+interface NoteListEntryProps extends NoteExploreEntryInterface {
+  showLastVisitedTime?: boolean
+}
+
+export const NoteListEntry: React.FC<NoteListEntryProps> = ({
   primaryAlias,
   title,
   tags,
   type,
   lastChangedAt,
-  owner
+  lastVisitedAt,
+  owner,
+  showLastVisitedTime
 }) => {
   const { showErrorNotification } = useUiNotifications()
   const lastChangedRelative = useMemo(() => formatChangedAt(lastChangedAt), [lastChangedAt])
+  const lastVisitedRelative = useMemo(
+    () => (showLastVisitedTime && lastVisitedAt ? formatChangedAt(lastVisitedAt) : null),
+    [lastVisitedAt, showLastVisitedTime]
+  )
   const currentUser = useApplicationState((state) => state.user)
   const fallbackUntitled = useTranslatedText('editor.untitledNote')
   const onClickDeleteNote = useCallback(
@@ -56,7 +66,9 @@ export const NoteListEntry: React.FC<NoteExploreEntryInterface> = ({
       <div className={'me-4'}>
         <UserAvatarForUsername username={owner} />
         <br />
-        <small className={'text-muted float-end'}>{lastChangedRelative}</small>
+        <small className={'text-muted float-end'}>
+          {showLastVisitedTime ? lastVisitedRelative : lastChangedRelative}
+        </small>
       </div>
       <Dropdown>
         <Dropdown.Toggle variant={'secondary'} className={'no-arrow'}>

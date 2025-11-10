@@ -4,8 +4,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { Fragment } from 'react'
-import type { Mode } from '../mode-selection/mode'
+import React, { Fragment, useEffect, useRef } from 'react'
+import { Mode } from '../mode-selection/mode'
 import type { NoteType } from '@hedgedoc/commons'
 import { FilterByNoteType } from './filters/filter-by-note-type'
 import { FilterBySearchTerm } from './filters/filter-by-search-term'
@@ -20,15 +20,29 @@ export interface ExploreNotesSectionProps {
 
 export const ExploreNotesSection: React.FC<ExploreNotesSectionProps> = ({ mode }) => {
   const [searchFilter, setSearchFilter] = useUrlParamState<string | null>('search', null)
-  const [sortMode, setSortMode] = useUrlParamState<SortMode>('sort', SortMode.UPDATED_AT_DESC)
+  const [sortMode, setSortMode] = useUrlParamState<SortMode>(
+    'sort',
+    mode === Mode.VISITED ? SortMode.LAST_VISITED_DESC : SortMode.UPDATED_AT_DESC
+  )
   const [filterByType, setFilterByType] = useUrlParamState<NoteType | null>('type', null)
+  const previousMode = useRef<Mode>(mode)
+
+  // Reset filters when mode/page changes
+  useEffect(() => {
+    if (previousMode.current !== mode) {
+      setSearchFilter(null)
+      setSortMode(mode === Mode.VISITED ? SortMode.LAST_VISITED_DESC : SortMode.UPDATED_AT_DESC)
+      setFilterByType(null)
+      previousMode.current = mode
+    }
+  }, [mode, setFilterByType, setSearchFilter, setSortMode])
 
   return (
     <Fragment>
       <search className={'d-flex gap-2 mb-2'}>
         <FilterByNoteType value={filterByType} onChange={setFilterByType} />
         <FilterBySearchTerm value={searchFilter} onChange={setSearchFilter} />
-        <SortButton selected={sortMode} onChange={setSortMode} />
+        <SortButton selected={sortMode} onChange={setSortMode} showLastVisitedOptions={mode === Mode.VISITED} />
       </search>
       <NotesList mode={mode} sort={sortMode} searchFilter={searchFilter} typeFilter={filterByType} />
     </Fragment>
