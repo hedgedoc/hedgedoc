@@ -97,6 +97,25 @@ export class ExploreController {
     return this.exploreService.getMyPinnedNoteExploreEntries(userId);
   }
 
+  @Get('visited')
+  @OpenApi(200)
+  getRecentlyVisitedNotes(
+    @RequestUserId() userId: number,
+    @Query('page') page: number,
+    @Query('sort') sort?: OptionalSortMode,
+    @Query('search') search?: string,
+    @Query('type') type?: OptionalNoteType,
+  ): Promise<NoteExploreEntryDto[]> {
+    this.checkQueryParams(page, sort, type);
+    return this.exploreService.getRecentlyVisitedNoteExploreEntries(
+      userId,
+      page,
+      type,
+      sort,
+      search,
+    );
+  }
+
   private checkQueryParams(
     page: number,
     sort?: OptionalSortMode,
