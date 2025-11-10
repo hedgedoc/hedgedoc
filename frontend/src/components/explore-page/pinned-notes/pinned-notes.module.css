@@ -1,0 +1,14 @@
+/*
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+.scrollbox {
+    display: flex;
+    flex-flow: row;
+    overflow-x: scroll;
+    gap: 0.5rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}

@@ -8,7 +8,7 @@
 
 import type { NextPage } from 'next'
 import React from 'react'
-import { RedirectToParamOrHistory } from '../../../components/login-page/redirect-to-param-or-history'
+import { RedirectToParamOrExplore } from '../../../components/login-page/redirect-to-param-or-explore'
 import { LocalLoginCard } from '../../../components/login-page/local-login/local-login-card'
 import { LdapLoginCards } from '../../../components/login-page/ldap/ldap-login-cards'
 import { OneClickLoginCard } from '../../../components/login-page/one-click/one-click-login-card'
@@ -20,7 +20,7 @@ const LoginPage: NextPage = () => {
   const userLoggedIn = useIsLoggedIn()
 
   if (userLoggedIn) {
-    return <RedirectToParamOrHistory />
+    return <RedirectToParamOrExplore />
   }
 
   return (
