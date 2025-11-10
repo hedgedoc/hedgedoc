@@ -20,6 +20,7 @@ export const ModeSelection: React.FC = () => {
       <ModeLink mode={Mode.MY_NOTES} />
       {userLoggedIn && <ModeLink mode={Mode.SHARED_WITH_ME} />}
       <ModeLink mode={Mode.PUBLIC} />
+      <ModeLink mode={Mode.VISITED} />
     </h2>
   )
 }

@@ -74,7 +74,12 @@ export class NotesController {
   @OpenApi(200)
   @RequirePermission(PermissionLevel.READ)
   @UseInterceptors(GetNoteIdInterceptor)
-  async getNote(@RequestNoteId() noteId: number): Promise<NoteDto> {
+  async getNote(
+    @RequestNoteId() noteId: number,
+    @RequestUserId() userId: number,
+  ): Promise<NoteDto> {
+    // We don't await the marking promise to not delay the response
+    void this.noteService.markNoteAsVisited(noteId, userId);
     return await this.noteService.toNoteDto(noteId);
   }
 

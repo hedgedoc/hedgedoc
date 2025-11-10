@@ -22,7 +22,8 @@
     "modes": {
       "my": "My notes",
       "shared": "Shared with me",
-      "public": "Public notes"
+      "public": "Public notes",
+      "visited": "Recently visited"
     },
     "filters": {
       "byType": {
@@ -38,7 +39,8 @@
       "asc": "(ascending)",
       "desc": "(descending)",
       "byUpdatedDate": "Updated at {{direction}}",
-      "byTitle": "Title {{direction}}"
+      "byTitle": "Title {{direction}}",
+      "byLastVisited": "Last visited {{direction}}"
     },
     "loadingMore": "Loading entries...",
     "noMoreNotesFound": "No more notes matching your search criteria were found.",
