@@ -8,9 +8,11 @@ import {
   FieldNameAlias,
   FieldNameNote,
   FieldNameRevision,
+  FieldNameVisitedNote,
   Note,
   TableAlias,
   TableNote,
+  TableVisitedNote,
 } from '@hedgedoc/database';
 import { SpecialGroup } from '@hedgedoc/database';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
@@ -400,5 +402,23 @@ export class NoteService {
         editedByAtPosition: [],
       });
     });
+  }
+
+  /**
+   * Marks a note as visited by a user
+   *
+   * @param noteId The id of the visited note
+   * @param userId The id of the visiting user
+   */
+  async markNoteAsVisited(noteId: number, userId: number): Promise<void> {
+    const now = dateTimeToDB(getCurrentDateTime());
+    await this.knex(TableVisitedNote)
+      .insert({
+        [FieldNameVisitedNote.noteId]: noteId,
+        [FieldNameVisitedNote.userId]: userId,
+        [FieldNameVisitedNote.visitedAt]: now,
+      })
+      .onConflict([FieldNameVisitedNote.noteId, FieldNameVisitedNote.userId])
+      .merge();
   }
 }

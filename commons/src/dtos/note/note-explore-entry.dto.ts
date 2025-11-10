@@ -20,6 +20,11 @@ export const NoteExploreEntrySchema = z
       .string()
       .datetime()
       .describe('The last time the note was changed'),
+    lastVisitedAt: z
+      .string()
+      .datetime()
+      .nullable()
+      .describe('The last time the note was visited by the current user'),
   })
   .describe('DTO for a note entry in the explore page')
 

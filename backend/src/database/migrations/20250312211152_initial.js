@@ -21,6 +21,7 @@ const {
   FieldNameRevisionTag,
   FieldNameUser,
   FieldNameUserPinnedNote,
+  FieldNameVisitedNote,
   MediaBackendType,
   NoteType,
   SpecialGroup,
@@ -38,6 +39,7 @@ const {
   TableRevisionTag,
   TableUser,
   TableUserPinnedNote,
+  TableVisitedNote,
 } = require('@hedgedoc/database');
 
 const up = async function (knex) {
@@ -424,10 +426,37 @@ const up = async function (knex) {
       'idx_user_pinned_note_note_id',
     );
   });
+
+  // Create visited_notes table
+  await knex.schema.createTable(TableVisitedNote, (table) => {
+    table
+      .integer(FieldNameVisitedNote.userId)
+      .unsigned()
+      .notNullable()
+      .references(FieldNameUser.id)
+      .inTable(TableUser)
+      .onDelete('CASCADE');
+    table
+      .integer(FieldNameVisitedNote.noteId)
+      .unsigned()
+      .notNullable()
+      .references(FieldNameNote.id)
+      .inTable(TableNote)
+      .onDelete('CASCADE');
+    table.timestamp(FieldNameVisitedNote.visitedAt, {
+      useTz: false,
+      precision: 3,
+    });
+
+    table.primary([FieldNameVisitedNote.userId, FieldNameVisitedNote.noteId]);
+    table.index([FieldNameVisitedNote.userId], 'idx_visited_notes_user_id');
+    table.index([FieldNameVisitedNote.noteId], 'idx_visited_notes_note_id');
+  });
 };
 
 const down = async function (knex) {
   // Drop tables in reverse order of creation to avoid integer key constraints
+  await knex.schema.dropTableIfExists(TableVisitedNote);
   await knex.schema.dropTableIfExists(TableUserPinnedNote);
   await knex.schema.dropTableIfExists(TableMediaUpload);
   await knex.schema.dropTableIfExists(TableNoteGroupPermission);

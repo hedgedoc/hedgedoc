@@ -5,7 +5,7 @@
  */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { NoteExploreEntryInterface, NoteType, SortMode } from '@hedgedoc/commons'
-import type { Mode } from '../../mode-selection/mode'
+import { Mode } from '../../mode-selection/mode'
 import { getExplorePageEntries } from '../../../../api/explore'
 import { NoteListEntry } from './note-entry'
 import { Trans } from 'react-i18next'
@@ -50,9 +50,9 @@ export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, 
 
   const noteEntries = useMemo(() => {
     return entries.map((note) => {
-      return <NoteListEntry {...note} key={note.primaryAlias} />
+      return <NoteListEntry {...note} key={note.primaryAlias} showLastVisitedTime={mode === Mode.VISITED} />
     })
-  }, [entries])
+  }, [entries, mode])
 
   // Update entries when filters change
   useEffect(() => {

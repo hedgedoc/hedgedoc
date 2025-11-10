@@ -6,5 +6,6 @@
 export enum Mode {
   MY_NOTES = 'my',
   SHARED_WITH_ME = 'shared',
-  PUBLIC = 'public'
+  PUBLIC = 'public',
+  VISITED = 'visited'
 }
