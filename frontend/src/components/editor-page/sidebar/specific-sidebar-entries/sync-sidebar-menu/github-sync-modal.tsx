@@ -12,11 +12,14 @@ import { ExternalLink } from '../../../../common/links/external-link'
 import { useOnInputChange } from '../../../../../hooks/common/use-on-input-change'
 import { validateToken } from '../export-sidebar-menu/entries/export-gist-sidebar-entry/validate-token'
 import { listRepositories, type GithubRepository } from './list-repositories'
+import { listBranches } from './list-branches'
+import { listRepositoryPathContents, type GithubContentEntry } from './list-contents'
 
 enum SyncStep {
   TOKEN = 'token',
   OWNER = 'owner',
-  REPOSITORY = 'repository'
+  REPOSITORY = 'repository',
+  FILE = 'file'
 }
 
 /**
@@ -33,6 +36,16 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
   const [reposError, setReposError] = useState<string | null>(null)
   const [selectedOwner, setSelectedOwner] = useState<string>('')
   const [selectedRepoFullName, setSelectedRepoFullName] = useState<string>('')
+  const [branches, setBranches] = useState<string[] | null>(null)
+  const [branchesLoading, setBranchesLoading] = useState(false)
+  const [branchesError, setBranchesError] = useState<string | null>(null)
+  const [selectedBranch, setSelectedBranch] = useState<string>('')
+  const onBranchChange = useOnInputChange(setSelectedBranch)
+  const [currentPath, setCurrentPath] = useState<string>('')
+  const [entries, setEntries] = useState<GithubContentEntry[] | null>(null)
+  const [entriesLoading, setEntriesLoading] = useState(false)
+  const [entriesError, setEntriesError] = useState<string | null>(null)
+  const [selectedFilePath, setSelectedFilePath] = useState<string>('')
   const onGhTokenChange = useOnInputChange(setGhToken)
   const onOwnerChange = useOnInputChange(setSelectedOwner)
   const onRepoChange = useOnInputChange(setSelectedRepoFullName)
@@ -74,6 +87,84 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
   }
   const onBackToOwner = (): void => {
     setStep(SyncStep.OWNER)
+  }
+  const parseOwnerRepo = (fullName: string): { owner: string; repo: string } => {
+    const [owner, repo] = fullName.split('/')
+    return { owner, repo }
+  }
+  const loadBranches = (owner: string, repo: string, defaultBranch?: string): void => {
+    setBranchesLoading(true)
+    setBranchesError(null)
+    setBranches(null)
+    listBranches(ghToken, owner, repo)
+      .then((list) => {
+        setBranches(list)
+        // prefer repo default branch if available
+        if (defaultBranch && list.includes(defaultBranch)) {
+          setSelectedBranch(defaultBranch)
+        } else if (list.length > 0) {
+          setSelectedBranch(list[0])
+        } else {
+          setSelectedBranch('')
+        }
+      })
+      .catch((err: unknown) => {
+        setBranchesError(err instanceof Error ? err.message : 'Failed to load branches')
+      })
+      .finally(() => setBranchesLoading(false))
+  }
+  const loadEntries = (owner: string, repo: string, path: string, ref: string): void => {
+    setEntriesLoading(true)
+    setEntriesError(null)
+    setEntries(null)
+    listRepositoryPathContents(ghToken, owner, repo, path, ref)
+      .then((list) => {
+        setEntries(list)
+      })
+      .catch((err: unknown) => {
+        setEntriesError(err instanceof Error ? err.message : 'Failed to load path contents')
+      })
+      .finally(() => setEntriesLoading(false))
+  }
+  const onNextFromRepo = (): void => {
+    if (!selectedRepoFullName) {
+      return
+    }
+    // find selected repo details for default branch
+    const repo = repos?.find((r) => r.full_name === selectedRepoFullName)
+    const { owner, repo: repoName } = parseOwnerRepo(selectedRepoFullName)
+    setCurrentPath('')
+    setSelectedFilePath('')
+    setStep(SyncStep.FILE)
+    loadBranches(owner, repoName, repo?.default_branch)
+  }
+  useEffect(() => {
+    if (step !== SyncStep.FILE || !selectedRepoFullName || !selectedBranch) {
+      return
+    }
+    const { owner, repo } = parseOwnerRepo(selectedRepoFullName)
+    loadEntries(owner, repo, currentPath, selectedBranch)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, selectedRepoFullName, selectedBranch, currentPath, ghToken])
+  const goUpOneLevel = (): void => {
+    if (!currentPath) {
+      return
+    }
+    const parts = currentPath.split('/').filter((p) => p.length > 0)
+    parts.pop()
+    setCurrentPath(parts.join('/'))
+    setSelectedFilePath('')
+  }
+  const onClickEntry = (entry: GithubContentEntry): void => {
+    if (entry.type === 'dir') {
+      setCurrentPath(entry.path)
+      setSelectedFilePath('')
+      return
+    }
+    if (entry.type === 'file') {
+      setSelectedFilePath(entry.path)
+      return
+    }
   }
 
   return (
@@ -156,6 +247,62 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
             )}
           </>
         )}
+        {step === SyncStep.FILE && (
+          <>
+            <h5 className={'mb-2'}>Select Branch and File</h5>
+            <FormGroup className={'my-2'}>
+              <FormLabel>Branch</FormLabel>
+              {branchesLoading && (
+                <div className={'d-flex align-items-center gap-2 my-2'}>
+                  <Spinner animation='border' size='sm' /> <span>Loading branches…</span>
+                </div>
+              )}
+              {branchesError && <div className={'text-danger my-2'}>{branchesError}</div>}
+              {!branchesLoading && branches && (
+                <FormSelect value={selectedBranch} onChange={onBranchChange}>
+                  {branches.map((b) => (
+                    <option key={b} value={b}>
+                      {b}
+                    </option>
+                  ))}
+                </FormSelect>
+              )}
+            </FormGroup>
+            <FormGroup className={'my-2'}>
+              <FormLabel>Path</FormLabel>
+              <div className={'d-flex align-items-center gap-2'}>
+                <code className={'flex-grow-1'}>{currentPath || '/'}</code>
+                <Button size={'sm'} variant={'outline-secondary'} onClick={goUpOneLevel} disabled={!currentPath}>
+                  Up
+                </Button>
+              </div>
+              {entriesLoading && (
+                <div className={'d-flex align-items-center gap-2 my-2'}>
+                  <Spinner animation='border' size='sm' /> <span>Loading directory…</span>
+                </div>
+              )}
+              {entriesError && <div className={'text-danger my-2'}>{entriesError}</div>}
+              {!entriesLoading && entries && (
+                <div className={'mt-2'} style={{ maxHeight: 240, overflowY: 'auto' }}>
+                  {entries.length === 0 && <div className={'text-muted'}>No entries</div>}
+                  {entries.map((e) => {
+                    const isSelected = e.path === selectedFilePath
+                    return (
+                      <Button
+                        key={e.path}
+                        variant={isSelected ? 'success' : 'light'}
+                        className={'w-100 text-start mb-1'}
+                        onClick={() => onClickEntry(e)}>
+                        {e.type === 'dir' ? '📁' : '📄'} {e.name}
+                        {isSelected && ' (selected)'}
+                      </Button>
+                    )
+                  })}
+                </div>
+              )}
+            </FormGroup>
+          </>
+        )}
       </Modal.Body>
       <Modal.Footer>
         {step === SyncStep.REPOSITORY && (
@@ -179,9 +326,24 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
           </>
         )}
         {step === SyncStep.REPOSITORY && (
-          <Button variant={'success'} disabled={selectedRepoFullName.length === 0}>
-            Next
-          </Button>
+          <>
+            <Button variant={'secondary'} onClick={onBackToOwner}>
+              Back
+            </Button>
+            <Button variant={'success'} disabled={selectedRepoFullName.length === 0} onClick={onNextFromRepo}>
+              Next
+            </Button>
+          </>
+        )}
+        {step === SyncStep.FILE && (
+          <>
+            <Button variant={'secondary'} onClick={() => setStep(SyncStep.REPOSITORY)}>
+              Back
+            </Button>
+            <Button variant={'success'} disabled={selectedFilePath.length === 0}>
+              Done
+            </Button>
+          </>
         )}
       </Modal.Footer>
     </CommonModal>
