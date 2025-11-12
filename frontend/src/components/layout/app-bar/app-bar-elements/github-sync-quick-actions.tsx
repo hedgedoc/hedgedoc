@@ -79,7 +79,7 @@ export const GithubSyncQuickActions: React.FC = () => {
       })
       return
     }
-    dispatchUiNotification('notifications.info.title', 'notifications.sync.pullSoon', { durationInSecond: 5 })
+    window.dispatchEvent(new CustomEvent('hd2.sync.github.pull'))
   }
 
   const onPush = (): void => {
@@ -89,7 +89,7 @@ export const GithubSyncQuickActions: React.FC = () => {
       })
       return
     }
-    dispatchUiNotification('notifications.info.title', 'notifications.sync.pushSoon', { durationInSecond: 5 })
+    window.dispatchEvent(new CustomEvent('hd2.sync.github.push'))
   }
 
   return (

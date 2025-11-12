@@ -15,6 +15,7 @@ import { listRepositories, type GithubRepository } from './list-repositories'
 import { listBranches } from './list-branches'
 import { listRepositoryPathContents, type GithubContentEntry } from './list-contents'
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
+// removed modal-local push/pull handling; handled by bridge + app bar quick actions
 
 enum SyncStep {
   TOKEN = 'token',
@@ -52,6 +53,7 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
   const onRepoChange = useOnInputChange(setSelectedRepoFullName)
   const ghTokenFormatValid = useMemo(() => validateToken(ghToken), [ghToken])
   const noteId = useApplicationState((state) => state.noteDetails?.id)
+  // modal no longer performs push/pull; bridge handles actions
 
   useEffect(() => {
     if (step !== SyncStep.OWNER && step !== SyncStep.REPOSITORY) {
@@ -206,9 +208,58 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
     onHide?.()
   }
 
+  const onPullNow = (): void => {
+    const token = loadTokenFromLocalStorage()
+    const target = loadTargetFromLocalStorage(noteId)
+    if (!token || !target || !changeEditorContent) {
+      return
+    }
+    getFileContent(token, target)
+      .then(({ content }) => {
+        const formatter = ({ markdownContent }: { markdownContent: string }): [ContentEdits, undefined] => {
+          return [
+            [
+              {
+                from: 0,
+                to: markdownContent.length,
+                insert: content
+              }
+            ],
+            undefined
+          ]
+        }
+        changeEditorContent(formatter as any)
+        dispatchUiNotification('notifications.success.title', 'notifications.sync.pullSuccess', {
+          durationInSecond: 5
+        })
+      })
+      .catch(
+        showErrorNotification('notifications.sync.pullFailed', undefined, true)
+      )
+  }
+
+  const onPushNow = (): void => {
+    const token = loadTokenFromLocalStorage()
+    const target = loadTargetFromLocalStorage(noteId)
+    if (!token || !target) {
+      return
+    }
+    getFileContent(token, target)
+      .then(({ sha }) => putFileContent(token, target, currentNoteContent, sha))
+      .then(() => {
+        dispatchUiNotification('notifications.success.title', 'notifications.sync.pushSuccess', {
+          durationInSecond: 5
+        })
+      })
+      .catch(
+        showErrorNotification('notifications.sync.pushFailed', undefined, true)
+      )
+  }
+
   return (
     <CommonModal show={show} onHide={onHide} showCloseButton={true} titleIcon={Github} title={'Github Sync'}>
       <Modal.Body>
+        
         {step === SyncStep.TOKEN && (
           <>
             <h5 className={'mb-2'}>Authentication</h5>
