@@ -63,8 +63,21 @@ export const GithubSyncBridge: React.FC = () => {
         return
       }
       getFileContent(token, target)
-        .then(({ sha }) => putFileContent(token, target, currentNoteContent, sha))
-        .then(() => {
+        .then(({ sha, content }) => {
+          // No-op push: current editor content equals remote file content
+          if (content === currentNoteContent) {
+            dispatchUiNotification('notifications.info.title', 'notifications.sync.noChanges', {
+              durationInSecond: 4
+            })
+            return
+          }
+          return putFileContent(token, target, currentNoteContent, sha)
+        })
+        .then((result) => {
+          // Only show success if a PUT actually happened (result is sha string)
+          if (result === undefined) {
+            return
+          }
           dispatchUiNotification('notifications.success.title', 'notifications.sync.pushSuccess', {
             durationInSecond: 5
           })
