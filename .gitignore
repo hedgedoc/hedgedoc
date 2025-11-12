@@ -45,3 +45,4 @@ rathole.toml
 # dev-env
 .cursorignore
 .condarc
+setup.md
