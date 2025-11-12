@@ -9,6 +9,7 @@ import React, { Fragment, useEffect, useMemo, useState } from 'react'
 import { CloudDownload as IconPull, CloudUpload as IconPush } from 'react-bootstrap-icons'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import { cypressId } from '../../../../utils/cypress-attribute'
+import { useOutlineButtonVariant } from '../../../../hooks/dark-mode/use-outline-button-variant'
 
 /**
  * Renders quick actions for GitHub sync (Pull/Push) into the app bar.
@@ -21,6 +22,7 @@ export const GithubSyncQuickActions: React.FC = () => {
   const [hasToken, setHasToken] = useState(false)
   const [hasTarget, setHasTarget] = useState(false)
   const { dispatchUiNotification } = useUiNotifications()
+  const buttonVariant = useOutlineButtonVariant()
 
   const targetStorageKey = useMemo(() => {
     return noteId ? `hd2.sync.github.target.${noteId}` : null
@@ -97,7 +99,7 @@ export const GithubSyncQuickActions: React.FC = () => {
       <IconButton
         {...cypressId('github-sync-pull')}
         size={'sm'}
-        variant={'outline-secondary'}
+        variant={buttonVariant}
         icon={IconPull}
         disabled={!enabled}
         onClick={onPull}
@@ -106,7 +108,7 @@ export const GithubSyncQuickActions: React.FC = () => {
       <IconButton
         {...cypressId('github-sync-push')}
         size={'sm'}
-        variant={'outline-secondary'}
+        variant={buttonVariant}
         icon={IconPush}
         disabled={!enabled}
         onClick={onPush}
