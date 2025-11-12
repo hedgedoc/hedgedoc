@@ -83,6 +83,7 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
           savedAt: new Date().toISOString()
         })
       )
+      window.dispatchEvent(new CustomEvent('hd2.sync.github.updated'))
     } catch {
       // ignore storage errors
     }
@@ -198,6 +199,7 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
           savedAt: new Date().toISOString()
         })
       )
+      window.dispatchEvent(new CustomEvent('hd2.sync.github.updated'))
     } catch {
       // ignore storage errors
     }
