@@ -88,6 +88,14 @@ Using the unit file below, you can run HedgeDoc as a systemd service.
     file in the root directory of the HedgeDoc installation**, but create a subfolder like `db`!
     - If you use an external database like PostgreSQL or MariaDB, make sure to add a corresponding
     `After` statement.
+    - `SystemCallFilter=`
+      - More about filtering system calls can be read in the [systemd.exec documentation](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#System%20Call%20Filtering).
+      - If the service does not start please have a look at your systemd-journal (`journalctl -f`) and then try to `systemctl start hedgedoc.service`.
+        - In the systemd-journal you will then see a line with `... kernel: audit: ...`. The important part of this line is `syscall=` (example `syscall=330`).
+        - You can lookup the name of the syscall for the numer on a website like <https://filippo.io/linux-syscall-table/>. Example: 330 is `pkey_alloc`.
+        - Add the name of the syscall at the end of the line of `SystemCallFilter=` (separated by spaces), `systemctl daemon-reload` and then `systemctl restart hedgedoc.service`.
+        - If it does not work have another look at the systemd-journal and repeat the previous steps (add/allow additional needed syscalls).
+        - You can also use groups of syscalls (starting with `@`). See the systemd.exec documentation as it contains a table of `Currently predefined system call sets` you can use. Of course as HedgeDoc is usually exposed to the internet it might be wise to only allow syscalls HedgeDoc really needs depending on your own paranoia. ;-)
 
 ```ini
 [Unit]
@@ -125,7 +133,7 @@ ProtectSystem=strict
 ProtectHome=true
 PrivateTmp=true
 SystemCallArchitectures=native
-SystemCallFilter=@system-service
+SystemCallFilter=@system-service pkey_alloc pkey_mprotect
 
 # You may have to adjust these settings
 User=hedgedoc
