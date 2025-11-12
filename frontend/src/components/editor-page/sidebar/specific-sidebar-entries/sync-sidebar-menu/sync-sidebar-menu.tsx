@@ -9,7 +9,7 @@ import { SidebarMenu } from '../../sidebar-menu/sidebar-menu'
 import type { SpecificSidebarMenuProps } from '../../types'
 import { DocumentSidebarMenuSelection } from '../../types'
 import React, { Fragment, useCallback } from 'react'
-import { ArrowLeft as IconArrowLeft, ArrowRepeat as IconArrowRepeat } from 'react-bootstrap-icons'
+import { ArrowLeft as IconArrowLeft, ArrowRepeat as IconArrowRepeat, Github as IconGithub } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 import styles from '../../sidebar-button/sidebar-button.module.scss'
 import { concatCssClasses } from '../../../../../utils/concat-css-classes'
@@ -48,7 +48,11 @@ export const SyncSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         onClick={onClickHandler}>
         <Trans i18nKey={'editor.documentBar.sync'}>Sync</Trans>
       </SidebarButton>
-      <SidebarMenu expand={expand}>{/* Placeholder for future sync entries */}</SidebarMenu>
+      <SidebarMenu expand={expand}>
+        <SidebarButton icon={IconGithub} disabled={true}>
+          Github
+        </SidebarButton>
+      </SidebarMenu>
     </Fragment>
   )
 }
