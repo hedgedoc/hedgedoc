@@ -13,6 +13,8 @@ import { ArrowLeft as IconArrowLeft, ArrowRepeat as IconArrowRepeat, Github as I
 import { Trans, useTranslation } from 'react-i18next'
 import styles from '../../sidebar-button/sidebar-button.module.scss'
 import { concatCssClasses } from '../../../../../utils/concat-css-classes'
+import { useBooleanState } from '../../../../../hooks/common/use-boolean-state'
+import { GithubSyncModal } from './github-sync-modal'
 
 /**
  * Renders the sync menu for the sidebar.
@@ -37,6 +39,7 @@ export const SyncSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   const onClickHandler = useCallback(() => {
     onClick(menuId)
   }, [menuId, onClick])
+  const [showGithubModal, doShowGithubModal, doHideGithubModal] = useBooleanState(false)
 
   return (
     <Fragment>
@@ -49,10 +52,11 @@ export const SyncSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         <Trans i18nKey={'editor.documentBar.sync'}>Sync</Trans>
       </SidebarButton>
       <SidebarMenu expand={expand}>
-        <SidebarButton icon={IconGithub} disabled={true}>
+        <SidebarButton icon={IconGithub} onClick={doShowGithubModal}>
           Github
         </SidebarButton>
       </SidebarMenu>
+      <GithubSyncModal show={showGithubModal} onHide={doHideGithubModal} />
     </Fragment>
   )
 }
