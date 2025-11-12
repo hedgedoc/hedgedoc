@@ -14,6 +14,7 @@ import { validateToken } from '../export-sidebar-menu/entries/export-gist-sideba
 import { listRepositories, type GithubRepository } from './list-repositories'
 import { listBranches } from './list-branches'
 import { listRepositoryPathContents, type GithubContentEntry } from './list-contents'
+import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 
 enum SyncStep {
   TOKEN = 'token',
@@ -50,6 +51,7 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
   const onOwnerChange = useOnInputChange(setSelectedOwner)
   const onRepoChange = useOnInputChange(setSelectedRepoFullName)
   const ghTokenFormatValid = useMemo(() => validateToken(ghToken), [ghToken])
+  const noteId = useApplicationState((state) => state.noteDetails?.id)
 
   useEffect(() => {
     if (step !== SyncStep.OWNER && step !== SyncStep.REPOSITORY) {
@@ -71,6 +73,18 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
   const onNextFromToken = (): void => {
     if (!ghTokenFormatValid) {
       return
+    }
+    // Save token to localStorage (user layer). This is a convenience and can be replaced later.
+    try {
+      window.localStorage.setItem(
+        'hd2.sync.github.token',
+        JSON.stringify({
+          token: ghToken,
+          savedAt: new Date().toISOString()
+        })
+      )
+    } catch {
+      // ignore storage errors
     }
     setStep(SyncStep.OWNER)
   }
@@ -165,6 +179,29 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
       setSelectedFilePath(entry.path)
       return
     }
+  }
+  const onDoneSelection = (): void => {
+    if (!noteId || !selectedRepoFullName || !selectedBranch || !selectedFilePath) {
+      return
+    }
+    const { owner, repo } = parseOwnerRepo(selectedRepoFullName)
+    // Save note-level sync target in localStorage for now
+    try {
+      const key = `hd2.sync.github.target.${noteId}`
+      window.localStorage.setItem(
+        key,
+        JSON.stringify({
+          owner,
+          repo,
+          branch: selectedBranch,
+          path: selectedFilePath,
+          savedAt: new Date().toISOString()
+        })
+      )
+    } catch {
+      // ignore storage errors
+    }
+    onHide?.()
   }
 
   return (
@@ -340,7 +377,7 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
             <Button variant={'secondary'} onClick={() => setStep(SyncStep.REPOSITORY)}>
               Back
             </Button>
-            <Button variant={'success'} disabled={selectedFilePath.length === 0}>
+            <Button variant={'success'} disabled={selectedFilePath.length === 0} onClick={onDoneSelection}>
               Done
             </Button>
           </>
