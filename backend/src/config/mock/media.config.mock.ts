@@ -22,9 +22,9 @@ export function createDefaultMockMediaConfig(): MediaConfig {
 }
 
 export function registerMediaConfig(
-  appConfig: MediaConfig,
+  mediaConfig: MediaConfig,
 ): ConfigFactory<MediaConfig> & ConfigFactoryKeyHost<MediaConfig> {
-  return registerAs('mediaConfig', (): MediaConfig => appConfig);
+  return registerAs('mediaConfig', (): MediaConfig => mediaConfig);
 }
 
 export default registerMediaConfig(createDefaultMockMediaConfig());

@@ -266,6 +266,10 @@ export class RevisionsService {
         'getLatestRevision',
       );
     }
+    this.logger.debug(
+      `Found latest revision for note '${noteId}': '${revision[FieldNameRevision.uuid]}'`,
+      'getLatestRevision',
+    );
     return revision;
   }
 
@@ -333,6 +337,10 @@ export class RevisionsService {
     transaction?: Knex,
     yjsStateVector?: ArrayBuffer,
   ): Promise<void> {
+    this.logger.debug(
+      `Creating revision for note '${noteId}'`,
+      'createRevision',
+    );
     if (!transaction) {
       await this.knex.transaction(async (newTransaction) => {
         await this.innerCreateRevision(
@@ -376,6 +384,7 @@ export class RevisionsService {
       : await this.getLatestRevision(noteId, transaction);
     const oldContent = latestRevision?.content;
     if (oldContent === newContent) {
+      this.logger.debug('There is no difference between old and new content.');
       return undefined;
     }
     const primaryAlias = await this.aliasService.getPrimaryAliasByNoteId(
@@ -422,6 +431,10 @@ export class RevisionsService {
         })),
       );
     }
+    this.logger.debug(
+      `created revision '${newUuid}' for note '${noteId}'`,
+      'innerCreateRevision',
+    );
   }
 
   /**
