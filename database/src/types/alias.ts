@@ -18,7 +18,7 @@ export interface Alias {
   [FieldNameAlias.noteId]: number
 
   /** Whether the alias is the primary one for the note. */
-  [FieldNameAlias.isPrimary]: boolean
+  [FieldNameAlias.isPrimary]: boolean | null
 }
 
 export enum FieldNameAlias {
@@ -29,5 +29,4 @@ export enum FieldNameAlias {
 
 export const TableAlias = 'alias'
 
-export type TypeInsertAlias = Alias
 export type TypeUpdateAlias = Pick<Alias, FieldNameAlias.isPrimary>

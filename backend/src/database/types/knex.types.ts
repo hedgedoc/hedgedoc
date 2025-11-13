@@ -30,17 +30,10 @@ import {
   TableRevisionTag,
   TableUser,
   TableUserPinnedNote,
-  TypeInsertAlias,
-  TypeInsertApiToken,
-  TypeInsertAuthorshipInfo,
   TypeInsertGroup,
-  TypeInsertIdentity,
-  TypeInsertMediaUpload,
   TypeInsertNote,
-  TypeInsertRevision,
   TypeInsertUser,
   TypeUpdateAlias,
-  TypeUpdateApiToken,
   TypeUpdateGroup,
   TypeUpdateIdentity,
   TypeUpdateMediaUpload,
@@ -56,20 +49,9 @@ import { Knex } from 'knex';
 /* eslint-disable @typescript-eslint/naming-convention */
 declare module 'knex/types/tables.js' {
   interface Tables {
-    [TableAlias]: Knex.CompositeTableType<
-      Alias,
-      TypeInsertAlias,
-      TypeUpdateAlias
-    >;
-    [TableApiToken]: Knex.CompositeTableType<
-      ApiToken,
-      TypeInsertApiToken,
-      TypeUpdateApiToken
-    >;
-    [TableAuthorshipInfo]: Knex.CompositeTableType<
-      AuthorshipInfo,
-      TypeInsertAuthorshipInfo
-    >;
+    [TableAlias]: Knex.CompositeTableType<Alias, Alias, TypeUpdateAlias>;
+    [TableApiToken]: Knex.CompositeTableType<ApiToken>;
+    [TableAuthorshipInfo]: Knex.CompositeTableType<AuthorshipInfo>;
     [TableGroup]: Knex.CompositeTableType<
       Group,
       TypeInsertGroup,
@@ -78,12 +60,12 @@ declare module 'knex/types/tables.js' {
     [TableGroupUser]: GroupUser;
     [TableIdentity]: Knex.CompositeTableType<
       Identity,
-      TypeInsertIdentity,
+      Identity,
       TypeUpdateIdentity
     >;
     [TableMediaUpload]: Knex.CompositeTableType<
       MediaUpload,
-      TypeInsertMediaUpload,
+      MediaUpload,
       TypeUpdateMediaUpload
     >;
     [TableNote]: Knex.CompositeTableType<Note, TypeInsertNote, TypeUpdateNote>;
@@ -97,7 +79,7 @@ declare module 'knex/types/tables.js' {
       NoteUserPermission,
       TypeUpdateNoteUserPermission
     >;
-    [TableRevision]: Knex.CompositeTableType<Revision, TypeInsertRevision>;
+    [TableRevision]: Knex.CompositeTableType<Revision>;
     [TableRevisionTag]: RevisionTag;
     [TableUser]: Knex.CompositeTableType<User, TypeInsertUser, TypeUpdateUser>;
     [TableUserPinnedNote]: UserPinnedNote;

@@ -8,6 +8,7 @@ import { BadRequestException, Provider } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import type { Tracker } from 'knex-mock-client';
+import { DateTime } from 'luxon';
 import * as uuidModule from 'uuid';
 
 import appConfigMock from '../config/mock/app.config.mock';
@@ -67,11 +68,14 @@ describe('UsersService', () => {
     });
 
     it('inserts a new user', async () => {
+      jest.useFakeTimers();
+      const now = DateTime.utc();
       mockInsert(
         tracker,
         TableUser,
         [
           FieldNameUser.authorStyle,
+          FieldNameUser.createdAt,
           FieldNameUser.displayName,
           FieldNameUser.email,
           FieldNameUser.guestUuid,
@@ -88,8 +92,17 @@ describe('UsersService', () => {
       );
       expect(result).toBe(userId);
       expectBindings(tracker, 'insert', [
-        [expect.any(Number), displayName, email, null, photoUrl, username],
+        [
+          expect.any(Number),
+          now.toSQL(),
+          displayName,
+          email,
+          null,
+          photoUrl,
+          username,
+        ],
       ]);
+      jest.useRealTimers();
     });
 
     it('throws GenericDBError if insert fails', async () => {
@@ -114,6 +127,8 @@ describe('UsersService', () => {
 
   describe('createGuestUser', () => {
     it('inserts a new guest user', async () => {
+      jest.useFakeTimers();
+      const now = DateTime.utc();
       // This wrong typecast is required since TypeScript does not see that
       // `uuid.v4()` returns a string or a Uint8Array based on the given options
       jest
@@ -124,6 +139,7 @@ describe('UsersService', () => {
         TableUser,
         [
           FieldNameUser.authorStyle,
+          FieldNameUser.createdAt,
           FieldNameUser.displayName,
           FieldNameUser.email,
           FieldNameUser.guestUuid,
@@ -138,6 +154,7 @@ describe('UsersService', () => {
       expectBindings(tracker, 'insert', [
         [
           expect.any(Number),
+          now.toSQL(),
           expect.stringContaining('Guest '),
           null,
           guestUuid,
@@ -145,6 +162,7 @@ describe('UsersService', () => {
           null,
         ],
       ]);
+      jest.useRealTimers();
     });
 
     it('throws GenericDBError if insert fails', async () => {
@@ -153,6 +171,7 @@ describe('UsersService', () => {
         TableUser,
         [
           FieldNameUser.authorStyle,
+          FieldNameUser.createdAt,
           FieldNameUser.displayName,
           FieldNameUser.email,
           FieldNameUser.guestUuid,

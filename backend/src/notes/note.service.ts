@@ -111,6 +111,7 @@ export class NoteService {
           {
             [FieldNameNote.ownerId]: ownerUserId,
             [FieldNameNote.version]: 2,
+            [FieldNameNote.createdAt]: DateTime.utc().toSQL(),
           },
           [FieldNameNote.id],
         );

@@ -52,15 +52,7 @@ export enum FieldNameMediaUpload {
 
 export const TableMediaUpload = 'media_upload'
 
-type TypeMediaUploadDate = Omit<MediaUpload, FieldNameMediaUpload.createdAt> & {
-  [FieldNameMediaUpload.createdAt]: Date
-}
-
-export type TypeInsertMediaUpload = Omit<
-  TypeMediaUploadDate,
-  FieldNameMediaUpload.createdAt
->
 export type TypeUpdateMediaUpload = Pick<
-  TypeMediaUploadDate,
+  MediaUpload,
   FieldNameMediaUpload.noteId
 >

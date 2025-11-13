@@ -50,19 +50,7 @@ export enum FieldNameIdentity {
 
 export const TableIdentity = 'identity'
 
-type TypeIdentityDate = Omit<
-  Identity,
-  FieldNameIdentity.createdAt | FieldNameIdentity.updatedAt
-> & {
-  [FieldNameIdentity.createdAt]: Date
-  [FieldNameIdentity.updatedAt]: Date
-}
-
-export type TypeInsertIdentity = Omit<
-  Identity,
-  FieldNameIdentity.createdAt | FieldNameIdentity.updatedAt
->
 export type TypeUpdateIdentity = Pick<
-  TypeIdentityDate,
+  Identity,
   FieldNameIdentity.passwordHash | FieldNameIdentity.updatedAt
 >

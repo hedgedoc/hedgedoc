@@ -43,23 +43,3 @@ export enum FieldNameApiToken {
 }
 
 export const TableApiToken = 'api_token'
-
-type TypeApiTokenDate = Omit<
-  ApiToken,
-  | FieldNameApiToken.validUntil
-  | FieldNameApiToken.createdAt
-  | FieldNameApiToken.lastUsedAt
-> & {
-  [FieldNameApiToken.validUntil]: Date
-  [FieldNameApiToken.createdAt]: Date
-  [FieldNameApiToken.lastUsedAt]: Date | null
-}
-
-export type TypeInsertApiToken = Omit<
-  TypeApiTokenDate,
-  FieldNameApiToken.lastUsedAt
->
-export type TypeUpdateApiToken = Pick<
-  TypeApiTokenDate,
-  FieldNameApiToken.lastUsedAt
->
