@@ -491,13 +491,24 @@ export class PermissionService {
         owner: owner[FieldNameUser.username],
         sharedToUsers: userPermissions.map((userPermission) => ({
           username: userPermission[FieldNameUser.username],
-          canEdit: userPermission[FieldNameNoteUserPermission.canEdit],
+          canEdit: this.numberToBoolean(
+            userPermission[FieldNameNoteUserPermission.canEdit],
+          ),
         })),
         sharedToGroups: groupPermissions.map((groupPermission) => ({
           groupName: groupPermission[FieldNameGroup.name],
-          canEdit: groupPermission[FieldNameNoteGroupPermission.canEdit],
+          canEdit: this.numberToBoolean(
+            groupPermission[FieldNameNoteGroupPermission.canEdit],
+          ),
         })),
       });
     });
+  }
+
+  private numberToBoolean(canEdit: boolean | number): boolean {
+    if (typeof canEdit !== 'boolean') {
+      return canEdit === 1;
+    }
+    return canEdit;
   }
 }
