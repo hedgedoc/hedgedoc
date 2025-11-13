@@ -100,12 +100,12 @@ export class NotesController {
     return await this.noteService.toNoteDto(createdNoteId);
   }
 
-  @Post(':noteAlias')
+  @Post(':newNoteAlias')
   @OpenApi(201, 400, 404, 409, 413)
   @RequirePermission(PermissionLevel.FULL)
   async createNamedNote(
     @RequestUserId() userId: number,
-    @Param('noteAlias') noteAlias: string,
+    @Param('newNoteAlias') noteAlias: string,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
     const createdNoteId = await this.noteService.createNote(
