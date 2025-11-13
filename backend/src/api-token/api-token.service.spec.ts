@@ -8,6 +8,7 @@ import { Provider } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import type { Tracker } from 'knex-mock-client';
+import { DateTime } from 'luxon';
 
 import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
@@ -207,7 +208,11 @@ describe('ApiTokenService', () => {
           }),
         );
         await expect(
-          service.createToken(userId, label, new Date(mockValidUntilIso)),
+          service.createToken(
+            userId,
+            label,
+            DateTime.fromISO(mockValidUntilIso),
+          ),
         ).rejects.toThrow(TooManyTokensError);
       });
     });
@@ -238,6 +243,7 @@ describe('ApiTokenService', () => {
           FieldNameApiToken.createdAt,
           FieldNameApiToken.id,
           FieldNameApiToken.label,
+          FieldNameApiToken.lastUsedAt,
           FieldNameApiToken.secretHash,
           FieldNameApiToken.userId,
           FieldNameApiToken.validUntil,
@@ -254,12 +260,13 @@ describe('ApiTokenService', () => {
         expectBindings(tracker, 'select', [[userId]]);
         expectBindings(tracker, 'insert', [
           [
-            new Date(mockCreatedAtIso),
+            DateTime.fromISO(mockCreatedAtIso, { zone: 'utc' }).toSQL(),
             validKeyId,
             label,
+            null,
             mockSecretHash,
             userId,
-            new Date(expectedValidUntil),
+            DateTime.fromISO(expectedValidUntil, { zone: 'utc' }).toSQL(),
           ],
         ]);
         jest.useRealTimers();
@@ -276,7 +283,7 @@ describe('ApiTokenService', () => {
         token = await service.createToken(
           userId,
           label,
-          new Date(mockValidUntilOver2YearsIso),
+          DateTime.fromISO(mockValidUntilOver2YearsIso),
         );
       });
 
@@ -285,7 +292,7 @@ describe('ApiTokenService', () => {
         token = await service.createToken(
           userId,
           label,
-          new Date(mockValidUntilOver1YearsIso),
+          DateTime.fromISO(mockValidUntilOver1YearsIso, { zone: 'utc' }),
         );
         expectedValidUntil = mockValidUntilOver1YearsIso;
       });
@@ -299,7 +306,9 @@ describe('ApiTokenService', () => {
           service.ensureTokenIsValid(
             validSecret,
             '',
-            new Date(Date.now() - 1000 * 3600 * 24),
+            DateTime.utc().minus({
+              day: 1,
+            }),
           ),
         ).toThrow(TokenNotValidError);
       });
@@ -309,7 +318,9 @@ describe('ApiTokenService', () => {
           service.ensureTokenIsValid(
             validSecret,
             '',
-            new Date(Date.now() - 1000 * 3600 * 24),
+            DateTime.utc().minus({
+              day: 1,
+            }),
           ),
         ).toThrow(TokenNotValidError);
       });
@@ -321,7 +332,9 @@ describe('ApiTokenService', () => {
         service.ensureTokenIsValid(
           validSecret,
           '',
-          new Date(Date.now() + 1000 * 3600 * 24),
+          DateTime.utc().plus({
+            day: 1,
+          }),
         ),
       ).not.toThrow();
     });
@@ -409,11 +422,11 @@ describe('ApiTokenService', () => {
 
   describe('removeInvalidTokens', () => {
     it('works', async () => {
-      const mockTime = new Date(mockCreatedAtIso);
-      jest.useFakeTimers().setSystemTime(mockTime);
+      const mockTime = DateTime.fromISO(mockCreatedAtIso, { zone: 'utc' });
+      jest.useFakeTimers().setSystemTime(new Date(mockCreatedAtIso));
       mockDelete(tracker, TableApiToken, [FieldNameApiToken.validUntil], 1);
       await service.removeInvalidTokens();
-      expectBindings(tracker, 'delete', [[mockTime]]);
+      expectBindings(tracker, 'delete', [[mockTime.toSQL()]]);
       jest.useRealTimers();
     });
   });

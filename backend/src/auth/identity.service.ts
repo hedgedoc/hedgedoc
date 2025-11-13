@@ -7,6 +7,7 @@ import { AuthProviderType } from '@hedgedoc/commons';
 import { FieldNameIdentity, Identity, TableIdentity } from '@hedgedoc/database';
 import { Inject, Injectable } from '@nestjs/common';
 import { Knex } from 'knex';
+import { DateTime } from 'luxon';
 import { InjectConnection } from 'nest-knexjs';
 
 import AuthConfiguration, { AuthConfig } from '../config/auth.config';
@@ -94,6 +95,8 @@ export class IdentityService {
       [FieldNameIdentity.providerIdentifier]: authProviderIdentifier,
       [FieldNameIdentity.providerUserId]: authProviderUserId,
       [FieldNameIdentity.passwordHash]: passwordHash ?? null,
+      [FieldNameIdentity.createdAt]: DateTime.utc().toSQL(),
+      [FieldNameIdentity.updatedAt]: DateTime.utc().toSQL(),
     });
   }
 

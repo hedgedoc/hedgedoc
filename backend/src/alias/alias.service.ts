@@ -3,12 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  Alias,
-  FieldNameAlias,
-  TableAlias,
-  TypeInsertAlias,
-} from '@hedgedoc/database';
+import { Alias, FieldNameAlias, TableAlias } from '@hedgedoc/database';
 import { Inject, Injectable } from '@nestjs/common';
 import base32Encode from 'base32-encode';
 import { Knex } from 'knex';
@@ -67,7 +62,7 @@ export class AliasService {
     transaction?: Knex,
   ): Promise<void> {
     const dbActor: Knex = transaction ? transaction : this.knex;
-    const newAlias: TypeInsertAlias = {
+    const newAlias: Alias = {
       [FieldNameAlias.alias]: alias,
       [FieldNameAlias.noteId]: noteId,
       [FieldNameAlias.isPrimary]: false,
