@@ -89,7 +89,7 @@ export class MediaService {
    * @param fileBuffer The buffer with the file contents to save
    * @param userId Id of the user who uploaded this file
    * @param noteId Id of the note which will be associated with the new file
-   * @returns The created MediaUpload entity
+   * @returns The uuid of the mediaupload
    * @throws ClientError if the MIME type of the file is not supported
    * @throws NotInDBError if the note or user is not in the database
    * @throws MediaBackendError if there was an error saving the file
