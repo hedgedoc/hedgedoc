@@ -5,18 +5,12 @@
  */
 import { z } from 'zod'
 
-const nowPlusTwoYears = (): Date => {
-  const date = new Date()
-  date.setFullYear(date.getFullYear() + 2)
-  return date
-}
-
 export const ApiTokenCreateSchema = z
   .object({
     label: z.string().describe('Label for the new token'),
-    validUntil: z.coerce
-      .date()
-      .max(nowPlusTwoYears())
+    validUntil: z
+      .string()
+      .datetime({ offset: false, precision: 3 })
       .describe(
         'Expiry date for the new token. Should be at max two years in the future.',
       ),

@@ -402,6 +402,7 @@ export class RevisionsService {
         [FieldNameRevision.uuid]: newUuid,
         [FieldNameRevision.yjsStateVector]:
           yjsStateVector !== undefined ? Buffer.from(yjsStateVector) : null,
+        [FieldNameRevision.createdAt]: DateTime.utc().toSQL(),
       },
       [FieldNameRevision.uuid],
     );

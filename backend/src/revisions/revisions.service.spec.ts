@@ -21,6 +21,7 @@ import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as diffModule from 'diff';
 import type { Tracker } from 'knex-mock-client';
+import { DateTime } from 'luxon';
 import * as uuidModule from 'uuid';
 
 import { AliasService } from '../alias/alias.service';
@@ -418,11 +419,14 @@ describe('RevisionsService', () => {
     });
 
     it('uses a correct diff when an old revision is present', async () => {
+      jest.useFakeTimers();
+      const now = DateTime.utc();
       mockInsert(
         tracker,
         TableRevision,
         [
           FieldNameRevision.content,
+          FieldNameRevision.createdAt,
           FieldNameRevision.description,
           FieldNameRevision.noteId,
           FieldNameRevision.noteType,
@@ -437,6 +441,7 @@ describe('RevisionsService', () => {
       expectBindings(tracker, 'insert', [
         [
           mockContent2,
+          now.toSQL(),
           mockDescription,
           mockNoteId,
           NoteType.DOCUMENT,
@@ -446,13 +451,17 @@ describe('RevisionsService', () => {
           null,
         ],
       ]);
+      jest.useRealTimers();
     });
     it('creates a correct revision when no old revisions are present', async () => {
+      jest.useFakeTimers();
+      const now = DateTime.utc();
       mockInsert(
         tracker,
         TableRevision,
         [
           FieldNameRevision.content,
+          FieldNameRevision.createdAt,
           FieldNameRevision.description,
           FieldNameRevision.noteId,
           FieldNameRevision.noteType,
@@ -467,6 +476,7 @@ describe('RevisionsService', () => {
       expectBindings(tracker, 'insert', [
         [
           mockContent1,
+          now.toSQL(),
           mockDescription,
           mockNoteId,
           NoteType.DOCUMENT,
@@ -476,6 +486,7 @@ describe('RevisionsService', () => {
           null,
         ],
       ]);
+      jest.useRealTimers();
     });
     it('throws a GenericDBError when the revision could not be inserted', async () => {
       mockInsert(
@@ -483,6 +494,7 @@ describe('RevisionsService', () => {
         TableRevision,
         [
           FieldNameRevision.content,
+          FieldNameRevision.createdAt,
           FieldNameRevision.description,
           FieldNameRevision.noteId,
           FieldNameRevision.noteType,

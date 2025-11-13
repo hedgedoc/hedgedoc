@@ -32,12 +32,5 @@ export enum FieldNameNote {
 
 export const TableNote = 'note'
 
-type TypeNoteDate = Omit<Note, FieldNameNote.createdAt> & {
-  [FieldNameNote.createdAt]: Date
-}
-
-export type TypeInsertNote = Omit<
-  TypeNoteDate,
-  FieldNameNote.createdAt | FieldNameNote.id
->
-export type TypeUpdateNote = Pick<TypeNoteDate, FieldNameNote.ownerId>
+export type TypeInsertNote = Omit<Note, FieldNameNote.id>
+export type TypeUpdateNote = Pick<Note, FieldNameNote.ownerId>

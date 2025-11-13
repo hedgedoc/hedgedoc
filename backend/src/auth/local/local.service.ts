@@ -21,6 +21,7 @@ import {
   translations as zxcvbnEnTranslations,
 } from '@zxcvbn-ts/language-en';
 import { Knex } from 'knex';
+import { DateTime } from 'luxon';
 import { InjectConnection } from 'nest-knexjs';
 
 import authConfiguration, { AuthConfig } from '../../config/auth.config';
@@ -99,7 +100,7 @@ export class LocalService {
     await this.knex(TableIdentity)
       .update({
         [FieldNameIdentity.passwordHash]: newPasswordHash,
-        [FieldNameIdentity.updatedAt]: new Date(),
+        [FieldNameIdentity.updatedAt]: DateTime.utc().toSQL(),
       })
       .where(FieldNameIdentity.providerType, AuthProviderType.LOCAL)
       .andWhere(FieldNameIdentity.userId, userId);

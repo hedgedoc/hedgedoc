@@ -17,6 +17,7 @@ import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as fileTypeModule from 'file-type';
 import type { Tracker } from 'knex-mock-client';
+import { DateTime } from 'luxon';
 import * as uuidModule from 'uuid';
 
 import appConfigMock from '../config/mock/app.config.mock';
@@ -86,6 +87,8 @@ describe('MediaService', () => {
 
   describe('saveFile', () => {
     it('inserts a new media upload and returns uuid', async () => {
+      jest.useFakeTimers();
+      const now = DateTime.utc();
       jest
         .spyOn(fileTypeModule, 'fromBuffer')
         .mockResolvedValue({ mime: 'image/png', ext: 'png' });
@@ -100,6 +103,7 @@ describe('MediaService', () => {
         [
           FieldNameMediaUpload.backendData,
           FieldNameMediaUpload.backendType,
+          FieldNameMediaUpload.createdAt,
           FieldNameMediaUpload.fileName,
           FieldNameMediaUpload.noteId,
           FieldNameMediaUpload.userId,
@@ -130,8 +134,9 @@ describe('MediaService', () => {
       );
       expect(result).toBe(uuid);
       expectBindings(tracker, 'insert', [
-        [backendData, backendType, fileName, noteId, userId, uuid],
+        [backendData, backendType, now.toSQL(), fileName, noteId, userId, uuid],
       ]);
+      jest.useRealTimers();
     });
 
     it('throws ClientError if file type is not detected', async () => {

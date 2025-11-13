@@ -25,6 +25,7 @@ import { ConfigModule } from '@nestjs/config';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import type { Tracker } from 'knex-mock-client';
+import { DateTime } from 'luxon';
 
 import { AliasService } from '../alias/alias.service';
 import appConfigMock from '../config/mock/app.config.mock';
@@ -160,6 +161,14 @@ describe('NoteService', () => {
   });
 
   describe('createNote', () => {
+    let now: DateTime;
+    beforeEach(() => {
+      jest.useFakeTimers();
+      now = DateTime.utc();
+    });
+    afterEach(() => {
+      jest.useRealTimers();
+    });
     it('throws a MaximumDocumentLengthExceededError', async () => {
       const tooLongContent = 'a'.repeat(noteMockConfig.maxDocumentLength + 1);
       await expect(
@@ -171,13 +180,13 @@ describe('NoteService', () => {
       mockInsert(
         tracker,
         TableNote,
-        [FieldNameNote.ownerId, FieldNameNote.version],
+        [FieldNameNote.createdAt, FieldNameNote.ownerId, FieldNameNote.version],
         [],
       );
       await expect(
         service.createNote(mockNoteContent, mockOwnerUserId, mockAliasCustom),
       ).rejects.toThrow(GenericDBError);
-      expectBindings(tracker, 'insert', [[mockOwnerUserId, 2]]);
+      expectBindings(tracker, 'insert', [[now.toSQL(), mockOwnerUserId, 2]]);
     });
 
     /* eslint-disable jest/no-conditional-expect */
@@ -240,7 +249,11 @@ describe('NoteService', () => {
           mockInsert(
             tracker,
             TableNote,
-            [FieldNameNote.ownerId, FieldNameNote.version],
+            [
+              FieldNameNote.createdAt,
+              FieldNameNote.ownerId,
+              FieldNameNote.version,
+            ],
             [{ [FieldNameNote.id]: mockNoteId }],
           );
         });
@@ -252,7 +265,9 @@ describe('NoteService', () => {
             expect.anything(),
           );
           expect(result).toBe(mockNoteId);
-          expectBindings(tracker, 'insert', [[mockOwnerUserId, 2]]);
+          expectBindings(tracker, 'insert', [
+            [now.toSQL(), mockOwnerUserId, 2],
+          ]);
         });
 
         it(`with settings: ${descr}`, async () => {
