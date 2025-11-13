@@ -4,13 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { MediaUploadSchema, PermissionLevel } from '@hedgedoc/commons';
-import {
-  FieldNameMediaUpload,
-  FieldNameNote,
-  FieldNameUser,
-  Note,
-  User,
-} from '@hedgedoc/database';
+import { FieldNameMediaUpload } from '@hedgedoc/database';
 import {
   BadRequestException,
   Controller,
@@ -92,22 +86,22 @@ export class MediaController {
   @UseInterceptors(NoteHeaderInterceptor)
   @RequirePermission(PermissionLevel.WRITE)
   async uploadMedia(
-    @RequestUserId() user: User,
+    @RequestUserId() userId: number,
     @UploadedFile() file: MulterFile,
-    @RequestNoteId() note: Note,
+    @RequestNoteId() noteId: number,
   ): Promise<MediaUploadDto> {
     if (file === undefined) {
       throw new BadRequestException('Request does not contain a file');
     }
     this.logger.debug(
-      `Received filename '${file.originalname}' for note '${note[FieldNameNote.id]}' from user '${user.username}'`,
+      `Received filename '${file.originalname}' for note '${noteId}' from user '${userId}'`,
       'uploadMedia',
     );
     const uploadUuid = await this.mediaService.saveFile(
       file.originalname,
       file.buffer,
-      user[FieldNameUser.id],
-      note[FieldNameNote.id],
+      userId,
+      noteId,
     );
     return (await this.mediaService.getMediaUploadDtosByUuids([uploadUuid]))[0];
   }
