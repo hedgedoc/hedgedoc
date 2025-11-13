@@ -5,6 +5,7 @@
     "ts"
   ],
   "rootDir": ".",
+  "automock": false,
   "testEnvironment": "node",
   "testMatch": [
     "<rootDir>/test/**/*.e2e-spec.{ts,js}"

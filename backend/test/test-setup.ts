@@ -3,14 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ApiTokenWithSecretDto } from '@hedgedoc/commons';
+import { SpecialGroup } from '@hedgedoc/database';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { RouterModule, Routes } from '@nestjs/core';
+import { APP_INTERCEPTOR, APP_PIPE, RouterModule, Routes } from '@nestjs/core';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
 import knex, { Knex } from 'knex';
+import { DateTime } from 'luxon';
 import { KnexModule } from 'nest-knexjs';
+import { ZodSerializerInterceptor, ZodValidationPipe } from 'nestjs-zod';
 import { v4 as uuidv4 } from 'uuid';
 
 import { AliasModule } from '../src/alias/alias.module';
@@ -22,6 +24,7 @@ import { PublicApiModule } from '../src/api/public/public-api.module';
 import { ApiTokenGuard } from '../src/api/utils/guards/api-token.guard';
 import { MockApiTokenGuard } from '../src/api/utils/guards/mock-api-token.guard';
 import { setupApp } from '../src/app-init';
+import { PRIVATE_API_PREFIX, PUBLIC_API_PREFIX } from '../src/app.module';
 import { AuthModule } from '../src/auth/auth.module';
 import { IdentityService } from '../src/auth/identity.service';
 import { LdapService } from '../src/auth/ldap/ldap.service';
@@ -62,13 +65,14 @@ import {
   registerNoteConfig,
 } from '../src/config/mock/note.config.mock';
 import { NoteConfig } from '../src/config/note.config';
-import { ErrorExceptionMapping } from '../src/errors/error-mapping';
+import { ApiTokenWithSecretDto } from '../src/dtos/api-token-with-secret.dto';
 import { eventModuleConfig } from '../src/events';
 import { FrontendConfigModule } from '../src/frontend-config/frontend-config.module';
 import { GroupsModule } from '../src/groups/groups.module';
 import { GroupsService } from '../src/groups/groups.service';
 import { ConsoleLoggerService } from '../src/logger/console-logger.service';
 import { LoggerModule } from '../src/logger/logger.module';
+import { FilesystemBackend } from '../src/media/backends/filesystem-backend';
 import { MediaModule } from '../src/media/media.module';
 import { MediaService } from '../src/media/media.service';
 import { MonitoringModule } from '../src/monitoring/monitoring.module';
@@ -112,6 +116,8 @@ export class TestSetup {
   revisionsService: RevisionsService;
 
   userIds: number[] = [];
+  guestUserId: number;
+  guestUserUuid: string;
   authTokens: ApiTokenWithSecretDto[] = [];
   anonymousNoteIds: number[] = [];
   ownedNoteIds: number[] = [];
@@ -216,11 +222,11 @@ export class TestSetupBuilder {
 
     const routes: Routes = [
       {
-        path: '/api/v2',
+        path: PUBLIC_API_PREFIX,
         module: PublicApiModule,
       },
       {
-        path: '/api/private',
+        path: PRIVATE_API_PREFIX,
         module: PrivateApiModule,
       },
     ];
@@ -284,8 +290,12 @@ export class TestSetupBuilder {
       ],
       providers: [
         {
-          provide: 'APP_FILTER',
-          useClass: ErrorExceptionMapping,
+          provide: APP_PIPE,
+          useClass: ZodValidationPipe,
+        },
+        {
+          provide: APP_INTERCEPTOR,
+          useClass: ZodSerializerInterceptor,
         },
       ],
     });
@@ -316,8 +326,11 @@ export class TestSetupBuilder {
       this.testSetup.moduleRef.get<LocalService>(LocalService);
     this.testSetup.notesService =
       this.testSetup.moduleRef.get<NoteService>(NoteService);
+    const filesystemBackend =
+      this.testSetup.moduleRef.get<FilesystemBackend>(FilesystemBackend);
     this.testSetup.mediaService =
       this.testSetup.moduleRef.get<MediaService>(MediaService);
+    this.testSetup.mediaService.mediaBackend = filesystemBackend;
     this.testSetup.aliasService =
       this.testSetup.moduleRef.get<AliasService>(AliasService);
     this.testSetup.apiTokenService =
@@ -393,9 +406,10 @@ export class TestSetupBuilder {
       // create auth tokens
       this.testSetup.authTokens = await Promise.all(
         this.testSetup.userIds.map(async (userId) => {
-          const validUntil = new Date();
           // Token is valid for 1 hour
-          validUntil.setTime(validUntil.getTime() + 60 * 60 * 1000);
+          const validUntil = DateTime.utc().plus({
+            hour: 1,
+          });
           return await this.testSetup.apiTokenService.createToken(
             userId,
             'test',
@@ -407,23 +421,42 @@ export class TestSetupBuilder {
       // create notes owned by the test users
       this.testSetup.ownedNoteIds.push(
         await this.testSetup.notesService.createNote(
-          'Test Note 1',
+          noteContent1,
           this.testSetup.userIds[0],
-          'testAlias1',
+          noteAlias1,
         ),
       );
       this.testSetup.ownedNoteIds.push(
         await this.testSetup.notesService.createNote(
-          'Test Note 2',
+          noteContent2,
           this.testSetup.userIds[1],
-          'testAlias2',
+          noteAlias2,
         ),
       );
       this.testSetup.ownedNoteIds.push(
         await this.testSetup.notesService.createNote(
-          'Test Note 3',
+          noteContent3,
           this.testSetup.userIds[2],
-          'testAlias3',
+          noteAlias3,
+        ),
+      );
+      this.testSetup.ownedNoteIds.push(
+        await this.testSetup.notesService.createNote(
+          noteContent4,
+          this.testSetup.userIds[0],
+          noteAlias4,
+        ),
+      );
+      await this.testSetup.permissionsService.removeGroupPermission(
+        this.testSetup.ownedNoteIds[3],
+        await this.testSetup.groupService.getGroupIdByName(
+          SpecialGroup.EVERYONE,
+        ),
+      );
+      await this.testSetup.permissionsService.removeGroupPermission(
+        this.testSetup.ownedNoteIds[3],
+        await this.testSetup.groupService.getGroupIdByName(
+          SpecialGroup.LOGGED_IN,
         ),
       );
     });
@@ -435,25 +468,27 @@ export class TestSetupBuilder {
    */
   public withNotes(): TestSetupBuilder {
     this.setupPostCompile.push(async () => {
+      [this.testSetup.guestUserUuid, this.testSetup.guestUserId] =
+        await this.testSetup.usersService.createGuestUser();
       this.testSetup.anonymousNoteIds.push(
         await this.testSetup.notesService.createNote(
-          'Anonymous Note 1',
-          null,
-          'anonAlias1',
+          anonymousNoteContent1,
+          this.testSetup.guestUserId,
+          anonymousNoteAlias1,
         ),
       );
       this.testSetup.anonymousNoteIds.push(
         await this.testSetup.notesService.createNote(
-          'Anonymous Note 2',
-          null,
-          'anonAlias2',
+          anonymousNoteContent2,
+          this.testSetup.guestUserId,
+          anonymousNoteAlias2,
         ),
       );
       this.testSetup.anonymousNoteIds.push(
         await this.testSetup.notesService.createNote(
-          'Anonymous Note 3',
-          null,
-          'anonAlias3',
+          anonymousNoteContent3,
+          this.testSetup.guestUserId,
+          anonymousNoteAlias3,
         ),
       );
     });
@@ -470,3 +505,18 @@ export const displayName2 = 'Test User 2';
 export const username3 = 'testuser3';
 export const password3 = 'AStrongP@sswordForUser3';
 export const displayName3 = 'Test User 3';
+
+export const anonymousNoteAlias1 = 'anonymousNoteId1';
+export const anonymousNoteContent1 = 'Anonymous Note 1';
+export const anonymousNoteAlias2 = 'anonymousNoteId2';
+export const anonymousNoteContent2 = 'Anonymous Note 2';
+export const anonymousNoteAlias3 = 'anonymousNoteId3';
+export const anonymousNoteContent3 = 'Anonymous Note 3';
+export const noteAlias1 = 'testAlias1';
+export const noteContent1 = 'Test Note 1';
+export const noteAlias2 = 'testAlias2';
+export const noteContent2 = 'Test Note 2';
+export const noteAlias3 = 'testAlias3';
+export const noteContent3 = 'Test Note 3';
+export const noteAlias4 = 'testAlias4';
+export const noteContent4 = 'Test Note 4';
