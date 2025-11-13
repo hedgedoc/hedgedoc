@@ -13,6 +13,7 @@ import {
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { createHash } from 'crypto';
 import { Knex } from 'knex';
+import { DateTime } from 'luxon';
 import { InjectConnection } from 'nest-knexjs';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -76,6 +77,7 @@ export class UsersService {
           // TODO Use generatePhotoUrl method to generate a random avatar image
           [FieldNameUser.guestUuid]: null,
           [FieldNameUser.authorStyle]: this.generateAuthorStyleIndex(username),
+          [FieldNameUser.createdAt]: DateTime.utc().toSQL(),
         },
         [FieldNameUser.id],
       );
@@ -112,6 +114,7 @@ export class UsersService {
           [FieldNameUser.photoUrl]: null,
           [FieldNameUser.guestUuid]: uuid,
           [FieldNameUser.authorStyle]: this.generateAuthorStyleIndex(uuid),
+          [FieldNameUser.createdAt]: DateTime.utc().toSQL(),
         },
         [FieldNameUser.id],
       );

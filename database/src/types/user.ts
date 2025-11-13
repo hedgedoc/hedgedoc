@@ -54,14 +54,7 @@ export const enum FieldNameUser {
 
 export const TableUser = 'user'
 
-type TypeUserDate = Omit<User, FieldNameUser.createdAt> & {
-  [FieldNameUser.createdAt]: Date
-}
-
-export type TypeInsertUser = Omit<
-  TypeUserDate,
-  FieldNameUser.id | FieldNameUser.createdAt
->
+export type TypeInsertUser = Omit<User, FieldNameUser.id>
 export type TypeUpdateUser = Pick<
   User,
   | FieldNameUser.displayName

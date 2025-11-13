@@ -54,12 +54,3 @@ export enum FieldNameRevision {
 }
 
 export const TableRevision = 'revision'
-
-type TypeRevisionDate = Omit<Revision, FieldNameRevision.createdAt> & {
-  [FieldNameRevision.createdAt]: Date
-}
-
-export type TypeInsertRevision = Omit<
-  TypeRevisionDate,
-  FieldNameRevision.createdAt
->

@@ -124,6 +124,7 @@ export class MediaService {
       [FieldNameMediaUpload.noteId]: noteId,
       [FieldNameMediaUpload.backendType]: this.mediaBackendType,
       [FieldNameMediaUpload.backendData]: backendData,
+      [FieldNameMediaUpload.createdAt]: DateTime.utc().toSQL(),
     });
     return uuid;
   }

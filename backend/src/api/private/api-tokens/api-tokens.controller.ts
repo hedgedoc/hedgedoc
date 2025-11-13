@@ -14,6 +14,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { DateTime } from 'luxon';
 
 import { ApiTokenService } from '../../../api-token/api-token.service';
 import { SessionGuard } from '../../../auth/session.guard';
@@ -53,7 +54,7 @@ export class ApiTokensController {
     return await this.apiTokenService.createToken(
       userId,
       createDto.label,
-      createDto.validUntil,
+      DateTime.fromISO(createDto.validUntil),
     );
   }
 
