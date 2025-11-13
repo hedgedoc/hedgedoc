@@ -66,8 +66,9 @@ export class AliasController {
         'Only the owner of a note can modify its aliases',
       );
     }
+    await this.aliasService.ensureAliasIsAvailable(newAliasDto.newAlias);
     await this.aliasService.addAlias(noteId, newAliasDto.newAlias);
-    return this.aliasService.toAliasDto(newAliasDto.newAlias, false);
+    return this.aliasService.toAliasDto(newAliasDto.newAlias, null);
   }
 
   @Put(':alias')
