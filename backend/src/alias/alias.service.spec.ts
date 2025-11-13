@@ -113,7 +113,7 @@ describe('AliasService', () => {
         ]);
         await service.addAlias(noteId1, alias2);
         expectBindings(tracker, 'select', [[noteId1]]);
-        expectBindings(tracker, 'insert', [[alias2, false, noteId1]]);
+        expectBindings(tracker, 'insert', [[alias2, null, noteId1]]);
       });
     });
   });
@@ -356,7 +356,7 @@ describe('AliasService', () => {
       expect(primaryAliasDto.isPrimaryAlias).toBe(true);
     });
     it('with a non-primary alias', () => {
-      const nonPrimaryAliasDto = service.toAliasDto(alias2, false);
+      const nonPrimaryAliasDto = service.toAliasDto(alias2, null);
       expect(nonPrimaryAliasDto.name).toEqual(alias2);
       expect(nonPrimaryAliasDto.isPrimaryAlias).toBe(false);
     });
