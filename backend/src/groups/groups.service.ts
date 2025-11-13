@@ -69,7 +69,7 @@ export class GroupsService {
     return GroupInfoDto.create({
       name: group[FieldNameGroup.name],
       displayName: group[FieldNameGroup.displayName],
-      isSpecial: group[FieldNameGroup.isSpecial],
+      isSpecial: Boolean(group[FieldNameGroup.isSpecial]),
     });
   }
 
