@@ -89,7 +89,7 @@ export class NoteService {
    * @param noteContent The content of the new note, in most cases an empty string
    * @param givenAlias An optional alias the note should have
    * @param ownerUserId The owner of the note
-   * @returns The newly created note
+   * @returns The id of the newly created note
    * @throws AlreadyInDBError if a note with the requested id or aliases already exists
    * @throws ForbiddenIdError if the requested id or aliases is forbidden
    * @throws MaximumDocumentLengthExceededError if the noteContent is longer than the maxDocumentLength
@@ -454,18 +454,22 @@ export class NoteService {
     this.logger.debug(`Retrieved ${updateUsers.users.length}`);
     updateUsers.users.sort();
 
+    const updatedAt = DateTime.fromSQL(
+      latestRevision[FieldNameRevision.createdAt],
+      {
+        zone: 'utc',
+      },
+    ).toISO();
+
     let lastUpdatedBy;
     let editedBy;
-    let updatedAt;
     if (updateUsers.users.length > 0) {
       const lastEdit = updateUsers.users[0];
       lastUpdatedBy = lastEdit.username;
       editedBy = updateUsers.users.map((user) => user.username);
-      updatedAt = DateTime.fromSQL(lastEdit.createdAt, { zone: 'UTC' }).toISO();
     } else {
       lastUpdatedBy = permissions.owner;
       editedBy = permissions.owner ? [permissions.owner] : [];
-      updatedAt = createdAt;
     }
 
     return NoteMetadataDto.create({
