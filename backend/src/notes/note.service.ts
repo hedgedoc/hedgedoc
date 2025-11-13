@@ -195,6 +195,7 @@ export class NoteService {
       ?.getRealtimeDoc()
       .getCurrentContent();
     if (realtimeContent) {
+      this.logger.debug(`Found realtime note for note '${noteId}'`);
       return realtimeContent;
     }
 
@@ -267,6 +268,10 @@ export class NoteService {
    * @throws NotInDBError if there is no note with this id or aliases
    */
   async updateNote(noteId: number, noteContent: string): Promise<void> {
+    this.logger.debug(
+      `Updating note content for note '${noteId}': ${noteContent}`,
+      'updateNote',
+    );
     this.eventEmitter.emit(NoteEvent.CLOSE_REALTIME, noteId);
     await this.revisionsService.createRevision(noteId, noteContent);
   }
@@ -446,6 +451,7 @@ export class NoteService {
       latestRevision[FieldNameRevision.uuid],
       transaction,
     );
+    this.logger.debug(`Retrieved ${updateUsers.users.length}`);
     updateUsers.users.sort();
 
     let lastUpdatedBy;
