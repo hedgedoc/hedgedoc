@@ -330,7 +330,7 @@ export class MediaService {
       MediaUploadDto.create({
         uuid: mediaUpload[FieldNameMediaUpload.uuid],
         fileName: mediaUpload[FieldNameMediaUpload.fileName],
-        noteId: mediaUpload[FieldNameAlias.alias],
+        noteAlias: mediaUpload[FieldNameAlias.alias],
         createdAt: DateTime.fromSQL(
           mediaUpload[FieldNameMediaUpload.createdAt],
           { zone: 'UTC' },
