@@ -65,7 +65,7 @@ export class AliasService {
     const newAlias: Alias = {
       [FieldNameAlias.alias]: alias,
       [FieldNameAlias.noteId]: noteId,
-      [FieldNameAlias.isPrimary]: false,
+      [FieldNameAlias.isPrimary]: null,
     };
     const oldAliases = await dbActor(TableAlias)
       .select(FieldNameAlias.alias)
@@ -292,10 +292,10 @@ export class AliasService {
    * @param isPrimaryAlias Whether the alias is the primary alias.
    * @returns The built AliasDto
    */
-  toAliasDto(name: string, isPrimaryAlias: boolean): AliasDto {
+  toAliasDto(name: string, isPrimaryAlias: boolean | null): AliasDto {
     return AliasDto.create({
       name,
-      isPrimaryAlias,
+      isPrimaryAlias: isPrimaryAlias !== null,
     });
   }
 }
