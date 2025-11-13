@@ -476,6 +476,19 @@
         },
         "inconsistent": "This permission is overridden by another permission"
       },
+      "summary": {
+        "button": "Summary",
+        "title": "AI Summary",
+        "selectParagraphs": "Select paragraphs to summarize (click to select/deselect):",
+        "selectAll": "Select All",
+        "deselectAll": "Deselect All",
+        "selectedText": "Text to summarize:",
+        "textPlaceholder": "Enter or select text to summarize",
+        "result": "Summary:",
+        "generate": "Generate Summary",
+        "generating": "Generating...",
+        "error": "Failed to generate summary. Please try again."
+      },
       "shareLink": {
         "title": "Share link",
         "editorDescription": "This link points to this note in the editor as you currently see it.",

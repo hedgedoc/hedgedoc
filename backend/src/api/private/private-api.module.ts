@@ -15,6 +15,7 @@ import { MediaModule } from '../../media/media.module';
 import { NotesModule } from '../../notes/notes.module';
 import { PermissionsModule } from '../../permissions/permissions.module';
 import { RevisionsModule } from '../../revisions/revisions.module';
+import { SummaryModule } from '../../summary/summary.module';
 import { UsersModule } from '../../users/users.module';
 import { AliasController } from './alias/alias.controller';
 import { AuthController } from './auth/auth.controller';
@@ -29,6 +30,7 @@ import { MediaController } from './media/media.controller';
 import { NotesController } from './notes/notes.controller';
 import { ApiTokensController } from './tokens/api-tokens.controller';
 import { UsersController } from './users/users.controller';
+import { SummaryController } from '../../summary/summary.controller';
 
 @Module({
   imports: [
@@ -43,6 +45,7 @@ import { UsersController } from './users/users.controller';
     RevisionsModule,
     AuthModule,
     GroupsModule,
+    SummaryModule,
   ],
   controllers: [
     ApiTokensController,
@@ -58,6 +61,7 @@ import { UsersController } from './users/users.controller';
     LdapController,
     LocalController,
     OidcController,
+    SummaryController,
   ],
 })
 export class PrivateApiModule {}
