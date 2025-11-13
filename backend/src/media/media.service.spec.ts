@@ -358,7 +358,7 @@ describe('MediaService', () => {
         {
           uuid,
           fileName,
-          noteId: alias,
+          noteAlias: alias,
           createdAt: createdAtIso,
           username,
         },
