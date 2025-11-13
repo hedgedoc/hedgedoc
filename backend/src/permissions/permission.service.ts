@@ -491,11 +491,13 @@ export class PermissionService {
         owner: owner[FieldNameUser.username],
         sharedToUsers: userPermissions.map((userPermission) => ({
           username: userPermission[FieldNameUser.username],
-          canEdit: userPermission[FieldNameNoteUserPermission.canEdit],
+          canEdit: Boolean(userPermission[FieldNameNoteUserPermission.canEdit]),
         })),
         sharedToGroups: groupPermissions.map((groupPermission) => ({
           groupName: groupPermission[FieldNameGroup.name],
-          canEdit: groupPermission[FieldNameNoteGroupPermission.canEdit],
+          canEdit: Boolean(
+            groupPermission[FieldNameNoteGroupPermission.canEdit],
+          ),
         })),
       });
     });
