@@ -72,6 +72,10 @@ export class AliasService {
       .where(FieldNameAlias.noteId, noteId);
     if (oldAliases.length === 0) {
       // The first alias is automatically made the primary aliases
+      this.logger.debug(
+        `There are no old aliases so the new one ${alias} will be primary`,
+        'addAlias',
+      );
       newAlias[FieldNameAlias.isPrimary] = true;
     }
     await dbActor(TableAlias).insert(newAlias);
@@ -149,6 +153,10 @@ export class AliasService {
         .delete();
 
       if (numberOfDeletedAliases !== 1) {
+        this.logger.error(
+          `While trying to remove alias ${alias} for note ${noteId}, removed ${numberOfDeletedAliases}`,
+          'removeAlias',
+        );
         throw new PrimaryAliasDeletionForbiddenError(
           `The alias '${alias}' is the primary alias, which can not be removed.`,
           this.logger.getContext(),
