@@ -161,7 +161,7 @@ export class NotesController {
     @RequestNoteId() noteId: number,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
-    this.logger.debug('Got raw markdown:\n' + text, 'updateNote');
+    this.logger.debug('Got raw markdown: ' + text, 'updateNote');
     await this.noteService.updateNote(noteId, text);
     return await this.noteService.toNoteDto(noteId);
   }
