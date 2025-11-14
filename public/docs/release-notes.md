@@ -2,6 +2,11 @@
 
 ## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
 
+### Enhancements
+
+- Add `enableUploads` (`CMD_ENABLE_UPLOADS`) config option to restrict uploads to `registered` users, `all` users or
+  `none` to completely disable uploads.
+
 ### Bugfixes
 - Ignore the healthcheck endpoint in the "too busy" limiter
 

@@ -1079,6 +1079,10 @@ function changeMode (type) {
     // add and update tool bar
     if (!editorInstance.toolBar) {
       editorInstance.addToolBar()
+      const uploadButtonVisible = window.enableUploads === 'all' || (window.enableUploads === 'registered' && personalInfo.login)
+      if (!uploadButtonVisible) {
+        $('#uploadImage').remove()
+      }
     }
     // work around foldGutter might not init properly
     editor.setOption('foldGutter', false)
