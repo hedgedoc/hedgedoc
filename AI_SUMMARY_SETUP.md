@@ -48,7 +48,8 @@ After adding the API key, restart your HedgeDoc instance for the changes to take
    - Click on paragraphs from the list to select them (they will be highlighted in blue)
    - Or manually enter/edit text in the text area
    - Click "Generate Summary" to create an AI summary
-5. The summary will appear in the result section below
+   - Click "Check for Issues" to scan the text for spelling, grammar, or markdown mistakes
+5. The summary and issue report will appear in the result sections below
 
 ## Features
 
@@ -57,10 +58,11 @@ After adding the API key, restart your HedgeDoc instance for the changes to take
 - **Multi-paragraph Support**: Select multiple paragraphs at once
 - **Loading States**: Clear feedback during summary generation
 - **Error Handling**: Informative error messages if something goes wrong
+- **Issue Detection**: Optional AI-powered linting for the selected text
 
 ## API Endpoint
 
-The backend exposes a private API endpoint:
+The backend exposes private API endpoints:
 
 ```
 POST /api/private/summary
@@ -75,6 +77,22 @@ Response:
 ```json
 {
   "summary": "The generated summary text..."
+}
+```
+
+```
+POST /api/private/summary/check
+Content-Type: application/json
+
+{
+  "text": "Your text to review..."
+}
+```
+
+Response:
+```json
+{
+  "issues": "List of issues or “No issues found.”"
 }
 ```
 

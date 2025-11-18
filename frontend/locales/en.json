@@ -487,6 +487,12 @@
         "result": "Summary:",
         "generate": "Generate Summary",
         "generating": "Generating...",
+        "check": "Check for Issues",
+        "checking": "Checking...",
+        "issuesResult": "Issues found:",
+        "missingText": "Please enter or select text first",
+        "issuesNone": "No issues found.",
+        "checkError": "Failed to check for issues. Please try again.",
         "error": "Failed to generate summary. Please try again."
       },
       "shareLink": {
