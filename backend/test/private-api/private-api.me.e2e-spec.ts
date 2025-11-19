@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { FieldNameUser } from '@hedgedoc/database';
 import { promises as fs } from 'fs';
 import request from 'supertest';
 
@@ -12,7 +11,6 @@ import { NotInDBError } from '../../src/errors/errors';
 import {
   displayName1,
   displayName2,
-  noteAlias1,
   TestSetup,
   TestSetupBuilder,
   username1,
@@ -69,7 +67,7 @@ describe('Me', () => {
       expect(user2.username).toEqual(username2);
     });
     it('correctly returns info for a guest user', async () => {
-      const response = await agentGuestUser
+      await agentGuestUser
         .get(`${PRIVATE_API_PREFIX}/me`)
         .expect('Content-Type', /json/)
         .expect(200);
