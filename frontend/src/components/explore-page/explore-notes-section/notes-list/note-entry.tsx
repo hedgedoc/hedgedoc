@@ -19,8 +19,11 @@ import { deleteNote } from '../../../../api/notes'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import type { NoteExploreEntryInterface } from '@hedgedoc/commons'
 import { useTranslatedText } from '../../../../hooks/common/use-translated-text'
+import { Trans, useTranslation } from 'react-i18next'
+import { PinNoteMenuEntry } from './pin-note-menu-entry'
 
 interface NoteListEntryProps extends NoteExploreEntryInterface {
+  isPinned: boolean
   showLastVisitedTime?: boolean
 }
 
@@ -32,14 +35,11 @@ export const NoteListEntry: React.FC<NoteListEntryProps> = ({
   lastChangedAt,
   lastVisitedAt,
   owner,
+  isPinned,
   showLastVisitedTime
 }) => {
+  useTranslation()
   const { showErrorNotification } = useUiNotifications()
-  const lastChangedRelative = useMemo(() => formatChangedAt(lastChangedAt), [lastChangedAt])
-  const lastVisitedRelative = useMemo(
-    () => (showLastVisitedTime && lastVisitedAt ? formatChangedAt(lastVisitedAt) : null),
-    [lastVisitedAt, showLastVisitedTime]
-  )
   const currentUser = useApplicationState((state) => state.user)
   const fallbackUntitled = useTranslatedText('editor.untitledNote')
   const onClickDeleteNote = useCallback(
@@ -48,6 +48,19 @@ export const NoteListEntry: React.FC<NoteListEntryProps> = ({
     },
     [title, primaryAlias, showErrorNotification]
   )
+
+  const relativeTime = useMemo(() => {
+    if (showLastVisitedTime && lastVisitedAt) {
+      return {
+        key: 'explore.timestamps.lastVisited',
+        value: formatChangedAt(lastVisitedAt)
+      }
+    }
+    return {
+      key: 'explore.timestamps.lastUpdated',
+      value: formatChangedAt(lastChangedAt)
+    }
+  }, [showLastVisitedTime, lastVisitedAt, lastChangedAt])
 
   return (
     <div className={'border-top border-bottom py-3 d-flex align-items-center'}>
@@ -67,7 +80,7 @@ export const NoteListEntry: React.FC<NoteListEntryProps> = ({
         <UserAvatarForUsername username={owner} />
         <br />
         <small className={'text-muted float-end'}>
-          {showLastVisitedTime ? lastVisitedRelative : lastChangedRelative}
+          <Trans i18nKey={relativeTime.key} values={{ timeAgo: relativeTime.value }} />
         </small>
       </div>
       <Dropdown>
@@ -80,6 +93,7 @@ export const NoteListEntry: React.FC<NoteListEntryProps> = ({
             isOwner={owner !== null && currentUser?.username === owner}
             onConfirm={onClickDeleteNote}
           />
+          <PinNoteMenuEntry noteAlias={primaryAlias} isPinned={isPinned} />
         </Dropdown.Menu>
       </Dropdown>
     </div>

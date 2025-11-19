@@ -224,6 +224,7 @@ export class ExploreService {
         title: `${TableRevision}.${FieldNameRevision.title}`,
         noteType: `${TableRevision}.${FieldNameRevision.noteType}`,
         ownerUsername: `${TableUser}.${FieldNameUser.username}`,
+        createdAt: `${TableNote}.${FieldNameNote.createdAt}`,
         lastChangedAt: `${TableRevision}.${FieldNameRevision.createdAt}`,
         revisionUuid: `${TableRevision}.${FieldNameRevision.uuid}`,
         tag: `${TableRevisionTag}.${FieldNameRevisionTag.tag}`,
@@ -319,9 +320,9 @@ export class ExploreService {
           `${TableRevision}.${FieldNameRevision.title}`,
           'desc',
         ) as T;
-      case SortMode.UPDATED_AT_ASC:
+      case SortMode.LAST_VISITED_ASC:
         return query.orderBy(
-          `${TableRevision}.${FieldNameRevision.createdAt}`,
+          `${TableVisitedNote}.${FieldNameVisitedNote.visitedAt}`,
           'asc',
         ) as T;
       case SortMode.LAST_VISITED_DESC:
@@ -329,9 +330,19 @@ export class ExploreService {
           `${TableVisitedNote}.${FieldNameVisitedNote.visitedAt}`,
           'desc',
         ) as T;
-      case SortMode.LAST_VISITED_ASC:
+      case SortMode.CREATED_AT_ASC:
         return query.orderBy(
-          `${TableVisitedNote}.${FieldNameVisitedNote.visitedAt}`,
+          `${TableNote}.${FieldNameNote.createdAt}`,
+          'asc',
+        ) as T;
+      case SortMode.CREATED_AT_DESC:
+        return query.orderBy(
+          `${TableNote}.${FieldNameNote.createdAt}`,
+          'desc',
+        ) as T;
+      case SortMode.UPDATED_AT_ASC:
+        return query.orderBy(
+          `${TableRevision}.${FieldNameRevision.createdAt}`,
           'asc',
         ) as T;
       default:
@@ -340,6 +351,33 @@ export class ExploreService {
           `${TableRevision}.${FieldNameRevision.createdAt}`,
           'desc',
         ) as T;
+    }
+  }
+
+  async setNotePinStatus(
+    userId: number,
+    noteId: number,
+    isPinned: boolean,
+  ): Promise<void> {
+    if (isPinned) {
+      // If note is already pinned, ignore that
+      await this.knex(TableUserPinnedNote)
+        .insert({
+          [FieldNameUserPinnedNote.userId]: userId,
+          [FieldNameUserPinnedNote.noteId]: noteId,
+        })
+        .onConflict([
+          FieldNameUserPinnedNote.userId,
+          FieldNameUserPinnedNote.noteId,
+        ])
+        .ignore();
+    } else {
+      await this.knex(TableUserPinnedNote)
+        .where({
+          [FieldNameUserPinnedNote.userId]: userId,
+          [FieldNameUserPinnedNote.noteId]: noteId,
+        })
+        .delete();
     }
   }
 }

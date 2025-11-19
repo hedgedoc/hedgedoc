@@ -8,6 +8,8 @@ export enum SortMode {
   TITLE_DESC = 'title_desc',
   UPDATED_AT_ASC = 'updated_at_asc',
   UPDATED_AT_DESC = 'updated_at_desc',
+  CREATED_AT_ASC = 'created_at_asc',
+  CREATED_AT_DESC = 'created_at_desc',
   LAST_VISITED_ASC = 'last_visited_asc',
   LAST_VISITED_DESC = 'last_visited_desc',
 }
