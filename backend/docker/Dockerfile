@@ -29,16 +29,12 @@ COPY --chown=node . .
 
 # Install dependencies first to not invalidate the cache on every source change
 RUN --mount=type=cache,sharing=locked,uid=1000,gid=1000,target=/tmp/.yarn \
-    yarn install --immutable && yarn workspaces focus hedgedoc @hedgedoc/backend @hedgedoc/commons
+    yarn install --immutable && yarn workspaces focus hedgedoc @hedgedoc/backend @hedgedoc/database @hedgedoc/commons
 
 ## Stage 2a: Compile TypeScript
 FROM code-with-deps as builder
 USER node
 WORKDIR /usr/src/app
-
-ARG TURBO_TEAM
-ARG TURBO_API
-ARG TURBO_TOKEN
 
 RUN yarn build --filter=@hedgedoc/backend --no-cache --no-daemon
 
@@ -69,6 +65,9 @@ COPY --chown=node --from=prod-dependencies /usr/src/app/node_modules ./node_modu
 COPY --chown=node backend/package.json backend/package.json
 COPY --chown=node --from=builder /usr/src/app/backend/dist/src backend/dist
 COPY --chown=node backend/public backend/public
+
+COPY --chown=node database/package.json /usr/src/app/database/package.json
+COPY --chown=node --from=builder /usr/src/app/database/dist database/dist
 
 COPY --chown=node commons/package.json /usr/src/app/commons/package.json
 COPY --chown=node --from=builder /usr/src/app/commons/dist commons/dist
