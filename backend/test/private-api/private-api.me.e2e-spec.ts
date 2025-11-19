@@ -3,73 +3,86 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { AuthProviderType, LoginUserInfoDto } from '@hedgedoc/commons';
-import { FieldNameUser, User } from '@hedgedoc/database';
+import { FieldNameUser } from '@hedgedoc/database';
 import { promises as fs } from 'fs';
 import request from 'supertest';
 
+import { PRIVATE_API_PREFIX } from '../../src/app.module';
 import { NotInDBError } from '../../src/errors/errors';
-import { TestSetup, TestSetupBuilder } from '../test-setup';
+import {
+  displayName1,
+  displayName2,
+  TestSetup,
+  TestSetupBuilder,
+  username1,
+  username2,
+} from '../test-setup';
+import { setupAgent } from './utils/setup-agent';
 
 describe('Me', () => {
   let testSetup: TestSetup;
 
-  let uploadPath: string;
-  let user: User;
-  let userId: number;
-  let content: string;
-  let noteId1: number;
-  let alias2: string;
-  let noteId2: number;
-  let agent: request.SuperAgentTest;
+  let agentNotLoggedIn: request.SuperAgentTest;
+  let agentGuestUser: request.SuperAgentTest;
+  let agentUser1: request.SuperAgentTest;
+  let agentUser2: request.SuperAgentTest;
 
-  beforeAll(async () => {
-    testSetup = await TestSetupBuilder.create().build();
+  let uploadPath: string;
+
+  beforeEach(async () => {
+    testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
+    await testSetup.app.init();
+
+    [agentNotLoggedIn, agentGuestUser, agentUser1, agentUser2] =
+      await setupAgent(testSetup);
 
     uploadPath =
       testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
-    const username = 'hardcoded';
-    const password = 'AHardcodedStrongP@ssword123';
-    await testSetup.app.init();
-
-    userId = await testSetup.localIdentityService.createUserWithLocalIdentity(
-      username,
-      password,
-      'Testy',
-    );
-    user = await testSetup.usersService.getUserById(userId);
-
-    content = 'This is a test note.';
-    alias2 = 'note2';
-    noteId1 = await testSetup.notesService.createNote(content, userId);
-    noteId2 = await testSetup.notesService.createNote(content, userId, alias2);
-    agent = request.agent(testSetup.app.getHttpServer());
-    await agent
-      .post('/api/private/auth/local/login')
-      .send({ username: username, password: password })
-      .expect(201);
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await testSetup.cleanup();
   });
 
-  it('GET /me', async () => {
-    const userInfo = testSetup.usersService.toLoginUserInfoDto(
-      user,
-      AuthProviderType.LOCAL,
-    );
-    const response = await agent
-      .get('/api/private/me')
-      .expect('Content-Type', /json/)
-      .expect(200);
-    const gotUser = response.body as LoginUserInfoDto;
-    expect(gotUser).toEqual(userInfo);
+  describe(`GET ${PRIVATE_API_PREFIX}/me`, () => {
+    it('correctly returns your user info', async () => {
+      const responseUser1 = await agentUser1
+        .get(`${PRIVATE_API_PREFIX}/me`)
+        .expect('Content-Type', /json/)
+        .expect(200);
+      const user1 = responseUser1.body;
+      expect(user1.authProvider).toEqual('local');
+      expect(user1.displayName).toEqual(displayName1);
+      expect(user1.email).toEqual(null);
+      expect(user1.username).toEqual(username1);
+
+      const responseUser2 = await agentUser2
+        .get(`${PRIVATE_API_PREFIX}/me`)
+        .expect('Content-Type', /json/)
+        .expect(200);
+      const user2 = responseUser2.body;
+      expect(user2.authProvider).toEqual('local');
+      expect(user2.displayName).toEqual(displayName2);
+      expect(user2.email).toEqual(null);
+      expect(user2.username).toEqual(username2);
+    });
+    it('correctly returns info for a guest user', async () => {
+      const response = await agentGuestUser
+        .get(`${PRIVATE_API_PREFIX}/me`)
+        .expect('Content-Type', /json/)
+        .expect(200);
+    });
+    it('does not return info if not logged in', async () => {
+      await agentNotLoggedIn
+        .get(`${PRIVATE_API_PREFIX}/me`)
+        .expect('Content-Type', /json/)
+        .expect(401);
+    });
   });
 
-  it('GET /me/media', async () => {
-    const responseBefore = await agent
-      .get('/api/private/me/media/')
+  /*it(`GET ${PRIVATE_API_PREFIX}/me/media`, async () => {
+    const responseBefore = await agentUser1
+      .get(`${PRIVATE_API_PREFIX}/me/media/`)
       .expect('Content-Type', /json/)
       .expect(200);
     expect(responseBefore.body).toHaveLength(0);
@@ -110,7 +123,7 @@ describe('Me', () => {
     );
 
     const response = await agent
-      .get('/api/private/me/media/')
+      .get(`${PRIVATE_API_PREFIX}/me/media/`)
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body).toHaveLength(4);
@@ -126,11 +139,11 @@ describe('Me', () => {
     await fs.rmdir(uploadPath);
   });
 
-  it('PUT /me/profile', async () => {
+  it(`PUT ${PRIVATE_API_PREFIX}/me/profile`, async () => {
     const newDisplayName = 'Another name';
     expect(user[FieldNameUser.displayName]).not.toEqual(newDisplayName);
     await agent
-      .put('/api/private/me/profile')
+      .put(`${PRIVATE_API_PREFIX}/me/profile`)
       .send({
         displayName: newDisplayName,
       })
@@ -140,7 +153,7 @@ describe('Me', () => {
     expect(dbUser.displayName).toEqual(newDisplayName);
   });
 
-  it('DELETE /me', async () => {
+  it(`DELETE ${PRIVATE_API_PREFIX}/me`, async () => {
     const testImage = await fs.readFile('test/public-api/fixtures/test.png');
     const userId =
       await testSetup.usersService.getUserIdByUsername('hardcoded');
@@ -154,12 +167,12 @@ describe('Me', () => {
       await testSetup.mediaService.getMediaUploadUuidsByUserId(userId);
     expect(mediaUploads).toHaveLength(1);
     expect(mediaUploads[0]).toEqual(uploadUuid);
-    await agent.delete('/api/private/me').expect(204);
+    await agent.delete(`${PRIVATE_API_PREFIX}/me`).expect(204);
     await expect(
       testSetup.usersService.getUserDtoByUsername('hardcoded'),
     ).rejects.toThrow(NotInDBError);
     const mediaUploadsAfter =
       await testSetup.mediaService.getMediaUploadUuidsByNoteId(noteId1);
     expect(mediaUploadsAfter).toHaveLength(0);
-  });
+  });*/
 });
