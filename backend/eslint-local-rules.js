@@ -45,39 +45,11 @@ module.exports = {
                 fix: function (fixer) {
                   return fixer.replaceText(
                     node.arguments[1],
-                    `'${correctContext}'`
+                    `'${correctContext}'`,
                   );
                 },
               });
             }
-          }
-        },
-      };
-    },
-  },
-  'no-typeorm-equal': {
-    meta: {
-      type: 'problem',
-      fixable: 'code',
-      messages: {
-        noEqual:
-          'TypeORMs Equal constructor is buggy and therefore not allowed.',
-      },
-    },
-    create: function (context) {
-      return {
-        Identifier: function (node) {
-          if (node.name === 'Equal' && node.parent.type === 'CallExpression') {
-            context.report({
-              node: node,
-              messageId: 'noEqual',
-              fix: function (fixer) {
-                return fixer.replaceText(
-                  node.parent,
-                  `{ id: ${node.parent.arguments[0].name}.id }`
-                );
-              },
-            });
           }
         },
       };
