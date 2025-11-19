@@ -98,7 +98,7 @@ describe('Alias', () => {
           .expect(409);
       });
 
-      it('because the user is not an owner', async () => {
+      it('because the user is not the owner', async () => {
         newAliasDto.newAlias = 'normal-alias';
 
         await agentUser2
