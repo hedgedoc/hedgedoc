@@ -70,7 +70,6 @@ module.exports = {
   rules: {
     'prettier/prettier': ['error', require('./.prettierrc.json')],
     'local-rules/correct-logger-context': 'error',
-    'local-rules/no-typeorm-equal': 'error',
     'func-style': ['error', 'declaration'],
     '@typescript-eslint/no-unused-vars': [
       'warn',
