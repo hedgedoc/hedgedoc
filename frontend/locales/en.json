@@ -14,7 +14,8 @@
     },
     "pinnedNotes": {
       "title": "Pinned notes",
-      "unpin": "Click to unpin this note",
+      "pin": "Pin this note",
+      "unpin": "Unpin this note",
       "empty": "You don't have any pinned notes yet.",
       "pinError": "Could not pin note {{name}}.",
       "unpinError": "Could not unpin note {{name}}."
@@ -39,8 +40,14 @@
       "asc": "(ascending)",
       "desc": "(descending)",
       "byUpdatedDate": "Updated at {{direction}}",
+      "byCreatedDate": "Created at {{direction}}",
       "byTitle": "Title {{direction}}",
       "byLastVisited": "Last visited {{direction}}"
+    },
+    "timestamps": {
+      "lastUpdated": "Last updated {{timeAgo}}",
+      "createdAt": "Created {{timeAgo}}",
+      "lastVisited": "Last visited {{timeAgo}}"
     },
     "loadingMore": "Loading entries...",
     "noMoreNotesFound": "No more notes matching your search criteria were found.",
@@ -275,9 +282,7 @@
       "readOnlyMode": "Read-only mode",
       "download": "Download",
       "help": "Help",
-      "deleteNote": "Delete note",
-      "pinNoteToHistory": "Pin note to history",
-      "pinnedToHistory": "Pinned to history"
+      "deleteNote": "Delete note"
     },
     "statusBar": {
       "cursor": "Line {{line}}, Character {{columns}}",
