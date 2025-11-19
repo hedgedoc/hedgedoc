@@ -10,16 +10,16 @@
 #    DOCKER_BUILDKIT=1 docker build -f docker/Dockerfile .
 
 ## Stage 0: Base image with only yarn and package.json
-FROM docker.io/node:20.18.2-alpine@sha256:2cd2a6f4cb37cf8a007d5f1e9aef090ade6b62974c7a274098c390599e8c72b4 as base
+FROM docker.io/node:20.19.5-alpine AS base
 # Add tini to handle signals
 # https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md#handling-kernel-signals
 RUN apk add --no-cache tini
 ENTRYPOINT ["tini", "--"]
 
-ENV YARN_CACHE_FOLDER=/tmp/.yarn
+ENV YARN_CACHE_FOLDER /tmp/.yarn
 
 ## Stage 1: Code with all dependencies
-FROM base as code-with-deps
+FROM base AS code-with-deps
 RUN apk add --no-cache libc6-compat git
 
 USER node
@@ -32,14 +32,14 @@ RUN --mount=type=cache,sharing=locked,uid=1000,gid=1000,target=/tmp/.yarn \
     yarn install --immutable && yarn workspaces focus hedgedoc @hedgedoc/backend @hedgedoc/database @hedgedoc/commons
 
 ## Stage 2a: Compile TypeScript
-FROM code-with-deps as builder
+FROM code-with-deps AS builder
 USER node
 WORKDIR /usr/src/app
 
 RUN yarn build --filter=@hedgedoc/backend --no-cache --no-daemon
 
 ## Stage 2b: Install only prod dependencies
-FROM code-with-deps as prod-dependencies
+FROM code-with-deps AS prod-dependencies
 USER node
 WORKDIR /usr/src/app
 
@@ -47,7 +47,7 @@ RUN --mount=type=cache,sharing=locked,uid=1000,gid=1000,target=/tmp/.yarn \
     yarn workspaces focus --production @hedgedoc/backend
 
 ## Stage 3: Final image, only production dependencies
-FROM base as prod
+FROM base AS prod
 
 LABEL org.opencontainers.image.title='HedgeDoc production backend image'
 LABEL org.opencontainers.image.url='https://hedgedoc.org'
@@ -57,7 +57,7 @@ LABEL org.opencontainers.image.licenses='AGPL-3.0'
 
 USER node
 WORKDIR /usr/src/app
-ENV NODE_ENV=production
+ENV NODE_ENV production
 
 COPY --chown=node package.json package.json
 COPY --chown=node --from=prod-dependencies /usr/src/app/node_modules ./node_modules
