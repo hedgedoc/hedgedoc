@@ -5,7 +5,6 @@
  */
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
-import type { ChangePinStatusDto } from './types'
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
 import type { UpdateUserInfoInterface, LoginUserInfoInterface, MediaUploadInterface } from '@hedgedoc/commons'
 
@@ -54,18 +53,4 @@ export const updateUser = async (displayName: string | null, email: string | nul
 export const getMyMedia = async (): Promise<MediaUploadInterface[]> => {
   const response = await new GetApiRequestBuilder<MediaUploadInterface[]>('me/media').sendRequest()
   return response.asParsedJsonObject()
-}
-
-/**
- * Retrieves a list of media belonging to the user.
- *
- * @return List of media object information.
- * @throws {Error} when the api request wasn't successful.
- */
-export const setPinnedState = async (primaryAddress: string, isPinned: boolean): Promise<void> => {
-  await new PutApiRequestBuilder<void, ChangePinStatusDto>(`me/pin/${primaryAddress}`)
-    .withJsonBody({
-      isPinned
-    })
-    .sendRequest()
 }

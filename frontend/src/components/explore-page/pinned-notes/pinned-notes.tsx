@@ -8,18 +8,15 @@ import { PinnedNoteCard } from './pinned-note-card'
 import { Trans, useTranslation } from 'react-i18next'
 import { Caret } from './caret'
 import styles from './pinned-notes.module.css'
-import { useAsync } from 'react-use'
-import { getPinnedNotes } from '../../../api/explore'
 import { AsyncLoadingBoundary } from '../../common/async-loading-boundary/async-loading-boundary'
-import type { NoteExploreEntryInterface } from '@hedgedoc/commons'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export const PinnedNotes: React.FC = () => {
   useTranslation()
   const scrollboxRef = useRef<HTMLDivElement>(null)
   const [enableScrollLeft, setEnableScrollLeft] = useState(false)
   const [enableScrollRight, setEnableScrollRight] = useState(true)
-
-  const { value: pinnedNotes, loading, error } = useAsync(getPinnedNotes, [])
+  const pinnedNotes = useApplicationState((state) => state.pinnedNotes)
 
   const leftClick = useCallback(() => {
     if (!scrollboxRef.current) {
@@ -44,7 +41,7 @@ export const PinnedNotes: React.FC = () => {
     if (!pinnedNotes) {
       return null
     }
-    return pinnedNotes.map((note: NoteExploreEntryInterface) => <PinnedNoteCard key={note.primaryAlias} {...note} />)
+    return pinnedNotes.map((note) => <PinnedNoteCard key={note} {...note} />)
   }, [pinnedNotes])
 
   useEffect(() => {

@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
-import { type NoteExploreEntryInterface, type NoteType, SortMode } from '@hedgedoc/commons'
+import { type NoteExploreEntryInterface, type NoteType, SortMode, type NotePinStatusInterface } from '@hedgedoc/commons'
 import { createURLSearchParams } from './utils'
 import { Mode } from '../../components/explore-page/mode-selection/mode'
+import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
 
 /**
  * Fetches the pinned notes of a user
@@ -17,6 +18,14 @@ import { Mode } from '../../components/explore-page/mode-selection/mode'
 export const getPinnedNotes = async (): Promise<NoteExploreEntryInterface[]> => {
   const response = await new GetApiRequestBuilder<NoteExploreEntryInterface[]>('explore/pinned').sendRequest()
   return response.asParsedJsonObject()
+}
+
+export const setPinnedState = async (primaryAddress: string, isPinned: boolean): Promise<void> => {
+  await new PutApiRequestBuilder<void, NotePinStatusInterface>(`explore/pin/${primaryAddress}`)
+    .withJsonBody({
+      isPinned
+    })
+    .sendRequest()
 }
 
 /**
