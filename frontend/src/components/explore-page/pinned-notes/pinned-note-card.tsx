@@ -13,11 +13,11 @@ import { UiIcon } from '../../common/icons/ui-icon'
 import Link from 'next/link'
 import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import { useRouter } from 'next/navigation'
-import { setPinnedState } from '../../../api/me'
 import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 import { NoteTags } from '../note-tags/note-tags'
 import { formatChangedAt } from '../../../utils/format-date'
 import type { NoteExploreEntryInterface } from '@hedgedoc/commons'
+import { unpinNote } from '../../../redux/pinned-notes/methods'
 
 export const PinnedNoteCard: React.FC<NoteExploreEntryInterface> = ({
   title,
@@ -31,12 +31,11 @@ export const PinnedNoteCard: React.FC<NoteExploreEntryInterface> = ({
   const labelTag = useTranslatedText('explore.filters.byTag')
   const labelUnpinNote = useTranslatedText('explore.pinnedNotes.unpin')
   const lastVisitedString = useMemo(() => formatChangedAt(lastChangedAt), [lastChangedAt])
+
   const onClickUnpin = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {
       event.preventDefault()
-      setPinnedState(primaryAlias, false).catch(
-        showErrorNotification('explore.pinnedNotes.unpinError', { name: primaryAlias })
-      )
+      unpinNote(primaryAlias).catch(showErrorNotification('explore.pinnedNotes.unpinError', { name: primaryAlias }))
     },
     [primaryAlias, showErrorNotification]
   )

@@ -8,20 +8,16 @@ import { PinnedNoteCard } from './pinned-note-card'
 import { Trans, useTranslation } from 'react-i18next'
 import { Caret } from './caret'
 import styles from './pinned-notes.module.css'
-import { useAsync } from 'react-use'
-import { getPinnedNotes } from '../../../api/explore'
-import { AsyncLoadingBoundary } from '../../common/async-loading-boundary/async-loading-boundary'
-import type { NoteExploreEntryInterface } from '@hedgedoc/commons'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
 
 export const PinnedNotes: React.FC = () => {
   useTranslation()
   const scrollboxRef = useRef<HTMLDivElement>(null)
   const [enableScrollLeft, setEnableScrollLeft] = useState(false)
   const [enableScrollRight, setEnableScrollRight] = useState(true)
+  const pinnedNotes = useApplicationState((state) => state.pinnedNotes)
 
-  const { value: pinnedNotes, loading, error } = useAsync(getPinnedNotes, [])
-
-  const leftClick = useCallback(() => {
+  const scrollToLeftClick = useCallback(() => {
     if (!scrollboxRef.current) {
       return
     }
@@ -30,7 +26,7 @@ export const PinnedNotes: React.FC = () => {
       behavior: 'smooth'
     })
   }, [])
-  const rightClick = useCallback(() => {
+  const scrollToRightClick = useCallback(() => {
     if (!scrollboxRef.current) {
       return
     }
@@ -44,7 +40,7 @@ export const PinnedNotes: React.FC = () => {
     if (!pinnedNotes) {
       return null
     }
-    return pinnedNotes.map((note: NoteExploreEntryInterface) => <PinnedNoteCard key={note.primaryAlias} {...note} />)
+    return Object.values(pinnedNotes).map((note) => <PinnedNoteCard key={note.primaryAlias} {...note} />)
   }, [pinnedNotes])
 
   useEffect(() => {
@@ -69,21 +65,19 @@ export const PinnedNotes: React.FC = () => {
         <Trans i18nKey={'explore.pinnedNotes.title'} />
       </h2>
       <div className={'d-flex flex-row gap-2 align-items-center mb-4'}>
-        <AsyncLoadingBoundary componentName={'PinnedNotes'} loading={loading} error={error}>
-          {pinnedNoteCards && pinnedNoteCards.length > 0 ? (
-            <Fragment>
-              <Caret active={enableScrollLeft} left={true} onClick={leftClick} />
-              <div className={styles.scrollbox} ref={scrollboxRef}>
-                {pinnedNoteCards}
-              </div>
-              <Caret active={enableScrollRight} left={false} onClick={rightClick} />
-            </Fragment>
-          ) : (
-            <p className={'fs-4'}>
-              <Trans i18nKey={'explore.pinnedNotes.empty'} />
-            </p>
-          )}
-        </AsyncLoadingBoundary>
+        {pinnedNoteCards && pinnedNoteCards.length > 0 ? (
+          <Fragment>
+            <Caret active={enableScrollLeft} left={true} onClick={scrollToLeftClick} />
+            <div className={styles.scrollbox} ref={scrollboxRef}>
+              {pinnedNoteCards}
+            </div>
+            <Caret active={enableScrollRight} left={false} onClick={scrollToRightClick} />
+          </Fragment>
+        ) : (
+          <p className={'fs-4'}>
+            <Trans i18nKey={'explore.pinnedNotes.empty'} />
+          </p>
+        )}
       </div>
     </Fragment>
   )

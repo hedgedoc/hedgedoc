@@ -53,6 +53,18 @@ export const SortButton: React.FC<SortButtonProps> = ({ selected, onChange, show
           <Trans i18nKey={'explore.sort.byUpdatedDate'} values={{ direction: labelDescending }} />
         </>
       ),
+      [SortMode.CREATED_AT_ASC]: (
+        <>
+          <UiIcon icon={IconSortUp} className={'me-1'} />
+          <Trans i18nKey={'explore.sort.byCreatedDate'} values={{ direction: labelAscending }} />
+        </>
+      ),
+      [SortMode.CREATED_AT_DESC]: (
+        <>
+          <UiIcon icon={IconSortDown} className={'me-1'} />
+          <Trans i18nKey={'explore.sort.byCreatedDate'} values={{ direction: labelDescending }} />
+        </>
+      ),
       [SortMode.LAST_VISITED_DESC]: (
         <>
           <UiIcon icon={IconSortDown} className={'me-1'} />
@@ -87,6 +99,8 @@ export const SortButton: React.FC<SortButtonProps> = ({ selected, onChange, show
       <Dropdown.Item eventKey={SortMode.UPDATED_AT_ASC}>{labels[SortMode.UPDATED_AT_ASC]}</Dropdown.Item>
       <Dropdown.Item eventKey={SortMode.TITLE_ASC}>{labels[SortMode.TITLE_ASC]}</Dropdown.Item>
       <Dropdown.Item eventKey={SortMode.TITLE_DESC}>{labels[SortMode.TITLE_DESC]}</Dropdown.Item>
+      <Dropdown.Item eventKey={SortMode.CREATED_AT_ASC}>{labels[SortMode.CREATED_AT_ASC]}</Dropdown.Item>
+      <Dropdown.Item eventKey={SortMode.CREATED_AT_DESC}>{labels[SortMode.CREATED_AT_DESC]}</Dropdown.Item>
       {showLastVisitedOptions && (
         <Fragment>
           <Dropdown.Item eventKey={SortMode.LAST_VISITED_DESC}>{labels[SortMode.LAST_VISITED_DESC]}</Dropdown.Item>

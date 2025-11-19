@@ -6,8 +6,11 @@
 import { NoteType, OptionalSortMode, SortMode } from '@hedgedoc/commons';
 import {
   BadRequestException,
+  Body,
   Controller,
   Get,
+  Param,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -15,8 +18,10 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../auth/session.guard';
 import { NoteExploreEntryDto } from '../../../dtos/note-explore-entry.dto';
+import { NotePinStatusDto } from '../../../dtos/note-pin-status.dto';
 import { ExploreService } from '../../../explore/explore.service';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
+import { NoteService } from '../../../notes/note.service';
 import { OpenApi } from '../../utils/decorators/openapi.decorator';
 import { RequestUserId } from '../../utils/decorators/request-user-id.decorator';
 
@@ -30,6 +35,7 @@ export class ExploreController {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private readonly exploreService: ExploreService,
+    private readonly noteService: NoteService,
   ) {
     this.logger.setContext(ExploreController.name);
   }
@@ -113,6 +119,21 @@ export class ExploreController {
       type,
       sort,
       search,
+    );
+  }
+
+  @Put('pin/:noteAlias')
+  @OpenApi(204, 400, 404)
+  async setPinStatus(
+    @RequestUserId() userId: number,
+    @Param('noteAlias') noteAlias: string,
+    @Body() notePinStatusDto: NotePinStatusDto,
+  ): Promise<void> {
+    const noteId = await this.noteService.getNoteIdByAlias(noteAlias);
+    await this.exploreService.setNotePinStatus(
+      userId,
+      noteId,
+      notePinStatusDto.isPinned,
     );
   }
 

@@ -11,6 +11,7 @@ import { NoteListEntry } from './note-entry'
 import { Trans } from 'react-i18next'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import equal from 'fast-deep-equal'
 
 export interface NotesListProps {
@@ -26,6 +27,7 @@ export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, 
   const [moreDataAvailable, setMoreDataAvailable] = useState(true)
   const lastPage = useRef<number>(0)
   const lastFilters = useRef({})
+  const pinnedNotes = useApplicationState((state) => state.pinnedNotes)
 
   const fetchNextPage = useCallback(
     (replaceOldEntries: boolean = false) => {
@@ -50,9 +52,17 @@ export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, 
 
   const noteEntries = useMemo(() => {
     return entries.map((note) => {
-      return <NoteListEntry {...note} key={note.primaryAlias} showLastVisitedTime={mode === Mode.VISITED} />
+      const isPinned = pinnedNotes[note.primaryAlias] !== undefined
+      return (
+        <NoteListEntry
+          {...note}
+          key={note.primaryAlias}
+          isPinned={isPinned}
+          showLastVisitedTime={mode === Mode.VISITED}
+        />
+      )
     })
-  }, [entries, mode])
+  }, [entries, mode, pinnedNotes])
 
   // Update entries when filters change
   useEffect(() => {
