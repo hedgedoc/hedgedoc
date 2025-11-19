@@ -30,7 +30,7 @@ module.exports = {
             assertFunctionNames: [
               'expect**',
               'request.**.expect',
-              'agent[0-9]?.**.expect',
+              'agent**.**.expect',
             ],
           },
         ],
