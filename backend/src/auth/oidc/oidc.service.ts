@@ -197,6 +197,16 @@ export class OidcService {
     });
 
     request.session.oidcIdToken = tokenSet.id_token;
+    
+    // Store GitHub access token in session for sync functionality
+    if (oidcIdentifier === 'github' && tokenSet.access_token) {
+      request.session.githubAccessToken = tokenSet.access_token;
+      this.logger.debug(
+        'Stored GitHub access token in session for sync functionality',
+        'extractUserInfoFromCallback',
+      );
+    }
+    
     const userInfoResponse = await client.userinfo(tokenSet);
     const userId = OidcService.getResponseFieldValue(
       userInfoResponse,

@@ -49,6 +49,9 @@ export interface SessionState {
 
   /** The user data of the user that is currently being created */
   newUserData?: FullUserInfoDto;
+
+  /** The GitHub access token for sync functionality (stored securely in session) */
+  githubAccessToken?: string;
 }
 
 /**
