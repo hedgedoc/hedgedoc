@@ -20,6 +20,7 @@ import { concatCssClasses } from '../../../../../utils/concat-css-classes'
 import styles from '../../sidebar-button/sidebar-button.module.scss'
 import { ExportGistSidebarEntry } from './entries/export-gist-sidebar-entry/export-gist-sidebar-entry'
 import { ExportGitlabSnippetSidebarEntry } from './entries/export-gitlab-snippet-sidebar-entry/export-gitlab-snippet-sidebar-entry'
+import { ExportPdfSidebarEntry } from './entries/export-pdf-sidebar-entry'
 import { ExportPrintSidebarEntry } from './entries/export-print-sidebar-entry'
 
 /**
@@ -55,6 +56,7 @@ export const ExportSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
       </SidebarButton>
       <SidebarMenu expand={expand}>
         <ExportPrintSidebarEntry />
+        <ExportPdfSidebarEntry />
         <ExportMarkdownSidebarEntry />
         <SidebarButton icon={IconFileCode} disabled={true}>
           HTML
