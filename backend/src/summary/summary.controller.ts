@@ -36,6 +36,7 @@ export class SummaryController {
     );
     const summary = await this.summaryService.generateSummary(
       summaryRequest.text,
+      summaryRequest.length,
     );
     return { summary };
   }

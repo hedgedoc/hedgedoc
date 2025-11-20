@@ -6,4 +6,5 @@
 
 export interface SummaryRequestDto {
   text: string;
+  length?: 'short' | 'medium' | 'long';
 }

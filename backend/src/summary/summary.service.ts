@@ -76,13 +76,52 @@ export class SummaryService {
     }
   }
 
-  async generateSummary(text: string): Promise<string> {
-    const prompt = `Please provide a concise summary of the following text intended for a collaborative HedgeDoc note:\n\n${text}`;
+  async generateSummary(
+    text: string,
+    length: 'short' | 'medium' | 'long' = 'medium',
+  ): Promise<string> {
+    const lengthInstructions = {
+      short: 'Keep it very brief, around 2-3 sentences.',
+      medium: 'Provide a moderate summary, around 1-2 paragraphs.',
+      long: 'Provide a comprehensive and detailed summary.',
+    };
+
+    const prompt = `Please provide a ${length} summary of the following text intended for a collaborative HedgeDoc note. ${lengthInstructions[length]}
+
+IMPORTANT: Use ONLY the following markdown format structure for ALL responses:
+- Start with a brief intro sentence
+- Use bullet points (•) for key points
+- Use **bold** for important terms or emphasis
+- Keep formatting CONSISTENT across all responses
+
+Example format:
+This document discusses [main topic]. Key points include:
+
+• **First main point**: Brief explanation
+• **Second main point**: Brief explanation
+• **Third main point**: Brief explanation
+
+Text to summarize:
+${text}`;
     return this.sendGeminiRequest(prompt);
   }
 
   async checkForErrors(text: string): Promise<string> {
-    const prompt = `Review the following HedgeDoc markdown note. Identify spelling mistakes, broken markdown, structural issues, unclear sentences, and missing context. Respond with a short list of actionable issues. If there are no issues, respond with "No issues found."\n\n${text}`;
+    const prompt = `Review the following HedgeDoc markdown note. ONLY Identify spelling mistakes and broken markdown. DO NOT provide semantic fixes and content improvements.
+
+IMPORTANT: Use ONLY the following markdown format structure for ALL responses:
+- If issues found: Use bullet points (•) with **bold** labels for issue types
+- If no issues: Return exactly "✓ No issues found."
+- Keep formatting CONSISTENT
+
+Example format when issues are found:
+• **Spelling**: [specific issues]
+• **Markdown**: [specific issues]
+• **Structure**: [specific issues]
+• **Clarity**: [specific issues]
+
+Text to review:
+${text}`;
     return this.sendGeminiRequest(prompt);
   }
 }
