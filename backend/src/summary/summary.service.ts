@@ -75,7 +75,7 @@ export class SummaryService {
       throw new Error('Failed to retrieve response from Gemini API');
     }
   }
-
+  // Generate a summary based on the provided text and length
   async generateSummary(
     text: string,
     length: 'short' | 'medium' | 'long' = 'medium',
