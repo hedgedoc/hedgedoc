@@ -3,12 +3,55 @@
     "slogan": "Ideas grow better together",
     "icon": "HedgeDoc logo with text"
   },
-  "notificationTest": {
-    "title": "Test",
-    "content": "It works!"
-  },
   "navigation": {
     "newNote": "New Note"
+  },
+  "explore": {
+    "title": "Explore notes",
+    "welcome": {
+      "user": "Welcome, {{userName}}!",
+      "guest": "Welcome, guest!"
+    },
+    "pinnedNotes": {
+      "title": "Pinned notes",
+      "pin": "Pin this note",
+      "unpin": "Unpin this note",
+      "empty": "You don't have any pinned notes yet.",
+      "pinError": "Could not pin note {{name}}.",
+      "unpinError": "Could not unpin note {{name}}."
+    },
+    "modes": {
+      "my": "My notes",
+      "shared": "Shared with me",
+      "public": "Public notes",
+      "visited": "Recently visited"
+    },
+    "filters": {
+      "byType": {
+        "title": "Filter by type",
+        "all": "All notes",
+        "documents": "Only documents",
+        "slides": "Only slides"
+      },
+      "byTag": "Show all notes with this tag",
+      "bySearchTerm": "Search term or tag name"
+    },
+    "sort": {
+      "asc": "(ascending)",
+      "desc": "(descending)",
+      "byUpdatedDate": "Updated at {{direction}}",
+      "byCreatedDate": "Created at {{direction}}",
+      "byTitle": "Title {{direction}}",
+      "byLastVisited": "Last visited {{direction}}"
+    },
+    "timestamps": {
+      "lastUpdated": "Last updated {{timeAgo}}",
+      "createdAt": "Created {{timeAgo}}",
+      "lastVisited": "Last visited {{timeAgo}}"
+    },
+    "loadingMore": "Loading entries...",
+    "noMoreNotesFound": "No more notes matching your search criteria were found.",
+    "errorLoadingEntries": "There was an error loading the explore page entries."
   },
   "renderer": {
     "highlightCode": {
@@ -239,9 +282,7 @@
       "readOnlyMode": "Read-only mode",
       "download": "Download",
       "help": "Help",
-      "deleteNote": "Delete note",
-      "pinNoteToHistory": "Pin note to history",
-      "pinnedToHistory": "Pinned to history"
+      "deleteNote": "Delete note"
     },
     "statusBar": {
       "cursor": "Line {{line}}, Character {{columns}}",
@@ -369,7 +410,8 @@
         "warning": "All users will lose their connection. This process is irreversible.",
         "deleteButton": "Delete note and uploads",
         "deleteButtonKeepMedia": "Delete note but keep uploads",
-        "keepMedia": "Keep uploads?"
+        "keepMedia": "Keep uploads?",
+        "error": "There was an error deleting the note."
       },
       "permissions": {
         "title": "Permissions",
