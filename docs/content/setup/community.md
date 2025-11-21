@@ -65,6 +65,14 @@ using the button below. This will run the official Docker image from [quay.io](h
 
 [![Run on PikaPods](https://www.pikapods.com/static/run-button.svg)](https://www.pikapods.com/pods?run=hedgedoc)
 
+### SelfPrivacy
+
+HedgeDoc is available as a 1-click install on [SelfPrivacy](https://selfprivacy.org/). SelfPrivacy app allows you to set up self-hosted services on your automatically configured and managed NixOS-based server. Because HedgeDoc is officialy supported by SelfPrivacy, all you need to do is add it from the Services catalog on the Services page.
+
+The source code of the module can be found [here](https://git.selfprivacy.org/SelfPrivacy/selfprivacy-nixos-config/src/branch/flakes/sp-modules/hedgedoc).
+
+[Install SelfPrivacy](https://selfprivacy.org/download/)
+
 ## Distribution Packages
 
 ### Arch Linux
