@@ -5,6 +5,8 @@ import store from 'store'
 import S from 'string'
 import LZString from 'lz-string'
 import url from 'wurl'
+import moment from 'moment'
+import $ from 'jquery'
 
 import {
   checkNoteIdValid,

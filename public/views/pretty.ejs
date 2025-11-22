@@ -26,7 +26,7 @@
     <title><%= title %></title>
     <%- include('includes/favicon.ejs') %>
     <link rel="stylesheet" href='<%- serverURL %>/build/emojify.js/dist/css/basic/emojify.min.css'>
-    <%- include('build/pretty-pack-header') %>
+    <%- include('includes/header', { entryNames: ['js/pretty.js'] }) %>
 </head>
 
 <body style="display:none;">
@@ -74,5 +74,5 @@
 <script src="<%- serverURL %>/build/MathJax/MathJax.js" defer></script>
 <script src="<%- serverURL %>/build/MathJax/config/TeX-AMS-MML_HTMLorMML.js" defer></script>
 <script src="<%- serverURL %>/build/MathJax/config/Safe.js" defer></script>
-<%- include('build/pretty-pack-scripts') %>
+<%- include('includes/scripts', { entryNames: ['pretty', 'pretty-pack'] }) %>
 <%- include('shared/ga') %>

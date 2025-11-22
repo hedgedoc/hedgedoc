@@ -1,24 +1,22 @@
-require('bootstrap/dist/css/bootstrap.min.css')
-require('fork-awesome/css/fork-awesome.min.css')
-require('ionicons/css/ionicons.min.css')
-require('prismjs/prism')
-require('prismjs/themes/prism.css')
-require('prismjs/components/prism-wiki')
-require('prismjs/components/prism-haskell')
-require('prismjs/components/prism-go')
-require('prismjs/components/prism-typescript')
-require('prismjs/components/prism-jsx')
-require('prismjs/components/prism-makefile')
-require('prismjs/components/prism-gherkin')
-require('highlight.js/styles/github-gist.css')
-require('emojify.js/dist/css/basic/emojify.min.css')
-require('../css/github-extract.css')
-require('../css/markdown.css')
-require('../css/extra.css')
-require('../css/slide-preview.css')
-require('../css/font.css')
-require('../css/site.css')
-const $ = require('jquery')
-window.jQuery = $
-window.$ = $
-require('bootstrap')
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'fork-awesome/css/fork-awesome.min.css'
+import 'ionicons/css/ionicons.min.css'
+import 'prismjs/themes/prism.css'
+import 'emojify.js/dist/css/basic/emojify.min.css'
+import '../css/github-extract.css'
+import '../css/markdown.css'
+import '../css/extra.css'
+import '../css/slide-preview.css'
+import '../css/font.css'
+import '../css/site.css'
+import 'highlight.js/styles/github-gist.css'
+import 'prismjs/prism'
+import 'prismjs/components/prism-wiki'
+import 'prismjs/components/prism-haskell'
+import 'prismjs/components/prism-go'
+import 'prismjs/components/prism-typescript'
+import 'prismjs/components/prism-jsx'
+import 'prismjs/components/prism-makefile'
+import 'prismjs/components/prism-gherkin'
+import $ from 'jquery'
+import 'bootstrap'

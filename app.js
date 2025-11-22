@@ -28,6 +28,7 @@ const models = require('./lib/models')
 const csp = require('./lib/csp')
 const metrics = require('./lib/prometheus')
 const { useUnless } = require('./lib/utils')
+const viteAssets = require('./lib/viteAssets')
 
 const supportedLocalesList = Object.keys(require('./locales/_supported.json'))
 
@@ -221,6 +222,10 @@ app.set('view engine', 'ejs')
 // set generally available variables for all views
 app.locals.serverURL = config.serverURL
 app.locals.sourceURL = config.sourceURL
+// expose helper to include Vite-built assets by entry name
+app.locals.assetTags = function assetTags (entryNames) {
+  return viteAssets.buildTags(entryNames, __dirname)
+}
 app.locals.allowAnonymous = config.allowAnonymous
 app.locals.allowAnonymousEdits = config.allowAnonymousEdits
 app.locals.disableNoteCreation = config.disableNoteCreation

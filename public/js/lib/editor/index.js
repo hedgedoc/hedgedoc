@@ -1,4 +1,4 @@
-/* global CodeMirror, inlineAttachment, editor, Cookies  */
+/* global CodeMirror, inlineAttachment, editor  */
 import '@hedgedoc/codemirror-5/addon/comment/comment.js'
 import '@hedgedoc/codemirror-5/addon/comment/continuecomment.js'
 import '@hedgedoc/codemirror-5/addon/dialog/dialog.js'
@@ -87,10 +87,11 @@ import '../../../vendor/inlineAttachment/codemirror.inline-attachment'
 
 import * as utils from './utils'
 import config from './config'
-import statusBarTemplate from './statusbar.html'
-import toolBarTemplate from './toolbar.html'
+import statusBarTemplate from './statusbar.html?raw'
+import toolBarTemplate from './toolbar.html?raw'
 
 import '../../../css/ui/toolbar.css'
+import Cookies from 'js-cookie'
 
 /* config section */
 const isMac = CodeMirror.keyMap.default === CodeMirror.keyMap.macDefault

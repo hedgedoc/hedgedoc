@@ -1,5 +1,4 @@
-/* global Cookies */
-
+import Cookies from 'js-cookie'
 import { serverurl } from '../config'
 
 let checkAuth = false

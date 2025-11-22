@@ -11,9 +11,9 @@
     "markdownlint": "remark .",
     "mocha-suite": "NODE_ENV=test CMD_DB_URL=\"sqlite::memory:\" mocha --exit",
     "standard": "echo 'standard is no longer being used, use `npm run eslint` instead!' && exit 1",
-    "dev": "webpack --config webpack.dev.js --progress --watch",
+    "dev": "vite",
     "heroku-prebuild": "bin/heroku",
-    "build": "webpack --config webpack.prod.js --progress",
+    "build": "vite build",
     "start": "node app.js"
   },
   "dependencies": {
@@ -202,6 +202,8 @@
     "url-loader": "4.1.1",
     "velocity-animate": "1.5.2",
     "visibilityjs": "2.0.2",
+    "vite": "5.4.21",
+    "vite-plugin-require-transform": "^1.0.21",
     "viz.js": "1.8.2",
     "webpack": "4.47.0",
     "webpack-cli": "4.10.0",

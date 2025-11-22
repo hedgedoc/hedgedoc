@@ -1,10 +1,12 @@
 /* global serverurl, Reveal, RevealMarkdown */
 
-import { preventXSS } from './render'
+import * as renderModule from './render'
 import { md, updateLastChange, removeDOMEvents, finishView } from './extra'
+import '../css/extra.css'
+import '../css/site.css'
+import Cookies from 'js-cookie'
 
-require('../css/extra.css')
-require('../css/site.css')
+const preventXSS = renderModule.preventXSS || (renderModule.default && renderModule.default.preventXSS) || renderModule
 
 const body = preventXSS($('.slides').text())
 

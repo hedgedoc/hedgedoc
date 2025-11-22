@@ -1,4 +1,5 @@
-/* global Cookies */
+import $ from 'jquery'
+import Cookies from 'js-cookie'
 const supportedLanguages = require('../../locales/_supported.json')
 
 function detectLang () {

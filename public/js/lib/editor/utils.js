@@ -1,4 +1,5 @@
-/* global CodeMirror, editor  */
+import CodeMirror from '@hedgedoc/codemirror-5/lib/codemirror.js'
+
 const wrapSymbols = ['*', '_', '~', '^', '+', '=']
 
 export function wrapTextWith (editor, cm, symbol) {

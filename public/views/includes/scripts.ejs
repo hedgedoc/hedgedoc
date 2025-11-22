@@ -1,4 +1,4 @@
 <script src="config"></script>
-<% for (var js in htmlWebpackPlugin.files.js) { %>
-<script src="<%= htmlWebpackPlugin.files.js[js] %>" defer></script>
+<% if (typeof assetTags === 'function' && typeof entryNames !== 'undefined') { %>
+<%- assetTags(entryNames) %>
 <% } %>

@@ -16,4 +16,4 @@
 <base href="<%- serverURL %>/">
 <title><%= title %></title>
 <link rel="stylesheet" href='<%- serverURL %>/build/emojify.js/dist/css/basic/emojify.min.css'>
-<%- include('../build/index-pack-header') %>
+<%- include('../includes/header', { entryNames: ['js/index.js'] }) %>

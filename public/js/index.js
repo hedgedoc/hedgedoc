@@ -1,9 +1,13 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "debug"] }] */
-/* global Cookies, moment, serverurl,
-   key, Dropbox, Visibility */
+/* global serverurl */
 
+import Cookies from 'js-cookie'
 import TurndownService from 'turndown'
 import CodeMirror from '@hedgedoc/codemirror-5/lib/codemirror.js'
+import Visibility from 'visibilityjs'
+import key from 'keymaster'
+import moment from 'moment'
+import $ from 'jquery'
 
 import 'jquery-ui/ui/widgets/resizable'
 import 'jquery-ui/themes/base/resizable.css'
@@ -12,8 +16,8 @@ import Idle from 'Idle.Js'
 
 import '../vendor/jquery-textcomplete/jquery.textcomplete'
 
-import { ot } from '../vendor/ot/ot.min.js'
-import hex2rgb from '../vendor/ot/hex2rgb'
+import * as otModule from '../vendor/ot/ot.min.js'
+import * as hex2rgbModule from '../vendor/ot/hex2rgb'
 
 import { saveAs } from 'file-saver'
 import randomColor from 'randomcolor'
@@ -77,7 +81,7 @@ import {
   removeHistory
 } from './history'
 
-import { preventXSS } from './render'
+import * as renderModule from './render'
 
 import Editor from './lib/editor'
 
@@ -85,15 +89,20 @@ import getUIElements from './lib/editor/ui-elements'
 import modeType from './lib/modeType'
 import appState from './lib/appState'
 
+import '../css/index.css'
+
+import '../css/extra.css'
+import '../css/slide-preview.css'
+import '../css/site.css'
+import 'highlight.js/styles/github-gist.css'
 require('../vendor/showup/showup')
-
-require('../css/index.css')
-require('../css/extra.css')
-require('../css/slide-preview.css')
-require('../css/site.css')
-
-require('highlight.js/styles/github-gist.css')
 require('./fix-aria-hidden-for-modals')
+
+const ot = (otModule && (otModule.default || otModule.ot || otModule))
+const hex2rgb = (typeof hex2rgbModule === 'function'
+  ? hex2rgbModule
+  : (hex2rgbModule.default || hex2rgbModule))
+const preventXSS = renderModule.preventXSS || (renderModule.default && renderModule.default.preventXSS) || renderModule
 
 let defaultTextHeight = 20
 let viewportMargin = 20
@@ -2522,8 +2531,7 @@ function iterateLine (line) {
       const rule = `.${className} { ${styleString} }`
       addStyleRule(rule)
       const gutter = $('<div>', {
-        class: 'authorship-gutter ' + className,
-        title: author.name
+        class: 'authorship-gutter ' + className
       })
       editor.setGutterMarker(line, 'authorship-gutters', gutter[0])
     }
@@ -3591,7 +3599,7 @@ function partialUpdate (src, tar, des) {
       // copyAttribute(src[srcLength - i], des[srcLength - i], 'data-startline');
       // copyAttribute(src[srcLength - i], des[srcLength - i], 'data-endline');
       const rawSrc = cloneAndRemoveDataAttr(src[srcLength - i])
-      const rawTar = cloneAndRemoveDataAttr(tar[tarLength - i])
+      const rawTar = cloneAndRemoveDataAttr(tarLength - i)
       if (!rawSrc || !rawTar || rawSrc.outerHTML !== rawTar.outerHTML) {
         tarEnd = tar.length - i
         break
@@ -3604,7 +3612,7 @@ function partialUpdate (src, tar, des) {
       // copyAttribute(src[srcLength - i], des[srcLength - i], 'data-startline');
       // copyAttribute(src[srcLength - i], des[srcLength - i], 'data-endline');
       const rawSrc = cloneAndRemoveDataAttr(src[srcLength - i])
-      const rawTar = cloneAndRemoveDataAttr(tar[tarLength - i])
+      const rawTar = cloneAndRemoveDataAttr(tarLength - i)
       if (!rawSrc || !rawTar || rawSrc.outerHTML !== rawTar.outerHTML) {
         srcEnd = src.length - i
         break

@@ -15,13 +15,14 @@ import {
   updateLastChange
 } from './extra'
 
-import { preventXSS } from './render'
+import * as renderModule from './render'
+import '../css/extra.css'
 
-require('../css/extra.css')
-require('../css/slide-preview.css')
-require('../css/site.css')
-
-require('highlight.js/styles/github-gist.css')
+import '../css/slide-preview.css'
+import '../css/site.css'
+import 'highlight.js/styles/github-gist.css'
+import Cookies from 'js-cookie'
+const preventXSS = renderModule.preventXSS || (renderModule.default && renderModule.default.preventXSS) || renderModule
 
 const markdown = $('#doc.markdown-body')
 const text = markdown.text()

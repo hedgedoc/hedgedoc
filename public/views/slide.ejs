@@ -16,7 +16,7 @@
         <%- include('includes/favicon.ejs') %>
         <link rel="stylesheet" href="<%- serverURL %>/build/reveal.js/css/reveal.css">
         <link rel="stylesheet" href='<%- serverURL %>/build/emojify.js/dist/css/basic/emojify.min.css'>
-        <%- include('build/slide-pack-header') %>
+        <%- include('includes/header', { entryNames: ['js/slide.js'] }) %>
 
         <!-- For reveal.js theme -->
         <% if(typeof theme !== 'undefined' && theme) { %>
@@ -80,7 +80,7 @@
         <script src="<%- serverURL %>/build/MathJax/MathJax.js" defer></script>
         <script src="<%- serverURL %>/build/MathJax/config/TeX-AMS-MML_HTMLorMML.js" defer></script>
         <script src="<%- serverURL %>/build/MathJax/config/Safe.js" defer></script>
-        <%- include('build/slide-pack-scripts') %>
+        <%- include('includes/scripts', { entryNames: ['slide', 'slide-pack'] }) %>
     </body>
 </html>
 

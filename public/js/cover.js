@@ -25,13 +25,12 @@ import {
 import { saveAs } from 'file-saver'
 import List from 'list.js'
 import S from 'string'
+import Cookies from 'js-cookie'
 
-require('./locale')
-
-require('../css/cover.css')
-require('../css/site.css')
-
-require('./fix-aria-hidden-for-modals')
+import '../css/cover.css'
+import '../css/site.css'
+import './locale'
+import './fix-aria-hidden-for-modals'
 
 const options = {
   valueNames: ['id', 'text', 'timestamp', 'fromNow', 'time', 'tags', 'pinned'],

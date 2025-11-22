@@ -1,11 +1,13 @@
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-/* global moment, serverurl */
+/* global serverurl */
 
 import Prism from 'prismjs'
 import PDFObject from 'pdfobject'
 import S from 'string'
 import { saveAs } from 'file-saver'
 import escapeHTML from 'escape-html'
+import moment from 'moment'
+import $ from 'jquery'
 
 import getUIElements from './lib/editor/ui-elements'
 
@@ -15,18 +17,17 @@ import markdownitContainer from 'markdown-it-container'
 /* Defined regex markdown it plugins */
 import Plugin from 'markdown-it-regexp'
 
-require('prismjs/themes/prism.css')
-require('prismjs/components/prism-wiki')
-require('prismjs/components/prism-haskell')
-require('prismjs/components/prism-go')
-require('prismjs/components/prism-typescript')
-require('prismjs/components/prism-jsx')
-require('prismjs/components/prism-makefile')
-require('prismjs/components/prism-gherkin')
-
-require('./lib/common/login')
-require('./locale')
-require('../vendor/md-toc')
+import 'prismjs/themes/prism.css'
+import 'prismjs/components/prism-wiki'
+import 'prismjs/components/prism-haskell'
+import 'prismjs/components/prism-go'
+import 'prismjs/components/prism-typescript'
+import 'prismjs/components/prism-jsx'
+import 'prismjs/components/prism-makefile'
+import 'prismjs/components/prism-gherkin'
+import './lib/common/login'
+import './locale'
+import '../vendor/md-toc'
 const ui = getUIElements()
 
 // auto update last change
@@ -508,7 +509,9 @@ export function finishView (view) {
             if (!languages.includes(reallang)) {
               result = hljs.highlightAuto(code)
             } else {
-              result = hljs.highlight(reallang, code)
+              result = hljs.highlight(code, {
+                language: reallang
+              })
             }
             if (codeDiv.length > 0) codeDiv.html(result.value)
             else langDiv.html(result.value)
