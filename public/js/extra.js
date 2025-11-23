@@ -3,11 +3,11 @@
 
 import Prism from 'prismjs'
 import PDFObject from 'pdfobject'
-import S from 'string'
 import { saveAs } from 'file-saver'
-import escapeHTML from 'escape-html'
+import filterXSS from 'xss'
 
 import getUIElements from './lib/editor/ui-elements'
+import { escapeHtml, unescapeHtml } from './utils'
 
 import markdownit from 'markdown-it'
 import markdownitContainer from 'markdown-it-container'
@@ -166,7 +166,11 @@ export function renderTags (view) {
 
 function slugifyWithUTF8 (text) {
   // remove HTML tags and trim spaces
-  let newText = S(text).trim().stripTags().s
+  let newText = filterXSS(text.trim(), {
+    whiteList: {},
+    stripIgnoreTag: true,
+    stripIgnoreTagBody: ['script', 'style']
+  })
   // replace space between words with dashes
   newText = newText.replace(/\s+/g, '-')
   // slugify string to make it valid as an attribute
@@ -318,7 +322,7 @@ export function finishView (view) {
       svg[0].setAttribute('preserveAspectRatio', 'xMidYMid meet')
     } catch (err) {
       $value.unwrap()
-      $value.parent().append(`<div class="alert alert-warning">${escapeHTML(err)}</div>`)
+      $value.parent().append(`<div class="alert alert-warning">${escapeHtml(err)}</div>`)
       console.warn(err)
     }
   })
@@ -343,7 +347,7 @@ export function finishView (view) {
       $value.children().unwrap().unwrap()
     } catch (err) {
       $value.unwrap()
-      $value.parent().append(`<div class="alert alert-warning">${escapeHTML(err)}</div>`)
+      $value.parent().append(`<div class="alert alert-warning">${escapeHtml(err)}</div>`)
       console.warn(err)
     }
   })
@@ -365,7 +369,7 @@ export function finishView (view) {
       })
     } catch (err) {
       $value.unwrap()
-      $value.parent().append(`<div class="alert alert-warning">${escapeHTML(err)}</div>`)
+      $value.parent().append(`<div class="alert alert-warning">${escapeHtml(err)}</div>`)
       console.warn(err)
     }
   })
@@ -388,7 +392,7 @@ export function finishView (view) {
           errormessage = err.str
         }
         $value.unwrap()
-        $value.parent().append(`<div class="alert alert-warning">${escapeHTML(errormessage)}</div>`)
+        $value.parent().append(`<div class="alert alert-warning">${escapeHtml(errormessage)}</div>`)
         console.warn(errormessage)
       }
     })
@@ -411,7 +415,7 @@ export function finishView (view) {
       })
     } catch (err) {
       $value.unwrap()
-      $value.parent().append(`<div class="alert alert-warning">${escapeHTML(err)}</div>`)
+      $value.parent().append(`<div class="alert alert-warning">${escapeHtml(err)}</div>`)
       console.warn(err)
     }
   })
@@ -486,24 +490,24 @@ export function finishView (view) {
             value: code
           }
         } else if (reallang === 'haskell' || reallang === 'go' || reallang === 'typescript' || reallang === 'jsx' || reallang === 'gherkin') {
-          code = S(code).unescapeHTML().s
+          code = unescapeHtml(code)
           result = {
             value: Prism.highlight(code, Prism.languages[reallang])
           }
         } else if (reallang === 'tiddlywiki' || reallang === 'mediawiki') {
-          code = S(code).unescapeHTML().s
+          code = unescapeHtml(code)
           result = {
             value: Prism.highlight(code, Prism.languages.wiki)
           }
         } else if (reallang === 'cmake') {
-          code = S(code).unescapeHTML().s
+          code = unescapeHtml(code)
           result = {
             value: Prism.highlight(code, Prism.languages.makefile)
           }
         } else {
           require.ensure([], function (require) {
             const hljs = require('highlight.js')
-            code = S(code).unescapeHTML().s
+            code = unescapeHtml(code)
             const languages = hljs.listLanguages()
             if (!languages.includes(reallang)) {
               result = hljs.highlightAuto(code)
@@ -576,7 +580,7 @@ export function postProcess (code) {
     if (warning && warning.length > 0) {
       warning.text(md.metaError)
     } else {
-      warning = $(`<div id="meta-error" class="alert alert-warning">${escapeHTML(md.metaError)}</div>`)
+      warning = $(`<div id="meta-error" class="alert alert-warning">${escapeHtml(md.metaError)}</div>`)
       result.prepend(warning)
     }
   }
@@ -963,7 +967,7 @@ export function scrollToHash () {
 
 function highlightRender (code, lang) {
   if (!lang || /no(-?)highlight|plain|text/.test(lang)) { return }
-  code = S(code).escapeHTML().s
+  code = escapeHtml(code)
   if (lang === 'sequence') {
     return `<div class="sequence-diagram raw">${code}</div>`
   } else if (lang === 'flow') {
