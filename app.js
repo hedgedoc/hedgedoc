@@ -356,7 +356,7 @@ function handleTermSignals () {
   alreadyHandlingTermSignals = true
   realtime.maintenance = true
   // disconnect all socket.io clients
-  io.sockets.sockets.keys().forEach(function (key) {
+  Array.from(io.sockets.sockets.keys()).forEach(function (key) {
     const socket = io.sockets.sockets.get(key)
     if (!socket) return
     // notify client server going into maintenance status
