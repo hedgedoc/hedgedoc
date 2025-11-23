@@ -16,7 +16,7 @@ import { ot } from '../vendor/ot/ot.min.js'
 import hex2rgb from '../vendor/ot/hex2rgb'
 
 import { saveAs } from 'file-saver'
-import randomColor from 'randomcolor'
+import chance from 'chance'
 import store from 'store'
 import url from 'wurl'
 import { Spinner } from 'spin.js'
@@ -427,7 +427,7 @@ const supportExtraTags = [
     text: '[random color tag]',
     search: '[]',
     command: function () {
-      const color = randomColor()
+      const color = chance().color()
       return '[color=' + color + ']'
     }
   }

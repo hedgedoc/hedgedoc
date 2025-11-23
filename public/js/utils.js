@@ -30,3 +30,21 @@ export function decodeNoteId (encodedId) {
   idParts.push(id.substr(20, 12))
   return idParts.join('-')
 }
+
+// use browser's DOM APIs for escaping and unescaping HTML
+export function escapeHtml (unsafe) {
+  if (!unsafe) {
+    return ''
+  }
+  const tempDiv = document.createElement('div')
+  tempDiv.appendChild(document.createTextNode(String(unsafe)))
+  return tempDiv.innerHTML
+}
+
+export function unescapeHtml (escapedHtml) {
+  if (!escapedHtml) {
+    return ''
+  }
+  const doc = new DOMParser().parseFromString(escapedHtml, 'text/html')
+  return doc.documentElement.textContent || ''
+}
