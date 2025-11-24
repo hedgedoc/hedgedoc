@@ -816,7 +816,7 @@ export function smoothHashScroll () {
 
 function imgPlayiframe (element, src) {
   if (!$(element).attr('data-videoid')) return
-  const iframe = $("<iframe style='border: none' allowfullscreen></iframe>")
+  const iframe = $('<iframe style="border: none" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>')
   $(iframe).attr('src', `${src + $(element).attr('data-videoid')}?autoplay=1`)
   $(element).find('img').css('visibility', 'hidden')
   $(element).append(iframe)
