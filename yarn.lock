@@ -426,6 +426,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mathjax/mathjax-newcm-font@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@mathjax/mathjax-newcm-font@npm:4.0.0"
+  checksum: 10/78e5aa587009c8daca30e94842cadf56cc8ba6d1471c5b2c3e7ec0a38b0e0b5430f0d59210c5a5fea28d6533648619861271213c76c9aa34efa6e4ca2504adb9
+  languageName: node
+  linkType: hard
+
 "@messageformat/core@npm:^3.4.0":
   version: 3.4.0
   resolution: "@messageformat/core@npm:3.4.0"
@@ -1507,7 +1514,7 @@ __metadata:
     markdown-it-regexp: "npm:0.4.0"
     markdown-it-sub: "npm:1.0.0"
     markdown-it-sup: "npm:1.0.0"
-    mathjax: "npm:2.7.9"
+    mathjax: "npm:4.0.0"
     mattermost: "npm:3.4.0"
     mermaid: "npm:9.1.7"
     method-override: "npm:3.0.0"
@@ -10031,10 +10038,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mathjax@npm:2.7.9":
-  version: 2.7.9
-  resolution: "mathjax@npm:2.7.9"
-  checksum: 10/51fe786132af8168fa12694d1c905188f1bfe097effdd614dc553f7caa2adb500eab646ecb241f8e5dd679a71eac3809ee5c5524f75e16f924b31bbcd8e51fcb
+"mathjax@npm:4.0.0":
+  version: 4.0.0
+  resolution: "mathjax@npm:4.0.0"
+  dependencies:
+    "@mathjax/mathjax-newcm-font": "npm:^4.0.0"
+  checksum: 10/7cd5306a712ad5587f9e6b0a346bcb8bf31f9053d9c70d3172d0d360eaeb4d44fa541fb8a537017787aec632fc48ebe4ec3fdc502104f01cbc491a52610d4492
   languageName: node
   linkType: hard
 
