@@ -242,7 +242,7 @@ When you’re a carpenter making a beautiful chest of drawers, you’re not goin
 
 **Caution: this might be blocked by your browser if not using an `https` URL.**
 Note that not all servers allow embedding their content. See [our FAQ](https://docs.hedgedoc.org/faq/#why-cant-i-embed-some-pdfs) for details.
-{%pdf https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf %}
+{%pdf https://pdfobject.com/pdf/sample-3pp.pdf %}
 
 ### MathJax
 
