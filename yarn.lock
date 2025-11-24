@@ -1545,7 +1545,7 @@ __metadata:
     reveal.js: "npm:3.9.2"
     rimraf: "npm:6.1.2"
     sanitize-filename: "npm:1.6.3"
-    scrypt-kdf: "npm:2.0.1"
+    scrypt-kdf: "npm:4.0.0"
     select2: "npm:3.5.2-browserify"
     sequelize: "npm:5.22.5"
     socket.io: "npm:4.8.1"
@@ -14787,10 +14787,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scrypt-kdf@npm:2.0.1":
-  version: 2.0.1
-  resolution: "scrypt-kdf@npm:2.0.1"
-  checksum: 10/c9a21c5c9f18df8438f81d60c581a3267b8f6fdfb8b63479353195361e740ea56f8b3d71abaec99963dbafbd973563527bc6a4ebb05dc695514216e33e189037
+"scrypt-kdf@npm:4.0.0":
+  version: 4.0.0
+  resolution: "scrypt-kdf@npm:4.0.0"
+  checksum: 10/2e88019932fe1d092d02d7c6764817f835b4d6de8b67a24587e9ecfce4686ca2b4d2b8d75224d904b05a784ba87134062b035955f29e0e8e97ffb0284551df36
   languageName: node
   linkType: hard
 
