@@ -332,6 +332,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@file-type/xml@npm:^0.4.3":
+  version: 0.4.4
+  resolution: "@file-type/xml@npm:0.4.4"
+  dependencies:
+    sax: "npm:^1.4.1"
+    strtok3: "npm:^10.3.4"
+  checksum: 10/a7c9bdbdb188fbc11bb08efdc699b49c5367952f732e3a9505396e905edfe47e2f924623861827be992a7899158b1864515770ec9252a43d6c0e37e404b4bd7a
+  languageName: node
+  linkType: hard
+
 "@gar/promisify@npm:^1.0.1":
   version: 1.1.3
   resolution: "@gar/promisify@npm:1.1.3"
@@ -1477,7 +1487,7 @@ __metadata:
     i18n: "npm:0.15.3"
     imports-loader: "npm:1.2.0"
     ionicons: "npm:2.0.1"
-    is-svg: "npm:4.4.0"
+    is-svg: "npm:6.1.0"
     jquery: "npm:3.7.1"
     jquery-mousewheel: "npm:3.2.2"
     jquery-ui: "npm:1.14.1"
@@ -6848,7 +6858,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-xml-parser@npm:^4.1.3, fast-xml-parser@npm:^4.4.1":
+"fast-xml-parser@npm:^4.4.1":
   version: 4.5.3
   resolution: "fast-xml-parser@npm:4.5.3"
   dependencies:
@@ -8840,12 +8850,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-svg@npm:4.4.0":
-  version: 4.4.0
-  resolution: "is-svg@npm:4.4.0"
+"is-svg@npm:6.1.0":
+  version: 6.1.0
+  resolution: "is-svg@npm:6.1.0"
   dependencies:
-    fast-xml-parser: "npm:^4.1.3"
-  checksum: 10/cd5a0ba1af653e4897721913b0b80de968fa5b19eb1a592412f4672d3a1203935d183c2a9dbf61d68023739ee43d3761ea795ae1a9f618c6098a9e89eacdd256
+    "@file-type/xml": "npm:^0.4.3"
+  checksum: 10/16b106b83398ded673b4465773e30ee5857a444125fc2153c225f403016e341af39a10bfc1d0c1104c2cac3afcc3be446f786eb6184913c5f069ad85b94030e0
   languageName: node
   linkType: hard
 
@@ -14758,7 +14768,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sax@npm:>=0.6.0, sax@npm:^1.2.4":
+"sax@npm:>=0.6.0, sax@npm:^1.2.4, sax@npm:^1.4.1":
   version: 1.4.3
   resolution: "sax@npm:1.4.3"
   checksum: 10/99161215f23e0b13bc7f94adbaa63a6a2f188fe291c450790d92b5bc3cd7966d574a15dcd5918c30917e17ed68129e34cc3168564263b967f9b8f61869d6ccc4
