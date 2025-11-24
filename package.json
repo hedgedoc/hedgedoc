@@ -173,7 +173,7 @@
     "jquery-ui": "1.14.1",
     "js-cookie": "3.0.5",
     "js-sequence-diagrams": "git+https://github.com/hedgedoc/js-sequence-diagrams.git",
-    "js-yaml": "3.14.2",
+    "js-yaml": "4.1.1",
     "jsonlint": "1.6.3",
     "keymaster": "1.6.2",
     "less": "4.4.2",
