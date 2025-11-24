@@ -12,6 +12,7 @@
 
 ### Bugfixes
 - Ignore the healthcheck endpoint in the "too busy" limiter
+- Send the referrer origin for YouTube embeddings due to their requirement 
 
 ## <i class="fa fa-tag"></i> 1.10.3 <i class="fa fa-calendar-o"></i> 2025-04-09
 
