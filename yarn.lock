@@ -705,6 +705,62 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/rollup-darwin-arm64@npm:4.34.9":
+  version: 4.34.9
+  resolution: "@rollup/rollup-darwin-arm64@npm:4.34.9"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-darwin-x64@npm:4.34.9":
+  version: 4.34.9
+  resolution: "@rollup/rollup-darwin-x64@npm:4.34.9"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-arm64-gnu@npm:4.34.9":
+  version: 4.34.9
+  resolution: "@rollup/rollup-linux-arm64-gnu@npm:4.34.9"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-arm64-musl@npm:4.34.9":
+  version: 4.34.9
+  resolution: "@rollup/rollup-linux-arm64-musl@npm:4.34.9"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-x64-gnu@npm:4.34.9":
+  version: 4.34.9
+  resolution: "@rollup/rollup-linux-x64-gnu@npm:4.34.9"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-x64-musl@npm:4.34.9":
+  version: 4.34.9
+  resolution: "@rollup/rollup-linux-x64-musl@npm:4.34.9"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-win32-arm64-msvc@npm:4.34.9":
+  version: 4.34.9
+  resolution: "@rollup/rollup-win32-arm64-msvc@npm:4.34.9"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-win32-x64-msvc@npm:4.34.9":
+  version: 4.34.9
+  resolution: "@rollup/rollup-win32-x64-msvc@npm:4.34.9"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@rtsao/scc@npm:^1.1.0":
   version: 1.1.0
   resolution: "@rtsao/scc@npm:1.1.0"
@@ -726,6 +782,41 @@ __metadata:
   version: 3.1.2
   resolution: "@socket.io/component-emitter@npm:3.1.2"
   checksum: 10/89888f00699eb34e3070624eb7b8161fa29f064aeb1389a48f02195d55dd7c52a504e52160016859f6d6dffddd54324623cdd47fd34b3d46f9ed96c18c456edc
+  languageName: node
+  linkType: hard
+
+"@stencil/core@npm:^4.35.3":
+  version: 4.38.3
+  resolution: "@stencil/core@npm:4.38.3"
+  dependencies:
+    "@rollup/rollup-darwin-arm64": "npm:4.34.9"
+    "@rollup/rollup-darwin-x64": "npm:4.34.9"
+    "@rollup/rollup-linux-arm64-gnu": "npm:4.34.9"
+    "@rollup/rollup-linux-arm64-musl": "npm:4.34.9"
+    "@rollup/rollup-linux-x64-gnu": "npm:4.34.9"
+    "@rollup/rollup-linux-x64-musl": "npm:4.34.9"
+    "@rollup/rollup-win32-arm64-msvc": "npm:4.34.9"
+    "@rollup/rollup-win32-x64-msvc": "npm:4.34.9"
+  dependenciesMeta:
+    "@rollup/rollup-darwin-arm64":
+      optional: true
+    "@rollup/rollup-darwin-x64":
+      optional: true
+    "@rollup/rollup-linux-arm64-gnu":
+      optional: true
+    "@rollup/rollup-linux-arm64-musl":
+      optional: true
+    "@rollup/rollup-linux-x64-gnu":
+      optional: true
+    "@rollup/rollup-linux-x64-musl":
+      optional: true
+    "@rollup/rollup-win32-arm64-msvc":
+      optional: true
+    "@rollup/rollup-win32-x64-msvc":
+      optional: true
+  bin:
+    stencil: bin/stencil
+  checksum: 10/90cc542b0bd7307e2cc5376cd97b6317c72c5b90069e9e6a745b0dae7ffe0c9ddb48b03f1c7977bde9c79f4cb39ee2d0b0c12451316137258a3f3e94e7bbc32c
   languageName: node
   linkType: hard
 
@@ -1476,7 +1567,7 @@ __metadata:
     html-webpack-plugin: "npm:4.5.2"
     i18n: "npm:0.15.3"
     imports-loader: "npm:1.2.0"
-    ionicons: "npm:2.0.1"
+    ionicons: "npm:8.0.13"
     is-svg: "npm:4.4.0"
     jquery: "npm:3.7.1"
     jquery-mousewheel: "npm:3.2.2"
@@ -8331,10 +8422,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ionicons@npm:2.0.1":
-  version: 2.0.1
-  resolution: "ionicons@npm:2.0.1"
-  checksum: 10/937500db8528b958e6db3fd20558dc5a8bc2888c8557fa0940c546036770af99b546da5c5d34ba9b5396052d033333881c745212c76269b6a621b6c1d353c4a9
+"ionicons@npm:8.0.13":
+  version: 8.0.13
+  resolution: "ionicons@npm:8.0.13"
+  dependencies:
+    "@stencil/core": "npm:^4.35.3"
+  checksum: 10/8d507c41ce2bd3a635cf25fcb05c7fabb7c75c27802a8476548f85cedf3366251eee4a0306b95f9a71870cb509ef6ac317c7d84ffd6898dd0218d100e5c640fe
   languageName: node
   linkType: hard
 
