@@ -394,6 +394,13 @@ function handleTermSignals () {
           process.exit(0)
         }
       })
+    } else {
+      logger.warn(`Real time server not ready for shutdown, trying again (${currentCleanTry}/${maxCleanTries})...`)
+      currentCleanTry++
+      if (currentCleanTry > maxCleanTries) {
+        logger.error('Could not save note revisions after shutdown! Exiting.')
+        process.exit(1)
+      }
     }
   }, 200)
 }

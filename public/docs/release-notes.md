@@ -10,7 +10,8 @@
 
 ### Bugfixes
 - Ignore the healthcheck endpoint in the "too busy" limiter
-- Send the referrer origin for YouTube embeddings due to their requirement 
+- Send the referrer origin for YouTube embeddings due to their requirement
+- Force kill the server after a timeout when waiting for the realtime server to close connections on shutdown
 
 ## <i class="fa fa-tag"></i> 1.10.3 <i class="fa fa-calendar-o"></i> 2025-04-09
 
