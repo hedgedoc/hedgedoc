@@ -7,6 +7,7 @@
   `none` to completely disable uploads.
 - Allow links to protocols such as xmpp, webcal or geo
 - Switch from deprecated shortid to nanoid module, with 10 character long aliases in "public" links
+- Ensure compatibility with Node 24
 
 ### Bugfixes
 - Ignore the healthcheck endpoint in the "too busy" limiter
