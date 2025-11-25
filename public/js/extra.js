@@ -233,10 +233,10 @@ window.viewAjaxCallback = null
 // regex for extra tags
 const spaceregex = /\s*/
 const notinhtmltagregex = /(?![^<]*>|[^<>]*<\/)/
-let coloregex = /\[color=([#|(|)|\s|,|\w]*?)\]/
+let coloregex = /\[color=([#()\s,\w]*?)]/
 coloregex = new RegExp(coloregex.source + notinhtmltagregex.source, 'g')
-let nameregex = /\[name=(.*?)\]/
-let timeregex = /\[time=([:|,|+|-|(|)|\s|\w]*?)\]/
+let nameregex = /\[name=(.*?)]/
+let timeregex = /\[time=([:,.+()\s\w-]*?)]/
 const nameandtimeregex = new RegExp(nameregex.source + spaceregex.source + timeregex.source + notinhtmltagregex.source, 'g')
 nameregex = new RegExp(nameregex.source + notinhtmltagregex.source, 'g')
 timeregex = new RegExp(timeregex.source + notinhtmltagregex.source, 'g')
