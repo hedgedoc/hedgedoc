@@ -8,6 +8,7 @@
 - Allow links to protocols such as xmpp, webcal or geo
 - Switch from deprecated shortid to nanoid module, with 10 character long aliases in "public" links
 - Ensure compatibility with Node 24
+- Protect user history from accidental or malicious deletion by adding a CSRF-like token
 
 ### Bugfixes
 - Ignore the healthcheck endpoint in the "too busy" limiter
