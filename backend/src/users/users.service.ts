@@ -19,7 +19,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { LoginUserInfoDto } from '../dtos/login-user-info.dto';
 import { UserInfoDto } from '../dtos/user-info.dto';
-import { GenericDBError, NotInDBError } from '../errors/errors';
+import {
+  AlreadyInDBError,
+  GenericDBError,
+  NotInDBError,
+} from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { generateRandomName } from './random-word-lists/name-randomizer';
 
@@ -61,6 +65,17 @@ export class UsersService {
     }
 
     const dbActor = transaction ? transaction : this.knex;
+
+    const isUserNameTaken = await this.isUsernameTaken(username, dbActor);
+
+    if (isUserNameTaken) {
+      throw new AlreadyInDBError(
+        `Failed to create user '${username}', the user with this username already exists.`,
+        this.logger.getContext(),
+        'createUser',
+      );
+    }
+
     try {
       const newUsers: number[] | Pick<User, FieldNameUser.id>[] = await dbActor(
         TableUser,
@@ -203,10 +218,15 @@ export class UsersService {
    * Checks if a given username is already taken
    *
    * @param username The username to check
+   * @param transaction The optional transaction to use
    * @returns true if the user exists, false otherwise
    */
-  async isUsernameTaken(username: string): Promise<boolean> {
-    const result = await this.knex(TableUser)
+  async isUsernameTaken(
+    username: string,
+    transaction?: Knex,
+  ): Promise<boolean> {
+    const dbActor = transaction ? transaction : this.knex;
+    const result = await dbActor(TableUser)
       .select(FieldNameUser.username)
       .where(FieldNameUser.username, username);
     return result.length === 1;
