@@ -1,0 +1,61 @@
+/*!
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+/* HackMD Theme: Dark editor (left) + Light preview (right) */
+
+/* Force dark theme for editor pane */
+.hackmd-dark-editor {
+  background-color: #1e2126 !important;
+  color: #abb2bf !important;
+  
+  * {
+    color-scheme: dark;
+  }
+  
+  /* Editor toolbar dark styling */
+  .btn, button {
+    background-color: #282c34;
+    border-color: #3e4451;
+    color: #abb2bf;
+    
+    &:hover {
+      background-color: #3e4451;
+      border-color: #4b5263;
+    }
+  }
+  
+  /* Status bar dark styling */
+  .status-bar, [class*="status"] {
+    background-color: #15181e;
+    border-color: #1d222a;
+    color: #5c6370;
+  }
+}
+
+/* Override Bootstrap dark mode for preview iframe */
+body[data-bs-theme="dark"] .hackmd-light-preview iframe {
+  color-scheme: light !important;
+}
+
+/* Force light theme for preview pane */
+.hackmd-light-preview {
+  background-color: #ffffff !important;
+  
+  /* The iframe will receive LIGHT mode preference, so it should render correctly */
+  iframe {
+    background-color: #ffffff !important;
+  }
+}
+
+/* Ensure preview stays light even when body theme is dark */
+body[data-bs-theme="dark"] .hackmd-light-preview {
+  background-color: #ffffff !important;
+  
+  iframe {
+    background-color: #ffffff !important;
+  }
+}
+

@@ -6,7 +6,8 @@
 export enum DarkModePreference {
   DARK,
   LIGHT,
-  AUTO
+  AUTO,
+  HACKMD
 }
 
 export interface DarkModeConfig {

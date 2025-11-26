@@ -715,6 +715,10 @@
           "tooltip": "Switch to light mode",
           "label": "Light"
         },
+        "hackmd": {
+          "tooltip": "Dark editor with light preview (HackMD style)",
+          "label": "HackMD"
+        },
         "browser": {
           "tooltip": "Let browser decide",
           "label": "Auto"

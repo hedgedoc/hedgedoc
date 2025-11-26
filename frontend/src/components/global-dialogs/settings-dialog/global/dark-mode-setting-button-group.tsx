@@ -36,6 +36,13 @@ const DarkModeSettingButtonGroup: React.FC = () => {
       />
       <SettingsToggleButton
         onSelect={onSelect}
+        value={DarkModePreference.HACKMD}
+        selected={darkModePreference === DarkModePreference.HACKMD}
+        i18nKeyLabel={'settings.global.darkMode.hackmd.label'}
+        i18nKeyTooltip={'settings.global.darkMode.hackmd.tooltip'}
+      />
+      <SettingsToggleButton
+        onSelect={onSelect}
         value={DarkModePreference.AUTO}
         selected={darkModePreference === DarkModePreference.AUTO}
         i18nKeyLabel={'settings.global.darkMode.browser.label'}

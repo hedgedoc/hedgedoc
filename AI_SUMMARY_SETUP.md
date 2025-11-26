@@ -133,6 +133,19 @@ Response:
 ### Localization
 - Translations added to `frontend/locales/en.json` under `editor.summary`
 
+## HackMD Theme Mode
+
+A new theme mode has been added that mimics HackMD's editing experience:
+- **Dark editor** (left pane): Code editor uses dark theme for comfortable coding
+- **Light preview** (right pane): Markdown preview uses light theme for better readability
+
+To enable HackMD mode:
+1. Open Settings (gear icon)
+2. Go to Global settings
+3. Under "Dark mode", select "HackMD"
+
+This mode provides the best of both worlds - a dark editing environment that's easy on the eyes during long coding sessions, combined with a light preview that ensures your rendered content is clearly visible.
+
 ## Future Enhancements
 
 Possible improvements for future versions:
