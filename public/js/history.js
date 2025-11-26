@@ -295,7 +295,7 @@ export function postHistoryToServer (noteId, data, callback) {
 
 export function deleteServerHistory (noteId, callback) {
   $.ajax({
-    url: `${serverurl}/history${noteId ? '/' + noteId : ''}`,
+    url: `${serverurl}/history${noteId ? '/' + noteId : ''}?token=${window.userToken}`,
     type: 'DELETE'
   })
     .done(result => callback(null, result))

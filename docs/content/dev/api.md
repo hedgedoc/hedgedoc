@@ -23,15 +23,15 @@ You have to replace *\<NOTE\>* with either the alias or id of a note you want to
 ## User / History
 These endpoints return information about the current logged-in user and it's note history. If no user is logged-in, the most of this requests will fail with either a HTTP 403 or a JSON object containing `{"status":"forbidden"}`.
 
-| Endpoint          | HTTP-Method | Description                                                                                                                                                                                       |
-| ----------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/me`             | `GET`       | **Returns the profile data of the current logged-in user.**<br>The data is returned as a JSON object containing the user-id, the user's name and a url to the profile picture.                    |
-| `/me/export`      | `GET`       | **Exports a zip-archive with all notes of the current user.**                                                                                                                                     |
-| `/history`        | `GET`       | **Returns a list of the last viewed notes.**<br>The list is returned as a JSON object with an array containing for each entry it's id, title, tags, last visit time and pinned status.            |
-| `/history`        | `POST`      | **Replace user's history with a new one.**<br>The body must be form-encoded and contain a field `history` with a JSON-encoded array like its returned from the server when exporting the history. |
-| `/history`        | `DELETE`    | **Deletes the user's history.**                                                                                                                                                                   |
-| `/history/<NOTE>` | `POST`      | **Toggles the pinned status in the history for a note.**<br>The body must be form-encoded and contain a field `pinned` that is either `true` or `false`.                                          |
-| `/history/<NOTE>` | `DELETE`    | **Deletes a note from the user's history.**                                                                                                                                                       |
+| Endpoint                 | HTTP-Method | Description                                                                                                                                                                                       |
+| ------------------------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/me`                    | `GET`       | **Returns the profile data of the current logged-in user.**<br>The data is returned as a JSON object containing the user-id, the user's name and a url to the profile picture.                    |
+| `/me/export`             | `GET`       | **Exports a zip-archive with all notes of the current user.**                                                                                                                                     |
+| `/history`               | `GET`       | **Returns a list of the last viewed notes.**<br>The list is returned as a JSON object with an array containing for each entry it's id, title, tags, last visit time and pinned status.            |
+| `/history`               | `POST`      | **Replace user's history with a new one.**<br>The body must be form-encoded and contain a field `history` with a JSON-encoded array like its returned from the server when exporting the history. |
+| `/history?token=<TOKEN>` | `DELETE`    | **Deletes the user's history.**<br>Requires the user token since HedgeDoc 1.10.4 to prevent CSRF-attacks. The token can be obtained from the `/config` endpoint when logged-in.                   |
+| `/history/<NOTE>`        | `POST`      | **Toggles the pinned status in the history for a note.**<br>The body must be form-encoded and contain a field `pinned` that is either `true` or `false`.                                          |
+| `/history/<NOTE>`        | `DELETE`    | **Deletes a note from the user's history.**                                                                                                                                                       |
 
 ## HedgeDoc-server
 These endpoints return information about the running HedgeDoc instance.
