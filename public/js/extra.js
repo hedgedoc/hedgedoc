@@ -233,10 +233,10 @@ window.viewAjaxCallback = null
 // regex for extra tags
 const spaceregex = /\s*/
 const notinhtmltagregex = /(?![^<]*>|[^<>]*<\/)/
-let coloregex = /\[color=([#|(|)|\s|,|\w]*?)\]/
+let coloregex = /\[color=([#()\s,\w]*?)]/
 coloregex = new RegExp(coloregex.source + notinhtmltagregex.source, 'g')
-let nameregex = /\[name=(.*?)\]/
-let timeregex = /\[time=([:|,|+|-|(|)|\s|\w]*?)\]/
+let nameregex = /\[name=(.*?)]/
+let timeregex = /\[time=([:,.+()\s\w-]*?)]/
 const nameandtimeregex = new RegExp(nameregex.source + spaceregex.source + timeregex.source + notinhtmltagregex.source, 'g')
 nameregex = new RegExp(nameregex.source + notinhtmltagregex.source, 'g')
 timeregex = new RegExp(timeregex.source + notinhtmltagregex.source, 'g')
@@ -816,7 +816,7 @@ export function smoothHashScroll () {
 
 function imgPlayiframe (element, src) {
   if (!$(element).attr('data-videoid')) return
-  const iframe = $("<iframe style='border: none' allowfullscreen></iframe>")
+  const iframe = $('<iframe style="border: none" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>')
   $(iframe).attr('src', `${src + $(element).attr('data-videoid')}?autoplay=1`)
   $(element).find('img').css('visibility', 'hidden')
   $(element).append(iframe)
