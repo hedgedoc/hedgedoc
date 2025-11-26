@@ -17,6 +17,7 @@ import { expectBindings } from '../database/mock/expect-bindings';
 import {
   mockDelete,
   mockInsert,
+  mockSelect,
   mockUpdate,
 } from '../database/mock/mock-queries';
 import { mockKnexDb } from '../database/mock/provider';
@@ -70,6 +71,12 @@ describe('UsersService', () => {
     it('inserts a new user', async () => {
       jest.useFakeTimers();
       const now = DateTime.utc();
+      mockSelect(
+        tracker,
+        [FieldNameUser.username],
+        TableUser,
+        FieldNameUser.username,
+      );
       mockInsert(
         tracker,
         TableUser,
@@ -91,6 +98,7 @@ describe('UsersService', () => {
         photoUrl,
       );
       expect(result).toBe(userId);
+      expectBindings(tracker, 'select', [[username]]);
       expectBindings(tracker, 'insert', [
         [
           expect.any(Number),
@@ -106,6 +114,12 @@ describe('UsersService', () => {
     });
 
     it('throws GenericDBError if insert fails', async () => {
+      mockSelect(
+        tracker,
+        [FieldNameUser.username],
+        TableUser,
+        FieldNameUser.username,
+      );
       mockInsert(
         tracker,
         TableUser,
