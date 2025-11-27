@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-only
 
-const path = require('path')
 
 module.exports = {
   plugins: ['@typescript-eslint', 'jest', 'testing-library'],
