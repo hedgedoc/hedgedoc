@@ -17,25 +17,19 @@
       ]
     },
     "@hedgedoc/commons#build": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": [],
       "outputs": [
         "dist/**"
       ]
     },
     "@hedgedoc/database#build": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": [],
       "outputs": [
         "dist/**"
       ]
     },
     "@hedgedoc/markdown-it-plugins#build": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": [],
       "outputs": [
         "dist/**"
       ]

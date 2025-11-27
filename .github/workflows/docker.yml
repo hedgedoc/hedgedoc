@@ -63,6 +63,3 @@ jobs:
           context: .
           build-args: |
             BUILD_VERSION=${{ github.event.head_commit.id }}
-            TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
-            TURBO_API=${{ vars.TURBO_API }}
-            TURBO_TEAM=${{ vars.TURBO_TEAM }}
