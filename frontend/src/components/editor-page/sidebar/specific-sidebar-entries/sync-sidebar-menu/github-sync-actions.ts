@@ -12,6 +12,20 @@ export interface GithubSyncTarget {
   path: string
 }
 
+const buildLastSyncedShaKey = (noteId?: string): string | null => {
+  return noteId ? `hd2.sync.github.state.${noteId}` : null
+}
+
+interface StoredSyncShaPayload {
+  sha: string | null
+  savedAt: string
+}
+
+export interface StoredSyncSha {
+  sha: string | null
+  isKnown: boolean
+}
+
 export const loadTokenFromLocalStorage = (): string | null => {
   try {
     const raw = window.localStorage.getItem('hd2.sync.github.token')
@@ -33,6 +47,56 @@ export const loadTargetFromLocalStorage = (noteId: string | undefined): GithubSy
     return parsed
   } catch {
     return null
+  }
+}
+
+export const loadLastSyncedSha = (noteId: string | undefined): StoredSyncSha => {
+  const key = buildLastSyncedShaKey(noteId)
+  if (!key) {
+    return { sha: null, isKnown: false }
+  }
+  try {
+    const raw = window.localStorage.getItem(key)
+    if (!raw) {
+      return { sha: null, isKnown: false }
+    }
+    const parsed = JSON.parse(raw) as Partial<StoredSyncShaPayload>
+    if (!parsed || !Object.prototype.hasOwnProperty.call(parsed, 'sha')) {
+      return { sha: null, isKnown: false }
+    }
+    return { sha: parsed.sha ?? null, isKnown: true }
+  } catch {
+    return { sha: null, isKnown: false }
+  }
+}
+
+export const saveLastSyncedSha = (noteId: string | undefined, sha: string | null): void => {
+  const key = buildLastSyncedShaKey(noteId)
+  if (!key) {
+    return
+  }
+  try {
+    const payload: StoredSyncShaPayload = {
+      sha: sha ?? null,
+      savedAt: new Date().toISOString()
+    }
+    window.localStorage.setItem(key, JSON.stringify(payload))
+    window.dispatchEvent(new CustomEvent('hd2.sync.github.updated'))
+  } catch {
+    // ignore storage errors
+  }
+}
+
+export const clearLastSyncedSha = (noteId: string | undefined): void => {
+  const key = buildLastSyncedShaKey(noteId)
+  if (!key) {
+    return
+  }
+  try {
+    window.localStorage.removeItem(key)
+    window.dispatchEvent(new CustomEvent('hd2.sync.github.updated'))
+  } catch {
+    // ignore storage errors
   }
 }
 
@@ -104,7 +168,7 @@ export const putFileContent = async (
   target: GithubSyncTarget,
   content: string,
   currentSha: string | null
-): Promise<string> => {
+): Promise<string | null> => {
   const body = {
     message: `Update ${target.path} via HedgeDoc`,
     content: utf8ToBase64(content),
@@ -131,8 +195,8 @@ export const putFileContent = async (
     }
     throw new Error('Request to GitHub API failed')
   }
-  const json = (await response.json()) as { content?: { sha?: string } }
-  return json.content?.sha ?? ''
+  const json = (await response.json()) as { content?: { sha?: string | null } }
+  return json.content?.sha ?? null
 }
 
 

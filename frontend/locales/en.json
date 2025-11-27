@@ -662,6 +662,15 @@
     "noteDeleted": {
       "title": "Note '{{noteTitle}}' deleted",
       "text": "You were redirected to the history page, because the note you just edited was deleted."
+    },
+    "sync": {
+      "configureTargetFirst": "Configure GitHub sync in the sidebar before using these actions.",
+      "pullSuccess": "Fetched the latest version from GitHub.",
+      "pullFailed": "Pulling from GitHub failed. Check your token, branch or network connection.",
+      "pushSuccess": "Pushed the current note to GitHub.",
+      "pushFailed": "Pushing to GitHub failed. Try pulling the latest version and resolve conflicts.",
+      "noChanges": "Nothing to push. Remote content already matches this note.",
+      "conflictDetected": "Remote file changed since your last sync. Pull the latest version before pushing again."
     }
   },
   "realtime": {

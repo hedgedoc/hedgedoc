@@ -13,7 +13,9 @@ import {
   getFileContent,
   loadTargetFromLocalStorage,
   loadTokenFromLocalStorage,
-  putFileContent
+  putFileContent,
+  loadLastSyncedSha,
+  saveLastSyncedSha
 } from '../sidebar/specific-sidebar-entries/sync-sidebar-menu/github-sync-actions'
 
 /**
@@ -35,7 +37,7 @@ export const GithubSyncBridge: React.FC = () => {
         return
       }
       getFileContent(token, target)
-        .then(({ content }) => {
+        .then(({ content, sha }) => {
           const formatter = ({ markdownContent }: { markdownContent: string }): [ContentEdits, undefined] => {
             return [
               [
@@ -49,6 +51,7 @@ export const GithubSyncBridge: React.FC = () => {
             ]
           }
           changeEditorContent(formatter as any)
+          saveLastSyncedSha(noteId, sha ?? null)
           dispatchUiNotification('notifications.success.title', 'notifications.sync.pullSuccess', {
             durationInSecond: 5
           })
@@ -62,8 +65,18 @@ export const GithubSyncBridge: React.FC = () => {
       if (!token || !target) {
         return
       }
+      const { sha: storedSha, isKnown } = loadLastSyncedSha(noteId)
+      const notifyConflict = (): void => {
+        dispatchUiNotification('notifications.error.title', 'notifications.sync.conflictDetected', {
+          durationInSecond: 6
+        })
+      }
       getFileContent(token, target)
         .then(({ sha, content }) => {
+          if ((isKnown && storedSha !== sha) || (!isKnown && !!sha)) {
+            notifyConflict()
+            return undefined
+          }
           // No-op push: current editor content equals remote file content
           if (content === currentNoteContent) {
             dispatchUiNotification('notifications.info.title', 'notifications.sync.noChanges', {
@@ -71,13 +84,17 @@ export const GithubSyncBridge: React.FC = () => {
             })
             return
           }
-          return putFileContent(token, target, currentNoteContent, sha)
+          return putFileContent(token, target, currentNoteContent, sha).then((newSha) => ({
+            newSha,
+            previousSha: sha ?? null
+          }))
         })
         .then((result) => {
-          // Only show success if a PUT actually happened (result is sha string)
-          if (result === undefined) {
+          if (!result) {
             return
           }
+          const nextSha = result.newSha ?? result.previousSha ?? null
+          saveLastSyncedSha(noteId, nextSha)
           dispatchUiNotification('notifications.success.title', 'notifications.sync.pushSuccess', {
             durationInSecond: 5
           })
