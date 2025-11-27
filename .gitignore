@@ -41,3 +41,4 @@ frontend/cypress/screenshots
 
 # Rathole proxy configuration
 rathole.toml
+frontend/.env
