@@ -1,61 +1,40 @@
-/**
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
- *
- * SPDX-License-Identifier: CC0-1.0
- **/
+// SPDX-FileCopyrightText: 2022 The HedgeDoc developers (see AUTHORS file)
+//
+// SPDX-License-Identifier: AGPL-3.0-only
+
+const path = require('path')
+
 module.exports = {
-  "root": true,
-  "parserOptions": {
-    "tsconfigRootDir": ".",
-    "project": [
-      "./tsconfig.json"
+  plugins: ['@typescript-eslint', 'jest', 'testing-library'],
+  env: {
+    browser: true,
+    node: true,
+    jest: true
+  },
+  extends: ['eslint:recommended', 'next', 'next/core-web-vitals', 'prettier'],
+  rules: {
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_'
+      }
     ]
   },
-  "rules": {
-    "prettier/prettier": ["error",
-      require('./.prettierrc.json')
-    ],
-    "no-use-before-define": "off",
-    "no-debugger": "warn",
-    "default-param-last": "off",
-    "@typescript-eslint/consistent-type-imports": [
-      "error",
-      {
-        "prefer": "type-imports",
-        "disallowTypeAnnotations": false
-      }
-    ],
-    "jest/no-disabled-tests": "warn",
-    "jest/no-focused-tests": "error",
-    "jest/no-identical-title": "error",
-    "jest/prefer-to-have-length": "warn",
-    "jest/valid-expect": "error"
-  },
-  "env": {
-    "jest": true,
-    "jest/globals": true
-  },
-  "plugins": [
-    "@typescript-eslint",
-    "testing-library",
-    "jest",
-    "prettier"
-  ],
-  "extends": [
-    "next/core-web-vitals",
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "prettier"
-  ],
-  "overrides": [
+  overrides: [
     {
-      "files": [
-        "**/__tests__/**/*.[jt]s?(x)",
-        "**/?(*.)+(spec|test).[jt]s?(x)"
-      ],
-      "extends": ["plugin:testing-library/react"]
+      files: ['**/*.ts', '**/*.tsx'],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        project: './tsconfig.json',
+        tsconfigRootDir: __dirname
+      },
+      extends: [
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking'
+      ]
     }
   ]
 }
