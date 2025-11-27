@@ -61,6 +61,7 @@
     "node-fetch": "2.7.0",
     "openid-client": "5.7.1",
     "pg": "8.13.1",
+    "puppeteer": "^24.30.0",
     "raw-body": "3.0.0",
     "reflect-metadata": "0.2.2",
     "rimraf": "6.0.1",

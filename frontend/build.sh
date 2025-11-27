@@ -28,12 +28,16 @@ if [ ! -z "${NEXT_PUBLIC_USE_MOCK_API}" ]; then
     fi
 else
     echo "🦔 > Moving Mock API because NEXT_PUBLIC_USE_MOCK_API is unset"
-    mkdir -p ../tmp/src/pages
-    mv src/pages/api ../tmp/src/pages/
+    if [ -d src/pages/api ]; then
+        mkdir -p ../tmp/src/pages
+        mv src/pages/api ../tmp/src/pages/
+    else
+        echo "🦔 > ⚠️ src/pages/api doesn't exist, skipping"
+    fi
 fi
 
 echo "🦔 > Building"
-BUILD_TIME=true next build
+BUILD_TIME=true yarn next build
 
 echo "🦔 > Bundling"
 mv .next/standalone dist

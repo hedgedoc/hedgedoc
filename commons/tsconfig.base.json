@@ -15,6 +15,7 @@
     "allowJs": true,
     "declarationMap":true,
     "sourceMap": true,
+    "skipLibCheck": true,
     "typeRoots": ["./types"]
   },
   "include": ["./src", "./types"],
