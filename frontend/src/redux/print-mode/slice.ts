@@ -12,7 +12,7 @@ const printModeSlice = createSlice({
   initialState,
   reducers: {
     setPrintMode: (state, action: PayloadAction<boolean>) => {
-      return action.payload
+      state = action.payload
     }
   }
 })
