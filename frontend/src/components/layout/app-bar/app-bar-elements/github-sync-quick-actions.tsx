@@ -25,14 +25,50 @@ export const GithubSyncQuickActions: React.FC = () => {
   const buttonVariant = useOutlineButtonVariant()
 
   const targetStorageKey = useMemo(() => {
-    return noteId ? `hd2.sync.github.target.${noteId}` : null
+    const key = noteId ? `hd2.sync.github.target.${noteId}` : null
+    console.log('GitHub Sync Quick Actions - noteId:', noteId, 'targetStorageKey:', key)
+    return key
   }, [noteId])
 
   useEffect(() => {
     const refresh = () => {
       try {
+        // First check localStorage (backward compatibility)
         const tokenRaw = window.localStorage.getItem('hd2.sync.github.token')
-        setHasToken(!!tokenRaw)
+        if (tokenRaw) {
+          setHasToken(true)
+          return
+        }
+        
+        // If not in localStorage, try to fetch from backend API
+        fetch('/api/private/me/github-token', {
+          credentials: 'include'
+        })
+          .then(response => {
+            if (response.ok) {
+              return response.json()
+            }
+            throw new Error('Failed to fetch token')
+          })
+          .then((data: { hasToken: boolean; token?: string }) => {
+            if (data.hasToken && data.token) {
+              // Store in localStorage for the sync functionality to use
+              window.localStorage.setItem(
+                'hd2.sync.github.token',
+                JSON.stringify({
+                  token: data.token,
+                  source: 'oauth',
+                  savedAt: new Date().toISOString()
+                })
+              )
+              setHasToken(true)
+            } else {
+              setHasToken(false)
+            }
+          })
+          .catch(() => {
+            setHasToken(false)
+          })
       } catch {
         setHasToken(false)
       }
@@ -64,11 +100,33 @@ export const GithubSyncQuickActions: React.FC = () => {
       setHasTarget(false)
       return
     }
-    try {
-      const targetRaw = window.localStorage.getItem(targetStorageKey)
-      setHasTarget(!!targetRaw)
-    } catch {
-      setHasTarget(false)
+    
+    const checkTarget = () => {
+      try {
+        const targetRaw = window.localStorage.getItem(targetStorageKey)
+        console.log('GitHub Sync Quick Actions - checking target:', targetStorageKey, 'found:', !!targetRaw, 'value:', targetRaw)
+        setHasTarget(!!targetRaw)
+      } catch {
+        setHasTarget(false)
+      }
+    }
+    
+    checkTarget()
+    
+    // Listen for updates to the target
+    const onCustom = () => checkTarget()
+    const onStorage = (e: StorageEvent) => {
+      if (!e.key || e.key === targetStorageKey || e.key.startsWith('hd2.sync.github')) {
+        checkTarget()
+      }
+    }
+    
+    window.addEventListener('hd2.sync.github.updated', onCustom as EventListener)
+    window.addEventListener('storage', onStorage)
+    
+    return () => {
+      window.removeEventListener('hd2.sync.github.updated', onCustom as EventListener)
+      window.removeEventListener('storage', onStorage)
     }
   }, [targetStorageKey])
 

@@ -25,6 +25,7 @@ import { ConfigController } from './config/config.controller';
 import { GroupsController } from './groups/groups.controller';
 import { HistoryController } from './me/history/history.controller';
 import { MeController } from './me/me.controller';
+import { GithubTokenController } from './me/github-token.controller';
 import { MediaController } from './media/media.controller';
 import { NotesController } from './notes/notes.controller';
 import { ApiTokensController } from './tokens/api-tokens.controller';
@@ -50,6 +51,7 @@ import { UsersController } from './users/users.controller';
     MediaController,
     HistoryController,
     MeController,
+    GithubTokenController,
     NotesController,
     AliasController,
     AuthController,

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import type { ModalVisibilityProps } from '../../../../common/modals/common-modal'
 import { CommonModal } from '../../../../common/modals/common-modal'
 import { Github } from 'react-bootstrap-icons'
@@ -49,11 +49,66 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
   const [entriesError, setEntriesError] = useState<string | null>(null)
   const [selectedFilePath, setSelectedFilePath] = useState<string>('')
   const onGhTokenChange = useOnInputChange(setGhToken)
-  const onOwnerChange = useOnInputChange(setSelectedOwner)
-  const onRepoChange = useOnInputChange(setSelectedRepoFullName)
+  // Create specific handlers for select elements
+  const onOwnerChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOwner(e.target.value)
+  }, [])
+  const onRepoChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedRepoFullName(e.target.value)
+  }, [])
+  const onBranchSelectChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedBranch(e.target.value)
+  }, [])
   const ghTokenFormatValid = useMemo(() => validateToken(ghToken), [ghToken])
   const noteId = useApplicationState((state) => state.noteDetails?.id)
   // modal no longer performs push/pull; bridge handles actions
+
+  // Auto-load token from localStorage or API on modal open
+  useEffect(() => {
+    if (!show) {
+      return
+    }
+    
+    // Try to load token from localStorage first
+    try {
+      const tokenRaw = window.localStorage.getItem('hd2.sync.github.token')
+      if (tokenRaw) {
+        const tokenData = JSON.parse(tokenRaw)
+        if (tokenData.token) {
+          setGhToken(tokenData.token)
+          setStep(SyncStep.OWNER)
+          return
+        }
+      }
+    } catch {
+      // ignore
+    }
+
+    // If not in localStorage, try to fetch from backend API
+    fetch('/api/private/me/github-token', {
+      credentials: 'include'
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+        }
+        throw new Error('Failed to fetch token')
+      })
+      .then((data: { hasToken: boolean; token?: string }) => {
+        if (data.hasToken && data.token) {
+          setGhToken(data.token)
+          // Skip token input step and go directly to owner selection
+          setStep(SyncStep.OWNER)
+        } else {
+          // No token available, stay on token input step
+          setStep(SyncStep.TOKEN)
+        }
+      })
+      .catch(() => {
+        // Error fetching token, stay on token input step
+        setStep(SyncStep.TOKEN)
+      })
+  }, [show])
 
   useEffect(() => {
     if (step !== SyncStep.OWNER && step !== SyncStep.REPOSITORY) {
@@ -201,59 +256,23 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
           savedAt: new Date().toISOString()
         })
       )
+      console.log('GitHub sync target saved:', key, {
+        owner,
+        repo,
+        branch: selectedBranch,
+        path: selectedFilePath
+      })
+      // Dispatch multiple events to ensure components pick up the change
       window.dispatchEvent(new CustomEvent('hd2.sync.github.updated'))
-    } catch {
-      // ignore storage errors
+      window.dispatchEvent(new StorageEvent('storage', {
+        key,
+        newValue: window.localStorage.getItem(key),
+        url: window.location.href
+      }))
+    } catch (error) {
+      console.error('Failed to save GitHub sync target:', error)
     }
     onHide?.()
-  }
-
-  const onPullNow = (): void => {
-    const token = loadTokenFromLocalStorage()
-    const target = loadTargetFromLocalStorage(noteId)
-    if (!token || !target || !changeEditorContent) {
-      return
-    }
-    getFileContent(token, target)
-      .then(({ content }) => {
-        const formatter = ({ markdownContent }: { markdownContent: string }): [ContentEdits, undefined] => {
-          return [
-            [
-              {
-                from: 0,
-                to: markdownContent.length,
-                insert: content
-              }
-            ],
-            undefined
-          ]
-        }
-        changeEditorContent(formatter as any)
-        dispatchUiNotification('notifications.success.title', 'notifications.sync.pullSuccess', {
-          durationInSecond: 5
-        })
-      })
-      .catch(
-        showErrorNotification('notifications.sync.pullFailed', undefined, true)
-      )
-  }
-
-  const onPushNow = (): void => {
-    const token = loadTokenFromLocalStorage()
-    const target = loadTargetFromLocalStorage(noteId)
-    if (!token || !target) {
-      return
-    }
-    getFileContent(token, target)
-      .then(({ sha }) => putFileContent(token, target, currentNoteContent, sha))
-      .then(() => {
-        dispatchUiNotification('notifications.success.title', 'notifications.sync.pushSuccess', {
-          durationInSecond: 5
-        })
-      })
-      .catch(
-        showErrorNotification('notifications.sync.pushFailed', undefined, true)
-      )
   }
 
   return (
@@ -263,6 +282,10 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
         {step === SyncStep.TOKEN && (
           <>
             <h5 className={'mb-2'}>Authentication</h5>
+            <p className={'text-muted'}>
+              If you logged in via GitHub OAuth, your token should be automatically loaded. 
+              Otherwise, you can provide a Personal Access Token below.
+            </p>
             <FormGroup className={'my-2'}>
               <FormLabel>GitHub Token</FormLabel>
               <FormControl
@@ -270,9 +293,10 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
                 onChange={onGhTokenChange}
                 type={'password'}
                 isInvalid={!ghTokenFormatValid}
+                placeholder='Automatically loaded from OAuth login'
               />
               <FormText muted={true}>
-                Create a token:{' '}
+                Or create a token manually:{' '}
                 <ExternalLink
                   text={'https://github.com/settings/personal-access-tokens/new'}
                   href={'https://github.com/settings/personal-access-tokens/new'}
@@ -284,6 +308,9 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
         {step === SyncStep.OWNER && (
           <>
             <h5 className={'mb-2'}>Select Organization</h5>
+            <p className={'text-muted small'}>
+              ✓ Authenticated via GitHub OAuth
+            </p>
             {isLoadingRepos && (
               <div className={'d-flex align-items-center gap-2 my-2'}>
                 <Spinner animation='border' size='sm' /> <span>Loading organizations…</span>
@@ -349,7 +376,7 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
               )}
               {branchesError && <div className={'text-danger my-2'}>{branchesError}</div>}
               {!branchesLoading && branches && (
-                <FormSelect value={selectedBranch} onChange={onBranchChange}>
+                <FormSelect value={selectedBranch} onChange={onBranchSelectChange}>
                   {branches.map((b) => (
                     <option key={b} value={b}>
                       {b}
