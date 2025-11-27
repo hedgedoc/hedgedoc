@@ -53,7 +53,7 @@ export const SyncSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
       </SidebarButton>
       <SidebarMenu expand={expand}>
         <SidebarButton icon={IconGithub} onClick={doShowGithubModal}>
-          Github
+          GitHub
         </SidebarButton>
       </SidebarMenu>
       <GithubSyncModal show={showGithubModal} onHide={doHideGithubModal} />
