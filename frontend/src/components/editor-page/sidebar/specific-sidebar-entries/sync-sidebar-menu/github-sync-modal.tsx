@@ -15,6 +15,7 @@ import { listRepositories, type GithubRepository } from './list-repositories'
 import { listBranches } from './list-branches'
 import { listRepositoryPathContents, type GithubContentEntry } from './list-contents'
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
+import { clearLastSyncedSha } from './github-sync-actions'
 // removed modal-local push/pull handling; handled by bridge + app bar quick actions
 
 enum SyncStep {
@@ -246,6 +247,7 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
     // Save note-level sync target in localStorage for now
     try {
       const key = `hd2.sync.github.target.${noteId}`
+      clearLastSyncedSha(noteId)
       window.localStorage.setItem(
         key,
         JSON.stringify({
