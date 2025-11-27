@@ -7,6 +7,7 @@
  */
 import { NewNoteButton } from '../../common/new-note-button/new-note-button'
 import { SettingsButton } from '../../global-dialogs/settings-dialog/settings-button'
+import { GithubSyncQuickActions } from './app-bar-elements/github-sync-quick-actions'
 import { BrandingElement } from './app-bar-elements/branding-element'
 import { HelpDropdown } from './app-bar-elements/help-dropdown/help-dropdown'
 import { UserElement } from './app-bar-elements/user-element'
@@ -38,6 +39,7 @@ export const BaseAppBar: React.FC<PropsWithChildren<BaseAppBarProps>> = ({ child
         <div className={'d-flex gap-2'}>
           <HelpDropdown />
           <SettingsButton />
+          <GithubSyncQuickActions />
           <NewNoteButton />
           <UserElement />
         </div>
