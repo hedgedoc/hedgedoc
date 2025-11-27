@@ -476,6 +476,26 @@
         },
         "inconsistent": "This permission is overridden by another permission"
       },
+      "summary": {
+        "button": "Summary",
+        "title": "AI Summary",
+        "controls": "Controls",
+        "lengthLabel": "Summary Length",
+        "lengthShort": "Short (2-3 sentences)",
+        "lengthMedium": "Medium (1-2 paragraphs)",
+        "lengthLong": "Long (detailed)",
+        "result": "Summary",
+        "generate": "Generate Summary",
+        "generating": "Generating...",
+        "check": "Check for Issues",
+        "checking": "Checking...",
+        "issuesResult": "Issues Found",
+        "missingText": "No content to analyze",
+        "issuesNone": "No issues found.",
+        "checkError": "Failed to check for issues. Please try again.",
+        "error": "Failed to generate summary. Please try again.",
+        "placeholder": "Select an action to analyze your document"
+      },
       "shareLink": {
         "title": "Share link",
         "editorDescription": "This link points to this note in the editor as you currently see it.",
@@ -694,6 +714,10 @@
         "light": {
           "tooltip": "Switch to light mode",
           "label": "Light"
+        },
+        "hackmd": {
+          "tooltip": "Dark editor with light preview (HackMD style)",
+          "label": "HackMD"
         },
         "browser": {
           "tooltip": "Let browser decide",

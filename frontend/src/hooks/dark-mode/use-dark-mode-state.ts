@@ -23,6 +23,14 @@ export const useDarkModeState = (): boolean => {
       return false
     }
 
-    return preference === DarkModePreference.DARK || (preference === DarkModePreference.AUTO && isBrowserPreferringDark)
+    return preference === DarkModePreference.DARK || preference === DarkModePreference.HACKMD || (preference === DarkModePreference.AUTO && isBrowserPreferringDark)
   }, [preference, printModeEnabled, isBrowserPreferringDark])
+}
+
+/**
+ * Check if HackMD theme mode is active (dark editor, light preview).
+ */
+export const useIsHackMDMode = (): boolean => {
+  const preference = useApplicationState((state) => state.darkMode.darkModePreference)
+  return preference === DarkModePreference.HACKMD
 }

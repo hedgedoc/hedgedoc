@@ -27,6 +27,7 @@
   "dependencies": {
     "@azure/storage-blob": "12.25.0",
     "@hedgedoc/commons": "workspace:commons",
+    "@huggingface/inference": "^4.13.2",
     "@mrdrogdrog/optional": "1.2.1",
     "@nestjs/common": "10.4.16",
     "@nestjs/config": "3.3.0",
