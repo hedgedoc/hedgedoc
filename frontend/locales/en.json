@@ -371,9 +371,7 @@
       },
       "rawHtml": "Raw HTML",
       "markdown-file": "Markdown file",
-      "print": "Print",
-      "pdf": "Export to PDF",
-      "pdfHint": "In the print dialog, select 'Save as PDF' or 'Microsoft Print to PDF' as your printer destination to save as a PDF file."
+      "print": "Print"
     },
     "import": {
       "clipboard": "Clipboard",
