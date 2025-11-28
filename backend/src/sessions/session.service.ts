@@ -16,13 +16,14 @@ import { HEDGEDOC_SESSION } from '../utils/session';
 import { KeyvSessionStore } from './keyv-session-store';
 import { SessionState as ImportedSessionState } from './session-state.type';
 import { Session } from './session.entity';
+import { ProviderType } from '@hedgedoc/commons'; // Ensure correct import
 
 export interface SessionState {
   /** Details about the currently used session cookie */
-  cookie: unknown;
+  cookie: Cookie; // Updated to match expected type
 
-  /** Contains the username if logged in completely, is undefined when not being logged in */
-  username?: string;
+  /** The user id associated with the session */
+  userId?: string;
 
   /** The auth provider that is used for the current login or pending login */
   authProviderType?: ProviderType;
