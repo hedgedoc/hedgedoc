@@ -47,3 +47,10 @@ export class SessionGuard implements CanActivate {
     return true;
   }
 }
+
+export interface RequestWithSession {
+  session: {
+    userId?: number;
+    authProviderType?: string;
+  };
+}
