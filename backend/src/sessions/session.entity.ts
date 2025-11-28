@@ -1,5 +1,5 @@
 export interface Session {
   id: string;
-  userId?: string;
+  userId?: number;
   data: Record<string, any>;
 }
