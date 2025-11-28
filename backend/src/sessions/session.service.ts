@@ -14,7 +14,7 @@ import authConfiguration, { AuthConfig } from '../config/auth.config';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { HEDGEDOC_SESSION } from '../utils/session';
 import { KeyvSessionStore } from './keyv-session-store';
-import { SessionState } from './session-state.type';
+import { SessionState as ImportedSessionState } from './session-state.type';
 import { Session } from './session.entity';
 
 export interface SessionState {
