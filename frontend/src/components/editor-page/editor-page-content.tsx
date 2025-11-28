@@ -19,6 +19,7 @@ import React, { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import './print.scss'
 import { usePrintKeyboardShortcut } from './hooks/use-print-keyboard-shortcut'
+import { GithubSyncBridge } from './sync/github-sync-bridge'
 
 export enum ScrollSource {
   EDITOR = 'editor',
@@ -67,6 +68,7 @@ export const EditorPageContent: React.FC = () => {
   return (
     <ChangeEditorContentContextProvider>
       <ExtensionEventEmitterProvider>
+        <GithubSyncBridge />
         {editorExtensionComponents}
         <CommunicatorImageLightbox />
         <PrintWarning />

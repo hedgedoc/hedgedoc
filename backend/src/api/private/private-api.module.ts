@@ -14,6 +14,7 @@ import { MediaModule } from '../../media/media.module';
 import { NoteModule } from '../../notes/note.module';
 import { PermissionsModule } from '../../permissions/permissions.module';
 import { RevisionsModule } from '../../revisions/revisions.module';
+import { SummaryModule } from '../../summary/summary.module';
 import { UsersModule } from '../../users/users.module';
 import { AliasController } from './alias/alias.controller';
 import { ApiTokensController } from './api-tokens/api-tokens.controller';
@@ -25,9 +26,11 @@ import { OidcController } from './auth/oidc/oidc.controller';
 import { ConfigController } from './config/config.controller';
 import { GroupsController } from './groups/groups.controller';
 import { MeController } from './me/me.controller';
+import { GithubTokenController } from './me/github-token.controller';
 import { MediaController } from './media/media.controller';
 import { NotesController } from './notes/notes.controller';
 import { UsersController } from './users/users.controller';
+import { SummaryController } from '../../summary/summary.controller';
 
 @Module({
   imports: [
@@ -41,6 +44,7 @@ import { UsersController } from './users/users.controller';
     AuthModule,
     GroupsModule,
     NoteModule,
+    SummaryModule,
   ],
   controllers: [
     ApiTokensController,
@@ -48,6 +52,7 @@ import { UsersController } from './users/users.controller';
     GuestController,
     MediaController,
     MeController,
+    GithubTokenController,
     NotesController,
     AliasController,
     AuthController,
@@ -56,6 +61,7 @@ import { UsersController } from './users/users.controller';
     LdapController,
     LocalController,
     OidcController,
+    SummaryController,
   ],
 })
 export class PrivateApiModule {}

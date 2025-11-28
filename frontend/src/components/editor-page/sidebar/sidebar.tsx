@@ -13,7 +13,9 @@ import { PermissionsSidebarEntry } from './specific-sidebar-entries/permissions-
 import { PinNoteSidebarEntry } from './specific-sidebar-entries/pin-note-sidebar-entry/pin-note-sidebar-entry'
 import { RevisionSidebarEntry } from './specific-sidebar-entries/revisions-sidebar-entry/revision-sidebar-entry'
 import { ShareNoteSidebarEntry } from './specific-sidebar-entries/share-note-sidebar-entry/share-note-sidebar-entry'
+import { SummarySidebarEntry } from './specific-sidebar-entries/summary-sidebar-entry/summary-sidebar-entry'
 import { UsersOnlineSidebarMenu } from './specific-sidebar-entries/users-online-sidebar-menu/users-online-sidebar-menu'
+import { SyncSidebarMenu } from './specific-sidebar-entries/sync-sidebar-menu/sync-sidebar-menu'
 import styles from './style/sidebar.module.scss'
 import { DocumentSidebarMenuSelection } from './types'
 import React, { useCallback, useRef, useState } from 'react'
@@ -68,11 +70,17 @@ export const Sidebar: React.FC = () => {
           selectedMenuId={selectedMenu}
           onClick={toggleValue}
         />
+        <SyncSidebarMenu
+          menuId={DocumentSidebarMenuSelection.SYNC}
+          selectedMenuId={selectedMenu}
+          onClick={toggleValue}
+        />
         <ExportSidebarMenu
           menuId={DocumentSidebarMenuSelection.EXPORT}
           selectedMenuId={selectedMenu}
           onClick={toggleValue}
         />
+        <SummarySidebarEntry hide={selectionIsNotNone} />
         <ShareNoteSidebarEntry hide={selectionIsNotNone} />
         {isOwner && <DeleteNoteSidebarEntry hide={selectionIsNotNone} />}
         <PinNoteSidebarEntry hide={selectionIsNotNone} />

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import { DarkModePreference } from '../../../../redux/dark-mode/types'
 import { useSendToRenderer } from '../../../render-page/window-post-message-communicator/hooks/use-send-to-renderer'
 import { CommunicationMessageType } from '../../../render-page/window-post-message-communicator/rendering-message'
 import { useMemo } from 'react'
@@ -23,7 +24,10 @@ export const useSendAdditionalConfigurationToRenderer = (rendererReady: boolean)
         ? null
         : {
             type: CommunicationMessageType.SET_ADDITIONAL_CONFIGURATION,
-            darkModePreference: darkModePreference,
+            // Force light mode in renderer when HackMD mode is active
+            darkModePreference: darkModePreference === DarkModePreference.HACKMD 
+              ? DarkModePreference.LIGHT 
+              : darkModePreference,
             newLinesAreBreaks: newlinesAreBreaks
           }
     }, [darkModePreference, newlinesAreBreaks]),

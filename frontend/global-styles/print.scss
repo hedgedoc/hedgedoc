@@ -8,6 +8,11 @@
     display: none;
   }
 
+  // Hide table of contents in print/PDF
+  nav.table-of-contents, .table-of-contents, .toc, [class*="toc"], [class*="table-of-contents"] {
+    display: none !important;
+  }
+
   a[href] {
     border-bottom: none;
     text-decoration: none;
@@ -41,19 +46,99 @@
     -webkit-print-color-adjust: exact;
   }
 
-  h1, h2, h3, h4, h5 {
+  h1, h2, h3, h4, h5, h6 {
     break-after: avoid;
     page-break-after: avoid;
   }
 
-  table, figure, p, img, ul, ol, pre, code  {
+  table, figure, p, img, ul, ol, pre, code, blockquote, svg, video, iframe, canvas {
     break-inside: avoid;
     page-break-inside: avoid;
+  }
+
+  img, svg, video, canvas, iframe {
+    max-width: 100%;
+    max-height: 90vh;
+    height: auto !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    break-before: auto;
+    page-break-before: auto;
+    break-after: auto;
+    page-break-after: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  figure, .image-container, .figure-container, picture {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    break-before: auto;
+    page-break-before: auto;
+    display: block;
+    margin-bottom: 0.5em;
+    
+    img {
+      max-width: 100%;
+      max-height: 90vh;
+      height: auto !important;
+      width: auto !important;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
+  p {
+    img {
+      display: block;
+      max-width: 100%;
+      max-height: 90vh;
+      height: auto !important;
+      margin: 0.5em auto;
+    }
+  }
+
+  blockquote {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  // Ensure lightbox images print correctly
+  .lightbox, .lightbox-container, [data-lightbox] {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    display: block !important;
+    position: static !important;
+    
+    img {
+      max-width: 100% !important;
+      max-height: 85vh !important;
+      height: auto !important;
+      width: auto !important;
+      display: block !important;
+      margin: 0.5em auto !important;
+      object-fit: contain !important;
+      position: static !important;
+    }
+  }
+
+  // Ensure markdown images render properly
+  .markdown-body, .markdown-renderer, .markdown-content {
+    img {
+      max-width: 100% !important;
+      max-height: 85vh !important;
+      height: auto !important;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      display: block;
+      margin: 0.5em auto;
+    }
   }
 
   @page {
     padding: 1.5cm;
     margin: 1cm auto;
+    size: A4;
   }
 
   .print-only {

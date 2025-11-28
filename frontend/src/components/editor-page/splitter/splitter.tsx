@@ -10,6 +10,7 @@ import type { MouseEvent, ReactElement, TouchEvent } from 'react'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { setEditorSplitPosition } from '../../../redux/editor-config/methods'
+import { useIsHackMDMode } from '../../../hooks/dark-mode/use-dark-mode-state'
 
 export interface SplitterProps {
   left?: ReactElement
@@ -134,6 +135,7 @@ export const Splitter: React.FC<SplitterProps> = ({ additionalContainerClassName
   }, [relativeSplitValue])
 
   useKeyboardShortcuts()
+  const isHackMDMode = useIsHackMDMode()
 
   return (
     <div
@@ -152,7 +154,7 @@ export const Splitter: React.FC<SplitterProps> = ({ additionalContainerClassName
       )}
       <div
         id={'editor-edit-pane'}
-        className={styles['left']}
+        className={`${styles['left']} ${isHackMDMode ? 'hackmd-dark-editor' : ''}`}
         style={{ width: `calc(${adjustedRelativeSplitValue}% - 5px)` }}>
         <div className={styles['inner']}>{left}</div>
       </div>
@@ -167,7 +169,7 @@ export const Splitter: React.FC<SplitterProps> = ({ additionalContainerClassName
       />
       <div
         id={'editor-view-pane'}
-        className={styles['right']}
+        className={`${styles['right']} ${isHackMDMode ? 'hackmd-light-preview' : ''}`}
         style={{ width: `calc(100% - ${adjustedRelativeSplitValue}%)` }}>
         <div className={styles['inner']}>{right}</div>
       </div>

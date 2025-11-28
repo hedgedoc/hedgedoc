@@ -8,7 +8,12 @@ import { useCallback } from 'react'
 import React, { Fragment } from 'react'
 import { BaseAppBar } from '../../../../../components/layout/app-bar/base-app-bar'
 import { ButtonGroup } from 'react-bootstrap'
-import { Eye as IconEye, FileText as IconFileText, WindowSplit as IconWindowSplit } from 'react-bootstrap-icons'
+import {
+  Eye as IconEye,
+  FileText as IconFileText,
+  WindowSplit as IconWindowSplit,
+  Printer as IconPrinter
+} from 'react-bootstrap-icons'
 import { IconButton } from '../../../../../components/common/icon-button/icon-button'
 import { setEditorSplitPosition } from '../../../../../redux/editor-config/methods'
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'

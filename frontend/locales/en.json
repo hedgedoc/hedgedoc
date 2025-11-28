@@ -291,7 +291,9 @@
       },
       "rawHtml": "Raw HTML",
       "markdown-file": "Markdown file",
-      "print": "Print"
+      "print": "Print",
+      "pdf": "Export to PDF",
+      "pdfHint": "In the print dialog, select 'Save as PDF' or 'Microsoft Print to PDF' as your printer destination to save as a PDF file."
     },
     "import": {
       "clipboard": "Clipboard",
@@ -395,6 +397,26 @@
           "button": "Change the owner of this note"
         },
         "inconsistent": "This permission is overridden by another permission"
+      },
+      "summary": {
+        "button": "Summary",
+        "title": "AI Summary",
+        "controls": "Controls",
+        "lengthLabel": "Summary Length",
+        "lengthShort": "Short (2-3 sentences)",
+        "lengthMedium": "Medium (1-2 paragraphs)",
+        "lengthLong": "Long (detailed)",
+        "result": "Summary",
+        "generate": "Generate Summary",
+        "generating": "Generating...",
+        "check": "Check for Issues",
+        "checking": "Checking...",
+        "issuesResult": "Issues Found",
+        "missingText": "No content to analyze",
+        "issuesNone": "No issues found.",
+        "checkError": "Failed to check for issues. Please try again.",
+        "error": "Failed to generate summary. Please try again.",
+        "placeholder": "Select an action to analyze your document"
       },
       "shareLink": {
         "title": "Share link",
@@ -561,6 +583,15 @@
     "noteDeleted": {
       "title": "Note '{{noteTitle}}' deleted",
       "text": "You were redirected to the history page, because the note you just edited was deleted."
+    },
+    "sync": {
+      "configureTargetFirst": "Configure GitHub sync in the sidebar before using these actions.",
+      "pullSuccess": "Fetched the latest version from GitHub.",
+      "pullFailed": "Pulling from GitHub failed. Check your token, branch or network connection.",
+      "pushSuccess": "Pushed the current note to GitHub.",
+      "pushFailed": "Pushing to GitHub failed. Try pulling the latest version and resolve conflicts.",
+      "noChanges": "Nothing to push. Remote content already matches this note.",
+      "conflictDetected": "Remote file changed since your last sync. Pull the latest version before pushing again."
     }
   },
   "realtime": {
@@ -613,6 +644,10 @@
         "light": {
           "tooltip": "Switch to light mode",
           "label": "Light"
+        },
+        "hackmd": {
+          "tooltip": "Dark editor with light preview (HackMD style)",
+          "label": "HackMD"
         },
         "browser": {
           "tooltip": "Let browser decide",

@@ -32,7 +32,8 @@ export enum DocumentSidebarMenuSelection {
   NOTE_INFO,
   MEDIA_BROWSER,
   IMPORT,
-  EXPORT
+  EXPORT,
+  SYNC
 }
 
 export interface SpecificSidebarMenuProps {
