@@ -90,6 +90,7 @@ const routes: Routes = [
       }),
     }),
     ConfigModule.forRoot({
+      envFilePath: ['../.env', '.env'],
       load: [
         appConfig,
         noteConfig,

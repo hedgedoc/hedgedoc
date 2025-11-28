@@ -1,8 +1,7 @@
+// Consolidated FullUserInfoDto declaration
 export interface FullUserInfoDto {
   username: string;
-  email?: string;
-  displayName?: string;
+  displayName: string;
+  email?: string | null;
+  photoUrl?: string | null;
 }
-// Placeholder for FullUserInfoDto
-type FullUserInfoDto = any;
-export { FullUserInfoDto };

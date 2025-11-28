@@ -29,6 +29,8 @@ export function setupSessionMiddleware(
       cookie: {
         // Handle session duration in seconds instead of ms
         maxAge: authConfig.session.lifetime * 1000,
+        // Ensure OAuth redirects send cookies back on top-level navigations
+        sameSite: 'lax',
       },
       resave: false,
       saveUninitialized: false,

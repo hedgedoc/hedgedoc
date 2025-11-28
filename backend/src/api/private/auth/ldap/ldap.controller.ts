@@ -72,12 +72,10 @@ export class LdapController {
       return LdapLoginResponseDto.create({ newUser: false });
     } catch (error) {
       if (error instanceof NotInDBError) {
-        request.session.pendingUser = {
-          authProviderType: AuthProviderType.LDAP,
-          authProviderIdentifier: ldapIdentifier,
-          confirmationData: userInfo,
-          providerUserId: userInfo.id,
-        };
+        request.session.providerUserId = userInfo.id;
+        request.session.authProviderType = AuthProviderType.LDAP;
+        request.session.authProviderIdentifier = ldapIdentifier;
+        request.session.newUserData = userInfo;
         return LdapLoginResponseDto.create({ newUser: true });
       }
       this.logger.error(`Error during LDAP login: ${String(error)}`);

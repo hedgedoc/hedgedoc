@@ -13,10 +13,11 @@ import type { NoteInterface } from '@hedgedoc/commons'
 /**
  * Builds a {@link NoteDetails} redux state from a DTO received as an API response.
  * @param dto The first DTO received from the API containing the relevant information about the note.
+ * @param noteId The ID of the note being loaded.
  * @return An updated {@link NoteDetails} redux state.
  */
-export const buildStateFromServerInterface = (dto: NoteInterface): NoteDetails => {
-  const newState = convertNoteInterfaceToNoteDetails(dto)
+export const buildStateFromServerInterface = (dto: NoteInterface, noteId: string): NoteDetails => {
+  const newState = convertNoteInterfaceToNoteDetails(dto, noteId)
   return buildStateFromUpdatedMarkdownContent(newState, newState.markdownContent.plain)
 }
 
@@ -24,13 +25,15 @@ export const buildStateFromServerInterface = (dto: NoteInterface): NoteDetails =
  * Converts a note DTO from the HTTP API to a {@link NoteDetails} object.
  * Note that the documentContent will be set but the markdownContent and rawFrontmatterContent are yet to be processed.
  * @param note The NoteDTO as defined in the backend.
+ * @param noteId The ID of the note being loaded.
  * @return The NoteDetails object corresponding to the DTO.
  */
-const convertNoteInterfaceToNoteDetails = (note: NoteInterface): NoteDetails => {
+const convertNoteInterfaceToNoteDetails = (note: NoteInterface, noteId: string): NoteDetails => {
   const stateWithMetadata = buildStateFromMetadataUpdate(initialState, note.metadata)
   const newLines = note.content.split('\n')
   return {
     ...stateWithMetadata,
+    id: noteId,
     markdownContent: {
       plain: note.content,
       lines: newLines,

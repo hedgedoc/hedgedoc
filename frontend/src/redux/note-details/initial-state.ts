@@ -7,6 +7,7 @@ import type { NoteDetails } from './types'
 import { defaultNoteFrontmatter } from '@hedgedoc/commons'
 
 export const initialState: NoteDetails = {
+  id: '',
   lastUpdatedBy: null,
   version: 0,
   markdownContent: {

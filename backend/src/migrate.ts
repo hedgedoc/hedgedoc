@@ -32,22 +32,27 @@ export async function runMigrations(
   const knex: Knex = app.get<Knex>(knexConnectionToken);
   logger.log('Checking for pending database migrations... ', 'runMigrations');
   try {
+    logger.log('Attempting to list migrations...', 'runMigrations');
     const [completedMigrations, pendingMigrations] =
       (await knex.migrate.list()) as [CompletedMigration[], PendingMigration[]];
+    logger.log('Successfully listed migrations.', 'runMigrations');
+
     logger.log(
       `Found ${completedMigrations.length} already completed migrations and ${pendingMigrations.length} pending migrations.`,
       'runMigrations',
     );
+
     for (const migration of completedMigrations) {
       logger.log(
         `Already applied migration '${migration.name}'`,
         'runMigrations',
       );
     }
+
     for (const migration of pendingMigrations) {
       logger.log(`Applying migration '${migration.file}'`, 'runMigrations');
       await knex.migrate.up();
-      logger.log('✅', 'runMigrations');
+      logger.log(`Successfully applied migration '${migration.file}'`, 'runMigrations');
     }
   } catch (error: unknown) {
     logger.error(`Error while migrating database: ${String(error)}`);

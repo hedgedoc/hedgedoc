@@ -19,7 +19,7 @@ export const useLoadNoteFromServer = (noteId: string | undefined): [AsyncState<b
       throw new Error('Invalid id')
     }
     const noteFromServer = await getNote(noteId)
-    setNoteDataFromServer(noteFromServer)
+    setNoteDataFromServer(noteFromServer, noteId)
     return true
   }, [noteId])
 }

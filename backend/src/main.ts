@@ -43,12 +43,13 @@ async function bootstrap(): Promise<void> {
     process.exit(1);
   }
 
-  // Call common setup function which handles the rest
-  // Setup code must be added there!
+  logger.log('Starting setupApp...', 'AppBootstrap');
   await setupApp(app, appConfig, authConfig, mediaConfig, logger);
+  logger.log('Completed setupApp.', 'AppBootstrap');
 
-  // Start the server
+  logger.log(`Starting server on port ${appConfig.backendPort}...`, 'AppBootstrap');
   await app.listen(appConfig.backendPort);
+  logger.log(`Server is running on port ${appConfig.backendPort}.`, 'AppBootstrap');
 }
 
 void bootstrap();

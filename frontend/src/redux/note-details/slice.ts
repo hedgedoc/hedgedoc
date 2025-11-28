@@ -19,8 +19,8 @@ const noteDetailsSlice = createSlice({
   name: 'noteDetails',
   initialState,
   reducers: {
-    setNoteDataFromServer(_, action: PayloadAction<NoteInterface>) {
-      return buildStateFromServerInterface(action.payload)
+    setNoteDataFromServer(_, action: PayloadAction<{ note: NoteInterface; noteId: string }>) {
+      return buildStateFromServerInterface(action.payload.note, action.payload.noteId)
     },
     setNoteContent(state, action: PayloadAction<string>) {
       return buildStateFromUpdatedMarkdownContent(state, action.payload)

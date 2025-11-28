@@ -206,36 +206,44 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
       setSelectedFilePath('')
       return
     }
+    
     if (entry.type === 'file') {
       setSelectedFilePath(entry.path)
       return
     }
   }
   const onDoneSelection = (): void => {
-    if (!noteId || !selectedRepoFullName || !selectedBranch || !selectedFilePath) {
+    if (!noteId) {
+      console.error('noteId is missing from Redux state')
       return
     }
+    
+    if (!selectedRepoFullName || !selectedBranch || !selectedFilePath) {
+      console.error('Incomplete selection:', {
+        selectedRepoFullName,
+        selectedBranch,
+        selectedFilePath
+      })
+      return
+    }
+    
     const { owner, repo } = parseOwnerRepo(selectedRepoFullName)
+    
     // Save note-level sync target in localStorage for now
     try {
       const key = `hd2.sync.github.target.${noteId}`
       clearLastSyncedSha(noteId)
-      window.localStorage.setItem(
-        key,
-        JSON.stringify({
-          owner,
-          repo,
-          branch: selectedBranch,
-          path: selectedFilePath,
-          savedAt: new Date().toISOString()
-        })
-      )
-      console.log('GitHub sync target saved:', key, {
+      
+      const syncConfig = {
         owner,
         repo,
         branch: selectedBranch,
-        path: selectedFilePath
-      })
+        path: selectedFilePath,
+        savedAt: new Date().toISOString()
+      }
+      
+      window.localStorage.setItem(key, JSON.stringify(syncConfig))
+      
       // Dispatch multiple events to ensure components pick up the change
       window.dispatchEvent(new CustomEvent('hd2.sync.github.updated'))
       window.dispatchEvent(new StorageEvent('storage', {
@@ -245,8 +253,13 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
       }))
     } catch (error) {
       console.error('Failed to save GitHub sync target:', error)
+      return
     }
-    onHide?.()
+    
+    // Close the modal
+    if (onHide) {
+      onHide()
+    }
   }
 
   return (
@@ -394,7 +407,10 @@ export const GithubSyncModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
             <Button variant={'secondary'} onClick={() => setStep(SyncStep.REPOSITORY)}>
               Back
             </Button>
-            <Button variant={'success'} disabled={selectedFilePath.length === 0} onClick={onDoneSelection}>
+            <Button 
+              variant={'success'} 
+              disabled={selectedFilePath.length === 0} 
+              onClick={onDoneSelection}>
               Done
             </Button>
           </>

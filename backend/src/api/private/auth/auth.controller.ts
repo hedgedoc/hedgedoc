@@ -38,27 +38,31 @@ export class AuthController {
     this.logger.setContext(AuthController.name);
   }
 
-  @UseGuards(SessionGuard)
   @Delete('logout')
   @OpenApi(200, 400, 401)
   logout(@Req() request: RequestWithSession): LogoutResponseDto {
+    // Make logout idempotent and tolerant of missing/expired sessions
     let logoutUrl: string | null = null;
-    if (request.session.authProviderType === AuthProviderType.OIDC) {
-      logoutUrl = this.oidcService.getLogoutUrl(request);
-    }
-    request.session.destroy((err) => {
-      if (err) {
-        this.logger.error(
-          'Error during logout:' + String(err),
-          undefined,
-          'logout',
-        );
-        throw new InternalServerErrorException('Unable to log out');
+    try {
+      if (request.session?.authProviderType === AuthProviderType.OIDC) {
+        logoutUrl = this.oidcService.getLogoutUrl(request);
       }
-    });
-    return LogoutResponseDto.create({
-      redirect: logoutUrl || '/',
-    });
+      if (request.session?.destroy) {
+        request.session.destroy((err) => {
+          if (err) {
+            this.logger.error(
+              'Error during logout:' + String(err),
+              undefined,
+              'logout',
+            );
+          }
+        });
+      }
+    } catch (err) {
+      // Never fail the logout call for clients; just log it
+      this.logger.error('Unexpected error during logout: ' + String(err), undefined, 'logout');
+    }
+    return LogoutResponseDto.create({ redirect: logoutUrl || '/' });
   }
 
   @Get('pending-user')
@@ -66,12 +70,10 @@ export class AuthController {
   getPendingUserData(
     @Req() request: RequestWithSession,
   ): Partial<PendingUserInfoDto> {
-    if (!request.session.pendingUser?.confirmationData) {
+    if (!request.session.newUserData) {
       throw new BadRequestException('No pending user data');
     }
-    return PendingUserInfoDto.create(
-      request.session.pendingUser.confirmationData,
-    );
+    return PendingUserInfoDto.create(request.session.newUserData);
   }
 
   @Put('pending-user')
@@ -81,33 +83,33 @@ export class AuthController {
     @Body() pendingUserConfirmationData: PendingUserConfirmationDto,
   ): Promise<void> {
     if (
-      !request.session.pendingUser?.confirmationData ||
-      !request.session.pendingUser?.authProviderType ||
-      !request.session.pendingUser?.authProviderIdentifier ||
-      !request.session.pendingUser?.providerUserId
+      !request.session.newUserData ||
+      !request.session.authProviderType ||
+      !request.session.authProviderIdentifier ||
+      !request.session.providerUserId
     ) {
       throw new BadRequestException('No pending user data');
     }
-    request.session.userId =
-      await this.identityService.createUserWithIdentityFromPendingUserConfirmation(
-        request.session.pendingUser.confirmationData,
-        pendingUserConfirmationData,
-        request.session.pendingUser.authProviderType,
-        request.session.pendingUser.authProviderIdentifier,
-        request.session.pendingUser.providerUserId,
-      );
-    request.session.authProviderType =
-      request.session.pendingUser.authProviderType;
-    request.session.authProviderIdentifier =
-      request.session.pendingUser.authProviderIdentifier;
+    const identity = await this.identityService.createUserWithIdentityFromPendingUserConfirmation(
+      request.session.newUserData as PendingUserInfoDto,
+      pendingUserConfirmationData,
+      request.session.authProviderType,
+      request.session.authProviderIdentifier,
+      request.session.providerUserId,
+    );
+    request.session.userId = identity;
     // Cleanup
-    request.session.pendingUser = undefined;
+    request.session.newUserData = undefined;
+    request.session.providerUserId = undefined;
   }
 
   @Delete('pending-user')
   @OpenApi(204, 400)
   deletePendingUserData(@Req() request: RequestWithSession): void {
-    request.session.pendingUser = undefined;
-    request.session.oidc = undefined;
+    request.session.newUserData = undefined;
+    request.session.providerUserId = undefined;
+    request.session.oidcLoginCode = undefined;
+    request.session.oidcLoginState = undefined;
+    request.session.oidcIdToken = undefined;
   }
 }

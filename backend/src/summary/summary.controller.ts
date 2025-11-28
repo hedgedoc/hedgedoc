@@ -14,7 +14,6 @@ import { SummaryCheckResponseDto } from './summary-check-response.dto';
 import { SummaryService } from './summary.service';
 
 @UseGuards(SessionGuard)
-@OpenApi(401)
 @ApiTags('summary')
 @Controller('summary')
 export class SummaryController {
@@ -26,7 +25,7 @@ export class SummaryController {
   }
 
   @Post()
-  @OpenApi(200, 400, 500)
+  @OpenApi()
   async generateSummary(
     @Body() summaryRequest: SummaryRequestDto,
   ): Promise<SummaryResponseDto> {
@@ -42,7 +41,7 @@ export class SummaryController {
   }
 
   @Post('check')
-  @OpenApi(200, 400, 500)
+  @OpenApi()
   async checkForIssues(
     @Body() summaryRequest: SummaryRequestDto,
   ): Promise<SummaryCheckResponseDto> {

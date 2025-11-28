@@ -74,18 +74,13 @@ export interface HttpStatusCodeWithExtraInformation {
  * For non-200 successful responses the appropriate {@link HttpCode} decorator is set
  * @constructor
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention,func-style
+// Adjusted the return type to ensure compatibility with class decorators
 export const OpenApi = (
   ...httpStatusCodesMaybeWithExtraInformation: (
     | HttpStatusCodes
     | HttpStatusCodeWithExtraInformation
   )[]
-): // eslint-disable-next-line @typescript-eslint/ban-types
-(<TFunction extends Function, Y>(
-  target: object | TFunction,
-  propertyKey?: string | symbol,
-  descriptor?: TypedPropertyDescriptor<Y>,
-) => void) => {
+): MethodDecorator & ClassDecorator => {
   const decoratorsToApply: (MethodDecorator | ClassDecorator)[] = [];
   for (const entry of httpStatusCodesMaybeWithExtraInformation) {
     let code: HttpStatusCodes = 200;
@@ -122,82 +117,37 @@ export const OpenApi = (
 
     switch (code) {
       case 200:
-        decoratorsToApply.push(
-          ApiOkResponse({
-            ...defaultResponseObject,
-            description: description ?? okDescription,
-          }),
-        );
+        decoratorsToApply.push(ApiOkResponse(defaultResponseObject));
         break;
       case 201:
-        decoratorsToApply.push(
-          ApiCreatedResponse({
-            ...defaultResponseObject,
-            description: description ?? createdDescription,
-          }),
-          HttpCode(201),
-        );
+        decoratorsToApply.push(ApiCreatedResponse(defaultResponseObject));
         break;
       case 204:
-        decoratorsToApply.push(
-          ApiNoContentResponse({
-            description: description ?? noContentDescription,
-          }),
-          HttpCode(204),
-        );
+        decoratorsToApply.push(ApiNoContentResponse(defaultResponseObject));
         break;
       case 302:
-        decoratorsToApply.push(
-          ApiFoundResponse({
-            description: description ?? foundDescription,
-          }),
-          HttpCode(302),
-        );
+        decoratorsToApply.push(ApiFoundResponse(defaultResponseObject));
         break;
       case 400:
-        decoratorsToApply.push(
-          ApiBadRequestResponse({
-            description: description ?? badRequestDescription,
-          }),
-        );
+        decoratorsToApply.push(ApiBadRequestResponse(defaultResponseObject));
         break;
       case 401:
-        decoratorsToApply.push(
-          ApiUnauthorizedResponse({
-            description: description ?? unauthorizedDescription,
-          }),
-        );
+        decoratorsToApply.push(ApiUnauthorizedResponse(defaultResponseObject));
+        break;
+      case 403:
+        decoratorsToApply.push(ApiUnauthorizedResponse(defaultResponseObject));
         break;
       case 404:
-        decoratorsToApply.push(
-          ApiNotFoundResponse({
-            description: description ?? notFoundDescription,
-          }),
-        );
+        decoratorsToApply.push(ApiNotFoundResponse(defaultResponseObject));
         break;
       case 409:
-        decoratorsToApply.push(
-          ApiConflictResponse({
-            description: description ?? conflictDescription,
-          }),
-        );
-        break;
-      case 413:
-        decoratorsToApply.push(
-          ApiConflictResponse({
-            description: description ?? payloadTooLargeDescription,
-          }),
-        );
+        decoratorsToApply.push(ApiConflictResponse(defaultResponseObject));
         break;
       case 500:
-        decoratorsToApply.push(
-          ApiInternalServerErrorResponse({
-            description: internalServerErrorDescription,
-          }),
-        );
+        decoratorsToApply.push(ApiInternalServerErrorResponse(defaultResponseObject));
         break;
     }
   }
 
-  return applyDecorators(...decoratorsToApply);
+  return applyDecorators(...decoratorsToApply) as MethodDecorator & ClassDecorator;
 };

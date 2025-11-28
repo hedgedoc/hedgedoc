@@ -17,6 +17,7 @@ import { KeyvSessionStore } from './keyv-session-store';
 import { SessionState as ImportedSessionState } from './session-state.type';
 import { Session } from './session.entity';
 import { AuthProviderType } from '@hedgedoc/commons'; // Ensure correct import
+import { FullUserInfoDto } from '../types/full-user-info.dto';
 
 export interface SessionState {
   /** Details about the currently used session cookie */
@@ -48,6 +49,12 @@ export interface SessionState {
 
   /** The GitHub access token for sync functionality (stored securely in session) */
   githubAccessToken?: string;
+
+  /** Force session save method */
+  save?: (callback?: (err?: any) => void) => void;
+
+  /** Force session destroy method */
+  destroy?: (callback?: (err?: any) => void) => void;
 }
 
 /**

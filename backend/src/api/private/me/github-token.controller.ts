@@ -8,7 +8,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard, RequestWithSession } from '../../../auth/session.guard';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
-import { OpenApi } from '../../utils/openapi.decorator';
+import { OpenApi } from '../../utils/decorators/openapi.decorator';
 
 export interface GithubTokenResponseDto {
   hasToken: boolean;
@@ -16,7 +16,7 @@ export interface GithubTokenResponseDto {
 }
 
 @UseGuards(SessionGuard)
-@OpenApi(401)
+@OpenApi()
 @ApiTags('me')
 @Controller('me/github-token')
 export class GithubTokenController {
@@ -25,10 +25,10 @@ export class GithubTokenController {
   }
 
   @Get()
-  @OpenApi(200)
+  @OpenApi()
   getGithubToken(@Req() request: RequestWithSession): GithubTokenResponseDto {
     const token = request.session?.githubAccessToken;
-    
+
     if (token) {
       this.logger.debug(
         'GitHub access token retrieved from session for sync functionality',
@@ -40,12 +40,6 @@ export class GithubTokenController {
       };
     }
 
-    this.logger.debug(
-      'No GitHub access token found in session',
-      'getGithubToken',
-    );
-    return {
-      hasToken: false,
-    };
+    return { hasToken: false };
   }
 }

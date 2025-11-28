@@ -30,15 +30,19 @@ export async function setupApp(
   mediaConfig: MediaConfig,
   logger: ConsoleLoggerService,
 ): Promise<void> {
-  // Setup OpenAPI documentation
+  logger.log('setupApp: start', 'AppBootstrap');
+  logger.log('setupApp: setting up public API docs...', 'AppBootstrap');
   await setupPublicApiDocs(app);
   if (isDevMode()) {
+    logger.log('setupApp: setting up private API docs...', 'AppBootstrap');
     await setupPrivateApiDocs(app);
   }
 
+  logger.log('setupApp: running database migrations...', 'AppBootstrap');
   await runMigrations(app, logger);
 
   // Setup session handling
+  logger.log('setupApp: configuring session middleware...', 'AppBootstrap');
   setupSessionMiddleware(
     app,
     authConfig,
@@ -46,6 +50,7 @@ export async function setupApp(
   );
 
   // Enable web security aspects
+  logger.log('setupApp: enabling CORS...', 'AppBootstrap');
   app.enableCors({
     origin: appConfig.rendererBaseUrl,
   });
@@ -58,9 +63,11 @@ export async function setupApp(
   // TODO Add common security headers and CSRF (#201)
 
   // Setup class-validator for incoming API request data
+  logger.log('setupApp: registering validation pipes...', 'AppBootstrap');
   app.useGlobalPipes(setupValidationPipe(logger));
 
   // Map URL paths to directories
+  logger.log('setupApp: configuring static assets...', 'AppBootstrap');
   if (mediaConfig.backend.use === MediaBackendType.FILESYSTEM) {
     logger.log(
       `Serving the local folder '${mediaConfig.backend.filesystem.uploadPath}' under '/uploads'`,
@@ -81,10 +88,13 @@ export async function setupApp(
   //  only use-cases for now are intro.md and motd.md which could be API endpoints as well
 
   // Configure WebSocket and error message handling
+  logger.log('setupApp: configuring global filters and websocket adapter...', 'AppBootstrap');
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new ErrorExceptionMapping(logger, httpAdapter));
   app.useWebSocketAdapter(new WsAdapter(app));
 
   // Enable hooks on app shutdown, like saving notes into the database
+  logger.log('setupApp: enabling shutdown hooks...', 'AppBootstrap');
   app.enableShutdownHooks();
+  logger.log('setupApp: done', 'AppBootstrap');
 }

@@ -12,6 +12,7 @@ import {
 
 import { CompleteRequest } from '../api/utils/request.type';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { Session } from 'express-session';
 
 /**
  * This guard checks if a session is present.
@@ -49,8 +50,5 @@ export class SessionGuard implements CanActivate {
 }
 
 export interface RequestWithSession {
-  session: {
-    userId?: number;
-    authProviderType?: string;
-  };
+  session: Session;
 }

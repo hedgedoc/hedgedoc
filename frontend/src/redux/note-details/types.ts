@@ -12,6 +12,7 @@ type UnnecessaryNoteAttributes = 'tags' | 'description'
  * Redux state containing the currently loaded note with its content and metadata.
  */
 export interface NoteDetails extends Omit<NoteMetadataInterface, UnnecessaryNoteAttributes> {
+  id: string
   markdownContent: {
     plain: string
     lines: string[]

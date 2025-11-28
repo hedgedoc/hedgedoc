@@ -21,9 +21,10 @@ export const setNoteContent = (content: string): void => {
 /**
  * Sets the note metadata for the current note from an API response DTO to the redux.
  * @param apiResponse The NoteDTO received from the API to store into redux.
+ * @param noteId The ID of the note being loaded.
  */
-export const setNoteDataFromServer = (apiResponse: NoteInterface): void => {
-  const action = noteDetailsActionsCreator.setNoteDataFromServer(apiResponse)
+export const setNoteDataFromServer = (apiResponse: NoteInterface, noteId: string): void => {
+  const action = noteDetailsActionsCreator.setNoteDataFromServer({ note: apiResponse, noteId })
   store.dispatch(action)
 }
 

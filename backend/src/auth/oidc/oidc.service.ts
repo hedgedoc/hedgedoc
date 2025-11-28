@@ -186,8 +186,8 @@ export class OidcService {
     const client = clientConfig.client;
     const oidcConfig = clientConfig.config;
     const params = client.callbackParams(request);
-    const code = request.session.oidc?.loginCode;
-    const state = request.session.oidc?.loginState;
+    const code = request.session.oidcLoginCode;
+    const state = request.session.oidcLoginState;
     const isAutodiscovered = clientConfig.config.authorizeUrl === undefined;
     const callbackMethod = isAutodiscovered
       ? client.callback.bind(client)
@@ -241,12 +241,9 @@ export class OidcService {
       photoUrl: photoUrl ?? null,
       email: email ?? null,
     };
-    request.session.pendingUser = {
-      authProviderType: AuthProviderType.OIDC,
-      authProviderIdentifier: oidcIdentifier,
-      providerUserId: userId,
-      confirmationData: newUserData,
-    };
+    // Store provider user ID directly in session for callback
+    request.session.providerUserId = userId;
+    request.session.newUserData = newUserData;
     return PendingUserInfoDto.create(newUserData);
   }
 
@@ -307,7 +304,7 @@ export class OidcService {
     }
     const issuer = clientConfig.issuer;
     const endSessionEndpoint = issuer.metadata.end_session_endpoint;
-    const idToken = request.session.oidc?.idToken;
+    const idToken = request.session.oidcIdToken;
     if (!endSessionEndpoint) {
       return null;
     }
