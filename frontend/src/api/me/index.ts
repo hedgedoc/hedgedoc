@@ -5,7 +5,7 @@
  */
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
-import type { UpdateUserInfoInterface, LoginUserInfoInterface, MediaUploadInterface } from '@hedgedoc/commons'
+import type { UpdateUserInfoInterface, LoginUserInfoInterface, MediaUploadInterface, NoteMetadataInterface } from '@hedgedoc/commons'
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
 
 /**
@@ -52,5 +52,16 @@ export const updateUser = async (displayName: string | null, email: string | nul
  */
 export const getMyMedia = async (): Promise<MediaUploadInterface[]> => {
   const response = await new GetApiRequestBuilder<MediaUploadInterface[]>('me/media').sendRequest()
+  return response.asParsedJsonObject()
+}
+
+/**
+ * Retrieves a list of notes owned by the user.
+ *
+ * @return List of note metadata.
+ * @throws {Error} when the api request wasn't successful.
+ */
+export const getMyNotes = async (): Promise<NoteMetadataInterface[]> => {
+  const response = await new GetApiRequestBuilder<NoteMetadataInterface[]>('me/notes').sendRequest()
   return response.asParsedJsonObject()
 }

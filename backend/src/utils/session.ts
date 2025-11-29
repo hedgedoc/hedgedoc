@@ -29,10 +29,16 @@ export function setupSessionMiddleware(
       cookie: {
         // Handle session duration in seconds instead of ms
         maxAge: authConfig.session.lifetime * 1000,
-        // Ensure OAuth redirects send cookies back on top-level navigations
+        // Explicitly set path to root so cookie is sent with all requests
+        path: '/',
+        // Allow cookie to be sent over HTTP (not just HTTPS) for local development
+        secure: false,
+        // Prevent client-side JavaScript from accessing the cookie
+        httpOnly: true,
+        // Allow cookie to be sent with cross-origin requests from same site
         sameSite: 'lax',
       },
-      resave: false,
+      resave: true,
       saveUninitialized: false,
       store: sessionStore,
     }),

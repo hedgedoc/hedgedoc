@@ -491,4 +491,19 @@ export class NoteService {
       });
     });
   }
+
+  /**
+   * Get all notes owned by a user with their metadata
+   *
+   * @param userId The id of the user who owns the notes
+   * @returns Array of note metadata for notes owned by the user
+   */
+  async getUserNotes(userId: number): Promise<NoteMetadataDto[]> {
+    const noteIds = await this.getUserNoteIds(userId);
+    return await this.knex.transaction(async (transaction) => {
+      return await Promise.all(
+        noteIds.map((noteId) => this.toNoteMetadataDto(noteId, transaction)),
+      );
+    });
+  }
 }

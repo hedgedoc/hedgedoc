@@ -47,6 +47,7 @@
     "class-transformer": "0.5.1",
     "class-validator": "0.14.1",
     "cli-color": "2.0.4",
+    "connect-typeorm": "2.0.0",
     "cookie": "1.0.2",
     "diff": "7.0.0",
     "express-session": "1.18.1",
