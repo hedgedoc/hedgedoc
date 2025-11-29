@@ -12,6 +12,7 @@ import { Lightbulb as IconLightbulb } from 'react-bootstrap-icons'
 import { MarkdownToReact } from '../../../../markdown-renderer/markdown-to-react/markdown-to-react'
 import { useMarkdownExtensions } from '../../../../markdown-renderer/hooks/use-markdown-extensions'
 import { RendererType } from '../../../../render-page/window-post-message-communicator/rendering-message'
+import { useDarkModeState } from '../../../../../hooks/dark-mode/use-dark-mode-state'
 
 interface SummaryModalProps extends ModalVisibilityProps {}
 
@@ -31,6 +32,22 @@ export const SummaryModal: React.FC<SummaryModalProps> = ({ show, onHide }) => {
   const [summaryLength, setSummaryLength] = useState<SummaryLength>('medium')
   
   const extensions = useMarkdownExtensions('/', RendererType.SIMPLE, [])
+  const isDarkMode = useDarkModeState()
+  const resultBoxStyle = useMemo(
+    () =>
+      isDarkMode
+        ? {
+            backgroundColor: '#1f1f1f',
+            color: '#f8f9fa',
+            border: '1px solid rgba(255,255,255,0.15)'
+          }
+        : {
+            backgroundColor: '#f8f9fa',
+            color: '#212529',
+            border: '1px solid rgba(0,0,0,0.05)'
+          },
+    [isDarkMode]
+  )
   
   // Convert summary text to markdown lines for rendering
   const summaryLines = useMemo(() => (summary ? summary.split('\n') : []), [summary])
@@ -196,7 +213,7 @@ export const SummaryModal: React.FC<SummaryModalProps> = ({ show, onHide }) => {
                 <h5 className="mb-3">
                   <Trans i18nKey='editor.modal.summary.result' />
                 </h5>
-                <div className="p-3 bg-light rounded markdown-body">
+                <div className="p-3 rounded markdown-body" style={resultBoxStyle}>
                   <MarkdownToReact
                     markdownContentLines={summaryLines}
                     markdownRenderExtensions={extensions}
@@ -212,7 +229,7 @@ export const SummaryModal: React.FC<SummaryModalProps> = ({ show, onHide }) => {
                 <h5 className="mb-3">
                   <Trans i18nKey='editor.modal.summary.issuesResult' />
                 </h5>
-                <div className="p-3 bg-light rounded markdown-body">
+                <div className="p-3 rounded markdown-body" style={resultBoxStyle}>
                   <MarkdownToReact
                     markdownContentLines={issuesLines}
                     markdownRenderExtensions={extensions}
