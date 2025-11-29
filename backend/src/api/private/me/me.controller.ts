@@ -10,8 +10,10 @@ import { ApiTags } from '@nestjs/swagger';
 import { SessionGuard } from '../../../auth/session.guard';
 import { LoginUserInfoDto } from '../../../dtos/login-user-info.dto';
 import { MediaUploadDto } from '../../../dtos/media-upload.dto';
+import { NoteMetadataDto } from '../../../dtos/note-metadata.dto';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
+import { NoteService } from '../../../notes/note.service';
 import { UsersService } from '../../../users/users.service';
 import { OpenApi } from '../../utils/decorators/openapi.decorator';
 import { RequestUserId } from '../../utils/decorators/request-user-id.decorator';
@@ -26,6 +28,7 @@ export class MeController {
     private readonly logger: ConsoleLoggerService,
     private userService: UsersService,
     private mediaService: MediaService,
+    private noteService: NoteService,
   ) {
     this.logger.setContext(MeController.name);
   }
@@ -46,6 +49,14 @@ export class MeController {
     const mediaUuids =
       await this.mediaService.getMediaUploadUuidsByUserId(userId);
     return await this.mediaService.getMediaUploadDtosByUuids(mediaUuids);
+  }
+
+  @Get('notes')
+  @OpenApi(200)
+  async getMyNotes(
+    @RequestUserId() userId: number,
+  ): Promise<NoteMetadataDto[]> {
+    return await this.noteService.getUserNotes(userId);
   }
 
   @Delete()
