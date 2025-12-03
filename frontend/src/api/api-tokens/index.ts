@@ -31,7 +31,7 @@ export const postNewAccessToken = async (label: string, validUntil: Date): Promi
   const response = await new PostApiRequestBuilder<ApiTokenWithSecretInterface, ApiTokenCreateInterface>('tokens')
     .withJsonBody({
       label,
-      validUntil
+      validUntil: validUntil.toISOString()
     })
     .sendRequest()
   return response.asParsedJsonObject()

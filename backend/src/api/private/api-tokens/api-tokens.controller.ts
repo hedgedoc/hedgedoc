@@ -51,10 +51,14 @@ export class ApiTokensController {
     @Body() createDto: ApiTokenCreateDto,
     @RequestUserId({ forbidGuests: true }) userId: User[FieldNameUser.id],
   ): Promise<ApiTokenWithSecretDto> {
+    let validUntil: DateTime | undefined = undefined;
+    if (createDto.validUntil !== undefined) {
+      validUntil = DateTime.fromISO(createDto.validUntil, { zone: 'UTC' });
+    }
     return await this.apiTokenService.createToken(
       userId,
       createDto.label,
-      DateTime.fromISO(createDto.validUntil),
+      validUntil,
     );
   }
 
