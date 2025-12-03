@@ -16,6 +16,7 @@
 - Force kill the server after a timeout when waiting for the realtime server to close connections on shutdown
 - Secure iframes with `credentialless` and `sandbox` attributes
 - Fix regexes for `[time=...]`, `[name=...]` and `[color=...]` shortcodes in lists
+- Use `state` parameter for OAuth2 flows and PKCE where applicable
 
 ## <i class="fa fa-tag"></i> 1.10.3 <i class="fa fa-calendar-o"></i> 2025-04-09
 

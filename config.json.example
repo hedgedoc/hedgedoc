@@ -106,6 +106,19 @@
                "email": "change or delete this: attribute map for `email` (default: NameID)"
             }
         },
+        "oauth2": {
+          "baseURL": "https://auth.example.com/",
+          "userProfileURL": "https://auth.example.com/oauth2/userinfo/",
+          "tokenURL": "https://auth.example.com/oauth2/token/",
+          "authorizationURL": "https://auth.example.com/oauth2/authorize/",
+          "clientID": "change-this-id",
+          "clientSecret": "change-this-secret",
+          "scope": "openid profile user",
+          "userProfileUsernameAttr": "preferred_username",
+          "userProfileEmailAttr": "email",
+          "userProfileDisplayNameAttr": "name",
+          "pkce": true
+        },
         "imgur": {
             "clientID": "change this"
         },
