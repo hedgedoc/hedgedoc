@@ -461,7 +461,7 @@ export function finishView (view) {
       inner.attr('target', '_blank')
       $(value).append(inner)
     })
-    // pdf
+  // pdf
   view.find('div.pdf.raw').removeClass('raw')
     .each(function (key, value) {
       const url = $(value).attr('data-pdfurl')
@@ -471,7 +471,12 @@ export function finishView (view) {
         height: '400px'
       })
     })
-    // syntax highlighting
+  // iframe
+  view.find('iframe')
+    .each((key, value) => {
+      $(value).attr('credentialless', '').attr('sandbox', '')
+    })
+  // syntax highlighting
   view.find('code.raw').removeClass('raw')
     .each((key, value) => {
       const langDiv = $(value)
