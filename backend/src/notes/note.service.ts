@@ -220,7 +220,7 @@ export class NoteService {
     const isForbidden = this.aliasService.isAliasForbidden(alias);
     if (isForbidden) {
       throw new ForbiddenIdError(
-        `The note id or alias '${alias}' is forbidden by the administrator.`,
+        `The alias '${alias}' is forbidden by the administrator.`,
       );
     }
 
