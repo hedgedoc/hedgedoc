@@ -19,8 +19,8 @@
     "test:watch": "jest --watch",
     "test:ci": "jest --coverage --runInBand",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config jest-e2e.json && rimraf test_uploads*",
-    "test:e2e:ci": "jest --config jest-e2e.json --coverage && rimraf test_uploads*",
+    "test:e2e": "jest --config jest-e2e.json",
+    "test:e2e:ci": "jest --config jest-e2e.json --coverage",
     "knex": "tsx ../node_modules/.bin/knex --migrations-directory src/database/migrations --knexfile ./knexfile.ts"
   },
   "dependencies": {
