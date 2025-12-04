@@ -8,6 +8,7 @@ import request from 'supertest';
 import { PUBLIC_API_PREFIX } from '../../src/app.module';
 import { AliasCreateDto } from '../../src/dtos/alias-create.dto';
 import { AliasUpdateDto } from '../../src/dtos/alias-update.dto';
+import { NotInDBError } from '../../src/errors/errors';
 import { noteAlias1, TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Alias', () => {
@@ -32,7 +33,7 @@ describe('Alias', () => {
   });
 
   describe(`POST ${PUBLIC_API_PREFIX}/alias`, () => {
-    it('create with normal alias', async () => {
+    it('create normal alias', async () => {
       const normalNewAlias = 'normal-new-alias';
       const newAliasDto: AliasCreateDto = {
         noteAlias: noteAlias1,
@@ -49,13 +50,13 @@ describe('Alias', () => {
       expect(metadata.body.name).toEqual(normalNewAlias);
       expect(metadata.body.isPrimaryAlias).toBe(false);
 
-      const note = await agent
-        .get(`${PUBLIC_API_PREFIX}/notes/${normalNewAlias}`)
-        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
-        .expect(200);
+      const noteId =
+        await testSetup.notesService.getNoteIdByAlias(normalNewAlias);
+      const noteMetadata =
+        await testSetup.notesService.toNoteMetadataDto(noteId);
 
-      expect(note.body.metadata.aliases).toContainEqual(normalNewAlias);
-      expect(note.body.metadata.primaryAlias).toEqual(noteAlias1);
+      expect(noteMetadata.aliases).toContainEqual(normalNewAlias);
+      expect(noteMetadata.primaryAlias).toEqual(noteAlias1);
     });
 
     describe('does not create an alias', () => {
@@ -195,20 +196,18 @@ describe('Alias', () => {
         secondAlias,
       );
 
-      await agent
-        .get(`${PUBLIC_API_PREFIX}/notes/${secondAlias}`)
-        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
-        .expect(200);
+      const noteIdBefore =
+        await testSetup.notesService.getNoteIdByAlias(secondAlias);
+      expect(noteIdBefore).toBeDefined();
 
       await agent
         .delete(`${PUBLIC_API_PREFIX}/alias/${secondAlias}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect(204);
 
-      await agent
-        .get(`${PUBLIC_API_PREFIX}/notes/${secondAlias}`)
-        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
-        .expect(404);
+      await expect(
+        testSetup.notesService.getNoteIdByAlias(secondAlias),
+      ).rejects.toThrow(NotInDBError);
     });
 
     describe('does not delete', () => {
@@ -245,10 +244,9 @@ describe('Alias', () => {
           .delete(`${PUBLIC_API_PREFIX}/alias/${noteAlias1}`)
           .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
           .expect(400);
-        await agent
-          .get(`${PUBLIC_API_PREFIX}/notes/${secondAlias}`)
-          .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
-          .expect(200);
+        const noteId =
+          await testSetup.notesService.getNoteIdByAlias(secondAlias);
+        expect(noteId).toBeDefined();
       });
       it('if no token is provided', async () => {
         await agent
