@@ -146,7 +146,7 @@ describe('ApiTokenService', () => {
             {
               [FieldNameApiToken.secretHash]: 'foo',
               [FieldNameApiToken.userId]: userId,
-              [FieldNameApiToken.validUntil]: 1,
+              [FieldNameApiToken.validUntil]: '01.01.2020T00:00:00',
             },
           ],
         );
@@ -175,7 +175,7 @@ describe('ApiTokenService', () => {
           {
             [FieldNameApiToken.secretHash]: 'foo',
             [FieldNameApiToken.userId]: userId,
-            [FieldNameApiToken.validUntil]: 1,
+            [FieldNameApiToken.validUntil]: '01.01.2020T00:00:00',
           },
         ],
       );

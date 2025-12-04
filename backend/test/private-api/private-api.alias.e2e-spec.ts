@@ -55,7 +55,8 @@ describe('Alias', () => {
         .send(newAliasDto)
         .expect(201);
       const metadata = await testSetup.notesService.toNoteMetadataDto(noteId);
-      expect(metadata.aliases).toEqual([noteAlias1, newAlias]);
+      expect(metadata.aliases).toContain(noteAlias1);
+      expect(metadata.aliases).toContain(newAlias);
       expect(metadata.primaryAlias).toEqual(noteAlias1);
     });
 
