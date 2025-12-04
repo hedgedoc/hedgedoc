@@ -191,8 +191,10 @@ export class RevisionsService {
       await transaction(TableRevision)
         .whereIn(FieldNameRevision.uuid, idsToDelete)
         .delete();
-      const notePrimaryAlias =
-        await this.aliasService.getPrimaryAliasByNoteId(noteId);
+      const notePrimaryAlias = await this.aliasService.getPrimaryAliasByNoteId(
+        noteId,
+        transaction,
+      );
       const newPatch = createPatch(
         notePrimaryAlias,
         '',
