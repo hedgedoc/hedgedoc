@@ -1459,7 +1459,7 @@ __metadata:
     clean-webpack-plugin: "npm:4.0.0"
     compression: "npm:1.8.1"
     connect-flash: "npm:0.1.1"
-    connect-session-sequelize: "npm:8.0.2"
+    connect-session-sequelize: "npm:8.0.4"
     cookie: "npm:1.0.2"
     cookie-parser: "npm:1.4.7"
     copy-webpack-plugin: "npm:6.4.1"
@@ -4114,14 +4114,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"connect-session-sequelize@npm:8.0.2":
-  version: 8.0.2
-  resolution: "connect-session-sequelize@npm:8.0.2"
+"connect-session-sequelize@npm:8.0.4":
+  version: 8.0.4
+  resolution: "connect-session-sequelize@npm:8.0.4"
   dependencies:
     debug: "npm:^4.4.1"
   peerDependencies:
     sequelize: ">= 6.37.7"
-  checksum: 10/56b45664e4540b5b8de8fb04ce35f4991c5519c395423899dd9af607d1341c64b781deebb78d4094b128b0ed07221ada73e9cfba533906af57bfdffde49a7936
+  checksum: 10/c7cca8eb82307e334cacf283076aa964f2a6cefe4447d156ff06c84262213c8f06b0c336c9a10eae297573360994c893b89b27a463f4952605e0e24b571c105f
   languageName: node
   linkType: hard
 
