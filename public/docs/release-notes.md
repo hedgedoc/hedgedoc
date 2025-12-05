@@ -1,6 +1,12 @@
 # Release Notes
 
-## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
+## <i class="fa fa-tag"></i> 1.10.4 <i class="fa fa-calendar-o"></i> 2025-12-05
+
+### Security fixes
+
+This release contains two low severity security fixes:
+- [GHSA-gmgw-rcmh-7x47](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-gmgw-rcmh-7x47) reports potential cross-site side-effects due to not applying sandboxing to iframes.
+- [GHSA-6wm6-3vpq-6qvv](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-6wm6-3vpq-6qvv) reports a possible CSRF vulnerability when using certain social login providers because the `state` parameter is not used and checked.
 
 ### Enhancements
 - Add `enableUploads` (`CMD_ENABLE_UPLOADS`) config option to restrict uploads to `registered` users, `all` users or
@@ -9,6 +15,7 @@
 - Switch from deprecated shortid to nanoid module, with 10 character long aliases in "public" links
 - Ensure compatibility with Node 24
 - Protect user history from accidental or malicious deletion by adding a CSRF-like token
+- Many enhancements in the documentation at [docs.hedgedoc.org](https://docs.hedgedoc.org)
 
 ### Bugfixes
 - Ignore the healthcheck endpoint in the "too busy" limiter
@@ -17,6 +24,20 @@
 - Secure iframes with `credentialless` and `sandbox` attributes
 - Fix regexes for `[time=...]`, `[name=...]` and `[color=...]` shortcodes in lists
 - Use `state` parameter for OAuth2 flows and PKCE where applicable
+
+### Node compatibility
+- Support for Node 24 was verified. The docker image now uses Node 24 as its base image.
+
+### Contributors
+- [Nora Matthias Schiffer](https://github.com/neocturne) (#6096)
+- [4censord](https://github.com/4censord) (#6102)
+- [Zachery Faria](https://github.com/ZacheryFaria) (#6105)
+- [pl7ofit](https://github.com/pl7ofit) (#6106)
+- [Lars Kiesow](https://github.com/lkiesow) (#6107)
+- [Kim Brose](https://github.com/HarHarLinks) (#6114)
+- [Achilleas Pipinellis](https://github.com/axilleas) (#6119)
+- [Andreas Boesen](https://github.com/Happy86) (#6148, #6149)
+- [Thary](https://github.com/tharynot) (#6155)
 
 ## <i class="fa fa-tag"></i> 1.10.3 <i class="fa fa-calendar-o"></i> 2025-04-09
 

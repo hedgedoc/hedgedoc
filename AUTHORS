@@ -1,6 +1,7 @@
 # This file lists all individuals having contributed content to the repository.
 # To regenerate, use `git log --format='%aN <%aE>' | LC_ALL=C.UTF-8 sort -uf`.
 
+Achilleas Pipinellis <axilleas@users.noreply.github.com>
 Adam Hoka <hoka.adam@nexogen.hu>
 Adam Worley <28906234+AdamWorley@users.noreply.github.com>
 alecdwm <alec@owls.io>
@@ -8,6 +9,7 @@ Alex Garcia <alexsebastian.garcia@gmail.com>
 Alexander Hesse <alexander.hesse@sandstorm-media.de>
 Alexander Wellbrock <a.wellbrock@mailbox.org>
 Amolith <amolith@nixnet.xyz>
+Andreas Boesen <618847+Happy86@users.noreply.github.com>
 Antoine Aflalo <antoine@warrantymaster.com>
 aptalca <aptalca@users.noreply.github.com>
 Augustin Trancart <augustin.trancart@oslandia.com>
@@ -31,6 +33,7 @@ Colin Maudry <colin@maudry.com>
 CrazyPython <CrazyPython@users.noreply.github.com>
 Cédric Couralet <cedric.couralet@gmail.com>
 Daan Sprenkels <hello@dsprenkels.com>
+Daniel Koschützki <daniel.koschuetzki@adfinis.com>
 Daniel Lublin <daniel@lublin.se>
 Danilo Bargen <mail@dbrgn.ch>
 Dario Ernst <daddel9@nebuk.de>
@@ -90,9 +93,11 @@ Julian Rother <julian@jrother.eu>
 Jun SAKATA <jun.bj141400@gmail.com>
 Juned Khan <junedkhanc101@gmail.com>
 Kaiyu Shi <skyisno.1@gmail.com>
+Kim Brose <2803622+HarHarLinks@users.noreply.github.com>
 knjcode <knjcode@gmail.com>
 Kotaro Yamamoto <kota.crk@gmail.com>
 Lars Karlsson <lars@kajes.se>
+Lars Kiesow <lkiesow@uos.de>
 Laura Kyle <laura.kyle91@gmail.com>
 Lautaro Alvarez <lautarolalvarez@gmail.com>
 LaysDragon <laysdra7265@gmail.com>
@@ -172,6 +177,7 @@ Stratos Gerakakis <stratosgear@gmail.com>
 Stéphane Guillou <stephane.guillou@member.fsf.org>
 Stéphane Maniaci <stephane.maniaci@beta.gouv.fr>
 Takeaki Matsumoto <takeaki.matsumoto@ntt.com>
+Thary <thary@riseup.net>
 The Gitter Badger <badger@gitter.im>
 Thomas De Backer <thomasisdebacker5@gmail.com>
 Thor77 <thor77@thor77.org>
@@ -196,6 +202,7 @@ xnum <s000032001@gmail.com>
 Yannick Bungers <git@innay.de>
 Yukai Huang <yukaihuangtw@gmail.com>
 zachariast <zachariastraianos@gmail.com>
+Zachery Faria <zacheryfaria@gmail.com>
 Zankio <xxoojoeooxx1@gmail.com>
 Zearin <Zearin@users.noreply.github.com>
 Ádám Hóka <hoka.adam@nexogen.hu>
