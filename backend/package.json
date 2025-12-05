@@ -63,7 +63,7 @@
     "node-fetch": "2.7.0",
     "openid-client": "5.7.1",
     "pg": "8.13.1",
-    "raw-body": "3.0.0",
+    "raw-body": "3.0.2",
     "reflect-metadata": "0.2.2",
     "rimraf": "6.0.1",
     "rxjs": "7.8.1",
