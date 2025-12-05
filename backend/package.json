@@ -78,7 +78,7 @@
     "@nestjs/schematics": "10.2.3",
     "@nestjs/testing": "10.4.15",
     "@trivago/prettier-plugin-sort-imports": "4.3.0",
-    "@tsconfig/node18": "18.2.4",
+    "@tsconfig/node18": "18.2.6",
     "@types/better-sqlite3": "7.6.12",
     "@types/cli-color": "2.0.6",
     "@types/cookie": "1.0.0",
