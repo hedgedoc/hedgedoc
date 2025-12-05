@@ -110,7 +110,7 @@ and put this into your config:
   "password": "hd1db",
   "database": "hd1db",
   "host": "localhost",
-  "port": "5432",
+  "port": "3306",
   "dialect": "mariadb"
 },
 ```
@@ -144,6 +144,26 @@ Click in them an try to play around with them. Don't just check they exist and s
 ### Working YAML-Meta
 
 - [ ] Testing each option if it works
+
+```
+---
+title: yaml metadata testing
+description: This is a test description
+tags: features, cool, updated
+robots: noindex, nofollow
+lang: en-US
+dir: rtl
+breaks: false
+type: slide
+slideOptions:
+  transition: fade
+  theme: white
+opengraph:
+  title: Special title for OpenGraph protocol
+  image: https://dummyimage.com/600x600/000/fff
+  image:type: image/png
+---
+```
 
 ### GDPR features
 
@@ -195,11 +215,13 @@ Click in them an try to play around with them. Don't just check they exist and s
   "scope": "openid profile user",
   "userProfileUsernameAttr": "preferred_username",
   "userProfileEmailAttr": "email",
-  "userProfileDisplayNameAttr": "name"
+  "userProfileDisplayNameAttr": "name",
+  "pkce": true
 }
 ```
 - [ ] GitHub
-- [ ] Rate-limiting for basic user/password
+- [ ] Rate-limiting for basic user/password (try to login with e.g. test@example.com and invalid password about 10 to 15 times in a row -> you should receive a message "Too many requests" at some point)
+
 
 ## Release:
 
