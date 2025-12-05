@@ -2964,7 +2964,7 @@ __metadata:
     picocolors: "npm:1.1.1"
     prettier: "npm:3.7.4"
     react: "npm:18.3.1"
-    react-bootstrap: "npm:2.10.9"
+    react-bootstrap: "npm:2.10.10"
     react-bootstrap-icons: "npm:1.11.5"
     react-bootstrap-typeahead: "npm:6.3.4"
     react-diff-viewer: "npm:3.1.1"
@@ -17285,9 +17285,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-bootstrap@npm:2.10.9":
-  version: 2.10.9
-  resolution: "react-bootstrap@npm:2.10.9"
+"react-bootstrap@npm:2.10.10":
+  version: 2.10.10
+  resolution: "react-bootstrap@npm:2.10.10"
   dependencies:
     "@babel/runtime": "npm:^7.24.7"
     "@restart/hooks": "npm:^0.4.9"
@@ -17309,7 +17309,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10c0/96a198ee97fc6f8f1cbd68bd97daae3509561fd4613b53a55eeb170d138a8dd78cc336c679fee4adb146427d5cc92cd03256793099431984e8f91fd20210a8c8
+  checksum: 10c0/7d515ca782398a267809f0e62b8cb9b94a9c5190c7cdeb974d54365ac445c3280872258722a95ee753f2e124c0354a875e167c17dcb93138cf16c633681925d6
   languageName: node
   linkType: hard
 
