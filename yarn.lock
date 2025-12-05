@@ -2905,7 +2905,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:8.14.0"
     "@uiw/react-codemirror": "npm:4.23.8"
     abcjs: "npm:6.4.4"
-    bootstrap: "npm:5.3.3"
+    bootstrap: "npm:5.3.8"
     copy-webpack-plugin: "npm:12.0.2"
     cross-env: "npm:7.0.3"
     csstype: "npm:3.1.3"
@@ -7954,12 +7954,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bootstrap@npm:5.3.3":
-  version: 5.3.3
-  resolution: "bootstrap@npm:5.3.3"
+"bootstrap@npm:5.3.8":
+  version: 5.3.8
+  resolution: "bootstrap@npm:5.3.8"
   peerDependencies:
     "@popperjs/core": ^2.11.8
-  checksum: 10c0/bb68ca7b763977b9cce40cb5b8c676ae19a716d2f5d15009fa7bdbcec9dea426968e3cb748fbed7592fbf10edd7c749aea841c2920996a7c1aa5e0a6e2d4c2ad
+  checksum: 10c0/0039a9df2c3e7bfa04f1abca199c299ff3b75869d578c0cb1721c6f1f203c91531788a5631ecbee01513481979314d0e4ba0d90c2011e6ce18fc2e0bc93e18d9
   languageName: node
   linkType: hard
 
