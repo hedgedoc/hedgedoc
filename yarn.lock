@@ -2979,7 +2979,7 @@ __metadata:
     sass: "npm:1.80.7"
     sharp: "npm:0.33.5"
     tlds: "npm:1.255.0"
-    ts-loader: "npm:9.5.2"
+    ts-loader: "npm:9.5.4"
     ts-mockery: "npm:1.2.0"
     ts-node: "npm:11.0.0-beta.1"
     twemoji-colr-font: "npm:15.0.3"
@@ -18862,9 +18862,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-loader@npm:9.5.2":
-  version: 9.5.2
-  resolution: "ts-loader@npm:9.5.2"
+"ts-loader@npm:9.5.4":
+  version: 9.5.4
+  resolution: "ts-loader@npm:9.5.4"
   dependencies:
     chalk: "npm:^4.1.0"
     enhanced-resolve: "npm:^5.0.0"
@@ -18874,7 +18874,7 @@ __metadata:
   peerDependencies:
     typescript: "*"
     webpack: ^5.0.0
-  checksum: 10c0/d4f4e67f1365a8c4a929d26148611b6a82a9241bd988863386c9cc0c034eec8b14562206e09540fae38154595e0b3b9520b701b5c83c0e5d743c4016cd91d9f1
+  checksum: 10c0/f0982404b43628c335d3b3a60ac3f1738385da7b97c3f04cb5ad2ebad791597be39b25c8a4e158a66173f9bd9f5aa72e285b046b0573e4beed8ecd032d418e4d
   languageName: node
   linkType: hard
 
