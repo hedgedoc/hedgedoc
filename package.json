@@ -32,7 +32,7 @@
     "clean-webpack-plugin": "4.0.0",
     "compression": "1.8.1",
     "connect-flash": "0.1.1",
-    "connect-session-sequelize": "8.0.2",
+    "connect-session-sequelize": "8.0.4",
     "cookie": "1.0.2",
     "cookie-parser": "1.4.7",
     "deep-freeze": "0.0.1",
