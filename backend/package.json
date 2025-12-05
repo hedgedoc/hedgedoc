@@ -58,7 +58,7 @@
     "markdown-it": "13.0.2",
     "minio": "8.0.6",
     "mysql2": "3.15.3",
-    "nest-knexjs": "0.0.26",
+    "nest-knexjs": "0.0.28",
     "nestjs-zod": "4.3.1",
     "node-fetch": "2.7.0",
     "openid-client": "5.7.1",
