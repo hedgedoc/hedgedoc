@@ -75,7 +75,7 @@
     "i18next": "23.16.8",
     "i18next-browser-languagedetector": "8.0.2",
     "i18next-resources-to-backend": "1.2.1",
-    "katex": "0.16.21",
+    "katex": "0.16.25",
     "luxon": "3.5.0",
     "markdown-it": "13.0.2",
     "markdown-it-abbr": "2.0.0",
