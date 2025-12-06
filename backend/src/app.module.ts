@@ -29,6 +29,7 @@ import { Loglevel } from './config/loglevel.enum';
 import mediaConfig from './config/media.config';
 import noteConfig from './config/note.config';
 import { eventModuleConfig } from './events';
+import { ExploreModule } from './explore/explore.module';
 import { FrontendConfigModule } from './frontend-config/frontend-config.module';
 import { FrontendConfigService } from './frontend-config/frontend-config.service';
 import { GroupsModule } from './groups/groups.module';
@@ -121,6 +122,7 @@ const routes: Routes = [
     SessionModule,
     MediaRedirectModule,
     MessageModule,
+    ExploreModule,
   ],
   controllers: [],
   providers: [
