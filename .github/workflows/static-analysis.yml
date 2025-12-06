@@ -23,7 +23,7 @@ jobs:
     name: Njsscan code scanning
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v4.2.2 # v4.2.2
+        uses: actions/checkout@v4.3.1
       - name: Scan with njsscan
         id: njsscan
         uses: ajinabraham/njsscan-action@c7b65a3590ade829628b2b3c87b34ac0ce666a79 # master
@@ -46,7 +46,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.2.2 # v4.2.2
+        uses: actions/checkout@v4.3.1
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@f779452ac5af1c261dce0346a8f964149f49322b # v3.26.13
