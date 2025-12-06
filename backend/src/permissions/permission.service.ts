@@ -470,15 +470,34 @@ export class PermissionService {
         );
       }
 
+      this.logger.debug(
+        `Getting permissions for note '${noteId}':`,
+        'getPermissionsDtoForNote',
+      );
+      this.logger.debug(
+        `owner: ${owner[FieldNameUser.username]}`,
+        'getPermissionsDtoForNote',
+      );
+      this.logger.debug(
+        `user permissions: ${JSON.stringify(groupPermissions)}`,
+        'getPermissionsDtoForNote',
+      );
+      this.logger.debug(
+        `group permissions: ${JSON.stringify(groupPermissions)}`,
+        'getPermissionsDtoForNote',
+      );
+
       return NotePermissionsDto.create({
         owner: owner[FieldNameUser.username],
         sharedToUsers: userPermissions.map((userPermission) => ({
           username: userPermission[FieldNameUser.username],
-          canEdit: userPermission[FieldNameNoteUserPermission.canEdit],
+          canEdit: Boolean(userPermission[FieldNameNoteUserPermission.canEdit]),
         })),
         sharedToGroups: groupPermissions.map((groupPermission) => ({
           groupName: groupPermission[FieldNameGroup.name],
-          canEdit: groupPermission[FieldNameNoteGroupPermission.canEdit],
+          canEdit: Boolean(
+            groupPermission[FieldNameNoteGroupPermission.canEdit],
+          ),
         })),
       });
     });

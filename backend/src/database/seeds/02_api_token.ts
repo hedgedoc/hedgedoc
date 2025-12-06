@@ -6,10 +6,13 @@
 import { FieldNameApiToken, TableApiToken } from '@hedgedoc/database';
 import { createHash } from 'crypto';
 import { Knex } from 'knex';
+import { DateTime } from 'luxon';
 
 export async function seed(knex: Knex): Promise<void> {
   // Clear table beforehand
   await knex(TableApiToken).del();
+
+  const validUntil = DateTime.utc().plus({ year: 1 }).toSQL();
 
   // Insert an api token
   const apiToken =
@@ -21,10 +24,8 @@ export async function seed(knex: Knex): Promise<void> {
     [FieldNameApiToken.secretHash]: createHash('sha512')
       .update(apiToken)
       .digest('hex'),
-    // Token is valid for 2 years
-    [FieldNameApiToken.validUntil]: new Date(
-      new Date().getTime() + 2 * 365 * 24 * 60 * 60 * 1000,
-    ),
-    [FieldNameApiToken.createdAt]: new Date(),
+    [FieldNameApiToken.validUntil]: validUntil,
+    [FieldNameApiToken.createdAt]: DateTime.utc().toSQL(),
+    [FieldNameApiToken.lastUsedAt]: null,
   });
 }

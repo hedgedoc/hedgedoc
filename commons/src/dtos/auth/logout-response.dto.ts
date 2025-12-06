@@ -9,8 +9,7 @@ import { z } from 'zod'
 export const LogoutResponseSchema = z
   .object({
     redirect: z
-      .string()
-      .url()
+      .union([z.string().url(), z.literal('/')])
       .describe('Where the user shall be redirected to after the logout.'),
   })
   .describe('Information the user gets after logging out.')

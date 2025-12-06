@@ -89,7 +89,7 @@ export class NoteService {
    * @param noteContent The content of the new note, in most cases an empty string
    * @param givenAlias An optional alias the note should have
    * @param ownerUserId The owner of the note
-   * @returns The newly created note
+   * @returns The id of the newly created note
    * @throws AlreadyInDBError if a note with the requested id or aliases already exists
    * @throws ForbiddenIdError if the requested id or aliases is forbidden
    * @throws MaximumDocumentLengthExceededError if the noteContent is longer than the maxDocumentLength
@@ -111,6 +111,7 @@ export class NoteService {
           {
             [FieldNameNote.ownerId]: ownerUserId,
             [FieldNameNote.version]: 2,
+            [FieldNameNote.createdAt]: DateTime.utc().toSQL(),
           },
           [FieldNameNote.id],
         );
@@ -194,6 +195,7 @@ export class NoteService {
       ?.getRealtimeDoc()
       .getCurrentContent();
     if (realtimeContent) {
+      this.logger.debug(`Found realtime note for note '${noteId}'`);
       return realtimeContent;
     }
 
@@ -218,7 +220,7 @@ export class NoteService {
     const isForbidden = this.aliasService.isAliasForbidden(alias);
     if (isForbidden) {
       throw new ForbiddenIdError(
-        `The note id or alias '${alias}' is forbidden by the administrator.`,
+        `The alias '${alias}' is forbidden by the administrator.`,
       );
     }
 
@@ -266,6 +268,10 @@ export class NoteService {
    * @throws NotInDBError if there is no note with this id or aliases
    */
   async updateNote(noteId: number, noteContent: string): Promise<void> {
+    this.logger.debug(
+      `Updating note content for note '${noteId}': ${noteContent}`,
+      'updateNote',
+    );
     this.eventEmitter.emit(NoteEvent.CLOSE_REALTIME, noteId);
     await this.revisionsService.createRevision(noteId, noteContent);
   }
@@ -445,20 +451,25 @@ export class NoteService {
       latestRevision[FieldNameRevision.uuid],
       transaction,
     );
+    this.logger.debug(`Retrieved ${updateUsers.users.length}`);
     updateUsers.users.sort();
+
+    const updatedAt = DateTime.fromSQL(
+      latestRevision[FieldNameRevision.createdAt],
+      {
+        zone: 'utc',
+      },
+    ).toISO();
 
     let lastUpdatedBy;
     let editedBy;
-    let updatedAt;
     if (updateUsers.users.length > 0) {
       const lastEdit = updateUsers.users[0];
       lastUpdatedBy = lastEdit.username;
       editedBy = updateUsers.users.map((user) => user.username);
-      updatedAt = DateTime.fromSQL(lastEdit.createdAt, { zone: 'UTC' }).toISO();
     } else {
       lastUpdatedBy = permissions.owner;
       editedBy = permissions.owner ? [permissions.owner] : [];
-      updatedAt = createdAt;
     }
 
     return NoteMetadataDto.create({

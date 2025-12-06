@@ -98,7 +98,7 @@ export class NotesController {
   }
 
   @RequirePermission(PermissionLevel.FULL)
-  @Post(':noteAlias')
+  @Post(':newNoteAlias')
   @OpenApi(
     {
       code: 201,
@@ -112,7 +112,7 @@ export class NotesController {
   )
   async createNamedNote(
     @RequestUserId() userId: number,
-    @Param('noteAlias') noteAlias: string,
+    @Param('newNoteAlias') noteAlias: string,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
     this.logger.debug('Got raw markdown:\n' + text, 'createNamedNote');
@@ -161,7 +161,7 @@ export class NotesController {
     @RequestNoteId() noteId: number,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
-    this.logger.debug('Got raw markdown:\n' + text, 'updateNote');
+    this.logger.debug('Got raw markdown: ' + text, 'updateNote');
     await this.noteService.updateNote(noteId, text);
     return await this.noteService.toNoteDto(noteId);
   }

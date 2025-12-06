@@ -30,6 +30,9 @@ export class FilesystemBackend implements MediaBackend {
       return;
     }
     this.uploadDirectory = this.mediaConfig.backend.filesystem.uploadPath;
+    this.logger.debug(
+      `Activated media backend filesystem using ${this.uploadDirectory}`,
+    );
   }
 
   async saveFile(
@@ -37,6 +40,7 @@ export class FilesystemBackend implements MediaBackend {
     buffer: Buffer,
     fileType: FileTypeResult,
   ): Promise<string> {
+    this.logger.debug(`Using ${this.uploadDirectory}`, 'saveFile');
     const filePath = this.getFilePath(uuid, fileType.ext);
     this.logger.debug(`Writing uploaded file to '${filePath}'`, 'saveFile');
     await this.ensureDirectory();

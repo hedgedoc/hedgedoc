@@ -35,12 +35,4 @@ export enum FieldNameAuthorshipInfo {
   createdAt = 'created_at',
 }
 
-type TypeAuthorshipInfoDate = Omit<
-  AuthorshipInfo,
-  FieldNameAuthorshipInfo.createdAt
-> & {
-  [FieldNameAuthorshipInfo.createdAt]: Date
-}
-
-export type TypeInsertAuthorshipInfo = TypeAuthorshipInfoDate
 export const TableAuthorshipInfo = 'authorship_info'
