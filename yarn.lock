@@ -3712,10 +3712,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lezer/common@npm:1.2.3":
-  version: 1.2.3
-  resolution: "@lezer/common@npm:1.2.3"
-  checksum: 10c0/fe9f8e111080ef94037a34ca2af1221c8d01c1763ba5ecf708a286185c76119509a5d19d924c8842172716716ddce22d7834394670c4a9432f0ba9f3b7c0f50d
+"@lezer/common@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@lezer/common@npm:1.4.0"
+  checksum: 10c0/6b7a0b5f9b969d5eb87b1a6407abf90809ed4cb290afa4ce0fd412102176144b1d01748f243b27fef1300e0444eb690a519395388cda936fbbb536fd0abb8ebc
   languageName: node
   linkType: hard
 
