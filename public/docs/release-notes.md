@@ -1,5 +1,13 @@
 # Release Notes
 
+## <i class="fa fa-tag"></i> 1.10.5 <i class="fa fa-calendar-o"></i> 2025-12-06
+
+This release is just a fix for the docker container. It does not contain any
+changes to HedgeDoc itself.
+
+### Bugfixes
+- Fix the bundled healthcheck in the docker container
+
 ## <i class="fa fa-tag"></i> 1.10.4 <i class="fa fa-calendar-o"></i> 2025-12-05
 
 ### Security fixes
