@@ -2957,7 +2957,7 @@ __metadata:
     i18next-resources-to-backend: "npm:1.2.1"
     jest: "npm:29.7.0"
     jest-environment-jsdom: "npm:29.7.0"
-    katex: "npm:0.16.25"
+    katex: "npm:0.16.27"
     luxon: "npm:3.5.0"
     markdown-it: "npm:13.0.2"
     markdown-it-abbr: "npm:2.0.0"
@@ -14694,7 +14694,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"katex@npm:0.16.25, katex@npm:^0.16.0, katex@npm:^0.16.22":
+"katex@npm:0.16.27":
+  version: 0.16.27
+  resolution: "katex@npm:0.16.27"
+  dependencies:
+    commander: "npm:^8.3.0"
+  bin:
+    katex: cli.js
+  checksum: 10c0/f5f9a8c9f422c8f798081cc3483d44f112d75f65968a643572d9cfa910b9ebcf47f3563111764b91b9298f32776dfc04ebaf950f515ff3f406f058a0b9a33c9a
+  languageName: node
+  linkType: hard
+
+"katex@npm:^0.16.0, katex@npm:^0.16.22":
   version: 0.16.25
   resolution: "katex@npm:0.16.25"
   dependencies:
