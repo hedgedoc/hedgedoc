@@ -52,7 +52,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push
-        uses: docker/build-push-action@v6.15.0 # v6.7.0
+        uses: docker/build-push-action@v6.18.0
         with:
           push: true
           file: ${{ matrix.component}}/docker/Dockerfile
