@@ -12,6 +12,7 @@ import {
   FieldNameNoteUserPermission,
   FieldNameRevision,
   FieldNameUser,
+  FieldNameVisitedNote,
   Group,
   Note,
   NoteGroupPermission,
@@ -22,6 +23,7 @@ import {
   TableNoteGroupPermission,
   TableNoteUserPermission,
   TableUser,
+  TableVisitedNote,
   User,
 } from '@hedgedoc/database';
 import { SpecialGroup } from '@hedgedoc/database';
@@ -490,5 +492,23 @@ export class NoteService {
         editedByAtPosition: [],
       });
     });
+  }
+
+  /**
+   * Marks a note as visited by a user
+   *
+   * @param noteId The id of the visited note
+   * @param userId The id of the visiting user
+   */
+  async markNoteAsVisited(noteId: number, userId: number): Promise<void> {
+    const now = DateTime.utc().toSQL({ includeOffset: false });
+    await this.knex(TableVisitedNote)
+      .insert({
+        [FieldNameVisitedNote.noteId]: noteId,
+        [FieldNameVisitedNote.userId]: userId,
+        [FieldNameVisitedNote.visitedAt]: now,
+      })
+      .onConflict([FieldNameVisitedNote.noteId, FieldNameVisitedNote.userId])
+      .merge();
   }
 }
