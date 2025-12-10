@@ -6,6 +6,7 @@
 import { registerAs } from '@nestjs/config';
 import z from 'zod';
 
+import { printConfigErrorAndExit } from './utils';
 import {
   buildErrorMessage,
   extractDescriptionFromZodIssue,
@@ -32,7 +33,8 @@ export default registerAs('externalServicesConfig', () => {
     const errorMessages = externalConfig.error.errors.map((issue) =>
       extractDescriptionFromZodIssue(issue, 'HD'),
     );
-    throw new Error(buildErrorMessage(errorMessages));
+    const errorMessage = buildErrorMessage(errorMessages);
+    return printConfigErrorAndExit(errorMessage);
   }
   return externalConfig.data;
 });

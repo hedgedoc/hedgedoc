@@ -11,7 +11,11 @@ import {
 import { registerAs } from '@nestjs/config';
 import z from 'zod';
 
-import { parseOptionalNumber, toArrayConfig } from './utils';
+import {
+  parseOptionalNumber,
+  printConfigErrorAndExit,
+  toArrayConfig,
+} from './utils';
 import {
   buildErrorMessage,
   extractDescriptionFromZodIssue,
@@ -128,7 +132,8 @@ export default registerAs('noteConfig', () => {
     const errorMessages = noteConfig.error.errors.map((issue) =>
       extractDescriptionFromZodIssue(issue, 'HD'),
     );
-    throw new Error(buildErrorMessage(errorMessages));
+    const errorMessage = buildErrorMessage(errorMessages);
+    return printConfigErrorAndExit(errorMessage);
   }
   const config = noteConfig.data;
   checkDefaultPermissions(config);

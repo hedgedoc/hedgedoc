@@ -12,7 +12,11 @@ import { registerAs } from '@nestjs/config';
 import z, { RefinementCtx } from 'zod';
 
 import { Loglevel } from './loglevel.enum';
-import { parseOptionalBoolean, parseOptionalNumber } from './utils';
+import {
+  parseOptionalBoolean,
+  parseOptionalNumber,
+  printConfigErrorAndExit,
+} from './utils';
 import {
   buildErrorMessage,
   extractDescriptionFromZodIssue,
@@ -76,7 +80,7 @@ const schema = z
       .describe('HD_BACKEND_PORT'),
     loglevel: z
       .enum(Object.values(Loglevel) as [Loglevel, ...Loglevel[]])
-      .default(Loglevel.WARN)
+      .default(Loglevel.INFO)
       .describe('HD_LOGLEVEL'),
     showLogTimestamp: z
       .boolean()
@@ -112,7 +116,8 @@ export default registerAs('appConfig', () => {
     const errorMessages = appConfig.error.errors.map((issue) =>
       extractDescriptionFromZodIssue(issue, 'HD'),
     );
-    throw new Error(buildErrorMessage(errorMessages));
+    const errorMessage = buildErrorMessage(errorMessages);
+    return printConfigErrorAndExit(errorMessage);
   }
   return appConfig.data;
 });

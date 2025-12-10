@@ -9,7 +9,7 @@ import { types as pgTypes } from 'pg';
 import z from 'zod';
 
 import { DatabaseType } from './database-type.enum';
-import { parseOptionalNumber } from './utils';
+import { parseOptionalNumber, printConfigErrorAndExit } from './utils';
 import {
   buildErrorMessage,
   extractDescriptionFromZodIssue,
@@ -72,7 +72,8 @@ export default registerAs('databaseConfig', () => {
     const errorMessages = databaseConfig.error.errors.map((issue) =>
       extractDescriptionFromZodIssue(issue, 'HD_DATABASE'),
     );
-    throw new Error(buildErrorMessage(errorMessages));
+    const errorMessage = buildErrorMessage(errorMessages);
+    return printConfigErrorAndExit(errorMessage);
   }
   return databaseConfig.data;
 });
