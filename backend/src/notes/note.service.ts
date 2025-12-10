@@ -106,7 +106,7 @@ export class NoteService {
     givenAlias?: string,
   ): Promise<number> {
     // Ensures that a new note doesn't violate application constraints
-    if (noteContent.length > this.noteConfig.maxDocumentLength) {
+    if (noteContent.length > this.noteConfig.maxLength) {
       throw new MaximumDocumentLengthExceededError();
     }
     return await this.knex.transaction(async (transaction) => {

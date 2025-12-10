@@ -261,7 +261,7 @@ export class MediaService {
    * Returns the backend type that is configured in the media configuration
    */
   private chooseBackendType(): MediaBackendType {
-    switch (this.mediaConfig.backend.use as string) {
+    switch (this.mediaConfig.backend.type as string) {
       case 'filesystem':
         return MediaBackendType.FILESYSTEM;
       case 'azure':
@@ -274,7 +274,7 @@ export class MediaService {
         return MediaBackendType.WEBDAV;
       default:
         throw new Error(
-          `Unexpected media backend ${this.mediaConfig.backend.use}`,
+          `Unexpected media backend ${this.mediaConfig.backend.type}`,
         );
     }
   }

@@ -10,7 +10,7 @@ import { BeforeApplicationShutdown, Inject, Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { SchedulerRegistry } from '@nestjs/schedule';
 
-import appConfiguration, { AppConfig } from '../../config/app.config';
+import noteConfiguration, { NoteConfig } from '../../config/note.config';
 import { NoteEvent } from '../../events';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { PermissionService } from '../../permissions/permission.service';
@@ -26,8 +26,8 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
     private readonly logger: ConsoleLoggerService,
     private realtimeNoteStore: RealtimeNoteStore,
     private schedulerRegistry: SchedulerRegistry,
-    @Inject(appConfiguration.KEY)
-    private appConfig: AppConfig,
+    @Inject(noteConfiguration.KEY)
+    private noteConfig: NoteConfig,
     private permissionService: PermissionService,
   ) {}
 
@@ -103,7 +103,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
    * @param realtimeNote The realtime note for which the timer should be started
    */
   private startPersistTimer(realtimeNote: RealtimeNote): void {
-    Optional.of(this.appConfig.persistInterval)
+    Optional.of(this.noteConfig.persistInterval)
       .filter((value) => value > 0)
       .ifPresent((persistInterval) => {
         const intervalId = setInterval(

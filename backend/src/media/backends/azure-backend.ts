@@ -36,7 +36,7 @@ export class AzureBackend implements MediaBackend {
   ) {
     this.logger.setContext(AzureBackend.name);
     // only create the backend if azure is configured
-    if (this.mediaConfig.backend.use !== MediaBackendType.AZURE) {
+    if (this.mediaConfig.backend.type !== MediaBackendType.AZURE) {
       return;
     }
     this.config = this.mediaConfig.backend.azure;

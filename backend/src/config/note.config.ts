@@ -22,31 +22,31 @@ import {
 } from './zod-error-message';
 
 const schema = z.object({
-  forbiddenNoteIds: z
+  forbiddenAliases: z
     .array(z.string().min(1))
     .optional()
     .default([])
-    .describe('HD_FORBIDDEN_NOTE_IDS'),
-  maxDocumentLength: z
+    .describe('HD_NOTE_FORBIDDEN_ALIASES'),
+  maxLength: z
     .number()
     .int()
     .positive()
     .optional()
     .default(100000)
-    .describe('HD_MAX_DOCUMENT_LENGTH'),
+    .describe('HD_NOTE_MAX_LENGTH'),
   permissions: z.object({
     maxGuestLevel: z
       .enum(PermissionLevelNames)
       .optional()
       .default(PermissionLevelNames[PermissionLevel.FULL])
-      .describe('HD_PERMISSIONS_MAX_GUEST_LEVEL')
+      .describe('HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL')
       .transform((value) => PermissionLevelValues[value]),
     default: z.object({
       everyone: z
         .enum(PermissionLevelNames)
         .optional()
         .default(PermissionLevelNames[PermissionLevel.READ])
-        .describe('HD_PERMISSIONS_DEFAULT_EVERYONE')
+        .describe('HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE')
         .refine((value) => {
           // The PermissionLevel.FULL is reserved for owner permissions in the note context and is therefore forbidden
           return value !== PermissionLevelNames[PermissionLevel.FULL];
@@ -56,7 +56,7 @@ const schema = z.object({
         .enum(PermissionLevelNames)
         .optional()
         .default(PermissionLevelNames[PermissionLevel.WRITE])
-        .describe('HD_PERMISSIONS_DEFAULT_LOGGED_IN')
+        .describe('HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN')
         .refine((value) => {
           // The PermissionLevel.FULL is reserved for owner permissions in the note context and is therefore forbidden
           return value !== PermissionLevelNames[PermissionLevel.FULL];
@@ -70,7 +70,13 @@ const schema = z.object({
     .nonnegative()
     .optional()
     .default(0)
-    .describe('HD_REVISION_RETENTION_DAYS'),
+    .describe('HD_NOTE_REVISION_RETENTION_DAYS'),
+  persistInterval: z.coerce
+    .number()
+    .int()
+    .min(0)
+    .default(10)
+    .describe('HD_NOTE_PERSIST_INTERVAL'),
 });
 
 export type NoteConfig = z.infer<typeof schema>;
@@ -89,7 +95,7 @@ function checkDefaultPermissions(config: NoteConfig): void {
   const loggedIn = config.permissions.default.loggedIn;
   if (everyone > loggedIn) {
     throw new Error(
-      `'HD_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[everyone]}', but 'HD_PERMISSIONS_DEFAULT_LOGGED_IN' is set to '${PermissionLevelNames[loggedIn]}'. This would give everyone greater permissions than logged-in users, and is not allowed since it doesn't make sense.`,
+      `'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[everyone]}', but 'HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN' is set to '${PermissionLevelNames[loggedIn]}'. This would give everyone greater permissions than logged-in users, and is not allowed since it doesn't make sense.`,
     );
   }
 }
@@ -108,29 +114,30 @@ function checkMaxGuestLevel(config: NoteConfig): void {
   const defaultEveryoneLevel = config.permissions.default.everyone;
   if (defaultEveryoneLevel > maxGuestLevel) {
     throw new Error(
-      `'HD_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[defaultEveryoneLevel]}', but 'HD_PERMISSIONS_MAX_GUEST_LEVEL' is set to '${PermissionLevelNames[maxGuestLevel]}'. This does not work since the default level may not be higher than the maximum guest level.`,
+      `'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[defaultEveryoneLevel]}', but 'HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL' is set to '${PermissionLevelNames[maxGuestLevel]}'. This does not work since the default level may not be higher than the maximum guest level.`,
     );
   }
 }
 
 export default registerAs('noteConfig', () => {
   const noteConfig = schema.safeParse({
-    forbiddenNoteIds: toArrayConfig(process.env.HD_FORBIDDEN_NOTE_IDS, ','),
-    maxDocumentLength: parseOptionalNumber(process.env.HD_MAX_DOCUMENT_LENGTH),
+    forbiddenAliases: toArrayConfig(process.env.HD_NOTE_FORBIDDEN_ALIASES, ','),
+    maxLength: parseOptionalNumber(process.env.HD_NOTE_MAX_LENGTH),
     permissions: {
-      maxGuestLevel: process.env.HD_PERMISSIONS_MAX_GUEST_LEVEL,
+      maxGuestLevel: process.env.HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL,
       default: {
-        everyone: process.env.HD_PERMISSIONS_DEFAULT_EVERYONE,
-        loggedIn: process.env.HD_PERMISSIONS_DEFAULT_LOGGED_IN,
+        everyone: process.env.HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE,
+        loggedIn: process.env.HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN,
       },
     },
     revisionRetentionDays: parseOptionalNumber(
-      process.env.HD_REVISION_RETENTION_DAYS,
+      process.env.HD_NOTE_REVISION_RETENTION_DAYS,
     ),
+    persistInterval: parseOptionalNumber(process.env.HD_NOTE_PERSIST_INTERVAL),
   });
   if (noteConfig.error) {
     const errorMessages = noteConfig.error.errors.map((issue) =>
-      extractDescriptionFromZodIssue(issue, 'HD'),
+      extractDescriptionFromZodIssue(issue, 'HD_NOTE'),
     );
     const errorMessage = buildErrorMessage(errorMessages);
     return printConfigErrorAndExit(errorMessage);

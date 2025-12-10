@@ -12,7 +12,7 @@ import { MediaConfig } from '../media.config';
 export function createDefaultMockMediaConfig(): MediaConfig {
   return {
     backend: {
-      use: MediaBackendType.FILESYSTEM,
+      type: MediaBackendType.FILESYSTEM,
       filesystem: {
         uploadPath:
           'test_uploads' + Math.floor(Math.random() * 100000).toString(),

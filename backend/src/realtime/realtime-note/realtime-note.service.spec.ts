@@ -8,7 +8,7 @@ import { FieldNameRevision, Revision } from '@hedgedoc/database';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import { Mock } from 'ts-mockery';
 
-import { AppConfig } from '../../config/app.config';
+import { NoteConfig } from '../../config/note.config';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { PermissionService } from '../../permissions/permission.service';
 import { RevisionsService } from '../../revisions/revisions.service';
@@ -29,7 +29,7 @@ describe('RealtimeNoteService', () => {
   let realtimeNoteStore: RealtimeNoteStore;
   let mockedPermissionService: PermissionService;
   let consoleLoggerService: ConsoleLoggerService;
-  let mockedAppConfig: AppConfig;
+  let mockedNoteConfig: NoteConfig;
   let addIntervalSpy: jest.SpyInstance;
   let setIntervalSpy: jest.SpyInstance;
   let clearIntervalSpy: jest.SpyInstance;
@@ -89,7 +89,7 @@ describe('RealtimeNoteService', () => {
       getAllRealtimeNotes: jest.fn(),
     });
 
-    mockedAppConfig = Mock.of<AppConfig>({ persistInterval: 0 });
+    mockedNoteConfig = Mock.of<NoteConfig>({ persistInterval: 0 });
     mockedPermissionService = Mock.of<PermissionService>({
       determinePermission: async (userId: number): Promise<PermissionLevel> => {
         if (userId === readWriteUserId) {
@@ -132,7 +132,7 @@ describe('RealtimeNoteService', () => {
       consoleLoggerService,
       realtimeNoteStore,
       schedulerRegistry,
-      mockedAppConfig,
+      mockedNoteConfig,
       mockedPermissionService,
     );
   });
@@ -179,7 +179,7 @@ describe('RealtimeNoteService', () => {
     jest
       .spyOn(realtimeNoteStore, 'create')
       .mockImplementation(() => realtimeNote);
-    mockedAppConfig.persistInterval = 0;
+    mockedNoteConfig.persistInterval = 0;
 
     await expect(
       realtimeNoteService.getOrCreateRealtimeNote(mockedNoteId),
@@ -200,7 +200,7 @@ describe('RealtimeNoteService', () => {
     jest
       .spyOn(realtimeNoteStore, 'create')
       .mockImplementation(() => realtimeNote);
-    mockedAppConfig.persistInterval = 0;
+    mockedNoteConfig.persistInterval = 0;
 
     await expect(
       realtimeNoteService.getOrCreateRealtimeNote(mockedNoteId),
@@ -222,7 +222,7 @@ describe('RealtimeNoteService', () => {
       jest
         .spyOn(realtimeNoteStore, 'create')
         .mockImplementation(() => realtimeNote);
-      mockedAppConfig.persistInterval = 10;
+      mockedNoteConfig.persistInterval = 10;
 
       await realtimeNoteService.getOrCreateRealtimeNote(mockedNoteId);
 
@@ -239,7 +239,7 @@ describe('RealtimeNoteService', () => {
       jest
         .spyOn(realtimeNoteStore, 'create')
         .mockImplementation(() => realtimeNote);
-      mockedAppConfig.persistInterval = 10;
+      mockedNoteConfig.persistInterval = 10;
 
       await realtimeNoteService.getOrCreateRealtimeNote(mockedNoteId);
       realtimeNote.emit('destroy');

@@ -10,6 +10,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ScheduleModule } from '@nestjs/schedule';
 import { KnexModule } from 'nest-knexjs';
 import { ZodSerializerInterceptor, ZodValidationPipe } from 'nestjs-zod';
+import { join } from 'node:path';
 
 import { AliasModule } from './alias/alias.module';
 import { ApiTokenModule } from './api-token/api-token.module';
@@ -83,12 +84,12 @@ const routes: Routes = [
             debug: knexLoggerService.debug.bind(knexLoggerService),
           },
           migrations: {
-            directory: 'src/database/migrations/',
+            directory: join(__dirname, 'database', 'migrations'),
           },
           debug:
             isDevMode() &&
-            (appConfig.loglevel === Loglevel.DEBUG ||
-              appConfig.loglevel === Loglevel.TRACE),
+            (appConfig.log.level === Loglevel.DEBUG ||
+              appConfig.log.level === Loglevel.TRACE),
         },
       }),
     }),

@@ -26,11 +26,9 @@ import { FrontendConfigService } from './frontend-config.service';
 describe('FrontendConfigService', () => {
   const domain = 'http://md.example.com';
   const emptyAuthConfig: AuthConfig = {
-    common: {
-      allowProfileEdits: true,
-      allowChooseUsername: true,
-      syncSource: undefined,
-    },
+    allowProfileEdits: true,
+    allowChooseUsername: true,
+    syncSource: undefined,
     session: {
       secret: 'my-secret',
       lifetime: 1209600000,
@@ -85,8 +83,10 @@ describe('FrontendConfigService', () => {
           baseUrl: domain,
           rendererBaseUrl: 'https://renderer.example.org',
           backendPort: 3000,
-          loglevel: Loglevel.ERROR,
-          showLogTimestamp: false,
+          log: {
+            level: Loglevel.ERROR,
+            showTimestamp: false,
+          },
           persistInterval: 10,
         };
         const authConfig: AuthConfig = {
@@ -191,8 +191,10 @@ describe('FrontendConfigService', () => {
                 baseUrl: domain,
                 rendererBaseUrl: 'https://renderer.example.org',
                 backendPort: 3000,
-                loglevel: Loglevel.ERROR,
-                showLogTimestamp: false,
+                log: {
+                  level: Loglevel.ERROR,
+                  showTimestamp: false,
+                },
                 persistInterval: 10,
               };
               const authConfig: AuthConfig = {
@@ -208,7 +210,7 @@ describe('FrontendConfigService', () => {
                   customName: customName,
                   customLogo: customLogo,
                 },
-                specialUrls: {
+                urls: {
                   privacy: privacyLink,
                   termsOfUse: termsOfUseLink,
                   imprint: imprintLink,
@@ -219,8 +221,8 @@ describe('FrontendConfigService', () => {
                 imageProxy: imageProxy,
               };
               const noteConfig: NoteConfig = {
-                forbiddenNoteIds: [],
-                maxDocumentLength: maxDocumentLength,
+                forbiddenAliases: [],
+                maxLength: maxDocumentLength,
                 permissions: {
                   default: {
                     everyone: PermissionLevel.READ,

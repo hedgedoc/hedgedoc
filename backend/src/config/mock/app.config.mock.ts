@@ -14,9 +14,10 @@ export function createDefaultMockAppConfig(): AppConfig {
     baseUrl: 'md.example.com',
     rendererBaseUrl: 'md-renderer.example.com',
     backendPort: 3000,
-    loglevel: Loglevel.DEBUG,
-    showLogTimestamp: true,
-    persistInterval: 10,
+    log: {
+      level: Loglevel.INFO,
+      showTimestamp: true,
+    },
   };
 }
 

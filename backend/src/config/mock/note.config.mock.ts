@@ -11,8 +11,8 @@ import { NoteConfig } from '../note.config';
 
 export function createDefaultMockNoteConfig(): NoteConfig {
   return {
-    maxDocumentLength: 100000,
-    forbiddenNoteIds: ['forbiddenNoteId'],
+    maxLength: 100000,
+    forbiddenAliases: ['forbiddenNoteId'],
     permissions: {
       maxGuestLevel: PermissionLevel.FULL,
       default: {
@@ -21,6 +21,7 @@ export function createDefaultMockNoteConfig(): NoteConfig {
       },
     },
     revisionRetentionDays: 0,
+    persistInterval: 10,
   };
 }
 

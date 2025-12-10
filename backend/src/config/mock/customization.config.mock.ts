@@ -14,7 +14,7 @@ export function createDefaultMockCustomizationConfig(): CustomizationConfig {
       customName: 'ACME Corp',
       customLogo: '',
     },
-    specialUrls: {
+    urls: {
       privacy: 'https://md.example.org/test/privacy',
       termsOfUse: 'https://md.example.org/test/termsOfUse',
       imprint: 'https://md.example.org/test/imprint',

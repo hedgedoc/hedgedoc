@@ -9,29 +9,31 @@ import mockedEnv from 'mocked-env';
 import noteConfig from './note.config';
 
 describe('noteConfig', () => {
-  const forbiddenNoteIds = ['forbidden_1', 'forbidden_2'];
-  const forbiddenNoteId = 'single_forbidden_id';
-  const invalidforbiddenNoteIds = ['', ''];
-  const maxDocumentLength = 1234;
+  const forbiddenAliases = ['forbidden_1', 'forbidden_2'];
+  const forbiddenAlias = 'single_forbidden_alias';
+  const invalidforbiddenAliases = ['', ''];
+  const maxLength = 1234;
   const negativeMaxDocumentLength = -123;
   const floatMaxDocumentLength = 2.71;
   const invalidMaxDocumentLength = 'not-a-max-document-length';
   const guestAccess = PermissionLevel.FULL;
   const wrongDefaultPermission = 'wrong';
   const retentionDays = 30;
+  const persistInteval = 15;
 
   describe('correctly parses config', () => {
     it('when given correct and complete environment variables', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSIONS_DEFAULT_EVERYONE:
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_PERMISSIONS_DEFAULT_LOGGED_IN:
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_REVISION_RETENTION_DAYS: retentionDays.toString(),
+          HD_NOTE_REVISION_RETENTION_DAYS: retentionDays.toString(),
+          HD_NOTE_PERSIST_INTERVAL: persistInteval.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -39,24 +41,25 @@ describe('noteConfig', () => {
         },
       );
       const config = noteConfig();
-      expect(config.forbiddenNoteIds).toHaveLength(forbiddenNoteIds.length);
-      expect(config.forbiddenNoteIds).toEqual(forbiddenNoteIds);
-      expect(config.maxDocumentLength).toEqual(maxDocumentLength);
+      expect(config.forbiddenAliases).toHaveLength(forbiddenAliases.length);
+      expect(config.forbiddenAliases).toEqual(forbiddenAliases);
+      expect(config.maxLength).toEqual(maxLength);
       expect(config.permissions.default.everyone).toEqual(PermissionLevel.READ);
       expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.READ);
       expect(config.permissions.maxGuestLevel).toEqual(guestAccess);
       expect(config.revisionRetentionDays).toEqual(retentionDays);
+      expect(config.persistInterval).toEqual(persistInteval);
       restore();
     });
 
-    it('when no HD_FORBIDDEN_NOTE_IDS is set', () => {
+    it('when no HD_NOTE_FORBIDDEN_ALIASES is set', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSIONS_DEFAULT_EVERYONE:
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_PERMISSIONS_DEFAULT_LOGGED_IN:
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.READ],
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -65,23 +68,23 @@ describe('noteConfig', () => {
         },
       );
       const config = noteConfig();
-      expect(config.forbiddenNoteIds).toHaveLength(0);
-      expect(config.maxDocumentLength).toEqual(maxDocumentLength);
+      expect(config.forbiddenAliases).toHaveLength(0);
+      expect(config.maxLength).toEqual(maxLength);
       expect(config.permissions.default.everyone).toEqual(PermissionLevel.READ);
       expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.READ);
       expect(config.permissions.maxGuestLevel).toEqual(guestAccess);
       restore();
     });
 
-    it('when HD_FORBIDDEN_NOTE_IDS is a single item', () => {
+    it('when HD_NOTE_FORBIDDEN_ALIASES is a single item', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteId,
-          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSIONS_DEFAULT_EVERYONE:
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAlias,
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_PERMISSIONS_DEFAULT_LOGGED_IN:
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.READ],
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -90,9 +93,9 @@ describe('noteConfig', () => {
         },
       );
       const config = noteConfig();
-      expect(config.forbiddenNoteIds).toHaveLength(1);
-      expect(config.forbiddenNoteIds[0]).toEqual(forbiddenNoteId);
-      expect(config.maxDocumentLength).toEqual(maxDocumentLength);
+      expect(config.forbiddenAliases).toHaveLength(1);
+      expect(config.forbiddenAliases[0]).toEqual(forbiddenAlias);
+      expect(config.maxLength).toEqual(maxLength);
       expect(config.permissions.default.everyone).toEqual(PermissionLevel.READ);
       expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.READ);
 
@@ -100,14 +103,14 @@ describe('noteConfig', () => {
       restore();
     });
 
-    it('when no HD_MAX_DOCUMENT_LENGTH is set', () => {
+    it('when no HD_NOTE_MAX_LENGTH is set', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_PERMISSIONS_DEFAULT_EVERYONE:
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_PERMISSIONS_DEFAULT_LOGGED_IN:
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.READ],
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -116,9 +119,9 @@ describe('noteConfig', () => {
         },
       );
       const config = noteConfig();
-      expect(config.forbiddenNoteIds).toHaveLength(forbiddenNoteIds.length);
-      expect(config.forbiddenNoteIds).toEqual(forbiddenNoteIds);
-      expect(config.maxDocumentLength).toEqual(100000);
+      expect(config.forbiddenAliases).toHaveLength(forbiddenAliases.length);
+      expect(config.forbiddenAliases).toEqual(forbiddenAliases);
+      expect(config.maxLength).toEqual(100000);
       expect(config.permissions.default.everyone).toEqual(PermissionLevel.READ);
       expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.READ);
 
@@ -130,9 +133,9 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSIONS_DEFAULT_LOGGED_IN:
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.READ],
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -141,9 +144,9 @@ describe('noteConfig', () => {
         },
       );
       const config = noteConfig();
-      expect(config.forbiddenNoteIds).toHaveLength(forbiddenNoteIds.length);
-      expect(config.forbiddenNoteIds).toEqual(forbiddenNoteIds);
-      expect(config.maxDocumentLength).toEqual(maxDocumentLength);
+      expect(config.forbiddenAliases).toHaveLength(forbiddenAliases.length);
+      expect(config.forbiddenAliases).toEqual(forbiddenAliases);
+      expect(config.maxLength).toEqual(maxLength);
       expect(config.permissions.default.everyone).toEqual(PermissionLevel.READ);
       expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.READ);
 
@@ -155,9 +158,9 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSIONS_DEFAULT_EVERYONE:
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.READ],
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -166,9 +169,9 @@ describe('noteConfig', () => {
         },
       );
       const config = noteConfig();
-      expect(config.forbiddenNoteIds).toHaveLength(forbiddenNoteIds.length);
-      expect(config.forbiddenNoteIds).toEqual(forbiddenNoteIds);
-      expect(config.maxDocumentLength).toEqual(maxDocumentLength);
+      expect(config.forbiddenAliases).toHaveLength(forbiddenAliases.length);
+      expect(config.forbiddenAliases).toEqual(forbiddenAliases);
+      expect(config.maxLength).toEqual(maxLength);
       expect(config.permissions.default.everyone).toEqual(PermissionLevel.READ);
       expect(config.permissions.default.loggedIn).toEqual(
         PermissionLevel.WRITE,
@@ -182,9 +185,9 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSIONS_DEFAULT_EVERYONE:
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.READ],
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -193,9 +196,9 @@ describe('noteConfig', () => {
         },
       );
       const config = noteConfig();
-      expect(config.forbiddenNoteIds).toHaveLength(forbiddenNoteIds.length);
-      expect(config.forbiddenNoteIds).toEqual(forbiddenNoteIds);
-      expect(config.maxDocumentLength).toEqual(maxDocumentLength);
+      expect(config.forbiddenAliases).toHaveLength(forbiddenAliases.length);
+      expect(config.forbiddenAliases).toEqual(forbiddenAliases);
+      expect(config.maxLength).toEqual(maxLength);
       expect(config.permissions.default.everyone).toEqual(PermissionLevel.READ);
       expect(config.permissions.default.loggedIn).toEqual(
         PermissionLevel.WRITE,
@@ -204,15 +207,15 @@ describe('noteConfig', () => {
       restore();
     });
 
-    it('when no HD_REVISION_RETENTION_DAYS is set', () => {
+    it('when no HD_NOTE_REVISION_RETENTION_DAYS is set', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSIONS_DEFAULT_EVERYONE:
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_PERMISSIONS_DEFAULT_LOGGED_IN:
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.READ],
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -221,27 +224,53 @@ describe('noteConfig', () => {
         },
       );
       const config = noteConfig();
-      expect(config.forbiddenNoteIds).toHaveLength(forbiddenNoteIds.length);
-      expect(config.forbiddenNoteIds).toEqual(forbiddenNoteIds);
-      expect(config.maxDocumentLength).toEqual(maxDocumentLength);
+      expect(config.forbiddenAliases).toHaveLength(forbiddenAliases.length);
+      expect(config.forbiddenAliases).toEqual(forbiddenAliases);
+      expect(config.maxLength).toEqual(maxLength);
       expect(config.permissions.default.everyone).toEqual(PermissionLevel.READ);
       expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.READ);
       expect(config.permissions.maxGuestLevel).toEqual(guestAccess);
       expect(config.revisionRetentionDays).toEqual(0);
       restore();
     });
+
+    it('when no HD_NOTE_PERSIST_INTERVAL is set', () => {
+      const restore = mockedEnv(
+        {
+          /* eslint-disable @typescript-eslint/naming-convention */
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
+            PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
+            PermissionLevelNames[PermissionLevel.READ],
+          /* eslint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      const config = noteConfig();
+      expect(config.forbiddenAliases).toHaveLength(forbiddenAliases.length);
+      expect(config.forbiddenAliases).toEqual(forbiddenAliases);
+      expect(config.maxLength).toEqual(maxLength);
+      expect(config.permissions.default.everyone).toEqual(PermissionLevel.READ);
+      expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.READ);
+      expect(config.persistInterval).toEqual(10);
+      restore();
+    });
   });
 
   describe('throws error', () => {
-    it('when given a non-valid HD_FORBIDDEN_NOTE_IDS', async () => {
+    it('when given a non-valid HD_NOTE_FORBIDDEN_ALIASES', async () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: invalidforbiddenNoteIds.join(' , '),
-          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSIONS_DEFAULT_EVERYONE:
+          HD_NOTE_FORBIDDEN_ALIASES: invalidforbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_PERMISSIONS_DEFAULT_LOGGED_IN:
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.READ],
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -250,20 +279,20 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        'HD_FORBIDDEN_NOTE_IDS[0]: String must contain at least 1 character(s)\n - HD_FORBIDDEN_NOTE_IDS[1]: String must contain at least 1 character(s)',
+        'HD_NOTE_FORBIDDEN_ALIASES[0]: String must contain at least 1 character(s)\n - HD_NOTE_FORBIDDEN_ALIASES[1]: String must contain at least 1 character(s)',
       );
       restore();
     });
 
-    it('when given a negative HD_MAX_DOCUMENT_LENGTH', async () => {
+    it('when given a negative HD_NOTE_MAX_LENGTH', async () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_MAX_DOCUMENT_LENGTH: negativeMaxDocumentLength.toString(),
-          HD_PERMISSIONS_DEFAULT_EVERYONE:
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: negativeMaxDocumentLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_PERMISSIONS_DEFAULT_LOGGED_IN:
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.READ],
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -272,20 +301,20 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        'HD_MAX_DOCUMENT_LENGTH: Number must be greater than 0',
+        'HD_NOTE_MAX_LENGTH: Number must be greater than 0',
       );
       restore();
     });
 
-    it('when given a non-integer HD_MAX_DOCUMENT_LENGTH', async () => {
+    it('when given a non-integer HD_NOTE_MAX_LENGTH', async () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_MAX_DOCUMENT_LENGTH: floatMaxDocumentLength.toString(),
-          HD_PERMISSIONS_DEFAULT_EVERYONE:
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: floatMaxDocumentLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_PERMISSIONS_DEFAULT_LOGGED_IN:
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.READ],
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -294,20 +323,20 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        'HD_MAX_DOCUMENT_LENGTH: Expected integer, received float',
+        'HD_NOTE_MAX_LENGTH: Expected integer, received float',
       );
       restore();
     });
 
-    it('when given a non-number HD_MAX_DOCUMENT_LENGTH', async () => {
+    it('when given a non-number HD_NOTE_MAX_LENGTH', async () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_MAX_DOCUMENT_LENGTH: invalidMaxDocumentLength,
-          HD_PERMISSIONS_DEFAULT_EVERYONE:
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: invalidMaxDocumentLength,
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_PERMISSIONS_DEFAULT_LOGGED_IN:
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.READ],
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -316,19 +345,19 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        'HD_MAX_DOCUMENT_LENGTH: Expected number, received nan',
+        'HD_NOTE_MAX_LENGTH: Expected number, received nan',
       );
       restore();
     });
 
-    it('when given a non-valid HD_PERMISSIONS_DEFAULT_EVERYONE', async () => {
+    it('when given a non-valid HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE', async () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSIONS_DEFAULT_EVERYONE: wrongDefaultPermission,
-          HD_PERMISSIONS_DEFAULT_LOGGED_IN:
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: wrongDefaultPermission,
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.READ],
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -337,20 +366,20 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        `HD_PERMISSIONS_DEFAULT_EVERYONE: Invalid enum value. Expected '${PermissionLevelNames[PermissionLevel.DENY]}' | '${PermissionLevelNames[PermissionLevel.READ]}' | '${PermissionLevelNames[PermissionLevel.WRITE]}' | '${PermissionLevelNames[PermissionLevel.FULL]}', received 'wrong'`,
+        `HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: Invalid enum value. Expected '${PermissionLevelNames[PermissionLevel.DENY]}' | '${PermissionLevelNames[PermissionLevel.READ]}' | '${PermissionLevelNames[PermissionLevel.WRITE]}' | '${PermissionLevelNames[PermissionLevel.FULL]}', received 'wrong'`,
       );
       restore();
     });
 
-    it('when given a non-valid HD_PERMISSIONS_DEFAULT_LOGGED_IN', async () => {
+    it('when given a non-valid HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN', async () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSIONS_DEFAULT_EVERYONE:
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_PERMISSIONS_DEFAULT_LOGGED_IN: wrongDefaultPermission,
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: wrongDefaultPermission,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -358,7 +387,7 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        `HD_PERMISSIONS_DEFAULT_LOGGED_IN: Invalid enum value. Expected '${PermissionLevelNames[PermissionLevel.DENY]}' | '${PermissionLevelNames[PermissionLevel.READ]}' | '${PermissionLevelNames[PermissionLevel.WRITE]}' | '${PermissionLevelNames[PermissionLevel.FULL]}', received 'wrong'`,
+        `HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: Invalid enum value. Expected '${PermissionLevelNames[PermissionLevel.DENY]}' | '${PermissionLevelNames[PermissionLevel.READ]}' | '${PermissionLevelNames[PermissionLevel.WRITE]}' | '${PermissionLevelNames[PermissionLevel.FULL]}', received 'wrong'`,
       );
       restore();
     });
@@ -367,8 +396,8 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_PERMISSION_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.READ],
           HD_PERMISSION_DEFAULT_LOGGED_IN:
@@ -390,11 +419,11 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSIONS_DEFAULT_EVERYONE:
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_PERMISSIONS_DEFAULT_LOGGED_IN:
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.READ],
           HD_PERMISSIONS_MAX_GUEST_LEVEL: 'deny',
           /* eslint-enable @typescript-eslint/naming-convention */
@@ -404,20 +433,20 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        `'HD_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[PermissionLevel.READ]}', but 'HD_PERMISSIONS_MAX_GUEST_LEVEL' is set to '${PermissionLevelNames[PermissionLevel.DENY]}'. This does not work since the default level may not be higher than the maximum guest level.`,
+        `'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[PermissionLevel.READ]}', but 'HD_PERMISSIONS_MAX_GUEST_LEVEL' is set to '${PermissionLevelNames[PermissionLevel.DENY]}'. This does not work since the default level may not be higher than the maximum guest level.`,
       );
       restore();
     });
 
-    it('when HD_PERMISSIONS_DEFAULT_EVERYONE is set to write, but HD_PERMISSION_DEFAULT_LOGGED_IN is set to read', async () => {
+    it('when HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE is set to write, but HD_PERMISSION_DEFAULT_LOGGED_IN is set to read', async () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSIONS_DEFAULT_EVERYONE:
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.WRITE],
-          HD_PERMISSIONS_DEFAULT_LOGGED_IN:
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.READ],
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -426,20 +455,20 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        `'HD_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[PermissionLevel.WRITE]}', but 'HD_PERMISSIONS_DEFAULT_LOGGED_IN' is set to '${PermissionLevelNames[PermissionLevel.READ]}'. This would give everyone greater permissions than logged-in users, and is not allowed since it doesn't make sense.`,
+        `'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[PermissionLevel.WRITE]}', but 'HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN' is set to '${PermissionLevelNames[PermissionLevel.READ]}'. This would give everyone greater permissions than logged-in users, and is not allowed since it doesn't make sense.`,
       );
       restore();
     });
 
-    it('when HD_PERMISSIONS_DEFAULT_EVERYONE is set to write, but HD_PERMISSION_DEFAULT_LOGGED_IN is set to none', async () => {
+    it('when HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE is set to write, but HD_PERMISSION_DEFAULT_LOGGED_IN is set to none', async () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSIONS_DEFAULT_EVERYONE:
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.WRITE],
-          HD_PERMISSIONS_DEFAULT_LOGGED_IN:
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.DENY],
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -448,20 +477,20 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        `'HD_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[PermissionLevel.WRITE]}', but 'HD_PERMISSIONS_DEFAULT_LOGGED_IN' is set to '${PermissionLevelNames[PermissionLevel.DENY]}'. This would give everyone greater permissions than logged-in users, and is not allowed since it doesn't make sense.`,
+        `'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[PermissionLevel.WRITE]}', but 'HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN' is set to '${PermissionLevelNames[PermissionLevel.DENY]}'. This would give everyone greater permissions than logged-in users, and is not allowed since it doesn't make sense.`,
       );
       restore();
     });
 
-    it('when HD_PERMISSIONS_DEFAULT_EVERYONE is set to read, but HD_PERMISSIONS_DEFAULT_LOGGED_IN is set to none', async () => {
+    it('when HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE is set to read, but HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN is set to none', async () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSIONS_DEFAULT_EVERYONE:
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_PERMISSIONS_DEFAULT_LOGGED_IN:
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.DENY],
           /* eslint-enable @typescript-eslint/naming-convention */
         },
@@ -470,7 +499,7 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        `'HD_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[PermissionLevel.READ]}', but 'HD_PERMISSIONS_DEFAULT_LOGGED_IN' is set to '${PermissionLevelNames[PermissionLevel.DENY]}'. This would give everyone greater permissions than logged-in users, and is not allowed since it doesn't make sense.`,
+        `'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[PermissionLevel.READ]}', but 'HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN' is set to '${PermissionLevelNames[PermissionLevel.DENY]}'. This would give everyone greater permissions than logged-in users, and is not allowed since it doesn't make sense.`,
       );
       restore();
     });
@@ -479,13 +508,13 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
-          HD_FORBIDDEN_NOTE_IDS: forbiddenNoteIds.join(' , '),
-          HD_MAX_DOCUMENT_LENGTH: maxDocumentLength.toString(),
-          HD_PERMISSIONS_DEFAULT_EVERYONE:
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_PERMISSIONS_DEFAULT_LOGGED_IN:
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_REVISION_RETENTION_DAYS: (-1).toString(),
+          HD_NOTE_REVISION_RETENTION_DAYS: (-1).toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -493,7 +522,31 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        'HD_REVISION_RETENTION_DAYS: Number must be greater than or equal to 0',
+        'HD_NOTE_REVISION_RETENTION_DAYS: Number must be greater than or equal to 0',
+      );
+      restore();
+    });
+
+    it('when given a negative persistence interval', () => {
+      const restore = mockedEnv(
+        {
+          /* eslint-disable @typescript-eslint/naming-convention */
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
+            PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
+            PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_REVISION_RETENTION_DAYS: retentionDays.toString(),
+          HD_NOTE_PERSIST_INTERVAL: (-1).toString(),
+          /* eslint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      expect(() => noteConfig()).toThrow(
+        'HD_NOTE_PERSIST_INTERVAL: Number must be greater than or equal to 0',
       );
       restore();
     });
