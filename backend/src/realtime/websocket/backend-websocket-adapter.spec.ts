@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -11,7 +11,7 @@ import {
   MessageType,
 } from '@hedgedoc/commons';
 import { Mock } from 'ts-mockery';
-import WebSocket, { CloseEvent, MessageEvent } from 'ws';
+import WebSocket, { CloseEvent, ErrorEvent, Event, MessageEvent } from 'ws';
 
 import { BackendWebsocketAdapter } from './backend-websocket-adapter';
 
@@ -41,7 +41,13 @@ describe('Backend websocket adapter', () => {
       ),
     );
 
-    let modifiedHandler: (event: CloseEvent) => void = jest.fn();
+    let modifiedHandler:
+      | ((event: CloseEvent | Event | ErrorEvent | MessageEvent) => void)
+      | {
+          handleEvent(
+            event: CloseEvent | Event | ErrorEvent | MessageEvent,
+          ): void;
+        } = jest.fn();
     jest
       .spyOn(mockedSocket, 'addEventListener')
       .mockImplementation((event, handler_) => {
@@ -91,7 +97,13 @@ describe('Backend websocket adapter', () => {
   it('can bind, unbind and translate the message event', () => {
     const handler = jest.fn();
 
-    let modifiedHandler: (event: MessageEvent) => void = jest.fn();
+    let modifiedHandler:
+      | ((event: CloseEvent | Event | ErrorEvent | MessageEvent) => void)
+      | {
+          handleEvent(
+            event: CloseEvent | Event | ErrorEvent | MessageEvent,
+          ): void;
+        } = jest.fn();
     jest
       .spyOn(mockedSocket, 'addEventListener')
       .mockImplementation((event, handler_) => {
