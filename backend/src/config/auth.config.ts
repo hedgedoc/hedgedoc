@@ -12,6 +12,7 @@ import {
   ensureNoDuplicatesExist,
   parseOptionalBoolean,
   parseOptionalNumber,
+  printConfigErrorAndExit,
   toArrayConfig,
 } from './utils';
 import {
@@ -315,8 +316,8 @@ export default registerAs('authConfig', () => {
         oidc: oidcServers,
       }),
     );
-    throw new Error(buildErrorMessage(errorMessages));
+    const errorMessage = buildErrorMessage(errorMessages);
+    return printConfigErrorAndExit(errorMessage);
   }
-
   return authConfig.data;
 });

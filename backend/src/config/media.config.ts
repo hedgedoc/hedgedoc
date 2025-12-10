@@ -7,7 +7,7 @@ import { MediaBackendType } from '@hedgedoc/commons';
 import { registerAs } from '@nestjs/config';
 import z from 'zod';
 
-import { parseOptionalBoolean } from './utils';
+import { parseOptionalBoolean, printConfigErrorAndExit } from './utils';
 import {
   buildErrorMessage,
   extractDescriptionFromZodIssue,
@@ -119,7 +119,8 @@ export default registerAs('mediaConfig', () => {
     const errorMessages = mediaConfig.error.errors.map((issue) =>
       extractDescriptionFromZodIssue(issue, 'HD_MEDIA'),
     );
-    throw new Error(buildErrorMessage(errorMessages));
+    const errorMessage = buildErrorMessage(errorMessages);
+    return printConfigErrorAndExit(errorMessage);
   }
   return mediaConfig.data;
 });

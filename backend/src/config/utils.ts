@@ -128,3 +128,16 @@ export function parseOptionalBoolean(value?: string): boolean | undefined {
     value.toLowerCase() === 'true'
   );
 }
+
+/**
+ * Prints the given error message to the console (STDERR usually) and then exits the HedgeDoc process.
+ * This is required, since just throwing a config error does not exit the app but instead just gives the
+ * error message to the exception handler. We cannot use the loggerService here, since the config
+ * configures the logger as well and could be prone to errors.
+ *
+ * @param errorMessage The error message to show before exiting.
+ */
+export function printConfigErrorAndExit(errorMessage: string): never {
+  console.error(errorMessage);
+  return process.exit(1);
+}

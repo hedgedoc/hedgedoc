@@ -7,7 +7,7 @@ import { registerAs } from '@nestjs/config';
 import * as process from 'node:process';
 import z from 'zod';
 
-import { parseOptionalBoolean } from './utils';
+import { parseOptionalBoolean, printConfigErrorAndExit } from './utils';
 import {
   buildErrorMessage,
   extractDescriptionFromZodIssue,
@@ -38,7 +38,8 @@ export default registerAs('cspConfig', () => {
     const errorMessages = cspConfig.error.errors.map((issue) =>
       extractDescriptionFromZodIssue(issue, 'HD_CSP'),
     );
-    throw new Error(buildErrorMessage(errorMessages));
+    const errorMessage = buildErrorMessage(errorMessages);
+    return printConfigErrorAndExit(errorMessage);
   }
   return cspConfig.data;
 });
