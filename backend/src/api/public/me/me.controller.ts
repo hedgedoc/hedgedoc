@@ -22,7 +22,6 @@ import { NoteService } from '../../../notes/note.service';
 import { UsersService } from '../../../users/users.service';
 import { OpenApi } from '../../utils/decorators/openapi.decorator';
 import { RequestUserId } from '../../utils/decorators/request-user-id.decorator';
-import { SessionAuthProvider } from '../../utils/decorators/session-authprovider.decorator';
 import { ApiTokenGuard } from '../../utils/guards/api-token.guard';
 
 @UseGuards(ApiTokenGuard)
@@ -46,12 +45,9 @@ export class MeController {
     description: 'The user information',
     schema: LoginUserInfoSchema,
   })
-  async getMe(
-    @RequestUserId() userId: number,
-    @SessionAuthProvider() authProvider: AuthProviderType,
-  ): Promise<LoginUserInfoDto> {
+  async getMe(@RequestUserId() userId: number): Promise<LoginUserInfoDto> {
     const user: User = await this.usersService.getUserById(userId);
-    return this.usersService.toLoginUserInfoDto(user, authProvider);
+    return this.usersService.toLoginUserInfoDto(user, AuthProviderType.TOKEN);
   }
 
   @Get('notes')

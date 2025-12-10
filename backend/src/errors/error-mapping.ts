@@ -38,7 +38,7 @@ const mapOfHedgeDocErrorsToHttpErrors: Map<string, HttpExceptionConstructor> =
     ],
     [
       'ForbiddenIdError',
-      (object): HttpException => new BadRequestException(object),
+      (object): HttpException => new ForbiddenException(object),
     ],
     ['ClientError', (object): HttpException => new BadRequestException(object)],
     [

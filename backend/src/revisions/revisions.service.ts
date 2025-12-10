@@ -191,8 +191,10 @@ export class RevisionsService {
       await transaction(TableRevision)
         .whereIn(FieldNameRevision.uuid, idsToDelete)
         .delete();
-      const notePrimaryAlias =
-        await this.aliasService.getPrimaryAliasByNoteId(noteId);
+      const notePrimaryAlias = await this.aliasService.getPrimaryAliasByNoteId(
+        noteId,
+        transaction,
+      );
       const newPatch = createPatch(
         notePrimaryAlias,
         '',
@@ -266,6 +268,10 @@ export class RevisionsService {
         'getLatestRevision',
       );
     }
+    this.logger.debug(
+      `Found latest revision for note '${noteId}': '${revision[FieldNameRevision.uuid]}'`,
+      'getLatestRevision',
+    );
     return revision;
   }
 
@@ -298,6 +304,9 @@ export class RevisionsService {
       .where(FieldNameAuthorshipInfo.revisionUuid, revisionUuid);
     const users: RevisionUserInfo['users'] = [];
     let guestUserCount = 0;
+    this.logger.debug(
+      `authorUsernamesAndGuestUuids ${JSON.stringify(authorUsernamesAndGuestUuids)}`,
+    );
     for (const author of authorUsernamesAndGuestUuids) {
       if (author[FieldNameUser.guestUuid] !== null) {
         guestUserCount++;
@@ -333,6 +342,10 @@ export class RevisionsService {
     transaction?: Knex,
     yjsStateVector?: ArrayBuffer,
   ): Promise<void> {
+    this.logger.debug(
+      `Creating revision for note '${noteId}'`,
+      'createRevision',
+    );
     if (!transaction) {
       await this.knex.transaction(async (newTransaction) => {
         await this.innerCreateRevision(
@@ -376,6 +389,7 @@ export class RevisionsService {
       : await this.getLatestRevision(noteId, transaction);
     const oldContent = latestRevision?.content;
     if (oldContent === newContent) {
+      this.logger.debug('There is no difference between old and new content.');
       return undefined;
     }
     const primaryAlias = await this.aliasService.getPrimaryAliasByNoteId(
@@ -402,6 +416,7 @@ export class RevisionsService {
         [FieldNameRevision.uuid]: newUuid,
         [FieldNameRevision.yjsStateVector]:
           yjsStateVector !== undefined ? Buffer.from(yjsStateVector) : null,
+        [FieldNameRevision.createdAt]: DateTime.utc().toSQL(),
       },
       [FieldNameRevision.uuid],
     );
@@ -421,6 +436,10 @@ export class RevisionsService {
         })),
       );
     }
+    this.logger.debug(
+      `created revision '${newUuid}' for note '${noteId}'`,
+      'innerCreateRevision',
+    );
   }
 
   /**

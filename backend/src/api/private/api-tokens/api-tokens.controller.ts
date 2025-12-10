@@ -14,6 +14,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { DateTime } from 'luxon';
 
 import { ApiTokenService } from '../../../api-token/api-token.service';
 import { SessionGuard } from '../../../auth/session.guard';
@@ -50,10 +51,14 @@ export class ApiTokensController {
     @Body() createDto: ApiTokenCreateDto,
     @RequestUserId({ forbidGuests: true }) userId: User[FieldNameUser.id],
   ): Promise<ApiTokenWithSecretDto> {
+    let validUntil: DateTime | undefined = undefined;
+    if (createDto.validUntil !== undefined) {
+      validUntil = DateTime.fromISO(createDto.validUntil, { zone: 'UTC' });
+    }
     return await this.apiTokenService.createToken(
       userId,
       createDto.label,
-      createDto.validUntil,
+      validUntil,
     );
   }
 

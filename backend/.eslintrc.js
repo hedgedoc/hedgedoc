@@ -1,7 +1,7 @@
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
- * SPDX-License-Identifier: CC0-1.0
+ * SPDX-License-Identifier: AGPL-3.0-only
  */
 module.exports = {
   parser: '@typescript-eslint/parser',
@@ -30,7 +30,7 @@ module.exports = {
             assertFunctionNames: [
               'expect**',
               'request.**.expect',
-              'agent[0-9]?.**.expect',
+              'agent**.**.expect',
             ],
           },
         ],

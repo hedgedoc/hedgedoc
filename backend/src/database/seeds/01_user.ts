@@ -11,6 +11,7 @@ import {
   TableUser,
 } from '@hedgedoc/database';
 import { Knex } from 'knex';
+import { DateTime } from 'luxon';
 
 import { hashPassword } from '../../utils/password';
 
@@ -28,6 +29,7 @@ export async function seed(knex: Knex): Promise<void> {
       [FieldNameUser.photoUrl]: null,
       [FieldNameUser.email]: null,
       [FieldNameUser.authorStyle]: 1,
+      [FieldNameUser.createdAt]: DateTime.utc().toSQL(),
     },
     {
       [FieldNameUser.username]: 'test',
@@ -36,6 +38,7 @@ export async function seed(knex: Knex): Promise<void> {
       [FieldNameUser.photoUrl]: null,
       [FieldNameUser.email]: null,
       [FieldNameUser.authorStyle]: 2,
+      [FieldNameUser.createdAt]: DateTime.utc().toSQL(),
     },
   ]);
   await knex(TableIdentity).insert({
@@ -44,5 +47,7 @@ export async function seed(knex: Knex): Promise<void> {
     [FieldNameIdentity.providerIdentifier]: null,
     [FieldNameIdentity.providerUserId]: null,
     [FieldNameIdentity.passwordHash]: await hashPassword('test123'),
+    [FieldNameIdentity.createdAt]: DateTime.utc().toSQL(),
+    [FieldNameIdentity.updatedAt]: DateTime.utc().toSQL(),
   });
 }

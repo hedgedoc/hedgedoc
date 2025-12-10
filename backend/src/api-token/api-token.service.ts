@@ -3,12 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  ApiToken,
-  FieldNameApiToken,
-  TableApiToken,
-  TypeInsertApiToken,
-} from '@hedgedoc/database';
+import { ApiToken, FieldNameApiToken, TableApiToken } from '@hedgedoc/database';
 import { Injectable } from '@nestjs/common';
 import { Cron, Timeout } from '@nestjs/schedule';
 import { Knex } from 'knex';
@@ -79,7 +74,9 @@ export class ApiTokenService {
       }
 
       const tokenHash = token[FieldNameApiToken.secretHash];
-      const validUntil = new Date(token[FieldNameApiToken.validUntil]);
+      const validUntil = DateTime.fromSQL(token[FieldNameApiToken.validUntil], {
+        zone: 'UTC',
+      });
       this.ensureTokenIsValid(secret, tokenHash, validUntil);
 
       await transaction(TableApiToken)
@@ -106,7 +103,7 @@ export class ApiTokenService {
   async createToken(
     userId: number,
     label: string,
-    userDefinedValidUntil?: Date,
+    userDefinedValidUntil?: DateTime,
   ): Promise<ApiTokenWithSecretDto> {
     return await this.knex.transaction(async (transaction) => {
       const existingTokensForUser = await transaction(TableApiToken)
@@ -123,30 +120,31 @@ export class ApiTokenService {
       const secretHash = hashApiToken(secret);
       const fullToken = `${AUTH_TOKEN_PREFIX}.${keyId}.${secret}`;
       // Tokens can only be valid for a maximum of 2 years
-      const maximumTokenValidity = new Date();
-      maximumTokenValidity.setTime(
-        maximumTokenValidity.getTime() + 2 * 365 * 24 * 60 * 60 * 1000,
-      );
+      const maximumTokenValidity = DateTime.utc().plus({
+        year: 2,
+      });
       const isTokenLimitedToMaximumValidity =
-        !userDefinedValidUntil || userDefinedValidUntil > maximumTokenValidity;
+        !userDefinedValidUntil ||
+        userDefinedValidUntil.toMillis() > maximumTokenValidity.toMillis();
       const validUntil = isTokenLimitedToMaximumValidity
         ? maximumTokenValidity
         : userDefinedValidUntil;
-      const createdAt = new Date();
-      const insertApiToken: TypeInsertApiToken = {
-        [FieldNameApiToken.createdAt]: createdAt,
+      const createdAt = DateTime.utc();
+      const insertApiToken: ApiToken = {
+        [FieldNameApiToken.createdAt]: createdAt.toSQL(),
         [FieldNameApiToken.id]: keyId,
         [FieldNameApiToken.label]: label,
         [FieldNameApiToken.secretHash]: secretHash,
         [FieldNameApiToken.userId]: userId,
-        [FieldNameApiToken.validUntil]: validUntil,
+        [FieldNameApiToken.validUntil]: validUntil.toSQL() as unknown as string,
+        [FieldNameApiToken.lastUsedAt]: null,
       };
       await transaction(TableApiToken).insert(insertApiToken);
       return ApiTokenWithSecretDto.create({
         label,
         keyId,
-        createdAt: createdAt.toISOString(),
-        validUntil: validUntil.toISOString(),
+        createdAt: createdAt.toISO(),
+        validUntil: validUntil.toISO(),
         lastUsedAt: null,
         secret: fullToken,
       });
@@ -165,10 +163,10 @@ export class ApiTokenService {
   ensureTokenIsValid(
     secret: string,
     tokenHash: string,
-    validUntil: Date,
+    validUntil: DateTime,
   ): void {
     // First, verify token expiry is not in the past (cheap operation)
-    if (validUntil.getTime() < new Date().getTime()) {
+    if (validUntil.toMillis() < DateTime.utc().toMillis()) {
       throw new TokenNotValidError(MESSAGE_TOKEN_INVALID);
     }
 
@@ -254,7 +252,7 @@ export class ApiTokenService {
    */
   async removeInvalidTokens(): Promise<void> {
     const numberOfDeletedTokens = await this.knex(TableApiToken)
-      .where(FieldNameApiToken.validUntil, '<', new Date())
+      .where(FieldNameApiToken.validUntil, '<', DateTime.utc().toSQL())
       .delete();
     this.logger.log(
       `${numberOfDeletedTokens} expired API tokens were purged from the DB`,
