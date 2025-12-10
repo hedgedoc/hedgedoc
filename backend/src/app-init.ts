@@ -61,7 +61,7 @@ export async function setupApp(
   app.useGlobalPipes(setupValidationPipe(logger));
 
   // Map URL paths to directories
-  if (mediaConfig.backend.use === MediaBackendType.FILESYSTEM) {
+  if (mediaConfig.backend.type === MediaBackendType.FILESYSTEM) {
     logger.log(
       `Serving the local folder '${mediaConfig.backend.filesystem.uploadPath}' under '/uploads'`,
       'AppBootstrap',

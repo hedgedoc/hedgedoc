@@ -171,7 +171,7 @@ describe('NoteService', () => {
       jest.useRealTimers();
     });
     it('throws a MaximumDocumentLengthExceededError', async () => {
-      const tooLongContent = 'a'.repeat(noteMockConfig.maxDocumentLength + 1);
+      const tooLongContent = 'a'.repeat(noteMockConfig.maxLength + 1);
       await expect(
         service.createNote(tooLongContent, mockOwnerUserId),
       ).rejects.toThrow(MaximumDocumentLengthExceededError);

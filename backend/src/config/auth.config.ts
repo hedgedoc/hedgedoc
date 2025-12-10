@@ -163,20 +163,18 @@ const oidcSchema = z.object({
 });
 
 const schema = z.object({
-  common: z.object({
-    allowProfileEdits: z
-      .boolean()
-      .default(true)
-      .describe('HD_AUTH_ALLOW_PROFILE_EDITS'),
-    allowChooseUsername: z
-      .boolean()
-      .default(true)
-      .describe('HD_AUTH_ALLOW_CHOOSE_USERNAME'),
-    syncSource: z.string().optional().describe('HD_AUTH_SYNC_SOURCE'),
-  }),
+  allowProfileEdits: z
+    .boolean()
+    .default(true)
+    .describe('HD_AUTH_ALLOW_PROFILE_EDITS'),
+  allowChooseUsername: z
+    .boolean()
+    .default(true)
+    .describe('HD_AUTH_ALLOW_CHOOSE_USERNAME'),
+  syncSource: z.string().optional().describe('HD_AUTH_SYNC_SOURCE'),
   session: z.object({
-    secret: z.string().describe('HD_SESSION_SECRET'),
-    lifetime: z.number().default(1209600).describe('HD_SESSION_LIFETIME'), // 14 * 24 * 60 * 60s = 14 days
+    secret: z.string().describe('HD_AUTH_SESSION_SECRET'),
+    lifetime: z.number().default(1209600).describe('HD_AUTH_SESSION_LIFETIME'), // 14 * 24 * 60 * 60s = 14 days
   }),
   local: z.object({
     enableLogin: z
@@ -278,23 +276,21 @@ export default registerAs('authConfig', () => {
       process.env[`HD_AUTH_OIDC_${name}_PROFILE_PICTURE_FIELD`],
     emailField: process.env[`HD_AUTH_OIDC_${name}_EMAIL_FIELD`],
     enableRegistration: parseOptionalBoolean(
-      process.env[`HD_AUTH_OIDC_${name}_ENABLE_REGISTER`],
+      process.env[`HD_AUTH_OIDC_${name}_ENABLE_REGISTRATION`],
     ),
   }));
 
   const authConfig = schema.safeParse({
-    common: {
-      allowProfileEdits: parseOptionalBoolean(
-        process.env.HD_AUTH_ALLOW_PROFILE_EDITS,
-      ),
-      allowChooseUsername: parseOptionalBoolean(
-        process.env.HD_AUTH_ALLOW_CHOOSE_USERNAME,
-      ),
-      syncSource: process.env.HD_AUTH_SYNC_SOURCE?.toLowerCase(),
-    },
+    allowProfileEdits: parseOptionalBoolean(
+      process.env.HD_AUTH_ALLOW_PROFILE_EDITS,
+    ),
+    allowChooseUsername: parseOptionalBoolean(
+      process.env.HD_AUTH_ALLOW_CHOOSE_USERNAME,
+    ),
+    syncSource: process.env.HD_AUTH_SYNC_SOURCE?.toLowerCase(),
     session: {
-      secret: process.env.HD_SESSION_SECRET,
-      lifetime: parseOptionalNumber(process.env.HD_SESSION_LIFETIME),
+      secret: process.env.HD_AUTH_SESSION_SECRET,
+      lifetime: parseOptionalNumber(process.env.HD_AUTH_SESSION_LIFETIME),
     },
     local: {
       enableLogin: parseOptionalBoolean(process.env.HD_AUTH_LOCAL_ENABLE_LOGIN),

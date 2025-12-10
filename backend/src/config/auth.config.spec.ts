@@ -22,7 +22,7 @@ describe('authConfig', () => {
   const secret = 'this-is-a-secret';
   const neededAuthConfig = {
     /* eslint-disable @typescript-eslint/naming-convention */
-    HD_SESSION_SECRET: secret,
+    HD_AUTH_SESSION_SECRET: secret,
     /* eslint-enable @typescript-eslint/naming-convention */
   };
 
@@ -584,7 +584,7 @@ describe('authConfig', () => {
       HD_AUTH_OIDC_GITLAB_DISPLAY_NAME_FIELD: displayNameField,
       HD_AUTH_OIDC_GITLAB_PROFILE_PICTURE_FIELD: profilePictureField,
       HD_AUTH_OIDC_GITLAB_EMAIL_FIELD: emailField,
-      HD_AUTH_OIDC_GITLAB_ENABLE_REGISTER: enableRegistration,
+      HD_AUTH_OIDC_GITLAB_ENABLE_REGISTRATION: enableRegistration,
       /* eslint-enable @typescript-eslint/naming-convention */
     };
     describe('is correctly parsed', () => {
@@ -974,13 +974,13 @@ describe('authConfig', () => {
         expect(firstOidc.enableRegistration).toEqual(false);
         restore();
       });
-      it('when HD_AUTH_OIDC_GITLAB_ENABLE_REGISTER is not set', () => {
+      it('when HD_AUTH_OIDC_GITLAB_ENABLE_REGISTRATION is not set', () => {
         const restore = mockedEnv(
           {
             /* eslint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeOidcConfig,
-            HD_AUTH_OIDC_GITLAB_ENABLE_REGISTER: undefined,
+            HD_AUTH_OIDC_GITLAB_ENABLE_REGISTRATION: undefined,
             /* eslint-enable @typescript-eslint/naming-convention */
           },
           {

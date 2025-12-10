@@ -14,7 +14,7 @@ import {
 } from './zod-error-message';
 
 const azureSchema = z.object({
-  use: z.literal(MediaBackendType.AZURE),
+  type: z.literal(MediaBackendType.AZURE),
   azure: z.object({
     connectionString: z
       .string()
@@ -24,21 +24,21 @@ const azureSchema = z.object({
 });
 
 const filesystemSchema = z.object({
-  use: z.literal(MediaBackendType.FILESYSTEM),
+  type: z.literal(MediaBackendType.FILESYSTEM),
   filesystem: z.object({
     uploadPath: z.string().describe('HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH'),
   }),
 });
 
 const imgurSchema = z.object({
-  use: z.literal(MediaBackendType.IMGUR),
+  type: z.literal(MediaBackendType.IMGUR),
   imgur: z.object({
     clientId: z.string().describe('HD_MEDIA_BACKEND_IMGUR_CLIENT_ID'),
   }),
 });
 
 const s3Schema = z.object({
-  use: z.literal(MediaBackendType.S3),
+  type: z.literal(MediaBackendType.S3),
   s3: z.object({
     accessKeyId: z.string().describe('HD_MEDIA_BACKEND_S3_ACCESS_KEY'),
     secretAccessKey: z.string().describe('HD_MEDIA_BACKEND_S3_SECRET_KEY'),
@@ -53,7 +53,7 @@ const s3Schema = z.object({
 });
 
 const webdavSchema = z.object({
-  use: z.literal(MediaBackendType.WEBDAV),
+  type: z.literal(MediaBackendType.WEBDAV),
   webdav: z.object({
     connectionString: z
       .string()
@@ -68,7 +68,7 @@ const webdavSchema = z.object({
 });
 
 const schema = z.object({
-  backend: z.discriminatedUnion('use', [
+  backend: z.discriminatedUnion('type', [
     azureSchema,
     filesystemSchema,
     imgurSchema,
@@ -87,7 +87,7 @@ export type WebdavMediaConfig = z.infer<typeof webdavSchema>;
 export default registerAs('mediaConfig', () => {
   const mediaConfig = schema.safeParse({
     backend: {
-      use: process.env.HD_MEDIA_BACKEND,
+      type: process.env.HD_MEDIA_BACKEND_TYPE,
       filesystem: {
         uploadPath: process.env.HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH,
       },

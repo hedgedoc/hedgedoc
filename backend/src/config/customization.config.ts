@@ -14,13 +14,17 @@ import {
 
 const schema = z.object({
   branding: z.object({
-    customName: z.string().or(z.null()).describe('HD_CUSTOM_NAME'),
-    customLogo: z.string().url().or(z.null()).describe('HD_CUSTOM_LOGO'),
+    customName: z.string().or(z.null()).describe('HD_BRANDING_CUSTOM_NAME'),
+    customLogo: z
+      .string()
+      .url()
+      .or(z.null())
+      .describe('HD_BRANDING_CUSTOM_LOGO'),
   }),
-  specialUrls: z.object({
-    privacy: z.string().url().or(z.null()).describe('HD_PRIVACY_URL'),
-    termsOfUse: z.string().url().or(z.null()).describe('HD_TERMS_OF_USE_URL'),
-    imprint: z.string().url().or(z.null()).describe('HD_IMPRINT_URL'),
+  urls: z.object({
+    privacy: z.string().url().or(z.null()).describe('HD_URLS_PRIVACY'),
+    termsOfUse: z.string().url().or(z.null()).describe('HD_URLS_TERMS_OF_USE'),
+    imprint: z.string().url().or(z.null()).describe('HD_URLS_IMPRINT'),
   }),
 });
 
@@ -29,13 +33,13 @@ export type CustomizationConfig = z.infer<typeof schema>;
 export default registerAs('customizationConfig', () => {
   const customizationConfig = schema.safeParse({
     branding: {
-      customName: process.env.HD_CUSTOM_NAME ?? null,
-      customLogo: process.env.HD_CUSTOM_LOGO ?? null,
+      customName: process.env.HD_BRANDING_CUSTOM_NAME ?? null,
+      customLogo: process.env.HD_BRANDING_CUSTOM_LOGO ?? null,
     },
-    specialUrls: {
-      privacy: process.env.HD_PRIVACY_URL ?? null,
-      termsOfUse: process.env.HD_TERMS_OF_USE_URL ?? null,
-      imprint: process.env.HD_IMPRINT_URL ?? null,
+    urls: {
+      privacy: process.env.HD_URLS_PRIVACY ?? null,
+      termsOfUse: process.env.HD_URLS_TERMS_OF_USE ?? null,
+      imprint: process.env.HD_URLS_IMPRINT ?? null,
     },
   });
   if (customizationConfig.error) {

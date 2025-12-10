@@ -75,7 +75,7 @@ export class ConsoleLoggerService implements LoggerService {
     ) {
       return;
     }
-    if (needToLog(this.appConfig.loglevel, Loglevel.INFO)) {
+    if (needToLog(this.appConfig.log.level, Loglevel.INFO)) {
       this.printMessage(
         message,
         green,
@@ -90,7 +90,7 @@ export class ConsoleLoggerService implements LoggerService {
     functionContext?: string,
     classContext?: string,
   ): void {
-    if (needToLog(this.appConfig.loglevel, Loglevel.WARN)) {
+    if (needToLog(this.appConfig.log.level, Loglevel.WARN)) {
       this.printMessage(
         message,
         yellow,
@@ -105,7 +105,7 @@ export class ConsoleLoggerService implements LoggerService {
     functionContext?: string,
     classContext?: string,
   ): void {
-    if (needToLog(this.appConfig.loglevel, Loglevel.DEBUG)) {
+    if (needToLog(this.appConfig.log.level, Loglevel.DEBUG)) {
       this.printMessage(
         message,
         magentaBright,
@@ -120,7 +120,7 @@ export class ConsoleLoggerService implements LoggerService {
     functionContext?: string,
     classContext?: string,
   ): void {
-    if (needToLog(this.appConfig.loglevel, Loglevel.TRACE)) {
+    if (needToLog(this.appConfig.log.level, Loglevel.TRACE)) {
       this.printMessage(
         message,
         cyanBright,
@@ -188,7 +188,7 @@ export class ConsoleLoggerService implements LoggerService {
       month: '2-digit',
     };
     let timeString = '';
-    if (this.appConfig.showLogTimestamp) {
+    if (this.appConfig.log.showTimestamp) {
       timeString =
         new Date(Date.now()).toLocaleString(undefined, localeStringOptions) +
         ' ';

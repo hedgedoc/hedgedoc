@@ -39,7 +39,7 @@ export class ImgurBackend implements MediaBackend {
   ) {
     this.logger.setContext(ImgurBackend.name);
     // only create the backend if imgur is configured
-    if (this.mediaConfig.backend.use !== MediaBackendType.IMGUR) {
+    if (this.mediaConfig.backend.type !== MediaBackendType.IMGUR) {
       return;
     }
     this.config = this.mediaConfig.backend.imgur;

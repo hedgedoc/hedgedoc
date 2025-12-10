@@ -46,15 +46,15 @@ export class FrontendConfigService {
     return FrontendConfigDto.create({
       guestAccess: this.noteConfig.permissions.maxGuestLevel,
       allowRegister: this.authConfig.local.enableRegister,
-      allowProfileEdits: this.authConfig.common.allowProfileEdits,
-      allowChooseUsername: this.authConfig.common.allowChooseUsername,
+      allowProfileEdits: this.authConfig.allowProfileEdits,
+      allowChooseUsername: this.authConfig.allowChooseUsername,
       authProviders: this.getAuthProviders(),
       branding: this.getBranding(),
-      maxDocumentLength: this.noteConfig.maxDocumentLength,
+      maxDocumentLength: this.noteConfig.maxLength,
       plantUmlServer: this.externalServicesConfig.plantumlServer
         ? new URL(this.externalServicesConfig.plantumlServer).toString()
         : null,
-      specialUrls: this.getSpecialUrls(),
+      urls: this.getSpecialUrls(),
       useImageProxy: !!this.externalServicesConfig.imageProxy,
       version: await getServerVersionFromPackageJson(),
     });
@@ -112,14 +112,14 @@ export class FrontendConfigService {
    */
   private getSpecialUrls(): SpecialUrlDto {
     return SpecialUrlDto.create({
-      imprint: this.customizationConfig.specialUrls.imprint
-        ? new URL(this.customizationConfig.specialUrls.imprint).toString()
+      imprint: this.customizationConfig.urls.imprint
+        ? new URL(this.customizationConfig.urls.imprint).toString()
         : null,
-      privacy: this.customizationConfig.specialUrls.privacy
-        ? new URL(this.customizationConfig.specialUrls.privacy).toString()
+      privacy: this.customizationConfig.urls.privacy
+        ? new URL(this.customizationConfig.urls.privacy).toString()
         : null,
-      termsOfUse: this.customizationConfig.specialUrls.termsOfUse
-        ? new URL(this.customizationConfig.specialUrls.termsOfUse).toString()
+      termsOfUse: this.customizationConfig.urls.termsOfUse
+        ? new URL(this.customizationConfig.urls.termsOfUse).toString()
         : null,
     });
   }

@@ -22,7 +22,9 @@ async function bootstrap(): Promise<void> {
     // ConsoleLoggerService only uses the loglevel, so we can give it an incomplete AppConfig to log everything
     // This Logger instance will be replaced by a proper one with config from DI below
     logger: isDevMode()
-      ? new ConsoleLoggerService({ loglevel: Loglevel.TRACE } as AppConfig)
+      ? new ConsoleLoggerService({
+          log: { level: Loglevel.TRACE },
+        } as AppConfig)
       : false,
   });
 

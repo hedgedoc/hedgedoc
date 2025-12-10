@@ -78,20 +78,16 @@ const schema = z
       .max(65535)
       .default(3000)
       .describe('HD_BACKEND_PORT'),
-    loglevel: z
-      .enum(Object.values(Loglevel) as [Loglevel, ...Loglevel[]])
-      .default(Loglevel.INFO)
-      .describe('HD_LOGLEVEL'),
-    showLogTimestamp: z
-      .boolean()
-      .default(true)
-      .describe('HD_SHOW_LOG_TIMESTAMP'),
-    persistInterval: z.coerce
-      .number()
-      .int()
-      .min(0)
-      .default(10)
-      .describe('HD_PERSIST_INTERVAL'),
+    log: z.object({
+      level: z
+        .enum(Object.values(Loglevel) as [Loglevel, ...Loglevel[]])
+        .default(Loglevel.INFO)
+        .describe('HD_LOG_LEVEL'),
+      showTimestamp: z
+        .boolean()
+        .default(true)
+        .describe('HD_LOG_SHOW_TIMESTAMP'),
+    }),
   })
   .transform((data) => {
     // Handle the default reference for rendererBaseUrl
@@ -108,9 +104,10 @@ export default registerAs('appConfig', () => {
     baseUrl: process.env.HD_BASE_URL,
     rendererBaseUrl: process.env.HD_RENDERER_BASE_URL,
     backendPort: parseOptionalNumber(process.env.HD_BACKEND_PORT),
-    loglevel: process.env.HD_LOGLEVEL,
-    showLogTimestamp: parseOptionalBoolean(process.env.HD_SHOW_LOG_TIMESTAMP),
-    persistInterval: process.env.HD_PERSIST_INTERVAL,
+    log: {
+      level: process.env.HD_LOG_LEVEL,
+      showTimestamp: parseOptionalBoolean(process.env.HD_LOG_SHOW_TIMESTAMP),
+    },
   });
   if (appConfig.error) {
     const errorMessages = appConfig.error.errors.map((issue) =>

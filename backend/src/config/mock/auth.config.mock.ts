@@ -10,10 +10,8 @@ import { AuthConfig } from '../auth.config';
 
 export function createDefaultMockAuthConfig(): AuthConfig {
   return {
-    common: {
-      allowProfileEdits: true,
-      allowChooseUsername: true,
-    },
+    allowProfileEdits: true,
+    allowChooseUsername: true,
     session: {
       secret: 'my_secret',
       lifetime: 1209600000,

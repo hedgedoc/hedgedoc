@@ -30,7 +30,7 @@ export class WebdavBackend implements MediaBackend {
   ) {
     this.logger.setContext(WebdavBackend.name);
     // only create the backend if WebDAV is configured
-    if (this.mediaConfig.backend.use !== MediaBackendType.WEBDAV) {
+    if (this.mediaConfig.backend.type !== MediaBackendType.WEBDAV) {
       return;
     }
 

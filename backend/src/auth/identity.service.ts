@@ -39,7 +39,7 @@ export class IdentityService {
    * @returns true if the authProviderIdentifier is the sync source, false otherwise
    */
   mayUpdateIdentity(authProviderIdentifier: string): boolean {
-    return this.authConfig.common.syncSource === authProviderIdentifier;
+    return this.authConfig.syncSource === authProviderIdentifier;
   }
 
   /**
@@ -169,8 +169,8 @@ export class IdentityService {
     authProviderIdentifier: string,
     authProviderUserId: string,
   ): Promise<number> {
-    const profileEditsAllowed = this.authConfig.common.allowProfileEdits;
-    const chooseUsernameAllowed = this.authConfig.common.allowChooseUsername;
+    const profileEditsAllowed = this.authConfig.allowProfileEdits;
+    const chooseUsernameAllowed = this.authConfig.allowChooseUsername;
 
     const username = chooseUsernameAllowed
       ? pendingUserConfirmationData.username

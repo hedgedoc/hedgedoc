@@ -20,7 +20,6 @@ describe('appConfig', () => {
   const loglevel = Loglevel.TRACE;
   const showLogTimestamp = false;
   const invalidLoglevel = 'not-a-loglevel';
-  const invalidPersistInterval = -1;
 
   describe('correctly parses config', () => {
     it('when given correct and complete environment variables', async () => {
@@ -30,9 +29,8 @@ describe('appConfig', () => {
           HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
           HD_BACKEND_PORT: port.toString(),
-          HD_LOGLEVEL: loglevel,
-          HD_SHOW_LOG_TIMESTAMP: showLogTimestamp.toString(),
-          HD_PERSIST_INTERVAL: '100',
+          HD_LOG_LEVEL: loglevel,
+          HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -43,21 +41,19 @@ describe('appConfig', () => {
       expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
       expect(config.backendPort).toEqual(port);
-      expect(config.loglevel).toEqual(loglevel);
-      expect(config.showLogTimestamp).toEqual(showLogTimestamp);
-      expect(config.persistInterval).toEqual(100);
+      expect(config.log.level).toEqual(loglevel);
+      expect(config.log.showTimestamp).toEqual(showLogTimestamp);
       restore();
     });
 
-    it('when no HD_RENDER_ORIGIN is set', () => {
+    it('when no HD_RENDER_BASE_URL is set', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_BACKEND_PORT: port.toString(),
-          HD_LOGLEVEL: loglevel,
-          HD_SHOW_LOG_TIMESTAMP: showLogTimestamp.toString(),
-          HD_PERSIST_INTERVAL: '100',
+          HD_LOG_LEVEL: loglevel,
+          HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -68,9 +64,8 @@ describe('appConfig', () => {
       expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(baseUrl);
       expect(config.backendPort).toEqual(port);
-      expect(config.loglevel).toEqual(loglevel);
-      expect(config.showLogTimestamp).toEqual(showLogTimestamp);
-      expect(config.persistInterval).toEqual(100);
+      expect(config.log.level).toEqual(loglevel);
+      expect(config.log.showTimestamp).toEqual(showLogTimestamp);
       restore();
     });
 
@@ -80,9 +75,8 @@ describe('appConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
-          HD_LOGLEVEL: loglevel,
-          HD_SHOW_LOG_TIMESTAMP: showLogTimestamp.toString(),
-          HD_PERSIST_INTERVAL: '100',
+          HD_LOG_LEVEL: loglevel,
+          HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -93,21 +87,19 @@ describe('appConfig', () => {
       expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
       expect(config.backendPort).toEqual(3000);
-      expect(config.loglevel).toEqual(loglevel);
-      expect(config.showLogTimestamp).toEqual(showLogTimestamp);
-      expect(config.persistInterval).toEqual(100);
+      expect(config.log.level).toEqual(loglevel);
+      expect(config.log.showTimestamp).toEqual(showLogTimestamp);
       restore();
     });
 
-    it('when no HD_LOGLEVEL is set', () => {
+    it('when no HD_LOG_LEVEL is set', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
           HD_BACKEND_PORT: port.toString(),
-          HD_SHOW_LOG_TIMESTAMP: showLogTimestamp.toString(),
-          HD_PERSIST_INTERVAL: '100',
+          HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -118,45 +110,18 @@ describe('appConfig', () => {
       expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
       expect(config.backendPort).toEqual(port);
-      expect(config.loglevel).toEqual(Loglevel.WARN);
-      expect(config.showLogTimestamp).toEqual(showLogTimestamp);
-      expect(config.persistInterval).toEqual(100);
+      expect(config.log.level).toEqual(Loglevel.WARN);
+      expect(config.log.showTimestamp).toEqual(showLogTimestamp);
       restore();
     });
 
-    it('when no HD_PERSIST_INTERVAL is set', () => {
+    it('when no HD_LOG_SHOW_TIMESTAMP is set', () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
-          HD_LOGLEVEL: loglevel,
-          HD_SHOW_LOG_TIMESTAMP: showLogTimestamp.toString(),
-          HD_BACKEND_PORT: port.toString(),
-          /* eslint-enable @typescript-eslint/naming-convention */
-        },
-        {
-          clear: true,
-        },
-      );
-      const config = appConfig();
-      expect(config.baseUrl).toEqual(baseUrl);
-      expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
-      expect(config.backendPort).toEqual(port);
-      expect(config.loglevel).toEqual(Loglevel.TRACE);
-      expect(config.showLogTimestamp).toEqual(showLogTimestamp);
-      expect(config.persistInterval).toEqual(10);
-      restore();
-    });
-
-    it('when HD_PERSIST_INTERVAL is zero', () => {
-      const restore = mockedEnv(
-        {
-          /* eslint-disable @typescript-eslint/naming-convention */
-          HD_BASE_URL: baseUrl,
-          HD_RENDERER_BASE_URL: rendererBaseUrl,
-          HD_LOGLEVEL: loglevel,
-          HD_SHOW_LOG_TIMESTAMP: showLogTimestamp.toString(),
+          HD_LOG_LEVEL: loglevel,
           HD_BACKEND_PORT: port.toString(),
           HD_PERSIST_INTERVAL: '0',
           /* eslint-enable @typescript-eslint/naming-convention */
@@ -169,33 +134,8 @@ describe('appConfig', () => {
       expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
       expect(config.backendPort).toEqual(port);
-      expect(config.loglevel).toEqual(Loglevel.TRACE);
-      expect(config.showLogTimestamp).toEqual(showLogTimestamp);
-      expect(config.persistInterval).toEqual(0);
-      restore();
-    });
-    it('when no HD_SHOW_LOG_TIMESTAMP is set', () => {
-      const restore = mockedEnv(
-        {
-          /* eslint-disable @typescript-eslint/naming-convention */
-          HD_BASE_URL: baseUrl,
-          HD_RENDERER_BASE_URL: rendererBaseUrl,
-          HD_LOGLEVEL: loglevel,
-          HD_BACKEND_PORT: port.toString(),
-          HD_PERSIST_INTERVAL: '0',
-          /* eslint-enable @typescript-eslint/naming-convention */
-        },
-        {
-          clear: true,
-        },
-      );
-      const config = appConfig();
-      expect(config.baseUrl).toEqual(baseUrl);
-      expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
-      expect(config.backendPort).toEqual(port);
-      expect(config.loglevel).toEqual(Loglevel.TRACE);
-      expect(config.showLogTimestamp).toEqual(true);
-      expect(config.persistInterval).toEqual(0);
+      expect(config.log.level).toEqual(Loglevel.TRACE);
+      expect(config.log.showTimestamp).toEqual(true);
       restore();
     });
   });
@@ -206,8 +146,8 @@ describe('appConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: invalidBaseUrl,
           HD_BACKEND_PORT: port.toString(),
-          HD_LOGLEVEL: loglevel,
-          HD_SHOW_LOG_TIMESTAMP: showLogTimestamp.toString(),
+          HD_LOG_LEVEL: loglevel,
+          HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -223,8 +163,8 @@ describe('appConfig', () => {
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: 'https://example.org/subdirectory/',
-          HD_LOGLEVEL: loglevel,
-          HD_SHOW_LOG_TIMESTAMP: showLogTimestamp.toString(),
+          HD_LOG_LEVEL: loglevel,
+          HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -243,8 +183,8 @@ describe('appConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_BACKEND_PORT: negativePort.toString(),
-          HD_LOGLEVEL: loglevel,
-          HD_SHOW_LOG_TIMESTAMP: showLogTimestamp.toString(),
+          HD_LOG_LEVEL: loglevel,
+          HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -263,8 +203,8 @@ describe('appConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_BACKEND_PORT: outOfRangePort.toString(),
-          HD_LOGLEVEL: loglevel,
-          HD_SHOW_LOG_TIMESTAMP: showLogTimestamp.toString(),
+          HD_LOG_LEVEL: loglevel,
+          HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -283,8 +223,8 @@ describe('appConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_BACKEND_PORT: floatPort.toString(),
-          HD_LOGLEVEL: loglevel,
-          HD_SHOW_LOG_TIMESTAMP: showLogTimestamp.toString(),
+          HD_LOG_LEVEL: loglevel,
+          HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -303,8 +243,8 @@ describe('appConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_BACKEND_PORT: invalidPort,
-          HD_LOGLEVEL: loglevel,
-          HD_SHOW_LOG_TIMESTAMP: showLogTimestamp.toString(),
+          HD_LOG_LEVEL: loglevel,
+          HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -317,40 +257,21 @@ describe('appConfig', () => {
       restore();
     });
 
-    it('when given a non-loglevel HD_LOGLEVEL', async () => {
+    it('when given a non-loglevel HD_LOG_LEVEL', async () => {
       const restore = mockedEnv(
         {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_BACKEND_PORT: port.toString(),
-          HD_LOGLEVEL: invalidLoglevel,
-          HD_SHOW_LOG_TIMESTAMP: showLogTimestamp.toString(),
+          HD_LOG_LEVEL: invalidLoglevel,
+          HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
         },
       );
-      expect(() => appConfig()).toThrow('HD_LOGLEVEL');
-      restore();
-    });
-
-    it('when given a negative HD_PERSIST_INTERVAL', () => {
-      const restore = mockedEnv(
-        {
-          /* eslint-disable @typescript-eslint/naming-convention */
-          HD_BASE_URL: baseUrl,
-          HD_BACKEND_PORT: port.toString(),
-          HD_LOGLEVEL: invalidLoglevel,
-          HD_SHOW_LOG_TIMESTAMP: showLogTimestamp.toString(),
-          HD_PERSIST_INTERVAL: invalidPersistInterval.toString(),
-          /* eslint-enable @typescript-eslint/naming-convention */
-        },
-        {
-          clear: true,
-        },
-      );
-      expect(() => appConfig()).toThrow('HD_PERSIST_INTERVAL');
+      expect(() => appConfig()).toThrow('HD_LOG_LEVEL');
       restore();
     });
   });

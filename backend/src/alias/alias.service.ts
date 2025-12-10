@@ -258,7 +258,7 @@ export class AliasService {
    * @returns true if the alias is forbidden, false otherwise
    */
   isAliasForbidden(alias: string): boolean {
-    return this.noteConfig.forbiddenNoteIds.includes(alias);
+    return this.noteConfig.forbiddenAliases.includes(alias);
   }
 
   /**

@@ -25,7 +25,7 @@ export class FilesystemBackend implements MediaBackend {
   ) {
     this.logger.setContext(FilesystemBackend.name);
     // only create the backend if local filesystem is configured
-    if (this.mediaConfig.backend.use !== MediaBackendType.FILESYSTEM) {
+    if (this.mediaConfig.backend.type !== MediaBackendType.FILESYSTEM) {
       this.uploadDirectory = '';
       return;
     }

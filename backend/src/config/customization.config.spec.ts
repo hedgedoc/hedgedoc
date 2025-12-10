@@ -22,11 +22,11 @@ describe('customizationConfig', () => {
     const restore = mockedEnv(
       {
         /* eslint-disable @typescript-eslint/naming-convention */
-        HD_CUSTOM_NAME: customName,
-        HD_CUSTOM_LOGO: customLogo,
-        HD_PRIVACY_URL: privacyUrl,
-        HD_TERMS_OF_USE_URL: termsOfUseUrl,
-        HD_IMPRINT_URL: imprintUrl,
+        HD_BRANDING_CUSTOM_NAME: customName,
+        HD_BRANDING_CUSTOM_LOGO: customLogo,
+        HD_URLS_PRIVACY: privacyUrl,
+        HD_URLS_TERMS_OF_USE: termsOfUseUrl,
+        HD_URLS_IMPRINT: imprintUrl,
         /* eslint-enable @typescript-eslint/naming-convention */
       },
       {
@@ -36,9 +36,9 @@ describe('customizationConfig', () => {
     const config = customizationConfig();
     expect(config.branding.customName).toEqual(customName);
     expect(config.branding.customLogo).toEqual(customLogo);
-    expect(config.specialUrls.privacy).toEqual(privacyUrl);
-    expect(config.specialUrls.termsOfUse).toEqual(termsOfUseUrl);
-    expect(config.specialUrls.imprint).toEqual(imprintUrl);
+    expect(config.urls.privacy).toEqual(privacyUrl);
+    expect(config.urls.termsOfUse).toEqual(termsOfUseUrl);
+    expect(config.urls.imprint).toEqual(imprintUrl);
     restore();
   });
 
@@ -46,11 +46,11 @@ describe('customizationConfig', () => {
     const restore = mockedEnv(
       {
         /* eslint-disable @typescript-eslint/naming-convention */
-        HD_CUSTOM_NAME: customName,
-        HD_CUSTOM_LOGO: invalidCustomLogo,
-        HD_PRIVACY_URL: invalidPrivacyUrl,
-        HD_TERMS_OF_USE_URL: invalidTermsOfUseUrl,
-        HD_IMPRINT_URL: invalidImprintUrl,
+        HD_BRANDING_CUSTOM_NAME: customName,
+        HD_BRANDING_CUSTOM_LOGO: invalidCustomLogo,
+        HD_URLS_PRIVACY: invalidPrivacyUrl,
+        HD_URLS_TERMS_OF_USE: invalidTermsOfUseUrl,
+        HD_URLS_IMPRINT: invalidImprintUrl,
         /* eslint-enable @typescript-eslint/naming-convention */
       },
       {
@@ -59,9 +59,9 @@ describe('customizationConfig', () => {
     );
     expect(() => customizationConfig()).toThrow(
       `- HD_BRANDING_CUSTOM_LOGO: Invalid url
- - HD_SPECIAL_URLS_PRIVACY: Invalid url
- - HD_SPECIAL_URLS_TERMS_OF_USE: Invalid url
- - HD_SPECIAL_URLS_IMPRINT: Invalid url`,
+ - HD_URLS_PRIVACY: Invalid url
+ - HD_URLS_TERMS_OF_USE: Invalid url
+ - HD_URLS_IMPRINT: Invalid url`,
     );
     restore();
   });
