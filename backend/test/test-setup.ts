@@ -10,7 +10,6 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
 import knex, { Knex } from 'knex';
-import { DateTime } from 'luxon';
 import { KnexModule } from 'nest-knexjs';
 import { ZodSerializerInterceptor, ZodValidationPipe } from 'nestjs-zod';
 import { v4 as uuidv4 } from 'uuid';
@@ -85,6 +84,7 @@ import { SessionModule } from '../src/sessions/session.module';
 import { SessionService } from '../src/sessions/session.service';
 import { UsersModule } from '../src/users/users.module';
 import { UsersService } from '../src/users/users.service';
+import { getCurrentDateTime } from '../src/utils/datetime';
 
 interface CreateTestSetupParameters {
   appConfigMock?: AppConfig;
@@ -407,7 +407,7 @@ export class TestSetupBuilder {
       this.testSetup.authTokens = await Promise.all(
         this.testSetup.userIds.map(async (userId) => {
           // Token is valid for 1 hour
-          const validUntil = DateTime.utc().plus({
+          const validUntil = getCurrentDateTime().plus({
             hour: 1,
           });
           return await this.testSetup.apiTokenService.createToken(

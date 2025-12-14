@@ -56,6 +56,7 @@ import { PermissionService } from '../permissions/permission.service';
 import { RealtimeNoteStore } from '../realtime/realtime-note/realtime-note-store';
 import { RevisionsService } from '../revisions/revisions.service';
 import { UsersService } from '../users/users.service';
+import { dateTimeToDB, getCurrentDateTime } from '../utils/datetime';
 import { NoteService } from './note.service';
 
 describe('NoteService', () => {
@@ -164,7 +165,7 @@ describe('NoteService', () => {
     let now: DateTime;
     beforeEach(() => {
       jest.useFakeTimers();
-      now = DateTime.utc();
+      now = getCurrentDateTime();
     });
     afterEach(() => {
       jest.useRealTimers();
@@ -186,7 +187,9 @@ describe('NoteService', () => {
       await expect(
         service.createNote(mockNoteContent, mockOwnerUserId, mockAliasCustom),
       ).rejects.toThrow(GenericDBError);
-      expectBindings(tracker, 'insert', [[now.toSQL(), mockOwnerUserId, 2]]);
+      expectBindings(tracker, 'insert', [
+        [dateTimeToDB(now), mockOwnerUserId, 2],
+      ]);
     });
 
     /* eslint-disable jest/no-conditional-expect */
@@ -266,7 +269,7 @@ describe('NoteService', () => {
           );
           expect(result).toBe(mockNoteId);
           expectBindings(tracker, 'insert', [
-            [now.toSQL(), mockOwnerUserId, 2],
+            [dateTimeToDB(now), mockOwnerUserId, 2],
           ]);
         });
 

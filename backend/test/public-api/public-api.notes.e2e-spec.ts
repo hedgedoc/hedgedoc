@@ -423,7 +423,9 @@ describe('Notes', () => {
     });
 
     it('has the correct update/create dates', async () => {
-      jest.useFakeTimers();
+      jest.useFakeTimers({
+        legacyFakeTimers: true,
+      });
       const noteId = testSetup.ownedNoteIds[0];
       // save the creation time
       const noteMetadata =

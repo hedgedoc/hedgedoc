@@ -28,7 +28,6 @@ import { SpecialGroup } from '@hedgedoc/database';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Knex } from 'knex';
-import { DateTime } from 'luxon';
 import { InjectConnection } from 'nest-knexjs';
 
 import { AliasService } from '../alias/alias.service';
@@ -48,6 +47,12 @@ import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { PermissionService } from '../permissions/permission.service';
 import { RealtimeNoteStore } from '../realtime/realtime-note/realtime-note-store';
 import { RevisionsService } from '../revisions/revisions.service';
+import {
+  dateTimeToDB,
+  dateTimeToISOString,
+  dbToDateTime,
+  getCurrentDateTime,
+} from '../utils/datetime';
 
 @Injectable()
 export class NoteService {
@@ -106,12 +111,13 @@ export class NoteService {
     }
     return await this.knex.transaction(async (transaction) => {
       // Create note itself in the database
+      const createdAt = dateTimeToDB(getCurrentDateTime());
       const createdNotes: Pick<Note, FieldNameNote.id>[] | number[] =
         await transaction(TableNote).insert(
           {
             [FieldNameNote.ownerId]: ownerUserId,
             [FieldNameNote.version]: 2,
-            [FieldNameNote.createdAt]: DateTime.utc().toSQL(),
+            [FieldNameNote.createdAt]: createdAt,
           },
           [FieldNameNote.id],
         );
@@ -437,9 +443,7 @@ export class NoteService {
     }
     const createdAtString = note[FieldNameNote.createdAt];
     const version = note[FieldNameNote.version];
-    const createdAt = DateTime.fromSQL(createdAtString, {
-      zone: 'UTC',
-    }).toISO();
+    const createdAt = dateTimeToISOString(dbToDateTime(createdAtString));
 
     const latestRevision = await this.revisionsService.getLatestRevision(
       noteId,
@@ -461,12 +465,9 @@ export class NoteService {
     );
     updateUsers.users.sort();
 
-    const updatedAt = DateTime.fromSQL(
-      latestRevision[FieldNameRevision.createdAt],
-      {
-        zone: 'utc',
-      },
-    ).toISO();
+    const updatedAt = dateTimeToISOString(
+      dbToDateTime(latestRevision[FieldNameRevision.createdAt]),
+    );
 
     let lastUpdatedBy;
     let editedBy;

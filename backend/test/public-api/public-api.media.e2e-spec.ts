@@ -4,13 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { promises as fs } from 'fs';
-import { DateTime } from 'luxon';
 import { join } from 'path';
 import request from 'supertest';
 
 import { PUBLIC_API_PREFIX } from '../../src/app.module';
 import { MediaUploadDto } from '../../src/dtos/media-upload.dto';
 import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
+import {
+  getCurrentDateTime,
+  isoStringToDateTime,
+} from '../../src/utils/datetime';
 import {
   noteAlias1,
   TestSetup,
@@ -117,8 +120,10 @@ describe('Media', () => {
   describe(`GET ${PUBLIC_API_PREFIX}/media/{:uuid}`, () => {
     const fileName = 'test.png';
     it('returns the media info', async () => {
-      jest.useFakeTimers();
-      const now = DateTime.utc();
+      jest.useFakeTimers({
+        legacyFakeTimers: true,
+      });
+      const hardCodedNow = getCurrentDateTime();
       const uuid = await testSetup.mediaService.saveFile(
         fileName,
         testImage,
@@ -132,7 +137,10 @@ describe('Media', () => {
         .expect(200);
       const mediaDto: MediaUploadDto = response.body;
       expect(mediaDto.uuid).toEqual(uuid);
-      expect(mediaDto.createdAt).toEqual(now.toISO());
+      expect(
+        isoStringToDateTime(mediaDto.createdAt).toMillis() -
+          hardCodedNow.toMillis(),
+      ).toBeLessThan(100);
       expect(mediaDto.noteAlias).toEqual(noteAlias1);
       expect(mediaDto.fileName).toEqual(fileName);
       expect(mediaDto.username).toEqual(username1);

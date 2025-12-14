@@ -25,7 +25,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Cron, Timeout } from '@nestjs/schedule';
 import { createPatch } from 'diff';
 import { Knex } from 'knex';
-import { DateTime } from 'luxon';
 import { InjectConnection } from 'nest-knexjs';
 import { v7 as uuidv7 } from 'uuid';
 
@@ -35,6 +34,12 @@ import { RevisionMetadataDto } from '../dtos/revision-metadata.dto';
 import { RevisionDto } from '../dtos/revision.dto';
 import { GenericDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
+import {
+  dateTimeToDB,
+  dateTimeToISOString,
+  dbToDateTime,
+  getCurrentDateTime,
+} from '../utils/datetime';
 import { extractRevisionMetadataFromContent } from './utils/extract-revision-metadata-from-content';
 
 interface RevisionUserInfo {
@@ -136,9 +141,9 @@ export class RevisionsService {
           RevisionMetadataDto.create({
             uuid: revision[FieldNameRevision.uuid],
             length: (revision[FieldNameRevision.content] ?? '').length,
-            createdAt: DateTime.fromSQL(revision[FieldNameRevision.createdAt], {
-              zone: 'UTC',
-            }).toISO(),
+            createdAt: dateTimeToISOString(
+              dbToDateTime(revision[FieldNameRevision.createdAt]),
+            ),
             authorUsernames:
               revision[FieldNameUser.username] !== null
                 ? [revision[FieldNameUser.username]]
@@ -236,9 +241,9 @@ export class RevisionsService {
       uuid: revision[FieldNameRevision.uuid],
       content: revision[FieldNameRevision.content],
       length: (revision[FieldNameRevision.content] ?? '').length,
-      createdAt: DateTime.fromSQL(revision[FieldNameRevision.createdAt], {
-        zone: 'UTC',
-      }).toISO(),
+      createdAt: dateTimeToISOString(
+        dbToDateTime(revision[FieldNameRevision.createdAt]),
+      ),
       title: revision[FieldNameRevision.title],
       description: revision[FieldNameRevision.description],
       patch: revision.patch,
@@ -413,7 +418,7 @@ export class RevisionsService {
         [FieldNameRevision.uuid]: newUuid,
         [FieldNameRevision.yjsStateVector]:
           yjsStateVector !== undefined ? Buffer.from(yjsStateVector) : null,
-        [FieldNameRevision.createdAt]: DateTime.utc().toSQL(),
+        [FieldNameRevision.createdAt]: dateTimeToDB(getCurrentDateTime()),
       },
       [FieldNameRevision.uuid],
     );

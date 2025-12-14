@@ -20,6 +20,12 @@ import {
 } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import {
+  dateTimeToDB,
+  dateTimeToISOString,
+  dbToDateTime,
+  getCurrentDateTime,
+} from '../utils/datetime';
+import {
   bufferToBase64Url,
   checkTokenEquality,
   hashApiToken,
@@ -74,6 +80,10 @@ export class ApiTokenService {
       }
 
       const tokenHash = token[FieldNameApiToken.secretHash];
+      this.logger.debug(
+        `valid until ${token[FieldNameApiToken.validUntil]} (${typeof token[FieldNameApiToken.validUntil]})`,
+        'getUserIdForToken',
+      );
       const validUntil = dbToDateTime(token[FieldNameApiToken.validUntil]);
       this.ensureTokenIsValid(secret, tokenHash, validUntil);
 
@@ -118,7 +128,7 @@ export class ApiTokenService {
       const secretHash = hashApiToken(secret);
       const fullToken = `${AUTH_TOKEN_PREFIX}.${keyId}.${secret}`;
       // Tokens can only be valid for a maximum of 2 years
-      const maximumTokenValidity = DateTime.utc().plus({
+      const maximumTokenValidity = getCurrentDateTime().plus({
         year: 2,
       });
       const isTokenLimitedToMaximumValidity =
@@ -127,26 +137,26 @@ export class ApiTokenService {
       const validUntil = isTokenLimitedToMaximumValidity
         ? maximumTokenValidity
         : userDefinedValidUntil;
-      const createdAt = DateTime.utc();
+      const createdAt = getCurrentDateTime();
       this.logger.debug(
         `New token für user '${userId}' valid until ${dateTimeToISOString(validUntil)}`,
         'createToken',
       );
       const insertApiToken: ApiToken = {
-        [FieldNameApiToken.createdAt]: createdAt.toSQL(),
+        [FieldNameApiToken.createdAt]: dateTimeToDB(createdAt),
         [FieldNameApiToken.id]: keyId,
         [FieldNameApiToken.label]: label,
         [FieldNameApiToken.secretHash]: secretHash,
         [FieldNameApiToken.userId]: userId,
-        [FieldNameApiToken.validUntil]: validUntil.toSQL() as unknown as string,
+        [FieldNameApiToken.validUntil]: dateTimeToDB(validUntil),
         [FieldNameApiToken.lastUsedAt]: null,
       };
       await transaction(TableApiToken).insert(insertApiToken);
       return ApiTokenWithSecretDto.create({
         label,
         keyId,
-        createdAt: createdAt.toISO(),
-        validUntil: validUntil.toISO(),
+        createdAt: dateTimeToISOString(createdAt),
+        validUntil: dateTimeToISOString(validUntil),
         lastUsedAt: null,
         secret: fullToken,
       });
@@ -167,8 +177,9 @@ export class ApiTokenService {
     tokenHash: string,
     validUntil: DateTime,
   ): void {
+    const now = getCurrentDateTime();
     // First, verify token expiry is not in the past (cheap operation)
-    if (validUntil.toMillis() < DateTime.utc().toMillis()) {
+    if (validUntil.toMillis() < now.toMillis()) {
       this.logger.debug(
         `Token ${tokenHash} is not valid anymore ${validUntil.toMillis()} > ${now.toMillis()}`,
         'ensureTokenIsValid',
@@ -208,16 +219,16 @@ export class ApiTokenService {
         ApiTokenDto.create({
           label: apiToken[FieldNameApiToken.label],
           keyId: apiToken[FieldNameApiToken.id],
-          createdAt: DateTime.fromSQL(apiToken[FieldNameApiToken.createdAt], {
-            zone: 'UTC',
-          }).toISO(),
-          validUntil: DateTime.fromSQL(apiToken[FieldNameApiToken.validUntil], {
-            zone: 'UTC',
-          }).toISO(),
+          createdAt: dateTimeToISOString(
+            dbToDateTime(apiToken[FieldNameApiToken.createdAt]),
+          ),
+          validUntil: dateTimeToISOString(
+            dbToDateTime(apiToken[FieldNameApiToken.validUntil]),
+          ),
           lastUsedAt: apiToken[FieldNameApiToken.lastUsedAt]
-            ? DateTime.fromSQL(apiToken[FieldNameApiToken.lastUsedAt], {
-                zone: 'UTC',
-              }).toISO()
+            ? dateTimeToISOString(
+                dbToDateTime(apiToken[FieldNameApiToken.lastUsedAt]),
+              )
             : null,
         }),
     );
@@ -258,7 +269,11 @@ export class ApiTokenService {
    */
   async removeInvalidTokens(): Promise<void> {
     const numberOfDeletedTokens = await this.knex(TableApiToken)
-      .where(FieldNameApiToken.validUntil, '<', DateTime.utc().toSQL())
+      .where(
+        FieldNameApiToken.validUntil,
+        '<',
+        dateTimeToDB(getCurrentDateTime()),
+      )
       .delete();
     this.logger.log(
       `${numberOfDeletedTokens} expired API tokens were purged from the DB`,

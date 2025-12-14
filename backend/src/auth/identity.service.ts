@@ -7,7 +7,6 @@ import { AuthProviderType } from '@hedgedoc/commons';
 import { FieldNameIdentity, Identity, TableIdentity } from '@hedgedoc/database';
 import { Inject, Injectable } from '@nestjs/common';
 import { Knex } from 'knex';
-import { DateTime } from 'luxon';
 import { InjectConnection } from 'nest-knexjs';
 
 import AuthConfiguration, { AuthConfig } from '../config/auth.config';
@@ -16,6 +15,7 @@ import { PendingUserInfoDto } from '../dtos/pending-user-info.dto';
 import { GenericDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { UsersService } from '../users/users.service';
+import { dateTimeToDB, getCurrentDateTime } from '../utils/datetime';
 
 @Injectable()
 export class IdentityService {
@@ -96,8 +96,8 @@ export class IdentityService {
         [FieldNameIdentity.providerIdentifier]: authProviderIdentifier,
         [FieldNameIdentity.providerUserId]: authProviderUserId,
         [FieldNameIdentity.passwordHash]: passwordHash ?? null,
-        [FieldNameIdentity.createdAt]: DateTime.utc().toSQL(),
-        [FieldNameIdentity.updatedAt]: DateTime.utc().toSQL(),
+        [FieldNameIdentity.createdAt]: dateTimeToDB(getCurrentDateTime()),
+        [FieldNameIdentity.updatedAt]: dateTimeToDB(getCurrentDateTime()),
       });
     } catch (error) {
       this.logger.error(error);

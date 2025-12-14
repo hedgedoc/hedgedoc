@@ -6,13 +6,20 @@
 import { FieldNameApiToken, TableApiToken } from '@hedgedoc/database';
 import { createHash } from 'crypto';
 import { Knex } from 'knex';
-import { DateTime } from 'luxon';
+
+import {
+  dateTimeToDB,
+  dateTimeToISOString,
+  getCurrentDateTime,
+} from '../../utils/datetime';
 
 export async function seed(knex: Knex): Promise<void> {
   // Clear table beforehand
   await knex(TableApiToken).del();
 
-  const validUntil = DateTime.utc().plus({ year: 1 }).toSQL();
+  const validUntil = dateTimeToISOString(
+    getCurrentDateTime().plus({ year: 1 }),
+  );
 
   // Insert an api token
   const apiToken =
@@ -25,7 +32,7 @@ export async function seed(knex: Knex): Promise<void> {
       .update(apiToken)
       .digest('hex'),
     [FieldNameApiToken.validUntil]: validUntil,
-    [FieldNameApiToken.createdAt]: DateTime.utc().toSQL(),
+    [FieldNameApiToken.createdAt]: dateTimeToDB(getCurrentDateTime()),
     [FieldNameApiToken.lastUsedAt]: null,
   });
 }
