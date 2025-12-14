@@ -155,6 +155,7 @@ export class AliasService {
       if (numberOfDeletedAliases !== 1) {
         this.logger.error(
           `While trying to remove alias ${alias} for note ${noteId}, removed ${numberOfDeletedAliases}`,
+          undefined,
           'removeAlias',
         );
         throw new PrimaryAliasDeletionForbiddenError(

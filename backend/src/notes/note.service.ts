@@ -129,6 +129,10 @@ export class NoteService {
           ? createdNotes[0]
           : createdNotes[0][FieldNameNote.id];
 
+      this.logger.debug(
+        `Creating new note '${noteId}' for '${ownerUserId}' at '${createdAt}'`,
+      );
+
       if (givenAlias !== undefined) {
         await this.aliasService.ensureAliasIsAvailable(givenAlias, transaction);
       }
@@ -451,7 +455,10 @@ export class NoteService {
       latestRevision[FieldNameRevision.uuid],
       transaction,
     );
-    this.logger.debug(`Retrieved ${updateUsers.users.length}`);
+    this.logger.debug(
+      `Retrieved ${updateUsers.users.length} users`,
+      'innerToNoteMetadataDto',
+    );
     updateUsers.users.sort();
 
     const updatedAt = DateTime.fromSQL(
@@ -471,6 +478,8 @@ export class NoteService {
       lastUpdatedBy = permissions.owner;
       editedBy = permissions.owner ? [permissions.owner] : [];
     }
+
+    this.logger.debug(`updatedAt ${updatedAt}`, 'innerToNoteMetadataDto');
 
     return NoteMetadataDto.create({
       aliases: aliases.map((alias) => alias[FieldNameAlias.alias]),

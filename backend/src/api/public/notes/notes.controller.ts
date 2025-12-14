@@ -73,7 +73,6 @@ export class NotesController {
     @RequestUserId() userId: number,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
-    this.logger.debug('Got raw markdown:\n' + text);
     const newNote = await this.noteService.createNote(text, userId);
     return await this.noteService.toNoteDto(newNote);
   }
