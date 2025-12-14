@@ -74,9 +74,7 @@ export class ApiTokenService {
       }
 
       const tokenHash = token[FieldNameApiToken.secretHash];
-      const validUntil = DateTime.fromSQL(token[FieldNameApiToken.validUntil], {
-        zone: 'UTC',
-      });
+      const validUntil = dbToDateTime(token[FieldNameApiToken.validUntil]);
       this.ensureTokenIsValid(secret, tokenHash, validUntil);
 
       await transaction(TableApiToken)
@@ -130,6 +128,10 @@ export class ApiTokenService {
         ? maximumTokenValidity
         : userDefinedValidUntil;
       const createdAt = DateTime.utc();
+      this.logger.debug(
+        `New token für user '${userId}' valid until ${dateTimeToISOString(validUntil)}`,
+        'createToken',
+      );
       const insertApiToken: ApiToken = {
         [FieldNameApiToken.createdAt]: createdAt.toSQL(),
         [FieldNameApiToken.id]: keyId,
@@ -167,6 +169,10 @@ export class ApiTokenService {
   ): void {
     // First, verify token expiry is not in the past (cheap operation)
     if (validUntil.toMillis() < DateTime.utc().toMillis()) {
+      this.logger.debug(
+        `Token ${tokenHash} is not valid anymore ${validUntil.toMillis()} > ${now.toMillis()}`,
+        'ensureTokenIsValid',
+      );
       throw new TokenNotValidError(MESSAGE_TOKEN_INVALID);
     }
 

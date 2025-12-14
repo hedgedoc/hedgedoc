@@ -470,23 +470,6 @@ export class PermissionService {
         );
       }
 
-      this.logger.debug(
-        `Getting permissions for note '${noteId}':`,
-        'getPermissionsDtoForNote',
-      );
-      this.logger.debug(
-        `owner: ${owner[FieldNameUser.username]}`,
-        'getPermissionsDtoForNote',
-      );
-      this.logger.debug(
-        `user permissions: ${JSON.stringify(groupPermissions)}`,
-        'getPermissionsDtoForNote',
-      );
-      this.logger.debug(
-        `group permissions: ${JSON.stringify(groupPermissions)}`,
-        'getPermissionsDtoForNote',
-      );
-
       return NotePermissionsDto.create({
         owner: owner[FieldNameUser.username],
         sharedToUsers: userPermissions.map((userPermission) => ({

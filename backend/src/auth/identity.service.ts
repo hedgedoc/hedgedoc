@@ -13,7 +13,7 @@ import { InjectConnection } from 'nest-knexjs';
 import AuthConfiguration, { AuthConfig } from '../config/auth.config';
 import { PendingUserConfirmationDto } from '../dtos/pending-user-confirmation.dto';
 import { PendingUserInfoDto } from '../dtos/pending-user-info.dto';
-import { NotInDBError } from '../errors/errors';
+import { GenericDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { UsersService } from '../users/users.service';
 
@@ -89,15 +89,24 @@ export class IdentityService {
     transaction?: Knex,
   ): Promise<void> {
     const dbActor = transaction ?? this.knex;
-    await dbActor(TableIdentity).insert({
-      [FieldNameIdentity.userId]: userId,
-      [FieldNameIdentity.providerType]: authProviderType,
-      [FieldNameIdentity.providerIdentifier]: authProviderIdentifier,
-      [FieldNameIdentity.providerUserId]: authProviderUserId,
-      [FieldNameIdentity.passwordHash]: passwordHash ?? null,
-      [FieldNameIdentity.createdAt]: DateTime.utc().toSQL(),
-      [FieldNameIdentity.updatedAt]: DateTime.utc().toSQL(),
-    });
+    try {
+      await dbActor(TableIdentity).insert({
+        [FieldNameIdentity.userId]: userId,
+        [FieldNameIdentity.providerType]: authProviderType,
+        [FieldNameIdentity.providerIdentifier]: authProviderIdentifier,
+        [FieldNameIdentity.providerUserId]: authProviderUserId,
+        [FieldNameIdentity.passwordHash]: passwordHash ?? null,
+        [FieldNameIdentity.createdAt]: DateTime.utc().toSQL(),
+        [FieldNameIdentity.updatedAt]: DateTime.utc().toSQL(),
+      });
+    } catch (error) {
+      this.logger.error(error);
+      throw new GenericDBError(
+        `Failed to create identity for user id '${userId}', no identity was created.`,
+        this.logger.getContext(),
+        'createIdentity',
+      );
+    }
   }
 
   /**

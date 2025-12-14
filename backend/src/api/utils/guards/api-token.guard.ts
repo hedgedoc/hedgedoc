@@ -41,7 +41,8 @@ export class ApiTokenGuard implements CanActivate {
         !(error instanceof TokenNotValidError || error instanceof NotInDBError)
       ) {
         this.logger.error(
-          `Error during API token validation: ${String(error)}`,
+          `Unknown Error during API token validation: ${String(error)}`,
+          undefined,
           'canActivate',
         );
       }
