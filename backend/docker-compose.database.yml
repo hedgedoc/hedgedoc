@@ -1,0 +1,36 @@
+# SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+# SPDX-License-Identifier: AGPL-3.0-only
+---
+services:
+  mariadb:
+    # renovate: datasource=docker depName=mariadb
+    image: mariadb:11.5.2@sha256:2d50fe0f77dac919396091e527e5e148a9de690e58f32875f113bef6506a17f5
+    environment:
+      MARIADB_USER: hedgedoc
+      MARIADB_PASSWORD: hedgedoc
+      MARIADB_DATABASE: hedgedoc
+      MARIADB_ROOT_PASSWORD: hedgedoc
+      MARIADB_MYSQL_LOCALHOST_USER: 1
+      MARIADB_MYSQL_LOCALHOST_GRANTS: USAGE
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    ports:
+      - "3306:3306"
+  postgres:
+    # renovate: datasource=docker depName=postgres
+    image: postgres:16.4@sha256:e62fbf9d3e2b49816a32c400ed2dba83e3b361e6833e624024309c35d334b412
+    environment:
+      POSTGRES_PASSWORD: hedgedoc
+      POSTGRES_USER: hedgedoc
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      start_period: 10s
+      interval: 5s
+      timeout: 2s
+      retries: 5
+    ports:
+      - "5432:5432"
