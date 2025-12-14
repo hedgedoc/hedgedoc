@@ -12,6 +12,7 @@ import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
 import knex, { Knex } from 'knex';
 import { KnexModule } from 'nest-knexjs';
 import { ZodSerializerInterceptor, ZodValidationPipe } from 'nestjs-zod';
+import { types as pgTypes } from 'pg';
 import { v4 as uuidv4 } from 'uuid';
 
 import { AliasModule } from '../src/alias/alias.module';
@@ -193,6 +194,14 @@ export class TestSetupBuilder {
           useNullAsDefault: true,
         };
       case 'postgres':
+        pgTypes.setTypeParser(
+          pgTypes.builtins.TIMESTAMP,
+          (value: string) => value,
+        );
+        pgTypes.setTypeParser(
+          pgTypes.builtins.TIMESTAMPTZ,
+          (value: string) => value,
+        );
         return {
           client: 'pg',
           connection: {
@@ -214,6 +223,7 @@ export class TestSetupBuilder {
             password: 'hedgedoc',
             host: process.env.HD_DATABASE_HOST || 'localhost',
             port: parseInt(process.env.HD_DATABASE_PORT || '3306'),
+            dateStrings: true,
           },
         };
       default:
