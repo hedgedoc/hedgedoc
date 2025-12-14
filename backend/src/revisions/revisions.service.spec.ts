@@ -21,7 +21,6 @@ import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as diffModule from 'diff';
 import type { Tracker } from 'knex-mock-client';
-import { DateTime } from 'luxon';
 import * as uuidModule from 'uuid';
 
 import { AliasService } from '../alias/alias.service';
@@ -41,6 +40,7 @@ import {
 import { mockKnexDb } from '../database/mock/provider';
 import { GenericDBError, NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
+import { dateTimeToDB, getCurrentDateTime } from '../utils/datetime';
 import { RevisionsService } from './revisions.service';
 import * as utilsExtractRevisionMetadataFromContentModule from './utils/extract-revision-metadata-from-content';
 
@@ -420,7 +420,7 @@ describe('RevisionsService', () => {
 
     it('uses a correct diff when an old revision is present', async () => {
       jest.useFakeTimers();
-      const now = DateTime.utc();
+      const now = getCurrentDateTime();
       mockInsert(
         tracker,
         TableRevision,
@@ -441,7 +441,7 @@ describe('RevisionsService', () => {
       expectBindings(tracker, 'insert', [
         [
           mockContent2,
-          now.toSQL(),
+          dateTimeToDB(now),
           mockDescription,
           mockNoteId,
           NoteType.DOCUMENT,
@@ -455,7 +455,7 @@ describe('RevisionsService', () => {
     });
     it('creates a correct revision when no old revisions are present', async () => {
       jest.useFakeTimers();
-      const now = DateTime.utc();
+      const now = getCurrentDateTime();
       mockInsert(
         tracker,
         TableRevision,
@@ -476,7 +476,7 @@ describe('RevisionsService', () => {
       expectBindings(tracker, 'insert', [
         [
           mockContent1,
-          now.toSQL(),
+          dateTimeToDB(now),
           mockDescription,
           mockNoteId,
           NoteType.DOCUMENT,

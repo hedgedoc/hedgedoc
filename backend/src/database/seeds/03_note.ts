@@ -23,9 +23,9 @@ import {
 import { createPatch } from 'diff';
 import { readFileSync } from 'fs';
 import { Knex } from 'knex';
-import { DateTime } from 'luxon';
 
 import { extractRevisionMetadataFromContent } from '../../revisions/utils/extract-revision-metadata-from-content';
+import { dateTimeToDB, getCurrentDateTime } from '../../utils/datetime';
 
 export async function seed(knex: Knex): Promise<void> {
   // Clear tables beforehand
@@ -70,17 +70,17 @@ export async function seed(knex: Knex): Promise<void> {
     {
       [FieldNameNote.ownerId]: 1,
       [FieldNameNote.version]: 2,
-      [FieldNameNote.createdAt]: DateTime.utc().toSQL(),
+      [FieldNameNote.createdAt]: dateTimeToDB(getCurrentDateTime()),
     },
     {
       [FieldNameNote.ownerId]: 2,
       [FieldNameNote.version]: 2,
-      [FieldNameNote.createdAt]: DateTime.utc().toSQL(),
+      [FieldNameNote.createdAt]: dateTimeToDB(getCurrentDateTime()),
     },
     {
       [FieldNameNote.ownerId]: 2,
       [FieldNameNote.version]: 2,
-      [FieldNameNote.createdAt]: DateTime.utc().toSQL(),
+      [FieldNameNote.createdAt]: dateTimeToDB(getCurrentDateTime()),
     },
   ]);
   await knex(TableAlias).insert([
@@ -114,7 +114,7 @@ export async function seed(knex: Knex): Promise<void> {
       [FieldNameRevision.noteType]: NoteType.DOCUMENT,
       [FieldNameRevision.title]: guestNoteTitle,
       [FieldNameRevision.description]: guestNoteDescription,
-      [FieldNameRevision.createdAt]: DateTime.utc().toSQL(),
+      [FieldNameRevision.createdAt]: dateTimeToDB(getCurrentDateTime()),
     },
     {
       [FieldNameRevision.uuid]: userNoteRevisionUuid,
@@ -129,7 +129,7 @@ export async function seed(knex: Knex): Promise<void> {
       [FieldNameRevision.noteType]: NoteType.DOCUMENT,
       [FieldNameRevision.title]: userNoteTitle,
       [FieldNameRevision.description]: userNoteDescription,
-      [FieldNameRevision.createdAt]: DateTime.utc().toSQL(),
+      [FieldNameRevision.createdAt]: dateTimeToDB(getCurrentDateTime()),
     },
     {
       [FieldNameRevision.uuid]: userSlideRevisionUuid,
@@ -144,7 +144,7 @@ export async function seed(knex: Knex): Promise<void> {
       [FieldNameRevision.noteType]: NoteType.SLIDE,
       [FieldNameRevision.title]: userSlideTitle,
       [FieldNameRevision.description]: userSlideDescription,
-      [FieldNameRevision.createdAt]: DateTime.utc().toSQL(),
+      [FieldNameRevision.createdAt]: dateTimeToDB(getCurrentDateTime()),
     },
   ]);
   await knex(TableRevisionTag).insert([
@@ -167,21 +167,21 @@ export async function seed(knex: Knex): Promise<void> {
       [FieldNameAuthorshipInfo.authorId]: 1,
       [FieldNameAuthorshipInfo.startPosition]: 0,
       [FieldNameAuthorshipInfo.endPosition]: guestNoteContent.length,
-      [FieldNameAuthorshipInfo.createdAt]: DateTime.utc().toSQL(),
+      [FieldNameAuthorshipInfo.createdAt]: dateTimeToDB(getCurrentDateTime()),
     },
     {
       [FieldNameAuthorshipInfo.revisionUuid]: userNoteRevisionUuid,
       [FieldNameAuthorshipInfo.authorId]: 2,
       [FieldNameAuthorshipInfo.startPosition]: 0,
       [FieldNameAuthorshipInfo.endPosition]: userNoteContent.length,
-      [FieldNameAuthorshipInfo.createdAt]: DateTime.utc().toSQL(),
+      [FieldNameAuthorshipInfo.createdAt]: dateTimeToDB(getCurrentDateTime()),
     },
     {
       [FieldNameAuthorshipInfo.revisionUuid]: userSlideRevisionUuid,
       [FieldNameAuthorshipInfo.authorId]: 2,
       [FieldNameAuthorshipInfo.startPosition]: 0,
       [FieldNameAuthorshipInfo.endPosition]: userSlideContent.length,
-      [FieldNameAuthorshipInfo.createdAt]: DateTime.utc().toSQL(),
+      [FieldNameAuthorshipInfo.createdAt]: dateTimeToDB(getCurrentDateTime()),
     },
   ]);
   await knex(TableNoteGroupPermission).insert([

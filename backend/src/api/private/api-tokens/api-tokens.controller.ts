@@ -22,6 +22,7 @@ import { ApiTokenCreateDto } from '../../../dtos/api-token-create.dto';
 import { ApiTokenWithSecretDto } from '../../../dtos/api-token-with-secret.dto';
 import { ApiTokenDto } from '../../../dtos/api-token.dto';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
+import { isoStringToDateTime } from '../../../utils/datetime';
 import { OpenApi } from '../../utils/decorators/openapi.decorator';
 import { RequestUserId } from '../../utils/decorators/request-user-id.decorator';
 
@@ -53,7 +54,7 @@ export class ApiTokensController {
   ): Promise<ApiTokenWithSecretDto> {
     let validUntil: DateTime | undefined = undefined;
     if (createDto.validUntil !== undefined) {
-      validUntil = DateTime.fromISO(createDto.validUntil, { zone: 'UTC' });
+      validUntil = isoStringToDateTime(createDto.validUntil);
     }
     return await this.apiTokenService.createToken(
       userId,

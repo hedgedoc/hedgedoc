@@ -17,7 +17,6 @@ import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as fileTypeModule from 'file-type';
 import type { Tracker } from 'knex-mock-client';
-import { DateTime } from 'luxon';
 import * as uuidModule from 'uuid';
 
 import appConfigMock from '../config/mock/app.config.mock';
@@ -33,6 +32,7 @@ import {
 import { mockKnexDb } from '../database/mock/provider';
 import { ClientError, NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
+import { dateTimeToDB, getCurrentDateTime } from '../utils/datetime';
 import { FilesystemBackend } from './backends/filesystem-backend';
 import { MediaService } from './media.service';
 
@@ -88,7 +88,7 @@ describe('MediaService', () => {
   describe('saveFile', () => {
     it('inserts a new media upload and returns uuid', async () => {
       jest.useFakeTimers();
-      const now = DateTime.utc();
+      const now = getCurrentDateTime();
       jest
         .spyOn(fileTypeModule, 'fromBuffer')
         .mockResolvedValue({ mime: 'image/png', ext: 'png' });
@@ -134,7 +134,15 @@ describe('MediaService', () => {
       );
       expect(result).toBe(uuid);
       expectBindings(tracker, 'insert', [
-        [backendData, backendType, now.toSQL(), fileName, noteId, userId, uuid],
+        [
+          backendData,
+          backendType,
+          dateTimeToDB(now),
+          fileName,
+          noteId,
+          userId,
+          uuid,
+        ],
       ]);
       jest.useRealTimers();
     });

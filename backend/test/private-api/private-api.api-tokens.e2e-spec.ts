@@ -4,10 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ApiTokenWithSecretInterface } from '@hedgedoc/commons';
-import { DateTime } from 'luxon';
 import request from 'supertest';
 
 import { PRIVATE_API_PREFIX } from '../../src/app.module';
+import {
+  dateTimeToISOString,
+  getCurrentDateTime,
+} from '../../src/utils/datetime';
 import { TestSetup, TestSetupBuilder } from '../test-setup';
 import { setupAgent } from './utils/setup-agent';
 
@@ -45,7 +48,9 @@ describe('Tokens', () => {
         expect(apiTokenWithSecret.secret.length).toBe(102);
       });
       it('with validUntil', async () => {
-        const validUntilInTwoDays = DateTime.utc().plus({ days: 2 }).toISO();
+        const validUntilInTwoDays = dateTimeToISOString(
+          getCurrentDateTime().plus({ days: 2 }),
+        );
         const response = await agentUser1
           .post(`${PRIVATE_API_PREFIX}/tokens`)
           .send({

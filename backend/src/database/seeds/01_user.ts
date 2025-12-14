@@ -11,8 +11,8 @@ import {
   TableUser,
 } from '@hedgedoc/database';
 import { Knex } from 'knex';
-import { DateTime } from 'luxon';
 
+import { dateTimeToDB, getCurrentDateTime } from '../../utils/datetime';
 import { hashPassword } from '../../utils/password';
 
 export async function seed(knex: Knex): Promise<void> {
@@ -29,7 +29,7 @@ export async function seed(knex: Knex): Promise<void> {
       [FieldNameUser.photoUrl]: null,
       [FieldNameUser.email]: null,
       [FieldNameUser.authorStyle]: 1,
-      [FieldNameUser.createdAt]: DateTime.utc().toSQL(),
+      [FieldNameUser.createdAt]: dateTimeToDB(getCurrentDateTime()),
     },
     {
       [FieldNameUser.username]: 'test',
@@ -38,7 +38,7 @@ export async function seed(knex: Knex): Promise<void> {
       [FieldNameUser.photoUrl]: null,
       [FieldNameUser.email]: null,
       [FieldNameUser.authorStyle]: 2,
-      [FieldNameUser.createdAt]: DateTime.utc().toSQL(),
+      [FieldNameUser.createdAt]: dateTimeToDB(getCurrentDateTime()),
     },
   ]);
   await knex(TableIdentity).insert({
@@ -47,7 +47,7 @@ export async function seed(knex: Knex): Promise<void> {
     [FieldNameIdentity.providerIdentifier]: null,
     [FieldNameIdentity.providerUserId]: null,
     [FieldNameIdentity.passwordHash]: await hashPassword('test123'),
-    [FieldNameIdentity.createdAt]: DateTime.utc().toSQL(),
-    [FieldNameIdentity.updatedAt]: DateTime.utc().toSQL(),
+    [FieldNameIdentity.createdAt]: dateTimeToDB(getCurrentDateTime()),
+    [FieldNameIdentity.updatedAt]: dateTimeToDB(getCurrentDateTime()),
   });
 }

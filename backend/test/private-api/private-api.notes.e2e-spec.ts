@@ -12,6 +12,7 @@ import request from 'supertest';
 import { PRIVATE_API_PREFIX } from '../../src/app.module';
 import { NoteMetadataDto } from '../../src/dtos/note-metadata.dto';
 import { NotInDBError } from '../../src/errors/errors';
+import { dateTimeToISOString, dbToDateTime } from '../../src/utils/datetime';
 import {
   noteAlias1,
   noteContent1,
@@ -617,7 +618,7 @@ describe('Notes', () => {
       afterEach(() => {
         expect(response.body.content).toEqual(revision.content);
         expect(response.body.createdAt).toEqual(
-          revision.created_at.replace(' Z', 'Z').replace(' ', 'T'),
+          dateTimeToISOString(dbToDateTime(revision.created_at)),
         );
         expect(response.body.description).toEqual(revision.description);
         expect(response.body.length).toEqual(revision.content.length);

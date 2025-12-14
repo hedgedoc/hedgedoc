@@ -21,7 +21,6 @@ import {
   translations as zxcvbnEnTranslations,
 } from '@zxcvbn-ts/language-en';
 import { Knex } from 'knex';
-import { DateTime } from 'luxon';
 import { InjectConnection } from 'nest-knexjs';
 
 import authConfiguration, { AuthConfig } from '../../config/auth.config';
@@ -30,6 +29,7 @@ import {
   PasswordTooWeakError,
 } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
+import { dateTimeToDB, getCurrentDateTime } from '../../utils/datetime';
 import { checkPassword, hashPassword } from '../../utils/password';
 import { IdentityService } from '../identity.service';
 
@@ -100,7 +100,7 @@ export class LocalService {
     await this.knex(TableIdentity)
       .update({
         [FieldNameIdentity.passwordHash]: newPasswordHash,
-        [FieldNameIdentity.updatedAt]: DateTime.utc().toSQL(),
+        [FieldNameIdentity.updatedAt]: dateTimeToDB(getCurrentDateTime()),
       })
       .where(FieldNameIdentity.providerType, AuthProviderType.LOCAL)
       .andWhere(FieldNameIdentity.userId, userId);
