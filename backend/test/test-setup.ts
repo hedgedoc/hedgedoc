@@ -236,7 +236,7 @@ export class TestSetupBuilder {
    */
   public static create(mocks?: CreateTestSetupParameters): TestSetupBuilder {
     const testSetupBuilder = new TestSetupBuilder();
-    const testId = `hedgedoc_test_${uuidv4()}`;
+    const testId = `hedgedoc_test_${uuidv4()}`.replaceAll('-', '_');
     testSetupBuilder.testId = testId;
 
     const routes: Routes = [
