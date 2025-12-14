@@ -155,10 +155,13 @@ export class TestSetupBuilder {
    */
   private static async createTestDatabase(dbName: string) {
     const dbType = process.env.HEDGEDOC_TEST_DB_TYPE || 'sqlite';
+    // we need to use this low-level way of writing to get the message to the output without getting
+    // a lot of extra output about using console.log
+    process.stdout.write(`Using dbname ${dbName} (${dbType})\n`);
     if (dbType === 'sqlite') {
       return;
     }
-    const knexConfig = this.getTestDatabaseConfig(dbName);
+    const knexConfig = this.getTestDatabaseConfig(dbName, true);
     const adminKnex = knex(knexConfig);
     await adminKnex.raw(`DROP DATABASE IF EXISTS ${dbName}`);
     await adminKnex.raw(`CREATE DATABASE ${dbName}`);
@@ -174,9 +177,13 @@ export class TestSetupBuilder {
    * Returns the database configuration for the test database
    *
    * @param dbName The name of the database to use
+   * @param asAdmin If the database should be connected to as the admin user
    * @returns The database configuration
    */
-  private static getTestDatabaseConfig(dbName: string): Knex.Config {
+  private static getTestDatabaseConfig(
+    dbName: string,
+    asAdmin = false,
+  ): Knex.Config {
     const dbType = process.env.HEDGEDOC_TEST_DB_TYPE || 'sqlite';
     switch (dbType) {
       case 'sqlite':
@@ -189,19 +196,21 @@ export class TestSetupBuilder {
         return {
           client: 'pg',
           connection: {
-            database: dbName,
+            database: asAdmin ? 'postgres' : dbName,
             user: 'hedgedoc',
             password: 'hedgedoc',
             host: process.env.HD_DATABASE_HOST || 'localhost',
             port: parseInt(process.env.HD_DATABASE_PORT || '5432'),
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            application_name: 'HedgeDoc Test Server',
           },
         };
       case 'mariadb':
         return {
           client: 'mysql2',
           connection: {
-            database: dbName,
-            user: 'hedgedoc',
+            database: asAdmin ? 'hedgedoc' : dbName,
+            user: asAdmin ? 'root' : 'hedgedoc',
             password: 'hedgedoc',
             host: process.env.HD_DATABASE_HOST || 'localhost',
             port: parseInt(process.env.HD_DATABASE_PORT || '3306'),
