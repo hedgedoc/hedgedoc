@@ -235,7 +235,7 @@ describe('AliasService', () => {
   });
 
   describe('getPrimaryAliasByNoteId', () => {
-    it('does not return alias if note does not exits', async () => {
+    it('does not return alias if note does not exist', async () => {
       mockSelect(
         tracker,
         [FieldNameAlias.alias],
