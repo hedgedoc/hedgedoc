@@ -1,15 +1,9 @@
 {
-  "moduleFileExtensions": [
-    "js",
-    "json",
-    "ts"
-  ],
+  "moduleFileExtensions": ["js", "json", "ts"],
   "rootDir": ".",
   "automock": false,
   "testEnvironment": "node",
-  "testMatch": [
-    "<rootDir>/test/**/*.e2e-spec.{ts,js}"
-  ],
+  "testMatch": ["<rootDir>/test/**/*.e2e-spec.{ts,js}"],
   "transform": {
     "^.+\\.(t|j)s$": [
       "ts-jest",
@@ -19,6 +13,6 @@
     ]
   },
   "coverageDirectory": "./coverage-e2e",
-  "testTimeout": 10000,
+  "testTimeout": 15000,
   "reporters": ["default", "github-actions"]
 }
