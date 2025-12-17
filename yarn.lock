@@ -3095,7 +3095,7 @@ __metadata:
     eslint-config-prettier: "npm:9.1.2"
     eslint-plugin-jest: "npm:28.14.0"
     eslint-plugin-prettier: "npm:5.5.4"
-    html-entities: "npm:2.5.2"
+    html-entities: "npm:2.6.0"
     jest: "npm:29.7.0"
     markdown-it: "npm:13.0.2"
     prettier: "npm:3.7.4"
@@ -12921,10 +12921,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-entities@npm:2.5.2":
-  version: 2.5.2
-  resolution: "html-entities@npm:2.5.2"
-  checksum: 10c0/f20ffb4326606245c439c231de40a7c560607f639bf40ffbfb36b4c70729fd95d7964209045f1a4e62fe17f2364cef3d6e49b02ea09016f207fde51c2211e481
+"html-entities@npm:2.6.0":
+  version: 2.6.0
+  resolution: "html-entities@npm:2.6.0"
+  checksum: 10c0/7c8b15d9ea0cd00dc9279f61bab002ba6ca8a7a0f3c36ed2db3530a67a9621c017830d1d2c1c65beb9b8e3436ea663e9cf8b230472e0e413359399413b27c8b7
   languageName: node
   linkType: hard
 
