@@ -20,7 +20,7 @@ Then you just add the following lines to your configuration:
 (with the appropriate substitution for `<CONNECTION_STRING>` and `<NAME>` of course)
 
 ```dotenv
-HD_MEDIA_BACKEND="azure"
+HD_MEDIA_BACKEND_TYPE="azure"
 HD_MEDIA_BACKEND_AZURE_CONNECTION_STRING="<CONNECTION_STRING>"
 HD_MEDIA_BACKEND_AZURE_CONTAINER="<NAME>"
 ```
