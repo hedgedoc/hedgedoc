@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import MarkdownIt from 'markdown-it/lib'
+import MarkdownIt from 'markdown-it/lib/index.js'
 import { toc } from './plugin.js'
 import { describe, expect, it, jest } from '@jest/globals'
 
