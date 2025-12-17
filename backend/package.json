@@ -24,7 +24,7 @@
     "knex": "tsx ../node_modules/.bin/knex --migrations-directory src/database/migrations --knexfile ./knexfile.ts"
   },
   "dependencies": {
-    "@azure/storage-blob": "12.25.0",
+    "@azure/storage-blob": "12.29.1",
     "@hedgedoc/commons": "workspace:commons",
     "@hedgedoc/database": "workspace:database",
     "@mrdrogdrog/optional": "1.2.1",
