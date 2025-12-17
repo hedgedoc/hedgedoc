@@ -87,7 +87,6 @@ describe('FrontendConfigService', () => {
             level: Loglevel.ERROR,
             showTimestamp: false,
           },
-          persistInterval: 10,
         };
         const authConfig: AuthConfig = {
           ...emptyAuthConfig,
@@ -106,7 +105,7 @@ describe('FrontendConfigService', () => {
                       customName: null,
                       customLogo: null,
                     },
-                    specialUrls: {},
+                    urls: {},
                   };
                 }),
                 registerAs('externalServicesConfig', () => {
@@ -114,8 +113,8 @@ describe('FrontendConfigService', () => {
                 }),
                 registerAs('noteConfig', () => {
                   return {
-                    forbiddenNoteIds: [],
-                    maxDocumentLength: 200,
+                    forbiddenAliases: [],
+                    maxLength: 200,
                     permissions: {
                       maxGuestLevel: PermissionLevel.FULL,
                       default: {
@@ -124,6 +123,7 @@ describe('FrontendConfigService', () => {
                       },
                     },
                     revisionRetentionDays: 0,
+                    persistInterval: 10,
                   } as unknown as NoteConfig;
                 }),
               ],
@@ -195,7 +195,6 @@ describe('FrontendConfigService', () => {
                   level: Loglevel.ERROR,
                   showTimestamp: false,
                 },
-                persistInterval: 10,
               };
               const authConfig: AuthConfig = {
                 ...emptyAuthConfig,
@@ -231,6 +230,7 @@ describe('FrontendConfigService', () => {
                   maxGuestLevel: PermissionLevel.FULL,
                 },
                 revisionRetentionDays: 0,
+                persistInterval: 10,
               };
               const module: TestingModule = await Test.createTestingModule({
                 imports: [

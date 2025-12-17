@@ -43,7 +43,7 @@ describe('s3 backend', () => {
   function mockMediaConfig(endPoint: string): MediaConfig {
     return Mock.of<MediaConfig>({
       backend: {
-        use: MediaBackendType.S3,
+        type: MediaBackendType.S3,
         s3: {
           accessKeyId: mockedS3AccessKeyId,
           secretAccessKey: mockedS3SecretAccessKey,

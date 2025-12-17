@@ -262,6 +262,25 @@ describe('noteConfig', () => {
   });
 
   describe('throws error', () => {
+    let spyConsoleError: jest.SpyInstance;
+    let spyProcessExit: jest.Mock;
+    let originalProcess: typeof process;
+
+    beforeEach(() => {
+      spyConsoleError = jest.spyOn(console, 'error');
+      spyProcessExit = jest.fn();
+      originalProcess = global.process;
+      global.process = {
+        ...originalProcess,
+        exit: spyProcessExit,
+      } as unknown as typeof global.process;
+    });
+
+    afterEach(() => {
+      global.process = originalProcess;
+      jest.restoreAllMocks();
+    });
+
     it('when given a non-valid HD_NOTE_FORBIDDEN_ALIASES', async () => {
       const restore = mockedEnv(
         {
@@ -278,9 +297,14 @@ describe('noteConfig', () => {
           clear: true,
         },
       );
-      expect(() => noteConfig()).toThrow(
-        'HD_NOTE_FORBIDDEN_ALIASES[0]: String must contain at least 1 character(s)\n - HD_NOTE_FORBIDDEN_ALIASES[1]: String must contain at least 1 character(s)',
+      noteConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
+        'HD_NOTE_FORBIDDEN_ALIASES[0]: String must contain at least 1 character(s)',
       );
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
+        'HD_NOTE_FORBIDDEN_ALIASES[1]: String must contain at least 1 character(s)',
+      );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
 
@@ -300,9 +324,11 @@ describe('noteConfig', () => {
           clear: true,
         },
       );
-      expect(() => noteConfig()).toThrow(
+      noteConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
         'HD_NOTE_MAX_LENGTH: Number must be greater than 0',
       );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
 
@@ -322,9 +348,11 @@ describe('noteConfig', () => {
           clear: true,
         },
       );
-      expect(() => noteConfig()).toThrow(
+      noteConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
         'HD_NOTE_MAX_LENGTH: Expected integer, received float',
       );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
 
@@ -344,9 +372,11 @@ describe('noteConfig', () => {
           clear: true,
         },
       );
-      expect(() => noteConfig()).toThrow(
+      noteConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
         'HD_NOTE_MAX_LENGTH: Expected number, received nan',
       );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
 
@@ -365,9 +395,11 @@ describe('noteConfig', () => {
           clear: true,
         },
       );
-      expect(() => noteConfig()).toThrow(
+      noteConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
         `HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: Invalid enum value. Expected '${PermissionLevelNames[PermissionLevel.DENY]}' | '${PermissionLevelNames[PermissionLevel.READ]}' | '${PermissionLevelNames[PermissionLevel.WRITE]}' | '${PermissionLevelNames[PermissionLevel.FULL]}', received 'wrong'`,
       );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
 
@@ -386,9 +418,11 @@ describe('noteConfig', () => {
           clear: true,
         },
       );
-      expect(() => noteConfig()).toThrow(
+      noteConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
         `HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: Invalid enum value. Expected '${PermissionLevelNames[PermissionLevel.DENY]}' | '${PermissionLevelNames[PermissionLevel.READ]}' | '${PermissionLevelNames[PermissionLevel.WRITE]}' | '${PermissionLevelNames[PermissionLevel.FULL]}', received 'wrong'`,
       );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
 
@@ -398,20 +432,22 @@ describe('noteConfig', () => {
           /* eslint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
-          HD_PERMISSION_DEFAULT_EVERYONE:
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_PERMISSION_DEFAULT_LOGGED_IN:
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_PERMISSIONS_MAX_GUEST_LEVEL: wrongDefaultPermission,
+          HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: wrongDefaultPermission,
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
         },
       );
-      expect(() => noteConfig()).toThrow(
-        `HD_PERMISSIONS_MAX_GUEST_LEVEL: Invalid enum value. Expected '${PermissionLevelNames[PermissionLevel.DENY]}' | '${PermissionLevelNames[PermissionLevel.READ]}' | '${PermissionLevelNames[PermissionLevel.WRITE]}' | '${PermissionLevelNames[PermissionLevel.FULL]}', received 'wrong'`,
+      noteConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
+        `HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: Invalid enum value. Expected '${PermissionLevelNames[PermissionLevel.DENY]}' | '${PermissionLevelNames[PermissionLevel.READ]}' | '${PermissionLevelNames[PermissionLevel.WRITE]}' | '${PermissionLevelNames[PermissionLevel.FULL]}', received 'wrong'`,
       );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
 
@@ -425,7 +461,7 @@ describe('noteConfig', () => {
             PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.READ],
-          HD_PERMISSIONS_MAX_GUEST_LEVEL: 'deny',
+          HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: 'deny',
           /* eslint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -433,7 +469,7 @@ describe('noteConfig', () => {
         },
       );
       expect(() => noteConfig()).toThrow(
-        `'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[PermissionLevel.READ]}', but 'HD_PERMISSIONS_MAX_GUEST_LEVEL' is set to '${PermissionLevelNames[PermissionLevel.DENY]}'. This does not work since the default level may not be higher than the maximum guest level.`,
+        `'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[PermissionLevel.READ]}', but 'HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL' is set to '${PermissionLevelNames[PermissionLevel.DENY]}'. This does not work since the default level may not be higher than the maximum guest level.`,
       );
       restore();
     });
@@ -521,9 +557,11 @@ describe('noteConfig', () => {
           clear: true,
         },
       );
-      expect(() => noteConfig()).toThrow(
+      noteConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
         'HD_NOTE_REVISION_RETENTION_DAYS: Number must be greater than or equal to 0',
       );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
 
@@ -545,9 +583,11 @@ describe('noteConfig', () => {
           clear: true,
         },
       );
-      expect(() => noteConfig()).toThrow(
+      noteConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
         'HD_NOTE_PERSIST_INTERVAL: Number must be greater than or equal to 0',
       );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
   });

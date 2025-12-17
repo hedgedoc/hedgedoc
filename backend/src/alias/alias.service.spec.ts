@@ -62,7 +62,7 @@ describe('AliasService', () => {
     }).compile();
 
     const config = module.get<ConfigService>(ConfigService);
-    forbiddenNoteId = config.get('noteConfig').forbiddenNoteIds[0];
+    forbiddenNoteId = config.get('noteConfig').forbiddenAliases[0];
     service = module.get<AliasService>(AliasService);
   });
 

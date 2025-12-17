@@ -125,6 +125,25 @@ describe('authConfig', () => {
     });
 
     describe('fails to be parsed', () => {
+      let spyConsoleError: jest.SpyInstance;
+      let spyProcessExit: jest.Mock;
+      let originalProcess: typeof process;
+
+      beforeEach(() => {
+        spyConsoleError = jest.spyOn(console, 'error');
+        spyProcessExit = jest.fn();
+        originalProcess = global.process;
+        global.process = {
+          ...originalProcess,
+          exit: spyProcessExit,
+        } as unknown as typeof global.process;
+      });
+
+      afterEach(() => {
+        global.process = originalProcess;
+        jest.restoreAllMocks();
+      });
+
       it('when HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH is 5', () => {
         const restore = mockedEnv(
           {
@@ -138,9 +157,11 @@ describe('authConfig', () => {
             clear: true,
           },
         );
-        expect(() => authConfig()).toThrow(
+        authConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH: Number must be less than or equal to 4',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
       it('when HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH is -1', () => {
@@ -156,9 +177,11 @@ describe('authConfig', () => {
             clear: true,
           },
         );
-        expect(() => authConfig()).toThrow(
+        authConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH: Number must be greater than or equal to 0',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
     });
@@ -486,6 +509,25 @@ describe('authConfig', () => {
       });
     });
     describe('throws error', () => {
+      let spyConsoleError: jest.SpyInstance;
+      let spyProcessExit: jest.Mock;
+      let originalProcess: typeof process;
+
+      beforeEach(() => {
+        spyConsoleError = jest.spyOn(console, 'error').mockImplementation();
+        spyProcessExit = jest.fn();
+        originalProcess = global.process;
+        global.process = {
+          ...originalProcess,
+          exit: spyProcessExit,
+        } as unknown as typeof global.process;
+      });
+
+      afterEach(() => {
+        global.process = originalProcess;
+        jest.restoreAllMocks();
+      });
+
       it('when HD_AUTH_LDAP_FUTURAMA_URL is wrong', () => {
         const restore = mockedEnv(
           {
@@ -499,9 +541,11 @@ describe('authConfig', () => {
             clear: true,
           },
         );
-        expect(() => authConfig()).toThrow(
+        authConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_AUTH_LDAP_FUTURAMA_URL: Required',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
       it('when HD_AUTH_LDAP_FUTURAMA_SEARCH_BASE is wrong', () => {
@@ -517,9 +561,11 @@ describe('authConfig', () => {
             clear: true,
           },
         );
-        expect(() => authConfig()).toThrow(
+        authConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_AUTH_LDAP_FUTURAMA_SEARCH_BASE: Required',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
       it('when HD_AUTH_LDAP_FUTURAMA_TLS_CERT_PATHS is wrong', () => {
@@ -535,9 +581,11 @@ describe('authConfig', () => {
             clear: true,
           },
         );
-        expect(() => authConfig()).toThrow(
+        authConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_AUTH_LDAP_FUTURAMA_TLS_CA_CERTS[0]: File not found',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
     });
@@ -1011,6 +1059,25 @@ describe('authConfig', () => {
       });
     });
     describe('throws error', () => {
+      let spyConsoleError: jest.SpyInstance;
+      let spyProcessExit: jest.Mock;
+      let originalProcess: typeof process;
+
+      beforeEach(() => {
+        spyConsoleError = jest.spyOn(console, 'error').mockImplementation();
+        spyProcessExit = jest.fn();
+        originalProcess = global.process;
+        global.process = {
+          ...originalProcess,
+          exit: spyProcessExit,
+        } as unknown as typeof global.process;
+      });
+
+      afterEach(() => {
+        global.process = originalProcess;
+        jest.restoreAllMocks();
+      });
+
       it('when HD_AUTH_OIDC_GITLAB_ISSUER is not set', () => {
         const restore = mockedEnv(
           {
@@ -1024,9 +1091,11 @@ describe('authConfig', () => {
             clear: true,
           },
         );
-        expect(() => authConfig()).toThrow(
+        authConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_AUTH_OIDC_GITLAB_ISSUER: Required',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
       it('when HD_AUTH_OIDC_GITLAB_CLIENT_ID is not set', () => {
@@ -1042,9 +1111,11 @@ describe('authConfig', () => {
             clear: true,
           },
         );
-        expect(() => authConfig()).toThrow(
+        authConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_AUTH_OIDC_GITLAB_CLIENT_ID: Required',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
       it('when HD_AUTH_OIDC_GITLAB_CLIENT_SECRET is not set', () => {
@@ -1060,9 +1131,11 @@ describe('authConfig', () => {
             clear: true,
           },
         );
-        expect(() => authConfig()).toThrow(
+        authConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_AUTH_OIDC_GITLAB_CLIENT_SECRET: Required',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
       it('when HD_AUTH_OIDC_GITLAB_THEME is set to a wrong value', () => {
@@ -1078,9 +1151,11 @@ describe('authConfig', () => {
             clear: true,
           },
         );
-        expect(() => authConfig()).toThrow(
+        authConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           "HD_AUTH_OIDC_GITLAB_THEME: Invalid enum value. Expected 'google' | 'github' | 'gitlab' | 'facebook' | 'discord' | 'mastodon' | 'azure', received 'something else'",
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
     });

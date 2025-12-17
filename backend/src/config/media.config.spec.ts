@@ -147,6 +147,25 @@ describe('mediaConfig', () => {
   });
 
   describe('throws error', () => {
+    let spyConsoleError: jest.SpyInstance;
+    let spyProcessExit: jest.Mock;
+    let originalProcess: typeof process;
+
+    beforeEach(() => {
+      spyConsoleError = jest.spyOn(console, 'error');
+      spyProcessExit = jest.fn();
+      originalProcess = global.process;
+      global.process = {
+        ...originalProcess,
+        exit: spyProcessExit,
+      } as unknown as typeof global.process;
+    });
+
+    afterEach(() => {
+      global.process = originalProcess;
+      jest.restoreAllMocks();
+    });
+
     describe('for backend filesystem', () => {
       it('when HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH is not set', async () => {
         const restore = mockedEnv(
@@ -159,9 +178,11 @@ describe('mediaConfig', () => {
             clear: true,
           },
         );
-        expect(() => mediaConfig()).toThrow(
+        mediaConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH: Required',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
     });
@@ -181,9 +202,11 @@ describe('mediaConfig', () => {
             clear: true,
           },
         );
-        expect(() => mediaConfig()).toThrow(
+        mediaConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_MEDIA_BACKEND_S3_ACCESS_KEY_ID: Required',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
       it('when HD_MEDIA_BACKEND_S3_SECRET_KEY is not set', async () => {
@@ -200,9 +223,11 @@ describe('mediaConfig', () => {
             clear: true,
           },
         );
-        expect(() => mediaConfig()).toThrow(
+        mediaConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_MEDIA_BACKEND_S3_SECRET_ACCESS_KEY: Required',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
       it('when HD_MEDIA_BACKEND_S3_BUCKET is not set', async () => {
@@ -219,9 +244,11 @@ describe('mediaConfig', () => {
             clear: true,
           },
         );
-        expect(() => mediaConfig()).toThrow(
+        mediaConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_MEDIA_BACKEND_S3_BUCKET: Required',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
       it('when HD_MEDIA_BACKEND_S3_ENDPOINT is not set', async () => {
@@ -238,9 +265,11 @@ describe('mediaConfig', () => {
             clear: true,
           },
         );
-        expect(() => mediaConfig()).toThrow(
+        mediaConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_MEDIA_BACKEND_S3_ENDPOINT: Required',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
       it('when HD_MEDIA_BACKEND_S3_ENDPOINT is not an URI', async () => {
@@ -258,9 +287,11 @@ describe('mediaConfig', () => {
             clear: true,
           },
         );
-        expect(() => mediaConfig()).toThrow(
+        mediaConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_MEDIA_BACKEND_S3_ENDPOINT: Invalid url',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
     });
@@ -278,9 +309,11 @@ describe('mediaConfig', () => {
             clear: true,
           },
         );
-        expect(() => mediaConfig()).toThrow(
+        mediaConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_MEDIA_BACKEND_AZURE_CONNECTION_STRING: Required',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
       it('when HD_MEDIA_BACKEND_AZURE_CONTAINER is not set', async () => {
@@ -295,9 +328,11 @@ describe('mediaConfig', () => {
             clear: true,
           },
         );
-        expect(() => mediaConfig()).toThrow(
+        mediaConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_MEDIA_BACKEND_AZURE_CONTAINER: Required',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
     });
@@ -314,9 +349,11 @@ describe('mediaConfig', () => {
             clear: true,
           },
         );
-        expect(() => mediaConfig()).toThrow(
+        mediaConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_MEDIA_BACKEND_IMGUR_CLIENT_ID: Required',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
     });
@@ -335,9 +372,11 @@ describe('mediaConfig', () => {
             clear: true,
           },
         );
-        expect(() => mediaConfig()).toThrow(
+        mediaConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING: Required',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
       it('when HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING is not set to an url', async () => {
@@ -354,9 +393,11 @@ describe('mediaConfig', () => {
             clear: true,
           },
         );
-        expect(() => mediaConfig()).toThrow(
+        mediaConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING: Invalid url',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
       it('when HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL is not set', async () => {
@@ -372,9 +413,11 @@ describe('mediaConfig', () => {
             clear: true,
           },
         );
-        expect(() => mediaConfig()).toThrow(
+        mediaConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL: Required',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
       it('when HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL is not set to an url', async () => {
@@ -391,9 +434,11 @@ describe('mediaConfig', () => {
             clear: true,
           },
         );
-        expect(() => mediaConfig()).toThrow(
+        mediaConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL: Invalid url',
         );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
     });
