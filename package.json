@@ -135,7 +135,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "3.3.3",
-    "@eslint/js": "9.39.1",
+    "@eslint/js": "9.39.2",
     "@hedgedoc/codemirror-5": "5.65.12",
     "abcjs": "6.5.2",
     "babel-cli": "6.26.0",
@@ -151,7 +151,7 @@
     "css-loader": "5.2.7",
     "emojify.js": "1.1.0",
     "esbuild-loader": "4.4.0",
-    "eslint": "9.39.1",
+    "eslint": "9.39.2",
     "eslint-config-standard": "17.1.0",
     "eslint-plugin-import": "2.32.0",
     "eslint-plugin-n": "17.23.1",
