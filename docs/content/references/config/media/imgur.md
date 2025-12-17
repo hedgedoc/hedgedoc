@@ -19,7 +19,7 @@ Then you just add the following lines to your configuration:
 (with the appropriate substitution for `<IMGUR_CLIENT_ID>` of course)
 
 ```dotenv
-HD_MEDIA_BACKEND="imgur"
+HD_MEDIA_BACKEND_TYPE="imgur"
 HD_MEDIA_BACKEND_IMGUR_CLIENT_ID="<IMGUR_CLIENT_ID>"
 ```
 

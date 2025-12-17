@@ -8,8 +8,8 @@ You just add the following lines to your configuration:
 (with the appropriate substitution for `<CONNECTION_STRING>`,
 `<UPLOAD_DIR>`, and `<PUBLIC_URL>` of course)
 
-```dotemv
-HD_MEDIA_BACKEND="webdav"
+```dotenv
+HD_MEDIA_BACKEND_TYPE="webdav"
 HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING="<CONNECTION_STRING>"
 HD_MEDIA_BACKEND_WEBDAV_UPLOAD_DIR="<UPLOAD_DIR>"
 HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL="<PUBLIC_URL>"
@@ -60,7 +60,7 @@ In this example the username will be `TestUser`.
 8. Configure HedgeDoc:
 
 ```dotenv
-HD_MEDIA_BACKEND="webdav"
+HD_MEDIA_BACKEND_TYPE="webdav"
 HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING="https://TestUser:passw0rd@cloud.example.com/remote.php/dav/files/TestUser/"
 HD_MEDIA_BACKEND_WEBDAV_UPLOAD_DIR="HedgeDoc"
 HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL="https://cloud.example.com/s/some-id/download?path=%2F&files="
