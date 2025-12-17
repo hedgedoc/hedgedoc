@@ -2778,7 +2778,7 @@ __metadata:
     "@nestjs/websockets": "npm:10.4.20"
     "@node-rs/argon2": "npm:2.0.2"
     "@trivago/prettier-plugin-sort-imports": "npm:4.3.0"
-    "@tsconfig/node18": "npm:18.2.6"
+    "@tsconfig/node20": "npm:20.1.0"
     "@types/better-sqlite3": "npm:7.6.13"
     "@types/cli-color": "npm:2.0.6"
     "@types/cookie": "npm:1.0.0"
@@ -5383,17 +5383,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/node18@npm:18.2.6":
-  version: 18.2.6
-  resolution: "@tsconfig/node18@npm:18.2.6"
-  checksum: 10c0/52fc3fadd9d60225c30983f1236f9d16a83f942d27accf3a71d71aee7c76e705307aefb89baa5b3df631c93fe41b47a25ede4f14c6816019000233f1e4df3302
-  languageName: node
-  linkType: hard
-
 "@tsconfig/node20@npm:*":
   version: 20.1.2
   resolution: "@tsconfig/node20@npm:20.1.2"
   checksum: 10c0/e438fa9b93f0e6ea667affbbd3217692bf3f92db1b3dcbfba1dd141a7dbcd647c19ed87ce76871c723bed398759ec4a5590685f3e669b600c9371f143a19e0c1
+  languageName: node
+  linkType: hard
+
+"@tsconfig/node20@npm:20.1.0":
+  version: 20.1.0
+  resolution: "@tsconfig/node20@npm:20.1.0"
+  checksum: 10c0/364f4adba8d0bb291454962087f49c55577ec2b401bacee42417b8b196728e5228b8beb1944f89f0fdcb7e6ec1f730bc6be82ebc02e042a8c82cd245b8a33483
   languageName: node
   linkType: hard
 
