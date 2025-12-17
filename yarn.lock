@@ -2928,7 +2928,7 @@ __metadata:
     "@hedgedoc/html-to-react": "workspace:html-to-react"
     "@hedgedoc/markdown-it-plugins": "workspace:markdown-it-plugins"
     "@mrdrogdrog/optional": "npm:1.2.1"
-    "@next/bundle-analyzer": "npm:14.2.33"
+    "@next/bundle-analyzer": "npm:14.2.35"
     "@orama/orama": "npm:3.1.17"
     "@react-hook/resize-observer": "npm:2.0.2"
     "@redux-devtools/core": "npm:4.0.0"
@@ -4344,12 +4344,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/bundle-analyzer@npm:14.2.33":
-  version: 14.2.33
-  resolution: "@next/bundle-analyzer@npm:14.2.33"
+"@next/bundle-analyzer@npm:14.2.35":
+  version: 14.2.35
+  resolution: "@next/bundle-analyzer@npm:14.2.35"
   dependencies:
     webpack-bundle-analyzer: "npm:4.10.1"
-  checksum: 10c0/9f5dc18afc7c09b3b8e45328db8b2c7037406aea65e91cb4393685f07daafdec345597df440d1f40eb5e608d5892b5904aacdb3cfa6312acc8ab876c05b198fe
+  checksum: 10c0/cef97a8df6ee5df261a3db9388993550f90f474aa7cad24acb63cdbe3cabd094fe1dc84d516cd36b978aebd4060e33d6bcedd4614ca2d78a58ac55d096c162ae
   languageName: node
   linkType: hard
 
