@@ -33,7 +33,7 @@ jobs:
         run: yarn run mocha-suite
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: github.ref == 'refs/heads/master' && matrix.node-version == '22'
         with:
           name: Prebuild with Node.js ${{ matrix.node-version }}
