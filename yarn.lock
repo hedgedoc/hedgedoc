@@ -3030,7 +3030,7 @@ __metadata:
     sanitize-filename: "npm:1.6.3"
     sass: "npm:1.97.0"
     sharp: "npm:0.34.5"
-    tlds: "npm:1.255.0"
+    tlds: "npm:1.261.0"
     ts-loader: "npm:9.5.4"
     ts-mockery: "npm:1.2.0"
     ts-node: "npm:11.0.0-beta.1"
@@ -19872,12 +19872,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tlds@npm:1.255.0":
-  version: 1.255.0
-  resolution: "tlds@npm:1.255.0"
+"tlds@npm:1.261.0":
+  version: 1.261.0
+  resolution: "tlds@npm:1.261.0"
   bin:
     tlds: bin.js
-  checksum: 10c0/e7e0434142a2ee80e48c383db53cc94757a9fefd545230fad908a31c235f9f9b9cd1d8232d9bc2bd018050f0e8a912c141d0c79289dda852169199892ba847d0
+  checksum: 10c0/ce05d266618312dd52efe0c958ebd668da70b9b752b7ec1f1b8c4b8fabc6e0f044159f80fec6c3a78df02572afbeb343208df7ef8e83a43e9f8e6c26134c76ee
   languageName: node
   linkType: hard
 
