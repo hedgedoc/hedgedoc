@@ -41,7 +41,7 @@ runs:
           cypress-${{ runner.os }}-${{ steps.cypress-version.outputs.cyver }}
 
     - name: Set up NodeJS
-      uses: actions/setup-node@v4.4.0 # v4.1.0
+      uses: actions/setup-node@v6.1.0
       with:
         node-version: ${{ inputs.NODEJS_VERSION }}
 
