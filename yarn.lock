@@ -2732,10 +2732,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fontsource/source-sans-pro@npm:5.1.0":
-  version: 5.1.0
-  resolution: "@fontsource/source-sans-pro@npm:5.1.0"
-  checksum: 10c0/d4360c6a5ce3d89fb7a32bc75a4a33e899140c506234b700e931a698f6ea15bccec62faaacbd52537151a0804a0f804dc2524a9abfa60aa7af64c007ca559ad2
+"@fontsource/source-sans-pro@npm:5.2.5":
+  version: 5.2.5
+  resolution: "@fontsource/source-sans-pro@npm:5.2.5"
+  checksum: 10c0/4891631d076de226d05fe49f6fe6862c32fc7636992dfaf09da4ba9b6cdc689b3e2568a39a21e84027ce1f0bcdaec24adb26947f95ebad9e127cf2a729dc73de
   languageName: node
   linkType: hard
 
@@ -2923,7 +2923,7 @@ __metadata:
     "@codemirror/view": "npm:6.34.3"
     "@dicebear/core": "npm:9.2.4"
     "@dicebear/identicon": "npm:9.2.4"
-    "@fontsource/source-sans-pro": "npm:5.1.0"
+    "@fontsource/source-sans-pro": "npm:5.2.5"
     "@hedgedoc/commons": "workspace:commons"
     "@hedgedoc/html-to-react": "workspace:html-to-react"
     "@hedgedoc/markdown-it-plugins": "workspace:markdown-it-plugins"

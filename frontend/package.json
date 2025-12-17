@@ -42,7 +42,7 @@
     "@codemirror/view": "6.34.3",
     "@dicebear/core": "9.2.4",
     "@dicebear/identicon": "9.2.4",
-    "@fontsource/source-sans-pro": "5.1.0",
+    "@fontsource/source-sans-pro": "5.2.5",
     "@hedgedoc/commons": "workspace:commons",
     "@hedgedoc/html-to-react": "workspace:html-to-react",
     "@hedgedoc/markdown-it-plugins": "workspace:markdown-it-plugins",
