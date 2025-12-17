@@ -22,7 +22,7 @@ describe('Alias', () => {
     testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
     agent = request.agent(testSetup.app.getHttpServer());
     forbiddenAlias =
-      testSetup.configService.get('noteConfig').forbiddenNoteIds[0];
+      testSetup.configService.get('noteConfig').forbiddenAliases[0];
     await testSetup.app.init();
     noteId = testSetup.ownedNoteIds[0];
   });

@@ -29,15 +29,15 @@ describe('Notes', () => {
   let agent: request.SuperAgentTest;
 
   let content: string;
-  let forbiddenNoteId: string;
+  let forbiddenAlias: string;
   let uploadPath: string;
   let testImage: Buffer;
 
   beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
     agent = request.agent(testSetup.app.getHttpServer());
-    forbiddenNoteId =
-      testSetup.configService.get('noteConfig').forbiddenNoteIds[0];
+    forbiddenAlias =
+      testSetup.configService.get('noteConfig').forbiddenAliases[0];
     uploadPath =
       testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
     await testSetup.app.init();
@@ -132,7 +132,7 @@ describe('Notes', () => {
 
     it('errors with a forbidden alias', async () => {
       await agent
-        .post(`${PUBLIC_API_PREFIX}/notes/${forbiddenNoteId}`)
+        .post(`${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .set('Content-Type', 'text/markdown')
         .send(content)
@@ -172,8 +172,7 @@ describe('Notes', () => {
 
     it('errors with overlong content', async () => {
       const content = 'x'.repeat(
-        (testSetup.configService.get('noteConfig')
-          .maxDocumentLength as number) + 1,
+        (testSetup.configService.get('noteConfig').maxLength as number) + 1,
       );
       await agent
         .post(`${PUBLIC_API_PREFIX}/notes/${givenAlias}`)
@@ -283,7 +282,7 @@ describe('Notes', () => {
     });
     it('errors with a forbidden alias', async () => {
       await agent
-        .delete(`${PUBLIC_API_PREFIX}/notes/${forbiddenNoteId}`)
+        .delete(`${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
         .expect(403);
@@ -329,7 +328,7 @@ describe('Notes', () => {
     });
     it('errors with a forbidden alias', async () => {
       await agent
-        .put(`${PUBLIC_API_PREFIX}/notes/${forbiddenNoteId}`)
+        .put(`${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .set('Content-Type', 'text/markdown')
         .send(changedContent)
@@ -375,7 +374,7 @@ describe('Notes', () => {
     });
     it('errors with a forbidden alias', async () => {
       await agent
-        .get(`${PUBLIC_API_PREFIX}/notes/${forbiddenNoteId}/content`)
+        .get(`${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/content`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
         .expect(403);
@@ -448,7 +447,7 @@ describe('Notes', () => {
 
     it('errors with a forbidden alias', async () => {
       await agent
-        .get(`${PUBLIC_API_PREFIX}/notes/${forbiddenNoteId}/metadata`)
+        .get(`${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/metadata`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
         .expect(403);
@@ -501,7 +500,7 @@ describe('Notes', () => {
     it('errors with a forbidden alias', async () => {
       await agent
         .get(
-          `${PUBLIC_API_PREFIX}/notes/${forbiddenNoteId}/metadata/permissions`,
+          `${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions`,
         )
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
@@ -587,7 +586,7 @@ describe('Notes', () => {
     it('errors with a forbidden alias', async () => {
       await agent
         .put(
-          `${PUBLIC_API_PREFIX}/notes/${forbiddenNoteId}/metadata/permissions/users/${username2}`,
+          `${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/users/${username2}`,
         )
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
@@ -658,7 +657,7 @@ describe('Notes', () => {
     it('errors with a forbidden alias', async () => {
       await agent
         .delete(
-          `${PUBLIC_API_PREFIX}/notes/${forbiddenNoteId}/metadata/permissions/users/${username2}`,
+          `${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/users/${username2}`,
         )
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
@@ -745,7 +744,7 @@ describe('Notes', () => {
     it('errors with a forbidden alias', async () => {
       await agent
         .put(
-          `${PUBLIC_API_PREFIX}/notes/${forbiddenNoteId}/metadata/permissions/groups/${SpecialGroup.EVERYONE}`,
+          `${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/groups/${SpecialGroup.EVERYONE}`,
         )
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
@@ -819,7 +818,7 @@ describe('Notes', () => {
     it('errors with a forbidden alias', async () => {
       await agent
         .delete(
-          `${PUBLIC_API_PREFIX}/notes/${forbiddenNoteId}/metadata/permissions/groups/${SpecialGroup.EVERYONE}`,
+          `${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/groups/${SpecialGroup.EVERYONE}`,
         )
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
@@ -882,7 +881,7 @@ describe('Notes', () => {
     it('errors with a forbidden alias', async () => {
       await agent
         .put(
-          `${PUBLIC_API_PREFIX}/notes/${forbiddenNoteId}/metadata/permissions/owner`,
+          `${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/owner`,
         )
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .send({
@@ -940,7 +939,7 @@ describe('Notes', () => {
 
     it('errors with a forbidden alias', async () => {
       await agent
-        .get(`${PUBLIC_API_PREFIX}/notes/${forbiddenNoteId}/revisions`)
+        .get(`${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/revisions`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
         .expect(403);
@@ -985,7 +984,7 @@ describe('Notes', () => {
     });
     it('errors with a forbidden alias', async () => {
       await agent
-        .get(`${PUBLIC_API_PREFIX}/notes/${forbiddenNoteId}/revisions/1`)
+        .get(`${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/revisions/1`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
         .expect(403);
@@ -1042,7 +1041,7 @@ describe('Notes', () => {
     });
     it('errors with a forbidden alias', async () => {
       await agent
-        .get(`${PUBLIC_API_PREFIX}/notes/${forbiddenNoteId}/revisions/1`)
+        .get(`${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/revisions/1`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
         .expect(403);

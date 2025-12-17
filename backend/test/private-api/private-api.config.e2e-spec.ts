@@ -47,10 +47,10 @@ describe('Config', () => {
         authConfig.local.enableRegister,
       );
       expect(responseBody.allowProfileEdits).toEqual(
-        authConfig.common.allowProfileEdits,
+        authConfig.allowProfileEdits,
       );
       expect(responseBody.allowChooseUsername).toEqual(
-        authConfig.common.allowChooseUsername,
+        authConfig.allowChooseUsername,
       );
       expect(responseBody.authProviders).toHaveLength(1);
       expect(responseBody.authProviders[0]).toEqual({
@@ -60,18 +60,14 @@ describe('Config', () => {
         logo: null,
         name: customizationConfig.branding.customName,
       });
-      expect(responseBody.maxDocumentLength).toEqual(
-        noteConfig.maxDocumentLength,
-      );
+      expect(responseBody.maxDocumentLength).toEqual(noteConfig.maxLength);
       expect(responseBody.plantUmlServer).toEqual(
         new URL(externalServicesConfig.plantumlServer).toString(),
       );
       expect(responseBody.specialUrls).toEqual({
-        imprint: new URL(customizationConfig.specialUrls.imprint).toString(),
-        privacy: new URL(customizationConfig.specialUrls.privacy).toString(),
-        termsOfUse: new URL(
-          customizationConfig.specialUrls.termsOfUse,
-        ).toString(),
+        imprint: new URL(customizationConfig.urls.imprint).toString(),
+        privacy: new URL(customizationConfig.urls.privacy).toString(),
+        termsOfUse: new URL(customizationConfig.urls.termsOfUse).toString(),
       });
       expect(responseBody.useImageProxy).toEqual(
         !!externalServicesConfig.imageProxy,
