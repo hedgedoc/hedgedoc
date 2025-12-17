@@ -28,7 +28,7 @@ jobs:
     name: Deploys to netlify
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.3.1
+        uses: actions/checkout@v6.0.1
 
       - name: Set up NodeJS
         uses: actions/setup-node@v4.4.0 # v4.1.0
