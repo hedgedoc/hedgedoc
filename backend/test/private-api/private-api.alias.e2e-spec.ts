@@ -13,7 +13,7 @@ import { setupAgent } from './utils/setup-agent';
 describe('Alias', () => {
   let testSetup: TestSetup;
 
-  let forbiddenNoteId: string;
+  let forbiddenAlias: string;
 
   let agentNotLoggedIn: request.SuperAgentTest;
   let agentGuestUser: request.SuperAgentTest;
@@ -29,8 +29,8 @@ describe('Alias', () => {
     [agentNotLoggedIn, agentGuestUser, agentUser1, agentUser2] =
       await setupAgent(testSetup);
 
-    forbiddenNoteId =
-      testSetup.configService.get('noteConfig').forbiddenNoteIds[0];
+    forbiddenAlias =
+      testSetup.configService.get('noteConfig').forbiddenAliases[0];
     noteId = await testSetup.notesService.getNoteIdByAlias(noteAlias1);
   });
 
@@ -62,7 +62,7 @@ describe('Alias', () => {
 
     describe('does not create an alias', () => {
       it('because of a forbidden alias', async () => {
-        newAliasDto.newAlias = forbiddenNoteId;
+        newAliasDto.newAlias = forbiddenAlias;
 
         await agentUser1
           .post(`${PRIVATE_API_PREFIX}/alias`)
@@ -140,7 +140,7 @@ describe('Alias', () => {
       });
       it('for a note with a forbidden ID', async () => {
         await agentUser1
-          .put(`${PRIVATE_API_PREFIX}/alias/${forbiddenNoteId}`)
+          .put(`${PRIVATE_API_PREFIX}/alias/${forbiddenAlias}`)
           .set('Content-Type', 'application/json')
           .send(changeAliasDto)
           .expect(403);
@@ -200,7 +200,7 @@ describe('Alias', () => {
 
       it('if the alias is forbidden', async () => {
         await agentUser1
-          .delete(`${PRIVATE_API_PREFIX}/alias/${forbiddenNoteId}`)
+          .delete(`${PRIVATE_API_PREFIX}/alias/${forbiddenAlias}`)
           .expect(403);
       });
 

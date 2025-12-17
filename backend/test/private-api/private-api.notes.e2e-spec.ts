@@ -31,7 +31,7 @@ describe('Notes', () => {
   let agentUser1: request.SuperAgentTest;
   let agentUser2: request.SuperAgentTest;
 
-  let forbiddenNoteId: string;
+  let forbiddenAlias: string;
   let uploadPath: string;
   let testImage: Buffer;
   const content = 'This is a test note.';
@@ -40,8 +40,8 @@ describe('Notes', () => {
     testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
     await testSetup.app.init();
 
-    forbiddenNoteId =
-      testSetup.configService.get('noteConfig').forbiddenNoteIds[0];
+    forbiddenAlias =
+      testSetup.configService.get('noteConfig').forbiddenAliases[0];
     uploadPath =
       testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
 
@@ -92,7 +92,7 @@ describe('Notes', () => {
     });
     it('fails for a forbidden note', async () => {
       await agentUser1
-        .get(`${PRIVATE_API_PREFIX}/notes/${forbiddenNoteId}`)
+        .get(`${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}`)
         .expect('Content-Type', /json/)
         .expect(403);
     });
@@ -171,7 +171,7 @@ describe('Notes', () => {
       });
       it('fails for a forbidden note', async () => {
         await agentUser1
-          .get(`${PRIVATE_API_PREFIX}/notes/${forbiddenNoteId}/media`)
+          .get(`${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}/media`)
           .expect('Content-Type', /json/)
           .expect(403);
       });
@@ -237,8 +237,7 @@ describe('Notes', () => {
     );
     it('throws an error if trying to create a note with overlong content', async () => {
       const content = 'x'.repeat(
-        (testSetup.configService.get('noteConfig')
-          .maxDocumentLength as number) + 1,
+        (testSetup.configService.get('noteConfig').maxLength as number) + 1,
       );
       await agentUser1
         .post(`${PRIVATE_API_PREFIX}/notes/`)
@@ -309,7 +308,7 @@ describe('Notes', () => {
     );
     it("the note can't be created if the alias is forbiden", async () => {
       await agentUser1
-        .post(`${PRIVATE_API_PREFIX}/notes/${forbiddenNoteId}`)
+        .post(`${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}`)
         .set('Content-Type', 'text/markdown')
         .send(content)
         .expect('Content-Type', /json/)
@@ -325,8 +324,7 @@ describe('Notes', () => {
     });
     it('throws an error if trying to create a note with overlong content', async () => {
       const content = 'x'.repeat(
-        (testSetup.configService.get('noteConfig')
-          .maxDocumentLength as number) + 1,
+        (testSetup.configService.get('noteConfig').maxLength as number) + 1,
       );
       await agentUser1
         .post(`${PRIVATE_API_PREFIX}/notes/${newNoteAlias}`)
@@ -398,7 +396,7 @@ describe('Notes', () => {
     });
     it('throws an error when trying to delete a forbidden alias', async () => {
       await agentUser1
-        .delete(`/api/private/notes/${forbiddenNoteId}`)
+        .delete(`/api/private/notes/${forbiddenAlias}`)
         .expect(403);
     });
     it('throws an error when trying to delete a non-existing alias', async () => {
@@ -458,14 +456,14 @@ describe('Notes', () => {
 
     it('throws errors for not logged-in user', async () => {
       await agentNotLoggedIn
-        .get(`${PRIVATE_API_PREFIX}/notes/${forbiddenNoteId}/metadata`)
+        .get(`${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}/metadata`)
         .expect('Content-Type', /json/)
         .expect(401);
     });
 
     it('throws errors with a forbidden alias', async () => {
       await agentUser1
-        .get(`${PRIVATE_API_PREFIX}/notes/${forbiddenNoteId}/metadata`)
+        .get(`${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}/metadata`)
         .expect('Content-Type', /json/)
         .expect(403);
     });
@@ -542,7 +540,7 @@ describe('Notes', () => {
 
     it('throws an error when using a forbidden alias', async () => {
       await agentUser1
-        .get(`${PRIVATE_API_PREFIX}/notes/${forbiddenNoteId}/revisions`)
+        .get(`${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}/revisions`)
         .expect(403);
     });
 
@@ -595,7 +593,7 @@ describe('Notes', () => {
 
     it('throws error if a forbidden alias is requested', async () => {
       await agentUser1
-        .delete(`${PRIVATE_API_PREFIX}/notes/${forbiddenNoteId}/revisions`)
+        .delete(`${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}/revisions`)
         .expect(403);
     });
     it('fails with non-existing aliases', async () => {
@@ -661,7 +659,7 @@ describe('Notes', () => {
     });
     it('throws an error if the noteAlias is forbidden', async () => {
       await agentUser1
-        .get(`${PRIVATE_API_PREFIX}/notes/${forbiddenNoteId}/revisions/1`)
+        .get(`${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}/revisions/1`)
         .expect('Content-Type', /json/)
         .expect(403);
     });
@@ -738,7 +736,7 @@ describe('Notes', () => {
     it('throws an error if using a forbidden alias', async () => {
       await agentUser1
         .put(
-          `${PRIVATE_API_PREFIX}/notes/${forbiddenNoteId}/metadata/permissions/users/${username2}`,
+          `${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/users/${username2}`,
         )
         .send({
           canEdit: true,
@@ -805,7 +803,7 @@ describe('Notes', () => {
     it('throws an error if using a forbidden alias', async () => {
       await agentUser1
         .put(
-          `${PRIVATE_API_PREFIX}/notes/${forbiddenNoteId}/metadata/permissions/users/${username2}`,
+          `${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/users/${username2}`,
         )
         .send({
           owner: username2,
@@ -905,7 +903,7 @@ describe('Notes', () => {
     it('throws an error if using a forbidden alias', async () => {
       await agentUser1
         .put(
-          `${PRIVATE_API_PREFIX}/notes/${forbiddenNoteId}/metadata/permissions/groups/${SpecialGroup.EVERYONE}`,
+          `${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/groups/${SpecialGroup.EVERYONE}`,
         )
         .send({
           canEdit: true,
@@ -972,7 +970,7 @@ describe('Notes', () => {
     it('throws an error if using a forbidden alias', async () => {
       await agentUser1
         .put(
-          `${PRIVATE_API_PREFIX}/notes/${forbiddenNoteId}/metadata/permissions/groups/${SpecialGroup.EVERYONE}`,
+          `${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/groups/${SpecialGroup.EVERYONE}`,
         )
         .send({
           owner: username2,
@@ -1043,7 +1041,7 @@ describe('Notes', () => {
     it('throws an error if using a forbidden alias', async () => {
       await agentUser1
         .put(
-          `${PRIVATE_API_PREFIX}/notes/${forbiddenNoteId}/metadata/permissions/owner`,
+          `${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/owner`,
         )
         .send({
           owner: username2,
