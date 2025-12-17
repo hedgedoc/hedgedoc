@@ -9,5 +9,5 @@
   "devDependencies": {
     "markdownlint-cli2": "0.20.0"
   },
-  "packageManager": "yarn@4.5.3"
+  "packageManager": "yarn@4.12.0"
 }

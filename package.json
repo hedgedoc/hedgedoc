@@ -24,7 +24,7 @@
     "test": "dotenv -c test -- turbo run test --concurrency 1",
     "test:e2e:ci": "dotenv -c test -- turbo run test:e2e:ci"
   },
-  "packageManager": "yarn@4.5.3",
+  "packageManager": "yarn@4.12.0",
   "resolutions": {
     "@types/node": "20.19.26",
     "domhandler": "5.0.3",
