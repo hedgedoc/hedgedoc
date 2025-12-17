@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 /**
  * This file allows us to extract all the DateTime handling into a single place.
  *
