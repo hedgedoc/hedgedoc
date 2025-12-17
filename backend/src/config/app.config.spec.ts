@@ -110,7 +110,7 @@ describe('appConfig', () => {
       expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
       expect(config.backendPort).toEqual(port);
-      expect(config.log.level).toEqual(Loglevel.WARN);
+      expect(config.log.level).toEqual(Loglevel.INFO);
       expect(config.log.showTimestamp).toEqual(showLogTimestamp);
       restore();
     });
@@ -139,7 +139,27 @@ describe('appConfig', () => {
       restore();
     });
   });
+
   describe('throws error', () => {
+    let spyConsoleError: jest.SpyInstance;
+    let spyProcessExit: jest.Mock;
+    let originalProcess: typeof process;
+
+    beforeEach(() => {
+      spyConsoleError = jest.spyOn(console, 'error');
+      spyProcessExit = jest.fn();
+      originalProcess = global.process;
+      global.process = {
+        ...originalProcess,
+        exit: spyProcessExit,
+      } as unknown as typeof global.process;
+    });
+
+    afterEach(() => {
+      global.process = originalProcess;
+      jest.restoreAllMocks();
+    });
+
     it('when given a non-valid HD_BASE_URL', async () => {
       const restore = mockedEnv(
         {
@@ -154,7 +174,11 @@ describe('appConfig', () => {
           clear: true,
         },
       );
-      expect(() => appConfig()).toThrow('HD_BASE_URL');
+      appConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
+        "HD_BASE_URL: Can't parse as URL",
+      );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
 
@@ -171,9 +195,11 @@ describe('appConfig', () => {
           clear: true,
         },
       );
-      expect(() => appConfig()).toThrow(
+      appConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
         'HD_BASE_URL: baseUrl must not contain a subdirectory',
       );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
 
@@ -191,9 +217,11 @@ describe('appConfig', () => {
           clear: true,
         },
       );
-      expect(() => appConfig()).toThrow(
+      appConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
         'HD_BACKEND_PORT: Number must be greater than 0',
       );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
 
@@ -211,9 +239,11 @@ describe('appConfig', () => {
           clear: true,
         },
       );
-      expect(() => appConfig()).toThrow(
+      appConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
         'HD_BACKEND_PORT: Number must be less than or equal to 65535',
       );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
 
@@ -231,9 +261,11 @@ describe('appConfig', () => {
           clear: true,
         },
       );
-      expect(() => appConfig()).toThrow(
+      appConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
         'HD_BACKEND_PORT: Expected integer, received float',
       );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
 
@@ -251,9 +283,11 @@ describe('appConfig', () => {
           clear: true,
         },
       );
-      expect(() => appConfig()).toThrow(
+      appConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
         'HD_BACKEND_PORT: Expected number, received nan',
       );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
 
@@ -271,7 +305,9 @@ describe('appConfig', () => {
           clear: true,
         },
       );
-      expect(() => appConfig()).toThrow('HD_LOG_LEVEL');
+      appConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain('HD_LOG_LEVEL');
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
   });

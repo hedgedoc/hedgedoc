@@ -54,7 +54,7 @@ export class FrontendConfigService {
       plantUmlServer: this.externalServicesConfig.plantumlServer
         ? new URL(this.externalServicesConfig.plantumlServer).toString()
         : null,
-      urls: this.getSpecialUrls(),
+      specialUrls: this.getSpecialUrls(),
       useImageProxy: !!this.externalServicesConfig.imageProxy,
       version: await getServerVersionFromPackageJson(),
     });

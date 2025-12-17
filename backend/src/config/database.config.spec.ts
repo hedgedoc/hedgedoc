@@ -96,46 +96,71 @@ describe('databaseConfig', () => {
     });
   });
 
-  it('throws an error if the port is negative', () => {
-    const restore = mockedEnv(
-      {
-        /* eslint-disable @typescript-eslint/naming-convention */
-        HD_DATABASE_TYPE: databaseTypePostgres,
-        HD_DATABASE_NAME: databaseName,
-        HD_DATABASE_USERNAME: databaseUser,
-        HD_DATABASE_PASSWORD: databasePass,
-        HD_DATABASE_HOST: databaseHost,
-        HD_DATABASE_PORT: String(invalidDatabasePort),
-        /* eslint-enable @typescript-eslint/naming-convention */
-      },
-      {
-        clear: true,
-      },
-    );
-    expect(() => databaseConfig()).toThrow(
-      'HD_DATABASE_PORT: Number must be greater than 0',
-    );
-    restore();
-  });
-  it('throws an error if the port is too big', () => {
-    const restore = mockedEnv(
-      {
-        /* eslint-disable @typescript-eslint/naming-convention */
-        HD_DATABASE_TYPE: databaseTypePostgres,
-        HD_DATABASE_NAME: databaseName,
-        HD_DATABASE_USERNAME: databaseUser,
-        HD_DATABASE_PASSWORD: databasePass,
-        HD_DATABASE_HOST: databaseHost,
-        HD_DATABASE_PORT: String(invalidDatabasePort2),
-        /* eslint-enable @typescript-eslint/naming-convention */
-      },
-      {
-        clear: true,
-      },
-    );
-    expect(() => databaseConfig()).toThrow(
-      'HD_DATABASE_PORT: Number must be less than or equal to 65535',
-    );
-    restore();
+  describe('throws error', () => {
+    let spyConsoleError: jest.SpyInstance;
+    let spyProcessExit: jest.Mock;
+    let originalProcess: typeof process;
+
+    beforeEach(() => {
+      spyConsoleError = jest.spyOn(console, 'error');
+      spyProcessExit = jest.fn();
+      originalProcess = global.process;
+      global.process = {
+        ...originalProcess,
+        exit: spyProcessExit,
+      } as unknown as typeof global.process;
+    });
+
+    afterEach(() => {
+      global.process = originalProcess;
+      jest.restoreAllMocks();
+    });
+
+    it('when the port is negative', () => {
+      const restore = mockedEnv(
+        {
+          /* eslint-disable @typescript-eslint/naming-convention */
+          HD_DATABASE_TYPE: databaseTypePostgres,
+          HD_DATABASE_NAME: databaseName,
+          HD_DATABASE_USERNAME: databaseUser,
+          HD_DATABASE_PASSWORD: databasePass,
+          HD_DATABASE_HOST: databaseHost,
+          HD_DATABASE_PORT: String(invalidDatabasePort),
+          /* eslint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      databaseConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
+        'HD_DATABASE_PORT: Number must be greater than 0',
+      );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
+      restore();
+    });
+    it('when the port is too big', () => {
+      const restore = mockedEnv(
+        {
+          /* eslint-disable @typescript-eslint/naming-convention */
+          HD_DATABASE_TYPE: databaseTypePostgres,
+          HD_DATABASE_NAME: databaseName,
+          HD_DATABASE_USERNAME: databaseUser,
+          HD_DATABASE_PASSWORD: databasePass,
+          HD_DATABASE_HOST: databaseHost,
+          HD_DATABASE_PORT: String(invalidDatabasePort2),
+          /* eslint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      databaseConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain(
+        'HD_DATABASE_PORT: Number must be less than or equal to 65535',
+      );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
+      restore();
+    });
   });
 });
