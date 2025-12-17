@@ -2826,7 +2826,7 @@ __metadata:
     minio: "npm:8.0.6"
     mocked-env: "npm:1.3.5"
     mysql2: "npm:3.16.0"
-    nest-knexjs: "npm:0.0.28"
+    nest-knexjs: "npm:0.0.29"
     nestjs-zod: "npm:4.3.1"
     node-fetch: "npm:2.7.0"
     openid-client: "npm:5.7.1"
@@ -16377,16 +16377,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nest-knexjs@npm:0.0.28":
-  version: 0.0.28
-  resolution: "nest-knexjs@npm:0.0.28"
+"nest-knexjs@npm:0.0.29":
+  version: 0.0.29
+  resolution: "nest-knexjs@npm:0.0.29"
   peerDependencies:
     "@nestjs/common": ^9.0.0 || ^10.0.0 || ^11.0.0
     "@nestjs/core": ^9.0.0 || ^10.0.0 || ^11.0.0
     knex: ^0.95.0 || ^1.0.0 || ^2.0.0 || ^3.0.0
     reflect-metadata: ^0.1.13 || ^0.2.0
     rxjs: ^6.6.3 || ^7.2.0
-  checksum: 10c0/fc05702eff664b2459a27c897236ee4c81c08f6f656c006e44c6b10f684c956dcb08e164eaef6d88c773f5ccbd554c16ba78afbfd261898d82e463bede006ccf
+  checksum: 10c0/4741c0c893b60c3f878e288ed4b6ddcaab049e869718503fe026d74f5a9861c90fcb41d6e89044b29fbd23d641cccad3f7f8edca24930021789519285a0ef572
   languageName: node
   linkType: hard
 
