@@ -3039,8 +3039,8 @@ __metadata:
     user-agent-data-types: "npm:0.4.2"
     uuid: "npm:11.1.0"
     vega: "npm:5.30.0"
-    vega-embed: "npm:6.28.0"
-    vega-lite: "npm:5.21.0"
+    vega-embed: "npm:6.29.0"
+    vega-lite: "npm:5.23.0"
     words-count: "npm:2.0.2"
     ws: "npm:8.18.3"
     yjs: "npm:13.6.27"
@@ -14697,10 +14697,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-stringify-pretty-compact@npm:^3.0.0, json-stringify-pretty-compact@npm:~3.0.0":
-  version: 3.0.0
-  resolution: "json-stringify-pretty-compact@npm:3.0.0"
-  checksum: 10c0/fc522c25047bd96d72ded77af4002e7f12e9ba9f4b7e7e12a9316aee166f1b8f9c7b0d0d989a8494e3fdd804a23819f411479f68f2ef10b2f7a144581b2c68f4
+"json-stringify-pretty-compact@npm:^4.0.0, json-stringify-pretty-compact@npm:~4.0.0":
+  version: 4.0.0
+  resolution: "json-stringify-pretty-compact@npm:4.0.0"
+  checksum: 10c0/505781b4be7c72047ae8dfa667b520d20461ceac451b6516cb8ac5e12a758fbd7491d99d5e3f7e60423ce9d26ed4e4bcaccab3420bf651298901635c849017cf
   languageName: node
   linkType: hard
 
@@ -20233,7 +20233,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.8.1, tslib@npm:^2.8.1":
+"tslib@npm:2.8.1, tslib@npm:^2.8.1, tslib@npm:~2.8.1":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
@@ -20251,13 +20251,6 @@ __metadata:
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
   checksum: 10c0/e03a8a4271152c8b26604ed45535954c0a45296e32445b4b87f8a5abdb2421f40b59b4ca437c4346af0f28179780d604094eb64546bee2019d903d01c6c19bdb
-  languageName: node
-  linkType: hard
-
-"tslib@npm:~2.6.3":
-  version: 2.6.3
-  resolution: "tslib@npm:2.6.3"
-  checksum: 10c0/2598aef53d9dbe711af75522464b2104724d6467b26a60f2bdac8297d2b5f1f6b86a71f61717384aa8fd897240467aaa7bcc36a0700a0faf751293d1331db39a
   languageName: node
   linkType: hard
 
@@ -21010,22 +21003,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-embed@npm:6.28.0":
-  version: 6.28.0
-  resolution: "vega-embed@npm:6.28.0"
+"vega-embed@npm:6.29.0":
+  version: 6.29.0
+  resolution: "vega-embed@npm:6.29.0"
   dependencies:
     fast-json-patch: "npm:^3.1.1"
-    json-stringify-pretty-compact: "npm:^3.0.0"
+    json-stringify-pretty-compact: "npm:^4.0.0"
     semver: "npm:^7.6.3"
     tslib: "npm:^2.8.1"
     vega-interpreter: "npm:^1.0.5"
     vega-schema-url-parser: "npm:^2.2.0"
     vega-themes: "npm:^2.15.0"
-    vega-tooltip: "npm:^0.35.1"
+    vega-tooltip: "npm:^0.35.2"
   peerDependencies:
     vega: ^5.21.0
     vega-lite: "*"
-  checksum: 10c0/eb85b43b088ee4f916067d1661e83e128b923d0fa4292ebbcf06306e4d7cdbf5488867aa2d2d10cb60631f62a628c5290685a4c7fd0f4793a52068a29e41088d
+  checksum: 10c0/298285cd45647c9958d529fbd0450040b6cdec5e204b2e940807b890046aa4f7b52706f662d980428b6347265cb6909e2b47d4e12e8f59e06b358de581dbbb10
   languageName: node
   linkType: hard
 
@@ -21158,12 +21151,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-lite@npm:5.21.0":
-  version: 5.21.0
-  resolution: "vega-lite@npm:5.21.0"
+"vega-lite@npm:5.23.0":
+  version: 5.23.0
+  resolution: "vega-lite@npm:5.23.0"
   dependencies:
-    json-stringify-pretty-compact: "npm:~3.0.0"
-    tslib: "npm:~2.6.3"
+    json-stringify-pretty-compact: "npm:~4.0.0"
+    tslib: "npm:~2.8.1"
     vega-event-selector: "npm:~3.0.1"
     vega-expression: "npm:~5.1.1"
     vega-util: "npm:~1.17.2"
@@ -21175,7 +21168,7 @@ __metadata:
     vl2png: bin/vl2png
     vl2svg: bin/vl2svg
     vl2vg: bin/vl2vg
-  checksum: 10c0/e5566555b594d47d3995e6eb5011976a5feb333df129d5bb4868f57ab62518aa930e70ee7b1988340a41ac3c0b74c4abe97ec2f5b12903c7433ca3f2b8a68f58
+  checksum: 10c0/8188136d5266d71b05672a18a3553ab79cdaf34b541b104a9985fd783cefcabcd8a5c0b35ac6f73072397ed6c058ee6559c43ada072f0bd6db97e7e743d1955b
   languageName: node
   linkType: hard
 
@@ -21314,16 +21307,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-tooltip@npm:^0.35.1":
-  version: 0.35.1
-  resolution: "vega-tooltip@npm:0.35.1"
+"vega-tooltip@npm:^0.35.2":
+  version: 0.35.2
+  resolution: "vega-tooltip@npm:0.35.2"
   dependencies:
     "@rollup/rollup-linux-x64-gnu": "npm:^4.24.4"
     vega-util: "npm:^1.17.2"
   dependenciesMeta:
     "@rollup/rollup-linux-x64-gnu":
       optional: true
-  checksum: 10c0/340844252f64c59e760bf20cfcfd4a0a916209b873741f627f705c3e85e8ec69b80cd54d6664919131e537cc1ab4a8cbf3cb3c5d32a05b6ebf2442e9730bbda4
+  checksum: 10c0/9ebd70e687f604dad23d99268df0ef30aadc942237a9ba20f1996252fdfc0a56ce48882ccb80deaf26c62445176bce81ae2caacf051f1cbe42c0de3d3030a10b
   languageName: node
   linkType: hard
 
