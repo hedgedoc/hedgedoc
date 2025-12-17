@@ -62,7 +62,7 @@
     "nestjs-zod": "4.3.1",
     "node-fetch": "2.7.0",
     "openid-client": "5.7.1",
-    "pg": "8.13.1",
+    "pg": "8.16.3",
     "raw-body": "3.0.2",
     "reflect-metadata": "0.2.2",
     "rimraf": "6.0.1",
