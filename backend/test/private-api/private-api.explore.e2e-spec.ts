@@ -23,8 +23,6 @@ describe('Explore', () => {
   let testSetup: TestSetup;
 
   let forbiddenAlias: string;
-  let agentNotLoggedIn: request.SuperAgentTest;
-  let agentGuestUser: request.SuperAgentTest;
   let agentUser1: request.SuperAgentTest;
   let agentUser2: request.SuperAgentTest;
   let agentUser3: request.SuperAgentTest;
@@ -35,8 +33,7 @@ describe('Explore', () => {
     testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
     await testSetup.app.init();
 
-    [agentNotLoggedIn, agentGuestUser, agentUser1, agentUser2] =
-      await setupAgent(testSetup);
+    [, , agentUser1, agentUser2] = await setupAgent(testSetup);
     agentUser3 = request.agent(testSetup.app.getHttpServer());
     await agentUser3
       .post(`${PRIVATE_API_PREFIX}/auth/local/login`)
