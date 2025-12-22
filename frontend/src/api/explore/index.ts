@@ -28,8 +28,11 @@ export const getPinnedNotes = async (): Promise<NoteExploreEntryInterface[]> => 
  * @return The pinned note's explore page entry.
  * @throws {Error} when the API request wasn't successful.
  */
-export const setPinnedState = async (primaryAlias: string, isPinned: boolean): Promise<NoteExploreEntryInterface> => {
-  const response = await new PutApiRequestBuilder<NoteExploreEntryInterface, NotePinStatusInterface>(
+export const setPinnedState = async (
+  primaryAlias: string,
+  isPinned: boolean
+): Promise<NoteExploreEntryInterface | null> => {
+  const response = await new PutApiRequestBuilder<NoteExploreEntryInterface | null, NotePinStatusInterface>(
     `explore/pin/${primaryAlias}`
   )
     .withJsonBody({

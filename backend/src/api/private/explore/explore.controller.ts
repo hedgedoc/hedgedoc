@@ -12,9 +12,11 @@ import {
   Param,
   Put,
   Query,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { type Response } from 'express';
 
 import { SessionGuard } from '../../../auth/session.guard';
 import { NoteExploreEntryDto } from '../../../dtos/note-explore-entry.dto';
@@ -128,13 +130,24 @@ export class ExploreController {
     @RequestUserId() userId: number,
     @Param('noteAlias') noteAlias: string,
     @Body() notePinStatusDto: NotePinStatusDto,
+    @Res() res: Response,
   ): Promise<NoteExploreEntryDto | null> {
     const noteId = await this.noteService.getNoteIdByAlias(noteAlias);
-    return await this.exploreService.setNotePinStatus(
+    const entry = await this.exploreService.setNotePinStatus(
       userId,
       noteId,
       notePinStatusDto.isPinned,
     );
+    // We send the response manually with res.send() and setting the content type accordingly.
+    // This is required with the express backend for NestJS since it does not allow `null` to be sent normally
+    // https://github.com/nestjs/nest/issues/10415
+    res.header('Content-Type', 'application/json; charset=utf-8')
+    if (entry === null) {
+      res.send('null');
+      return null;
+    }
+    res.send(JSON.stringify(entry));
+    return entry;
   }
 
   private checkQueryParams(
