@@ -123,14 +123,14 @@ export class ExploreController {
   }
 
   @Put('pin/:noteAlias')
-  @OpenApi(204, 400, 404)
+  @OpenApi(200, 400, 404)
   async setPinStatus(
     @RequestUserId() userId: number,
     @Param('noteAlias') noteAlias: string,
     @Body() notePinStatusDto: NotePinStatusDto,
-  ): Promise<void> {
+  ): Promise<NoteExploreEntryDto | null> {
     const noteId = await this.noteService.getNoteIdByAlias(noteAlias);
-    await this.exploreService.setNotePinStatus(
+    return await this.exploreService.setNotePinStatus(
       userId,
       noteId,
       notePinStatusDto.isPinned,

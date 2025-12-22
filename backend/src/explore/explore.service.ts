@@ -358,7 +358,7 @@ export class ExploreService {
     userId: number,
     noteId: number,
     isPinned: boolean,
-  ): Promise<void> {
+  ): Promise<NoteExploreEntryDto | null> {
     if (isPinned) {
       // If note is already pinned, ignore that
       await this.knex(TableUserPinnedNote)
@@ -371,6 +371,13 @@ export class ExploreService {
           FieldNameUserPinnedNote.noteId,
         ])
         .ignore();
+      const queryBase = this.knex(TableNote).where(
+        `${TableNote}.${FieldNameNote.id}`,
+        noteId,
+      );
+      const query = this.applyCommonQuery(queryBase);
+      const results = (await query) as QueryResult[];
+      return this.transformQueryResultIntoDtos(results)[0];
     } else {
       await this.knex(TableUserPinnedNote)
         .where({
@@ -378,6 +385,7 @@ export class ExploreService {
           [FieldNameUserPinnedNote.noteId]: noteId,
         })
         .delete();
+      return null;
     }
   }
 }
