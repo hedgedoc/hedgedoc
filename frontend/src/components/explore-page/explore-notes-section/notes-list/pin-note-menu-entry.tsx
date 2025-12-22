@@ -21,7 +21,7 @@ export const PinNoteMenuEntry: React.FC<PinNoteMenuEntryProps> = ({ noteAlias, i
 
   const onClickPin = useCallback(() => {
     setNotePinStatus(noteAlias, !isPinned).catch(
-      showErrorNotification('explore.pinnedNotes.error', { alias: noteAlias })
+      showErrorNotification(`explore.pinnedNotes.${isPinned ? 'un' : ''}pinError`, { alias: noteAlias })
     )
   }, [noteAlias, isPinned, showErrorNotification])
 

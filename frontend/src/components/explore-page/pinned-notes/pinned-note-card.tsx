@@ -30,6 +30,7 @@ export const PinnedNoteCard: React.FC<NoteExploreEntryInterface> = ({
   const router = useRouter()
   const labelTag = useTranslatedText('explore.filters.byTag')
   const labelUnpinNote = useTranslatedText('explore.pinnedNotes.unpin')
+  const fallbackUntitled = useTranslatedText('editor.untitledNote')
   const lastVisitedString = useMemo(() => formatChangedAt(lastChangedAt), [lastChangedAt])
 
   const onClickUnpin = useCallback(
@@ -60,7 +61,7 @@ export const PinnedNoteCard: React.FC<NoteExploreEntryInterface> = ({
         <Card.Title className={`${styles.title}`}>
           <NoteTypeIcon noteType={type} />
           <span className={`${styles.titleText}`} title={title}>
-            {title}
+            {title !== '' ? title : <i className={'fst-italic'}>{fallbackUntitled}</i>}
           </span>
         </Card.Title>
         <Card.Subtitle className='mb-2 text-muted'>{lastVisitedString}</Card.Subtitle>
