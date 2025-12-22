@@ -67,6 +67,7 @@ import {
 import { NoteConfig } from '../src/config/note.config';
 import { ApiTokenWithSecretDto } from '../src/dtos/api-token-with-secret.dto';
 import { eventModuleConfig } from '../src/events';
+import { ExploreService } from '../src/explore/explore.service';
 import { FrontendConfigModule } from '../src/frontend-config/frontend-config.module';
 import { GroupsModule } from '../src/groups/groups.module';
 import { GroupsService } from '../src/groups/groups.service';
@@ -115,6 +116,7 @@ export class TestSetup {
   apiTokenService: ApiTokenService;
   sessionService: SessionService;
   revisionsService: RevisionsService;
+  exploreService: ExploreService;
 
   userIds: number[] = [];
   guestUserId: number;
@@ -364,6 +366,8 @@ export class TestSetupBuilder {
       this.testSetup.moduleRef.get<LdapService>(LdapService);
     this.testSetup.oidcService =
       this.testSetup.moduleRef.get<OidcService>(OidcService);
+    this.testSetup.exploreService =
+      this.testSetup.moduleRef.get<ExploreService>(ExploreService);
 
     this.testSetup.app = this.testSetup.moduleRef.createNestApplication();
 
@@ -534,8 +538,8 @@ export const anonymousNoteContent3 = 'Anonymous Note 3';
 export const noteAlias1 = 'testAlias1';
 export const noteContent1 = 'Test Note 1';
 export const noteAlias2 = 'testAlias2';
-export const noteContent2 = 'Test Note 2';
+export const noteContent2 = '# Test Note 2';
 export const noteAlias3 = 'testAlias3';
-export const noteContent3 = 'Test Note 3';
+export const noteContent3 = '---\ntype: slide\n---\nTest Note 3';
 export const noteAlias4 = 'testAlias4';
 export const noteContent4 = 'Test Note 4';
