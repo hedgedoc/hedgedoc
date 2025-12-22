@@ -35,7 +35,7 @@ export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ class
     }
     setLoading(true)
     setPinnedState(noteAlias, !isPinned)
-      .catch(showErrorNotification('explore.pinnedNotes.error', { alias: noteAlias }))
+      .catch(showErrorNotification(`explore.pinnedNotes.${isPinned ? 'un' : ''}pinError`, { alias: noteAlias }))
       .finally(() => setLoading(false))
   }, [noteAlias, isPinned, showErrorNotification])
 
