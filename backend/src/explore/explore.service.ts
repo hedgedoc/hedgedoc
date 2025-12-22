@@ -71,6 +71,12 @@ export class ExploreService {
   ): Promise<NoteExploreEntryDto[]> {
     const queryBase = this.knex(TableNote);
     let query = this.applyCommonQuery(queryBase);
+    if (
+      sortBy === SortMode.LAST_VISITED_ASC ||
+      sortBy === SortMode.LAST_VISITED_DESC
+    ) {
+      query = this.joinWithTableVisitedNote(query);
+    }
     query = query.andWhere(`${TableNote}.${FieldNameNote.ownerId}`, userId);
     query = this.applyFiltersToQuery(query, noteType, search);
     query = this.applySortingToQuery(query, sortBy);
@@ -92,6 +98,12 @@ export class ExploreService {
       `${TableNote}.${FieldNameNote.id}`,
     );
     let query = this.applyCommonQuery(queryBase);
+    if (
+      sortBy === SortMode.LAST_VISITED_ASC ||
+      sortBy === SortMode.LAST_VISITED_DESC
+    ) {
+      query = this.joinWithTableVisitedNote(query);
+    }
     query = query.andWhere(
       `${TableNoteUserPermission}.${FieldNameNoteUserPermission.userId}`,
       userId,
@@ -112,16 +124,22 @@ export class ExploreService {
     const everyoneGroupId = await this.groupsService.getGroupIdByName(
       SpecialGroup.EVERYONE,
     );
-    const queryBase = this.knex(TableNoteGroupPermission).join(
-      TableNote,
-      `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.noteId}`,
+    const queryBase = this.knex(TableNote).join(
+      TableNoteGroupPermission,
       `${TableNote}.${FieldNameNote.id}`,
+      `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.noteId}`,
     );
     let query = this.applyCommonQuery(queryBase);
     query = query.andWhere(
       `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.groupId}`,
       everyoneGroupId,
     );
+    if (
+      sortBy === SortMode.LAST_VISITED_ASC ||
+      sortBy === SortMode.LAST_VISITED_DESC
+    ) {
+      query = this.joinWithTableVisitedNote(query);
+    }
     query = this.applyFiltersToQuery(query, noteType, search);
     query = this.applySortingToQuery(query, sortBy);
     query = this.applyPaginationToQuery(query, page);
@@ -159,6 +177,7 @@ export class ExploreService {
     query = query.select({
       lastVisitedAt: `${TableVisitedNote}.${FieldNameVisitedNote.visitedAt}`,
     });
+    query = this.joinWithTableVisitedNote(query);
     query = query.andWhere(
       `${TableVisitedNote}.${FieldNameVisitedNote.userId}`,
       userId,
@@ -211,6 +230,15 @@ export class ExploreService {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  private joinWithTableVisitedNote(query: Knex.QueryBuilder) {
+    return query.leftJoin(
+      TableVisitedNote,
+      `${TableVisitedNote}.${FieldNameVisitedNote.noteId}`,
+      `${TableNote}.${FieldNameNote.id}`,
+    );
+  }
+
   // The correct return type with all joins and selects is very specific and should just be inferred from Knex
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   private applyCommonQuery(query: Knex.QueryBuilder) {
@@ -234,11 +262,6 @@ export class ExploreService {
         TableUser,
         `${TableUser}.${FieldNameUser.id}`,
         `${TableNote}.${FieldNameNote.ownerId}`,
-      )
-      .leftJoin(
-        TableVisitedNote,
-        `${TableVisitedNote}.${FieldNameVisitedNote.noteId}`,
-        `${TableNote}.${FieldNameNote.id}`,
       )
       .join(
         this.knex(TableRevision)
@@ -265,7 +288,7 @@ export class ExploreService {
       .leftJoin(
         TableRevisionTag,
         `${TableRevisionTag}.${FieldNameRevisionTag.revisionUuid}`,
-        `${TableRevision}.${FieldNameRevision.uuid}`,
+        `latest_revision.${FieldNameRevision.uuid}`,
       )
       .where(`${TableAlias}.${FieldNameAlias.isPrimary}`, true);
   }
