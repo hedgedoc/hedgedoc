@@ -18,7 +18,8 @@
       "unpin": "Unpin this note",
       "empty": "You don't have any pinned notes yet.",
       "pinError": "Could not pin note {{name}}.",
-      "unpinError": "Could not unpin note {{name}}."
+      "unpinError": "Could not unpin note {{name}}.",
+      "loadingError": "Could not load pinned notes."
     },
     "modes": {
       "my": "My notes",
