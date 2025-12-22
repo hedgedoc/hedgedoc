@@ -10,6 +10,7 @@ import { initialState as initialStateEditorConfig } from '../redux/editor-config
 import { initialState as initialStateNoteDetails } from '../redux/note-details/initial-state'
 import { initialState as initialStateRealtimeStatus } from '../redux/realtime/initial-state'
 import { initialState as initialStateRendererStatus } from '../redux/renderer-status/initial-state'
+import { initialState as initialStatePinnedNotes } from '../redux/pinned-notes/initial-state'
 import { type DeepPartial, AuthProviderType } from '@hedgedoc/commons'
 
 jest.mock('../redux/editor-config/methods', () => ({
@@ -46,6 +47,9 @@ export const mockAppState = (state?: DeepPartial<ApplicationState>) => {
       rendererStatus: {
         ...initialStateRendererStatus,
         ...state?.rendererStatus
+      },
+      pinnedNotes: {
+        ...initialStatePinnedNotes
       },
       user: state?.user
         ? {
