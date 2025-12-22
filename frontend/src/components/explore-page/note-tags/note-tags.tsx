@@ -12,6 +12,13 @@ export interface NoteTagsProps {
   hoverLabel?: string
 }
 
+/**
+ * Renders a list of tags for a note.
+ *
+ * @param tags The list of tags as strings
+ * @param onClickTag Callback for when a tag is clicked
+ * @param hoverLabel A different label for hover tooltips
+ */
 export const NoteTags: React.FC<NoteTagsProps> = ({ tags, onClickTag, hoverLabel }) => {
   const onMouseEvent = useCallback(
     (tag: string) => (event: MouseEvent<HTMLDivElement>) => {

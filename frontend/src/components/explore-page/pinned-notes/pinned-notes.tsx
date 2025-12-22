@@ -16,6 +16,9 @@ import { concatCssClasses } from '../../../utils/concat-css-classes'
 
 const logger = new Logger('PinnedNotes')
 
+/**
+ * Renders the section for the user's pinned notes on the explore page.
+ */
 export const PinnedNotes: React.FC = () => {
   useTranslation()
   const scrollboxRef = useRef<HTMLDivElement>(null)

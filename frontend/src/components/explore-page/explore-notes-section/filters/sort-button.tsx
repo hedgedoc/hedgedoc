@@ -22,6 +22,13 @@ export interface SortButtonProps {
   onChange: (mode: SortMode) => void
 }
 
+/**
+ * Renders the dropdown button for the selection menu of the sorting mode for the note list
+ *
+ * @param selected The currently selected sort mode
+ * @param onChange Callback for the change event of the dropdown button
+ * @param showLastVisitedOptions Whether to show the last visited options in the dropdown
+ */
 export const SortButton: React.FC<SortButtonProps> = ({ selected, onChange, showLastVisitedOptions }) => {
   useTranslation()
 

@@ -16,6 +16,12 @@ export interface PinNoteMenuEntryProps {
   isPinned: boolean
 }
 
+/**
+ * Renders a dropdown item for the note entry menu that allows to pin the note of the entry.
+ *
+ * @param noteAlias The primary alias of the note
+ * @param isPinned Whether the note is pinned or not
+ */
 export const PinNoteMenuEntry: React.FC<PinNoteMenuEntryProps> = ({ noteAlias, isPinned }) => {
   const { showErrorNotification } = useUiNotifications()
 
