@@ -62,6 +62,17 @@ export class ExploreService {
     this.logger.setContext(ExploreService.name);
   }
 
+  /**
+   * Return a list of {@link NoteExploreEntryDto} that the user is owner of.
+   *
+   * @param userId The user that is the owner
+   * @param page Which page of the list is wanted
+   * @param noteType Filter which noteType is requested
+   * @param sortBy How the list should be sorted
+   * @param search An search text to filter the list by
+   *
+   * @return A list of {@link NoteExploreEntryDto}
+   */
   async getMyNoteExploreEntries(
     userId: number,
     page: number,
@@ -85,6 +96,17 @@ export class ExploreService {
     return this.transformQueryResultIntoDtos(results);
   }
 
+  /**
+   * Return a list of {@link NoteExploreEntryDto} that are explicity shared with the user.
+   *
+   * @param userId The user that the note is shared with
+   * @param page Which page of the list is wanted
+   * @param noteType Filter which noteType is requested
+   * @param sortBy How the list should be sorted
+   * @param search An search text to filter the list by
+   *
+   * @return A list of {@link NoteExploreEntryDto}
+   */
   async getSharedWithMeExploreEntries(
     userId: number,
     page: number,
@@ -115,6 +137,16 @@ export class ExploreService {
     return this.transformQueryResultIntoDtos(results);
   }
 
+  /**
+   * Return a list of {@link NoteExploreEntryDto} for public notes
+   *
+   * @param page Which page of the list is wanted
+   * @param noteType Filter which noteType is requested
+   * @param sortBy How the list should be sorted
+   * @param search An search text to filter the list by
+   *
+   * @return A list of {@link NoteExploreEntryDto}
+   */
   async getPublicNoteExploreEntries(
     page: number,
     noteType?: NoteType | '',
@@ -147,6 +179,13 @@ export class ExploreService {
     return this.transformQueryResultIntoDtos(results);
   }
 
+  /**
+   * Return a list of {@link NoteExploreEntryDto} that the user has pinned.
+   *
+   * @param userId The user that has the notes pinned.
+   *
+   * @return A list of {@link NoteExploreEntryDto}
+   */
   async getMyPinnedNoteExploreEntries(
     userId: number,
   ): Promise<NoteExploreEntryDto[]> {
@@ -165,6 +204,17 @@ export class ExploreService {
     return this.transformQueryResultIntoDtos(results);
   }
 
+  /**
+   * Return a list of {@link NoteExploreEntryDto} that the user recently visited.
+   *
+   * @param userId The user that has visited the notes
+   * @param page Which page of the list is wanted
+   * @param noteType Filter which noteType is requested
+   * @param sortBy How the list should be sorted
+   * @param search An search text to filter the list by
+   *
+   * @return A list of {@link NoteExploreEntryDto}
+   */
   async getRecentlyVisitedNoteExploreEntries(
     userId: number,
     page: number,
@@ -242,6 +292,13 @@ export class ExploreService {
   // The correct return type with all joins and selects is very specific and should just be inferred from Knex
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   private applyCommonQuery(query: Knex.QueryBuilder) {
+    const subquery = this.knex(TableRevision)
+      .select(`${FieldNameRevision.uuid}`, `${FieldNameRevision.noteId}`)
+      .rowNumber('rn', function () {
+        void this.orderBy(FieldNameRevision.createdAt, 'desc').partitionBy(
+          FieldNameRevision.noteId,
+        );
+      });
     return query
       .select({
         primaryAlias: `${TableAlias}.${FieldNameAlias.alias}`,
@@ -264,10 +321,10 @@ export class ExploreService {
         `${TableNote}.${FieldNameNote.ownerId}`,
       )
       .join(
-        this.knex(TableRevision)
+        this.knex
           .select(`${FieldNameRevision.uuid}`, `${FieldNameRevision.noteId}`)
-          .max(`${FieldNameRevision.createdAt}`)
-          .groupBy(`${FieldNameRevision.noteId}`)
+          .from(subquery)
+          .where('rn', 1)
           .as('latest_revision'),
         function () {
           this.on(
