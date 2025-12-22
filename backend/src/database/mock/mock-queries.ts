@@ -103,7 +103,7 @@ export function mockQuery(
   tracker: Tracker,
   query: RegExp,
   returnValue: unknown = [],
-) {
+): void {
   console.debug(query);
   tracker.on[method](query).responseOnce(returnValue);
 }
