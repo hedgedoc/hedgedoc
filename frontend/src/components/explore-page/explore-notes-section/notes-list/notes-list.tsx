@@ -1,3 +1,4 @@
+'use client'
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
@@ -13,6 +14,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import equal from 'fast-deep-equal'
+import { Logger } from '../../../../utils/logger'
 
 export interface NotesListProps {
   mode: Mode
@@ -20,6 +22,8 @@ export interface NotesListProps {
   searchFilter: string | null
   typeFilter: NoteType | null
 }
+
+const logger = new Logger('NotesList')
 
 export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, typeFilter }) => {
   const [entries, setEntries] = useState<NoteExploreEntryInterface[]>([])
@@ -37,6 +41,9 @@ export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, 
         .then((data) => {
           if (data.length === 0) {
             setMoreDataAvailable(false)
+            if (replaceOldEntries) {
+              setEntries([])
+            }
             return
           }
           if (replaceOldEntries) {
@@ -67,6 +74,12 @@ export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, 
   // Update entries when filters change
   useEffect(() => {
     if (!equal(lastFilters.current, { mode, sort, searchFilter, typeFilter })) {
+      logger.debug('Filters changed, fetching first page of entries', {
+        mode,
+        sort,
+        searchFilter,
+        typeFilter
+      })
       lastPage.current = 0
       setMoreDataAvailable(true)
       fetchNextPage(true)

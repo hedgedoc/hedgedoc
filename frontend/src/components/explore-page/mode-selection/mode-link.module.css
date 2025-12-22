@@ -8,6 +8,7 @@
     text-decoration: underline;
     cursor: pointer;
     margin-right: 1rem;
+    font-size: 1.25rem;
 }
 
 .active {

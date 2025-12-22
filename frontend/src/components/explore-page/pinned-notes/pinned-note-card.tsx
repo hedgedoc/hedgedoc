@@ -12,26 +12,17 @@ import { NoteTypeIcon } from '../../common/note-type-icon/note-type-icon'
 import { UiIcon } from '../../common/icons/ui-icon'
 import Link from 'next/link'
 import { useTranslatedText } from '../../../hooks/common/use-translated-text'
-import { useRouter } from 'next/navigation'
 import { useUiNotifications } from '../../notifications/ui-notification-boundary'
-import { NoteTags } from '../note-tags/note-tags'
 import { formatChangedAt } from '../../../utils/format-date'
 import type { NoteExploreEntryInterface } from '@hedgedoc/commons'
 import { unpinNote } from '../../../redux/pinned-notes/methods'
+import { Trans } from 'react-i18next'
 
-export const PinnedNoteCard: React.FC<NoteExploreEntryInterface> = ({
-  title,
-  lastChangedAt,
-  type,
-  primaryAlias,
-  tags
-}) => {
+export const PinnedNoteCard: React.FC<NoteExploreEntryInterface> = ({ title, lastChangedAt, type, primaryAlias }) => {
   const { showErrorNotification } = useUiNotifications()
-  const router = useRouter()
-  const labelTag = useTranslatedText('explore.filters.byTag')
   const labelUnpinNote = useTranslatedText('explore.pinnedNotes.unpin')
   const fallbackUntitled = useTranslatedText('editor.untitledNote')
-  const lastVisitedString = useMemo(() => formatChangedAt(lastChangedAt), [lastChangedAt])
+  const lastChangedString = useMemo(() => formatChangedAt(lastChangedAt), [lastChangedAt])
 
   const onClickUnpin = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {
@@ -41,32 +32,26 @@ export const PinnedNoteCard: React.FC<NoteExploreEntryInterface> = ({
     [primaryAlias, showErrorNotification]
   )
 
-  const onClickTag = useCallback(
-    (tag: string) => {
-      return (event: MouseEvent<HTMLDivElement>) => {
-        event.preventDefault()
-        router.push(`?search=${tag}`)
-      }
-    },
-    [router]
-  )
-
   return (
     <Card className={`${styles.card}`} as={Link} href={`/n/${primaryAlias}`}>
       <Card.Body className={`${styles.cardBody}`}>
-        <div onClick={onClickUnpin} title={labelUnpinNote}>
-          <UiIcon icon={IconPinned} size={1.5} className={`${styles.bookmark}`} />
-          <div className={`${styles.star}`} />
-        </div>
-        <Card.Title className={`${styles.title}`}>
-          <NoteTypeIcon noteType={type} />
-          <span className={`${styles.titleText}`} title={title}>
-            {title !== '' ? title : <i className={'fst-italic'}>{fallbackUntitled}</i>}
+        <div className={'d-flex align-items-center'}>
+          <div onClick={onClickUnpin} title={labelUnpinNote}>
+            <UiIcon icon={IconPinned} size={1.5} className={`${styles.bookmark}`} />
+            <div className={`${styles.star}`} />
+          </div>
+          <span className={'me-2'}>
+            <NoteTypeIcon noteType={type} size={3} />
           </span>
-        </Card.Title>
-        <Card.Subtitle className='mb-2 text-muted'>{lastVisitedString}</Card.Subtitle>
-        <div>
-          <NoteTags tags={tags} onClickTag={onClickTag} hoverLabel={labelTag} />
+          <div className={'flex-grow-1'}>
+            <span className={`${styles.title} d-inline-block text-truncate`}>
+              {title !== '' ? title : <i className={'fst-italic'}>{fallbackUntitled}</i>}
+            </span>
+            <br />
+            <span className={'text-muted'}>
+              <Trans i18nKey={'explore.timestamps.lastUpdated'} values={{ timeAgo: lastChangedString }} />
+            </span>
+          </div>
         </div>
       </Card.Body>
     </Card>
