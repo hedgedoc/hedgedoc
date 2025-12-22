@@ -32,6 +32,9 @@ export const loadPinnedNotes = async (): Promise<void> => {
 export const pinNote = async (primaryAlias: string): Promise<void> => {
   try {
     const entry = await setPinnedState(primaryAlias, true)
+    if (!entry) {
+      throw new Error('Backend could not find pinned note')
+    }
     const action = pinnedNotesActionsCreator.addPinnedNote(entry)
     store.dispatch(action)
   } catch (error) {
@@ -47,8 +50,8 @@ export const pinNote = async (primaryAlias: string): Promise<void> => {
  */
 export const unpinNote = async (primaryAlias: string): Promise<void> => {
   try {
-    const entry = await setPinnedState(primaryAlias, false)
-    const action = pinnedNotesActionsCreator.removePinnedNote(entry)
+    await setPinnedState(primaryAlias, false)
+    const action = pinnedNotesActionsCreator.removePinnedNote(primaryAlias)
     store.dispatch(action)
   } catch (error) {
     logger.error('Failed to unpin note', error)
