@@ -18,6 +18,11 @@ export interface ExploreNotesSectionProps {
   mode: Mode
 }
 
+/**
+ * Renders the section that shows the notes of the explore page.
+ *
+ * @param mode The current mode of the explore page, for example to show public notes or own notes.
+ */
 export const ExploreNotesSection: React.FC<ExploreNotesSectionProps> = ({ mode }) => {
   const [searchFilter, setSearchFilter] = useUrlParamState<string | null>('search', null)
   const [sortMode, setSortMode] = useUrlParamState<SortMode>(

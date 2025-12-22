@@ -7,10 +7,10 @@
 import { DateTime } from 'luxon'
 
 /**
- * Creates a format for the changedAt timestamp
- *
+ * Formats a timestamp form a DateTime or ISO string as relative to the user's current time.
  *
  * @param changedAt the date as an ISO String or DateTime
+ * @return The formatted relative timestamp
  */
 export const formatChangedAt = (changedAt: string | DateTime): string => {
   if (typeof changedAt === 'string') {

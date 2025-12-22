@@ -14,13 +14,12 @@ import { PinnedNotes } from '../../../components/explore-page/pinned-notes/pinne
 import { loadPinnedNotes } from '../../../redux/pinned-notes/methods'
 import { useUiNotifications } from '../../../components/notifications/ui-notification-boundary'
 
+export type ExploreLayoutProps = PropsWithChildren
+
 /**
  * Layout for the login page with the intro content on the left and children on the right.
  * @param children The content to show on the right
  */
-
-export type ExploreLayoutProps = PropsWithChildren
-
 export default function ExploreLayout({ children }: ExploreLayoutProps) {
   const { showErrorNotification } = useUiNotifications()
   useEffect(() => {

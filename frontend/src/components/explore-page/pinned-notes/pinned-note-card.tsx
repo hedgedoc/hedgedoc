@@ -18,6 +18,14 @@ import type { NoteExploreEntryInterface } from '@hedgedoc/commons'
 import { unpinNote } from '../../../redux/pinned-notes/methods'
 import { Trans } from 'react-i18next'
 
+/**
+ * Renders a pinned note card.
+ *
+ * @param title The title of the note.
+ * @param lastChangedAt The last time the note was changed as ISO string
+ * @param type The type of the note, e.g. slide or document.
+ * @param primaryAlias The primary alias of the note.
+ */
 export const PinnedNoteCard: React.FC<NoteExploreEntryInterface> = ({ title, lastChangedAt, type, primaryAlias }) => {
   const { showErrorNotification } = useUiNotifications()
   const labelUnpinNote = useTranslatedText('explore.pinnedNotes.unpin')

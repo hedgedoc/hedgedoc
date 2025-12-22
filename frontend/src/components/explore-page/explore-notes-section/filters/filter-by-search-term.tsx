@@ -12,6 +12,12 @@ export interface FilterBySearchTermProps {
   onChange: (value: string | null) => void
 }
 
+/**
+ * Renders the search input to filter the note list using a search term.
+ *
+ * @param value The current search term. If null, the search input is empty.
+ * @param onChange Callback for when the search term changes. The new search term is passed as a parameter.
+ */
 export const FilterBySearchTerm: React.FC<FilterBySearchTermProps> = ({ value, onChange }) => {
   const onInputSearchTerm = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
