@@ -87,3 +87,23 @@ export function mockDelete(
   );
   tracker.on.delete(deleteRegex).responseOnce(numberDeletedEntries);
 }
+
+/**
+ * Pre-registers a mocked SELECT SQL query for the tracker db.
+ * When the tested method runs a matching query, the pre-registered response
+ * value will be returned and the query will be stored in the tracker's history.
+ *
+ * @param method The SQL method used for the query, e.g. 'select' or 'insert'
+ * @param tracker The mock db tracker
+ * @param query A regex matching the query to mock
+ * @param returnValue The response value to return for the query
+ */
+export function mockQuery(
+  method: 'select' | 'insert' | 'update' | 'delete',
+  tracker: Tracker,
+  query: RegExp,
+  returnValue: unknown = [],
+) {
+  console.debug(query);
+  tracker.on[method](query).responseOnce(returnValue);
+}

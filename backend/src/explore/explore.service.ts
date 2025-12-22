@@ -34,7 +34,7 @@ import { NoteExploreEntryDto } from '../dtos/note-explore-entry.dto';
 import { GroupsService } from '../groups/groups.service';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 
-const ENTRIES_PER_PAGE_LIMIT = 20;
+export const ENTRIES_PER_PAGE_LIMIT = 20;
 
 interface QueryResult {
   primaryAlias: string;
