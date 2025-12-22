@@ -8,11 +8,27 @@ import { useEffect, useRef } from 'react'
 import { useCallback, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 
+/**
+ * Extracts the value of a specified query parameter from the current page's URL.
+ * If the parameter is not found, it returns `null`.
+ *
+ * @param paramName The name of the query parameter to extract.
+ * @returns The value of the query parameter if found, or `null` if not present.
+ */
 const extractSearchParam = (paramName: string): string | null => {
   const searchParams = new URLSearchParams(window.location.search)
   return searchParams.get(paramName)
 }
 
+/**
+ * Manages a state tied to a URL search parameter.
+ * This hook synchronizes the state with the given parameter in the URL's query string and allows updates
+ * to both the local state and the URL simultaneously. It has the same signature as `useState`.
+ *
+ * @param paramName The name of the URL search parameter to synchronize with.
+ * @param defaultValue The default value for the state if the parameter is not found in the URL. Can be a value or a function returning a value.
+ * @returns A tuple containing the current state value and a function to update it.
+ */
 export const useUrlParamState = <T extends string | null = string>(
   paramName: string,
   defaultValue: T | (() => T)

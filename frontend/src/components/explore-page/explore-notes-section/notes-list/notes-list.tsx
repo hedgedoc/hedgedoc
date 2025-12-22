@@ -25,6 +25,14 @@ export interface NotesListProps {
 
 const logger = new Logger('NotesList')
 
+/**
+ * Renders the infinite scroll list of notes matching the given filter criteria.
+ *
+ * @param mode The access mode to use, for example whether to show only recently visited notes or all public notes.
+ * @param sort The sorting mode to use, for example whether to sort by last changed date or by title.
+ * @param searchFilter An optional search filter to apply, e.g. to filter for notes containing a specific string.
+ * @param typeFilter An optional note type filter to apply, e.g. to show only documents or only slides.
+ */
 export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, typeFilter }) => {
   const [entries, setEntries] = useState<NoteExploreEntryInterface[]>([])
   const { showErrorNotification } = useUiNotifications()

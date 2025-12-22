@@ -27,6 +27,19 @@ interface NoteListEntryProps extends NoteExploreEntryInterface {
   showLastVisitedTime?: boolean
 }
 
+/**
+ * Renders a single note entry in the notes list.
+ *
+ * @param primaryAlias The primary alias of the note.
+ * @param title The title of the note.
+ * @param tags A list of tags of the note.
+ * @param type The type of the note, e.g. slide or document.
+ * @param lastChangedAt ISO string of the last time the note was changed.
+ * @param lastVisitedAt ISO string of the last time the note was visited, can be null if not visited yet.
+ * @param owner The username of the owner of the note, can be null if the note is owned by a guest.
+ * @param isPinned Whether the note is pinned to the current user's explore page or not.
+ * @param showLastVisitedTime Whether to show the last visited time instead of the last changed time. Defaults to false.
+ */
 export const NoteListEntry: React.FC<NoteListEntryProps> = ({
   primaryAlias,
   title,

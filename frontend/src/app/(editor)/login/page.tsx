@@ -16,6 +16,9 @@ import { GuestCard } from '../../../components/login-page/guest/guest-card'
 import { useIsLoggedIn } from '../../../hooks/common/use-is-logged-in'
 import { LoginLayout } from '../../../components/layout/login-layout'
 
+/**
+ * Renders the login page with different login methods.
+ */
 const LoginPage: NextPage = () => {
   const userLoggedIn = useIsLoggedIn()
 

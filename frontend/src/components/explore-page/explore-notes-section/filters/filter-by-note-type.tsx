@@ -18,6 +18,12 @@ export interface FilterByNoteTypeProps {
   onChange: (value: NoteType | null) => void
 }
 
+/**
+ * Renders the dropdown button for the selection menu of the note type filter
+ *
+ * @param value The currently selected note type. If null, the dropdown button shows the initial label
+ * @param onChange Callback for the change event of the dropdown button. The new note type is passed as a parameter.
+ */
 export const FilterByNoteType: React.FC<FilterByNoteTypeProps> = ({ value, onChange }) => {
   useTranslation()
 

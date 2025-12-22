@@ -20,6 +20,13 @@ interface CaretProps {
   onClick?: () => void
 }
 
+/**
+ * Renders the caret icon which is used for scroll-clicking through the list of pinned notes.
+ *
+ * @param active true if the caret is active (clickable), false otherwise
+ * @param left true if the caret points to the left, false if it points to the right
+ * @param onClick Handler for the click event
+ */
 export const Caret: React.FC<CaretProps> = ({ active, left, onClick }) => {
   const activeIcon = useMemo(() => (left ? IconCaretLeft : IconCaretRight), [left])
   const inactiveIcon = useMemo(() => (left ? IconCaretLeftEmpty : IconCaretRightEmpty), [left])
