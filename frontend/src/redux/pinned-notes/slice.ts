@@ -22,9 +22,9 @@ const pinnedNotesSlice = createSlice({
         state[action.payload.primaryAlias] = action.payload
       }
     },
-    removePinnedNote: (state, action: PayloadAction<NoteExploreEntryInterface>) => {
-      if (state[action.payload.primaryAlias] !== undefined) {
-        delete state[action.payload.primaryAlias]
+    removePinnedNote: (state, action: PayloadAction<string>) => {
+      if (state[action.payload] !== undefined) {
+        delete state[action.payload]
       }
     }
   }
