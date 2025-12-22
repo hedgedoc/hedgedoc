@@ -46,7 +46,7 @@ export class ExploreController {
   @OpenApi(200)
   getMyNotes(
     @RequestUserId() userId: number,
-    @Query('page') page: number,
+    @Query('page') page = 1,
     @Query('sort') sort?: OptionalSortMode,
     @Query('search') search?: string,
     @Query('type') type?: OptionalNoteType,
@@ -65,7 +65,7 @@ export class ExploreController {
   @OpenApi(200)
   getSharedNotes(
     @RequestUserId() userId: number,
-    @Query('page') page: number,
+    @Query('page') page = 1,
     @Query('sort') sort?: OptionalSortMode,
     @Query('search') search?: string,
     @Query('type') type?: OptionalNoteType,
@@ -83,7 +83,7 @@ export class ExploreController {
   @Get('public')
   @OpenApi(200)
   getPublicNotes(
-    @Query('page') page: number,
+    @Query('page') page = 1,
     @Query('sort') sort?: OptionalSortMode,
     @Query('search') search?: string,
     @Query('type') type?: OptionalNoteType,
@@ -109,7 +109,7 @@ export class ExploreController {
   @OpenApi(200)
   getRecentlyVisitedNotes(
     @RequestUserId() userId: number,
-    @Query('page') page: number,
+    @Query('page') page = 1,
     @Query('sort') sort?: OptionalSortMode,
     @Query('search') search?: string,
     @Query('type') type?: OptionalNoteType,
@@ -161,7 +161,7 @@ export class ExploreController {
   }
 
   private ensurePageNumberIsValid(page: number): void {
-    if (page < 1) {
+    if (page < 1 || Number.isNaN(page)) {
       throw new BadRequestException('Page number must be greater than 0');
     }
   }
