@@ -19,7 +19,9 @@
       "empty": "You don't have any pinned notes yet.",
       "pinError": "Could not pin note {{name}}.",
       "unpinError": "Could not unpin note {{name}}.",
-      "loadingError": "Could not load pinned notes."
+      "loadingError": "Could not load pinned notes.",
+      "isPinned": "Pinned on explore page",
+      "isUnpinned": "Not pinned on explore page"
     },
     "modes": {
       "my": "My notes",

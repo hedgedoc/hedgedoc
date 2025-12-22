@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { PropsWithChildren } from 'react'
-import React, { useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { Container } from 'react-bootstrap'
 import { Welcome } from '../../../components/explore-page/welcome'
 import { ModeSelection } from '../../../components/explore-page/mode-selection/mode-selection'
@@ -28,11 +28,15 @@ export default function ExploreLayout({ children }: ExploreLayoutProps) {
   }, [showErrorNotification])
 
   return (
-    <Container>
-      <Welcome />
+    <Fragment>
+      <Container>
+        <Welcome />
+      </Container>
       <PinnedNotes />
-      <ModeSelection />
-      {children}
-    </Container>
+      <Container>
+        <ModeSelection />
+        {children}
+      </Container>
+    </Fragment>
   )
 }

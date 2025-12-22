@@ -54,7 +54,7 @@ export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ class
       hide={hide}
       onClick={onPinClicked}
       className={concatCssClasses(className, { [styles['highlighted']]: isPinned })}>
-      <Trans i18nKey={isPinned ? 'editor.documentBar.pinnedToHistory' : 'editor.documentBar.pinNoteToHistory'} />
+      <Trans i18nKey={`explore.pinnedNotes.is${isPinned ? 'Pinned' : 'Unpinned'}`} />
     </SidebarButton>
   )
 }
