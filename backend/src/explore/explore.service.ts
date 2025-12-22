@@ -62,32 +62,6 @@ export class ExploreService {
     this.logger.setContext(ExploreService.name);
   }
 
-  async getPublicNoteExploreEntries(
-    page: number,
-    noteType?: NoteType | '',
-    sortBy?: OptionalSortMode,
-    search?: string,
-  ): Promise<NoteExploreEntryDto[]> {
-    const everyoneGroupId = await this.groupsService.getGroupIdByName(
-      SpecialGroup.EVERYONE,
-    );
-    const queryBase = this.knex(TableNoteGroupPermission).join(
-      TableNote,
-      `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.noteId}`,
-      `${TableNote}.${FieldNameNote.id}`,
-    );
-    let query = this.applyCommonQuery(queryBase);
-    query = query.andWhere(
-      `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.groupId}`,
-      everyoneGroupId,
-    );
-    query = this.applyFiltersToQuery(query, noteType, search);
-    query = this.applySortingToQuery(query, sortBy);
-    query = this.applyPaginationToQuery(query, page);
-    const results = (await query) as QueryResult[];
-    return this.transformQueryResultIntoDtos(results);
-  }
-
   async getMyNoteExploreEntries(
     userId: number,
     page: number,
@@ -129,6 +103,32 @@ export class ExploreService {
     return this.transformQueryResultIntoDtos(results);
   }
 
+  async getPublicNoteExploreEntries(
+    page: number,
+    noteType?: NoteType | '',
+    sortBy?: OptionalSortMode,
+    search?: string,
+  ): Promise<NoteExploreEntryDto[]> {
+    const everyoneGroupId = await this.groupsService.getGroupIdByName(
+      SpecialGroup.EVERYONE,
+    );
+    const queryBase = this.knex(TableNoteGroupPermission).join(
+      TableNote,
+      `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.noteId}`,
+      `${TableNote}.${FieldNameNote.id}`,
+    );
+    let query = this.applyCommonQuery(queryBase);
+    query = query.andWhere(
+      `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.groupId}`,
+      everyoneGroupId,
+    );
+    query = this.applyFiltersToQuery(query, noteType, search);
+    query = this.applySortingToQuery(query, sortBy);
+    query = this.applyPaginationToQuery(query, page);
+    const results = (await query) as QueryResult[];
+    return this.transformQueryResultIntoDtos(results);
+  }
+
   async getMyPinnedNoteExploreEntries(
     userId: number,
   ): Promise<NoteExploreEntryDto[]> {
@@ -154,11 +154,7 @@ export class ExploreService {
     sortBy?: OptionalSortMode,
     search?: string,
   ): Promise<NoteExploreEntryDto[]> {
-    const queryBase = this.knex(TableVisitedNote).join(
-      TableNote,
-      `${TableVisitedNote}.${FieldNameVisitedNote.noteId}`,
-      `${TableNote}.${FieldNameNote.id}`,
-    );
+    const queryBase = this.knex(TableNote);
     let query = this.applyCommonQuery(queryBase);
     query = query.select({
       lastVisitedAt: `${TableVisitedNote}.${FieldNameVisitedNote.visitedAt}`,
@@ -238,6 +234,11 @@ export class ExploreService {
         TableUser,
         `${TableUser}.${FieldNameUser.id}`,
         `${TableNote}.${FieldNameNote.ownerId}`,
+      )
+      .leftJoin(
+        TableVisitedNote,
+        `${TableVisitedNote}.${FieldNameVisitedNote.noteId}`,
+        `${TableNote}.${FieldNameNote.id}`,
       )
       .join(
         this.knex(TableRevision)
