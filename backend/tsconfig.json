@@ -1,9 +1,7 @@
 {
-  "extends": [
-    "@tsconfig/node18/tsconfig.json"
-  ],
+  "extends": ["@tsconfig/node18/tsconfig.json"],
   "compilerOptions": {
-    "declaration": true,
+    "declaration": false,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
