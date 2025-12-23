@@ -6,7 +6,7 @@
   "private": true,
   "license": "AGPL-3.0",
   "scripts": {
-    "build": "rimraf dist && nest build",
+    "build": "./build.sh",
     "format": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\"",
     "format:fix": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "rimraf dist && nest start",
