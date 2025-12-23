@@ -14,7 +14,6 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import equal from 'fast-deep-equal'
-import { Logger } from '../../../../utils/logger'
 
 export interface NotesListProps {
   mode: Mode
@@ -22,8 +21,6 @@ export interface NotesListProps {
   searchFilter: string | null
   typeFilter: NoteType | null
 }
-
-const logger = new Logger('NotesList')
 
 /**
  * Renders the infinite scroll list of notes matching the given filter criteria.
@@ -65,6 +62,12 @@ export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, 
     [mode, sort, searchFilter, typeFilter, showErrorNotification]
   )
 
+  const updateExplorePage = useCallback(() => {
+    lastPage.current = 0
+    setMoreDataAvailable(true)
+    fetchNextPage(true)
+  }, [setMoreDataAvailable, fetchNextPage])
+
   const noteEntries = useMemo(() => {
     return entries.map((note) => {
       const isPinned = pinnedNotes[note.primaryAlias] !== undefined
@@ -74,25 +77,18 @@ export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, 
           key={note.primaryAlias}
           isPinned={isPinned}
           showLastVisitedTime={mode === Mode.VISITED}
+          updateExplorePage={updateExplorePage}
         />
       )
     })
-  }, [entries, mode, pinnedNotes])
+  }, [entries, mode, pinnedNotes, updateExplorePage])
 
   // Update entries when filters change
   useEffect(() => {
     if (!equal(lastFilters.current, { mode, sort, searchFilter, typeFilter })) {
-      logger.debug('Filters changed, fetching first page of entries', {
-        mode,
-        sort,
-        searchFilter,
-        typeFilter
-      })
-      lastPage.current = 0
-      setMoreDataAvailable(true)
-      fetchNextPage(true)
+      updateExplorePage()
     }
-  }, [fetchNextPage, mode, sort, searchFilter, typeFilter])
+  }, [updateExplorePage, mode, sort, searchFilter, typeFilter])
 
   return (
     <InfiniteScroll

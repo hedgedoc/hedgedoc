@@ -25,6 +25,7 @@ import { PinNoteMenuEntry } from './pin-note-menu-entry'
 interface NoteListEntryProps extends NoteExploreEntryInterface {
   isPinned: boolean
   showLastVisitedTime?: boolean
+  updateExplorePage: () => void
 }
 
 /**
@@ -39,6 +40,7 @@ interface NoteListEntryProps extends NoteExploreEntryInterface {
  * @param owner The username of the owner of the note, can be null if the note is owned by a guest.
  * @param isPinned Whether the note is pinned to the current user's explore page or not.
  * @param showLastVisitedTime Whether to show the last visited time instead of the last changed time. Defaults to false.
+ * @param updateExplorePage Function to update the explore page this entry is used in.
  */
 export const NoteListEntry: React.FC<NoteListEntryProps> = ({
   primaryAlias,
@@ -49,7 +51,8 @@ export const NoteListEntry: React.FC<NoteListEntryProps> = ({
   lastVisitedAt,
   owner,
   isPinned,
-  showLastVisitedTime
+  showLastVisitedTime,
+  updateExplorePage
 }) => {
   useTranslation()
   const { showErrorNotification } = useUiNotifications()
@@ -57,9 +60,11 @@ export const NoteListEntry: React.FC<NoteListEntryProps> = ({
   const fallbackUntitled = useTranslatedText('editor.untitledNote')
   const onClickDeleteNote = useCallback(
     (keepMedia: boolean) => {
-      deleteNote(primaryAlias, keepMedia).catch(showErrorNotification('explore.notesList.deleteNoteError', { title }))
+      deleteNote(primaryAlias, keepMedia)
+        .then(updateExplorePage)
+        .catch(showErrorNotification('explore.notesList.deleteNoteError', { title }))
     },
-    [title, primaryAlias, showErrorNotification]
+    [title, primaryAlias, showErrorNotification, updateExplorePage]
   )
 
   const relativeTime = useMemo(() => {

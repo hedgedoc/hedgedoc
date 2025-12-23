@@ -11,10 +11,7 @@ import { Caret } from './caret'
 import styles from './pinned-notes.module.css'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { Container } from 'react-bootstrap'
-import { Logger } from '../../../utils/logger'
 import { concatCssClasses } from '../../../utils/concat-css-classes'
-
-const logger = new Logger('PinnedNotes')
 
 /**
  * Renders the section for the user's pinned notes on the explore page.
@@ -56,23 +53,10 @@ export const PinnedNotes: React.FC = () => {
 
   useEffect(() => {
     if (!scrollboxRef.current) {
-      logger.debug('scrollboxRef not yet initialized')
       return
     }
-    logger.debug('scrollboxRef initialized')
     const scrollbox = scrollboxRef.current
     const scrollHandler = () => {
-      logger.debug(
-        'scrollHandler event fired:',
-        'scrollLeft',
-        scrollbox.scrollLeft,
-        'clientWidth',
-        scrollbox.clientWidth,
-        'scrollWidth',
-        scrollbox.scrollWidth,
-        'condition met',
-        Math.ceil(scrollbox.scrollLeft + scrollbox.clientWidth) < scrollbox.scrollWidth
-      )
       setEnableScrollLeft(scrollbox.scrollLeft > 0)
       setEnableScrollRight(Math.ceil(scrollbox.scrollLeft + scrollbox.clientWidth) < scrollbox.scrollWidth)
     }
