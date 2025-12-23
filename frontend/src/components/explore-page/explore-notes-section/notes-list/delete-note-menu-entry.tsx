@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { Fragment } from 'react'
+import React, { Fragment, useCallback } from 'react'
 import { Trash as IconTrash } from 'react-bootstrap-icons'
 import { Dropdown } from 'react-bootstrap'
 import { useBooleanState } from '../../../../hooks/common/use-boolean-state'
@@ -26,6 +26,13 @@ export interface DeleteNoteMenuEntryProps {
  */
 export const DeleteNoteMenuEntry: React.FC<DeleteNoteMenuEntryProps> = ({ noteTitle, onConfirm, isOwner }) => {
   const [isModalVisible, showModal, hideModal] = useBooleanState()
+  const onConfirmAndHide = useCallback(
+    (keepMedia: boolean) => {
+      onConfirm(keepMedia)
+      hideModal()
+    },
+    [onConfirm, hideModal]
+  )
   return (
     <Fragment>
       <Dropdown.Item onClick={showModal} disabled={!isOwner}>
@@ -34,7 +41,7 @@ export const DeleteNoteMenuEntry: React.FC<DeleteNoteMenuEntryProps> = ({ noteTi
       </Dropdown.Item>
       <DeleteNoteModal
         optionalNoteTitle={noteTitle}
-        onConfirm={onConfirm}
+        onConfirm={onConfirmAndHide}
         show={isModalVisible}
         onHide={hideModal}
         overrideIsOwner={isOwner}
