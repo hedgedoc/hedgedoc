@@ -2859,7 +2859,7 @@ __metadata:
     "@nestjs/websockets": "npm:10.4.20"
     "@node-rs/argon2": "npm:2.0.2"
     "@trivago/prettier-plugin-sort-imports": "npm:6.0.0"
-    "@tsconfig/node20": "npm:20.1.0"
+    "@tsconfig/node24": "npm:24.0.3"
     "@types/better-sqlite3": "npm:7.6.13"
     "@types/cli-color": "npm:2.0.6"
     "@types/cookie": "npm:1.0.0"
@@ -2870,7 +2870,7 @@ __metadata:
     "@types/jest": "npm:29.5.14"
     "@types/luxon": "npm:3.7.1"
     "@types/markdown-it": "npm:13.0.8"
-    "@types/node": "npm:20.19.28"
+    "@types/node": "npm:24.10.7"
     "@types/node-fetch": "npm:2.6.13"
     "@types/pg": "npm:8.15.6"
     "@types/source-map-support": "npm:0.5.10"
@@ -2963,7 +2963,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/database@workspace:database"
   dependencies:
-    "@types/node": "npm:20.19.28"
+    "@types/node": "npm:24.10.7"
     "@typescript-eslint/eslint-plugin": "npm:8.14.0"
     "@typescript-eslint/parser": "npm:8.14.0"
     eslint: "npm:8.57.1"
@@ -3030,7 +3030,7 @@ __metadata:
     "@types/markdown-it": "npm:13.0.8"
     "@types/markdown-it-container": "npm:2.0.9"
     "@types/markdown-it-plantuml": "npm:1.4.4"
-    "@types/node": "npm:20.19.28"
+    "@types/node": "npm:24.10.7"
     "@types/react": "npm:18.3.27"
     "@types/react-dom": "npm:18.3.7"
     "@types/ws": "npm:8.18.1"
@@ -5502,10 +5502,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/node20@npm:20.1.0":
-  version: 20.1.0
-  resolution: "@tsconfig/node20@npm:20.1.0"
-  checksum: 10c0/364f4adba8d0bb291454962087f49c55577ec2b401bacee42417b8b196728e5228b8beb1944f89f0fdcb7e6ec1f730bc6be82ebc02e042a8c82cd245b8a33483
+"@tsconfig/node24@npm:24.0.3":
+  version: 24.0.3
+  resolution: "@tsconfig/node24@npm:24.0.3"
+  checksum: 10c0/68068b503774450d533dda769785356c5722bdc6a3333646fcbcb265e02aafb6d0784619ed85de6d62414df20483428b25bf3d608955ca40b085fb1f12cc26c4
   languageName: node
   linkType: hard
 
@@ -6281,12 +6281,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.19.28":
-  version: 20.19.28
-  resolution: "@types/node@npm:20.19.28"
+"@types/node@npm:24.10.7":
+  version: 24.10.7
+  resolution: "@types/node@npm:24.10.7"
   dependencies:
-    undici-types: "npm:~6.21.0"
-  checksum: 10c0/aaa2de8570bfafdb9c160c1dbe3ecd7d9b2ccdc496ab6b0f24ccd5023aabe6f8c7fd02d7090185c2912052174f7cffef4ace80edd7d2a433200429c7a0a4869d
+    undici-types: "npm:~7.16.0"
+  checksum: 10c0/dcc1b8caf16c7b54dfccbe5c23cf4156e924cebcd9ab0a00147c841279f8151a10888c76fd82dda76e0a849aaf5a57097ee2b156308a355959900c1e647d7e61
   languageName: node
   linkType: hard
 
@@ -20783,10 +20783,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.21.0":
-  version: 6.21.0
-  resolution: "undici-types@npm:6.21.0"
-  checksum: 10c0/c01ed51829b10aa72fc3ce64b747f8e74ae9b60eafa19a7b46ef624403508a54c526ffab06a14a26b3120d055e1104d7abe7c9017e83ced038ea5cf52f8d5e04
+"undici-types@npm:~7.16.0":
+  version: 7.16.0
+  resolution: "undici-types@npm:7.16.0"
+  checksum: 10c0/3033e2f2b5c9f1504bdc5934646cb54e37ecaca0f9249c983f7b1fc2e87c6d18399ebb05dc7fd5419e02b2e915f734d872a65da2e3eeed1813951c427d33cc9a
   languageName: node
   linkType: hard
 

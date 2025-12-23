@@ -16,7 +16,7 @@ permissions:
   contents: read
 
 env:
-  NODEJS_VERSION: 20
+  NODEJS_VERSION: 24
 
 jobs:
   lint:
