@@ -162,10 +162,12 @@ export class ExploreService {
       `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.noteId}`,
     );
     let query = this.applyCommonQuery(queryBase);
-    query = query.andWhere(
-      `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.groupId}`,
-      everyoneGroupId,
-    );
+    query = query
+      .andWhere(
+        `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.groupId}`,
+        everyoneGroupId,
+      )
+      .andWhere(`${TableNote}.${FieldNameNote.publiclyVisible}`, true);
     if (
       sortBy === SortMode.LAST_VISITED_ASC ||
       sortBy === SortMode.LAST_VISITED_DESC

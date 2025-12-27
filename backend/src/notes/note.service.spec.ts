@@ -83,6 +83,7 @@ describe('NoteService', () => {
   const mockTags = ['tag1', 'tag2'];
   const mockPermissions = {
     owner: mockUsername,
+    publiclyVisible: false,
     sharedToUsers: [],
     sharedToGroups: [],
   };
@@ -172,14 +173,24 @@ describe('NoteService', () => {
       mockInsert(
         tracker,
         TableNote,
-        [FieldNameNote.createdAt, FieldNameNote.ownerId, FieldNameNote.version],
+        [
+          FieldNameNote.createdAt,
+          FieldNameNote.ownerId,
+          FieldNameNote.publiclyVisible,
+          FieldNameNote.version,
+        ],
         [],
       );
       await expect(
         service.createNote(mockNoteContent, mockOwnerUserId, mockAliasCustom),
       ).rejects.toThrow(GenericDBError);
       expectBindings(tracker, 'insert', [
-        [dateTimeToDB(now), mockOwnerUserId, 2],
+        [
+          dateTimeToDB(now),
+          mockOwnerUserId,
+          noteMockConfig.permissions.default.publiclyVisible,
+          2,
+        ],
       ]);
     });
 
@@ -246,6 +257,7 @@ describe('NoteService', () => {
             [
               FieldNameNote.createdAt,
               FieldNameNote.ownerId,
+              FieldNameNote.publiclyVisible,
               FieldNameNote.version,
             ],
             [{ [FieldNameNote.id]: mockNoteId }],
@@ -260,7 +272,12 @@ describe('NoteService', () => {
           );
           expect(result).toBe(mockNoteId);
           expectBindings(tracker, 'insert', [
-            [dateTimeToDB(now), mockOwnerUserId, 2],
+            [
+              dateTimeToDB(now),
+              mockOwnerUserId,
+              noteMockConfig.permissions.default.publiclyVisible,
+              2,
+            ],
           ]);
         });
 

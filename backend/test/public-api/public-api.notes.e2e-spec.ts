@@ -415,7 +415,18 @@ describe('Notes', () => {
       expect(typeof response.body.createdAt).toEqual('string');
       expect(response.body.editedBy).toEqual([username1]);
       expect(response.body.permissions.owner).toEqual(username1);
+      expect(response.body.permissions.publiclyVisible).toEqual(false);
       expect(response.body.permissions.sharedToUsers).toEqual([]);
+      expect(response.body.permissions.sharedToGroups).toEqual([
+        {
+          groupName: SpecialGroup.EVERYONE,
+          canEdit: false,
+        },
+        {
+          groupName: SpecialGroup.LOGGED_IN,
+          canEdit: true,
+        },
+      ]);
       expect(response.body.tags).toEqual([]);
       expect(typeof response.body.updatedAt).toEqual('string');
       expect(typeof response.body.lastUpdatedBy).toEqual('string');
@@ -483,6 +494,7 @@ describe('Notes', () => {
         .expect('Content-Type', /json/)
         .expect(200);
       expect(permissions.body.owner).toBe(username1);
+      expect(permissions.body.publiclyVisible).toBe(false);
       expect(new Set(permissions.body.sharedToUsers)).toEqual(new Set([]));
       expect(new Set(permissions.body.sharedToGroups)).toEqual(
         new Set([
@@ -921,6 +933,80 @@ describe('Notes', () => {
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
         .send({
           newOwner: username2,
+        })
+        .expect('Content-Type', /json/)
+        .expect(403);
+    });
+  });
+
+  describe(`PUT ${PUBLIC_API_PREFIX}/notes/{:noteAlias}/metadata/permissions/visibility`, () => {
+    it('changes visibility of a note', async () => {
+      const permissionsDtoBefore =
+        await testSetup.permissionsService.getPermissionsDtoForNote(
+          testSetup.ownedNoteIds[0],
+        );
+      expect(permissionsDtoBefore.publiclyVisible).toEqual(false);
+
+      await agent
+        .put(
+          `${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/visibility`,
+        )
+        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
+        .send({
+          newPubliclyVisible: true,
+        })
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      const permissionsDtoAfter =
+        await testSetup.permissionsService.getPermissionsDtoForNote(
+          testSetup.ownedNoteIds[0],
+        );
+      expect(permissionsDtoAfter.publiclyVisible).toEqual(true);
+    });
+    it('errors with a forbidden alias', async () => {
+      await agent
+        .put(
+          `${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/visibility`,
+        )
+        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
+        .send({
+          newPubliclyVisible: true,
+        })
+        .expect('Content-Type', /json/)
+        .expect(403);
+    });
+    it('errors with non-existing alias', async () => {
+      await agent
+        .put(
+          `${PUBLIC_API_PREFIX}/notes/i_dont_exist/metadata/permissions/visibility`,
+        )
+        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
+        .send({
+          newPubliclyVisible: true,
+        })
+        .expect('Content-Type', /json/)
+        .expect(404);
+    });
+    it('errors if no token is provided', async () => {
+      await agent
+        .put(
+          `${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/visibility`,
+        )
+        .send({
+          newPubliclyVisible: true,
+        })
+        .expect('Content-Type', /json/)
+        .expect(403);
+    });
+    it("errors when user can't access note", async () => {
+      await agent
+        .put(
+          `${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/visibility`,
+        )
+        .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
+        .send({
+          newPubliclyVisible: true,
         })
         .expect('Content-Type', /json/)
         .expect(403);

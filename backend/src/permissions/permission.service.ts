@@ -11,12 +11,14 @@ import {
   FieldNameNoteGroupPermission,
   FieldNameNoteUserPermission,
   FieldNameUser,
+  Note,
   TableGroup,
   TableMediaUpload,
   TableNote,
   TableNoteGroupPermission,
   TableNoteUserPermission,
   TableUser,
+  User,
 } from '@hedgedoc/database';
 import { Inject, Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
@@ -400,6 +402,27 @@ export class PermissionService {
   }
 
   /**
+   * Updates if a note is publicly visible or not
+   *
+   * @param noteId the id of note to update
+   * @param newPublicVisible the new state of the note
+   * @throws NotInDBError if note does not exist
+   */
+  public async changePubliclyVisible(
+    noteId: number,
+    newPublicVisible: boolean,
+  ): Promise<void> {
+    const result = await this.knex(TableNote)
+      .update({
+        [FieldNameNote.publiclyVisible]: newPublicVisible,
+      })
+      .where(FieldNameNote.id, noteId);
+    if (result !== 1) {
+      throw new NotInDBError('The note does not exist');
+    }
+  }
+
+  /**
    * Gets the permissions for a note
    *
    * @param noteId the id of the note
@@ -423,15 +446,16 @@ export class PermissionService {
     noteId: number,
     transaction: Knex,
   ): Promise<NotePermissionsDto> {
-    const owner = await transaction(TableNote)
+    const metadata = await transaction(TableNote)
       .join(
         TableUser,
         `${TableUser}.${FieldNameUser.id}`,
         `${TableNote}.${FieldNameNote.ownerId}`,
       )
-      .select<{
-        [FieldNameUser.username]: string;
-      }>(`${TableUser}.${FieldNameUser.username}`)
+      .select<
+        Pick<User, FieldNameUser.username> &
+          Pick<Note, FieldNameNote.publiclyVisible>
+      >(`${TableUser}.${FieldNameUser.username}`, `${TableNote}.${FieldNameNote.publiclyVisible}`)
       .where(`${TableNote}.${FieldNameNote.id}`, noteId)
       .first();
 
@@ -475,7 +499,7 @@ export class PermissionService {
         noteId,
       );
 
-    if (owner === undefined) {
+    if (metadata === undefined) {
       throw new GenericDBError(
         'Invalid database state. This should not happen.',
         this.logger.getContext(),
@@ -484,7 +508,8 @@ export class PermissionService {
     }
 
     return NotePermissionsDto.create({
-      owner: owner[FieldNameUser.username],
+      owner: metadata[FieldNameUser.username],
+      publiclyVisible: Boolean(metadata[FieldNameNote.publiclyVisible]),
       sharedToUsers: userPermissions.map((userPermission) => ({
         username: userPermission[FieldNameUser.username],
         canEdit: Boolean(userPermission[FieldNameNoteUserPermission.canEdit]),

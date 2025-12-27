@@ -336,6 +336,30 @@ export class NotesController {
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
+  @RequirePermission(PermissionLevel.FULL)
+  @Put(':noteAlias/metadata/permissions/visibility')
+  @OpenApi(
+    {
+      code: 200,
+      description: 'Changes the owner of the note',
+      schema: NoteSchema,
+    },
+    403,
+    404,
+  )
+  async change(
+    @RequestNoteId() noteId: number,
+    @Body('newPubliclyVisible') newPubliclyVisible: boolean,
+  ): Promise<NoteMetadataDto> {
+    await this.permissionService.changePubliclyVisible(
+      noteId,
+      newPubliclyVisible,
+    );
+
+    return await this.noteService.toNoteMetadataDto(noteId);
+  }
+
+  @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.READ)
   @Get(':noteAlias/revisions')
   @OpenApi(
