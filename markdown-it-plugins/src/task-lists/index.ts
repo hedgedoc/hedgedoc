@@ -9,7 +9,7 @@
 // https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments
 // https://github.com/blog/1825-task-lists-in-all-markdown-documents
 
-import MarkdownIt from 'markdown-it/lib'
+import MarkdownIt from 'markdown-it/lib/index.js'
 import StateCore from 'markdown-it/lib/rules_core/state_core.js'
 import Token from 'markdown-it/lib/token.js'
 
