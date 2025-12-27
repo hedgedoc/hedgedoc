@@ -20,6 +20,7 @@ describe('noteConfig', () => {
   const wrongDefaultPermission = 'wrong';
   const retentionDays = 30;
   const persistInteval = 15;
+  const publiclyVisible = true;
 
   describe('correctly parses config', () => {
     it('when given correct and complete environment variables', () => {
@@ -32,6 +33,8 @@ describe('noteConfig', () => {
             PermissionLevelNames[PermissionLevel.WRITE],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
             PermissionLevelNames[PermissionLevel.WRITE],
+          HD_NOTE_PERMISSIONS_DEFAULT_PUBLICLY_VISIBLE:
+            publiclyVisible.toString(),
           HD_NOTE_REVISION_RETENTION_DAYS: retentionDays.toString(),
           HD_NOTE_PERSIST_INTERVAL: persistInteval.toString(),
           /* eslint-enable @typescript-eslint/naming-convention */
@@ -49,6 +52,9 @@ describe('noteConfig', () => {
       );
       expect(config.permissions.default.loggedIn).toEqual(
         PermissionLevel.WRITE,
+      );
+      expect(config.permissions.default.publiclyVisible).toEqual(
+        publiclyVisible,
       );
       expect(config.permissions.maxGuestLevel).toEqual(guestAccess);
       expect(config.revisionRetentionDays).toEqual(retentionDays);
@@ -80,6 +86,7 @@ describe('noteConfig', () => {
       expect(config.permissions.default.loggedIn).toEqual(
         PermissionLevel.WRITE,
       );
+      expect(config.permissions.default.publiclyVisible).toEqual(false);
       expect(config.permissions.maxGuestLevel).toEqual(guestAccess);
       restore();
     });
@@ -110,7 +117,7 @@ describe('noteConfig', () => {
       expect(config.permissions.default.loggedIn).toEqual(
         PermissionLevel.WRITE,
       );
-
+      expect(config.permissions.default.publiclyVisible).toEqual(false);
       expect(config.permissions.maxGuestLevel).toEqual(guestAccess);
       restore();
     });
@@ -140,7 +147,7 @@ describe('noteConfig', () => {
       expect(config.permissions.default.loggedIn).toEqual(
         PermissionLevel.WRITE,
       );
-
+      expect(config.permissions.default.publiclyVisible).toEqual(false);
       expect(config.permissions.maxGuestLevel).toEqual(guestAccess);
       restore();
     });
@@ -167,7 +174,7 @@ describe('noteConfig', () => {
       expect(config.maxLength).toEqual(maxLength);
       expect(config.permissions.default.everyone).toEqual(PermissionLevel.READ);
       expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.READ);
-
+      expect(config.permissions.default.publiclyVisible).toEqual(false);
       expect(config.permissions.maxGuestLevel).toEqual(PermissionLevel.READ);
       restore();
     });
@@ -196,7 +203,7 @@ describe('noteConfig', () => {
       expect(config.permissions.default.loggedIn).toEqual(
         PermissionLevel.WRITE,
       );
-
+      expect(config.permissions.default.publiclyVisible).toEqual(false);
       expect(config.permissions.maxGuestLevel).toEqual(guestAccess);
       restore();
     });
@@ -225,6 +232,7 @@ describe('noteConfig', () => {
       expect(config.permissions.default.loggedIn).toEqual(
         PermissionLevel.WRITE,
       );
+      expect(config.permissions.default.publiclyVisible).toEqual(false);
       expect(config.permissions.maxGuestLevel).toEqual(PermissionLevel.FULL);
       restore();
     });
@@ -255,6 +263,7 @@ describe('noteConfig', () => {
       expect(config.permissions.default.loggedIn).toEqual(
         PermissionLevel.WRITE,
       );
+      expect(config.permissions.default.publiclyVisible).toEqual(false);
       expect(config.permissions.maxGuestLevel).toEqual(guestAccess);
       expect(config.revisionRetentionDays).toEqual(0);
       restore();
@@ -286,6 +295,7 @@ describe('noteConfig', () => {
       expect(config.permissions.default.loggedIn).toEqual(
         PermissionLevel.WRITE,
       );
+      expect(config.permissions.default.publiclyVisible).toEqual(false);
       expect(config.persistInterval).toEqual(10);
       restore();
     });

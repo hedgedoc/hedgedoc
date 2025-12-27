@@ -18,6 +18,7 @@ export function createDefaultMockNoteConfig(): NoteConfig {
       default: {
         everyone: PermissionLevel.READ,
         loggedIn: PermissionLevel.WRITE,
+        publiclyVisible: false,
       },
     },
     revisionRetentionDays: 0,

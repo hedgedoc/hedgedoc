@@ -40,7 +40,7 @@ export const PermissionSectionSpecialGroups: React.FC<PermissionDisabledProps> =
   return (
     <Fragment>
       <h5 className={'my-3'}>
-        <Trans i18nKey={'editor.modal.permissions.sharedWithElse'} />
+        <Trans i18nKey={'editor.modal.permissions.sharedWithGroups'} />
       </h5>
       <ul className={'list-group'}>
         <PermissionEntrySpecialGroup
