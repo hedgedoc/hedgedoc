@@ -25,7 +25,7 @@ and the provided configuration.
    ```
    <!-- markdownlint-enable proper-names -->
 
-2. Install Node.js. You need at least Node 20.
+2. Install Node.js. You need at least Node 22.
 3. Install [Yarn][yarn]
 4. Install Caddy (select one of the two options)
    - [Download][caddy] and place the `caddy` binary in `dev-reverse-proxy`.
