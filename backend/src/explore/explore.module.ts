@@ -6,10 +6,11 @@
 import { Module } from '@nestjs/common';
 
 import { GroupsModule } from '../groups/groups.module';
+import { RevisionsModule } from '../revisions/revisions.module';
 import { ExploreService } from './explore.service';
 
 @Module({
-  imports: [GroupsModule],
+  imports: [GroupsModule, RevisionsModule],
   providers: [ExploreService],
   exports: [ExploreService],
 })
