@@ -10,6 +10,7 @@ import { NotePermissionsInterface, SpecialGroup } from '../dtos/index.js'
 describe('Permissions', () => {
   const testPermissions: NotePermissionsInterface = {
     owner: 'owner',
+    publiclyVisible: true,
     sharedToUsers: [
       {
         username: 'logged_in',

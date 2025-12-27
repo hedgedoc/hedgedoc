@@ -421,7 +421,6 @@
         "owner": "Owner",
         "sharedWithUsers": "Shared with users",
         "sharedWithGroups": "Shared with groups",
-        "sharedWithElse": "Shared with else...",
         "editUser": "Change {{name}}'s permissions to view and edit",
         "viewOnlyUser": "Change {{name}}'s permissions to view only",
         "removeUser": "Remove {{name}}'s permissions",
@@ -439,7 +438,9 @@
           "placeholder": "Enter username of new note owner",
           "button": "Change the owner of this note"
         },
-        "inconsistent": "This permission is overridden by another permission"
+        "inconsistent": "This permission is overridden by another permission",
+        "visibility": "Visibility",
+        "publiclyVisible": "Show on the public explore page"
       },
       "shareLink": {
         "title": "Share link",

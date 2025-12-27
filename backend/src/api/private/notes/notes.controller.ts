@@ -23,6 +23,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { SessionGuard } from '../../../auth/session.guard';
 import noteConfiguration, { NoteConfig } from '../../../config/note.config';
 import { ChangeNoteOwnerDto } from '../../../dtos/change-note-owner.dto';
+import { ChangeNoteVisibilityDto } from '../../../dtos/change-note-visibility.dto';
 import { MediaUploadDto } from '../../../dtos/media-upload.dto';
 import { NoteGroupPermissionEntryDto } from '../../../dtos/note-group-permission-entry.dto';
 import { NoteGroupPermissionUpdateDto } from '../../../dtos/note-group-permission-update.dto';
@@ -267,11 +268,25 @@ export class NotesController {
   async changeOwner(
     @RequestNoteId() noteId: number,
     @Body() changeNoteOwnerDto: ChangeNoteOwnerDto,
-  ): Promise<NoteDto> {
+  ): Promise<NotePermissionsDto> {
     const newOwnerId = await this.userService.getUserIdByUsername(
       changeNoteOwnerDto.owner,
     );
     await this.permissionService.changeOwner(noteId, newOwnerId);
-    return await this.noteService.toNoteDto(noteId);
+    return await this.permissionService.getPermissionsDtoForNote(noteId);
+  }
+
+  @UseInterceptors(GetNoteIdInterceptor)
+  @RequirePermission(PermissionLevel.FULL)
+  @Put(':noteAlias/metadata/permissions/visibility')
+  async changeVisibility(
+    @RequestNoteId() noteId: number,
+    @Body() changeNoteVisibilityDto: ChangeNoteVisibilityDto,
+  ): Promise<NotePermissionsDto> {
+    await this.permissionService.changePubliclyVisible(
+      noteId,
+      changeNoteVisibilityDto.publiclyVisible,
+    );
+    return await this.permissionService.getPermissionsDtoForNote(noteId);
   }
 }

@@ -107,6 +107,8 @@ export class NoteService {
             [FieldNameNote.ownerId]: ownerUserId,
             [FieldNameNote.version]: 2,
             [FieldNameNote.createdAt]: createdAt,
+            [FieldNameNote.publiclyVisible]:
+              this.noteConfig.permissions.default.publiclyVisible,
           },
           [FieldNameNote.id],
         );

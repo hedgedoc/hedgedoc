@@ -92,6 +92,7 @@ const up = async function (knex) {
       .references(FieldNameUser.id)
       .inTable(TableUser)
       .onDelete('CASCADE');
+    table.boolean(FieldNameNote.publiclyVisible).notNullable();
     table.index([FieldNameNote.ownerId], 'idx_note_owner_id');
   });
 
