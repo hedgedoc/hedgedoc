@@ -403,86 +403,96 @@ export class PermissionService {
    * Gets the permissions for a note
    *
    * @param noteId the id of the note
+   * @param transaction the optional transaction if this is called from a transaction context already
    * @returns a NotePermissionsDto containing the permissions for the note
    * @throws GenericDBError if the database state is invalid
    */
   public async getPermissionsDtoForNote(
     noteId: number,
+    transaction?: Knex,
   ): Promise<NotePermissionsDto> {
-    return await this.knex.transaction(async (transaction) => {
-      const owner = await transaction(TableNote)
-        .join(
-          TableUser,
-          `${TableUser}.${FieldNameUser.id}`,
-          `${TableNote}.${FieldNameNote.ownerId}`,
-        )
-        .select<{
-          [FieldNameUser.username]: string;
-        }>(`${TableUser}.${FieldNameUser.username}`)
-        .where(`${TableNote}.${FieldNameNote.id}`, noteId)
-        .first();
-
-      const userPermissions = await transaction(TableNoteUserPermission)
-        .join(
-          TableUser,
-          `${TableUser}.${FieldNameUser.id}`,
-          `${TableNoteUserPermission}.${FieldNameNoteUserPermission.userId}`,
-        )
-        .select<
-          {
-            [FieldNameUser.username]: string;
-            [FieldNameNoteUserPermission.canEdit]: boolean;
-          }[]
-        >(
-          `${TableUser}.${FieldNameUser.username}`,
-          `${TableNoteUserPermission}.${FieldNameNoteUserPermission.canEdit}`,
-        )
-        .where(
-          `${TableNoteUserPermission}.${FieldNameNoteUserPermission.noteId}`,
-          noteId,
-        );
-
-      const groupPermissions = await transaction(TableNoteGroupPermission)
-        .join(
-          TableGroup,
-          `${TableGroup}.${FieldNameGroup.id}`,
-          `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.groupId}`,
-        )
-        .select<
-          {
-            [FieldNameGroup.name]: string;
-            [FieldNameNoteGroupPermission.canEdit]: boolean;
-          }[]
-        >(
-          `${TableGroup}.${FieldNameGroup.name}`,
-          `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.canEdit}`,
-        )
-        .where(
-          `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.noteId}`,
-          noteId,
-        );
-
-      if (owner === undefined) {
-        throw new GenericDBError(
-          'Invalid database state. This should not happen.',
-          this.logger.getContext(),
-          'getPermissionsForNote',
-        );
-      }
-
-      return NotePermissionsDto.create({
-        owner: owner[FieldNameUser.username],
-        sharedToUsers: userPermissions.map((userPermission) => ({
-          username: userPermission[FieldNameUser.username],
-          canEdit: Boolean(userPermission[FieldNameNoteUserPermission.canEdit]),
-        })),
-        sharedToGroups: groupPermissions.map((groupPermission) => ({
-          groupName: groupPermission[FieldNameGroup.name],
-          canEdit: Boolean(
-            groupPermission[FieldNameNoteGroupPermission.canEdit],
-          ),
-        })),
+    if (transaction === undefined) {
+      return await this.knex.transaction(async (newTransaction) => {
+        return await this.innerGetPermissionsDtoForNote(noteId, newTransaction);
       });
+    }
+    return await this.innerGetPermissionsDtoForNote(noteId, transaction);
+  }
+
+  async innerGetPermissionsDtoForNote(
+    noteId: number,
+    transaction: Knex,
+  ): Promise<NotePermissionsDto> {
+    const owner = await transaction(TableNote)
+      .join(
+        TableUser,
+        `${TableUser}.${FieldNameUser.id}`,
+        `${TableNote}.${FieldNameNote.ownerId}`,
+      )
+      .select<{
+        [FieldNameUser.username]: string;
+      }>(`${TableUser}.${FieldNameUser.username}`)
+      .where(`${TableNote}.${FieldNameNote.id}`, noteId)
+      .first();
+
+    const userPermissions = await transaction(TableNoteUserPermission)
+      .join(
+        TableUser,
+        `${TableUser}.${FieldNameUser.id}`,
+        `${TableNoteUserPermission}.${FieldNameNoteUserPermission.userId}`,
+      )
+      .select<
+        {
+          [FieldNameUser.username]: string;
+          [FieldNameNoteUserPermission.canEdit]: boolean;
+        }[]
+      >(
+        `${TableUser}.${FieldNameUser.username}`,
+        `${TableNoteUserPermission}.${FieldNameNoteUserPermission.canEdit}`,
+      )
+      .where(
+        `${TableNoteUserPermission}.${FieldNameNoteUserPermission.noteId}`,
+        noteId,
+      );
+
+    const groupPermissions = await transaction(TableNoteGroupPermission)
+      .join(
+        TableGroup,
+        `${TableGroup}.${FieldNameGroup.id}`,
+        `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.groupId}`,
+      )
+      .select<
+        {
+          [FieldNameGroup.name]: string;
+          [FieldNameNoteGroupPermission.canEdit]: boolean;
+        }[]
+      >(
+        `${TableGroup}.${FieldNameGroup.name}`,
+        `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.canEdit}`,
+      )
+      .where(
+        `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.noteId}`,
+        noteId,
+      );
+
+    if (owner === undefined) {
+      throw new GenericDBError(
+        'Invalid database state. This should not happen.',
+        this.logger.getContext(),
+        'getPermissionsForNote',
+      );
+    }
+
+    return NotePermissionsDto.create({
+      owner: owner[FieldNameUser.username],
+      sharedToUsers: userPermissions.map((userPermission) => ({
+        username: userPermission[FieldNameUser.username],
+        canEdit: Boolean(userPermission[FieldNameNoteUserPermission.canEdit]),
+      })),
+      sharedToGroups: groupPermissions.map((groupPermission) => ({
+        groupName: groupPermission[FieldNameGroup.name],
+        canEdit: Boolean(groupPermission[FieldNameNoteGroupPermission.canEdit]),
+      })),
     });
   }
 }
