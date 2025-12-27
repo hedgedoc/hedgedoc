@@ -6,19 +6,11 @@
 import { PermissionLevel } from '@hedgedoc/commons';
 import {
   FieldNameAlias,
-  FieldNameGroup,
   FieldNameNote,
-  FieldNameNoteGroupPermission,
-  FieldNameNoteUserPermission,
   FieldNameRevision,
-  FieldNameUser,
   NoteType,
   TableAlias,
-  TableGroup,
   TableNote,
-  TableNoteGroupPermission,
-  TableNoteUserPermission,
-  TableUser,
 } from '@hedgedoc/database';
 import { Provider } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -35,7 +27,7 @@ import {
   registerNoteConfig,
 } from '../config/mock/note.config.mock';
 import { NoteConfig } from '../config/note.config';
-import { expectBindings, IS_FIRST } from '../database/mock/expect-bindings';
+import { expectBindings } from '../database/mock/expect-bindings';
 import {
   mockDelete,
   mockInsert,
@@ -79,7 +71,6 @@ describe('NoteService', () => {
   const everyoneGroupId = 1;
   const loggedInGroupId = 1;
   const mockUsername = 'TestyMcTestface';
-  const mockGroupName = 'Testers-Group';
   const mockRevisionUuid = '0199110d-076f-7724-9229-bbeb32b53592';
   const mockCreatedAt = '2025-10-22 18:55:38';
   const mockCreatedAtIso = '2025-10-22T18:55:38.000Z';
@@ -471,116 +462,6 @@ describe('NoteService', () => {
     });
   });
 
-  describe('toNotePermissionsDto', () => {
-    it('throws NotInDBError if a note does not exist', async () => {
-      mockSelect(
-        tracker,
-        [`${TableUser}"."${FieldNameUser.username}`],
-        TableNote,
-        `${TableNote}"."${FieldNameNote.id}`,
-        [],
-        [
-          {
-            joinTable: TableUser,
-            keyLeft: FieldNameUser.id,
-            keyRight: FieldNameNote.ownerId,
-          },
-        ],
-      );
-      await expect(service.toNotePermissionsDto(mockNoteId)).rejects.toThrow(
-        NotInDBError,
-      );
-    });
-
-    it('returns correct NotePermissionDto', async () => {
-      mockSelect(
-        tracker,
-        [`${TableUser}"."${FieldNameUser.username}`],
-        TableNote,
-        `${TableNote}"."${FieldNameNote.id}`,
-        [
-          {
-            [FieldNameUser.username]: mockUsername,
-          },
-        ],
-        [
-          {
-            joinTable: TableUser,
-            keyLeft: FieldNameUser.id,
-            keyRight: FieldNameNote.ownerId,
-          },
-        ],
-      );
-      mockSelect(
-        tracker,
-        [
-          `${TableUser}"."${FieldNameUser.username}`,
-          `${TableNoteUserPermission}"."${FieldNameNoteUserPermission.canEdit}`,
-        ],
-        TableNoteUserPermission,
-        [
-          `${TableUser}"."${FieldNameUser.username}`,
-          `${TableNoteUserPermission}"."${FieldNameNoteUserPermission.noteId}`,
-        ],
-        [
-          {
-            [FieldNameUser.username]: mockUsername,
-            [FieldNameNoteUserPermission.canEdit]: true,
-          },
-        ],
-        [
-          {
-            joinTable: TableUser,
-            keyLeft: FieldNameUser.id,
-            keyRight: FieldNameNoteUserPermission.userId,
-          },
-        ],
-      );
-      mockSelect(
-        tracker,
-        [
-          `${TableGroup}"."${FieldNameGroup.name}`,
-          `${TableNoteGroupPermission}"."${FieldNameNoteGroupPermission.canEdit}`,
-        ],
-        TableNoteGroupPermission,
-        `${TableNoteGroupPermission}"."${FieldNameNoteGroupPermission.noteId}`,
-        [
-          {
-            [FieldNameGroup.name]: mockGroupName,
-            [FieldNameNoteGroupPermission.canEdit]: false,
-          },
-        ],
-        [
-          {
-            joinTable: TableGroup,
-            keyLeft: FieldNameGroup.id,
-            keyRight: FieldNameNoteGroupPermission.groupId,
-          },
-        ],
-      );
-      const result = await service.toNotePermissionsDto(mockNoteId);
-      expectBindings(tracker, 'select', [
-        [mockNoteId, IS_FIRST],
-        [mockNoteId],
-        [mockNoteId],
-      ]);
-      expect(result).toEqual({
-        owner: mockUsername,
-        sharedToUsers: [
-          {
-            username: mockUsername,
-            canEdit: true,
-          },
-        ],
-        sharedToGroups: [
-          {
-            groupName: mockGroupName,
-            canEdit: false,
-          },
-        ],
-      });
-    });
-  });
   describe('toNoteMetadataDto', () => {
     let spyAliasService: jest.SpyInstance;
 
@@ -649,7 +530,7 @@ describe('NoteService', () => {
         .spyOn(revisionService, 'getTagsByRevisionUuid')
         .mockResolvedValue(mockTags);
       jest
-        .spyOn(service, 'toNotePermissionsDto')
+        .spyOn(permissionService, 'getPermissionsDtoForNote')
         .mockResolvedValue(mockPermissions);
       jest.spyOn(revisionService, 'getRevisionUserInfo').mockResolvedValue({
         users: [

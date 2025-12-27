@@ -6,23 +6,11 @@
 import { PermissionLevel } from '@hedgedoc/commons';
 import {
   FieldNameAlias,
-  FieldNameGroup,
   FieldNameNote,
-  FieldNameNoteGroupPermission,
-  FieldNameNoteUserPermission,
   FieldNameRevision,
-  FieldNameUser,
-  Group,
   Note,
-  NoteGroupPermission,
-  NoteUserPermission,
   TableAlias,
-  TableGroup,
   TableNote,
-  TableNoteGroupPermission,
-  TableNoteUserPermission,
-  TableUser,
-  User,
 } from '@hedgedoc/database';
 import { SpecialGroup } from '@hedgedoc/database';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
@@ -33,7 +21,6 @@ import { InjectConnection } from 'nest-knexjs';
 import { AliasService } from '../alias/alias.service';
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import { NoteMetadataDto } from '../dtos/note-metadata.dto';
-import { NotePermissionsDto } from '../dtos/note-permissions.dto';
 import { NoteDto } from '../dtos/note.dto';
 import {
   ForbiddenIdError,
@@ -287,107 +274,6 @@ export class NoteService {
   }
 
   /**
-   * Builds a NotePermissionsDto for a note
-   * This method is a wrapper around the innerToNotePermissionsDto method to ensure a single transaction is used
-   *
-   * @param noteId The id of the note to get the permissions for
-   * @param transaction The optional database transaction to use
-   * @returns The built NotePermissionDto
-   */
-  async toNotePermissionsDto(
-    noteId: number,
-    transaction?: Knex,
-  ): Promise<NotePermissionsDto> {
-    if (transaction === undefined) {
-      return await this.knex.transaction(async (newTransaction) => {
-        return await this.innerToNotePermissionsDto(noteId, newTransaction);
-      });
-    }
-    return await this.innerToNotePermissionsDto(noteId, transaction);
-  }
-
-  /**
-   * Builds a NotePermissionsDto for a note
-   *
-   * @param noteId The id of the note to get the permissions for
-   * @param transaction The database transaction to use
-   * @returns The built NotePermissionDto
-   * @throws NotInDBError if the note does not exist
-   */
-  private async innerToNotePermissionsDto(
-    noteId: number,
-    transaction: Knex,
-  ): Promise<NotePermissionsDto> {
-    const ownerUsername = await transaction(TableNote)
-      .join(
-        TableUser,
-        `${TableUser}.${FieldNameUser.id}`,
-        `${TableNote}.${FieldNameNote.ownerId}`,
-      )
-      .select<
-        Pick<User, FieldNameUser.username>
-      >(`${TableUser}.${FieldNameUser.username}`)
-      .where(`${TableNote}.${FieldNameNote.id}`, noteId)
-      .first();
-    // As FieldNameUser.username is string (for registered users) or null (for guests),
-    // undefined indicates a missing entry here
-    if (ownerUsername === undefined) {
-      throw new NotInDBError(
-        `The note does not exist.`,
-        this.logger.getContext(),
-        'toNotePermissionsDto',
-      );
-    }
-    const userPermissions = await transaction(TableNoteUserPermission)
-      .join(
-        TableUser,
-        `${TableUser}.${FieldNameUser.id}`,
-        `${TableNoteUserPermission}.${FieldNameNoteUserPermission.userId}`,
-      )
-      .select<
-        ({ [FieldNameUser.username]: string } & Pick<
-          NoteUserPermission,
-          FieldNameNoteUserPermission.canEdit
-        >)[]
-      >(`${TableUser}.${FieldNameUser.username}`, `${TableNoteUserPermission}.${FieldNameNoteUserPermission.canEdit}`)
-      .whereNotNull(`${TableUser}.${FieldNameUser.username}`)
-      .andWhere(
-        `${TableNoteUserPermission}.${FieldNameNoteUserPermission.noteId}`,
-        noteId,
-      );
-    const groupPermissions = await transaction(TableNoteGroupPermission)
-      .join(
-        TableGroup,
-        `${TableGroup}.${FieldNameGroup.id}`,
-        `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.groupId}`,
-      )
-      .select<
-        (Pick<Group, FieldNameGroup.name> &
-          Pick<NoteGroupPermission, FieldNameNoteGroupPermission.canEdit>)[]
-      >(`${TableGroup}.${FieldNameGroup.name}`, `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.canEdit}`)
-      .where(
-        `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.noteId}`,
-        noteId,
-      );
-
-    return NotePermissionsDto.create({
-      owner: ownerUsername[FieldNameUser.username],
-      sharedToUsers: userPermissions.map((noteUserPermission) => ({
-        username: noteUserPermission[FieldNameUser.username],
-        canEdit: Boolean(
-          noteUserPermission[FieldNameNoteUserPermission.canEdit],
-        ),
-      })),
-      sharedToGroups: groupPermissions.map((noteGroupPermission) => ({
-        groupName: noteGroupPermission[FieldNameGroup.name],
-        canEdit: Boolean(
-          noteGroupPermission[FieldNameNoteGroupPermission.canEdit],
-        ),
-      })),
-    });
-  }
-
-  /**
    * Builds a NoteMetadataDto for a note
    * This method is a wrapper around the innerToNoteMetadataDto method to ensure a single transaction is used
    *
@@ -453,7 +339,10 @@ export class NoteService {
       latestRevision[FieldNameRevision.uuid],
       transaction,
     );
-    const permissions = await this.toNotePermissionsDto(noteId, transaction);
+    const permissions = await this.permissionService.getPermissionsDtoForNote(
+      noteId,
+      transaction,
+    );
 
     const updateUsers = await this.revisionsService.getRevisionUserInfo(
       latestRevision[FieldNameRevision.uuid],

@@ -196,7 +196,7 @@ export class NotesController {
   ): Promise<NotePermissionsDto> {
     const userId = await this.userService.getUserIdByUsername(username);
     await this.permissionService.setUserPermission(noteId, userId, canEdit);
-    return await this.noteService.toNotePermissionsDto(noteId);
+    return await this.permissionService.getPermissionsDtoForNote(noteId);
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
@@ -209,7 +209,7 @@ export class NotesController {
     try {
       const userId = await this.userService.getUserIdByUsername(username);
       await this.permissionService.removeUserPermission(noteId, userId);
-      return await this.noteService.toNotePermissionsDto(noteId);
+      return await this.permissionService.getPermissionsDtoForNote(noteId);
     } catch (e) {
       if (e instanceof NotInDBError) {
         throw new BadRequestException(
@@ -240,7 +240,7 @@ export class NotesController {
     }
     const groupId = await this.groupService.getGroupIdByName(groupName);
     await this.permissionService.setGroupPermission(noteId, groupId, canEdit);
-    return await this.noteService.toNotePermissionsDto(noteId);
+    return await this.permissionService.getPermissionsDtoForNote(noteId);
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
@@ -253,7 +253,7 @@ export class NotesController {
   ): Promise<NotePermissionsDto> {
     const groupId = await this.groupService.getGroupIdByName(groupName);
     await this.permissionService.removeGroupPermission(noteId, groupId);
-    return await this.noteService.toNotePermissionsDto(noteId);
+    return await this.permissionService.getPermissionsDtoForNote(noteId);
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
