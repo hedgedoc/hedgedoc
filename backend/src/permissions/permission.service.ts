@@ -11,6 +11,7 @@ import {
   FieldNameNoteGroupPermission,
   FieldNameNoteUserPermission,
   FieldNameUser,
+  FieldNameVisitedNote,
   Note,
   TableGroup,
   TableMediaUpload,
@@ -18,6 +19,7 @@ import {
   TableNoteGroupPermission,
   TableNoteUserPermission,
   TableUser,
+  TableVisitedNote,
   User,
 } from '@hedgedoc/database';
 import { Inject, Injectable } from '@nestjs/common';
@@ -164,88 +166,100 @@ export class PermissionService {
    *
    * @param userId The user whose permission should be checked
    * @param noteId The note that is accessed by the given user
+   * @param transaction Optional transaction to use
    * @returns The determined permission level
    */
   public async determinePermission(
     userId: number,
     noteId: number,
+    transaction?: Knex.Transaction,
   ): Promise<PermissionLevel> {
-    return await this.knex.transaction(async (transaction) => {
-      if (await this.isOwner(userId, noteId, transaction)) {
-        // If the user is the owner of the note, they have full permissions
-        return PermissionLevel.FULL;
-      }
+    if (transaction === undefined) {
+      return await this.knex.transaction(
+        async (transaction) =>
+          await this.innerDeterminePermission(userId, noteId, transaction),
+      );
+    }
+    return await this.innerDeterminePermission(userId, noteId, transaction);
+  }
 
-      // Determine UserPermission
-      let userPermission: PermissionLevel;
-      const userPermissionDbResult = await transaction(TableNoteUserPermission)
-        .select(FieldNameNoteUserPermission.canEdit)
-        .where(FieldNameNoteUserPermission.noteId, noteId)
-        .andWhere(FieldNameNoteUserPermission.userId, userId)
-        .first();
-      if (userPermissionDbResult === undefined) {
-        userPermission = PermissionLevel.DENY;
-      } else {
-        userPermission = convertEditabilityToPermissionLevel(
-          userPermissionDbResult[FieldNameNoteUserPermission.canEdit],
+  private async innerDeterminePermission(
+    userId: number,
+    noteId: number,
+    transaction: Knex.Transaction,
+  ): Promise<PermissionLevel> {
+    if (await this.isOwner(userId, noteId, transaction)) {
+      // If the user is the owner of the note, they have full permissions
+      return PermissionLevel.FULL;
+    }
+
+    // Determine UserPermission
+    let userPermission: PermissionLevel;
+    const userPermissionDbResult = await transaction(TableNoteUserPermission)
+      .select(FieldNameNoteUserPermission.canEdit)
+      .where(FieldNameNoteUserPermission.noteId, noteId)
+      .andWhere(FieldNameNoteUserPermission.userId, userId)
+      .first();
+    if (userPermissionDbResult === undefined) {
+      userPermission = PermissionLevel.DENY;
+    } else {
+      userPermission = convertEditabilityToPermissionLevel(
+        userPermissionDbResult[FieldNameNoteUserPermission.canEdit],
+      );
+    }
+
+    // If the user is not the owner but has write permissions, this is already the highest permission level
+    if (userPermission === PermissionLevel.WRITE) {
+      return userPermission;
+    }
+
+    // Determine GroupPermission
+    let groupPermission: PermissionLevel;
+
+    // 1. Get all groups the user is a member of
+    const groupsOfUser = await this.groupsService.getGroupsForUser(
+      userId,
+      transaction,
+    );
+    const groupIds = groupsOfUser.map(
+      (groupOfUser) => groupOfUser[FieldNameGroup.id],
+    );
+
+    // 2. Get all permissions on the note for groups the user is member of
+    const groupPermissions = await transaction(TableNoteGroupPermission)
+      .select(FieldNameNoteGroupPermission.canEdit)
+      .whereIn(FieldNameNoteGroupPermission.groupId, groupIds)
+      .andWhere(FieldNameNoteGroupPermission.noteId, noteId);
+    if (groupPermissions.length === 0) {
+      // If there are no permissions for the groups, the user cannot have permissions
+      groupPermission = PermissionLevel.DENY;
+    } else {
+      const permissionLevels = groupPermissions.map((permission) => {
+        if (permission === undefined) {
+          return PermissionLevel.DENY;
+        }
+        return convertEditabilityToPermissionLevel(
+          permission[FieldNameNoteGroupPermission.canEdit],
         );
-      }
+      });
+      groupPermission = Math.max(...permissionLevels);
+    }
 
-      // If the user is not the owner but has write permissions, this is already the highest permission level
-      if (userPermission === PermissionLevel.WRITE) {
-        return userPermission;
-      }
+    const isRegisteredUser = await this.userService.isRegisteredUser(
+      userId,
+      transaction,
+    );
 
-      // Determine GroupPermission
-      let groupPermission: PermissionLevel;
+    // 3. If the user is a guest user, the highest permission level is the max guest permission
+    if (!isRegisteredUser) {
+      const maxGuestPermission = this.noteConfig.permissions.maxGuestLevel;
+      return groupPermission > maxGuestPermission
+        ? maxGuestPermission
+        : groupPermission;
+    }
 
-      // 1. Get all groups the user is a member of
-      const groupsOfUser = await this.groupsService.getGroupsForUser(
-        userId,
-        transaction,
-      );
-      const groupIds = groupsOfUser.map(
-        (groupOfUser) => groupOfUser[FieldNameGroup.id],
-      );
-
-      // 2. Get all permissions on the note for groups the user is member of
-      const groupPermissions = await transaction(TableNoteGroupPermission)
-        .select(FieldNameNoteGroupPermission.canEdit)
-        .whereIn(FieldNameNoteGroupPermission.groupId, groupIds)
-        .andWhere(FieldNameNoteGroupPermission.noteId, noteId);
-      if (groupPermissions.length === 0) {
-        // If there are no permissions for the groups, the user cannot have permissions
-        groupPermission = PermissionLevel.DENY;
-      } else {
-        const permissionLevels = groupPermissions.map((permission) => {
-          if (permission === undefined) {
-            return PermissionLevel.DENY;
-          }
-          return convertEditabilityToPermissionLevel(
-            permission[FieldNameNoteGroupPermission.canEdit],
-          );
-        });
-        groupPermission = Math.max(...permissionLevels);
-      }
-
-      const isRegisteredUser = await this.userService.isRegisteredUser(
-        userId,
-        transaction,
-      );
-
-      // 3. If the user is a guest user, the highest permission level is the max guest permission
-      if (!isRegisteredUser) {
-        const maxGuestPermission = this.noteConfig.permissions.maxGuestLevel;
-        return groupPermission > maxGuestPermission
-          ? maxGuestPermission
-          : groupPermission;
-      }
-
-      // 4. Use the highest permission available
-      return groupPermission > userPermission
-        ? groupPermission
-        : userPermission;
-    });
+    // 4. Use the highest permission available
+    return groupPermission > userPermission ? groupPermission : userPermission;
   }
 
   /**
@@ -312,17 +326,23 @@ export class PermissionService {
     noteId: number,
     userId: number,
   ): Promise<void> {
-    const result = await this.knex(TableNoteUserPermission)
-      .where(FieldNameNoteUserPermission.noteId, noteId)
-      .andWhere(FieldNameNoteUserPermission.userId, userId)
-      .delete();
-    if (result !== 1) {
-      throw new NotInDBError(
-        `The user does not have a permission on this note.`,
-        this.logger.getContext(),
-        'removeUserPermission',
-      );
-    }
+    await this.knex.transaction(async (transaction) => {
+      const result = await transaction(TableNoteUserPermission)
+        .where(FieldNameNoteUserPermission.noteId, noteId)
+        .andWhere(FieldNameNoteUserPermission.userId, userId)
+        .delete();
+      await transaction(TableVisitedNote)
+        .where(FieldNameVisitedNote.noteId, noteId)
+        .andWhere(FieldNameVisitedNote.userId, userId)
+        .delete();
+      if (result !== 1) {
+        throw new NotInDBError(
+          `The user does not have a permission on this note.`,
+          this.logger.getContext(),
+          'removeUserPermission',
+        );
+      }
+    });
     this.notifyOthers(noteId);
   }
 

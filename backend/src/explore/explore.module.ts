@@ -6,11 +6,12 @@
 import { Module } from '@nestjs/common';
 
 import { GroupsModule } from '../groups/groups.module';
+import { PermissionsModule } from '../permissions/permissions.module';
 import { RevisionsModule } from '../revisions/revisions.module';
 import { ExploreService } from './explore.service';
 
 @Module({
-  imports: [GroupsModule, RevisionsModule],
+  imports: [GroupsModule, RevisionsModule, PermissionsModule],
   providers: [ExploreService],
   exports: [ExploreService],
 })
