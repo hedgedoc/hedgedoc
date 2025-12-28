@@ -17,6 +17,7 @@ import {
   TableNoteGroupPermission,
   TableNoteUserPermission,
   TableUser,
+  TableVisitedNote,
 } from '@hedgedoc/database';
 import { Provider } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -422,12 +423,24 @@ describe('PermissionsService', () => {
         ],
         deletedEntries,
       );
+      mockDelete(
+        tracker,
+        TableVisitedNote,
+        [
+          FieldNameNoteUserPermission.noteId,
+          FieldNameNoteUserPermission.userId,
+        ],
+        deletedEntries,
+      );
     }
     it('correctly deletes the user permissions and notifies others', async () => {
       buildMockDelete(1);
       await service.removeUserPermission(mockNoteId, mockUserId1);
       expect(spyOneNotifyOthers).toHaveBeenCalledWith(mockNoteId);
-      expectBindings(tracker, 'delete', [[mockNoteId, mockUserId1]]);
+      expectBindings(tracker, 'delete', [
+        [mockNoteId, mockUserId1],
+        [mockNoteId, mockUserId1],
+      ]);
     });
     it('throws NotInDBError if user does not exist', async () => {
       buildMockDelete(0);
@@ -435,7 +448,10 @@ describe('PermissionsService', () => {
         service.removeUserPermission(mockNoteId, mockUserId1),
       ).rejects.toThrow(NotInDBError);
       expect(spyOneNotifyOthers).toHaveBeenCalledTimes(0);
-      expectBindings(tracker, 'delete', [[mockNoteId, mockUserId1]]);
+      expectBindings(tracker, 'delete', [
+        [mockNoteId, mockUserId1],
+        [mockNoteId, mockUserId1],
+      ]);
     });
   });
 

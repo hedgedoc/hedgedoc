@@ -7,6 +7,8 @@ import { SortMode } from '@hedgedoc/commons';
 import { OptionalNoteType, OptionalSortMode } from '@hedgedoc/commons';
 import {
   FieldNameGroup,
+  FieldNameNote,
+  FieldNameRevisionTag,
   FieldNameUserPinnedNote,
   NoteType,
   TableGroup,
@@ -43,7 +45,11 @@ import {
   dateTimeToISOString,
   getCurrentDateTime,
 } from '../utils/datetime';
-import { ENTRIES_PER_PAGE_LIMIT, ExploreService } from './explore.service';
+import {
+  ENTRIES_PER_PAGE_LIMIT,
+  ExploreService,
+  QueryResult,
+} from './explore.service';
 
 describe('ExploreService', () => {
   let service: ExploreService;
@@ -51,7 +57,9 @@ describe('ExploreService', () => {
   let knexProvider: Provider;
 
   let now: DateTime;
-  let selectedRows: unknown;
+  let selectedRows: QueryResult[];
+  let selectedTags: unknown;
+  let selectedOwner: unknown;
 
   const mockUserId = 42;
   const mockUsername = 'TestUser';
@@ -103,10 +111,20 @@ describe('ExploreService', () => {
         title: mockTitle,
         noteType: mockNoteType,
         ownerUsername: mockUsername,
-        createdAt: dateTimeToDB(now),
-        revisionUuid: mockRevisionUuid,
         lastChangedAt: dateTimeToDB(now),
-        tag: mockTag,
+        revisionUuid: mockRevisionUuid,
+        lastVisitedAt: null,
+      },
+    ];
+    selectedTags = [
+      {
+        [FieldNameRevisionTag.tag]: mockTag,
+        [FieldNameRevisionTag.revisionUuid]: mockRevisionUuid,
+      },
+    ];
+    selectedOwner = [
+      {
+        [FieldNameNote.ownerId]: mockUserId,
       },
     ];
   });
@@ -123,7 +141,7 @@ describe('ExploreService', () => {
         '',
         '',
         '',
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note"."owner_id" = \$3 order by "revision"."created_at" desc limit \$4/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note"."owner_id" = \$3 order by "revision"."created_at" desc limit \$4/,
         [1, true, mockUserId, ENTRIES_PER_PAGE_LIMIT],
       ],
       [
@@ -131,7 +149,7 @@ describe('ExploreService', () => {
         NoteType.SLIDE,
         '',
         '',
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note"."owner_id" = \$3 and "revision"."note_type" = \$4 order by "revision"."created_at" desc limit \$5/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note"."owner_id" = \$3 and "revision"."note_type" = \$4 order by "revision"."created_at" desc limit \$5/,
         [1, true, mockUserId, NoteType.SLIDE, ENTRIES_PER_PAGE_LIMIT],
       ],
       [
@@ -139,7 +157,7 @@ describe('ExploreService', () => {
         '',
         SortMode.TITLE_ASC,
         '',
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note"."owner_id" = \$3 order by "revision"."title" asc limit \$4/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note"."owner_id" = \$3 order by "revision"."title" asc limit \$4/,
         [1, true, mockUserId, ENTRIES_PER_PAGE_LIMIT],
       ],
       [
@@ -147,7 +165,7 @@ describe('ExploreService', () => {
         '',
         '',
         'test',
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note"."owner_id" = \$3 and \(LOWER\("revision"."title"\) LIKE \$4 OR LOWER\("revision_tag"."tag"\) LIKE \$5\) order by "revision"."created_at" desc limit \$6/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note"."owner_id" = \$3 and \(LOWER\("revision"."title"\) LIKE \$4 OR LOWER\("revision_tag"."tag"\) LIKE \$5\) order by "revision"."created_at" desc limit \$6/,
         [1, true, mockUserId, '%test%', '%test%', ENTRIES_PER_PAGE_LIMIT],
       ],
     ] as [
@@ -163,6 +181,12 @@ describe('ExploreService', () => {
         // eslint-disable-next-line jest/valid-title
         it(name, async () => {
           mockQuery('select', tracker, regex, selectedRows);
+          mockQuery(
+            'select',
+            tracker,
+            /select "tag" from "revision_tag" where "revision_id" = \$1/,
+            selectedTags,
+          );
           const exploreEntries = await service.getMyNoteExploreEntries(
             mockUserId,
             pageNumber,
@@ -180,7 +204,7 @@ describe('ExploreService', () => {
             lastChangedAt: dateTimeToISOString(now),
             lastVisitedAt: null,
           });
-          expectBindings(tracker, 'select', [bindings]);
+          expectBindings(tracker, 'select', [bindings, [mockRevisionUuid]]);
         });
       },
     );
@@ -193,7 +217,7 @@ describe('ExploreService', () => {
         '',
         '',
         '',
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag" from "note_user_permission" inner join "note" on "note_user_permission"."note_id" = "note"."id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_user_permission"."user_id" = \$3 order by "revision"."created_at" desc limit \$4/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid" from "note_user_permission" inner join "note" on "note_user_permission"."note_id" = "note"."id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_user_permission"."user_id" = \$3 order by "revision"."created_at" desc limit \$4/,
         [1, true, mockUserId, ENTRIES_PER_PAGE_LIMIT],
       ],
       [
@@ -201,7 +225,7 @@ describe('ExploreService', () => {
         NoteType.SLIDE,
         '',
         '',
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag" from "note_user_permission" inner join "note" on "note_user_permission"."note_id" = "note"."id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_user_permission"."user_id" = \$3 and "revision"."note_type" = \$4 order by "revision"."created_at" desc limit \$5/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid" from "note_user_permission" inner join "note" on "note_user_permission"."note_id" = "note"."id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_user_permission"."user_id" = \$3 and "revision"."note_type" = \$4 order by "revision"."created_at" desc limit \$5/,
         [1, true, mockUserId, NoteType.SLIDE, ENTRIES_PER_PAGE_LIMIT],
       ],
       [
@@ -209,7 +233,7 @@ describe('ExploreService', () => {
         '',
         SortMode.TITLE_ASC,
         '',
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag" from "note_user_permission" inner join "note" on "note_user_permission"."note_id" = "note"."id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_user_permission"."user_id" = \$3 order by "revision"."title" asc limit \$4/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid" from "note_user_permission" inner join "note" on "note_user_permission"."note_id" = "note"."id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_user_permission"."user_id" = \$3 order by "revision"."title" asc limit \$4/,
         [1, true, mockUserId, ENTRIES_PER_PAGE_LIMIT],
       ],
       [
@@ -217,7 +241,7 @@ describe('ExploreService', () => {
         '',
         '',
         'test',
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag" from "note_user_permission" inner join "note" on "note_user_permission"."note_id" = "note"."id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_user_permission"."user_id" = \$3 and \(LOWER\("revision"."title"\) LIKE \$4 OR LOWER\("revision_tag"."tag"\) LIKE \$5\) order by "revision"."created_at" desc limit \$6/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid" from "note_user_permission" inner join "note" on "note_user_permission"."note_id" = "note"."id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_user_permission"."user_id" = \$3 and \(LOWER\("revision"."title"\) LIKE \$4 OR LOWER\("revision_tag"."tag"\) LIKE \$5\) order by "revision"."created_at" desc limit \$6/,
         [1, true, mockUserId, '%test%', '%test%', ENTRIES_PER_PAGE_LIMIT],
       ],
     ] as [
@@ -233,6 +257,12 @@ describe('ExploreService', () => {
         // eslint-disable-next-line jest/valid-title
         it(name, async () => {
           mockQuery('select', tracker, regex, selectedRows);
+          mockQuery(
+            'select',
+            tracker,
+            /select "tag" from "revision_tag" where "revision_id" = \$1/,
+            selectedTags,
+          );
           const exploreEntries = await service.getSharedWithMeExploreEntries(
             mockUserId,
             pageNumber,
@@ -250,7 +280,7 @@ describe('ExploreService', () => {
             lastChangedAt: dateTimeToISOString(now),
             lastVisitedAt: null,
           });
-          expectBindings(tracker, 'select', [bindings]);
+          expectBindings(tracker, 'select', [bindings, [mockRevisionUuid]]);
         });
       },
     );
@@ -263,7 +293,7 @@ describe('ExploreService', () => {
         '',
         '',
         '',
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag" from "note" inner join "note_group_permission" on "note"."id" = "note_group_permission"."note_id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_group_permission"."group_id" = \$3 and "note"."publicly_visible" = \$4 order by "revision"."created_at" desc limit \$5/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid" from "note" inner join "note_group_permission" on "note"."id" = "note_group_permission"."note_id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_group_permission"."group_id" = \$3 and "note"."publicly_visible" = \$4 order by "revision"."created_at" desc limit \$5/,
         [1, true, mockEveryoneGroupId, true, ENTRIES_PER_PAGE_LIMIT],
       ],
       [
@@ -271,7 +301,7 @@ describe('ExploreService', () => {
         NoteType.SLIDE,
         '',
         '',
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag" from "note" inner join "note_group_permission" on "note"."id" = "note_group_permission"."note_id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_group_permission"."group_id" = \$3 and "note"."publicly_visible" = \$4 and "revision"."note_type" = \$5 order by "revision"."created_at" desc limit \$6/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid" from "note" inner join "note_group_permission" on "note"."id" = "note_group_permission"."note_id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_group_permission"."group_id" = \$3 and "note"."publicly_visible" = \$4 and "revision"."note_type" = \$5 order by "revision"."created_at" desc limit \$6/,
         [
           1,
           true,
@@ -286,7 +316,7 @@ describe('ExploreService', () => {
         '',
         SortMode.TITLE_ASC,
         '',
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag" from "note" inner join "note_group_permission" on "note"."id" = "note_group_permission"."note_id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_group_permission"."group_id" = \$3 and "note"."publicly_visible" = \$4 order by "revision"."title" asc limit \$5/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid" from "note" inner join "note_group_permission" on "note"."id" = "note_group_permission"."note_id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_group_permission"."group_id" = \$3 and "note"."publicly_visible" = \$4 order by "revision"."title" asc limit \$5/,
         [1, true, mockEveryoneGroupId, true, ENTRIES_PER_PAGE_LIMIT],
       ],
       [
@@ -294,7 +324,7 @@ describe('ExploreService', () => {
         '',
         '',
         'test',
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag" from "note" inner join "note_group_permission" on "note"."id" = "note_group_permission"."note_id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_group_permission"."group_id" = \$3 and "note"."publicly_visible" = \$4 and \(LOWER\("revision"."title"\) LIKE \$5 OR LOWER\("revision_tag"."tag"\) LIKE \$6\) order by "revision"."created_at" desc limit \$7/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid" from "note" inner join "note_group_permission" on "note"."id" = "note_group_permission"."note_id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_group_permission"."group_id" = \$3 and "note"."publicly_visible" = \$4 and \(LOWER\("revision"."title"\) LIKE \$5 OR LOWER\("revision_tag"."tag"\) LIKE \$6\) order by "revision"."created_at" desc limit \$7/,
         [
           1,
           true,
@@ -332,6 +362,12 @@ describe('ExploreService', () => {
             ],
           );
           mockQuery('select', tracker, regex, selectedRows);
+          mockQuery(
+            'select',
+            tracker,
+            /select "tag" from "revision_tag" where "revision_id" = \$1/,
+            selectedTags,
+          );
           const exploreEntries = await service.getPublicNoteExploreEntries(
             pageNumber,
             noteType,
@@ -351,6 +387,7 @@ describe('ExploreService', () => {
           expectBindings(tracker, 'select', [
             ['_EVERYONE', IS_FIRST],
             bindings,
+            [mockRevisionUuid],
           ]);
         });
       },
@@ -362,8 +399,14 @@ describe('ExploreService', () => {
       mockQuery(
         'select',
         tracker,
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag" from "user_pinned_note" inner join "note" on "user_pinned_note"."note_id" = "note"."id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "user_pinned_note"."user_id" = \$3 order by "revision"."created_at" desc/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid" from "user_pinned_note" inner join "note" on "user_pinned_note"."note_id" = "note"."id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "user_pinned_note"."user_id" = \$3 order by "revision"."created_at" desc/,
         selectedRows,
+      );
+      mockQuery(
+        'select',
+        tracker,
+        /select "tag" from "revision_tag" where "revision_id" = \$1/,
+        selectedTags,
       );
       const exploreEntries =
         await service.getMyPinnedNoteExploreEntries(mockUserId);
@@ -377,7 +420,10 @@ describe('ExploreService', () => {
         lastChangedAt: dateTimeToISOString(now),
         lastVisitedAt: null,
       });
-      expectBindings(tracker, 'select', [[1, true, mockUserId]]);
+      expectBindings(tracker, 'select', [
+        [1, true, mockUserId],
+        [mockRevisionUuid],
+      ]);
     });
   });
   describe('getRecentlyVisitedNoteExploreEntries', () => {
@@ -387,7 +433,7 @@ describe('ExploreService', () => {
         '',
         '',
         '',
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag", "visited_notes"."visited_at" as "lastVisitedAt" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" left join "visited_notes" on "visited_notes"."note_id" = "note"."id" where "alias"."is_primary" = \$2 and "visited_notes"."user_id" = \$3 order by "revision"."created_at" desc limit \$4/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "visited_notes"."visited_at" as "lastVisitedAt", "note"."id" as "noteId" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "visited_notes" on "visited_notes"."note_id" = "note"."id" where "alias"."is_primary" = \$2 and "visited_notes"."user_id" = \$3 order by "revision"."created_at" desc limit \$4/,
         [1, true, mockUserId, ENTRIES_PER_PAGE_LIMIT],
       ],
       [
@@ -395,7 +441,7 @@ describe('ExploreService', () => {
         NoteType.SLIDE,
         '',
         '',
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag", "visited_notes"."visited_at" as "lastVisitedAt" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" left join "visited_notes" on "visited_notes"."note_id" = "note"."id" where "alias"."is_primary" = \$2 and "visited_notes"."user_id" = \$3 and "revision"."note_type" = \$4 order by "revision"."created_at" desc limit \$5/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "visited_notes"."visited_at" as "lastVisitedAt", "note"."id" as "noteId" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "visited_notes" on "visited_notes"."note_id" = "note"."id" where "alias"."is_primary" = \$2 and "visited_notes"."user_id" = \$3 and "revision"."note_type" = \$4 order by "revision"."created_at" desc limit \$5/,
         [1, true, mockUserId, NoteType.SLIDE, ENTRIES_PER_PAGE_LIMIT],
       ],
       [
@@ -403,7 +449,7 @@ describe('ExploreService', () => {
         '',
         SortMode.TITLE_ASC,
         '',
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag", "visited_notes"."visited_at" as "lastVisitedAt" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" left join "visited_notes" on "visited_notes"."note_id" = "note"."id" where "alias"."is_primary" = \$2 and "visited_notes"."user_id" = \$3 order by "revision"."title" asc limit \$4/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "visited_notes"."visited_at" as "lastVisitedAt", "note"."id" as "noteId" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "visited_notes" on "visited_notes"."note_id" = "note"."id" where "alias"."is_primary" = \$2 and "visited_notes"."user_id" = \$3 order by "revision"."title" asc limit \$4/,
         [1, true, mockUserId, ENTRIES_PER_PAGE_LIMIT],
       ],
       [
@@ -411,7 +457,7 @@ describe('ExploreService', () => {
         '',
         '',
         'test',
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag", "visited_notes"."visited_at" as "lastVisitedAt" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" left join "visited_notes" on "visited_notes"."note_id" = "note"."id" where "alias"."is_primary" = \$2 and "visited_notes"."user_id" = \$3 and \(LOWER\("revision"."title"\) LIKE \$4 OR LOWER\("revision_tag"."tag"\) LIKE \$5\) order by "revision"."created_at" desc limit \$6/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "visited_notes"."visited_at" as "lastVisitedAt", "note"."id" as "noteId" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "visited_notes" on "visited_notes"."note_id" = "note"."id" where "alias"."is_primary" = \$2 and "visited_notes"."user_id" = \$3 and \(LOWER\("revision"."title"\) LIKE \$4 OR LOWER\("revision_tag"."tag"\) LIKE \$5\) order by "revision"."created_at" desc limit \$6/,
         [1, true, mockUserId, '%test%', '%test%', ENTRIES_PER_PAGE_LIMIT],
       ],
     ] as [
@@ -426,7 +472,24 @@ describe('ExploreService', () => {
       (name, noteType, sortBy, search, regex, bindings) => {
         // eslint-disable-next-line jest/valid-title
         it(name, async () => {
-          mockQuery('select', tracker, regex, selectedRows);
+          mockQuery(
+            'select',
+            tracker,
+            regex,
+            selectedRows.map((row) => ({ ...row, noteId: mockNoteId })),
+          );
+          mockQuery(
+            'select',
+            tracker,
+            /select "owner_id" from "note" where "id" = \$1 limit \$2/,
+            selectedOwner,
+          );
+          mockQuery(
+            'select',
+            tracker,
+            /select "tag" from "revision_tag" where "revision_id" = \$1/,
+            selectedTags,
+          );
           const exploreEntries =
             await service.getRecentlyVisitedNoteExploreEntries(
               mockUserId,
@@ -445,7 +508,11 @@ describe('ExploreService', () => {
             lastChangedAt: dateTimeToISOString(now),
             lastVisitedAt: null,
           });
-          expectBindings(tracker, 'select', [bindings]);
+          expectBindings(tracker, 'select', [
+            bindings,
+            [mockNoteId, IS_FIRST],
+            [mockRevisionUuid],
+          ]);
         });
       },
     );
@@ -453,7 +520,6 @@ describe('ExploreService', () => {
 
   describe('setNotePinStatus', () => {
     it('pins note', async () => {
-      //
       mockQuery(
         'insert',
         tracker,
@@ -463,11 +529,20 @@ describe('ExploreService', () => {
       mockQuery(
         'select',
         tracker,
-        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "revision_tag"."tag" as "tag" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "revision_tag" on "revision_tag"."revision_id" = "latest_revision"."uuid" where "note"."id" = \$2 and "alias"."is_primary" = \$3/,
+        /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" where "note"."id" = \$2 and "alias"."is_primary" = \$3/,
         selectedRows,
       );
+      mockQuery(
+        'select',
+        tracker,
+        /select "tag" from "revision_tag" where "revision_id" = \$1/,
+        selectedTags,
+      );
       await service.setNotePinStatus(mockUserId, mockNoteId, true);
-      expectBindings(tracker, 'select', [[1, mockNoteId, true]]);
+      expectBindings(tracker, 'select', [
+        [1, mockNoteId, true],
+        [mockRevisionUuid],
+      ]);
     });
 
     it('unpins note', async () => {

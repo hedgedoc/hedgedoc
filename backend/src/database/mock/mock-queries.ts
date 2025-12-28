@@ -104,6 +104,5 @@ export function mockQuery(
   query: RegExp,
   returnValue: unknown = [],
 ): void {
-  console.debug(query);
   tracker.on[method](query).responseOnce(returnValue);
 }
