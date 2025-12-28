@@ -21,7 +21,7 @@ import { useIsOwner } from '../../../../../hooks/common/use-is-owner'
 /**
  * Sidebar entry that can be used to delete the current note.
  *
- * @param hide {@link true} if the entry shouldn't be visible
+ * @param hide true if the entry shouldn't be visible
  * @param className Additional css class names for the sidebar entry
  */
 export const DeleteNoteSidebarEntry: React.FC<PropsWithChildren<SpecificSidebarEntryProps>> = ({ hide, className }) => {
@@ -38,8 +38,8 @@ export const DeleteNoteSidebarEntry: React.FC<PropsWithChildren<SpecificSidebarE
         return
       }
       deleteNote(noteAlias, keepMedia)
-        .then(() => router.push('/history'))
-        .catch(showErrorNotification('landing.history.error.deleteNote.text'))
+        .then(() => router.push('/explore/my'))
+        .catch(showErrorNotification('editor.modal.deleteNote.error'))
         .finally(closeModal)
     },
     [closeModal, noteAlias, router, showErrorNotification]
@@ -57,7 +57,7 @@ export const DeleteNoteSidebarEntry: React.FC<PropsWithChildren<SpecificSidebarE
         className={className}
         hide={hide}
         onClick={showModal}>
-        <Trans i18nKey={'landing.history.menu.deleteNote'} />
+        <Trans i18nKey={'editor.modal.deleteNote.title'} />
       </SidebarButton>
       <DeleteNoteModal onHide={closeModal} onConfirm={deleteNoteAndCloseDialog} show={modalVisibility} />
     </Fragment>

@@ -11,6 +11,7 @@ import { NoteGroupPermissionEntrySchema } from './note-group-permission-entry.dt
 export const NotePermissionsSchema = z
   .object({
     owner: z.string().nullable().describe('Username of the owner of the note'),
+    publiclyVisible: z.boolean().describe('If a note is publicly visible'),
     sharedToUsers: z
       .array(NoteUserPermissionEntrySchema)
       .describe('List of users the note is shared with'),

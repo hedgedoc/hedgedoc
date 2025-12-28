@@ -415,6 +415,7 @@ describe('Notes', () => {
         expect(typeof metadataBody.createdAt).toEqual('string');
         expect(metadataBody.editedBy).toEqual([username1]);
         expect(metadataBody.permissions.owner).toEqual(username1);
+        expect(metadataBody.permissions.publiclyVisible).toEqual(false);
         expect(metadataBody.permissions.sharedToUsers).toEqual([]);
         expect(metadataBody.permissions.sharedToGroups).toEqual([
           {
@@ -507,7 +508,6 @@ describe('Notes', () => {
       });
       afterEach(() => {
         expect(response.body).toHaveLength(2);
-        console.log(response.body);
         expect(response.body[0].length).toEqual(content.length);
         expect(response.body[1].length).toEqual(noteContent1.length);
       });
@@ -756,6 +756,7 @@ describe('Notes', () => {
         .expect(404);
     });
   });
+
   describe(`DELETE ${PRIVATE_API_PREFIX}/notes/:noteAlias/metadata/permissions/users/:username`, () => {
     beforeEach(async () => {
       const noteId = testSetup.ownedNoteIds[0];
@@ -823,6 +824,7 @@ describe('Notes', () => {
         .expect(404);
     });
   });
+
   describe(`PUT ${PRIVATE_API_PREFIX}/notes/:noteAlias/metadata/permissions/groups/:groupName`, () => {
     beforeEach(async () => {
       const noteId: number = testSetup.ownedNoteIds[0];
@@ -923,6 +925,7 @@ describe('Notes', () => {
         .expect(404);
     });
   });
+
   describe(`DELETE ${PRIVATE_API_PREFIX}/notes/:noteAlias/metadata/permissions/groups/:groupName`, () => {
     beforeEach(async () => {
       const noteId = testSetup.ownedNoteIds[0];
@@ -990,6 +993,7 @@ describe('Notes', () => {
         .expect(404);
     });
   });
+
   describe(`PUT ${PRIVATE_API_PREFIX}/notes/:noteAlias/metadata/permissions/owner`, () => {
     it('can change owner as the owner', async () => {
       const response = await agentUser1
@@ -1001,7 +1005,7 @@ describe('Notes', () => {
         })
         .expect('Content-Type', /json/)
         .expect(200);
-      expect(response.body.metadata.permissions.owner).toEqual(username2);
+      expect(response.body.owner).toEqual(username2);
     });
     describe("can't change owner as", () => {
       it('another user', async () => {
@@ -1056,6 +1060,78 @@ describe('Notes', () => {
         )
         .send({
           owner: username2,
+        })
+        .expect('Content-Type', /json/)
+        .expect(404);
+    });
+  });
+
+  describe(`PUT ${PRIVATE_API_PREFIX}/notes/:noteAlias/metadata/permissions/visibility`, () => {
+    it('can change visibility as the owner', async () => {
+      const response = await agentUser1
+        .put(
+          `${PRIVATE_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/visibility`,
+        )
+        .send({
+          publiclyVisible: true,
+        })
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(response.body.publiclyVisible).toEqual(true);
+    });
+    describe("can't change visibility as", () => {
+      it('another user', async () => {
+        await agentUser2
+          .put(
+            `${PRIVATE_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/visibility`,
+          )
+          .send({
+            publiclyVisible: true,
+          })
+          .expect('Content-Type', /json/)
+          .expect(403);
+      });
+      it('guest user', async () => {
+        await agentGuestUser
+          .put(
+            `${PRIVATE_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/visibility`,
+          )
+          .send({
+            publiclyVisible: true,
+          })
+          .expect('Content-Type', /json/)
+          .expect(403);
+      });
+      it('not logged-in user', async () => {
+        await agentNotLoggedIn
+          .put(
+            `${PRIVATE_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/visibility`,
+          )
+          .send({
+            publiclyVisible: true,
+          })
+          .expect('Content-Type', /json/)
+          .expect(401);
+      });
+    });
+    it('throws an error if using a forbidden alias', async () => {
+      await agentUser1
+        .put(
+          `${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/visibility`,
+        )
+        .send({
+          publiclyVisible: true,
+        })
+        .expect('Content-Type', /json/)
+        .expect(403);
+    });
+    it('throws an error if using a non-existing alias', async () => {
+      await agentUser1
+        .put(
+          `${PRIVATE_API_PREFIX}/notes/i_do_not_exist/metadata/permissions/visibility`,
+        )
+        .send({
+          publiclyVisible: true,
         })
         .expect('Content-Type', /json/)
         .expect(404);

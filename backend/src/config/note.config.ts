@@ -12,6 +12,7 @@ import { registerAs } from '@nestjs/config';
 import z from 'zod';
 
 import {
+  parseOptionalBoolean,
   parseOptionalNumber,
   printConfigErrorAndExit,
   toArrayConfig,
@@ -62,6 +63,10 @@ const schema = z.object({
           return value !== PermissionLevelNames[PermissionLevel.FULL];
         })
         .transform((value) => PermissionLevelValues[value]),
+      publiclyVisible: z
+        .boolean()
+        .default(false)
+        .describe('HD_NOTE_PERMISSIONS_DEFAULT_PUBLICLY_VISIBLE'),
     }),
   }),
   revisionRetentionDays: z
@@ -128,6 +133,9 @@ export default registerAs('noteConfig', () => {
       default: {
         everyone: process.env.HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE,
         loggedIn: process.env.HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN,
+        publiclyVisible: parseOptionalBoolean(
+          process.env.HD_NOTE_PERMISSIONS_DEFAULT_PUBLICLY_VISIBLE,
+        ),
       },
     },
     revisionRetentionDays: parseOptionalNumber(
@@ -136,6 +144,7 @@ export default registerAs('noteConfig', () => {
     persistInterval: parseOptionalNumber(process.env.HD_NOTE_PERSIST_INTERVAL),
   });
   if (noteConfig.error) {
+    console.log(noteConfig.error);
     const errorMessages = noteConfig.error.errors.map((issue) =>
       extractDescriptionFromZodIssue(issue, 'HD_NOTE'),
     );

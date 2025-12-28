@@ -529,12 +529,40 @@ describe('PermissionsService', () => {
     });
   });
 
+  describe('changePubliclyVisibly', () => {
+    // eslint-disable-next-line func-style
+    const buildMockUpdate = (updatedEntries: number) => {
+      mockUpdate(
+        tracker,
+        TableNote,
+        [FieldNameNote.publiclyVisible],
+        FieldNameNote.id,
+        updatedEntries,
+      );
+    };
+    it('throws NotInDBError when the update does not succed', async () => {
+      buildMockUpdate(0);
+      await expect(
+        service.changePubliclyVisible(mockNoteId, true),
+      ).rejects.toThrow(NotInDBError);
+      expectBindings(tracker, 'update', [[true, mockNoteId]]);
+    });
+    it('correctly notifies others', async () => {
+      buildMockUpdate(1);
+      await service.changePubliclyVisible(mockNoteId, true);
+      expectBindings(tracker, 'update', [[true, mockNoteId]]);
+    });
+  });
+
   describe('getPermissionsDtoForNote', () => {
     // eslint-disable-next-line func-style
     const buildMockOwnerSelect = (returnValues: unknown) => {
       mockSelect(
         tracker,
-        [`${TableUser}"."${FieldNameUser.username}`],
+        [
+          `${TableUser}"."${FieldNameUser.username}`,
+          `${TableNote}"."${FieldNameNote.publiclyVisible}`,
+        ],
         TableNote,
         `${TableNote}"."${FieldNameNote.id}`,
         returnValues,
@@ -616,6 +644,8 @@ describe('PermissionsService', () => {
       buildMockOwnerSelect([
         {
           [FieldNameUser.username]: mockUserName2,
+          [FieldNameNote.publiclyVisible]:
+            noteMockConfig.permissions.default.publiclyVisible,
         },
       ]);
       const results = await service.getPermissionsDtoForNote(mockNoteId);

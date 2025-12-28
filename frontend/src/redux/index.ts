@@ -12,6 +12,7 @@ import { rendererStatusReducer } from './renderer-status/slice'
 import { realtimeStatusReducer } from './realtime/slice'
 import { noteDetailsReducer } from './note-details/slice'
 import { printModeReducer } from './print-mode/slice'
+import { pinnedNotesReducer } from './pinned-notes/slice'
 
 export const store = configureStore({
   reducer: {
@@ -21,7 +22,8 @@ export const store = configureStore({
     rendererStatus: rendererStatusReducer,
     realtimeStatus: realtimeStatusReducer,
     noteDetails: noteDetailsReducer,
-    printMode: printModeReducer
+    printMode: printModeReducer,
+    pinnedNotes: pinnedNotesReducer
   },
   devTools: isDevMode
 })

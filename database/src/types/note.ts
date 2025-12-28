@@ -21,6 +21,9 @@ export interface Note {
 
   /** Timestamp when the note was created */
   [FieldNameNote.createdAt]: string
+
+  /** If a note should be visible in the public notes section */
+  [FieldNameNote.publiclyVisible]: boolean
 }
 
 export enum FieldNameNote {
@@ -28,9 +31,12 @@ export enum FieldNameNote {
   ownerId = 'owner_id',
   version = 'version',
   createdAt = 'created_at',
+  publiclyVisible = 'publicly_visible',
 }
 
 export const TableNote = 'note'
 
 export type TypeInsertNote = Omit<Note, FieldNameNote.id>
-export type TypeUpdateNote = Pick<Note, FieldNameNote.ownerId>
+export type TypeUpdateNote =
+  | Pick<Note, FieldNameNote.ownerId>
+  | Pick<Note, FieldNameNote.publiclyVisible>

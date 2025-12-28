@@ -5,8 +5,8 @@
  */
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
-import type { UpdateUserInfoInterface, LoginUserInfoInterface, MediaUploadInterface } from '@hedgedoc/commons'
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
+import type { UpdateUserInfoInterface, LoginUserInfoInterface, MediaUploadInterface } from '@hedgedoc/commons'
 
 /**
  * Returns metadata about the currently signed-in user from the API.
