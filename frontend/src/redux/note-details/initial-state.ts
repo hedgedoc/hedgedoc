@@ -23,6 +23,7 @@ export const initialState: NoteDetails = {
   primaryAlias: '',
   permissions: {
     owner: null,
+    publiclyVisible: false,
     sharedToGroups: [],
     sharedToUsers: []
   },

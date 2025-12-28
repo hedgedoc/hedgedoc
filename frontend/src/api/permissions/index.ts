@@ -7,6 +7,7 @@ import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-ap
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
 import type {
   ChangeNoteOwnerInterface,
+  ChangeNoteVisibilityInterface,
   NoteGroupPermissionUpdateInterface,
   NotePermissionsInterface,
   NoteUserPermissionUpdateInterface
@@ -26,6 +27,24 @@ export const setNoteOwner = async (noteId: string, newOwner: string): Promise<No
   )
     .withJsonBody({
       owner: newOwner
+    })
+    .sendRequest()
+  return response.asParsedJsonObject()
+}
+
+/**
+ * Updates the visibility of a note by setting it as public or private.
+ *
+ * @param noteId - The unique identifier of the note to update.
+ * @param publiclyVisible - A flag indicating whether the note should be publicly visible.
+ * @returns A promise resolving to the updated permissions metadata for the note.
+ */
+export const setNotePublic = async (noteId: string, publiclyVisible: boolean): Promise<NotePermissionsInterface> => {
+  const response = await new PutApiRequestBuilder<NotePermissionsInterface, ChangeNoteVisibilityInterface>(
+    `notes/${noteId}/metadata/permissions/visibility`
+  )
+    .withJsonBody({
+      publiclyVisible: publiclyVisible
     })
     .sendRequest()
   return response.asParsedJsonObject()

@@ -19,6 +19,9 @@ export enum NoteType {
   DOCUMENT = 'document',
   SLIDE = 'slide',
 }
+
+export type OptionalNoteType = NoteType | ''
+
 export interface NoteFrontmatter {
   title: string
   description: string

@@ -12,6 +12,7 @@ import { PermissionSectionUsers } from './permission-section-users'
 import React from 'react'
 import { Modal } from 'react-bootstrap'
 import { cypressId } from '../../../../../../utils/cypress-attribute'
+import { PermissionSectionVisibility } from './permission-section-visibility'
 
 /**
  * Modal for viewing and managing the permissions of the note.
@@ -32,6 +33,7 @@ export const PermissionModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
         <PermissionSectionOwner disabled={!isOwner} />
         <PermissionSectionUsers disabled={!isOwner} />
         <PermissionSectionSpecialGroups disabled={!isOwner} />
+        <PermissionSectionVisibility disabled={!isOwner} />
       </Modal.Body>
     </CommonModal>
   )

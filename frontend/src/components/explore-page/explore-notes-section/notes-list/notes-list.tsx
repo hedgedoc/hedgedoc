@@ -1,0 +1,113 @@
+'use client'
+/*
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import type { NoteExploreEntryInterface, NoteType, SortMode } from '@hedgedoc/commons'
+import { Mode } from '../../mode-selection/mode'
+import { getExplorePageEntries } from '../../../../api/explore'
+import { NoteListEntry } from './note-entry'
+import { Trans } from 'react-i18next'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
+import { useApplicationState } from '../../../../hooks/common/use-application-state'
+import equal from 'fast-deep-equal'
+
+export interface NotesListProps {
+  mode: Mode
+  sort: SortMode
+  searchFilter: string | null
+  typeFilter: NoteType | null
+}
+
+/**
+ * Renders the infinite scroll list of notes matching the given filter criteria.
+ *
+ * @param mode The access mode to use, for example whether to show only recently visited notes or all public notes.
+ * @param sort The sorting mode to use, for example whether to sort by last changed date or by title.
+ * @param searchFilter An optional search filter to apply, e.g. to filter for notes containing a specific string.
+ * @param typeFilter An optional note type filter to apply, e.g. to show only documents or only slides.
+ */
+export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, typeFilter }) => {
+  const [entries, setEntries] = useState<NoteExploreEntryInterface[]>([])
+  const { showErrorNotification } = useUiNotifications()
+  const [moreDataAvailable, setMoreDataAvailable] = useState(true)
+  const lastPage = useRef<number>(0)
+  const lastFilters = useRef({})
+  const pinnedNotes = useApplicationState((state) => state.pinnedNotes)
+
+  const fetchNextPage = useCallback(
+    (replaceOldEntries: boolean = false) => {
+      lastFilters.current = { mode, sort, searchFilter, typeFilter }
+      lastPage.current += 1
+      getExplorePageEntries(mode, sort, searchFilter, typeFilter, lastPage.current)
+        .then((data) => {
+          if (data.length === 0) {
+            setMoreDataAvailable(false)
+            if (replaceOldEntries) {
+              setEntries([])
+            }
+            return
+          }
+          if (replaceOldEntries) {
+            setEntries(data)
+          } else {
+            setEntries((prev) => [...prev, ...data])
+          }
+        })
+        .catch(showErrorNotification('explore.errorLoadingEntries'))
+    },
+    [mode, sort, searchFilter, typeFilter, showErrorNotification]
+  )
+
+  const updateExplorePage = useCallback(() => {
+    lastPage.current = 0
+    setMoreDataAvailable(true)
+    fetchNextPage(true)
+  }, [setMoreDataAvailable, fetchNextPage])
+
+  const noteEntries = useMemo(() => {
+    return entries.map((note) => {
+      const isPinned = pinnedNotes[note.primaryAlias] !== undefined
+      return (
+        <NoteListEntry
+          {...note}
+          key={note.primaryAlias}
+          isPinned={isPinned}
+          showLastVisitedTime={mode === Mode.VISITED}
+          updateExplorePage={updateExplorePage}
+        />
+      )
+    })
+  }, [entries, mode, pinnedNotes, updateExplorePage])
+
+  // Update entries when filters change
+  useEffect(() => {
+    if (!equal(lastFilters.current, { mode, sort, searchFilter, typeFilter })) {
+      updateExplorePage()
+    }
+  }, [updateExplorePage, mode, sort, searchFilter, typeFilter])
+
+  return (
+    <InfiniteScroll
+      dataLength={entries.length}
+      next={fetchNextPage}
+      hasMore={moreDataAvailable}
+      loader={
+        <div className={'text-center fs-3'}>
+          <Trans i18nKey={'explore.loadingMore'} />
+        </div>
+      }
+      endMessage={
+        <div className={'text-center fs-4'}>
+          <p>
+            <Trans i18nKey={'explore.noMoreNotesFound'} />
+          </p>
+        </div>
+      }>
+      {noteEntries}
+    </InfiniteScroll>
+  )
+}
