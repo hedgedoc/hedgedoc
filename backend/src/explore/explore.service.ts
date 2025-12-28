@@ -3,7 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { NoteType, OptionalSortMode, SortMode } from '@hedgedoc/commons';
+import {
+  NoteType,
+  OptionalSortMode,
+  PermissionLevel,
+  SortMode,
+} from '@hedgedoc/commons';
 import {
   FieldNameAlias,
   FieldNameNote,
@@ -14,7 +19,6 @@ import {
   FieldNameUser,
   FieldNameUserPinnedNote,
   FieldNameVisitedNote,
-  Note,
   SpecialGroup,
   TableAlias,
   TableNote,
@@ -34,11 +38,12 @@ import { InjectConnection } from 'nest-knexjs';
 import { NoteExploreEntryDto } from '../dtos/note-explore-entry.dto';
 import { GroupsService } from '../groups/groups.service';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { PermissionService } from '../permissions/permission.service';
 import { RevisionsService } from '../revisions/revisions.service';
 
 export const ENTRIES_PER_PAGE_LIMIT = 20;
 
-interface QueryResult {
+export interface QueryResult {
   primaryAlias: string;
   title: string;
   noteType: NoteType;
@@ -46,6 +51,10 @@ interface QueryResult {
   lastChangedAt: string;
   lastVisitedAt: string | null;
   revisionUuid: string;
+}
+
+interface QueryResultWithNoteId extends QueryResult {
+  noteId: number;
 }
 
 interface QueryResultWithTagList extends QueryResult {
@@ -60,6 +69,7 @@ export class ExploreService {
     private readonly knex: Knex,
     private readonly groupsService: GroupsService,
     private readonly revisionsService: RevisionsService,
+    private readonly permissionsService: PermissionService,
   ) {
     this.logger.setContext(ExploreService.name);
   }
@@ -96,7 +106,7 @@ export class ExploreService {
       query = this.applySortingToQuery(query, sortBy);
       query = this.applyPaginationToQuery(query, page);
       const results = (await query) as QueryResult[];
-      return this.transformQueryResultIntoDtos(results, transaction);
+      return await this.transformQueryResultIntoDtos(results, transaction);
     });
   }
 
@@ -118,27 +128,6 @@ export class ExploreService {
     sortBy?: OptionalSortMode,
     search?: string,
   ): Promise<NoteExploreEntryDto[]> {
-    const queryBase = this.knex(TableNoteUserPermission).join(
-      TableNote,
-      `${TableNoteUserPermission}.${FieldNameNoteUserPermission.noteId}`,
-      `${TableNote}.${FieldNameNote.id}`,
-    );
-    let query = this.applyCommonQuery(queryBase);
-    if (
-      sortBy === SortMode.LAST_VISITED_ASC ||
-      sortBy === SortMode.LAST_VISITED_DESC
-    ) {
-      query = this.joinWithTableVisitedNote(query);
-    }
-    query = query.andWhere(
-      `${TableNoteUserPermission}.${FieldNameNoteUserPermission.userId}`,
-      userId,
-    );
-    query = this.applyFiltersToQuery(query, noteType, search);
-    query = this.applySortingToQuery(query, sortBy);
-    query = this.applyPaginationToQuery(query, page);
-    const results = (await query) as QueryResult[];
-    return this.transformQueryResultIntoDtos(results);
     return await this.knex.transaction(async (transaction) => {
       const queryBase = transaction(TableNoteUserPermission).join(
         TableNote,
@@ -160,7 +149,7 @@ export class ExploreService {
       query = this.applySortingToQuery(query, sortBy);
       query = this.applyPaginationToQuery(query, page);
       const results = (await query) as QueryResult[];
-      return this.transformQueryResultIntoDtos(results, transaction);
+      return await this.transformQueryResultIntoDtos(results, transaction);
     });
   }
 
@@ -206,7 +195,7 @@ export class ExploreService {
       query = this.applySortingToQuery(query, sortBy);
       query = this.applyPaginationToQuery(query, page);
       const results = (await query) as QueryResult[];
-      return this.transformQueryResultIntoDtos(results, transaction);
+      return await this.transformQueryResultIntoDtos(results, transaction);
     });
   }
 
@@ -233,7 +222,7 @@ export class ExploreService {
       );
       query = this.applySortingToQuery(query, SortMode.UPDATED_AT_DESC);
       const results = (await query) as QueryResult[];
-      return this.transformQueryResultIntoDtos(results, transaction);
+      return await this.transformQueryResultIntoDtos(results, transaction);
     });
   }
 
@@ -255,28 +244,98 @@ export class ExploreService {
     sortBy?: OptionalSortMode,
     search?: string,
   ): Promise<NoteExploreEntryDto[]> {
-    const queryBase = this.knex(TableNote);
-    let query = this.applyCommonQuery(queryBase);
+    return await this.knex.transaction(async (transaction) => {
+      return await this.innerGetRecentlyVisitedNoteExploreEntries(
+        userId,
+        page,
+        transaction,
+        0,
+        noteType,
+        sortBy,
+        search,
+      );
+    });
+  }
+
+  private async innerGetRecentlyVisitedNoteExploreEntries(
+    userId: number,
+    page: number,
+    transaction: Knex.Transaction,
+    retry: number,
+    noteType?: NoteType | '',
+    sortBy?: OptionalSortMode,
+    search?: string,
+  ): Promise<NoteExploreEntryDto[]> {
+    const queryBase = transaction(TableNote);
+    let query = this.applyCommonQuery(queryBase, transaction);
     query = query.select({
       lastVisitedAt: `${TableVisitedNote}.${FieldNameVisitedNote.visitedAt}`,
-    return await this.knex.transaction(async (transaction) => {
-      const queryBase = transaction(TableNote);
-      let query = this.applyCommonQuery(queryBase, transaction);
-      query = query.select({
-        lastVisitedAt: `${TableVisitedNote}.${FieldNameVisitedNote.visitedAt}`,
-      });
-      query = this.joinWithTableVisitedNote(query);
-      query = query.andWhere(
-        `${TableVisitedNote}.${FieldNameVisitedNote.userId}`,
-        userId,
-      );
-      query = this.applyFiltersToQuery(query, noteType, search);
-      query = this.applySortingToQuery(query, sortBy);
-      query = this.applyPaginationToQuery(query, page);
-      const results = (await query) as (QueryResult &
-        Pick<Note, FieldNameNote.id>)[];
-      return this.transformQueryResultIntoDtos(results, transaction);
+      noteId: `${TableNote}.${FieldNameNote.id}`,
     });
+    query = this.joinWithTableVisitedNote(query);
+    query = query.andWhere(
+      `${TableVisitedNote}.${FieldNameVisitedNote.userId}`,
+      userId,
+    );
+    query = this.applyFiltersToQuery(query, noteType, search);
+    query = this.applySortingToQuery(query, sortBy);
+    query = this.applyPaginationToQuery(query, page);
+    const results = (await query) as QueryResultWithNoteId[];
+    const filteredResults =
+      await this.checkPermissionsAndCleanUpRecentlyVisitedNotes(
+        userId,
+        results,
+        transaction,
+      );
+    if (retry < 2) {
+      // To prevent multiple loops, we only try this once again if we filtered everything out
+      if (filteredResults.length === 0 && results.length !== 0) {
+        // We filtered everything out, so we need to reevaluate the function
+        return await this.innerGetRecentlyVisitedNoteExploreEntries(
+          userId,
+          page,
+          transaction,
+          retry + 1,
+          noteType,
+          sortBy,
+          search,
+        );
+      }
+    }
+    return await this.transformQueryResultIntoDtos(
+      filteredResults,
+      transaction,
+    );
+  }
+
+  private async checkPermissionsAndCleanUpRecentlyVisitedNotes(
+    userId: number,
+    resultWithNoteIds: QueryResultWithNoteId[],
+    transaction: Knex.Transaction,
+  ): Promise<QueryResultWithNoteId[]> {
+    const rejectedNoteIds: number[] = [];
+    const permissionLevelPromises = resultWithNoteIds.map((result) =>
+      this.permissionsService.determinePermission(
+        userId,
+        result.noteId,
+        transaction,
+      ),
+    );
+    const permissionLevels = await Promise.all(permissionLevelPromises);
+    for (let i = 0; i < resultWithNoteIds.length; i++) {
+      if (permissionLevels[i] === PermissionLevel.DENY) {
+        rejectedNoteIds.push(resultWithNoteIds[i].noteId);
+        await transaction(TableVisitedNote)
+          .where({
+            [FieldNameVisitedNote.userId]: userId,
+            [FieldNameVisitedNote.noteId]: resultWithNoteIds[i].noteId,
+          })
+          .delete();
+      }
+    }
+    return resultWithNoteIds.filter(
+      (result) => !rejectedNoteIds.includes(result.noteId),
+    );
   }
 
   private async transformQueryResultIntoDtos(
