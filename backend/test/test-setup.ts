@@ -470,6 +470,16 @@ export class TestSetupBuilder {
           noteAlias4,
         ),
       );
+
+      // Alter permissions
+      await this.testSetup.permissionsService.changePubliclyVisible(
+        this.testSetup.ownedNoteIds[1],
+        true,
+      );
+      await this.testSetup.permissionsService.changePubliclyVisible(
+        this.testSetup.ownedNoteIds[2],
+        true,
+      );
       await this.testSetup.permissionsService.removeGroupPermission(
         this.testSetup.ownedNoteIds[3],
         await this.testSetup.groupService.getGroupIdByName(
