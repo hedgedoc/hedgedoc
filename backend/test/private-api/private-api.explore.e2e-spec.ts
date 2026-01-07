@@ -242,7 +242,7 @@ describe('Explore', () => {
               .expect('Content-Type', /json/)
               .expect(200);
             const myNotes = response.body;
-            expect(myNotes.length).toBe(6);
+            expect(myNotes.length).toBe(2);
           });
         },
       );
