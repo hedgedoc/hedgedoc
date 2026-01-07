@@ -87,6 +87,36 @@ Therefore, we have two big extra steps in the default export:
    the error, the name of the config option (e.g `'gitlab'`), the approriate prefix
    (e.g. `'HD_AUTH_GITLAB_'`), and an array of the user defined names.
 
+## Default permission config
+
+HedgeDoc 2 allows to configure a default permission value for the `EVERYONE` and `LOGGED_IN`
+special groups. This default value is applied to all new notes. It is ensured that the `EVERYONE`
+level is always at least as permissive as the `LOGGED_IN` level, as otherwise logged-in users would
+have fewer permissions than guests by default. These default permissions are configured using
+`HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE` and `HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN`.
+
+There is another config 2️⃣ `HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL` which defines the maximum allowed
+permission for guests on the instance. This limits user's ability to give guests higher permissions
+for a note. This value also acts to define whether guests are allowed to create notes on the
+instance, which is possible if the value is `full`.
+
+To avoid a situation where guests can create a note but not edit it afterward, the
+`HD_NOTE_MAX_GUEST_LEVEL=full` setting requires `HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE` to bet set
+to `write`.
+
+The following table shows accepted and not accepted configurations:
+
+| maxGuestLevel. / defaultEveryone | WRITE | READ | DENY |
+|----------------------------------|:-----:|:----:|:----:|
+| **FULL**                         |  ☑️   |  1   |  1   |
+| **WRITE**                        |  ☑️   |  ☑️  |  ☑️  |
+| **READ**                         |   2   |  ☑️  |  ☑️  |
+| **DENY**                         |   2   |  2   |  ☑️  |
+
+1: This default permission for everyone would allow guests to create notes,
+    but then not write or even read them.  
+2: The default permission for everyone can't be higher than the max permissions a user can set.
+
 ## Mocks
 
 Some config files also have a `.mock.ts` file which defines the configuration for the e2e tests.
