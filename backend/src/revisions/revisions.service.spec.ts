@@ -535,10 +535,12 @@ describe('RevisionsService', () => {
 
   describe('removeOldRevisions', () => {
     const now = 1758653425;
+    let expectedDateTime: string;
     beforeEach(() => {
       jest.useFakeTimers();
       jest.setSystemTime(now);
       noteConfig.revisionRetentionDays = 1;
+      expectedDateTime = dateTimeToDB(getCurrentDateTime().minus({ days: 1 }));
     });
     afterEach(() => {
       jest.useRealTimers();
@@ -550,9 +552,16 @@ describe('RevisionsService', () => {
     });
     it("doesn't update if no revisions were removed", async () => {
       mockDelete(tracker, TableRevision, [FieldNameRevision.createdAt], []);
+      mockSelect(
+        tracker,
+        [FieldNameRevision.noteId],
+        TableRevision,
+        [FieldNameRevision.createdAt],
+        [],
+      );
       await service.removeOldRevisions();
-      expectBindings(tracker, 'delete', [[now - 24 * 60 * 60 * 1000]]);
-      expectBindings(tracker, 'select', [], false, true);
+      expectBindings(tracker, 'delete', [[expectedDateTime]]);
+      expectBindings(tracker, 'select', [[expectedDateTime]]);
     });
     it('updates notes if revisions were deleted', async () => {
       // The typecast is required since jest does not see all signatures of the mocked function
@@ -564,6 +573,17 @@ describe('RevisionsService', () => {
       ).mockImplementation((a, b, c) => `${mockPatch}\n${a}\n${b}\n${c}`);
       mockDelete(
         tracker,
+        TableRevision,
+        [FieldNameRevision.createdAt],
+        [
+          {
+            [FieldNameRevision.noteId]: mockNoteId,
+          },
+        ],
+      );
+      mockSelect(
+        tracker,
+        [FieldNameRevision.noteId],
         TableRevision,
         [FieldNameRevision.createdAt],
         [
@@ -606,8 +626,12 @@ describe('RevisionsService', () => {
         1,
       );
       await service.removeOldRevisions();
-      expectBindings(tracker, 'delete', [[now - 24 * 60 * 60 * 1000]]);
-      expectBindings(tracker, 'select', [[mockNoteId, true]]);
+
+      expectBindings(tracker, 'delete', [[expectedDateTime]]);
+      expectBindings(tracker, 'select', [
+        [expectedDateTime],
+        [mockNoteId, true],
+      ]);
       expectBindings(tracker, 'update', [
         [
           `${mockPatch}\n${mockPrimaryAlias}\n\n${mockContent1}`,
