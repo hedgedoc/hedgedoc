@@ -478,36 +478,37 @@ export class RevisionsService {
    * Deletes old revisions except the latest one if the clean-up is enabled
    */
   async removeOldRevisions(): Promise<void> {
-    const currentTime = new Date().getTime();
+    const currentTime = getCurrentDateTime();
     const revisionRetentionDays: number = this.noteConfig.revisionRetentionDays;
     if (revisionRetentionDays <= 0) {
       return;
     }
-    const revisionRetentionMilliSeconds =
-      revisionRetentionDays * 24 * 60 * 60 * 1000;
-
+    const oldestRevisionToKeepTime = currentTime.minus({
+      days: revisionRetentionDays,
+    });
+    const oldestRevisionToKeepDBTime = dateTimeToDB(oldestRevisionToKeepTime);
     await this.knex.transaction(async (transaction) => {
       // Delete old revisions
-      const noteIdsWhereRevisionWereDeleted = await transaction(TableRevision)
-        .where(
-          FieldNameRevision.createdAt,
-          '<=',
-          currentTime - revisionRetentionMilliSeconds,
-        )
-        .delete(FieldNameRevision.noteId);
+      const noteIdsWhereRevisionsAreDeleted = await transaction(TableRevision)
+        .select(FieldNameRevision.noteId)
+        .where(FieldNameRevision.createdAt, '<=', oldestRevisionToKeepDBTime);
+
+      await transaction(TableRevision)
+        .where(FieldNameRevision.createdAt, '<=', oldestRevisionToKeepDBTime)
+        .delete();
 
       this.logger.log(
-        `${noteIdsWhereRevisionWereDeleted.length} old revisions were removed from the DB`,
+        `${noteIdsWhereRevisionsAreDeleted.length} old revisions were removed from the DB`,
         'removeOldRevisions',
       );
 
-      if (noteIdsWhereRevisionWereDeleted.length === 0) {
+      if (noteIdsWhereRevisionsAreDeleted.length === 0) {
         return;
       }
 
       const uniqueNoteIds = Array.from(
         new Set(
-          noteIdsWhereRevisionWereDeleted.map(
+          noteIdsWhereRevisionsAreDeleted.map(
             (entry) => entry[FieldNameRevision.noteId],
           ),
         ),
