@@ -15,7 +15,6 @@ import {
   FieldNameNoteGroupPermission,
   FieldNameNoteUserPermission,
   FieldNameRevision,
-  FieldNameRevisionTag,
   FieldNameUser,
   FieldNameUserPinnedNote,
   FieldNameVisitedNote,
@@ -25,7 +24,6 @@ import {
   TableNoteGroupPermission,
   TableNoteUserPermission,
   TableRevision,
-  TableRevisionTag,
   TableUser,
   TableUserPinnedNote,
   TableVisitedNote,
@@ -453,15 +451,10 @@ export class ExploreService {
     }
     if (search) {
       const searchLowercase = search.toLowerCase();
-      filteredQuery = filteredQuery.andWhereRaw(
-        '(LOWER(??) LIKE ? OR LOWER(??) LIKE ?)',
-        [
-          `${TableRevision}.${FieldNameRevision.title}`,
-          `%${searchLowercase}%`,
-          `${TableRevisionTag}.${FieldNameRevisionTag.tag}`,
-          `%${searchLowercase}%`,
-        ],
-      ) as T;
+      filteredQuery = filteredQuery.andWhereRaw('LOWER(??) LIKE ?', [
+        `${TableRevision}.${FieldNameRevision.title}`,
+        `%${searchLowercase}%`,
+      ]) as T;
     }
     return filteredQuery;
   }
