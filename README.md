@@ -4,14 +4,20 @@ SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-![HedgeDoc Logo](docs/content/images/hedgedoc_logo_black.svg)
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/content/images/hedgedoc_logo_white.svg">
+    <source media="(prefers-color-scheme: light)" srcset="docs/content/images/hedgedoc_logo_black.svg">
+    <img alt="Hedgedoc Logo" src="docs/content/images/hedgedoc_logo_white.svg">
+  </picture>
+</p>
+
 
 [![#HedgeDoc on matrix.org][matrix.org-image]][matrix.org-url]
 [![version][github-version-badge]][github-release-page]
 [![POEditor][poeditor-image]][poeditor-url]
 [![Mastodon][social-mastodon-image]][social-mastodon]
 ![REUSE Compliance Check][reuse-workflow-badge]
-![Nest.JS CI][nestjs-workflow-badge]
 [![codecov][codecov-badge]][codecov-url]
 
 HedgeDoc lets you create real-time collaborative markdown notes. 
