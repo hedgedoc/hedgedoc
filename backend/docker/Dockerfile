@@ -16,7 +16,7 @@ FROM docker.io/node:20.19.6-alpine AS base
 RUN apk add --no-cache tini
 ENTRYPOINT ["tini", "--"]
 
-ENV YARN_CACHE_FOLDER /tmp/.yarn
+ENV YARN_CACHE_FOLDER=/tmp/.yarn
 
 ## Stage 1: Code with all dependencies
 FROM base AS code-with-deps
@@ -57,7 +57,7 @@ LABEL org.opencontainers.image.licenses='AGPL-3.0'
 
 USER node
 WORKDIR /usr/src/app
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 COPY --chown=node package.json package.json
 COPY --chown=node --from=prod-dependencies /usr/src/app/node_modules ./node_modules
