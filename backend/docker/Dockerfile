@@ -36,7 +36,8 @@ FROM code-with-deps AS builder
 USER node
 WORKDIR /usr/src/app
 
-RUN yarn build --filter=@hedgedoc/backend --no-cache --no-daemon
+# Build without using caches to ensure a fresh build
+RUN yarn build --filter=@hedgedoc/backend --cache=local:,remote: --no-daemon
 
 ## Stage 2b: Install only prod dependencies
 FROM code-with-deps AS prod-dependencies
