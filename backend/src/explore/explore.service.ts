@@ -201,7 +201,6 @@ export class ExploreService {
    * Return a list of {@link NoteExploreEntryDto} that the user has pinned.
    *
    * @param userId The user that has the notes pinned.
-   *
    * @return A list of {@link NoteExploreEntryDto}
    */
   async getMyPinnedNoteExploreEntries(
@@ -518,6 +517,16 @@ export class ExploreService {
     }
   }
 
+  /**
+   * Updates the pin status of a specific note for a given user. If the `isPinned` flag is set to true, the note is pinned;
+   * otherwise, it is unpinned. When pinning a note, the method ensures no duplicate entries are created. If the note is
+   * unpinned, it removes the corresponding entry from the database.
+   *
+   * @param userId The ID of the user for which the note should be pinned or unpinned.
+   * @param noteId The ID of the note to be pinned or unpinned.
+   * @param isPinned true to pin the note, false to unpin it.
+   * @return The `NoteExploreEntryDto` object for the note if the note was pinned successfully, or `null` if the note was unpinned.
+   */
   async setNotePinStatus(
     userId: number,
     noteId: number,

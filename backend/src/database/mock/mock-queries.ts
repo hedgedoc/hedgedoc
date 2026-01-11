@@ -52,6 +52,16 @@ export function mockSelect(
   tracker.on.select(selectRegex).responseOnce(returnValue);
 }
 
+/**
+ * Pre-registers a mocked INSERT SQL query for the tracker db.
+ * When the tested method runs a matching query, the pre-registered response
+ * value will be returned and the query will be stored in the tracker's history.
+ *
+ * @param tracker The mock db tracker
+ * @param table The table into which data is inserted
+ * @param variables A list of inserted database columns
+ * @param returnValue The response value to return for the query
+ */
 export function mockInsert(
   tracker: Tracker,
   table: string,
@@ -64,6 +74,17 @@ export function mockInsert(
   tracker.on.insert(insertRegex).responseOnce(returnValue);
 }
 
+/**
+ * Pre-registers a mocked UPDATE SQL query for the tracker db.
+ * When the tested method runs a matching query, the pre-registered response
+ * value will be returned and the query will be stored in the tracker's history.
+ *
+ * @param tracker The mock db tracker
+ * @param table The table to update
+ * @param variables A list of updated database columns
+ * @param where The WHERE clause to match
+ * @param numberUpdatedEntries The response value to return for the query (number of updated entries or array)
+ */
 export function mockUpdate(
   tracker: Tracker,
   table: string,
@@ -76,6 +97,16 @@ export function mockUpdate(
   tracker.on.update(updateRegex).responseOnce(numberUpdatedEntries);
 }
 
+/**
+ * Pre-registers a mocked DELETE SQL query for the tracker db.
+ * When the tested method runs a matching query, the pre-registered response
+ * value will be returned and the query will be stored in the tracker's history.
+ *
+ * @param tracker The mock db tracker
+ * @param table The table from which data is deleted
+ * @param wheres A list of WHERE clause conditions to match
+ * @param numberDeletedEntries The response value to return for the query (number of deleted entries or array)
+ */
 export function mockDelete(
   tracker: Tracker,
   table: string,
@@ -89,7 +120,7 @@ export function mockDelete(
 }
 
 /**
- * Pre-registers a mocked SELECT SQL query for the tracker db.
+ * Pre-registers a mocked SQL query for the tracker db.
  * When the tested method runs a matching query, the pre-registered response
  * value will be returned and the query will be stored in the tracker's history.
  *
