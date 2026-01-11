@@ -11,10 +11,10 @@ ENTRYPOINT ["tini", "--"]
 FROM base AS builder
 
 RUN apk add --no-cache libc6-compat git
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
-ENV YARN_CACHE_FOLDER /tmp/.yarn
+ENV YARN_CACHE_FOLDER=/tmp/.yarn
 USER node
 WORKDIR /usr/src/app
 
@@ -26,8 +26,8 @@ RUN yarn build --filter=@hedgedoc/frontend --no-cache --no-daemon
 
 # RUNNER
 FROM base
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
 LABEL org.opencontainers.image.title='HedgeDoc production frontend image'
 LABEL org.opencontainers.image.url='https://hedgedoc.org'
@@ -41,7 +41,7 @@ COPY --from=builder --chown=node:node /usr/src/app/frontend/dist ./
 
 USER node
 
-ENV PORT 3001
+ENV PORT=3001
 EXPOSE 3001/tcp
 
 WORKDIR /usr/src/app/frontend
