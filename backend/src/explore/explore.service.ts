@@ -391,7 +391,8 @@ export class ExploreService {
         void this.orderBy(FieldNameRevision.createdAt, 'desc').partitionBy(
           FieldNameRevision.noteId,
         );
-      });
+      })
+      .as('latest_revisions_per_note');
     return query
       .select({
         primaryAlias: `${TableAlias}.${FieldNameAlias.alias}`,
