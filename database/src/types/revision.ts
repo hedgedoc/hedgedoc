@@ -26,7 +26,7 @@ export interface Revision {
   [FieldNameRevision.content]: string
 
   /** The stored Y.js state for realtime editing */
-  [FieldNameRevision.yjsStateVector]: null | ArrayBuffer
+  [FieldNameRevision.yjsStateVector]: null | Buffer<ArrayBuffer>
 
   /** Whether the note is a document or presentation at this revision */
   [FieldNameRevision.noteType]: NoteType

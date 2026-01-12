@@ -2963,6 +2963,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/database@workspace:database"
   dependencies:
+    "@types/node": "npm:20.19.28"
     "@typescript-eslint/eslint-plugin": "npm:8.14.0"
     "@typescript-eslint/parser": "npm:8.14.0"
     eslint: "npm:8.57.1"
