@@ -82,6 +82,9 @@
       "cache": false
     },
     "format": {},
+    "format:fix": {
+      "cache": false
+    },
     "test": {
       "dependsOn": [
         "^build"

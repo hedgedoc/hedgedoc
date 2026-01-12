@@ -7,6 +7,8 @@
   "license": "AGPL-3.0",
   "scripts": {
     "build": "./build.sh",
+    "format": "../node_modules/.bin/oxfmt --check src",
+    "format:fix": "../node_modules/.bin/oxfmt src",
     "lint": "../node_modules/.bin/oxlint src",
     "lint:fix": "../node_modules/.bin/oxlint --fix src"
   },
@@ -35,7 +37,6 @@
   },
   "devDependencies": {
     "@types/node": "24.10.7",
-    "prettier": "3.7.4",
     "typescript": "5.9.3"
   },
   "packageManager": "yarn@4.12.0"
