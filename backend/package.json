@@ -70,7 +70,7 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
-    "@darraghor/eslint-plugin-nestjs-typed": "5.0.32",
+    "@darraghor/eslint-plugin-nestjs-typed": "7.1.14",
     "@nestjs/cli": "10.4.9",
     "@nestjs/schematics": "10.2.3",
     "@nestjs/testing": "10.4.20",
