@@ -66,7 +66,7 @@ describe('realtime note', () => {
   it("doesn't destroy a destroyed note", () => {
     const sut = new RealtimeNote(mockedNoteId, 'nothing');
     sut.destroy();
-    expect(() => sut.destroy()).toThrow();
+    expect(() => sut.destroy()).toThrow('Note already destroyed');
   });
 
   it('announcePermissionChange to all clients', () => {
