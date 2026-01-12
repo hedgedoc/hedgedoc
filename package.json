@@ -18,6 +18,7 @@
     "lint": "dotenv -c development -- turbo run lint",
     "lint:fix": "dotenv -c development -- turbo run lint:fix",
     "format": "dotenv -c development -- turbo run format",
+    "format:fix": "dotenv -c development -- turbo run format:fix",
     "start:dev": "dotenv -c development -- turbo run start:dev",
     "start": "dotenv -c production -- turbo run start",
     "test:ci": "dotenv -c test -- turbo run test:ci --concurrency 1",
@@ -46,6 +47,7 @@
   },
   "devDependencies": {
     "dotenv-cli": "11.0.0",
+    "oxfmt": "0.23.0",
     "oxlint": "1.38.0",
     "turbo": "2.6.3"
   }
