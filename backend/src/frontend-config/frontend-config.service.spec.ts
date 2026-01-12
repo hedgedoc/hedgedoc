@@ -22,7 +22,7 @@ import { LoggerModule } from '../logger/logger.module';
 import { getServerVersionFromPackageJson } from '../utils/server-version';
 import { FrontendConfigService } from './frontend-config.service';
 
-/* eslint-disable jest/no-conditional-expect */
+/* oxlint-disable jest/no-conditional-expect */
 describe('FrontendConfigService', () => {
   const domain = 'http://md.example.com';
   const emptyAuthConfig: AuthConfig = {

@@ -212,7 +212,7 @@ export class TestSetupBuilder {
             password: 'hedgedoc',
             host: process.env.HD_DATABASE_HOST || 'localhost',
             port: parseInt(process.env.HD_DATABASE_PORT || '5432'),
-            // eslint-disable-next-line @typescript-eslint/naming-convention
+            // oxlint-disable-next-line @typescript-eslint/naming-convention
             application_name: 'HedgeDoc Test Server',
           },
         };

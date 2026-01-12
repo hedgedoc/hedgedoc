@@ -17,7 +17,7 @@ interface KnexData {
   cancelOnTimeout: boolean;
   bindings: (number | string)[];
   sql: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
+  // oxlint-disable-next-line @typescript-eslint/naming-convention
   __knexQueryUid: string;
 }
 

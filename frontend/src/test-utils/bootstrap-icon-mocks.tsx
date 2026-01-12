@@ -1186,7 +1186,7 @@ export const InboxesFill: Icon = () => <>BootstrapIconMock_InboxesFill</>
 export const Inboxes: Icon = () => <>BootstrapIconMock_Inboxes</>
 export const Incognito: Icon = () => <>BootstrapIconMock_Incognito</>
 export const Indent: Icon = () => <>BootstrapIconMock_Indent</>
-// eslint-disable-next-line no-shadow-restricted-names
+// oxlint-disable-next-line no-shadow-restricted-names
 export const Infinity: Icon = () => <>BootstrapIconMock_Infinity</>
 export const InfoCircleFill: Icon = () => <>BootstrapIconMock_InfoCircleFill</>
 export const InfoCircle: Icon = () => <>BootstrapIconMock_InfoCircle</>

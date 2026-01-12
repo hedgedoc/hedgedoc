@@ -62,7 +62,7 @@ export const MediaEntry: React.FC<MediaEntryProps> = ({ entry, onDelete }) => {
   return (
     <div className={'p-2 border-bottom border-opacity-50'}>
       <a href={imageUrl} target={'_blank'} rel={'noreferrer'} className={'text-center d-block mb-2'}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
+        {/* oxlint-disable-next-line @next/next/no-img-element */}
         <img src={imageUrl} alt={`Upload ${entry.fileName}`} className={styles.preview} />
       </a>
       <div className={'w-100 d-flex flex-row align-items-center justify-content-between'}>

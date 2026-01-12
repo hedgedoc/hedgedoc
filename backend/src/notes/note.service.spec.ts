@@ -194,7 +194,7 @@ describe('NoteService', () => {
       ]);
     });
 
-    /* eslint-disable jest/no-conditional-expect */
+    /* oxlint-disable jest/no-conditional-expect */
     describe.each([
       [
         PermissionLevel.READ,
@@ -346,7 +346,7 @@ describe('NoteService', () => {
       },
     );
   });
-  /* eslint-enable jest/no-conditional-expect */
+  /* oxlint-enable jest/no-conditional-expect */
 
   describe('getNoteContent', () => {
     let realtimeNoteStoreSpy: jest.SpyInstance;
@@ -378,7 +378,7 @@ describe('NoteService', () => {
 
   describe('getNoteIdByAlias', () => {
     let aliasServiceSpy: jest.SpyInstance;
-    // eslint-disable-next-line func-style
+    // oxlint-disable-next-line func-style
     const buildMockSelect = (returnValues: unknown) => {
       mockSelect(
         tracker,

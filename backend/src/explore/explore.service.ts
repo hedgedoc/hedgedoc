@@ -369,7 +369,7 @@ export class ExploreService {
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  // oxlint-disable-next-line @typescript-eslint/explicit-function-return-type
   private joinWithTableVisitedNote(query: Knex.QueryBuilder) {
     return query.leftJoin(
       TableVisitedNote,
@@ -379,7 +379,7 @@ export class ExploreService {
   }
 
   // The correct return type with all joins and selects is very specific and should just be inferred from Knex
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  // oxlint-disable-next-line @typescript-eslint/explicit-function-return-type
   private applyCommonQuery(
     query: Knex.QueryBuilder,
     transaction: Knex.Transaction,

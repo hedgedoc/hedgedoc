@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-/* eslint-disable
+/* oxlint-disable
 @typescript-eslint/no-unsafe-assignment,
 @typescript-eslint/no-unsafe-member-access
 */

@@ -18,7 +18,7 @@ import getRawBody from 'raw-body';
  * Implementation inspired by https://stackoverflow.com/questions/52283713/how-do-i-pass-plain-text-as-my-request-body-using-nestjs
  */
 // Override naming convention as decorators are in PascalCase
-// eslint-disable-next-line @typescript-eslint/naming-convention
+// oxlint-disable-next-line @typescript-eslint/naming-convention
 export const MarkdownBody = createParamDecorator(
   async (_, context: ExecutionContext) => {
     // we have to check req.readable because of raw-body issue #57
@@ -43,7 +43,7 @@ export const MarkdownBody = createParamDecorator(
     (target, key): void => {
       if (key === undefined) {
         throw new Error(
-          // eslint-disable-next-line @typescript-eslint/no-base-to-string
+          // oxlint-disable-next-line @typescript-eslint/no-base-to-string
           `Could not enhance param decorator for target ${target.toString()} because key is undefined`,
         );
       }
@@ -53,7 +53,7 @@ export const MarkdownBody = createParamDecorator(
       );
       if (!ownPropertyDescriptor) {
         throw new Error(
-          // eslint-disable-next-line @typescript-eslint/no-base-to-string
+          // oxlint-disable-next-line @typescript-eslint/no-base-to-string
           `Could not get property descriptor for target ${target.toString()} and key ${key.toString()}`,
         );
       }

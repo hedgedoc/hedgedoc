@@ -11,7 +11,7 @@ export function setupValidationPipe(
   logger: ConsoleLoggerService,
 ): ValidationPipe {
   // This issue is only relevant for usage of class-validator, however we use Zod
-  // eslint-disable-next-line @darraghor/nestjs-typed/should-specify-forbid-unknown-values
+  // oxlint-disable-next-line @darraghor/nestjs-typed/should-specify-forbid-unknown-values
   return new ValidationPipe({
     forbidUnknownValues: false,
     skipMissingProperties: false,

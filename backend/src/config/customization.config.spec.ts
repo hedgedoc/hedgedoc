@@ -21,13 +21,13 @@ describe('customizationConfig', () => {
   it('correctly parses valid config', () => {
     const restore = mockedEnv(
       {
-        /* eslint-disable @typescript-eslint/naming-convention */
+        /* oxlint-disable @typescript-eslint/naming-convention */
         HD_BRANDING_CUSTOM_NAME: customName,
         HD_BRANDING_CUSTOM_LOGO: customLogo,
         HD_URLS_PRIVACY: privacyUrl,
         HD_URLS_TERMS_OF_USE: termsOfUseUrl,
         HD_URLS_IMPRINT: imprintUrl,
-        /* eslint-enable @typescript-eslint/naming-convention */
+        /* oxlint-enable @typescript-eslint/naming-convention */
       },
       {
         clear: true,
@@ -65,13 +65,13 @@ describe('customizationConfig', () => {
     it('when anything is wrongly configured', () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_BRANDING_CUSTOM_NAME: customName,
           HD_BRANDING_CUSTOM_LOGO: invalidCustomLogo,
           HD_URLS_PRIVACY: invalidPrivacyUrl,
           HD_URLS_TERMS_OF_USE: invalidTermsOfUseUrl,
           HD_URLS_IMPRINT: invalidImprintUrl,
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,

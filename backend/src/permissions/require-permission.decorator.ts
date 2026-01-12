@@ -13,7 +13,7 @@ export const PERMISSION_METADATA_KEY = 'requiredPermission';
  * @param permissionLevel the required permission for the decorated action
  * @returns The custom decorator action
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+// oxlint-disable-next-line @typescript-eslint/naming-convention
 export function RequirePermission(
   permissionLevel: PermissionLevel,
 ): CustomDecorator {

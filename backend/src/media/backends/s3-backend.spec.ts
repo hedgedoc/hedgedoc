@@ -159,7 +159,7 @@ describe('s3 backend', () => {
         mockedBuffer,
         mockedBuffer.length,
         {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+          // oxlint-disable-next-line @typescript-eslint/naming-convention
           'Content-Type': 'image/png',
         },
       );
@@ -189,7 +189,7 @@ describe('s3 backend', () => {
         mockedBuffer,
         mockedBuffer.length,
         {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+          // oxlint-disable-next-line @typescript-eslint/naming-convention
           'Content-Type': 'image/png',
         },
       );

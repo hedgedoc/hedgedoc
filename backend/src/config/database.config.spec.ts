@@ -28,10 +28,10 @@ describe('databaseConfig', () => {
     it('SQLite config', () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_DATABASE_TYPE: databaseTypeSqlite,
           HD_DATABASE_NAME: databaseFileSqlite,
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -46,14 +46,14 @@ describe('databaseConfig', () => {
     it('MariaDB config', () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_DATABASE_TYPE: databaseTypeMariadb,
           HD_DATABASE_NAME: databaseName,
           HD_DATABASE_USERNAME: databaseUser,
           HD_DATABASE_PASSWORD: databasePass,
           HD_DATABASE_HOST: databaseHost,
           HD_DATABASE_PORT: String(databasePort),
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -72,14 +72,14 @@ describe('databaseConfig', () => {
     it('Postgres config', () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_DATABASE_TYPE: databaseTypePostgres,
           HD_DATABASE_NAME: databaseName,
           HD_DATABASE_USERNAME: databaseUser,
           HD_DATABASE_PASSWORD: databasePass,
           HD_DATABASE_HOST: databaseHost,
           HD_DATABASE_PORT: String(databasePort),
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -119,14 +119,14 @@ describe('databaseConfig', () => {
     it('when the port is negative', () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_DATABASE_TYPE: databaseTypePostgres,
           HD_DATABASE_NAME: databaseName,
           HD_DATABASE_USERNAME: databaseUser,
           HD_DATABASE_PASSWORD: databasePass,
           HD_DATABASE_HOST: databaseHost,
           HD_DATABASE_PORT: String(invalidDatabasePort),
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -142,14 +142,14 @@ describe('databaseConfig', () => {
     it('when the port is too big', () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_DATABASE_TYPE: databaseTypePostgres,
           HD_DATABASE_NAME: databaseName,
           HD_DATABASE_USERNAME: databaseUser,
           HD_DATABASE_PASSWORD: databasePass,
           HD_DATABASE_HOST: databaseHost,
           HD_DATABASE_PORT: String(invalidDatabasePort2),
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,

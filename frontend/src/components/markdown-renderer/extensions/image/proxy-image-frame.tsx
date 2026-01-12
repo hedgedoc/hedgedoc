@@ -32,6 +32,6 @@ export const ProxyImageFrame: React.FC<React.ImgHTMLAttributes<HTMLImageElement>
   }, [imageProxyEnabled, src])
 
   // The next image processor works with a whitelist of origins. Therefore, we can't use it for general images.
-  // eslint-disable-next-line @next/next/no-img-element
+  // oxlint-disable-next-line @next/next/no-img-element
   return <img src={imageProxyEnabled ? imageUrl : (src ?? '')} title={title ?? alt ?? ''} alt={alt} {...props} />
 }

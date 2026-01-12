@@ -78,7 +78,8 @@
     "lint:fix": {
       "dependsOn": [
         "^build"
-      ]
+      ],
+      "cache": false
     },
     "format": {},
     "test": {

@@ -32,7 +32,7 @@ describe('config utils', () => {
     });
   });
   describe('ensureNoDuplicatesExist', () => {
-    // eslint-disable-next-line jest/expect-expect
+    // oxlint-disable-next-line jest/expect-expect
     it('throws no error if everything is correct', () => {
       ensureNoDuplicatesExist('Test', ['A']);
     });

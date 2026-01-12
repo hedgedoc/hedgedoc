@@ -61,7 +61,7 @@ const ldapSchema = z
     tlsCaCerts: z
       .array(
         z.string({
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+          // oxlint-disable-next-line @typescript-eslint/naming-convention
           required_error: 'File not found',
         }),
       )

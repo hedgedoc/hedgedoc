@@ -7,8 +7,8 @@
   "license": "AGPL-3.0",
   "scripts": {
     "build": "./build.sh",
-    "lint": "eslint src --ext .ts",
-    "lint:fix": "eslint --fix --ext .ts src"
+    "lint": "../node_modules/.bin/oxlint src",
+    "lint:fix": "../node_modules/.bin/oxlint --fix src"
   },
   "type": "module",
   "source": "src/index.ts",
@@ -35,12 +35,6 @@
   },
   "devDependencies": {
     "@types/node": "24.10.7",
-    "@typescript-eslint/eslint-plugin": "8.14.0",
-    "@typescript-eslint/parser": "8.14.0",
-    "eslint": "8.57.1",
-    "eslint-config-prettier": "9.1.2",
-    "eslint-plugin-jest": "28.14.0",
-    "eslint-plugin-prettier": "5.5.4",
     "prettier": "3.7.4",
     "typescript": "5.9.3"
   },

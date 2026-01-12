@@ -162,7 +162,7 @@ describe('RevisionsService', () => {
 
   describe('purgeRevisions', () => {
     let spyOnGetPrimaryAlias: jest.SpyInstance;
-    // eslint-disable-next-line func-style
+    // oxlint-disable-next-line func-style
     const buildMockSelect = (returnValues: unknown) => {
       mockSelect(
         tracker,

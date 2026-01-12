@@ -85,23 +85,23 @@ export class OidcService {
     const issuer = useAutodiscover
       ? await Issuer.discover(oidcConfig.issuer)
       : new Issuer({
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           issuer: oidcConfig.issuer,
           authorization_endpoint: oidcConfig.authorizeUrl,
           token_endpoint: oidcConfig.tokenUrl,
           userinfo_endpoint: oidcConfig.userinfoUrl,
           end_session_endpoint: oidcConfig.endSessionUrl,
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         });
 
     const redirectUri = `${this.appConfig.baseUrl}/api/private/auth/oidc/${oidcConfig.identifier}/callback`;
     const client = new issuer.Client({
-      /* eslint-disable @typescript-eslint/naming-convention */
+      /* oxlint-disable @typescript-eslint/naming-convention */
       client_id: oidcConfig.clientId,
       client_secret: oidcConfig.clientSecret,
       redirect_uris: [redirectUri],
       response_types: ['code'],
-      /* eslint-enable @typescript-eslint/naming-convention */
+      /* oxlint-enable @typescript-eslint/naming-convention */
     });
     return {
       client,
@@ -157,11 +157,11 @@ export class OidcService {
     const client = clientConfig.client;
     return client.authorizationUrl({
       scope: clientConfig.config.scope,
-      /* eslint-disable @typescript-eslint/naming-convention */
+      /* oxlint-disable @typescript-eslint/naming-convention */
       code_challenge: generators.codeChallenge(code),
       code_challenge_method: 'S256',
       state,
-      /* eslint-enable @typescript-eslint/naming-convention */
+      /* oxlint-enable @typescript-eslint/naming-convention */
     });
   }
 
@@ -193,7 +193,7 @@ export class OidcService {
       ? client.callback.bind(client)
       : client.oauthCallback.bind(client);
     const tokenSet = await callbackMethod(clientConfig.redirectUri, params, {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
+      // oxlint-disable-next-line @typescript-eslint/naming-convention
       code_verifier: code,
       state,
     });

@@ -29,15 +29,15 @@ describe('y-doc-sync-adapter', () => {
     const textClient2 = docClient2.getMarkdownContentChannel()
 
     textServer.observe(() =>
-      // eslint-disable-next-line @typescript-eslint/no-base-to-string
+      // oxlint-disable-next-line @typescript-eslint/no-base-to-string
       console.log('textServer', new Date(), textServer.toString()),
     )
     textClient1.observe(() =>
-      // eslint-disable-next-line @typescript-eslint/no-base-to-string
+      // oxlint-disable-next-line @typescript-eslint/no-base-to-string
       console.log('textClient1', new Date(), textClient1.toString()),
     )
     textClient2.observe(() =>
-      // eslint-disable-next-line @typescript-eslint/no-base-to-string
+      // oxlint-disable-next-line @typescript-eslint/no-base-to-string
       console.log('textClient2', new Date(), textClient2.toString()),
     )
 
@@ -209,11 +209,11 @@ describe('y-doc-sync-adapter', () => {
     textClient1.insert(0, 'test3')
     textClient2.insert(0, 'test4')
 
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
+    // oxlint-disable-next-line @typescript-eslint/no-base-to-string
     expect(textServer.toString()).toBe('test4test3test2This is a test note')
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
+    // oxlint-disable-next-line @typescript-eslint/no-base-to-string
     expect(textClient1.toString()).toBe('test4test3test2This is a test note')
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
+    // oxlint-disable-next-line @typescript-eslint/no-base-to-string
     expect(textClient2.toString()).toBe('test4test3test2This is a test note')
 
     docServer.destroy()

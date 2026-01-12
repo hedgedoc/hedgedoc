@@ -69,7 +69,7 @@ export const ProfilePictureSelectField: React.FC<ProfilePictureSelectFieldProps>
             onChange={onSetProviderPicture}
           />
           <Form.Check.Label>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+            {/* oxlint-disable-next-line @next/next/no-img-element */}
             <img src={photoUrl} alt={'Profile picture provided by the identity provider'} height={48} width={48} />
           </Form.Check.Label>
         </Form.Check>
@@ -81,7 +81,7 @@ export const ProfilePictureSelectField: React.FC<ProfilePictureSelectFieldProps>
           onChange={onSetFallbackPicture}
         />
         <Form.Check.Label>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* oxlint-disable-next-line @next/next/no-img-element */}
           <img alt={'Fallback profile picture'} src={fallbackUrl} height={48} width={48} />
         </Form.Check.Label>
       </Form.Check>
