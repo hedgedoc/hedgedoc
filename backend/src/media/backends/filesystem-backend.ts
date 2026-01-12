@@ -91,7 +91,7 @@ export class FilesystemBackend implements MediaBackend {
     );
     try {
       await fs.access(this.uploadDirectory);
-    } catch (e) {
+    } catch {
       try {
         this.logger.debug(
           `The directory '${this.uploadDirectory}' can't be accessed. Trying to create the directory`,

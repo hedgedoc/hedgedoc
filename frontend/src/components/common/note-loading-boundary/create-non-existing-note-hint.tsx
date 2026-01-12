@@ -78,7 +78,7 @@ export const CreateNonExistingNoteHint: React.FC<CreateNonExistingNoteHintProps>
         </span>
         <div className={'mt-3'}>
           <Button
-            autoFocus
+            
             type='submit'
             variant='primary'
             className='mx-2'

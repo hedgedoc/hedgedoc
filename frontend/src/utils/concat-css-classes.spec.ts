@@ -10,7 +10,7 @@ describe('concat css classes', () => {
     expect(concatCssClasses({ a: true, b: false, c: true })).toBe('a c')
   })
 
-  it('works with a string array ', () => {
+  it('works with a string array', () => {
     expect(concatCssClasses('a', 'b', 'c')).toBe('a b c')
   })
 

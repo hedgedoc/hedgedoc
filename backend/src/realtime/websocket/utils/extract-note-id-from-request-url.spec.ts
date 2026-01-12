@@ -11,7 +11,7 @@ import { extractNoteAliasFromRequestUrl } from './extract-note-id-from-request-u
 describe('extract note id from path', () => {
   it('fails if no URL is present', () => {
     const mockedRequest = Mock.of<IncomingMessage>();
-    expect(() => extractNoteAliasFromRequestUrl(mockedRequest)).toThrow();
+    expect(() => extractNoteAliasFromRequestUrl(mockedRequest)).toThrow('No URL found in request');
   });
 
   it('can find a note id', () => {
@@ -27,20 +27,20 @@ describe('extract note id from path', () => {
     const mockedRequest = Mock.of<IncomingMessage>({
       url: '/realtime?nöteAlias=somethingsomething',
     });
-    expect(() => extractNoteAliasFromRequestUrl(mockedRequest)).toThrow();
+    expect(() => extractNoteAliasFromRequestUrl(mockedRequest)).toThrow("Path doesn't contain parameter noteAlias");
   });
 
   it('fails if note id is empty', () => {
     const mockedRequest = Mock.of<IncomingMessage>({
       url: '/realtime?noteAlias=',
     });
-    expect(() => extractNoteAliasFromRequestUrl(mockedRequest)).toThrow();
+    expect(() => extractNoteAliasFromRequestUrl(mockedRequest)).toThrow("Path doesn't contain parameter noteAlias");
   });
 
   it('fails if path is empty', () => {
     const mockedRequest = Mock.of<IncomingMessage>({
       url: '',
     });
-    expect(() => extractNoteAliasFromRequestUrl(mockedRequest)).toThrow();
+    expect(() => extractNoteAliasFromRequestUrl(mockedRequest)).toThrow("Path doesn't contain parameter noteAlias");
   });
 });

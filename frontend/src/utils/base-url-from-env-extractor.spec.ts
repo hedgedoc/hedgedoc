@@ -26,7 +26,7 @@ describe('BaseUrlFromEnvExtractor', () => {
     process.env.HD_INTERNAL_API_URL = undefined
     const sut = new BaseUrlFromEnvExtractor()
 
-    expect(() => sut.extractBaseUrls()).toThrow()
+    expect(() => sut.extractBaseUrls()).toThrow("undefined isn't a valid URL")
   })
 
   it("should throw if editor base url isn't an URL", () => {
@@ -35,7 +35,7 @@ describe('BaseUrlFromEnvExtractor', () => {
     process.env.HD_INTERNAL_API_URL = 'https://internal.example.org/'
     const sut = new BaseUrlFromEnvExtractor()
 
-    expect(() => sut.extractBaseUrls()).toThrow()
+    expect(() => sut.extractBaseUrls()).toThrow("bibedibabedibu isn't a valid URL")
   })
 
   it("should throw if renderer base url isn't an URL", () => {
@@ -44,7 +44,7 @@ describe('BaseUrlFromEnvExtractor', () => {
     process.env.HD_INTERNAL_API_URL = 'https://internal.example.org/'
     const sut = new BaseUrlFromEnvExtractor()
 
-    expect(() => sut.extractBaseUrls()).toThrow()
+    expect(() => sut.extractBaseUrls()).toThrow("isn't a valid URL")
   })
 
   it("should throw if internal api url isn't an URL", () => {
@@ -53,7 +53,7 @@ describe('BaseUrlFromEnvExtractor', () => {
     process.env.HD_INTERNAL_API_URL = 'bibedibabedibu'
     const sut = new BaseUrlFromEnvExtractor()
 
-    expect(() => sut.extractBaseUrls()).toThrow()
+    expect(() => sut.extractBaseUrls()).toThrow("isn't a valid URL")
   })
 
   it('should throw if editor base url contains a subdirectory', () => {
@@ -62,7 +62,7 @@ describe('BaseUrlFromEnvExtractor', () => {
     process.env.HD_INTERNAL_API_URL = 'https://internal.example.org/'
     const sut = new BaseUrlFromEnvExtractor()
 
-    expect(() => sut.extractBaseUrls()).toThrow()
+    expect(() => sut.extractBaseUrls()).toThrow('Subdirectories are not allowed')
   })
 
   it('should throw if renderer base url contains a subdirectory', () => {
@@ -71,7 +71,7 @@ describe('BaseUrlFromEnvExtractor', () => {
     process.env.HD_INTERNAL_API_URL = 'https://internal.example.org/'
     const sut = new BaseUrlFromEnvExtractor()
 
-    expect(() => sut.extractBaseUrls()).toThrow()
+    expect(() => sut.extractBaseUrls()).toThrow('Subdirectories are not allowed')
   })
 
   it('should throw if internal api url contains a subdirectory', () => {
@@ -80,7 +80,7 @@ describe('BaseUrlFromEnvExtractor', () => {
     process.env.HD_INTERNAL_API_URL = 'https://internal.example.org/asd/'
     const sut = new BaseUrlFromEnvExtractor()
 
-    expect(() => sut.extractBaseUrls()).toThrow()
+    expect(() => sut.extractBaseUrls()).toThrow('Subdirectories are not allowed')
   })
 
   it('should copy editor base url to renderer base url if url is omitted', () => {

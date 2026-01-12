@@ -5,7 +5,7 @@
  */
 import { convertClipboardTableToMarkdown, isTable } from './table-extractor'
 
-describe('isTable detection: ', () => {
+describe('isTable detection', () => {
   it('empty string is no table', () => {
     expect(isTable('')).toBe(false)
   })

@@ -16,15 +16,15 @@ describe('create markdown table', () => {
 |      |      |`)
   })
   it('crashes if called with zero rows', () => {
-    expect(() => createMarkdownTable(0, 1)).toThrow()
+    expect(() => createMarkdownTable(0, 1)).toThrow("Can't generate a table with 0 rows.")
   })
   it('crashes if called with zero columns', () => {
-    expect(() => createMarkdownTable(1, 0)).toThrow()
+    expect(() => createMarkdownTable(1, 0)).toThrow("Can't generate a table with 0 columns.")
   })
   it('crashes if called with negative rows', () => {
-    expect(() => createMarkdownTable(-1, 1)).toThrow()
+    expect(() => createMarkdownTable(-1, 1)).toThrow("Can't generate a table with -1 rows.")
   })
   it('crashes if called with negative columns', () => {
-    expect(() => createMarkdownTable(1, -1)).toThrow()
+    expect(() => createMarkdownTable(1, -1)).toThrow("Can't generate a table with -1 columns.")
   })
 })

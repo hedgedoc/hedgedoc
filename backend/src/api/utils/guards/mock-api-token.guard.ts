@@ -21,7 +21,7 @@ export class MockApiTokenGuard {
       // create them on the fly when the first call to the api is made
       try {
         this.userId = await this.usersService.getUserIdByUsername('hardcoded');
-      } catch (e) {
+      } catch {
         this.userId = await this.usersService.createUser(
           'hardcoded',
           'Testy',

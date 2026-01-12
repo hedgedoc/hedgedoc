@@ -24,7 +24,7 @@ const expectOtherHtml = function (html: string, override: string, options: Parse
   expect(actual).toBe(expected)
 }
 
-describe('Integration tests: ', () => {
+describe('Integration tests', () => {
   it('should render a simple element', () => {
     expectSameHtml('<div>test</div>')
   })

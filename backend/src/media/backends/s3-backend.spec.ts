@@ -129,7 +129,7 @@ describe('s3 backend', () => {
 
     it('will crash if endpoint has no protocol', () => {
       const mediaConfig = mockMediaConfig('s3.example.org');
-      expect(() => new S3Backend(mockedLoggerService, mediaConfig)).toThrow();
+      expect(() => new S3Backend(mockedLoggerService, mediaConfig)).toThrow('Invalid URL');
     });
   });
 

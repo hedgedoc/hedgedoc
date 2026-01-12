@@ -70,7 +70,7 @@ describe('RealtimeNoteStore', () => {
     );
     expect(() =>
       realtimeNoteStore.create(mockedNoteId, mockedContent),
-    ).toThrow();
+    ).toThrow('Realtime note for note');
   });
 
   it('deletes a note if it gets destroyed', () => {

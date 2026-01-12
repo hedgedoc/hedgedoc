@@ -37,7 +37,7 @@ export const UsernameField: React.FC<UsernameFieldProps> = ({ onChange, value, i
       placeholder={placeholderText}
       disabled={disabled}
       autoComplete='username'
-      autoFocus={true}
+      
       required
     />
   )
