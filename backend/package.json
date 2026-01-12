@@ -124,7 +124,10 @@
       "^.+\\.(t|j)s$": [
         "ts-jest",
         {
-          "tsconfig": "test/tsconfig.json"
+          "tsconfig": "test/tsconfig.json",
+          "diagnostics": {
+            "ignoreCodes": [151002]
+          }
         }
       ]
     },
