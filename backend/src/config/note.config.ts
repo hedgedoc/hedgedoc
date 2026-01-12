@@ -136,7 +136,6 @@ export default registerAs('noteConfig', () => {
     persistInterval: parseOptionalNumber(process.env.HD_NOTE_PERSIST_INTERVAL),
   });
   if (noteConfig.error) {
-    console.log(noteConfig.error);
     const errorMessages = noteConfig.error.errors.map((issue) =>
       extractDescriptionFromZodIssue(issue, 'HD_NOTE'),
     );
