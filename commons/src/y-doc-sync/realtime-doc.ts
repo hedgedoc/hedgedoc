@@ -68,7 +68,7 @@ export class RealtimeDoc extends EventEmitter2<RealtimeDocEvents> {
    * @return The current note content.
    */
   public getCurrentContent(): string {
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
+    // oxlint-disable-next-line @typescript-eslint/no-base-to-string
     return this.getMarkdownContentChannel().toString()
   }
 

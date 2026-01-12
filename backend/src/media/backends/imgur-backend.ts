@@ -53,7 +53,7 @@ export class ImgurBackend implements MediaBackend {
       const result = (await fetch('https://api.imgur.com/3/image', {
         method: 'POST',
         body: params,
-        // eslint-disable-next-line @typescript-eslint/naming-convention
+        // oxlint-disable-next-line @typescript-eslint/naming-convention
         headers: { Authorization: `Client-ID ${this.config.clientId}` },
       })
         .then((res) => ImgurBackend.checkStatus(res))
@@ -87,12 +87,12 @@ export class ImgurBackend implements MediaBackend {
         `https://api.imgur.com/3/image/${backendData.deleteHash}`,
         {
           method: 'DELETE',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+          // oxlint-disable-next-line @typescript-eslint/naming-convention
           headers: { Authorization: `Client-ID ${this.config.clientId}` },
         },
       );
       ImgurBackend.checkStatus(result);
-      // eslint-disable-next-line @typescript-eslint/no-base-to-string
+      // oxlint-disable-next-line @typescript-eslint/no-base-to-string
       this.logger.log(`Deleted file ${uuid}`, 'deleteFile');
       return;
     } catch (e) {

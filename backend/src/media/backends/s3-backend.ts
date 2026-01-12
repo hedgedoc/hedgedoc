@@ -63,7 +63,7 @@ export class S3Backend implements MediaBackend {
         buffer,
         buffer.length,
         {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+          // oxlint-disable-next-line @typescript-eslint/naming-convention
           'Content-Type': fileType.mime,
         },
       );

@@ -1,0 +1,29 @@
+{
+  "$schema": "../node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "typescript",
+    "react",
+    "nextjs",
+    "jsx-a11y",
+    "jest",
+    "oxc"
+  ],
+  "rules": {
+    "no-debugger": "warn",
+    "typescript/consistent-type-imports": ["error", {
+      "prefer": "type-imports",
+      "disallowTypeAnnotations": false
+    }],
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/valid-expect": "error",
+    "jest/expect-expect": ["error", {
+      "assertFunctionNames": ["expect*", "screen.*", "test*"]
+    }]
+  },
+  "env": {
+    "browser": true,
+    "jest": true
+  }
+}

@@ -21,7 +21,7 @@ import { PendingLdapUserInfoDto } from '../../dtos/pending-ldap-user-info.dto';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 
 const LDAP_ERROR_MAP: Record<string, string> = {
-  /* eslint-disable @typescript-eslint/naming-convention */
+  /* oxlint-disable @typescript-eslint/naming-convention */
   '530': 'Not Permitted to login at this time',
   '531': 'Not permitted to logon at this workstation',
   '532': 'Password expired',
@@ -31,7 +31,7 @@ const LDAP_ERROR_MAP: Record<string, string> = {
   '773': 'User must reset password',
   '775': 'User account locked',
   default: 'Invalid username/password',
-  /* eslint-enable @typescript-eslint/naming-convention */
+  /* oxlint-enable @typescript-eslint/naming-convention */
 } as const;
 
 @Injectable()
@@ -76,7 +76,7 @@ export class LdapService {
         const exception = this.getLdapException(username, error);
         return reject(exception);
       });
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      // oxlint-disable-next-line @typescript-eslint/no-empty-function
       auth.on('error', () => {}); // Ignore further errors
       auth.authenticate(
         username,

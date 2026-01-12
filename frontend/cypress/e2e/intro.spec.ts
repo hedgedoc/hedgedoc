@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* oxlint-disable @typescript-eslint/no-unsafe-call */
 describe('Intro page', () => {
   beforeEach(() => {
     cy.intercept('/public/intro.md', 'test content')

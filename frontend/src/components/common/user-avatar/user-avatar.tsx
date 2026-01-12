@@ -64,7 +64,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
   return (
     <span className={'d-inline-flex align-items-center ' + additionalClasses}>
       {photoComponent ?? (
-        // eslint-disable-next-line @next/next/no-img-element
+        // oxlint-disable-next-line @next/next/no-img-element
         <img
           src={avatarUrl}
           className={`rounded ${styles['user-image']}`}

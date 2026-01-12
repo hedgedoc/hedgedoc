@@ -25,13 +25,13 @@ describe('appConfig', () => {
     it('when given correct and complete environment variables', async () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
           HD_BACKEND_PORT: port.toString(),
           HD_LOG_LEVEL: loglevel,
           HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -49,12 +49,12 @@ describe('appConfig', () => {
     it('when no HD_RENDER_BASE_URL is set', () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_BACKEND_PORT: port.toString(),
           HD_LOG_LEVEL: loglevel,
           HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -72,12 +72,12 @@ describe('appConfig', () => {
     it('when no PORT is set', () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
           HD_LOG_LEVEL: loglevel,
           HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -95,12 +95,12 @@ describe('appConfig', () => {
     it('when no HD_LOG_LEVEL is set', () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
           HD_BACKEND_PORT: port.toString(),
           HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -118,13 +118,13 @@ describe('appConfig', () => {
     it('when no HD_LOG_SHOW_TIMESTAMP is set', () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
           HD_LOG_LEVEL: loglevel,
           HD_BACKEND_PORT: port.toString(),
           HD_PERSIST_INTERVAL: '0',
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -163,12 +163,12 @@ describe('appConfig', () => {
     it('when given a non-valid HD_BASE_URL', async () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: invalidBaseUrl,
           HD_BACKEND_PORT: port.toString(),
           HD_LOG_LEVEL: loglevel,
           HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -185,11 +185,11 @@ describe('appConfig', () => {
     it('when given a base url with subdirectory in HD_BASE_URL', async () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: 'https://example.org/subdirectory/',
           HD_LOG_LEVEL: loglevel,
           HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -206,12 +206,12 @@ describe('appConfig', () => {
     it('when given a negative PORT', async () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_BACKEND_PORT: negativePort.toString(),
           HD_LOG_LEVEL: loglevel,
           HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -228,12 +228,12 @@ describe('appConfig', () => {
     it('when given a out-of-range PORT', async () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_BACKEND_PORT: outOfRangePort.toString(),
           HD_LOG_LEVEL: loglevel,
           HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -250,12 +250,12 @@ describe('appConfig', () => {
     it('when given a non-integer PORT', async () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_BACKEND_PORT: floatPort.toString(),
           HD_LOG_LEVEL: loglevel,
           HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -272,12 +272,12 @@ describe('appConfig', () => {
     it('when given a non-number PORT', async () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_BACKEND_PORT: invalidPort,
           HD_LOG_LEVEL: loglevel,
           HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -294,12 +294,12 @@ describe('appConfig', () => {
     it('when given a non-loglevel HD_LOG_LEVEL', async () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_BASE_URL: baseUrl,
           HD_BACKEND_PORT: port.toString(),
           HD_LOG_LEVEL: invalidLoglevel,
           HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,

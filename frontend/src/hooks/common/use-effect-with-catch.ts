@@ -22,7 +22,7 @@ export const useEffectWithCatch = (effect: EffectCallback, deps: DependencyList 
     } catch (error) {
       setError(error as Error)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, deps)
 
   return error

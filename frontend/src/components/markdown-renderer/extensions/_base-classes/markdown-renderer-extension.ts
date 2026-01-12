@@ -11,12 +11,12 @@ import type MarkdownIt from 'markdown-it'
  * Base class for Markdown extensions.
  */
 export abstract class MarkdownRendererExtension {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // oxlint-disable-next-line @typescript-eslint/no-unused-vars
   public configureMarkdownIt(markdownIt: MarkdownIt): void {
     return
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // oxlint-disable-next-line @typescript-eslint/no-unused-vars
   public configureMarkdownItPost(markdownIt: MarkdownIt): void {
     return
   }

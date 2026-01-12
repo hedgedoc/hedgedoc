@@ -11,8 +11,8 @@
     "format:fix": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "node dist/src/main",
     "start:dev": "nest start --watch",
-    "lint": "eslint --max-warnings 0 \"{src,apps,libs,test}/**/*.ts\"",
-    "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "lint": "../node_modules/.bin/oxlint src test",
+    "lint:fix": "../node_modules/.bin/oxlint src test --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:ci": "jest --coverage --runInBand",
@@ -70,7 +70,6 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
-    "@darraghor/eslint-plugin-nestjs-typed": "5.0.32",
     "@nestjs/cli": "10.4.9",
     "@nestjs/schematics": "10.2.3",
     "@nestjs/testing": "10.4.20",
@@ -92,14 +91,6 @@
     "@types/source-map-support": "0.5.10",
     "@types/supertest": "2.0.16",
     "@types/ws": "8.18.1",
-    "@typescript-eslint/eslint-plugin": "7.18.0",
-    "@typescript-eslint/parser": "7.18.0",
-    "eslint": "8.57.1",
-    "eslint-config-prettier": "9.1.2",
-    "eslint-plugin-import": "2.32.0",
-    "eslint-plugin-jest": "28.14.0",
-    "eslint-plugin-local-rules": "3.0.2",
-    "eslint-plugin-prettier": "5.5.4",
     "jest": "29.7.0",
     "knex-mock-client": "3.0.2",
     "mocked-env": "1.3.5",
@@ -126,7 +117,9 @@
         {
           "tsconfig": "test/tsconfig.json",
           "diagnostics": {
-            "ignoreCodes": [151002]
+            "ignoreCodes": [
+              151002
+            ]
           }
         }
       ]

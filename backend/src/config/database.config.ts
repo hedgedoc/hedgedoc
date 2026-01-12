@@ -107,7 +107,7 @@ export function getKnexConfig(databaseConfig: DatabaseConfig): Knex.Config {
           user: databaseConfig.username,
           database: databaseConfig.name,
           password: databaseConfig.password,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+          // oxlint-disable-next-line @typescript-eslint/naming-convention
           application_name: 'HedgeDoc',
         },
       };

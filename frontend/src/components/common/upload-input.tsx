@@ -33,7 +33,7 @@ export const UploadInput: React.FC<UploadInputProps> = ({ onLoad, allowedFileTyp
 
   const onChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
     // TODO Check and fix this
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    // oxlint-disable-next-line @typescript-eslint/no-misused-promises
     async (event) => {
       const fileInput = event.currentTarget
       if (!fileInput.files || fileInput.files.length < 1) {

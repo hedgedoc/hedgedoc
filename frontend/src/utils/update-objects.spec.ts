@@ -8,7 +8,7 @@ import { updateObject } from './update-object'
 describe('updateObject', () => {
   it('should not update the object if newValues is not an object', () => {
     const oldObject = { a: 1, b: 2 }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // oxlint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     updateObject(oldObject, 'abc')
     expect(oldObject).toEqual({ a: 1, b: 2 })
@@ -37,7 +37,7 @@ describe('updateObject', () => {
   it('should ignore keys with different types', () => {
     const oldObject = { a: 1, b: 2 }
     const newValues = { a: '3', b: 4 }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // oxlint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     updateObject(oldObject, newValues)
     expect(oldObject).toEqual({ a: 1, b: 4 })

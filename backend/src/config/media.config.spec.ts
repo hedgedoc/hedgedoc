@@ -38,10 +38,10 @@ describe('mediaConfig', () => {
     it('for backend filesystem', () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_MEDIA_BACKEND_TYPE: MediaBackendType.FILESYSTEM,
           HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH: uploadPath,
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -56,7 +56,7 @@ describe('mediaConfig', () => {
     it('for backend s3', () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_MEDIA_BACKEND_TYPE: MediaBackendType.S3,
           HD_MEDIA_BACKEND_S3_ACCESS_KEY: accessKeyId,
           HD_MEDIA_BACKEND_S3_SECRET_KEY: secretAccessKey,
@@ -64,7 +64,7 @@ describe('mediaConfig', () => {
           HD_MEDIA_BACKEND_S3_ENDPOINT: endPoint,
           HD_MEDIA_BACKEND_S3_REGION: region,
           HD_MEDIA_BACKEND_S3_PATH_STYLE: pathStyle.toString(),
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -84,11 +84,11 @@ describe('mediaConfig', () => {
     it('for backend azure', () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_MEDIA_BACKEND_TYPE: MediaBackendType.AZURE,
           HD_MEDIA_BACKEND_AZURE_CONNECTION_STRING: azureConnectionString,
           HD_MEDIA_BACKEND_AZURE_CONTAINER: container,
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -106,10 +106,10 @@ describe('mediaConfig', () => {
     it('for backend imgur', () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_MEDIA_BACKEND_TYPE: MediaBackendType.IMGUR,
           HD_MEDIA_BACKEND_IMGUR_CLIENT_ID: clientID,
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -124,12 +124,12 @@ describe('mediaConfig', () => {
     it('for backend webdav', () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_MEDIA_BACKEND_TYPE: MediaBackendType.WEBDAV,
           HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING: webdavConnectionString,
           HD_MEDIA_BACKEND_WEBDAV_UPLOAD_DIR: uploadDir,
           HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL: publicUrl,
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -170,9 +170,9 @@ describe('mediaConfig', () => {
       it('when HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH is not set', async () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             HD_MEDIA_BACKEND_TYPE: MediaBackendType.FILESYSTEM,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -191,12 +191,12 @@ describe('mediaConfig', () => {
       it('when HD_MEDIA_BACKEND_S3_ACCESS_KEY is not set', async () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             HD_MEDIA_BACKEND_TYPE: MediaBackendType.S3,
             HD_MEDIA_BACKEND_S3_SECRET_KEY: secretAccessKey,
             HD_MEDIA_BACKEND_S3_BUCKET: bucket,
             HD_MEDIA_BACKEND_S3_ENDPOINT: endPoint,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -212,12 +212,12 @@ describe('mediaConfig', () => {
       it('when HD_MEDIA_BACKEND_S3_SECRET_KEY is not set', async () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             HD_MEDIA_BACKEND_TYPE: MediaBackendType.S3,
             HD_MEDIA_BACKEND_S3_ACCESS_KEY: accessKeyId,
             HD_MEDIA_BACKEND_S3_BUCKET: bucket,
             HD_MEDIA_BACKEND_S3_ENDPOINT: endPoint,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -233,12 +233,12 @@ describe('mediaConfig', () => {
       it('when HD_MEDIA_BACKEND_S3_BUCKET is not set', async () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             HD_MEDIA_BACKEND_TYPE: MediaBackendType.S3,
             HD_MEDIA_BACKEND_S3_ACCESS_KEY: accessKeyId,
             HD_MEDIA_BACKEND_S3_SECRET_KEY: secretAccessKey,
             HD_MEDIA_BACKEND_S3_ENDPOINT: endPoint,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -254,12 +254,12 @@ describe('mediaConfig', () => {
       it('when HD_MEDIA_BACKEND_S3_ENDPOINT is not set', async () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             HD_MEDIA_BACKEND_TYPE: MediaBackendType.S3,
             HD_MEDIA_BACKEND_S3_ACCESS_KEY: accessKeyId,
             HD_MEDIA_BACKEND_S3_SECRET_KEY: secretAccessKey,
             HD_MEDIA_BACKEND_S3_BUCKET: bucket,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -275,13 +275,13 @@ describe('mediaConfig', () => {
       it('when HD_MEDIA_BACKEND_S3_ENDPOINT is not an URI', async () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             HD_MEDIA_BACKEND_TYPE: MediaBackendType.S3,
             HD_MEDIA_BACKEND_S3_ACCESS_KEY: accessKeyId,
             HD_MEDIA_BACKEND_S3_SECRET_KEY: secretAccessKey,
             HD_MEDIA_BACKEND_S3_BUCKET: bucket,
             HD_MEDIA_BACKEND_S3_ENDPOINT: 'wrong-uri',
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -300,10 +300,10 @@ describe('mediaConfig', () => {
       it('when HD_MEDIA_BACKEND_AZURE_CONNECTION_STRING is not set', async () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             HD_MEDIA_BACKEND_TYPE: MediaBackendType.AZURE,
             HD_MEDIA_BACKEND_AZURE_CONTAINER: container,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -319,10 +319,10 @@ describe('mediaConfig', () => {
       it('when HD_MEDIA_BACKEND_AZURE_CONTAINER is not set', async () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             HD_MEDIA_BACKEND_TYPE: MediaBackendType.AZURE,
             HD_MEDIA_BACKEND_AZURE_CONNECTION_STRING: azureConnectionString,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -341,9 +341,9 @@ describe('mediaConfig', () => {
       it('when HD_MEDIA_BACKEND_IMGUR_CLIENT_ID is not set', async () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             HD_MEDIA_BACKEND_TYPE: MediaBackendType.IMGUR,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -362,11 +362,11 @@ describe('mediaConfig', () => {
       it('when HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING is not set', async () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             HD_MEDIA_BACKEND_TYPE: MediaBackendType.WEBDAV,
             HD_MEDIA_BACKEND_WEBDAV_UPLOAD_DIR: uploadDir,
             HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL: publicUrl,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -382,12 +382,12 @@ describe('mediaConfig', () => {
       it('when HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING is not set to an url', async () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             HD_MEDIA_BACKEND_TYPE: MediaBackendType.WEBDAV,
             HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING: 'not-an-url',
             HD_MEDIA_BACKEND_WEBDAV_UPLOAD_DIR: uploadDir,
             HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL: publicUrl,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -403,11 +403,11 @@ describe('mediaConfig', () => {
       it('when HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL is not set', async () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             HD_MEDIA_BACKEND_TYPE: MediaBackendType.WEBDAV,
             HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING: webdavConnectionString,
             HD_MEDIA_BACKEND_WEBDAV_UPLOAD_DIR: uploadDir,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -423,12 +423,12 @@ describe('mediaConfig', () => {
       it('when HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL is not set to an url', async () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             HD_MEDIA_BACKEND_TYPE: MediaBackendType.WEBDAV,
             HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING: webdavConnectionString,
             HD_MEDIA_BACKEND_WEBDAV_UPLOAD_DIR: uploadDir,
             HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL: 'not-an-url',
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,

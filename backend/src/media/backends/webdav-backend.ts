@@ -47,9 +47,9 @@ export class WebdavBackend implements MediaBackend {
     fetch(this.baseUrl, {
       method: 'PROPFIND',
       headers: {
-        Accept: 'text/plain', // eslint-disable-line @typescript-eslint/naming-convention
-        Authorization: this.authHeader, // eslint-disable-line @typescript-eslint/naming-convention
-        Depth: '0', // eslint-disable-line @typescript-eslint/naming-convention
+        Accept: 'text/plain', // oxlint-disable-line @typescript-eslint/naming-convention
+        Authorization: this.authHeader, // oxlint-disable-line @typescript-eslint/naming-convention
+        Depth: '0', // oxlint-disable-line @typescript-eslint/naming-convention
       },
     })
       .then((response) => {
@@ -74,10 +74,10 @@ export class WebdavBackend implements MediaBackend {
         method: 'PUT',
         body: buffer,
         headers: {
-          Authorization: this.authHeader, // eslint-disable-line @typescript-eslint/naming-convention
-          'Content-Type': 'application/octet-stream', // eslint-disable-line @typescript-eslint/naming-convention
-          'Content-Length': `${contentLength}`, // eslint-disable-line @typescript-eslint/naming-convention
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+          Authorization: this.authHeader, // oxlint-disable-line @typescript-eslint/naming-convention
+          'Content-Type': 'application/octet-stream', // oxlint-disable-line @typescript-eslint/naming-convention
+          'Content-Length': `${contentLength}`, // oxlint-disable-line @typescript-eslint/naming-convention
+          // oxlint-disable-next-line @typescript-eslint/naming-convention
           'If-None-Match': '*', // Don't overwrite already existing files
         },
       }).then((res) => WebdavBackend.checkStatus(res));
@@ -101,7 +101,7 @@ export class WebdavBackend implements MediaBackend {
       await fetch(WebdavBackend.joinURL(this.baseUrl, '/', file), {
         method: 'DELETE',
         headers: {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+          // oxlint-disable-next-line @typescript-eslint/naming-convention
           Authorization: this.authHeader,
         },
       }).then((res) => WebdavBackend.checkStatus(res));

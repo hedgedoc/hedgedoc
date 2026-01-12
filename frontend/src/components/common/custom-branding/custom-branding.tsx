@@ -35,7 +35,7 @@ export const CustomBranding: React.FC<BrandingProps> = ({ inline = false }) => {
     return null
   } else if (branding.logo) {
     return (
-      /* eslint-disable-next-line @next/next/no-img-element */
+      /* oxlint-disable-next-line @next/next/no-img-element */
       <img
         src={branding.logo}
         alt={branding.name !== null ? branding.name : undefined}

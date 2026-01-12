@@ -46,7 +46,7 @@ import {
 } from '@hedgedoc/database';
 import { Knex } from 'knex';
 
-/* eslint-disable @typescript-eslint/naming-convention */
+/* oxlint-disable @typescript-eslint/naming-convention */
 declare module 'knex/types/tables.js' {
   interface Tables {
     [TableAlias]: Knex.CompositeTableType<Alias, Alias, TypeUpdateAlias>;

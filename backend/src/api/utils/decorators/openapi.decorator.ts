@@ -74,13 +74,13 @@ export interface HttpStatusCodeWithExtraInformation {
  * For non-200 successful responses the appropriate {@link HttpCode} decorator is set
  * @constructor
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention,func-style
+// oxlint-disable-next-line @typescript-eslint/naming-convention,func-style
 export const OpenApi = (
   ...httpStatusCodesMaybeWithExtraInformation: (
     | HttpStatusCodes
     | HttpStatusCodeWithExtraInformation
   )[]
-): // eslint-disable-next-line @typescript-eslint/ban-types
+): // oxlint-disable-next-line @typescript-eslint/ban-types
 (<TFunction extends Function, Y>(
   target: object | TFunction,
   propertyKey?: string | symbol,

@@ -178,7 +178,7 @@ describe('ExploreService', () => {
     ][])(
       'correctly get all notes owned by user with',
       (name, noteType, sortBy, search, regex, bindings) => {
-        // eslint-disable-next-line jest/valid-title
+        // oxlint-disable-next-line jest/valid-title
         it(name, async () => {
           mockQuery('select', tracker, regex, selectedRows);
           mockQuery(
@@ -254,7 +254,7 @@ describe('ExploreService', () => {
     ][])(
       'correctly get all notes shared with the user with',
       (name, noteType, sortBy, search, regex, bindings) => {
-        // eslint-disable-next-line jest/valid-title
+        // oxlint-disable-next-line jest/valid-title
         it(name, async () => {
           mockQuery('select', tracker, regex, selectedRows);
           mockQuery(
@@ -337,7 +337,7 @@ describe('ExploreService', () => {
     ][])(
       'correctly get all public notes with',
       (name, noteType, sortBy, search, regex, bindings) => {
-        // eslint-disable-next-line jest/valid-title
+        // oxlint-disable-next-line jest/valid-title
         it(name, async () => {
           mockSelect(
             tracker,
@@ -462,7 +462,7 @@ describe('ExploreService', () => {
     ][])(
       'correctly get all notes visited by the user with',
       (name, noteType, sortBy, search, regex, bindings) => {
-        // eslint-disable-next-line jest/valid-title
+        // oxlint-disable-next-line jest/valid-title
         it(name, async () => {
           mockQuery(
             'select',

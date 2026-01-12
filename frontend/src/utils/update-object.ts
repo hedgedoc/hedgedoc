@@ -20,7 +20,7 @@ export const updateObject = <T extends Record<string, unknown>>(oldObject: T, ne
   Object.keys(oldObject).forEach((key) => {
     if (Object.prototype.hasOwnProperty.call(newValues, key) && typeof oldObject[key] === typeof newValues[key]) {
       // TypeScript does not allow to assign a value to a key of a generic object (as it could be potentially readonly)
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // oxlint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       oldObject[key] = newValues[key]
     }

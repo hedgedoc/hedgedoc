@@ -21,9 +21,9 @@ jest.mock('fs', () => ({
 describe('authConfig', () => {
   const secret = 'this-is-a-secret';
   const neededAuthConfig = {
-    /* eslint-disable @typescript-eslint/naming-convention */
+    /* oxlint-disable @typescript-eslint/naming-convention */
     HD_AUTH_SESSION_SECRET: secret,
-    /* eslint-enable @typescript-eslint/naming-convention */
+    /* oxlint-enable @typescript-eslint/naming-convention */
   };
 
   describe('local', () => {
@@ -31,20 +31,20 @@ describe('authConfig', () => {
     const enableRegister = true;
     const minimalPasswordStrength = 1;
     const completeLocalConfig = {
-      /* eslint-disable @typescript-eslint/naming-convention */
+      /* oxlint-disable @typescript-eslint/naming-convention */
       HD_AUTH_LOCAL_ENABLE_LOGIN: String(enableLogin),
       HD_AUTH_LOCAL_ENABLE_REGISTER: String(enableRegister),
       HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH: String(minimalPasswordStrength),
-      /* eslint-enable @typescript-eslint/naming-convention */
+      /* oxlint-enable @typescript-eslint/naming-convention */
     };
     describe('is correctly parsed', () => {
       it('when given correct and complete environment variables', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLocalConfig,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -62,11 +62,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_LOCAL_ENABLE_LOGIN is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLocalConfig,
             HD_AUTH_LOCAL_ENABLE_LOGIN: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -84,11 +84,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_LOCAL_ENABLE_REGISTER is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLocalConfig,
             HD_AUTH_LOCAL_ENABLE_REGISTER: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -106,11 +106,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLocalConfig,
             HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -147,11 +147,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH is 5', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLocalConfig,
             HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH: '5',
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -167,11 +167,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH is -1', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLocalConfig,
             HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH: '-1',
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -203,7 +203,7 @@ describe('authConfig', () => {
     const tlsCa = ['./test.pem'];
     const tlsCaContent = ['test-cert\n'];
     const completeLdapConfig = {
-      /* eslint-disable @typescript-eslint/naming-convention */
+      /* oxlint-disable @typescript-eslint/naming-convention */
       HD_AUTH_LDAP_SERVERS: ldapNames.join(','),
       HD_AUTH_LDAP_FUTURAMA_PROVIDER_NAME: providerName,
       HD_AUTH_LDAP_FUTURAMA_URL: url,
@@ -217,16 +217,16 @@ describe('authConfig', () => {
       HD_AUTH_LDAP_FUTURAMA_BIND_DN: bindDn,
       HD_AUTH_LDAP_FUTURAMA_BIND_CREDENTIALS: bindCredentials,
       HD_AUTH_LDAP_FUTURAMA_TLS_CERT_PATHS: tlsCa.join(','),
-      /* eslint-enable @typescript-eslint/naming-convention */
+      /* oxlint-enable @typescript-eslint/naming-convention */
     };
     describe('is correctly parsed', () => {
       it('when given correct and complete environment variables', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLdapConfig,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -255,11 +255,11 @@ describe('authConfig', () => {
       it('when no HD_AUTH_LDAP_FUTURAMA_PROVIDER_NAME is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLdapConfig,
             HD_AUTH_LDAP_FUTURAMA_PROVIDER_NAME: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -287,11 +287,11 @@ describe('authConfig', () => {
       it('when no HD_AUTH_LDAP_FUTURAMA_SEARCH_FILTER is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLdapConfig,
             HD_AUTH_LDAP_FUTURAMA_SEARCH_FILTER: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -319,11 +319,11 @@ describe('authConfig', () => {
       it('when no HD_AUTH_LDAP_FUTURAMA_USER_ID_FIELD is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLdapConfig,
             HD_AUTH_LDAP_FUTURAMA_USER_ID_FIELD: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -351,11 +351,11 @@ describe('authConfig', () => {
       it('when no HD_AUTH_LDAP_FUTURAMA_DISPLAY_NAME_FIELD is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLdapConfig,
             HD_AUTH_LDAP_FUTURAMA_DISPLAY_NAME_FIELD: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -383,11 +383,11 @@ describe('authConfig', () => {
       it('when no HD_AUTH_LDAP_FUTURAMA_PROFILE_PICTURE_FIELD is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLdapConfig,
             HD_AUTH_LDAP_FUTURAMA_PROFILE_PICTURE_FIELD: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -415,11 +415,11 @@ describe('authConfig', () => {
       it('when no HD_AUTH_LDAP_FUTURAMA_BIND_DN is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLdapConfig,
             HD_AUTH_LDAP_FUTURAMA_BIND_DN: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -447,11 +447,11 @@ describe('authConfig', () => {
       it('when no HD_AUTH_LDAP_FUTURAMA_BIND_CREDENTIALS is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLdapConfig,
             HD_AUTH_LDAP_FUTURAMA_BIND_CREDENTIALS: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -479,11 +479,11 @@ describe('authConfig', () => {
       it('when no HD_AUTH_LDAP_FUTURAMA_TLS_CERT_PATHS is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLdapConfig,
             HD_AUTH_LDAP_FUTURAMA_TLS_CERT_PATHS: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -531,11 +531,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_LDAP_FUTURAMA_URL is wrong', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLdapConfig,
             HD_AUTH_LDAP_FUTURAMA_URL: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -551,11 +551,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_LDAP_FUTURAMA_SEARCH_BASE is wrong', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLdapConfig,
             HD_AUTH_LDAP_FUTURAMA_SEARCH_BASE: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -571,11 +571,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_LDAP_FUTURAMA_TLS_CERT_PATHS is wrong', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeLdapConfig,
             HD_AUTH_LDAP_FUTURAMA_TLS_CERT_PATHS: 'not-a-file.pem',
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -615,7 +615,7 @@ describe('authConfig', () => {
     const defaultEmailField = 'email';
     const enableRegistration = 'false';
     const completeOidcConfig = {
-      /* eslint-disable @typescript-eslint/naming-convention */
+      /* oxlint-disable @typescript-eslint/naming-convention */
       HD_AUTH_OIDC_SERVERS: oidcNames.join(','),
       HD_AUTH_OIDC_GITLAB_PROVIDER_NAME: providerName,
       HD_AUTH_OIDC_GITLAB_ISSUER: issuer,
@@ -633,16 +633,16 @@ describe('authConfig', () => {
       HD_AUTH_OIDC_GITLAB_PROFILE_PICTURE_FIELD: profilePictureField,
       HD_AUTH_OIDC_GITLAB_EMAIL_FIELD: emailField,
       HD_AUTH_OIDC_GITLAB_ENABLE_REGISTRATION: enableRegistration,
-      /* eslint-enable @typescript-eslint/naming-convention */
+      /* oxlint-enable @typescript-eslint/naming-convention */
     };
     describe('is correctly parsed', () => {
       it('when given correct and complete environment variables', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeOidcConfig,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -673,11 +673,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_OIDC_GITLAB_THEME is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeOidcConfig,
             HD_AUTH_OIDC_GITLAB_THEME: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -708,11 +708,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_OIDC_GITLAB_AUTHORIZE_URL is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeOidcConfig,
             HD_AUTH_OIDC_GITLAB_AUTHORIZE_URL: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -743,11 +743,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_OIDC_GITLAB_TOKEN_URL is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeOidcConfig,
             HD_AUTH_OIDC_GITLAB_TOKEN_URL: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -778,11 +778,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_OIDC_GITLAB_USERINFO_URL is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeOidcConfig,
             HD_AUTH_OIDC_GITLAB_USERINFO_URL: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -813,11 +813,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_OIDC_GITLAB_END_SESSION_URL is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeOidcConfig,
             HD_AUTH_OIDC_GITLAB_END_SESSION_URL: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -848,11 +848,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_OIDC_GITLAB_SCOPE is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeOidcConfig,
             HD_AUTH_OIDC_GITLAB_SCOPE: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -883,11 +883,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_OIDC_GITLAB_USER_ID_FIELD is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeOidcConfig,
             HD_AUTH_OIDC_GITLAB_USER_ID_FIELD: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -918,11 +918,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_OIDC_GITLAB_DISPLAY_NAME_FIELD is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeOidcConfig,
             HD_AUTH_OIDC_GITLAB_DISPLAY_NAME_FIELD: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -953,11 +953,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_OIDC_GITLAB_PROFILE_PICTURE_FIELD is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeOidcConfig,
             HD_AUTH_OIDC_GITLAB_PROFILE_PICTURE_FIELD: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -990,11 +990,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_OIDC_GITLAB_EMAIL_FIELD is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeOidcConfig,
             HD_AUTH_OIDC_GITLAB_EMAIL_FIELD: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -1025,11 +1025,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_OIDC_GITLAB_ENABLE_REGISTRATION is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeOidcConfig,
             HD_AUTH_OIDC_GITLAB_ENABLE_REGISTRATION: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -1081,11 +1081,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_OIDC_GITLAB_ISSUER is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeOidcConfig,
             HD_AUTH_OIDC_GITLAB_ISSUER: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -1101,11 +1101,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_OIDC_GITLAB_CLIENT_ID is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeOidcConfig,
             HD_AUTH_OIDC_GITLAB_CLIENT_ID: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -1121,11 +1121,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_OIDC_GITLAB_CLIENT_SECRET is not set', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeOidcConfig,
             HD_AUTH_OIDC_GITLAB_CLIENT_SECRET: undefined,
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,
@@ -1141,11 +1141,11 @@ describe('authConfig', () => {
       it('when HD_AUTH_OIDC_GITLAB_THEME is set to a wrong value', () => {
         const restore = mockedEnv(
           {
-            /* eslint-disable @typescript-eslint/naming-convention */
+            /* oxlint-disable @typescript-eslint/naming-convention */
             ...neededAuthConfig,
             ...completeOidcConfig,
             HD_AUTH_OIDC_GITLAB_THEME: 'something else',
-            /* eslint-enable @typescript-eslint/naming-convention */
+            /* oxlint-enable @typescript-eslint/naming-convention */
           },
           {
             clear: true,

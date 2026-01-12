@@ -277,12 +277,12 @@ describe('ApiTokenService', () => {
       });
 
       // expect is common in this test group, and therefore called in afterEach instead of each test
-      // eslint-disable-next-line jest/expect-expect
+      // oxlint-disable-next-line jest/expect-expect
       it('without validUntil', async () => {
         token = await service.createToken(userId, label);
       });
 
-      // eslint-disable-next-line jest/expect-expect
+      // oxlint-disable-next-line jest/expect-expect
       it('with validUntil more than two years in the future', async () => {
         token = await service.createToken(
           userId,
@@ -291,7 +291,7 @@ describe('ApiTokenService', () => {
         );
       });
 
-      // eslint-disable-next-line jest/expect-expect
+      // oxlint-disable-next-line jest/expect-expect
       it('with validUntil less than two years in the future', async () => {
         token = await service.createToken(
           userId,

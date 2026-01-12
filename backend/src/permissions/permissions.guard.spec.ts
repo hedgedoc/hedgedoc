@@ -17,7 +17,7 @@ import { PERMISSION_METADATA_KEY } from './require-permission.decorator';
 
 jest.mock('../api/utils/extract-note-id-from-request');
 
-// eslint-disable-next-line func-style
+// oxlint-disable-next-line func-style
 const buildContext = (
   userId: number | undefined,
   handler: () => void,

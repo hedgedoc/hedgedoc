@@ -45,7 +45,7 @@ describe('extract note from request', () => {
         : {},
       headers: headerValue
         ? {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
+            // oxlint-disable-next-line @typescript-eslint/naming-convention
             'hedgedoc-note': headerValue,
           }
         : {},

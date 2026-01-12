@@ -14,9 +14,9 @@ describe('externalServices', () => {
   it('correctly parses valid config', () => {
     const restore = mockedEnv(
       {
-        /* eslint-disable @typescript-eslint/naming-convention */
+        /* oxlint-disable @typescript-eslint/naming-convention */
         HD_PLANTUML_SERVER: plantUmlServer,
-        /* eslint-enable @typescript-eslint/naming-convention */
+        /* oxlint-enable @typescript-eslint/naming-convention */
       },
       {
         clear: true,
@@ -51,9 +51,9 @@ describe('externalServices', () => {
       const invalid = 'wrong!';
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_PLANTUML_SERVER: invalid,
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -70,9 +70,9 @@ describe('externalServices', () => {
     it('when image proxy is configured', () => {
       const restore = mockedEnv(
         {
-          /* eslint-disable @typescript-eslint/naming-convention */
+          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_IMAGE_PROXY: imageProxy,
-          /* eslint-enable @typescript-eslint/naming-convention */
+          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,

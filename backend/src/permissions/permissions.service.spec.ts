@@ -123,7 +123,7 @@ describe('PermissionsService', () => {
       expectBindings(tracker, 'select', [[mockMediaUploadUuid]], true);
     });
 
-    // eslint-disable-next-line func-style
+    // oxlint-disable-next-line func-style
     const buildMockSelect = (returnValues: unknown) => {
       mockSelect(
         tracker,
@@ -200,7 +200,7 @@ describe('PermissionsService', () => {
   });
 
   describe('isOwner', () => {
-    // eslint-disable-next-line func-style
+    // oxlint-disable-next-line func-style
     const buildMockSelect = (returnValues: unknown) => {
       mockSelect(
         tracker,
@@ -285,7 +285,7 @@ describe('PermissionsService', () => {
     });
 
     for (const testCase of determinePermissionTestCases) {
-      // eslint-disable-next-line jest/valid-title
+      // oxlint-disable-next-line jest/valid-title
       it(testCase.description, async () => {
         // Owner
         spyOnPermissionsServiceIsOwner.mockResolvedValue(testCase.isOwner);
@@ -387,7 +387,7 @@ describe('PermissionsService', () => {
       });
       it('and user is registered', async () => {
         const spyOneNotifyOthers = jest.spyOn(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // oxlint-disable-next-line @typescript-eslint/no-explicit-any
           service as any,
           'notifyOthers',
         );
@@ -408,7 +408,7 @@ describe('PermissionsService', () => {
     let spyOneNotifyOthers: jest.SpyInstance;
     beforeEach(() => {
       spyOneNotifyOthers = jest.spyOn(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // oxlint-disable-next-line @typescript-eslint/no-explicit-any
         service as any,
         'notifyOthers',
       );
@@ -458,7 +458,7 @@ describe('PermissionsService', () => {
   describe('setGroupPermission', () => {
     it('correctly sets group permissions and notifies other user', async () => {
       const spyOneNotifyOthers = jest.spyOn(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // oxlint-disable-next-line @typescript-eslint/no-explicit-any
         service as any,
         'notifyOthers',
       );
@@ -477,12 +477,12 @@ describe('PermissionsService', () => {
     let spyOneNotifyOthers: jest.SpyInstance;
     beforeEach(() => {
       spyOneNotifyOthers = jest.spyOn(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // oxlint-disable-next-line @typescript-eslint/no-explicit-any
         service as any,
         'notifyOthers',
       );
     });
-    // eslint-disable-next-line func-style
+    // oxlint-disable-next-line func-style
     const buildMockDelete = (deletedEntries: number) => {
       mockDelete(
         tracker,
@@ -514,12 +514,12 @@ describe('PermissionsService', () => {
     let spyOneNotifyOthers: jest.SpyInstance;
     beforeEach(() => {
       spyOneNotifyOthers = jest.spyOn(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // oxlint-disable-next-line @typescript-eslint/no-explicit-any
         service as any,
         'notifyOthers',
       );
     });
-    // eslint-disable-next-line func-style
+    // oxlint-disable-next-line func-style
     const buildMockUpdate = (updatedEntries: number) => {
       mockUpdate(
         tracker,
@@ -546,7 +546,7 @@ describe('PermissionsService', () => {
   });
 
   describe('changePubliclyVisibly', () => {
-    // eslint-disable-next-line func-style
+    // oxlint-disable-next-line func-style
     const buildMockUpdate = (updatedEntries: number) => {
       mockUpdate(
         tracker,
@@ -571,7 +571,7 @@ describe('PermissionsService', () => {
   });
 
   describe('getPermissionsDtoForNote', () => {
-    // eslint-disable-next-line func-style
+    // oxlint-disable-next-line func-style
     const buildMockOwnerSelect = (returnValues: unknown) => {
       mockSelect(
         tracker,
@@ -591,7 +591,7 @@ describe('PermissionsService', () => {
         ],
       );
     };
-    // eslint-disable-next-line func-style
+    // oxlint-disable-next-line func-style
     const buildMockUserPermissionsSelect = (returnValues: unknown) => {
       mockSelect(
         tracker,
@@ -611,7 +611,7 @@ describe('PermissionsService', () => {
         ],
       );
     };
-    // eslint-disable-next-line func-style
+    // oxlint-disable-next-line func-style
     const buildMockGroupPermissionsSelect = (returnValues: unknown) => {
       mockSelect(
         tracker,

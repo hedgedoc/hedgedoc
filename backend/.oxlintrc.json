@@ -1,0 +1,42 @@
+{
+  "$schema": "../node_modules/oxlint/configuration_schema.json",
+  "jsPlugins": ["./oxlint-local-rules.js"],
+  "plugins": [
+    "typescript",
+    "jest",
+    "oxc"
+  ],
+  "rules": {
+    "no-debugger": "warn",
+    "hedgedoc-local/correct-logger-context": "error",
+    "typescript/no-unused-vars": ["warn", { "argsIgnorePattern": "^_+$" }],
+    "typescript/return-await": ["error", "always"],
+    "typescript/naming-convention": "off",
+    "typescript/no-base-to-string": "error"
+  },
+  "overrides": [
+    {
+      "files": ["test/**", "src/**/*.spec.ts"],
+      "rules": {
+        "typescript/unbound-method": "off",
+        "typescript/no-unsafe-assignment": "off",
+        "typescript/no-unsafe-argument": "off",
+        "typescript/no-unsafe-member-access": "off",
+        "typescript/require-await": "off",
+        "typescript/explicit-function-return-type": "off",
+        "jest/unbound-method": "error",
+        "jest/no-standalone-expect": "off"
+      }
+    },
+    {
+      "files": ["src/database/**"],
+      "rules": {
+        "typescript/naming-convention": "off"
+      }
+    }
+  ],
+  "env": {
+    "node": true,
+    "jest": true
+  }
+}

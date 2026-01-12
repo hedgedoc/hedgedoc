@@ -10,7 +10,7 @@ import { Vimeo as IconVimeo } from 'react-bootstrap-icons'
 
 interface VimeoApiResponse {
   // Vimeo uses strange names for their fields. ESLint doesn't like that.
-  // eslint-disable-next-line camelcase
+  // oxlint-disable-next-line camelcase
   thumbnail_large?: string
 }
 

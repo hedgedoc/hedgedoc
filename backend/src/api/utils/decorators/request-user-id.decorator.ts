@@ -23,7 +23,7 @@ type RequestUserIdParameter = {
  * If no user is present and guests are allowed, returns `null`.
  * If no user is present and guests are not allowed, throws {@link UnauthorizedException}.
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+// oxlint-disable-next-line @typescript-eslint/naming-convention
 export const RequestUserId = createParamDecorator(
   (
     data: RequestUserIdParameter = { forbidGuests: false },
