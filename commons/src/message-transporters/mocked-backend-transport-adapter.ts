@@ -45,9 +45,7 @@ export class MockedBackendTransportAdapter implements TransportAdapter {
     }
   }
 
-  bindOnMessageEvent(
-    handler: (value: Message<MessageType>) => void,
-  ): () => void {
+  bindOnMessageEvent(handler: (value: Message<MessageType>) => void): () => void {
     this.messageHandler = handler
     return () => {
       this.messageHandler = undefined
@@ -63,9 +61,7 @@ export class MockedBackendTransportAdapter implements TransportAdapter {
   }
 
   getConnectionState(): ConnectionState {
-    return this.connected
-      ? ConnectionState.CONNECTED
-      : ConnectionState.DISCONNECTED
+    return this.connected ? ConnectionState.CONNECTED : ConnectionState.DISCONNECTED
   }
 
   send(value: Message<MessageType>): void {

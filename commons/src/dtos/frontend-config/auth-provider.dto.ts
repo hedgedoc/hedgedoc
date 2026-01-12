@@ -9,10 +9,7 @@ import { AuthProviderWithoutCustomNameSchema } from './auth-provider-without-cus
 import { z } from 'zod'
 
 export const AuthProviderSchema = z
-  .union([
-    AuthProviderWithoutCustomNameSchema,
-    AuthProviderWithCustomNameSchema,
-  ])
+  .union([AuthProviderWithoutCustomNameSchema, AuthProviderWithCustomNameSchema])
   .describe('A general type for all auth providers')
 
 export type AuthProviderInterface = z.infer<typeof AuthProviderSchema>

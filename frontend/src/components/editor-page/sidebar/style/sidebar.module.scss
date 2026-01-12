@@ -9,7 +9,7 @@
   --sidebar-menu-width: 280px;
   --sidebar-separator-color: var(--bs-secondary);
 
-  :global(body[data-bs-theme=dark]) & {
+  :global(body[data-bs-theme='dark']) & {
     --sidebar-separator-color: rgba(255, 255, 255, 0.2);
   }
 
@@ -30,7 +30,8 @@
     box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
     border-left: solid 1px var(--sidebar-separator-color);
 
-    &:hover, &.show {
+    &:hover,
+    &.show {
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
       left: calc(0px - var(--sidebar-menu-width) + var(--sidebar-entry-height));
     }

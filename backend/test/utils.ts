@@ -1,3 +1,5 @@
+import { PUBLIC_API_PREFIX } from '../src/app.module';
+import { NotePermissionsDto } from '../src/dtos/note-permissions.dto';
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
@@ -5,9 +7,6 @@
  */
 import { promises as fs } from 'fs';
 import request from 'supertest';
-
-import { PUBLIC_API_PREFIX } from '../src/app.module';
-import { NotePermissionsDto } from '../src/dtos/note-permissions.dto';
 
 /**
  * Ensures the directory at `path` is deleted.

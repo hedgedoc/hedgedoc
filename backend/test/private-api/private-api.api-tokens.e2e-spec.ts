@@ -1,3 +1,7 @@
+import { PRIVATE_API_PREFIX } from '../../src/app.module';
+import { dateTimeToISOString, getCurrentDateTime } from '../../src/utils/datetime';
+import { TestSetup, TestSetupBuilder } from '../test-setup';
+import { setupAgent } from './utils/setup-agent';
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
@@ -5,14 +9,6 @@
  */
 import { ApiTokenWithSecretInterface } from '@hedgedoc/commons';
 import request from 'supertest';
-
-import { PRIVATE_API_PREFIX } from '../../src/app.module';
-import {
-  dateTimeToISOString,
-  getCurrentDateTime,
-} from '../../src/utils/datetime';
-import { TestSetup, TestSetupBuilder } from '../test-setup';
-import { setupAgent } from './utils/setup-agent';
 
 describe('Tokens', () => {
   let testSetup: TestSetup;
@@ -26,8 +22,7 @@ describe('Tokens', () => {
     testSetup = await TestSetupBuilder.create().withUsers().build();
     await testSetup.app.init();
 
-    [agentNotLoggedIn, agentGuestUser, agentUser1, agentUser2] =
-      await setupAgent(testSetup);
+    [agentNotLoggedIn, agentGuestUser, agentUser1, agentUser2] = await setupAgent(testSetup);
   });
 
   afterEach(async () => {
@@ -41,16 +36,12 @@ describe('Tokens', () => {
       let apiTokenWithSecret: ApiTokenWithSecretInterface;
       afterEach(() => {
         expect(apiTokenWithSecret.label).toBe(tokenName);
-        expect(
-          new Date(apiTokenWithSecret.validUntil).getTime(),
-        ).toBeGreaterThan(Date.now());
+        expect(new Date(apiTokenWithSecret.validUntil).getTime()).toBeGreaterThan(Date.now());
         expect(apiTokenWithSecret.lastUsedAt).toBe(null);
         expect(apiTokenWithSecret.secret.length).toBe(102);
       });
       it('with validUntil', async () => {
-        const validUntilInTwoDays = dateTimeToISOString(
-          getCurrentDateTime().plus({ days: 2 }),
-        );
+        const validUntilInTwoDays = dateTimeToISOString(getCurrentDateTime().plus({ days: 2 }));
         const response = await agentUser1
           .post(`${PRIVATE_API_PREFIX}/tokens`)
           .send({
@@ -97,10 +88,7 @@ describe('Tokens', () => {
   describe(`GET ${PRIVATE_API_PREFIX}/tokens`, () => {
     const tokenName = 'test';
     beforeEach(async () => {
-      await testSetup.apiTokenService.createToken(
-        testSetup.userIds[0],
-        tokenName,
-      );
+      await testSetup.apiTokenService.createToken(testSetup.userIds[0], tokenName);
     });
     it('owner can see api tokens', async () => {
       const response = await agentUser1
@@ -108,9 +96,7 @@ describe('Tokens', () => {
         .expect('Content-Type', /json/)
         .expect(200);
       expect(response.body[0].label).toBe(tokenName);
-      expect(new Date(response.body[0].validUntil).getTime()).toBeGreaterThan(
-        Date.now(),
-      );
+      expect(new Date(response.body[0].validUntil).getTime()).toBeGreaterThan(Date.now());
       expect(response.body[0].lastUsedAt).toBe(null);
       expect(response.body[0].secret).not.toBeDefined();
     });
@@ -138,10 +124,7 @@ describe('Tokens', () => {
     const tokenName = 'private-api-test-token';
     let keyId: string;
     beforeEach(async () => {
-      const token = await testSetup.apiTokenService.createToken(
-        testSetup.userIds[0],
-        tokenName,
-      );
+      const token = await testSetup.apiTokenService.createToken(testSetup.userIds[0], tokenName);
       keyId = token.keyId;
     });
     it('owner can delete api tokens', async () => {
@@ -149,29 +132,19 @@ describe('Tokens', () => {
         testSetup.userIds[0],
       );
       expect(tokensBefore).toHaveLength(2);
-      await agentUser1
-        .delete(`${PRIVATE_API_PREFIX}/tokens/${keyId}`)
-        .expect(204);
-      const tokens = await testSetup.apiTokenService.getTokensOfUserById(
-        testSetup.userIds[0],
-      );
+      await agentUser1.delete(`${PRIVATE_API_PREFIX}/tokens/${keyId}`).expect(204);
+      const tokens = await testSetup.apiTokenService.getTokensOfUserById(testSetup.userIds[0]);
       // As we already have a token for each user, because of testSetup this is 1 instead of 0
       expect(tokens).toHaveLength(1);
     });
     it("other user can't delete api tokens", async () => {
-      await agentUser2
-        .delete(`${PRIVATE_API_PREFIX}/tokens/${keyId}`)
-        .expect(404);
+      await agentUser2.delete(`${PRIVATE_API_PREFIX}/tokens/${keyId}`).expect(404);
     });
     it("guest user can't delete api tokens", async () => {
-      await agentGuestUser
-        .delete(`${PRIVATE_API_PREFIX}/tokens/${keyId}`)
-        .expect(401);
+      await agentGuestUser.delete(`${PRIVATE_API_PREFIX}/tokens/${keyId}`).expect(401);
     });
     it("non logged-in user can't delete api tokens", async () => {
-      await agentNotLoggedIn
-        .delete(`${PRIVATE_API_PREFIX}/tokens/${keyId}`)
-        .expect(401);
+      await agentNotLoggedIn.delete(`${PRIVATE_API_PREFIX}/tokens/${keyId}`).expect(401);
     });
   });
 });

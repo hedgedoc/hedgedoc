@@ -11,6 +11,4 @@ import { createZodDto } from 'nestjs-zod';
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-export class NoteGroupPermissionUpdateDto extends createZodDto(
-  NoteGroupPermissionUpdateSchema,
-) {}
+export class NoteGroupPermissionUpdateDto extends createZodDto(NoteGroupPermissionUpdateSchema) {}

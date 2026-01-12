@@ -7,12 +7,8 @@ import { z } from 'zod'
 
 export const UsernameCheckResponseSchema = z
   .object({
-    usernameAvailable: z
-      .boolean()
-      .describe('Whether the chosen username is available or not'),
+    usernameAvailable: z.boolean().describe('Whether the chosen username is available or not'),
   })
   .describe('Response to the username check on the register forms')
 
-export type UsernameCheckResponseInterface = z.infer<
-  typeof UsernameCheckResponseSchema
->
+export type UsernameCheckResponseInterface = z.infer<typeof UsernameCheckResponseSchema>

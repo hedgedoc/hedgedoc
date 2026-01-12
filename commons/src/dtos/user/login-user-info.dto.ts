@@ -13,14 +13,8 @@ export const LoginUserInfoSchema = UserInfoSchema.merge(
     authProvider: z
       .nativeEnum(AuthProviderType)
       .describe('The type of login provider used for the current session'),
-    email: z
-      .string()
-      .email()
-      .nullable()
-      .describe('The email address of the user if known'),
+    email: z.string().email().nullable().describe('The email address of the user if known'),
   }),
-).describe(
-  'Information about the user and their auth method for the current session',
-)
+).describe('Information about the user and their auth method for the current session')
 
 export type LoginUserInfoInterface = z.infer<typeof LoginUserInfoSchema>

@@ -17,14 +17,8 @@ export function createDefaultMockExternalServicesConfig(): ExternalServicesConfi
 
 export function registerExternalServiceConfig(
   externalServicesConfig: ExternalServicesConfig,
-): ConfigFactory<ExternalServicesConfig> &
-  ConfigFactoryKeyHost<ExternalServicesConfig> {
-  return registerAs(
-    'externalServicesConfig',
-    (): ExternalServicesConfig => externalServicesConfig,
-  );
+): ConfigFactory<ExternalServicesConfig> & ConfigFactoryKeyHost<ExternalServicesConfig> {
+  return registerAs('externalServicesConfig', (): ExternalServicesConfig => externalServicesConfig);
 }
 
-export default registerExternalServiceConfig(
-  createDefaultMockExternalServicesConfig(),
-);
+export default registerExternalServiceConfig(createDefaultMockExternalServicesConfig());

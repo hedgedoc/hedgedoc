@@ -16,7 +16,9 @@
   cursor: pointer;
   background: transparent;
   padding: 0;
-  transition: height 0.2s, flex-basis 0.2s;
+  transition:
+    height 0.2s,
+    flex-basis 0.2s;
   overflow: hidden;
   color: var(--bs-emphasis-color);
 
@@ -81,5 +83,3 @@
     background: var(--bs-primary);
   }
 }
-
-

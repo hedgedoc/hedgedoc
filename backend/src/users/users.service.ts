@@ -4,12 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { AuthProviderType, REGEX_USERNAME } from '@hedgedoc/commons';
-import {
-  FieldNameUser,
-  TableUser,
-  TypeUpdateUser,
-  User,
-} from '@hedgedoc/database';
+import { FieldNameUser, TableUser, TypeUpdateUser, User } from '@hedgedoc/database';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { createHash } from 'crypto';
 import { Knex } from 'knex';
@@ -18,11 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { LoginUserInfoDto } from '../dtos/login-user-info.dto';
 import { UserInfoDto } from '../dtos/user-info.dto';
-import {
-  AlreadyInDBError,
-  GenericDBError,
-  NotInDBError,
-} from '../errors/errors';
+import { AlreadyInDBError, GenericDBError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { dateTimeToDB, getCurrentDateTime } from '../utils/datetime';
 import { generateRandomName } from './random-word-lists/name-randomizer';
@@ -59,9 +50,7 @@ export class UsersService {
     transaction?: Knex,
   ): Promise<number> {
     if (!REGEX_USERNAME.test(username)) {
-      throw new BadRequestException(
-        `The username '${username}' is not a valid username.`,
-      );
+      throw new BadRequestException(`The username '${username}' is not a valid username.`);
     }
 
     const dbActor = transaction ? transaction : this.knex;
@@ -77,18 +66,12 @@ export class UsersService {
     }
 
     try {
-      const newUsers: number[] | Pick<User, FieldNameUser.id>[] = await dbActor(
-        TableUser,
-      ).insert(
+      const newUsers: number[] | Pick<User, FieldNameUser.id>[] = await dbActor(TableUser).insert(
         {
           [FieldNameUser.username]: username,
           [FieldNameUser.displayName]: displayName,
           [FieldNameUser.email]: email ?? null,
-          [FieldNameUser.photoUrl]: this.generatePhotoUrl(
-            username,
-            email,
-            photoUrl,
-          ),
+          [FieldNameUser.photoUrl]: this.generatePhotoUrl(username, email, photoUrl),
           // TODO Use generatePhotoUrl method to generate a random avatar image
           [FieldNameUser.guestUuid]: null,
           [FieldNameUser.authorStyle]: this.generateAuthorStyleIndex(username),
@@ -99,9 +82,7 @@ export class UsersService {
       if (newUsers.length !== 1) {
         throw new Error('User was not added to the database');
       }
-      return typeof newUsers[0] === 'number'
-        ? newUsers[0]
-        : newUsers[0][FieldNameUser.id];
+      return typeof newUsers[0] === 'number' ? newUsers[0] : newUsers[0][FieldNameUser.id];
     } catch {
       throw new GenericDBError(
         `Failed to create user '${username}', no user was created.`,
@@ -120,19 +101,20 @@ export class UsersService {
   async createGuestUser(): Promise<[string, number]> {
     const randomName = generateRandomName();
     const uuid = uuidv4();
-    const createdUserIds: number[] | Pick<User, FieldNameUser.id>[] =
-      await this.knex(TableUser).insert(
-        {
-          [FieldNameUser.username]: null,
-          [FieldNameUser.displayName]: `Guest ${randomName}`,
-          [FieldNameUser.email]: null,
-          [FieldNameUser.photoUrl]: null,
-          [FieldNameUser.guestUuid]: uuid,
-          [FieldNameUser.authorStyle]: this.generateAuthorStyleIndex(uuid),
-          [FieldNameUser.createdAt]: dateTimeToDB(getCurrentDateTime()),
-        },
-        [FieldNameUser.id],
-      );
+    const createdUserIds: number[] | Pick<User, FieldNameUser.id>[] = await this.knex(
+      TableUser,
+    ).insert(
+      {
+        [FieldNameUser.username]: null,
+        [FieldNameUser.displayName]: `Guest ${randomName}`,
+        [FieldNameUser.email]: null,
+        [FieldNameUser.photoUrl]: null,
+        [FieldNameUser.guestUuid]: uuid,
+        [FieldNameUser.authorStyle]: this.generateAuthorStyleIndex(uuid),
+        [FieldNameUser.createdAt]: dateTimeToDB(getCurrentDateTime()),
+      },
+      [FieldNameUser.id],
+    );
     if (createdUserIds.length !== 1) {
       throw new GenericDBError(
         'Failed to create guest user',
@@ -154,9 +136,7 @@ export class UsersService {
    * @throws NotInDBError if the username has no user associated with it
    */
   async deleteUser(userId: number): Promise<void> {
-    const usersDeleted = await this.knex(TableUser)
-      .where(FieldNameUser.id, userId)
-      .delete();
+    const usersDeleted = await this.knex(TableUser).where(FieldNameUser.id, userId).delete();
     if (usersDeleted === 0) {
       throw new NotInDBError(
         `User with id '${userId}' not found`,
@@ -202,9 +182,7 @@ export class UsersService {
       this.logger.debug('No update data provided.', 'updateUser');
       return;
     }
-    const result = await this.knex(TableUser)
-      .where(FieldNameUser.id, userId)
-      .update(updateData);
+    const result = await this.knex(TableUser).where(FieldNameUser.id, userId).update(updateData);
     if (result !== 1) {
       throw new NotInDBError(
         `Failed to update user '${userId}'.`,
@@ -221,10 +199,7 @@ export class UsersService {
    * @param transaction The optional transaction to use
    * @returns true if the user exists, false otherwise
    */
-  async isUsernameTaken(
-    username: string,
-    transaction?: Knex,
-  ): Promise<boolean> {
+  async isUsernameTaken(username: string, transaction?: Knex): Promise<boolean> {
     const dbActor = transaction ? transaction : this.knex;
     const result = await dbActor(TableUser)
       .select(FieldNameUser.username)
@@ -239,10 +214,7 @@ export class UsersService {
    * @param transaction the optional transaction to access the db
    * @returns true if the user is registered, false otherwise
    */
-  async isRegisteredUser(
-    userId: User[FieldNameUser.id],
-    transaction?: Knex,
-  ): Promise<boolean> {
+  async isRegisteredUser(userId: User[FieldNameUser.id], transaction?: Knex): Promise<boolean> {
     const dbActor = transaction ? transaction : this.knex;
     const usernameResponse = await dbActor(TableUser)
       .select(FieldNameUser.username)
@@ -313,8 +285,7 @@ export class UsersService {
     }
     return UserInfoDto.create({
       username: user[FieldNameUser.username],
-      displayName:
-        user[FieldNameUser.displayName] ?? user[FieldNameUser.username],
+      displayName: user[FieldNameUser.displayName] ?? user[FieldNameUser.username],
       photoUrl: user[FieldNameUser.photoUrl],
     });
   }
@@ -327,10 +298,7 @@ export class UsersService {
    * @throws {NotInDBError} if the user could not be found
    */
   async getUserById(userId: number): Promise<User> {
-    const user = await this.knex(TableUser)
-      .select()
-      .where(FieldNameUser.id, userId)
-      .first();
+    const user = await this.knex(TableUser).select().where(FieldNameUser.id, userId).first();
     if (!user) {
       throw new NotInDBError(`User with id "${userId}" does not exist`);
     }
@@ -358,9 +326,7 @@ export class UsersService {
     }
     if (email && email.length > 0) {
       // TODO Add config option to enable or disable libravatar
-      const hash = createHash('sha256')
-        .update(email.toLowerCase())
-        .digest('hex');
+      const hash = createHash('sha256').update(email.toLowerCase()).digest('hex');
       return `https://seccdn.libravatar.org/avatar/${hash}`;
     }
     // TODO Generate random fallback image (data URL) with the username as seed
@@ -388,14 +354,10 @@ export class UsersService {
    * @param authProvider The auth provider used for the current login session
    * @returns The built OwnUserInfoDto
    */
-  toLoginUserInfoDto(
-    user: User,
-    authProvider: AuthProviderType,
-  ): LoginUserInfoDto {
+  toLoginUserInfoDto(user: User, authProvider: AuthProviderType): LoginUserInfoDto {
     return LoginUserInfoDto.create({
       username: user[FieldNameUser.username],
-      displayName:
-        user[FieldNameUser.displayName] ?? user[FieldNameUser.username],
+      displayName: user[FieldNameUser.displayName] ?? user[FieldNameUser.username],
       photoUrl: user[FieldNameUser.photoUrl],
       email: user[FieldNameUser.email] ?? null,
       authProvider,

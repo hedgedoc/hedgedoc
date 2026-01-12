@@ -100,15 +100,9 @@ export class GroupsService {
    * @returns The raw database group object
    * @throws NotInDBError if there is no group with this name
    */
-  private async getRawGroupByName(
-    name: string,
-    transaction?: Knex,
-  ): Promise<Group | undefined> {
+  private async getRawGroupByName(name: string, transaction?: Knex): Promise<Group | undefined> {
     const dbActor = transaction ?? this.knex;
-    return await dbActor(TableGroup)
-      .select()
-      .where(FieldNameGroup.name, name)
-      .first();
+    return await dbActor(TableGroup).select().where(FieldNameGroup.name, name).first();
   }
 
   /**
@@ -129,14 +123,8 @@ export class GroupsService {
     });
   }
 
-  private async innerGetGroupsForUser(
-    userId: number,
-    transaction: Knex,
-  ): Promise<Group[]> {
-    const specialGroupEveryone = await this.getRawGroupByName(
-      SpecialGroup.EVERYONE,
-      transaction,
-    );
+  private async innerGetGroupsForUser(userId: number, transaction: Knex): Promise<Group[]> {
+    const specialGroupEveryone = await this.getRawGroupByName(SpecialGroup.EVERYONE, transaction);
     if (specialGroupEveryone === undefined) {
       throw new NotInDBError(
         `Special group '${SpecialGroup.EVERYONE}' not found. Did the database migrations run?`,
@@ -150,10 +138,7 @@ export class GroupsService {
       )
       .where(`${TableGroupUser}.${FieldNameGroupUser.userId}`, userId)
       .select();
-    const isRegisteredUser = await this.usersService.isRegisteredUser(
-      userId,
-      transaction,
-    );
+    const isRegisteredUser = await this.usersService.isRegisteredUser(userId, transaction);
     if (isRegisteredUser) {
       const specialGroupLoggedIn = await this.getRawGroupByName(
         SpecialGroup.LOGGED_IN,

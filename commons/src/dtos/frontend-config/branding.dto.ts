@@ -8,10 +8,7 @@ import { z } from 'zod'
 
 export const BrandingSchema = z
   .object({
-    name: z
-      .string()
-      .nullable()
-      .describe('The name to be displayed next to the HedgeDoc logo'),
+    name: z.string().nullable().describe('The name to be displayed next to the HedgeDoc logo'),
     logo: z
       .string()
       .url()

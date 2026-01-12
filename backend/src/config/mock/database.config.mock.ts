@@ -11,8 +11,7 @@ import { DatabaseConfig } from '../database.config';
 
 export function createDefaultMockDatabaseConfig(): DatabaseConfig {
   return {
-    type: (process.env.HEDGEDOC_TEST_DB_TYPE ||
-      DatabaseType.SQLITE) as DatabaseType,
+    type: (process.env.HEDGEDOC_TEST_DB_TYPE || DatabaseType.SQLITE) as DatabaseType,
     name: 'hedgedoc',
     password: 'hedgedoc',
     host: 'localhost',

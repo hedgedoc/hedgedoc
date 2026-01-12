@@ -31,19 +31,15 @@ export async function getServerVersionFromPackageJson(): Promise<ServerVersionDt
  * @throws Error if the package.json couldn't be found or doesn't contain a correct version.
  */
 async function parseVersionFromPackageJson(): Promise<ServerVersionDto> {
-  const rawFileContent: string = await fs.readFile(
-    joinPath(__dirname, '../../../package.json'),
-    { encoding: 'utf8' },
-  );
+  const rawFileContent: string = await fs.readFile(joinPath(__dirname, '../../../package.json'), {
+    encoding: 'utf8',
+  });
   const packageInfo = JSON.parse(rawFileContent) as { version: string };
   const versionParts = Optional.ofNullable(packageInfo.version)
     .orThrow(() => new Error('No version found in root package.json'))
     .map((version) => /^(\d+).(\d+).(\d+)(?:-([\w.]+))?$/g.exec(version))
     .orElseThrow(
-      () =>
-        new Error(
-          `Version from package.json is malformed. Got ${packageInfo.version}`,
-        ),
+      () => new Error(`Version from package.json is malformed. Got ${packageInfo.version}`),
     );
   return ServerVersionDto.create({
     major: parseInt(versionParts[1]),

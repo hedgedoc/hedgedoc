@@ -1,11 +1,3 @@
-/*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
- *
- * SPDX-License-Identifier: AGPL-3.0-only
- */
-import { promises as fs } from 'fs';
-import request from 'supertest';
-
 import { PRIVATE_API_PREFIX } from '../../src/app.module';
 import { NotInDBError } from '../../src/errors/errors';
 import {
@@ -17,6 +9,13 @@ import {
   username2,
 } from '../test-setup';
 import { setupAgent } from './utils/setup-agent';
+/*
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+import { promises as fs } from 'fs';
+import request from 'supertest';
 
 describe('Me', () => {
   let testSetup: TestSetup;
@@ -32,11 +31,9 @@ describe('Me', () => {
     testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
     await testSetup.app.init();
 
-    [agentNotLoggedIn, agentGuestUser, agentUser1, agentUser2] =
-      await setupAgent(testSetup);
+    [agentNotLoggedIn, agentGuestUser, agentUser1, agentUser2] = await setupAgent(testSetup);
 
-    uploadPath =
-      testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
+    uploadPath = testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
   });
 
   afterEach(async () => {
@@ -145,16 +142,14 @@ describe('Me', () => {
         userId,
         noteId,
       );
-      const mediaUploads =
-        await testSetup.mediaService.getMediaUploadUuidsByUserId(userId);
+      const mediaUploads = await testSetup.mediaService.getMediaUploadUuidsByUserId(userId);
       expect(mediaUploads).toHaveLength(1);
       expect(mediaUploads[0]).toEqual(uploadUuid);
       await agentUser1.delete(`${PRIVATE_API_PREFIX}/me`).expect(204);
-      await expect(
-        testSetup.usersService.getUserDtoByUsername(username1),
-      ).rejects.toThrow(NotInDBError);
-      const mediaUploadsAfter =
-        await testSetup.mediaService.getMediaUploadUuidsByNoteId(noteId);
+      await expect(testSetup.usersService.getUserDtoByUsername(username1)).rejects.toThrow(
+        NotInDBError,
+      );
+      const mediaUploadsAfter = await testSetup.mediaService.getMediaUploadUuidsByNoteId(noteId);
       expect(mediaUploadsAfter).toHaveLength(0);
       await fs.rmdir(uploadPath);
     });
@@ -169,8 +164,7 @@ describe('Me', () => {
           displayName: newDisplayName,
         })
         .expect(200);
-      const dbUser =
-        await testSetup.usersService.getUserDtoByUsername(username1);
+      const dbUser = await testSetup.usersService.getUserDtoByUsername(username1);
       expect(dbUser.displayName).toEqual(newDisplayName);
     });
     it("guest users can't change their display name", async () => {

@@ -11,9 +11,7 @@ export const ApiTokenCreateSchema = z
     validUntil: z
       .string()
       .datetime({ offset: false, precision: 3 })
-      .describe(
-        'Expiry date for the new token. Should be at max two years in the future.',
-      )
+      .describe('Expiry date for the new token. Should be at max two years in the future.')
       .optional(),
   })
   .describe('DTO for creating a new API access token')

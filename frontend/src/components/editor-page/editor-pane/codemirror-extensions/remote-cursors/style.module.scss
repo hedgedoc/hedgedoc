@@ -12,13 +12,13 @@
     box-sizing: content-box;
 
     & {
-      @import "../../../../../../global-styles/variables.module.scss";
+      @import '../../../../../../global-styles/variables.module.scss';
       font-family: $font-family-base;
     }
 
     &:hover {
       &:before {
-        opacity: 1
+        opacity: 1;
       }
     }
 

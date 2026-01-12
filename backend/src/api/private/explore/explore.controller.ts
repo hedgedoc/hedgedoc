@@ -52,13 +52,7 @@ export class ExploreController {
     @Query('type') type?: OptionalNoteType,
   ): Promise<NoteExploreEntryDto[]> {
     this.checkQueryParams(page, sort, type);
-    return this.exploreService.getMyNoteExploreEntries(
-      userId,
-      page,
-      type,
-      sort,
-      search,
-    );
+    return this.exploreService.getMyNoteExploreEntries(userId, page, type, sort, search);
   }
 
   @Get('shared')
@@ -71,13 +65,7 @@ export class ExploreController {
     @Query('type') type?: OptionalNoteType,
   ): Promise<NoteExploreEntryDto[]> {
     this.checkQueryParams(page, sort, type);
-    return this.exploreService.getSharedWithMeExploreEntries(
-      userId,
-      page,
-      type,
-      sort,
-      search,
-    );
+    return this.exploreService.getSharedWithMeExploreEntries(userId, page, type, sort, search);
   }
 
   @Get('public')
@@ -89,19 +77,12 @@ export class ExploreController {
     @Query('type') type?: OptionalNoteType,
   ): Promise<NoteExploreEntryDto[]> {
     this.checkQueryParams(page, sort, type);
-    return this.exploreService.getPublicNoteExploreEntries(
-      page,
-      type,
-      sort,
-      search,
-    );
+    return this.exploreService.getPublicNoteExploreEntries(page, type, sort, search);
   }
 
   @Get('pinned')
   @OpenApi(200)
-  getMyPinnedNotes(
-    @RequestUserId() userId: number,
-  ): Promise<NoteExploreEntryDto[]> {
+  getMyPinnedNotes(@RequestUserId() userId: number): Promise<NoteExploreEntryDto[]> {
     return this.exploreService.getMyPinnedNoteExploreEntries(userId);
   }
 
@@ -150,11 +131,7 @@ export class ExploreController {
     return entry;
   }
 
-  private checkQueryParams(
-    page: number,
-    sort?: OptionalSortMode,
-    type?: OptionalNoteType,
-  ): void {
+  private checkQueryParams(page: number, sort?: OptionalSortMode, type?: OptionalNoteType): void {
     this.ensurePageNumberIsValid(page);
     this.ensureTypeQueryParamIsValid(type);
     this.ensureSortQueryParamIsValid(sort);

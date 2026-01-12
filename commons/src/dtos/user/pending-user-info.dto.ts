@@ -8,11 +8,7 @@ import { UserInfoSchema } from './user-info.dto.js'
 
 export const PendingUserInfoSchema = UserInfoSchema.merge(
   z.object({
-    email: z
-      .string()
-      .email()
-      .nullable()
-      .describe('The email address of the user if known'),
+    email: z.string().email().nullable().describe('The email address of the user if known'),
     username: z.string().describe('The username of the user'),
   }),
 ).describe(

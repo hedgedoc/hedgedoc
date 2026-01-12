@@ -17,10 +17,7 @@ import { Client, generators, Issuer, UserinfoResponse } from 'openid-client';
 
 import { RequestWithSession } from '../../api/utils/request.type';
 import appConfiguration, { AppConfig } from '../../config/app.config';
-import authConfiguration, {
-  AuthConfig,
-  OidcConfig,
-} from '../../config/auth.config';
+import authConfiguration, { AuthConfig, OidcConfig } from '../../config/auth.config';
 import { PendingUserInfoDto } from '../../dtos/pending-user-info.dto';
 import { NotInDBError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
@@ -75,9 +72,7 @@ export class OidcService {
    * @param oidcConfig The OIDC configuration to fetch the client config for
    * @returns A promise that resolves to the client configuration.
    */
-  private async fetchClientConfig(
-    oidcConfig: OidcConfig,
-  ): Promise<OidcClientConfigEntry> {
+  private async fetchClientConfig(oidcConfig: OidcConfig): Promise<OidcClientConfigEntry> {
     const useAutodiscover =
       oidcConfig.authorizeUrl === undefined ||
       oidcConfig.tokenUrl === undefined ||
@@ -143,16 +138,10 @@ export class OidcService {
    * @param state The state generated for the login
    * @returns The generated authorization URL
    */
-  getAuthorizationUrl(
-    oidcIdentifier: string,
-    code: string,
-    state: string,
-  ): string {
+  getAuthorizationUrl(oidcIdentifier: string, code: string, state: string): string {
     const clientConfig = this.clientConfigs.get(oidcIdentifier);
     if (!clientConfig) {
-      throw new NotFoundException(
-        'OIDC configuration not found or initialized',
-      );
+      throw new NotFoundException('OIDC configuration not found or initialized');
     }
     const client = clientConfig.client;
     return client.authorizationUrl({
@@ -179,9 +168,7 @@ export class OidcService {
   ): Promise<PendingUserInfoDto> {
     const clientConfig = this.clientConfigs.get(oidcIdentifier);
     if (!clientConfig) {
-      throw new NotFoundException(
-        'OIDC configuration not found or initialized',
-      );
+      throw new NotFoundException('OIDC configuration not found or initialized');
     }
     const client = clientConfig.client;
     const oidcConfig = clientConfig.config;
@@ -255,9 +242,7 @@ export class OidcService {
   ): Promise<Identity | null> {
     const clientConfig = this.clientConfigs.get(oidcIdentifier);
     if (!clientConfig) {
-      throw new NotFoundException(
-        'OIDC configuration not found or initialized',
-      );
+      throw new NotFoundException('OIDC configuration not found or initialized');
     }
     try {
       return await this.identityService.getIdentityFromUserIdAndProviderType(
@@ -269,9 +254,7 @@ export class OidcService {
       // Catch not-found errors when registration via OIDC is enabled and return null instead
       if (e instanceof NotInDBError) {
         if (!clientConfig.config.enableRegistration) {
-          throw new ForbiddenException(
-            'Registration is disabled for this OIDC provider',
-          );
+          throw new ForbiddenException('Registration is disabled for this OIDC provider');
         }
         return null;
       } else {
@@ -293,9 +276,7 @@ export class OidcService {
     }
     const clientConfig = this.clientConfigs.get(oidcIdentifier);
     if (!clientConfig) {
-      throw new InternalServerErrorException(
-        'OIDC configuration not found or initialized',
-      );
+      throw new InternalServerErrorException('OIDC configuration not found or initialized');
     }
     const issuer = clientConfig.issuer;
     const endSessionEndpoint = issuer.metadata.end_session_endpoint;

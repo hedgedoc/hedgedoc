@@ -14,6 +14,4 @@ export const ChangeNoteVisibilitySchema = z
   })
   .describe('DTO to change the visibility of a note.')
 
-export type ChangeNoteVisibilityInterface = z.infer<
-  typeof ChangeNoteVisibilitySchema
->
+export type ChangeNoteVisibilityInterface = z.infer<typeof ChangeNoteVisibilitySchema>

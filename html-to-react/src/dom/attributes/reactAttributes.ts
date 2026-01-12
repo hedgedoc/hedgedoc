@@ -310,6 +310,6 @@ const reactAttributes: Record<string, string> = {
   'xmlns:xlink': 'xmlnsXlink',
   xmlspace: 'xmlSpace',
   ychannelselector: 'yChannelSelector',
-  zoomandpan: 'zoomAndPan'
+  zoomandpan: 'zoomAndPan',
 }
 export default reactAttributes

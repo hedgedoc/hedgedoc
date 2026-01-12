@@ -6,16 +6,8 @@
 import { AuthProviderType } from '@hedgedoc/commons';
 import { FieldNameIdentity, Identity, TableIdentity } from '@hedgedoc/database';
 import { Inject, Injectable } from '@nestjs/common';
-import {
-  OptionsGraph,
-  OptionsType,
-  zxcvbnAsync,
-  zxcvbnOptions,
-} from '@zxcvbn-ts/core';
-import {
-  adjacencyGraphs,
-  dictionary as zxcvbnCommonDictionary,
-} from '@zxcvbn-ts/language-common';
+import { OptionsGraph, OptionsType, zxcvbnAsync, zxcvbnOptions } from '@zxcvbn-ts/core';
+import { adjacencyGraphs, dictionary as zxcvbnCommonDictionary } from '@zxcvbn-ts/language-common';
 import {
   dictionary as zxcvbnEnDictionary,
   translations as zxcvbnEnTranslations,
@@ -24,10 +16,7 @@ import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
 
 import authConfiguration, { AuthConfig } from '../../config/auth.config';
-import {
-  InvalidCredentialsError,
-  PasswordTooWeakError,
-} from '../../errors/errors';
+import { InvalidCredentialsError, PasswordTooWeakError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { dateTimeToDB, getCurrentDateTime } from '../../utils/datetime';
 import { checkPassword, hashPassword } from '../../utils/password';
@@ -91,10 +80,7 @@ export class LocalService {
    * @throws NoLocalIdentityError if the specified user has no local identity
    * @throws PasswordTooWeakError if the password is too weak
    */
-  async updateLocalPassword(
-    userId: number,
-    newPassword: string,
-  ): Promise<void> {
+  async updateLocalPassword(userId: number, newPassword: string): Promise<void> {
     await this.checkPasswordStrength(newPassword);
     const newPasswordHash = await hashPassword(newPassword);
     await this.knex(TableIdentity)
@@ -114,16 +100,12 @@ export class LocalService {
    * @returns The identity of the user if the credentials are valid
    * @throws InvalidCredentialsError if the credentials are invalid
    */
-  async checkLocalPassword(
-    username: string,
-    password: string,
-  ): Promise<Identity> {
-    const identity =
-      await this.identityService.getIdentityFromUserIdAndProviderType(
-        username,
-        AuthProviderType.LOCAL,
-        null,
-      );
+  async checkLocalPassword(username: string, password: string): Promise<Identity> {
+    const identity = await this.identityService.getIdentityFromUserIdAndProviderType(
+      username,
+      AuthProviderType.LOCAL,
+      null,
+    );
     const passwordValid = await checkPassword(
       password,
       identity[FieldNameIdentity.passwordHash] ?? '',

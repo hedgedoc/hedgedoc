@@ -3,12 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  Message,
-  MessageTransporter,
-  MessageType,
-  RealtimeUser,
-} from '@hedgedoc/commons';
+import { Message, MessageTransporter, MessageType, RealtimeUser } from '@hedgedoc/commons';
 import { Listener } from 'eventemitter2';
 
 export type OtherAdapterCollector = () => RealtimeUserStatusAdapter[];
@@ -68,9 +63,7 @@ export class RealtimeUserStatusAdapter {
     const transporterMessagesListener = this.messageTransporter.on(
       MessageType.REALTIME_USER_SINGLE_UPDATE,
       (message: Message<MessageType.REALTIME_USER_SINGLE_UPDATE>) => {
-        this.realtimeUser.cursor = this.acceptCursorUpdateProvider()
-          ? message.payload
-          : null;
+        this.realtimeUser.cursor = this.acceptCursorUpdateProvider() ? message.payload : null;
         this.collectOtherAdapters()
           .filter((adapter) => adapter !== this)
           .forEach((adapter) => adapter.sendCompleteStateToClient());

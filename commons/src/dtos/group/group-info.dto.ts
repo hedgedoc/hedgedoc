@@ -10,9 +10,7 @@ export const GroupInfoSchema = z
     name: z.string().describe('Name of the group'),
     displayName: z
       .string()
-      .describe(
-        'Display name of this group. This is used in the UI, when the group is mentioned.',
-      ),
+      .describe('Display name of this group. This is used in the UI, when the group is mentioned.'),
     isSpecial: z.boolean().describe('Is this group special?'),
   })
   .describe('DTO that contains the information about a group.')

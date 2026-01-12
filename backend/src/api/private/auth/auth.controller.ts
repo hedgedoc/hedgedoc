@@ -48,11 +48,7 @@ export class AuthController {
     }
     request.session.destroy((err) => {
       if (err) {
-        this.logger.error(
-          'Error during logout:' + String(err),
-          undefined,
-          'logout',
-        );
+        this.logger.error('Error during logout:' + String(err), undefined, 'logout');
         throw new InternalServerErrorException('Unable to log out');
       }
     });
@@ -63,15 +59,11 @@ export class AuthController {
 
   @Get('pending-user')
   @OpenApi(200, 400)
-  getPendingUserData(
-    @Req() request: RequestWithSession,
-  ): Partial<PendingUserInfoDto> {
+  getPendingUserData(@Req() request: RequestWithSession): Partial<PendingUserInfoDto> {
     if (!request.session.pendingUser?.confirmationData) {
       throw new BadRequestException('No pending user data');
     }
-    return PendingUserInfoDto.create(
-      request.session.pendingUser.confirmationData,
-    );
+    return PendingUserInfoDto.create(request.session.pendingUser.confirmationData);
   }
 
   @Put('pending-user')
@@ -96,10 +88,8 @@ export class AuthController {
         request.session.pendingUser.authProviderIdentifier,
         request.session.pendingUser.providerUserId,
       );
-    request.session.authProviderType =
-      request.session.pendingUser.authProviderType;
-    request.session.authProviderIdentifier =
-      request.session.pendingUser.authProviderIdentifier;
+    request.session.authProviderType = request.session.pendingUser.authProviderType;
+    request.session.authProviderIdentifier = request.session.pendingUser.authProviderIdentifier;
     // Cleanup
     request.session.pendingUser = undefined;
   }

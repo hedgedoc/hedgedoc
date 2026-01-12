@@ -6,6 +6,4 @@
 import { PendingUserConfirmationSchema } from '@hedgedoc/commons';
 import { createZodDto } from 'nestjs-zod';
 
-export class PendingUserConfirmationDto extends createZodDto(
-  PendingUserConfirmationSchema,
-) {}
+export class PendingUserConfirmationDto extends createZodDto(PendingUserConfirmationSchema) {}

@@ -10,10 +10,7 @@ export const ServerVersionSchema = z
     major: z.number().positive().describe('The major version of the server'),
     minor: z.number().describe('The minor version of the server'),
     patch: z.number().describe('The patch version of the server'),
-    preRelease: z
-      .string()
-      .optional()
-      .describe('The pre release text of the server'),
+    preRelease: z.string().optional().describe('The pre release text of the server'),
     commit: z.string().optional().describe('The commit of the server'),
     fullString: z.string().describe('The full version string of the server'),
   })

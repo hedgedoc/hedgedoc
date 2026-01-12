@@ -25,14 +25,13 @@ export interface ParserOptions {
  */
 export function convertHtmlToReact(
   html: string,
-  options?: ParserOptions
+  options?: ParserOptions,
 ): (ReactElement | string | null)[] {
   const parsedDocument = parseDocument(html, {
-    decodeEntities: options?.decodeEntities ?? true
+    decodeEntities: options?.decodeEntities ?? true,
   })
 
-  const processedDocument =
-    options?.preprocessNodes?.(parsedDocument) ?? parsedDocument
+  const processedDocument = options?.preprocessNodes?.(parsedDocument) ?? parsedDocument
 
   return processNodes(processedDocument.childNodes, options?.transform)
 }

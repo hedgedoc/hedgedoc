@@ -13,10 +13,7 @@ import {
 import { HttpException } from '@nestjs/common/exceptions/http.exception';
 import LdapAuth from 'ldapauth-fork';
 
-import authConfiguration, {
-  AuthConfig,
-  LdapConfig,
-} from '../../config/auth.config';
+import authConfiguration, { AuthConfig, LdapConfig } from '../../config/auth.config';
 import { PendingLdapUserInfoDto } from '../../dtos/pending-ldap-user-info.dto';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 
@@ -78,44 +75,40 @@ export class LdapService {
       });
       // oxlint-disable-next-line @typescript-eslint/no-empty-function
       auth.on('error', () => {}); // Ignore further errors
-      auth.authenticate(
-        username,
-        password,
-        (error, userInfo: Record<string, string>) => {
-          auth.close(() => {
-            // We don't care about the closing
-          });
-          if (error) {
-            const exception = this.getLdapException(username, error);
-            return reject(exception);
-          }
+      auth.authenticate(username, password, (error, userInfo: Record<string, string>) => {
+        auth.close(() => {
+          // We don't care about the closing
+        });
+        if (error) {
+          const exception = this.getLdapException(username, error);
+          return reject(exception);
+        }
 
-          if (!userInfo) {
-            return reject(new UnauthorizedException(LDAP_ERROR_MAP['default']));
-          }
+        if (!userInfo) {
+          return reject(new UnauthorizedException(LDAP_ERROR_MAP['default']));
+        }
 
-          let email: string | null = null;
-          if (userInfo['mail']) {
-            if (Array.isArray(userInfo['mail'])) {
-              email = userInfo['mail'][0] as string;
-            } else {
-              email = userInfo['mail'];
-            }
+        let email: string | null = null;
+        if (userInfo['mail']) {
+          if (Array.isArray(userInfo['mail'])) {
+            email = userInfo['mail'][0] as string;
+          } else {
+            email = userInfo['mail'];
           }
+        }
 
-          return resolve(
-            PendingLdapUserInfoDto.create({
-              email,
-              username: username,
-              id: userInfo[ldapConfig.userIdField],
-              displayName: userInfo[ldapConfig.displayNameField] ?? username,
-              photoUrl: null,
-              // TODO LDAP stores images as binaries, we need to upload them to the media backend
-              // https://github.com/hedgedoc/hedgedoc/issues/5032
-            }),
-          );
-        },
-      );
+        return resolve(
+          PendingLdapUserInfoDto.create({
+            email,
+            username: username,
+            id: userInfo[ldapConfig.userIdField],
+            displayName: userInfo[ldapConfig.displayNameField] ?? username,
+            photoUrl: null,
+            // TODO LDAP stores images as binaries, we need to upload them to the media backend
+            // https://github.com/hedgedoc/hedgedoc/issues/5032
+          }),
+        );
+      });
     });
   }
 
@@ -127,16 +120,10 @@ export class LdapService {
    * @throws NotFoundException if there is no LDAP config with the given identifier
    */
   getLdapConfig(ldapIdentifier: string): LdapConfig {
-    const ldapConfig = this.authConfig.ldap.find(
-      (config) => config.identifier === ldapIdentifier,
-    );
+    const ldapConfig = this.authConfig.ldap.find((config) => config.identifier === ldapIdentifier);
     if (!ldapConfig) {
-      this.logger.warn(
-        `The LDAP config '${ldapIdentifier}' was requested, but doesn't exist`,
-      );
-      throw new NotFoundException(
-        `There is no LDAP config '${ldapIdentifier}'`,
-      );
+      this.logger.warn(`The LDAP config '${ldapIdentifier}' was requested, but doesn't exist`);
+      throw new NotFoundException(`There is no LDAP config '${ldapIdentifier}'`);
     }
     return ldapConfig;
   }
@@ -149,22 +136,16 @@ export class LdapService {
    * @throws UnauthorizedException if the error indicates that the user is not allowed to log in
    * @throws InternalServerErrorException in every other case
    */
-  private getLdapException(
-    username: string,
-    error: Error | string,
-  ): HttpException {
+  private getLdapException(username: string, error: Error | string): HttpException {
     // Invalid credentials / user not found are not errors but login failures
     let message = '';
     if (typeof error === 'object') {
       switch (error.name) {
         case 'InvalidCredentialsError': {
           message = 'Invalid username/password';
-          const ldapComment = error.message.match(
-            /data ([\da-fA-F]*), v[\da-fA-F]*/,
-          );
+          const ldapComment = error.message.match(/data ([\da-fA-F]*), v[\da-fA-F]*/);
           if (ldapComment && ldapComment[1]) {
-            message =
-              LDAP_ERROR_MAP[ldapComment[1]] || LDAP_ERROR_MAP['default'];
+            message = LDAP_ERROR_MAP[ldapComment[1]] || LDAP_ERROR_MAP['default'];
           }
           break;
         }
@@ -179,13 +160,8 @@ export class LdapService {
           break;
       }
     }
-    if (
-      message !== '' ||
-      (typeof error === 'string' && error.startsWith('no such user:'))
-    ) {
-      this.logger.log(
-        `User with username '${username}' could not log in. Reason: ${message}`,
-      );
+    if (message !== '' || (typeof error === 'string' && error.startsWith('no such user:'))) {
+      this.logger.log(`User with username '${username}' could not log in. Reason: ${message}`);
       return new UnauthorizedException(message);
     }
 

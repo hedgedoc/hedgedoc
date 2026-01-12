@@ -12,25 +12,12 @@ import type { Tracker } from 'knex-mock-client';
 import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
 import { expectBindings } from '../database/mock/expect-bindings';
-import {
-  mockDelete,
-  mockInsert,
-  mockSelect,
-  mockUpdate,
-} from '../database/mock/mock-queries';
+import { mockDelete, mockInsert, mockSelect, mockUpdate } from '../database/mock/mock-queries';
 import { mockKnexDb } from '../database/mock/provider';
 import { ApiTokenWithSecretDto } from '../dtos/api-token-with-secret.dto';
-import {
-  NotInDBError,
-  TokenNotValidError,
-  TooManyTokensError,
-} from '../errors/errors';
+import { NotInDBError, TokenNotValidError, TooManyTokensError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
-import {
-  dateTimeToDB,
-  getCurrentDateTime,
-  isoStringToDateTime,
-} from '../utils/datetime';
+import { dateTimeToDB, getCurrentDateTime, isoStringToDateTime } from '../utils/datetime';
 import * as passwordUtils from '../utils/password';
 import { ApiTokenService, AUTH_TOKEN_PREFIX } from './api-token.service';
 
@@ -88,9 +75,7 @@ describe('ApiTokenService', () => {
     describe('fails if', () => {
       it('the keyId has an invalid length', async () => {
         await expect(
-          service.getUserIdForToken(
-            `${AUTH_TOKEN_PREFIX}.123456789.${validSecret}`,
-          ),
+          service.getUserIdForToken(`${AUTH_TOKEN_PREFIX}.123456789.${validSecret}`),
         ).rejects.toThrow(TokenNotValidError);
       });
       it('the secret is missing', async () => {
@@ -100,50 +85,36 @@ describe('ApiTokenService', () => {
       });
       it('the secret has an invalid length', async () => {
         await expect(
-          service.getUserIdForToken(
-            `${AUTH_TOKEN_PREFIX}.${validKeyId}.${'a'.repeat(73)}`,
-          ),
+          service.getUserIdForToken(`${AUTH_TOKEN_PREFIX}.${validKeyId}.${'a'.repeat(73)}`),
         ).rejects.toThrow(TokenNotValidError);
       });
       it('the prefix is wrong', async () => {
-        await expect(
-          service.getUserIdForToken(`hd1.${validKeyId}.${validSecret}`),
-        ).rejects.toThrow(TokenNotValidError);
+        await expect(service.getUserIdForToken(`hd1.${validKeyId}.${validSecret}`)).rejects.toThrow(
+          TokenNotValidError,
+        );
       });
       it('the token contains sections after the secret', async () => {
         await expect(
-          service.getUserIdForToken(
-            `${AUTH_TOKEN_PREFIX}.${validKeyId}.${validSecret}.extra`,
-          ),
+          service.getUserIdForToken(`${AUTH_TOKEN_PREFIX}.${validKeyId}.${validSecret}.extra`),
         ).rejects.toThrow(TokenNotValidError);
       });
       it('the token does not exist in the database', async () => {
         mockSelect(
           tracker,
-          [
-            FieldNameApiToken.secretHash,
-            FieldNameApiToken.userId,
-            FieldNameApiToken.validUntil,
-          ],
+          [FieldNameApiToken.secretHash, FieldNameApiToken.userId, FieldNameApiToken.validUntil],
           TableApiToken,
           FieldNameApiToken.id,
           [],
         );
         await expect(
-          service.getUserIdForToken(
-            `${AUTH_TOKEN_PREFIX}.${validKeyId}.${validSecret}`,
-          ),
+          service.getUserIdForToken(`${AUTH_TOKEN_PREFIX}.${validKeyId}.${validSecret}`),
         ).rejects.toThrow(TokenNotValidError);
         expectBindings(tracker, 'select', [[validKeyId]], true);
       });
       it('ensureTokenIsValid does throw error', async () => {
         mockSelect(
           tracker,
-          [
-            FieldNameApiToken.secretHash,
-            FieldNameApiToken.userId,
-            FieldNameApiToken.validUntil,
-          ],
+          [FieldNameApiToken.secretHash, FieldNameApiToken.userId, FieldNameApiToken.validUntil],
           TableApiToken,
           FieldNameApiToken.id,
           [
@@ -158,9 +129,7 @@ describe('ApiTokenService', () => {
           throw new TokenNotValidError();
         });
         await expect(
-          service.getUserIdForToken(
-            `${AUTH_TOKEN_PREFIX}.${validKeyId}.${validSecret}`,
-          ),
+          service.getUserIdForToken(`${AUTH_TOKEN_PREFIX}.${validKeyId}.${validSecret}`),
         ).rejects.toThrow(TokenNotValidError);
         expectBindings(tracker, 'select', [[validKeyId]], true);
       });
@@ -168,11 +137,7 @@ describe('ApiTokenService', () => {
     it('works', async () => {
       mockSelect(
         tracker,
-        [
-          FieldNameApiToken.secretHash,
-          FieldNameApiToken.userId,
-          FieldNameApiToken.validUntil,
-        ],
+        [FieldNameApiToken.secretHash, FieldNameApiToken.userId, FieldNameApiToken.validUntil],
         TableApiToken,
         FieldNameApiToken.id,
         [
@@ -183,13 +148,7 @@ describe('ApiTokenService', () => {
           },
         ],
       );
-      mockUpdate(
-        tracker,
-        TableApiToken,
-        [FieldNameApiToken.lastUsedAt],
-        FieldNameApiToken.id,
-        1,
-      );
+      mockUpdate(tracker, TableApiToken, [FieldNameApiToken.lastUsedAt], FieldNameApiToken.id, 1);
       jest.spyOn(service, 'ensureTokenIsValid').mockImplementation(() => {});
       const userByToken = await service.getUserIdForToken(
         `${AUTH_TOKEN_PREFIX}.${validKeyId}.${validSecret}`,
@@ -212,11 +171,7 @@ describe('ApiTokenService', () => {
           }),
         );
         await expect(
-          service.createToken(
-            userId,
-            label,
-            isoStringToDateTime(mockValidUntilIso),
-          ),
+          service.createToken(userId, label, isoStringToDateTime(mockValidUntilIso)),
         ).rejects.toThrow(TooManyTokensError);
       });
     });
@@ -232,17 +187,9 @@ describe('ApiTokenService', () => {
           .spyOn(passwordUtils, 'bufferToBase64Url')
           .mockReturnValue(validSecret)
           .mockReturnValue(validKeyId);
-        jest
-          .spyOn(passwordUtils, 'hashApiToken')
-          .mockReturnValue(mockSecretHash);
+        jest.spyOn(passwordUtils, 'hashApiToken').mockReturnValue(mockSecretHash);
         token = {} as ApiTokenWithSecretDto;
-        mockSelect(
-          tracker,
-          [FieldNameApiToken.id],
-          TableApiToken,
-          FieldNameApiToken.userId,
-          [],
-        );
+        mockSelect(tracker, [FieldNameApiToken.id], TableApiToken, FieldNameApiToken.userId, []);
         mockInsert(tracker, TableApiToken, [
           FieldNameApiToken.createdAt,
           FieldNameApiToken.id,
@@ -258,9 +205,7 @@ describe('ApiTokenService', () => {
         expect(token.label).toEqual(label);
         expect(token.validUntil).toEqual(expectedValidUntil);
         expect(token.lastUsedAt).toBeNull();
-        expect(
-          token.secret.startsWith(AUTH_TOKEN_PREFIX + '.' + token.keyId),
-        ).toBe(true);
+        expect(token.secret.startsWith(AUTH_TOKEN_PREFIX + '.' + token.keyId)).toBe(true);
         expectBindings(tracker, 'select', [[userId]]);
         expectBindings(tracker, 'insert', [
           [
@@ -402,23 +347,11 @@ describe('ApiTokenService', () => {
 
   describe('removeToken', () => {
     it('throws if the token is not in the database', async () => {
-      mockDelete(
-        tracker,
-        TableApiToken,
-        [FieldNameApiToken.id, FieldNameApiToken.userId],
-        0,
-      );
-      await expect(service.removeToken(validKeyId, userId)).rejects.toThrow(
-        NotInDBError,
-      );
+      mockDelete(tracker, TableApiToken, [FieldNameApiToken.id, FieldNameApiToken.userId], 0);
+      await expect(service.removeToken(validKeyId, userId)).rejects.toThrow(NotInDBError);
     });
     it('works', async () => {
-      mockDelete(
-        tracker,
-        TableApiToken,
-        [FieldNameApiToken.id, FieldNameApiToken.userId],
-        1,
-      );
+      mockDelete(tracker, TableApiToken, [FieldNameApiToken.id, FieldNameApiToken.userId], 1);
       await service.removeToken(validKeyId, userId);
       expectBindings(tracker, 'delete', [[validKeyId, userId]]);
     });
@@ -437,9 +370,7 @@ describe('ApiTokenService', () => {
 
   describe('auto remove invalid tokens', () => {
     beforeEach(() => {
-      jest
-        .spyOn(service, 'removeInvalidTokens')
-        .mockImplementation(async () => {});
+      jest.spyOn(service, 'removeInvalidTokens').mockImplementation(async () => {});
     });
 
     it('handleCron should call removeInvalidTokens', async () => {

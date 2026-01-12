@@ -8,14 +8,7 @@ import { expect, it, describe } from '@jest/globals'
 
 describe('parse tags', () => {
   it('converts comma separated string tags into string list', () => {
-    expect(parseTags('a,b,c,d,e,f')).toStrictEqual([
-      'a',
-      'b',
-      'c',
-      'd',
-      'e',
-      'f',
-    ])
+    expect(parseTags('a,b,c,d,e,f')).toStrictEqual(['a', 'b', 'c', 'd', 'e', 'f'])
   })
 
   it('accepts a string list as tags', () => {

@@ -15,11 +15,11 @@ import { convertInlineStyleToMap } from './convertInlineStyleToMap.js'
  */
 export function generatePropsFromAttributes(
   attributes: Record<string, string>,
-  key: string | number
+  key: string | number,
 ): Record<string, string | Record<string, string>> {
   const props = Object.assign(
     { key },
-    mapHtmlAttributesToReactElementAttributes(attributes)
+    mapHtmlAttributesToReactElementAttributes(attributes),
   ) as Record<string, string | Record<string, string>>
 
   if (props.style) {

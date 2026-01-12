@@ -8,9 +8,7 @@ import { AuthProviderType } from '../auth/index.js'
 
 export const AuthProviderWithoutCustomNameSchema = z
   .object({
-    type: z
-      .literal(AuthProviderType.LOCAL)
-      .describe('The type of the auth provider'),
+    type: z.literal(AuthProviderType.LOCAL).describe('The type of the auth provider'),
   })
   .describe('Represents the local authentication provider')
 

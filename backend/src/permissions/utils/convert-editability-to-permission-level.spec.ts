@@ -9,13 +9,9 @@ import { convertEditabilityToPermissionLevel } from './convert-editability-to-pe
 
 describe('convert editability to note permission level', () => {
   it('canEdit false is converted to read', () => {
-    expect(convertEditabilityToPermissionLevel(false)).toBe(
-      PermissionLevel.READ,
-    );
+    expect(convertEditabilityToPermissionLevel(false)).toBe(PermissionLevel.READ);
   });
   it('canEdit true is converted to write', () => {
-    expect(convertEditabilityToPermissionLevel(true)).toBe(
-      PermissionLevel.WRITE,
-    );
+    expect(convertEditabilityToPermissionLevel(true)).toBe(PermissionLevel.WRITE);
   });
 });

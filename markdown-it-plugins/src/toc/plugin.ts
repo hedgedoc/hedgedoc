@@ -24,14 +24,14 @@ class Plugin {
   public constructor(md: MarkdownIt, tocOptions?: Partial<TocOptions>) {
     this.tocOptions = {
       ...defaultOptions,
-      ...tocOptions
+      ...tocOptions,
     }
     md.renderer.rules.tocOpen = this.renderTocOpen.bind(this)
     md.renderer.rules.tocClose = this.renderTocClose.bind(this)
     md.renderer.rules.tocBody = this.renderTocBody.bind(this)
     md.core.ruler.push('generateTocAst', (state) => this.generateTocAst(state.tokens))
     md.block.ruler.before('heading', 'toc', this.generateTocToken.bind(this), {
-      alt: ['paragraph', 'reference', 'blockquote']
+      alt: ['paragraph', 'reference', 'blockquote'],
     })
   }
 
@@ -129,7 +129,7 @@ class Plugin {
       const node: TocAst = {
         level: parseInt(token.tag.slice(1), 10),
         name: key,
-        children: []
+        children: [],
       }
       if (node.level > stack[0].level) {
         stack[0].children.push(node)

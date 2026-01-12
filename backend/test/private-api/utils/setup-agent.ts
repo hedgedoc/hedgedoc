@@ -1,3 +1,5 @@
+import { PRIVATE_API_PREFIX } from '../../../src/app.module';
+import { password1, password2, TestSetup, username1, username2 } from '../../test-setup';
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
@@ -5,23 +7,11 @@
  */
 import request from 'supertest';
 
-import { PRIVATE_API_PREFIX } from '../../../src/app.module';
-import {
-  password1,
-  password2,
-  TestSetup,
-  username1,
-  username2,
-} from '../../test-setup';
-
 export async function setupAgent(testSetup: TestSetup) {
   const agentNotLoggedIn = request.agent(testSetup.app.getHttpServer());
 
   const agentGuestUser = request.agent(testSetup.app.getHttpServer());
-  await agentGuestUser
-    .post(`${PRIVATE_API_PREFIX}/auth/guest/register`)
-    .send()
-    .expect(201);
+  await agentGuestUser.post(`${PRIVATE_API_PREFIX}/auth/guest/register`).send().expect(201);
 
   const agentUser1 = request.agent(testSetup.app.getHttpServer());
   await agentUser1

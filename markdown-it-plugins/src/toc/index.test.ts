@@ -36,7 +36,7 @@ describe('toc', () => {
 # Head 1
 
 # Head 1
-`)
+`),
     ).toMatchSnapshot()
   })
 
@@ -56,7 +56,7 @@ describe('toc', () => {
       listClass: 'listClass',
       itemClass: 'itemClass',
       linkClass: 'linkClass',
-      containerId: 'containerId'
+      containerId: 'containerId',
     })
     expect(markdownIt.render(simpleContent)).toMatchSnapshot()
   })
@@ -72,7 +72,7 @@ describe('toc', () => {
 ## Head 2
 
 ### Head 3
-`)
+`),
     ).toMatchSnapshot()
   })
 
@@ -89,7 +89,7 @@ describe('toc', () => {
 ### Head 3
 
 #### Head 4
-`)
+`),
     ).toMatchSnapshot()
   })
 
@@ -106,7 +106,7 @@ describe('toc', () => {
 ### Head 3
 
 #### Head 4
-`)
+`),
     ).toMatchSnapshot()
   })
 
@@ -123,7 +123,7 @@ describe('toc', () => {
 ### Head 3
 
 #### Head 4
-`)
+`),
     ).toMatchSnapshot()
   })
 
@@ -155,19 +155,19 @@ describe('toc', () => {
                 {
                   children: [],
                   level: 3,
-                  name: 'Heading 3'
-                }
+                  name: 'Heading 3',
+                },
               ],
               level: 2,
-              name: 'Heading 2'
-            }
+              name: 'Heading 2',
+            },
           ],
           level: 1,
-          name: 'Head 1'
-        }
+          name: 'Head 1',
+        },
       ],
       level: 0,
-      name: ''
+      name: '',
     })
   })
 
@@ -180,7 +180,7 @@ describe('toc', () => {
 # \`Head 1\` text
 
 # Head 2
-    `)
+    `),
     ).toMatchSnapshot()
   })
 })

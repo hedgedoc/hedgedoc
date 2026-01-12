@@ -57,14 +57,10 @@ export class AliasController {
     @RequestUserId() userId: number,
     @Body() newAliasDto: AliasCreateDto,
   ): Promise<AliasDto> {
-    const noteId = await this.noteService.getNoteIdByAlias(
-      newAliasDto.noteAlias,
-    );
+    const noteId = await this.noteService.getNoteIdByAlias(newAliasDto.noteAlias);
     const isUserOwner = await this.permissionsService.isOwner(userId, noteId);
     if (!isUserOwner) {
-      throw new UnauthorizedException(
-        'Only the owner of a note can modify its aliases',
-      );
+      throw new UnauthorizedException('Only the owner of a note can modify its aliases');
     }
     await this.aliasService.ensureAliasIsAvailable(newAliasDto.newAlias);
     await this.aliasService.addAlias(noteId, newAliasDto.newAlias);
@@ -109,10 +105,7 @@ export class AliasController {
     403,
     404,
   )
-  async removeAlias(
-    @RequestUserId() user: number,
-    @Param('alias') alias: string,
-  ): Promise<void> {
+  async removeAlias(@RequestUserId() user: number, @Param('alias') alias: string): Promise<void> {
     const note = await this.noteService.getNoteIdByAlias(alias);
     if (!(await this.permissionsService.isOwner(user, note))) {
       throw new UnauthorizedException('Reading note denied!');

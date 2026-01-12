@@ -16,10 +16,7 @@ import { isTag, Node } from 'domhandler'
  * @param {String} index The index of the React element relative to it's parent
  * @returns {React.Element} The React style element
  */
-export function processStyleNode(
-  node: Node,
-  index: number | string
-): ReactElement | null {
+export function processStyleNode(node: Node, index: number | string): ReactElement | null {
   if (!isTag(node)) {
     return null
   }

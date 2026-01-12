@@ -7,7 +7,7 @@
 .extendedCodemirror {
   :global(.cm-editor .cm-line) {
     @import '../../../../../global-styles/variables.module';
-    font-family: "Fira Code", $font-family-emojis, Consolas, monaco, monospace;
+    font-family: 'Fira Code', $font-family-emojis, Consolas, monaco, monospace;
   }
 
   &.no-ligatures {

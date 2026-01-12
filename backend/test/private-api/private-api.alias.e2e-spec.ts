@@ -1,3 +1,6 @@
+import { PRIVATE_API_PREFIX } from '../../src/app.module';
+import { noteAlias1, TestSetup, TestSetupBuilder } from '../test-setup';
+import { setupAgent } from './utils/setup-agent';
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
@@ -5,10 +8,6 @@
  */
 import { AliasCreateInterface, AliasUpdateInterface } from '@hedgedoc/commons';
 import request from 'supertest';
-
-import { PRIVATE_API_PREFIX } from '../../src/app.module';
-import { noteAlias1, TestSetup, TestSetupBuilder } from '../test-setup';
-import { setupAgent } from './utils/setup-agent';
 
 describe('Alias', () => {
   let testSetup: TestSetup;
@@ -26,11 +25,9 @@ describe('Alias', () => {
     testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
     await testSetup.app.init();
 
-    [agentNotLoggedIn, agentGuestUser, agentUser1, agentUser2] =
-      await setupAgent(testSetup);
+    [agentNotLoggedIn, agentGuestUser, agentUser1, agentUser2] = await setupAgent(testSetup);
 
-    forbiddenAlias =
-      testSetup.configService.get('noteConfig').forbiddenAliases[0];
+    forbiddenAlias = testSetup.configService.get('noteConfig').forbiddenAliases[0];
     noteId = await testSetup.notesService.getNoteIdByAlias(noteAlias1);
   });
 
@@ -180,46 +177,30 @@ describe('Alias', () => {
     });
 
     it('correctly deletes the alias', async () => {
-      await expect(
-        testSetup.notesService.getNoteIdByAlias(newAlias),
-      ).resolves.toBe(noteId);
-      await agentUser1
-        .delete(`${PRIVATE_API_PREFIX}/alias/${newAlias}`)
-        .expect(204);
-      await expect(
-        testSetup.notesService.getNoteIdByAlias(newAlias),
-      ).rejects.toThrow();
+      await expect(testSetup.notesService.getNoteIdByAlias(newAlias)).resolves.toBe(noteId);
+      await agentUser1.delete(`${PRIVATE_API_PREFIX}/alias/${newAlias}`).expect(204);
+      await expect(testSetup.notesService.getNoteIdByAlias(newAlias)).rejects.toThrow();
     });
 
     describe('does not delete the alias', () => {
       it("if it's an unknown alias", async () => {
-        await agentUser1
-          .delete(`${PRIVATE_API_PREFIX}/alias/i_dont_exist`)
-          .expect(404);
+        await agentUser1.delete(`${PRIVATE_API_PREFIX}/alias/i_dont_exist`).expect(404);
       });
 
       it('if the alias is forbidden', async () => {
-        await agentUser1
-          .delete(`${PRIVATE_API_PREFIX}/alias/${forbiddenAlias}`)
-          .expect(403);
+        await agentUser1.delete(`${PRIVATE_API_PREFIX}/alias/${forbiddenAlias}`).expect(403);
       });
 
       it('if the user does not own the note', async () => {
-        await agentUser2
-          .delete(`${PRIVATE_API_PREFIX}/alias/${newAlias}`)
-          .expect(401);
+        await agentUser2.delete(`${PRIVATE_API_PREFIX}/alias/${newAlias}`).expect(401);
       });
 
       it("if it's primary", async () => {
-        await agentUser1
-          .delete(`${PRIVATE_API_PREFIX}/alias/${noteAlias1}`)
-          .expect(400);
+        await agentUser1.delete(`${PRIVATE_API_PREFIX}/alias/${noteAlias1}`).expect(400);
       });
 
       it('if the user is not logged in', async () => {
-        await agentNotLoggedIn
-          .delete(`${PRIVATE_API_PREFIX}/alias/${newAlias}`)
-          .expect(401);
+        await agentNotLoggedIn.delete(`${PRIVATE_API_PREFIX}/alias/${newAlias}`).expect(401);
       });
     });
   });

@@ -17,15 +17,11 @@ import { CompleteRequest } from '../request.type';
  * Will throw an {@link InternalServerErrorException} if no identifier is present
  */
 // oxlint-disable-next-line @typescript-eslint/naming-convention
-export const SessionAuthProvider = createParamDecorator(
-  (data: unknown, ctx: ExecutionContext) => {
-    const request: CompleteRequest = ctx.switchToHttp().getRequest();
-    if (!request.session?.authProviderType) {
-      // We should have an auth provider here, otherwise something is wrong
-      throw new InternalServerErrorException(
-        'Session is missing an auth provider identifier',
-      );
-    }
-    return request.session.authProviderType;
-  },
-);
+export const SessionAuthProvider = createParamDecorator((data: unknown, ctx: ExecutionContext) => {
+  const request: CompleteRequest = ctx.switchToHttp().getRequest();
+  if (!request.session?.authProviderType) {
+    // We should have an auth provider here, otherwise something is wrong
+    throw new InternalServerErrorException('Session is missing an auth provider identifier');
+  }
+  return request.session.authProviderType;
+});

@@ -6,6 +6,4 @@
 import { GuestRegistrationResponseSchema } from '@hedgedoc/commons';
 import { createZodDto } from 'nestjs-zod';
 
-export class GuestRegistrationResponseDto extends createZodDto(
-  GuestRegistrationResponseSchema,
-) {}
+export class GuestRegistrationResponseDto extends createZodDto(GuestRegistrationResponseSchema) {}

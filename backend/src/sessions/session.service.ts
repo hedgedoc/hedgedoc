@@ -52,9 +52,7 @@ export class SessionService {
    * @param sessionId The session id for which the owning user should be found
    * @returns A Promise that either resolves with the username or rejects with an error
    */
-  async getUserIdForSessionId(
-    sessionId: string,
-  ): Promise<User[FieldNameUser.id] | undefined> {
+  async getUserIdForSessionId(sessionId: string): Promise<User[FieldNameUser.id] | undefined> {
     const session = await this.sessionStore.getAsync(sessionId);
     return session?.userId;
   }
@@ -70,9 +68,7 @@ export class SessionService {
   extractSessionIdFromRequest(request: IncomingMessage): Optional<string> {
     return Optional.ofNullable(request.headers?.cookie)
       .map((cookieHeader) => parseCookie(cookieHeader)[HEDGEDOC_SESSION])
-      .map((rawCookie) =>
-        this.extractVerifiedSessionIdFromCookieContent(rawCookie),
-      );
+      .map((rawCookie) => this.extractVerifiedSessionIdFromCookieContent(rawCookie));
   }
 
   /**
@@ -84,12 +80,9 @@ export class SessionService {
    * @throws Error if the cookie has been found but the content isn't signed
    */
   private extractVerifiedSessionIdFromCookieContent(rawCookie: string): string {
-    const parsedCookie =
-      SessionService.sessionCookieContentRegex.exec(rawCookie);
+    const parsedCookie = SessionService.sessionCookieContentRegex.exec(rawCookie);
     if (parsedCookie === null) {
-      throw new Error(
-        `cookie "${HEDGEDOC_SESSION}" doesn't look like a signed session cookie`,
-      );
+      throw new Error(`cookie "${HEDGEDOC_SESSION}" doesn't look like a signed session cookie`);
     }
     if (unsign(parsedCookie[1], this.authConfig.session.secret) === false) {
       throw new Error(`signature of cookie "${HEDGEDOC_SESSION}" isn't valid.`);

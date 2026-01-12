@@ -18,7 +18,7 @@ import { NodeToReactElementTransformer } from './NodeToReactElementTransformer.j
  */
 export function processNodes(
   nodes: Node[],
-  transform?: NodeToReactElementTransformer
+  transform?: NodeToReactElementTransformer,
 ): (ReactElement | string | null)[] {
   return nodes.map((node, index) => {
     if (transform) {

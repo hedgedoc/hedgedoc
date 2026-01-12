@@ -5,7 +5,9 @@
  */
 
 .menu {
-  transition: height 0.2s, flex-basis 0.2s;
+  transition:
+    height 0.2s,
+    flex-basis 0.2s;
   display: flex;
   flex-direction: column;
   overflow: hidden;

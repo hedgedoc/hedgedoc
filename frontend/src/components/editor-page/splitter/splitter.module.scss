@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-.left, .right {
+.left,
+.right {
   overflow: hidden;
 }
 
@@ -15,7 +16,8 @@
 }
 
 .resizing {
-  .left, .right {
+  .left,
+  .right {
     user-select: none;
   }
 }

@@ -29,9 +29,7 @@ describe('realtime note', () => {
 
   it('can connect and disconnect clients', () => {
     const sut = new RealtimeNote(mockedNoteId, 'nothing');
-    const client1 = new MockConnectionBuilder(sut)
-      .withLoggedInUser(mockUserId)
-      .build();
+    const client1 = new MockConnectionBuilder(sut).withLoggedInUser(mockUserId).build();
     expect(sut.getConnections()).toStrictEqual([client1]);
     expect(sut.hasConnections()).toBeTruthy();
     sut.removeClient(client1);
@@ -72,12 +70,8 @@ describe('realtime note', () => {
   it('announcePermissionChange to all clients', () => {
     const sut = new RealtimeNote(mockedNoteId, 'nothing');
 
-    const client1 = new MockConnectionBuilder(sut)
-      .withLoggedInUser(mockUserId)
-      .build();
-    const client2 = new MockConnectionBuilder(sut)
-      .withLoggedInUser(mockUserId)
-      .build();
+    const client1 = new MockConnectionBuilder(sut).withLoggedInUser(mockUserId).build();
+    const client2 = new MockConnectionBuilder(sut).withLoggedInUser(mockUserId).build();
 
     const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
     const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
@@ -94,12 +88,8 @@ describe('realtime note', () => {
 
   it('announceNoteDeletion to all clients', () => {
     const sut = new RealtimeNote(mockedNoteId, 'nothing');
-    const client1 = new MockConnectionBuilder(sut)
-      .withLoggedInUser(mockUserId)
-      .build();
-    const client2 = new MockConnectionBuilder(sut)
-      .withLoggedInUser(mockUserId)
-      .build();
+    const client1 = new MockConnectionBuilder(sut).withLoggedInUser(mockUserId).build();
+    const client2 = new MockConnectionBuilder(sut).withLoggedInUser(mockUserId).build();
 
     const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
     const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
@@ -117,9 +107,7 @@ describe('realtime note', () => {
   describe('removeClient', () => {
     it('destory if the number of connected clients reaches zero and the lifetime is exceeded', () => {
       const sut = new RealtimeNote(mockedNoteId, 'nothing');
-      const client1 = new MockConnectionBuilder(sut)
-        .withLoggedInUser(mockUserId)
-        .build();
+      const client1 = new MockConnectionBuilder(sut).withLoggedInUser(mockUserId).build();
       const docDestroy = jest.spyOn(sut, 'destroy');
 
       sut.addClient(client1);
@@ -135,9 +123,7 @@ describe('realtime note', () => {
 
     it("doesn't destory when a client reconnects quickly", () => {
       const sut = new RealtimeNote(mockedNoteId, 'nothing');
-      const client1 = new MockConnectionBuilder(sut)
-        .withLoggedInUser(mockUserId)
-        .build();
+      const client1 = new MockConnectionBuilder(sut).withLoggedInUser(mockUserId).build();
       const docDestroy = jest.spyOn(sut, 'destroy');
 
       // Assuming the case where the only connected user reloads the browser

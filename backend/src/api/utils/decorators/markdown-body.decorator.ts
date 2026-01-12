@@ -34,9 +34,7 @@ export const MarkdownBody = createParamDecorator(
         throw new InternalServerErrorException('Failed to parse request body!');
       }
     } else {
-      throw new BadRequestException(
-        'Body Content-Type has to be text/markdown!',
-      );
+      throw new BadRequestException('Body Content-Type has to be text/markdown!');
     }
   },
   [
@@ -47,10 +45,7 @@ export const MarkdownBody = createParamDecorator(
           `Could not enhance param decorator for target ${target.toString()} because key is undefined`,
         );
       }
-      const ownPropertyDescriptor = Object.getOwnPropertyDescriptor(
-        target,
-        key,
-      );
+      const ownPropertyDescriptor = Object.getOwnPropertyDescriptor(target, key);
       if (!ownPropertyDescriptor) {
         throw new Error(
           // oxlint-disable-next-line @typescript-eslint/no-base-to-string

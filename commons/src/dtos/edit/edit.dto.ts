@@ -8,18 +8,9 @@ import { z } from 'zod'
 
 export const EditSchema = z
   .object({
-    username: z
-      .string()
-      .nullable()
-      .describe('The username who changed this section of the note'),
-    startPosition: z
-      .number()
-      .positive()
-      .describe('The offset where the change starts in the note'),
-    endPosition: z
-      .number()
-      .positive()
-      .describe('The offset where the change ends in the note'),
+    username: z.string().nullable().describe('The username who changed this section of the note'),
+    startPosition: z.number().positive().describe('The offset where the change starts in the note'),
+    endPosition: z.number().positive().describe('The offset where the change ends in the note'),
     createdAt: z
       .string()
       .datetime({ offset: false, local: false })

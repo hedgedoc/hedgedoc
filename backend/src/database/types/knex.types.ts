@@ -52,22 +52,10 @@ declare module 'knex/types/tables.js' {
     [TableAlias]: Knex.CompositeTableType<Alias, Alias, TypeUpdateAlias>;
     [TableApiToken]: Knex.CompositeTableType<ApiToken>;
     [TableAuthorshipInfo]: Knex.CompositeTableType<AuthorshipInfo>;
-    [TableGroup]: Knex.CompositeTableType<
-      Group,
-      TypeInsertGroup,
-      TypeUpdateGroup
-    >;
+    [TableGroup]: Knex.CompositeTableType<Group, TypeInsertGroup, TypeUpdateGroup>;
     [TableGroupUser]: GroupUser;
-    [TableIdentity]: Knex.CompositeTableType<
-      Identity,
-      Identity,
-      TypeUpdateIdentity
-    >;
-    [TableMediaUpload]: Knex.CompositeTableType<
-      MediaUpload,
-      MediaUpload,
-      TypeUpdateMediaUpload
-    >;
+    [TableIdentity]: Knex.CompositeTableType<Identity, Identity, TypeUpdateIdentity>;
+    [TableMediaUpload]: Knex.CompositeTableType<MediaUpload, MediaUpload, TypeUpdateMediaUpload>;
     [TableNote]: Knex.CompositeTableType<Note, TypeInsertNote, TypeUpdateNote>;
     [TableNoteGroupPermission]: Knex.CompositeTableType<
       NoteGroupPermission,

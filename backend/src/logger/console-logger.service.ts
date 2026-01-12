@@ -3,13 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  Inject,
-  Injectable,
-  LoggerService,
-  Optional,
-  Scope,
-} from '@nestjs/common';
+import { Inject, Injectable, LoggerService, Optional, Scope } from '@nestjs/common';
 import { isObject } from '@nestjs/common/utils/shared.utils';
 import { blue, cyanBright, green, magentaBright, red, yellow } from 'cli-color';
 
@@ -20,11 +14,7 @@ import { isDevMode } from '../utils/dev-mode';
 
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions;
 
-const CONTEXTS_TO_IGNORE = [
-  'RouterExplorer',
-  'RoutesResolver',
-  'InstanceLoader',
-];
+const CONTEXTS_TO_IGNORE = ['RouterExplorer', 'RoutesResolver', 'InstanceLoader'];
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class ConsoleLoggerService implements LoggerService {
@@ -52,27 +42,13 @@ export class ConsoleLoggerService implements LoggerService {
     this.skipColor = skipColor;
   }
 
-  error(
-    message: unknown,
-    trace = '',
-    functionContext?: string,
-    classContext?: string,
-  ): void {
-    this.printMessage(
-      message,
-      red,
-      this.makeContextString(functionContext, classContext),
-      false,
-    );
+  error(message: unknown, trace = '', functionContext?: string, classContext?: string): void {
+    this.printMessage(message, red, this.makeContextString(functionContext, classContext), false);
     ConsoleLoggerService.printStackTrace(trace);
   }
 
   log(message: unknown, functionContext?: string, classContext?: string): void {
-    if (
-      !isDevMode() &&
-      functionContext &&
-      CONTEXTS_TO_IGNORE.includes(functionContext)
-    ) {
+    if (!isDevMode() && functionContext && CONTEXTS_TO_IGNORE.includes(functionContext)) {
       return;
     }
     if (needToLog(this.appConfig.log.level, Loglevel.INFO)) {
@@ -85,11 +61,7 @@ export class ConsoleLoggerService implements LoggerService {
     }
   }
 
-  warn(
-    message: unknown,
-    functionContext?: string,
-    classContext?: string,
-  ): void {
+  warn(message: unknown, functionContext?: string, classContext?: string): void {
     if (needToLog(this.appConfig.log.level, Loglevel.WARN)) {
       this.printMessage(
         message,
@@ -100,11 +72,7 @@ export class ConsoleLoggerService implements LoggerService {
     }
   }
 
-  debug(
-    message: unknown,
-    functionContext?: string,
-    classContext?: string,
-  ): void {
+  debug(message: unknown, functionContext?: string, classContext?: string): void {
     if (needToLog(this.appConfig.log.level, Loglevel.DEBUG)) {
       this.printMessage(
         message,
@@ -115,11 +83,7 @@ export class ConsoleLoggerService implements LoggerService {
     }
   }
 
-  verbose(
-    message: unknown,
-    functionContext?: string,
-    classContext?: string,
-  ): void {
+  verbose(message: unknown, functionContext?: string, classContext?: string): void {
     if (needToLog(this.appConfig.log.level, Loglevel.TRACE)) {
       this.printMessage(
         message,
@@ -130,10 +94,7 @@ export class ConsoleLoggerService implements LoggerService {
     }
   }
 
-  private makeContextString(
-    functionContext?: string,
-    classContext?: string,
-  ): string {
+  private makeContextString(functionContext?: string, classContext?: string): string {
     let context = classContext ?? this.classContext;
     if (!context) {
       context = 'HedgeDoc';
@@ -189,23 +150,17 @@ export class ConsoleLoggerService implements LoggerService {
     };
     let timeString = '';
     if (this.appConfig.log.showTimestamp) {
-      timeString =
-        new Date(Date.now()).toLocaleString(undefined, localeStringOptions) +
-        ' ';
+      timeString = new Date(Date.now()).toLocaleString(undefined, localeStringOptions) + ' ';
     }
     const contextMessage = context ? blue(`[${context}] `) : '';
     const timestampDiff = this.updateAndGetTimestampDiff(isTimeDiffEnabled);
 
-    process.stdout.write(
-      `${timeString}${contextMessage}${output}${timestampDiff}\n`,
-    );
+    process.stdout.write(`${timeString}${contextMessage}${output}${timestampDiff}\n`);
   }
 
   private updateAndGetTimestampDiff(isTimeDiffEnabled?: boolean): string {
     const includeTimestamp = this.lastTimestamp && isTimeDiffEnabled;
-    const result = includeTimestamp
-      ? yellow(` +${Date.now() - this.lastTimestamp}ms`)
-      : '';
+    const result = includeTimestamp ? yellow(` +${Date.now() - this.lastTimestamp}ms`) : '';
     this.lastTimestamp = Date.now();
     return result;
   }

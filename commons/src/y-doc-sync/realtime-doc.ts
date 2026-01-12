@@ -5,13 +5,7 @@
  */
 import type { EventMap } from 'eventemitter2'
 import { EventEmitter2 } from 'eventemitter2'
-import {
-  applyUpdate,
-  Doc,
-  encodeStateAsUpdate,
-  encodeStateVector,
-  Text as YText,
-} from 'yjs'
+import { applyUpdate, Doc, encodeStateAsUpdate, encodeStateVector, Text as YText } from 'yjs'
 
 const MARKDOWN_CONTENT_CHANNEL_NAME = 'markdownContent'
 
@@ -24,10 +18,7 @@ export interface RealtimeDocEvents extends EventMap {
  */
 export class RealtimeDoc extends EventEmitter2<RealtimeDocEvents> {
   private doc: Doc = new Doc()
-  private readonly docUpdateListener: (
-    update: Uint8Array,
-    origin: unknown,
-  ) => void
+  private readonly docUpdateListener: (update: Uint8Array, origin: unknown) => void
 
   /**
    * Creates a new instance.
@@ -79,9 +70,7 @@ export class RealtimeDoc extends EventEmitter2<RealtimeDocEvents> {
    */
   public encodeStateAsUpdate(encodedTargetStateVector?: number[]): number[] {
     const update =
-      encodedTargetStateVector !== undefined
-        ? new Uint8Array(encodedTargetStateVector)
-        : undefined
+      encodedTargetStateVector !== undefined ? new Uint8Array(encodedTargetStateVector) : undefined
     return Array.from(encodeStateAsUpdate(this.doc, update))
   }
 

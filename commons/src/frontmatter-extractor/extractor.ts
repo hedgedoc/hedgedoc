@@ -19,9 +19,7 @@ const FRONTMATTER_INCOMPLETE_END_REGEX = /^-{1,2}$/
  *         { frontmatterLines }   if a block was found, this property contains the number of lines to skip from the
  *                                given multiline string for retrieving the non-frontmatter content.
  */
-export const extractFrontmatter = (
-  lines: string[],
-): FrontmatterExtractionResult | undefined => {
+export const extractFrontmatter = (lines: string[]): FrontmatterExtractionResult | undefined => {
   if (lines.length < 2 || !FRONTMATTER_BEGIN_REGEX.test(lines[0])) {
     return undefined
   }
@@ -33,10 +31,7 @@ export const extractFrontmatter = (
         incomplete: true,
       }
     }
-    if (
-      lines[i].length === lines[0].length &&
-      FRONTMATTER_END_REGEX.test(lines[i])
-    ) {
+    if (lines[i].length === lines[0].length && FRONTMATTER_END_REGEX.test(lines[i])) {
       return {
         rawText: lines.slice(1, i).join('\n'),
         lineOffset: i + 1,

@@ -3,11 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  AuthProviderType,
-  PermissionLevel,
-  PermissionLevelNames,
-} from '@hedgedoc/commons';
+import { AuthProviderType, PermissionLevel, PermissionLevelNames } from '@hedgedoc/commons';
 import { ConfigModule, registerAs } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { URL } from 'url';
@@ -140,20 +136,14 @@ describe('FrontendConfigService', () => {
           });
         }
         expect(
-          config.authProviders.filter(
-            (provider) => provider.type === AuthProviderType.LDAP,
-          ).length,
+          config.authProviders.filter((provider) => provider.type === AuthProviderType.LDAP).length,
         ).toEqual(authConfig.ldap.length);
         expect(
-          config.authProviders.filter(
-            (provider) => provider.type === AuthProviderType.OIDC,
-          ).length,
+          config.authProviders.filter((provider) => provider.type === AuthProviderType.OIDC).length,
         ).toEqual(authConfig.oidc.length);
         if (authConfig.ldap.length > 0) {
           expect(
-            config.authProviders.find(
-              (provider) => provider.type === AuthProviderType.LDAP,
-            ),
+            config.authProviders.find((provider) => provider.type === AuthProviderType.LDAP),
           ).toEqual({
             type: AuthProviderType.LDAP,
             providerName: authConfig.ldap[0].providerName,
@@ -162,9 +152,7 @@ describe('FrontendConfigService', () => {
         }
         if (authConfig.oidc.length > 0) {
           expect(
-            config.authProviders.find(
-              (provider) => provider.type === AuthProviderType.OIDC,
-            ),
+            config.authProviders.find((provider) => provider.type === AuthProviderType.OIDC),
           ).toEqual({
             type: AuthProviderType.OIDC,
             providerName: authConfig.oidc[0].providerName,
@@ -239,14 +227,8 @@ describe('FrontendConfigService', () => {
                     load: [
                       registerAs('appConfig', () => appConfig),
                       registerAs('authConfig', () => authConfig),
-                      registerAs(
-                        'customizationConfig',
-                        () => customizationConfig,
-                      ),
-                      registerAs(
-                        'externalServicesConfig',
-                        () => externalServicesConfig,
-                      ),
+                      registerAs('customizationConfig', () => customizationConfig),
+                      registerAs('externalServicesConfig', () => externalServicesConfig),
                       registerAs('noteConfig', () => noteConfig),
                     ],
                   }),
@@ -258,18 +240,14 @@ describe('FrontendConfigService', () => {
               const service = module.get(FrontendConfigService);
               const config = await service.getFrontendConfig();
               expect(config.allowRegister).toEqual(enableRegister);
-              expect(config.guestAccess).toEqual(
-                noteConfig.permissions.maxGuestLevel,
-              );
+              expect(config.guestAccess).toEqual(noteConfig.permissions.maxGuestLevel);
               expect(config.branding.name).toEqual(customName);
               expect(config.branding.logo).toEqual(
                 customLogo !== null ? new URL(customLogo).toString() : null,
               );
               expect(config.maxDocumentLength).toEqual(maxDocumentLength);
               expect(config.plantUmlServer).toEqual(
-                plantUmlServer !== null
-                  ? new URL(plantUmlServer).toString()
-                  : null,
+                plantUmlServer !== null ? new URL(plantUmlServer).toString() : null,
               );
               expect(config.specialUrls.imprint).toEqual(
                 imprintLink !== null ? new URL(imprintLink).toString() : null,
@@ -278,14 +256,10 @@ describe('FrontendConfigService', () => {
                 privacyLink !== null ? new URL(privacyLink).toString() : null,
               );
               expect(config.specialUrls.termsOfUse).toEqual(
-                termsOfUseLink !== null
-                  ? new URL(termsOfUseLink).toString()
-                  : null,
+                termsOfUseLink !== null ? new URL(termsOfUseLink).toString() : null,
               );
               expect(config.useImageProxy).toEqual(!!imageProxy);
-              expect(config.version).toEqual(
-                await getServerVersionFromPackageJson(),
-              );
+              expect(config.version).toEqual(await getServerVersionFromPackageJson());
             });
             index += 1;
           }

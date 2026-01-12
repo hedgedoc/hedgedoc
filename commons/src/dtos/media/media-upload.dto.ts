@@ -18,10 +18,7 @@ export const MediaUploadSchema = z
       .string()
       .datetime({ offset: false, local: false })
       .describe('The dater when the upload was created'),
-    username: z
-      .string()
-      .nullable()
-      .describe('The username which uploaded the file'),
+    username: z.string().nullable().describe('The username which uploaded the file'),
   })
   .describe('Metadata for an uploaded file')
 

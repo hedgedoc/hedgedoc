@@ -63,8 +63,7 @@ export const determinePermissionTestCases: DeterminePermissionTestCase[] = [
     result: PermissionLevel.DENY,
   },
   {
-    description:
-      'if user has explicit READ permission, logged-in user can READ',
+    description: 'if user has explicit READ permission, logged-in user can READ',
     isOwner: false,
     isRegisteredUser: true,
     maxGuestLevel: PermissionLevel.FULL,
@@ -75,8 +74,7 @@ export const determinePermissionTestCases: DeterminePermissionTestCase[] = [
     result: PermissionLevel.READ,
   },
   {
-    description:
-      'if user has explicit WRITE permission, logged-in user can WRITE',
+    description: 'if user has explicit WRITE permission, logged-in user can WRITE',
     isOwner: false,
     isRegisteredUser: true,
     maxGuestLevel: PermissionLevel.FULL,
@@ -131,8 +129,7 @@ export const determinePermissionTestCases: DeterminePermissionTestCase[] = [
     result: PermissionLevel.WRITE,
   },
   {
-    description:
-      'if everyone has READ permission, logged-in user can READ (max guest level READ)',
+    description: 'if everyone has READ permission, logged-in user can READ (max guest level READ)',
     isOwner: false,
     isRegisteredUser: true,
     maxGuestLevel: PermissionLevel.READ,
@@ -143,8 +140,7 @@ export const determinePermissionTestCases: DeterminePermissionTestCase[] = [
     result: PermissionLevel.READ,
   },
   {
-    description:
-      'if everyone has READ permission, guest can READ (max guest level READ)',
+    description: 'if everyone has READ permission, guest can READ (max guest level READ)',
     isOwner: false,
     isRegisteredUser: false,
     maxGuestLevel: PermissionLevel.READ,
@@ -167,8 +163,7 @@ export const determinePermissionTestCases: DeterminePermissionTestCase[] = [
     result: PermissionLevel.WRITE,
   },
   {
-    description:
-      'if everyone has WRITE permission, guest can READ (max guest level READ)',
+    description: 'if everyone has WRITE permission, guest can READ (max guest level READ)',
     isOwner: false,
     isRegisteredUser: false,
     maxGuestLevel: PermissionLevel.READ,
@@ -179,8 +174,7 @@ export const determinePermissionTestCases: DeterminePermissionTestCase[] = [
     result: PermissionLevel.READ,
   },
   {
-    description:
-      'if logged-in users have READ permission, logged-in user can READ',
+    description: 'if logged-in users have READ permission, logged-in user can READ',
     isOwner: false,
     isRegisteredUser: true,
     maxGuestLevel: PermissionLevel.FULL,
@@ -202,8 +196,7 @@ export const determinePermissionTestCases: DeterminePermissionTestCase[] = [
     result: PermissionLevel.DENY,
   },
   {
-    description:
-      'if logged-in users have WRITE permission, logged-in user can WRITE',
+    description: 'if logged-in users have WRITE permission, logged-in user can WRITE',
     isOwner: false,
     isRegisteredUser: true,
     maxGuestLevel: PermissionLevel.FULL,
@@ -225,8 +218,7 @@ export const determinePermissionTestCases: DeterminePermissionTestCase[] = [
     result: PermissionLevel.DENY,
   },
   {
-    description:
-      'if user is in group with READ permission, logged-in user can READ',
+    description: 'if user is in group with READ permission, logged-in user can READ',
     isOwner: false,
     isRegisteredUser: true,
     maxGuestLevel: PermissionLevel.FULL,
@@ -237,8 +229,7 @@ export const determinePermissionTestCases: DeterminePermissionTestCase[] = [
     result: PermissionLevel.READ,
   },
   {
-    description:
-      'if user is in group with WRITE permission, logged-in user can WRITE',
+    description: 'if user is in group with WRITE permission, logged-in user can WRITE',
     isOwner: false,
     isRegisteredUser: true,
     maxGuestLevel: PermissionLevel.FULL,

@@ -13,9 +13,7 @@ import { Loglevel } from './loglevel.enum';
  * @returns An array containing the duplicate items
  */
 export function findDuplicatesInArray<T>(array: T[]): T[] {
-  return Array.from(
-    new Set(array.filter((item, index) => array.indexOf(item) !== index)),
-  );
+  return Array.from(new Set(array.filter((item, index) => array.indexOf(item) !== index)));
 }
 
 /**
@@ -26,16 +24,11 @@ export function findDuplicatesInArray<T>(array: T[]): T[] {
  * @param names The array of names to check for duplicates
  * @throws Error if duplicates are found in the names array
  */
-export function ensureNoDuplicatesExist(
-  authName: string,
-  names: string[],
-): void {
+export function ensureNoDuplicatesExist(authName: string, names: string[]): void {
   const duplicates = findDuplicatesInArray(names);
   if (duplicates.length !== 0) {
     throw new Error(
-      `Your ${authName} names '${names.join(
-        ',',
-      )}' contain duplicates: '${duplicates.join(',')}'`,
+      `Your ${authName} names '${names.join(',')}' contain duplicates: '${duplicates.join(',')}'`,
     );
   }
 }
@@ -47,10 +40,7 @@ export function ensureNoDuplicatesExist(
  * @param separator The separator to use for splitting the value (default is ',')
  * @returns An array of strings or undefined if configValue is undefined
  */
-export function toArrayConfig(
-  configValue?: string,
-  separator = ',',
-): string[] | undefined {
+export function toArrayConfig(configValue?: string, separator = ','): string[] | undefined {
   if (!configValue) {
     return undefined;
   }
@@ -67,10 +57,7 @@ export function toArrayConfig(
  * @param requestedLoglevel The requested log level
  * @returns true if the current log level is sufficient to log the requested log level, false otherwise
  */
-export function needToLog(
-  currentLoglevel: Loglevel,
-  requestedLoglevel: Loglevel,
-): boolean {
+export function needToLog(currentLoglevel: Loglevel, requestedLoglevel: Loglevel): boolean {
   const current = transformLoglevelToInt(currentLoglevel);
   const requested = transformLoglevelToInt(requestedLoglevel);
   return current >= requested;

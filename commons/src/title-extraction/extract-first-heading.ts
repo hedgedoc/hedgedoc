@@ -13,9 +13,7 @@ const headlineTagRegex = /^h[1-6]$/gi
  * @param nodes The node whose children should be checked for the headline
  * @return the plain text representation of the first headline. {@code undefined} if no headline has been found.
  */
-export function extractFirstHeading(
-  nodes: NodeWithChildren,
-): string | undefined {
+export function extractFirstHeading(nodes: NodeWithChildren): string | undefined {
   const foundHeadlineNode = checkNodesForHeadline(nodes.children)
   if (!foundHeadlineNode) {
     return

@@ -14,12 +14,10 @@ describe('convertInlineStyleToMap', () => {
   })
   it('should not split on a ; in string', () => {
     const styleObject = convertInlineStyleToMap(
-      "background-image: url('data:image/svg+xml;base64,...');"
+      "background-image: url('data:image/svg+xml;base64,...');",
     )
     expect(Object.keys(styleObject)).toHaveLength(1)
-    expect(styleObject.backgroundImage).toEqual(
-      "url('data:image/svg+xml;base64,...')"
-    )
+    expect(styleObject.backgroundImage).toEqual("url('data:image/svg+xml;base64,...')")
   })
   it('should not split on an escaped ;', () => {
     const styleObject = convertInlineStyleToMap('content: \\;;')
@@ -32,9 +30,7 @@ describe('convertInlineStyleToMap', () => {
     expect(styleObject['--test']).toEqual('okay')
   })
   it('should transform -ms css properties', () => {
-    const styleObject = convertInlineStyleToMap(
-      '-ms-overflow-style: ms-autohiding-scrollbar'
-    )
+    const styleObject = convertInlineStyleToMap('-ms-overflow-style: ms-autohiding-scrollbar')
     expect(Object.keys(styleObject)).toHaveLength(1)
     expect(styleObject['msOverflowStyle']).toEqual('ms-autohiding-scrollbar')
   })

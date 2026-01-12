@@ -9,12 +9,12 @@
 
   :global(code.hljs) {
     overflow-x: auto;
-    background-color: rgba(27, 31, 35, .05);
+    background-color: rgba(27, 31, 35, 0.05);
     padding: 16px;
     display: grid !important;
     grid-template-columns: auto minmax(0, 1fr);
 
-    :global(body[data-bs-theme=dark]) & {
+    :global(body[data-bs-theme='dark']) & {
       background-color: rgb(27, 31, 35);
     }
 

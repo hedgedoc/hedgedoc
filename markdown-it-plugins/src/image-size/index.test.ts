@@ -13,7 +13,7 @@ describe('markdown-it-imsize', function () {
   const md = new MarkdownIt({
     html: true,
     linkify: true,
-    typographer: true
+    typographer: true,
   }).use(imageSize)
 
   it('renders a image without size or title', () => {
@@ -34,7 +34,7 @@ describe('markdown-it-imsize', function () {
 
   it('renders an image with title and size', () => {
     expect(md.renderInline('![test](x "thisisthetitle" =100x200)')).toBe(
-      '<img src="x" alt="test" title="thisisthetitle" width="100" height="200">'
+      '<img src="x" alt="test" title="thisisthetitle" width="100" height="200">',
     )
   })
 

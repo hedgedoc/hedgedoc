@@ -11,6 +11,4 @@ export const GuestRegistrationResponseSchema = z
   })
   .describe('DTO to login as a guest user.')
 
-export type GuestRegistrationResponseInterface = z.infer<
-  typeof GuestRegistrationResponseSchema
->
+export type GuestRegistrationResponseInterface = z.infer<typeof GuestRegistrationResponseSchema>

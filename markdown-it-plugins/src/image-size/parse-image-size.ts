@@ -37,7 +37,7 @@ function parseNextNumber(content: string, startPosition: number, maximalPosition
 
   return {
     position: endCharacterIndex,
-    value: content.slice(startPosition, endCharacterIndex)
+    value: content.slice(startPosition, endCharacterIndex),
   }
 }
 
@@ -57,7 +57,7 @@ const checkImageSizeStart = (code: number): boolean => {
 export function parseImageSize(
   imageSize: string,
   startCharacterPosition: number,
-  maximalCharacterPosition: number
+  maximalCharacterPosition: number,
 ): ParseImageSize | undefined {
   if (startCharacterPosition >= maximalCharacterPosition) {
     return
@@ -93,6 +93,6 @@ export function parseImageSize(
   return {
     width: width.value,
     height: height.value,
-    position: currentCharacterPosition
+    position: currentCharacterPosition,
   }
 }

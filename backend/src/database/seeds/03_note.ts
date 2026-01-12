@@ -107,11 +107,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       [FieldNameRevision.uuid]: guestNoteRevisionUuid,
       [FieldNameRevision.noteId]: 1,
-      [FieldNameRevision.patch]: createPatch(
-        guestNoteAlias,
-        '',
-        guestNoteContent,
-      ),
+      [FieldNameRevision.patch]: createPatch(guestNoteAlias, '', guestNoteContent),
       [FieldNameRevision.content]: guestNoteContent,
       [FieldNameRevision.yjsStateVector]: null,
       [FieldNameRevision.noteType]: NoteType.DOCUMENT,
@@ -122,11 +118,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       [FieldNameRevision.uuid]: userNoteRevisionUuid,
       [FieldNameRevision.noteId]: 1,
-      [FieldNameRevision.patch]: createPatch(
-        userNoteAlias,
-        '',
-        userNoteContent,
-      ),
+      [FieldNameRevision.patch]: createPatch(userNoteAlias, '', userNoteContent),
       [FieldNameRevision.content]: userNoteContent,
       [FieldNameRevision.yjsStateVector]: null,
       [FieldNameRevision.noteType]: NoteType.DOCUMENT,
@@ -137,11 +129,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       [FieldNameRevision.uuid]: userSlideRevisionUuid,
       [FieldNameRevision.noteId]: 1,
-      [FieldNameRevision.patch]: createPatch(
-        userSlideAlias,
-        '',
-        userSlideContent,
-      ),
+      [FieldNameRevision.patch]: createPatch(userSlideAlias, '', userSlideContent),
       [FieldNameRevision.content]: userSlideContent,
       [FieldNameRevision.yjsStateVector]: null,
       [FieldNameRevision.noteType]: NoteType.SLIDE,

@@ -24,14 +24,8 @@ export function createDefaultMockCustomizationConfig(): CustomizationConfig {
 
 export function registerCustomizationConfig(
   customizationConfig: CustomizationConfig,
-): ConfigFactory<CustomizationConfig> &
-  ConfigFactoryKeyHost<CustomizationConfig> {
-  return registerAs(
-    'customizationConfig',
-    (): CustomizationConfig => customizationConfig,
-  );
+): ConfigFactory<CustomizationConfig> & ConfigFactoryKeyHost<CustomizationConfig> {
+  return registerAs('customizationConfig', (): CustomizationConfig => customizationConfig);
 }
 
-export default registerCustomizationConfig(
-  createDefaultMockCustomizationConfig(),
-);
+export default registerCustomizationConfig(createDefaultMockCustomizationConfig());

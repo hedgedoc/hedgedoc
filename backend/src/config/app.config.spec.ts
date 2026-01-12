@@ -175,9 +175,7 @@ describe('appConfig', () => {
         },
       );
       appConfig();
-      expect(spyConsoleError.mock.calls[0][0]).toContain(
-        "HD_BASE_URL: Can't parse as URL",
-      );
+      expect(spyConsoleError.mock.calls[0][0]).toContain("HD_BASE_URL: Can't parse as URL");
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });

@@ -105,10 +105,7 @@ export class MediaService {
     userId: User[FieldNameUser.id],
     noteId: Note[FieldNameNote.id],
   ): Promise<string> {
-    this.logger.debug(
-      `Saving file for note '${noteId}' and user '${userId}'`,
-      'saveFile',
-    );
+    this.logger.debug(`Saving file for note '${noteId}' and user '${userId}'`, 'saveFile');
     const fileTypeResult = await FileType.fromBuffer(fileBuffer);
     if (!fileTypeResult) {
       throw new ClientError('Could not detect file type.');
@@ -117,11 +114,7 @@ export class MediaService {
       throw new ClientError('MIME type not allowed.');
     }
     const uuid = uuidV7();
-    const backendData = await this.mediaBackend.saveFile(
-      uuid,
-      fileBuffer,
-      fileTypeResult,
-    );
+    const backendData = await this.mediaBackend.saveFile(uuid, fileBuffer, fileTypeResult);
     await this.knex(TableMediaUpload).insert({
       [FieldNameMediaUpload.uuid]: uuid,
       [FieldNameMediaUpload.fileName]: fileName,
@@ -153,13 +146,8 @@ export class MediaService {
         'deleteFile',
       );
     }
-    await this.mediaBackend.deleteFile(
-      uuid,
-      backendData[FieldNameMediaUpload.backendData],
-    );
-    await this.knex(TableMediaUpload)
-      .where(FieldNameMediaUpload.uuid, uuid)
-      .delete();
+    await this.mediaBackend.deleteFile(uuid, backendData[FieldNameMediaUpload.backendData]);
+    await this.knex(TableMediaUpload).where(FieldNameMediaUpload.uuid, uuid).delete();
   }
 
   /**
@@ -171,10 +159,7 @@ export class MediaService {
    */
   async getFileUrl(uuid: string): Promise<string> {
     const mediaUpload = await this.knex(TableMediaUpload)
-      .select(
-        FieldNameMediaUpload.backendType,
-        FieldNameMediaUpload.backendData,
-      )
+      .select(FieldNameMediaUpload.backendType, FieldNameMediaUpload.backendData)
       .where(FieldNameMediaUpload.uuid, uuid)
       .first();
     if (mediaUpload === undefined) {
@@ -246,10 +231,7 @@ export class MediaService {
    * @param uuid the media upload to be changed
    */
   async removeNoteFromMediaUpload(uuid: string): Promise<void> {
-    this.logger.debug(
-      'Setting note to null for mediaUpload: ' + uuid,
-      'removeNoteFromMediaUpload',
-    );
+    this.logger.debug('Setting note to null for mediaUpload: ' + uuid, 'removeNoteFromMediaUpload');
     await this.knex(TableMediaUpload)
       .update({
         [FieldNameMediaUpload.noteId]: null,
@@ -273,9 +255,7 @@ export class MediaService {
       case 'webdav':
         return MediaBackendType.WEBDAV;
       default:
-        throw new Error(
-          `Unexpected media backend ${this.mediaConfig.backend.type}`,
-        );
+        throw new Error(`Unexpected media backend ${this.mediaConfig.backend.type}`);
     }
   }
 
@@ -311,13 +291,17 @@ export class MediaService {
       .select<
         (Pick<
           MediaUpload,
-          | FieldNameMediaUpload.uuid
-          | FieldNameMediaUpload.fileName
-          | FieldNameMediaUpload.createdAt
+          FieldNameMediaUpload.uuid | FieldNameMediaUpload.fileName | FieldNameMediaUpload.createdAt
         > &
           Pick<User, FieldNameUser.username> &
           Pick<Alias, FieldNameAlias.alias>)[]
-      >(`${TableMediaUpload}.${FieldNameMediaUpload.uuid}`, `${TableMediaUpload}.${FieldNameMediaUpload.fileName}`, `${TableMediaUpload}.${FieldNameMediaUpload.createdAt}`, `${TableUser}.${FieldNameUser.username}`, `${TableAlias}.${FieldNameAlias.alias}`)
+      >(
+        `${TableMediaUpload}.${FieldNameMediaUpload.uuid}`,
+        `${TableMediaUpload}.${FieldNameMediaUpload.fileName}`,
+        `${TableMediaUpload}.${FieldNameMediaUpload.createdAt}`,
+        `${TableUser}.${FieldNameUser.username}`,
+        `${TableAlias}.${FieldNameAlias.alias}`,
+      )
       .join(
         TableAlias,
         `${TableAlias}.${FieldNameAlias.noteId}`,
@@ -336,9 +320,7 @@ export class MediaService {
         uuid: mediaUpload[FieldNameMediaUpload.uuid],
         fileName: mediaUpload[FieldNameMediaUpload.fileName],
         noteAlias: mediaUpload[FieldNameAlias.alias],
-        createdAt: dateTimeToISOString(
-          dbToDateTime(mediaUpload[FieldNameMediaUpload.createdAt]),
-        ),
+        createdAt: dateTimeToISOString(dbToDateTime(mediaUpload[FieldNameMediaUpload.createdAt])),
         username: mediaUpload[FieldNameUser.username],
       }),
     );

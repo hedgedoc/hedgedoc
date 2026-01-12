@@ -26,9 +26,7 @@ describe('zod error message', () => {
         extractDescriptionFromZodIssue(issue, PREFIX),
       );
       expect(errorMessages).toHaveLength(1);
-      expect(errorMessages[0]).toEqual(
-        `${PREFIX}_PORT: Number must be greater than 0`,
-      );
+      expect(errorMessages[0]).toEqual(`${PREFIX}_PORT: Number must be greater than 0`);
     });
     it('correctly builds an error message on an array object', () => {
       const schema = z.object({
@@ -45,9 +43,7 @@ describe('zod error message', () => {
         extractDescriptionFromZodIssue(issue, PREFIX),
       );
       expect(errorMessages).toHaveLength(1);
-      expect(errorMessages[0]).toEqual(
-        `${PREFIX}_ARRAY[1]: Number must be greater than 0`,
-      );
+      expect(errorMessages[0]).toEqual(`${PREFIX}_ARRAY[1]: Number must be greater than 0`);
     });
   });
 });

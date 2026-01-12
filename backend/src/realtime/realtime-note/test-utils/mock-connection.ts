@@ -3,10 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  MockedBackendTransportAdapter,
-  YDocSyncServerAdapter,
-} from '@hedgedoc/commons';
+import { MockedBackendTransportAdapter, YDocSyncServerAdapter } from '@hedgedoc/commons';
 import { FieldNameUser, User } from '@hedgedoc/database';
 import { Mock } from 'ts-mockery';
 
@@ -29,8 +26,7 @@ export class MockConnectionBuilder {
   private username: string | null;
   private displayName: string;
   private authorStyle: number;
-  private includeRealtimeUserStatus: RealtimeUserState =
-    RealtimeUserState.WITHOUT;
+  private includeRealtimeUserStatus: RealtimeUserState = RealtimeUserState.WITHOUT;
 
   constructor(private readonly realtimeNote: RealtimeNote) {}
 
@@ -99,9 +95,7 @@ export class MockConnectionBuilder {
                 .getConnections()
                 .map((connection) => connection.getRealtimeUserStateAdapter()),
             transporter,
-            () =>
-              this.includeRealtimeUserStatus ===
-              RealtimeUserState.WITH_READWRITE,
+            () => this.includeRealtimeUserStatus === RealtimeUserState.WITH_READWRITE,
           );
 
     const mockUser = Mock.of<User>({
@@ -123,9 +117,7 @@ export class MockConnectionBuilder {
       getRealtimeNote: () => this.realtimeNote,
     });
 
-    transporter.on('disconnected', () =>
-      this.realtimeNote.removeClient(connection),
-    );
+    transporter.on('disconnected', () => this.realtimeNote.removeClient(connection));
 
     this.realtimeNote.addClient(connection);
 

@@ -25,18 +25,10 @@ import * as uuidModule from 'uuid';
 
 import { AliasService } from '../alias/alias.service';
 import appConfigMock from '../config/mock/app.config.mock';
-import {
-  createDefaultMockNoteConfig,
-  registerNoteConfig,
-} from '../config/mock/note.config.mock';
+import { createDefaultMockNoteConfig, registerNoteConfig } from '../config/mock/note.config.mock';
 import { NoteConfig } from '../config/note.config';
 import { expectBindings } from '../database/mock/expect-bindings';
-import {
-  mockDelete,
-  mockInsert,
-  mockSelect,
-  mockUpdate,
-} from '../database/mock/mock-queries';
+import { mockDelete, mockInsert, mockSelect, mockUpdate } from '../database/mock/mock-queries';
 import { mockKnexDb } from '../database/mock/provider';
 import { GenericDBError, NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
@@ -164,20 +156,11 @@ describe('RevisionsService', () => {
     let spyOnGetPrimaryAlias: jest.SpyInstance;
     // oxlint-disable-next-line func-style
     const buildMockSelect = (returnValues: unknown) => {
-      mockSelect(
-        tracker,
-        [],
-        TableRevision,
-        [FieldNameRevision.noteId],
-        returnValues,
-      );
+      mockSelect(tracker, [], TableRevision, [FieldNameRevision.noteId], returnValues);
     };
 
     beforeEach(() => {
-      spyOnGetPrimaryAlias = jest.spyOn(
-        aliasService,
-        'getPrimaryAliasByNoteId',
-      );
+      spyOnGetPrimaryAlias = jest.spyOn(aliasService, 'getPrimaryAliasByNoteId');
     });
 
     it('returns immediately, when there are no revisions', async () => {
@@ -209,22 +192,13 @@ describe('RevisionsService', () => {
         },
       ]);
       mockDelete(tracker, TableRevision, [FieldNameRevision.uuid], 1);
-      mockUpdate(
-        tracker,
-        TableRevision,
-        [FieldNameRevision.patch],
-        FieldNameRevision.uuid,
-        1,
-      );
+      mockUpdate(tracker, TableRevision, [FieldNameRevision.patch], FieldNameRevision.uuid, 1);
       spyOnGetPrimaryAlias.mockResolvedValueOnce(mockPrimaryAlias);
       await service.purgeRevisions(mockNoteId);
       expectBindings(tracker, 'select', [[mockNoteId]]);
       expectBindings(tracker, 'delete', [[mockRevisionUuid1]]);
       expectBindings(tracker, 'update', [
-        [
-          `${mockPatch}\n${mockPrimaryAlias}\n\n${mockContent2}`,
-          mockRevisionUuid2,
-        ],
+        [`${mockPatch}\n${mockPrimaryAlias}\n\n${mockContent2}`, mockRevisionUuid2],
       ]);
     });
   });
@@ -245,9 +219,7 @@ describe('RevisionsService', () => {
         FieldNameRevision.uuid,
         [],
       );
-      await expect(service.getRevisionDto(mockRevisionUuid1)).rejects.toThrow(
-        NotInDBError,
-      );
+      await expect(service.getRevisionDto(mockRevisionUuid1)).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'select', [[mockRevisionUuid1]], true);
     });
 
@@ -295,9 +267,7 @@ describe('RevisionsService', () => {
   describe('getLatestRevision', () => {
     it('throws a NotInDBError when no revisions are found for the note', async () => {
       mockSelect(tracker, [], TableRevision, FieldNameRevision.noteId, []);
-      await expect(service.getLatestRevision(mockNoteId)).rejects.toThrow(
-        NotInDBError,
-      );
+      await expect(service.getLatestRevision(mockNoteId)).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'select', [[mockNoteId]], true);
     });
 
@@ -383,14 +353,9 @@ describe('RevisionsService', () => {
 
     beforeEach(() => {
       jest.spyOn(service, 'getLatestRevision').mockResolvedValue(lastRevision);
+      jest.spyOn(aliasService, 'getPrimaryAliasByNoteId').mockResolvedValue(mockPrimaryAlias);
       jest
-        .spyOn(aliasService, 'getPrimaryAliasByNoteId')
-        .mockResolvedValue(mockPrimaryAlias);
-      jest
-        .spyOn(
-          utilsExtractRevisionMetadataFromContentModule,
-          'extractRevisionMetadataFromContent',
-        )
+        .spyOn(utilsExtractRevisionMetadataFromContentModule, 'extractRevisionMetadataFromContent')
         .mockReturnValue({
           title: mockTitle,
           description: mockDescription,
@@ -399,9 +364,7 @@ describe('RevisionsService', () => {
         });
       // This wrong typecast is required since TypeScript does not see that
       // `uuid.v7()` returns a string or a Uint8Array based on the given options
-      jest
-        .spyOn(uuidModule, 'v7')
-        .mockReturnValue(mockRevisionUuid1 as unknown as Uint8Array);
+      jest.spyOn(uuidModule, 'v7').mockReturnValue(mockRevisionUuid1 as unknown as Uint8Array);
       // The typecast is required since jest does not see all signatures of the mocked function
       // and assumes using the first signature, which is wrong here and leads to a type error
       (
@@ -505,9 +468,9 @@ describe('RevisionsService', () => {
         ],
         [],
       );
-      await expect(
-        service.createRevision(mockNoteId, mockContent1, true),
-      ).rejects.toThrow(GenericDBError);
+      await expect(service.createRevision(mockNoteId, mockContent1, true)).rejects.toThrow(
+        GenericDBError,
+      );
     });
   });
 
@@ -618,25 +581,13 @@ describe('RevisionsService', () => {
           },
         ],
       );
-      mockUpdate(
-        tracker,
-        TableRevision,
-        [FieldNameRevision.patch],
-        FieldNameRevision.uuid,
-        1,
-      );
+      mockUpdate(tracker, TableRevision, [FieldNameRevision.patch], FieldNameRevision.uuid, 1);
       await service.removeOldRevisions();
 
       expectBindings(tracker, 'delete', [[expectedDateTime]]);
-      expectBindings(tracker, 'select', [
-        [expectedDateTime],
-        [mockNoteId, true],
-      ]);
+      expectBindings(tracker, 'select', [[expectedDateTime], [mockNoteId, true]]);
       expectBindings(tracker, 'update', [
-        [
-          `${mockPatch}\n${mockPrimaryAlias}\n\n${mockContent1}`,
-          mockRevisionUuid1,
-        ],
+        [`${mockPatch}\n${mockPrimaryAlias}\n\n${mockContent1}`, mockRevisionUuid1],
       ]);
     });
   });

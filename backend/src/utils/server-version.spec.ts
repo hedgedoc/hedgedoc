@@ -5,10 +5,7 @@
  */
 import { promises as fs } from 'fs';
 
-import {
-  clearCachedVersion,
-  getServerVersionFromPackageJson,
-} from './server-version';
+import { clearCachedVersion, getServerVersionFromPackageJson } from './server-version';
 
 jest.mock('fs', () => ({
   promises: {
@@ -29,8 +26,7 @@ describe('getServerVersionFromPackageJson', () => {
     jest
       .spyOn(fs, 'readFile')
       .mockImplementationOnce(
-        async (_) =>
-          `{ "version": "${major}.${minor}.${patch}-${preRelease}" }`,
+        async (_) => `{ "version": "${major}.${minor}.${patch}-${preRelease}" }`,
       );
     const serverVersion = await getServerVersionFromPackageJson();
     expect(serverVersion.major).toEqual(major);
@@ -45,9 +41,7 @@ describe('getServerVersionFromPackageJson', () => {
     const patch = 0;
     jest
       .spyOn(fs, 'readFile')
-      .mockImplementationOnce(
-        async (_) => `{ "version": "${major}.${minor}.${patch}" }`,
-      );
+      .mockImplementationOnce(async (_) => `{ "version": "${major}.${minor}.${patch}" }`);
     const serverVersion = await getServerVersionFromPackageJson();
     expect(serverVersion.major).toEqual(major);
     expect(serverVersion.minor).toEqual(minor);
@@ -59,9 +53,7 @@ describe('getServerVersionFromPackageJson', () => {
     jest.spyOn(fs, 'readFile').mockImplementationOnce(async (_) => {
       throw new Error('package.json not found');
     });
-    await expect(getServerVersionFromPackageJson()).rejects.toThrow(
-      'package.json not found',
-    );
+    await expect(getServerVersionFromPackageJson()).rejects.toThrow('package.json not found');
   });
 
   it("throws an error if version isn't present in package.json", async () => {
@@ -74,9 +66,7 @@ describe('getServerVersionFromPackageJson', () => {
   it('throws an error if the version is malformed', async () => {
     jest
       .spyOn(fs, 'readFile')
-      .mockImplementationOnce(
-        async (_) => `{ "version": "TwoDotZeroDotZero" }`,
-      );
+      .mockImplementationOnce(async (_) => `{ "version": "TwoDotZeroDotZero" }`);
     await expect(getServerVersionFromPackageJson()).rejects.toThrow(
       'Version from package.json is malformed. Got TwoDotZeroDotZero',
     );

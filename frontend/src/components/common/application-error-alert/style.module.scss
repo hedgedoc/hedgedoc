@@ -5,7 +5,7 @@
  */
 
 .alert {
-  $color: #5A0F04;
+  $color: #5a0f04;
   display: flex;
   --bs-alert-color: #{lighten($color, 80%)};
   --bs-alert-bg: #{$color};

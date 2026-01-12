@@ -3,12 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  ConnectionStateEvent,
-  Message,
-  MessagePayloads,
-  MessageType,
-} from './message.js'
+import { ConnectionStateEvent, Message, MessagePayloads, MessageType } from './message.js'
 import { TransportAdapter } from './transport-adapter.js'
 import { EventEmitter2, Listener } from 'eventemitter2'
 import { DisconnectReasonCode } from './disconnect_reason.js'
@@ -147,10 +142,7 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
   }
 
   public getConnectionState(): ConnectionState {
-    return (
-      this.transportAdapter?.getConnectionState() ??
-      ConnectionState.DISCONNECTED
-    )
+    return this.transportAdapter?.getConnectionState() ?? ConnectionState.DISCONNECTED
   }
 
   private unbindEventsFromPreviousWebsocket() {

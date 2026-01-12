@@ -21,9 +21,7 @@ export class InMemoryConnectionTransportAdapter implements TransportAdapter {
   constructor(private name: string) {}
 
   getConnectionState(): ConnectionState {
-    return this.otherSide !== undefined
-      ? ConnectionState.CONNECTED
-      : ConnectionState.DISCONNECTED
+    return this.otherSide !== undefined ? ConnectionState.CONNECTED : ConnectionState.DISCONNECTED
   }
 
   bindOnCloseEvent(handler: () => void): () => void {
@@ -41,9 +39,7 @@ export class InMemoryConnectionTransportAdapter implements TransportAdapter {
     return () => (this.onErrorHandler = undefined)
   }
 
-  bindOnMessageEvent(
-    handler: (value: Message<MessageType>) => void,
-  ): () => void {
+  bindOnMessageEvent(handler: (value: Message<MessageType>) => void): () => void {
     this.onMessageHandler = handler
     return () => (this.onMessageHandler = undefined)
   }

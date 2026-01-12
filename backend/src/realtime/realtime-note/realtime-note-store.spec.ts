@@ -30,28 +30,16 @@ describe('RealtimeNoteStore', () => {
   });
 
   it("can create a new realtime note if it doesn't exist yet", () => {
-    expect(realtimeNoteStore.create(mockedNoteId, mockedContent)).toBe(
-      mockedRealtimeNote,
-    );
-    expect(realtimeNoteConstructorSpy).toHaveBeenCalledWith(
-      mockedNoteId,
-      mockedContent,
-      undefined,
-    );
+    expect(realtimeNoteStore.create(mockedNoteId, mockedContent)).toBe(mockedRealtimeNote);
+    expect(realtimeNoteConstructorSpy).toHaveBeenCalledWith(mockedNoteId, mockedContent, undefined);
     expect(realtimeNoteStore.find(mockedNoteId)).toBe(mockedRealtimeNote);
-    expect(realtimeNoteStore.getAllRealtimeNotes()).toStrictEqual([
-      mockedRealtimeNote,
-    ]);
+    expect(realtimeNoteStore.getAllRealtimeNotes()).toStrictEqual([mockedRealtimeNote]);
   });
 
   it("can create a new realtime note with a yjs state if it doesn't exist yet", () => {
     const initialYjsState = [0];
     expect(
-      realtimeNoteStore.create(
-        mockedNoteId,
-        mockedContent,
-        new Uint8Array(initialYjsState).buffer,
-      ),
+      realtimeNoteStore.create(mockedNoteId, mockedContent, new Uint8Array(initialYjsState).buffer),
     ).toBe(mockedRealtimeNote);
     expect(realtimeNoteConstructorSpy).toHaveBeenCalledWith(
       mockedNoteId,
@@ -59,24 +47,18 @@ describe('RealtimeNoteStore', () => {
       initialYjsState,
     );
     expect(realtimeNoteStore.find(mockedNoteId)).toBe(mockedRealtimeNote);
-    expect(realtimeNoteStore.getAllRealtimeNotes()).toStrictEqual([
-      mockedRealtimeNote,
-    ]);
+    expect(realtimeNoteStore.getAllRealtimeNotes()).toStrictEqual([mockedRealtimeNote]);
   });
 
   it('throws if a realtime note has already been created for the given note', () => {
-    expect(realtimeNoteStore.create(mockedNoteId, mockedContent)).toBe(
-      mockedRealtimeNote,
+    expect(realtimeNoteStore.create(mockedNoteId, mockedContent)).toBe(mockedRealtimeNote);
+    expect(() => realtimeNoteStore.create(mockedNoteId, mockedContent)).toThrow(
+      'Realtime note for note',
     );
-    expect(() =>
-      realtimeNoteStore.create(mockedNoteId, mockedContent),
-    ).toThrow('Realtime note for note');
   });
 
   it('deletes a note if it gets destroyed', () => {
-    expect(realtimeNoteStore.create(mockedNoteId, mockedContent)).toBe(
-      mockedRealtimeNote,
-    );
+    expect(realtimeNoteStore.create(mockedNoteId, mockedContent)).toBe(mockedRealtimeNote);
     mockedRealtimeNote.emit('destroy');
     expect(realtimeNoteStore.find(mockedNoteId)).toBe(undefined);
     expect(realtimeNoteStore.getAllRealtimeNotes()).toStrictEqual([]);

@@ -3,12 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  CallHandler,
-  ExecutionContext,
-  Injectable,
-  NestInterceptor,
-} from '@nestjs/common';
+import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
 import { NoteService } from '../../../notes/note.service';
@@ -23,10 +18,7 @@ import { CompleteRequest } from '../request.type';
 export class GetNoteIdInterceptor implements NestInterceptor {
   constructor(private noteService: NoteService) {}
 
-  async intercept<T>(
-    context: ExecutionContext,
-    next: CallHandler,
-  ): Promise<Observable<T>> {
+  async intercept<T>(context: ExecutionContext, next: CallHandler): Promise<Observable<T>> {
     const request: CompleteRequest = context.switchToHttp().getRequest();
     const noteId = await extractNoteIdFromRequest(request, this.noteService);
     if (noteId !== undefined) {

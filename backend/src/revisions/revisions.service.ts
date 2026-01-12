@@ -68,9 +68,7 @@ export class RevisionsService {
    * @param noteId The id of the note
    * @returns The list of revisions
    */
-  async getAllRevisionMetadataDto(
-    noteId: number,
-  ): Promise<RevisionMetadataDto[]> {
+  async getAllRevisionMetadataDto(noteId: number): Promise<RevisionMetadataDto[]> {
     const noteRevisions = await this.knex(TableRevision)
       .distinct<
         (Pick<
@@ -83,7 +81,16 @@ export class RevisionsService {
         > &
           Pick<User, FieldNameUser.username | FieldNameUser.guestUuid> &
           Pick<RevisionTag, FieldNameRevisionTag.tag>)[]
-      >(`${TableRevision}.${FieldNameRevision.uuid}`, `${TableRevision}.${FieldNameRevision.createdAt}`, `${TableRevision}.${FieldNameRevision.description}`, `${TableRevision}.${FieldNameRevision.content}`, `${TableRevision}.${FieldNameRevision.title}`, `${TableUser}.${FieldNameUser.username}`, `${TableUser}.${FieldNameUser.guestUuid}`, `${TableRevisionTag}.${FieldNameRevisionTag.tag}`)
+      >(
+        `${TableRevision}.${FieldNameRevision.uuid}`,
+        `${TableRevision}.${FieldNameRevision.createdAt}`,
+        `${TableRevision}.${FieldNameRevision.description}`,
+        `${TableRevision}.${FieldNameRevision.content}`,
+        `${TableRevision}.${FieldNameRevision.title}`,
+        `${TableUser}.${FieldNameUser.username}`,
+        `${TableUser}.${FieldNameUser.guestUuid}`,
+        `${TableRevisionTag}.${FieldNameRevisionTag.tag}`,
+      )
       .leftJoin(
         TableRevisionTag,
         `${TableRevisionTag}.${FieldNameRevisionTag.revisionUuid}`,
@@ -104,9 +111,7 @@ export class RevisionsService {
       .where(FieldNameRevision.noteId, noteId);
 
     const revisionMap = noteRevisions.reduce((recordMap, revision) => {
-      const currentMappedRevision = recordMap.get(
-        revision[FieldNameRevision.uuid],
-      );
+      const currentMappedRevision = recordMap.get(revision[FieldNameRevision.uuid]);
       if (currentMappedRevision !== undefined) {
         const authorUsernames = currentMappedRevision.authorUsernames;
         const authorGuestUuids = currentMappedRevision.authorGuestUuids;
@@ -141,17 +146,11 @@ export class RevisionsService {
           RevisionMetadataDto.create({
             uuid: revision[FieldNameRevision.uuid],
             length: (revision[FieldNameRevision.content] ?? '').length,
-            createdAt: dateTimeToISOString(
-              dbToDateTime(revision[FieldNameRevision.createdAt]),
-            ),
+            createdAt: dateTimeToISOString(dbToDateTime(revision[FieldNameRevision.createdAt])),
             authorUsernames:
-              revision[FieldNameUser.username] !== null
-                ? [revision[FieldNameUser.username]]
-                : [],
+              revision[FieldNameUser.username] !== null ? [revision[FieldNameUser.username]] : [],
             authorGuestUuids:
-              revision[FieldNameUser.guestUuid] !== null
-                ? [revision[FieldNameUser.guestUuid]]
-                : [],
+              revision[FieldNameUser.guestUuid] !== null ? [revision[FieldNameUser.guestUuid]] : [],
             title: revision[FieldNameRevision.title],
             description: revision[FieldNameRevision.description],
             tags:
@@ -186,25 +185,12 @@ export class RevisionsService {
       }
       const latestRevision = allRevisions[0];
       const revisionsToDelete = allRevisions.filter(
-        (revision) =>
-          revision[FieldNameRevision.uuid] !==
-          latestRevision[FieldNameRevision.uuid],
+        (revision) => revision[FieldNameRevision.uuid] !== latestRevision[FieldNameRevision.uuid],
       );
-      const idsToDelete = revisionsToDelete.map(
-        (revision) => revision[FieldNameRevision.uuid],
-      );
-      await transaction(TableRevision)
-        .whereIn(FieldNameRevision.uuid, idsToDelete)
-        .delete();
-      const notePrimaryAlias = await this.aliasService.getPrimaryAliasByNoteId(
-        noteId,
-        transaction,
-      );
-      const newPatch = createPatch(
-        notePrimaryAlias,
-        '',
-        latestRevision[FieldNameRevision.content],
-      );
+      const idsToDelete = revisionsToDelete.map((revision) => revision[FieldNameRevision.uuid]);
+      await transaction(TableRevision).whereIn(FieldNameRevision.uuid, idsToDelete).delete();
+      const notePrimaryAlias = await this.aliasService.getPrimaryAliasByNoteId(noteId, transaction);
+      const newPatch = createPatch(notePrimaryAlias, '', latestRevision[FieldNameRevision.content]);
       await transaction(TableRevision)
         .update(FieldNameRevision.patch, newPatch)
         .where(FieldNameRevision.uuid, latestRevision[FieldNameRevision.uuid]);
@@ -241,9 +227,7 @@ export class RevisionsService {
       uuid: revision[FieldNameRevision.uuid],
       content: revision[FieldNameRevision.content],
       length: (revision[FieldNameRevision.content] ?? '').length,
-      createdAt: dateTimeToISOString(
-        dbToDateTime(revision[FieldNameRevision.createdAt]),
-      ),
+      createdAt: dateTimeToISOString(dbToDateTime(revision[FieldNameRevision.createdAt])),
       title: revision[FieldNameRevision.title],
       description: revision[FieldNameRevision.description],
       patch: revision.patch,
@@ -256,10 +240,7 @@ export class RevisionsService {
    * @param noteId The id of the note for which the latest revision should be retrieved
    * @param transaction The optional pre-existing database transaction to use
    */
-  async getLatestRevision(
-    noteId: number,
-    transaction?: Knex,
-  ): Promise<Revision> {
+  async getLatestRevision(noteId: number, transaction?: Knex): Promise<Revision> {
     const dbActor = transaction ?? this.knex;
     const revision = await dbActor(TableRevision)
       .select()
@@ -287,10 +268,7 @@ export class RevisionsService {
    * @param transaction The optional pre-existing database transaction to use
    * @returns An object containing the usernames and guest UUIDs of the authors and the count of guest users
    */
-  async getRevisionUserInfo(
-    revisionUuid: string,
-    transaction?: Knex,
-  ): Promise<RevisionUserInfo> {
+  async getRevisionUserInfo(revisionUuid: string, transaction?: Knex): Promise<RevisionUserInfo> {
     const dbActor = transaction ?? this.knex;
     const authorUsernamesAndGuestUuids = await dbActor(TableAuthorshipInfo)
       .join(
@@ -305,7 +283,12 @@ export class RevisionsService {
             AuthorshipInfo,
             FieldNameAuthorshipInfo.authorId | FieldNameAuthorshipInfo.createdAt
           >)[]
-      >(`${TableUser}.${FieldNameUser.username}`, `${TableUser}.${FieldNameUser.guestUuid}`, `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.createdAt}`, `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.authorId}`)
+      >(
+        `${TableUser}.${FieldNameUser.username}`,
+        `${TableUser}.${FieldNameUser.guestUuid}`,
+        `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.createdAt}`,
+        `${TableAuthorshipInfo}.${FieldNameAuthorshipInfo.authorId}`,
+      )
       .where(FieldNameAuthorshipInfo.revisionUuid, revisionUuid);
     const users: RevisionUserInfo['users'] = [];
     let guestUserCount = 0;
@@ -344,10 +327,7 @@ export class RevisionsService {
     transaction?: Knex,
     yjsStateVector?: ArrayBuffer,
   ): Promise<void> {
-    this.logger.debug(
-      `Creating revision for note '${noteId}'`,
-      'createRevision',
-    );
+    this.logger.debug(`Creating revision for note '${noteId}'`, 'createRevision');
     if (!transaction) {
       await this.knex.transaction(async (newTransaction) => {
         await this.innerCreateRevision(
@@ -360,13 +340,7 @@ export class RevisionsService {
       });
       return;
     }
-    await this.innerCreateRevision(
-      noteId,
-      newContent,
-      firstRevision,
-      transaction,
-      yjsStateVector,
-    );
+    await this.innerCreateRevision(noteId, newContent, firstRevision, transaction, yjsStateVector);
   }
 
   /**
@@ -386,26 +360,16 @@ export class RevisionsService {
     transaction: Knex,
     yjsStateVector?: ArrayBuffer,
   ): Promise<void> {
-    const latestRevision = firstRevision
-      ? null
-      : await this.getLatestRevision(noteId, transaction);
+    const latestRevision = firstRevision ? null : await this.getLatestRevision(noteId, transaction);
     const oldContent = latestRevision?.content;
     if (oldContent === newContent) {
       this.logger.debug('There is no difference between old and new content.');
       return undefined;
     }
-    const primaryAlias = await this.aliasService.getPrimaryAliasByNoteId(
-      noteId,
-      transaction,
-    );
-    const patch = createPatch(
-      primaryAlias,
-      latestRevision?.content ?? '',
-      newContent,
-    );
+    const primaryAlias = await this.aliasService.getPrimaryAliasByNoteId(noteId, transaction);
+    const patch = createPatch(primaryAlias, latestRevision?.content ?? '', newContent);
 
-    const { title, description, tags, noteType } =
-      extractRevisionMetadataFromContent(newContent);
+    const { title, description, tags, noteType } = extractRevisionMetadataFromContent(newContent);
     const newUuid = uuidv7();
     const revisionIds = await transaction(TableRevision).insert(
       {
@@ -438,10 +402,7 @@ export class RevisionsService {
         })),
       );
     }
-    this.logger.debug(
-      `created revision '${newUuid}' for note '${noteId}'`,
-      'innerCreateRevision',
-    );
+    this.logger.debug(`created revision '${newUuid}' for note '${noteId}'`, 'innerCreateRevision');
   }
 
   /**
@@ -451,10 +412,7 @@ export class RevisionsService {
    * @param transaction The optional pre-existing database transaction to use
    * @returns An array of tags associated with the revision
    */
-  async getTagsByRevisionUuid(
-    revisionUuid: string,
-    transaction?: Knex,
-  ): Promise<string[]> {
+  async getTagsByRevisionUuid(revisionUuid: string, transaction?: Knex): Promise<string[]> {
     const dbActor = transaction ?? this.knex;
     const tags = await dbActor(TableRevisionTag)
       .select(FieldNameRevisionTag.tag)
@@ -507,11 +465,7 @@ export class RevisionsService {
       }
 
       const uniqueNoteIds = Array.from(
-        new Set(
-          noteIdsWhereRevisionsAreDeleted.map(
-            (entry) => entry[FieldNameRevision.noteId],
-          ),
-        ),
+        new Set(noteIdsWhereRevisionsAreDeleted.map((entry) => entry[FieldNameRevision.noteId])),
       );
 
       const revisionsToUpdate = await transaction(TableRevision)

@@ -36,7 +36,7 @@ function createImageToken(
   href: string,
   title: string,
   width: string,
-  height: string
+  height: string,
 ) {
   state.pos = labelStartIndex
   state.posMax = labelEndIndex
@@ -48,7 +48,7 @@ function createImageToken(
     state.src.slice(labelStartIndex, labelEndIndex),
     state.md,
     state.env,
-    token.children
+    token.children,
   )
   newState.md.inline.tokenize(newState)
 
@@ -97,7 +97,7 @@ function parseSizeParameters(startPosition: number, state: StateInline): ParseIm
   return {
     position: skipWhiteSpaces(res.position, state),
     width: res.width,
-    height: res.height
+    height: res.height,
   }
 }
 

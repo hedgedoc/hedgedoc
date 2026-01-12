@@ -7,9 +7,7 @@ import { BadRequestException, ValidationPipe } from '@nestjs/common';
 
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 
-export function setupValidationPipe(
-  logger: ConsoleLoggerService,
-): ValidationPipe {
+export function setupValidationPipe(logger: ConsoleLoggerService): ValidationPipe {
   // This issue is only relevant for usage of class-validator, however we use Zod
   // oxlint-disable-next-line @darraghor/nestjs-typed/should-specify-forbid-unknown-values
   return new ValidationPipe({

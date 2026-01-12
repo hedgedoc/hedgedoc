@@ -38,5 +38,5 @@ export const defaultOptions: TocOptions = {
   level: 1,
   listType: 'ol',
   allowedTokenTypes: ['text', 'code_inline'],
-  slugify: defaultSlugify
+  slugify: defaultSlugify,
 }

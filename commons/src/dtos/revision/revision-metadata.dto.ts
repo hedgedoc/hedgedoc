@@ -12,31 +12,20 @@ export const RevisionMetadataSchema = z
       .string()
       .datetime({ offset: false, local: false })
       .describe('When the revision was created.'),
-    length: z
-      .number()
-      .nonnegative()
-      .describe('The length of the content of the revision.'),
+    length: z.number().nonnegative().describe('The length of the content of the revision.'),
     authorUsernames: z
       .array(z.string().toLowerCase())
-      .describe(
-        'A list of all usernames of the users that worked on the revision.',
-      ),
+      .describe('A list of all usernames of the users that worked on the revision.'),
     authorGuestUuids: z
       .array(z.string().uuid())
       .describe('A list of all guest UUIDs that worked on the revision.'),
     title: z
       .string()
-      .describe(
-        'The title of the revision. Does not contain any markup but might be empty.',
-      ),
+      .describe('The title of the revision. Does not contain any markup but might be empty.'),
     description: z
       .string()
-      .describe(
-        'The description of the revision. Does not contain any markup but might be empty.',
-      ),
-    tags: z
-      .array(z.string())
-      .describe('List of tags assigned to this revision'),
+      .describe('The description of the revision. Does not contain any markup but might be empty.'),
+    tags: z.array(z.string()).describe('List of tags assigned to this revision'),
   })
   .describe('DTO that describes the metadata of a revision.')
 

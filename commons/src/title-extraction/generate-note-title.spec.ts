@@ -3,11 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  NoteFrontmatter,
-  NoteTextDirection,
-  NoteType,
-} from '../note-frontmatter/frontmatter.js'
+import { NoteFrontmatter, NoteTextDirection, NoteType } from '../note-frontmatter/frontmatter.js'
 import { generateNoteTitle } from './generate-note-title.js'
 import { describe, expect, it } from '@jest/globals'
 
@@ -53,10 +49,7 @@ describe('generate note title', () => {
   })
 
   it('will choose the first heading third', () => {
-    const actual = generateNoteTitle(
-      { ...testFrontmatter },
-      () => 'first-heading',
-    )
+    const actual = generateNoteTitle({ ...testFrontmatter }, () => 'first-heading')
     expect(actual).toEqual('first-heading')
   })
 })

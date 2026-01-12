@@ -14,12 +14,7 @@ import authConfigMock from '../config/mock/auth.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
 import noteConfigMock from '../config/mock/note.config.mock';
 import { expectBindings } from '../database/mock/expect-bindings';
-import {
-  mockDelete,
-  mockInsert,
-  mockSelect,
-  mockUpdate,
-} from '../database/mock/mock-queries';
+import { mockDelete, mockInsert, mockSelect, mockUpdate } from '../database/mock/mock-queries';
 import { mockKnexDb } from '../database/mock/provider';
 import {
   AlreadyInDBError,
@@ -51,12 +46,7 @@ describe('AliasService', () => {
         LoggerModule,
         await ConfigModule.forRoot({
           isGlobal: true,
-          load: [
-            appConfigMock,
-            databaseConfigMock,
-            authConfigMock,
-            noteConfigMock,
-          ],
+          load: [appConfigMock, databaseConfigMock, authConfigMock, noteConfigMock],
         }),
       ],
     }).compile();
@@ -81,13 +71,7 @@ describe('AliasService', () => {
   describe('addAlias', () => {
     describe('creates', () => {
       it('a primary alias if no aliases are already present', async () => {
-        mockSelect(
-          tracker,
-          [FieldNameAlias.alias],
-          TableAlias,
-          FieldNameAlias.noteId,
-          [],
-        );
+        mockSelect(tracker, [FieldNameAlias.alias], TableAlias, FieldNameAlias.noteId, []);
         mockInsert(tracker, TableAlias, [
           FieldNameAlias.alias,
           FieldNameAlias.isPrimary,
@@ -99,13 +83,7 @@ describe('AliasService', () => {
       });
 
       it('a non-primary alias if a primary alias is already present', async () => {
-        mockSelect(
-          tracker,
-          [FieldNameAlias.alias],
-          TableAlias,
-          FieldNameAlias.noteId,
-          [alias2],
-        );
+        mockSelect(tracker, [FieldNameAlias.alias], TableAlias, FieldNameAlias.noteId, [alias2]);
         mockInsert(tracker, TableAlias, [
           FieldNameAlias.alias,
           FieldNameAlias.isPrimary,
@@ -120,19 +98,9 @@ describe('AliasService', () => {
 
   describe('makeAliasPrimary', () => {
     it('marks the alias as primary', async () => {
-      mockUpdate(
-        tracker,
-        TableAlias,
-        [FieldNameAlias.isPrimary],
-        FieldNameAlias.noteId,
-      );
+      mockUpdate(tracker, TableAlias, [FieldNameAlias.isPrimary], FieldNameAlias.noteId);
 
-      mockUpdate(
-        tracker,
-        TableAlias,
-        [FieldNameAlias.isPrimary],
-        FieldNameAlias.noteId,
-      );
+      mockUpdate(tracker, TableAlias, [FieldNameAlias.isPrimary], FieldNameAlias.noteId);
 
       await service.makeAliasPrimary(noteId1, alias2);
 
@@ -142,44 +110,24 @@ describe('AliasService', () => {
       ]);
     });
     it('does not mark the aliases as primary, if the alias does not exist', async () => {
-      mockUpdate(
-        tracker,
-        TableAlias,
-        [FieldNameAlias.isPrimary],
-        FieldNameAlias.noteId,
-        [],
+      mockUpdate(tracker, TableAlias, [FieldNameAlias.isPrimary], FieldNameAlias.noteId, []);
+      await expect(service.makeAliasPrimary(noteId1, 'i_dont_exist')).rejects.toThrow(
+        GenericDBError,
       );
-      await expect(
-        service.makeAliasPrimary(noteId1, 'i_dont_exist'),
-      ).rejects.toThrow(GenericDBError);
       expectBindings(tracker, 'update', [[null, noteId1]]);
     });
     it("does not mark the aliases as primary, if the alias can't be made primary", async () => {
-      mockUpdate(
-        tracker,
-        TableAlias,
-        [FieldNameAlias.isPrimary],
-        FieldNameAlias.noteId,
-        [
-          {
-            [FieldNameAlias.isPrimary]: null,
-          },
-        ],
-      );
-      mockUpdate(
-        tracker,
-        TableAlias,
-        [FieldNameAlias.isPrimary],
-        FieldNameAlias.noteId,
-        [
-          {
-            [FieldNameAlias.isPrimary]: null,
-          },
-        ],
-      );
-      await expect(
-        service.makeAliasPrimary(noteId1, 'i_dont_exist'),
-      ).rejects.toThrow(NotInDBError);
+      mockUpdate(tracker, TableAlias, [FieldNameAlias.isPrimary], FieldNameAlias.noteId, [
+        {
+          [FieldNameAlias.isPrimary]: null,
+        },
+      ]);
+      mockUpdate(tracker, TableAlias, [FieldNameAlias.isPrimary], FieldNameAlias.noteId, [
+        {
+          [FieldNameAlias.isPrimary]: null,
+        },
+      ]);
+      await expect(service.makeAliasPrimary(noteId1, 'i_dont_exist')).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'update', [
         [null, noteId1],
         [true, noteId1, 'i_dont_exist'],
@@ -208,9 +156,7 @@ describe('AliasService', () => {
         [FieldNameAlias.alias, FieldNameAlias.noteId, FieldNameAlias.isPrimary],
         0,
       );
-      await expect(service.removeAlias(alias1)).rejects.toThrow(
-        PrimaryAliasDeletionForbiddenError,
-      );
+      await expect(service.removeAlias(alias1)).rejects.toThrow(PrimaryAliasDeletionForbiddenError);
       expectBindings(tracker, 'select', [[alias1]]);
       expectBindings(tracker, 'delete', [[alias1, noteId1]]);
     });
@@ -243,9 +189,7 @@ describe('AliasService', () => {
         [FieldNameAlias.noteId, FieldNameAlias.isPrimary],
         [],
       );
-      await expect(service.getPrimaryAliasByNoteId(noteId1)).rejects.toThrow(
-        NotInDBError,
-      );
+      await expect(service.getPrimaryAliasByNoteId(noteId1)).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'select', [[noteId1, true]], true);
     });
 
@@ -274,9 +218,7 @@ describe('AliasService', () => {
         [FieldNameAlias.noteId, FieldNameAlias.isPrimary],
         [],
       );
-      await expect(service.getPrimaryAliasByNoteId(noteId1)).rejects.toThrow(
-        NotInDBError,
-      );
+      await expect(service.getPrimaryAliasByNoteId(noteId1)).rejects.toThrow(NotInDBError);
     });
 
     it('returns all aliases for a note', async () => {
@@ -304,35 +246,21 @@ describe('AliasService', () => {
 
   describe('ensureAliasIsAvailable', () => {
     it('throws ForbiddenIdError for forbidden aliases', async () => {
-      await expect(
-        service.ensureAliasIsAvailable(forbiddenNoteId),
-      ).rejects.toThrow(ForbiddenIdError);
+      await expect(service.ensureAliasIsAvailable(forbiddenNoteId)).rejects.toThrow(
+        ForbiddenIdError,
+      );
     });
     it('throws AlreadyInDBError for already used aliases', async () => {
-      mockSelect(
-        tracker,
-        [FieldNameAlias.alias],
-        TableAlias,
-        FieldNameAlias.alias,
-        [
-          {
-            [FieldNameAlias.alias]: alias1,
-          },
-        ],
-      );
-      await expect(service.ensureAliasIsAvailable(alias1)).rejects.toThrow(
-        AlreadyInDBError,
-      );
+      mockSelect(tracker, [FieldNameAlias.alias], TableAlias, FieldNameAlias.alias, [
+        {
+          [FieldNameAlias.alias]: alias1,
+        },
+      ]);
+      await expect(service.ensureAliasIsAvailable(alias1)).rejects.toThrow(AlreadyInDBError);
       expectBindings(tracker, 'select', [[alias1]]);
     });
     it('returns void if alias can be used', async () => {
-      mockSelect(
-        tracker,
-        [FieldNameAlias.alias],
-        TableAlias,
-        FieldNameAlias.alias,
-        [],
-      );
+      mockSelect(tracker, [FieldNameAlias.alias], TableAlias, FieldNameAlias.alias, []);
       await service.ensureAliasIsAvailable(alias1);
       expectBindings(tracker, 'select', [[alias1]]);
     });

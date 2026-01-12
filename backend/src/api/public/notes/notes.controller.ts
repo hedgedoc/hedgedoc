@@ -128,8 +128,7 @@ export class NotesController {
     @RequestNoteId() noteId: number,
     @Body() noteMediaDeletionDto: NoteMediaDeletionDto,
   ): Promise<void> {
-    const mediaUploads =
-      await this.mediaService.getMediaUploadUuidsByNoteId(noteId);
+    const mediaUploads = await this.mediaService.getMediaUploadUuidsByNoteId(noteId);
     for (const mediaUpload of mediaUploads) {
       if (!noteMediaDeletionDto.keepMedia) {
         await this.mediaService.deleteFile(mediaUpload);
@@ -196,9 +195,7 @@ export class NotesController {
     403,
     404,
   )
-  async getNoteMetadata(
-    @RequestNoteId() noteId: number,
-  ): Promise<NoteMetadataDto> {
+  async getNoteMetadata(@RequestNoteId() noteId: number): Promise<NoteMetadataDto> {
     return await this.noteService.toNoteMetadataDto(noteId);
   }
 
@@ -214,9 +211,7 @@ export class NotesController {
     403,
     404,
   )
-  async getPermissions(
-    @RequestNoteId() noteId: number,
-  ): Promise<NotePermissionsDto> {
+  async getPermissions(@RequestNoteId() noteId: number): Promise<NotePermissionsDto> {
     return await this.permissionService.getPermissionsDtoForNote(noteId);
   }
 
@@ -239,11 +234,7 @@ export class NotesController {
     @Body('canEdit') canEdit: boolean,
   ): Promise<NotePermissionsDto> {
     const targetUserId = await this.userService.getUserIdByUsername(username);
-    await this.permissionService.setUserPermission(
-      noteId,
-      targetUserId,
-      canEdit,
-    );
+    await this.permissionService.setUserPermission(noteId, targetUserId, canEdit);
     return await this.permissionService.getPermissionsDtoForNote(noteId);
   }
 
@@ -351,10 +342,7 @@ export class NotesController {
     @RequestNoteId() noteId: number,
     @Body('newPubliclyVisible') newPubliclyVisible: boolean,
   ): Promise<NoteMetadataDto> {
-    await this.permissionService.changePubliclyVisible(
-      noteId,
-      newPubliclyVisible,
-    );
+    await this.permissionService.changePubliclyVisible(noteId, newPubliclyVisible);
 
     return await this.noteService.toNoteMetadataDto(noteId);
   }
@@ -372,9 +360,7 @@ export class NotesController {
     403,
     404,
   )
-  async getNoteRevisions(
-    @RequestNoteId() noteId: number,
-  ): Promise<RevisionMetadataDto[]> {
+  async getNoteRevisions(@RequestNoteId() noteId: number): Promise<RevisionMetadataDto[]> {
     return await this.revisionsService.getAllRevisionMetadataDto(noteId);
   }
 
@@ -390,9 +376,7 @@ export class NotesController {
     403,
     404,
   )
-  async getNoteRevision(
-    @Param('revisionUuid') revisionUuid: string,
-  ): Promise<RevisionDto> {
+  async getNoteRevision(@Param('revisionUuid') revisionUuid: string): Promise<RevisionDto> {
     return await this.revisionsService.getRevisionDto(revisionUuid);
   }
 
@@ -405,11 +389,8 @@ export class NotesController {
     isArray: true,
     schema: MediaUploadSchema,
   })
-  async getNotesMedia(
-    @RequestNoteId() noteId: number,
-  ): Promise<MediaUploadDto[]> {
-    const mediaUuids =
-      await this.mediaService.getMediaUploadUuidsByNoteId(noteId);
+  async getNotesMedia(@RequestNoteId() noteId: number): Promise<MediaUploadDto[]> {
+    const mediaUuids = await this.mediaService.getMediaUploadUuidsByNoteId(noteId);
     return await this.mediaService.getMediaUploadDtosByUuids(mediaUuids);
   }
 }

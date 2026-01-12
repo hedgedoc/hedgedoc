@@ -34,9 +34,7 @@ interface FrontmatterParserResult {
  * @param content the revision content that contains the frontmatter
  * @returns the extracted metadata, including the title, description, tags, and note type
  */
-export function extractRevisionMetadataFromContent(
-  content: string,
-): FrontmatterExtractionResult {
+export function extractRevisionMetadataFromContent(content: string): FrontmatterExtractionResult {
   const parserResult = parseFrontmatter(content);
   const frontmatter = parserResult?.frontmatter;
   const firstLineOfContentIndex = parserResult?.firstLineOfContentIndex;
@@ -75,9 +73,7 @@ function generateContentWithoutFrontmatter(
  * @param content the content to parse
  * @returns an object containing the parsed frontmatter and the index of the first line of content, or undefined if no frontmatter was found
  */
-function parseFrontmatter(
-  content: string,
-): FrontmatterParserResult | undefined {
+function parseFrontmatter(content: string): FrontmatterParserResult | undefined {
   const extractionResult = extractFrontmatter(content.split('\n'));
   const rawText = extractionResult?.rawText;
   if (!rawText) {

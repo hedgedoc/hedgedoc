@@ -96,9 +96,7 @@ describe('mediaConfig', () => {
       );
       const config = mediaConfig() as { backend: AzureMediaConfig };
       expect(config.backend.type).toEqual(MediaBackendType.AZURE);
-      expect(config.backend.azure.connectionString).toEqual(
-        azureConnectionString,
-      );
+      expect(config.backend.azure.connectionString).toEqual(azureConnectionString);
       expect(config.backend.azure.container).toEqual(container);
       restore();
     });
@@ -137,9 +135,7 @@ describe('mediaConfig', () => {
       );
       const config = mediaConfig() as { backend: WebdavMediaConfig };
       expect(config.backend.type).toEqual(MediaBackendType.WEBDAV);
-      expect(config.backend.webdav.connectionString).toEqual(
-        webdavConnectionString,
-      );
+      expect(config.backend.webdav.connectionString).toEqual(webdavConnectionString);
       expect(config.backend.webdav.uploadDir).toEqual(uploadDir);
       expect(config.backend.webdav.publicUrl).toEqual(publicUrl);
       restore();
@@ -245,9 +241,7 @@ describe('mediaConfig', () => {
           },
         );
         mediaConfig();
-        expect(spyConsoleError.mock.calls[0][0]).toContain(
-          'HD_MEDIA_BACKEND_S3_BUCKET: Required',
-        );
+        expect(spyConsoleError.mock.calls[0][0]).toContain('HD_MEDIA_BACKEND_S3_BUCKET: Required');
         expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });

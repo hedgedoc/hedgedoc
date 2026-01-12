@@ -39,20 +39,13 @@ export async function setupApp(
   await runMigrations(app, logger);
 
   // Setup session handling
-  setupSessionMiddleware(
-    app,
-    authConfig,
-    app.get(SessionService).getSessionStore(),
-  );
+  setupSessionMiddleware(app, authConfig, app.get(SessionService).getSessionStore());
 
   // Enable web security aspects
   app.enableCors({
     origin: appConfig.rendererBaseUrl,
   });
-  logger.log(
-    `Enabling CORS for '${appConfig.rendererBaseUrl}'`,
-    'AppBootstrap',
-  );
+  logger.log(`Enabling CORS for '${appConfig.rendererBaseUrl}'`, 'AppBootstrap');
   // TODO Add rate limiting (#442)
   // TODO Add CSP (#1309)
   // TODO Add common security headers and CSRF (#201)
@@ -70,10 +63,7 @@ export async function setupApp(
       prefix: '/uploads/',
     });
   }
-  logger.log(
-    `Serving the local folder 'public' under '/public'`,
-    'AppBootstrap',
-  );
+  logger.log(`Serving the local folder 'public' under '/public'`, 'AppBootstrap');
   app.useStaticAssets('public', {
     prefix: '/public/',
   });

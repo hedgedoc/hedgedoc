@@ -5,15 +5,7 @@
  */
 import { AuthProviderType } from '@hedgedoc/commons';
 import { FieldNameIdentity, FieldNameUser } from '@hedgedoc/database';
-import {
-  Body,
-  Controller,
-  Post,
-  Put,
-  Req,
-  UnauthorizedException,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Post, Put, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { LocalService } from '../../../../auth/local/local.service';
@@ -72,14 +64,8 @@ export class LocalController {
     if (username === null) {
       throw new NoLocalIdentityError('User has no username assigned');
     }
-    await this.localIdentityService.checkLocalPassword(
-      username,
-      changePasswordDto.currentPassword,
-    );
-    await this.localIdentityService.updateLocalPassword(
-      userId,
-      changePasswordDto.newPassword,
-    );
+    await this.localIdentityService.checkLocalPassword(username, changePasswordDto.currentPassword);
+    await this.localIdentityService.updateLocalPassword(userId, changePasswordDto.newPassword);
   }
 
   @UseGuards(LoginEnabledGuard)

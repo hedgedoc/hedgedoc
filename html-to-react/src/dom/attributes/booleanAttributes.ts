@@ -39,6 +39,6 @@ const booleanAttributes: ReadonlySet<string> = new Set([
   'reversed',
   'scoped',
   'seamless',
-  'selected'
+  'selected',
 ])
 export default booleanAttributes

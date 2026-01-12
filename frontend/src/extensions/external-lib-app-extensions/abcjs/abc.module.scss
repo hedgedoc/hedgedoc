@@ -13,8 +13,9 @@
     max-width: unset !important;
   }
 
-  &, text {
-    @import "../../../../global-styles/variables.module";
+  &,
+  text {
+    @import '../../../../global-styles/variables.module';
     font-family: $font-family-base;
   }
 }

@@ -32,8 +32,7 @@ export function mockSelect(
   returnValue: unknown = [],
   joins: JoinDefinition[] = [],
 ): void {
-  const selection =
-    variables.length > 0 ? variables.map((v) => `"${v}"`).join(', ') : '\\*';
+  const selection = variables.length > 0 ? variables.map((v) => `"${v}"`).join(', ') : '\\*';
   const joinStatement =
     joins.length > 0
       ? joins
@@ -44,9 +43,7 @@ export function mockSelect(
           })
           .join(' ') + ' '
       : '';
-  const whereClause = Array.isArray(where)
-    ? where.map((w) => `"${w}"`).join('.*')
-    : `"${where}"`;
+  const whereClause = Array.isArray(where) ? where.map((w) => `"${w}"`).join('.*') : `"${where}"`;
   const regex = `select(?: distinct)? ${selection} from "${table}" ${joinStatement}where .*${whereClause}.*`;
   const selectRegex = new RegExp(regex);
   tracker.on.select(selectRegex).responseOnce(returnValue);

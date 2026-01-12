@@ -8,17 +8,12 @@ import { registerAs } from '@nestjs/config';
 import z from 'zod';
 
 import { parseOptionalBoolean, printConfigErrorAndExit } from './utils';
-import {
-  buildErrorMessage,
-  extractDescriptionFromZodIssue,
-} from './zod-error-message';
+import { buildErrorMessage, extractDescriptionFromZodIssue } from './zod-error-message';
 
 const azureSchema = z.object({
   type: z.literal(MediaBackendType.AZURE),
   azure: z.object({
-    connectionString: z
-      .string()
-      .describe('HD_MEDIA_BACKEND_AZURE_CONNECTION_STRING'),
+    connectionString: z.string().describe('HD_MEDIA_BACKEND_AZURE_CONNECTION_STRING'),
     container: z.string().describe('HD_MEDIA_BACKEND_AZURE_CONTAINER'),
   }),
 });
@@ -45,24 +40,15 @@ const s3Schema = z.object({
     bucket: z.string().describe('HD_MEDIA_BACKEND_S3_BUCKET'),
     endpoint: z.string().url().describe('HD_MEDIA_BACKEND_S3_ENDPOINT'),
     region: z.string().optional().describe('HD_MEDIA_BACKEND_S3_REGION'),
-    pathStyle: z
-      .boolean()
-      .default(false)
-      .describe('HD_MEDIA_BACKEND_S3_PATH_STYLE'),
+    pathStyle: z.boolean().default(false).describe('HD_MEDIA_BACKEND_S3_PATH_STYLE'),
   }),
 });
 
 const webdavSchema = z.object({
   type: z.literal(MediaBackendType.WEBDAV),
   webdav: z.object({
-    connectionString: z
-      .string()
-      .url()
-      .describe('HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING'),
-    uploadDir: z
-      .string()
-      .optional()
-      .describe('HD_MEDIA_BACKEND_WEBDAV_UPLOAD_DIR'),
+    connectionString: z.string().url().describe('HD_MEDIA_BACKEND_WEBDAV_CONNECTION_STRING'),
+    uploadDir: z.string().optional().describe('HD_MEDIA_BACKEND_WEBDAV_UPLOAD_DIR'),
     publicUrl: z.string().url().describe('HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL'),
   }),
 });
@@ -97,9 +83,7 @@ export default registerAs('mediaConfig', () => {
         bucket: process.env.HD_MEDIA_BACKEND_S3_BUCKET,
         endpoint: process.env.HD_MEDIA_BACKEND_S3_ENDPOINT,
         region: process.env.HD_MEDIA_BACKEND_S3_REGION,
-        pathStyle: parseOptionalBoolean(
-          process.env.HD_MEDIA_BACKEND_S3_PATH_STYLE,
-        ),
+        pathStyle: parseOptionalBoolean(process.env.HD_MEDIA_BACKEND_S3_PATH_STYLE),
       },
       azure: {
         connectionString: process.env.HD_MEDIA_BACKEND_AZURE_CONNECTION_STRING,

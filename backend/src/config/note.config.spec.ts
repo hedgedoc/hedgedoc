@@ -29,12 +29,9 @@ describe('noteConfig', () => {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
-          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
-            PermissionLevelNames[PermissionLevel.WRITE],
-          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
-            PermissionLevelNames[PermissionLevel.WRITE],
-          HD_NOTE_PERMISSIONS_DEFAULT_PUBLICLY_VISIBLE:
-            publiclyVisible.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
+          HD_NOTE_PERMISSIONS_DEFAULT_PUBLICLY_VISIBLE: publiclyVisible.toString(),
           HD_NOTE_REVISION_RETENTION_DAYS: retentionDays.toString(),
           HD_NOTE_PERSIST_INTERVAL: persistInteval.toString(),
           /* oxlint-enable @typescript-eslint/naming-convention */
@@ -47,15 +44,9 @@ describe('noteConfig', () => {
       expect(config.forbiddenAliases).toHaveLength(forbiddenAliases.length);
       expect(config.forbiddenAliases).toEqual(forbiddenAliases);
       expect(config.maxLength).toEqual(maxLength);
-      expect(config.permissions.default.everyone).toEqual(
-        PermissionLevel.WRITE,
-      );
-      expect(config.permissions.default.loggedIn).toEqual(
-        PermissionLevel.WRITE,
-      );
-      expect(config.permissions.default.publiclyVisible).toEqual(
-        publiclyVisible,
-      );
+      expect(config.permissions.default.everyone).toEqual(PermissionLevel.WRITE);
+      expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.WRITE);
+      expect(config.permissions.default.publiclyVisible).toEqual(publiclyVisible);
       expect(config.permissions.maxGuestLevel).toEqual(guestAccess);
       expect(config.revisionRetentionDays).toEqual(retentionDays);
       expect(config.persistInterval).toEqual(persistInteval);
@@ -67,10 +58,8 @@ describe('noteConfig', () => {
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
-          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
-            PermissionLevelNames[PermissionLevel.WRITE],
-          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
-            PermissionLevelNames[PermissionLevel.WRITE],
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
           /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -80,12 +69,8 @@ describe('noteConfig', () => {
       const config = noteConfig();
       expect(config.forbiddenAliases).toHaveLength(0);
       expect(config.maxLength).toEqual(maxLength);
-      expect(config.permissions.default.everyone).toEqual(
-        PermissionLevel.WRITE,
-      );
-      expect(config.permissions.default.loggedIn).toEqual(
-        PermissionLevel.WRITE,
-      );
+      expect(config.permissions.default.everyone).toEqual(PermissionLevel.WRITE);
+      expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.WRITE);
       expect(config.permissions.default.publiclyVisible).toEqual(false);
       expect(config.permissions.maxGuestLevel).toEqual(guestAccess);
       restore();
@@ -97,10 +82,8 @@ describe('noteConfig', () => {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAlias,
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
-          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
-            PermissionLevelNames[PermissionLevel.WRITE],
-          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
-            PermissionLevelNames[PermissionLevel.WRITE],
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
           /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -111,12 +94,8 @@ describe('noteConfig', () => {
       expect(config.forbiddenAliases).toHaveLength(1);
       expect(config.forbiddenAliases[0]).toEqual(forbiddenAlias);
       expect(config.maxLength).toEqual(maxLength);
-      expect(config.permissions.default.everyone).toEqual(
-        PermissionLevel.WRITE,
-      );
-      expect(config.permissions.default.loggedIn).toEqual(
-        PermissionLevel.WRITE,
-      );
+      expect(config.permissions.default.everyone).toEqual(PermissionLevel.WRITE);
+      expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.WRITE);
       expect(config.permissions.default.publiclyVisible).toEqual(false);
       expect(config.permissions.maxGuestLevel).toEqual(guestAccess);
       restore();
@@ -127,10 +106,8 @@ describe('noteConfig', () => {
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
-          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
-            PermissionLevelNames[PermissionLevel.WRITE],
-          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
-            PermissionLevelNames[PermissionLevel.WRITE],
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
           /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -141,12 +118,8 @@ describe('noteConfig', () => {
       expect(config.forbiddenAliases).toHaveLength(forbiddenAliases.length);
       expect(config.forbiddenAliases).toEqual(forbiddenAliases);
       expect(config.maxLength).toEqual(100000);
-      expect(config.permissions.default.everyone).toEqual(
-        PermissionLevel.WRITE,
-      );
-      expect(config.permissions.default.loggedIn).toEqual(
-        PermissionLevel.WRITE,
-      );
+      expect(config.permissions.default.everyone).toEqual(PermissionLevel.WRITE);
+      expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.WRITE);
       expect(config.permissions.default.publiclyVisible).toEqual(false);
       expect(config.permissions.maxGuestLevel).toEqual(guestAccess);
       restore();
@@ -158,10 +131,8 @@ describe('noteConfig', () => {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
-          HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL:
-            PermissionLevelNames[PermissionLevel.READ],
-          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
-            PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
           /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -185,8 +156,7 @@ describe('noteConfig', () => {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
-          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
-            PermissionLevelNames[PermissionLevel.WRITE],
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
           /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -197,12 +167,8 @@ describe('noteConfig', () => {
       expect(config.forbiddenAliases).toHaveLength(forbiddenAliases.length);
       expect(config.forbiddenAliases).toEqual(forbiddenAliases);
       expect(config.maxLength).toEqual(maxLength);
-      expect(config.permissions.default.everyone).toEqual(
-        PermissionLevel.WRITE,
-      );
-      expect(config.permissions.default.loggedIn).toEqual(
-        PermissionLevel.WRITE,
-      );
+      expect(config.permissions.default.everyone).toEqual(PermissionLevel.WRITE);
+      expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.WRITE);
       expect(config.permissions.default.publiclyVisible).toEqual(false);
       expect(config.permissions.maxGuestLevel).toEqual(guestAccess);
       restore();
@@ -214,8 +180,7 @@ describe('noteConfig', () => {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
-          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
-            PermissionLevelNames[PermissionLevel.WRITE],
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
           /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -226,12 +191,8 @@ describe('noteConfig', () => {
       expect(config.forbiddenAliases).toHaveLength(forbiddenAliases.length);
       expect(config.forbiddenAliases).toEqual(forbiddenAliases);
       expect(config.maxLength).toEqual(maxLength);
-      expect(config.permissions.default.everyone).toEqual(
-        PermissionLevel.WRITE,
-      );
-      expect(config.permissions.default.loggedIn).toEqual(
-        PermissionLevel.WRITE,
-      );
+      expect(config.permissions.default.everyone).toEqual(PermissionLevel.WRITE);
+      expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.WRITE);
       expect(config.permissions.default.publiclyVisible).toEqual(false);
       expect(config.permissions.maxGuestLevel).toEqual(PermissionLevel.FULL);
       restore();
@@ -243,10 +204,8 @@ describe('noteConfig', () => {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
-          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
-            PermissionLevelNames[PermissionLevel.WRITE],
-          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
-            PermissionLevelNames[PermissionLevel.WRITE],
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
           /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -257,12 +216,8 @@ describe('noteConfig', () => {
       expect(config.forbiddenAliases).toHaveLength(forbiddenAliases.length);
       expect(config.forbiddenAliases).toEqual(forbiddenAliases);
       expect(config.maxLength).toEqual(maxLength);
-      expect(config.permissions.default.everyone).toEqual(
-        PermissionLevel.WRITE,
-      );
-      expect(config.permissions.default.loggedIn).toEqual(
-        PermissionLevel.WRITE,
-      );
+      expect(config.permissions.default.everyone).toEqual(PermissionLevel.WRITE);
+      expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.WRITE);
       expect(config.permissions.default.publiclyVisible).toEqual(false);
       expect(config.permissions.maxGuestLevel).toEqual(guestAccess);
       expect(config.revisionRetentionDays).toEqual(0);
@@ -275,10 +230,8 @@ describe('noteConfig', () => {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
-          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
-            PermissionLevelNames[PermissionLevel.WRITE],
-          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
-            PermissionLevelNames[PermissionLevel.WRITE],
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
           /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -289,12 +242,8 @@ describe('noteConfig', () => {
       expect(config.forbiddenAliases).toHaveLength(forbiddenAliases.length);
       expect(config.forbiddenAliases).toEqual(forbiddenAliases);
       expect(config.maxLength).toEqual(maxLength);
-      expect(config.permissions.default.everyone).toEqual(
-        PermissionLevel.WRITE,
-      );
-      expect(config.permissions.default.loggedIn).toEqual(
-        PermissionLevel.WRITE,
-      );
+      expect(config.permissions.default.everyone).toEqual(PermissionLevel.WRITE);
+      expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.WRITE);
       expect(config.permissions.default.publiclyVisible).toEqual(false);
       expect(config.persistInterval).toEqual(10);
       restore();
@@ -327,10 +276,8 @@ describe('noteConfig', () => {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: invalidforbiddenAliases.join(' , '),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
-          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
-            PermissionLevelNames[PermissionLevel.READ],
-          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
-            PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
           /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -354,10 +301,8 @@ describe('noteConfig', () => {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
           HD_NOTE_MAX_LENGTH: negativeMaxDocumentLength.toString(),
-          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
-            PermissionLevelNames[PermissionLevel.READ],
-          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
-            PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
           /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -378,10 +323,8 @@ describe('noteConfig', () => {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
           HD_NOTE_MAX_LENGTH: floatMaxDocumentLength.toString(),
-          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
-            PermissionLevelNames[PermissionLevel.READ],
-          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
-            PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
           /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -402,10 +345,8 @@ describe('noteConfig', () => {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
           HD_NOTE_MAX_LENGTH: invalidMaxDocumentLength,
-          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
-            PermissionLevelNames[PermissionLevel.READ],
-          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
-            PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
           /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -427,8 +368,7 @@ describe('noteConfig', () => {
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: wrongDefaultPermission,
-          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
-            PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
           /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
@@ -449,8 +389,7 @@ describe('noteConfig', () => {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
-          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
-            PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: wrongDefaultPermission,
           /* oxlint-enable @typescript-eslint/naming-convention */
         },
@@ -472,10 +411,8 @@ describe('noteConfig', () => {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
-          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
-            PermissionLevelNames[PermissionLevel.READ],
-          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
-            PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: wrongDefaultPermission,
           /* oxlint-enable @typescript-eslint/naming-convention */
         },
@@ -497,10 +434,8 @@ describe('noteConfig', () => {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
-          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
-            PermissionLevelNames[PermissionLevel.READ],
-          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
-            PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: 'deny',
           /* oxlint-enable @typescript-eslint/naming-convention */
         },
@@ -518,18 +453,9 @@ describe('noteConfig', () => {
 
     describe('more complex permissions', () => {
       describe.each([
-        [
-          PermissionLevelNames[PermissionLevel.WRITE],
-          PermissionLevelNames[PermissionLevel.READ],
-        ],
-        [
-          PermissionLevelNames[PermissionLevel.WRITE],
-          PermissionLevelNames[PermissionLevel.DENY],
-        ],
-        [
-          PermissionLevelNames[PermissionLevel.READ],
-          PermissionLevelNames[PermissionLevel.DENY],
-        ],
+        [PermissionLevelNames[PermissionLevel.WRITE], PermissionLevelNames[PermissionLevel.READ]],
+        [PermissionLevelNames[PermissionLevel.WRITE], PermissionLevelNames[PermissionLevel.DENY]],
+        [PermissionLevelNames[PermissionLevel.READ], PermissionLevelNames[PermissionLevel.DENY]],
       ])(
         'check default everyone and logged-in interaction',
         (everyonePermission, loggedInPermission) => {
@@ -556,76 +482,57 @@ describe('noteConfig', () => {
         },
       );
       describe.each([
-        [
-          PermissionLevelNames[PermissionLevel.READ],
-          PermissionLevelNames[PermissionLevel.DENY],
-        ],
-      ])(
-        'check default everyone and max guest level full',
-        (defaultEveryone) => {
-          it(`when HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL is set to ${PermissionLevelNames[PermissionLevel.FULL]} and HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE is set to ${defaultEveryone}`, async () => {
-            const restore = mockedEnv(
-              {
-                /* oxlint-disable @typescript-eslint/naming-convention */
-                HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
-                HD_NOTE_MAX_LENGTH: maxLength.toString(),
-                HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: defaultEveryone,
-                HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL:
-                  PermissionLevelNames[PermissionLevel.FULL],
-                /* oxlint-enable @typescript-eslint/naming-convention */
-              },
-              {
-                clear: true,
-              },
-            );
-            noteConfig();
-            expect(spyConsoleError.mock.calls[0][0]).toContain(
-              `'HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL' is set to '${PermissionLevelNames[PermissionLevel.FULL]}', but 'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${defaultEveryone}'. This does not allow the guest users to write in the notes they can create.`,
-            );
-            expect(spyProcessExit).toHaveBeenCalledWith(1);
-            restore();
-          });
-        },
-      );
+        [PermissionLevelNames[PermissionLevel.READ], PermissionLevelNames[PermissionLevel.DENY]],
+      ])('check default everyone and max guest level full', (defaultEveryone) => {
+        it(`when HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL is set to ${PermissionLevelNames[PermissionLevel.FULL]} and HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE is set to ${defaultEveryone}`, async () => {
+          const restore = mockedEnv(
+            {
+              /* oxlint-disable @typescript-eslint/naming-convention */
+              HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+              HD_NOTE_MAX_LENGTH: maxLength.toString(),
+              HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: defaultEveryone,
+              HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: PermissionLevelNames[PermissionLevel.FULL],
+              /* oxlint-enable @typescript-eslint/naming-convention */
+            },
+            {
+              clear: true,
+            },
+          );
+          noteConfig();
+          expect(spyConsoleError.mock.calls[0][0]).toContain(
+            `'HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL' is set to '${PermissionLevelNames[PermissionLevel.FULL]}', but 'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${defaultEveryone}'. This does not allow the guest users to write in the notes they can create.`,
+          );
+          expect(spyProcessExit).toHaveBeenCalledWith(1);
+          restore();
+        });
+      });
       describe.each([
-        [
-          PermissionLevelNames[PermissionLevel.WRITE],
-          PermissionLevelNames[PermissionLevel.READ],
-        ],
-        [
-          PermissionLevelNames[PermissionLevel.WRITE],
-          PermissionLevelNames[PermissionLevel.DENY],
-        ],
-        [
-          PermissionLevelNames[PermissionLevel.READ],
-          PermissionLevelNames[PermissionLevel.DENY],
-        ],
-      ])(
-        'check default everyone and max guest level full',
-        (defaultEveryone, maxGuestLevel) => {
-          it(`when 'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${defaultEveryone}', but 'HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL' is set to '${maxGuestLevel}'`, async () => {
-            const restore = mockedEnv(
-              {
-                /* oxlint-disable @typescript-eslint/naming-convention */
-                HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
-                HD_NOTE_MAX_LENGTH: maxLength.toString(),
-                HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: defaultEveryone,
-                HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: maxGuestLevel,
-                /* oxlint-enable @typescript-eslint/naming-convention */
-              },
-              {
-                clear: true,
-              },
-            );
-            noteConfig();
-            expect(spyConsoleError.mock.calls[0][0]).toContain(
-              `HD_NOTE: 'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${defaultEveryone}', but 'HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL' is set to '${maxGuestLevel}'. This does not work since the default level may not be higher than the maximum guest level.`,
-            );
-            expect(spyProcessExit).toHaveBeenCalledWith(1);
-            restore();
-          });
-        },
-      );
+        [PermissionLevelNames[PermissionLevel.WRITE], PermissionLevelNames[PermissionLevel.READ]],
+        [PermissionLevelNames[PermissionLevel.WRITE], PermissionLevelNames[PermissionLevel.DENY]],
+        [PermissionLevelNames[PermissionLevel.READ], PermissionLevelNames[PermissionLevel.DENY]],
+      ])('check default everyone and max guest level full', (defaultEveryone, maxGuestLevel) => {
+        it(`when 'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${defaultEveryone}', but 'HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL' is set to '${maxGuestLevel}'`, async () => {
+          const restore = mockedEnv(
+            {
+              /* oxlint-disable @typescript-eslint/naming-convention */
+              HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+              HD_NOTE_MAX_LENGTH: maxLength.toString(),
+              HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: defaultEveryone,
+              HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: maxGuestLevel,
+              /* oxlint-enable @typescript-eslint/naming-convention */
+            },
+            {
+              clear: true,
+            },
+          );
+          noteConfig();
+          expect(spyConsoleError.mock.calls[0][0]).toContain(
+            `HD_NOTE: 'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${defaultEveryone}', but 'HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL' is set to '${maxGuestLevel}'. This does not work since the default level may not be higher than the maximum guest level.`,
+          );
+          expect(spyProcessExit).toHaveBeenCalledWith(1);
+          restore();
+        });
+      });
     });
 
     it('when given a negative retention days', async () => {
@@ -634,10 +541,8 @@ describe('noteConfig', () => {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
-          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
-            PermissionLevelNames[PermissionLevel.READ],
-          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
-            PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_REVISION_RETENTION_DAYS: (-1).toString(),
           /* oxlint-enable @typescript-eslint/naming-convention */
         },
@@ -659,10 +564,8 @@ describe('noteConfig', () => {
           /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
-          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE:
-            PermissionLevelNames[PermissionLevel.READ],
-          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN:
-            PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_REVISION_RETENTION_DAYS: retentionDays.toString(),
           HD_NOTE_PERSIST_INTERVAL: (-1).toString(),
           /* oxlint-enable @typescript-eslint/naming-convention */

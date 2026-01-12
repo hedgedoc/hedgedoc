@@ -98,12 +98,7 @@ describe('Websocket gateway', () => {
         LoggerModule,
         ConfigModule.forRoot({
           isGlobal: true,
-          load: [
-            appConfigMock,
-            databaseConfigMock,
-            authConfigMock,
-            noteConfigMock,
-          ],
+          load: [appConfigMock, databaseConfigMock, authConfigMock, noteConfigMock],
         }),
       ],
     }).compile();
@@ -120,9 +115,7 @@ describe('Websocket gateway', () => {
       .mockImplementation(
         (request: IncomingMessage): Optional<string> =>
           Optional.ofNullable(
-            request.headers?.cookie === mockedValidSessionCookie
-              ? mockedSessionIdWithUser
-              : null,
+            request.headers?.cookie === mockedValidSessionCookie ? mockedSessionIdWithUser : null,
           ),
       );
 
@@ -139,30 +132,25 @@ describe('Websocket gateway', () => {
           : Promise.reject('no user for session id found'),
       );
 
-    jest
-      .spyOn(usersService, 'getUserById')
-      .mockImplementation((userId: number) => {
-        if (userExistsForUserId && userId === mockUserId) {
-          return Promise.resolve({
-            [FieldNameUser.id]: mockUserId,
-            [FieldNameUser.username]: mockUsername,
-            [FieldNameUser.displayName]: mockDisplayName,
-            [FieldNameUser.authorStyle]: mockAuthorStyle,
-            [FieldNameUser.email]: null,
-            [FieldNameUser.photoUrl]: null,
-            [FieldNameUser.guestUuid]: null,
-            [FieldNameUser.createdAt]: new Date().toISOString(),
-          });
-        } else {
-          throw new NotInDBError('User not found');
-        }
-      });
+    jest.spyOn(usersService, 'getUserById').mockImplementation((userId: number) => {
+      if (userExistsForUserId && userId === mockUserId) {
+        return Promise.resolve({
+          [FieldNameUser.id]: mockUserId,
+          [FieldNameUser.username]: mockUsername,
+          [FieldNameUser.displayName]: mockDisplayName,
+          [FieldNameUser.authorStyle]: mockAuthorStyle,
+          [FieldNameUser.email]: null,
+          [FieldNameUser.photoUrl]: null,
+          [FieldNameUser.guestUuid]: null,
+          [FieldNameUser.createdAt]: new Date().toISOString(),
+        });
+      } else {
+        throw new NotInDBError('User not found');
+      }
+    });
 
     jest
-      .spyOn(
-        extractNoteIdFromRequestUrlModule,
-        'extractNoteAliasFromRequestUrl',
-      )
+      .spyOn(extractNoteIdFromRequestUrlModule, 'extractNoteAliasFromRequestUrl')
       .mockImplementation((request: IncomingMessage): string => {
         if (request.url === mockedValidUrl) {
           return mockedValidNoteAlias;
@@ -173,26 +161,22 @@ describe('Websocket gateway', () => {
         }
       });
 
-    jest
-      .spyOn(notesService, 'getNoteIdByAlias')
-      .mockImplementation((noteAlias: string) => {
-        if (noteExistsForNoteId && noteAlias === mockedValidNoteAlias) {
-          return Promise.resolve(mockedValidNoteId);
-        }
-        if (noteAlias === mockedValidGuestNoteAlias) {
-          return Promise.resolve(mockedValidGuestNoteId);
-        } else {
-          return Promise.reject('no note found');
-        }
-      });
+    jest.spyOn(notesService, 'getNoteIdByAlias').mockImplementation((noteAlias: string) => {
+      if (noteExistsForNoteId && noteAlias === mockedValidNoteAlias) {
+        return Promise.resolve(mockedValidNoteId);
+      }
+      if (noteAlias === mockedValidGuestNoteAlias) {
+        return Promise.resolve(mockedValidGuestNoteId);
+      } else {
+        return Promise.reject('no note found');
+      }
+    });
 
     jest
       .spyOn(permissionsService, 'determinePermission')
       .mockImplementation(
         async (userId: number, noteId: number): Promise<PermissionLevel> =>
-          (userId === mockUserId &&
-            noteId === mockedValidNoteId &&
-            userHasReadPermissions) ||
+          (userId === mockUserId && noteId === mockedValidNoteId && userHasReadPermissions) ||
           (userId === null && noteId === mockedValidGuestNoteId)
             ? PermissionLevel.READ
             : PermissionLevel.DENY,
@@ -233,9 +217,7 @@ describe('Websocket gateway', () => {
       },
     });
 
-    await expect(
-      gateway.handleConnection(mockedWebsocket, request),
-    ).resolves.not.toThrow();
+    await expect(gateway.handleConnection(mockedWebsocket, request)).resolves.not.toThrow();
     expect(addClientSpy).toHaveBeenCalledWith(mockedWebsocketConnection);
     expect(mockedWebsocketCloseSpy).not.toHaveBeenCalled();
   });
@@ -251,9 +233,7 @@ describe('Websocket gateway', () => {
       },
     });
 
-    await expect(
-      gateway.handleConnection(mockedWebsocket, request),
-    ).resolves.not.toThrow();
+    await expect(gateway.handleConnection(mockedWebsocket, request)).resolves.not.toThrow();
     expect(addClientSpy).not.toHaveBeenCalled();
     expect(mockedWebsocketCloseSpy).toHaveBeenCalled();
   });
@@ -271,9 +251,7 @@ describe('Websocket gateway', () => {
       },
     });
 
-    await expect(
-      gateway.handleConnection(mockedWebsocket, request),
-    ).resolves.not.toThrow();
+    await expect(gateway.handleConnection(mockedWebsocket, request)).resolves.not.toThrow();
     expect(addClientSpy).not.toHaveBeenCalled();
     expect(mockedWebsocketCloseSpy).toHaveBeenCalled();
   });
@@ -291,9 +269,7 @@ describe('Websocket gateway', () => {
       },
     });
 
-    await expect(
-      gateway.handleConnection(mockedWebsocket, request),
-    ).resolves.not.toThrow();
+    await expect(gateway.handleConnection(mockedWebsocket, request)).resolves.not.toThrow();
     expect(addClientSpy).not.toHaveBeenCalled();
     expect(mockedWebsocketCloseSpy).toHaveBeenCalled();
   });
@@ -309,9 +285,7 @@ describe('Websocket gateway', () => {
       },
     });
 
-    await expect(
-      gateway.handleConnection(mockedWebsocket, request),
-    ).resolves.not.toThrow();
+    await expect(gateway.handleConnection(mockedWebsocket, request)).resolves.not.toThrow();
     expect(addClientSpy).not.toHaveBeenCalled();
     expect(mockedWebsocketCloseSpy).toHaveBeenCalled();
   });
@@ -329,9 +303,7 @@ describe('Websocket gateway', () => {
       },
     });
 
-    await expect(
-      gateway.handleConnection(mockedWebsocket, request),
-    ).resolves.not.toThrow();
+    await expect(gateway.handleConnection(mockedWebsocket, request)).resolves.not.toThrow();
     expect(addClientSpy).not.toHaveBeenCalled();
     expect(mockedWebsocketCloseSpy).toHaveBeenCalled();
   });
@@ -349,9 +321,7 @@ describe('Websocket gateway', () => {
       },
     });
 
-    await expect(
-      gateway.handleConnection(mockedWebsocket, request),
-    ).resolves.not.toThrow();
+    await expect(gateway.handleConnection(mockedWebsocket, request)).resolves.not.toThrow();
     expect(addClientSpy).not.toHaveBeenCalled();
     expect(mockedWebsocketCloseSpy).toHaveBeenCalled();
   });
