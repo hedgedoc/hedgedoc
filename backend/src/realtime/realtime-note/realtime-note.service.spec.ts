@@ -21,6 +21,7 @@ import { MockConnectionBuilder } from './test-utils/mock-connection';
 describe('RealtimeNoteService', () => {
   const mockedContent = 'mockedContent';
   const mockedYjsState = [1, 2, 3];
+  const mockedYjsStateBuffer = new Uint8Array(mockedYjsState).buffer;
   const mockedNoteId = 4711;
 
   let realtimeNote: RealtimeNote;
@@ -61,7 +62,10 @@ describe('RealtimeNoteService', () => {
               Mock.of<Revision>({
                 [FieldNameRevision.content]: mockedContent,
                 ...(hasYjsState
-                  ? { [FieldNameRevision.yjsStateVector]: mockedYjsState }
+                  ? {
+                      [FieldNameRevision.yjsStateVector]:
+                        Buffer.from(mockedYjsStateBuffer),
+                    }
                   : {}),
               }),
             )
@@ -210,7 +214,7 @@ describe('RealtimeNoteService', () => {
     expect(realtimeNoteStore.create).toHaveBeenCalledWith(
       mockedNoteId,
       mockedContent,
-      mockedYjsState,
+      mockedYjsStateBuffer,
     );
     expect(setIntervalSpy).not.toHaveBeenCalled();
   });
@@ -302,7 +306,7 @@ describe('RealtimeNoteService', () => {
       mockedContent,
       false, // this cannot be an initial revision, since this is created during note creation
       undefined, // the test doesn't use knex transactions
-      expect.any(Uint8Array),
+      mockedYjsStateBuffer,
     );
   });
 

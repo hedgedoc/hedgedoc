@@ -4,7 +4,7 @@
     "preserveConstEnums": true,
     "lib": [
       "es2022",
-      "dom"
+      "dom",
     ],
     "declaration": true,
     "strict": true,
@@ -14,7 +14,8 @@
     "allowJs": true,
     "declarationMap":true,
     "sourceMap": true,
-    "typeRoots": ["./types"]
+    "types": ["node"],
+    "typeRoots": ["./types", "../node_modules/@types"],
   },
   "include": ["./src", "./types"],
   "exclude": ["./dist", "**/*.test.ts"]
