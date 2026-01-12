@@ -6,6 +6,4 @@
 import { LdapLoginResponseSchema } from '@hedgedoc/commons';
 import { createZodDto } from 'nestjs-zod';
 
-export class LdapLoginResponseDto extends createZodDto(
-  LdapLoginResponseSchema,
-) {}
+export class LdapLoginResponseDto extends createZodDto(LdapLoginResponseSchema) {}

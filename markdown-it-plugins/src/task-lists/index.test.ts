@@ -17,7 +17,7 @@ describe('markdown-it-task-lists', () => {
 - [ ] unchecked item 2
 - [ ] unchecked item 3
 - [x] checked item 4
-`)
+`),
     ).toMatchSnapshot()
   })
 
@@ -32,7 +32,7 @@ describe('markdown-it-task-lists', () => {
 - [x ] not a todo item 4
 - [ x ] not a todo item 5
 -   [x] todo item 6
-`)
+`),
     ).toMatchSnapshot()
   })
 
@@ -57,7 +57,7 @@ describe('markdown-it-task-lists', () => {
   - [ ] nested unchecked item 2
   - [x] nested checked item 3
   - [X] nested checked item 4
-`)
+`),
     ).toMatchSnapshot()
   })
   it('renders ordered correctly', () => {
@@ -68,7 +68,7 @@ describe('markdown-it-task-lists', () => {
 2. [ ] unchecked ordered 2
 3. [x] checked ordered 3
 4. [ ] unchecked ordered 4
-`)
+`),
     ).toMatchSnapshot()
   })
 })

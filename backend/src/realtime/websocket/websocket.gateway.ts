@@ -49,10 +49,7 @@ export class WebsocketGateway implements OnGatewayConnection {
    * @param clientSocket The WebSocket client object.
    * @param request The underlying HTTP request of the WebSocket connection.
    */
-  async handleConnection(
-    clientSocket: WebSocket,
-    request: IncomingMessage,
-  ): Promise<void> {
+  async handleConnection(clientSocket: WebSocket, request: IncomingMessage): Promise<void> {
     try {
       const userId = await this.findUserIdByRequestSession(request);
       if (userId === undefined) {
@@ -70,10 +67,7 @@ export class WebsocketGateway implements OnGatewayConnection {
       const displayName = user[FieldNameUser.displayName];
       const authorStyle = user[FieldNameUser.authorStyle];
 
-      const notePermission = await this.permissionsService.determinePermission(
-        userId,
-        noteId,
-      );
+      const notePermission = await this.permissionsService.determinePermission(userId, noteId);
       if (notePermission < PermissionLevel.READ) {
         this.logger.log(
           `Access denied to note '${noteId}' for user '${userId}'`,
@@ -93,13 +87,10 @@ export class WebsocketGateway implements OnGatewayConnection {
         }`,
       );
 
-      const realtimeNote =
-        await this.realtimeNoteService.getOrCreateRealtimeNote(noteId);
+      const realtimeNote = await this.realtimeNoteService.getOrCreateRealtimeNote(noteId);
 
       const websocketTransporter = new MessageTransporter();
-      websocketTransporter.setAdapter(
-        new BackendWebsocketAdapter(clientSocket),
-      );
+      websocketTransporter.setAdapter(new BackendWebsocketAdapter(clientSocket));
 
       const connection = new RealtimeConnection(
         websocketTransporter,
@@ -133,9 +124,7 @@ export class WebsocketGateway implements OnGatewayConnection {
    * @param request The request that contains the session cookie
    * @returns The found user id
    */
-  private async findUserIdByRequestSession(
-    request: IncomingMessage,
-  ): Promise<number | undefined> {
+  private async findUserIdByRequestSession(request: IncomingMessage): Promise<number | undefined> {
     const sessionId = this.sessionService.extractSessionIdFromRequest(request);
     if (sessionId.isEmpty()) {
       return undefined;

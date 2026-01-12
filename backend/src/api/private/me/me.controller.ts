@@ -43,16 +43,14 @@ export class MeController {
   @Get('media')
   @OpenApi(200)
   async getMyMedia(@RequestUserId() userId: number): Promise<MediaUploadDto[]> {
-    const mediaUuids =
-      await this.mediaService.getMediaUploadUuidsByUserId(userId);
+    const mediaUuids = await this.mediaService.getMediaUploadUuidsByUserId(userId);
     return await this.mediaService.getMediaUploadDtosByUuids(mediaUuids);
   }
 
   @Delete()
   @OpenApi(204, 404, 500)
   async deleteUser(@RequestUserId() userId: number): Promise<void> {
-    const mediaUploads =
-      await this.mediaService.getMediaUploadUuidsByUserId(userId);
+    const mediaUploads = await this.mediaService.getMediaUploadUuidsByUserId(userId);
     for (const mediaUpload of mediaUploads) {
       await this.mediaService.deleteFile(mediaUpload);
     }
@@ -67,11 +65,6 @@ export class MeController {
     @RequestUserId({ forbidGuests: true }) userId: number,
     @Body('displayName') newDisplayName: string,
   ): Promise<void> {
-    await this.userService.updateUser(
-      userId,
-      newDisplayName,
-      undefined,
-      undefined,
-    );
+    await this.userService.updateUser(userId, newDisplayName, undefined, undefined);
   }
 }

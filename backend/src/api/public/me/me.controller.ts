@@ -57,13 +57,9 @@ export class MeController {
     isArray: true,
     schema: NoteMetadataSchema,
   })
-  async getMyNotes(
-    @RequestUserId() userId: number,
-  ): Promise<NoteMetadataDto[]> {
+  async getMyNotes(@RequestUserId() userId: number): Promise<NoteMetadataDto[]> {
     const noteIds = await this.notesService.getUserNoteIds(userId);
-    return await Promise.all(
-      noteIds.map((note) => this.notesService.toNoteMetadataDto(note)),
-    );
+    return await Promise.all(noteIds.map((note) => this.notesService.toNoteMetadataDto(note)));
   }
 
   @Get('media')

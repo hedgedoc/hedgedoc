@@ -10,12 +10,8 @@ export const NoteMediaDeletionSchema = z
   .object({
     keepMedia: z
       .boolean()
-      .describe(
-        'Indicates whether existing media uploads for the note should be kept',
-      ),
+      .describe('Indicates whether existing media uploads for the note should be kept'),
   })
-  .describe(
-    'DTO for deleting a note with the option to remove associated uploads as well',
-  )
+  .describe('DTO for deleting a note with the option to remove associated uploads as well')
 
 export type NoteMediaDeletionInterface = z.infer<typeof NoteMediaDeletionSchema>

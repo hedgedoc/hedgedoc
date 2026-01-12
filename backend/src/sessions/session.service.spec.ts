@@ -15,10 +15,7 @@ import { Socket } from 'node:net';
 import { Mock } from 'ts-mockery';
 
 import appConfigMock from '../config/mock/app.config.mock';
-import {
-  createDefaultMockAuthConfig,
-  registerAuthConfig,
-} from '../config/mock/auth.config.mock';
+import { createDefaultMockAuthConfig, registerAuthConfig } from '../config/mock/auth.config.mock';
 import { mockKnexDb } from '../database/mock/provider';
 import { LoggerModule } from '../logger/logger.module';
 import { HEDGEDOC_SESSION } from '../utils/session';
@@ -86,39 +83,23 @@ describe('SessionService', () => {
     const sessionId = 'testSessionId';
     it('returns empty Optional if no cookie header is set', () => {
       const testRequest = new IncomingMessage(mockSocket);
-      expect(service.extractSessionIdFromRequest(testRequest).isEmpty()).toBe(
-        true,
-      );
+      expect(service.extractSessionIdFromRequest(testRequest).isEmpty()).toBe(true);
     });
     it('returns empty Optional if cookie is malformed', async () => {
       const testRequest = new IncomingMessage(mockSocket);
       testRequest.headers.cookie = serialize(HEDGEDOC_SESSION, 'foo', {});
-      expect(() => service.extractSessionIdFromRequest(testRequest)).toThrow(
-        Error,
-      );
+      expect(() => service.extractSessionIdFromRequest(testRequest)).toThrow(Error);
     });
     it('returns empty Optional if cookie has invalid signature', async () => {
       const testRequest = new IncomingMessage(mockSocket);
-      testRequest.headers.cookie = serialize(
-        HEDGEDOC_SESSION,
-        `s:${sessionId}:fakeSignature`,
-        {},
-      );
-      expect(() => service.extractSessionIdFromRequest(testRequest)).toThrow(
-        Error,
-      );
+      testRequest.headers.cookie = serialize(HEDGEDOC_SESSION, `s:${sessionId}:fakeSignature`, {});
+      expect(() => service.extractSessionIdFromRequest(testRequest)).toThrow(Error);
     });
     it('returns the correct id for session id', () => {
       const signature = sign(sessionId, authConfig.session.secret);
       const testRequest = new IncomingMessage(mockSocket);
-      testRequest.headers.cookie = serialize(
-        HEDGEDOC_SESSION,
-        `s:${signature}`,
-        {},
-      );
-      expect(service.extractSessionIdFromRequest(testRequest).get()).toEqual(
-        sessionId,
-      );
+      testRequest.headers.cookie = serialize(HEDGEDOC_SESSION, `s:${signature}`, {});
+      expect(service.extractSessionIdFromRequest(testRequest).get()).toEqual(sessionId);
     });
   });
 });

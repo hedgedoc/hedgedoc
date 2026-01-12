@@ -89,11 +89,7 @@ export class NoteService {
    * @throws MaximumDocumentLengthExceededError if the noteContent is longer than the maxDocumentLength
    * @throws GenericDBError if the database returned a non-expected value
    */
-  async createNote(
-    noteContent: string,
-    ownerUserId: number,
-    givenAlias?: string,
-  ): Promise<number> {
+  async createNote(noteContent: string, ownerUserId: number, givenAlias?: string): Promise<number> {
     // Ensures that a new note doesn't violate application constraints
     if (noteContent.length > this.noteConfig.maxLength) {
       throw new MaximumDocumentLengthExceededError();
@@ -101,17 +97,17 @@ export class NoteService {
     return await this.knex.transaction(async (transaction) => {
       // Create note itself in the database
       const createdAt = dateTimeToDB(getCurrentDateTime());
-      const createdNotes: Pick<Note, FieldNameNote.id>[] | number[] =
-        await transaction(TableNote).insert(
-          {
-            [FieldNameNote.ownerId]: ownerUserId,
-            [FieldNameNote.version]: 2,
-            [FieldNameNote.createdAt]: createdAt,
-            [FieldNameNote.publiclyVisible]:
-              this.noteConfig.permissions.default.publiclyVisible,
-          },
-          [FieldNameNote.id],
-        );
+      const createdNotes: Pick<Note, FieldNameNote.id>[] | number[] = await transaction(
+        TableNote,
+      ).insert(
+        {
+          [FieldNameNote.ownerId]: ownerUserId,
+          [FieldNameNote.version]: 2,
+          [FieldNameNote.createdAt]: createdAt,
+          [FieldNameNote.publiclyVisible]: this.noteConfig.permissions.default.publiclyVisible,
+        },
+        [FieldNameNote.id],
+      );
 
       if (createdNotes.length !== 1) {
         throw new GenericDBError(
@@ -122,34 +118,21 @@ export class NoteService {
       }
 
       const noteId =
-        typeof createdNotes[0] === 'number'
-          ? createdNotes[0]
-          : createdNotes[0][FieldNameNote.id];
+        typeof createdNotes[0] === 'number' ? createdNotes[0] : createdNotes[0][FieldNameNote.id];
 
-      this.logger.debug(
-        `Creating new note '${noteId}' for '${ownerUserId}' at '${createdAt}'`,
-      );
+      this.logger.debug(`Creating new note '${noteId}' for '${ownerUserId}' at '${createdAt}'`);
 
       if (givenAlias !== undefined) {
         await this.aliasService.ensureAliasIsAvailable(givenAlias, transaction);
       }
       const newAlias =
-        givenAlias === undefined
-          ? this.aliasService.generateRandomAlias()
-          : givenAlias;
+        givenAlias === undefined ? this.aliasService.generateRandomAlias() : givenAlias;
       await this.aliasService.addAlias(noteId, newAlias, transaction);
 
-      await this.revisionsService.createRevision(
-        noteId,
-        noteContent,
-        true,
-        transaction,
-      );
+      await this.revisionsService.createRevision(noteId, noteContent, true, transaction);
 
-      const everyoneDefaultAccessLevel =
-        this.noteConfig.permissions.default.everyone;
-      const loggedInUsersDefaultAccessLevel =
-        this.noteConfig.permissions.default.loggedIn;
+      const everyoneDefaultAccessLevel = this.noteConfig.permissions.default.everyone;
+      const loggedInUsersDefaultAccessLevel = this.noteConfig.permissions.default.loggedIn;
 
       if (everyoneDefaultAccessLevel !== PermissionLevel.DENY) {
         const everyoneAccessGroupId = await this.groupsService.getGroupIdByName(
@@ -165,11 +148,10 @@ export class NoteService {
       }
 
       if (loggedInUsersDefaultAccessLevel !== PermissionLevel.DENY) {
-        const loggedInUsersAccessGroupId =
-          await this.groupsService.getGroupIdByName(
-            SpecialGroup.LOGGED_IN,
-            transaction,
-          );
+        const loggedInUsersAccessGroupId = await this.groupsService.getGroupIdByName(
+          SpecialGroup.LOGGED_IN,
+          transaction,
+        );
         await this.permissionService.setGroupPermission(
           noteId,
           loggedInUsersAccessGroupId,
@@ -200,10 +182,7 @@ export class NoteService {
       return realtimeContent;
     }
 
-    const latestRevision = await this.revisionsService.getLatestRevision(
-      noteId,
-      transaction,
-    );
+    const latestRevision = await this.revisionsService.getLatestRevision(noteId, transaction);
     return latestRevision.content;
   }
 
@@ -220,19 +199,13 @@ export class NoteService {
     const dbActor = transaction ?? this.knex;
     const isForbidden = this.aliasService.isAliasForbidden(alias);
     if (isForbidden) {
-      throw new ForbiddenIdError(
-        `The alias '${alias}' is forbidden by the administrator.`,
-      );
+      throw new ForbiddenIdError(`The alias '${alias}' is forbidden by the administrator.`);
     }
 
     const note = await dbActor(TableAlias)
       .select<Pick<Note, FieldNameNote.id>>(`${TableNote}.${FieldNameNote.id}`)
       .where(FieldNameAlias.alias, alias)
-      .join(
-        TableNote,
-        `${TableNote}.${FieldNameNote.id}`,
-        `${TableAlias}.${FieldNameAlias.noteId}`,
-      )
+      .join(TableNote, `${TableNote}.${FieldNameNote.id}`, `${TableAlias}.${FieldNameAlias.noteId}`)
       .first();
 
     if (note === undefined) {
@@ -269,10 +242,7 @@ export class NoteService {
    * @throws NotInDBError if there is no note with this id or aliases
    */
   async updateNote(noteId: number, noteContent: string): Promise<void> {
-    this.logger.debug(
-      `Updating note content for note '${noteId}': ${noteContent}`,
-      'updateNote',
-    );
+    this.logger.debug(`Updating note content for note '${noteId}': ${noteContent}`, 'updateNote');
     this.eventEmitter.emit(NoteEvent.CLOSE_REALTIME, noteId);
     await this.revisionsService.createRevision(noteId, noteContent);
   }
@@ -285,10 +255,7 @@ export class NoteService {
    * @param transaction The optional database transaction to use
    * @returns The built NoteMetadataDto
    */
-  async toNoteMetadataDto(
-    noteId: number,
-    transaction?: Knex,
-  ): Promise<NoteMetadataDto> {
+  async toNoteMetadataDto(noteId: number, transaction?: Knex): Promise<NoteMetadataDto> {
     if (transaction === undefined) {
       return await this.knex.transaction(async (newTransaction) => {
         return await this.innerToNoteMetadataDto(noteId, newTransaction);
@@ -310,9 +277,7 @@ export class NoteService {
     transaction: Knex,
   ): Promise<NoteMetadataDto> {
     const aliases = await this.aliasService.getAllAliases(noteId, transaction);
-    const primaryAlias = aliases.find(
-      (alias) => alias[FieldNameAlias.isPrimary],
-    );
+    const primaryAlias = aliases.find((alias) => alias[FieldNameAlias.isPrimary]);
     if (primaryAlias === undefined) {
       throw new NotInDBError(
         'The note has no primary alias.',
@@ -335,27 +300,18 @@ export class NoteService {
     const version = note[FieldNameNote.version];
     const createdAt = dateTimeToISOString(dbToDateTime(createdAtString));
 
-    const latestRevision = await this.revisionsService.getLatestRevision(
-      noteId,
-      transaction,
-    );
+    const latestRevision = await this.revisionsService.getLatestRevision(noteId, transaction);
     const tags = await this.revisionsService.getTagsByRevisionUuid(
       latestRevision[FieldNameRevision.uuid],
       transaction,
     );
-    const permissions = await this.permissionService.getPermissionsDtoForNote(
-      noteId,
-      transaction,
-    );
+    const permissions = await this.permissionService.getPermissionsDtoForNote(noteId, transaction);
 
     const updateUsers = await this.revisionsService.getRevisionUserInfo(
       latestRevision[FieldNameRevision.uuid],
       transaction,
     );
-    this.logger.debug(
-      `Retrieved ${updateUsers.users.length} users`,
-      'innerToNoteMetadataDto',
-    );
+    this.logger.debug(`Retrieved ${updateUsers.users.length} users`, 'innerToNoteMetadataDto');
     updateUsers.users.sort();
 
     const updatedAt = dateTimeToISOString(

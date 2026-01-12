@@ -10,6 +10,6 @@ export interface NodeToReactElementTransformer {
   (
     node: Node,
     index: number | string,
-    transform?: NodeToReactElementTransformer
+    transform?: NodeToReactElementTransformer,
   ): ReactElement | void | null | string
 }

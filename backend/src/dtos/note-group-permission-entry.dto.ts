@@ -6,6 +6,4 @@
 import { NoteGroupPermissionEntrySchema } from '@hedgedoc/commons';
 import { createZodDto } from 'nestjs-zod';
 
-export class NoteGroupPermissionEntryDto extends createZodDto(
-  NoteGroupPermissionEntrySchema,
-) {}
+export class NoteGroupPermissionEntryDto extends createZodDto(NoteGroupPermissionEntrySchema) {}

@@ -26,12 +26,8 @@ export class UsersController {
   @Post('check')
   @HttpCode(200)
   @OpenApi(200)
-  async checkUsername(
-    @Body() usernameCheck: UsernameCheckDto,
-  ): Promise<UsernameCheckResponseDto> {
-    const userExists = await this.userService.isUsernameTaken(
-      usernameCheck.username,
-    );
+  async checkUsername(@Body() usernameCheck: UsernameCheckDto): Promise<UsernameCheckResponseDto> {
+    const userExists = await this.userService.isUsernameTaken(usernameCheck.username);
     // TODO Check if username is blocked (https://github.com/hedgedoc/hedgedoc/issues/5794)
     return UsernameCheckResponseDto.create({ usernameAvailable: !userExists });
   }

@@ -6,6 +6,4 @@
 import { PendingLdapUserInfoSchema } from '@hedgedoc/commons';
 import { createZodDto } from 'nestjs-zod';
 
-export class PendingLdapUserInfoDto extends createZodDto(
-  PendingLdapUserInfoSchema,
-) {}
+export class PendingLdapUserInfoDto extends createZodDto(PendingLdapUserInfoSchema) {}

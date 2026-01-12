@@ -1,12 +1,3 @@
-/*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
- *
- * SPDX-License-Identifier: AGPL-3.0-only
- */
-import { SortMode } from '@hedgedoc/commons';
-import { NoteType } from '@hedgedoc/database';
-import request from 'supertest';
-
 import { PRIVATE_API_PREFIX } from '../../src/app.module';
 import {
   noteAlias1,
@@ -18,6 +9,14 @@ import {
   username3,
 } from '../test-setup';
 import { setupAgent } from './utils/setup-agent';
+/*
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+import { SortMode } from '@hedgedoc/commons';
+import { NoteType } from '@hedgedoc/database';
+import request from 'supertest';
 
 describe('Explore', () => {
   let testSetup: TestSetup;
@@ -40,8 +39,7 @@ describe('Explore', () => {
       .send({ username: username3, password: password3 })
       .expect(201);
 
-    forbiddenAlias =
-      testSetup.configService.get('noteConfig').forbiddenAliases[0];
+    forbiddenAlias = testSetup.configService.get('noteConfig').forbiddenAliases[0];
   });
 
   afterEach(async () => {
@@ -51,20 +49,17 @@ describe('Explore', () => {
 
   describe(`GET ${PRIVATE_API_PREFIX}/explore/my`, () => {
     describe('return only own notes for user', () => {
-      describe.each(sortModes.map((sortMode) => [sortMode]))(
-        'with sorting note',
-        (sortMode) => {
-          it(`${sortMode}`, async () => {
-            const response = await agentUser2
-              .get(`${PRIVATE_API_PREFIX}/explore/my?sort=${sortMode}`)
-              .expect('Content-Type', /json/)
-              .expect(200);
-            const myNotes = response.body;
-            expect(myNotes.length).toBe(1);
-            expect(myNotes[0].primaryAlias).toEqual(noteAlias2);
-          });
-        },
-      );
+      describe.each(sortModes.map((sortMode) => [sortMode]))('with sorting note', (sortMode) => {
+        it(`${sortMode}`, async () => {
+          const response = await agentUser2
+            .get(`${PRIVATE_API_PREFIX}/explore/my?sort=${sortMode}`)
+            .expect('Content-Type', /json/)
+            .expect(200);
+          const myNotes = response.body;
+          expect(myNotes.length).toBe(1);
+          expect(myNotes[0].primaryAlias).toEqual(noteAlias2);
+        });
+      });
       it('with search term', async () => {
         const response = await agentUser2
           .get(`${PRIVATE_API_PREFIX}/explore/my?search=2`)
@@ -132,28 +127,25 @@ describe('Explore', () => {
 
   describe(`GET ${PRIVATE_API_PREFIX}/explore/shared`, () => {
     describe('return shared notes for user', () => {
-      describe.each(sortModes.map((sortMode) => [sortMode]))(
-        'with sorting note',
-        (sortMode) => {
-          beforeEach(async () => {
-            // Allow user1 to read the document from user 2
-            await testSetup.permissionsService.setUserPermission(
-              testSetup.ownedNoteIds[1],
-              testSetup.userIds[0],
-              false,
-            );
-          });
-          it(`${sortMode}`, async () => {
-            const response = await agentUser1
-              .get(`${PRIVATE_API_PREFIX}/explore/shared?sort=${sortMode}`)
-              .expect('Content-Type', /json/)
-              .expect(200);
-            const myNotes = response.body;
-            expect(myNotes.length).toBe(1);
-            expect(myNotes[0].primaryAlias).toEqual(noteAlias2);
-          });
-        },
-      );
+      describe.each(sortModes.map((sortMode) => [sortMode]))('with sorting note', (sortMode) => {
+        beforeEach(async () => {
+          // Allow user1 to read the document from user 2
+          await testSetup.permissionsService.setUserPermission(
+            testSetup.ownedNoteIds[1],
+            testSetup.userIds[0],
+            false,
+          );
+        });
+        it(`${sortMode}`, async () => {
+          const response = await agentUser1
+            .get(`${PRIVATE_API_PREFIX}/explore/shared?sort=${sortMode}`)
+            .expect('Content-Type', /json/)
+            .expect(200);
+          const myNotes = response.body;
+          expect(myNotes.length).toBe(1);
+          expect(myNotes[0].primaryAlias).toEqual(noteAlias2);
+        });
+      });
       it('with search term', async () => {
         // Allow user1 to read the document from user 2
         await testSetup.permissionsService.setUserPermission(
@@ -233,19 +225,16 @@ describe('Explore', () => {
 
   describe(`GET ${PRIVATE_API_PREFIX}/explore/public`, () => {
     describe('return public notes', () => {
-      describe.each(sortModes.map((sortMode) => [sortMode]))(
-        'with sorting note',
-        (sortMode) => {
-          it(`${sortMode}`, async () => {
-            const response = await agentUser1
-              .get(`${PRIVATE_API_PREFIX}/explore/public?sort=${sortMode}`)
-              .expect('Content-Type', /json/)
-              .expect(200);
-            const myNotes = response.body;
-            expect(myNotes.length).toBe(2);
-          });
-        },
-      );
+      describe.each(sortModes.map((sortMode) => [sortMode]))('with sorting note', (sortMode) => {
+        it(`${sortMode}`, async () => {
+          const response = await agentUser1
+            .get(`${PRIVATE_API_PREFIX}/explore/public?sort=${sortMode}`)
+            .expect('Content-Type', /json/)
+            .expect(200);
+          const myNotes = response.body;
+          expect(myNotes.length).toBe(2);
+        });
+      });
       it('with search term', async () => {
         const response = await agentUser1
           .get(`${PRIVATE_API_PREFIX}/explore/public?search=2`)
@@ -323,27 +312,24 @@ describe('Explore', () => {
 
   describe(`GET ${PRIVATE_API_PREFIX}/explore/visited`, () => {
     describe('return visited notes for user', () => {
-      describe.each(sortModes.map((sortMode) => [sortMode]))(
-        'with sorting note',
-        (sortMode) => {
-          beforeEach(async () => {
-            // User1 visited Note2
-            await testSetup.notesService.markNoteAsVisited(
-              testSetup.ownedNoteIds[1],
-              testSetup.userIds[0],
-            );
-          });
-          it(`${sortMode}`, async () => {
-            const response = await agentUser1
-              .get(`${PRIVATE_API_PREFIX}/explore/visited?sort=${sortMode}`)
-              .expect('Content-Type', /json/)
-              .expect(200);
-            const myNotes = response.body;
-            expect(myNotes.length).toBe(1);
-            expect(myNotes[0].primaryAlias).toEqual(noteAlias2);
-          });
-        },
-      );
+      describe.each(sortModes.map((sortMode) => [sortMode]))('with sorting note', (sortMode) => {
+        beforeEach(async () => {
+          // User1 visited Note2
+          await testSetup.notesService.markNoteAsVisited(
+            testSetup.ownedNoteIds[1],
+            testSetup.userIds[0],
+          );
+        });
+        it(`${sortMode}`, async () => {
+          const response = await agentUser1
+            .get(`${PRIVATE_API_PREFIX}/explore/visited?sort=${sortMode}`)
+            .expect('Content-Type', /json/)
+            .expect(200);
+          const myNotes = response.body;
+          expect(myNotes.length).toBe(1);
+          expect(myNotes[0].primaryAlias).toEqual(noteAlias2);
+        });
+      });
       it('with search term', async () => {
         // User1 visited Note2
         await testSetup.notesService.markNoteAsVisited(
@@ -421,10 +407,9 @@ describe('Explore', () => {
 
   describe(`PUT ${PRIVATE_API_PREFIX}/explore/pin/:noteAlias`, () => {
     it('pin a note', async () => {
-      const pinnedNotesBefore =
-        await testSetup.exploreService.getMyPinnedNoteExploreEntries(
-          testSetup.userIds[0],
-        );
+      const pinnedNotesBefore = await testSetup.exploreService.getMyPinnedNoteExploreEntries(
+        testSetup.userIds[0],
+      );
       expect(pinnedNotesBefore.length).toBe(0);
 
       const response = await agentUser1
@@ -437,10 +422,9 @@ describe('Explore', () => {
       const note = response.body;
       expect(note.primaryAlias).toEqual(noteAlias1);
 
-      const pinnedNotesAfter =
-        await testSetup.exploreService.getMyPinnedNoteExploreEntries(
-          testSetup.userIds[0],
-        );
+      const pinnedNotesAfter = await testSetup.exploreService.getMyPinnedNoteExploreEntries(
+        testSetup.userIds[0],
+      );
       expect(pinnedNotesAfter.length).toBe(1);
       expect(pinnedNotesAfter[0].primaryAlias).toEqual(noteAlias1);
     });

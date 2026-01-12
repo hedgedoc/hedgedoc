@@ -54,46 +54,31 @@ describe('extract note from request', () => {
 
   it('will return undefined if no id is present', async () => {
     const request = createRequest(undefined, undefined);
-    expect(await extractNoteIdFromRequest(request, notesService)).toBe(
-      undefined,
-    );
+    expect(await extractNoteIdFromRequest(request, notesService)).toBe(undefined);
   });
 
   it('can extract an id from parameters', async () => {
     const request = createRequest(mockNoteIdOrAlias1, undefined);
-    expect(await extractNoteIdFromRequest(request, notesService)).toBe(
-      mockNote1,
-    );
+    expect(await extractNoteIdFromRequest(request, notesService)).toBe(mockNote1);
   });
 
   it('can extract an id from headers if no parameter is given', async () => {
     const request = createRequest(undefined, mockNoteIdOrAlias1);
-    expect(await extractNoteIdFromRequest(request, notesService)).toBe(
-      mockNote1,
-    );
+    expect(await extractNoteIdFromRequest(request, notesService)).toBe(mockNote1);
   });
 
   it('can extract the first id from multiple id headers', async () => {
-    const request = createRequest(undefined, [
-      mockNoteIdOrAlias1,
-      mockNoteIdOrAlias2,
-    ]);
-    expect(await extractNoteIdFromRequest(request, notesService)).toBe(
-      mockNote1,
-    );
+    const request = createRequest(undefined, [mockNoteIdOrAlias1, mockNoteIdOrAlias2]);
+    expect(await extractNoteIdFromRequest(request, notesService)).toBe(mockNote1);
   });
 
   it('will return undefined if no parameter and empty id header array', async () => {
     const request = createRequest(undefined, []);
-    expect(await extractNoteIdFromRequest(request, notesService)).toBe(
-      undefined,
-    );
+    expect(await extractNoteIdFromRequest(request, notesService)).toBe(undefined);
   });
 
   it('will prefer the parameter over the header', async () => {
     const request = createRequest(mockNoteIdOrAlias1, mockNoteIdOrAlias2);
-    expect(await extractNoteIdFromRequest(request, notesService)).toBe(
-      mockNote1,
-    );
+    expect(await extractNoteIdFromRequest(request, notesService)).toBe(mockNote1);
   });
 });

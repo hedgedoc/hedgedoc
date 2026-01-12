@@ -1,13 +1,3 @@
-/*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
- *
- * SPDX-License-Identifier: AGPL-3.0-only
- */
-import { FieldNameRevision, SpecialGroup } from '@hedgedoc/database';
-import { promises as fs } from 'fs';
-import { join } from 'path';
-import request from 'supertest';
-
 import { PUBLIC_API_PREFIX } from '../../src/app.module';
 import { NotePermissionsDto } from '../../src/dtos/note-permissions.dto';
 import { NotInDBError } from '../../src/errors/errors';
@@ -23,6 +13,15 @@ import {
   username2,
 } from '../test-setup';
 import { ensureDeleted, expectPublicAPIPermissions } from '../utils';
+/*
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+import { FieldNameRevision, SpecialGroup } from '@hedgedoc/database';
+import { promises as fs } from 'fs';
+import { join } from 'path';
+import request from 'supertest';
 
 describe('Notes', () => {
   let testSetup: TestSetup;
@@ -36,10 +35,8 @@ describe('Notes', () => {
   beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
     agent = request.agent(testSetup.app.getHttpServer());
-    forbiddenAlias =
-      testSetup.configService.get('noteConfig').forbiddenAliases[0];
-    uploadPath =
-      testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
+    forbiddenAlias = testSetup.configService.get('noteConfig').forbiddenAliases[0];
+    uploadPath = testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
     await testSetup.app.init();
     content = 'This is a test note.';
     testImage = await fs.readFile('test/public-api/fixtures/test.png');
@@ -200,12 +197,7 @@ describe('Notes', () => {
           testSetup.userIds[0],
           deleteNoteAlias,
         );
-        await testSetup.mediaService.saveFile(
-          'test.png',
-          testImage,
-          testSetup.userIds[0],
-          noteId,
-        );
+        await testSetup.mediaService.saveFile('test.png', testImage, testSetup.userIds[0], noteId);
         await agent
           .delete(`${PUBLIC_API_PREFIX}/notes/${deleteNoteAlias}`)
           .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
@@ -213,15 +205,11 @@ describe('Notes', () => {
             keepMedia: false,
           })
           .expect(204);
-        await expect(
-          testSetup.notesService.getNoteIdByAlias(deleteNoteAlias),
-        ).rejects.toEqual(
+        await expect(testSetup.notesService.getNoteIdByAlias(deleteNoteAlias)).rejects.toEqual(
           new NotInDBError(`Could not find note '${deleteNoteAlias}'`),
         );
         expect(
-          await testSetup.mediaService.getMediaUploadUuidsByUserId(
-            testSetup.userIds[0],
-          ),
+          await testSetup.mediaService.getMediaUploadUuidsByUserId(testSetup.userIds[0]),
         ).toHaveLength(0);
       });
       it('with an existing alias and keepMedia true', async () => {
@@ -243,15 +231,11 @@ describe('Notes', () => {
             keepMedia: true,
           })
           .expect(204);
-        await expect(
-          testSetup.notesService.getNoteIdByAlias(deleteNoteAlias),
-        ).rejects.toEqual(
+        await expect(testSetup.notesService.getNoteIdByAlias(deleteNoteAlias)).rejects.toEqual(
           new NotInDBError(`Could not find note '${deleteNoteAlias}'`),
         );
         expect(
-          await testSetup.mediaService.getMediaUploadUuidsByUserId(
-            testSetup.userIds[0],
-          ),
+          await testSetup.mediaService.getMediaUploadUuidsByUserId(testSetup.userIds[0]),
         ).toHaveLength(1);
         // delete the file afterwards
         await fs.unlink(join(uploadPath, upload + '.png'));
@@ -263,19 +247,13 @@ describe('Notes', () => {
           deleteNoteAlias,
         );
         const userId2 = testSetup.userIds[1];
-        await testSetup.permissionsService.setUserPermission(
-          noteId,
-          userId2,
-          true,
-        );
+        await testSetup.permissionsService.setUserPermission(noteId, userId2, true);
         await agent
           .delete(`${PUBLIC_API_PREFIX}/notes/${deleteNoteAlias}`)
           .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
           .send({ keepMedia: false })
           .expect(204);
-        await expect(
-          testSetup.notesService.getNoteIdByAlias(deleteNoteAlias),
-        ).rejects.toEqual(
+        await expect(testSetup.notesService.getNoteIdByAlias(deleteNoteAlias)).rejects.toEqual(
           new NotInDBError(`Could not find note '${deleteNoteAlias}'`),
         );
       });
@@ -438,8 +416,7 @@ describe('Notes', () => {
       });
       const noteId = testSetup.ownedNoteIds[0];
       // save the creation time
-      const noteMetadata =
-        await testSetup.notesService.toNoteMetadataDto(noteId);
+      const noteMetadata = await testSetup.notesService.toNoteMetadataDto(noteId);
       const createDate = noteMetadata.createdAt;
       const updatedDate = noteMetadata.updatedAt;
       // wait two second
@@ -511,9 +488,7 @@ describe('Notes', () => {
     });
     it('errors with a forbidden alias', async () => {
       await agent
-        .get(
-          `${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions`,
-        )
+        .get(`${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
         .expect(403);
@@ -562,9 +537,7 @@ describe('Notes', () => {
       );
 
       await agent
-        .put(
-          `${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2}`,
-        )
+        .put(`${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .send({
           canEdit: true,
@@ -597,36 +570,28 @@ describe('Notes', () => {
     });
     it('errors with a forbidden alias', async () => {
       await agent
-        .put(
-          `${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/users/${username2}`,
-        )
+        .put(`${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/users/${username2}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
         .expect(403);
     });
     it('errors with non-existing alias', async () => {
       await agent
-        .put(
-          `${PUBLIC_API_PREFIX}/notes/i_dont_exist/metadata/permissions/users/${username2}`,
-        )
+        .put(`${PUBLIC_API_PREFIX}/notes/i_dont_exist/metadata/permissions/users/${username2}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
         .expect(404);
     });
     it('errors if no token is provided', async () => {
       await agent
-        .put(
-          `${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2}`,
-        )
+        .put(`${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2}`)
         .set('Content-Type', 'text/markdown')
         .expect('Content-Type', /json/)
         .expect(403);
     });
     it("errors when user can't access note", async () => {
       await agent
-        .put(
-          `${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2}`,
-        )
+        .put(`${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
         .expect('Content-Type', /json/)
         .expect(403);
@@ -641,10 +606,9 @@ describe('Notes', () => {
         true,
       );
 
-      const permissionsDtoBefore =
-        await testSetup.permissionsService.getPermissionsDtoForNote(
-          testSetup.ownedNoteIds[0],
-        );
+      const permissionsDtoBefore = await testSetup.permissionsService.getPermissionsDtoForNote(
+        testSetup.ownedNoteIds[0],
+      );
       expect(permissionsDtoBefore.sharedToUsers).toEqual([
         {
           username: username2,
@@ -653,17 +617,14 @@ describe('Notes', () => {
       ]);
 
       await agent
-        .delete(
-          `${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2}`,
-        )
+        .delete(`${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
         .expect(200);
 
-      const permissionsDtoAfter =
-        await testSetup.permissionsService.getPermissionsDtoForNote(
-          testSetup.ownedNoteIds[0],
-        );
+      const permissionsDtoAfter = await testSetup.permissionsService.getPermissionsDtoForNote(
+        testSetup.ownedNoteIds[0],
+      );
       expect(permissionsDtoAfter.sharedToUsers).toEqual([]);
     });
     it('errors with a forbidden alias', async () => {
@@ -677,27 +638,21 @@ describe('Notes', () => {
     });
     it('errors with non-existing alias', async () => {
       await agent
-        .delete(
-          `${PUBLIC_API_PREFIX}/notes/i_dont_exist/metadata/permissions/users/${username2}`,
-        )
+        .delete(`${PUBLIC_API_PREFIX}/notes/i_dont_exist/metadata/permissions/users/${username2}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)
         .expect(404);
     });
     it('errors if no token is provided', async () => {
       await agent
-        .delete(
-          `${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2}`,
-        )
+        .delete(`${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2}`)
         .set('Content-Type', 'text/markdown')
         .expect('Content-Type', /json/)
         .expect(403);
     });
     it("errors when user can't access note", async () => {
       await agent
-        .delete(
-          `${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2}`,
-        )
+        .delete(`${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
         .expect('Content-Type', /json/)
         .expect(403);
@@ -793,10 +748,9 @@ describe('Notes', () => {
 
   describe(`DELETE ${PUBLIC_API_PREFIX}/notes/{:noteAlias}/metadata/permissions/groups/{:groupName}`, () => {
     it('deletes group permissions', async () => {
-      const permissionsDtoBefore =
-        await testSetup.permissionsService.getPermissionsDtoForNote(
-          testSetup.ownedNoteIds[0],
-        );
+      const permissionsDtoBefore = await testSetup.permissionsService.getPermissionsDtoForNote(
+        testSetup.ownedNoteIds[0],
+      );
       expect(permissionsDtoBefore.sharedToGroups).toEqual([
         {
           groupName: SpecialGroup.EVERYONE,
@@ -816,10 +770,9 @@ describe('Notes', () => {
         .expect('Content-Type', /json/)
         .expect(200);
 
-      const permissionsDtoAfter =
-        await testSetup.permissionsService.getPermissionsDtoForNote(
-          testSetup.ownedNoteIds[0],
-        );
+      const permissionsDtoAfter = await testSetup.permissionsService.getPermissionsDtoForNote(
+        testSetup.ownedNoteIds[0],
+      );
       expect(permissionsDtoAfter.sharedToGroups).toEqual([
         {
           groupName: SpecialGroup.LOGGED_IN,
@@ -867,16 +820,13 @@ describe('Notes', () => {
 
   describe(`PUT ${PUBLIC_API_PREFIX}/notes/{:noteAlias}/metadata/permissions/owner`, () => {
     it('changes owner of a note', async () => {
-      const permissionsDtoBefore =
-        await testSetup.permissionsService.getPermissionsDtoForNote(
-          testSetup.ownedNoteIds[0],
-        );
+      const permissionsDtoBefore = await testSetup.permissionsService.getPermissionsDtoForNote(
+        testSetup.ownedNoteIds[0],
+      );
       expect(permissionsDtoBefore.owner).toEqual(username1);
 
       await agent
-        .put(
-          `${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/owner`,
-        )
+        .put(`${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/owner`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .send({
           newOwner: username2,
@@ -884,17 +834,14 @@ describe('Notes', () => {
         .expect('Content-Type', /json/)
         .expect(200);
 
-      const permissionsDtoAfter =
-        await testSetup.permissionsService.getPermissionsDtoForNote(
-          testSetup.ownedNoteIds[0],
-        );
+      const permissionsDtoAfter = await testSetup.permissionsService.getPermissionsDtoForNote(
+        testSetup.ownedNoteIds[0],
+      );
       expect(permissionsDtoAfter.owner).toEqual(username2);
     });
     it('errors with a forbidden alias', async () => {
       await agent
-        .put(
-          `${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/owner`,
-        )
+        .put(`${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/owner`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .send({
           newOwner: username2,
@@ -904,9 +851,7 @@ describe('Notes', () => {
     });
     it('errors with non-existing alias', async () => {
       await agent
-        .put(
-          `${PUBLIC_API_PREFIX}/notes/i_dont_exist/metadata/permissions/owner`,
-        )
+        .put(`${PUBLIC_API_PREFIX}/notes/i_dont_exist/metadata/permissions/owner`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .send({
           newOwner: username2,
@@ -916,9 +861,7 @@ describe('Notes', () => {
     });
     it('errors if no token is provided', async () => {
       await agent
-        .put(
-          `${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/owner`,
-        )
+        .put(`${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/owner`)
         .send({
           newOwner: username2,
         })
@@ -927,9 +870,7 @@ describe('Notes', () => {
     });
     it("errors when user can't access note", async () => {
       await agent
-        .put(
-          `${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/owner`,
-        )
+        .put(`${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/owner`)
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
         .send({
           newOwner: username2,
@@ -941,16 +882,13 @@ describe('Notes', () => {
 
   describe(`PUT ${PUBLIC_API_PREFIX}/notes/{:noteAlias}/metadata/permissions/visibility`, () => {
     it('changes visibility of a note', async () => {
-      const permissionsDtoBefore =
-        await testSetup.permissionsService.getPermissionsDtoForNote(
-          testSetup.ownedNoteIds[0],
-        );
+      const permissionsDtoBefore = await testSetup.permissionsService.getPermissionsDtoForNote(
+        testSetup.ownedNoteIds[0],
+      );
       expect(permissionsDtoBefore.publiclyVisible).toEqual(false);
 
       await agent
-        .put(
-          `${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/visibility`,
-        )
+        .put(`${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/visibility`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .send({
           newPubliclyVisible: true,
@@ -958,17 +896,14 @@ describe('Notes', () => {
         .expect('Content-Type', /json/)
         .expect(200);
 
-      const permissionsDtoAfter =
-        await testSetup.permissionsService.getPermissionsDtoForNote(
-          testSetup.ownedNoteIds[0],
-        );
+      const permissionsDtoAfter = await testSetup.permissionsService.getPermissionsDtoForNote(
+        testSetup.ownedNoteIds[0],
+      );
       expect(permissionsDtoAfter.publiclyVisible).toEqual(true);
     });
     it('errors with a forbidden alias', async () => {
       await agent
-        .put(
-          `${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/visibility`,
-        )
+        .put(`${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions/visibility`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .send({
           newPubliclyVisible: true,
@@ -978,9 +913,7 @@ describe('Notes', () => {
     });
     it('errors with non-existing alias', async () => {
       await agent
-        .put(
-          `${PUBLIC_API_PREFIX}/notes/i_dont_exist/metadata/permissions/visibility`,
-        )
+        .put(`${PUBLIC_API_PREFIX}/notes/i_dont_exist/metadata/permissions/visibility`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .send({
           newPubliclyVisible: true,
@@ -990,9 +923,7 @@ describe('Notes', () => {
     });
     it('errors if no token is provided', async () => {
       await agent
-        .put(
-          `${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/visibility`,
-        )
+        .put(`${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/visibility`)
         .send({
           newPubliclyVisible: true,
         })
@@ -1001,9 +932,7 @@ describe('Notes', () => {
     });
     it("errors when user can't access note", async () => {
       await agent
-        .put(
-          `${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/visibility`,
-        )
+        .put(`${PUBLIC_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/visibility`)
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
         .send({
           newPubliclyVisible: true,

@@ -22,12 +22,7 @@ export class MockApiTokenGuard {
       try {
         this.userId = await this.usersService.getUserIdByUsername('hardcoded');
       } catch {
-        this.userId = await this.usersService.createUser(
-          'hardcoded',
-          'Testy',
-          null,
-          null,
-        );
+        this.userId = await this.usersService.createUser('hardcoded', 'Testy', null, null);
       }
     }
     req.userId = this.userId;

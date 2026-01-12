@@ -14,10 +14,7 @@ import { Mock } from 'ts-mockery';
 
 import { RealtimeConnection } from './realtime-connection';
 import { RealtimeNote } from './realtime-note';
-import {
-  OtherAdapterCollector,
-  RealtimeUserStatusAdapter,
-} from './realtime-user-status-adapter';
+import { OtherAdapterCollector, RealtimeUserStatusAdapter } from './realtime-user-status-adapter';
 import * as RealtimeUserStatusModule from './realtime-user-status-adapter';
 
 jest.mock('../../users/random-word-lists/name-randomizer');
@@ -155,32 +152,29 @@ describe('websocket connection', () => {
     },
   );
 
-  it.each([true, false])(
-    'creates a sync adapter with acceptEdits %s',
-    (acceptEdits) => {
-      const yDocSyncServerAdapter = Mock.of<YDocSyncServerAdapter>({});
-      jest
-        .spyOn(HedgeDocCommonsModule, 'YDocSyncServerAdapter')
-        .mockImplementation((messageTransporter, doc, acceptEditsProvider) => {
-          expect(messageTransporter).toBe(mockedMessageTransporter);
-          expect(acceptEditsProvider()).toBe(acceptEdits);
-          expect(doc).toBe(mockedRealtimeNote.getRealtimeDoc());
-          return yDocSyncServerAdapter;
-        });
+  it.each([true, false])('creates a sync adapter with acceptEdits %s', (acceptEdits) => {
+    const yDocSyncServerAdapter = Mock.of<YDocSyncServerAdapter>({});
+    jest
+      .spyOn(HedgeDocCommonsModule, 'YDocSyncServerAdapter')
+      .mockImplementation((messageTransporter, doc, acceptEditsProvider) => {
+        expect(messageTransporter).toBe(mockedMessageTransporter);
+        expect(acceptEditsProvider()).toBe(acceptEdits);
+        expect(doc).toBe(mockedRealtimeNote.getRealtimeDoc());
+        return yDocSyncServerAdapter;
+      });
 
-      const sut = new RealtimeConnection(
-        mockedMessageTransporter,
-        mockedUser[FieldNameUser.id],
-        mockedUser[FieldNameUser.username],
-        mockedUser[FieldNameUser.displayName],
-        mockedUser[FieldNameUser.authorStyle],
-        mockedRealtimeNote,
-        acceptEdits,
-      );
+    const sut = new RealtimeConnection(
+      mockedMessageTransporter,
+      mockedUser[FieldNameUser.id],
+      mockedUser[FieldNameUser.username],
+      mockedUser[FieldNameUser.displayName],
+      mockedUser[FieldNameUser.authorStyle],
+      mockedRealtimeNote,
+      acceptEdits,
+    );
 
-      expect(sut.getSyncAdapter()).toBe(yDocSyncServerAdapter);
-    },
-  );
+    expect(sut.getSyncAdapter()).toBe(yDocSyncServerAdapter);
+  });
 
   it('removes the client from the note on transporter disconnect', () => {
     const sut = new RealtimeConnection(

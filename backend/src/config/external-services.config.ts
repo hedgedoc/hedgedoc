@@ -7,10 +7,7 @@ import { registerAs } from '@nestjs/config';
 import z from 'zod';
 
 import { printConfigErrorAndExit } from './utils';
-import {
-  buildErrorMessage,
-  extractDescriptionFromZodIssue,
-} from './zod-error-message';
+import { buildErrorMessage, extractDescriptionFromZodIssue } from './zod-error-message';
 
 const schema = z.object({
   plantumlServer: z.string().url().or(z.null()).describe('HD_PLANTUML_SERVER'),
@@ -21,9 +18,7 @@ export type ExternalServicesConfig = z.infer<typeof schema>;
 
 export default registerAs('externalServicesConfig', () => {
   if (process.env.HD_IMAGE_PROXY !== undefined) {
-    throw new Error(
-      "HD_IMAGE_PROXY is currently not yet supported. Please don't configure it",
-    );
+    throw new Error("HD_IMAGE_PROXY is currently not yet supported. Please don't configure it");
   }
   const externalConfig = schema.safeParse({
     plantumlServer: process.env.HD_PLANTUML_SERVER ?? null,

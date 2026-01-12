@@ -32,7 +32,11 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  transition: width 150ms ease-in-out, height 150ms ease-in-out, border-radius 50ms ease-in-out, transform 50ms ease-in-out;
+  transition:
+    width 150ms ease-in-out,
+    height 150ms ease-in-out,
+    border-radius 50ms ease-in-out,
+    transform 50ms ease-in-out;
   transform: translateX(0);
 
   &.shift-right {
@@ -47,7 +51,8 @@
     transform: translateX(-8px);
   }
 
-  &:hover, &.open {
+  &:hover,
+  &.open {
     width: 135px;
     height: 50px;
     border-radius: 90px;
@@ -59,7 +64,7 @@
 
   .buttons {
     height: 40px;
-    width: 3*40px;
+    width: 3 * 40px;
     position: absolute;
     display: flex;
     flex-direction: row;
@@ -67,4 +72,3 @@
     align-items: center;
   }
 }
-

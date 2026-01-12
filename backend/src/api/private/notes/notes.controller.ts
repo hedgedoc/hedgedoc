@@ -88,9 +88,7 @@ export class NotesController {
   @OpenApi(200)
   @RequirePermission(PermissionLevel.READ)
   @UseInterceptors(GetNoteIdInterceptor)
-  async getNotesMedia(
-    @RequestNoteId() noteId: number,
-  ): Promise<MediaUploadDto[]> {
+  async getNotesMedia(@RequestNoteId() noteId: number): Promise<MediaUploadDto[]> {
     const media = await this.mediaService.getMediaUploadUuidsByNoteId(noteId);
     return await this.mediaService.getMediaUploadDtosByUuids(media);
   }
@@ -114,11 +112,7 @@ export class NotesController {
     @Param('newNoteAlias') noteAlias: string,
     @MarkdownBody() text: string,
   ): Promise<NoteDto> {
-    const createdNoteId = await this.noteService.createNote(
-      text,
-      userId,
-      noteAlias,
-    );
+    const createdNoteId = await this.noteService.createNote(text, userId, noteAlias);
     return await this.noteService.toNoteDto(createdNoteId);
   }
 
@@ -133,12 +127,9 @@ export class NotesController {
   ): Promise<void> {
     const isOwner = await this.permissionService.isOwner(userId, noteId);
     if (!isOwner) {
-      throw new PermissionError(
-        'You do not have the permission to delete this note.',
-      );
+      throw new PermissionError('You do not have the permission to delete this note.');
     }
-    const mediaUploads =
-      await this.mediaService.getMediaUploadUuidsByNoteId(noteId);
+    const mediaUploads = await this.mediaService.getMediaUploadUuidsByNoteId(noteId);
     for (const mediaUpload of mediaUploads) {
       if (!noteMediaDeletionDto.keepMedia) {
         await this.mediaService.deleteFile(mediaUpload);
@@ -153,9 +144,7 @@ export class NotesController {
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.READ)
   @Get(':noteAlias/metadata')
-  async getNoteMetadata(
-    @RequestNoteId() noteId: number,
-  ): Promise<NoteMetadataDto> {
+  async getNoteMetadata(@RequestNoteId() noteId: number): Promise<NoteMetadataDto> {
     return await this.noteService.toNoteMetadataDto(noteId);
   }
 
@@ -163,9 +152,7 @@ export class NotesController {
   @OpenApi(200, 404)
   @RequirePermission(PermissionLevel.READ)
   @UseInterceptors(GetNoteIdInterceptor)
-  async getNoteRevisions(
-    @RequestNoteId() noteId: number,
-  ): Promise<RevisionMetadataDto[]> {
+  async getNoteRevisions(@RequestNoteId() noteId: number): Promise<RevisionMetadataDto[]> {
     return await this.revisionsService.getAllRevisionMetadataDto(noteId);
   }
 
@@ -175,19 +162,14 @@ export class NotesController {
   @UseInterceptors(GetNoteIdInterceptor)
   async purgeNoteRevisions(@RequestNoteId() noteId: number): Promise<void> {
     await this.revisionsService.purgeRevisions(noteId);
-    this.logger.debug(
-      `Successfully purged history of note ${noteId}`,
-      'purgeNoteRevisions',
-    );
+    this.logger.debug(`Successfully purged history of note ${noteId}`, 'purgeNoteRevisions');
   }
 
   @Get(':noteAlias/revisions/:revisionUuid')
   @OpenApi(200, 404)
   @RequirePermission(PermissionLevel.READ)
   @UseInterceptors(GetNoteIdInterceptor)
-  async getNoteRevision(
-    @Param('revisionUuid') revisionUuid: string,
-  ): Promise<RevisionDto> {
+  async getNoteRevision(@Param('revisionUuid') revisionUuid: string): Promise<RevisionDto> {
     return await this.revisionsService.getRevisionDto(revisionUuid);
   }
 
@@ -218,9 +200,7 @@ export class NotesController {
       return await this.permissionService.getPermissionsDtoForNote(noteId);
     } catch (e) {
       if (e instanceof NotInDBError) {
-        throw new BadRequestException(
-          "Can't remove user from permissions. User not known.",
-        );
+        throw new BadRequestException("Can't remove user from permissions. User not known.");
       }
       throw e;
     }
@@ -236,8 +216,7 @@ export class NotesController {
   ): Promise<NotePermissionsDto> {
     if ((groupName as SpecialGroup) === SpecialGroup.EVERYONE) {
       const maxGuestPermissionLevel = this.noteConfig.permissions.maxGuestLevel;
-      const requestedPermissionLevel =
-        convertEditabilityToPermissionLevel(canEdit);
+      const requestedPermissionLevel = convertEditabilityToPermissionLevel(canEdit);
       if (requestedPermissionLevel > maxGuestPermissionLevel) {
         throw new BadRequestException(
           `Cannot set permission for guest group to '${PermissionLevelNames[requestedPermissionLevel]}' since this is higher than the maximum allowed permission level.`,
@@ -269,9 +248,7 @@ export class NotesController {
     @RequestNoteId() noteId: number,
     @Body() changeNoteOwnerDto: ChangeNoteOwnerDto,
   ): Promise<NotePermissionsDto> {
-    const newOwnerId = await this.userService.getUserIdByUsername(
-      changeNoteOwnerDto.owner,
-    );
+    const newOwnerId = await this.userService.getUserIdByUsername(changeNoteOwnerDto.owner);
     await this.permissionService.changeOwner(noteId, newOwnerId);
     return await this.permissionService.getPermissionsDtoForNote(noteId);
   }

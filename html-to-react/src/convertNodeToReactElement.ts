@@ -23,7 +23,7 @@ import { NodeToReactElementTransformer } from './NodeToReactElementTransformer.j
 export function convertNodeToReactElement(
   node: Node,
   index: string | number,
-  transform?: NodeToReactElementTransformer
+  transform?: NodeToReactElementTransformer,
 ): ReactElement | string | null {
   switch (node.type) {
     case ElementType.Text:

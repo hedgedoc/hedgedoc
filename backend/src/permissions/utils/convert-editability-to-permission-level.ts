@@ -11,8 +11,6 @@ import { PermissionLevel } from '@hedgedoc/commons';
  * @param canEdit A boolean indicating whether the note can be edited
  * @returns The corresponding PermissionLevel
  */
-export function convertEditabilityToPermissionLevel(
-  canEdit: boolean,
-): PermissionLevel {
+export function convertEditabilityToPermissionLevel(canEdit: boolean): PermissionLevel {
   return canEdit ? PermissionLevel.WRITE : PermissionLevel.READ;
 }

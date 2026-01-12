@@ -1,15 +1,14 @@
+import { PRIVATE_API_PREFIX } from '../../src/app.module';
+import { createDefaultMockNoteConfig } from '../../src/config/mock/note.config.mock';
+import { NoteConfig } from '../../src/config/note.config';
+import { TestSetup, TestSetupBuilder } from '../test-setup';
+import { setupAgent } from './utils/setup-agent';
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import request from 'supertest';
-
-import { PRIVATE_API_PREFIX } from '../../src/app.module';
-import { createDefaultMockNoteConfig } from '../../src/config/mock/note.config.mock';
-import { NoteConfig } from '../../src/config/note.config';
-import { TestSetup, TestSetupBuilder } from '../test-setup';
-import { setupAgent } from './utils/setup-agent';
 
 describe('Groups', () => {
   let testSetup: TestSetup;
@@ -34,10 +33,7 @@ describe('Groups', () => {
     agentUser1 = agents[2];
 
     // create a test group
-    await testSetup.groupService.createGroup(
-      testGroupName,
-      testGroupDisplayName,
-    );
+    await testSetup.groupService.createGroup(testGroupName, testGroupDisplayName);
   });
 
   afterEach(async () => {
@@ -47,9 +43,7 @@ describe('Groups', () => {
 
   describe(`${PRIVATE_API_PREFIX}/groups/:groupName`, () => {
     test('details for an existing groups can be retrieved', async () => {
-      const response = await agentUser1.get(
-        `${PRIVATE_API_PREFIX}/groups/${testGroupName}`,
-      );
+      const response = await agentUser1.get(`${PRIVATE_API_PREFIX}/groups/${testGroupName}`);
       expect(response.status).toBe(200);
       expect(response.body.name).toBe(testGroupName);
       expect(response.body.displayName).toBe(testGroupDisplayName);
@@ -57,9 +51,7 @@ describe('Groups', () => {
     });
 
     test('details for non-existing groups cannot be retrieved', async () => {
-      const response = await agentUser1.get(
-        `${PRIVATE_API_PREFIX}/groups/i_dont_exist`,
-      );
+      const response = await agentUser1.get(`${PRIVATE_API_PREFIX}/groups/i_dont_exist`);
       expect(response.status).toBe(404);
     });
   });

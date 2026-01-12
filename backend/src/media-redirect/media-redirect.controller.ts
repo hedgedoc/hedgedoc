@@ -24,10 +24,7 @@ export class MediaRedirectController {
 
   @Get(':uuid')
   @OpenApi(302, 404, 500)
-  async getMedia(
-    @Param('uuid') uuid: string,
-    @Res() response: Response,
-  ): Promise<void> {
+  async getMedia(@Param('uuid') uuid: string, @Res() response: Response): Promise<void> {
     const url = await this.mediaService.getFileUrl(uuid);
     response.redirect(url);
   }

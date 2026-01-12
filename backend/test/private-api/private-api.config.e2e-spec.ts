@@ -1,3 +1,6 @@
+import { PRIVATE_API_PREFIX } from '../../src/app.module';
+import { getServerVersionFromPackageJson } from '../../src/utils/server-version';
+import { TestSetup, TestSetupBuilder } from '../test-setup';
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
@@ -5,10 +8,6 @@
  */
 import { AuthProviderType } from '@hedgedoc/database';
 import request from 'supertest';
-
-import { PRIVATE_API_PREFIX } from '../../src/app.module';
-import { getServerVersionFromPackageJson } from '../../src/utils/server-version';
-import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Config', () => {
   let testSetup: TestSetup;
@@ -27,12 +26,8 @@ describe('Config', () => {
     it('returns the frontend config', async () => {
       const noteConfig = testSetup.configService.get('noteConfig');
       const authConfig = testSetup.configService.get('authConfig');
-      const customizationConfig = testSetup.configService.get(
-        'customizationConfig',
-      );
-      const externalServicesConfig = testSetup.configService.get(
-        'externalServicesConfig',
-      );
+      const customizationConfig = testSetup.configService.get('customizationConfig');
+      const externalServicesConfig = testSetup.configService.get('externalServicesConfig');
 
       const response = await request(testSetup.app.getHttpServer())
         .get(`${PRIVATE_API_PREFIX}/config`)
@@ -40,18 +35,10 @@ describe('Config', () => {
         .expect('Content-Type', /json/)
         .expect(200);
       const responseBody = response.body;
-      expect(responseBody.guestAccess).toEqual(
-        noteConfig.permissions.maxGuestLevel,
-      );
-      expect(responseBody.allowRegister).toEqual(
-        authConfig.local.enableRegister,
-      );
-      expect(responseBody.allowProfileEdits).toEqual(
-        authConfig.allowProfileEdits,
-      );
-      expect(responseBody.allowChooseUsername).toEqual(
-        authConfig.allowChooseUsername,
-      );
+      expect(responseBody.guestAccess).toEqual(noteConfig.permissions.maxGuestLevel);
+      expect(responseBody.allowRegister).toEqual(authConfig.local.enableRegister);
+      expect(responseBody.allowProfileEdits).toEqual(authConfig.allowProfileEdits);
+      expect(responseBody.allowChooseUsername).toEqual(authConfig.allowChooseUsername);
       expect(responseBody.authProviders).toHaveLength(1);
       expect(responseBody.authProviders[0]).toEqual({
         type: AuthProviderType.LOCAL,
@@ -69,12 +56,8 @@ describe('Config', () => {
         privacy: new URL(customizationConfig.urls.privacy).toString(),
         termsOfUse: new URL(customizationConfig.urls.termsOfUse).toString(),
       });
-      expect(responseBody.useImageProxy).toEqual(
-        !!externalServicesConfig.imageProxy,
-      );
-      expect(responseBody.version).toEqual(
-        await getServerVersionFromPackageJson(),
-      );
+      expect(responseBody.useImageProxy).toEqual(!!externalServicesConfig.imageProxy);
+      expect(responseBody.version).toEqual(await getServerVersionFromPackageJson());
     });
   });
 });

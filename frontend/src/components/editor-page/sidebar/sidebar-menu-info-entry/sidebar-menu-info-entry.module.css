@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 .entry {
-    border-bottom: solid 1px var(--sidebar-separator-color);
+  border-bottom: solid 1px var(--sidebar-separator-color);
 }
 
 .title {
-    text-transform: uppercase;
-    font-size: 0.75em;
-    color: var(--bs-secondary);
+  text-transform: uppercase;
+  font-size: 0.75em;
+  color: var(--bs-secondary);
 }

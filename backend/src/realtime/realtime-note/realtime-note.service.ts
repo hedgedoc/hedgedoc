@@ -36,9 +36,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
    * This method is called by NestJS when the application is shutting down
    */
   beforeApplicationShutdown(): void {
-    this.realtimeNoteStore
-      .getAllRealtimeNotes()
-      .forEach((realtimeNote) => realtimeNote.destroy());
+    this.realtimeNoteStore.getAllRealtimeNotes().forEach((realtimeNote) => realtimeNote.destroy());
   }
 
   /**
@@ -47,9 +45,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
    * @param realtimeNote The realtime note for which a revision should be created
    */
   public saveRealtimeNote(realtimeNote: RealtimeNote): void {
-    const encodedStateUpdate = realtimeNote
-      .getRealtimeDoc()
-      .encodeStateAsUpdate();
+    const encodedStateUpdate = realtimeNote.getRealtimeDoc().encodeStateAsUpdate();
     const encodedStateUpdateBytes = new Uint8Array(encodedStateUpdate);
     this.revisionsService
       .createRevision(
@@ -73,10 +69,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
    * @throws NotInDBError if note doesn't exist or has no revisions.
    */
   public async getOrCreateRealtimeNote(noteId: number): Promise<RealtimeNote> {
-    return (
-      this.realtimeNoteStore.find(noteId) ??
-      (await this.createNewRealtimeNote(noteId))
-    );
+    return this.realtimeNoteStore.find(noteId) ?? (await this.createNewRealtimeNote(noteId));
   }
 
   /**
@@ -120,9 +113,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
         );
         realtimeNote.on('destroy', () => {
           clearInterval(intervalId);
-          this.schedulerRegistry.deleteInterval(
-            `periodic-persist-${realtimeNote.getNoteId()}`,
-          );
+          this.schedulerRegistry.deleteInterval(`periodic-persist-${realtimeNote.getNoteId()}`);
         });
       });
   }
@@ -157,11 +148,10 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
     noteId: number,
   ): Promise<void> {
     for (const connection of connections) {
-      const userPermissionLevel =
-        await this.permissionService.determinePermission(
-          connection.getUserId(),
-          noteId,
-        );
+      const userPermissionLevel = await this.permissionService.determinePermission(
+        connection.getUserId(),
+        noteId,
+      );
       if (userPermissionLevel === PermissionLevel.DENY) {
         connection.getTransporter().disconnect();
       } else {

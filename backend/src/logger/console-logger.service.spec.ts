@@ -9,9 +9,7 @@ describe('sanitize', () => {
   it('removes non-printable ASCII character', () => {
     for (let i = 0; i < 32; i++) {
       const nonPrintableString = String.fromCharCode(i);
-      expect(ConsoleLoggerService.sanitize(`a${nonPrintableString}b`)).toEqual(
-        'ab',
-      );
+      expect(ConsoleLoggerService.sanitize(`a${nonPrintableString}b`)).toEqual('ab');
     }
   });
   it('replaces non-zero-width space with space', () => {

@@ -53,9 +53,7 @@ describe('authConfig', () => {
         const config = authConfig();
         expect(config.local.enableLogin).toEqual(enableLogin);
         expect(config.local.enableRegister).toEqual(enableRegister);
-        expect(config.local.minimalPasswordStrength).toEqual(
-          minimalPasswordStrength,
-        );
+        expect(config.local.minimalPasswordStrength).toEqual(minimalPasswordStrength);
         restore();
       });
 
@@ -75,9 +73,7 @@ describe('authConfig', () => {
         const config = authConfig();
         expect(config.local.enableLogin).toEqual(false);
         expect(config.local.enableRegister).toEqual(enableRegister);
-        expect(config.local.minimalPasswordStrength).toEqual(
-          minimalPasswordStrength,
-        );
+        expect(config.local.minimalPasswordStrength).toEqual(minimalPasswordStrength);
         restore();
       });
 
@@ -97,9 +93,7 @@ describe('authConfig', () => {
         const config = authConfig();
         expect(config.local.enableLogin).toEqual(enableLogin);
         expect(config.local.enableRegister).toEqual(false);
-        expect(config.local.minimalPasswordStrength).toEqual(
-          minimalPasswordStrength,
-        );
+        expect(config.local.minimalPasswordStrength).toEqual(minimalPasswordStrength);
         restore();
       });
 
@@ -542,9 +536,7 @@ describe('authConfig', () => {
           },
         );
         authConfig();
-        expect(spyConsoleError.mock.calls[0][0]).toContain(
-          'HD_AUTH_LDAP_FUTURAMA_URL: Required',
-        );
+        expect(spyConsoleError.mock.calls[0][0]).toContain('HD_AUTH_LDAP_FUTURAMA_URL: Required');
         expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });
@@ -980,9 +972,7 @@ describe('authConfig', () => {
         expect(firstOidc.userIdField).toEqual(userIdField);
         expect(firstOidc.usernameField).toEqual(userNameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
-        expect(firstOidc.profilePictureField).toEqual(
-          defaultProfilePictureField,
-        );
+        expect(firstOidc.profilePictureField).toEqual(defaultProfilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
         expect(firstOidc.enableRegistration).toEqual(false);
         restore();
@@ -1092,9 +1082,7 @@ describe('authConfig', () => {
           },
         );
         authConfig();
-        expect(spyConsoleError.mock.calls[0][0]).toContain(
-          'HD_AUTH_OIDC_GITLAB_ISSUER: Required',
-        );
+        expect(spyConsoleError.mock.calls[0][0]).toContain('HD_AUTH_OIDC_GITLAB_ISSUER: Required');
         expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();
       });

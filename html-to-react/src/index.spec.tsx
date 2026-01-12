@@ -40,7 +40,7 @@ describe('Integration tests', () => {
   it('should handle bad html', () => {
     expectOtherHtml(
       '<div class=test>test<ul><li>test1<li>test2</ul><span>test</span></div>',
-      '<div class="test">test<ul><li>test1</li><li>test2</li></ul><span>test</span></div>'
+      '<div class="test">test<ul><li>test1</li><li>test2</li></ul><span>test</span></div>',
     )
   })
 
@@ -49,7 +49,10 @@ describe('Integration tests', () => {
   })
 
   it('should ignore comments', () => {
-    expectOtherHtml('<div>test1</div><!-- comment --><div>test2</div>', '<div>test1</div><div>test2</div>')
+    expectOtherHtml(
+      '<div>test1</div><!-- comment --><div>test2</div>',
+      '<div>test1</div><div>test2</div>',
+    )
   })
 
   it('should ignore script tags', () => {
@@ -84,7 +87,7 @@ describe('Integration tests', () => {
   ;[
     ['CONTENTEDITABLE', 'contentEditable'],
     ['LABEL', 'label'],
-    ['iTemREF', 'itemRef']
+    ['iTemREF', 'itemRef'],
   ].forEach(([attr, prop]) => {
     it(`should convert attribute ${attr} to prop ${prop}`, () => {
       const nodes = convertHtmlToReact(`<div ${attr}/>`, {})
@@ -99,17 +102,21 @@ describe('Integration tests', () => {
 
   it('should not decode html entities when the option is disabled', () => {
     expectOtherHtml('<span>&excl;</span>', '<span>&amp;excl;</span>', {
-      decodeEntities: false
+      decodeEntities: false,
     })
   })
 
   describe('transform function', () => {
     it('should use the response when it is not undefined', () => {
-      expectOtherHtml('<span>test</span><div>another</div>', '<p>transformed</p><p>transformed</p>', {
-        transform(node, index) {
-          return <p key={index}>transformed</p>
-        }
-      })
+      expectOtherHtml(
+        '<span>test</span><div>another</div>',
+        '<p>transformed</p><p>transformed</p>',
+        {
+          transform(node, index) {
+            return <p key={index}>transformed</p>
+          },
+        },
+      )
     })
 
     it('should not render elements and children when returning null', () => {
@@ -118,7 +125,7 @@ describe('Integration tests', () => {
           if (isTag(node) && node.type === 'tag' && node.name === 'span') {
             return null
           }
-        }
+        },
       })
     })
 
@@ -129,7 +136,7 @@ describe('Integration tests', () => {
             node.attribs.href = '/changed'
           }
           return convertNodeToReactElement(node, index)
-        }
+        },
       })
     })
 
@@ -150,8 +157,8 @@ describe('Integration tests', () => {
         '<ul><li>list 1</li><li>list 2</li></ul>',
         '<ul class="test"><li>changed 1</li><li>changed 2</li></ul>',
         {
-          transform
-        }
+          transform,
+        },
       )
     })
   })
@@ -161,14 +168,21 @@ describe('Integration tests', () => {
   })
 
   it('should not render invalid attributes', () => {
-    expectOtherHtml('<div data-test<="test" class="test">content</div>', '<div class="test">content</div>')
+    expectOtherHtml(
+      '<div data-test<="test" class="test">content</div>',
+      '<div class="test">content</div>',
+    )
   })
 
   it('should preprocess nodes correctly', () => {
-    expectOtherHtml('<div>preprocess test</div>', '<div>preprocess test</div><div>preprocess test</div>', {
-      preprocessNodes(document) {
-        return new Document([...document.childNodes, ...document.childNodes])
-      }
-    })
+    expectOtherHtml(
+      '<div>preprocess test</div>',
+      '<div>preprocess test</div><div>preprocess test</div>',
+      {
+        preprocessNodes(document) {
+          return new Document([...document.childNodes, ...document.childNodes])
+        },
+      },
+    )
   })
 })

@@ -15,11 +15,7 @@ export interface MediaBackend {
    * @returns The internal backend data, which should be saved
    * @throws MediaBackendError - there was an error saving the file
    */
-  saveFile(
-    uuid: string,
-    buffer: Buffer,
-    fileType?: FileTypeResult,
-  ): Promise<string | null>;
+  saveFile(uuid: string, buffer: Buffer, fileType?: FileTypeResult): Promise<string | null>;
 
   /**
    * Deletes a file from the backend

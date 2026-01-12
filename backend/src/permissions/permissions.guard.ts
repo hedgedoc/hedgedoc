@@ -4,13 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { PermissionLevel } from '@hedgedoc/commons';
-import {
-  CanActivate,
-  ExecutionContext,
-  forwardRef,
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, forwardRef, Inject, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
 import { extractNoteIdFromRequest } from '../api/utils/extract-note-id-from-request';
@@ -73,8 +67,7 @@ export class PermissionsGuard implements CanActivate {
       }
     }
 
-    const userPermissionForNote =
-      await this.permissionsService.determinePermission(userId, noteId);
+    const userPermissionForNote = await this.permissionsService.determinePermission(userId, noteId);
     return userPermissionForNote >= requiredAccessLevel;
   }
 
@@ -85,9 +78,7 @@ export class PermissionsGuard implements CanActivate {
    * @param context The execution context of the request
    * @returns The required permission level as defined
    */
-  private extractRequiredPermission(
-    context: ExecutionContext,
-  ): PermissionLevel {
+  private extractRequiredPermission(context: ExecutionContext): PermissionLevel {
     const requiredPermission = this.reflector.get<PermissionLevel>(
       PERMISSION_METADATA_KEY,
       context.getHandler(),

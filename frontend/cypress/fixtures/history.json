@@ -1,12 +1,12 @@
 {
-  "version" : 2,
-  "entries" : [
+  "version": 2,
+  "entries": [
     {
-      "identifier" : "cypress",
-      "title" : "cy-Test",
-      "tags" : [],
-      "lastVisitedAt" : "2019-04-30T09:36:45.249+02:00",
-      "pinStatus" : false
+      "identifier": "cypress",
+      "title": "cy-Test",
+      "tags": [],
+      "lastVisitedAt": "2019-04-30T09:36:45.249+02:00",
+      "pinStatus": false
     }
   ]
 }

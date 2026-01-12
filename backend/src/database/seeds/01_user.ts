@@ -4,12 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { AuthProviderType } from '@hedgedoc/commons';
-import {
-  FieldNameIdentity,
-  FieldNameUser,
-  TableIdentity,
-  TableUser,
-} from '@hedgedoc/database';
+import { FieldNameIdentity, FieldNameUser, TableIdentity, TableUser } from '@hedgedoc/database';
 import { Knex } from 'knex';
 
 import { dateTimeToDB, getCurrentDateTime } from '../../utils/datetime';

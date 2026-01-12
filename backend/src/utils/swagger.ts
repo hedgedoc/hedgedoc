@@ -39,9 +39,7 @@ export async function setupPublicApiDocs(app: INestApplication): Promise<void> {
  *
  * @param app The NestJS application instance to set up the Swagger module on.
  */
-export async function setupPrivateApiDocs(
-  app: INestApplication,
-): Promise<void> {
+export async function setupPrivateApiDocs(app: INestApplication): Promise<void> {
   const version = await getServerVersionFromPackageJson();
   const privateApiOptions = new DocumentBuilder()
     .setTitle('HedgeDoc Private API')

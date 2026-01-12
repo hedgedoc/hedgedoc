@@ -7,9 +7,8 @@ import { extractRevisionMetadataFromContent } from './extract-revision-metadata-
 
 describe('revision entity', () => {
   it('works without frontmatter without first heading', () => {
-    const { title, description, tags } = extractRevisionMetadataFromContent(
-      'This is a note content',
-    );
+    const { title, description, tags } =
+      extractRevisionMetadataFromContent('This is a note content');
     expect(title).toBe('');
     expect(description).toBe('');
     expect(tags).toStrictEqual([]);

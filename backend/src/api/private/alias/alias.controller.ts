@@ -53,14 +53,9 @@ export class AliasController {
     existingAlias: string,
   ): Promise<number> {
     const noteId = await this.noteService.getNoteIdByAlias(existingAlias);
-    const isUserNoteOwner = await this.permissionsService.isOwner(
-      userId,
-      noteId,
-    );
+    const isUserNoteOwner = await this.permissionsService.isOwner(userId, noteId);
     if (!isUserNoteOwner) {
-      throw new UnauthorizedException(
-        'Modifying aliases requires note ownership permissions',
-      );
+      throw new UnauthorizedException('Modifying aliases requires note ownership permissions');
     }
     return noteId;
   }
@@ -71,10 +66,7 @@ export class AliasController {
     @RequestUserId() userId: number,
     @Body() newAliasDto: AliasCreateDto,
   ): Promise<void> {
-    const noteId = await this.getNoteIdWithPermissionCheck(
-      userId,
-      newAliasDto.noteAlias,
-    );
+    const noteId = await this.getNoteIdWithPermissionCheck(userId, newAliasDto.noteAlias);
     await this.aliasService.ensureAliasIsAvailable(newAliasDto.newAlias);
     await this.aliasService.addAlias(noteId, newAliasDto.newAlias);
   }
@@ -97,10 +89,7 @@ export class AliasController {
 
   @Delete(':alias')
   @OpenApi(204, 400, 404)
-  async removeAlias(
-    @RequestUserId() userId: number,
-    @Param('alias') alias: string,
-  ): Promise<void> {
+  async removeAlias(@RequestUserId() userId: number, @Param('alias') alias: string): Promise<void> {
     await this.getNoteIdWithPermissionCheck(userId, alias);
     await this.aliasService.removeAlias(alias);
   }

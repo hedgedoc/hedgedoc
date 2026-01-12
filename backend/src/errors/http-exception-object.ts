@@ -9,10 +9,7 @@ export interface HttpExceptionObject {
   message: string;
 }
 
-export function buildHttpExceptionObject(
-  name: string,
-  message: string,
-): HttpExceptionObject {
+export function buildHttpExceptionObject(name: string, message: string): HttpExceptionObject {
   return {
     name: name,
     message: message,

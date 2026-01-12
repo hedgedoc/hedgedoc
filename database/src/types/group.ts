@@ -37,7 +37,4 @@ export enum FieldNameGroup {
 
 export const TableGroup = 'group'
 export type TypeInsertGroup = Omit<Group, FieldNameGroup.id>
-export type TypeUpdateGroup = Pick<
-  Group,
-  FieldNameGroup.name | FieldNameGroup.displayName
->
+export type TypeUpdateGroup = Pick<Group, FieldNameGroup.name | FieldNameGroup.displayName>

@@ -84,9 +84,7 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   public removeClient(client: RealtimeConnection): void {
     this.clients.delete(client);
     this.logger.debug(
-      `User '${client.getDisplayName()}' disconnected. ${
-        this.clients.size
-      } clients left.`,
+      `User '${client.getDisplayName()}' disconnected. ${this.clients.size} clients left.`,
     );
     this.emit('clientRemoved', client);
 

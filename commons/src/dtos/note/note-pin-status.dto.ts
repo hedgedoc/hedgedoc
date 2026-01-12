@@ -10,9 +10,7 @@ export const NotePinStatusSchema = z
   .object({
     isPinned: z
       .boolean()
-      .describe(
-        'Whether the note should be pinned to the top of the explore page',
-      ),
+      .describe('Whether the note should be pinned to the top of the explore page'),
   })
   .describe('DTO for setting the pin status of a note')
 

@@ -8,10 +8,7 @@ import * as process from 'node:process';
 import z from 'zod';
 
 import { parseOptionalBoolean, printConfigErrorAndExit } from './utils';
-import {
-  buildErrorMessage,
-  extractDescriptionFromZodIssue,
-} from './zod-error-message';
+import { buildErrorMessage, extractDescriptionFromZodIssue } from './zod-error-message';
 
 const cspSchema = z.object({
   enable: z.boolean().default(true).describe('HD_CSP_ENABLED'),
@@ -21,13 +18,8 @@ const cspSchema = z.object({
 export type CspConfig = z.infer<typeof cspSchema>;
 
 export default registerAs('cspConfig', () => {
-  if (
-    process.env.HD_CSP_ENABLE !== undefined ||
-    process.env.HD_CSP_REPORT_URI !== undefined
-  ) {
-    throw new Error(
-      "CSP config is currently not yet supported. Please don't configure it",
-    );
+  if (process.env.HD_CSP_ENABLE !== undefined || process.env.HD_CSP_REPORT_URI !== undefined) {
+    throw new Error("CSP config is currently not yet supported. Please don't configure it");
   }
 
   const cspConfig = cspSchema.safeParse({

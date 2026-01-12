@@ -1,20 +1,3 @@
-/*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
- *
- * SPDX-License-Identifier: AGPL-3.0-only
- */
-import { SpecialGroup } from '@hedgedoc/database';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_INTERCEPTOR, APP_PIPE, RouterModule, Routes } from '@nestjs/core';
-import { EventEmitterModule } from '@nestjs/event-emitter';
-import { NestExpressApplication } from '@nestjs/platform-express';
-import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
-import knex, { Knex } from 'knex';
-import { KnexModule } from 'nest-knexjs';
-import { ZodSerializerInterceptor, ZodValidationPipe } from 'nestjs-zod';
-import { types as pgTypes } from 'pg';
-import { v4 as uuidv4 } from 'uuid';
-
 import { AliasModule } from '../src/alias/alias.module';
 import { AliasService } from '../src/alias/alias.service';
 import { ApiTokenModule } from '../src/api-token/api-token.module';
@@ -36,10 +19,7 @@ import { CustomizationConfig } from '../src/config/customization.config';
 import { DatabaseConfig } from '../src/config/database.config';
 import { ExternalServicesConfig } from '../src/config/external-services.config';
 import { MediaConfig } from '../src/config/media.config';
-import {
-  createDefaultMockAppConfig,
-  registerAppConfig,
-} from '../src/config/mock/app.config.mock';
+import { createDefaultMockAppConfig, registerAppConfig } from '../src/config/mock/app.config.mock';
 import {
   createDefaultMockAuthConfig,
   registerAuthConfig,
@@ -87,6 +67,22 @@ import { SessionService } from '../src/sessions/session.service';
 import { UsersModule } from '../src/users/users.module';
 import { UsersService } from '../src/users/users.service';
 import { getCurrentDateTime } from '../src/utils/datetime';
+/*
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+import { SpecialGroup } from '@hedgedoc/database';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_INTERCEPTOR, APP_PIPE, RouterModule, Routes } from '@nestjs/core';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
+import knex, { Knex } from 'knex';
+import { KnexModule } from 'nest-knexjs';
+import { ZodSerializerInterceptor, ZodValidationPipe } from 'nestjs-zod';
+import { types as pgTypes } from 'pg';
+import { v4 as uuidv4 } from 'uuid';
 
 interface CreateTestSetupParameters {
   appConfigMock?: AppConfig;
@@ -169,9 +165,7 @@ export class TestSetupBuilder {
     await adminKnex.raw(`DROP DATABASE IF EXISTS ${dbName}`);
     await adminKnex.raw(`CREATE DATABASE ${dbName}`);
     if (dbType === 'mariadb') {
-      await adminKnex.raw(
-        `GRANT ALL PRIVILEGES ON ${dbName}.* TO 'hedgedoc'@'%'`,
-      );
+      await adminKnex.raw(`GRANT ALL PRIVILEGES ON ${dbName}.* TO 'hedgedoc'@'%'`);
     }
     await adminKnex.destroy();
   }
@@ -183,10 +177,7 @@ export class TestSetupBuilder {
    * @param asAdmin If the database should be connected to as the admin user
    * @returns The database configuration
    */
-  private static getTestDatabaseConfig(
-    dbName: string,
-    asAdmin = false,
-  ): Knex.Config {
+  private static getTestDatabaseConfig(dbName: string, asAdmin = false): Knex.Config {
     const dbType = process.env.HEDGEDOC_TEST_DB_TYPE || 'sqlite';
     switch (dbType) {
       case 'sqlite':
@@ -196,14 +187,8 @@ export class TestSetupBuilder {
           useNullAsDefault: true,
         };
       case 'postgres':
-        pgTypes.setTypeParser(
-          pgTypes.builtins.TIMESTAMP,
-          (value: string) => value,
-        );
-        pgTypes.setTypeParser(
-          pgTypes.builtins.TIMESTAMPTZ,
-          (value: string) => value,
-        );
+        pgTypes.setTypeParser(pgTypes.builtins.TIMESTAMP, (value: string) => value);
+        pgTypes.setTypeParser(pgTypes.builtins.TIMESTAMPTZ, (value: string) => value);
         return {
           client: 'pg',
           connection: {
@@ -260,29 +245,17 @@ export class TestSetupBuilder {
         ConfigModule.forRoot({
           isGlobal: true,
           load: [
-            registerAppConfig(
-              mocks?.appConfigMock ?? createDefaultMockAppConfig(),
-            ),
-            registerAuthConfig(
-              mocks?.authConfigMock ?? createDefaultMockAuthConfig(),
-            ),
+            registerAppConfig(mocks?.appConfigMock ?? createDefaultMockAppConfig()),
+            registerAuthConfig(mocks?.authConfigMock ?? createDefaultMockAuthConfig()),
             registerCustomizationConfig(
-              mocks?.customizationConfigMock ??
-                createDefaultMockCustomizationConfig(),
+              mocks?.customizationConfigMock ?? createDefaultMockCustomizationConfig(),
             ),
-            registerDatabaseConfig(
-              mocks?.databaseConfigMock ?? createDefaultMockDatabaseConfig(),
-            ),
+            registerDatabaseConfig(mocks?.databaseConfigMock ?? createDefaultMockDatabaseConfig()),
             registerExternalServiceConfig(
-              mocks?.externalServicesConfigMock ??
-                createDefaultMockExternalServicesConfig(),
+              mocks?.externalServicesConfigMock ?? createDefaultMockExternalServicesConfig(),
             ),
-            registerMediaConfig(
-              mocks?.mediaConfigMock ?? createDefaultMockMediaConfig(),
-            ),
-            registerNoteConfig(
-              mocks?.noteConfigMock ?? createDefaultMockNoteConfig(),
-            ),
+            registerMediaConfig(mocks?.mediaConfigMock ?? createDefaultMockMediaConfig()),
+            registerNoteConfig(mocks?.noteConfigMock ?? createDefaultMockNoteConfig()),
           ],
         }),
         KnexModule.forRoot({
@@ -335,39 +308,25 @@ export class TestSetupBuilder {
 
     this.testSetup.moduleRef = await this.testingModuleBuilder.compile();
 
-    this.testSetup.usersService =
-      this.testSetup.moduleRef.get<UsersService>(UsersService);
-    this.testSetup.groupService =
-      this.testSetup.moduleRef.get<GroupsService>(GroupsService);
-    this.testSetup.configService =
-      this.testSetup.moduleRef.get<ConfigService>(ConfigService);
-    this.testSetup.identityService =
-      this.testSetup.moduleRef.get<IdentityService>(IdentityService);
-    this.testSetup.localIdentityService =
-      this.testSetup.moduleRef.get<LocalService>(LocalService);
-    this.testSetup.notesService =
-      this.testSetup.moduleRef.get<NoteService>(NoteService);
-    const filesystemBackend =
-      this.testSetup.moduleRef.get<FilesystemBackend>(FilesystemBackend);
-    this.testSetup.mediaService =
-      this.testSetup.moduleRef.get<MediaService>(MediaService);
+    this.testSetup.usersService = this.testSetup.moduleRef.get<UsersService>(UsersService);
+    this.testSetup.groupService = this.testSetup.moduleRef.get<GroupsService>(GroupsService);
+    this.testSetup.configService = this.testSetup.moduleRef.get<ConfigService>(ConfigService);
+    this.testSetup.identityService = this.testSetup.moduleRef.get<IdentityService>(IdentityService);
+    this.testSetup.localIdentityService = this.testSetup.moduleRef.get<LocalService>(LocalService);
+    this.testSetup.notesService = this.testSetup.moduleRef.get<NoteService>(NoteService);
+    const filesystemBackend = this.testSetup.moduleRef.get<FilesystemBackend>(FilesystemBackend);
+    this.testSetup.mediaService = this.testSetup.moduleRef.get<MediaService>(MediaService);
     this.testSetup.mediaService.mediaBackend = filesystemBackend;
-    this.testSetup.aliasService =
-      this.testSetup.moduleRef.get<AliasService>(AliasService);
-    this.testSetup.apiTokenService =
-      this.testSetup.moduleRef.get<ApiTokenService>(ApiTokenService);
+    this.testSetup.aliasService = this.testSetup.moduleRef.get<AliasService>(AliasService);
+    this.testSetup.apiTokenService = this.testSetup.moduleRef.get<ApiTokenService>(ApiTokenService);
     this.testSetup.permissionsService =
       this.testSetup.moduleRef.get<PermissionService>(PermissionService);
-    this.testSetup.sessionService =
-      this.testSetup.moduleRef.get<SessionService>(SessionService);
+    this.testSetup.sessionService = this.testSetup.moduleRef.get<SessionService>(SessionService);
     this.testSetup.revisionsService =
       this.testSetup.moduleRef.get<RevisionsService>(RevisionsService);
-    this.testSetup.ldapService =
-      this.testSetup.moduleRef.get<LdapService>(LdapService);
-    this.testSetup.oidcService =
-      this.testSetup.moduleRef.get<OidcService>(OidcService);
-    this.testSetup.exploreService =
-      this.testSetup.moduleRef.get<ExploreService>(ExploreService);
+    this.testSetup.ldapService = this.testSetup.moduleRef.get<LdapService>(LdapService);
+    this.testSetup.oidcService = this.testSetup.moduleRef.get<OidcService>(OidcService);
+    this.testSetup.exploreService = this.testSetup.moduleRef.get<ExploreService>(ExploreService);
 
     this.testSetup.app = this.testSetup.moduleRef.createNestApplication();
 
@@ -390,9 +349,7 @@ export class TestSetupBuilder {
    */
   public withMockAuth() {
     this.setupPreCompile.push(() => {
-      this.testingModuleBuilder
-        .overrideGuard(ApiTokenGuard)
-        .useClass(MockApiTokenGuard);
+      this.testingModuleBuilder.overrideGuard(ApiTokenGuard).useClass(MockApiTokenGuard);
       return Promise.resolve();
     });
     return this;
@@ -433,11 +390,7 @@ export class TestSetupBuilder {
           const validUntil = getCurrentDateTime().plus({
             hour: 1,
           });
-          return await this.testSetup.apiTokenService.createToken(
-            userId,
-            'test',
-            validUntil,
-          );
+          return await this.testSetup.apiTokenService.createToken(userId, 'test', validUntil);
         }),
       );
 
@@ -482,15 +435,11 @@ export class TestSetupBuilder {
       );
       await this.testSetup.permissionsService.removeGroupPermission(
         this.testSetup.ownedNoteIds[3],
-        await this.testSetup.groupService.getGroupIdByName(
-          SpecialGroup.EVERYONE,
-        ),
+        await this.testSetup.groupService.getGroupIdByName(SpecialGroup.EVERYONE),
       );
       await this.testSetup.permissionsService.removeGroupPermission(
         this.testSetup.ownedNoteIds[3],
-        await this.testSetup.groupService.getGroupIdByName(
-          SpecialGroup.LOGGED_IN,
-        ),
+        await this.testSetup.groupService.getGroupIdByName(SpecialGroup.LOGGED_IN),
       );
     });
     return this;

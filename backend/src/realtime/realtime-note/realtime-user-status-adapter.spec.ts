@@ -66,16 +66,10 @@ describe('realtime user status adapter', () => {
     messageTransporterNotReady = new MessageTransporter();
     messageTransporterDecline = new MessageTransporter();
 
-    const mockedTransportAdapterLoggedIn1 = new MockedBackendTransportAdapter(
-      '',
-    );
-    const mockedTransportAdapterLoggedIn2 = new MockedBackendTransportAdapter(
-      '',
-    );
+    const mockedTransportAdapterLoggedIn1 = new MockedBackendTransportAdapter('');
+    const mockedTransportAdapterLoggedIn2 = new MockedBackendTransportAdapter('');
     const mockedTransportAdapterGuest = new MockedBackendTransportAdapter('');
-    const mockedTransportAdapterNotReady = new MockedBackendTransportAdapter(
-      '',
-    );
+    const mockedTransportAdapterNotReady = new MockedBackendTransportAdapter('');
     const mockedTransportAdapterDecline = new MockedBackendTransportAdapter('');
 
     messageTransporterLoggedIn1.setAdapter(mockedTransportAdapterLoggedIn1);
@@ -85,13 +79,9 @@ describe('realtime user status adapter', () => {
     messageTransporterDecline.setAdapter(mockedTransportAdapterDecline);
 
     function otherAdapterCollector(): RealtimeUserStatusAdapter[] {
-      return [
-        clientLoggedIn1,
-        clientLoggedIn2,
-        clientGuest,
-        clientNotReady,
-        clientDecline,
-      ].filter((value) => value !== undefined);
+      return [clientLoggedIn1, clientLoggedIn2, clientGuest, clientNotReady, clientDecline].filter(
+        (value) => value !== undefined,
+      );
     }
 
     clientLoggedIn1 = new RealtimeUserStatusAdapter(
@@ -135,26 +125,11 @@ describe('realtime user status adapter', () => {
       () => false,
     );
 
-    clientLoggedIn1SendMessageSpy = jest.spyOn(
-      messageTransporterLoggedIn1,
-      'sendMessage',
-    );
-    clientLoggedIn2SendMessageSpy = jest.spyOn(
-      messageTransporterLoggedIn2,
-      'sendMessage',
-    );
-    clientGuestSendMessageSpy = jest.spyOn(
-      messageTransporterGuest,
-      'sendMessage',
-    );
-    clientNotReadySendMessageSpy = jest.spyOn(
-      messageTransporterNotReady,
-      'sendMessage',
-    );
-    clientDeclineSendMessageSpy = jest.spyOn(
-      messageTransporterDecline,
-      'sendMessage',
-    );
+    clientLoggedIn1SendMessageSpy = jest.spyOn(messageTransporterLoggedIn1, 'sendMessage');
+    clientLoggedIn2SendMessageSpy = jest.spyOn(messageTransporterLoggedIn2, 'sendMessage');
+    clientGuestSendMessageSpy = jest.spyOn(messageTransporterGuest, 'sendMessage');
+    clientNotReadySendMessageSpy = jest.spyOn(messageTransporterNotReady, 'sendMessage');
+    clientDeclineSendMessageSpy = jest.spyOn(messageTransporterDecline, 'sendMessage');
 
     messageTransporterLoggedIn1.markAsReady();
     messageTransporterLoggedIn2.markAsReady();
@@ -238,10 +213,7 @@ describe('realtime user status adapter', () => {
         ],
       },
     };
-    expect(clientLoggedIn1SendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedMessage1,
-    );
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenNthCalledWith(2, expectedMessage1);
     expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(1);
     expect(clientGuestSendMessageSpy).toHaveBeenCalledTimes(1);
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
@@ -387,19 +359,10 @@ describe('realtime user status adapter', () => {
     };
 
     expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(1);
-    expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedMessage2,
-    );
-    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedMessage3,
-    );
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(2, expectedMessage2);
+    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(2, expectedMessage3);
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedMessage5,
-    );
+    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(2, expectedMessage5);
   });
 
   it('will inform other clients about removed client', () => {
@@ -501,20 +464,11 @@ describe('realtime user status adapter', () => {
       },
     };
 
-    expect(clientLoggedIn1SendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedMessage1,
-    );
+    expect(clientLoggedIn1SendMessageSpy).toHaveBeenNthCalledWith(2, expectedMessage1);
     expect(clientLoggedIn2SendMessageSpy).toHaveBeenCalledTimes(1);
-    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedMessage3,
-    );
+    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(2, expectedMessage3);
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedMessage5,
-    );
+    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(2, expectedMessage5);
   });
 
   it('will inform other clients about inactivity and reactivity', () => {
@@ -531,143 +485,131 @@ describe('realtime user status adapter', () => {
       },
     });
 
-    const expectedInactivityMessage2: Message<MessageType.REALTIME_USER_STATE_SET> =
-      {
-        type: MessageType.REALTIME_USER_STATE_SET,
-        payload: {
-          ownUser: {
-            styleIndex: clientLoggedIn2StyleIndex,
-            displayName: clientLoggedIn2Username,
-          },
-          users: [
-            {
-              active: false,
-              cursor: {
-                from: 0,
-                to: 0,
-              },
-              styleIndex: clientLoggedIn1StyleIndex,
-              username: clientLoggedIn1Username,
-              displayName: clientLoggedIn1Username,
-            },
-            {
-              active: true,
-              cursor: {
-                from: 0,
-                to: 0,
-              },
-              styleIndex: guestStyleIndex,
-              username: null,
-              displayName: guestDisplayName,
-            },
-            {
-              active: true,
-              cursor: null,
-              displayName: clientDeclineUsername,
-              styleIndex: clientDeclineStyleIndex,
-              username: clientDeclineUsername,
-            },
-          ],
+    const expectedInactivityMessage2: Message<MessageType.REALTIME_USER_STATE_SET> = {
+      type: MessageType.REALTIME_USER_STATE_SET,
+      payload: {
+        ownUser: {
+          styleIndex: clientLoggedIn2StyleIndex,
+          displayName: clientLoggedIn2Username,
         },
-      };
-
-    const expectedInactivityMessage3: Message<MessageType.REALTIME_USER_STATE_SET> =
-      {
-        type: MessageType.REALTIME_USER_STATE_SET,
-        payload: {
-          ownUser: {
+        users: [
+          {
+            active: false,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: clientLoggedIn1StyleIndex,
+            username: clientLoggedIn1Username,
+            displayName: clientLoggedIn1Username,
+          },
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
             styleIndex: guestStyleIndex,
+            username: null,
             displayName: guestDisplayName,
           },
-          users: [
-            {
-              active: false,
-              cursor: {
-                from: 0,
-                to: 0,
-              },
-              styleIndex: clientLoggedIn1StyleIndex,
-              username: clientLoggedIn1Username,
-              displayName: clientLoggedIn1Username,
-            },
-            {
-              active: true,
-              cursor: {
-                from: 0,
-                to: 0,
-              },
-              styleIndex: clientLoggedIn2StyleIndex,
-              username: clientLoggedIn2Username,
-              displayName: clientLoggedIn2Username,
-            },
-            {
-              active: true,
-              cursor: null,
-              displayName: clientDeclineUsername,
-              styleIndex: clientDeclineStyleIndex,
-              username: clientDeclineUsername,
-            },
-          ],
-        },
-      };
-
-    const expectedInactivityMessage5: Message<MessageType.REALTIME_USER_STATE_SET> =
-      {
-        type: MessageType.REALTIME_USER_STATE_SET,
-        payload: {
-          ownUser: {
-            styleIndex: clientDeclineStyleIndex,
+          {
+            active: true,
+            cursor: null,
             displayName: clientDeclineUsername,
+            styleIndex: clientDeclineStyleIndex,
+            username: clientDeclineUsername,
           },
-          users: [
-            {
-              active: false,
-              cursor: {
-                from: 0,
-                to: 0,
-              },
-              styleIndex: clientLoggedIn1StyleIndex,
-              username: clientLoggedIn1Username,
-              displayName: clientLoggedIn1Username,
-            },
-            {
-              active: true,
-              cursor: {
-                from: 0,
-                to: 0,
-              },
-              styleIndex: clientLoggedIn2StyleIndex,
-              username: clientLoggedIn2Username,
-              displayName: clientLoggedIn2Username,
-            },
-            {
-              active: true,
-              cursor: {
-                from: 0,
-                to: 0,
-              },
-              displayName: guestDisplayName,
-              styleIndex: guestStyleIndex,
-              username: null,
-            },
-          ],
+        ],
+      },
+    };
+
+    const expectedInactivityMessage3: Message<MessageType.REALTIME_USER_STATE_SET> = {
+      type: MessageType.REALTIME_USER_STATE_SET,
+      payload: {
+        ownUser: {
+          styleIndex: guestStyleIndex,
+          displayName: guestDisplayName,
         },
-      };
+        users: [
+          {
+            active: false,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: clientLoggedIn1StyleIndex,
+            username: clientLoggedIn1Username,
+            displayName: clientLoggedIn1Username,
+          },
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: clientLoggedIn2StyleIndex,
+            username: clientLoggedIn2Username,
+            displayName: clientLoggedIn2Username,
+          },
+          {
+            active: true,
+            cursor: null,
+            displayName: clientDeclineUsername,
+            styleIndex: clientDeclineStyleIndex,
+            username: clientDeclineUsername,
+          },
+        ],
+      },
+    };
+
+    const expectedInactivityMessage5: Message<MessageType.REALTIME_USER_STATE_SET> = {
+      type: MessageType.REALTIME_USER_STATE_SET,
+      payload: {
+        ownUser: {
+          styleIndex: clientDeclineStyleIndex,
+          displayName: clientDeclineUsername,
+        },
+        users: [
+          {
+            active: false,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: clientLoggedIn1StyleIndex,
+            username: clientLoggedIn1Username,
+            displayName: clientLoggedIn1Username,
+          },
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: clientLoggedIn2StyleIndex,
+            username: clientLoggedIn2Username,
+            displayName: clientLoggedIn2Username,
+          },
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            displayName: guestDisplayName,
+            styleIndex: guestStyleIndex,
+            username: null,
+          },
+        ],
+      },
+    };
 
     expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(1);
-    expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedInactivityMessage2,
-    );
-    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedInactivityMessage3,
-    );
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(2, expectedInactivityMessage2);
+    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(2, expectedInactivityMessage3);
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedInactivityMessage5,
-    );
+    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(2, expectedInactivityMessage5);
 
     messageTransporterLoggedIn1.emit(MessageType.REALTIME_USER_SET_ACTIVITY, {
       type: MessageType.REALTIME_USER_SET_ACTIVITY,
@@ -677,19 +619,10 @@ describe('realtime user status adapter', () => {
     });
 
     expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(1);
-    expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedInactivityMessage2,
-    );
-    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedInactivityMessage3,
-    );
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(2, expectedInactivityMessage2);
+    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(2, expectedInactivityMessage3);
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedInactivityMessage5,
-    );
+    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(2, expectedInactivityMessage5);
 
     messageTransporterLoggedIn1.emit(MessageType.REALTIME_USER_SET_ACTIVITY, {
       type: MessageType.REALTIME_USER_SET_ACTIVITY,
@@ -705,143 +638,131 @@ describe('realtime user status adapter', () => {
       },
     });
 
-    const expectedReactivityMessage2: Message<MessageType.REALTIME_USER_STATE_SET> =
-      {
-        type: MessageType.REALTIME_USER_STATE_SET,
-        payload: {
-          ownUser: {
-            styleIndex: clientLoggedIn2StyleIndex,
-            displayName: clientLoggedIn2Username,
-          },
-          users: [
-            {
-              active: true,
-              cursor: {
-                from: 0,
-                to: 0,
-              },
-              styleIndex: clientLoggedIn1StyleIndex,
-              username: clientLoggedIn1Username,
-              displayName: clientLoggedIn1Username,
-            },
-            {
-              active: true,
-              cursor: {
-                from: 0,
-                to: 0,
-              },
-              styleIndex: guestStyleIndex,
-              username: null,
-              displayName: guestDisplayName,
-            },
-            {
-              active: true,
-              cursor: null,
-              displayName: clientDeclineUsername,
-              styleIndex: clientDeclineStyleIndex,
-              username: clientDeclineUsername,
-            },
-          ],
+    const expectedReactivityMessage2: Message<MessageType.REALTIME_USER_STATE_SET> = {
+      type: MessageType.REALTIME_USER_STATE_SET,
+      payload: {
+        ownUser: {
+          styleIndex: clientLoggedIn2StyleIndex,
+          displayName: clientLoggedIn2Username,
         },
-      };
-
-    const expectedReactivityMessage3: Message<MessageType.REALTIME_USER_STATE_SET> =
-      {
-        type: MessageType.REALTIME_USER_STATE_SET,
-        payload: {
-          ownUser: {
+        users: [
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: clientLoggedIn1StyleIndex,
+            username: clientLoggedIn1Username,
+            displayName: clientLoggedIn1Username,
+          },
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
             styleIndex: guestStyleIndex,
+            username: null,
             displayName: guestDisplayName,
           },
-          users: [
-            {
-              active: true,
-              cursor: {
-                from: 0,
-                to: 0,
-              },
-              styleIndex: clientLoggedIn1StyleIndex,
-              username: clientLoggedIn1Username,
-              displayName: clientLoggedIn1Username,
-            },
-            {
-              active: true,
-              cursor: {
-                from: 0,
-                to: 0,
-              },
-              styleIndex: clientLoggedIn2StyleIndex,
-              username: clientLoggedIn2Username,
-              displayName: clientLoggedIn2Username,
-            },
-            {
-              active: true,
-              cursor: null,
-              displayName: clientDeclineUsername,
-              styleIndex: clientDeclineStyleIndex,
-              username: clientDeclineUsername,
-            },
-          ],
-        },
-      };
-
-    const expectedReactivityMessage5: Message<MessageType.REALTIME_USER_STATE_SET> =
-      {
-        type: MessageType.REALTIME_USER_STATE_SET,
-        payload: {
-          ownUser: {
-            styleIndex: clientDeclineStyleIndex,
+          {
+            active: true,
+            cursor: null,
             displayName: clientDeclineUsername,
+            styleIndex: clientDeclineStyleIndex,
+            username: clientDeclineUsername,
           },
-          users: [
-            {
-              active: true,
-              cursor: {
-                from: 0,
-                to: 0,
-              },
-              styleIndex: clientLoggedIn1StyleIndex,
-              username: clientLoggedIn1Username,
-              displayName: clientLoggedIn1Username,
-            },
-            {
-              active: true,
-              cursor: {
-                from: 0,
-                to: 0,
-              },
-              styleIndex: clientLoggedIn2StyleIndex,
-              username: clientLoggedIn2Username,
-              displayName: clientLoggedIn2Username,
-            },
-            {
-              active: true,
-              cursor: {
-                from: 0,
-                to: 0,
-              },
-              displayName: guestDisplayName,
-              styleIndex: guestStyleIndex,
-              username: null,
-            },
-          ],
+        ],
+      },
+    };
+
+    const expectedReactivityMessage3: Message<MessageType.REALTIME_USER_STATE_SET> = {
+      type: MessageType.REALTIME_USER_STATE_SET,
+      payload: {
+        ownUser: {
+          styleIndex: guestStyleIndex,
+          displayName: guestDisplayName,
         },
-      };
+        users: [
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: clientLoggedIn1StyleIndex,
+            username: clientLoggedIn1Username,
+            displayName: clientLoggedIn1Username,
+          },
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: clientLoggedIn2StyleIndex,
+            username: clientLoggedIn2Username,
+            displayName: clientLoggedIn2Username,
+          },
+          {
+            active: true,
+            cursor: null,
+            displayName: clientDeclineUsername,
+            styleIndex: clientDeclineStyleIndex,
+            username: clientDeclineUsername,
+          },
+        ],
+      },
+    };
+
+    const expectedReactivityMessage5: Message<MessageType.REALTIME_USER_STATE_SET> = {
+      type: MessageType.REALTIME_USER_STATE_SET,
+      payload: {
+        ownUser: {
+          styleIndex: clientDeclineStyleIndex,
+          displayName: clientDeclineUsername,
+        },
+        users: [
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: clientLoggedIn1StyleIndex,
+            username: clientLoggedIn1Username,
+            displayName: clientLoggedIn1Username,
+          },
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            styleIndex: clientLoggedIn2StyleIndex,
+            username: clientLoggedIn2Username,
+            displayName: clientLoggedIn2Username,
+          },
+          {
+            active: true,
+            cursor: {
+              from: 0,
+              to: 0,
+            },
+            displayName: guestDisplayName,
+            styleIndex: guestStyleIndex,
+            username: null,
+          },
+        ],
+      },
+    };
 
     expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(1);
-    expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedReactivityMessage2,
-    );
-    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedReactivityMessage3,
-    );
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(2, expectedReactivityMessage2);
+    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(2, expectedReactivityMessage3);
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedReactivityMessage5,
-    );
+    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(2, expectedReactivityMessage5);
 
     messageTransporterLoggedIn1.emit(MessageType.REALTIME_USER_SET_ACTIVITY, {
       type: MessageType.REALTIME_USER_SET_ACTIVITY,
@@ -851,18 +772,9 @@ describe('realtime user status adapter', () => {
     });
 
     expect(clientLoggedIn1SendMessageSpy).toHaveBeenCalledTimes(1);
-    expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedReactivityMessage2,
-    );
-    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedReactivityMessage3,
-    );
+    expect(clientLoggedIn2SendMessageSpy).toHaveBeenNthCalledWith(2, expectedReactivityMessage2);
+    expect(clientGuestSendMessageSpy).toHaveBeenNthCalledWith(2, expectedReactivityMessage3);
     expect(clientNotReadySendMessageSpy).toHaveBeenCalledTimes(0);
-    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(
-      2,
-      expectedReactivityMessage5,
-    );
+    expect(clientDeclineSendMessageSpy).toHaveBeenNthCalledWith(2, expectedReactivityMessage5);
   });
 });

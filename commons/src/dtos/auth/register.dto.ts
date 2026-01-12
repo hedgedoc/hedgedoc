@@ -14,10 +14,7 @@ export const RegisterSchema = z
       .toLowerCase()
       .describe('The new username for local account registration'),
     displayName: z.string().describe('The display name of the new user'),
-    password: z
-      .string()
-      .min(6)
-      .describe('The new password for the local account'),
+    password: z.string().min(6).describe('The new password for the local account'),
   })
   .describe('DTO to register a local user account')
 

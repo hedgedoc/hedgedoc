@@ -29,11 +29,7 @@ import { InjectConnection } from 'nest-knexjs';
 
 import noteConfiguration, { NoteConfig } from '../config/note.config';
 import { NotePermissionsDto } from '../dtos/note-permissions.dto';
-import {
-  GenericDBError,
-  NotInDBError,
-  PermissionError,
-} from '../errors/errors';
+import { GenericDBError, NotInDBError, PermissionError } from '../errors/errors';
 import { NoteEvent, NoteEventMap } from '../events';
 import { GroupsService } from '../groups/groups.service';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
@@ -86,10 +82,7 @@ export class PermissionService {
         `${TableMediaUpload}.${FieldNameMediaUpload.userId}`,
         `${TableNote}.${FieldNameNote.ownerId}`,
       )
-      .where(
-        `${TableMediaUpload}.${FieldNameMediaUpload.uuid}`,
-        mediaUploadUuid,
-      )
+      .where(`${TableMediaUpload}.${FieldNameMediaUpload.uuid}`, mediaUploadUuid)
       .first();
 
     if (dbResult === undefined) {
@@ -101,8 +94,7 @@ export class PermissionService {
     }
 
     return (
-      dbResult[FieldNameMediaUpload.userId] === userId ||
-      dbResult[FieldNameNote.ownerId] === userId
+      dbResult[FieldNameMediaUpload.userId] === userId || dbResult[FieldNameNote.ownerId] === userId
     );
   }
 
@@ -115,11 +107,7 @@ export class PermissionService {
    * @returns true if the user is the owner of the note, false otherwise
    * @throws NotInDBError if the note does not exist
    */
-  async isOwner(
-    userId: number,
-    noteId: number,
-    transaction?: Knex,
-  ): Promise<boolean> {
+  async isOwner(userId: number, noteId: number, transaction?: Knex): Promise<boolean> {
     const dbActor = transaction ? transaction : this.knex;
     const dbResult = await dbActor(TableNote)
       .select(FieldNameNote.ownerId)
@@ -142,15 +130,9 @@ export class PermissionService {
    * @param transaction Optional transaction to use
    * @returns true if the user may create a note, false otherwise
    */
-  public async checkIfUserMayCreateNote(
-    userId: number,
-    transaction?: Knex,
-  ): Promise<boolean> {
+  public async checkIfUserMayCreateNote(userId: number, transaction?: Knex): Promise<boolean> {
     const dbActor = transaction ? transaction : this.knex;
-    const isRegisteredUser = await this.userService.isRegisteredUser(
-      userId,
-      dbActor,
-    );
+    const isRegisteredUser = await this.userService.isRegisteredUser(userId, dbActor);
     if (isRegisteredUser) {
       // Registered users may always create notes
       return true;
@@ -176,8 +158,7 @@ export class PermissionService {
   ): Promise<PermissionLevel> {
     if (transaction === undefined) {
       return await this.knex.transaction(
-        async (transaction) =>
-          await this.innerDeterminePermission(userId, noteId, transaction),
+        async (transaction) => await this.innerDeterminePermission(userId, noteId, transaction),
       );
     }
     return await this.innerDeterminePermission(userId, noteId, transaction);
@@ -217,13 +198,8 @@ export class PermissionService {
     let groupPermission: PermissionLevel;
 
     // 1. Get all groups the user is a member of
-    const groupsOfUser = await this.groupsService.getGroupsForUser(
-      userId,
-      transaction,
-    );
-    const groupIds = groupsOfUser.map(
-      (groupOfUser) => groupOfUser[FieldNameGroup.id],
-    );
+    const groupsOfUser = await this.groupsService.getGroupsForUser(userId, transaction);
+    const groupIds = groupsOfUser.map((groupOfUser) => groupOfUser[FieldNameGroup.id]);
 
     // 2. Get all permissions on the note for groups the user is member of
     const groupPermissions = await transaction(TableNoteGroupPermission)
@@ -245,17 +221,12 @@ export class PermissionService {
       groupPermission = Math.max(...permissionLevels);
     }
 
-    const isRegisteredUser = await this.userService.isRegisteredUser(
-      userId,
-      transaction,
-    );
+    const isRegisteredUser = await this.userService.isRegisteredUser(userId, transaction);
 
     // 3. If the user is a guest user, the highest permission level is the max guest permission
     if (!isRegisteredUser) {
       const maxGuestPermission = this.noteConfig.permissions.maxGuestLevel;
-      return groupPermission > maxGuestPermission
-        ? maxGuestPermission
-        : groupPermission;
+      return groupPermission > maxGuestPermission ? maxGuestPermission : groupPermission;
     }
 
     // 4. Use the highest permission available
@@ -278,21 +249,14 @@ export class PermissionService {
    * @param userId the user for which the permission should be set
    * @param canEdit specifies if the user can edit the note
    */
-  public async setUserPermission(
-    noteId: number,
-    userId: number,
-    canEdit: boolean,
-  ): Promise<void> {
+  public async setUserPermission(noteId: number, userId: number, canEdit: boolean): Promise<void> {
     await this.knex.transaction(async (transaction) => {
       const isOwner = await this.isOwner(userId, noteId, transaction);
       if (isOwner) {
         // If the user is the owner, they always have full permissions
         return;
       }
-      const isRegisteredUser = await this.userService.isRegisteredUser(
-        userId,
-        transaction,
-      );
+      const isRegisteredUser = await this.userService.isRegisteredUser(userId, transaction);
       if (!isRegisteredUser) {
         throw new PermissionError(
           'Note permissions can not be granted to guests',
@@ -306,10 +270,7 @@ export class PermissionService {
           [FieldNameNoteUserPermission.noteId]: noteId,
           [FieldNameNoteUserPermission.canEdit]: canEdit,
         })
-        .onConflict([
-          FieldNameNoteUserPermission.noteId,
-          FieldNameNoteUserPermission.userId,
-        ])
+        .onConflict([FieldNameNoteUserPermission.noteId, FieldNameNoteUserPermission.userId])
         .merge();
       this.notifyOthers(noteId);
     });
@@ -322,10 +283,7 @@ export class PermissionService {
    * @param userId the userId for which the permission should be removed
    * @throws NotInDBError if the user did not have the permission already
    */
-  public async removeUserPermission(
-    noteId: number,
-    userId: number,
-  ): Promise<void> {
+  public async removeUserPermission(noteId: number, userId: number): Promise<void> {
     await this.knex.transaction(async (transaction) => {
       const result = await transaction(TableNoteUserPermission)
         .where(FieldNameNoteUserPermission.noteId, noteId)
@@ -367,10 +325,7 @@ export class PermissionService {
         [FieldNameNoteGroupPermission.groupId]: groupId,
         [FieldNameNoteGroupPermission.noteId]: noteId,
       })
-      .onConflict([
-        FieldNameNoteGroupPermission.noteId,
-        FieldNameNoteGroupPermission.groupId,
-      ])
+      .onConflict([FieldNameNoteGroupPermission.noteId, FieldNameNoteGroupPermission.groupId])
       .merge();
     this.notifyOthers(noteId);
   }
@@ -382,10 +337,7 @@ export class PermissionService {
    * @param groupId the group for which the permission should be removed
    * @returns the note with the new permission
    */
-  public async removeGroupPermission(
-    noteId: number,
-    groupId: number,
-  ): Promise<void> {
+  public async removeGroupPermission(noteId: number, groupId: number): Promise<void> {
     const result = await this.knex(TableNoteGroupPermission)
       .where(FieldNameNoteGroupPermission.noteId, noteId)
       .andWhere(FieldNameNoteGroupPermission.groupId, groupId)
@@ -414,9 +366,7 @@ export class PermissionService {
       })
       .where(FieldNameNote.id, noteId);
     if (result !== 1) {
-      throw new NotInDBError(
-        'The user id of the new owner or the note id does not exist',
-      );
+      throw new NotInDBError('The user id of the new owner or the note id does not exist');
     }
     this.notifyOthers(noteId);
   }
@@ -428,10 +378,7 @@ export class PermissionService {
    * @param newPublicVisible the new state of the note
    * @throws NotInDBError if note does not exist
    */
-  public async changePubliclyVisible(
-    noteId: number,
-    newPublicVisible: boolean,
-  ): Promise<void> {
+  public async changePubliclyVisible(noteId: number, newPublicVisible: boolean): Promise<void> {
     const result = await this.knex(TableNote)
       .update({
         [FieldNameNote.publiclyVisible]: newPublicVisible,
@@ -467,15 +414,11 @@ export class PermissionService {
     transaction: Knex,
   ): Promise<NotePermissionsDto> {
     const metadata = await transaction(TableNote)
-      .join(
-        TableUser,
-        `${TableUser}.${FieldNameUser.id}`,
-        `${TableNote}.${FieldNameNote.ownerId}`,
+      .join(TableUser, `${TableUser}.${FieldNameUser.id}`, `${TableNote}.${FieldNameNote.ownerId}`)
+      .select<Pick<User, FieldNameUser.username> & Pick<Note, FieldNameNote.publiclyVisible>>(
+        `${TableUser}.${FieldNameUser.username}`,
+        `${TableNote}.${FieldNameNote.publiclyVisible}`,
       )
-      .select<
-        Pick<User, FieldNameUser.username> &
-          Pick<Note, FieldNameNote.publiclyVisible>
-      >(`${TableUser}.${FieldNameUser.username}`, `${TableNote}.${FieldNameNote.publiclyVisible}`)
       .where(`${TableNote}.${FieldNameNote.id}`, noteId)
       .first();
 
@@ -494,10 +437,7 @@ export class PermissionService {
         `${TableUser}.${FieldNameUser.username}`,
         `${TableNoteUserPermission}.${FieldNameNoteUserPermission.canEdit}`,
       )
-      .where(
-        `${TableNoteUserPermission}.${FieldNameNoteUserPermission.noteId}`,
-        noteId,
-      );
+      .where(`${TableNoteUserPermission}.${FieldNameNoteUserPermission.noteId}`, noteId);
 
     const groupPermissions = await transaction(TableNoteGroupPermission)
       .join(
@@ -514,10 +454,7 @@ export class PermissionService {
         `${TableGroup}.${FieldNameGroup.name}`,
         `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.canEdit}`,
       )
-      .where(
-        `${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.noteId}`,
-        noteId,
-      );
+      .where(`${TableNoteGroupPermission}.${FieldNameNoteGroupPermission.noteId}`, noteId);
 
     if (metadata === undefined) {
       throw new GenericDBError(

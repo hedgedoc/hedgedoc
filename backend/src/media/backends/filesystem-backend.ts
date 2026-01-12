@@ -30,16 +30,10 @@ export class FilesystemBackend implements MediaBackend {
       return;
     }
     this.uploadDirectory = this.mediaConfig.backend.filesystem.uploadPath;
-    this.logger.debug(
-      `Activated media backend filesystem using ${this.uploadDirectory}`,
-    );
+    this.logger.debug(`Activated media backend filesystem using ${this.uploadDirectory}`);
   }
 
-  async saveFile(
-    uuid: string,
-    buffer: Buffer,
-    fileType: FileTypeResult,
-  ): Promise<string> {
+  async saveFile(uuid: string, buffer: Buffer, fileType: FileTypeResult): Promise<string> {
     const filePath = this.getFilePath(uuid, fileType.ext);
     this.logger.debug(`Writing uploaded file to '${filePath}'`, 'saveFile');
     await this.ensureDirectory();
@@ -99,14 +93,8 @@ export class FilesystemBackend implements MediaBackend {
         );
         await fs.mkdir(this.uploadDirectory);
       } catch (e) {
-        this.logger.error(
-          (e as Error).message,
-          (e as Error).stack,
-          'ensureDirectory',
-        );
-        throw new MediaBackendError(
-          `Could not create '${this.uploadDirectory}'`,
-        );
+        this.logger.error((e as Error).message, (e as Error).stack, 'ensureDirectory');
+        throw new MediaBackendError(`Could not create '${this.uploadDirectory}'`);
       }
     }
   }

@@ -6,6 +6,4 @@
 import { NoteMetadataUpdateSchema } from '@hedgedoc/commons';
 import { createZodDto } from 'nestjs-zod';
 
-export class NoteMetadataUpdateDto extends createZodDto(
-  NoteMetadataUpdateSchema,
-) {}
+export class NoteMetadataUpdateDto extends createZodDto(NoteMetadataUpdateSchema) {}

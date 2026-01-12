@@ -8,9 +8,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { URL } from 'url';
 
 import authConfiguration, { AuthConfig } from '../config/auth.config';
-import customizationConfiguration, {
-  CustomizationConfig,
-} from '../config/customization.config';
+import customizationConfiguration, { CustomizationConfig } from '../config/customization.config';
 import externalServicesConfiguration, {
   ExternalServicesConfig,
 } from '../config/external-services.config';

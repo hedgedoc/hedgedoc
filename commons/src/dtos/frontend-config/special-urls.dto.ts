@@ -7,21 +7,9 @@ import { z } from 'zod'
 
 export const SpecialUrlSchema = z
   .object({
-    privacy: z
-      .string()
-      .url()
-      .nullable()
-      .describe('A link to the privacy notice'),
-    termsOfUse: z
-      .string()
-      .url()
-      .nullable()
-      .describe('A link to the privacy notice'),
-    imprint: z
-      .string()
-      .url()
-      .nullable()
-      .describe('A link to the imprint notice'),
+    privacy: z.string().url().nullable().describe('A link to the privacy notice'),
+    termsOfUse: z.string().url().nullable().describe('A link to the privacy notice'),
+    imprint: z.string().url().nullable().describe('A link to the imprint notice'),
   })
   .describe('The special urls an HedgeDoc instance can link to.')
 

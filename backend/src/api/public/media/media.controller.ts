@@ -17,13 +17,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import {
-  ApiBody,
-  ApiConsumes,
-  ApiHeader,
-  ApiSecurity,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiHeader, ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 import { MediaUploadDto } from '../../../dtos/media-upload.dto';
 import { PermissionError } from '../../../errors/errors';
@@ -114,18 +108,10 @@ export class MediaController {
 
   @Delete(':uuid')
   @OpenApi(204, 403, 404, 500)
-  async deleteMedia(
-    @RequestUserId() userId: number,
-    @Param('uuid') uuid: string,
-  ): Promise<void> {
+  async deleteMedia(@RequestUserId() userId: number, @Param('uuid') uuid: string): Promise<void> {
     const mediaUpload = await this.mediaService.findUploadByUuid(uuid);
-    if (
-      await this.permissionsService.checkMediaDeletePermission(userId, uuid)
-    ) {
-      this.logger.debug(
-        `Deleting '${uuid}' for user '${userId}'`,
-        'deleteMedia',
-      );
+    if (await this.permissionsService.checkMediaDeletePermission(userId, uuid)) {
+      this.logger.debug(`Deleting '${uuid}' for user '${userId}'`, 'deleteMedia');
       await this.mediaService.deleteFile(uuid);
     } else {
       this.logger.warn(
@@ -134,9 +120,7 @@ export class MediaController {
       );
       const mediaUploadNote = mediaUpload[FieldNameMediaUpload.noteId];
       throw new PermissionError(
-        `Neither file '${uuid}' nor note '${
-          mediaUploadNote ?? 'unknown'
-        }'is owned by '${userId}'`,
+        `Neither file '${uuid}' nor note '${mediaUploadNote ?? 'unknown'}'is owned by '${userId}'`,
       );
     }
   }

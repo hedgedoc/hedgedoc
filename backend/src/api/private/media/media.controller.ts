@@ -90,12 +90,7 @@ export class MediaController {
       `Received filename '${file.originalname}' for note '${noteId}' from user '${userId}'`,
       'uploadMedia',
     );
-    return await this.mediaService.saveFile(
-      file.originalname,
-      file.buffer,
-      userId,
-      noteId,
-    );
+    return await this.mediaService.saveFile(file.originalname, file.buffer, userId, noteId);
   }
 
   @Get(':uuid')
@@ -106,12 +101,11 @@ export class MediaController {
 
   @Delete(':uuid')
   @OpenApi(204, 403, 404, 500)
-  async deleteMedia(
-    @RequestUserId() userId: number,
-    @Param('uuid') uuid: string,
-  ): Promise<void> {
-    const hasUserMediaDeletePermission =
-      await this.permissionsService.checkMediaDeletePermission(userId, uuid);
+  async deleteMedia(@RequestUserId() userId: number, @Param('uuid') uuid: string): Promise<void> {
+    const hasUserMediaDeletePermission = await this.permissionsService.checkMediaDeletePermission(
+      userId,
+      uuid,
+    );
     if (!hasUserMediaDeletePermission) {
       this.logger.warn(
         `${userId} tried to delete '${uuid}', but is not the owner of upload or connected note`,

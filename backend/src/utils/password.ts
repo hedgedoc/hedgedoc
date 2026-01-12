@@ -29,10 +29,7 @@ export async function hashPassword(cleartext: string): Promise<string> {
  * @param passwordHash The password hash
  * @returns Whether the password matches the hash
  */
-export async function checkPassword(
-  cleartext: string,
-  passwordHash: string,
-): Promise<boolean> {
+export async function checkPassword(cleartext: string, passwordHash: string): Promise<boolean> {
   return await verify(passwordHash, cleartext);
 }
 
@@ -47,11 +44,7 @@ export async function checkPassword(
  * @returns The base64Url encoded string
  */
 export function bufferToBase64Url(text: Buffer): string {
-  return text
-    .toString('base64')
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=+$/, '');
+  return text.toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
 /**
@@ -75,10 +68,7 @@ export function hashApiToken(token: string): string {
  * @param databaseSecretHash The secret hash we have saved in the database.
  * @returns Whether or not the tokens are equal
  */
-export function checkTokenEquality(
-  userSecret: string,
-  databaseSecretHash: string,
-): boolean {
+export function checkTokenEquality(userSecret: string, databaseSecretHash: string): boolean {
   const userSecretHashBuffer = Buffer.from(hashApiToken(userSecret));
   const databaseHashBuffer = Buffer.from(databaseSecretHash);
   return (

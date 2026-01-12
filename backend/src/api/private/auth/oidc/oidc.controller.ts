@@ -53,11 +53,7 @@ export class OidcController {
       authProviderType: AuthProviderType.OIDC,
       authProviderIdentifier: oidcIdentifier,
     };
-    const authorizationUrl = this.oidcService.getAuthorizationUrl(
-      oidcIdentifier,
-      code,
-      state,
-    );
+    const authorizationUrl = this.oidcService.getAuthorizationUrl(oidcIdentifier, code, state);
     return { url: authorizationUrl };
   }
 
@@ -69,10 +65,7 @@ export class OidcController {
     @Req() request: RequestWithSession,
   ): Promise<{ url: string }> {
     try {
-      const userInfo = await this.oidcService.extractUserInfoFromCallback(
-        oidcIdentifier,
-        request,
-      );
+      const userInfo = await this.oidcService.extractUserInfoFromCallback(oidcIdentifier, request);
       const oidcUserIdentifier = request.session.pendingUser?.providerUserId;
       if (!oidcUserIdentifier) {
         this.logger.log('No OIDC user identifier in callback', 'callback');
@@ -107,10 +100,7 @@ export class OidcController {
       if (error instanceof HttpException) {
         throw error;
       }
-      this.logger.log(
-        'Error during OIDC callback: ' + String(error),
-        'callback',
-      );
+      this.logger.log('Error during OIDC callback: ' + String(error), 'callback');
       throw new InternalServerErrorException();
     }
   }

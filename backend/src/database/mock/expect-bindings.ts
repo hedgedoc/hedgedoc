@@ -31,9 +31,7 @@ export function expectBindings(
   }
   if (usesFirst) {
     if (method !== 'select') {
-      throw new Error(
-        'Expected `select` as method if `usesFirst` is set to true',
-      );
+      throw new Error('Expected `select` as method if `usesFirst` is set to true');
     }
     bindings[0].push(IS_FIRST);
   }

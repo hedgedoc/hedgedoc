@@ -14,38 +14,35 @@ import { convertRawFrontmatterToNoteFrontmatter } from './convert-raw-frontmatte
 import { describe, expect, it } from '@jest/globals'
 
 describe('convertRawFrontmatterToNoteFrontmatter', () => {
-  it.each([false, true])(
-    'returns the correct note frontmatter with `breaks: %s`',
-    (breaks) => {
-      const slideOptions: SlideOptions = {}
-      const opengraph: OpenGraph = {}
-      expect(
-        convertRawFrontmatterToNoteFrontmatter({
-          title: 'title',
-          description: 'description',
-          robots: 'robots',
-          lang: 'de',
-          type: NoteType.DOCUMENT,
-          dir: NoteTextDirection.LTR,
-          license: 'license',
-          breaks: breaks,
-          opengraph: opengraph,
-          slideOptions: slideOptions,
-          tags: 'tags',
-        }),
-      ).toStrictEqual({
+  it.each([false, true])('returns the correct note frontmatter with `breaks: %s`', (breaks) => {
+    const slideOptions: SlideOptions = {}
+    const opengraph: OpenGraph = {}
+    expect(
+      convertRawFrontmatterToNoteFrontmatter({
         title: 'title',
         description: 'description',
         robots: 'robots',
-        newlinesAreBreaks: breaks,
         lang: 'de',
         type: NoteType.DOCUMENT,
         dir: NoteTextDirection.LTR,
+        license: 'license',
+        breaks: breaks,
         opengraph: opengraph,
         slideOptions: slideOptions,
-        license: 'license',
-        tags: ['tags'],
-      } as NoteFrontmatter)
-    },
-  )
+        tags: 'tags',
+      }),
+    ).toStrictEqual({
+      title: 'title',
+      description: 'description',
+      robots: 'robots',
+      newlinesAreBreaks: breaks,
+      lang: 'de',
+      type: NoteType.DOCUMENT,
+      dir: NoteTextDirection.LTR,
+      opengraph: opengraph,
+      slideOptions: slideOptions,
+      license: 'license',
+      tags: ['tags'],
+    } as NoteFrontmatter)
+  })
 })

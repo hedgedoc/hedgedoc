@@ -1,10 +1,3 @@
-/*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
- *
- * SPDX-License-Identifier: AGPL-3.0-only
- */
-import request from 'supertest';
-
 import { PRIVATE_API_PREFIX } from '../../src/app.module';
 import {
   displayName1,
@@ -14,6 +7,12 @@ import {
   username1,
   username2,
 } from '../test-setup';
+/*
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+import request from 'supertest';
 
 describe('Users', () => {
   let testSetup: TestSetup;
@@ -80,9 +79,7 @@ describe('Users', () => {
     });
 
     it('details for non-existing users cannot be retrieved', async () => {
-      await agent
-        .get(`${PRIVATE_API_PREFIX}/users/profile/i_dont_exist`)
-        .expect(404);
+      await agent.get(`${PRIVATE_API_PREFIX}/users/profile/i_dont_exist`).expect(404);
     });
   });
 });

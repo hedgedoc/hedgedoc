@@ -23,7 +23,7 @@ import { NodeToReactElementTransformer } from '../NodeToReactElementTransformer.
 export function processTagNode(
   node: Node,
   index: number | string,
-  transform?: NodeToReactElementTransformer
+  transform?: NodeToReactElementTransformer,
 ): ReactElement | null {
   if (!isTag(node)) {
     return null

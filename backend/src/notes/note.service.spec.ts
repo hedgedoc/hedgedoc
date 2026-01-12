@@ -22,17 +22,10 @@ import { DateTime } from 'luxon';
 import { AliasService } from '../alias/alias.service';
 import appConfigMock from '../config/mock/app.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
-import {
-  createDefaultMockNoteConfig,
-  registerNoteConfig,
-} from '../config/mock/note.config.mock';
+import { createDefaultMockNoteConfig, registerNoteConfig } from '../config/mock/note.config.mock';
 import { NoteConfig } from '../config/note.config';
 import { expectBindings } from '../database/mock/expect-bindings';
-import {
-  mockDelete,
-  mockInsert,
-  mockSelect,
-} from '../database/mock/mock-queries';
+import { mockDelete, mockInsert, mockSelect } from '../database/mock/mock-queries';
 import { mockKnexDb } from '../database/mock/provider';
 import { NoteMetadataDto } from '../dtos/note-metadata.dto';
 import {
@@ -107,20 +100,14 @@ describe('NoteService', () => {
         LoggerModule,
         await ConfigModule.forRoot({
           isGlobal: true,
-          load: [
-            appConfigMock,
-            databaseConfigMock,
-            registerNoteConfig(noteMockConfig),
-          ],
+          load: [appConfigMock, databaseConfigMock, registerNoteConfig(noteMockConfig)],
         }),
       ],
     }).compile();
 
     service = module.get<NoteService>(NoteService);
     aliasService = module.get<AliasService>(AliasService);
-    eventEmitter = module.get<EventEmitter2<NoteEventMap>>(
-      EventEmitter2<NoteEventMap>,
-    );
+    eventEmitter = module.get<EventEmitter2<NoteEventMap>>(EventEmitter2<NoteEventMap>);
     revisionService = module.get<RevisionsService>(RevisionsService);
     realtimeNoteStore = module.get<RealtimeNoteStore>(RealtimeNoteStore);
     groupsService = module.get<GroupsService>(GroupsService);
@@ -139,13 +126,7 @@ describe('NoteService', () => {
           [FieldNameNote.id]: mockNoteId,
         },
       ];
-      mockSelect(
-        tracker,
-        [FieldNameNote.id],
-        TableNote,
-        FieldNameNote.ownerId,
-        rows,
-      );
+      mockSelect(tracker, [FieldNameNote.id], TableNote, FieldNameNote.ownerId, rows);
       const result = await service.getUserNoteIds(mockOwnerUserId);
       expect(result).toHaveLength(1);
       expect(result[0]).toEqual(mockNoteId);
@@ -164,9 +145,9 @@ describe('NoteService', () => {
     });
     it('throws a MaximumDocumentLengthExceededError', async () => {
       const tooLongContent = 'a'.repeat(noteMockConfig.maxLength + 1);
-      await expect(
-        service.createNote(tooLongContent, mockOwnerUserId),
-      ).rejects.toThrow(MaximumDocumentLengthExceededError);
+      await expect(service.createNote(tooLongContent, mockOwnerUserId)).rejects.toThrow(
+        MaximumDocumentLengthExceededError,
+      );
     });
 
     it('throws GenericDBError if insert fails', async () => {
@@ -185,12 +166,7 @@ describe('NoteService', () => {
         service.createNote(mockNoteContent, mockOwnerUserId, mockAliasCustom),
       ).rejects.toThrow(GenericDBError);
       expectBindings(tracker, 'insert', [
-        [
-          dateTimeToDB(now),
-          mockOwnerUserId,
-          noteMockConfig.permissions.default.publiclyVisible,
-          2,
-        ],
+        [dateTimeToDB(now), mockOwnerUserId, noteMockConfig.permissions.default.publiclyVisible, 2],
       ]);
     });
 
@@ -224,127 +200,105 @@ describe('NoteService', () => {
         mockAliasCustom,
         'everyone read, loggedIn denied, with alias',
       ],
-    ])(
-      'inserts a new note',
-      (everyoneLevel, loggedInLevel, inputAlias, outputAlias, descr) => {
-        let result: number;
-        let mockEnsureAliasIsAvailable: jest.SpyInstance;
-        let mockGenerateRandomAlias: jest.SpyInstance;
-        let mockAddAlias: jest.SpyInstance;
-        let mockCreateRevision: jest.SpyInstance;
-        let mockGetGroupIdByName: jest.SpyInstance;
-        let mockSetGroupPermission: jest.SpyInstance;
-        beforeEach(() => {
-          mockEnsureAliasIsAvailable = jest
-            .spyOn(aliasService, 'ensureAliasIsAvailable')
-            .mockImplementation(async () => {});
-          mockGenerateRandomAlias = jest
-            .spyOn(aliasService, 'generateRandomAlias')
-            .mockImplementation(() => mockAliasRandom);
-          mockAddAlias = jest
-            .spyOn(aliasService, 'addAlias')
-            .mockImplementation(async () => {});
-          mockCreateRevision = jest
-            .spyOn(revisionService, 'createRevision')
-            .mockImplementation(async () => {});
-          mockGetGroupIdByName = jest.spyOn(groupsService, 'getGroupIdByName');
-          mockSetGroupPermission = jest
-            .spyOn(permissionService, 'setGroupPermission')
-            .mockImplementation(async () => {});
-          mockInsert(
-            tracker,
-            TableNote,
-            [
-              FieldNameNote.createdAt,
-              FieldNameNote.ownerId,
-              FieldNameNote.publiclyVisible,
-              FieldNameNote.version,
-            ],
-            [{ [FieldNameNote.id]: mockNoteId }],
-          );
-        });
-        afterEach(() => {
-          expect(mockCreateRevision).toHaveBeenCalledWith(
-            mockNoteId,
-            mockNoteContent,
-            true,
-            expect.anything(),
-          );
-          expect(result).toBe(mockNoteId);
-          expectBindings(tracker, 'insert', [
-            [
-              dateTimeToDB(now),
-              mockOwnerUserId,
-              noteMockConfig.permissions.default.publiclyVisible,
-              2,
-            ],
-          ]);
-        });
-
-        it(`with settings: ${descr}`, async () => {
-          noteMockConfig.permissions.default.everyone = everyoneLevel as
-            | PermissionLevel.DENY
-            | PermissionLevel.READ
-            | PermissionLevel.WRITE;
-          noteMockConfig.permissions.default.loggedIn = loggedInLevel as
-            | PermissionLevel.DENY
-            | PermissionLevel.READ
-            | PermissionLevel.WRITE;
-          let numberOfGroupIdByNameCalls = 0;
-          if (everyoneLevel !== PermissionLevel.DENY) {
-            mockGetGroupIdByName.mockImplementationOnce(
-              async () => everyoneGroupId,
-            );
-            numberOfGroupIdByNameCalls++;
-          }
-          if (loggedInLevel !== PermissionLevel.DENY) {
-            mockGetGroupIdByName.mockImplementationOnce(
-              async () => loggedInGroupId,
-            );
-            numberOfGroupIdByNameCalls++;
-          }
-          result = await service.createNote(
-            mockNoteContent,
+    ])('inserts a new note', (everyoneLevel, loggedInLevel, inputAlias, outputAlias, descr) => {
+      let result: number;
+      let mockEnsureAliasIsAvailable: jest.SpyInstance;
+      let mockGenerateRandomAlias: jest.SpyInstance;
+      let mockAddAlias: jest.SpyInstance;
+      let mockCreateRevision: jest.SpyInstance;
+      let mockGetGroupIdByName: jest.SpyInstance;
+      let mockSetGroupPermission: jest.SpyInstance;
+      beforeEach(() => {
+        mockEnsureAliasIsAvailable = jest
+          .spyOn(aliasService, 'ensureAliasIsAvailable')
+          .mockImplementation(async () => {});
+        mockGenerateRandomAlias = jest
+          .spyOn(aliasService, 'generateRandomAlias')
+          .mockImplementation(() => mockAliasRandom);
+        mockAddAlias = jest.spyOn(aliasService, 'addAlias').mockImplementation(async () => {});
+        mockCreateRevision = jest
+          .spyOn(revisionService, 'createRevision')
+          .mockImplementation(async () => {});
+        mockGetGroupIdByName = jest.spyOn(groupsService, 'getGroupIdByName');
+        mockSetGroupPermission = jest
+          .spyOn(permissionService, 'setGroupPermission')
+          .mockImplementation(async () => {});
+        mockInsert(
+          tracker,
+          TableNote,
+          [
+            FieldNameNote.createdAt,
+            FieldNameNote.ownerId,
+            FieldNameNote.publiclyVisible,
+            FieldNameNote.version,
+          ],
+          [{ [FieldNameNote.id]: mockNoteId }],
+        );
+      });
+      afterEach(() => {
+        expect(mockCreateRevision).toHaveBeenCalledWith(
+          mockNoteId,
+          mockNoteContent,
+          true,
+          expect.anything(),
+        );
+        expect(result).toBe(mockNoteId);
+        expectBindings(tracker, 'insert', [
+          [
+            dateTimeToDB(now),
             mockOwnerUserId,
-            inputAlias,
-          );
-          if (inputAlias === undefined) {
-            expect(mockEnsureAliasIsAvailable).not.toHaveBeenCalled();
-            expect(mockGenerateRandomAlias).toHaveBeenCalled();
-          } else {
-            expect(mockEnsureAliasIsAvailable).toHaveBeenCalledWith(
-              outputAlias,
-              expect.anything(),
-            );
-            expect(mockGenerateRandomAlias).not.toHaveBeenCalled();
-          }
-          expect(mockAddAlias).toHaveBeenCalledWith(
+            noteMockConfig.permissions.default.publiclyVisible,
+            2,
+          ],
+        ]);
+      });
+
+      it(`with settings: ${descr}`, async () => {
+        noteMockConfig.permissions.default.everyone = everyoneLevel as
+          | PermissionLevel.DENY
+          | PermissionLevel.READ
+          | PermissionLevel.WRITE;
+        noteMockConfig.permissions.default.loggedIn = loggedInLevel as
+          | PermissionLevel.DENY
+          | PermissionLevel.READ
+          | PermissionLevel.WRITE;
+        let numberOfGroupIdByNameCalls = 0;
+        if (everyoneLevel !== PermissionLevel.DENY) {
+          mockGetGroupIdByName.mockImplementationOnce(async () => everyoneGroupId);
+          numberOfGroupIdByNameCalls++;
+        }
+        if (loggedInLevel !== PermissionLevel.DENY) {
+          mockGetGroupIdByName.mockImplementationOnce(async () => loggedInGroupId);
+          numberOfGroupIdByNameCalls++;
+        }
+        result = await service.createNote(mockNoteContent, mockOwnerUserId, inputAlias);
+        if (inputAlias === undefined) {
+          expect(mockEnsureAliasIsAvailable).not.toHaveBeenCalled();
+          expect(mockGenerateRandomAlias).toHaveBeenCalled();
+        } else {
+          expect(mockEnsureAliasIsAvailable).toHaveBeenCalledWith(outputAlias, expect.anything());
+          expect(mockGenerateRandomAlias).not.toHaveBeenCalled();
+        }
+        expect(mockAddAlias).toHaveBeenCalledWith(mockNoteId, outputAlias, expect.anything());
+        expect(mockGetGroupIdByName).toHaveBeenCalledTimes(numberOfGroupIdByNameCalls);
+        if (everyoneLevel !== PermissionLevel.DENY) {
+          expect(mockSetGroupPermission).toHaveBeenCalledWith(
             mockNoteId,
-            outputAlias,
+            everyoneGroupId,
+            everyoneLevel === PermissionLevel.WRITE,
             expect.anything(),
           );
-          expect(mockGetGroupIdByName).toHaveBeenCalledTimes(
-            numberOfGroupIdByNameCalls,
+        }
+        if (loggedInLevel !== PermissionLevel.DENY) {
+          expect(mockSetGroupPermission).toHaveBeenCalledWith(
+            mockNoteId,
+            loggedInGroupId,
+            loggedInLevel === PermissionLevel.WRITE,
+            expect.anything(),
           );
-          if (everyoneLevel !== PermissionLevel.DENY) {
-            expect(mockSetGroupPermission).toHaveBeenCalledWith(
-              mockNoteId,
-              everyoneGroupId,
-              everyoneLevel === PermissionLevel.WRITE,
-              expect.anything(),
-            );
-          }
-          if (loggedInLevel !== PermissionLevel.DENY) {
-            expect(mockSetGroupPermission).toHaveBeenCalledWith(
-              mockNoteId,
-              loggedInGroupId,
-              loggedInLevel === PermissionLevel.WRITE,
-              expect.anything(),
-            );
-          }
-        });
-      },
-    );
+        }
+      });
+    });
   });
   /* oxlint-enable jest/no-conditional-expect */
 
@@ -402,17 +356,13 @@ describe('NoteService', () => {
 
     it('throws a ForbiddenIdError if the alias is forbidden', async () => {
       aliasServiceSpy.mockReturnValue(true);
-      await expect(service.getNoteIdByAlias(mockAliasRandom)).rejects.toThrow(
-        ForbiddenIdError,
-      );
+      await expect(service.getNoteIdByAlias(mockAliasRandom)).rejects.toThrow(ForbiddenIdError);
     });
 
     it('throws a NotInDBError if the note is not found', async () => {
       aliasServiceSpy.mockReturnValue(false);
       buildMockSelect([]);
-      await expect(service.getNoteIdByAlias(mockAliasRandom)).rejects.toThrow(
-        NotInDBError,
-      );
+      await expect(service.getNoteIdByAlias(mockAliasRandom)).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'select', [[mockAliasRandom]], true);
     });
 
@@ -435,16 +385,11 @@ describe('NoteService', () => {
       eventEmitterSpy = jest.spyOn(eventEmitter, 'emit').mockReturnValue(true);
     });
     afterEach(() => {
-      expect(eventEmitterSpy).toHaveBeenCalledWith(
-        NoteEvent.DELETION,
-        mockNoteId,
-      );
+      expect(eventEmitterSpy).toHaveBeenCalledWith(NoteEvent.DELETION, mockNoteId);
     });
     it('throws NotInDBError if note not found', async () => {
       mockDelete(tracker, TableNote, [FieldNameNote.id], 0);
-      await expect(service.deleteNote(mockNoteId)).rejects.toThrow(
-        NotInDBError,
-      );
+      await expect(service.deleteNote(mockNoteId)).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'delete', [[mockNoteId]]);
     });
 
@@ -465,17 +410,11 @@ describe('NoteService', () => {
         .mockImplementation(async () => {});
     });
     afterEach(() => {
-      expect(eventEmitterSpy).toHaveBeenCalledWith(
-        NoteEvent.CLOSE_REALTIME,
-        mockNoteId,
-      );
+      expect(eventEmitterSpy).toHaveBeenCalledWith(NoteEvent.CLOSE_REALTIME, mockNoteId);
     });
     it('creates a new revision', async () => {
       await service.updateNote(mockNoteId, mockNoteContent);
-      expect(revisionServiceSpy).toHaveBeenCalledWith(
-        mockNoteId,
-        mockNoteContent,
-      );
+      expect(revisionServiceSpy).toHaveBeenCalledWith(mockNoteId, mockNoteContent);
     });
   });
 
@@ -493,9 +432,7 @@ describe('NoteService', () => {
 
     it('throws NotInDBError if the note does not have a primary alias', async () => {
       spyAliasService.mockReturnValue([]);
-      await expect(service.toNoteMetadataDto(mockNoteId)).rejects.toThrow(
-        NotInDBError,
-      );
+      await expect(service.toNoteMetadataDto(mockNoteId)).rejects.toThrow(NotInDBError);
     });
     it('throws NotInDBError if the note does not exist', async () => {
       spyAliasService.mockReturnValue([
@@ -515,9 +452,7 @@ describe('NoteService', () => {
         FieldNameNote.id,
         [],
       );
-      await expect(service.toNoteMetadataDto(mockNoteId)).rejects.toThrow(
-        NotInDBError,
-      );
+      await expect(service.toNoteMetadataDto(mockNoteId)).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'select', [[mockNoteId]], true);
     });
     it('returns correct NoteMetadataDto', async () => {
@@ -543,12 +478,8 @@ describe('NoteService', () => {
         [FieldNameRevision.description]: mockNoteDescription,
         [FieldNameRevision.yjsStateVector]: null,
       });
-      jest
-        .spyOn(revisionService, 'getTagsByRevisionUuid')
-        .mockResolvedValue(mockTags);
-      jest
-        .spyOn(permissionService, 'getPermissionsDtoForNote')
-        .mockResolvedValue(mockPermissions);
+      jest.spyOn(revisionService, 'getTagsByRevisionUuid').mockResolvedValue(mockTags);
+      jest.spyOn(permissionService, 'getPermissionsDtoForNote').mockResolvedValue(mockPermissions);
       jest.spyOn(revisionService, 'getRevisionUserInfo').mockResolvedValue({
         users: [
           {
@@ -604,9 +535,7 @@ describe('NoteService', () => {
         lastUpdatedBy: mockUsername,
       });
       jest.spyOn(service, 'getNoteContent').mockResolvedValue(mockNoteContent);
-      jest
-        .spyOn(service, 'toNoteMetadataDto')
-        .mockResolvedValue(mockNoteMetadata);
+      jest.spyOn(service, 'toNoteMetadataDto').mockResolvedValue(mockNoteMetadata);
       const result = await service.toNoteDto(mockNoteId);
       expect(result).toEqual({
         content: mockNoteContent,

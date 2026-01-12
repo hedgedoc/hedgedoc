@@ -1,13 +1,3 @@
-/*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
- *
- * SPDX-License-Identifier: AGPL-3.0-only
- */
-import { AuthProviderType, FieldNameUser } from '@hedgedoc/database';
-import { promises as fs } from 'fs';
-import { join } from 'path';
-import request from 'supertest';
-
 import { PUBLIC_API_PREFIX } from '../../src/app.module';
 import { NoteMetadataDto } from '../../src/dtos/note-metadata.dto';
 import {
@@ -18,6 +8,15 @@ import {
   TestSetupBuilder,
   username1,
 } from '../test-setup';
+/*
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+import { AuthProviderType, FieldNameUser } from '@hedgedoc/database';
+import { promises as fs } from 'fs';
+import { join } from 'path';
+import request from 'supertest';
 
 describe('Me', () => {
   let testSetup: TestSetup;
@@ -29,8 +28,7 @@ describe('Me', () => {
   beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
     agent = request.agent(testSetup.app.getHttpServer());
-    uploadPath =
-      testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
+    uploadPath = testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
     await testSetup.app.init();
     userId = testSetup.userIds[0];
   });
@@ -56,10 +54,7 @@ describe('Me', () => {
       });
     });
     it('errors if no token is provided', async () => {
-      await agent
-        .get(`${PUBLIC_API_PREFIX}/me`)
-        .expect('Content-Type', /json/)
-        .expect(403);
+      await agent.get(`${PUBLIC_API_PREFIX}/me`).expect('Content-Type', /json/).expect(403);
     });
   });
   describe(`GET ${PUBLIC_API_PREFIX}/me/notes`, () => {
@@ -73,19 +68,12 @@ describe('Me', () => {
       const noteMetaDtos = response.body as NoteMetadataDto[];
       expect(noteMetaDtos).toHaveLength(2);
       expect(noteMetaDtos[0].primaryAlias).toEqual(noteAlias1);
-      expect(noteMetaDtos[0].lastUpdatedBy).toEqual(
-        user[FieldNameUser.username],
-      );
+      expect(noteMetaDtos[0].lastUpdatedBy).toEqual(user[FieldNameUser.username]);
       expect(noteMetaDtos[1].primaryAlias).toEqual(noteAlias4);
-      expect(noteMetaDtos[1].lastUpdatedBy).toEqual(
-        user[FieldNameUser.username],
-      );
+      expect(noteMetaDtos[1].lastUpdatedBy).toEqual(user[FieldNameUser.username]);
     });
     it('errors if no token is provided', async () => {
-      await agent
-        .get(`${PUBLIC_API_PREFIX}/me/notes`)
-        .expect('Content-Type', /json/)
-        .expect(403);
+      await agent.get(`${PUBLIC_API_PREFIX}/me/notes`).expect('Content-Type', /json/).expect(403);
     });
   });
   describe(`GET ${PUBLIC_API_PREFIX}/me/media`, () => {
@@ -104,20 +92,10 @@ describe('Me', () => {
 
       const testImage = await fs.readFile('test/public-api/fixtures/test.png');
       imageIds.push(
-        await testSetup.mediaService.saveFile(
-          'test.png',
-          testImage,
-          userId,
-          newNoteId1,
-        ),
+        await testSetup.mediaService.saveFile('test.png', testImage, userId, newNoteId1),
       );
       imageIds.push(
-        await testSetup.mediaService.saveFile(
-          'test.png',
-          testImage,
-          userId,
-          newNoteId1,
-        ),
+        await testSetup.mediaService.saveFile('test.png', testImage, userId, newNoteId1),
       );
 
       const response = await agent
@@ -136,10 +114,7 @@ describe('Me', () => {
       await fs.rm(uploadPath, { recursive: true });
     });
     it('errors if no token is provided', async () => {
-      await agent
-        .get(`${PUBLIC_API_PREFIX}/me/media/`)
-        .expect('Content-Type', /json/)
-        .expect(403);
+      await agent.get(`${PUBLIC_API_PREFIX}/me/media/`).expect('Content-Type', /json/).expect(403);
     });
   });
 });

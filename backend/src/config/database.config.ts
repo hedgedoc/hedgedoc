@@ -10,10 +10,7 @@ import z from 'zod';
 
 import { DatabaseType } from './database-type.enum';
 import { parseOptionalNumber, printConfigErrorAndExit } from './utils';
-import {
-  buildErrorMessage,
-  extractDescriptionFromZodIssue,
-} from './zod-error-message';
+import { buildErrorMessage, extractDescriptionFromZodIssue } from './zod-error-message';
 
 const sqliteDbSchema = z.object({
   type: z.literal(DatabaseType.SQLITE).describe('HD_DATABASE_TYPE'),
@@ -26,12 +23,7 @@ const postgresDbSchema = z.object({
   username: z.string().describe('HD_DATABASE_USERNAME'),
   password: z.string().describe('HD_DATABASE_PASSWORD'),
   host: z.string().describe('HD_DATABASE_HOST'),
-  port: z
-    .number()
-    .positive()
-    .max(65535)
-    .default(5432)
-    .describe('HD_DATABASE_PORT'),
+  port: z.number().positive().max(65535).default(5432).describe('HD_DATABASE_PORT'),
 });
 
 const mariaDbSchema = z.object({
@@ -40,19 +32,10 @@ const mariaDbSchema = z.object({
   username: z.string().describe('HD_DATABASE_USERNAME'),
   password: z.string().describe('HD_DATABASE_PASSWORD'),
   host: z.string().describe('HD_DATABASE_HOST'),
-  port: z
-    .number()
-    .positive()
-    .max(65535)
-    .default(3306)
-    .describe('HD_DATABASE_PORT'),
+  port: z.number().positive().max(65535).default(3306).describe('HD_DATABASE_PORT'),
 });
 
-const dbSchema = z.discriminatedUnion('type', [
-  sqliteDbSchema,
-  mariaDbSchema,
-  postgresDbSchema,
-]);
+const dbSchema = z.discriminatedUnion('type', [sqliteDbSchema, mariaDbSchema, postgresDbSchema]);
 
 export type SqliteDatabaseConfig = z.infer<typeof sqliteDbSchema>;
 export type PostgresDatabaseConfig = z.infer<typeof postgresDbSchema>;
@@ -91,14 +74,8 @@ export function getKnexConfig(databaseConfig: DatabaseConfig): Knex.Config {
     case DatabaseType.POSTGRES:
       // If we don't set the type parsers for TIMESTAMP and TIMESTAMPTZ, pg would return JSDate objects here
       // This is not what we want, so we set them to the string representation of the timestamp
-      pgTypes.setTypeParser(
-        pgTypes.builtins.TIMESTAMP,
-        (value: string) => value,
-      );
-      pgTypes.setTypeParser(
-        pgTypes.builtins.TIMESTAMPTZ,
-        (value: string) => value,
-      );
+      pgTypes.setTypeParser(pgTypes.builtins.TIMESTAMP, (value: string) => value);
+      pgTypes.setTypeParser(pgTypes.builtins.TIMESTAMPTZ, (value: string) => value);
       return {
         client: 'pg',
         connection: {

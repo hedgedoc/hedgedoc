@@ -5,25 +5,25 @@
  */
 
 .scrollbox {
-    display: flex;
-    flex-flow: row;
-    overflow-x: scroll;
-    gap: 0.5rem;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
+  display: flex;
+  flex-flow: row;
+  overflow-x: scroll;
+  gap: 0.5rem;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
 }
 
 .pinnedNotesHeading {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .container {
-    background-color: #f0f2f4;
-    padding: 1rem 0 0.25rem 0;
-    margin-block-end: 0.25rem;
+  background-color: #f0f2f4;
+  padding: 1rem 0 0.25rem 0;
+  margin-block-end: 0.25rem;
 }
 
-body[data-bs-theme="dark"] .container {
-    background-color: #17191c;
+body[data-bs-theme='dark'] .container {
+  background-color: #17191c;
 }

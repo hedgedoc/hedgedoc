@@ -3,12 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  NoteType,
-  OptionalSortMode,
-  PermissionLevel,
-  SortMode,
-} from '@hedgedoc/commons';
+import { NoteType, OptionalSortMode, PermissionLevel, SortMode } from '@hedgedoc/commons';
 import {
   FieldNameAlias,
   FieldNameNote,
@@ -93,10 +88,7 @@ export class ExploreService {
     return await this.knex.transaction(async (transaction) => {
       const queryBase = transaction(TableNote);
       let query = this.applyCommonQuery(queryBase, transaction);
-      if (
-        sortBy === SortMode.LAST_VISITED_ASC ||
-        sortBy === SortMode.LAST_VISITED_DESC
-      ) {
+      if (sortBy === SortMode.LAST_VISITED_ASC || sortBy === SortMode.LAST_VISITED_DESC) {
         query = this.joinWithTableVisitedNote(query);
       }
       query = query.andWhere(`${TableNote}.${FieldNameNote.ownerId}`, userId);
@@ -133,10 +125,7 @@ export class ExploreService {
         `${TableNote}.${FieldNameNote.id}`,
       );
       let query = this.applyCommonQuery(queryBase, transaction);
-      if (
-        sortBy === SortMode.LAST_VISITED_ASC ||
-        sortBy === SortMode.LAST_VISITED_DESC
-      ) {
+      if (sortBy === SortMode.LAST_VISITED_ASC || sortBy === SortMode.LAST_VISITED_DESC) {
         query = this.joinWithTableVisitedNote(query);
       }
       query = query.andWhere(
@@ -167,9 +156,7 @@ export class ExploreService {
     sortBy?: OptionalSortMode,
     search?: string,
   ): Promise<NoteExploreEntryDto[]> {
-    const everyoneGroupId = await this.groupsService.getGroupIdByName(
-      SpecialGroup.EVERYONE,
-    );
+    const everyoneGroupId = await this.groupsService.getGroupIdByName(SpecialGroup.EVERYONE);
     return await this.knex.transaction(async (transaction) => {
       const queryBase = transaction(TableNote).join(
         TableNoteGroupPermission,
@@ -183,10 +170,7 @@ export class ExploreService {
           everyoneGroupId,
         )
         .andWhere(`${TableNote}.${FieldNameNote.publiclyVisible}`, true);
-      if (
-        sortBy === SortMode.LAST_VISITED_ASC ||
-        sortBy === SortMode.LAST_VISITED_DESC
-      ) {
+      if (sortBy === SortMode.LAST_VISITED_ASC || sortBy === SortMode.LAST_VISITED_DESC) {
         query = this.joinWithTableVisitedNote(query);
       }
       query = this.applyFiltersToQuery(query, noteType, search);
@@ -203,9 +187,7 @@ export class ExploreService {
    * @param userId The user that has the notes pinned.
    * @return A list of {@link NoteExploreEntryDto}
    */
-  async getMyPinnedNoteExploreEntries(
-    userId: number,
-  ): Promise<NoteExploreEntryDto[]> {
+  async getMyPinnedNoteExploreEntries(userId: number): Promise<NoteExploreEntryDto[]> {
     return await this.knex.transaction(async (transaction) => {
       const queryBase = transaction(TableUserPinnedNote).join(
         TableNote,
@@ -213,10 +195,7 @@ export class ExploreService {
         `${TableNote}.${FieldNameNote.id}`,
       );
       let query = this.applyCommonQuery(queryBase, transaction);
-      query = query.andWhere(
-        `${TableUserPinnedNote}.${FieldNameUserPinnedNote.userId}`,
-        userId,
-      );
+      query = query.andWhere(`${TableUserPinnedNote}.${FieldNameUserPinnedNote.userId}`, userId);
       query = this.applySortingToQuery(query, SortMode.UPDATED_AT_DESC);
       const results = (await query) as QueryResult[];
       return await this.transformQueryResultIntoDtos(results, transaction);
@@ -270,20 +249,16 @@ export class ExploreService {
       noteId: `${TableNote}.${FieldNameNote.id}`,
     });
     query = this.joinWithTableVisitedNote(query);
-    query = query.andWhere(
-      `${TableVisitedNote}.${FieldNameVisitedNote.userId}`,
-      userId,
-    );
+    query = query.andWhere(`${TableVisitedNote}.${FieldNameVisitedNote.userId}`, userId);
     query = this.applyFiltersToQuery(query, noteType, search);
     query = this.applySortingToQuery(query, sortBy);
     query = this.applyPaginationToQuery(query, page);
     const results = (await query) as QueryResultWithNoteId[];
-    const filteredResults =
-      await this.checkPermissionsAndCleanUpRecentlyVisitedNotes(
-        userId,
-        results,
-        transaction,
-      );
+    const filteredResults = await this.checkPermissionsAndCleanUpRecentlyVisitedNotes(
+      userId,
+      results,
+      transaction,
+    );
     if (retry < 2) {
       // To prevent multiple loops, we only try this once again if we filtered everything out
       if (filteredResults.length === 0 && results.length !== 0) {
@@ -299,10 +274,7 @@ export class ExploreService {
         );
       }
     }
-    return await this.transformQueryResultIntoDtos(
-      filteredResults,
-      transaction,
-    );
+    return await this.transformQueryResultIntoDtos(filteredResults, transaction);
   }
 
   private async checkPermissionsAndCleanUpRecentlyVisitedNotes(
@@ -312,11 +284,7 @@ export class ExploreService {
   ): Promise<QueryResultWithNoteId[]> {
     const rejectedNoteIds: number[] = [];
     const permissionLevelPromises = resultWithNoteIds.map((result) =>
-      this.permissionsService.determinePermission(
-        userId,
-        result.noteId,
-        transaction,
-      ),
+      this.permissionsService.determinePermission(userId, result.noteId, transaction),
     );
     const permissionLevels = await Promise.all(permissionLevelPromises);
     for (let i = 0; i < resultWithNoteIds.length; i++) {
@@ -330,9 +298,7 @@ export class ExploreService {
           .delete();
       }
     }
-    return resultWithNoteIds.filter(
-      (result) => !rejectedNoteIds.includes(result.noteId),
-    );
+    return resultWithNoteIds.filter((result) => !rejectedNoteIds.includes(result.noteId));
   }
 
   private async transformQueryResultIntoDtos(
@@ -341,10 +307,7 @@ export class ExploreService {
   ): Promise<NoteExploreEntryDto[]> {
     const resultsWithTagList: QueryResultWithTagList[] = [];
     const tagsPromises = results.map((result) =>
-      this.revisionsService.getTagsByRevisionUuid(
-        result.revisionUuid,
-        transaction,
-      ),
+      this.revisionsService.getTagsByRevisionUuid(result.revisionUuid, transaction),
     );
     const tags = await Promise.all(tagsPromises);
     for (let i = 0; i < results.length; i++) {
@@ -380,10 +343,7 @@ export class ExploreService {
 
   // The correct return type with all joins and selects is very specific and should just be inferred from Knex
   // oxlint-disable-next-line @typescript-eslint/explicit-function-return-type
-  private applyCommonQuery(
-    query: Knex.QueryBuilder,
-    transaction: Knex.Transaction,
-  ) {
+  private applyCommonQuery(query: Knex.QueryBuilder, transaction: Knex.Transaction) {
     const subquery = transaction(TableRevision)
       .select(`${FieldNameRevision.uuid}`, `${FieldNameRevision.noteId}`)
       .rowNumber('rn', function () {
@@ -407,11 +367,7 @@ export class ExploreService {
         `${TableAlias}.${FieldNameAlias.noteId}`,
         `${TableNote}.${FieldNameNote.id}`,
       )
-      .join(
-        TableUser,
-        `${TableUser}.${FieldNameUser.id}`,
-        `${TableNote}.${FieldNameNote.ownerId}`,
-      )
+      .join(TableUser, `${TableUser}.${FieldNameUser.id}`, `${TableNote}.${FieldNameNote.ownerId}`)
       .join(
         this.knex
           .select(`${FieldNameRevision.uuid}`, `${FieldNameRevision.noteId}`)
@@ -459,61 +415,29 @@ export class ExploreService {
     return filteredQuery;
   }
 
-  private applyPaginationToQuery<T extends Knex.QueryBuilder>(
-    query: T,
-    page: number,
-  ): T {
-    return query
-      .limit(ENTRIES_PER_PAGE_LIMIT)
-      .offset((page - 1) * ENTRIES_PER_PAGE_LIMIT) as T;
+  private applyPaginationToQuery<T extends Knex.QueryBuilder>(query: T, page: number): T {
+    return query.limit(ENTRIES_PER_PAGE_LIMIT).offset((page - 1) * ENTRIES_PER_PAGE_LIMIT) as T;
   }
 
-  private applySortingToQuery<T extends Knex.QueryBuilder>(
-    query: T,
-    sortBy?: OptionalSortMode,
-  ): T {
+  private applySortingToQuery<T extends Knex.QueryBuilder>(query: T, sortBy?: OptionalSortMode): T {
     switch (sortBy) {
       case SortMode.TITLE_ASC:
-        return query.orderBy(
-          `${TableRevision}.${FieldNameRevision.title}`,
-          'asc',
-        ) as T;
+        return query.orderBy(`${TableRevision}.${FieldNameRevision.title}`, 'asc') as T;
       case SortMode.TITLE_DESC:
-        return query.orderBy(
-          `${TableRevision}.${FieldNameRevision.title}`,
-          'desc',
-        ) as T;
+        return query.orderBy(`${TableRevision}.${FieldNameRevision.title}`, 'desc') as T;
       case SortMode.LAST_VISITED_ASC:
-        return query.orderBy(
-          `${TableVisitedNote}.${FieldNameVisitedNote.visitedAt}`,
-          'asc',
-        ) as T;
+        return query.orderBy(`${TableVisitedNote}.${FieldNameVisitedNote.visitedAt}`, 'asc') as T;
       case SortMode.LAST_VISITED_DESC:
-        return query.orderBy(
-          `${TableVisitedNote}.${FieldNameVisitedNote.visitedAt}`,
-          'desc',
-        ) as T;
+        return query.orderBy(`${TableVisitedNote}.${FieldNameVisitedNote.visitedAt}`, 'desc') as T;
       case SortMode.CREATED_AT_ASC:
-        return query.orderBy(
-          `${TableNote}.${FieldNameNote.createdAt}`,
-          'asc',
-        ) as T;
+        return query.orderBy(`${TableNote}.${FieldNameNote.createdAt}`, 'asc') as T;
       case SortMode.CREATED_AT_DESC:
-        return query.orderBy(
-          `${TableNote}.${FieldNameNote.createdAt}`,
-          'desc',
-        ) as T;
+        return query.orderBy(`${TableNote}.${FieldNameNote.createdAt}`, 'desc') as T;
       case SortMode.UPDATED_AT_ASC:
-        return query.orderBy(
-          `${TableRevision}.${FieldNameRevision.createdAt}`,
-          'asc',
-        ) as T;
+        return query.orderBy(`${TableRevision}.${FieldNameRevision.createdAt}`, 'asc') as T;
       default:
       case SortMode.UPDATED_AT_DESC:
-        return query.orderBy(
-          `${TableRevision}.${FieldNameRevision.createdAt}`,
-          'desc',
-        ) as T;
+        return query.orderBy(`${TableRevision}.${FieldNameRevision.createdAt}`, 'desc') as T;
     }
   }
 
@@ -540,20 +464,12 @@ export class ExploreService {
             [FieldNameUserPinnedNote.userId]: userId,
             [FieldNameUserPinnedNote.noteId]: noteId,
           })
-          .onConflict([
-            FieldNameUserPinnedNote.userId,
-            FieldNameUserPinnedNote.noteId,
-          ])
+          .onConflict([FieldNameUserPinnedNote.userId, FieldNameUserPinnedNote.noteId])
           .ignore();
-        const queryBase = transaction(TableNote).where(
-          `${TableNote}.${FieldNameNote.id}`,
-          noteId,
-        );
+        const queryBase = transaction(TableNote).where(`${TableNote}.${FieldNameNote.id}`, noteId);
         const query = this.applyCommonQuery(queryBase, transaction);
         const results = (await query) as QueryResult[];
-        return (
-          await this.transformQueryResultIntoDtos(results, transaction)
-        )[0];
+        return (await this.transformQueryResultIntoDtos(results, transaction))[0];
       } else {
         await transaction(TableUserPinnedNote)
           .where({

@@ -78,18 +78,10 @@ describe('customizationConfig', () => {
         },
       );
       customizationConfig();
-      expect(spyConsoleError.mock.calls[0][0]).toContain(
-        '- HD_BRANDING_CUSTOM_LOGO: Invalid url',
-      );
-      expect(spyConsoleError.mock.calls[0][0]).toContain(
-        '- HD_URLS_PRIVACY: Invalid url',
-      );
-      expect(spyConsoleError.mock.calls[0][0]).toContain(
-        '- HD_URLS_TERMS_OF_USE: Invalid url',
-      );
-      expect(spyConsoleError.mock.calls[0][0]).toContain(
-        '- HD_URLS_IMPRINT: Invalid url',
-      );
+      expect(spyConsoleError.mock.calls[0][0]).toContain('- HD_BRANDING_CUSTOM_LOGO: Invalid url');
+      expect(spyConsoleError.mock.calls[0][0]).toContain('- HD_URLS_PRIVACY: Invalid url');
+      expect(spyConsoleError.mock.calls[0][0]).toContain('- HD_URLS_TERMS_OF_USE: Invalid url');
+      expect(spyConsoleError.mock.calls[0][0]).toContain('- HD_URLS_IMPRINT: Invalid url');
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });

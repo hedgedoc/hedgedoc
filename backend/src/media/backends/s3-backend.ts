@@ -9,10 +9,7 @@ import { FileTypeResult } from 'file-type';
 import { Client } from 'minio';
 import { URL } from 'url';
 
-import mediaConfiguration, {
-  MediaConfig,
-  S3MediaConfig,
-} from '../../config/media.config';
+import mediaConfiguration, { MediaConfig, S3MediaConfig } from '../../config/media.config';
 import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
@@ -51,22 +48,12 @@ export class S3Backend implements MediaBackend {
     });
   }
 
-  async saveFile(
-    uuid: string,
-    buffer: Buffer,
-    fileType: FileTypeResult,
-  ): Promise<null> {
+  async saveFile(uuid: string, buffer: Buffer, fileType: FileTypeResult): Promise<null> {
     try {
-      await this.client.putObject(
-        this.config.bucket,
-        uuid,
-        buffer,
-        buffer.length,
-        {
-          // oxlint-disable-next-line @typescript-eslint/naming-convention
-          'Content-Type': fileType.mime,
-        },
-      );
+      await this.client.putObject(this.config.bucket, uuid, buffer, buffer.length, {
+        // oxlint-disable-next-line @typescript-eslint/naming-convention
+        'Content-Type': fileType.mime,
+      });
       this.logger.log(`Uploaded file ${uuid}`, 'saveFile');
       return null;
     } catch (e) {

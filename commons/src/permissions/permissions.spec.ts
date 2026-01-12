@@ -45,26 +45,17 @@ describe('Permissions', () => {
       expect(userCanEdit(testPermissions, 'owner')).toBeTruthy()
     })
     it('returns true, if user is logged in and this is user specifically may edit', () => {
-      expect(
-        userCanEdit({ ...testPermissions, sharedToGroups: [] }, 'logged_in'),
-      ).toBeTruthy()
+      expect(userCanEdit({ ...testPermissions, sharedToGroups: [] }, 'logged_in')).toBeTruthy()
     })
     it('returns true, if user is logged in and loggedIn users may edit', () => {
-      expect(
-        userCanEdit({ ...testPermissions, sharedToUsers: [] }, 'logged_in'),
-      ).toBeTruthy()
+      expect(userCanEdit({ ...testPermissions, sharedToUsers: [] }, 'logged_in')).toBeTruthy()
     })
     it('returns true, if user is guest and guests are allowed to edit', () => {
-      expect(
-        userCanEdit({ ...testPermissions, sharedToUsers: [] }, undefined),
-      ).toBeTruthy()
+      expect(userCanEdit({ ...testPermissions, sharedToUsers: [] }, undefined)).toBeTruthy()
     })
     it('returns false, if user is logged in and loggedIn users may not edit', () => {
       expect(
-        userCanEdit(
-          { ...testPermissions, sharedToUsers: [], sharedToGroups: [] },
-          'logged_in',
-        ),
+        userCanEdit({ ...testPermissions, sharedToUsers: [], sharedToGroups: [] }, 'logged_in'),
       ).toBeFalsy()
     })
     it('returns false, if user is guest and guests are not allowed to edit', () => {

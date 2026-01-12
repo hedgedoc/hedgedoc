@@ -13,25 +13,15 @@ import { AuthProviderSchema } from './auth-provider.dto.js'
 
 export const FrontendConfigSchema = z
   .object({
-    guestAccess: z
-      .nativeEnum(PermissionLevel)
-      .describe('Maximum access level for guest users'),
-    allowRegister: z
-      .boolean()
-      .describe('Are users allowed to register on this instance?'),
-    allowProfileEdits: z
-      .boolean()
-      .describe('Are users allowed to edit their profile information?'),
+    guestAccess: z.nativeEnum(PermissionLevel).describe('Maximum access level for guest users'),
+    allowRegister: z.boolean().describe('Are users allowed to register on this instance?'),
+    allowProfileEdits: z.boolean().describe('Are users allowed to edit their profile information?'),
     allowChooseUsername: z
       .boolean()
-      .describe(
-        'Are users allowed to choose their username when signing up via OIDC?',
-      ),
+      .describe('Are users allowed to choose their username when signing up via OIDC?'),
     authProviders: z
       .array(AuthProviderSchema)
-      .describe(
-        'Which auth providers are enabled and how are they configured?',
-      ),
+      .describe('Which auth providers are enabled and how are they configured?'),
     branding: BrandingSchema.describe('Individual branding information'),
     useImageProxy: z.boolean().describe('Is an image proxy enabled?'),
     specialUrls: SpecialUrlSchema.describe('Links to some special pages'),
@@ -41,13 +31,8 @@ export const FrontendConfigSchema = z
       .url()
       .nullable()
       .describe('The PlantUML server that should be used to render.'),
-    maxDocumentLength: z
-      .number()
-      .positive()
-      .describe('The maximal length of each document'),
+    maxDocumentLength: z.number().positive().describe('The maximal length of each document'),
   })
-  .describe(
-    'Config properties that are received by the frontend to adjust its own behaviour',
-  )
+  .describe('Config properties that are received by the frontend to adjust its own behaviour')
 
 export type FrontendConfigInterface = z.infer<typeof FrontendConfigSchema>

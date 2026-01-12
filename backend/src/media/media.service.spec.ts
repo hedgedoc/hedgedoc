@@ -23,12 +23,7 @@ import appConfigMock from '../config/mock/app.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
 import mediaConfigMock from '../config/mock/media.config.mock';
 import { expectBindings } from '../database/mock/expect-bindings';
-import {
-  mockDelete,
-  mockInsert,
-  mockSelect,
-  mockUpdate,
-} from '../database/mock/mock-queries';
+import { mockDelete, mockInsert, mockSelect, mockUpdate } from '../database/mock/mock-queries';
 import { mockKnexDb } from '../database/mock/provider';
 import { ClientError, NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
@@ -89,14 +84,10 @@ describe('MediaService', () => {
     it('inserts a new media upload and returns uuid', async () => {
       jest.useFakeTimers();
       const now = getCurrentDateTime();
-      jest
-        .spyOn(fileTypeModule, 'fromBuffer')
-        .mockResolvedValue({ mime: 'image/png', ext: 'png' });
+      jest.spyOn(fileTypeModule, 'fromBuffer').mockResolvedValue({ mime: 'image/png', ext: 'png' });
       // This invalid Uint8Array typecast is required as TypeScript does not accept
       // that uuid.v7 can return either a string or Uint8Array based on the options.
-      jest
-        .spyOn(uuidModule, 'v7')
-        .mockReturnValue(uuid as unknown as Uint8Array);
+      jest.spyOn(uuidModule, 'v7').mockReturnValue(uuid as unknown as Uint8Array);
       mockInsert(
         tracker,
         TableMediaUpload,
@@ -126,32 +117,19 @@ describe('MediaService', () => {
             return JSON.stringify({ ext: fileType!.ext });
           },
         );
-      const result = await service.saveFile(
-        fileName,
-        fileBuffer,
-        userId,
-        noteId,
-      );
+      const result = await service.saveFile(fileName, fileBuffer, userId, noteId);
       expect(result).toBe(uuid);
       expectBindings(tracker, 'insert', [
-        [
-          backendData,
-          backendType,
-          dateTimeToDB(now),
-          fileName,
-          noteId,
-          userId,
-          uuid,
-        ],
+        [backendData, backendType, dateTimeToDB(now), fileName, noteId, userId, uuid],
       ]);
       jest.useRealTimers();
     });
 
     it('throws ClientError if file type is not detected', async () => {
       jest.spyOn(fileTypeModule, 'fromBuffer').mockResolvedValue(undefined);
-      await expect(
-        service.saveFile(fileName, fileBuffer, userId, noteId),
-      ).rejects.toThrow(ClientError);
+      await expect(service.saveFile(fileName, fileBuffer, userId, noteId)).rejects.toThrow(
+        ClientError,
+      );
     });
 
     it('throws ClientError if mime type is not allowed', async () => {
@@ -162,9 +140,9 @@ describe('MediaService', () => {
         mime: 'application/x-msdownload',
         ext: 'exe',
       });
-      await expect(
-        service.saveFile(fileName, fileBuffer, userId, noteId),
-      ).rejects.toThrow(ClientError);
+      await expect(service.saveFile(fileName, fileBuffer, userId, noteId)).rejects.toThrow(
+        ClientError,
+      );
     });
   });
 
@@ -180,12 +158,10 @@ describe('MediaService', () => {
       mockDelete(tracker, TableMediaUpload, [FieldNameMediaUpload.uuid]);
       jest
         .spyOn(service.mediaBackend, 'deleteFile')
-        .mockImplementationOnce(
-          async (givenUuid: string, givenBackendData: string | null) => {
-            expect(givenUuid).toBe(uuid);
-            expect(givenBackendData).toBe(backendData);
-          },
-        );
+        .mockImplementationOnce(async (givenUuid: string, givenBackendData: string | null) => {
+          expect(givenUuid).toBe(uuid);
+          expect(givenBackendData).toBe(backendData);
+        });
       await service.deleteFile(uuid);
       expectBindings(tracker, 'select', [[uuid]], true);
       expectBindings(tracker, 'delete', [[uuid]]);
@@ -221,10 +197,7 @@ describe('MediaService', () => {
       jest
         .spyOn(fileSystemBackend, 'getFileUrl')
         .mockImplementationOnce(
-          async (
-            givenUuid: string,
-            givenBackendData: string | null,
-          ): Promise<string> => {
+          async (givenUuid: string, givenBackendData: string | null): Promise<string> => {
             expect(givenUuid).toBe(uuid);
             expect(givenBackendData).toBe(backendData);
             return `http://example.com/${fileName}`;
@@ -258,16 +231,8 @@ describe('MediaService', () => {
     });
 
     it('throws NotInDBError if not found', async () => {
-      mockSelect(
-        tracker,
-        [],
-        TableMediaUpload,
-        FieldNameMediaUpload.uuid,
-        undefined,
-      );
-      await expect(service.findUploadByUuid(uuid)).rejects.toThrow(
-        NotInDBError,
-      );
+      mockSelect(tracker, [], TableMediaUpload, FieldNameMediaUpload.uuid, undefined);
+      await expect(service.findUploadByUuid(uuid)).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'select', [[uuid]], true);
     });
   });

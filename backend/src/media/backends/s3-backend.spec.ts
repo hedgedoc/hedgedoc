@@ -35,9 +35,7 @@ describe('s3 backend', () => {
       presignedGetObject: jest.fn(),
     });
 
-    clientConstructorSpy = jest
-      .spyOn(MinioModule, 'Client')
-      .mockImplementation(() => mockedClient);
+    clientConstructorSpy = jest.spyOn(MinioModule, 'Client').mockImplementation(() => mockedClient);
   });
 
   function mockMediaConfig(endPoint: string): MediaConfig {
@@ -136,14 +134,12 @@ describe('s3 backend', () => {
   describe('save', () => {
     it('can save a file', async () => {
       const mediaConfig = mockMediaConfig('https://s3.example.org');
-      const saveSpy = jest
-        .spyOn(mockedClient, 'putObject')
-        .mockImplementation(() =>
-          Promise.resolve({
-            etag: 'mock',
-            versionId: 'mock',
-          }),
-        );
+      const saveSpy = jest.spyOn(mockedClient, 'putObject').mockImplementation(() =>
+        Promise.resolve({
+          etag: 'mock',
+          versionId: 'mock',
+        }),
+      );
 
       const sut = new S3Backend(mockedLoggerService, mediaConfig);
 
@@ -179,9 +175,7 @@ describe('s3 backend', () => {
           mime: 'image/png',
           ext: 'png',
         }),
-      ).rejects.toThrow(
-        'Could not save file cbe87987-8e70-4092-a879-878e70b09245',
-      );
+      ).rejects.toThrow('Could not save file cbe87987-8e70-4092-a879-878e70b09245');
 
       expect(saveSpy).toHaveBeenCalledWith(
         mockedS3Bucket,
@@ -244,11 +238,9 @@ describe('s3 backend', () => {
     });
     it('throws a MediaBackendError if the client could not generate a signed url', async () => {
       const mediaConfig = mockMediaConfig('https://s3.example.org');
-      const fileUrlSpy = jest
-        .spyOn(mockedClient, 'presignedGetObject')
-        .mockImplementation(() => {
-          throw new Error('mocked error');
-        });
+      const fileUrlSpy = jest.spyOn(mockedClient, 'presignedGetObject').mockImplementation(() => {
+        throw new Error('mocked error');
+      });
 
       const sut = new S3Backend(mockedLoggerService, mediaConfig);
 

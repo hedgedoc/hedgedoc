@@ -31,9 +31,7 @@ describe('yaml frontmatter', () => {
   })
 
   it('should parse the tag inline-list syntax', () => {
-    const noteFrontmatter = parseRawFrontmatterFromYaml(
-      "tags: ['test123', 'abc']",
-    )
+    const noteFrontmatter = parseRawFrontmatterFromYaml("tags: ['test123', 'abc']")
     expect(noteFrontmatter.value?.tags).toEqual(['test123', 'abc'])
   })
 
@@ -56,9 +54,7 @@ describe('yaml frontmatter', () => {
       image:type: image/png
     `)
     expect(noteFrontmatter.value?.opengraph.title).toEqual('Testtitle')
-    expect(noteFrontmatter.value?.opengraph.image).toEqual(
-      'https://dummyimage.com/48.png',
-    )
+    expect(noteFrontmatter.value?.opengraph.image).toEqual('https://dummyimage.com/48.png')
     expect(noteFrontmatter.value?.opengraph['image:type']).toEqual('image/png')
   })
 

@@ -6,6 +6,4 @@
 import { ChangeNoteVisibilitySchema } from '@hedgedoc/commons';
 import { createZodDto } from 'nestjs-zod';
 
-export class ChangeNoteVisibilityDto extends createZodDto(
-  ChangeNoteVisibilitySchema,
-) {}
+export class ChangeNoteVisibilityDto extends createZodDto(ChangeNoteVisibilitySchema) {}

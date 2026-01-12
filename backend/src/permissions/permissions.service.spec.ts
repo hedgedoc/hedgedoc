@@ -29,24 +29,12 @@ import { AliasService } from '../alias/alias.service';
 import appConfigMock from '../config/mock/app.config.mock';
 import authConfigMock from '../config/mock/auth.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
-import {
-  createDefaultMockNoteConfig,
-  registerNoteConfig,
-} from '../config/mock/note.config.mock';
+import { createDefaultMockNoteConfig, registerNoteConfig } from '../config/mock/note.config.mock';
 import { NoteConfig } from '../config/note.config';
 import { expectBindings, IS_FIRST } from '../database/mock/expect-bindings';
-import {
-  mockDelete,
-  mockInsert,
-  mockSelect,
-  mockUpdate,
-} from '../database/mock/mock-queries';
+import { mockDelete, mockInsert, mockSelect, mockUpdate } from '../database/mock/mock-queries';
 import { mockKnexDb } from '../database/mock/provider';
-import {
-  GenericDBError,
-  NotInDBError,
-  PermissionError,
-} from '../errors/errors';
+import { GenericDBError, NotInDBError, PermissionError } from '../errors/errors';
 import { NoteEventMap } from '../events';
 import { GroupsService } from '../groups/groups.service';
 import { LoggerModule } from '../logger/logger.module';
@@ -161,10 +149,7 @@ describe('PermissionsService', () => {
           },
         ]);
         expect(
-          await service.checkMediaDeletePermission(
-            mockUserId1,
-            mockMediaUploadUuid,
-          ),
+          await service.checkMediaDeletePermission(mockUserId1, mockMediaUploadUuid),
         ).toBeTruthy();
       });
       it('for note owner', async () => {
@@ -175,10 +160,7 @@ describe('PermissionsService', () => {
           },
         ]);
         expect(
-          await service.checkMediaDeletePermission(
-            mockUserId1,
-            mockMediaUploadUuid,
-          ),
+          await service.checkMediaDeletePermission(mockUserId1, mockMediaUploadUuid),
         ).toBeTruthy();
       });
     });
@@ -191,10 +173,7 @@ describe('PermissionsService', () => {
         },
       ]);
       expect(
-        await service.checkMediaDeletePermission(
-          mockUserId1,
-          mockMediaUploadUuid,
-        ),
+        await service.checkMediaDeletePermission(mockUserId1, mockMediaUploadUuid),
       ).toBeFalsy();
     });
   });
@@ -202,19 +181,11 @@ describe('PermissionsService', () => {
   describe('isOwner', () => {
     // oxlint-disable-next-line func-style
     const buildMockSelect = (returnValues: unknown) => {
-      mockSelect(
-        tracker,
-        [FieldNameNote.ownerId],
-        TableNote,
-        FieldNameNote.id,
-        returnValues,
-      );
+      mockSelect(tracker, [FieldNameNote.ownerId], TableNote, FieldNameNote.id, returnValues);
     };
     it('throws NotInDBError if there is note in the db', async () => {
       buildMockSelect([]);
-      await expect(service.isOwner(mockUserId1, mockNoteId)).rejects.toThrow(
-        NotInDBError,
-      );
+      await expect(service.isOwner(mockUserId1, mockNoteId)).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'select', [[mockNoteId]], true);
     });
     describe('if a database entry is found', () => {
@@ -242,10 +213,7 @@ describe('PermissionsService', () => {
   describe('checkIfUserMayCreateNote', () => {
     let spyUserServiceIsRegisteredUser: jest.SpyInstance;
     beforeEach(() => {
-      spyUserServiceIsRegisteredUser = jest.spyOn(
-        usersService,
-        'isRegisteredUser',
-      );
+      spyUserServiceIsRegisteredUser = jest.spyOn(usersService, 'isRegisteredUser');
     });
     it('allows creation for logged in users', async () => {
       spyUserServiceIsRegisteredUser.mockResolvedValue(true);
@@ -270,14 +238,8 @@ describe('PermissionsService', () => {
 
     beforeEach(() => {
       spyOnPermissionsServiceIsOwner = jest.spyOn(service, 'isOwner');
-      spyOnUserServiceIsRegisteredUser = jest.spyOn(
-        usersService,
-        'isRegisteredUser',
-      );
-      spyOnGroupServiceGetGroupsForUser = jest.spyOn(
-        groupsService,
-        'getGroupsForUser',
-      );
+      spyOnUserServiceIsRegisteredUser = jest.spyOn(usersService, 'isRegisteredUser');
+      spyOnGroupServiceGetGroupsForUser = jest.spyOn(groupsService, 'getGroupsForUser');
     });
 
     afterEach(() => {
@@ -290,9 +252,7 @@ describe('PermissionsService', () => {
         // Owner
         spyOnPermissionsServiceIsOwner.mockResolvedValue(testCase.isOwner);
         // RegisteredUser
-        spyOnUserServiceIsRegisteredUser.mockResolvedValue(
-          testCase.isRegisteredUser,
-        );
+        spyOnUserServiceIsRegisteredUser.mockResolvedValue(testCase.isRegisteredUser);
         // maxGuestPermission
         noteMockConfig.permissions.maxGuestLevel = testCase.maxGuestLevel;
         // UserPermissions
@@ -300,10 +260,7 @@ describe('PermissionsService', () => {
           tracker,
           [FieldNameNoteUserPermission.canEdit],
           TableNoteUserPermission,
-          [
-            FieldNameNoteUserPermission.noteId,
-            FieldNameNoteUserPermission.userId,
-          ],
+          [FieldNameNoteUserPermission.noteId, FieldNameNoteUserPermission.userId],
           testCase.userPermission === PermissionLevel.DENY
             ? undefined
             : {
@@ -330,10 +287,7 @@ describe('PermissionsService', () => {
           tracker,
           [FieldNameNoteGroupPermission.canEdit],
           TableNoteGroupPermission,
-          [
-            FieldNameNoteGroupPermission.groupId,
-            FieldNameNoteGroupPermission.noteId,
-          ],
+          [FieldNameNoteGroupPermission.groupId, FieldNameNoteGroupPermission.noteId],
           [
             testCase.everyoneGroupPermission === PermissionLevel.DENY
               ? undefined
@@ -347,8 +301,7 @@ describe('PermissionsService', () => {
                   [FieldNameNoteGroupPermission.canEdit]:
                     testCase.groupPermission >= PermissionLevel.WRITE,
                 },
-            testCase.loggedInUserPermission === PermissionLevel.DENY ||
-            !testCase.isRegisteredUser
+            testCase.loggedInUserPermission === PermissionLevel.DENY || !testCase.isRegisteredUser
               ? undefined
               : {
                   [FieldNameNoteGroupPermission.canEdit]:
@@ -356,9 +309,7 @@ describe('PermissionsService', () => {
                 },
           ],
         );
-        expect(
-          await service.determinePermission(mockUserId1, mockNoteId),
-        ).toEqual(testCase.result);
+        expect(await service.determinePermission(mockUserId1, mockNoteId)).toEqual(testCase.result);
       });
     }
   });
@@ -381,9 +332,9 @@ describe('PermissionsService', () => {
       });
       it('and not a registered user', async () => {
         spyOnIsRegisteredUser.mockResolvedValue(false);
-        await expect(
-          service.setUserPermission(mockNoteId, mockUserId1, true),
-        ).rejects.toThrow(PermissionError);
+        await expect(service.setUserPermission(mockNoteId, mockUserId1, true)).rejects.toThrow(
+          PermissionError,
+        );
       });
       it('and user is registered', async () => {
         const spyOneNotifyOthers = jest.spyOn(
@@ -417,19 +368,13 @@ describe('PermissionsService', () => {
       mockDelete(
         tracker,
         TableNoteUserPermission,
-        [
-          FieldNameNoteUserPermission.noteId,
-          FieldNameNoteUserPermission.userId,
-        ],
+        [FieldNameNoteUserPermission.noteId, FieldNameNoteUserPermission.userId],
         deletedEntries,
       );
       mockDelete(
         tracker,
         TableVisitedNote,
-        [
-          FieldNameNoteUserPermission.noteId,
-          FieldNameNoteUserPermission.userId,
-        ],
+        [FieldNameNoteUserPermission.noteId, FieldNameNoteUserPermission.userId],
         deletedEntries,
       );
     }
@@ -444,9 +389,9 @@ describe('PermissionsService', () => {
     });
     it('throws NotInDBError if user does not exist', async () => {
       buildMockDelete(0);
-      await expect(
-        service.removeUserPermission(mockNoteId, mockUserId1),
-      ).rejects.toThrow(NotInDBError);
+      await expect(service.removeUserPermission(mockNoteId, mockUserId1)).rejects.toThrow(
+        NotInDBError,
+      );
       expect(spyOneNotifyOthers).toHaveBeenCalledTimes(0);
       expectBindings(tracker, 'delete', [
         [mockNoteId, mockUserId1],
@@ -487,10 +432,7 @@ describe('PermissionsService', () => {
       mockDelete(
         tracker,
         TableNoteGroupPermission,
-        [
-          FieldNameNoteGroupPermission.noteId,
-          FieldNameNoteGroupPermission.groupId,
-        ],
+        [FieldNameNoteGroupPermission.noteId, FieldNameNoteGroupPermission.groupId],
         deletedEntries,
       );
     };
@@ -502,9 +444,9 @@ describe('PermissionsService', () => {
     });
     it('throws NotInDBError if user does not exist', async () => {
       buildMockDelete(0);
-      await expect(
-        service.removeGroupPermission(mockNoteId, mockGroupId1),
-      ).rejects.toThrow(NotInDBError);
+      await expect(service.removeGroupPermission(mockNoteId, mockGroupId1)).rejects.toThrow(
+        NotInDBError,
+      );
       expect(spyOneNotifyOthers).toHaveBeenCalledTimes(0);
       expectBindings(tracker, 'delete', [[mockNoteId, mockGroupId1]]);
     });
@@ -521,19 +463,11 @@ describe('PermissionsService', () => {
     });
     // oxlint-disable-next-line func-style
     const buildMockUpdate = (updatedEntries: number) => {
-      mockUpdate(
-        tracker,
-        TableNote,
-        [FieldNameNote.ownerId],
-        FieldNameNote.id,
-        updatedEntries,
-      );
+      mockUpdate(tracker, TableNote, [FieldNameNote.ownerId], FieldNameNote.id, updatedEntries);
     };
     it('throws NotInDBError when the update does not succed', async () => {
       buildMockUpdate(0);
-      await expect(
-        service.changeOwner(mockNoteId, mockUserId2),
-      ).rejects.toThrow(NotInDBError);
+      await expect(service.changeOwner(mockNoteId, mockUserId2)).rejects.toThrow(NotInDBError);
       expect(spyOneNotifyOthers).toHaveBeenCalledTimes(0);
       expectBindings(tracker, 'update', [[mockUserId2, mockNoteId]]);
     });
@@ -558,9 +492,7 @@ describe('PermissionsService', () => {
     };
     it('throws NotInDBError when the update does not succed', async () => {
       buildMockUpdate(0);
-      await expect(
-        service.changePubliclyVisible(mockNoteId, true),
-      ).rejects.toThrow(NotInDBError);
+      await expect(service.changePubliclyVisible(mockNoteId, true)).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'update', [[true, mockNoteId]]);
     });
     it('correctly notifies others', async () => {
@@ -647,21 +579,14 @@ describe('PermissionsService', () => {
     });
     it('throws GenericDBError if note has no owner', async () => {
       buildMockOwnerSelect(undefined);
-      await expect(
-        service.getPermissionsDtoForNote(mockNoteId),
-      ).rejects.toThrow(GenericDBError);
-      expectBindings(tracker, 'select', [
-        [mockNoteId, IS_FIRST],
-        [mockNoteId],
-        [mockNoteId],
-      ]);
+      await expect(service.getPermissionsDtoForNote(mockNoteId)).rejects.toThrow(GenericDBError);
+      expectBindings(tracker, 'select', [[mockNoteId, IS_FIRST], [mockNoteId], [mockNoteId]]);
     });
     it('correctly returns Dto', async () => {
       buildMockOwnerSelect([
         {
           [FieldNameUser.username]: mockUserName2,
-          [FieldNameNote.publiclyVisible]:
-            noteMockConfig.permissions.default.publiclyVisible,
+          [FieldNameNote.publiclyVisible]: noteMockConfig.permissions.default.publiclyVisible,
         },
       ]);
       const results = await service.getPermissionsDtoForNote(mockNoteId);
@@ -676,11 +601,7 @@ describe('PermissionsService', () => {
         groupName: mockGroupName1,
         canEdit: true,
       });
-      expectBindings(tracker, 'select', [
-        [mockNoteId, IS_FIRST],
-        [mockNoteId],
-        [mockNoteId],
-      ]);
+      expectBindings(tracker, 'select', [[mockNoteId, IS_FIRST], [mockNoteId], [mockNoteId]]);
     });
   });
 });

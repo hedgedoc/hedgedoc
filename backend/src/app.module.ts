@@ -21,10 +21,7 @@ import appConfig, { AppConfig } from './config/app.config';
 import authConfig from './config/auth.config';
 import cspConfig from './config/csp.config';
 import customizationConfig from './config/customization.config';
-import databaseConfig, {
-  getKnexConfig,
-  PostgresDatabaseConfig,
-} from './config/database.config';
+import databaseConfig, { getKnexConfig, PostgresDatabaseConfig } from './config/database.config';
 import externalConfig from './config/external-services.config';
 import { Loglevel } from './config/loglevel.enum';
 import mediaConfig from './config/media.config';
@@ -89,8 +86,7 @@ const routes: Routes = [
           },
           debug:
             isDevMode() &&
-            (appConfig.log.level === Loglevel.DEBUG ||
-              appConfig.log.level === Loglevel.TRACE),
+            (appConfig.log.level === Loglevel.DEBUG || appConfig.log.level === Loglevel.TRACE),
         },
       }),
     }),

@@ -12,9 +12,7 @@ import { IncomingMessage } from 'http';
  * @returns The extracted note id
  * @throws Error if the given string isn't a valid realtime URL path
  */
-export function extractNoteAliasFromRequestUrl(
-  request: IncomingMessage,
-): string {
+export function extractNoteAliasFromRequestUrl(request: IncomingMessage): string {
   if (request.url === undefined) {
     throw new Error('No URL found in request');
   }

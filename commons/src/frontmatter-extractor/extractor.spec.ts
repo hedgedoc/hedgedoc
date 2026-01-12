@@ -29,13 +29,7 @@ describe('frontmatter extraction', () => {
       expect(extraction).toBeUndefined()
     })
     it('is false when note has no ending marker for frontmatter', () => {
-      const testNote = [
-        '---',
-        'this is not frontmatter',
-        'because',
-        'there is no',
-        'end marker',
-      ]
+      const testNote = ['---', 'this is not frontmatter', 'because', 'there is no', 'end marker']
       const extraction = extractFrontmatter(testNote)
       expect(extraction).toBeUndefined()
     })

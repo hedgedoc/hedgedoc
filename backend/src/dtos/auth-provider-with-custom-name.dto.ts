@@ -6,6 +6,4 @@
 import { AuthProviderWithCustomNameSchema } from '@hedgedoc/commons';
 import { createZodDto } from 'nestjs-zod';
 
-export class AuthProviderWithCustomNameDto extends createZodDto(
-  AuthProviderWithCustomNameSchema,
-) {}
+export class AuthProviderWithCustomNameDto extends createZodDto(AuthProviderWithCustomNameSchema) {}

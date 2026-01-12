@@ -41,18 +41,10 @@ describe('y-doc-sync-adapter', () => {
       console.log('textClient2', new Date(), textClient2.toString()),
     )
 
-    const transporterAdapterServerTo1 = new InMemoryConnectionTransportAdapter(
-      's>1',
-    )
-    const transporterAdapterServerTo2 = new InMemoryConnectionTransportAdapter(
-      's>2',
-    )
-    const transporterAdapterClient1 = new InMemoryConnectionTransportAdapter(
-      '1>s',
-    )
-    const transporterAdapterClient2 = new InMemoryConnectionTransportAdapter(
-      '2>s',
-    )
+    const transporterAdapterServerTo1 = new InMemoryConnectionTransportAdapter('s>1')
+    const transporterAdapterServerTo2 = new InMemoryConnectionTransportAdapter('s>2')
+    const transporterAdapterClient1 = new InMemoryConnectionTransportAdapter('1>s')
+    const transporterAdapterClient2 = new InMemoryConnectionTransportAdapter('2>s')
 
     const messageTransporterServerTo1 = new MessageTransporter()
     const messageTransporterServerTo2 = new MessageTransporter()
@@ -83,26 +75,14 @@ describe('y-doc-sync-adapter', () => {
     messageTransporterClient2.on(MessageType.NOTE_CONTENT_STATE_REQUEST, () =>
       console.log('Received NOTE_CONTENT_REQUEST from server to client 2'),
     )
-    messageTransporterClient1.doAsSoonAsConnected(() =>
-      console.log('1>s is connected'),
-    )
-    messageTransporterClient2.doAsSoonAsConnected(() =>
-      console.log('2>s is connected'),
-    )
-    messageTransporterServerTo1.doAsSoonAsConnected(() =>
-      console.log('s>1 is connected'),
-    )
-    messageTransporterServerTo2.doAsSoonAsConnected(() =>
-      console.log('s>2 is connected'),
-    )
+    messageTransporterClient1.doAsSoonAsConnected(() => console.log('1>s is connected'))
+    messageTransporterClient2.doAsSoonAsConnected(() => console.log('2>s is connected'))
+    messageTransporterServerTo1.doAsSoonAsConnected(() => console.log('s>1 is connected'))
+    messageTransporterServerTo2.doAsSoonAsConnected(() => console.log('s>2 is connected'))
     messageTransporterClient1.doAsSoonAsReady(() => console.log('1>s is ready'))
     messageTransporterClient2.doAsSoonAsReady(() => console.log('2>s is ready'))
-    messageTransporterServerTo1.doAsSoonAsReady(() =>
-      console.log('s>1 is connected'),
-    )
-    messageTransporterServerTo2.doAsSoonAsReady(() =>
-      console.log('s>2 is connected'),
-    )
+    messageTransporterServerTo1.doAsSoonAsReady(() => console.log('s>1 is connected'))
+    messageTransporterServerTo2.doAsSoonAsReady(() => console.log('s>2 is connected'))
 
     docServer.on('update', (update: number[], origin: unknown) => {
       const message: Message<MessageType.NOTE_CONTENT_UPDATE> = {
@@ -129,14 +109,8 @@ describe('y-doc-sync-adapter', () => {
       }
     })
 
-    const yDocSyncAdapter1 = new YDocSyncClientAdapter(
-      messageTransporterClient1,
-      docClient1,
-    )
-    const yDocSyncAdapter2 = new YDocSyncClientAdapter(
-      messageTransporterClient2,
-      docClient2,
-    )
+    const yDocSyncAdapter1 = new YDocSyncClientAdapter(messageTransporterClient1, docClient1)
+    const yDocSyncAdapter2 = new YDocSyncClientAdapter(messageTransporterClient2, docClient2)
 
     const yDocSyncAdapterServerTo1 = new YDocSyncServerAdapter(
       messageTransporterServerTo1,

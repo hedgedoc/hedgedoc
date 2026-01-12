@@ -6,6 +6,4 @@
 import { UsernameCheckResponseSchema } from '@hedgedoc/commons';
 import { createZodDto } from 'nestjs-zod';
 
-export class UsernameCheckResponseDto extends createZodDto(
-  UsernameCheckResponseSchema,
-) {}
+export class UsernameCheckResponseDto extends createZodDto(UsernameCheckResponseSchema) {}

@@ -23,7 +23,7 @@ const checkboxRegex = /^ *\[([\sx])] /i
 
 export function taskLists(
   md: MarkdownIt,
-  options: TaskListsOptions = { enabled: false, label: false, lineNumber: false }
+  options: TaskListsOptions = { enabled: false, label: false, lineNumber: false },
 ): void {
   md.core.ruler.after('inline', 'task-lists', (state) => processToken(state, options))
   md.renderer.rules.taskListItemCheckbox = (tokens) => {

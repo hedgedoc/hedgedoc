@@ -40,13 +40,11 @@ function isEventHandlerAttribute(attribute: string): boolean {
  * @returns {Object} The React attributes
  */
 export function mapHtmlAttributesToReactElementAttributes(
-  attributes: Record<string, string>
+  attributes: Record<string, string>,
 ): Record<string, string> {
   return Object.keys(attributes)
     .filter(
-      (attribute) =>
-        !isEventHandlerAttribute(attribute) &&
-        isValidTagOrAttributeName(attribute)
+      (attribute) => !isEventHandlerAttribute(attribute) && isValidTagOrAttributeName(attribute),
     )
     .reduce<Record<string, string>>((mappedAttributes, attribute) => {
       // lowercase the attribute name and find it in the react attribute map
@@ -56,10 +54,7 @@ export function mapHtmlAttributesToReactElementAttributes(
       const name = reactAttributes[lowerCaseAttribute] || attribute
 
       // add the parsed attribute value to the mapped attributes
-      mappedAttributes[name] = getParsedAttributeValue(
-        name,
-        attributes[attribute]
-      )
+      mappedAttributes[name] = getParsedAttributeValue(name, attributes[attribute])
 
       return mappedAttributes
     }, {})

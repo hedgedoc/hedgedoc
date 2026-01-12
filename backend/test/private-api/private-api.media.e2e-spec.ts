@@ -1,3 +1,7 @@
+import { PRIVATE_API_PREFIX } from '../../src/app.module';
+import { noteAlias1, TestSetup, TestSetupBuilder } from '../test-setup';
+import { ensureDeleted } from '../utils';
+import { setupAgent } from './utils/setup-agent';
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
@@ -6,11 +10,6 @@
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import request from 'supertest';
-
-import { PRIVATE_API_PREFIX } from '../../src/app.module';
-import { noteAlias1, TestSetup, TestSetupBuilder } from '../test-setup';
-import { ensureDeleted } from '../utils';
-import { setupAgent } from './utils/setup-agent';
 
 describe('Media', () => {
   let testSetup: TestSetup;
@@ -28,8 +27,7 @@ describe('Media', () => {
   beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
 
-    uploadPath =
-      testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
+    uploadPath = testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
 
     testSetup.app.useStaticAssets(uploadPath, {
       prefix: '/uploads',
@@ -37,8 +35,7 @@ describe('Media', () => {
 
     await testSetup.app.init();
 
-    [agentNotLoggedIn, agentGuestUser, agentUser1, agentUser2] =
-      await setupAgent(testSetup);
+    [agentNotLoggedIn, agentGuestUser, agentUser1, agentUser2] = await setupAgent(testSetup);
 
     userId = testSetup.userIds[0];
     testImage = await fs.readFile('test/private-api/fixtures/test.png');
@@ -65,9 +62,7 @@ describe('Media', () => {
           .set('HedgeDoc-Note', noteAlias1)
           .expect(201);
         uuid = uploadResponse.text;
-        const apiResponse = await agentUser1.get(
-          `${PRIVATE_API_PREFIX}/media/${uuid}`,
-        );
+        const apiResponse = await agentUser1.get(`${PRIVATE_API_PREFIX}/media/${uuid}`);
         expect(apiResponse.statusCode).toEqual(200);
         const downloadResponse = await agentUser1.get(`/uploads/${uuid}.png`);
         expect(downloadResponse.body).toEqual(testImage);
@@ -85,13 +80,9 @@ describe('Media', () => {
           .set('HedgeDoc-Note', noteDtoResponse.body.metadata.primaryAlias)
           .expect(201);
         uuid = uploadResponse.text;
-        const apiResponse = await agentGuestUser.get(
-          `${PRIVATE_API_PREFIX}/media/${uuid}`,
-        );
+        const apiResponse = await agentGuestUser.get(`${PRIVATE_API_PREFIX}/media/${uuid}`);
         expect(apiResponse.statusCode).toEqual(200);
-        const downloadResponse = await agentGuestUser.get(
-          `/uploads/${uuid}.png`,
-        );
+        const downloadResponse = await agentGuestUser.get(`/uploads/${uuid}.png`);
         expect(downloadResponse.body).toEqual(testImage);
       });
     });
@@ -154,9 +145,7 @@ describe('Media', () => {
 
       await agentUser1.get(`/uploads/${uuid}.png`).expect(200);
 
-      await agentUser1
-        .delete(`${PRIVATE_API_PREFIX}/media/${uuid}`)
-        .expect(204);
+      await agentUser1.delete(`${PRIVATE_API_PREFIX}/media/${uuid}`).expect(204);
 
       await agentUser1.get(`/uploads/${uuid}.png`).expect(404);
     });
@@ -170,9 +159,7 @@ describe('Media', () => {
 
       await agentUser1.get(`/uploads/${uuid}.png`).expect(200);
 
-      await agentUser1
-        .delete(`${PRIVATE_API_PREFIX}/media/${uuid}`)
-        .expect(204);
+      await agentUser1.delete(`${PRIVATE_API_PREFIX}/media/${uuid}`).expect(204);
 
       await agentUser1.get(`/uploads/${uuid}.png`).expect(404);
     });
@@ -184,9 +171,7 @@ describe('Media', () => {
         testSetup.ownedNoteIds[0],
       );
 
-      await agentUser2
-        .delete(`${PRIVATE_API_PREFIX}/media/${uuid}`)
-        .expect(403);
+      await agentUser2.delete(`${PRIVATE_API_PREFIX}/media/${uuid}`).expect(403);
     });
     it("guest user can't delete", async () => {
       const uuid = await testSetup.mediaService.saveFile(
@@ -196,9 +181,7 @@ describe('Media', () => {
         testSetup.ownedNoteIds[0],
       );
 
-      await agentGuestUser
-        .delete(`${PRIVATE_API_PREFIX}/media/${uuid}`)
-        .expect(403);
+      await agentGuestUser.delete(`${PRIVATE_API_PREFIX}/media/${uuid}`).expect(403);
     });
   });
 });

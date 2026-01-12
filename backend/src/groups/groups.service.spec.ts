@@ -70,13 +70,11 @@ describe('GroupsService', () => {
 
     it('throws AlreadyInDBError if group already exists', async () => {
       tracker.on
-        .insert(
-          /^insert into "group" \("display_name", "is_special", "name"\) values .*/,
-        )
+        .insert(/^insert into "group" \("display_name", "is_special", "name"\) values .*/)
         .simulateError('duplicate key value violates unique constraint');
-      await expect(
-        service.createGroup(groupName, groupDisplayName),
-      ).rejects.toThrow(AlreadyInDBError);
+      await expect(service.createGroup(groupName, groupDisplayName)).rejects.toThrow(
+        AlreadyInDBError,
+      );
     });
   });
 
@@ -99,9 +97,7 @@ describe('GroupsService', () => {
 
     it('throws NotInDBError if group not found', async () => {
       mockSelect(tracker, [], TableGroup, FieldNameGroup.name, undefined);
-      await expect(service.getGroupInfoDtoByName(groupName)).rejects.toThrow(
-        NotInDBError,
-      );
+      await expect(service.getGroupInfoDtoByName(groupName)).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'select', [[groupName]], true);
     });
   });
@@ -111,29 +107,15 @@ describe('GroupsService', () => {
       const groupRow = {
         [FieldNameGroup.id]: groupId,
       };
-      mockSelect(
-        tracker,
-        [FieldNameGroup.id],
-        TableGroup,
-        FieldNameGroup.name,
-        groupRow,
-      );
+      mockSelect(tracker, [FieldNameGroup.id], TableGroup, FieldNameGroup.name, groupRow);
       const result = await service.getGroupIdByName(groupName);
       expect(result).toBe(groupId);
       expectBindings(tracker, 'select', [[groupName]], true);
     });
 
     it('throws NotInDBError if group not found', async () => {
-      mockSelect(
-        tracker,
-        [FieldNameGroup.id],
-        TableGroup,
-        FieldNameGroup.name,
-        undefined,
-      );
-      await expect(service.getGroupIdByName(groupName)).rejects.toThrow(
-        NotInDBError,
-      );
+      mockSelect(tracker, [FieldNameGroup.id], TableGroup, FieldNameGroup.name, undefined);
+      await expect(service.getGroupIdByName(groupName)).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'select', [[groupName]], true);
     });
   });
@@ -159,13 +141,7 @@ describe('GroupsService', () => {
     };
 
     beforeEach(() => {
-      mockSelect(
-        tracker,
-        [],
-        TableGroup,
-        FieldNameGroup.name,
-        mockEveryoneGroup,
-      );
+      mockSelect(tracker, [], TableGroup, FieldNameGroup.name, mockEveryoneGroup);
     });
 
     it('returns EVERYONE, LOGGED_IN, and user groups for registered user', async () => {
@@ -184,19 +160,9 @@ describe('GroupsService', () => {
         ],
       );
       jest.spyOn(usersService, 'isRegisteredUser').mockResolvedValueOnce(true);
-      mockSelect(
-        tracker,
-        [],
-        TableGroup,
-        FieldNameGroup.name,
-        mockLoggedInGroup,
-      );
+      mockSelect(tracker, [], TableGroup, FieldNameGroup.name, mockLoggedInGroup);
       const result = await service.getGroupsForUser(123);
-      expect(result).toEqual([
-        mockEveryoneGroup,
-        mockLoggedInGroup,
-        mockUserGroup1,
-      ]);
+      expect(result).toEqual([mockEveryoneGroup, mockLoggedInGroup, mockUserGroup1]);
     });
 
     it('returns EVERYONE and user groups for unregistered user', async () => {

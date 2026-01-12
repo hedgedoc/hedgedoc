@@ -31,15 +31,11 @@ export class ApiTokenGuard implements CanActivate {
       return false;
     }
     try {
-      request.userId = await this.apiTokenService.getUserIdForToken(
-        token.trim(),
-      );
+      request.userId = await this.apiTokenService.getUserIdForToken(token.trim());
       request.authProviderType = AuthProviderType.TOKEN;
       return true;
     } catch (error) {
-      if (
-        !(error instanceof TokenNotValidError || error instanceof NotInDBError)
-      ) {
+      if (!(error instanceof TokenNotValidError || error instanceof NotInDBError)) {
         this.logger.error(
           `Unknown Error during API token validation: ${String(error)}`,
           undefined,

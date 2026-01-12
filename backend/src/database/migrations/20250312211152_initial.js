@@ -129,13 +129,9 @@ const up = async function (knex) {
       .onDelete('CASCADE');
     table.string(FieldNameApiToken.label).notNullable();
     table.string(FieldNameApiToken.secretHash).notNullable();
-    table
-      .timestamp(FieldNameApiToken.validUntil, { useTz: false })
-      .notNullable();
+    table.timestamp(FieldNameApiToken.validUntil, { useTz: false }).notNullable();
     table.timestamp(FieldNameApiToken.lastUsedAt, { useTz: false }).nullable();
-    table
-      .timestamp(FieldNameApiToken.createdAt, { useTz: false, precision: 3 })
-      .notNullable();
+    table.timestamp(FieldNameApiToken.createdAt, { useTz: false, precision: 3 }).notNullable();
     table.index([FieldNameApiToken.userId], 'idx_api_token_user_id');
   });
 
@@ -244,14 +240,8 @@ const up = async function (knex) {
       .inTable(TableRevision)
       .onDelete('CASCADE');
     table.string(FieldNameRevisionTag.tag).notNullable();
-    table.primary([
-      FieldNameRevisionTag.revisionUuid,
-      FieldNameRevisionTag.tag,
-    ]);
-    table.index(
-      [FieldNameRevisionTag.revisionUuid],
-      'idx_revision_tag_revision_uuid',
-    );
+    table.primary([FieldNameRevisionTag.revisionUuid, FieldNameRevisionTag.tag]);
+    table.index([FieldNameRevisionTag.revisionUuid], 'idx_revision_tag_revision_uuid');
   });
 
   // Create authorship_info table
@@ -269,23 +259,14 @@ const up = async function (knex) {
       .references(FieldNameUser.id)
       .inTable(TableUser)
       .onDelete('CASCADE');
-    table
-      .integer(FieldNameAuthorshipInfo.startPosition)
-      .unsigned()
-      .notNullable();
+    table.integer(FieldNameAuthorshipInfo.startPosition).unsigned().notNullable();
     table.integer(FieldNameAuthorshipInfo.endPosition).unsigned().notNullable();
     table.timestamp(FieldNameAuthorshipInfo.createdAt, {
       useTz: false,
       precision: 3,
     });
-    table.index(
-      [FieldNameAuthorshipInfo.revisionUuid],
-      'idx_authorship_info_revision_uuid',
-    );
-    table.index(
-      [FieldNameAuthorshipInfo.authorId],
-      'idx_authorship_info_author_id',
-    );
+    table.index([FieldNameAuthorshipInfo.revisionUuid], 'idx_authorship_info_revision_uuid');
+    table.index([FieldNameAuthorshipInfo.authorId], 'idx_authorship_info_author_id');
   });
 
   // Create note_user_permission table
@@ -304,22 +285,10 @@ const up = async function (knex) {
       .references(FieldNameUser.id)
       .inTable(TableUser)
       .onDelete('CASCADE');
-    table
-      .boolean(FieldNameNoteUserPermission.canEdit)
-      .notNullable()
-      .defaultTo(false);
-    table.primary([
-      FieldNameNoteUserPermission.noteId,
-      FieldNameNoteUserPermission.userId,
-    ]);
-    table.index(
-      [FieldNameNoteUserPermission.noteId],
-      'idx_note_user_permission_note_id',
-    );
-    table.index(
-      [FieldNameNoteUserPermission.userId],
-      'idx_note_user_permission_user_id',
-    );
+    table.boolean(FieldNameNoteUserPermission.canEdit).notNullable().defaultTo(false);
+    table.primary([FieldNameNoteUserPermission.noteId, FieldNameNoteUserPermission.userId]);
+    table.index([FieldNameNoteUserPermission.noteId], 'idx_note_user_permission_note_id');
+    table.index([FieldNameNoteUserPermission.userId], 'idx_note_user_permission_user_id');
   });
 
   // Create note_group_permission table
@@ -338,22 +307,10 @@ const up = async function (knex) {
       .references(FieldNameGroup.id)
       .inTable(TableGroup)
       .onDelete('CASCADE');
-    table
-      .boolean(FieldNameNoteGroupPermission.canEdit)
-      .notNullable()
-      .defaultTo(false);
-    table.primary([
-      FieldNameNoteGroupPermission.noteId,
-      FieldNameNoteGroupPermission.groupId,
-    ]);
-    table.index(
-      [FieldNameNoteGroupPermission.noteId],
-      'idx_note_group_permission_note_id',
-    );
-    table.index(
-      [FieldNameNoteGroupPermission.groupId],
-      'idx_note_group_permission_group_id',
-    );
+    table.boolean(FieldNameNoteGroupPermission.canEdit).notNullable().defaultTo(false);
+    table.primary([FieldNameNoteGroupPermission.noteId, FieldNameNoteGroupPermission.groupId]);
+    table.index([FieldNameNoteGroupPermission.noteId], 'idx_note_group_permission_note_id');
+    table.index([FieldNameNoteGroupPermission.groupId], 'idx_note_group_permission_group_id');
   });
 
   // Create media_upload table
@@ -414,18 +371,9 @@ const up = async function (knex) {
       .references(FieldNameNote.id)
       .inTable(TableNote)
       .onDelete('CASCADE');
-    table.primary([
-      FieldNameUserPinnedNote.userId,
-      FieldNameUserPinnedNote.noteId,
-    ]);
-    table.index(
-      [FieldNameUserPinnedNote.userId],
-      'idx_user_pinned_note_user_id',
-    );
-    table.index(
-      [FieldNameUserPinnedNote.noteId],
-      'idx_user_pinned_note_note_id',
-    );
+    table.primary([FieldNameUserPinnedNote.userId, FieldNameUserPinnedNote.noteId]);
+    table.index([FieldNameUserPinnedNote.userId], 'idx_user_pinned_note_user_id');
+    table.index([FieldNameUserPinnedNote.noteId], 'idx_user_pinned_note_note_id');
   });
 
   // Create visited_notes table

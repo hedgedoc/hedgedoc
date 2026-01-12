@@ -3,24 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  NoSubdirectoryAllowedError,
-  parseUrl,
-  WrongProtocolError,
-} from '@hedgedoc/commons';
+import { NoSubdirectoryAllowedError, parseUrl, WrongProtocolError } from '@hedgedoc/commons';
 import { registerAs } from '@nestjs/config';
 import z, { RefinementCtx } from 'zod';
 
 import { Loglevel } from './loglevel.enum';
-import {
-  parseOptionalBoolean,
-  parseOptionalNumber,
-  printConfigErrorAndExit,
-} from './utils';
-import {
-  buildErrorMessage,
-  extractDescriptionFromZodIssue,
-} from './zod-error-message';
+import { parseOptionalBoolean, parseOptionalNumber, printConfigErrorAndExit } from './utils';
+import { buildErrorMessage, extractDescriptionFromZodIssue } from './zod-error-message';
 
 /**
  * Validates that a given URL is valid, uses the HTTP or HTTPS protocol, and does not end with a slash
@@ -71,22 +60,13 @@ const schema = z
       .superRefine(validateUrl)
       .default('')
       .describe('HD_RENDERER_BASE_URL'),
-    backendPort: z
-      .number()
-      .positive()
-      .int()
-      .max(65535)
-      .default(3000)
-      .describe('HD_BACKEND_PORT'),
+    backendPort: z.number().positive().int().max(65535).default(3000).describe('HD_BACKEND_PORT'),
     log: z.object({
       level: z
         .enum(Object.values(Loglevel) as [Loglevel, ...Loglevel[]])
         .default(Loglevel.INFO)
         .describe('HD_LOG_LEVEL'),
-      showTimestamp: z
-        .boolean()
-        .default(true)
-        .describe('HD_LOG_SHOW_TIMESTAMP'),
+      showTimestamp: z.boolean().default(true).describe('HD_LOG_SHOW_TIMESTAMP'),
     }),
   })
   .transform((data) => {

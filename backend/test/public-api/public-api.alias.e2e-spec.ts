@@ -1,15 +1,14 @@
+import { PUBLIC_API_PREFIX } from '../../src/app.module';
+import { AliasCreateDto } from '../../src/dtos/alias-create.dto';
+import { AliasUpdateDto } from '../../src/dtos/alias-update.dto';
+import { NotInDBError } from '../../src/errors/errors';
+import { noteAlias1, TestSetup, TestSetupBuilder } from '../test-setup';
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import request from 'supertest';
-
-import { PUBLIC_API_PREFIX } from '../../src/app.module';
-import { AliasCreateDto } from '../../src/dtos/alias-create.dto';
-import { AliasUpdateDto } from '../../src/dtos/alias-update.dto';
-import { NotInDBError } from '../../src/errors/errors';
-import { noteAlias1, TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Alias', () => {
   let testSetup: TestSetup;
@@ -21,8 +20,7 @@ describe('Alias', () => {
   beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
     agent = request.agent(testSetup.app.getHttpServer());
-    forbiddenAlias =
-      testSetup.configService.get('noteConfig').forbiddenAliases[0];
+    forbiddenAlias = testSetup.configService.get('noteConfig').forbiddenAliases[0];
     await testSetup.app.init();
     noteId = testSetup.ownedNoteIds[0];
   });
@@ -50,10 +48,8 @@ describe('Alias', () => {
       expect(metadata.body.name).toEqual(normalNewAlias);
       expect(metadata.body.isPrimaryAlias).toBe(false);
 
-      const noteId =
-        await testSetup.notesService.getNoteIdByAlias(normalNewAlias);
-      const noteMetadata =
-        await testSetup.notesService.toNoteMetadataDto(noteId);
+      const noteId = await testSetup.notesService.getNoteIdByAlias(normalNewAlias);
+      const noteMetadata = await testSetup.notesService.toNoteMetadataDto(noteId);
 
       expect(noteMetadata.aliases).toContainEqual(normalNewAlias);
       expect(noteMetadata.primaryAlias).toEqual(noteAlias1);
@@ -191,13 +187,9 @@ describe('Alias', () => {
     const secondAlias = 'second-alias';
 
     it('deletes a normal alias', async () => {
-      await testSetup.aliasService.addAlias(
-        testSetup.ownedNoteIds[0],
-        secondAlias,
-      );
+      await testSetup.aliasService.addAlias(testSetup.ownedNoteIds[0], secondAlias);
 
-      const noteIdBefore =
-        await testSetup.notesService.getNoteIdByAlias(secondAlias);
+      const noteIdBefore = await testSetup.notesService.getNoteIdByAlias(secondAlias);
       expect(noteIdBefore).toBeDefined();
 
       await agent
@@ -205,9 +197,9 @@ describe('Alias', () => {
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect(204);
 
-      await expect(
-        testSetup.notesService.getNoteIdByAlias(secondAlias),
-      ).rejects.toThrow(NotInDBError);
+      await expect(testSetup.notesService.getNoteIdByAlias(secondAlias)).rejects.toThrow(
+        NotInDBError,
+      );
     });
 
     describe('does not delete', () => {
@@ -234,24 +226,18 @@ describe('Alias', () => {
 
       it('if alias is primary', async () => {
         // add another alias
-        await testSetup.aliasService.addAlias(
-          testSetup.ownedNoteIds[0],
-          secondAlias,
-        );
+        await testSetup.aliasService.addAlias(testSetup.ownedNoteIds[0], secondAlias);
 
         // try to delete the primary alias
         await agent
           .delete(`${PUBLIC_API_PREFIX}/alias/${noteAlias1}`)
           .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
           .expect(400);
-        const noteId =
-          await testSetup.notesService.getNoteIdByAlias(secondAlias);
+        const noteId = await testSetup.notesService.getNoteIdByAlias(secondAlias);
         expect(noteId).toBeDefined();
       });
       it('if no token is provided', async () => {
-        await agent
-          .delete(`${PUBLIC_API_PREFIX}/alias/${secondAlias}`)
-          .expect(403);
+        await agent.delete(`${PUBLIC_API_PREFIX}/alias/${secondAlias}`).expect(403);
       });
     });
   });

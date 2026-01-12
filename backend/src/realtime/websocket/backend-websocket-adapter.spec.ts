@@ -36,33 +36,23 @@ describe('Backend websocket adapter', () => {
 
   it('can bind and unbind the close event', () => {
     const handler = jest.fn((reason?: DisconnectReasonCode) =>
-      console.log(
-        DisconnectReason[reason ?? DisconnectReasonCode.INTERNAL_ERROR],
-      ),
+      console.log(DisconnectReason[reason ?? DisconnectReasonCode.INTERNAL_ERROR]),
     );
 
     let modifiedHandler:
       | ((event: CloseEvent | Event | ErrorEvent | MessageEvent) => void)
       | {
-          handleEvent(
-            event: CloseEvent | Event | ErrorEvent | MessageEvent,
-          ): void;
+          handleEvent(event: CloseEvent | Event | ErrorEvent | MessageEvent): void;
         } = jest.fn();
-    jest
-      .spyOn(mockedSocket, 'addEventListener')
-      .mockImplementation((event, handler_) => {
-        modifiedHandler = handler_;
-      });
+    jest.spyOn(mockedSocket, 'addEventListener').mockImplementation((event, handler_) => {
+      modifiedHandler = handler_;
+    });
 
     const unbind = sut.bindOnCloseEvent(handler);
 
-    modifiedHandler(
-      Mock.of<CloseEvent>({ code: DisconnectReasonCode.USER_NOT_PERMITTED }),
-    );
+    modifiedHandler(Mock.of<CloseEvent>({ code: DisconnectReasonCode.USER_NOT_PERMITTED }));
     expect(handler).toHaveBeenCalledTimes(1);
-    expect(handler).toHaveBeenCalledWith(
-      DisconnectReasonCode.USER_NOT_PERMITTED,
-    );
+    expect(handler).toHaveBeenCalledWith(DisconnectReasonCode.USER_NOT_PERMITTED);
 
     unbind();
 
@@ -74,24 +64,15 @@ describe('Backend websocket adapter', () => {
     const unbind = sut.bindOnConnectedEvent(handler);
     expect(mockedSocket.addEventListener).toHaveBeenCalledWith('open', handler);
     unbind();
-    expect(mockedSocket.removeEventListener).toHaveBeenCalledWith(
-      'open',
-      handler,
-    );
+    expect(mockedSocket.removeEventListener).toHaveBeenCalledWith('open', handler);
   });
 
   it('can bind and unbind the error event', () => {
     const handler = jest.fn();
     const unbind = sut.bindOnErrorEvent(handler);
-    expect(mockedSocket.addEventListener).toHaveBeenCalledWith(
-      'error',
-      handler,
-    );
+    expect(mockedSocket.addEventListener).toHaveBeenCalledWith('error', handler);
     unbind();
-    expect(mockedSocket.removeEventListener).toHaveBeenCalledWith(
-      'error',
-      handler,
-    );
+    expect(mockedSocket.removeEventListener).toHaveBeenCalledWith('error', handler);
   });
 
   it('can bind, unbind and translate the message event', () => {
@@ -100,15 +81,11 @@ describe('Backend websocket adapter', () => {
     let modifiedHandler:
       | ((event: CloseEvent | Event | ErrorEvent | MessageEvent) => void)
       | {
-          handleEvent(
-            event: CloseEvent | Event | ErrorEvent | MessageEvent,
-          ): void;
+          handleEvent(event: CloseEvent | Event | ErrorEvent | MessageEvent): void;
         } = jest.fn();
-    jest
-      .spyOn(mockedSocket, 'addEventListener')
-      .mockImplementation((event, handler_) => {
-        modifiedHandler = handler_;
-      });
+    jest.spyOn(mockedSocket, 'addEventListener').mockImplementation((event, handler_) => {
+      modifiedHandler = handler_;
+    });
 
     const unbind = sut.bindOnMessageEvent(handler);
 
@@ -118,15 +95,9 @@ describe('Backend websocket adapter', () => {
     modifiedHandler(Mock.of<MessageEvent>({ data: '{ "type": "READY" }' }));
     expect(handler).toHaveBeenCalledWith({ type: 'READY' });
 
-    expect(mockedSocket.addEventListener).toHaveBeenCalledWith(
-      'message',
-      modifiedHandler,
-    );
+    expect(mockedSocket.addEventListener).toHaveBeenCalledWith('message', modifiedHandler);
     unbind();
-    expect(mockedSocket.removeEventListener).toHaveBeenCalledWith(
-      'message',
-      modifiedHandler,
-    );
+    expect(mockedSocket.removeEventListener).toHaveBeenCalledWith('message', modifiedHandler);
   });
 
   it('can disconnect the socket', () => {

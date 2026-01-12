@@ -1,3 +1,9 @@
+import { PUBLIC_API_PREFIX } from '../../src/app.module';
+import { MediaUploadDto } from '../../src/dtos/media-upload.dto';
+import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
+import { getCurrentDateTime, isoStringToDateTime } from '../../src/utils/datetime';
+import { noteAlias1, TestSetup, TestSetupBuilder, username1 } from '../test-setup';
+import { ensureDeleted } from '../utils';
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
@@ -6,21 +12,6 @@
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import request from 'supertest';
-
-import { PUBLIC_API_PREFIX } from '../../src/app.module';
-import { MediaUploadDto } from '../../src/dtos/media-upload.dto';
-import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
-import {
-  getCurrentDateTime,
-  isoStringToDateTime,
-} from '../../src/utils/datetime';
-import {
-  noteAlias1,
-  TestSetup,
-  TestSetupBuilder,
-  username1,
-} from '../test-setup';
-import { ensureDeleted } from '../utils';
 
 describe('Media', () => {
   let testSetup: TestSetup;
@@ -34,8 +25,7 @@ describe('Media', () => {
     agent = request.agent(testSetup.app.getHttpServer());
 
     testImage = await fs.readFile('test/public-api/fixtures/test.png');
-    uploadPath =
-      testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
+    uploadPath = testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
 
     testSetup.app.useStaticAssets(uploadPath, {
       prefix: '/uploads',
@@ -138,8 +128,7 @@ describe('Media', () => {
       const mediaDto: MediaUploadDto = response.body;
       expect(mediaDto.uuid).toEqual(uuid);
       expect(
-        isoStringToDateTime(mediaDto.createdAt).toMillis() -
-          hardCodedNow.toMillis(),
+        isoStringToDateTime(mediaDto.createdAt).toMillis() - hardCodedNow.toMillis(),
       ).toBeLessThan(100);
       expect(mediaDto.noteAlias).toEqual(noteAlias1);
       expect(mediaDto.fileName).toEqual(fileName);

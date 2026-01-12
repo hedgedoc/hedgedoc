@@ -60,9 +60,7 @@ describe('externalServices', () => {
         },
       );
       externalServicesConfig();
-      expect(spyConsoleError.mock.calls[0][0]).toContain(
-        'HD_PLANTUML_SERVER: Invalid url',
-      );
+      expect(spyConsoleError.mock.calls[0][0]).toContain('HD_PLANTUML_SERVER: Invalid url');
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });

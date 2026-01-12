@@ -26,8 +26,7 @@ describe('get note interceptor', () => {
 
   beforeEach(() => {
     notesService = Mock.of<NoteService>({
-      getNoteIdByAlias: (id) =>
-        id === mockNoteId ? Promise.resolve(mockNote) : Promise.reject(),
+      getNoteIdByAlias: (id) => (id === mockNoteId ? Promise.resolve(mockNote) : Promise.reject()),
     });
     noteFetchSpy = jest.spyOn(notesService, 'getNoteIdByAlias');
   });

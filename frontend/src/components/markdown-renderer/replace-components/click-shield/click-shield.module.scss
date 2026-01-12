@@ -19,7 +19,9 @@
   .preview-hover {
     color: white;
     transition: text-shadow 0.2s;
-    text-shadow: #000000 0 0 5px, #000000 0 0 20px;
+    text-shadow:
+      #000000 0 0 5px,
+      #000000 0 0 20px;
 
     display: flex;
     flex-direction: column;
@@ -29,7 +31,9 @@
 
   &:hover {
     .preview-hover {
-      text-shadow: #000000 0 0 20px, #000000 0 0 40px;
+      text-shadow:
+        #000000 0 0 20px,
+        #000000 0 0 40px;
     }
   }
 

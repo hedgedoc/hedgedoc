@@ -52,7 +52,4 @@ export enum FieldNameMediaUpload {
 
 export const TableMediaUpload = 'media_upload'
 
-export type TypeUpdateMediaUpload = Pick<
-  MediaUpload,
-  FieldNameMediaUpload.noteId
->
+export type TypeUpdateMediaUpload = Pick<MediaUpload, FieldNameMediaUpload.noteId>

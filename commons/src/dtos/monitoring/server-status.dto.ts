@@ -24,14 +24,8 @@ export const ServerStatusSchema = z
       .describe(
         'Number of user that are currently working on notes. Each user only counts only once.',
       ),
-    notesCount: z
-      .number()
-      .positive()
-      .describe('Number of notes on the instance'),
-    registeredUsers: z
-      .number()
-      .positive()
-      .describe('Number of user that are currently registered'),
+    notesCount: z.number().positive().describe('Number of notes on the instance'),
+    registeredUsers: z.number().positive().describe('Number of user that are currently registered'),
     onlineRegisteredUsers: z
       .number()
       .positive()
@@ -42,16 +36,12 @@ export const ServerStatusSchema = z
       .describe(
         'Number of user that are currently registered and online. Each user only counts only once.',
       ),
-    isConnectionBusy: z
-      .boolean()
-      .describe('If the connection is currently busy'),
+    isConnectionBusy: z.boolean().describe('If the connection is currently busy'),
     connectionSocketQueueLength: z
       .number()
       .positive()
       .describe('Number of connections in the queue'),
-    isDisconnectBusy: z
-      .boolean()
-      .describe('If the connection is currently busy'),
+    isDisconnectBusy: z.boolean().describe('If the connection is currently busy'),
     disconnectSocketQueueLength: z
       .number()
       .positive()

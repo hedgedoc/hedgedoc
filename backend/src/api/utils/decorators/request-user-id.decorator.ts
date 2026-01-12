@@ -4,11 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { AuthProviderType } from '@hedgedoc/commons';
-import {
-  createParamDecorator,
-  ExecutionContext,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { createParamDecorator, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 
 import { CompleteRequest } from '../request.type';
 
@@ -25,10 +21,7 @@ type RequestUserIdParameter = {
  */
 // oxlint-disable-next-line @typescript-eslint/naming-convention
 export const RequestUserId = createParamDecorator(
-  (
-    data: RequestUserIdParameter = { forbidGuests: false },
-    ctx: ExecutionContext,
-  ) => {
+  (data: RequestUserIdParameter = { forbidGuests: false }, ctx: ExecutionContext) => {
     const request: CompleteRequest = ctx.switchToHttp().getRequest();
     if (
       !request.authProviderType ||

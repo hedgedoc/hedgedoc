@@ -17,13 +17,11 @@ import { CompleteRequest } from '../request.type';
  * Will throw an {@link InternalServerErrorException} if no note is present
  */
 // oxlint-disable-next-line @typescript-eslint/naming-convention
-export const RequestNoteId = createParamDecorator(
-  (data: unknown, ctx: ExecutionContext) => {
-    const request: CompleteRequest = ctx.switchToHttp().getRequest();
-    if (!request.noteId) {
-      // We should have a note here, otherwise something is wrong
-      throw new InternalServerErrorException('Request is missing a noteId');
-    }
-    return request.noteId;
-  },
-);
+export const RequestNoteId = createParamDecorator((data: unknown, ctx: ExecutionContext) => {
+  const request: CompleteRequest = ctx.switchToHttp().getRequest();
+  if (!request.noteId) {
+    // We should have a note here, otherwise something is wrong
+    throw new InternalServerErrorException('Request is missing a noteId');
+  }
+  return request.noteId;
+});

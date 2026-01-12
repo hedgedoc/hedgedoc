@@ -22,70 +22,36 @@ import { ZodError } from 'zod';
 
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { ErrorWithContextDetails } from './errors';
-import {
-  buildHttpExceptionObject,
-  HttpExceptionObject,
-} from './http-exception-object';
+import { buildHttpExceptionObject, HttpExceptionObject } from './http-exception-object';
 
 type HttpExceptionConstructor = (object: HttpExceptionObject) => HttpException;
 
-const mapOfHedgeDocErrorsToHttpErrors: Map<string, HttpExceptionConstructor> =
-  new Map([
-    ['NotInDBError', (object): HttpException => new NotFoundException(object)],
-    [
-      'AlreadyInDBError',
-      (object): HttpException => new ConflictException(object),
-    ],
-    [
-      'ForbiddenIdError',
-      (object): HttpException => new ForbiddenException(object),
-    ],
-    ['ClientError', (object): HttpException => new BadRequestException(object)],
-    [
-      'PermissionError',
-      (object): HttpException => new ForbiddenException(object),
-    ],
-    [
-      'TokenNotValidError',
-      (object): HttpException => new UnauthorizedException(object),
-    ],
-    [
-      'TooManyTokensError',
-      (object): HttpException => new BadRequestException(object),
-    ],
-    [
-      'PermissionsUpdateInconsistentError',
-      (object): HttpException => new BadRequestException(object),
-    ],
-    [
-      'MediaBackendError',
-      (object): HttpException => new InternalServerErrorException(object),
-    ],
-    [
-      'PrimaryAliasDeletionForbiddenError',
-      (object): HttpException => new BadRequestException(object),
-    ],
-    [
-      'InvalidCredentialsError',
-      (object): HttpException => new UnauthorizedException(object),
-    ],
-    [
-      'NoLocalIdentityError',
-      (object): HttpException => new BadRequestException(object),
-    ],
-    [
-      'PasswordTooWeakError',
-      (object): HttpException => new BadRequestException(object),
-    ],
-    [
-      'MaximumDocumentLengthExceededError',
-      (object): HttpException => new PayloadTooLargeException(object),
-    ],
-    [
-      'FeatureDisabledError',
-      (object): HttpException => new ForbiddenException(object),
-    ],
-  ]);
+const mapOfHedgeDocErrorsToHttpErrors: Map<string, HttpExceptionConstructor> = new Map([
+  ['NotInDBError', (object): HttpException => new NotFoundException(object)],
+  ['AlreadyInDBError', (object): HttpException => new ConflictException(object)],
+  ['ForbiddenIdError', (object): HttpException => new ForbiddenException(object)],
+  ['ClientError', (object): HttpException => new BadRequestException(object)],
+  ['PermissionError', (object): HttpException => new ForbiddenException(object)],
+  ['TokenNotValidError', (object): HttpException => new UnauthorizedException(object)],
+  ['TooManyTokensError', (object): HttpException => new BadRequestException(object)],
+  [
+    'PermissionsUpdateInconsistentError',
+    (object): HttpException => new BadRequestException(object),
+  ],
+  ['MediaBackendError', (object): HttpException => new InternalServerErrorException(object)],
+  [
+    'PrimaryAliasDeletionForbiddenError',
+    (object): HttpException => new BadRequestException(object),
+  ],
+  ['InvalidCredentialsError', (object): HttpException => new UnauthorizedException(object)],
+  ['NoLocalIdentityError', (object): HttpException => new BadRequestException(object)],
+  ['PasswordTooWeakError', (object): HttpException => new BadRequestException(object)],
+  [
+    'MaximumDocumentLengthExceededError',
+    (object): HttpException => new PayloadTooLargeException(object),
+  ],
+  ['FeatureDisabledError', (object): HttpException => new ForbiddenException(object)],
+]);
 
 @Catch()
 /**
@@ -111,32 +77,20 @@ export class ErrorExceptionMapping extends BaseExceptionFilter<Error> {
    * @returns An HttpException if the error is a HedgeDoc error, otherwise the original error
    */
   private transformError(error: Error): Error {
-    const httpExceptionConstructor = mapOfHedgeDocErrorsToHttpErrors.get(
-      error.name,
-    );
+    const httpExceptionConstructor = mapOfHedgeDocErrorsToHttpErrors.get(error.name);
     if (error instanceof ZodSerializationException) {
       const zodError = error.getZodError();
       if (zodError instanceof ZodError) {
-        this.loggerService.error(
-          `ZodSerializationException: ${zodError.message}`,
-        );
+        this.loggerService.error(`ZodSerializationException: ${zodError.message}`);
       }
     } else if (error instanceof ErrorWithContextDetails) {
-      this.loggerService.error(
-        error.message,
-        undefined,
-        error.functionContext,
-        error.classContext,
-      );
+      this.loggerService.error(error.message, undefined, error.functionContext, error.classContext);
     }
     if (httpExceptionConstructor === undefined) {
       // We don't know how to map this error and just leave it be
       return error;
     }
-    const httpExceptionObject = buildHttpExceptionObject(
-      error.name,
-      error.message,
-    );
+    const httpExceptionObject = buildHttpExceptionObject(error.name, error.message);
     return httpExceptionConstructor(httpExceptionObject);
   }
 }

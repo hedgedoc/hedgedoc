@@ -9,10 +9,7 @@ import { FileTypeResult } from 'file-type';
 import fetch, { Response } from 'node-fetch';
 import { URL } from 'url';
 
-import mediaConfiguration, {
-  MediaConfig,
-  WebdavMediaConfig,
-} from '../../config/media.config';
+import mediaConfiguration, { MediaConfig, WebdavMediaConfig } from '../../config/media.config';
 import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
@@ -40,10 +37,7 @@ export class WebdavBackend implements MediaBackend {
     if (this.config.uploadDir && this.config.uploadDir !== '') {
       this.baseUrl = WebdavBackend.joinURL(this.baseUrl, this.config.uploadDir);
     }
-    this.authHeader = WebdavBackend.generateBasicAuthHeader(
-      url.username,
-      url.password,
-    );
+    this.authHeader = WebdavBackend.generateBasicAuthHeader(url.username, url.password);
     fetch(this.baseUrl, {
       method: 'PROPFIND',
       headers: {
@@ -62,11 +56,7 @@ export class WebdavBackend implements MediaBackend {
       });
   }
 
-  async saveFile(
-    uuid: string,
-    buffer: Buffer,
-    fileType: FileTypeResult,
-  ): Promise<string> {
+  async saveFile(uuid: string, buffer: Buffer, fileType: FileTypeResult): Promise<string> {
     try {
       const contentLength = buffer.length;
       const remoteFileName = `${uuid}.${fileType.ext}`;
@@ -121,26 +111,17 @@ export class WebdavBackend implements MediaBackend {
     if (!file) {
       throw new MediaBackendError('No file name in backend data');
     }
-    return Promise.resolve(
-      WebdavBackend.joinURL(this.config.publicUrl, '/', file),
-    );
+    return Promise.resolve(WebdavBackend.joinURL(this.config.publicUrl, '/', file));
   }
 
-  private static generateBasicAuthHeader(
-    username: string,
-    password: string,
-  ): string {
+  private static generateBasicAuthHeader(username: string, password: string): string {
     const encoded = Buffer.from(`${username}:${password}`).toString('base64');
     return `Basic ${encoded}`;
   }
 
   private static joinURL(...urlParts: Array<string>): string {
     return urlParts.reduce((output, next, index) => {
-      if (
-        index === 0 ||
-        next !== '/' ||
-        (next === '/' && output[output.length - 1] !== '/')
-      ) {
+      if (index === 0 || next !== '/' || (next === '/' && output[output.length - 1] !== '/')) {
         output += next;
       }
       return output;

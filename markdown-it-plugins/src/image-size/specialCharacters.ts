@@ -15,5 +15,5 @@ export enum SpecialCharacters {
   NUMBER_ZERO = 0x30,
   NUMBER_NINE = 0x39,
   PERCENTAGE = 0x25,
-  CLOSING_PARENTHESIS = 0x29
+  CLOSING_PARENTHESIS = 0x29,
 }

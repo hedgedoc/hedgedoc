@@ -13,12 +13,7 @@ import * as uuidModule from 'uuid';
 import appConfigMock from '../config/mock/app.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
 import { expectBindings } from '../database/mock/expect-bindings';
-import {
-  mockDelete,
-  mockInsert,
-  mockSelect,
-  mockUpdate,
-} from '../database/mock/mock-queries';
+import { mockDelete, mockInsert, mockSelect, mockUpdate } from '../database/mock/mock-queries';
 import { mockKnexDb } from '../database/mock/provider';
 import { GenericDBError, NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
@@ -71,12 +66,7 @@ describe('UsersService', () => {
     it('inserts a new user', async () => {
       jest.useFakeTimers();
       const now = getCurrentDateTime();
-      mockSelect(
-        tracker,
-        [FieldNameUser.username],
-        TableUser,
-        FieldNameUser.username,
-      );
+      mockSelect(tracker, [FieldNameUser.username], TableUser, FieldNameUser.username);
       mockInsert(
         tracker,
         TableUser,
@@ -91,35 +81,17 @@ describe('UsersService', () => {
         ],
         [{ [FieldNameUser.id]: userId }],
       );
-      const result = await service.createUser(
-        username,
-        displayName,
-        email,
-        photoUrl,
-      );
+      const result = await service.createUser(username, displayName, email, photoUrl);
       expect(result).toBe(userId);
       expectBindings(tracker, 'select', [[username]]);
       expectBindings(tracker, 'insert', [
-        [
-          expect.any(Number),
-          dateTimeToDB(now),
-          displayName,
-          email,
-          null,
-          photoUrl,
-          username,
-        ],
+        [expect.any(Number), dateTimeToDB(now), displayName, email, null, photoUrl, username],
       ]);
       jest.useRealTimers();
     });
 
     it('throws GenericDBError if insert fails', async () => {
-      mockSelect(
-        tracker,
-        [FieldNameUser.username],
-        TableUser,
-        FieldNameUser.username,
-      );
+      mockSelect(tracker, [FieldNameUser.username], TableUser, FieldNameUser.username);
       mockInsert(
         tracker,
         TableUser,
@@ -133,9 +105,9 @@ describe('UsersService', () => {
         ],
         [],
       );
-      await expect(
-        service.createUser(username, displayName, email, photoUrl),
-      ).rejects.toThrow(GenericDBError);
+      await expect(service.createUser(username, displayName, email, photoUrl)).rejects.toThrow(
+        GenericDBError,
+      );
     });
   });
 
@@ -145,9 +117,7 @@ describe('UsersService', () => {
       const now = getCurrentDateTime();
       // This wrong typecast is required since TypeScript does not see that
       // `uuid.v4()` returns a string or a Uint8Array based on the given options
-      jest
-        .spyOn(uuidModule, 'v4')
-        .mockReturnValue(guestUuid as unknown as Uint8Array);
+      jest.spyOn(uuidModule, 'v4').mockReturnValue(guestUuid as unknown as Uint8Array);
       mockInsert(
         tracker,
         TableUser,
@@ -217,36 +187,19 @@ describe('UsersService', () => {
       mockUpdate(
         tracker,
         TableUser,
-        [
-          FieldNameUser.displayName,
-          FieldNameUser.email,
-          FieldNameUser.photoUrl,
-        ],
+        [FieldNameUser.displayName, FieldNameUser.email, FieldNameUser.photoUrl],
         FieldNameUser.id,
         1,
       );
-      await service.updateUser(
-        userId,
-        'New Name',
-        'new@example.com',
-        'https://new.url',
-      );
+      await service.updateUser(userId, 'New Name', 'new@example.com', 'https://new.url');
       expectBindings(tracker, 'update', [
         ['New Name', 'new@example.com', 'https://new.url', userId],
       ]);
     });
 
     it('throws NotInDBError if update fails', async () => {
-      mockUpdate(
-        tracker,
-        TableUser,
-        [FieldNameUser.displayName],
-        FieldNameUser.id,
-        0,
-      );
-      await expect(service.updateUser(userId, 'New Name')).rejects.toThrow(
-        NotInDBError,
-      );
+      mockUpdate(tracker, TableUser, [FieldNameUser.displayName], FieldNameUser.id, 0);
+      await expect(service.updateUser(userId, 'New Name')).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'update', [['New Name', userId]]);
     });
 

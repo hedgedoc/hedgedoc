@@ -25,8 +25,7 @@ describe('hashPassword', () => {
      * \________/\___/\______________/\_____________________/\_________________________________________/
      *     Alg    Ver    Parameters            Salt                               Hash
      */
-    const regexArgon2 =
-      /^\$argon2id\$v=19\$m=19456,t=2,p=1\$[\w+./]{22}\$[\w+./]{43}$/;
+    const regexArgon2 = /^\$argon2id\$v=19\$m=19456,t=2,p=1\$[\w+./]{22}\$[\w+./]{43}$/;
     const hash = await hashPassword(testPassword);
     expect(regexArgon2.test(hash)).toBe(true);
   });
@@ -49,9 +48,7 @@ describe('checkPassword', () => {
   });
   it('fails, if password is non-matching', async () => {
     const password = 'anotherTestPassword';
-    await checkPassword(password, hashOfTestPassword).then((result) =>
-      expect(result).toBe(false),
-    );
+    await checkPassword(password, hashOfTestPassword).then((result) => expect(result).toBe(false));
   });
   it('calls argon2.verify with the correct parameters', async () => {
     const spy = jest.spyOn(argon2, 'verify');
@@ -62,21 +59,17 @@ describe('checkPassword', () => {
     const password = 'a'.repeat(70);
     const hash =
       '$argon2id$v=19$m=19456,t=2,p=1$4aBLKxd7MqYQqf/th835yQ$iUMe+HHphn8B8q6gQ3IPL2k1+Bdbb505r7LuqZIMTjg';
-    await checkPassword(password, hash).then((result) =>
-      expect(result).toBe(true),
-    );
+    await checkPassword(password, hash).then((result) => expect(result).toBe(true));
     const password2 = 'a'.repeat(73);
-    await checkPassword(password2, hash).then((result) =>
-      expect(result).toBe(false),
-    );
+    await checkPassword(password2, hash).then((result) => expect(result).toBe(false));
   });
 });
 
 describe('bufferToBase64Url', () => {
   it('transforms a buffer to the correct base64url encoded string', () => {
-    expect(
-      bufferToBase64Url(Buffer.from('testsentence is a test sentence')),
-    ).toEqual('dGVzdHNlbnRlbmNlIGlzIGEgdGVzdCBzZW50ZW5jZQ');
+    expect(bufferToBase64Url(Buffer.from('testsentence is a test sentence'))).toEqual(
+      'dGVzdHNlbnRlbmNlIGlzIGEgdGVzdCBzZW50ZW5jZQ',
+    );
   });
 });
 

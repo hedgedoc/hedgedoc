@@ -5,14 +5,7 @@
  */
 import { AuthProviderType } from '@hedgedoc/commons';
 import { FieldNameIdentity } from '@hedgedoc/database';
-import {
-  Body,
-  Controller,
-  InternalServerErrorException,
-  Param,
-  Post,
-  Req,
-} from '@nestjs/common';
+import { Body, Controller, InternalServerErrorException, Param, Post, Req } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { IdentityService } from '../../../../auth/identity.service';
@@ -52,12 +45,11 @@ export class LdapController {
       loginDto.password,
     );
     try {
-      const identity =
-        await this.identityService.getIdentityFromUserIdAndProviderType(
-          userInfo.id,
-          AuthProviderType.LDAP,
-          ldapIdentifier,
-        );
+      const identity = await this.identityService.getIdentityFromUserIdAndProviderType(
+        userInfo.id,
+        AuthProviderType.LDAP,
+        ldapIdentifier,
+      );
       if (this.identityService.mayUpdateIdentity(ldapIdentifier)) {
         await this.usersService.updateUser(
           identity[FieldNameIdentity.userId],

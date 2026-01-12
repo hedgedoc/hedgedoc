@@ -3,12 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  ConnectionState,
-  DisconnectReasonCode,
-  Message,
-  MessageType,
-} from '@hedgedoc/commons';
+import { ConnectionState, DisconnectReasonCode, Message, MessageType } from '@hedgedoc/commons';
 import type { TransportAdapter } from '@hedgedoc/commons';
 import WebSocket, { CloseEvent, MessageEvent } from 'ws';
 
@@ -18,9 +13,7 @@ import WebSocket, { CloseEvent, MessageEvent } from 'ws';
 export class BackendWebsocketAdapter implements TransportAdapter {
   constructor(private socket: WebSocket) {}
 
-  bindOnCloseEvent(
-    handler: (reason?: DisconnectReasonCode) => void,
-  ): () => void {
+  bindOnCloseEvent(handler: (reason?: DisconnectReasonCode) => void): () => void {
     function callback(event: CloseEvent): void {
       handler(event.code);
     }
@@ -44,9 +37,7 @@ export class BackendWebsocketAdapter implements TransportAdapter {
     };
   }
 
-  bindOnMessageEvent(
-    handler: (value: Message<MessageType>) => void,
-  ): () => void {
+  bindOnMessageEvent(handler: (value: Message<MessageType>) => void): () => void {
     function adjustedHandler(message: MessageEvent): void {
       if (typeof message.data !== 'string') {
         return;

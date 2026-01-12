@@ -7,13 +7,8 @@ import { z } from 'zod'
 
 export const LoginSchema = z
   .object({
-    username: z
-      .string()
-      .toLowerCase()
-      .describe('The username to log in with local authentication'),
-    password: z
-      .string()
-      .describe('The password to log in with local authentication'),
+    username: z.string().toLowerCase().describe('The username to log in with local authentication'),
+    password: z.string().describe('The password to log in with local authentication'),
   })
   .describe('DTO for the login form of local accounts')
 

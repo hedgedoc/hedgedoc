@@ -1,3 +1,10 @@
+import { PRIVATE_API_PREFIX } from '../../src/app.module';
+import { LoginDto } from '../../src/dtos/login.dto';
+import { RegisterDto } from '../../src/dtos/register.dto';
+import { UpdatePasswordDto } from '../../src/dtos/update-password.dto';
+import { NotInDBError } from '../../src/errors/errors';
+import { checkPassword } from '../../src/utils/password';
+import { TestSetup, TestSetupBuilder } from '../test-setup';
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
@@ -7,20 +14,8 @@
 @typescript-eslint/no-unsafe-assignment,
 @typescript-eslint/no-unsafe-member-access
 */
-import {
-  AuthProviderType,
-  FieldNameIdentity,
-  FieldNameUser,
-} from '@hedgedoc/database';
+import { AuthProviderType, FieldNameIdentity, FieldNameUser } from '@hedgedoc/database';
 import request from 'supertest';
-
-import { PRIVATE_API_PREFIX } from '../../src/app.module';
-import { LoginDto } from '../../src/dtos/login.dto';
-import { RegisterDto } from '../../src/dtos/register.dto';
-import { UpdatePasswordDto } from '../../src/dtos/update-password.dto';
-import { NotInDBError } from '../../src/errors/errors';
-import { checkPassword } from '../../src/utils/password';
-import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Auth', () => {
   let testSetup: TestSetup;
@@ -55,22 +50,17 @@ describe('Auth', () => {
         .set('Content-Type', 'application/json')
         .send(JSON.stringify(registrationDto))
         .expect(201);
-      const newUserId =
-        await testSetup.usersService.getUserIdByUsername(username);
+      const newUserId = await testSetup.usersService.getUserIdByUsername(username);
       expect(newUserId).toBeDefined();
       const newUser = await testSetup.usersService.getUserById(newUserId);
       expect(newUser[FieldNameUser.displayName]).toEqual(displayName);
-      const newUserIdentity =
-        await testSetup.identityService.getIdentityFromUserIdAndProviderType(
-          username,
-          AuthProviderType.LOCAL,
-          null,
-        );
+      const newUserIdentity = await testSetup.identityService.getIdentityFromUserIdAndProviderType(
+        username,
+        AuthProviderType.LOCAL,
+        null,
+      );
       await expect(
-        checkPassword(
-          password,
-          newUserIdentity[FieldNameIdentity.passwordHash] ?? '',
-        ),
+        checkPassword(password, newUserIdentity[FieldNameIdentity.passwordHash] ?? ''),
       ).resolves.toBe(true);
       await testSetup.usersService.deleteUser(newUserId);
     });
@@ -121,9 +111,9 @@ describe('Auth', () => {
           .send(JSON.stringify(registrationDto))
           .expect(400);
         expect(response.text).toContain('PasswordTooWeakError');
-        await expect(() =>
-          testSetup.usersService.getUserDtoByUsername(username),
-        ).rejects.toThrow(NotInDBError);
+        await expect(() => testSetup.usersService.getUserDtoByUsername(username)).rejects.toThrow(
+          NotInDBError,
+        );
       });
     });
   });

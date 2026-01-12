@@ -3,11 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import {
-  PermissionLevel,
-  PermissionLevelNames,
-  PermissionLevelValues,
-} from '@hedgedoc/commons';
+import { PermissionLevel, PermissionLevelNames, PermissionLevelValues } from '@hedgedoc/commons';
 import { registerAs } from '@nestjs/config';
 import z from 'zod';
 
@@ -17,10 +13,7 @@ import {
   printConfigErrorAndExit,
   toArrayConfig,
 } from './utils';
-import {
-  buildErrorMessage,
-  extractDescriptionFromZodIssue,
-} from './zod-error-message';
+import { buildErrorMessage, extractDescriptionFromZodIssue } from './zod-error-message';
 
 const schema = z
   .object({
@@ -88,10 +81,7 @@ const schema = z
     const defaultEveryone = config.permissions.default.everyone;
     const defaultLoggedIn = config.permissions.default.loggedIn;
     const maxGuestLevel = config.permissions.maxGuestLevel;
-    if (
-      maxGuestLevel === PermissionLevel.FULL &&
-      defaultEveryone !== PermissionLevel.WRITE
-    ) {
+    if (maxGuestLevel === PermissionLevel.FULL && defaultEveryone !== PermissionLevel.WRITE) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: `'HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL' is set to '${PermissionLevelNames[maxGuestLevel]}', but 'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[defaultEveryone]}'. This does not allow the guest users to write in the notes they can create.`,
@@ -130,9 +120,7 @@ export default registerAs('noteConfig', () => {
         ),
       },
     },
-    revisionRetentionDays: parseOptionalNumber(
-      process.env.HD_NOTE_REVISION_RETENTION_DAYS,
-    ),
+    revisionRetentionDays: parseOptionalNumber(process.env.HD_NOTE_REVISION_RETENTION_DAYS),
     persistInterval: parseOptionalNumber(process.env.HD_NOTE_PERSIST_INTERVAL),
   });
   if (noteConfig.error) {

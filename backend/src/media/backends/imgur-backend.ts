@@ -8,10 +8,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import fetch, { Response } from 'node-fetch';
 import { URLSearchParams } from 'url';
 
-import mediaConfiguration, {
-  ImgurMediaConfig,
-  MediaConfig,
-} from '../../config/media.config';
+import mediaConfiguration, { ImgurMediaConfig, MediaConfig } from '../../config/media.config';
 import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
@@ -66,11 +63,7 @@ export class ImgurBackend implements MediaBackend {
       };
       return JSON.stringify(backendData);
     } catch (e) {
-      this.logger.error(
-        `error: ${(e as Error).message}`,
-        (e as Error).stack,
-        'saveFile',
-      );
+      this.logger.error(`error: ${(e as Error).message}`, (e as Error).stack, 'saveFile');
       throw new MediaBackendError(`Could not save file ${uuid}`);
     }
   }
@@ -83,24 +76,17 @@ export class ImgurBackend implements MediaBackend {
       );
     }
     try {
-      const result = await fetch(
-        `https://api.imgur.com/3/image/${backendData.deleteHash}`,
-        {
-          method: 'DELETE',
-          // oxlint-disable-next-line @typescript-eslint/naming-convention
-          headers: { Authorization: `Client-ID ${this.config.clientId}` },
-        },
-      );
+      const result = await fetch(`https://api.imgur.com/3/image/${backendData.deleteHash}`, {
+        method: 'DELETE',
+        // oxlint-disable-next-line @typescript-eslint/naming-convention
+        headers: { Authorization: `Client-ID ${this.config.clientId}` },
+      });
       ImgurBackend.checkStatus(result);
       // oxlint-disable-next-line @typescript-eslint/no-base-to-string
       this.logger.log(`Deleted file ${uuid}`, 'deleteFile');
       return;
     } catch (e) {
-      this.logger.error(
-        `error: ${(e as Error).message}`,
-        (e as Error).stack,
-        'deleteFile',
-      );
+      this.logger.error(`error: ${(e as Error).message}`, (e as Error).stack, 'deleteFile');
       throw new MediaBackendError(`Could not delete file '${uuid}'`);
     }
   }

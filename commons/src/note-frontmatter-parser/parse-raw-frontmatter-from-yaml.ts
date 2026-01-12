@@ -4,11 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { defaultNoteFrontmatter } from '../note-frontmatter/index.js'
-import {
-  NoteTextDirection,
-  NoteType,
-  OpenGraph,
-} from '../note-frontmatter/index.js'
+import { NoteTextDirection, NoteType, OpenGraph } from '../note-frontmatter/index.js'
 import { SlideOptions } from '../note-frontmatter/index.js'
 import { ISO6391 } from '../note-frontmatter/iso6391.js'
 import type { RawNoteFrontmatter } from './types.js'
@@ -18,14 +14,8 @@ import { load } from 'js-yaml'
 
 const schema = Joi.object<RawNoteFrontmatter>({
   title: Joi.string().optional().default(defaultNoteFrontmatter.title),
-  description: Joi.string()
-    .optional()
-    .default(defaultNoteFrontmatter.description),
-  tags: Joi.alternatives(
-    Joi.array().items(Joi.string()),
-    Joi.string(),
-    Joi.number().cast('string'),
-  )
+  description: Joi.string().optional().default(defaultNoteFrontmatter.description),
+  tags: Joi.alternatives(Joi.array().items(Joi.string()), Joi.string(), Joi.number().cast('string'))
     .optional()
     .default(defaultNoteFrontmatter.tags),
   robots: Joi.string().optional().default(defaultNoteFrontmatter.robots),
@@ -38,9 +28,7 @@ const schema = Joi.object<RawNoteFrontmatter>({
     .valid(...Object.values(NoteTextDirection))
     .optional()
     .default(defaultNoteFrontmatter.dir),
-  breaks: Joi.boolean()
-    .optional()
-    .default(defaultNoteFrontmatter.newlinesAreBreaks),
+  breaks: Joi.boolean().optional().default(defaultNoteFrontmatter.newlinesAreBreaks),
   license: Joi.string().optional().default(defaultNoteFrontmatter.license),
   type: Joi.string()
     .valid(...Object.values(NoteType))

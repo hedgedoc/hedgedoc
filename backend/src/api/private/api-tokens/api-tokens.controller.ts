@@ -4,15 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { FieldNameUser, User } from '@hedgedoc/database';
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { DateTime } from 'luxon';
 
@@ -40,9 +32,7 @@ export class ApiTokensController {
 
   @Get()
   @OpenApi(200)
-  getUserTokens(
-    @RequestUserId({ forbidGuests: true }) userId: number,
-  ): Promise<ApiTokenDto[]> {
+  getUserTokens(@RequestUserId({ forbidGuests: true }) userId: number): Promise<ApiTokenDto[]> {
     return this.apiTokenService.getTokensOfUserById(userId);
   }
 
@@ -56,11 +46,7 @@ export class ApiTokensController {
     if (createDto.validUntil !== undefined) {
       validUntil = isoStringToDateTime(createDto.validUntil);
     }
-    return await this.apiTokenService.createToken(
-      userId,
-      createDto.label,
-      validUntil,
-    );
+    return await this.apiTokenService.createToken(userId, createDto.label, validUntil);
   }
 
   @Delete('/:keyId')

@@ -42,9 +42,9 @@ describe('config utils', () => {
       );
     });
     it('throws error if there are multiple duplicates', () => {
-      expect(() =>
-        ensureNoDuplicatesExist('Test', ['A', 'A', 'B', 'B']),
-      ).toThrow("Your Test names 'A,A,B,B' contain duplicates: 'A,B'");
+      expect(() => ensureNoDuplicatesExist('Test', ['A', 'A', 'B', 'B'])).toThrow(
+        "Your Test names 'A,A,B,B' contain duplicates: 'A,B'",
+      );
     });
   });
   describe('toArrayConfig', () => {
@@ -59,11 +59,7 @@ describe('config utils', () => {
       expect(toArrayConfig('one, two, three')).toEqual(['one', 'two', 'three']);
     });
     it('non default seperator', () => {
-      expect(toArrayConfig('one ; two ; three', ';')).toEqual([
-        'one',
-        'two',
-        'three',
-      ]);
+      expect(toArrayConfig('one ; two ; three', ';')).toEqual(['one', 'two', 'three']);
     });
   });
   describe('needToLog', () => {
