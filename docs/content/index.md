@@ -57,7 +57,7 @@ There are different ways how you can participate in the HedgeDoc project:
 - Read the [getting started how-to for developers][how-to-dev] to start implementing
   your own features.
 
-[![Deployed using netlify](https://www.netlify.com/img/global/badgesnetlify-color-accent.svg)](https://www.netlify.com)
+[![Deployed using netlify](https://www.netlify.com/assets/badges/netlify-badge-color-accent.svg)](https://www.netlify.com)
 
 [hedgedoc-tour]: https://tour.hedgedoc.org
 [install-guide]: tutorials/setup.md
