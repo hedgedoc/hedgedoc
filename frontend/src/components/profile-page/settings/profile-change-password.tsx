@@ -14,6 +14,7 @@ import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { useAsyncFn } from 'react-use'
+import { MIN_PASSWORD_LENGTH } from '@hedgedoc/commons'
 
 /**
  * Profile page section for changing the password when using internal login.
@@ -61,11 +62,7 @@ export const ProfileChangePassword: React.FC = () => {
 
   const ready = useMemo(() => {
     return (
-      !loading &&
-      oldPassword.trim() !== '' &&
-      newPassword.trim() !== '' &&
-      newPasswordAgain.trim() !== '' &&
-      newPassword === newPasswordAgain
+      !loading && oldPassword !== '' && newPassword.length >= MIN_PASSWORD_LENGTH && newPassword === newPasswordAgain
     )
   }, [loading, oldPassword, newPassword, newPasswordAgain])
 
