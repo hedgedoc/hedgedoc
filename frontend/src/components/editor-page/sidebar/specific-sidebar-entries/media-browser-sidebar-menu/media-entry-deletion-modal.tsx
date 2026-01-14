@@ -22,16 +22,16 @@ type MediaEntryDeletionModalProps = Pick<MediaEntryProps, 'entry'> & ModalVisibi
  */
 export const MediaEntryDeletionModal: React.FC<MediaEntryDeletionModalProps> = ({ entry, show, onHide }) => {
   useTranslation()
-  const { showErrorNotification, dispatchUiNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder, dispatchUiNotification } = useUiNotifications()
 
   const handleDelete = useCallback(() => {
     deleteUploadedMedia(entry.uuid)
       .then(() => {
         dispatchUiNotification('common.success', 'editor.mediaBrowser.mediaDeleted', {})
       })
-      .catch(showErrorNotification('editor.mediaBrowser.errorDeleting'))
+      .catch(showErrorNotificationBuilder('editor.mediaBrowser.errorDeleting'))
       .finally(onHide)
-  }, [showErrorNotification, dispatchUiNotification, entry, onHide])
+  }, [showErrorNotificationBuilder, dispatchUiNotification, entry, onHide])
 
   return (
     <DeletionModal

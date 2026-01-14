@@ -32,7 +32,7 @@ export interface NotesListProps {
  */
 export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, typeFilter }) => {
   const [entries, setEntries] = useState<NoteExploreEntryInterface[]>([])
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
   const [moreDataAvailable, setMoreDataAvailable] = useState(true)
   const lastPage = useRef<number>(0)
   const lastFilters = useRef({})
@@ -57,9 +57,9 @@ export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, 
             setEntries((prev) => [...prev, ...data])
           }
         })
-        .catch(showErrorNotification('explore.errorLoadingEntries'))
+        .catch(showErrorNotificationBuilder('explore.errorLoadingEntries'))
     },
-    [mode, sort, searchFilter, typeFilter, showErrorNotification]
+    [mode, sort, searchFilter, typeFilter, showErrorNotificationBuilder]
   )
 
   const updateExplorePage = useCallback(() => {

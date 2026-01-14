@@ -20,15 +20,17 @@ import { Trans } from 'react-i18next'
  * @param onHide Callback that is fired when the modal is requested to close.
  */
 export const RevisionDeleteModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
   const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
 
   const deleteAllRevisions = useCallback(() => {
     if (!noteAlias) {
       return
     }
-    deleteRevisionsForNote(noteAlias).catch(showErrorNotification('editor.modal.deleteRevision.error')).finally(onHide)
-  }, [noteAlias, onHide, showErrorNotification])
+    deleteRevisionsForNote(noteAlias)
+      .catch(showErrorNotificationBuilder('editor.modal.deleteRevision.error'))
+      .finally(onHide)
+  }, [noteAlias, onHide, showErrorNotificationBuilder])
 
   return (
     <CommonModal

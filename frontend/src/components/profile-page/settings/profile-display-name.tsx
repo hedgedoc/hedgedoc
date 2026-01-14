@@ -21,7 +21,7 @@ export const ProfileDisplayName: React.FC = () => {
   useTranslation()
   const userName = useApplicationState((state) => state.user?.displayName)
   const [displayName, setDisplayName] = useState(userName ?? '')
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
 
   const onChangeDisplayName = useOnInputChange(setDisplayName)
   const onSubmitNameChange = useCallback(
@@ -29,9 +29,9 @@ export const ProfileDisplayName: React.FC = () => {
       event.preventDefault()
       updateUser(displayName, null)
         .then(fetchAndSetUser)
-        .catch(showErrorNotification('profile.changeDisplayNameFailed'))
+        .catch(showErrorNotificationBuilder('profile.changeDisplayNameFailed'))
     },
-    [displayName, showErrorNotification]
+    [displayName, showErrorNotificationBuilder]
   )
 
   const formSubmittable = useMemo(() => {

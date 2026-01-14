@@ -19,7 +19,7 @@ import { useIsLoggedIn } from '../../../hooks/common/use-is-logged-in'
  * Links to the "new note" endpoint
  */
 export const NewNoteButton: React.FC = () => {
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
   const router = useRouter()
   const guestAccessLevel = useFrontendConfig().guestAccess
   const isLoggedIn = useIsLoggedIn()
@@ -30,9 +30,9 @@ export const NewNoteButton: React.FC = () => {
         router?.push(`/n/${note.metadata.primaryAlias}`)
       })
       .catch((error: Error) => {
-        showErrorNotification(error.message)
+        showErrorNotificationBuilder(error.message)
       })
-  }, [router, showErrorNotification])
+  }, [router, showErrorNotificationBuilder])
 
   if (!isLoggedIn && guestAccessLevel !== PermissionLevel.FULL) {
     return null

@@ -21,7 +21,7 @@ import { Trans, useTranslation } from 'react-i18next'
  */
 export const AccountDeletionModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
   useTranslation()
-  const { showErrorNotification, dispatchUiNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder, dispatchUiNotification } = useUiNotifications()
 
   const deleteUserAccount = useCallback(() => {
     deleteUser()
@@ -33,13 +33,13 @@ export const AccountDeletionModal: React.FC<ModalVisibilityProps> = ({ show, onH
           {}
         )
       })
-      .catch(showErrorNotification('profile.modal.deleteUser.failed'))
+      .catch(showErrorNotificationBuilder('profile.modal.deleteUser.failed'))
       .finally(() => {
         if (onHide) {
           onHide()
         }
       })
-  }, [dispatchUiNotification, onHide, showErrorNotification])
+  }, [dispatchUiNotification, onHide, showErrorNotificationBuilder])
 
   return (
     <CommonModal show={show} titleI18nKey={'profile.modal.deleteUser.message'} onHide={onHide} showCloseButton={true}>

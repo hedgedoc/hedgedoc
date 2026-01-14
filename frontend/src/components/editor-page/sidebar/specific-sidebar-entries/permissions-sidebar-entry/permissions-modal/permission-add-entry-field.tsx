@@ -33,7 +33,7 @@ export const PermissionAddEntryField: React.FC<PermissionAddEntryFieldProps & Pe
   const [newEntryIdentifier, setNewEntryIdentifier] = useState('')
   const onChange = useLowercaseOnInputChange(setNewEntryIdentifier)
   const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
 
   const onAddEntry = useCallback(() => {
     if (!noteAlias) {
@@ -49,9 +49,9 @@ export const PermissionAddEntryField: React.FC<PermissionAddEntryFieldProps & Pe
           .withHttpCode(404, 'missingUser')
           .withHttpCode(403, 'missingPermissions')
           .orFallbackI18nKey('other')
-        showErrorNotification(errorI18nKey)(error)
+        showErrorNotificationBuilder(errorI18nKey)(error)
       })
-  }, [noteAlias, newEntryIdentifier, showErrorNotification])
+  }, [noteAlias, newEntryIdentifier, showErrorNotificationBuilder])
 
   const placeholderText = useTranslatedText(i18nKey)
 

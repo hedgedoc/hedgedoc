@@ -19,15 +19,15 @@ import { Trans, useTranslation } from 'react-i18next'
  */
 export const SignOutDropdownButton: React.FC = () => {
   useTranslation()
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
   const router = useRouter()
 
   const onSignOut = useCallback(() => {
     clearUser()
     doLogout()
       .then((logoutResponse) => router.push(logoutResponse.redirect))
-      .catch(showErrorNotification('login.logoutFailed'))
-  }, [showErrorNotification, router])
+      .catch(showErrorNotificationBuilder('login.logoutFailed'))
+  }, [showErrorNotificationBuilder, router])
 
   return (
     <Dropdown.Item dir='auto' onClick={onSignOut} {...cypressId('user-dropdown-sign-out-button')}>

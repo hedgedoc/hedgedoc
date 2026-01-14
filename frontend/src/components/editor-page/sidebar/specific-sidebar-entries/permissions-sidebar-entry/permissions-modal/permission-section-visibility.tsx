@@ -20,7 +20,7 @@ import { Form } from 'react-bootstrap'
 export const PermissionSectionVisibility: React.FC<PermissionDisabledProps> = ({ disabled }) => {
   const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const currentVisibility = useApplicationState((state) => state.noteDetails.permissions.publiclyVisible)
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
 
   const onSetChangeVisibility = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -32,9 +32,9 @@ export const PermissionSectionVisibility: React.FC<PermissionDisabledProps> = ({
         .then((updatedPermissions) => {
           setNotePermissionsFromServer(updatedPermissions)
         })
-        .catch(showErrorNotification('editor.modal.permissions.error'))
+        .catch(showErrorNotificationBuilder('editor.modal.permissions.error'))
     },
-    [noteAlias, showErrorNotification]
+    [noteAlias, showErrorNotificationBuilder]
   )
 
   return (

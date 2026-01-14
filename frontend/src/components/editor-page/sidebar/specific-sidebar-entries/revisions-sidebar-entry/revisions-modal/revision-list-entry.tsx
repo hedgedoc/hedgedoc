@@ -37,7 +37,7 @@ export interface RevisionListEntryProps {
  */
 export const RevisionListEntry: React.FC<RevisionListEntryProps> = ({ active, onSelect, revision }) => {
   useTranslation()
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
 
   const revisionCreationTime = useMemo(() => {
     return DateTime.fromISO(revision.createdAt).toFormat('DDDD T')
@@ -50,7 +50,7 @@ export const RevisionListEntry: React.FC<RevisionListEntryProps> = ({ active, on
         <UserAvatar user={author} key={author.username} showName={false} additionalClasses={'mx-1'} />
       ))
     } catch (error) {
-      showErrorNotification('editor.modal.revision.errorUser')(error as Error)
+      showErrorNotificationBuilder('editor.modal.revision.errorUser')(error as Error)
       return null
     }
   }, [])

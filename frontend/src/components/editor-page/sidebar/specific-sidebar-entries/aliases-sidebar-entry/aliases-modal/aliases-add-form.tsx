@@ -23,7 +23,7 @@ const validAliasRegex = /^[a-z0-9_-]*$/
  * Form for adding a new alias to a note.
  */
 export const AliasesAddForm: React.FC = () => {
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
   const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const isOwner = useIsOwner()
   const [newAlias, setNewAlias] = useState('')
@@ -36,12 +36,12 @@ export const AliasesAddForm: React.FC = () => {
       }
       addAlias(noteAlias, newAlias)
         .then(updateMetadata)
-        .catch(showErrorNotification('editor.modal.aliases.errorAddingAlias'))
+        .catch(showErrorNotificationBuilder('editor.modal.aliases.errorAddingAlias'))
         .finally(() => {
           setNewAlias('')
         })
     },
-    [noteAlias, newAlias, setNewAlias, showErrorNotification]
+    [noteAlias, newAlias, setNewAlias, showErrorNotificationBuilder]
   )
 
   const onNewAliasInputChange = useOnInputChange(setNewAlias)
