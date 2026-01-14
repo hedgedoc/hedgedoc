@@ -12,11 +12,13 @@ import { AuthProviderType } from '@hedgedoc/commons'
 import { LocalRegisterCardBody } from './register/local-register-card-body'
 import { UsernamePasswordLogin } from '../username-password-login'
 import { ErrorToI18nKeyMapper } from '../../../api/common/error-to-i18n-key-mapper'
+import { useTranslation } from 'react-i18next'
 
 /**
  * Shows the card that processes local logins and registers.
  */
 export const LocalLoginCard: React.FC = () => {
+  const { t } = useTranslation()
   const frontendConfig = useFrontendConfig()
 
   const performLocalLogin = useCallback(async (username: string, password: string, _: unknown) => {
@@ -24,13 +26,17 @@ export const LocalLoginCard: React.FC = () => {
     return { newUser: false }
   }, [])
 
-  const errorMapping = useCallback((error: Error) => {
-    return new ErrorToI18nKeyMapper(error, 'login.auth.error')
-      .withHttpCode(404, 'usernamePassword')
-      .withHttpCode(401, 'usernamePassword')
-      .withBackendErrorName('FeatureDisabledError', 'loginDisabled')
-      .orFallbackI18nKey('other')
-  }, [])
+  const errorMapping = useCallback(
+    (error: Error) => {
+      const key = new ErrorToI18nKeyMapper(error, 'login.auth.error')
+        .withHttpCode(404, 'usernamePassword')
+        .withHttpCode(401, 'usernamePassword')
+        .withBackendErrorName('FeatureDisabledError', 'loginDisabled')
+        .orFallbackI18nKey('other')
+      return t(key)
+    },
+    [t]
+  )
 
   const localLoginEnabled = useMemo(() => {
     return frontendConfig.authProviders.some((provider) => provider.type === AuthProviderType.LOCAL)

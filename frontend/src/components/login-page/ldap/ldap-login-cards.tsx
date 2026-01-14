@@ -10,16 +10,29 @@ import type { AuthProviderWithCustomNameInterface } from '@hedgedoc/commons'
 import { AuthProviderType } from '@hedgedoc/commons'
 import { UsernamePasswordLogin } from '../username-password-login'
 import { doLdapLogin } from '../../../api/auth/ldap'
+import { ApiError } from '../../../api/common/api-error'
+import { useTranslation } from 'react-i18next'
 
 /**
  * Renders a ldap login card for every ldap auth provider.
  */
 export const LdapLoginCards: React.FC = () => {
+  const { t } = useTranslation()
   const authProviders = useFrontendConfig().authProviders
 
-  const errorMapping = useCallback((error: Error) => {
-    return String(error)
-  }, [])
+  const errorMapping = useCallback(
+    (error: Error) => {
+      if (error instanceof ApiError) {
+        const status = error.statusCode
+        if (status === 401) {
+          return t('login.auth.error.usernamePassword')
+        }
+      }
+      return t('login.auth.error.other')
+    },
+    [t]
+  )
+
   const performLdapLogin = useCallback(async (username: string, password: string, identifier?: string) => {
     if (!identifier) {
       throw new Error('LDAP identifier is missing')
