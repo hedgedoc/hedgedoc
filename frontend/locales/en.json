@@ -573,7 +573,7 @@
       "title": "Register",
       "passwordAgain": "Password (again)",
       "usernameInfo": "The username is your unique identifier for login.",
-      "passwordInfo": "Choose a unique and secure password.",
+      "passwordInfo": "Choose a unique and secure password. It should be at least 6 characters long.",
       "infoTermsPrivacy": "With the registration of my user account I agree to the following terms:",
       "success": {
         "title": "Successfully registered",
