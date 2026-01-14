@@ -3,10 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { setUserPermission } from '../../../../../../api/permissions'
 import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
-import { setNotePermissionsFromServer } from '../../../../../../redux/note-details/methods'
-import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
 import { PermissionAddEntryField } from './permission-add-entry-field'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionEntryUser } from './permission-entry-user'
@@ -21,8 +18,6 @@ import { Trans, useTranslation } from 'react-i18next'
 export const PermissionSectionUsers: React.FC<PermissionDisabledProps> = ({ disabled }) => {
   useTranslation()
   const userPermissions = useApplicationState((state) => state.noteDetails?.permissions.sharedToUsers)
-  const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
-  const { showErrorNotification } = useUiNotifications()
 
   const userEntries = useMemo(() => {
     if (!userPermissions) {
@@ -33,20 +28,6 @@ export const PermissionSectionUsers: React.FC<PermissionDisabledProps> = ({ disa
     ))
   }, [userPermissions, disabled])
 
-  const onAddEntry = useCallback(
-    (username: string) => {
-      if (!noteAlias) {
-        return
-      }
-      setUserPermission(noteAlias, username, false)
-        .then((updatedPermissions) => {
-          setNotePermissionsFromServer(updatedPermissions)
-        })
-        .catch(showErrorNotification('editor.modal.permissions.error'))
-    },
-    [noteAlias, showErrorNotification]
-  )
-
   return (
     <Fragment>
       <h5 className={'my-3'}>
@@ -54,11 +35,7 @@ export const PermissionSectionUsers: React.FC<PermissionDisabledProps> = ({ disa
       </h5>
       <ul className={'list-group'}>
         {userEntries}
-        <PermissionAddEntryField
-          onAddEntry={onAddEntry}
-          i18nKey={'editor.modal.permissions.addUser'}
-          disabled={disabled}
-        />
+        <PermissionAddEntryField i18nKey={'editor.modal.permissions.addUser'} disabled={disabled} />
       </ul>
     </Fragment>
   )
