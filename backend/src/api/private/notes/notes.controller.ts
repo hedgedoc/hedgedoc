@@ -148,6 +148,13 @@ export class NotesController {
     return await this.noteService.toNoteMetadataDto(noteId);
   }
 
+  @UseInterceptors(GetNoteIdInterceptor)
+  @RequirePermission(PermissionLevel.READ)
+  @Get(':noteAlias/metadata/permissions')
+  async getNotePermissions(@RequestNoteId() noteId: number): Promise<NotePermissionsDto> {
+    return await this.permissionService.getPermissionsDtoForNote(noteId);
+  }
+
   @Get(':noteAlias/revisions')
   @OpenApi(200, 404)
   @RequirePermission(PermissionLevel.READ)

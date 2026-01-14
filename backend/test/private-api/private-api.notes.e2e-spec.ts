@@ -21,6 +21,7 @@ import { FieldNameRevision, Revision, SpecialGroup } from '@hedgedoc/database';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import request from 'supertest';
+import {NotePermissionsDto} from "../../src/dtos/note-permissions.dto";
 
 describe('Notes', () => {
   let testSetup: TestSetup;
@@ -457,6 +458,69 @@ describe('Notes', () => {
         .expect(200);
       expect(metadata.body.createdAt).toEqual(createDate);
       expect(metadata.body.updatedAt).not.toEqual(updatedDate);
+    });
+  });
+
+  describe(`GET ${PRIVATE_API_PREFIX}/notes/:noteAlias/metadata/permissions`, () => {
+    describe('returns complete metadata object for', () => {
+      let permissionBody: NotePermissionsDto;
+      afterEach(() => {
+        expect(permissionBody.owner).toEqual(username1);
+        expect(permissionBody.publiclyVisible).toEqual(false);
+        expect(permissionBody.sharedToUsers).toEqual([]);
+        expect(permissionBody.sharedToGroups).toEqual([
+          {
+            groupName: SpecialGroup.EVERYONE,
+            canEdit: false,
+          },
+          {
+            groupName: SpecialGroup.LOGGED_IN,
+            canEdit: true,
+          },
+        ]);
+      });
+      it('owner', async () => {
+        const metadata = await agentUser1
+          .get(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}/metadata/permissions`)
+          .expect('Content-Type', /json/)
+          .expect(200);
+        permissionBody = metadata.body;
+      });
+      it('another user', async () => {
+        const metadata = await agentUser2
+          .get(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}/metadata/permissions`)
+          .expect('Content-Type', /json/)
+          .expect(200);
+        permissionBody = metadata.body;
+      });
+      it('guest user', async () => {
+        const metadata = await agentGuestUser
+          .get(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}/metadata/permissions`)
+          .expect('Content-Type', /json/)
+          .expect(200);
+        permissionBody = metadata.body;
+      });
+    });
+
+    it('throws errors for not logged-in user', async () => {
+      await agentNotLoggedIn
+        .get(`${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions`)
+        .expect('Content-Type', /json/)
+        .expect(401);
+    });
+
+    it('throws errors with a forbidden alias', async () => {
+      await agentUser1
+        .get(`${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}/metadata/permissions`)
+        .expect('Content-Type', /json/)
+        .expect(403);
+    });
+
+    it('throws errors with non-existing alias', async () => {
+      await agentUser1
+        .get(`${PRIVATE_API_PREFIX}/notes/i_dont_exist/metadata/permissions`)
+        .expect('Content-Type', /json/)
+        .expect(404);
     });
   });
 
