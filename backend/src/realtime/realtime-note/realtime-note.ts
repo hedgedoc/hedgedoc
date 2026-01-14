@@ -160,6 +160,13 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   }
 
   /**
+   * Announces to all clients that the permissions of the note has been changed
+   */
+  public announcePermissionsUpdate(): void {
+    this.sendToAllClients({ type: MessageType.PERMISSIONS_UPDATED });
+  }
+
+  /**
    * Announces to all clients that the note has been deleted
    */
   public announceNoteDeletion(): void {

@@ -130,7 +130,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
       return;
     }
 
-    realtimeNote.announceMetadataUpdate();
+    realtimeNote.announcePermissionsUpdate();
     const allConnections = realtimeNote.getConnections();
     await this.updateOrCloseConnection(allConnections, noteId);
   }

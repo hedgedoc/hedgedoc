@@ -46,6 +46,7 @@ import React, { useCallback, useEffect, useMemo } from 'react'
 import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 import { Lock as IconLock } from 'react-bootstrap-icons'
 import { useCodeMirrorIndentationExtension } from './hooks/codemirror-extensions/use-code-mirror-indentation-extension'
+import { useOnPermissionsUpdated } from './hooks/yjs/use-on-permissions-updated'
 
 export type EditorPaneProps = ScrollProps
 
@@ -86,6 +87,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
   const yjsExtension = useCodeMirrorYjsExtension(realtimeDoc, syncAdapter)
 
   useOnMetadataUpdated(messageTransporter)
+  useOnPermissionsUpdated(messageTransporter)
   useOnNoteDeleted(messageTransporter)
 
   useBindYTextToRedux(realtimeDoc)
