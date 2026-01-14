@@ -8,6 +8,7 @@
   ],
   "rules": {
     "no-debugger": "warn",
+    "sort-imports": "error",
     "hedgedoc-local/correct-logger-context": "error",
     "typescript/no-unused-vars": ["warn", { "argsIgnorePattern": "^_+$" }],
     "typescript/return-await": ["error", "always"],
