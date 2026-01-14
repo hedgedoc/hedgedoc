@@ -598,7 +598,7 @@ describe('authConfig', () => {
     const defaultScope = 'openid profile email';
     const userIdField = 'login';
     const defaultUserIdField = 'sub';
-    const userNameField = 'preferred_username';
+    const usernameField = 'preferred_username';
     const displayNameField = 'displayName';
     const defaultDisplayNameField = 'name';
     const profilePictureField = 'pictureField';
@@ -620,7 +620,7 @@ describe('authConfig', () => {
       HD_AUTH_OIDC_GITLAB_END_SESSION_URL: endSessionUrl,
       HD_AUTH_OIDC_GITLAB_SCOPE: scope,
       HD_AUTH_OIDC_GITLAB_USER_ID_FIELD: userIdField,
-      HD_AUTH_OIDC_GITLAB_USER_NAME_FIELD: userNameField,
+      HD_AUTH_OIDC_GITLAB_USER_NAME_FIELD: usernameField,
       HD_AUTH_OIDC_GITLAB_DISPLAY_NAME_FIELD: displayNameField,
       HD_AUTH_OIDC_GITLAB_PROFILE_PICTURE_FIELD: profilePictureField,
       HD_AUTH_OIDC_GITLAB_EMAIL_FIELD: emailField,
@@ -655,7 +655,7 @@ describe('authConfig', () => {
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.usernameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(usernameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -690,7 +690,7 @@ describe('authConfig', () => {
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.usernameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(usernameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -725,7 +725,7 @@ describe('authConfig', () => {
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.usernameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(usernameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -760,7 +760,7 @@ describe('authConfig', () => {
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.usernameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(usernameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -795,7 +795,7 @@ describe('authConfig', () => {
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.usernameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(usernameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -830,7 +830,7 @@ describe('authConfig', () => {
         expect(firstOidc.endSessionUrl).toBeUndefined();
         expect(firstOidc.scope).toEqual(scope);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.usernameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(usernameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -865,7 +865,7 @@ describe('authConfig', () => {
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.scope).toEqual(defaultScope);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.usernameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(usernameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -900,7 +900,7 @@ describe('authConfig', () => {
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.userIdField).toEqual(defaultUserIdField);
-        expect(firstOidc.usernameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(usernameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -935,7 +935,7 @@ describe('authConfig', () => {
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.usernameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(usernameField);
         expect(firstOidc.displayNameField).toEqual(defaultDisplayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -970,7 +970,7 @@ describe('authConfig', () => {
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.usernameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(usernameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(defaultProfilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
@@ -1005,7 +1005,7 @@ describe('authConfig', () => {
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.usernameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(usernameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(defaultEmailField);
@@ -1040,7 +1040,7 @@ describe('authConfig', () => {
         expect(firstOidc.userinfoUrl).toEqual(userinfoUrl);
         expect(firstOidc.endSessionUrl).toEqual(endSessionUrl);
         expect(firstOidc.userIdField).toEqual(userIdField);
-        expect(firstOidc.usernameField).toEqual(userNameField);
+        expect(firstOidc.usernameField).toEqual(usernameField);
         expect(firstOidc.displayNameField).toEqual(displayNameField);
         expect(firstOidc.profilePictureField).toEqual(profilePictureField);
         expect(firstOidc.emailField).toEqual(emailField);
