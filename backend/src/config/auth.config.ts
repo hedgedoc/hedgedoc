@@ -195,7 +195,7 @@ export default registerAs('authConfig', () => {
     endSessionUrl: process.env[`HD_AUTH_OIDC_${name}_END_SESSION_URL`],
     scope: process.env[`HD_AUTH_OIDC_${name}_SCOPE`],
     userIdField: process.env[`HD_AUTH_OIDC_${name}_USER_ID_FIELD`],
-    userNameField: process.env[`HD_AUTH_OIDC_${name}_USER_NAME_FIELD`],
+    usernameField: process.env[`HD_AUTH_OIDC_${name}_USER_NAME_FIELD`],
     displayNameField: process.env[`HD_AUTH_OIDC_${name}_DISPLAY_NAME_FIELD`],
     profilePictureField: process.env[`HD_AUTH_OIDC_${name}_PROFILE_PICTURE_FIELD`],
     emailField: process.env[`HD_AUTH_OIDC_${name}_EMAIL_FIELD`],
