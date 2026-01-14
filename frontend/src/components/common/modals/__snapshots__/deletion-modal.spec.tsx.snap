@@ -31,6 +31,12 @@ exports[`DeletionModal renders correctly with deletionButtonI18nKey 1`] = `
       class="modal-footer"
     >
       <button
+        class="btn btn-secondary"
+        type="button"
+      >
+        common.cancel
+      </button>
+      <button
         class="btn btn-danger"
         type="button"
       >
