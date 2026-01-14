@@ -67,7 +67,7 @@ describe('realtime note', () => {
     expect(() => sut.destroy()).toThrow('Note already destroyed');
   });
 
-  it('announcePermissionChange to all clients', () => {
+  it('announceMetadataChange to all clients', () => {
     const sut = new RealtimeNote(mockedNoteId, 'nothing');
 
     const client1 = new MockConnectionBuilder(sut).withLoggedInUser(mockUserId).build();
@@ -82,6 +82,25 @@ describe('realtime note', () => {
     expect(sendMessage2Spy).toHaveBeenCalledWith(metadataMessage);
     sut.removeClient(client2);
     sut.announceMetadataUpdate();
+    expect(sendMessage1Spy).toHaveBeenCalledTimes(2);
+    expect(sendMessage2Spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('announcePermissionChange to all clients', () => {
+    const sut = new RealtimeNote(mockedNoteId, 'nothing');
+
+    const client1 = new MockConnectionBuilder(sut).withLoggedInUser(mockUserId).build();
+    const client2 = new MockConnectionBuilder(sut).withLoggedInUser(mockUserId).build();
+
+    const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
+    const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
+
+    const permissionsMessage = { type: MessageType.PERMISSIONS_UPDATED };
+    sut.announcePermissionsUpdate();
+    expect(sendMessage1Spy).toHaveBeenCalledWith(permissionsMessage);
+    expect(sendMessage2Spy).toHaveBeenCalledWith(permissionsMessage);
+    sut.removeClient(client2);
+    sut.announcePermissionsUpdate();
     expect(sendMessage1Spy).toHaveBeenCalledTimes(2);
     expect(sendMessage2Spy).toHaveBeenCalledTimes(1);
   });

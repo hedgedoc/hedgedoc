@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { store } from '..'
-import { getNoteMetadata } from '../../api/notes'
+import { getNoteMetadata, getNotePermissions } from '../../api/notes'
 import type { CursorSelection } from '../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
 import type { NoteInterface, NotePermissionsInterface } from '@hedgedoc/commons'
 import { noteDetailsActionsCreator } from './slice'
@@ -45,6 +45,11 @@ export const updateNoteTitleByFirstHeading = (firstHeading?: string): void => {
   store.dispatch(action)
 }
 
+/**
+ * Updates the redux state with the current user's cursor position and/or selection.
+ * This is stored in redux to allow working on the cursor position with actions like "surround with ..."
+ * @param selection The CursorSelection object from the CodeMirror editor
+ */
 export const updateCursorPositions = (selection: CursorSelection): void => {
   const action = noteDetailsActionsCreator.updateCursorPosition(selection)
   store.dispatch(action)
@@ -60,6 +65,19 @@ export const updateMetadata = async (): Promise<void> => {
   }
   const updatedMetadata = await getNoteMetadata(noteDetails.primaryAlias)
   const action = noteDetailsActionsCreator.updateMetadata(updatedMetadata)
+  store.dispatch(action)
+}
+
+/**
+ * Updates the current note's permissions from the server.
+ */
+export const updateNotePermissions = async (): Promise<void> => {
+  const noteDetails = store.getState().noteDetails
+  if (!noteDetails) {
+    return
+  }
+  const updatedPermissions = await getNotePermissions(noteDetails.primaryAlias)
+  const action = noteDetailsActionsCreator.setNotePermissionsFromServer(updatedPermissions)
   store.dispatch(action)
 }
 

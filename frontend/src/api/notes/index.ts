@@ -12,6 +12,7 @@ import type {
   NoteMediaDeletionInterface,
   NoteMetadataInterface
 } from '@hedgedoc/commons'
+import { NotePermissionsInterface } from '@hedgedoc/commons/dist/esm'
 
 /**
  * Retrieves the content and metadata about the specified note.
@@ -33,6 +34,17 @@ export const getNote = async (noteAlias: string, baseUrl?: string): Promise<Note
  */
 export const getNoteMetadata = async (noteAlias: string): Promise<NoteMetadataInterface> => {
   const response = await new GetApiRequestBuilder<NoteMetadataInterface>(`notes/${noteAlias}/metadata`).sendRequest()
+  return response.asParsedJsonObject()
+}
+
+/**
+ * Retrieves the permissions of the specified note.
+ *
+ * @param noteAlias The id or alias of the note.
+ * @return Permissions of the specified note.
+ */
+export const getNotePermissions = async (noteAlias: string): Promise<NotePermissionsInterface> => {
+  const response = await new GetApiRequestBuilder<NotePermissionsInterface>(`notes/${noteAlias}/metadata/permissions`).sendRequest()
   return response.asParsedJsonObject()
 }
 
