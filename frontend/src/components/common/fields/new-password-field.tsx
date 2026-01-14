@@ -14,6 +14,7 @@ import { Trans } from 'react-i18next'
  *
  * @param onChange Hook that is called when the entered password changes.
  * @param value The currently entered password.
+ * @param hasError true to show an error style on the field.
  */
 export const NewPasswordField: React.FC<CommonFieldProps> = ({ onChange, value, hasError = false }) => {
   const isValid = useMemo(() => value.length >= 6, [value])
