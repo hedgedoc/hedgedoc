@@ -6,8 +6,12 @@
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
-import type { MediaUploadInterface, NoteInterface, NoteMetadataInterface } from '@hedgedoc/commons'
-import type { NoteMediaDeletionInterface } from '@hedgedoc/commons/dist/esm'
+import type {
+  MediaUploadInterface,
+  NoteInterface,
+  NoteMediaDeletionInterface,
+  NoteMetadataInterface
+} from '@hedgedoc/commons'
 
 /**
  * Retrieves the content and metadata about the specified note.
