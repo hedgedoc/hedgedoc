@@ -133,7 +133,11 @@
       "info": "Your new password should contain at least 6 characters.",
       "failed": "Changing your password failed. Check your old password and try again.",
       "successTitle": "Password changed",
-      "successText": "Your password has been changed successfully."
+      "successText": "Your password has been changed successfully.",
+      "error": {
+        "wrongPassword": "Your old password is wrong",
+        "other": "There was an unexpected error logging you in."
+      }
     },
     "selectProfilePicture": {
       "title": "Select profile picture",
