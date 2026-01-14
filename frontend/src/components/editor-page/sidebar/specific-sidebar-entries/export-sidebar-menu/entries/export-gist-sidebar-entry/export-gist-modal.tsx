@@ -30,7 +30,7 @@ export const ExportGistModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
   const noteContent = useNoteMarkdownContent()
   const noteFilename = useNoteFilename()
 
-  const { dispatchUiNotification, showErrorNotification } = useUiNotifications()
+  const { dispatchUiNotification, showErrorNotificationBuilder } = useUiNotifications()
 
   const textService = useTranslatedText('editor.export.gist.service')
   const textShortName = useTranslatedText('editor.export.gist.shortName')
@@ -76,7 +76,7 @@ export const ExportGistModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
         onHide?.()
       })
       .catch(
-        showErrorNotification(
+        showErrorNotificationBuilder(
           'editor.export.common.notificationErrorTitle',
           { replace: { shortName: textShortName } },
           true
@@ -88,7 +88,7 @@ export const ExportGistModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
     noteFilename,
     gistDescription,
     gistPublic,
-    showErrorNotification,
+    showErrorNotificationBuilder,
     textShortName,
     dispatchUiNotification,
     textNotificationButton,

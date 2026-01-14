@@ -28,21 +28,21 @@ export interface AliasesListEntryProps {
  */
 export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => {
   const { t } = useTranslation()
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
   const primaryAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const isOwner = useIsOwner()
 
   const onRemoveClick = useCallback(() => {
     deleteAlias(alias)
       .then(updateMetadata)
-      .catch(showErrorNotification(t('editor.modal.aliases.errorRemovingAlias')))
-  }, [alias, t, showErrorNotification])
+      .catch(showErrorNotificationBuilder(t('editor.modal.aliases.errorRemovingAlias')))
+  }, [alias, t, showErrorNotificationBuilder])
 
   const onMakePrimaryClick = useCallback(() => {
     markAliasAsPrimary(alias)
       .then(updateMetadata)
-      .catch(showErrorNotification(t('editor.modal.aliases.errorMakingPrimary')))
-  }, [alias, t, showErrorNotification])
+      .catch(showErrorNotificationBuilder(t('editor.modal.aliases.errorMakingPrimary')))
+  }, [alias, t, showErrorNotificationBuilder])
 
   const isPrimaryText = useTranslatedText('editor.modal.aliases.isPrimary')
   const makePrimaryText = useTranslatedText('editor.modal.aliases.makePrimary')

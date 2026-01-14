@@ -55,16 +55,16 @@ export const NoteListEntry: React.FC<NoteListEntryProps> = ({
   updateExplorePage
 }) => {
   useTranslation()
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
   const currentUser = useApplicationState((state) => state.user)
   const fallbackUntitled = useTranslatedText('editor.untitledNote')
   const onClickDeleteNote = useCallback(
     (keepMedia: boolean) => {
       deleteNote(primaryAlias, keepMedia)
         .then(updateExplorePage)
-        .catch(showErrorNotification('explore.notesList.deleteNoteError', { title }))
+        .catch(showErrorNotificationBuilder('explore.notesList.deleteNoteError', { title }))
     },
-    [title, primaryAlias, showErrorNotification, updateExplorePage]
+    [title, primaryAlias, showErrorNotificationBuilder, updateExplorePage]
   )
 
   const relativeTime = useMemo(() => {

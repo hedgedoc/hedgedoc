@@ -22,7 +22,7 @@ import { fetchAndSetUser } from '../utils/fetch-and-set-user'
  */
 export const NewUserCard: React.FC = () => {
   const router = useRouter()
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
   const { value, error, loading } = useAsync(getPendingUserInfo, [])
   const [username, setUsername] = useState('')
   const [displayName, setDisplayName] = useState('')
@@ -54,25 +54,25 @@ export const NewUserCard: React.FC = () => {
         .then(() => {
           router.push('/')
         })
-        .catch(showErrorNotification('login.welcome.error'))
+        .catch(showErrorNotificationBuilder('login.welcome.error'))
     },
-    [pictureChoice, value, username, displayName, showErrorNotification, router]
+    [pictureChoice, value, username, displayName, showErrorNotificationBuilder, router]
   )
 
   const cancelUserCreation = useCallback(() => {
     cancelPendingUser()
-      .catch(showErrorNotification('login.welcome.cancelError'))
+      .catch(showErrorNotificationBuilder('login.welcome.cancelError'))
       .finally(() => {
         router.push('/login')
       })
-  }, [router, showErrorNotification])
+  }, [router, showErrorNotificationBuilder])
 
   useEffect(() => {
     if (error) {
-      showErrorNotification('login.welcome.error')(error)
+      showErrorNotificationBuilder('login.welcome.error')(error)
       router.push('/login')
     }
-  }, [error, router, showErrorNotification])
+  }, [error, router, showErrorNotificationBuilder])
 
   useEffect(() => {
     if (!value) {

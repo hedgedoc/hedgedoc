@@ -40,7 +40,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
 }) => {
   const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const { t } = useTranslation()
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
 
   const onSetEntryReadOnly = useCallback(() => {
     if (!noteAlias) {
@@ -50,8 +50,8 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
       })
-      .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteAlias, showErrorNotification, type])
+      .catch(showErrorNotificationBuilder('editor.modal.permissions.error'))
+  }, [noteAlias, showErrorNotificationBuilder, type])
 
   const onSetEntryWriteable = useCallback(() => {
     if (!noteAlias) {
@@ -61,8 +61,8 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
       })
-      .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteAlias, showErrorNotification, type])
+      .catch(showErrorNotificationBuilder('editor.modal.permissions.error'))
+  }, [noteAlias, showErrorNotificationBuilder, type])
 
   const onSetEntryDenied = useCallback(() => {
     if (!noteAlias) {
@@ -72,8 +72,8 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
       })
-      .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteAlias, showErrorNotification, type])
+      .catch(showErrorNotificationBuilder('editor.modal.permissions.error'))
+  }, [noteAlias, showErrorNotificationBuilder, type])
 
   const name = useMemo(() => {
     switch (type) {

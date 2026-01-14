@@ -32,7 +32,7 @@ export const ExportGitlabSnippetModal: React.FC<ModalVisibilityProps> = ({ show,
   const noteFilename = useNoteFilename()
   const noteTitle = useNoteTitle()
 
-  const { dispatchUiNotification, showErrorNotification } = useUiNotifications()
+  const { dispatchUiNotification, showErrorNotificationBuilder } = useUiNotifications()
 
   const [gitlabUrl, setGitlabUrl] = useState<string>('')
   const [gitlabToken, setGitlabToken] = useState<string>('')
@@ -84,7 +84,7 @@ export const ExportGitlabSnippetModal: React.FC<ModalVisibilityProps> = ({ show,
         onHide?.()
       })
       .catch(
-        showErrorNotification(
+        showErrorNotificationBuilder(
           'editor.export.common.notificationErrorTitle',
           { replace: { shortName: textShortName } },
           true
@@ -98,7 +98,7 @@ export const ExportGitlabSnippetModal: React.FC<ModalVisibilityProps> = ({ show,
     snippetDescription,
     noteFilename,
     snippetVisibility,
-    showErrorNotification,
+    showErrorNotificationBuilder,
     textShortName,
     dispatchUiNotification,
     textNotificationButton,

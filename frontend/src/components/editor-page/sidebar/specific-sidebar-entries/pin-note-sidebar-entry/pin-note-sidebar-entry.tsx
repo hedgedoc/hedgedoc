@@ -25,7 +25,7 @@ import { setPinnedState } from '../../../../../api/explore'
 export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
   useTranslation()
   const [loading, setLoading] = useState(false)
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
   const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const isPinned = useIsNotePinned(noteAlias)
 
@@ -35,9 +35,9 @@ export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ class
     }
     setLoading(true)
     setPinnedState(noteAlias, !isPinned)
-      .catch(showErrorNotification(`explore.pinnedNotes.${isPinned ? 'un' : ''}pinError`, { alias: noteAlias }))
+      .catch(showErrorNotificationBuilder(`explore.pinnedNotes.${isPinned ? 'un' : ''}pinError`, { alias: noteAlias }))
       .finally(() => setLoading(false))
-  }, [noteAlias, isPinned, showErrorNotification])
+  }, [noteAlias, isPinned, showErrorNotificationBuilder])
 
   if (loading) {
     return (

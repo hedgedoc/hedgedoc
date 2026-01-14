@@ -27,7 +27,7 @@ import { Trans } from 'react-i18next'
  * @param primaryAlias The primary alias of the note.
  */
 export const PinnedNoteCard: React.FC<NoteExploreEntryInterface> = ({ title, lastChangedAt, type, primaryAlias }) => {
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
   const labelUnpinNote = useTranslatedText('explore.pinnedNotes.unpin')
   const fallbackUntitled = useTranslatedText('editor.untitledNote')
   const lastChangedString = useMemo(() => formatChangedAt(lastChangedAt), [lastChangedAt])
@@ -35,9 +35,11 @@ export const PinnedNoteCard: React.FC<NoteExploreEntryInterface> = ({ title, las
   const onClickUnpin = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {
       event.preventDefault()
-      unpinNote(primaryAlias).catch(showErrorNotification('explore.pinnedNotes.unpinError', { name: primaryAlias }))
+      unpinNote(primaryAlias).catch(
+        showErrorNotificationBuilder('explore.pinnedNotes.unpinError', { name: primaryAlias })
+      )
     },
-    [primaryAlias, showErrorNotification]
+    [primaryAlias, showErrorNotificationBuilder]
   )
 
   return (

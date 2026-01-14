@@ -22,7 +22,7 @@ import { cypressId } from '../../../../../../utils/cypress-attribute'
 export const PermissionSectionOwner: React.FC<PermissionDisabledProps> = ({ disabled }) => {
   const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const [changeOwner, setChangeOwner] = useState(false)
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
 
   const onSetChangeOwner = useCallback(() => {
     setChangeOwner(true)
@@ -37,12 +37,12 @@ export const PermissionSectionOwner: React.FC<PermissionDisabledProps> = ({ disa
         .then((updatedPermissions) => {
           setNotePermissionsFromServer(updatedPermissions)
         })
-        .catch(showErrorNotification('editor.modal.permissions.ownerChange.error'))
+        .catch(showErrorNotificationBuilder('editor.modal.permissions.ownerChange.error'))
         .finally(() => {
           setChangeOwner(false)
         })
     },
-    [noteAlias, showErrorNotification]
+    [noteAlias, showErrorNotificationBuilder]
   )
 
   return (

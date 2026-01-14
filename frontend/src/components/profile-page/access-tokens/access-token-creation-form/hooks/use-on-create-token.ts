@@ -23,7 +23,7 @@ export const useOnCreateToken = (
   expiryDateStr: string,
   setNewTokenWithSecret: (token: ApiTokenWithSecretInterface) => void
 ): ((event: FormEvent) => void) => {
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
 
   return useCallback(
     (event: FormEvent) => {
@@ -33,8 +33,8 @@ export const useOnCreateToken = (
         .then((tokenWithSecret) => {
           setNewTokenWithSecret(tokenWithSecret)
         })
-        .catch(showErrorNotification('profile.accessTokens.creationFailed'))
+        .catch(showErrorNotificationBuilder('profile.accessTokens.creationFailed'))
     },
-    [expiryDateStr, label, setNewTokenWithSecret, showErrorNotification]
+    [expiryDateStr, label, setNewTokenWithSecret, showErrorNotificationBuilder]
   )
 }

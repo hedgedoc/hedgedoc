@@ -38,7 +38,7 @@ type handleUploadSignature = (
  */
 export const useHandleUpload = (): handleUploadSignature => {
   const { t } = useTranslation()
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
   const baseUrl = useBaseUrl()
 
   return useCallback(
@@ -71,9 +71,9 @@ export const useHandleUpload = (): handleUploadSignature => {
         })
         .catch((error: ApiError) => {
           if (error.statusCode === 413) {
-            showErrorNotification('editor.upload.failed_size_too_large', { fileName: file.name })(error)
+            showErrorNotificationBuilder('editor.upload.failed_size_too_large', { fileName: file.name })(error)
           } else {
-            showErrorNotification('editor.upload.failed', { fileName: file.name })(error)
+            showErrorNotificationBuilder('editor.upload.failed', { fileName: file.name })(error)
           }
           changeContent(({ markdownContent }) => [
             replaceInContent(markdownContent, uploadPlaceholder, '\n'),
@@ -81,6 +81,6 @@ export const useHandleUpload = (): handleUploadSignature => {
           ])
         })
     },
-    [showErrorNotification, t, baseUrl]
+    [showErrorNotificationBuilder, t, baseUrl]
   )
 }

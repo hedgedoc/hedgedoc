@@ -26,7 +26,7 @@ export interface AccessTokenDeletionModalProps extends ModalVisibilityProps {
  */
 export const AccessTokenDeletionModal: React.FC<AccessTokenDeletionModalProps> = ({ show, token, onHide }) => {
   useTranslation()
-  const { showErrorNotification, dispatchUiNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder, dispatchUiNotification } = useUiNotifications()
 
   const onConfirmDelete = useCallback(() => {
     deleteAccessToken(token.keyId)
@@ -41,9 +41,9 @@ export const AccessTokenDeletionModal: React.FC<AccessTokenDeletionModalProps> =
           }
         )
       })
-      .catch(showErrorNotification('profile.modal.deleteAccessToken.failed'))
+      .catch(showErrorNotificationBuilder('profile.modal.deleteAccessToken.failed'))
       .finally(() => onHide?.())
-  }, [token.keyId, token.label, showErrorNotification, dispatchUiNotification, onHide])
+  }, [token.keyId, token.label, showErrorNotificationBuilder, dispatchUiNotification, onHide])
 
   return (
     <CommonModal

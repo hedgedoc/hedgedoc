@@ -22,15 +22,15 @@ export interface AccessTokenUpdateProps {
 export const ProfileAccessTokens: React.FC = () => {
   useTranslation()
   const [accessTokens, setAccessTokens] = useState<ApiTokenInterface[]>([])
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
 
   const refreshAccessTokens = useCallback(() => {
     getAccessTokenList()
       .then((tokens) => {
         setAccessTokens(tokens)
       })
-      .catch(showErrorNotification('profile.accessTokens.loadingFailed'))
-  }, [showErrorNotification])
+      .catch(showErrorNotificationBuilder('profile.accessTokens.loadingFailed'))
+  }, [showErrorNotificationBuilder])
 
   useEffect(() => {
     refreshAccessTokens()

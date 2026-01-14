@@ -21,10 +21,10 @@ export type ExploreLayoutProps = PropsWithChildren
  * @param children The content to show on the right
  */
 export default function ExploreLayout({ children }: ExploreLayoutProps) {
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
   useEffect(() => {
-    loadPinnedNotes().catch(showErrorNotification('explore.pinnedNotes.loadingError'))
-  }, [showErrorNotification])
+    loadPinnedNotes().catch(showErrorNotificationBuilder('explore.pinnedNotes.loadingError'))
+  }, [showErrorNotificationBuilder])
 
   return (
     <Fragment>

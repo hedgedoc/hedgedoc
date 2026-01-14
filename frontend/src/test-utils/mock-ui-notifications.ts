@@ -12,7 +12,7 @@ jest.mock('../components/notifications/ui-notification-boundary')
  */
 export const mockUiNotifications = () => {
   jest.spyOn(useUiNotificationsModule, 'useUiNotifications').mockReturnValue({
-    showErrorNotification: jest.fn(),
+    showErrorNotificationBuilder: jest.fn(),
     dismissNotification: jest.fn(),
     dispatchUiNotification: jest.fn(),
     pruneNotification: jest.fn()

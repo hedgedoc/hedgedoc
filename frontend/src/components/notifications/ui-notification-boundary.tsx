@@ -25,7 +25,7 @@ interface UiNotificationContext {
     dispatchOptions: Partial<DispatchOptions>
   ) => void
 
-  showErrorNotification: (
+  showErrorNotificationBuilder: (
     messageI18nKey: string,
     messageI18nOptions?: TOptions,
     showErrorMessage?: boolean
@@ -83,7 +83,7 @@ export const UiNotificationBoundary: React.FC<PropsWithChildren> = ({ children }
     [setUiNotification]
   )
 
-  const showErrorNotification = useCallback(
+  const showErrorNotificationBuilder = useCallback(
     (messageI18nKey: string, messageI18nOptions: Record<string, unknown> = {}, showErrorMessage = false) =>
       (error: Error): void => {
         log.error(t(messageI18nKey, messageI18nOptions), error)
@@ -121,11 +121,11 @@ export const UiNotificationBoundary: React.FC<PropsWithChildren> = ({ children }
   const context = useMemo(() => {
     return {
       dispatchUiNotification: dispatchUiNotification,
-      showErrorNotification: showErrorNotification,
+      showErrorNotificationBuilder: showErrorNotificationBuilder,
       dismissNotification: dismissNotification,
       pruneNotification: pruneNotification
     }
-  }, [dismissNotification, dispatchUiNotification, showErrorNotification, pruneNotification])
+  }, [dismissNotification, dispatchUiNotification, showErrorNotificationBuilder, pruneNotification])
   return (
     <uiNotificationContext.Provider value={context}>
       <UiNotifications notifications={uiNotifications} />

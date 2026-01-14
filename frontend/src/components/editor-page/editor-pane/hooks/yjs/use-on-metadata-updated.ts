@@ -16,13 +16,15 @@ import { useEffect } from 'react'
  * @param websocketConnection The websocket connection that emits the metadata changed event
  */
 export const useOnMetadataUpdated = (websocketConnection: MessageTransporter): void => {
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
 
   useEffect(() => {
     const listener = websocketConnection.on(
       MessageType.METADATA_UPDATED,
       () => {
-        updateMetadata().catch(showErrorNotification('common.errorWhileLoading', { name: 'note metadata refresh' }))
+        updateMetadata().catch(
+          showErrorNotificationBuilder('common.errorWhileLoading', { name: 'note metadata refresh' })
+        )
       },
       {
         objectify: true
@@ -31,5 +33,5 @@ export const useOnMetadataUpdated = (websocketConnection: MessageTransporter): v
     return () => {
       listener.off()
     }
-  }, [showErrorNotification, websocketConnection])
+  }, [showErrorNotificationBuilder, websocketConnection])
 }

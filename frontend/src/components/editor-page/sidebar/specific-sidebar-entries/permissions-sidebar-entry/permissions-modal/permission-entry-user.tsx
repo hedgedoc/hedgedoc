@@ -34,7 +34,7 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
   disabled
 }) => {
   const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
   const { [SpecialGroup.EVERYONE]: everyonePermission, [SpecialGroup.LOGGED_IN]: loggedInPermission } =
     useGetSpecialPermissions()
 
@@ -53,8 +53,8 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
       })
-      .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteAlias, entry.username, showErrorNotification])
+      .catch(showErrorNotificationBuilder('editor.modal.permissions.error'))
+  }, [noteAlias, entry.username, showErrorNotificationBuilder])
 
   const onSetEntryReadOnly = useCallback(() => {
     if (!noteAlias) {
@@ -64,8 +64,8 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
       })
-      .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteAlias, entry.username, showErrorNotification])
+      .catch(showErrorNotificationBuilder('editor.modal.permissions.error'))
+  }, [noteAlias, entry.username, showErrorNotificationBuilder])
 
   const onSetEntryWriteable = useCallback(() => {
     if (!noteAlias) {
@@ -75,8 +75,8 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
       })
-      .catch(showErrorNotification('editor.modal.permissions.error'))
-  }, [noteAlias, entry.username, showErrorNotification])
+      .catch(showErrorNotificationBuilder('editor.modal.permissions.error'))
+  }, [noteAlias, entry.username, showErrorNotificationBuilder])
 
   const { value, loading, error } = useAsync(async () => {
     return await getUserInfo(entry.username)

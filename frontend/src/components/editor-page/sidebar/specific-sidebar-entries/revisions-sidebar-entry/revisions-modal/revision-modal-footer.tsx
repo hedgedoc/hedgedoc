@@ -38,7 +38,7 @@ export const RevisionModalFooter: React.FC<RevisionModalFooterProps> = ({
 }) => {
   useTranslation()
   const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
-  const { showErrorNotification } = useUiNotifications()
+  const { showErrorNotificationBuilder } = useUiNotifications()
 
   const onRevertToRevision = useCallback(() => {
     // TODO Websocket message handler missing
@@ -54,8 +54,8 @@ export const RevisionModalFooter: React.FC<RevisionModalFooterProps> = ({
       .then((revision) => {
         downloadRevision(noteAlias, revision)
       })
-      .catch(showErrorNotification(''))
-  }, [noteAlias, selectedRevisionId, showErrorNotification])
+      .catch(showErrorNotificationBuilder(''))
+  }, [noteAlias, selectedRevisionId, showErrorNotificationBuilder])
 
   const openDeleteModal = useCallback(() => {
     onHide?.()
