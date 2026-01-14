@@ -23,6 +23,7 @@ import { RegisterInfos } from './register-infos'
 import { RegisterError } from './register-error'
 import { fetchAndSetUser } from '../../utils/fetch-and-set-user'
 import { useGetPostLoginRedirectUrl } from '../../utils/use-get-post-login-redirect-url'
+import { MAX_USERNAME_LENGTH, MIN_PASSWORD_LENGTH, MIN_USERNAME_LENGTH } from '@hedgedoc/commons'
 
 /**
  * Renders the registration process with fields for username, display name, password, password retype and information about terms and conditions.
@@ -54,10 +55,10 @@ export const LocalRegisterForm: NextPage = () => {
 
   const ready = useMemo(() => {
     return (
-      username.length >= 3 &&
-      username.length <= 64 &&
+      username.length >= MIN_USERNAME_LENGTH &&
+      username.length <= MAX_USERNAME_LENGTH &&
       displayName.trim() !== '' &&
-      password.length >= 6 &&
+      password.length >= MIN_PASSWORD_LENGTH &&
       password === passwordAgain
     )
   }, [username, password, displayName, passwordAgain])

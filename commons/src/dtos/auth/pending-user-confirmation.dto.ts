@@ -5,13 +5,14 @@
  */
 
 import { z } from 'zod'
+import { MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH } from '../../constants/index.js'
 
 export const PendingUserConfirmationSchema = z
   .object({
     username: z
       .string()
-      .min(3)
-      .max(64)
+      .min(MIN_USERNAME_LENGTH)
+      .max(MAX_USERNAME_LENGTH)
       .toLowerCase()
       .describe('The chosen new username for the pending user'),
     displayName: z.string().describe('The new display name for the pending user'),

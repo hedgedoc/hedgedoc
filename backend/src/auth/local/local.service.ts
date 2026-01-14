@@ -21,6 +21,7 @@ import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { dateTimeToDB, getCurrentDateTime } from '../../utils/datetime';
 import { checkPassword, hashPassword } from '../../utils/password';
 import { IdentityService } from '../identity.service';
+import { MIN_PASSWORD_LENGTH } from '@hedgedoc/commons';
 
 @Injectable()
 export class LocalService {
@@ -129,7 +130,7 @@ export class LocalService {
    * @throws PasswordTooWeakError if the password is too weak
    */
   async checkPasswordStrength(password: string): Promise<void> {
-    if (password.length < 6) {
+    if (password.length < MIN_PASSWORD_LENGTH) {
       throw new PasswordTooWeakError();
     }
     const result = await zxcvbnAsync(password);
