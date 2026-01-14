@@ -35,11 +35,14 @@ export const ProfilePictureSelectField: React.FC<ProfilePictureSelectFieldProps>
   username,
   value
 }) => {
-  const fallbackUrl = useAvatarUrl({
-    username,
-    photoUrl,
-    displayName: username
-  })
+  const fallbackUrl = useAvatarUrl(
+    {
+      username,
+      photoUrl,
+      displayName: username
+    },
+    true
+  )
   const profileEditsAllowed = useFrontendConfig().allowProfileEdits
   const onSetProviderPicture = useCallback(() => {
     if (value !== ProfilePictureChoice.PROVIDER) {
