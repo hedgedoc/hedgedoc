@@ -14,6 +14,7 @@ import { useApplicationState } from '../../../../../../hooks/common/use-applicat
 import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
 import { setUserPermission } from '../../../../../../api/permissions'
 import { setNotePermissionsFromServer } from '../../../../../../redux/note-details/methods'
+import { ErrorToI18nKeyMapper } from '../../../../../../api/common/error-to-i18n-key-mapper'
 
 export interface PermissionAddEntryFieldProps {
   i18nKey: string
@@ -43,7 +44,13 @@ export const PermissionAddEntryField: React.FC<PermissionAddEntryFieldProps & Pe
         setNotePermissionsFromServer(updatedPermissions)
         setNewEntryIdentifier('')
       })
-      .catch(showErrorNotification('editor.modal.permissions.error'))
+      .catch((error) => {
+        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.modal.permissions.error')
+          .withHttpCode(404, 'missingUser')
+          .withHttpCode(403, 'missingPermissions')
+          .orFallbackI18nKey('other')
+        showErrorNotification(errorI18nKey)(error)
+      })
   }, [noteAlias, newEntryIdentifier, showErrorNotification])
 
   const placeholderText = useTranslatedText(i18nKey)

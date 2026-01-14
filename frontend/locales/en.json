@@ -432,7 +432,11 @@
         "addGroup": "Add group",
         "allUser": "Everyone",
         "allLoggedInUser": "All logged-in users",
-        "error": "An error occurred while updating the permissions of this note.",
+        "error": {
+          "missingUser": "This user does not exist",
+          "missingPermissions": "You're not allowed to give permissions",
+          "other": "An error occurred while updating the permissions of this note."
+        },
         "ownerChange": {
           "error": "There was an error changing the owner of this note.",
           "placeholder": "Enter username of new note owner",
