@@ -55,6 +55,9 @@ export const DeletionModal: React.FC<PropsWithChildren<DeletionModalProps>> = ({
       <Modal.Body>{children}</Modal.Body>
       <Modal.Footer>
         {footerContent}
+        <Button variant='secondary' onClick={onHide}>
+          <Trans i18nKey={'common.cancel'} />
+        </Button>
         <Button {...cypressId('deletionModal.confirmButton')} variant='danger' onClick={onConfirm} disabled={disabled}>
           <Trans i18nKey={deletionButtonI18nKey} />
         </Button>
