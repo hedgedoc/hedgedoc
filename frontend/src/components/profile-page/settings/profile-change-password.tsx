@@ -36,9 +36,8 @@ export const ProfileChangePassword: React.FC = () => {
       await doLocalPasswordChange(oldPassword, newPassword)
       return true
     } catch (error) {
-      const foundI18nKey = new ErrorToI18nKeyMapper(error as Error, 'login.auth.error')
-        .withHttpCode(401, 'usernamePassword')
-        .withBackendErrorName('FeatureDisabledError', 'loginDisabled')
+      const foundI18nKey = new ErrorToI18nKeyMapper(error as Error, 'profile.changePassword.error')
+        .withHttpCode(401, 'wrongPassword')
         .withBackendErrorName('PasswordTooWeakError', 'login.register.error.passwordTooWeak', true)
         .orFallbackI18nKey('other')
       return Promise.reject(new Error(foundI18nKey))
