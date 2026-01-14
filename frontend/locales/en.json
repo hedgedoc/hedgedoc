@@ -577,7 +577,7 @@
       "infoTermsPrivacy": "With the registration of my user account I agree to the following terms:",
       "success": {
         "title": "Successfully registered",
-        "message": "Your account has been registered successfully. You can now log in with your username and password."
+        "message": "Your account has been registered successfully."
       },
       "error": {
         "passwordTooWeak": "The password is too weak.",
