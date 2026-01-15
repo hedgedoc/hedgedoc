@@ -161,3 +161,29 @@ custom background image:
 
 ---
 ```
+
+## Speaker notes and speaker view
+
+You can add speaker notes to your slides. 
+
+```markdown
+---
+type: slide
+...
+
+# This is a test slide
+
+I am on your slide
+
+Note: Find me in the notes section in the down right corner in speaker view
+
+---
+
+# Another slide
+
+...
+```
+
+The notes are not displayed in the presentation view, but you can press `S` there to open a new window with the speaker view. 
+
+Both speaker notes and speaker view are features of reveal.js, you can read more in their documentation: https://revealjs.com/speaker-view/
