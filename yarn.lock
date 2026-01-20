@@ -2708,7 +2708,7 @@ __metadata:
     class-validator: "npm:0.14.3"
     cli-color: "npm:2.0.4"
     cookie: "npm:1.1.1"
-    diff: "npm:7.0.0"
+    diff: "npm:8.0.3"
     express-session: "npm:1.18.2"
     file-type: "npm:16.5.4"
     htmlparser2: "npm:9.1.0"
@@ -2846,7 +2846,7 @@ __metadata:
     d3-graphviz: "npm:5.6.0"
     d3-selection: "npm:3.0.0"
     deepmerge: "npm:4.3.1"
-    diff: "npm:7.0.0"
+    diff: "npm:8.0.3"
     dom-serializer: "npm:2.0.0"
     domhandler: "npm:5.0.3"
     dompurify: "npm:3.3.1"
@@ -9151,10 +9151,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"diff@npm:7.0.0":
-  version: 7.0.0
-  resolution: "diff@npm:7.0.0"
-  checksum: 10c0/251fd15f85ffdf814cfc35a728d526b8d2ad3de338dcbd011ac6e57c461417090766b28995f8ff733135b5fbc3699c392db1d5e27711ac4e00244768cd1d577b
+"diff@npm:8.0.3":
+  version: 8.0.3
+  resolution: "diff@npm:8.0.3"
+  checksum: 10c0/d29321c70d3545fdcb56c5fdd76028c3f04c012462779e062303d4c3c531af80d2c360c26b871e6e2b9a971d2422d47e1779a859106c4cac4b5d2d143df70e20
   languageName: node
   linkType: hard
 
