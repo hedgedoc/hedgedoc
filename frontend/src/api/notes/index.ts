@@ -10,9 +10,9 @@ import type {
   MediaUploadInterface,
   NoteInterface,
   NoteMediaDeletionInterface,
-  NoteMetadataInterface
+  NoteMetadataInterface,
+  NotePermissionsInterface
 } from '@hedgedoc/commons'
-import type { NotePermissionsInterface } from '@hedgedoc/commons/dist/esm'
 
 /**
  * Retrieves the content and metadata about the specified note.
