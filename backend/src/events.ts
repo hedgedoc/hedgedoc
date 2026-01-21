@@ -27,6 +27,7 @@ export enum NoteEvent {
    * Event triggered when a note's aliases are changed.
    * Payload:
    *  noteId: The id of the {@link Note}, for which permissions are changed.
+   *  primaryAlias: The new primary alias of the note. Can be undefined if there was no change of primary alias.
    */
   ALIAS_UPDATE = 'note.alias_update',
 

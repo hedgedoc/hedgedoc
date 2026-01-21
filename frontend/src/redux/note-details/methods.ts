@@ -84,6 +84,7 @@ export const updateNotePermissions = async (): Promise<void> => {
 
 /**
  * Updates the current note's alias list from the server.
+ * @param newPrimaryAlias The new primary alias of the note. Can be undefined when the primary alias is not changed.
  */
 export const updateNoteAliases = async (newPrimaryAlias?: string): Promise<void> => {
   const noteDetails = store.getState().noteDetails

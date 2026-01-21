@@ -1,11 +1,11 @@
-import { PRIVATE_API_PREFIX } from '../../src/app.module';
-import { noteAlias1, password3, TestSetup, TestSetupBuilder, username3 } from '../test-setup';
-import { setupAgent } from './utils/setup-agent';
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { PRIVATE_API_PREFIX } from '../../src/app.module';
+import { noteAlias1, password3, TestSetup, TestSetupBuilder, username3 } from '../test-setup';
+import { setupAgent } from './utils/setup-agent';
 import { AliasCreateInterface, AliasUpdateInterface } from '@hedgedoc/commons';
 import request from 'supertest';
 import { SpecialGroup } from '@hedgedoc/database';
