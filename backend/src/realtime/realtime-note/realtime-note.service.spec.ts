@@ -43,6 +43,8 @@ describe('RealtimeNoteService', () => {
   const onlyReadUserId = 1;
   const noAccessUserId = 0;
 
+  const mockedAlias = 'mocked-alias';
+
   afterAll(() => {
     jest.useRealTimers();
   });
@@ -203,6 +205,32 @@ describe('RealtimeNoteService', () => {
       mockedYjsStateBuffer,
     );
     expect(setIntervalSpy).not.toHaveBeenCalled();
+  });
+
+  describe('handleNoteAliasesChanged', () => {
+    let spyRealtimeNoteStoreFind: jest.SpyInstance;
+    let spyAnnounceAliasesUpdate: jest.SpyInstance;
+
+    beforeEach(() => {
+      spyRealtimeNoteStoreFind = jest.spyOn(realtimeNoteStore, 'find').mockImplementation(() => {
+        return realtimeNote;
+      });
+      spyAnnounceAliasesUpdate = jest
+        .spyOn(realtimeNote, 'announceAliasesUpdate')
+        .mockImplementation(() => {});
+    });
+
+    it('announces change without new alias', async () => {
+      await realtimeNoteService.handleNoteAliasesChanged(mockedNoteId);
+      expect(spyRealtimeNoteStoreFind).toHaveBeenCalledWith(mockedNoteId);
+      expect(spyAnnounceAliasesUpdate).toHaveBeenCalledWith(undefined);
+    });
+
+    it('announces change with new alias', async () => {
+      await realtimeNoteService.handleNoteAliasesChanged(mockedNoteId, mockedAlias);
+      expect(spyRealtimeNoteStoreFind).toHaveBeenCalledWith(mockedNoteId);
+      expect(spyAnnounceAliasesUpdate).toHaveBeenCalledWith(mockedAlias);
+    });
   });
 
   describe('with periodic timer', () => {

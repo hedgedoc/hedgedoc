@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -47,6 +47,7 @@ import { useUiNotifications } from '../../notifications/ui-notification-boundary
 import { Lock as IconLock } from 'react-bootstrap-icons'
 import { useCodeMirrorIndentationExtension } from './hooks/codemirror-extensions/use-code-mirror-indentation-extension'
 import { useOnPermissionsUpdated } from './hooks/yjs/use-on-permissions-updated'
+import { useOnAliasesUpdated } from './hooks/yjs/use-on-aliases-updated'
 
 export type EditorPaneProps = ScrollProps
 
@@ -86,6 +87,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
   const syncAdapter = useYDocSyncClientAdapter(messageTransporter, realtimeDoc)
   const yjsExtension = useCodeMirrorYjsExtension(realtimeDoc, syncAdapter)
 
+  useOnAliasesUpdated(messageTransporter)
   useOnMetadataUpdated(messageTransporter)
   useOnPermissionsUpdated(messageTransporter)
   useOnNoteDeleted(messageTransporter)

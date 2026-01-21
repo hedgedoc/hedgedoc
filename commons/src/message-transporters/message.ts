@@ -12,6 +12,7 @@ export enum MessageType {
   PONG = 'PONG',
   METADATA_UPDATED = 'METADATA_UPDATED',
   PERMISSIONS_UPDATED = 'PERMISSIONS_UPDATED',
+  ALIASES_UPDATED = 'ALIASES_UPDATED',
   DOCUMENT_DELETED = 'DOCUMENT_DELETED',
   SERVER_VERSION_UPDATED = 'SERVER_VERSION_UPDATED',
   REALTIME_USER_STATE_SET = 'REALTIME_USER_STATE_SET',
@@ -43,6 +44,9 @@ export interface MessagePayloads {
 
   [MessageType.REALTIME_USER_SET_ACTIVITY]: {
     active: boolean
+  }
+  [MessageType.ALIASES_UPDATED]: {
+    primaryAlias?: string
   }
 }
 

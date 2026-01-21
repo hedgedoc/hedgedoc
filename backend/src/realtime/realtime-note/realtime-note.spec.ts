@@ -105,6 +105,51 @@ describe('realtime note', () => {
     expect(sendMessage2Spy).toHaveBeenCalledTimes(1);
   });
 
+  it('announceAliasesUpdate without primary alias to all clients', () => {
+    const sut = new RealtimeNote(mockedNoteId, 'nothing');
+
+    const client1 = new MockConnectionBuilder(sut).withLoggedInUser(mockUserId).build();
+    const client2 = new MockConnectionBuilder(sut).withLoggedInUser(mockUserId).build();
+
+    const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
+    const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
+
+    const permissionsMessage = {
+      type: MessageType.ALIASES_UPDATED,
+      payload: { primaryAlias: undefined },
+    };
+    sut.announceAliasesUpdate();
+    expect(sendMessage1Spy).toHaveBeenCalledWith(permissionsMessage);
+    expect(sendMessage2Spy).toHaveBeenCalledWith(permissionsMessage);
+    sut.removeClient(client2);
+    sut.announceAliasesUpdate();
+    expect(sendMessage1Spy).toHaveBeenCalledTimes(2);
+    expect(sendMessage2Spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('announceAliasesUpdate with primary alias to all clients', () => {
+    const sut = new RealtimeNote(mockedNoteId, 'nothing');
+    const primaryAlias = 'primaryAlias';
+
+    const client1 = new MockConnectionBuilder(sut).withLoggedInUser(mockUserId).build();
+    const client2 = new MockConnectionBuilder(sut).withLoggedInUser(mockUserId).build();
+
+    const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
+    const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
+
+    const permissionsMessage = {
+      type: MessageType.ALIASES_UPDATED,
+      payload: { primaryAlias: primaryAlias },
+    };
+    sut.announceAliasesUpdate(primaryAlias);
+    expect(sendMessage1Spy).toHaveBeenCalledWith(permissionsMessage);
+    expect(sendMessage2Spy).toHaveBeenCalledWith(permissionsMessage);
+    sut.removeClient(client2);
+    sut.announceAliasesUpdate(primaryAlias);
+    expect(sendMessage1Spy).toHaveBeenCalledTimes(2);
+    expect(sendMessage2Spy).toHaveBeenCalledTimes(1);
+  });
+
   it('announceNoteDeletion to all clients', () => {
     const sut = new RealtimeNote(mockedNoteId, 'nothing');
     const client1 = new MockConnectionBuilder(sut).withLoggedInUser(mockUserId).build();
