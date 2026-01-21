@@ -20,6 +20,11 @@ import {
   PrimaryAliasDeletionForbiddenError,
 } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { NoteEvent, NoteEventMap } from '../events';
+import { NoteAliasesDto } from '../dtos/note-aliases.dto';
+
+type AliasAndIsPrimary = Pick<Alias, FieldNameAlias.alias | FieldNameAlias.isPrimary>;
 
 @Injectable()
 export class AliasService {
@@ -31,6 +36,8 @@ export class AliasService {
 
     @Inject(noteConfiguration.KEY)
     private noteConfig: NoteConfig,
+
+    private eventEmitter: EventEmitter2<NoteEventMap>,
   ) {
     this.logger.setContext(AliasService.name);
   }
@@ -45,6 +52,16 @@ export class AliasService {
   generateRandomAlias(): string {
     const randomId = randomBytes(16);
     return base32Encode(randomId, 'Crockford').toLowerCase();
+  }
+
+  /**
+   * Broadcasts an alias change event for the given note id
+   *
+   * @param noteId The id of the note for which aliases changed
+   * @param primaryAlias optional - The new primary alias to be used
+   */
+  private notifyOthers(noteId: number, primaryAlias?: string): void {
+    this.eventEmitter.emit(NoteEvent.ALIAS_UPDATE, noteId, primaryAlias);
   }
 
   /**
@@ -75,6 +92,7 @@ export class AliasService {
       newAlias[FieldNameAlias.isPrimary] = true;
     }
     await dbActor(TableAlias).insert(newAlias);
+    this.notifyOthers(noteId);
   }
 
   /**
@@ -115,6 +133,7 @@ export class AliasService {
           'makeAliasPrimary',
         );
       }
+      this.notifyOthers(noteId, alias);
     });
   }
 
@@ -158,6 +177,7 @@ export class AliasService {
           'removeAlias',
         );
       }
+      this.notifyOthers(noteId);
     });
   }
 
@@ -194,10 +214,7 @@ export class AliasService {
    * @returns The list of aliases for the note
    * @throws NotInDBError The note with the specified id does not exist
    */
-  async getAllAliases(
-    noteId: number,
-    transaction?: Knex,
-  ): Promise<Pick<Alias, FieldNameAlias.alias | FieldNameAlias.isPrimary>[]> {
+  async getAllAliases(noteId: number, transaction?: Knex): Promise<AliasAndIsPrimary[]> {
     const dbActor = transaction ?? this.knex;
     const aliases = await dbActor(TableAlias)
       .select(FieldNameAlias.alias, FieldNameAlias.isPrimary)
@@ -266,6 +283,21 @@ export class AliasService {
       return true;
     }
     return false;
+  }
+
+  toNoteAliasesDto(allAliases: AliasAndIsPrimary[]): NoteAliasesDto {
+    const primaryAlias = allAliases.find((alias) => alias[FieldNameAlias.isPrimary]);
+    if (primaryAlias === undefined) {
+      throw new NotInDBError(
+        'The note has no primary alias.',
+        this.logger.getContext(),
+        'toNoteMetadataDto',
+      );
+    }
+    return {
+      aliases: allAliases.map((alias) => alias[FieldNameAlias.alias]),
+      primaryAlias: primaryAlias[FieldNameAlias.alias],
+    };
   }
 
   /**

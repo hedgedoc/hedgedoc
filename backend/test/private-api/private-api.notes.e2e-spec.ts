@@ -21,7 +21,7 @@ import { FieldNameRevision, Revision, SpecialGroup } from '@hedgedoc/database';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import request from 'supertest';
-import {NotePermissionsDto} from "../../src/dtos/note-permissions.dto";
+import { NotePermissionsDto } from '../../src/dtos/note-permissions.dto';
 
 describe('Notes', () => {
   let testSetup: TestSetup;

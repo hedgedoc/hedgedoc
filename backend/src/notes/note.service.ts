@@ -277,21 +277,14 @@ export class NoteService {
     transaction: Knex,
   ): Promise<NoteMetadataDto> {
     const aliases = await this.aliasService.getAllAliases(noteId, transaction);
-    const primaryAlias = aliases.find((alias) => alias[FieldNameAlias.isPrimary]);
-    if (primaryAlias === undefined) {
-      throw new NotInDBError(
-        'The note has no primary alias.',
-        this.logger.getContext(),
-        'toNoteMetadataDto',
-      );
-    }
+    const noteAliases = this.aliasService.toNoteAliasesDto(aliases);
     const note = await transaction(TableNote)
       .select(FieldNameNote.createdAt, FieldNameNote.version)
       .where(FieldNameNote.id, noteId)
       .first();
     if (note === undefined) {
       throw new NotInDBError(
-        `The note '${primaryAlias[FieldNameAlias.alias]}' does not exist.`,
+        `The note '${noteAliases.primaryAlias}' does not exist.`,
         this.logger.getContext(),
         'toNoteMetadataDto',
       );
@@ -332,8 +325,7 @@ export class NoteService {
     this.logger.debug(`updatedAt ${updatedAt}`, 'innerToNoteMetadataDto');
 
     return NoteMetadataDto.create({
-      aliases: aliases.map((alias) => alias[FieldNameAlias.alias]),
-      primaryAlias: primaryAlias[FieldNameAlias.alias],
+      ...noteAliases,
       title: latestRevision.title,
       description: latestRevision.description,
       tags,
