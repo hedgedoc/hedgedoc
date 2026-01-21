@@ -24,6 +24,13 @@ export enum NoteEvent {
   PERMISSION_CHANGE = 'note.permission_change',
 
   /**
+   * Event triggered when a note's aliases are changed.
+   * Payload:
+   *  noteId: The id of the {@link Note}, for which permissions are changed.
+   */
+  ALIAS_UPDATE = 'note.alias_update',
+
+  /**
    * Event triggered when a note is deleted
    * Payload:
    *   noteId: The id of the {@link Note}, which is being deleted.
@@ -40,6 +47,7 @@ export enum NoteEvent {
 
 export interface NoteEventMap extends EventMap {
   [NoteEvent.PERMISSION_CHANGE]: (noteId: number) => void;
+  [NoteEvent.ALIAS_UPDATE]: (noteId: number, primaryAlias?: string) => void;
   [NoteEvent.DELETION]: (noteId: number) => void;
   [NoteEvent.CLOSE_REALTIME]: (noteId: number) => void;
 }

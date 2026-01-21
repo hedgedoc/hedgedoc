@@ -167,6 +167,13 @@ export class RealtimeNote extends EventEmitter2<RealtimeNoteEventMap> {
   }
 
   /**
+   * Announces to all clients that the permissions of the note has been changed
+   */
+  public announceAliasesUpdate(primaryAlias?: string): void {
+    this.sendToAllClients({ type: MessageType.ALIASES_UPDATED, payload: { primaryAlias } });
+  }
+
+  /**
    * Announces to all clients that the note has been deleted
    */
   public announceNoteDeletion(): void {

@@ -136,6 +136,22 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
   }
 
   /**
+   * Reflects the changes of the note's aliases to all connections of the note
+   *
+   * @param noteId The id of the note for that aliases changed
+   * @param primaryAlias optional - The new primary alias to be used
+   */
+  @OnEvent(NoteEvent.ALIAS_UPDATE)
+  public async handleNoteAliasesChanged(noteId: number, primaryAlias?: string): Promise<void> {
+    const realtimeNote = this.realtimeNoteStore.find(noteId);
+    if (realtimeNote === undefined) {
+      return;
+    }
+
+    realtimeNote.announceAliasesUpdate(primaryAlias);
+  }
+
+  /**
    * Updates the connections of the given note based on the current permissions of the user.
    * If the user has no permission to edit the note, the connection is closed.
    * Otherwise, it updates the acceptEdits property of the connection.
