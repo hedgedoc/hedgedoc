@@ -40,7 +40,7 @@ export class LineContentToLineIdMapper {
    * @return {@link LineChange line changes} that describe the difference between the given and the old lines. Because of the way the used diff-lib works, the ADDED lines will be tagged as "removed", because if two lines are the same the lib takes the line from the NEW lines, which results in a loss of the unique id.
    */
   private diffNewLinesWithLastLineKeys(lines: string[]): LineChange[] {
-    return diffArrays<NewLine, LineWithId>(lines, this.lastLines, {
+    return diffArrays<NewLine | LineWithId>(lines, this.lastLines, {
       comparator: (left: NewLine | LineWithId, right: NewLine | LineWithId) => {
         const leftLine = (left as LineWithId).line ?? (left as NewLine)
         const rightLine = (right as LineWithId).line ?? (right as NewLine)

@@ -3,19 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { Hunk, ParsedDiff } from 'diff'
+import type { StructuredPatchHunk, StructuredPatch } from 'diff'
 
 /**
  * Inverts a given unified patch.
  * A patch that e.g. adds a line, will remove it then.
  *
- * @param parsedDiff The patch to invert
+ * @param structuredPatch The patch to invert
  * @return The inverted patch
  */
-export const invertUnifiedPatch = (parsedDiff: ParsedDiff): ParsedDiff => {
-  const { oldFileName, newFileName, oldHeader, newHeader, hunks, index } = parsedDiff
+export const invertUnifiedPatch = (structuredPatch: StructuredPatch): StructuredPatch => {
+  const { oldFileName, newFileName, oldHeader, newHeader, hunks, index } = structuredPatch
 
-  const newHunks: Hunk[] = hunks.map((hunk) => {
+  const newHunks: StructuredPatchHunk[] = hunks.map((hunk) => {
     const { oldLines, oldStart, newLines, newStart, lines } = hunk
     return {
       oldLines: newLines,
