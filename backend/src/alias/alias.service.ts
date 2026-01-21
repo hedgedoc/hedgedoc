@@ -218,7 +218,8 @@ export class AliasService {
     const dbActor = transaction ?? this.knex;
     const aliases = await dbActor(TableAlias)
       .select(FieldNameAlias.alias, FieldNameAlias.isPrimary)
-      .where(FieldNameAlias.noteId, noteId);
+      .where(FieldNameAlias.noteId, noteId)
+      .orderBy(FieldNameAlias.alias);
     if (aliases.length === 0) {
       throw new NotInDBError(
         'The note does not exist or has no aliases. This should never happen',
@@ -286,8 +287,15 @@ export class AliasService {
   }
 
   toNoteAliasesDto(allAliases: AliasAndIsPrimary[]): NoteAliasesDto {
-    const primaryAlias = allAliases.find((alias) => alias[FieldNameAlias.isPrimary]);
-    if (primaryAlias === undefined) {
+    let primaryAlias: string | null = null;
+    const aliasStrings: string[] = [];
+    for (const alias of allAliases) {
+      if (alias[FieldNameAlias.isPrimary]) {
+        primaryAlias = alias[FieldNameAlias.alias];
+      }
+      aliasStrings.push(alias[FieldNameAlias.alias]);
+    }
+    if (primaryAlias === null) {
       throw new NotInDBError(
         'The note has no primary alias.',
         this.logger.getContext(),
@@ -295,8 +303,8 @@ export class AliasService {
       );
     }
     return {
-      aliases: allAliases.map((alias) => alias[FieldNameAlias.alias]),
-      primaryAlias: primaryAlias[FieldNameAlias.alias],
+      aliases: aliasStrings,
+      primaryAlias: primaryAlias,
     };
   }
 
