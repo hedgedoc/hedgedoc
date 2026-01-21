@@ -7,3 +7,4 @@
 export * from './alias.dto.js'
 export * from './alias-create.dto.js'
 export * from './alias-update.dto.js'
+export * from './note-aliases.dto.js'

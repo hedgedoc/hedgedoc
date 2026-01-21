@@ -8,6 +8,7 @@ import { getNoteMetadata, getNotePermissions } from '../../api/notes'
 import type { CursorSelection } from '../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
 import type { NoteInterface, NotePermissionsInterface } from '@hedgedoc/commons'
 import { noteDetailsActionsCreator } from './slice'
+import { getAllAliases } from '../../api/alias'
 
 /**
  * Sets the content of the current note, extracts and parses the frontmatter and extracts the markdown content part.
@@ -78,6 +79,20 @@ export const updateNotePermissions = async (): Promise<void> => {
   }
   const updatedPermissions = await getNotePermissions(noteDetails.primaryAlias)
   const action = noteDetailsActionsCreator.setNotePermissionsFromServer(updatedPermissions)
+  store.dispatch(action)
+}
+
+/**
+ * Updates the current note's alias list from the server.
+ */
+export const updateNoteAliases = async (newPrimaryAlias?: string): Promise<void> => {
+  const noteDetails = store.getState().noteDetails
+  if (!noteDetails) {
+    return
+  }
+  const previousPrimaryAlias = noteDetails.primaryAlias
+  const updatedAliases = await getAllAliases(newPrimaryAlias ?? previousPrimaryAlias)
+  const action = noteDetailsActionsCreator.updateAliases(updatedAliases)
   store.dispatch(action)
 }
 

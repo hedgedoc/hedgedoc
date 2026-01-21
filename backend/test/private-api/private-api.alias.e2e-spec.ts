@@ -1,5 +1,5 @@
 import { PRIVATE_API_PREFIX } from '../../src/app.module';
-import { noteAlias1, TestSetup, TestSetupBuilder } from '../test-setup';
+import { noteAlias1, password3, TestSetup, TestSetupBuilder, username3 } from '../test-setup';
 import { setupAgent } from './utils/setup-agent';
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
@@ -8,6 +8,7 @@ import { setupAgent } from './utils/setup-agent';
  */
 import { AliasCreateInterface, AliasUpdateInterface } from '@hedgedoc/commons';
 import request from 'supertest';
+import { SpecialGroup } from '@hedgedoc/database';
 
 describe('Alias', () => {
   let testSetup: TestSetup;
@@ -18,6 +19,7 @@ describe('Alias', () => {
   let agentGuestUser: request.SuperAgentTest;
   let agentUser1: request.SuperAgentTest;
   let agentUser2: request.SuperAgentTest;
+  let agentUser3: request.SuperAgentTest;
 
   let noteId: number = NaN;
 
@@ -27,6 +29,12 @@ describe('Alias', () => {
 
     [agentNotLoggedIn, agentGuestUser, agentUser1, agentUser2] = await setupAgent(testSetup);
 
+    agentUser3 = request.agent(testSetup.app.getHttpServer());
+    await agentUser3
+      .post(`${PRIVATE_API_PREFIX}/auth/local/login`)
+      .send({ username: username3, password: password3 })
+      .expect(201);
+
     forbiddenAlias = testSetup.configService.get('noteConfig').forbiddenAliases[0];
     noteId = await testSetup.notesService.getNoteIdByAlias(noteAlias1);
   });
@@ -34,6 +42,49 @@ describe('Alias', () => {
   afterEach(async () => {
     await testSetup.app.close();
     await testSetup.cleanup();
+  });
+
+  describe(`GET ${PRIVATE_API_PREFIX}/alias/:alias`, () => {
+    const testAlias = 'alias_for_testing_get_all_aliases';
+    const testAlias2 = 'alias_for_testing_get_all_aliases2';
+    let noteId;
+    beforeEach(async () => {
+      // Create note for testing purposes
+      noteId = await testSetup.notesService.createNote('TestNote', testSetup.userIds[0], testAlias);
+      await testSetup.aliasService.addAlias(noteId, testAlias2);
+      await testSetup.permissionsService.removeGroupPermission(
+        noteId,
+        await testSetup.groupService.getGroupIdByName(SpecialGroup.EVERYONE),
+      );
+      await testSetup.permissionsService.setUserPermission(noteId, testSetup.userIds[1], true);
+      await testSetup.permissionsService.setUserPermission(noteId, testSetup.userIds[2], false);
+    });
+    describe('returns the aliases for', () => {
+      it('the owner of the note', async () => {
+        const result = await agentUser1.get(`${PRIVATE_API_PREFIX}/alias/${testAlias}`).expect(200);
+        expect(result.body).toEqual({
+          aliases: [testAlias, testAlias2],
+          primaryAlias: testAlias,
+        });
+      });
+      it('a user with write permission on the note', async () => {
+        const result = await agentUser2.get(`${PRIVATE_API_PREFIX}/alias/${testAlias}`).expect(200);
+        expect(result.body).toEqual({
+          aliases: [testAlias, testAlias2],
+          primaryAlias: testAlias,
+        });
+      });
+      it('a user with read permission on the note', async () => {
+        const result = await agentUser3.get(`${PRIVATE_API_PREFIX}/alias/${testAlias}`).expect(200);
+        expect(result.body).toEqual({
+          aliases: [testAlias, testAlias2],
+          primaryAlias: testAlias,
+        });
+      });
+    });
+    it('throws an UnauthorizedError if the user has no permissions', async () => {
+      await agentGuestUser.get(`${PRIVATE_API_PREFIX}/alias/${testAlias}`).expect(401);
+    });
   });
 
   describe(`POST ${PRIVATE_API_PREFIX}/alias`, () => {

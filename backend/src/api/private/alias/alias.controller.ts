@@ -8,6 +8,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   Post,
   Put,
@@ -25,6 +26,8 @@ import { NoteService } from '../../../notes/note.service';
 import { PermissionService } from '../../../permissions/permission.service';
 import { OpenApi } from '../../utils/decorators/openapi.decorator';
 import { RequestUserId } from '../../utils/decorators/request-user-id.decorator';
+import { PermissionLevel } from '@hedgedoc/commons';
+import { NoteAliasesDto } from '../../../dtos/note-aliases.dto';
 
 @UseGuards(SessionGuard)
 @OpenApi(401)
@@ -48,7 +51,7 @@ export class AliasController {
    * @returns The ID of the note
    * @throws UnauthorizedException if the user does not have permission to modify the note
    */
-  private async getNoteIdWithPermissionCheck(
+  private async getNoteIdAndCheckIfUserCanEditAliases(
     userId: number,
     existingAlias: string,
   ): Promise<number> {
@@ -60,19 +63,37 @@ export class AliasController {
     return noteId;
   }
 
+  @Get(':alias')
+  @OpenApi(200, 401, 404)
+  async getAllAliases(
+    @RequestUserId() userId: number,
+    @Param('alias') alias: string,
+  ): Promise<NoteAliasesDto> {
+    const noteId = await this.noteService.getNoteIdByAlias(alias);
+    if (
+      (await this.permissionsService.determinePermission(userId, noteId)) === PermissionLevel.DENY
+    ) {
+      throw new UnauthorizedException(
+        'Retrieving the list of aliases requires at least note read permissions',
+      );
+    }
+    const allAliases = await this.aliasService.getAllAliases(noteId);
+    return this.aliasService.toNoteAliasesDto(allAliases);
+  }
+
   @Post()
-  @OpenApi(201, 400, 404, 409)
+  @OpenApi(201, 400, 401, 403, 404, 409)
   async addAlias(
     @RequestUserId() userId: number,
     @Body() newAliasDto: AliasCreateDto,
   ): Promise<void> {
-    const noteId = await this.getNoteIdWithPermissionCheck(userId, newAliasDto.noteAlias);
+    const noteId = await this.getNoteIdAndCheckIfUserCanEditAliases(userId, newAliasDto.noteAlias);
     await this.aliasService.ensureAliasIsAvailable(newAliasDto.newAlias);
     await this.aliasService.addAlias(noteId, newAliasDto.newAlias);
   }
 
   @Put(':alias')
-  @OpenApi(200, 400, 404)
+  @OpenApi(200, 400, 401, 404)
   async makeAliasPrimary(
     @RequestUserId() userId: number,
     @Param('alias') alias: string,
@@ -83,14 +104,14 @@ export class AliasController {
         `This endpoint can only set an alias as primary, therefore the field 'primaryAlias' must be set to 'true'.`,
       );
     }
-    const noteId = await this.getNoteIdWithPermissionCheck(userId, alias);
+    const noteId = await this.getNoteIdAndCheckIfUserCanEditAliases(userId, alias);
     await this.aliasService.makeAliasPrimary(noteId, alias);
   }
 
   @Delete(':alias')
-  @OpenApi(204, 400, 404)
+  @OpenApi(204, 400, 401, 404)
   async removeAlias(@RequestUserId() userId: number, @Param('alias') alias: string): Promise<void> {
-    await this.getNoteIdWithPermissionCheck(userId, alias);
+    await this.getNoteIdAndCheckIfUserCanEditAliases(userId, alias);
     await this.aliasService.removeAlias(alias);
   }
 }

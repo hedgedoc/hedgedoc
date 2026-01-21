@@ -25,6 +25,9 @@ import {
 } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
 import { AliasService } from './alias.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { NoteEventMap } from '../events';
+import SpyInstance = jest.SpyInstance;
 
 describe('AliasService', () => {
   const alias1 = 'testAlias1';
@@ -41,7 +44,7 @@ describe('AliasService', () => {
     [tracker, knexProvider] = mockKnexDb();
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AliasService, knexProvider],
+      providers: [AliasService, knexProvider, EventEmitter2<NoteEventMap>],
       imports: [
         LoggerModule,
         await ConfigModule.forRoot({
@@ -56,8 +59,20 @@ describe('AliasService', () => {
     service = module.get<AliasService>(AliasService);
   });
 
+  let spyOnNotifyOthers: SpyInstance;
+
+  beforeEach(() => {
+    spyOnNotifyOthers = jest.spyOn(
+      // oxlint-disable-next-line @typescript-eslint/no-explicit-any
+      service as any,
+      'notifyOthers',
+    );
+  });
+
   afterEach(() => {
     tracker.reset();
+    spyOnNotifyOthers.mockClear();
+    spyOnNotifyOthers.mockReset();
   });
 
   describe('generateRandomAlias', () => {
@@ -80,6 +95,7 @@ describe('AliasService', () => {
         await service.addAlias(noteId1, alias1);
         expectBindings(tracker, 'select', [[noteId1]]);
         expectBindings(tracker, 'insert', [[alias1, true, noteId1]]);
+        expect(spyOnNotifyOthers).toHaveBeenCalledWith(noteId1);
       });
 
       it('a non-primary alias if a primary alias is already present', async () => {
@@ -92,6 +108,7 @@ describe('AliasService', () => {
         await service.addAlias(noteId1, alias2);
         expectBindings(tracker, 'select', [[noteId1]]);
         expectBindings(tracker, 'insert', [[alias2, null, noteId1]]);
+        expect(spyOnNotifyOthers).toHaveBeenCalledWith(noteId1);
       });
     });
   });
@@ -108,6 +125,7 @@ describe('AliasService', () => {
         [null, noteId1],
         [true, noteId1, alias2],
       ]);
+      expect(spyOnNotifyOthers).toHaveBeenCalledWith(noteId1, alias2);
     });
     it('does not mark the aliases as primary, if the alias does not exist', async () => {
       mockUpdate(tracker, TableAlias, [FieldNameAlias.isPrimary], FieldNameAlias.noteId, []);
@@ -115,6 +133,7 @@ describe('AliasService', () => {
         GenericDBError,
       );
       expectBindings(tracker, 'update', [[null, noteId1]]);
+      expect(spyOnNotifyOthers).not.toHaveBeenCalled();
     });
     it("does not mark the aliases as primary, if the alias can't be made primary", async () => {
       mockUpdate(tracker, TableAlias, [FieldNameAlias.isPrimary], FieldNameAlias.noteId, [
@@ -132,6 +151,7 @@ describe('AliasService', () => {
         [null, noteId1],
         [true, noteId1, 'i_dont_exist'],
       ]);
+      expect(spyOnNotifyOthers).not.toHaveBeenCalled();
     });
   });
 
@@ -140,6 +160,7 @@ describe('AliasService', () => {
       mockSelect(tracker, [], TableAlias, FieldNameAlias.alias);
       await expect(service.removeAlias(alias1)).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'select', [[alias1]]);
+      expect(spyOnNotifyOthers).not.toHaveBeenCalled();
     });
 
     it('fails if alias is primary', async () => {
@@ -159,6 +180,7 @@ describe('AliasService', () => {
       await expect(service.removeAlias(alias1)).rejects.toThrow(PrimaryAliasDeletionForbiddenError);
       expectBindings(tracker, 'select', [[alias1]]);
       expectBindings(tracker, 'delete', [[alias1, noteId1]]);
+      expect(spyOnNotifyOthers).not.toHaveBeenCalled();
     });
 
     it('correctly deletes the alias', async () => {
@@ -177,6 +199,7 @@ describe('AliasService', () => {
       await service.removeAlias(alias2);
       expectBindings(tracker, 'select', [[alias2]]);
       expectBindings(tracker, 'delete', [[alias2, noteId1]]);
+      expect(spyOnNotifyOthers).toHaveBeenCalledWith(noteId1);
     });
   });
 

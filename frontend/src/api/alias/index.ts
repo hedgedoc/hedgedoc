@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,6 +7,20 @@ import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-ap
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
 import type { AliasCreateInterface, AliasUpdateInterface } from '@hedgedoc/commons'
+import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
+import type { NoteAliasesInterface } from '@hedgedoc/commons/dist/esm'
+
+/**
+ * Fetches the list of available aliases for a given note identified by one known alias.
+ *
+ * @param noteAlias An existing alias for a note.
+ * @return Information about the available aliases.
+ * @throws {Error} when the API request wasn't successful
+ */
+export const getAllAliases = async (noteAlias: string): Promise<NoteAliasesInterface> => {
+  const response = await new GetApiRequestBuilder<NoteAliasesInterface>(`alias/${noteAlias}`).sendRequest()
+  return response.asParsedJsonObject()
+}
 
 /**
  * Adds an alias to an existing note.

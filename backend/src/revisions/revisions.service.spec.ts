@@ -35,6 +35,8 @@ import { LoggerModule } from '../logger/logger.module';
 import { dateTimeToDB, getCurrentDateTime } from '../utils/datetime';
 import { RevisionsService } from './revisions.service';
 import * as utilsExtractRevisionMetadataFromContentModule from './utils/extract-revision-metadata-from-content';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { NoteEventMap } from '../events';
 
 jest.mock('diff');
 jest.mock('uuid');
@@ -71,7 +73,7 @@ describe('RevisionsService', () => {
     [tracker, knexProvider] = mockKnexDb();
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [RevisionsService, knexProvider, AliasService],
+      providers: [RevisionsService, knexProvider, AliasService, EventEmitter2<NoteEventMap>],
       imports: [
         LoggerModule,
         await ConfigModule.forRoot({

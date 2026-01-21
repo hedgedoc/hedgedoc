@@ -14,6 +14,8 @@ import { buildStateFromMetadataUpdate } from './reducers/build-state-from-metada
 import type { CursorSelection } from '../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
 import { buildStateFromUpdateCursorPosition } from './reducers/build-state-from-update-cursor-position'
 import type { NoteInterface, NoteMetadataInterface, NotePermissionsInterface } from '@hedgedoc/commons'
+import type { NoteAliasesInterface } from '@hedgedoc/commons/dist/esm'
+import { buildStateFromAliasesUpdate } from './reducers/build-state-from-aliases-update'
 
 const noteDetailsSlice = createSlice({
   name: 'noteDetails',
@@ -36,6 +38,9 @@ const noteDetailsSlice = createSlice({
     },
     updateCursorPosition(state, action: PayloadAction<CursorSelection>) {
       return buildStateFromUpdateCursorPosition(state, action.payload)
+    },
+    updateAliases(state, action: PayloadAction<NoteAliasesInterface>) {
+      return buildStateFromAliasesUpdate(state, action.payload)
     },
     unloadNote() {
       return initialState
