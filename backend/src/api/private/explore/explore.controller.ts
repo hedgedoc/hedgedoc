@@ -16,7 +16,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { type Response } from 'express';
+import { type FastifyReply } from 'fastify';
 
 import { SessionGuard } from '../../../auth/session.guard';
 import { NoteExploreEntryDto } from '../../../dtos/note-explore-entry.dto';
@@ -111,7 +111,7 @@ export class ExploreController {
     @RequestUserId() userId: number,
     @Param('noteAlias') noteAlias: string,
     @Body() notePinStatusDto: NotePinStatusDto,
-    @Res() res: Response,
+    @Res() res: FastifyReply,
   ): Promise<NoteExploreEntryDto | null> {
     const noteId = await this.noteService.getNoteIdByAlias(noteAlias);
     const entry = await this.exploreService.setNotePinStatus(
@@ -120,7 +120,7 @@ export class ExploreController {
       notePinStatusDto.isPinned,
     );
     // We send the response manually with res.send() and setting the content type accordingly.
-    // This is required with the express backend for NestJS since it does not allow `null` to be sent normally
+    // This is required to allow null to be sent
     // https://github.com/nestjs/nest/issues/10415
     res.header('Content-Type', 'application/json; charset=utf-8');
     if (entry === null) {

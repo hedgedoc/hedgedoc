@@ -37,14 +37,13 @@ describe('Notes', () => {
     agent = request.agent(testSetup.app.getHttpServer());
     forbiddenAlias = testSetup.configService.get('noteConfig').forbiddenAliases[0];
     uploadPath = testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
-    await testSetup.app.init();
+    await testSetup.init();
     content = 'This is a test note.';
     testImage = await fs.readFile('test/public-api/fixtures/test.png');
   });
 
   afterEach(async () => {
     await ensureDeleted(uploadPath);
-    await testSetup.app.close();
     await testSetup.cleanup();
   });
 
@@ -182,7 +181,8 @@ describe('Notes', () => {
     it('errors if no token is provided', async () => {
       await agent
         .post(`${PUBLIC_API_PREFIX}/notes/${givenAlias}`)
-        .set('Content-Type', 'application/json')
+        .set('Content-Type', 'text/markdown')
+        .send(content)
         .expect('Content-Type', /json/)
         .expect(403);
     });

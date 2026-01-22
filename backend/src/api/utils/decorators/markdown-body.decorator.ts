@@ -10,7 +10,6 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { ApiBody, ApiConsumes } from '@nestjs/swagger';
-import getRawBody from 'raw-body';
 
 /**
  * Extract the raw markdown from the request body and create a new note with it
@@ -21,16 +20,21 @@ import getRawBody from 'raw-body';
 // oxlint-disable-next-line @typescript-eslint/naming-convention
 export const MarkdownBody = createParamDecorator(
   async (_, context: ExecutionContext) => {
-    // we have to check req.readable because of raw-body issue #57
-    // https://github.com/stream-utils/raw-body/issues/57
-    const req = context.switchToHttp().getRequest<import('express').Request>();
+    const req = context.switchToHttp().getRequest<import('fastify').FastifyRequest>();
     // Here the Content-Type of the http request is checked to be text/markdown
-    // because we dealing with markdown. Technically by now there can be any content which can be encoded.
+    // because we're dealing with markdown. Technically by now there can be any content which can be encoded.
     // There could be features in the software which do not work properly if the text can't be parsed as markdown.
-    if (req.get('Content-Type') === 'text/markdown') {
-      if (req.readable) {
-        return (await getRawBody(req)).toString().trim();
-      } else {
+    if (req.headers['content-type'] === 'text/markdown') {
+      try {
+        const body = await req.body;
+        if (typeof body === 'string') {
+          return body.trim();
+        } else if (Buffer.isBuffer(body)) {
+          return body.toString().trim();
+        } else {
+          throw new InternalServerErrorException('Unknown type of request body!');
+        }
+      } catch {
         throw new InternalServerErrorException('Failed to parse request body!');
       }
     } else {

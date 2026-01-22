@@ -20,12 +20,11 @@ describe('Users', () => {
 
   beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().withUsers().build();
-    await testSetup.app.init();
+    await testSetup.init();
     agent = request.agent(testSetup.app.getHttpServer());
   });
 
   afterEach(async () => {
-    await testSetup.app.close();
     await testSetup.cleanup();
   });
 

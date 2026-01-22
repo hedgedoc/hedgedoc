@@ -5,16 +5,16 @@
  */
 import { AuthProviderType } from '@hedgedoc/commons';
 import { FieldNameNote, FieldNameUser, Note, User } from '@hedgedoc/database';
-import { Request } from 'express';
+import { FastifyRequest } from 'fastify';
 import { SessionState } from 'src/sessions/session-state.type';
 
-export type CompleteRequest = Request & {
+export type CompleteRequest = FastifyRequest & {
   userId?: User[FieldNameUser.id];
   authProviderType?: AuthProviderType;
   noteId?: Note[FieldNameNote.id];
   session?: SessionState;
 };
 
-export type RequestWithSession = Request & {
+export type RequestWithSession = FastifyRequest & {
   session: SessionState;
 };

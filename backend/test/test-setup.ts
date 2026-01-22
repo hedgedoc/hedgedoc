@@ -1,3 +1,4 @@
+import { HttpServer } from '@nestjs/common';
 import { AliasModule } from '../src/alias/alias.module';
 import { AliasService } from '../src/alias/alias.service';
 import { ApiTokenModule } from '../src/api-token/api-token.module';
@@ -76,7 +77,7 @@ import { SpecialGroup } from '@hedgedoc/database';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR, APP_PIPE, RouterModule, Routes } from '@nestjs/core';
 import { EventEmitterModule } from '@nestjs/event-emitter';
-import { NestExpressApplication } from '@nestjs/platform-express';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
 import knex, { Knex } from 'knex';
 import { KnexModule } from 'nest-knexjs';
@@ -96,7 +97,7 @@ interface CreateTestSetupParameters {
 
 export class TestSetup {
   moduleRef: TestingModule;
-  app: NestExpressApplication;
+  app: NestFastifyApplication;
   knexInstance: Knex;
 
   usersService: UsersService;
@@ -123,13 +124,22 @@ export class TestSetup {
   permissionsService: PermissionService;
 
   /**
-   * Cleans up remnants from a test run from the database
+   * Initializes the Fastify application for testing and waits for it to be ready.
+   * Must be called after build() and before making HTTP requests.
    */
-  public async cleanup() {
+  public async init(): Promise<void> {
+    await this.app.init();
+    await this.app.getHttpAdapter().getInstance().ready();
+  }
+
+  /**
+   * Cleans up Fastify, NestJS, and the database from a test run.
+   */
+  public async cleanup(): Promise<void> {
+    await this.app.close();
     if (this.knexInstance) {
       await this.knexInstance.destroy();
     }
-    await this.app.close();
   }
 }
 
@@ -328,7 +338,9 @@ export class TestSetupBuilder {
     this.testSetup.oidcService = this.testSetup.moduleRef.get<OidcService>(OidcService);
     this.testSetup.exploreService = this.testSetup.moduleRef.get<ExploreService>(ExploreService);
 
-    this.testSetup.app = this.testSetup.moduleRef.createNestApplication();
+    this.testSetup.app = this.testSetup.moduleRef.createNestApplication(
+      new FastifyAdapter({ ignoreTrailingSlash: true }) as HttpServer,
+    ) as NestFastifyApplication;
 
     await setupApp(
       this.testSetup.app,

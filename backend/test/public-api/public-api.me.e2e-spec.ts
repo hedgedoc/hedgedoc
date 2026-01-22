@@ -29,12 +29,11 @@ describe('Me', () => {
     testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
     agent = request.agent(testSetup.app.getHttpServer());
     uploadPath = testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
-    await testSetup.app.init();
+    await testSetup.init();
     userId = testSetup.userIds[0];
   });
 
   afterEach(async () => {
-    await testSetup.app.close();
     await testSetup.cleanup();
   });
   describe(`GET ${PUBLIC_API_PREFIX}/me`, () => {

@@ -5,8 +5,9 @@
  */
 import { MediaBackendType } from '@hedgedoc/commons';
 import { HttpAdapterHost } from '@nestjs/core';
-import { NestExpressApplication } from '@nestjs/platform-express';
+import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { WsAdapter } from '@nestjs/platform-ws';
+import fastifyMultipart from '@fastify/multipart';
 
 import { AppConfig } from './config/app.config';
 import { AuthConfig } from './config/auth.config';
@@ -19,27 +20,51 @@ import { isDevMode } from './utils/dev-mode';
 import { setupSessionMiddleware } from './utils/session';
 import { setupValidationPipe } from './utils/setup-pipes';
 import { setupPrivateApiDocs, setupPublicApiDocs } from './utils/swagger';
+import { INestApplication } from '@nestjs/common';
 
 /**
  * Common setup function which is called by main.ts and the E2E tests.
  */
 export async function setupApp(
-  app: NestExpressApplication,
+  app: NestFastifyApplication,
   appConfig: AppConfig,
   authConfig: AuthConfig,
   mediaConfig: MediaConfig,
   logger: ConsoleLoggerService,
 ): Promise<void> {
   // Setup OpenAPI documentation
-  await setupPublicApiDocs(app);
+  await setupPublicApiDocs(app as INestApplication);
   if (isDevMode()) {
-    await setupPrivateApiDocs(app);
+    await setupPrivateApiDocs(app as INestApplication);
   }
 
-  await runMigrations(app, logger);
+  // Register multipart for file uploads
+  await app.register(fastifyMultipart, {
+    limits: {
+      fileSize: 1024 * 1024 * 20, // 20 MB
+    },
+  });
+
+  // Register content-type parser for text/markdown
+  app
+    .getHttpAdapter()
+    .getInstance()
+    .addContentTypeParser(
+      'text/markdown',
+      { parseAs: 'string' },
+      (_req: unknown, body: unknown, done: (err: Error | null, body: unknown) => void) => {
+        done(null, body);
+      },
+    );
+
+  await runMigrations(app as INestApplication, logger);
 
   // Setup session handling
-  setupSessionMiddleware(app, authConfig, app.get(SessionService).getSessionStore());
+  await setupSessionMiddleware(
+    app as INestApplication,
+    authConfig,
+    app.get(SessionService).getSessionStore(),
+  );
 
   // Enable web security aspects
   app.enableCors({
@@ -59,13 +84,18 @@ export async function setupApp(
       `Serving the local folder '${mediaConfig.backend.filesystem.uploadPath}' under '/uploads'`,
       'AppBootstrap',
     );
-    app.useStaticAssets(mediaConfig.backend.filesystem.uploadPath, {
+    const path = await import('path');
+    await app.register(import('@fastify/static'), {
+      root: path.resolve(mediaConfig.backend.filesystem.uploadPath),
       prefix: '/uploads/',
     });
   }
   logger.log(`Serving the local folder 'public' under '/public'`, 'AppBootstrap');
-  app.useStaticAssets('public', {
+  const path = await import('path');
+  await app.register(import('@fastify/static'), {
+    root: path.resolve('public'),
     prefix: '/public/',
+    decorateReply: false,
   });
   // TODO Evaluate whether we really need this folder,
   //  only use-cases for now are intro.md and motd.md which could be API endpoints as well

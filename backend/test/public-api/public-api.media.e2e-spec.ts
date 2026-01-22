@@ -22,16 +22,13 @@ describe('Media', () => {
 
   beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().withUsers().build();
-    agent = request.agent(testSetup.app.getHttpServer());
 
     testImage = await fs.readFile('test/public-api/fixtures/test.png');
     uploadPath = testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
 
-    testSetup.app.useStaticAssets(uploadPath, {
-      prefix: '/uploads',
-    });
+    await testSetup.init();
 
-    await testSetup.app.init();
+    agent = request.agent(testSetup.app.getHttpServer());
 
     const logger = await testSetup.app.resolve(ConsoleLoggerService);
     logger.log('Switching logger', 'AppBootstrap');
@@ -41,7 +38,6 @@ describe('Media', () => {
   afterEach(async () => {
     // Delete the upload folder
     await ensureDeleted(uploadPath);
-    await testSetup.app.close();
     await testSetup.cleanup();
   });
 

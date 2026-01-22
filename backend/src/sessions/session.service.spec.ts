@@ -8,7 +8,6 @@ import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { serialize } from 'cookie';
 import { sign } from 'cookie-signature';
-import { Cookie } from 'express-session';
 import type { Tracker } from 'knex-mock-client';
 import { IncomingMessage } from 'node:http';
 import { Socket } from 'node:net';
@@ -61,7 +60,9 @@ describe('SessionService', () => {
       sessionsStore.set(
         testSessionId,
         {
-          cookie: new Cookie(),
+          cookie: {
+            originalMaxAge: null,
+          },
           userId: testUserId,
         },
         async (error) => {
