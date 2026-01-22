@@ -15,6 +15,7 @@ import { Loglevel } from './config/loglevel.enum';
 import { MediaConfig } from './config/media.config';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 import { isDevMode } from './utils/dev-mode';
+import { extendKnexQueryBuilder } from './database/extend-knex-query-builder';
 
 async function bootstrap(): Promise<void> {
   // Initialize AppModule
@@ -27,6 +28,8 @@ async function bootstrap(): Promise<void> {
         } as AppConfig)
       : false,
   });
+
+  extendKnexQueryBuilder();
 
   // Set up our custom logger
   const logger = await app.resolve(ConsoleLoggerService);
