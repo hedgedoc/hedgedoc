@@ -96,6 +96,7 @@ import { KnexModule } from 'nest-knexjs';
 import { ZodSerializerInterceptor, ZodValidationPipe } from 'nestjs-zod';
 import { types as pgTypes } from 'pg';
 import { v4 as uuidv4 } from 'uuid';
+import { extendKnexQueryBuilder } from "../src/database/extend-knex-query-builder";
 
 interface CreateTestSetupParameters {
   appConfigMock?: AppConfig;
@@ -180,6 +181,7 @@ export class TestSetupBuilder {
     // we need to use this low-level way of writing to get the message to the output without getting
     // a lot of extra output about using console.log
     process.stdout.write(`Using dbname ${dbName} (${dbType})\n`);
+    extendKnexQueryBuilder();
     if (dbType === 'sqlite') {
       return;
     }
@@ -328,6 +330,7 @@ export class TestSetupBuilder {
    * Builds the final TestSetup from the configured builder
    */
   public async build(): Promise<TestSetup> {
+    console.log(`Calling build with ${this.testId}...`);
     await TestSetupBuilder.createTestDatabase(this.testId);
 
     for (const setupFunction of this.setupPreCompile) {
