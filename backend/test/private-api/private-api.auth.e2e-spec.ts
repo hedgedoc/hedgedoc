@@ -26,7 +26,7 @@ describe('Auth', () => {
 
   beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().build();
-    await testSetup.app.init();
+    await testSetup.init();
 
     username = 'hardcoded';
     displayName = 'Testy';
@@ -34,7 +34,6 @@ describe('Auth', () => {
   });
 
   afterEach(async () => {
-    await testSetup.app.close();
     await testSetup.cleanup();
   });
 

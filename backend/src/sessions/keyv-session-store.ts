@@ -3,7 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { SessionData, Store } from 'express-session';
+import { SessionStore } from '@fastify/session';
+import type {} from './fastify-session';
+import { Session } from 'fastify';
 import Keyv from 'keyv';
 
 export interface SessionStoreOptions {
@@ -11,54 +13,39 @@ export interface SessionStoreOptions {
   ttl?: number;
 }
 
-export class KeyvSessionStore<T extends SessionData> extends Store {
-  private readonly dataStore: Keyv<T>;
+export class KeyvSessionStore implements SessionStore {
+  private readonly dataStore: Keyv<Session>;
 
   constructor(options?: SessionStoreOptions) {
-    super();
-    this.dataStore = new Keyv<T>({
+    this.dataStore = new Keyv<Session>({
       namespace: 'sessions',
-      ttl: options?.ttl,
+      ttl: options?.ttl ? options.ttl * 1000 : undefined,
       // TODO Add support for non-in-memory keyv backends like redis/valkey
     });
   }
 
-  destroy(sid: string, callback: (error?: Error) => void): void {
+  destroy(sessionId: string, callback: (error?: Error) => void): void {
     this.dataStore
-      .delete(sid)
+      .delete(sessionId)
       .then(() => callback())
       .catch(callback);
   }
 
-  clear(callback: (error?: Error) => void): void {
+  get(sessionId: string, callback: (error: Error | null, session?: Session | null) => void): void {
     this.dataStore
-      .clear()
-      .then(() => {
-        callback(undefined);
-      })
-      .catch(callback);
-  }
-
-  get(sid: string, callback: (error?: Error, session?: T) => void): void {
-    this.dataStore
-      .get(sid)
-      .then((session) => callback(undefined, session))
+      .get(sessionId)
+      .then((session) => callback(null, session ?? null))
       .catch((error: Error) => callback(error));
   }
 
-  set(sid: string, session: T, callback: (error?: Error) => void | Promise<void>): void {
+  set(sessionId: string, session: Session, callback: (error?: Error) => void): void {
     this.dataStore
-      .set(sid, session)
+      .set(sessionId, session)
       .then(() => callback())
       .catch(callback);
   }
 
-  touch(sid: string, session: T, callback: (error?: Error) => void): void {
-    // Keyv does not allow updating the TTL of an existing entry, so we just set it again
-    this.set(sid, session, callback);
-  }
-
-  getAsync(sid: string): Promise<T | undefined> {
-    return this.dataStore.get(sid);
+  getAsync(sessionId: string): Promise<Session | undefined> {
+    return this.dataStore.get(sessionId);
   }
 }

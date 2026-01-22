@@ -20,13 +20,12 @@ describe('Tokens', () => {
 
   beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().withUsers().build();
-    await testSetup.app.init();
+    await testSetup.init();
 
     [agentNotLoggedIn, agentGuestUser, agentUser1, agentUser2] = await setupAgent(testSetup);
   });
 
   afterEach(async () => {
-    await testSetup.app.close();
     await testSetup.cleanup();
   });
 

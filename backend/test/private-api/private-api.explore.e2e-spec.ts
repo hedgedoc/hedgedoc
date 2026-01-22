@@ -30,7 +30,7 @@ describe('Explore', () => {
 
   beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
-    await testSetup.app.init();
+    await testSetup.init();
 
     [, , agentUser1, agentUser2] = await setupAgent(testSetup);
     agentUser3 = request.agent(testSetup.app.getHttpServer());
@@ -43,7 +43,6 @@ describe('Explore', () => {
   });
 
   afterEach(async () => {
-    await testSetup.app.close();
     await testSetup.cleanup();
   });
 

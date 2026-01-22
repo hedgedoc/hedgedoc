@@ -172,7 +172,7 @@ export class OidcService {
     }
     const client = clientConfig.client;
     const oidcConfig = clientConfig.config;
-    const params = client.callbackParams(request);
+    const params = client.callbackParams(request.raw);
     const code = request.session.oidc?.loginCode;
     const state = request.session.oidc?.loginState;
     const isAutodiscovered = clientConfig.config.authorizeUrl === undefined;
