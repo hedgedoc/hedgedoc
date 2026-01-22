@@ -6,6 +6,7 @@
 import { Provider } from '@nestjs/common';
 import knex from 'knex';
 import { createTracker, MockClient, Tracker } from 'knex-mock-client';
+import { extendKnexQueryBuilder } from '../extend-knex-query-builder';
 
 /**
  * Creates a mock Knex database instance and its tracker for testing purposes.
@@ -14,6 +15,7 @@ import { createTracker, MockClient, Tracker } from 'knex-mock-client';
  */
 export function mockKnexDb(): [Tracker, Provider] {
   const db = knex({ client: MockClient, dialect: 'pg' });
+  extendKnexQueryBuilder();
   const tracker = createTracker(db);
   const provider = {
     provide: 'default',

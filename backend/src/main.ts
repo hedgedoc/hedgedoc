@@ -16,6 +16,7 @@ import { MediaConfig } from './config/media.config';
 import { SecurityConfig } from './config/security.config';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 import { isDevMode } from './utils/dev-mode';
+import { extendKnexQueryBuilder } from './database/extend-knex-query-builder';
 
 async function bootstrap(): Promise<void> {
   // Initialize AppModule
@@ -36,6 +37,8 @@ async function bootstrap(): Promise<void> {
         : false,
     },
   )) as NestFastifyApplication;
+
+  extendKnexQueryBuilder();
 
   // Set up our custom logger
   const logger = await app.resolve(ConsoleLoggerService);
