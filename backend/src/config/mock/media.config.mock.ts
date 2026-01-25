@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -17,6 +17,7 @@ export function createDefaultMockMediaConfig(): MediaConfig {
         uploadPath: 'test_uploads' + Math.floor(Math.random() * 100000).toString(),
       },
     },
+    maxUploadSize: 20 * 1024 * 1024, // 20 MB
   };
 }
 
