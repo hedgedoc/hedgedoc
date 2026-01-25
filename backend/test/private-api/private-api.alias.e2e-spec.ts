@@ -5,7 +5,7 @@
  */
 import { PRIVATE_API_PREFIX } from '../../src/app.module';
 import { noteAlias1, password3, TestSetup, TestSetupBuilder, username3 } from '../test-setup';
-import { setupAgent } from './utils/setup-agent';
+import { extendAgentWithCsrf, setupAgent } from './utils/setup-agent';
 import { AliasCreateInterface, AliasUpdateInterface } from '@hedgedoc/commons';
 import request from 'supertest';
 import { SpecialGroup } from '@hedgedoc/database';
@@ -29,7 +29,8 @@ describe('Alias', () => {
 
     [agentNotLoggedIn, agentGuestUser, agentUser1, agentUser2] = await setupAgent(testSetup);
 
-    agentUser3 = request.agent(testSetup.app.getHttpServer());
+    const originalAgentUser3 = request.agent(testSetup.app.getHttpServer());
+    agentUser3 = await extendAgentWithCsrf(originalAgentUser3);
     await agentUser3
       .post(`${PRIVATE_API_PREFIX}/auth/local/login`)
       .send({ username: username3, password: password3 })

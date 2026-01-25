@@ -10,6 +10,7 @@ import { setUpI18n } from './setupI18n'
 import { loadFromLocalStorage } from '../../../redux/editor-config/methods'
 import { fetchAndSetUser } from '../../login-page/utils/fetch-and-set-user'
 import { loginOrRegisterGuest } from './login-or-register-guest'
+import { refreshCsrfToken } from '../../../redux/csrf-token/methods'
 
 const logger = new Logger('Application Loader')
 
@@ -54,6 +55,10 @@ const fetchUserInformation = async (): Promise<void> => {
  */
 export const createSetUpTaskList = (): InitTask[] => {
   return [
+    {
+      name: 'Load CSRF token',
+      task: refreshCsrfToken
+    },
     {
       name: 'Load dark mode',
       task: loadDarkMode

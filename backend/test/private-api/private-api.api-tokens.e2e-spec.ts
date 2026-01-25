@@ -1,14 +1,14 @@
-import { PRIVATE_API_PREFIX } from '../../src/app.module';
-import { dateTimeToISOString, getCurrentDateTime } from '../../src/utils/datetime';
-import { TestSetup, TestSetupBuilder } from '../test-setup';
-import { setupAgent } from './utils/setup-agent';
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ApiTokenWithSecretInterface } from '@hedgedoc/commons';
 import request from 'supertest';
+import { ApiTokenWithSecretInterface } from '@hedgedoc/commons';
+import { dateTimeToISOString, getCurrentDateTime } from '../../src/utils/datetime';
+import { PRIVATE_API_PREFIX } from '../../src/app.module';
+import { setupAgent } from './utils/setup-agent';
+import { TestSetup, TestSetupBuilder } from '../test-setup';
 
 describe('Tokens', () => {
   let testSetup: TestSetup;

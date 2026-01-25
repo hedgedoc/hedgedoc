@@ -13,6 +13,7 @@ import { realtimeStatusReducer } from './realtime/slice'
 import { noteDetailsReducer } from './note-details/slice'
 import { printModeReducer } from './print-mode/slice'
 import { pinnedNotesReducer } from './pinned-notes/slice'
+import { csrfTokenReducer } from './csrf-token/slice'
 
 export const store = configureStore({
   reducer: {
@@ -23,7 +24,8 @@ export const store = configureStore({
     realtimeStatus: realtimeStatusReducer,
     noteDetails: noteDetailsReducer,
     printMode: printModeReducer,
-    pinnedNotes: pinnedNotesReducer
+    pinnedNotes: pinnedNotesReducer,
+    csrfToken: csrfTokenReducer
   },
   devTools: isDevMode
 })
