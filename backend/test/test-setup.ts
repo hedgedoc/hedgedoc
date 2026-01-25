@@ -3,6 +3,7 @@ import { AliasModule } from '../src/alias/alias.module';
 import { AliasService } from '../src/alias/alias.service';
 import { ApiTokenModule } from '../src/api-token/api-token.module';
 import { ApiTokenService } from '../src/api-token/api-token.service';
+import { CsrfGuard } from '../src/api/private/csrf/csrf.guard';
 import { PrivateApiModule } from '../src/api/private/private-api.module';
 import { PublicApiModule } from '../src/api/public/public-api.module';
 import { ApiTokenGuard } from '../src/api/utils/guards/api-token.guard';
@@ -75,7 +76,7 @@ import { getCurrentDateTime } from '../src/utils/datetime';
  */
 import { SpecialGroup } from '@hedgedoc/database';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_INTERCEPTOR, APP_PIPE, RouterModule, Routes } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR, APP_PIPE, RouterModule, Routes } from '@nestjs/core';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
@@ -300,6 +301,10 @@ export class TestSetupBuilder {
         {
           provide: APP_INTERCEPTOR,
           useClass: ZodSerializerInterceptor,
+        },
+        {
+          provide: APP_GUARD,
+          useClass: CsrfGuard,
         },
       ],
     });

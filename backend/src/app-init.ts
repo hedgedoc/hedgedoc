@@ -8,6 +8,7 @@ import { HttpAdapterHost } from '@nestjs/core';
 import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { WsAdapter } from '@nestjs/platform-ws';
 import fastifyMultipart from '@fastify/multipart';
+import fastifyCsrfProtection from '@fastify/csrf-protection';
 
 import { AppConfig } from './config/app.config';
 import { AuthConfig } from './config/auth.config';
@@ -66,6 +67,14 @@ export async function setupApp(
     app.get(SessionService).getSessionStore(),
   );
 
+  // Setup CSRF protection
+  await app.register(fastifyCsrfProtection, {
+    cookieKey: 'hedgedoc-csrf',
+    sessionPlugin: '@fastify/session',
+    getToken: (req) => req.headers['csrf-token'] as string | undefined,
+  });
+  logger.log('CSRF protection enabled', 'AppBootstrap');
+
   // Enable web security aspects
   app.enableCors({
     origin: appConfig.rendererBaseUrl,
@@ -73,7 +82,7 @@ export async function setupApp(
   logger.log(`Enabling CORS for '${appConfig.rendererBaseUrl}'`, 'AppBootstrap');
   // TODO Add rate limiting (#442)
   // TODO Add CSP (#1309)
-  // TODO Add common security headers and CSRF (#201)
+  // TODO Add common security headers (#201)
 
   // Setup class-validator for incoming API request data
   app.useGlobalPipes(setupValidationPipe(logger));

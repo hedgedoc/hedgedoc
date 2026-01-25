@@ -2636,6 +2636,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fastify/csrf-protection@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@fastify/csrf-protection@npm:7.1.0"
+  dependencies:
+    "@fastify/csrf": "npm:^8.0.0"
+    "@fastify/error": "npm:^4.0.0"
+    fastify-plugin: "npm:^5.0.0"
+  checksum: 10c0/aaf230ca4da4394971ade980e0c18ac29aef33f3385e98b99a59abc28e234d2513e92f02e62111797b5954831f83ca03cc720d829f784a29fbda22dc6c38ab6d
+  languageName: node
+  linkType: hard
+
+"@fastify/csrf@npm:^8.0.0":
+  version: 8.0.1
+  resolution: "@fastify/csrf@npm:8.0.1"
+  checksum: 10c0/b1dd899c63d76628b9d816e612d34b3b6f9435130e177997a1ea3cc7c019613fe85ea00afc9ec53e2fb519ad27a2e85d240c0e6bc5410ba699f4bb4d36004235
+  languageName: node
+  linkType: hard
+
 "@fastify/deepmerge@npm:^3.0.0":
   version: 3.2.0
   resolution: "@fastify/deepmerge@npm:3.2.0"
@@ -2825,6 +2843,7 @@ __metadata:
   dependencies:
     "@azure/storage-blob": "npm:12.29.1"
     "@fastify/cookie": "npm:11.0.2"
+    "@fastify/csrf-protection": "npm:7.1.0"
     "@fastify/multipart": "npm:9.4.0"
     "@fastify/secure-session": "npm:8.3.0"
     "@fastify/session": "npm:11.1.1"

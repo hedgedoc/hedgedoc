@@ -1,10 +1,3 @@
-import { PRIVATE_API_PREFIX } from '../../src/app.module';
-import { LoginDto } from '../../src/dtos/login.dto';
-import { RegisterDto } from '../../src/dtos/register.dto';
-import { UpdatePasswordDto } from '../../src/dtos/update-password.dto';
-import { NotInDBError } from '../../src/errors/errors';
-import { checkPassword } from '../../src/utils/password';
-import { TestSetup, TestSetupBuilder } from '../test-setup';
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
@@ -14,8 +7,17 @@ import { TestSetup, TestSetupBuilder } from '../test-setup';
 @typescript-eslint/no-unsafe-assignment,
 @typescript-eslint/no-unsafe-member-access
 */
-import { AuthProviderType, FieldNameIdentity, FieldNameUser } from '@hedgedoc/database';
 import request from 'supertest';
+import { AuthProviderType, FieldNameIdentity, FieldNameUser } from '@hedgedoc/database';
+import { checkPassword } from '../../src/utils/password';
+import { PRIVATE_API_PREFIX } from '../../src/app.module';
+import { LoginDto } from '../../src/dtos/login.dto';
+import { NotInDBError } from '../../src/errors/errors';
+import { RegisterDto } from '../../src/dtos/register.dto';
+import { TestSetup, TestSetupBuilder } from '../test-setup';
+import { UpdatePasswordDto } from '../../src/dtos/update-password.dto';
+import { extendAgentWithCsrf } from './utils/setup-agent';
+import { extractCookieValue } from './utils/cookie';
 
 describe('Auth', () => {
   let testSetup: TestSetup;
@@ -44,7 +46,9 @@ describe('Auth', () => {
         password: password,
         username: username,
       };
-      await request(testSetup.app.getHttpServer())
+      const originalAgent = request.agent(testSetup.app.getHttpServer());
+      const agent = await extendAgentWithCsrf(originalAgent);
+      await agent
         .post(`${PRIVATE_API_PREFIX}/auth/local`)
         .set('Content-Type', 'application/json')
         .send(JSON.stringify(registrationDto))
@@ -77,7 +81,9 @@ describe('Auth', () => {
           password: password,
           username: conflictingUserName,
         };
-        await request(testSetup.app.getHttpServer())
+        const originalAgent = request.agent(testSetup.app.getHttpServer());
+        const agent = await extendAgentWithCsrf(originalAgent);
+        await agent
           .post(`${PRIVATE_API_PREFIX}/auth/local`)
           .set('Content-Type', 'application/json')
           .send(JSON.stringify(registrationDto))
@@ -91,7 +97,9 @@ describe('Auth', () => {
           password: password,
           username: username,
         };
-        await request(testSetup.app.getHttpServer())
+        const originalAgent = request.agent(testSetup.app.getHttpServer());
+        const agent = await extendAgentWithCsrf(originalAgent);
+        await agent
           .post(`${PRIVATE_API_PREFIX}/auth/local`)
           .set('Content-Type', 'application/json')
           .send(JSON.stringify(registrationDto))
@@ -104,7 +112,9 @@ describe('Auth', () => {
           password: 'test1234',
           username: username,
         };
-        const response = await request(testSetup.app.getHttpServer())
+        const originalAgent = request.agent(testSetup.app.getHttpServer());
+        const agent = await extendAgentWithCsrf(originalAgent);
+        const response = await agent
           .post(`${PRIVATE_API_PREFIX}/auth/local`)
           .set('Content-Type', 'application/json')
           .send(JSON.stringify(registrationDto))
@@ -118,13 +128,18 @@ describe('Auth', () => {
   });
 
   describe('With an already existing user', () => {
+    let loggedInAgent: request.SuperAgentTest;
+    let cookie: string;
+
     beforeEach(async () => {
       const registrationDto: RegisterDto = {
         displayName: displayName,
         password: password,
         username: username,
       };
-      await request(testSetup.app.getHttpServer())
+      const originalAgent = request.agent(testSetup.app.getHttpServer());
+      const agent = await extendAgentWithCsrf(originalAgent);
+      await agent
         .post(`${PRIVATE_API_PREFIX}/auth/local`)
         .set('Content-Type', 'application/json')
         .send(JSON.stringify(registrationDto))
@@ -132,13 +147,14 @@ describe('Auth', () => {
     });
     describe(`PUT ${PRIVATE_API_PREFIX}/auth/local`, () => {
       const newPassword = 'new_password';
-      let cookie = '';
       beforeEach(async () => {
         const loginDto: LoginDto = {
           password: password,
           username: username,
         };
-        const response = await request(testSetup.app.getHttpServer())
+        const originalAgent = request.agent(testSetup.app.getHttpServer());
+        loggedInAgent = await extendAgentWithCsrf(originalAgent);
+        const response = await loggedInAgent
           .post(`${PRIVATE_API_PREFIX}/auth/local/login`)
           .set('Content-Type', 'application/json')
           .send(JSON.stringify(loginDto))
@@ -151,10 +167,10 @@ describe('Auth', () => {
           currentPassword: password,
           newPassword: newPassword,
         };
-        await request(testSetup.app.getHttpServer())
+        await loggedInAgent
           .put(`${PRIVATE_API_PREFIX}/auth/local`)
           .set('Content-Type', 'application/json')
-          .set('Cookie', cookie)
+          .set('Cookie', extractCookieValue(cookie))
           .send(JSON.stringify(changePasswordDto))
           .expect(200);
         // Successfully login with new password
@@ -162,7 +178,7 @@ describe('Auth', () => {
           password: newPassword,
           username: username,
         };
-        const response = await request(testSetup.app.getHttpServer())
+        const response = await loggedInAgent
           .post(`${PRIVATE_API_PREFIX}/auth/local/login`)
           .set('Content-Type', 'application/json')
           .send(JSON.stringify(loginDto))
@@ -173,10 +189,10 @@ describe('Auth', () => {
           currentPassword: newPassword,
           newPassword: password,
         };
-        await request(testSetup.app.getHttpServer())
+        await loggedInAgent
           .put(`${PRIVATE_API_PREFIX}/auth/local`)
           .set('Content-Type', 'application/json')
-          .set('Cookie', cookie)
+          .set('Cookie', extractCookieValue(cookie))
           .send(JSON.stringify(changePasswordBackDto))
           .expect(200);
       });
@@ -188,10 +204,10 @@ describe('Auth', () => {
             currentPassword: password,
             newPassword: newPassword,
           };
-          await request(testSetup.app.getHttpServer())
+          await loggedInAgent
             .put(`${PRIVATE_API_PREFIX}/auth/local`)
             .set('Content-Type', 'application/json')
-            .set('Cookie', cookie)
+            .set('Cookie', extractCookieValue(cookie))
             .send(JSON.stringify(changePasswordDto))
             .expect(403);
           // enable login again
@@ -201,7 +217,7 @@ describe('Auth', () => {
             password: newPassword,
             username: username,
           };
-          await request(testSetup.app.getHttpServer())
+          await loggedInAgent
             .post(`${PRIVATE_API_PREFIX}/auth/local/login`)
             .set('Content-Type', 'application/json')
             .send(JSON.stringify(loginNewPasswordDto))
@@ -211,7 +227,7 @@ describe('Auth', () => {
             password: password,
             username: username,
           };
-          await request(testSetup.app.getHttpServer())
+          await loggedInAgent
             .post(`${PRIVATE_API_PREFIX}/auth/local/login`)
             .set('Content-Type', 'application/json')
             .send(JSON.stringify(loginOldPasswordDto))
@@ -223,10 +239,10 @@ describe('Auth', () => {
             currentPassword: 'wrong_password',
             newPassword: newPassword,
           };
-          await request(testSetup.app.getHttpServer())
+          await loggedInAgent
             .put(`${PRIVATE_API_PREFIX}/auth/local`)
             .set('Content-Type', 'application/json')
-            .set('Cookie', cookie)
+            .set('Cookie', extractCookieValue(cookie))
             .send(JSON.stringify(changePasswordDto))
             .expect(401);
           // old password still does work for login
@@ -234,7 +250,7 @@ describe('Auth', () => {
             password: password,
             username: username,
           };
-          await request(testSetup.app.getHttpServer())
+          loggedInAgent
             .post(`${PRIVATE_API_PREFIX}/auth/local/login`)
             .set('Content-Type', 'application/json')
             .send(JSON.stringify(loginOldPasswordDto))
@@ -246,10 +262,10 @@ describe('Auth', () => {
             currentPassword: 'wrong',
             newPassword: newPassword,
           };
-          await request(testSetup.app.getHttpServer())
+          await loggedInAgent
             .put(`${PRIVATE_API_PREFIX}/auth/local`)
             .set('Content-Type', 'application/json')
-            .set('Cookie', cookie)
+            .set('Cookie', extractCookieValue(cookie))
             .send(JSON.stringify(changePasswordDtoOldPwTooShort))
             .expect(400);
 
@@ -257,10 +273,10 @@ describe('Auth', () => {
             currentPassword: password,
             newPassword: 'new',
           };
-          await request(testSetup.app.getHttpServer())
+          await loggedInAgent
             .put(`${PRIVATE_API_PREFIX}/auth/local`)
             .set('Content-Type', 'application/json')
-            .set('Cookie', cookie)
+            .set('Cookie', extractCookieValue(cookie))
             .send(JSON.stringify(changePasswordDtoNewPwTooShort))
             .expect(400);
 
@@ -269,7 +285,7 @@ describe('Auth', () => {
             password: password,
             username: username,
           };
-          await request(testSetup.app.getHttpServer())
+          await loggedInAgent
             .post(`${PRIVATE_API_PREFIX}/auth/local/login`)
             .set('Content-Type', 'application/json')
             .send(JSON.stringify(loginOldPasswordDto))
@@ -285,7 +301,9 @@ describe('Auth', () => {
           password: password,
           username: username,
         };
-        await request(testSetup.app.getHttpServer())
+        const originalAgent = request.agent(testSetup.app.getHttpServer());
+        const agent = await extendAgentWithCsrf(originalAgent);
+        await agent
           .post(`${PRIVATE_API_PREFIX}/auth/local/login`)
           .set('Content-Type', 'application/json')
           .send(JSON.stringify(loginDto))
@@ -300,15 +318,17 @@ describe('Auth', () => {
           password: password,
           username: username,
         };
-        const response = await request(testSetup.app.getHttpServer())
+        const originalAgent = request.agent(testSetup.app.getHttpServer());
+        const agent = await extendAgentWithCsrf(originalAgent);
+        const response = await agent
           .post(`${PRIVATE_API_PREFIX}/auth/local/login`)
           .set('Content-Type', 'application/json')
           .send(JSON.stringify(loginDto))
           .expect(201);
         const cookie = response.get('Set-Cookie')[0];
-        await request(testSetup.app.getHttpServer())
+        await agent
           .delete(`${PRIVATE_API_PREFIX}/auth/logout`)
-          .set('Cookie', cookie)
+          .set('Cookie', extractCookieValue(cookie))
           .expect(200);
       });
     });
