@@ -1,3 +1,10 @@
+/*
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+import { SortMode } from '@hedgedoc/commons';
+import { NoteType } from '@hedgedoc/database';
 import { PRIVATE_API_PREFIX } from '../../src/app.module';
 import {
   noteAlias1,
@@ -8,14 +15,7 @@ import {
   TestSetupBuilder,
   username3,
 } from '../test-setup';
-import { setupAgent } from './utils/setup-agent';
-/*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
- *
- * SPDX-License-Identifier: AGPL-3.0-only
- */
-import { SortMode } from '@hedgedoc/commons';
-import { NoteType } from '@hedgedoc/database';
+import { extendAgentWithCsrf, setupAgent } from './utils/setup-agent';
 import request from 'supertest';
 
 describe('Explore', () => {
@@ -33,7 +33,8 @@ describe('Explore', () => {
     await testSetup.init();
 
     [, , agentUser1, agentUser2] = await setupAgent(testSetup);
-    agentUser3 = request.agent(testSetup.app.getHttpServer());
+    const originalAgentUser3 = request.agent(testSetup.app.getHttpServer());
+    agentUser3 = await extendAgentWithCsrf(originalAgentUser3);
     await agentUser3
       .post(`${PRIVATE_API_PREFIX}/auth/local/login`)
       .send({ username: username3, password: password3 })
