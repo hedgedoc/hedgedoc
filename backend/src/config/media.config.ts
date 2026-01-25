@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -9,6 +9,8 @@ import z from 'zod';
 
 import { parseOptionalBoolean, printConfigErrorAndExit } from './utils';
 import { buildErrorMessage, extractDescriptionFromZodIssue } from './zod-error-message';
+
+const DEFAULT_MAX_UPLOAD_SIZE = 20 * 1024 * 1024; // 20 MB default
 
 const azureSchema = z.object({
   type: z.literal(MediaBackendType.AZURE),
@@ -61,6 +63,11 @@ const schema = z.object({
     s3Schema,
     webdavSchema,
   ]),
+  maxUploadSize: z
+    .number()
+    .min(0)
+    .default(DEFAULT_MAX_UPLOAD_SIZE)
+    .describe('HD_MEDIA_MAX_UPLOAD_SIZE'),
 });
 
 export type MediaConfig = z.infer<typeof schema>;
@@ -98,6 +105,9 @@ export default registerAs('mediaConfig', () => {
         publicUrl: process.env.HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL,
       },
     },
+    maxUploadSize: process.env.HD_MEDIA_MAX_UPLOAD_SIZE
+      ? parseInt(process.env.HD_MEDIA_MAX_UPLOAD_SIZE)
+      : DEFAULT_MAX_UPLOAD_SIZE,
   });
   if (mediaConfig.error) {
     const errorMessages = mediaConfig.error.errors.map((issue) =>

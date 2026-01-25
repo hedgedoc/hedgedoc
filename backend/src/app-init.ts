@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -41,7 +41,7 @@ export async function setupApp(
   // Register multipart for file uploads
   await app.register(fastifyMultipart, {
     limits: {
-      fileSize: 1024 * 1024 * 20, // 20 MB
+      fileSize: mediaConfig.maxUploadSize,
     },
   });
 
