@@ -58,7 +58,7 @@ Similarly to the *save* feature, you can also import a Markdown file from **Drop
 ### Permissions
 
 It is possible to change the access permission of a note through the little button on the top right of the view.
-There are four possible options:
+There are six possible options:
 
 |                                                                                      | Owner read/write | Signed-in read | Signed-in write | Guest read | Guest write |
 |:------------------------------------------------------------------------------------ |:----------------:|:--------------:|:---------------:|:----------:|:-----------:|
