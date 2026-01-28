@@ -42,6 +42,7 @@ nav:
       - 'Slide Options': references/slide-options.md
       - 'URL Scheme': references/url-scheme.md
       - 'YAML Metadata': references/yaml-metadata.md
+      - 'Permissions': references/permissions.md
   - Developer:
       - 'Getting Started': dev/getting-started.md
       - API: dev/api.md
