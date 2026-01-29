@@ -13,7 +13,13 @@ nav:
           - 'Docker Image': setup/docker.md
           - 'Manual Installation': setup/manual-setup.md
       - 'Community Installation Methods': setup/community.md
-  - Guides:
+  - 'User Guide':
+      - 'Introduction': user-guide/index.md
+      - 'Interface': user-guide/interface.md
+      - 'Managing Notes': user-guide/managing-notes.md
+      - 'Editor Features': user-guide/editor.md
+      - 'Markdown Syntax': user-guide/formatting.md
+  - 'Admin Guides':
       - 'Reverse Proxy': guides/reverse-proxy.md
       - Authentication:
           - LDAP: guides/auth/ldap-ad.md

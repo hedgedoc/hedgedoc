@@ -37,3 +37,6 @@ site/
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Local Netlify folder
+.netlify
