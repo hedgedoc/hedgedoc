@@ -13,7 +13,7 @@ export function createDefaultMockAuthConfig(): AuthConfig {
     allowProfileEdits: true,
     allowChooseUsername: true,
     session: {
-      secret: 'my_secret',
+      secret: 'long-but-still-insecure-session-secret',
       lifetime: 1209600000,
     },
     local: {

@@ -12,11 +12,9 @@ import {
   Get,
   Param,
   Post,
-  UploadedFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes, ApiHeader, ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../auth/session.guard';
@@ -28,6 +26,7 @@ import { MulterFile } from '../../../media/multer-file.interface';
 import { PermissionService } from '../../../permissions/permission.service';
 import { PermissionsGuard } from '../../../permissions/permissions.guard';
 import { RequirePermission } from '../../../permissions/require-permission.decorator';
+import { FastifyFile } from '../../utils/decorators/fastify-file.decorator';
 import { OpenApi } from '../../utils/decorators/openapi.decorator';
 import { RequestNoteId } from '../../utils/decorators/request-note-id.decorator';
 import { RequestUserId } from '../../utils/decorators/request-user-id.decorator';
@@ -64,7 +63,6 @@ export class MediaController {
     description: 'ID or aliases of the parent note',
   })
   @UseGuards(PermissionsGuard)
-  @UseInterceptors(FileInterceptor('file'))
   @UseInterceptors(NoteHeaderInterceptor)
   @RequirePermission(PermissionLevel.WRITE)
   @OpenApi(
@@ -79,7 +77,7 @@ export class MediaController {
     500,
   )
   async uploadMedia(
-    @UploadedFile() file: MulterFile | undefined,
+    @FastifyFile('file') file: MulterFile | undefined,
     @RequestNoteId() noteId: number,
     @RequestUserId() userId: number,
   ): Promise<string> {

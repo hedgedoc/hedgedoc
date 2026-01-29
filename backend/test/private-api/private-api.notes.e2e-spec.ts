@@ -38,7 +38,7 @@ describe('Notes', () => {
 
   beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
-    await testSetup.app.init();
+    await testSetup.init();
 
     forbiddenAlias = testSetup.configService.get('noteConfig').forbiddenAliases[0];
     uploadPath = testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
@@ -49,7 +49,6 @@ describe('Notes', () => {
   });
 
   afterEach(async () => {
-    await testSetup.app.close();
     await testSetup.cleanup();
   });
 
@@ -582,31 +581,25 @@ describe('Notes', () => {
         await testSetup.notesService.updateNote(noteId, content);
       });
       it('allows the owner to discard all revisions', async () => {
-        await agentUser1
-          .delete(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}/revisions`)
-          .set('Content-Type', 'application/json')
-          .expect(204);
+        await agentUser1.delete(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}/revisions`).expect(204);
         const after = await testSetup.revisionsService.getAllRevisionMetadataDto(noteId);
         expect(after).toHaveLength(1);
       });
       it('disallows another user to discard all revisions', async () => {
         await agentUser2
           .delete(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}/revisions`)
-          .set('Content-Type', 'application/json')
           .expect('Content-Type', /json/)
           .expect(403);
       });
       it('disallows guest user to discard all revisions', async () => {
         await agentGuestUser
           .delete(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}/revisions`)
-          .set('Content-Type', 'application/json')
           .expect('Content-Type', /json/)
           .expect(403);
       });
       it('disallows not logged-in user to discard all revisions', async () => {
         await agentNotLoggedIn
           .delete(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}/revisions`)
-          .set('Content-Type', 'application/json')
           .expect('Content-Type', /json/)
           .expect(401);
       });

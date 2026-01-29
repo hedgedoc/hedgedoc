@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+import request from 'supertest';
 import { PRIVATE_API_PREFIX } from '../../src/app.module';
 import {
   displayName1,
@@ -7,12 +13,7 @@ import {
   username1,
   username2,
 } from '../test-setup';
-/*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
- *
- * SPDX-License-Identifier: AGPL-3.0-only
- */
-import request from 'supertest';
+import { extendAgentWithCsrf } from './utils/setup-agent';
 
 describe('Users', () => {
   let testSetup: TestSetup;
@@ -20,12 +21,12 @@ describe('Users', () => {
 
   beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().withUsers().build();
-    await testSetup.app.init();
-    agent = request.agent(testSetup.app.getHttpServer());
+    await testSetup.init();
+    const originalAgent = request.agent(testSetup.app.getHttpServer());
+    agent = await extendAgentWithCsrf(originalAgent);
   });
 
   afterEach(async () => {
-    await testSetup.app.close();
     await testSetup.cleanup();
   });
 

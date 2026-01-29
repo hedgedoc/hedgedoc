@@ -34,6 +34,44 @@ describe('mediaConfig', () => {
   const uploadDir = 'uploadDir';
   const publicUrl = 'https://example.com/images';
 
+  describe('maxUploadSize', () => {
+    it('uses default value when HD_MEDIA_MAX_UPLOAD_SIZE is not set', () => {
+      const restore = mockedEnv(
+        {
+          /* oxlint-disable @typescript-eslint/naming-convention */
+          HD_MEDIA_BACKEND_TYPE: MediaBackendType.FILESYSTEM,
+          HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH: uploadPath,
+          /* oxlint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      const config = mediaConfig();
+      expect(config.maxUploadSize).toEqual(20971520); // 20 MB default
+      restore();
+    });
+
+    it('correctly parses HD_MEDIA_MAX_UPLOAD_SIZE when set', () => {
+      const maxSize = 10485760; // 10 MB
+      const restore = mockedEnv(
+        {
+          /* oxlint-disable @typescript-eslint/naming-convention */
+          HD_MEDIA_BACKEND_TYPE: MediaBackendType.FILESYSTEM,
+          HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH: uploadPath,
+          HD_MEDIA_MAX_UPLOAD_SIZE: maxSize.toString(),
+          /* oxlint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      const config = mediaConfig();
+      expect(config.maxUploadSize).toEqual(maxSize);
+      restore();
+    });
+  });
+
   describe('correctly parses config', () => {
     it('for backend filesystem', () => {
       const restore = mockedEnv(
@@ -431,6 +469,29 @@ describe('mediaConfig', () => {
         mediaConfig();
         expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_MEDIA_BACKEND_WEBDAV_PUBLIC_URL: Invalid url',
+        );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
+        restore();
+      });
+    });
+
+    describe('for maxUploadSize', () => {
+      it('when HD_MEDIA_MAX_UPLOAD_SIZE is negative', () => {
+        const restore = mockedEnv(
+          {
+            /* oxlint-disable @typescript-eslint/naming-convention */
+            HD_MEDIA_BACKEND_TYPE: MediaBackendType.FILESYSTEM,
+            HD_MEDIA_BACKEND_FILESYSTEM_UPLOAD_PATH: uploadPath,
+            HD_MEDIA_MAX_UPLOAD_SIZE: '-1',
+            /* oxlint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        mediaConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
+          'HD_MEDIA_MAX_UPLOAD_SIZE: Number must be greater than or equal to 0',
         );
         expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();

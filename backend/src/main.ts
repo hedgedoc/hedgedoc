@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ConfigService } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core';
-import { NestExpressApplication } from '@nestjs/platform-express';
+import { AbstractHttpAdapter, NestFactory } from '@nestjs/core';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 
 import { setupApp } from './app-init';
 import { AppModule } from './app.module';
@@ -18,15 +18,23 @@ import { isDevMode } from './utils/dev-mode';
 
 async function bootstrap(): Promise<void> {
   // Initialize AppModule
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    // ConsoleLoggerService only uses the loglevel, so we can give it an incomplete AppConfig to log everything
-    // This Logger instance will be replaced by a proper one with config from DI below
-    logger: isDevMode()
-      ? new ConsoleLoggerService({
-          log: { level: Loglevel.TRACE },
-        } as AppConfig)
-      : false,
-  });
+  const app = (await NestFactory.create(
+    AppModule,
+    new FastifyAdapter({
+      routerOptions: {
+        ignoreTrailingSlash: true,
+      },
+    }) as AbstractHttpAdapter,
+    {
+      // ConsoleLoggerService only uses the loglevel, so we can give it an incomplete AppConfig to log everything
+      // This Logger instance will be replaced by a proper one with config from DI below
+      logger: isDevMode()
+        ? new ConsoleLoggerService({
+            log: { level: Loglevel.TRACE },
+          } as AppConfig)
+        : false,
+    },
+  )) as NestFastifyApplication;
 
   // Set up our custom logger
   const logger = await app.resolve(ConsoleLoggerService);

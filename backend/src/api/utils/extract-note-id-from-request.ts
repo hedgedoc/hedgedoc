@@ -18,7 +18,8 @@ export async function extractNoteIdFromRequest(
 }
 
 function extractNoteAlias(request: CompleteRequest): string | undefined {
-  const noteAlias = request.params['noteAlias'] || request.headers['hedgedoc-note'];
+  const params = request.params as Record<string, string | undefined>;
+  const noteAlias = params['noteAlias'] || request.headers['hedgedoc-note'];
   if (Array.isArray(noteAlias)) {
     return noteAlias[0];
   }

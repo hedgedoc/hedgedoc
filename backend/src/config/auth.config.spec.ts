@@ -19,7 +19,7 @@ jest.mock('fs', () => ({
 }));
 
 describe('authConfig', () => {
-  const secret = 'this-is-a-secret';
+  const secret = 'this-is-a-long-but-insecure-secret';
   const neededAuthConfig = {
     /* oxlint-disable @typescript-eslint/naming-convention */
     HD_AUTH_SESSION_SECRET: secret,
@@ -174,6 +174,98 @@ describe('authConfig', () => {
         authConfig();
         expect(spyConsoleError.mock.calls[0][0]).toContain(
           'HD_AUTH_LOCAL_MINIMAL_PASSWORD_STRENGTH: Number must be greater than or equal to 0',
+        );
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
+        restore();
+      });
+    });
+  });
+
+  describe('session', () => {
+    describe('is correctly parsed', () => {
+      it('when HD_AUTH_SESSION_SECRET is at least 32 characters', () => {
+        const longSecret = 'a'.repeat(40);
+        const restore = mockedEnv(
+          {
+            /* oxlint-disable @typescript-eslint/naming-convention */
+            HD_AUTH_SESSION_SECRET: longSecret,
+            /* oxlint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.session.secret).toEqual(longSecret);
+        restore();
+      });
+
+      it('when HD_AUTH_SESSION_SECRET is exactly 32 characters', () => {
+        const exactSecret = 'a'.repeat(32);
+        const restore = mockedEnv(
+          {
+            /* oxlint-disable @typescript-eslint/naming-convention */
+            HD_AUTH_SESSION_SECRET: exactSecret,
+            /* oxlint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        const config = authConfig();
+        expect(config.session.secret).toEqual(exactSecret);
+        restore();
+      });
+    });
+
+    describe('fails to be parsed', () => {
+      let spyConsoleError: jest.SpyInstance;
+      let spyProcessExit: jest.Mock;
+      let originalProcess: typeof process;
+
+      beforeEach(() => {
+        spyConsoleError = jest.spyOn(console, 'error');
+        spyProcessExit = jest.fn();
+        originalProcess = global.process;
+        global.process = {
+          ...originalProcess,
+          exit: spyProcessExit,
+        } as unknown as typeof global.process;
+      });
+
+      afterEach(() => {
+        global.process = originalProcess;
+        jest.restoreAllMocks();
+      });
+
+      it('when HD_AUTH_SESSION_SECRET is not set', () => {
+        const restore = mockedEnv(
+          {},
+          {
+            clear: true,
+          },
+        );
+        authConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain('HD_AUTH_SESSION_SECRET: Required');
+        expect(spyProcessExit).toHaveBeenCalledWith(1);
+        restore();
+      });
+
+      it('when HD_AUTH_SESSION_SECRET is less than 32 characters', () => {
+        const shortSecret = 'a'.repeat(31);
+        const restore = mockedEnv(
+          {
+            /* oxlint-disable @typescript-eslint/naming-convention */
+            HD_AUTH_SESSION_SECRET: shortSecret,
+            /* oxlint-enable @typescript-eslint/naming-convention */
+          },
+          {
+            clear: true,
+          },
+        );
+        authConfig();
+        expect(spyConsoleError.mock.calls[0][0]).toContain(
+          'HD_AUTH_SESSION_SECRET: String must contain at least 32 character(s)',
         );
         expect(spyProcessExit).toHaveBeenCalledWith(1);
         restore();

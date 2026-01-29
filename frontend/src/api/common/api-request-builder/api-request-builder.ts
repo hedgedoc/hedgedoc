@@ -7,6 +7,7 @@ import { ApiError } from '../api-error'
 import type { ApiErrorResponse } from '../api-error-response'
 import { ApiResponse } from '../api-response'
 import { defaultConfig, defaultHeaders } from '../default-config'
+import { getCsrfToken } from '../../../redux/csrf-token/methods'
 import deepmerge from 'deepmerge'
 import { baseUrlFromEnvExtractor } from '../../../utils/base-url-from-env-extractor'
 
@@ -56,6 +57,12 @@ export abstract class ApiRequestBuilder<ResponseType> {
   }
 
   protected async sendRequestAndVerifyResponse(httpMethod: RequestInit['method']): Promise<ApiResponse<ResponseType>> {
+    // Add CSRF token for requests except GET, HEAD, OPTIONS (only in browser context)
+    if (typeof window !== 'undefined' && httpMethod && !['GET', 'HEAD', 'OPTIONS'].includes(httpMethod.toUpperCase())) {
+      const csrfToken = await getCsrfToken()
+      this.customRequestHeaders.set('csrf-token', csrfToken)
+    }
+
     const response = await fetch(this.targetUrl, {
       ...this.customRequestOptions,
       method: httpMethod,

@@ -24,6 +24,7 @@ import { LdapController } from './auth/ldap/ldap.controller';
 import { LocalController } from './auth/local/local.controller';
 import { OidcController } from './auth/oidc/oidc.controller';
 import { ConfigController } from './config/config.controller';
+import { CsrfController } from './csrf/csrf.controller';
 import { ExploreController } from './explore/explore.controller';
 import { GroupsController } from './groups/groups.controller';
 import { MeController } from './me/me.controller';
@@ -48,6 +49,7 @@ import { UsersController } from './users/users.controller';
   controllers: [
     ApiTokensController,
     ConfigController,
+    CsrfController,
     ExploreController,
     GuestController,
     MediaController,

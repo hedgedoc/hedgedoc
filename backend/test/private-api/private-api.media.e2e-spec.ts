@@ -29,11 +29,7 @@ describe('Media', () => {
 
     uploadPath = testSetup.configService.get('mediaConfig').backend.filesystem.uploadPath;
 
-    testSetup.app.useStaticAssets(uploadPath, {
-      prefix: '/uploads',
-    });
-
-    await testSetup.app.init();
+    await testSetup.init();
 
     [agentNotLoggedIn, agentGuestUser, agentUser1, agentUser2] = await setupAgent(testSetup);
 
@@ -44,7 +40,6 @@ describe('Media', () => {
   afterEach(async () => {
     // Delete the upload folder
     await ensureDeleted(uploadPath);
-    await testSetup.app.close();
     await testSetup.cleanup();
   });
 

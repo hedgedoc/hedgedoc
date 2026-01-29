@@ -5,7 +5,7 @@
  */
 import { Controller, Get, Param, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Response } from 'express';
+import { FastifyReply } from 'fastify';
 
 import { OpenApi } from '../api/utils/decorators/openapi.decorator';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
@@ -24,7 +24,7 @@ export class MediaRedirectController {
 
   @Get(':uuid')
   @OpenApi(302, 404, 500)
-  async getMedia(@Param('uuid') uuid: string, @Res() response: Response): Promise<void> {
+  async getMedia(@Param('uuid') uuid: string, @Res() response: FastifyReply): Promise<void> {
     const url = await this.mediaService.getFileUrl(uuid);
     response.redirect(url);
   }

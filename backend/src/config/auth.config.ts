@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -111,7 +111,7 @@ const schema = z.object({
   allowChooseUsername: z.boolean().default(true).describe('HD_AUTH_ALLOW_CHOOSE_USERNAME'),
   syncSource: z.string().optional().describe('HD_AUTH_SYNC_SOURCE'),
   session: z.object({
-    secret: z.string().describe('HD_AUTH_SESSION_SECRET'),
+    secret: z.string().describe('HD_AUTH_SESSION_SECRET').min(32),
     lifetime: z.number().default(1209600).describe('HD_AUTH_SESSION_LIFETIME'), // 14 * 24 * 60 * 60s = 14 days
   }),
   local: z.object({

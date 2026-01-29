@@ -27,7 +27,7 @@ describe('Groups', () => {
       .withNotes()
       .build();
 
-    await testSetup.app.init();
+    await testSetup.init();
 
     const agents = await setupAgent(testSetup);
     agentUser1 = agents[2];
@@ -37,7 +37,6 @@ describe('Groups', () => {
   });
 
   afterEach(async () => {
-    await testSetup.app.close();
     await testSetup.cleanup();
   });
 

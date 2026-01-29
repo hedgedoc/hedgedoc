@@ -14,7 +14,6 @@ import authConfiguration, { AuthConfig } from '../config/auth.config';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { HEDGEDOC_SESSION } from '../utils/session';
 import { KeyvSessionStore } from './keyv-session-store';
-import { SessionState } from './session-state.type';
 
 /**
  * Finds {@link Session sessions} by session id and verifies session cookies.
@@ -22,7 +21,7 @@ import { SessionState } from './session-state.type';
 @Injectable()
 export class SessionService {
   private static readonly sessionCookieContentRegex = /^s:(([^.]+)\.(.+))$/;
-  private readonly sessionStore: KeyvSessionStore<SessionState>;
+  private readonly sessionStore: KeyvSessionStore;
 
   constructor(
     private readonly logger: ConsoleLoggerService,
@@ -31,7 +30,7 @@ export class SessionService {
     private authConfig: AuthConfig,
   ) {
     this.logger.setContext(SessionService.name);
-    this.sessionStore = new KeyvSessionStore<SessionState>({
+    this.sessionStore = new KeyvSessionStore({
       ttl: authConfig.session.lifetime,
     });
   }
@@ -42,7 +41,7 @@ export class SessionService {
    *
    * @returns The used session store
    */
-  getSessionStore(): KeyvSessionStore<SessionState> {
+  getSessionStore(): KeyvSessionStore {
     return this.sessionStore;
   }
 

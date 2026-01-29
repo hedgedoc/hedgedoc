@@ -5,7 +5,7 @@
  */
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { APP_INTERCEPTOR, APP_PIPE, RouterModule, Routes } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR, APP_PIPE, RouterModule, Routes } from '@nestjs/core';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ScheduleModule } from '@nestjs/schedule';
 import { KnexModule } from 'nest-knexjs';
@@ -14,6 +14,7 @@ import { join } from 'node:path';
 
 import { AliasModule } from './alias/alias.module';
 import { ApiTokenModule } from './api-token/api-token.module';
+import { CsrfGuard } from './api/private/csrf/csrf.guard';
 import { PrivateApiModule } from './api/private/private-api.module';
 import { PublicApiModule } from './api/public/public-api.module';
 import { AuthModule } from './auth/auth.module';
@@ -134,6 +135,10 @@ const routes: Routes = [
     {
       provide: APP_INTERCEPTOR,
       useClass: ZodSerializerInterceptor,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: CsrfGuard,
     },
   ],
 })

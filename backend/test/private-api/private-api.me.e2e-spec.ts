@@ -29,7 +29,7 @@ describe('Me', () => {
 
   beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
-    await testSetup.app.init();
+    await testSetup.init();
 
     [agentNotLoggedIn, agentGuestUser, agentUser1, agentUser2] = await setupAgent(testSetup);
 
@@ -37,7 +37,6 @@ describe('Me', () => {
   });
 
   afterEach(async () => {
-    await testSetup.app.close();
     await testSetup.cleanup();
   });
 

@@ -5,7 +5,6 @@
  */
 import { AuthProviderType } from '@hedgedoc/commons';
 import { FieldNameUser, User } from '@hedgedoc/database';
-import { Cookie } from 'express-session';
 
 import { PendingUserInfoDto } from '../dtos/pending-user-info.dto';
 
@@ -35,8 +34,18 @@ interface PendingUserSessionState {
 }
 
 export interface SessionState {
-  /** Details about the currently used session cookie */
-  cookie: Cookie;
+  /** Session cookie properties */
+  cookie: {
+    originalMaxAge: number | null;
+    maxAge?: number;
+    signed?: boolean;
+    expires?: Date | null;
+    httpOnly?: boolean;
+    path?: string;
+    domain?: string;
+    secure?: boolean | 'auto';
+    sameSite?: boolean | 'lax' | 'strict' | 'none';
+  };
 
   /** Contains the username if logged in completely, is undefined when not being logged in */
   userId?: User[FieldNameUser.id];

@@ -14,11 +14,10 @@ describe('Config', () => {
 
   beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().withUsers().build();
-    await testSetup.app.init();
+    await testSetup.init();
   });
 
   afterEach(async () => {
-    await testSetup.app.close();
     await testSetup.cleanup();
   });
 
