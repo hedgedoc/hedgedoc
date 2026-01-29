@@ -16,13 +16,14 @@ import { useEffect, useState } from 'react'
 export const useEffectWithCatch = (effect: EffectCallback, deps: DependencyList = []): Error | undefined => {
   const [error, setError] = useState<Error | undefined>(undefined)
 
+  // oxlint-disable-next-line exhaustive-deps
   useEffect(() => {
     try {
       return effect()
     } catch (error) {
       setError(error as Error)
     }
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line exhaustive-deps
   }, deps)
 
   return error

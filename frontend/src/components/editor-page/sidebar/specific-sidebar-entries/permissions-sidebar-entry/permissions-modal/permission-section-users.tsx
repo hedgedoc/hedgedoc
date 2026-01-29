@@ -7,7 +7,7 @@ import { useApplicationState } from '../../../../../../hooks/common/use-applicat
 import { PermissionAddEntryField } from './permission-add-entry-field'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionEntryUser } from './permission-entry-user'
-import React, { Fragment, useCallback, useMemo } from 'react'
+import React, { Fragment, useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
