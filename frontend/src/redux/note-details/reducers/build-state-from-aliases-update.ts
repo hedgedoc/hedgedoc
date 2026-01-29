@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { NoteDetails } from '../types'
-import type { NoteMetadataInterface } from '@hedgedoc/commons'
-import type { NoteAliasesInterface } from '@hedgedoc/commons/dist/esm'
+import type { NoteAliasesInterface } from '@hedgedoc/commons'
 
 /**
  * Builds a {@link NoteDetails} redux state from a note aliases DTO received from the HTTP API.
