@@ -26,6 +26,7 @@
     "@fastify/cookie": "11.0.2",
     "@fastify/csrf-protection": "7.1.0",
     "@fastify/multipart": "9.4.0",
+    "@fastify/rate-limit": "10.3.0",
     "@fastify/secure-session": "8.3.0",
     "@fastify/session": "11.1.1",
     "@fastify/static": "9.0.0",

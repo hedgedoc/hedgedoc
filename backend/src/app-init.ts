@@ -9,10 +9,12 @@ import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { WsAdapter } from '@nestjs/platform-ws';
 import fastifyMultipart from '@fastify/multipart';
 import fastifyCsrfProtection from '@fastify/csrf-protection';
+import fastifyRateLimit from '@fastify/rate-limit';
 
 import { AppConfig } from './config/app.config';
 import { AuthConfig } from './config/auth.config';
 import { MediaConfig } from './config/media.config';
+import { SecurityConfig } from './config/security.config';
 import { ErrorExceptionMapping } from './errors/error-mapping';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 import { runMigrations } from './migrate';
@@ -22,6 +24,12 @@ import { setupSessionMiddleware } from './utils/session';
 import { setupValidationPipe } from './utils/setup-pipes';
 import { setupPrivateApiDocs, setupPublicApiDocs } from './utils/swagger';
 import { INestApplication } from '@nestjs/common';
+import {
+  buildRateLimitResponse,
+  generateRateLimitKey,
+  getMaxLimitByRequestWithSecurityConfig,
+  getTimeWindowByRequestWithSecurityConfig,
+} from './security/rate-limiting';
 
 /**
  * Common setup function which is called by main.ts and the E2E tests.
@@ -31,6 +39,7 @@ export async function setupApp(
   appConfig: AppConfig,
   authConfig: AuthConfig,
   mediaConfig: MediaConfig,
+  securityConfig: SecurityConfig,
   logger: ConsoleLoggerService,
 ): Promise<void> {
   // Setup OpenAPI documentation
@@ -75,12 +84,26 @@ export async function setupApp(
   });
   logger.log('CSRF protection enabled', 'AppBootstrap');
 
+  // Setup rate limiting
+  await app.register(fastifyRateLimit, {
+    global: true,
+    hook: 'preHandler',
+    cache: 10000,
+    skipOnError: true,
+    keyGenerator: generateRateLimitKey,
+    max: getMaxLimitByRequestWithSecurityConfig(securityConfig),
+    timeWindow: getTimeWindowByRequestWithSecurityConfig(securityConfig),
+    errorResponseBuilder: buildRateLimitResponse,
+    allowList: securityConfig.rateLimit.bypass,
+    enableDraftSpec: true,
+  });
+  logger.log('Rate limiting enabled', 'AppBootstrap');
+
   // Enable web security aspects
   app.enableCors({
     origin: appConfig.rendererBaseUrl,
   });
   logger.log(`Enabling CORS for '${appConfig.rendererBaseUrl}'`, 'AppBootstrap');
-  // TODO Add rate limiting (#442)
   // TODO Add CSP (#1309)
   // TODO Add common security headers (#201)
 

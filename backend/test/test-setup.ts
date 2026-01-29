@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import { HttpServer } from '@nestjs/common';
 import { AliasModule } from '../src/alias/alias.module';
 import { AliasService } from '../src/alias/alias.service';
@@ -46,7 +52,12 @@ import {
   createDefaultMockNoteConfig,
   registerNoteConfig,
 } from '../src/config/mock/note.config.mock';
+import {
+  createDefaultMockSecurityConfig,
+  registerSecurityConfig,
+} from '../src/config/mock/security.config.mock';
 import { NoteConfig } from '../src/config/note.config';
+import { SecurityConfig } from '../src/config/security.config';
 import { ApiTokenWithSecretDto } from '../src/dtos/api-token-with-secret.dto';
 import { eventModuleConfig } from '../src/events';
 import { ExploreService } from '../src/explore/explore.service';
@@ -94,6 +105,7 @@ interface CreateTestSetupParameters {
   externalServicesConfigMock?: ExternalServicesConfig;
   mediaConfigMock?: MediaConfig;
   noteConfigMock?: NoteConfig;
+  securityConfigMock?: SecurityConfig;
 }
 
 export class TestSetup {
@@ -267,6 +279,7 @@ export class TestSetupBuilder {
             ),
             registerMediaConfig(mocks?.mediaConfigMock ?? createDefaultMockMediaConfig()),
             registerNoteConfig(mocks?.noteConfigMock ?? createDefaultMockNoteConfig()),
+            registerSecurityConfig(mocks?.securityConfigMock ?? createDefaultMockSecurityConfig()),
           ],
         }),
         KnexModule.forRoot({
@@ -347,11 +360,21 @@ export class TestSetupBuilder {
       new FastifyAdapter({ ignoreTrailingSlash: true }) as HttpServer,
     ) as NestFastifyApplication;
 
+    const appConfig = this.testSetup.configService.get<AppConfig>('appConfig');
+    const authConfig = this.testSetup.configService.get<AuthConfig>('authConfig');
+    const mediaConfig = this.testSetup.configService.get<MediaConfig>('mediaConfig');
+    const securityConfig = this.testSetup.configService.get<SecurityConfig>('securityConfig');
+
+    if (!appConfig || !authConfig || !mediaConfig || !securityConfig) {
+      throw new Error('Could not initialize config in test setup');
+    }
+
     await setupApp(
       this.testSetup.app,
-      this.testSetup.configService.get<AppConfig>('appConfig'),
-      this.testSetup.configService.get<AuthConfig>('authConfig'),
-      this.testSetup.configService.get<MediaConfig>('mediaConfig'),
+      appConfig,
+      authConfig,
+      mediaConfig,
+      securityConfig,
       await this.testSetup.app.resolve(ConsoleLoggerService),
     );
 

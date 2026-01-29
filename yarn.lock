@@ -2726,6 +2726,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fastify/rate-limit@npm:10.3.0":
+  version: 10.3.0
+  resolution: "@fastify/rate-limit@npm:10.3.0"
+  dependencies:
+    "@lukeed/ms": "npm:^2.0.2"
+    fastify-plugin: "npm:^5.0.0"
+    toad-cache: "npm:^3.7.0"
+  checksum: 10c0/dc29c4e088362cc144a9782d86d50bc8bbd440d10017c394660ff26bd7468feb90ba412e101b3e312bfdbb7a515798ffd73801ff32a36d0fedf40032ff081dcb
+  languageName: node
+  linkType: hard
+
 "@fastify/secure-session@npm:8.3.0":
   version: 8.3.0
   resolution: "@fastify/secure-session@npm:8.3.0"
@@ -2845,6 +2856,7 @@ __metadata:
     "@fastify/cookie": "npm:11.0.2"
     "@fastify/csrf-protection": "npm:7.1.0"
     "@fastify/multipart": "npm:9.4.0"
+    "@fastify/rate-limit": "npm:10.3.0"
     "@fastify/secure-session": "npm:8.3.0"
     "@fastify/session": "npm:11.1.1"
     "@fastify/static": "npm:9.0.0"
