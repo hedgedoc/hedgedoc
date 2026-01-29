@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { SessionStore } from '@fastify/session';
-import type {} from './fastify-session';
-import { Session } from 'fastify';
 import Keyv from 'keyv';
+import { Session } from 'fastify';
+import { SessionStore } from '@fastify/session';
+import type {} from './fastify-session.d';
 
 export interface SessionStoreOptions {
   /** The time how long a session lives in seconds */
