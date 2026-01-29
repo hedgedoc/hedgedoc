@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -13,6 +13,7 @@ import { AppConfig } from './config/app.config';
 import { AuthConfig } from './config/auth.config';
 import { Loglevel } from './config/loglevel.enum';
 import { MediaConfig } from './config/media.config';
+import { SecurityConfig } from './config/security.config';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 import { isDevMode } from './utils/dev-mode';
 
@@ -46,16 +47,17 @@ async function bootstrap(): Promise<void> {
   const appConfig = configService.get<AppConfig>('appConfig');
   const authConfig = configService.get<AuthConfig>('authConfig');
   const mediaConfig = configService.get<MediaConfig>('mediaConfig');
+  const securityConfig = configService.get<SecurityConfig>('securityConfig');
 
-  if (!appConfig || !authConfig || !mediaConfig) {
-    logger.error('Could not initialize config, aborting.', 'AppBootstrap');
+  if (!appConfig || !authConfig || !mediaConfig || !securityConfig) {
+    logger.error('Could not initialize config, aborting.', undefined, 'AppBootstrap');
     await app.close();
     process.exit(1);
   }
 
   // Call common setup function which handles the rest
   // Setup code must be added there!
-  await setupApp(app, appConfig, authConfig, mediaConfig, logger);
+  await setupApp(app, appConfig, authConfig, mediaConfig, securityConfig, logger);
 
   // Start the server
   await app.listen(appConfig.backendPort);

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -27,6 +27,7 @@ import externalConfig from './config/external-services.config';
 import { Loglevel } from './config/loglevel.enum';
 import mediaConfig from './config/media.config';
 import noteConfig from './config/note.config';
+import securityConfig from './config/security.config';
 import { eventModuleConfig } from './events';
 import { ExploreModule } from './explore/explore.module';
 import { FrontendConfigModule } from './frontend-config/frontend-config.module';
@@ -101,6 +102,7 @@ const routes: Routes = [
         authConfig,
         customizationConfig,
         externalConfig,
+        securityConfig,
       ],
       isGlobal: true,
     }),
