@@ -9,10 +9,12 @@ import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { WsAdapter } from '@nestjs/platform-ws';
 import fastifyMultipart from '@fastify/multipart';
 import fastifyCsrfProtection from '@fastify/csrf-protection';
+import fastifyRateLimit from '@fastify/rate-limit';
 
 import { AppConfig } from './config/app.config';
 import { AuthConfig } from './config/auth.config';
 import { MediaConfig } from './config/media.config';
+import { RateLimitConfig } from './config/rate-limit.config';
 import { ErrorExceptionMapping } from './errors/error-mapping';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 import { runMigrations } from './migrate';
@@ -31,6 +33,7 @@ export async function setupApp(
   appConfig: AppConfig,
   authConfig: AuthConfig,
   mediaConfig: MediaConfig,
+  rateLimitConfig: RateLimitConfig,
   logger: ConsoleLoggerService,
 ): Promise<void> {
   // Setup OpenAPI documentation
@@ -75,12 +78,117 @@ export async function setupApp(
   });
   logger.log('CSRF protection enabled', 'AppBootstrap');
 
+  // Setup rate limiting
+  await app.register(fastifyRateLimit, {
+    global: true,
+    hook: 'preHandler',
+    cache: 10000,
+    skipOnError: true,
+    keyGenerator: (request) => {
+      // Use userId if authenticated (from session or API token)
+      const userId = (request as { userId?: string }).userId;
+      if (userId) {
+        return `user:${userId}`;
+      }
+      // Fall back to IP address for unauthenticated requests
+      return `ip:${request.ip}`;
+    },
+    max: async (request) => {
+      const path =
+        (request as { routeOptions?: { url?: string } }).routeOptions?.url || request.url;
+      const userId = (request as { userId?: string }).userId;
+      const authHeader = request.headers.authorization;
+
+      // Login endpoints (strictest limit)
+      if (
+        path?.includes('/api/private/auth/guest/') ||
+        path?.includes('/api/private/auth/local') ||
+        path?.includes('/api/private/auth/ldap') ||
+        path?.includes('/api/private/auth/oidc')
+      ) {
+        return rateLimitConfig.login.max;
+      }
+
+      // Public API (with auth token)
+      if (path?.startsWith('/api/v2') && authHeader?.startsWith('Bearer ')) {
+        return rateLimitConfig.public.max;
+      }
+
+      // Private API authenticated
+      if (path?.startsWith('/api/private') && userId) {
+        return rateLimitConfig.privateAuthenticated.max;
+      }
+
+      // Private API unauthenticated/guest
+      if (path?.startsWith('/api/private')) {
+        return rateLimitConfig.privateUnauthenticated.max;
+      }
+
+      // Public API without token (use private unauth limit)
+      if (path?.startsWith('/api/v2')) {
+        return rateLimitConfig.privateUnauthenticated.max;
+      }
+
+      // Default to public limit for other routes
+      return rateLimitConfig.public.max;
+    },
+    timeWindow: async (request) => {
+      const path =
+        (request as { routeOptions?: { url?: string } }).routeOptions?.url || request.url;
+
+      // Login endpoints
+      if (
+        path?.includes('/api/private/auth/guest/') ||
+        path?.includes('/api/private/auth/local') ||
+        path?.includes('/api/private/auth/ldap') ||
+        path?.includes('/api/private/auth/oidc')
+      ) {
+        return rateLimitConfig.login.window * 1000;
+      }
+
+      const userId = (request as { userId?: string }).userId;
+      const authHeader = request.headers.authorization;
+
+      // Public API (with auth token)
+      if (path?.startsWith('/api/v2') && authHeader?.startsWith('Bearer ')) {
+        return rateLimitConfig.public.window * 1000;
+      }
+
+      // Private API authenticated
+      if (path?.startsWith('/api/private') && userId) {
+        return rateLimitConfig.privateAuthenticated.window * 1000;
+      }
+
+      // Private API unauthenticated/guest or Public API without token
+      if (path?.startsWith('/api/private') || path?.startsWith('/api/v2')) {
+        return rateLimitConfig.privateUnauthenticated.window * 1000;
+      }
+
+      // Default to public window for other routes
+      return rateLimitConfig.public.window * 1000;
+    },
+    errorResponseBuilder: (_request, context) => {
+      return {
+        statusCode: 429,
+        error: 'Too Many Requests',
+        message: `Rate limit exceeded. You can make ${context.max} requests per ${context.after} to this service. Please try again later.`,
+        expiresIn: context.ttl,
+      };
+    },
+    addHeaders: {
+      'x-ratelimit-limit': true,
+      'x-ratelimit-remaining': true,
+      'x-ratelimit-reset': true,
+      'retry-after': true,
+    },
+  });
+  logger.log('Rate limiting enabled', 'AppBootstrap');
+
   // Enable web security aspects
   app.enableCors({
     origin: appConfig.rendererBaseUrl,
   });
   logger.log(`Enabling CORS for '${appConfig.rendererBaseUrl}'`, 'AppBootstrap');
-  // TODO Add rate limiting (#442)
   // TODO Add CSP (#1309)
   // TODO Add common security headers (#201)
 

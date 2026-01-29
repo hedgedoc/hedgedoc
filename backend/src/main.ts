@@ -13,6 +13,7 @@ import { AppConfig } from './config/app.config';
 import { AuthConfig } from './config/auth.config';
 import { Loglevel } from './config/loglevel.enum';
 import { MediaConfig } from './config/media.config';
+import { RateLimitConfig } from './config/rate-limit.config';
 import { ConsoleLoggerService } from './logger/console-logger.service';
 import { isDevMode } from './utils/dev-mode';
 
@@ -46,8 +47,9 @@ async function bootstrap(): Promise<void> {
   const appConfig = configService.get<AppConfig>('appConfig');
   const authConfig = configService.get<AuthConfig>('authConfig');
   const mediaConfig = configService.get<MediaConfig>('mediaConfig');
+  const rateLimitConfig = configService.get<RateLimitConfig>('rateLimit');
 
-  if (!appConfig || !authConfig || !mediaConfig) {
+  if (!appConfig || !authConfig || !mediaConfig || !rateLimitConfig) {
     logger.error('Could not initialize config, aborting.', 'AppBootstrap');
     await app.close();
     process.exit(1);
@@ -55,7 +57,7 @@ async function bootstrap(): Promise<void> {
 
   // Call common setup function which handles the rest
   // Setup code must be added there!
-  await setupApp(app, appConfig, authConfig, mediaConfig, logger);
+  await setupApp(app, appConfig, authConfig, mediaConfig, rateLimitConfig, logger);
 
   // Start the server
   await app.listen(appConfig.backendPort);

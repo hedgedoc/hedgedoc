@@ -27,6 +27,7 @@ import externalConfig from './config/external-services.config';
 import { Loglevel } from './config/loglevel.enum';
 import mediaConfig from './config/media.config';
 import noteConfig from './config/note.config';
+import rateLimitConfig from './config/rate-limit.config';
 import { eventModuleConfig } from './events';
 import { ExploreModule } from './explore/explore.module';
 import { FrontendConfigModule } from './frontend-config/frontend-config.module';
@@ -101,6 +102,7 @@ const routes: Routes = [
         authConfig,
         customizationConfig,
         externalConfig,
+        rateLimitConfig,
       ],
       isGlobal: true,
     }),

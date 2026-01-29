@@ -46,7 +46,12 @@ import {
   createDefaultMockNoteConfig,
   registerNoteConfig,
 } from '../src/config/mock/note.config.mock';
+import {
+  createDefaultMockRateLimitConfig,
+  registerRateLimitConfig,
+} from '../src/config/mock/rate-limit.config.mock';
 import { NoteConfig } from '../src/config/note.config';
+import { RateLimitConfig } from '../src/config/rate-limit.config';
 import { ApiTokenWithSecretDto } from '../src/dtos/api-token-with-secret.dto';
 import { eventModuleConfig } from '../src/events';
 import { ExploreService } from '../src/explore/explore.service';
@@ -94,6 +99,7 @@ interface CreateTestSetupParameters {
   externalServicesConfigMock?: ExternalServicesConfig;
   mediaConfigMock?: MediaConfig;
   noteConfigMock?: NoteConfig;
+  rateLimitConfigMock?: RateLimitConfig;
 }
 
 export class TestSetup {
@@ -267,6 +273,9 @@ export class TestSetupBuilder {
             ),
             registerMediaConfig(mocks?.mediaConfigMock ?? createDefaultMockMediaConfig()),
             registerNoteConfig(mocks?.noteConfigMock ?? createDefaultMockNoteConfig()),
+            registerRateLimitConfig(
+              mocks?.rateLimitConfigMock ?? createDefaultMockRateLimitConfig(),
+            ),
           ],
         }),
         KnexModule.forRoot({
@@ -352,6 +361,7 @@ export class TestSetupBuilder {
       this.testSetup.configService.get<AppConfig>('appConfig'),
       this.testSetup.configService.get<AuthConfig>('authConfig'),
       this.testSetup.configService.get<MediaConfig>('mediaConfig'),
+      this.testSetup.configService.get<RateLimitConfig>('rateLimit'),
       await this.testSetup.app.resolve(ConsoleLoggerService),
     );
 
