@@ -48,3 +48,69 @@ Setting a `*_MAX` value to `0` effectively disables rate limiting for that tier
 | `HD_SECURITY_RATE_LIMIT_AUTH_MAX`               | 20      | Maximum of auth request attempts                                   |
 | `HD_SECURITY_RATE_LIMIT_AUTH_WINDOW`            | 600     | Time window in seconds for auth request attempts                   |
 | `HD_SECURITY_RATE_LIMIT_BYPASS`                 | *none*  | Bypass rate limiting for these IP addresses (comma-separated list) |
+
+## Content Security Policy (CSP)
+
+HedgeDoc implements Content Security Policy headers to protect against cross-site scripting (XSS),
+clickjacking, and other code injection attacks. The CSP configuration uses secure defaults and can
+be extended to allow additional trusted sources.
+
+### Default Security Policy
+
+By default, HedgeDoc's CSP allows:
+
+- **Scripts**: Only from the same origin (`'self'`)
+- **Styles**: From the same origin with inline styles for Next.js compatibility
+  (`'self'`, `'unsafe-inline'`)
+- **Images**: From the same origin, data URIs, blob URIs, YouTube thumbnails, Vimeo
+  thumbnails, and Bootstrap CDN
+- **Frames**: From the same origin, YouTube embeds, and Vimeo embeds
+- **Connections**: From the same origin
+- **Forms**: Submissions only to the same origin
+
+When `HD_RENDERER_BASE_URL` is set to a different domain than `HD_BASE_URL`, the renderer domain
+is automatically added to the `frame-src` directive.
+
+### CSP Configuration
+
+CSP can be customized to allow additional trusted sources for your deployment. All additional
+sources must be valid URLs with `http://` or `https://` protocol (or `ws://`/`wss://` for
+`HD_SECURITY_CSP_ADDITIONAL_CONNECT_SRC`).
+
+| environment variable                        | default | description                                                                      |
+|---------------------------------------------|---------|----------------------------------------------------------------------------------|
+| `HD_SECURITY_CSP_ENABLE`                    | `true`  | Enable or disable CSP headers                                                    |
+| `HD_SECURITY_CSP_REPORT_ONLY`               | `false` | Enable report-only mode (logs violations without blocking)                       |
+| `HD_SECURITY_CSP_REPORT_URI`                | *none*  | URI to send CSP violation reports to                                             |
+| `HD_SECURITY_CSP_ADDITIONAL_SCRIPT_SRC`     | *none*  | Additional sources for JavaScript (comma-separated list of URLs)                 |
+| `HD_SECURITY_CSP_ADDITIONAL_STYLE_SRC`      | *none*  | Additional sources for stylesheets (comma-separated list of URLs)                |
+| `HD_SECURITY_CSP_ADDITIONAL_IMG_SRC`        | *none*  | Additional sources for images (comma-separated list of URLs)                     |
+| `HD_SECURITY_CSP_ADDITIONAL_FRAME_SRC`      | *none*  | Additional sources for frames/iframes (comma-separated list of URLs)             |
+| `HD_SECURITY_CSP_ADDITIONAL_CONNECT_SRC`    | *none*  | Additional sources for connections (comma-separated URLs, supports WebSocket)    |
+
+### Examples
+
+Allow loading images from your corporate CDN:
+
+```bash
+HD_SECURITY_CSP_ADDITIONAL_IMG_SRC=https://cdn.mycorp.example.com
+```
+
+Allow embedding content from multiple trusted sources:
+
+```bash
+HD_SECURITY_CSP_ADDITIONAL_FRAME_SRC=https://embed1.example.com,https://embed2.example.com
+```
+
+Allow WebSocket connections to your custom service:
+
+```bash
+HD_SECURITY_CSP_ADDITIONAL_CONNECT_SRC=https://api.example.com,wss://ws.example.com
+```
+
+Enable report-only mode for testing (logs violations without blocking):
+
+```bash
+HD_SECURITY_CSP_REPORT_ONLY=true
+HD_SECURITY_CSP_REPORT_URI=https://csp-reports.example.com/report
+```

@@ -2694,6 +2694,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fastify/helmet@npm:13.0.2":
+  version: 13.0.2
+  resolution: "@fastify/helmet@npm:13.0.2"
+  dependencies:
+    fastify-plugin: "npm:^5.0.0"
+    helmet: "npm:^8.0.0"
+  checksum: 10c0/d0dbabdd3ccafc723eb5c1d0dbf76c462c69c9a7f7b54d299c776f327ed2e708b4a9b335b92a6b1f9a2d9b5c46a64d0936b0955b9f2733df34004be92968a51b
+  languageName: node
+  linkType: hard
+
 "@fastify/merge-json-schemas@npm:^0.2.0":
   version: 0.2.1
   resolution: "@fastify/merge-json-schemas@npm:0.2.1"
@@ -2855,6 +2865,7 @@ __metadata:
     "@azure/storage-blob": "npm:12.29.1"
     "@fastify/cookie": "npm:11.0.2"
     "@fastify/csrf-protection": "npm:7.1.0"
+    "@fastify/helmet": "npm:13.0.2"
     "@fastify/multipart": "npm:9.4.0"
     "@fastify/rate-limit": "npm:10.3.0"
     "@fastify/secure-session": "npm:8.3.0"
@@ -10984,6 +10995,13 @@ __metadata:
     turbo: "npm:2.6.3"
   languageName: unknown
   linkType: soft
+
+"helmet@npm:^8.0.0":
+  version: 8.1.0
+  resolution: "helmet@npm:8.1.0"
+  checksum: 10c0/94d3a7ebc88dbda1421635bdf33f00724adb5252269e93c5ab296ec0db11336d01265659ad3739ab1a1e881fb23a686ff7e788aac6a5fb929285134f157df763
+  languageName: node
+  linkType: hard
 
 "hexoid@npm:^1.0.0":
   version: 1.0.0

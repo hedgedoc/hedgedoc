@@ -25,6 +25,7 @@
     "@azure/storage-blob": "12.29.1",
     "@fastify/cookie": "11.0.2",
     "@fastify/csrf-protection": "7.1.0",
+    "@fastify/helmet": "13.0.2",
     "@fastify/multipart": "9.4.0",
     "@fastify/rate-limit": "10.3.0",
     "@fastify/secure-session": "8.3.0",

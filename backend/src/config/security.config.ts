@@ -6,10 +6,45 @@
 import { registerAs } from '@nestjs/config';
 import z from 'zod';
 
-import { parseOptionalNumber, printConfigErrorAndExit } from './utils';
+import {
+  buildValidatorForUrlProtocols,
+  parseOptionalBoolean,
+  parseOptionalNumber,
+  printConfigErrorAndExit,
+} from './utils';
 import { buildErrorMessage, extractDescriptionFromZodIssue } from './zod-error-message';
 
 const securityConfigSchema = z.object({
+  csp: z.object({
+    enable: z.boolean().default(true).describe('HD_SECURITY_CSP_ENABLE'),
+    reportOnly: z.boolean().default(false).describe('HD_SECURITY_CSP_REPORT_ONLY'),
+    reportUri: z.string().optional().describe('HD_SECURITY_CSP_REPORT_URI'),
+    additionalScriptSrc: z
+      .array(buildValidatorForUrlProtocols(['http:', 'https:']))
+      .optional()
+      .default([])
+      .describe('HD_SECURITY_CSP_ADDITIONAL_SCRIPT_SRC'),
+    additionalStyleSrc: z
+      .array(buildValidatorForUrlProtocols(['http:', 'https:']))
+      .optional()
+      .default([])
+      .describe('HD_SECURITY_CSP_ADDITIONAL_STYLE_SRC'),
+    additionalImgSrc: z
+      .array(buildValidatorForUrlProtocols(['http:', 'https:']))
+      .optional()
+      .default([])
+      .describe('HD_SECURITY_CSP_ADDITIONAL_IMG_SRC'),
+    additionalFrameSrc: z
+      .array(buildValidatorForUrlProtocols(['http:', 'https:']))
+      .optional()
+      .default([])
+      .describe('HD_SECURITY_CSP_ADDITIONAL_FRAME_SRC'),
+    additionalConnectSrc: z
+      .array(buildValidatorForUrlProtocols(['http:', 'https:', 'ws:', 'wss:']))
+      .optional()
+      .default([])
+      .describe('HD_SECURITY_CSP_ADDITIONAL_CONNECT_SRC'),
+  }),
   rateLimit: z.object({
     publicApi: z.object({
       max: z
@@ -74,6 +109,16 @@ export type SecurityConfig = z.infer<typeof securityConfigSchema>;
 
 export default registerAs('securityConfig', () => {
   const securityConfig = securityConfigSchema.safeParse({
+    csp: {
+      enable: parseOptionalBoolean(process.env.HD_SECURITY_CSP_ENABLE),
+      reportOnly: parseOptionalBoolean(process.env.HD_SECURITY_CSP_REPORT_ONLY),
+      reportUri: process.env.HD_SECURITY_CSP_REPORT_URI,
+      additionalScriptSrc: process.env.HD_SECURITY_CSP_ADDITIONAL_SCRIPT_SRC?.split(',') ?? [],
+      additionalStyleSrc: process.env.HD_SECURITY_CSP_ADDITIONAL_STYLE_SRC?.split(',') ?? [],
+      additionalImgSrc: process.env.HD_SECURITY_CSP_ADDITIONAL_IMG_SRC?.split(',') ?? [],
+      additionalFrameSrc: process.env.HD_SECURITY_CSP_ADDITIONAL_FRAME_SRC?.split(',') ?? [],
+      additionalConnectSrc: process.env.HD_SECURITY_CSP_ADDITIONAL_CONNECT_SRC?.split(',') ?? [],
+    },
     rateLimit: {
       publicApi: {
         max: parseOptionalNumber(process.env.HD_SECURITY_RATE_LIMIT_PUBLIC_API_MAX),

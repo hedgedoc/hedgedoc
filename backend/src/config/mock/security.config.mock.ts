@@ -10,6 +10,16 @@ import { SecurityConfig } from '../security.config';
 
 export function createDefaultMockSecurityConfig(): SecurityConfig {
   return {
+    csp: {
+      enable: true,
+      reportOnly: false,
+      reportUri: undefined,
+      additionalScriptSrc: [],
+      additionalStyleSrc: [],
+      additionalImgSrc: [],
+      additionalFrameSrc: [],
+      additionalConnectSrc: [],
+    },
     rateLimit: {
       publicApi: {
         max: 150,

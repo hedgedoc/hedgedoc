@@ -10,6 +10,7 @@ import { WsAdapter } from '@nestjs/platform-ws';
 import fastifyMultipart from '@fastify/multipart';
 import fastifyCsrfProtection from '@fastify/csrf-protection';
 import fastifyRateLimit from '@fastify/rate-limit';
+import fastifyHelmet from '@fastify/helmet';
 
 import { AppConfig } from './config/app.config';
 import { AuthConfig } from './config/auth.config';
@@ -30,6 +31,7 @@ import {
   getMaxLimitByRequestWithSecurityConfig,
   getTimeWindowByRequestWithSecurityConfig,
 } from './security/rate-limiting';
+import { buildCspDirectives } from './security/csp';
 
 /**
  * Common setup function which is called by main.ts and the E2E tests.
@@ -84,6 +86,22 @@ export async function setupApp(
   });
   logger.log('CSRF protection enabled', 'AppBootstrap');
 
+  // Setup CSP
+  if (securityConfig.csp.enable) {
+    const cspConfig = buildCspDirectives(appConfig, securityConfig);
+    await app.register(fastifyHelmet, {
+      contentSecurityPolicy: cspConfig,
+      // Disable CORS headers since they are enabled below
+      crossOriginEmbedderPolicy: false,
+      crossOriginOpenerPolicy: false,
+      crossOriginResourcePolicy: false,
+    });
+    const mode = securityConfig.csp.reportOnly ? 'report-only' : 'enforcement';
+    logger.log(`CSP enabled in ${mode} mode`, 'AppBootstrap');
+  } else {
+    logger.log('CSP disabled', 'AppBootstrap');
+  }
+
   // Setup rate limiting
   await app.register(fastifyRateLimit, {
     global: true,
@@ -104,7 +122,6 @@ export async function setupApp(
     origin: appConfig.rendererBaseUrl,
   });
   logger.log(`Enabling CORS for '${appConfig.rendererBaseUrl}'`, 'AppBootstrap');
-  // TODO Add CSP (#1309)
   // TODO Add common security headers (#201)
 
   // Setup class-validator for incoming API request data

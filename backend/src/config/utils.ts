@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import z, { type ZodEffects, type ZodString } from 'zod';
 import { Loglevel } from './loglevel.enum';
 
 /**
@@ -127,4 +128,31 @@ export function parseOptionalBoolean(value?: string): boolean | undefined {
 export function printConfigErrorAndExit(errorMessage: string): never {
   console.error(errorMessage);
   return process.exit(1);
+}
+
+/**
+ * Builds a zod validator for validating URLs to have one of the given protocols.
+ *
+ * @param protocols An array of allowed URL protocols, for example, 'http:' or 'https:'.
+ * @return A Zod string validator configured to validate URLs with the specified protocols.
+ */
+export function buildValidatorForUrlProtocols(
+  protocols: string[],
+): ZodEffects<ZodString, string, string> {
+  return z
+    .string()
+    .url()
+    .refine(
+      (url) => {
+        try {
+          const parsedUrl = new URL(url);
+          return protocols.includes(parsedUrl.protocol);
+        } catch {
+          return false;
+        }
+      },
+      {
+        message: `Must be a valid URL with one of the following protocols: ${protocols.map((protocol) => `${protocol}//`).join(', ')}.`,
+      },
+    );
 }
