@@ -159,7 +159,7 @@ app.use(i18n.init)
 // security headers for uploads
 app.use('/uploads', (req, res, next) => {
   res.set('Content-Disposition', 'attachment')
-  res.set('Content-Security-Policy', "default-src 'none'")
+  res.set('Content-Security-Policy', "default-src 'none'; sandbox")
   next()
 })
 
