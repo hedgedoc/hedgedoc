@@ -1528,7 +1528,7 @@ __metadata:
     mock-require: "npm:3.0.3"
     moment: "npm:2.30.1"
     morgan: "npm:1.10.1"
-    mysql2: "npm:3.16.0"
+    mysql2: "npm:3.16.3"
     nanoid: "npm:3.3.11"
     optimize-css-assets-webpack-plugin: "npm:6.0.1"
     passport: "patch:passport@npm%3A0.7.0#~/.yarn/patches/passport-npm-0.7.0-df02531736.patch"
@@ -2212,7 +2212,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-ssl-profiles@npm:^1.1.1":
+"aws-ssl-profiles@npm:^1.1.2":
   version: 1.1.2
   resolution: "aws-ssl-profiles@npm:1.1.2"
   checksum: 10/af9e5c5e6e343e0f299106acaf03106a7458be69772d004f3e4cf0e3649bb41131b594126fcbc997ad89d73752d9e1d72886c72fcc8649ac5d590459d6b75827
@@ -8139,6 +8139,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"iconv-lite@npm:^0.7.2":
+  version: 0.7.2
+  resolution: "iconv-lite@npm:0.7.2"
+  dependencies:
+    safer-buffer: "npm:>= 2.1.2 < 3.0.0"
+  checksum: 10/24c937b532f868e938386b62410b303b7c767ce3d08dc2829cbe59464d5a26ef86ae5ad1af6b34eec43ddfea39e7d101638644b0178d67262fa87015d59f983a
+  languageName: node
+  linkType: hard
+
 "icss-utils@npm:^5.0.0, icss-utils@npm:^5.1.0":
   version: 5.1.0
   resolution: "icss-utils@npm:5.1.0"
@@ -9700,7 +9709,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"long@npm:^5.2.1":
+"long@npm:^5.3.2":
   version: 5.3.2
   resolution: "long@npm:5.3.2"
   checksum: 10/b6b55ddae56fcce2864d37119d6b02fe28f6dd6d9e44fd22705f86a9254b9321bd69e9ffe35263b4846d54aba197c64882adcb8c543f2383c1e41284b321ea64
@@ -9766,17 +9775,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lru-cache@npm:^7.10.1, lru-cache@npm:^7.14.1":
+"lru-cache@npm:^7.10.1":
   version: 7.18.3
   resolution: "lru-cache@npm:7.18.3"
   checksum: 10/6029ca5aba3aacb554e919d7ef804fffd4adfc4c83db00fac8248c7c78811fb6d4b6f70f7fd9d55032b3823446546a007edaa66ad1f2377ae833bd983fac5d98
   languageName: node
   linkType: hard
 
-"lru.min@npm:^1.0.0":
-  version: 1.1.3
-  resolution: "lru.min@npm:1.1.3"
-  checksum: 10/b741bf51e6f2620f35f66657c31a37bb4e6aaa3d7f4dfd8a657cd4e6a4d75be881057d71f54a907a4938d5993677d92cdfa71203054a73af6978514ba73767ee
+"lru.min@npm:^1.1.0, lru.min@npm:^1.1.3":
+  version: 1.1.4
+  resolution: "lru.min@npm:1.1.4"
+  checksum: 10/c7041fb558fa0c39b3e14b8c711716af729a4df96af25e6a2d54f5d60d936a1e33edbabcfa3a71359f73f746763dc51da3fc679d60e2f087aa722f139f56ccd4
   languageName: node
   linkType: hard
 
@@ -11296,29 +11305,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mysql2@npm:3.16.0":
-  version: 3.16.0
-  resolution: "mysql2@npm:3.16.0"
+"mysql2@npm:3.16.3":
+  version: 3.16.3
+  resolution: "mysql2@npm:3.16.3"
   dependencies:
-    aws-ssl-profiles: "npm:^1.1.1"
+    aws-ssl-profiles: "npm:^1.1.2"
     denque: "npm:^2.1.0"
     generate-function: "npm:^2.3.1"
-    iconv-lite: "npm:^0.7.0"
-    long: "npm:^5.2.1"
-    lru.min: "npm:^1.0.0"
-    named-placeholders: "npm:^1.1.3"
+    iconv-lite: "npm:^0.7.2"
+    long: "npm:^5.3.2"
+    lru.min: "npm:^1.1.3"
+    named-placeholders: "npm:^1.1.6"
     seq-queue: "npm:^0.0.5"
-    sqlstring: "npm:^2.3.2"
-  checksum: 10/0123611ffa2d8b2569bcd425226c21b3797bae303f4c51df9d086fa5c99bc01fa44f70295071fb4664217fdfbf959a78a2ea74ef0aae2015300c41af1389463a
+    sqlstring: "npm:^2.3.3"
+  checksum: 10/cc903e1534730439948976c8494a04aeebd01a494b003852a339e506cdaf36ae646a44d362019c1c4f4f1627b7ededaa9827291bc711e443d749b70a7d7748c4
   languageName: node
   linkType: hard
 
-"named-placeholders@npm:^1.1.3":
-  version: 1.1.3
-  resolution: "named-placeholders@npm:1.1.3"
+"named-placeholders@npm:^1.1.6":
+  version: 1.1.6
+  resolution: "named-placeholders@npm:1.1.6"
   dependencies:
-    lru-cache: "npm:^7.14.1"
-  checksum: 10/7834adc91e92ae1b9c4413384e3ccd297de5168bb44017ff0536705ddc4db421723bd964607849265feb3f6ded390f84cf138e5925f22f7c13324f87a803dc73
+    lru.min: "npm:^1.1.0"
+  checksum: 10/959d44f2a00e87baa2c2b2d43c2be76c6e841a0ed67af4bf4a8d91c54082e2b2db9ac8461b16db413dcb133c6f34669516d755f9a1a7956851ce81196a717f65
   languageName: node
   linkType: hard
 
@@ -15463,7 +15472,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sqlstring@npm:^2.3.2":
+"sqlstring@npm:^2.3.3":
   version: 2.3.3
   resolution: "sqlstring@npm:2.3.3"
   checksum: 10/4e5a25af2d77a031fe00694034bf9fd822ddc3a483c9383124b120aa6b9ae9ab71e173cd29fba9c653998ebfef9e97be668957839960b9b3dc1afcb45f1ddb64
