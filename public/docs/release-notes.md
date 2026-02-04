@@ -1,5 +1,23 @@
 # Release Notes
 
+## <i class="fa fa-tag"></i> 1.10.6 <i class="fa fa-calendar-o"></i> 2026-02-04
+
+### Security fixes
+
+This release contains two medium severity security fixes:
+- [GHSA-x74j-jmf9-534w](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-x74j-jmf9-534w) reports a bug where security headers for upload files were not set correctly.
+- [GHSA-672m-p72w-gw28](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-672m-p72w-gw28) reports potential security issues with limited script execution in uploaded SVG files.
+
+Thanks to [@HUSEYNKHANLI](https://github.com/HUSEYNKHANLI) and [@drkim-dev](https://github.com/drkim-dev) for reporting!
+
+### Maintenance
+
+- Dependency updates
+- Enhancements in the documentation at [docs.hedgedoc.org](https://docs.hedgedoc.org)
+
+### Contributors
+- [xenein](https://github.com/xenein) (#6322)
+
 ## <i class="fa fa-tag"></i> 1.10.5 <i class="fa fa-calendar-o"></i> 2025-12-06
 
 This release is just a fix for the docker container. It does not contain any
