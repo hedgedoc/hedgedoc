@@ -4,18 +4,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { ServerStatusSchema } from '@hedgedoc/commons';
-import { Controller, Get, UseGuards } from '@nestjs/common';
-import { ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, HttpCode, HttpStatus, Res } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { FastifyReply } from 'fastify';
 
 import { ServerStatusDto } from '../../../dtos/server-status.dto';
 import { MonitoringService } from '../../../monitoring/monitoring.service';
 import { OpenApi } from '../../utils/decorators/openapi.decorator';
-import { ApiTokenGuard } from '../../utils/guards/api-token.guard';
 
-@UseGuards(ApiTokenGuard)
-@OpenApi(401)
 @ApiTags('monitoring')
-@ApiSecurity('token')
 @Controller('monitoring')
 export class MonitoringController {
   constructor(private monitoringService: MonitoringService) {}
@@ -44,5 +41,26 @@ export class MonitoringController {
   )
   getPrometheusStatus(): string {
     return '';
+  }
+
+  @Get('health')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @OpenApi(
+    {
+      code: 204,
+      description: 'HedgeDoc is healthy',
+    },
+    {
+      code: 503,
+      description: 'HedgeDoc is currently not healthy',
+    },
+  )
+  async getHealth(@Res() reply: FastifyReply): Promise<void> {
+    const isHealthy = await this.monitoringService.isHealthy();
+    if (isHealthy) {
+      reply.status(HttpStatus.NO_CONTENT).send();
+    } else {
+      reply.status(HttpStatus.SERVICE_UNAVAILABLE).send();
+    }
   }
 }
