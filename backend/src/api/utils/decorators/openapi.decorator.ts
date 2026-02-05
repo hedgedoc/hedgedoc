@@ -33,7 +33,7 @@ import {
   unauthorizedDescription,
 } from '../descriptions';
 
-export type HttpStatusCodes = 200 | 201 | 204 | 302 | 400 | 401 | 403 | 404 | 409 | 413 | 500;
+export type HttpStatusCodes = 200 | 201 | 204 | 302 | 400 | 401 | 403 | 404 | 409 | 413 | 500 | 503;
 
 /**
  * Defines what the open api route should document.
