@@ -11,6 +11,18 @@ import z from 'zod';
 import { DatabaseType } from './database-type.enum';
 import { parseOptionalNumber, printConfigErrorAndExit } from './utils';
 import { buildErrorMessage, extractDescriptionFromZodIssue } from './zod-error-message';
+import { checkDatabaseHealthWithRawConnection } from '../database/utils/healthcheck';
+
+// Knex.js ships with incomplete TypeScript types regarding the validate option
+// for connection pools. Therefore we need to manually define them here.
+// We use a connection pool to ensure reconnection to the database when the
+// connection was lost in between.
+interface KnexPoolConfigWithValidate extends Knex.PoolConfig {
+  validate?: (resource: { query: (sql: string) => Promise<unknown> }) => boolean | Promise<boolean>;
+}
+interface KnexConfigWithPoolConfig extends Knex.Config {
+  pool?: KnexPoolConfigWithValidate;
+}
 
 const sqliteDbSchema = z.object({
   type: z.literal(DatabaseType.SQLITE).describe('HD_DATABASE_TYPE'),
@@ -87,7 +99,14 @@ export function getKnexConfig(databaseConfig: DatabaseConfig): Knex.Config {
           // oxlint-disable-next-line @typescript-eslint/naming-convention
           application_name: 'HedgeDoc',
         },
-      };
+        pool: {
+          min: 0,
+          max: 10,
+          acquireTimeoutMillis: 30000,
+          idleTimeoutMillis: 30000,
+          validate: checkDatabaseHealthWithRawConnection,
+        },
+      } as KnexConfigWithPoolConfig;
     case DatabaseType.MARIADB:
       return {
         client: 'mysql2',
@@ -99,6 +118,13 @@ export function getKnexConfig(databaseConfig: DatabaseConfig): Knex.Config {
           password: databaseConfig.password,
           dateStrings: true,
         },
-      };
+        pool: {
+          min: 0,
+          max: 10,
+          acquireTimeoutMillis: 30000,
+          idleTimeoutMillis: 30000,
+          validate: checkDatabaseHealthWithRawConnection,
+        },
+      } as KnexConfigWithPoolConfig;
   }
 }
