@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,14 +7,19 @@ import type { ChangeSpec, Transaction } from '@codemirror/state'
 import { Annotation } from '@codemirror/state'
 import type { EditorView, PluginValue, ViewUpdate } from '@codemirror/view'
 import type { Text as YText, Transaction as YTransaction, YTextEvent } from 'yjs'
+import { UndoManager } from 'yjs'
 
 const syncAnnotation = Annotation.define()
 
 /**
  * Synchronizes the content of a codemirror with a {@link YText y.js text channel}.
+ *
+ * Manages a per-user {@link UndoManager} that only tracks local changes,
+ * ensuring each user has their own undo/redo stack.
  */
 export class YTextSyncViewPlugin implements PluginValue {
   private readonly observer: YTextSyncViewPlugin['onYTextUpdate']
+  public readonly undoManager: UndoManager
 
   constructor(
     private view: EditorView,
@@ -23,6 +28,7 @@ export class YTextSyncViewPlugin implements PluginValue {
   ) {
     this.observer = this.onYTextUpdate.bind(this)
     this.yText.observe(this.observer)
+    this.undoManager = new UndoManager(this.yText, { trackedOrigins: new Set([this]) })
     pluginLoaded()
   }
 
@@ -80,5 +86,6 @@ export class YTextSyncViewPlugin implements PluginValue {
 
   public destroy(): void {
     this.yText.unobserve(this.observer)
+    this.undoManager.destroy()
   }
 }
