@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -23,6 +23,7 @@ import { WaitSpinner } from '../wait-spinner/wait-spinner'
 import { useEffectOnRenderTypeChange } from './hooks/use-effect-on-render-type-change'
 import { useForceRenderPageUrlOnIframeLoadCallback } from './hooks/use-force-render-page-url-on-iframe-load-callback'
 import { useSendAdditionalConfigurationToRenderer } from './hooks/use-send-additional-configuration-to-renderer'
+import { useSendFragmentToRenderer } from './hooks/use-send-fragment-to-renderer'
 import { useSendMarkdownToRenderer } from './hooks/use-send-markdown-to-renderer'
 import { useSendScrollState } from './hooks/use-send-scroll-state'
 import styles from './style.module.scss'
@@ -157,6 +158,7 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
   useEffectOnRenderTypeChange(rendererType, onIframeLoad)
   useSendAdditionalConfigurationToRenderer(rendererReady)
   useSendMarkdownToRenderer(markdownContentLines, rendererReady)
+  useSendFragmentToRenderer(rendererReady)
 
   useSendScrollState(scrollState ?? null, rendererReady)
   useEditorReceiveHandler(
