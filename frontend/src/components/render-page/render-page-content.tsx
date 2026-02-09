@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -85,6 +85,42 @@ export const RenderPageContent: React.FC = () => {
     useCallback(({ printMode }) => {
       setPrintMode(printMode)
     }, [])
+  )
+
+  useRendererReceiveHandler(
+    CommunicationMessageType.SCROLL_TO_ELEMENT,
+    useCallback(
+      // elementId corresponds to the id created by markdown-it-anchor for a heading
+      ({ elementId }) => {
+        const scrollToElement = (): boolean => {
+          const targetElement = document.getElementById(elementId)
+          const scrollElement = document.querySelector('[data-scroll-element]')
+          if (targetElement && scrollElement) {
+            sendScrolling.current = true
+            communicator.sendMessageToOtherSide({
+              type: CommunicationMessageType.ENABLE_RENDERER_SCROLL_SOURCE
+            })
+            scrollElement.scrollTo({ behavior: 'smooth', top: targetElement.offsetTop })
+            return true
+          }
+          return false
+        }
+
+        // On initial page load on slower computers, the markdown might not have rendered yet.
+        // Therefore, the mutation observer checks 5 seconds for changes to the DOM,
+        // and executes the scrolling if possible.
+        if (!scrollToElement()) {
+          const observer = new MutationObserver(() => {
+            if (scrollToElement()) {
+              observer.disconnect()
+            }
+          })
+          observer.observe(document.body, { childList: true, subtree: true })
+          setTimeout(() => observer.disconnect(), 5000)
+        }
+      },
+      [communicator]
+    )
   )
 
   usePrintKeyboardShortcut()
