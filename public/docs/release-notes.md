@@ -1,5 +1,10 @@
 # Release Notes
 
+## Unreleased
+
+### Bugfixes
+- Random colors for user's cursors and selections are now always in hex format to avoid conversion errors
+
 ## <i class="fa fa-tag"></i> 1.10.6 <i class="fa fa-calendar-o"></i> 2026-02-04
 
 ### Security fixes
