@@ -182,7 +182,7 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
         height={'100%'}
         maxHeight={'100%'}
         maxWidth={'100%'}
-        basicSetup={true}
+        basicSetup={{ history: false }}
         className={codeMirrorClassName}
         theme={darkModeActivated ? oneDark : undefined}
       />
