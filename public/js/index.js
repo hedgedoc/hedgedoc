@@ -427,7 +427,7 @@ const supportExtraTags = [
     text: '[random color tag]',
     search: '[]',
     command: function () {
-      const color = chance().color()
+      const color = chance().color({ format: 'hex' })
       return '[color=' + color + ']'
     }
   }
