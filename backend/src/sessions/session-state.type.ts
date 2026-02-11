@@ -17,6 +17,9 @@ interface OidcAuthSessionState {
 
   /** The (random) OIDC state for verifying that OIDC responses match the OIDC requests */
   loginState?: string;
+
+  /** The session ID from the OIDC provider, used for backchannel logout */
+  sid?: string;
 }
 
 interface PendingUserSessionState {
