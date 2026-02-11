@@ -88,4 +88,43 @@ export class SessionService {
     }
     return parsedCookie[2];
   }
+
+  /**
+   * Terminates a session by OIDC session ID (sid)
+   *
+   * @param oidcSid The OIDC session ID
+   * @returns Promise that resolves to true if a session was terminated, false otherwise
+   */
+  async terminateSessionByOidcSid(oidcSid: string): Promise<boolean> {
+    const sessionId = this.sessionStore.findSessionIdBySid(oidcSid);
+    if (!sessionId) {
+      return false;
+    }
+
+    return new Promise((resolve, reject) => {
+      this.sessionStore.destroy(sessionId, (error) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(true);
+        }
+      });
+    });
+  }
+
+  /**
+   * Terminates all sessions for a given user
+   *
+   * @param userId The user ID
+   * @returns Promise that resolves to the number of sessions terminated
+   */
+  async terminateAllUserSessions(userId: User[FieldNameUser.id]): Promise<number> {
+    const sessionIds = this.sessionStore.findSessionIdsByUserId(userId);
+    if (sessionIds.length === 0) {
+      return 0;
+    }
+
+    await this.sessionStore.destroyMultiple(sessionIds);
+    return sessionIds.length;
+  }
 }

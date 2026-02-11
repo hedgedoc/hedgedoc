@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { AuthProviderType } from '@hedgedoc/commons';
-import { Identity } from '@hedgedoc/database';
+import { FieldNameIdentity, Identity } from '@hedgedoc/database';
 import {
+  BadRequestException,
   ForbiddenException,
   Inject,
   Injectable,
@@ -14,6 +15,7 @@ import {
 } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { Client, generators, Issuer, UserinfoResponse } from 'openid-client';
+import { createRemoteJWKSet, jwtVerify } from 'jose';
 
 import { RequestWithSession } from '../../api/utils/request.type';
 import appConfiguration, { AppConfig } from '../../config/app.config';
@@ -21,6 +23,7 @@ import authConfiguration, { AuthConfig, OidcConfig } from '../../config/auth.con
 import { PendingUserInfoDto } from '../../dtos/pending-user-info.dto';
 import { NotInDBError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
+import { SessionService } from '../../sessions/session.service';
 import { IdentityService } from '../identity.service';
 
 interface OidcClientConfigEntry {
@@ -28,6 +31,7 @@ interface OidcClientConfigEntry {
   issuer: Issuer;
   redirectUri: string;
   config: OidcConfig;
+  jwks?: ReturnType<typeof createRemoteJWKSet>;
 }
 
 @Injectable()
@@ -37,6 +41,7 @@ export class OidcService {
   constructor(
     private identityService: IdentityService,
     private logger: ConsoleLoggerService,
+    private sessionService: SessionService,
     @Inject(authConfiguration.KEY)
     private authConfig: AuthConfig,
     @Inject(appConfiguration.KEY)
@@ -187,6 +192,7 @@ export class OidcService {
 
     request.session.oidc = {
       idToken: tokenSet.id_token,
+      sid: (tokenSet.claims()?.sid as string | undefined) ?? undefined,
     };
     const userInfoResponse = await client.userinfo(tokenSet);
     const userId = OidcService.getResponseFieldValue(
@@ -301,5 +307,130 @@ export class OidcService {
     defaultValue: T,
   ): string | T {
     return response[field] ? String(response[field]) : defaultValue;
+  }
+
+  /**
+   * Validates and processes an OIDC backchannel logout token
+   *
+   * @param oidcIdentifier The identifier of the OIDC configuration
+   * @param logoutToken The logout token as a JWT string
+   * @returns Promise that resolves when logout is processed
+   * @throws BadRequestException if the logout token is invalid
+   */
+  async processBackchannelLogout(oidcIdentifier: string, logoutToken: string): Promise<void> {
+    const clientConfig = this.clientConfigs.get(oidcIdentifier);
+    if (!clientConfig) {
+      throw new NotFoundException('OIDC configuration not found or initialized');
+    }
+
+    const issuer = clientConfig.issuer;
+    const client = clientConfig.client;
+
+    // Get JWKS URI for signature verification
+    const jwksUri = issuer.metadata.jwks_uri;
+    if (!jwksUri) {
+      this.logger.error(
+        `OIDC provider ${oidcIdentifier} does not provide jwks_uri`,
+        undefined,
+        'processBackchannelLogout',
+      );
+      throw new InternalServerErrorException('OIDC provider configuration incomplete');
+    }
+
+    try {
+      // Get or create cached JWKS client for signature verification
+      if (!clientConfig.jwks) {
+        clientConfig.jwks = createRemoteJWKSet(new URL(jwksUri));
+      }
+      const JWKS = clientConfig.jwks;
+
+      // Verify and decode the logout token
+      const { payload } = await jwtVerify(logoutToken, JWKS, {
+        issuer: issuer.metadata.issuer,
+        audience: client.metadata.client_id,
+        // Logout tokens typically don't have expiration, but we check other required claims
+      });
+
+      this.logger.debug(
+        `Validated logout token for provider ${oidcIdentifier}`,
+        'processBackchannelLogout',
+      );
+
+      // Validate logout token specific requirements per spec
+      // 1. Must have 'iss', 'aud', 'iat', 'jti', 'events' claims
+      if (!payload.iss || !payload.aud || !payload.iat || !payload.jti || !payload.events) {
+        throw new BadRequestException('Logout token missing required claims');
+      }
+
+      // 2. Must NOT have 'nonce' claim
+      if ('nonce' in payload) {
+        throw new BadRequestException('Logout token must not contain nonce claim');
+      }
+
+      // 3. Must have 'sub' or 'sid' claim (or both)
+      if (!payload.sub && !payload.sid) {
+        throw new BadRequestException('Logout token must contain sub or sid claim');
+      }
+
+      // 4. Must have the backchannel-logout event
+      const events = payload.events as Record<string, unknown> | undefined;
+      if (!events || !('http://schemas.openid.net/event/backchannel-logout' in events)) {
+        throw new BadRequestException('Logout token does not contain backchannel-logout event');
+      }
+
+      // Process the logout based on sid or sub
+      const sid = payload.sid as string | undefined;
+      const sub = payload.sub as string | undefined;
+
+      let terminatedCount = 0;
+
+      if (sid) {
+        // Terminate specific session by sid
+        this.logger.debug(`Terminating session with sid: ${sid}`, 'processBackchannelLogout');
+        const terminated = await this.sessionService.terminateSessionByOidcSid(sid);
+        if (terminated) {
+          terminatedCount = 1;
+        }
+      } else if (sub) {
+        // Terminate all sessions for the user
+        this.logger.debug(`Terminating all sessions for user: ${sub}`, 'processBackchannelLogout');
+        // First, find the HedgeDoc user ID from the OIDC sub
+        try {
+          const identity = await this.identityService.getIdentityFromUserIdAndProviderType(
+            sub,
+            AuthProviderType.OIDC,
+            oidcIdentifier,
+          );
+          terminatedCount = await this.sessionService.terminateAllUserSessions(
+            identity[FieldNameIdentity.userId],
+          );
+        } catch (error) {
+          if (error instanceof NotInDBError) {
+            // User not found - this is okay, might have been deleted
+            this.logger.debug(
+              `User with sub ${sub} not found in database`,
+              'processBackchannelLogout',
+            );
+          } else {
+            throw error;
+          }
+        }
+      }
+
+      this.logger.debug(
+        `Backchannel logout processed: terminated ${terminatedCount} session(s)`,
+        'processBackchannelLogout',
+      );
+    } catch (error) {
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
+      this.logger.error(
+        `Failed to validate logout token: ${String(error)}`,
+        undefined,
+        'processBackchannelLogout',
+      );
+      throw new BadRequestException('Invalid logout token');
+    }
   }
 }

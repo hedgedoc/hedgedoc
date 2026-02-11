@@ -68,5 +68,16 @@ describe('CSRF Protection', () => {
     it('allows GET requests without CSRF token', async () => {
       await agentUser1.get(`${PRIVATE_API_PREFIX}/me`).expect(200);
     });
+
+    it('allows CSRF-exempt endpoints without CSRF token', async () => {
+      // The backchannel logout endpoint is marked with @CsrfExempt()
+      // because it's called by the OIDC provider, not the user's browser
+      await agentUser1WithoutCsrf
+        .post(`${PRIVATE_API_PREFIX}/auth/oidc/test-provider/backchannel-logout`)
+        .send({ logout_token: 'test-token' })
+        // Expect 404 (provider not found) not 403 (CSRF rejection)
+        // This proves CSRF protection was bypassed
+        .expect(404);
+    });
   });
 });

@@ -24,6 +24,40 @@ As redirect URL you should configure
 `https://hedgedoc.example.com/api/private/auth/oidc/$NAME/callback` where `$NAME`
 is the identifier of the OIDC server. Remember to update the domain to your one.
 
+## Backchannel Logout
+
+HedgeDoc supports [OpenID Connect Back-Channel Logout 1.0](https://openid.net/specs/openid-connect-backchannel-1_0.html),
+which allows OIDC providers to directly notify HedgeDoc when a user logs out at the provider side.
+This ensures that user sessions are terminated immediately when they log out from the identity provider.
+
+To enable backchannel logout, you need to register the backchannel logout URI at your OIDC provider:
+
+```
+https://hedgedoc.example.com/api/private/auth/oidc/$NAME/backchannel-logout
+```
+
+Where `$NAME` is the identifier of the OIDC server. Remember to update the domain to your own.
+
+### Features
+
+- **Session-specific logout**: If the OIDC provider includes a `sid` (session ID) claim in the logout token,
+  HedgeDoc will only terminate that specific session.
+- **User-wide logout**: If no `sid` is provided, HedgeDoc will terminate all active sessions for that user.
+- **Secure validation**: Logout tokens are validated using JWT signature verification with the provider's public keys (JWKS).
+- **Idempotent behavior**: The endpoint returns success even if no active sessions are found (e.g., user already logged out).
+- **No CSRF protection required**: The backchannel logout endpoint is called directly by the OIDC provider,
+  so it's exempt from CSRF token requirements that apply to other private API routes.
+
+### Configuration at OIDC Provider
+
+When configuring backchannel logout at your OIDC provider, ensure:
+
+1. The backchannel logout URI is registered correctly
+2. The provider supports sending logout tokens via HTTP POST
+3. (Optional) The provider includes `sid` claims in ID tokens and logout tokens for session-specific logout support
+
+Most modern OIDC providers (Keycloak, Auth0, Azure AD, etc.) support backchannel logout out of the box.
+
 You can also configure servers that only support plain OAuth2 but
 no OIDC (e.g., GitHub or Discord). In this case, you need the following additional variables:
 
