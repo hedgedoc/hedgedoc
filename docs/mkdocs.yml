@@ -46,6 +46,7 @@ nav:
           - LDAP: references/config/auth/ldap.md
           - 'OpenID Connect (OIDC)': references/config/auth/oidc.md
         - Security: references/config/security.md
+        - SCIM: references/config/scim.md
         - Customization: references/config/customization.md
         - Media Backends:
           - Azure: references/config/media/azure.md

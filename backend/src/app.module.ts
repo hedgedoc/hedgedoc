@@ -17,6 +17,7 @@ import { ApiTokenModule } from './api-token/api-token.module';
 import { CsrfGuard } from './api/private/csrf/csrf.guard';
 import { PrivateApiModule } from './api/private/private-api.module';
 import { PublicApiModule } from './api/public/public-api.module';
+import { ScimApiModule } from './api/scim/scim-api.module';
 import { AuthModule } from './auth/auth.module';
 import appConfig, { AppConfig } from './config/app.config';
 import authConfig from './config/auth.config';
@@ -27,6 +28,7 @@ import externalConfig from './config/external-services.config';
 import { Loglevel } from './config/loglevel.enum';
 import mediaConfig from './config/media.config';
 import noteConfig from './config/note.config';
+import scimConfig from './config/scim.config';
 import securityConfig from './config/security.config';
 import { eventModuleConfig } from './events';
 import { ExploreModule } from './explore/explore.module';
@@ -48,6 +50,7 @@ import { isDevMode } from './utils/dev-mode';
 
 export const PUBLIC_API_PREFIX = '/api/v2';
 export const PRIVATE_API_PREFIX = '/api/private';
+export const SCIM_API_PREFIX = '/api/scim/v2';
 
 const routes: Routes = [
   {
@@ -57,6 +60,10 @@ const routes: Routes = [
   {
     path: PRIVATE_API_PREFIX,
     module: PrivateApiModule,
+  },
+  {
+    path: SCIM_API_PREFIX,
+    module: ScimApiModule,
   },
   {
     path: '/media',
@@ -103,6 +110,7 @@ const routes: Routes = [
         customizationConfig,
         externalConfig,
         securityConfig,
+        scimConfig,
       ],
       isGlobal: true,
     }),
@@ -113,6 +121,7 @@ const routes: Routes = [
     RevisionsModule,
     PublicApiModule,
     PrivateApiModule,
+    ScimApiModule,
     MonitoringModule,
     PermissionsModule,
     GroupsModule,

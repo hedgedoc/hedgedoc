@@ -67,6 +67,18 @@ export async function setupApp(
       },
     );
 
+  // Register content-type parser for application/scim+json (SCIM 2.0)
+  app
+    .getHttpAdapter()
+    .getInstance()
+    .addContentTypeParser(
+      'application/scim+json',
+      { parseAs: 'string' },
+      (_req: unknown, body: unknown, done: (err: Error | null, body: unknown) => void) => {
+        done(null, typeof body === 'string' ? JSON.parse(body) : body);
+      },
+    );
+
   await runMigrations(app as INestApplication, logger);
 
   // Setup session handling
