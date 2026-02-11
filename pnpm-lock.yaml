@@ -383,6 +383,9 @@ importers:
       rxjs:
         specifier: 7.8.2
         version: 7.8.2
+      scimmy:
+        specifier: 1.3.5
+        version: 1.3.5
       uuid:
         specifier: 14.0.2
         version: 14.0.2
@@ -7632,6 +7635,10 @@ packages:
   schema-utils@4.3.3:
     resolution: {integrity: sha512-eflK8wEtyOE6+hsaRVPxvUKYCpRgzLqDTb8krvAsRIwOGlHoSgYLgBXoubGgLd2fT41/OUYdb48v4k4WWHQurA==}
     engines: {node: '>= 10.13.0'}
+
+  scimmy@1.3.5:
+    resolution: {integrity: sha512-JTrUOoqH1gMH2zZhgk01hGgY7cH9v4qUli5b3OGVVOzjAwY8h4Z2mSNH8kXjW2pz8ypzpiRuMEtFGBaWQWJz7w==}
+    engines: {node: '>=16'}
 
   screenfull@5.2.0:
     resolution: {integrity: sha512-9BakfsO2aUQN2K9Fdbj87RJIEZ82Q9IGim7FqM5OsebfoFC6ZHXgDq/KvniuLTPdeM8wY2o6Dj3WQ7KeQCj3cA==}
@@ -16545,6 +16552,8 @@ snapshots:
       ajv: 8.20.0
       ajv-formats: 2.1.1(ajv@8.20.0)
       ajv-keywords: 5.1.0(ajv@8.20.0)
+
+  scimmy@1.3.5: {}
 
   screenfull@5.2.0: {}
 
