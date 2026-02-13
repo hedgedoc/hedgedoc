@@ -30,9 +30,9 @@ Or meet us on [**Matrix**](https://chat.hedgedoc.org) for dev-talk and interacti
 
 ### Night Mode
 
-When you are tired of a white screen and like a night mode, click on the little moon <i class="fa fa-moon-o"></i> and turn on the night view of HedgeDoc.
+When you are tired of a white screen and like a night mode, click on the little moon <i class="fa fa-moon-o"></i> in the header bar and turn on the night view of HedgeDoc.
 
-The editor view, which is in night mode by default, can also be toggled between night and day view using the the little sun<i class="fa fa-sun-o fa-fw"></i>.
+The editor view, which is in night mode by default, can also be toggled between night and day view using the the little sun<i class="fa fa-sun-o fa-fw"></i>. It is below the editor in the bottom bar.
 
 ### Image Upload
 
