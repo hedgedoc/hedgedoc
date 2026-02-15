@@ -36,7 +36,7 @@
     "url": "https://github.com/hedgedoc/hedgedoc.git"
   },
   "devDependencies": {
-    "@types/node": "24.10.7",
+    "@types/node": "24.10.13",
     "typescript": "5.9.3"
   },
   "packageManager": "yarn@4.12.0"
