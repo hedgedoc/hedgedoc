@@ -87,7 +87,7 @@
     "@types/cookie-signature": "1.1.2",
     "@types/jest": "29.5.14",
     "@types/luxon": "3.7.1",
-    "@types/markdown-it": "13.0.8",
+    "@types/markdown-it": "14.1.2",
     "@types/node": "24.10.7",
     "@types/node-fetch": "2.6.13",
     "@types/pg": "8.15.6",
