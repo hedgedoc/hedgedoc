@@ -53,7 +53,7 @@
     "lutim": "1.0.3",
     "lz-string": "git+https://github.com/hackmdio/lz-string.git#commit=6edfccb79cd8c210f03fd3bf18e41ca144fbeefb",
     "mariadb": "3.4.5",
-    "markdown-it": "13.0.2",
+    "markdown-it": "14.1.1",
     "markdown-it-abbr": "1.0.4",
     "markdown-it-container": "3.0.0",
     "markdown-it-deflist": "2.1.0",
