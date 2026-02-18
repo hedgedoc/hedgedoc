@@ -17,7 +17,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Form, InputGroup } from 'react-bootstrap'
 import { PlusLg as IconPlus } from 'react-bootstrap-icons'
 
-const validAliasRegex = /^[a-z0-9_-]*$/
+const validAliasRegex = /^[a-zA-Z0-9_-]*$/
 
 /**
  * Form for adding a new alias to a note.

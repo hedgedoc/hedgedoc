@@ -1,27 +1,22 @@
-import { PRIVATE_API_PREFIX } from '../../src/app.module';
-import { NoteMetadataDto } from '../../src/dtos/note-metadata.dto';
-import { NotInDBError } from '../../src/errors/errors';
-import { dateTimeToISOString, dbToDateTime } from '../../src/utils/datetime';
-import {
-  noteAlias1,
-  noteContent1,
-  TestSetup,
-  TestSetupBuilder,
-  username1,
-  username2,
-} from '../test-setup';
-import { setupAgent } from './utils/setup-agent';
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { PRIVATE_API_PREFIX } from '../../src/app.module';
+import type { NoteMetadataDto } from '../../src/dtos/note-metadata.dto';
+import { NotInDBError } from '../../src/errors/errors';
+import { dateTimeToISOString, dbToDateTime } from '../../src/utils/datetime';
+import type { TestSetup } from '../test-setup';
+import { noteAlias1, noteContent1, TestSetupBuilder, username1, username2 } from '../test-setup';
+import { setupAgent } from './utils/setup-agent';
 import { PermissionLevel, PermissionLevelNames } from '@hedgedoc/commons';
-import { FieldNameRevision, Revision, SpecialGroup } from '@hedgedoc/database';
+import type { Revision } from '@hedgedoc/database';
+import { FieldNameRevision, SpecialGroup } from '@hedgedoc/database';
 import { promises as fs } from 'fs';
 import { join } from 'path';
-import request from 'supertest';
-import { NotePermissionsDto } from '../../src/dtos/note-permissions.dto';
+import type request from 'supertest';
+import type { NotePermissionsDto } from '../../src/dtos/note-permissions.dto';
 
 describe('Notes', () => {
   let testSetup: TestSetup;
@@ -70,6 +65,13 @@ describe('Notes', () => {
     it('returns the content for guest users with read permission', async () => {
       const response = await agentGuestUser
         .get(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}`)
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(response.body.content).toEqual(noteContent1);
+    });
+    it('return the note using a upper case alias', async () => {
+      const response = await agentUser1
+        .get(`${PRIVATE_API_PREFIX}/notes/${noteAlias1.toUpperCase()}`)
         .expect('Content-Type', /json/)
         .expect(200);
       expect(response.body.content).toEqual(noteContent1);
@@ -137,6 +139,14 @@ describe('Notes', () => {
         expect(responseAfter.body).toHaveLength(1);
         expect(responseAfter.body[0].uuid).toEqual(upload);
       });
+      it('using upper case alias', async () => {
+        const responseAfter = await agentUser1
+          .get(`${PRIVATE_API_PREFIX}/notes/${noteAlias1.toUpperCase()}/media/`)
+          .expect('Content-Type', /json/)
+          .expect(200);
+        expect(responseAfter.body).toHaveLength(1);
+        expect(responseAfter.body[0].uuid).toEqual(upload);
+      });
     });
     describe('throws an error', () => {
       it('if the user is not logged in', async () => {
@@ -177,14 +187,6 @@ describe('Notes', () => {
   describe(`POST ${PRIVATE_API_PREFIX}/notes`, () => {
     describe('a new note can be created by', () => {
       let response: request.Response;
-      afterEach(async () => {
-        expect(response.body.metadata?.primaryAlias).toBeDefined();
-        expect(
-          await testSetup.notesService.getNoteContent(
-            await testSetup.notesService.getNoteIdByAlias(response.body.metadata.primaryAlias),
-          ),
-        ).toEqual(content);
-      });
       it('a user', async () => {
         response = await agentUser1
           .post(`${PRIVATE_API_PREFIX}/notes`)
@@ -192,6 +194,12 @@ describe('Notes', () => {
           .send(content)
           .expect('Content-Type', /json/)
           .expect(201);
+        expect(response.body.metadata?.primaryAlias).toBeDefined();
+        expect(
+          await testSetup.notesService.getNoteContent(
+            await testSetup.notesService.getNoteIdByAlias(response.body.metadata.primaryAlias),
+          ),
+        ).toEqual(content);
       });
       it('a guest user', async () => {
         response = await agentGuestUser
@@ -200,6 +208,12 @@ describe('Notes', () => {
           .send(content)
           .expect('Content-Type', /json/)
           .expect(201);
+        expect(response.body.metadata?.primaryAlias).toBeDefined();
+        expect(
+          await testSetup.notesService.getNoteContent(
+            await testSetup.notesService.getNoteIdByAlias(response.body.metadata.primaryAlias),
+          ),
+        ).toEqual(content);
       });
     });
     it("a not logged-in user can't create a note", async () => {
@@ -242,14 +256,6 @@ describe('Notes', () => {
     const newNoteAlias = 'newNoteAlias';
     describe('a new note can be created by', () => {
       let response: request.Response;
-      afterEach(async () => {
-        expect(response.body.metadata?.primaryAlias).toEqual(newNoteAlias);
-        expect(
-          await testSetup.notesService.getNoteContent(
-            await testSetup.notesService.getNoteIdByAlias(response.body.metadata.primaryAlias),
-          ),
-        ).toEqual(content);
-      });
       it('a user', async () => {
         response = await agentUser1
           .post(`${PRIVATE_API_PREFIX}/notes/${newNoteAlias}`)
@@ -257,6 +263,12 @@ describe('Notes', () => {
           .send(content)
           .expect('Content-Type', /json/)
           .expect(201);
+        expect(response.body.metadata?.primaryAlias).toEqual(newNoteAlias);
+        expect(
+          await testSetup.notesService.getNoteContent(
+            await testSetup.notesService.getNoteIdByAlias(response.body.metadata.primaryAlias),
+          ),
+        ).toEqual(content);
       });
       it('a guest user', async () => {
         response = await agentGuestUser
@@ -265,7 +277,27 @@ describe('Notes', () => {
           .send(content)
           .expect('Content-Type', /json/)
           .expect(201);
+        expect(response.body.metadata?.primaryAlias).toEqual(newNoteAlias);
+        expect(
+          await testSetup.notesService.getNoteContent(
+            await testSetup.notesService.getNoteIdByAlias(response.body.metadata.primaryAlias),
+          ),
+        ).toEqual(content);
       });
+    });
+    it('a new note can be created with an upper case alias', async () => {
+      const response = await agentUser1
+        .post(`${PRIVATE_API_PREFIX}/notes/${newNoteAlias.toUpperCase()}`)
+        .set('Content-Type', 'text/markdown')
+        .send(content)
+        .expect('Content-Type', /json/)
+        .expect(201);
+      expect(response.body.metadata?.primaryAlias).toEqual(newNoteAlias.toUpperCase());
+      expect(
+        await testSetup.notesService.getNoteContent(
+          await testSetup.notesService.getNoteIdByAlias(response.body.metadata.primaryAlias),
+        ),
+      ).toEqual(content);
     });
     it("a not logged-in user can't create a note", async () => {
       await agentNotLoggedIn
@@ -327,7 +359,7 @@ describe('Notes', () => {
         noteId = testSetup.ownedNoteIds[0];
         userId = testSetup.userIds[0];
       });
-      it('with an existing aliases and keepMedia false', async () => {
+      it('with an existing alias and keepMedia false', async () => {
         await testSetup.mediaService.saveFile('test.png', testImage, userId, noteId);
         await agentUser1
           .delete(`/api/private/notes/${noteAlias1}`)
@@ -342,7 +374,7 @@ describe('Notes', () => {
         expect(await testSetup.mediaService.getMediaUploadUuidsByUserId(userId)).toHaveLength(0);
         await fs.rmdir(uploadPath);
       });
-      it('with an existing aliases and keepMedia true', async () => {
+      it('with an existing alias and keepMedia true', async () => {
         const upload = await testSetup.mediaService.saveFile('test.png', testImage, userId, noteId);
         await agentUser1
           .delete(`/api/private/notes/${noteAlias1}`)
@@ -354,6 +386,23 @@ describe('Notes', () => {
         await expect(testSetup.notesService.getNoteIdByAlias(noteAlias1)).rejects.toEqual(
           new NotInDBError(`Could not find note '${noteAlias1}'`),
         );
+        expect(await testSetup.mediaService.getMediaUploadUuidsByUserId(userId)).toHaveLength(1);
+        // delete the file afterwards
+        await fs.unlink(join(uploadPath, upload + '.png'));
+        await fs.rmdir(uploadPath);
+      });
+      it('with an existing alias, but upper case and keepMedia true', async () => {
+        const upload = await testSetup.mediaService.saveFile('test.png', testImage, userId, noteId);
+        await agentUser1
+          .delete(`/api/private/notes/${noteAlias1.toUpperCase()}`)
+          .set('Content-Type', 'application/json')
+          .send({
+            keepMedia: true,
+          })
+          .expect(204);
+        await expect(
+          testSetup.notesService.getNoteIdByAlias(noteAlias1.toUpperCase()),
+        ).rejects.toEqual(new NotInDBError(`Could not find note '${noteAlias1.toUpperCase()}'`));
         expect(await testSetup.mediaService.getMediaUploadUuidsByUserId(userId)).toHaveLength(1);
         // delete the file afterwards
         await fs.unlink(join(uploadPath, upload + '.png'));
@@ -371,7 +420,7 @@ describe('Notes', () => {
   describe(`GET ${PRIVATE_API_PREFIX}/notes/:noteAlias/metadata`, () => {
     describe('returns complete metadata object for', () => {
       let metadataBody: NoteMetadataDto;
-      afterEach(() => {
+      const expectMetadataBody = () => {
         expect(metadataBody.aliases[0]).toEqual(noteAlias1);
         expect(metadataBody.primaryAlias).toEqual(noteAlias1);
         expect(metadataBody.title).toEqual('');
@@ -395,13 +444,14 @@ describe('Notes', () => {
         expect(typeof metadataBody.updatedAt).toEqual('string');
         expect(typeof metadataBody.lastUpdatedBy).toEqual('string');
         expect(metadataBody.editedBy).toEqual([username1]);
-      });
+      };
       it('owner', async () => {
         const metadata = await agentUser1
           .get(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}/metadata`)
           .expect('Content-Type', /json/)
           .expect(200);
         metadataBody = metadata.body;
+        expectMetadataBody();
       });
       it('another user', async () => {
         const metadata = await agentUser2
@@ -409,6 +459,7 @@ describe('Notes', () => {
           .expect('Content-Type', /json/)
           .expect(200);
         metadataBody = metadata.body;
+        expectMetadataBody();
       });
       it('guest user', async () => {
         const metadata = await agentGuestUser
@@ -416,6 +467,15 @@ describe('Notes', () => {
           .expect('Content-Type', /json/)
           .expect(200);
         metadataBody = metadata.body;
+        expectMetadataBody();
+      });
+      it('an upper case alias', async () => {
+        const metadata = await agentUser1
+          .get(`${PRIVATE_API_PREFIX}/notes/${noteAlias1.toUpperCase()}/metadata`)
+          .expect('Content-Type', /json/)
+          .expect(200);
+        metadataBody = metadata.body;
+        expectMetadataBody();
       });
     });
 
@@ -461,9 +521,9 @@ describe('Notes', () => {
   });
 
   describe(`GET ${PRIVATE_API_PREFIX}/notes/:noteAlias/metadata/permissions`, () => {
-    describe('returns complete metadata object for', () => {
+    describe('returns complete permissions object for', () => {
       let permissionBody: NotePermissionsDto;
-      afterEach(() => {
+      const expectPermissionBody = () => {
         expect(permissionBody.owner).toEqual(username1);
         expect(permissionBody.publiclyVisible).toEqual(false);
         expect(permissionBody.sharedToUsers).toEqual([]);
@@ -477,13 +537,14 @@ describe('Notes', () => {
             canEdit: true,
           },
         ]);
-      });
+      };
       it('owner', async () => {
         const metadata = await agentUser1
           .get(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}/metadata/permissions`)
           .expect('Content-Type', /json/)
           .expect(200);
         permissionBody = metadata.body;
+        expectPermissionBody();
       });
       it('another user', async () => {
         const metadata = await agentUser2
@@ -491,6 +552,7 @@ describe('Notes', () => {
           .expect('Content-Type', /json/)
           .expect(200);
         permissionBody = metadata.body;
+        expectPermissionBody();
       });
       it('guest user', async () => {
         const metadata = await agentGuestUser
@@ -498,6 +560,15 @@ describe('Notes', () => {
           .expect('Content-Type', /json/)
           .expect(200);
         permissionBody = metadata.body;
+        expectPermissionBody();
+      });
+      it('an upper case alias', async () => {
+        const metadata = await agentUser1
+          .get(`${PRIVATE_API_PREFIX}/notes/${noteAlias1.toUpperCase()}/metadata/permissions`)
+          .expect('Content-Type', /json/)
+          .expect(200);
+        permissionBody = metadata.body;
+        expectPermissionBody();
       });
     });
 
@@ -529,28 +600,38 @@ describe('Notes', () => {
       beforeEach(async () => {
         await testSetup.notesService.updateNote(testSetup.ownedNoteIds[0], content);
       });
-      afterEach(() => {
+      const expectResponseBody = () => {
         expect(response.body).toHaveLength(2);
         expect(response.body[0].length).toEqual(content.length);
         expect(response.body[1].length).toEqual(noteContent1.length);
-      });
+      };
       it('the owner', async () => {
         response = await agentUser1
           .get(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}/revisions`)
           .expect('Content-Type', /json/)
           .expect(200);
+        expectResponseBody();
       });
       it('another user', async () => {
         response = await agentUser2
           .get(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}/revisions`)
           .expect('Content-Type', /json/)
           .expect(200);
+        expectResponseBody();
       });
       it('a guest user', async () => {
         response = await agentGuestUser
           .get(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}/revisions`)
           .expect('Content-Type', /json/)
           .expect(200);
+        expectResponseBody();
+      });
+      it('an upper case alias', async () => {
+        response = await agentUser1
+          .get(`${PRIVATE_API_PREFIX}/notes/${noteAlias1.toUpperCase()}/revisions`)
+          .expect('Content-Type', /json/)
+          .expect(200);
+        expectResponseBody();
       });
     });
 
@@ -573,7 +654,7 @@ describe('Notes', () => {
     });
   });
 
-  describe(`DELETE ${PRIVATE_API_PREFIX}/notes/{note}/revisions`, () => {
+  describe(`DELETE ${PRIVATE_API_PREFIX}/notes/:noteAlias/revisions`, () => {
     describe('if multiple revisions exist', () => {
       let noteId: number;
       beforeEach(async () => {
@@ -602,6 +683,14 @@ describe('Notes', () => {
           .delete(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}/revisions`)
           .expect('Content-Type', /json/)
           .expect(401);
+      });
+      it('allows the owner to discard all revisions even via an upper case alias', async () => {
+        await agentUser1
+          .delete(`${PRIVATE_API_PREFIX}/notes/${noteAlias1.toUpperCase()}/revisions`)
+          .set('Content-Type', 'application/json')
+          .expect(204);
+        const after = await testSetup.revisionsService.getAllRevisionMetadataDto(noteId);
+        expect(after).toHaveLength(1);
       });
     });
 
@@ -662,6 +751,14 @@ describe('Notes', () => {
           .expect('Content-Type', /json/)
           .expect(200);
       });
+      it('an upper case alias', async () => {
+        response = await agentUser1
+          .get(
+            `${PRIVATE_API_PREFIX}/notes/${noteAlias1.toUpperCase()}/revisions/${revision[FieldNameRevision.uuid]}`,
+          )
+          .expect('Content-Type', /json/)
+          .expect(200);
+      });
     });
     it('throws an error if the user is not logged-in user', async () => {
       await agentNotLoggedIn
@@ -694,6 +791,22 @@ describe('Notes', () => {
       it(`with canEdit ${canEdit}`, async () => {
         await agentUser1
           .put(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2}`)
+          .send({
+            canEdit: canEdit,
+          })
+          .expect('Content-Type', /json/)
+          .expect(200);
+        const permissions = await testSetup.permissionsService.getPermissionsDtoForNote(noteId);
+        expect(permissions.sharedToUsers[0]).toEqual({
+          username: username2,
+          canEdit: canEdit,
+        });
+      });
+      it(`with canEdit ${canEdit} with upper case alias`, async () => {
+        await agentUser1
+          .put(
+            `${PRIVATE_API_PREFIX}/notes/${noteAlias1.toUpperCase()}/metadata/permissions/users/${username2}`,
+          )
           .send({
             canEdit: canEdit,
           })
@@ -769,6 +882,14 @@ describe('Notes', () => {
         .expect('Content-Type', /json/)
         .expect(200);
     });
+    it('the owner can delete user permissions using an upper case alias', async () => {
+      await agentUser1
+        .delete(
+          `${PRIVATE_API_PREFIX}/notes/${noteAlias1.toUpperCase()}/metadata/permissions/users/${username2}`,
+        )
+        .expect('Content-Type', /json/)
+        .expect(200);
+    });
     describe("can't delete user permissions as", () => {
       it('another user', async () => {
         await agentUser2
@@ -838,6 +959,22 @@ describe('Notes', () => {
         await agentUser1
           .put(
             `${PRIVATE_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/groups/${SpecialGroup.EVERYONE}`,
+          )
+          .send({
+            canEdit: canEdit,
+          })
+          .expect('Content-Type', /json/)
+          .expect(200);
+        const permissions = await testSetup.permissionsService.getPermissionsDtoForNote(noteId);
+        expect(permissions.sharedToGroups[0]).toEqual({
+          groupName: SpecialGroup.EVERYONE,
+          canEdit: canEdit,
+        });
+      });
+      it(`with canEdit ${canEdit} with upper case alias`, async () => {
+        await agentUser1
+          .put(
+            `${PRIVATE_API_PREFIX}/notes/${noteAlias1.toUpperCase()}/metadata/permissions/groups/${SpecialGroup.EVERYONE}`,
           )
           .send({
             canEdit: canEdit,
@@ -926,6 +1063,14 @@ describe('Notes', () => {
         .expect('Content-Type', /json/)
         .expect(200);
     });
+    it('the owner can delete group permissions using an upper case alias', async () => {
+      await agentUser1
+        .delete(
+          `${PRIVATE_API_PREFIX}/notes/${noteAlias1.toUpperCase()}/metadata/permissions/groups/${SpecialGroup.EVERYONE}`,
+        )
+        .expect('Content-Type', /json/)
+        .expect(200);
+    });
     describe("can't delete group permissions as", () => {
       it('another user', async () => {
         await agentUser2
@@ -987,6 +1132,16 @@ describe('Notes', () => {
         .expect(200);
       expect(response.body.owner).toEqual(username2);
     });
+    it('can change owner as the owner using an upper case alias', async () => {
+      const response = await agentUser1
+        .put(`${PRIVATE_API_PREFIX}/notes/${noteAlias1.toUpperCase()}/metadata/permissions/owner`)
+        .send({
+          owner: username2,
+        })
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(response.body.owner).toEqual(username2);
+    });
     describe("can't change owner as", () => {
       it('another user', async () => {
         await agentUser2
@@ -1040,6 +1195,18 @@ describe('Notes', () => {
     it('can change visibility as the owner', async () => {
       const response = await agentUser1
         .put(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/visibility`)
+        .send({
+          publiclyVisible: true,
+        })
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(response.body.publiclyVisible).toEqual(true);
+    });
+    it('can change visibility as the owner for an uppercase alias', async () => {
+      const response = await agentUser1
+        .put(
+          `${PRIVATE_API_PREFIX}/notes/${noteAlias1.toUpperCase()}/metadata/permissions/visibility`,
+        )
         .send({
           publiclyVisible: true,
         })
