@@ -9,6 +9,7 @@ import { noteAlias1, TestSetup, TestSetupBuilder } from '../test-setup';
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import request from 'supertest';
+import {AliasTestCases} from "../utils";
 
 describe('Alias', () => {
   let testSetup: TestSetup;
@@ -31,28 +32,27 @@ describe('Alias', () => {
   });
 
   describe(`POST ${PUBLIC_API_PREFIX}/alias`, () => {
-    it('create normal alias', async () => {
-      const normalNewAlias = 'normal-new-alias';
-      const newAliasDto: AliasCreateDto = {
-        noteAlias: noteAlias1,
-        newAlias: normalNewAlias,
-      };
+    describe.each(AliasTestCases)('create normal alias', (testName, normalNewAlias) => {
+      it(testName, async () => {
+        const newAliasDto: AliasCreateDto = {
+          noteAlias: noteAlias1,
+          newAlias: normalNewAlias,
+        };
+        const metadata = await agent
+          .post(`${PUBLIC_API_PREFIX}/alias`)
+          .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
+          .set('Content-Type', 'application/json')
+          .send(newAliasDto)
+          .expect(201);
+        expect(metadata.body.name).toEqual(normalNewAlias);
+        expect(metadata.body.isPrimaryAlias).toBe(false);
 
-      const metadata = await agent
-        .post(`${PUBLIC_API_PREFIX}/alias`)
-        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
-        .set('Content-Type', 'application/json')
-        .send(newAliasDto)
-        .expect(201);
+        const noteId = await testSetup.notesService.getNoteIdByAlias(normalNewAlias);
+        const noteMetadata = await testSetup.notesService.toNoteMetadataDto(noteId);
 
-      expect(metadata.body.name).toEqual(normalNewAlias);
-      expect(metadata.body.isPrimaryAlias).toBe(false);
-
-      const noteId = await testSetup.notesService.getNoteIdByAlias(normalNewAlias);
-      const noteMetadata = await testSetup.notesService.toNoteMetadataDto(noteId);
-
-      expect(noteMetadata.aliases).toContainEqual(normalNewAlias);
-      expect(noteMetadata.primaryAlias).toEqual(noteAlias1);
+        expect(noteMetadata.aliases).toContainEqual(normalNewAlias);
+        expect(noteMetadata.primaryAlias).toEqual(noteAlias1);
+      });
     });
 
     describe('does not create an alias', () => {

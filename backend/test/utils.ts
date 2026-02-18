@@ -8,6 +8,15 @@ import { NotePermissionsDto } from '../src/dtos/note-permissions.dto';
 import { promises as fs } from 'fs';
 import request from 'supertest';
 
+export const DefaultTestAlias = 'an-alias';
+export const AliasTestCases = [[
+  'with lower case alias',
+  DefaultTestAlias
+], [
+  'with upper case alias',
+  'AN-ALIAS'
+]]
+
 /**
  * Ensures the directory at `path` is deleted.
  * If `path` does not exist, nothing happens.
