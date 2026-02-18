@@ -7,7 +7,7 @@ exports[`AliasesAddForm renders the input form 1`] = `
       class="me-1 mb-1 input-group has-validation"
     >
       <input
-        class="form-control"
+        class="form-control is-invalid"
         data-testid="addAliasInput"
         placeholder="editor.modal.aliases.addAlias"
         required=""
