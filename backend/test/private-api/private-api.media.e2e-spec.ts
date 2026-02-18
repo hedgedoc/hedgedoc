@@ -1,7 +1,3 @@
-import { PRIVATE_API_PREFIX } from '../../src/app.module';
-import { noteAlias1, TestSetup, TestSetupBuilder } from '../test-setup';
-import { ensureDeleted } from '../utils';
-import { setupAgent } from './utils/setup-agent';
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
@@ -9,7 +5,12 @@ import { setupAgent } from './utils/setup-agent';
  */
 import { promises as fs } from 'fs';
 import { join } from 'path';
-import request from 'supertest';
+import type request from 'supertest';
+import { PRIVATE_API_PREFIX } from '../../src/app.module';
+import type { TestSetup } from '../test-setup';
+import { noteAlias1, TestSetupBuilder } from '../test-setup';
+import { ensureDeleted } from '../utils';
+import { setupAgent } from './utils/setup-agent';
 
 describe('Media', () => {
   let testSetup: TestSetup;
@@ -67,6 +68,18 @@ describe('Media', () => {
         const downloadResponse = await agentUser1.get(`/uploads/${uuid}.png`);
         expect(downloadResponse.body).toEqual(testImage);
       });
+      it('with user and uppercase note alias', async () => {
+        const uploadResponse = await agentUser1
+          .post(`${PRIVATE_API_PREFIX}/media`)
+          .attach('file', 'test/private-api/fixtures/test.png')
+          .set('HedgeDoc-Note', noteAlias1.toUpperCase())
+          .expect(201);
+        uuid = uploadResponse.text;
+        const apiResponse = await agentUser1.get(`${PRIVATE_API_PREFIX}/media/${uuid}`);
+        expect(apiResponse.statusCode).toEqual(200);
+        const downloadResponse = await agentUser1.get(`/uploads/${uuid}.png`);
+        expect(downloadResponse.body).toEqual(testImage);
+      });
       it('with guest user', async () => {
         const noteDtoResponse = await agentGuestUser
           .post(`${PRIVATE_API_PREFIX}/notes`)
@@ -85,7 +98,26 @@ describe('Media', () => {
         const downloadResponse = await agentGuestUser.get(`/uploads/${uuid}.png`);
         expect(downloadResponse.body).toEqual(testImage);
       });
+      it('with guest user and uppercase note alias', async () => {
+        const noteDtoResponse = await agentGuestUser
+          .post(`${PRIVATE_API_PREFIX}/notes`)
+          .set('Content-Type', 'text/markdown')
+          .send('')
+          .expect('Content-Type', /json/)
+          .expect(201);
+        const uploadResponse = await agentGuestUser
+          .post(`${PRIVATE_API_PREFIX}/media`)
+          .attach('file', 'test/private-api/fixtures/test.png')
+          .set('HedgeDoc-Note', noteDtoResponse.body.metadata.primaryAlias.toUpperCase())
+          .expect(201);
+        uuid = uploadResponse.text;
+        const apiResponse = await agentGuestUser.get(`${PRIVATE_API_PREFIX}/media/${uuid}`);
+        expect(apiResponse.statusCode).toEqual(200);
+        const downloadResponse = await agentGuestUser.get(`/uploads/${uuid}.png`);
+        expect(downloadResponse.body).toEqual(testImage);
+      });
     });
+
     describe('fails:', () => {
       afterEach(async () => {
         await ensureDeleted(uploadPath);

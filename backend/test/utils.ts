@@ -1,5 +1,3 @@
-import { PUBLIC_API_PREFIX } from '../src/app.module';
-import { NotePermissionsDto } from '../src/dtos/note-permissions.dto';
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
@@ -7,6 +5,15 @@ import { NotePermissionsDto } from '../src/dtos/note-permissions.dto';
  */
 import { promises as fs } from 'fs';
 import request from 'supertest';
+import { PUBLIC_API_PREFIX } from '../src/app.module';
+import { NotePermissionsDto } from '../src/dtos/note-permissions.dto';
+
+export const DefaultTestAlias = 'an-alias';
+export const DefaultMixedCaseTestAlias = 'aN-aLiAS';
+export const AliasTestCases = [
+  ['with lower case alias', DefaultTestAlias, DefaultTestAlias.toUpperCase()],
+  ['with mixed case alias', DefaultMixedCaseTestAlias, DefaultMixedCaseTestAlias.toUpperCase()],
+];
 
 /**
  * Ensures the directory at `path` is deleted.

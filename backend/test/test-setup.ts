@@ -83,7 +83,7 @@ import { KnexModule } from 'nest-knexjs';
 import { ZodSerializerInterceptor, ZodValidationPipe } from 'nestjs-zod';
 import { types as pgTypes } from 'pg';
 import { v4 as uuidv4 } from 'uuid';
-import { extendKnexQueryBuilder } from "../src/database/extend-knex-query-builder";
+import { extendKnexQueryBuilder } from '../src/database/extend-knex-query-builder';
 
 interface CreateTestSetupParameters {
   appConfigMock?: AppConfig;

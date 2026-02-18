@@ -22,7 +22,7 @@ import {
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { NoteEvent, NoteEventMap } from '../events';
-import { NoteAliasesDto } from '../dtos/note-aliases.dto';
+import type { NoteAliasesDto } from '../dtos/note-aliases.dto';
 
 type AliasAndIsPrimary = Pick<Alias, FieldNameAlias.alias | FieldNameAlias.isPrimary>;
 
@@ -123,8 +123,9 @@ export class AliasService {
       // Then set the specified alias to primary
       const numberOfUpdatedPrimaryAliases = await transaction(TableAlias)
         .update(FieldNameAlias.isPrimary, true)
-        .where(FieldNameAlias.noteId, noteId)
-        .andWhere(FieldNameAlias.alias, alias);
+        // @ts-ignore
+        .whereEqualLowercase(FieldNameAlias.alias, alias)
+        .andWhere(FieldNameAlias.noteId, noteId);
 
       if (numberOfUpdatedPrimaryAliases !== 1) {
         throw new NotInDBError(
@@ -148,7 +149,10 @@ export class AliasService {
    */
   async removeAlias(alias: string): Promise<void> {
     await this.knex.transaction(async (transaction) => {
-      const aliases = await transaction(TableAlias).select().where(FieldNameAlias.alias, alias);
+      const aliases = await transaction(TableAlias)
+        .select()
+        // @ts-ignore
+        .whereEqualLowercase(FieldNameAlias.alias, alias);
       if (aliases.length !== 1) {
         throw new NotInDBError(
           `The alias '${alias}' does not exist.`,
@@ -158,9 +162,10 @@ export class AliasService {
       }
 
       const noteId = aliases[0][FieldNameAlias.noteId];
+      const dbAlias = aliases[0][FieldNameAlias.alias];
 
       const numberOfDeletedAliases = await transaction(TableAlias)
-        .where(FieldNameAlias.alias, alias)
+        .where(FieldNameAlias.alias, dbAlias)
         .andWhere(FieldNameAlias.noteId, noteId)
         .andWhere(FieldNameAlias.isPrimary, null)
         .delete();
@@ -264,7 +269,7 @@ export class AliasService {
    * @returns true if the alias is forbidden, false otherwise
    */
   isAliasForbidden(alias: string): boolean {
-    return this.noteConfig.forbiddenAliases.includes(alias);
+    return this.noteConfig.forbiddenAliases.includes(alias.toLowerCase());
   }
 
   /**
@@ -278,7 +283,8 @@ export class AliasService {
     const dbActor = transaction ? transaction : this.knex;
     const result = await dbActor(TableAlias)
       .select(FieldNameAlias.alias)
-      .where(FieldNameAlias.alias, alias);
+      // @ts-ignore
+      .whereEqualLowercase(FieldNameAlias.alias, alias);
     if (result.length === 1) {
       this.logger.log(`A note with the alias '${alias}' already exists.`, 'isAliasUsed');
       return true;

@@ -1,14 +1,15 @@
-import { PUBLIC_API_PREFIX } from '../../src/app.module';
-import { MediaUploadDto } from '../../src/dtos/media-upload.dto';
-import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
-import { getCurrentDateTime, isoStringToDateTime } from '../../src/utils/datetime';
-import { noteAlias1, TestSetup, TestSetupBuilder, username1 } from '../test-setup';
-import { ensureDeleted } from '../utils';
 /*
  * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { PUBLIC_API_PREFIX } from '../../src/app.module';
+import type { MediaUploadDto } from '../../src/dtos/media-upload.dto';
+import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
+import { getCurrentDateTime, isoStringToDateTime } from '../../src/utils/datetime';
+import type { TestSetup } from '../test-setup';
+import { noteAlias1, TestSetupBuilder, username1 } from '../test-setup';
+import { ensureDeleted } from '../utils';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import request from 'supertest';
@@ -52,6 +53,18 @@ describe('Media', () => {
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .attach('file', 'test/public-api/fixtures/test.png')
         .set('HedgeDoc-Note', noteAlias1)
+        .expect('Content-Type', /json/)
+        .expect(201);
+      const uuid = uploadResponse.body.uuid;
+      const file = await fs.readFile(join(uploadPath, uuid + '.png'));
+      expect(file).toEqual(testImage);
+    });
+    it('uploads image and uppercase note alias', async () => {
+      const uploadResponse = await agent
+        .post(`${PUBLIC_API_PREFIX}/media`)
+        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
+        .attach('file', 'test/public-api/fixtures/test.png')
+        .set('HedgeDoc-Note', noteAlias1.toUpperCase())
         .expect('Content-Type', /json/)
         .expect(201);
       const uuid = uploadResponse.body.uuid;

@@ -4,11 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { PRIVATE_API_PREFIX } from '../../src/app.module';
-import { noteAlias1, password3, TestSetup, TestSetupBuilder, username3 } from '../test-setup';
+import type { TestSetup } from '../test-setup';
+import { noteAlias1, password3, TestSetupBuilder, username3 } from '../test-setup';
 import { setupAgent } from './utils/setup-agent';
-import { AliasCreateInterface, AliasUpdateInterface } from '@hedgedoc/commons';
+import type { AliasCreateInterface, AliasUpdateInterface } from '@hedgedoc/commons';
 import request from 'supertest';
 import { SpecialGroup } from '@hedgedoc/database';
+import { AliasTestCases, DefaultTestAlias } from '../utils';
 
 describe('Alias', () => {
   let testSetup: TestSetup;
@@ -46,7 +48,7 @@ describe('Alias', () => {
 
   describe(`GET ${PRIVATE_API_PREFIX}/alias/:alias`, () => {
     const testAlias = 'alias_for_testing_get_all_aliases';
-    const testAlias2 = 'alias_for_testing_get_all_aliases2';
+    const testAlias2 = DefaultTestAlias;
     let noteId;
     beforeEach(async () => {
       // Create note for testing purposes
@@ -82,6 +84,17 @@ describe('Alias', () => {
         });
       });
     });
+    describe.each(AliasTestCases)('returns the note', (testName, _aliasToUse, aliasToQuery) => {
+      it(testName, async () => {
+        const result = await agentUser1
+          .get(`${PRIVATE_API_PREFIX}/alias/${aliasToQuery}`)
+          .expect(200);
+        expect(result.body).toEqual({
+          aliases: [testAlias, testAlias2],
+          primaryAlias: testAlias,
+        });
+      });
+    });
     it('throws an UnauthorizedError if the user has no permissions', async () => {
       await agentGuestUser.get(`${PRIVATE_API_PREFIX}/alias/${testAlias}`).expect(401);
     });
@@ -93,19 +106,19 @@ describe('Alias', () => {
       newAlias: '',
     };
 
-    it('creates a normal alias', async () => {
-      const newAlias = 'new-alias';
-      newAliasDto.newAlias = newAlias;
-
-      await agentUser1
-        .post(`${PRIVATE_API_PREFIX}/alias`)
-        .set('Content-Type', 'application/json')
-        .send(newAliasDto)
-        .expect(201);
-      const metadata = await testSetup.notesService.toNoteMetadataDto(noteId);
-      expect(metadata.aliases).toContain(noteAlias1);
-      expect(metadata.aliases).toContain(newAlias);
-      expect(metadata.primaryAlias).toEqual(noteAlias1);
+    describe.each(AliasTestCases)('creates', (testName, alias) => {
+      it(testName, async () => {
+        newAliasDto.newAlias = alias;
+        await agentUser1
+          .post(`${PRIVATE_API_PREFIX}/alias`)
+          .set('Content-Type', 'application/json')
+          .send(newAliasDto)
+          .expect(201);
+        const metadata = await testSetup.notesService.toNoteMetadataDto(noteId);
+        expect(metadata.aliases).toContain(noteAlias1);
+        expect(metadata.aliases).toContain(alias);
+        expect(metadata.primaryAlias).toEqual(noteAlias1);
+      });
     });
 
     describe('does not create an alias', () => {
@@ -163,19 +176,21 @@ describe('Alias', () => {
     const changeAliasDto: AliasUpdateInterface = {
       primaryAlias: true,
     };
+    const newAlias = DefaultTestAlias;
 
-    it('correctly set primary alias', async () => {
-      const newAlias = 'new-alias';
-      await testSetup.aliasService.addAlias(noteId, newAlias);
-      await agentUser1
-        .put(`${PRIVATE_API_PREFIX}/alias/${newAlias}`)
-        .set('Content-Type', 'application/json')
-        .send(changeAliasDto)
-        .expect(200);
-      const metadata = await testSetup.notesService.toNoteMetadataDto(noteId);
-      expect(metadata.aliases).toContainEqual(newAlias);
-      expect(metadata.aliases).toContainEqual(noteAlias1);
-      expect(metadata.primaryAlias).toEqual(newAlias);
+    describe.each(AliasTestCases)('correctly set primary alias', (testName, alias) => {
+      it(testName, async () => {
+        await testSetup.aliasService.addAlias(noteId, newAlias);
+        await agentUser1
+          .put(`${PRIVATE_API_PREFIX}/alias/${alias}`)
+          .set('Content-Type', 'application/json')
+          .send(changeAliasDto)
+          .expect(200);
+        const metadata = await testSetup.notesService.toNoteMetadataDto(noteId);
+        expect(metadata.aliases).toContainEqual(newAlias);
+        expect(metadata.aliases).toContainEqual(noteAlias1);
+        expect(metadata.primaryAlias).toEqual(newAlias);
+      });
     });
 
     describe('does not set primary alias', () => {
@@ -222,15 +237,16 @@ describe('Alias', () => {
   });
 
   describe(`DELETE ${PRIVATE_API_PREFIX}/alias/:alias`, () => {
-    const newAlias = 'new-alias';
+    const newAlias = DefaultTestAlias;
     beforeEach(async () => {
       await testSetup.aliasService.addAlias(noteId, newAlias);
     });
-
-    it('correctly deletes the alias', async () => {
-      await expect(testSetup.notesService.getNoteIdByAlias(newAlias)).resolves.toBe(noteId);
-      await agentUser1.delete(`${PRIVATE_API_PREFIX}/alias/${newAlias}`).expect(204);
-      await expect(testSetup.notesService.getNoteIdByAlias(newAlias)).rejects.toThrow();
+    describe.each(AliasTestCases)('correctly deletes the alias', (testName, alias) => {
+      it(testName, async () => {
+        await expect(testSetup.notesService.getNoteIdByAlias(newAlias)).resolves.toBe(noteId);
+        await agentUser1.delete(`${PRIVATE_API_PREFIX}/alias/${alias}`).expect(204);
+        await expect(testSetup.notesService.getNoteIdByAlias(newAlias)).rejects.toThrow();
+      });
     });
 
     describe('does not delete the alias', () => {

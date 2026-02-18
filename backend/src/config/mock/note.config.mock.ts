@@ -12,7 +12,7 @@ import { NoteConfig } from '../note.config';
 export function createDefaultMockNoteConfig(): NoteConfig {
   return {
     maxLength: 100000,
-    forbiddenAliases: ['forbiddenNoteId'],
+    forbiddenAliases: ['forbidden'],
     permissions: {
       maxGuestLevel: PermissionLevel.FULL,
       default: {

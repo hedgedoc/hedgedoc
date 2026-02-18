@@ -90,7 +90,7 @@ describe('Notes', () => {
     });
     it('errors with a forbidden note id', async () => {
       await agent
-        .get(`${PUBLIC_API_PREFIX}/notes/forbiddenNoteId`)
+        .get(`${PUBLIC_API_PREFIX}/notes/${forbiddenAlias}`)
         .set('Content-Type', 'application/json')
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect('Content-Type', /json/)

@@ -101,6 +101,56 @@ describe('noteConfig', () => {
       restore();
     });
 
+    it('when HD_NOTE_FORBIDDEN_ALIASES has multiple items', () => {
+      const restore = mockedEnv(
+        {
+          /* oxlint-disable @typescript-eslint/naming-convention */
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
+          /* oxlint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      const config = noteConfig();
+      expect(config.forbiddenAliases).toHaveLength(forbiddenAliases.length);
+      expect(config.forbiddenAliases).toEqual(forbiddenAliases);
+      expect(config.maxLength).toEqual(maxLength);
+      expect(config.permissions.default.everyone).toEqual(PermissionLevel.WRITE);
+      expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.WRITE);
+      expect(config.permissions.default.publiclyVisible).toEqual(false);
+      expect(config.permissions.maxGuestLevel).toEqual(guestAccess);
+      restore();
+    });
+
+    it('with mixed-case HD_NOTE_FORBIDDEN_ALIASES being transformed to lowercase', () => {
+      const restore = mockedEnv(
+        {
+          /* oxlint-disable @typescript-eslint/naming-convention */
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAlias.toUpperCase(),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+          HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
+          HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
+          /* oxlint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      const config = noteConfig();
+      expect(config.forbiddenAliases).toHaveLength(1);
+      expect(config.forbiddenAliases[0]).toEqual(forbiddenAlias);
+      expect(config.maxLength).toEqual(maxLength);
+      expect(config.permissions.default.everyone).toEqual(PermissionLevel.WRITE);
+      expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.WRITE);
+      expect(config.permissions.default.publiclyVisible).toEqual(false);
+      expect(config.permissions.maxGuestLevel).toEqual(guestAccess);
+      restore();
+    });
+
     it('when no HD_NOTE_MAX_LENGTH is set', () => {
       const restore = mockedEnv(
         {
