@@ -123,7 +123,7 @@ describe('AliasService', () => {
 
       expectBindings(tracker, 'update', [
         [null, noteId1],
-        [true, noteId1, alias2],
+        [true, alias2.toLowerCase(), noteId1],
       ]);
       expect(spyOnNotifyOthers).toHaveBeenCalledWith(noteId1, alias2);
     });
@@ -149,7 +149,7 @@ describe('AliasService', () => {
       await expect(service.makeAliasPrimary(noteId1, 'i_dont_exist')).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'update', [
         [null, noteId1],
-        [true, noteId1, 'i_dont_exist'],
+        [true, 'i_dont_exist', noteId1],
       ]);
       expect(spyOnNotifyOthers).not.toHaveBeenCalled();
     });
@@ -159,7 +159,7 @@ describe('AliasService', () => {
     it('fails if alias does not exist', async () => {
       mockSelect(tracker, [], TableAlias, FieldNameAlias.alias);
       await expect(service.removeAlias(alias1)).rejects.toThrow(NotInDBError);
-      expectBindings(tracker, 'select', [[alias1]]);
+      expectBindings(tracker, 'select', [[alias1.toLowerCase()]]);
       expect(spyOnNotifyOthers).not.toHaveBeenCalled();
     });
 
@@ -178,7 +178,7 @@ describe('AliasService', () => {
         0,
       );
       await expect(service.removeAlias(alias1)).rejects.toThrow(PrimaryAliasDeletionForbiddenError);
-      expectBindings(tracker, 'select', [[alias1]]);
+      expectBindings(tracker, 'select', [[alias1.toLowerCase()]]);
       expectBindings(tracker, 'delete', [[alias1, noteId1]]);
       expect(spyOnNotifyOthers).not.toHaveBeenCalled();
     });
@@ -197,7 +197,7 @@ describe('AliasService', () => {
         FieldNameAlias.isPrimary,
       ]);
       await service.removeAlias(alias2);
-      expectBindings(tracker, 'select', [[alias2]]);
+      expectBindings(tracker, 'select', [[alias2.toLowerCase()]]);
       expectBindings(tracker, 'delete', [[alias2, noteId1]]);
       expect(spyOnNotifyOthers).toHaveBeenCalledWith(noteId1);
     });
@@ -280,12 +280,12 @@ describe('AliasService', () => {
         },
       ]);
       await expect(service.ensureAliasIsAvailable(alias1)).rejects.toThrow(AlreadyInDBError);
-      expectBindings(tracker, 'select', [[alias1]]);
+      expectBindings(tracker, 'select', [[alias1.toLowerCase()]]);
     });
     it('returns void if alias can be used', async () => {
       mockSelect(tracker, [FieldNameAlias.alias], TableAlias, FieldNameAlias.alias, []);
       await service.ensureAliasIsAvailable(alias1);
-      expectBindings(tracker, 'select', [[alias1]]);
+      expectBindings(tracker, 'select', [[alias1.toLowerCase()]]);
     });
   });
 
