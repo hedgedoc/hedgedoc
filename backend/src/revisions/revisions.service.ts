@@ -447,7 +447,7 @@ export class RevisionsService {
     const oldestRevisionToKeepDBTime = dateTimeToDB(oldestRevisionToKeepTime);
     await this.knex.transaction(async (transaction) => {
       // Delete old revisions
-      const noteIdsWhereRevisionsAreDeleted = await transaction(TableRevision)
+      const noteIdsWhereRevisionsWillBeDeleted = await transaction(TableRevision)
         .select(FieldNameRevision.noteId)
         .where(FieldNameRevision.createdAt, '<=', oldestRevisionToKeepDBTime);
 
@@ -456,16 +456,16 @@ export class RevisionsService {
         .delete();
 
       this.logger.log(
-        `${noteIdsWhereRevisionsAreDeleted.length} old revisions were removed from the DB`,
+        `${noteIdsWhereRevisionsWillBeDeleted.length} old revisions were removed from the DB`,
         'removeOldRevisions',
       );
 
-      if (noteIdsWhereRevisionsAreDeleted.length === 0) {
+      if (noteIdsWhereRevisionsWillBeDeleted.length === 0) {
         return;
       }
 
       const uniqueNoteIds = Array.from(
-        new Set(noteIdsWhereRevisionsAreDeleted.map((entry) => entry[FieldNameRevision.noteId])),
+        new Set(noteIdsWhereRevisionsWillBeDeleted.map((entry) => entry[FieldNameRevision.noteId])),
       );
 
       const revisionsToUpdate = await transaction(TableRevision)
@@ -476,7 +476,7 @@ export class RevisionsService {
         )
         .select(
           FieldNameRevision.uuid,
-          FieldNameRevision.noteId,
+          `${TableRevision}.${FieldNameRevision.noteId}`,
           FieldNameRevision.content,
           FieldNameAlias.alias,
         )

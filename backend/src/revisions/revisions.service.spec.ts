@@ -561,7 +561,7 @@ describe('RevisionsService', () => {
         tracker,
         [
           FieldNameRevision.uuid,
-          FieldNameRevision.noteId,
+          `${TableRevision}"."${FieldNameRevision.noteId}`,
           FieldNameRevision.content,
           FieldNameAlias.alias,
         ],
@@ -570,7 +570,7 @@ describe('RevisionsService', () => {
         [
           {
             [FieldNameRevision.uuid]: mockRevisionUuid1,
-            [FieldNameRevision.noteId]: mockNoteId,
+            [`${TableRevision}.${FieldNameRevision.noteId}`]: mockNoteId,
             [FieldNameRevision.content]: mockContent1,
             [FieldNameAlias.alias]: mockPrimaryAlias,
           },
