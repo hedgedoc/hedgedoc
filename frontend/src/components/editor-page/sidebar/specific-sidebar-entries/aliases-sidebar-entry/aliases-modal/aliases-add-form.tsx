@@ -16,8 +16,7 @@ import type { FormEvent } from 'react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Form, InputGroup } from 'react-bootstrap'
 import { PlusLg as IconPlus } from 'react-bootstrap-icons'
-
-const validAliasRegex = /^[a-zA-Z0-9_-]*$/
+import { ALIAS_REGEX } from '@hedgedoc/commons'
 
 /**
  * Form for adding a new alias to a note.
@@ -47,7 +46,7 @@ export const AliasesAddForm: React.FC = () => {
   const onNewAliasInputChange = useOnInputChange(setNewAlias)
 
   const newAliasValid = useMemo(() => {
-    return validAliasRegex.test(newAlias)
+    return ALIAS_REGEX.test(newAlias)
   }, [newAlias])
 
   const addAliasText = useTranslatedText('editor.modal.aliases.addAlias')

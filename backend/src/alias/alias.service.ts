@@ -3,14 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { Alias, FieldNameAlias, TableAlias } from '@hedgedoc/database';
+import type { Alias} from '@hedgedoc/database';
+import { FieldNameAlias, TableAlias } from '@hedgedoc/database';
 import { Inject, Injectable } from '@nestjs/common';
 import base32Encode from 'base32-encode';
 import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
 import { randomBytes } from 'node:crypto';
 
-import noteConfiguration, { NoteConfig } from '../config/note.config';
+import noteConfiguration from '../config/note.config';
+import { NoteConfig } from '../config/note.config';
 import { AliasDto } from '../dtos/alias.dto';
 import {
   AlreadyInDBError,
@@ -21,8 +23,10 @@ import {
 } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { NoteEvent, NoteEventMap } from '../events';
+import { NoteEventMap } from '../events';
+import { NoteEvent } from '../events';
 import type { NoteAliasesDto } from '../dtos/note-aliases.dto';
+import { ALIAS_REGEX } from '@hedgedoc/commons';
 
 type AliasAndIsPrimary = Pick<Alias, FieldNameAlias.alias | FieldNameAlias.isPrimary>;
 
@@ -245,6 +249,13 @@ export class AliasService {
    * @throws AlreadyInDBError The requested alias already exists
    */
   async ensureAliasIsAvailable(alias: string, transaction?: Knex): Promise<void> {
+    if (!ALIAS_REGEX.test(alias)) {
+      throw new ForbiddenIdError(
+        `The alias '${alias}' contains invalid characters.`,
+        this.logger.getContext(),
+        'ensureAliasIsAvailable',
+      );
+    }
     if (this.isAliasForbidden(alias)) {
       throw new ForbiddenIdError(
         `The alias '${alias}' is forbidden by the administrator.`,
