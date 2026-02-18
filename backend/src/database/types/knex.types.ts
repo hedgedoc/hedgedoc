@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -44,32 +44,47 @@ import {
   User,
   UserPinnedNote,
 } from '@hedgedoc/database';
-import { Knex } from 'knex';
+import { Knex as KnexOriginal } from 'knex';
 
 /* oxlint-disable @typescript-eslint/naming-convention */
 declare module 'knex/types/tables.js' {
   interface Tables {
-    [TableAlias]: Knex.CompositeTableType<Alias, Alias, TypeUpdateAlias>;
-    [TableApiToken]: Knex.CompositeTableType<ApiToken>;
-    [TableAuthorshipInfo]: Knex.CompositeTableType<AuthorshipInfo>;
-    [TableGroup]: Knex.CompositeTableType<Group, TypeInsertGroup, TypeUpdateGroup>;
+    [TableAlias]: KnexOriginal.CompositeTableType<Alias, Alias, TypeUpdateAlias>;
+    [TableApiToken]: KnexOriginal.CompositeTableType<ApiToken>;
+    [TableAuthorshipInfo]: KnexOriginal.CompositeTableType<AuthorshipInfo>;
+    [TableGroup]: KnexOriginal.CompositeTableType<Group, TypeInsertGroup, TypeUpdateGroup>;
     [TableGroupUser]: GroupUser;
-    [TableIdentity]: Knex.CompositeTableType<Identity, Identity, TypeUpdateIdentity>;
-    [TableMediaUpload]: Knex.CompositeTableType<MediaUpload, MediaUpload, TypeUpdateMediaUpload>;
-    [TableNote]: Knex.CompositeTableType<Note, TypeInsertNote, TypeUpdateNote>;
-    [TableNoteGroupPermission]: Knex.CompositeTableType<
+    [TableIdentity]: KnexOriginal.CompositeTableType<Identity, Identity, TypeUpdateIdentity>;
+    [TableMediaUpload]: KnexOriginal.CompositeTableType<
+      MediaUpload,
+      MediaUpload,
+      TypeUpdateMediaUpload
+    >;
+    [TableNote]: KnexOriginal.CompositeTableType<Note, TypeInsertNote, TypeUpdateNote>;
+    [TableNoteGroupPermission]: KnexOriginal.CompositeTableType<
       NoteGroupPermission,
       NoteGroupPermission,
       TypeUpdateNoteGroupPermission
     >;
-    [TableNoteUserPermission]: Knex.CompositeTableType<
+    [TableNoteUserPermission]: KnexOriginal.CompositeTableType<
       NoteUserPermission,
       NoteUserPermission,
       TypeUpdateNoteUserPermission
     >;
-    [TableRevision]: Knex.CompositeTableType<Revision>;
+    [TableRevision]: KnexOriginal.CompositeTableType<Revision>;
     [TableRevisionTag]: RevisionTag;
-    [TableUser]: Knex.CompositeTableType<User, TypeInsertUser, TypeUpdateUser>;
+    [TableUser]: KnexOriginal.CompositeTableType<User, TypeInsertUser, TypeUpdateUser>;
     [TableUserPinnedNote]: UserPinnedNote;
+  }
+}
+
+declare module 'knex' {
+  namespace Knex {
+    interface QueryInterface {
+      whereEqualLowercase<TRecord extends {}, TResult>(
+        field: string,
+        value: string,
+      ): KnexOriginal.QueryBuilder<TRecord, TResult>;
+    }
   }
 }
