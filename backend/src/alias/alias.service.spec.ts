@@ -282,10 +282,17 @@ describe('AliasService', () => {
       await expect(service.ensureAliasIsAvailable(alias1)).rejects.toThrow(AlreadyInDBError);
       expectBindings(tracker, 'select', [[alias1.toLowerCase()]]);
     });
-    it('returns void if alias can be used', async () => {
+    it.each(['note?', 'alias!', 'pizza ', 'te.st', 'test;1'])(
+      "throws ForbiddenIdError for aliases with invalid alias '%s'",
+      async (alias) => {
+        await expect(service.ensureAliasIsAvailable(alias)).rejects.toThrow(ForbiddenIdError);
+      },
+    );
+
+    it.each([alias1, '🍕', 'pizza', 'Pizza', 'pizzä', 'pißßa'])("accepts '%s'", async (alias) => {
       mockSelect(tracker, [FieldNameAlias.alias], TableAlias, FieldNameAlias.alias, []);
-      await service.ensureAliasIsAvailable(alias1);
-      expectBindings(tracker, 'select', [[alias1.toLowerCase()]]);
+      await service.ensureAliasIsAvailable(alias);
+      expectBindings(tracker, 'select', [[alias.toLowerCase()]]);
     });
   });
 
