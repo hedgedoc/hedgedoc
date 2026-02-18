@@ -32,7 +32,7 @@ export class SessionGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const request: CompleteRequest = context.switchToHttp().getRequest();
     const userId = request.session?.userId;
-    const authProviderType = request.session?.authProviderType;
+    const authProviderType = request.session?.loginAuthProviderType;
     if (!userId || !authProviderType) {
       this.logger.debug('The user has no session.');
       throw new UnauthorizedException('You have no active session');

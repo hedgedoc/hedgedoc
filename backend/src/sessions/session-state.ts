@@ -3,23 +3,21 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { AuthProviderType } from '@hedgedoc/commons';
-import { FieldNameUser, User } from '@hedgedoc/database';
-
-import { PendingUserInfoDto } from '../dtos/pending-user-info.dto';
+import type { AuthProviderType } from '@hedgedoc/commons';
+import type { PendingUserInfoDto } from '../dtos/pending-user-info.dto';
 
 interface OidcAuthSessionState {
   /** The id token to identify a user session with an OIDC auth provider, required for the logout */
-  idToken?: string;
+  idToken: string | null;
 
   /** The (random) OIDC code for verifying that OIDC responses match the OIDC requests */
-  loginCode?: string;
+  loginCode: string | null;
 
   /** The (random) OIDC state for verifying that OIDC responses match the OIDC requests */
-  loginState?: string;
+  loginState: string | null;
 
   /** The session ID from the OIDC provider, used for backchannel logout */
-  sid?: string;
+  sid: string | null;
 }
 
 interface PendingUserSessionState {
@@ -38,7 +36,7 @@ interface PendingUserSessionState {
 
 export interface SessionState {
   /** Session cookie properties */
-  cookie: {
+  cookie?: {
     originalMaxAge: number | null;
     maxAge?: number;
     signed?: boolean;
@@ -50,18 +48,21 @@ export interface SessionState {
     sameSite?: boolean | 'lax' | 'strict' | 'none';
   };
 
-  /** Contains the username if logged in completely, is undefined when not being logged in */
-  userId?: User[FieldNameUser.id];
+  /** The current session owner's CSRF token */
+  csrfToken: string | null;
+
+  /** Contains the username if logged in completely, is null when not being logged in */
+  userId: number | null;
 
   /** The auth provider that is used for the current login */
-  authProviderType?: AuthProviderType;
+  loginAuthProviderType: AuthProviderType | null;
 
   /** The identifier of the auth provider that is used for the current login */
-  authProviderIdentifier?: string;
+  loginAuthProviderIdentifier: string | null;
 
   /** Session data used on OIDC login */
-  oidc?: OidcAuthSessionState;
+  oidc: OidcAuthSessionState;
 
   /** The user data of the user that is currently being created */
-  pendingUser?: PendingUserSessionState;
+  pendingUser: PendingUserSessionState | null;
 }

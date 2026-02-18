@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import '@fastify/session';
-import { SessionState } from './session-state.type';
+import type { SessionState } from './session-state';
 
 declare module 'fastify' {
   interface Session extends SessionState {}

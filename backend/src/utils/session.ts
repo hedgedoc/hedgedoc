@@ -9,7 +9,7 @@ import fastifyCookie from '@fastify/cookie';
 import { NestFastifyApplication } from '@nestjs/platform-fastify';
 
 import { AuthConfig } from '../config/auth.config';
-import { KeyvSessionStore } from '../sessions/keyv-session-store';
+import { KnexSessionStore } from '../sessions/knex-session-store';
 
 export const HEDGEDOC_SESSION = 'hedgedoc-session';
 
@@ -23,7 +23,7 @@ export const HEDGEDOC_SESSION = 'hedgedoc-session';
 export async function setupSessionMiddleware(
   app: INestApplication,
   authConfig: AuthConfig,
-  sessionStore: KeyvSessionStore,
+  sessionStore: KnexSessionStore,
 ): Promise<void> {
   const fastifyApp = app as NestFastifyApplication;
 
@@ -35,7 +35,9 @@ export async function setupSessionMiddleware(
     cookie: {
       // Handle session duration in seconds instead of ms
       maxAge: authConfig.session.lifetime * 1000,
-      secure: false,
+      secure: 'auto',
+      httpOnly: true,
+      sameSite: 'lax',
     },
     saveUninitialized: false,
     store: sessionStore,

@@ -33,7 +33,7 @@ export class GuestController {
   ): Promise<GuestRegistrationResponseDto> {
     const [uuid, userId] = await this.usersService.createGuestUser();
     // Log the user in after registration
-    request.session.authProviderType = AuthProviderType.GUEST;
+    request.session.loginAuthProviderType = AuthProviderType.GUEST;
     request.session.userId = userId;
     return GuestRegistrationResponseDto.create({
       uuid,
@@ -48,7 +48,7 @@ export class GuestController {
     @Body() loginDto: GuestLoginDto,
   ): Promise<void> {
     const userId = await this.usersService.getUserIdByGuestUuid(loginDto.uuid);
-    request.session.authProviderType = AuthProviderType.GUEST;
+    request.session.loginAuthProviderType = AuthProviderType.GUEST;
     request.session.userId = userId;
   }
 }

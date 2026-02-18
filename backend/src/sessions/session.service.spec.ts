@@ -48,7 +48,7 @@ describe('SessionService', () => {
   });
 
   it('getSessionStore', () => {
-    const store = service.getSessionStore();
+    const store = service.getFastifySessionStore();
     expect(store).toBeDefined();
   });
 
@@ -56,7 +56,7 @@ describe('SessionService', () => {
     it('returns the correct user id for session id', async () => {
       const testSessionId = 'testSessionId';
       const testUserId = 1337;
-      const sessionsStore = service.getSessionStore();
+      const sessionsStore = service.getFastifySessionStore();
       sessionsStore.set(
         testSessionId,
         {

@@ -54,6 +54,8 @@ export class OidcController {
     request.session.oidc = {
       loginCode: code,
       loginState: state,
+      idToken: null,
+      sid: null,
     };
     request.session.pendingUser = {
       authProviderType: AuthProviderType.OIDC,
@@ -98,9 +100,9 @@ export class OidcController {
       }
 
       request.session.userId = userId;
-      request.session.authProviderType = AuthProviderType.OIDC;
-      request.session.authProviderIdentifier = oidcIdentifier;
-      request.session.pendingUser = undefined;
+      request.session.loginAuthProviderType = AuthProviderType.OIDC;
+      request.session.loginAuthProviderIdentifier = oidcIdentifier;
+      request.session.pendingUser = null;
       return { url: '/' };
     } catch (error) {
       if (error instanceof HttpException) {
@@ -111,30 +113,30 @@ export class OidcController {
     }
   }
 
-  @Post(':oidcIdentifier/backchannel-logout')
-  @HttpCode(200)
-  @CsrfExempt()
-  @OpenApi(200, 400)
-  async backchannelLogout(
-    @Param('oidcIdentifier') oidcIdentifier: string,
-    @Body() body: BackchannelLogoutDto,
-  ): Promise<void> {
-    try {
-      await this.oidcService.processBackchannelLogout(oidcIdentifier, body.logout_token);
-      this.logger.debug(
-        `Backchannel logout successful for provider ${oidcIdentifier}`,
-        'backchannelLogout',
-      );
-    } catch (error) {
-      if (error instanceof HttpException) {
-        throw error;
-      }
-      this.logger.error(
-        `Error during backchannel logout: ${String(error)}`,
-        undefined,
-        'backchannelLogout',
-      );
-      throw new BadRequestException('Invalid logout token');
-    }
-  }
+  // @Post(':oidcIdentifier/backchannel-logout')
+  // @HttpCode(200)
+  // @CsrfExempt()
+  // @OpenApi(200, 400)
+  // async backchannelLogout(
+  //   @Param('oidcIdentifier') oidcIdentifier: string,
+  //   @Body() body: BackchannelLogoutDto,
+  // ): Promise<void> {
+  //   try {
+  //     await this.oidcService.processBackchannelLogout(oidcIdentifier, body.logout_token);
+  //     this.logger.debug(
+  //       `Backchannel logout successful for provider ${oidcIdentifier}`,
+  //       'backchannelLogout',
+  //     );
+  //   } catch (error) {
+  //     if (error instanceof HttpException) {
+  //       throw error;
+  //     }
+  //     this.logger.error(
+  //       `Error during backchannel logout: ${String(error)}`,
+  //       undefined,
+  //       'backchannelLogout',
+  //     );
+  //     throw new BadRequestException('Invalid logout token');
+  //   }
+  // }
 }

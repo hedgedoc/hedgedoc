@@ -43,7 +43,7 @@ export class AuthController {
   @OpenApi(200, 400, 401)
   logout(@Req() request: RequestWithSession): LogoutResponseDto {
     let logoutUrl: string | null = null;
-    if (request.session.authProviderType === AuthProviderType.OIDC) {
+    if (request.session.loginAuthProviderType === AuthProviderType.OIDC) {
       logoutUrl = this.oidcService.getLogoutUrl(request);
     }
     request.session.destroy((err) => {
@@ -88,16 +88,22 @@ export class AuthController {
         request.session.pendingUser.authProviderIdentifier,
         request.session.pendingUser.providerUserId,
       );
-    request.session.authProviderType = request.session.pendingUser.authProviderType;
-    request.session.authProviderIdentifier = request.session.pendingUser.authProviderIdentifier;
+    request.session.loginAuthProviderType = request.session.pendingUser.authProviderType;
+    request.session.loginAuthProviderIdentifier =
+      request.session.pendingUser.authProviderIdentifier;
     // Cleanup
-    request.session.pendingUser = undefined;
+    request.session.pendingUser = null;
   }
 
   @Delete('pending-user')
   @OpenApi(204, 400)
   deletePendingUserData(@Req() request: RequestWithSession): void {
-    request.session.pendingUser = undefined;
-    request.session.oidc = undefined;
+    request.session.pendingUser = null;
+    request.session.oidc = {
+      idToken: null,
+      sid: null,
+      loginCode: null,
+      loginState: null,
+    };
   }
 }

@@ -126,9 +126,9 @@ export class WebsocketGateway implements OnGatewayConnection {
    */
   private async findUserIdByRequestSession(request: IncomingMessage): Promise<number | undefined> {
     const sessionId = this.sessionService.extractSessionIdFromRequest(request);
-    if (sessionId.isEmpty()) {
+    if (sessionId === null) {
       return undefined;
     }
-    return await this.sessionService.getUserIdForSessionId(sessionId.get());
+    return await this.sessionService.getUserIdForSessionId(sessionId);
   }
 }
