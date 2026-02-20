@@ -74,4 +74,5 @@ COPY --chown=node commons/package.json /usr/src/app/commons/package.json
 COPY --chown=node --from=builder /usr/src/app/commons/dist commons/dist
 
 WORKDIR /usr/src/app/backend
+EXPOSE 3000/tcp
 CMD  ["node", "dist/main.js"]

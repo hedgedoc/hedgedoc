@@ -60,7 +60,7 @@ async function bootstrap(): Promise<void> {
   await setupApp(app, appConfig, authConfig, mediaConfig, securityConfig, logger);
 
   // Start the server
-  await app.listen(appConfig.backendPort);
+  await app.listen(appConfig.backendPort, appConfig.backendBindIp);
 }
 
 void bootstrap();

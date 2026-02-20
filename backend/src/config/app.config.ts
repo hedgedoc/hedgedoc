@@ -61,6 +61,7 @@ const schema = z
       .default('')
       .describe('HD_RENDERER_BASE_URL'),
     backendPort: z.number().positive().int().max(65535).default(3000).describe('HD_BACKEND_PORT'),
+    backendBindIp: z.string().ip().default('127.0.0.1').describe('HD_BACKEND_BIND_IP'),
     log: z.object({
       level: z
         .enum(Object.values(Loglevel) as [Loglevel, ...Loglevel[]])
@@ -84,6 +85,7 @@ export default registerAs('appConfig', () => {
     baseUrl: process.env.HD_BASE_URL,
     rendererBaseUrl: process.env.HD_RENDERER_BASE_URL,
     backendPort: parseOptionalNumber(process.env.HD_BACKEND_PORT),
+    backendBindIp: process.env.HD_BACKEND_BIND_IP,
     log: {
       level: process.env.HD_LOG_LEVEL,
       showTimestamp: parseOptionalBoolean(process.env.HD_LOG_SHOW_TIMESTAMP),
