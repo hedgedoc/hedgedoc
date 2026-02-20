@@ -14,6 +14,7 @@ export function createDefaultMockAppConfig(): AppConfig {
     baseUrl: 'md.example.com',
     rendererBaseUrl: 'md-renderer.example.com',
     backendPort: 3000,
+    backendBindIp: '127.0.0.1',
     log: {
       level: Loglevel.INFO,
       showTimestamp: true,

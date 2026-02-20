@@ -17,6 +17,9 @@ describe('appConfig', () => {
   const floatPort = 3.14;
   const outOfRangePort = 1000000;
   const invalidPort = 'not-a-port';
+  const bindIp = '0.0.0.0';
+  const bindIpV6 = '::1';
+  const invalidBindIp = 'not-an-ip';
   const loglevel = Loglevel.TRACE;
   const showLogTimestamp = false;
   const invalidLoglevel = 'not-a-loglevel';
@@ -29,6 +32,7 @@ describe('appConfig', () => {
           HD_BASE_URL: baseUrl,
           HD_RENDERER_BASE_URL: rendererBaseUrl,
           HD_BACKEND_PORT: port.toString(),
+          HD_BACKEND_BIND_IP: bindIp,
           HD_LOG_LEVEL: loglevel,
           HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
           /* oxlint-enable @typescript-eslint/naming-convention */
@@ -41,8 +45,46 @@ describe('appConfig', () => {
       expect(config.baseUrl).toEqual(baseUrl);
       expect(config.rendererBaseUrl).toEqual(rendererBaseUrl);
       expect(config.backendPort).toEqual(port);
+      expect(config.backendBindIp).toEqual(bindIp);
       expect(config.log.level).toEqual(loglevel);
       expect(config.log.showTimestamp).toEqual(showLogTimestamp);
+      restore();
+    });
+
+    it('when given an IPv6 address as HD_BACKEND_BIND_IP', () => {
+      const restore = mockedEnv(
+        {
+          /* oxlint-disable @typescript-eslint/naming-convention */
+          HD_BASE_URL: baseUrl,
+          HD_BACKEND_BIND_IP: bindIpV6,
+          HD_LOG_LEVEL: loglevel,
+          HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
+          /* oxlint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      const config = appConfig();
+      expect(config.backendBindIp).toEqual(bindIpV6);
+      restore();
+    });
+
+    it('when no HD_BACKEND_BIND_IP is set', () => {
+      const restore = mockedEnv(
+        {
+          /* oxlint-disable @typescript-eslint/naming-convention */
+          HD_BASE_URL: baseUrl,
+          HD_LOG_LEVEL: loglevel,
+          HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
+          /* oxlint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      const config = appConfig();
+      expect(config.backendBindIp).toEqual('127.0.0.1');
       restore();
     });
 
@@ -285,6 +327,26 @@ describe('appConfig', () => {
       expect(spyConsoleError.mock.calls[0][0]).toContain(
         'HD_BACKEND_PORT: Expected number, received nan',
       );
+      expect(spyProcessExit).toHaveBeenCalledWith(1);
+      restore();
+    });
+
+    it('when given a non-IP address as HD_BACKEND_BIND_IP', async () => {
+      const restore = mockedEnv(
+        {
+          /* oxlint-disable @typescript-eslint/naming-convention */
+          HD_BASE_URL: baseUrl,
+          HD_BACKEND_BIND_IP: invalidBindIp,
+          HD_LOG_LEVEL: loglevel,
+          HD_LOG_SHOW_TIMESTAMP: showLogTimestamp.toString(),
+          /* oxlint-enable @typescript-eslint/naming-convention */
+        },
+        {
+          clear: true,
+        },
+      );
+      appConfig();
+      expect(spyConsoleError.mock.calls[0][0]).toContain('HD_BACKEND_BIND_IP');
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
