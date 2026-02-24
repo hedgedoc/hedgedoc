@@ -1,10 +1,11 @@
 # Release Notes
 
-## Unreleased
+## <i class="fa fa-tag"></i> 1.10.7 <i class="fa fa-calendar-o"></i> 2026-02-24
 
 ### Bugfixes
 - Random colors for user's cursors and selections are now always in hex format to avoid conversion errors
-- Correctly close realtime connections if they disconnect during connection creation 
+- Correctly close realtime connections if they disconnect during connection creation
+- manage_users CLI does not silently drop errors
 
 ## <i class="fa fa-tag"></i> 1.10.6 <i class="fa fa-calendar-o"></i> 2026-02-04
 
