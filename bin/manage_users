@@ -7,6 +7,7 @@ logger.transports.forEach((transport) => transport.level = 'warning')
 const models = require('../lib/models/')
 const readline = require('readline-sync')
 const minimist = require('minimist')
+const { ValidationError } = require('sequelize')
 
 function showUsage (tips) {
   console.log(`${tips}
@@ -48,12 +49,21 @@ async function createUser (argv) {
   }
 
   // Lets try to create, and check success
-  const ref = await models.User.create({ email: argv['add'], password: pass })
-  if (ref === undefined) {
-    console.log(`Could not create user with email ${argv['add']}`)
-    process.exit(1)
-  } else {
-    console.log(`Created user with email ${argv['add']}`)
+  try {
+    const ref = await models.User.create({ email: argv['add'], password: pass })
+    if (ref === undefined) {
+      console.log(`Could not create user with email ${argv['add']}`)
+      process.exit(1)
+    } else {
+      console.log(`Created user with email ${argv['add']}`)
+    }
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      console.log('Could not create user, since the email address is invalid.')
+      process.exit(1)
+    } else {
+      throw err
+    }
   }
 }
 
@@ -117,4 +127,7 @@ if (typeof argv[action] !== 'string') {
 // Call respective processing functions
 options[action](argv).then(function () {
   process.exit(0);
+}).catch(err => {
+  console.error('An error occurred:', err)
+  process.exit(1)
 });
