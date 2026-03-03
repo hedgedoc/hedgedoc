@@ -2876,7 +2876,7 @@ __metadata:
     "@nestjs/testing": "npm:10.4.20"
     "@nestjs/websockets": "npm:10.4.20"
     "@node-rs/argon2": "npm:2.0.2"
-    "@tsconfig/node24": "npm:24.0.3"
+    "@tsconfig/node24": "npm:24.0.4"
     "@types/better-sqlite3": "npm:7.6.13"
     "@types/cli-color": "npm:2.0.6"
     "@types/cookie": "npm:1.0.0"
@@ -5506,10 +5506,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/node24@npm:24.0.3":
-  version: 24.0.3
-  resolution: "@tsconfig/node24@npm:24.0.3"
-  checksum: 10c0/68068b503774450d533dda769785356c5722bdc6a3333646fcbcb265e02aafb6d0784619ed85de6d62414df20483428b25bf3d608955ca40b085fb1f12cc26c4
+"@tsconfig/node24@npm:24.0.4":
+  version: 24.0.4
+  resolution: "@tsconfig/node24@npm:24.0.4"
+  checksum: 10c0/9c5d4173204c6935c45d3ff0584fd423bd7d8bc3f6b246e646320ae584e4226b34ea1c66ec67cd16769c73e7e80f4cc562287b0acaa4ec81aa482463972ff83f
   languageName: node
   linkType: hard
 
