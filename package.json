@@ -38,7 +38,7 @@
     "@codemirror/language-data": "6.5.1",
     "@codemirror/lint": "6.8.4",
     "@codemirror/theme-one-dark": "6.1.2",
-    "@lezer/common": "1.4.0",
+    "@lezer/common": "1.5.1",
     "@types/react": "18.3.27",
     "eventemitter2@6.4.9": "patch:eventemitter2@npm%3A6.4.9#./.yarn/patches/eventemitter2-npm-6.4.9-ba37798a18.patch",
     "yjs@13.6.28": "patch:yjs@npm%3A13.6.28#./.yarn/patches/yjs-remove-import-warning-in-test.patch",
