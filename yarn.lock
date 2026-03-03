@@ -2598,7 +2598,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fastify/ajv-compiler@npm:^4.0.0":
+"@fastify/ajv-compiler@npm:^4.0.5":
   version: 4.0.5
   resolution: "@fastify/ajv-compiler@npm:4.0.5"
   dependencies:
@@ -2868,7 +2868,7 @@ __metadata:
     "@nestjs/config": "npm:3.3.0"
     "@nestjs/core": "npm:10.4.20"
     "@nestjs/event-emitter": "npm:2.1.1"
-    "@nestjs/platform-fastify": "npm:11.1.12"
+    "@nestjs/platform-fastify": "npm:11.1.14"
     "@nestjs/platform-ws": "npm:10.4.20"
     "@nestjs/schedule": "npm:4.1.2"
     "@nestjs/schematics": "npm:10.2.3"
@@ -4224,14 +4224,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/platform-fastify@npm:11.1.12":
-  version: 11.1.12
-  resolution: "@nestjs/platform-fastify@npm:11.1.12"
+"@nestjs/platform-fastify@npm:11.1.14":
+  version: 11.1.14
+  resolution: "@nestjs/platform-fastify@npm:11.1.14"
   dependencies:
     "@fastify/cors": "npm:11.2.0"
     "@fastify/formbody": "npm:8.0.2"
     fast-querystring: "npm:1.1.2"
-    fastify: "npm:5.6.2"
+    fastify: "npm:5.7.4"
     fastify-plugin: "npm:5.1.0"
     find-my-way: "npm:9.4.0"
     light-my-request: "npm:6.6.0"
@@ -4248,7 +4248,7 @@ __metadata:
       optional: true
     "@fastify/view":
       optional: true
-  checksum: 10c0/57c5fa9580768e5d22988fee5bf54d76e0027432dcff566e11a8ce130f5cfe7ddb77e4854be8fe1210f73f52f30c4f6fbac429c6ccb4ac0ae9cd101a734b4cf6
+  checksum: 10c0/d8506f0bb027ac769c830c06fa17cc7fa269378dfa90ab3a4fb4b372dd5434871e6816992c6f98f6165c38070635ef1aceedcd8c715e1a484aeee6960a18ea69
   languageName: node
   linkType: hard
 
@@ -10211,11 +10211,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastify@npm:5.6.2":
-  version: 5.6.2
-  resolution: "fastify@npm:5.6.2"
+"fastify@npm:5.7.4":
+  version: 5.7.4
+  resolution: "fastify@npm:5.7.4"
   dependencies:
-    "@fastify/ajv-compiler": "npm:^4.0.0"
+    "@fastify/ajv-compiler": "npm:^4.0.5"
     "@fastify/error": "npm:^4.0.0"
     "@fastify/fast-json-stringify-compiler": "npm:^5.0.0"
     "@fastify/proxy-addr": "npm:^5.0.0"
@@ -10230,7 +10230,7 @@ __metadata:
     secure-json-parse: "npm:^4.0.0"
     semver: "npm:^7.6.0"
     toad-cache: "npm:^3.7.0"
-  checksum: 10c0/a3c31316ba5db03eb14a5dc46571fe0f888d0f4569befb8a0aedebc7b24fbd6139e7b16f2bf0dad793345ad66cd5952bdffe182ee2ab0d4e4cb5f331f74a7781
+  checksum: 10c0/87425737ad4973eac1cb8a2cc00771fae26ccf87f7142d6a100e4b03d92613b050ec2abbb9b54432dfee0bebc5b75f5658c0016e77970cb4fb9d8382729cfc6a
   languageName: node
   linkType: hard
 
