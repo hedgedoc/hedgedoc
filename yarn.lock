@@ -2273,12 +2273,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dicebear/core@npm:9.2.4":
-  version: 9.2.4
-  resolution: "@dicebear/core@npm:9.2.4"
+"@dicebear/core@npm:9.4.0":
+  version: 9.4.0
+  resolution: "@dicebear/core@npm:9.4.0"
   dependencies:
-    "@types/json-schema": "npm:^7.0.11"
-  checksum: 10c0/1717d9ddac91f5c1ebac8772b38a41b1ceebacc19569241dc83c0730fae6759091d46d9efb4beaf9da021f43e2d0bfe88aa136603188e6df7246208272d13bbc
+    "@types/json-schema": "npm:^7.0.15"
+  checksum: 10c0/dc08b753943d2b65d70b55418c76e9f9a24553f3188677c5e343e03ad0f6e51be766dd1e4ef94d3011d1c581cb8777b18f279a7671307f83f849dda4e858ba4a
   languageName: node
   linkType: hard
 
@@ -2993,7 +2993,7 @@ __metadata:
     "@codemirror/state": "npm:6.4.1"
     "@codemirror/theme-one-dark": "npm:6.1.2"
     "@codemirror/view": "npm:6.34.3"
-    "@dicebear/core": "npm:9.2.4"
+    "@dicebear/core": "npm:9.4.0"
     "@dicebear/identicon": "npm:9.2.4"
     "@fontsource/source-sans-pro": "npm:5.2.5"
     "@hedgedoc/commons": "workspace:commons"
@@ -6071,7 +6071,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/json-schema@npm:*, @types/json-schema@npm:^7.0.11, @types/json-schema@npm:^7.0.8, @types/json-schema@npm:^7.0.9":
+"@types/json-schema@npm:*, @types/json-schema@npm:^7.0.15, @types/json-schema@npm:^7.0.8, @types/json-schema@npm:^7.0.9":
   version: 7.0.15
   resolution: "@types/json-schema@npm:7.0.15"
   checksum: 10c0/a996a745e6c5d60292f36731dd41341339d4eeed8180bb09226e5c8d23759067692b1d88e5d91d72ee83dfc00d3aca8e7bd43ea120516c17922cbcb7c3e252db
