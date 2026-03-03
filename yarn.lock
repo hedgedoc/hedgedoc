@@ -3050,7 +3050,7 @@ __metadata:
     highlight.js: "npm:11.11.1"
     htmlparser2: "npm:9.1.0"
     i18next: "npm:23.16.8"
-    i18next-browser-languagedetector: "npm:8.2.0"
+    i18next-browser-languagedetector: "npm:8.2.1"
     i18next-resources-to-backend: "npm:1.2.1"
     jest: "npm:29.7.0"
     jest-environment-jsdom: "npm:29.7.0"
@@ -11146,12 +11146,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next-browser-languagedetector@npm:8.2.0":
-  version: 8.2.0
-  resolution: "i18next-browser-languagedetector@npm:8.2.0"
+"i18next-browser-languagedetector@npm:8.2.1":
+  version: 8.2.1
+  resolution: "i18next-browser-languagedetector@npm:8.2.1"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-  checksum: 10c0/4fcb6ec316e0fd4a10eee67a8d1e3d7e1407f14d5bed98978c50ed6f1853f5d559dc18ea7fd4b2de445ac0a4ed44df5b38f0b31b89b9ac883f99050d59ffec82
+  checksum: 10c0/d200847a79b4cb2764ef59b33e5399085d4d56b2b038e884bb54fffe17953b467899142a6ef6e985592234f10049d14d06b80f2c56441ae80648c5a6717704f3
   languageName: node
   linkType: hard
 
