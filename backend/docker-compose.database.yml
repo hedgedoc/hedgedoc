@@ -4,7 +4,7 @@
 services:
   mariadb:
     # renovate: datasource=docker depName=mariadb
-    image: mariadb:11.8.5@sha256:345fa26d595e8c7fe298e0c4098ed400356f502458769c8902229b3437d6da2b
+    image: mariadb:11.8.6@sha256:8164f184d16c30e2f159e30518113667b796306dff0fe558876ab1ff521a682f
     environment:
       MARIADB_USER: hedgedoc
       MARIADB_PASSWORD: hedgedoc
