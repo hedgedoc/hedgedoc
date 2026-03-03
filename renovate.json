@@ -14,7 +14,7 @@
     ":maintainLockFilesWeekly",
     ":separateMajorReleases"
   ],
-  "baseBranches": [
+  "baseBranchPatterns": [
     "master",
     "develop"
   ],
@@ -27,66 +27,67 @@
   "packageRules": [
     {
       "groupName": "NestJS packages",
-      "packagePatterns": [
-        "^@nestjs/"
+      "matchPackageNames": [
+        "/^@nestjs//"
       ]
     },
     {
       "groupName": "Graphviz",
-      "packagePatterns": [
-        "d3-graphviz",
-        "@hpcc-js/wasm"
+      "matchPackageNames": [
+        "/d3-graphviz/",
+        "/@hpcc-js/wasm/"
       ]
     },
     {
       "groupName": "cypress",
-      "matchPackagePatterns": [
-        "^@cypress",
-        "^cypress"
+      "matchPackageNames": [
+        "/^@cypress/",
+        "/^cypress/"
       ]
     },
     {
       "groupName": "vega",
-      "packagePatterns": [
-        "vega",
-        "vega-embed",
-        "vega-lite"
+      "matchPackageNames": [
+        "/vega/",
+        "/vega-embed/",
+        "/vega-lite/"
       ]
     },
     {
       "groupName": "i18next",
-      "matchPackagePatterns": [
-        "i18next",
-        "i18next-browser-languagedetector",
-        "i18next-http-backend",
-        "react-i18next"
+      "matchPackageNames": [
+        "/i18next/",
+        "/i18next-browser-languagedetector/",
+        "/i18next-http-backend/",
+        "/react-i18next/"
       ]
     },
     {
       "groupName": "CodeMirror",
-      "matchPackagePatterns": [
-        "^@codemirror/",
-        "@uiw/react-codemirror"
+      "matchPackageNames": [
+        "/^@codemirror//",
+        "/@uiw/react-codemirror/"
       ]
     },
     {
       "groupName": "testing-library",
-      "matchPackagePatterns": [
-        "^@testing-library/"
+      "matchPackageNames": [
+        "/^@testing-library//"
       ]
     },
     {
       "groupName": "zxcvbn-ts",
-      "matchPackagePatterns": [
-        "^@zxcvbn-ts/"
+      "matchPackageNames": [
+        "/^@zxcvbn-ts//"
       ]
     }
   ],
-  "regexManagers": [
+  "customManagers": [
     {
-      "fileMatch": [
-        "\\.yml$",
-        "\\.yaml$"
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/\\.yml$/",
+        "/\\.yaml$/"
       ],
       "matchStrings": [
         "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s+\\S+:\\s+\"?(?<currentValue>[^\"]*?)\"?\\s"
@@ -95,8 +96,9 @@
       "extractVersionTemplate": "^v(?<version>.*)$"
     },
     {
-      "fileMatch": [
-        "package.json"
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/package.json/"
       ],
       "matchStrings": [
         "yjs@(?:npm%3A)?(?<currentValue>[\\d\\.]+)"
@@ -105,8 +107,9 @@
       "depNameTemplate": "yjs"
     },
     {
-      "fileMatch": [
-        "package.json"
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/package.json/"
       ],
       "matchStrings": [
         "@dicebear/converter@(?:npm%3A)?(?<currentValue>[\\d\\.]+)"
