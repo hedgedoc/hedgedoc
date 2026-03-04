@@ -22,7 +22,7 @@
     "knex": "tsx ../node_modules/.bin/knex --migrations-directory src/database/migrations --knexfile ./knexfile.ts"
   },
   "dependencies": {
-    "@azure/storage-blob": "12.29.1",
+    "@azure/storage-blob": "12.31.0",
     "@fastify/cookie": "11.0.2",
     "@fastify/csrf-protection": "7.1.0",
     "@fastify/multipart": "9.4.0",
