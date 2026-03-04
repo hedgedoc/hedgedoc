@@ -61,7 +61,7 @@
     "ldapauth-fork": "6.1.0",
     "luxon": "3.7.2",
     "markdown-it": "13.0.2",
-    "minio": "8.0.6",
+    "minio": "8.0.7",
     "mysql2": "3.18.2",
     "nest-knexjs": "0.0.34",
     "nestjs-zod": "4.3.1",
