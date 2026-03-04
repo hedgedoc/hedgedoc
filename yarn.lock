@@ -2904,7 +2904,7 @@ __metadata:
     file-type: "npm:16.5.4"
     htmlparser2: "npm:9.1.0"
     jest: "npm:29.7.0"
-    keyv: "npm:5.5.5"
+    keyv: "npm:5.6.0"
     knex: "npm:3.1.0"
     knex-mock-client: "npm:3.0.2"
     ldapauth-fork: "npm:6.1.0"
@@ -12447,12 +12447,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"keyv@npm:5.5.5":
-  version: 5.5.5
-  resolution: "keyv@npm:5.5.5"
+"keyv@npm:5.6.0":
+  version: 5.6.0
+  resolution: "keyv@npm:5.6.0"
   dependencies:
     "@keyv/serialize": "npm:^1.1.1"
-  checksum: 10c0/d0b8c5ffbfbaa98055e14b3c58ecf92fec2f8c4ad2a2a35fff1a146e82444ae0b969918fb6ab3281f6c16282cafb1239cc115c953cadf12838f1c45a97a5e2b8
+  checksum: 10c0/c3ea795b6e03593ca57c8f70928a69bad14c13389a7fb75649a115ff55615244b04d8902798d841c17f0bb4a8a8866c97133b543b93f151b440170bba09176db
   languageName: node
   linkType: hard
 
