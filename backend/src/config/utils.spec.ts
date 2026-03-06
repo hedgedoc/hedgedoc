@@ -10,8 +10,20 @@ import {
   needToLog,
   parseOptionalBoolean,
   parseOptionalNumber,
+  readOptionalFileContents,
   toArrayConfig,
 } from './utils';
+import { TEST_CERT_FILE_CONTENT, TEST_CERT_FILE_PATH } from './shared-test-data';
+
+jest.mock('fs', () => ({
+  existsSync: jest.fn((fileName) => fileName === TEST_CERT_FILE_PATH),
+  readFileSync: jest.fn((fileName, encoding) => {
+    if (fileName === TEST_CERT_FILE_PATH && encoding === 'utf8') {
+      return TEST_CERT_FILE_CONTENT;
+    }
+    throw new Error('File not found');
+  }),
+}));
 
 describe('config utils', () => {
   describe('findDuplicatesInArray', () => {
@@ -126,6 +138,17 @@ describe('config utils', () => {
       expect(parseOptionalBoolean('false')).toEqual(false);
       expect(parseOptionalBoolean('0')).toEqual(false);
       expect(parseOptionalBoolean('HedgeDoc')).toEqual(false);
+    });
+  });
+  describe('readOptionalFileContents', () => {
+    it('returns undefined on undefined file path', () => {
+      expect(readOptionalFileContents(undefined)).toBeUndefined();
+    });
+    it('returns undefined when file does not exist', () => {
+      expect(readOptionalFileContents('./non-existing-file.pem')).toBeUndefined();
+    });
+    it('returns the contents of the file when it exists', () => {
+      expect(readOptionalFileContents(TEST_CERT_FILE_PATH)).toEqual(TEST_CERT_FILE_CONTENT);
     });
   });
 });

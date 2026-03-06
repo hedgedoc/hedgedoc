@@ -5,18 +5,11 @@
  */
 import mockedEnv from 'mocked-env';
 
+import * as utilsModule from './utils';
+
 import authConfig from './auth.config';
 import { Theme } from './theme.enum';
-
-jest.mock('fs', () => ({
-  existsSync: jest.fn((fileName) => fileName === './test.pem'),
-  readFileSync: jest.fn((fileName, encoding) => {
-    if (fileName === './test.pem' && encoding === 'utf8') {
-      return 'test-cert\n';
-    }
-    throw new Error('File not found');
-  }),
-}));
+import { TEST_CERT_FILE_CONTENT, TEST_CERT_FILE_PATH } from './shared-test-data';
 
 describe('authConfig', () => {
   const secret = 'this-is-a-long-but-insecure-secret';
@@ -274,6 +267,14 @@ describe('authConfig', () => {
   });
 
   describe('ldap', () => {
+    beforeEach(() => {
+      jest
+        .spyOn(utilsModule, 'readOptionalFileContents')
+        .mockImplementation((filePath: string | undefined) =>
+          filePath === TEST_CERT_FILE_PATH ? TEST_CERT_FILE_CONTENT : undefined,
+        );
+    });
+
     const ldapNames = ['futurama'];
     const providerName = 'Futurama LDAP';
     const url = 'ldap://localhost:389';
@@ -286,8 +287,8 @@ describe('authConfig', () => {
     const profilePictureField = 'non_default_profile_picture';
     const bindDn = 'cn=admin,dc=planetexpress,dc=com';
     const bindCredentials = 'GoodNewsEveryone';
-    const tlsCa = ['./test.pem'];
-    const tlsCaContent = ['test-cert\n'];
+    const tlsCa = [TEST_CERT_FILE_PATH];
+    const tlsCaContent = [TEST_CERT_FILE_CONTENT];
     const completeLdapConfig = {
       /* oxlint-disable @typescript-eslint/naming-convention */
       HD_AUTH_LDAP_SERVERS: ldapNames.join(','),

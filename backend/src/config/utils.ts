@@ -3,6 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import fs from 'fs';
+
 import { Loglevel } from './loglevel.enum';
 
 /**
@@ -114,6 +116,23 @@ export function parseOptionalBoolean(value?: string): boolean | undefined {
     value.toLowerCase() === 'yes' ||
     value.toLowerCase() === 'true'
   );
+}
+
+/**
+ * Reads the UTF-8 contents of a file if the path is provided and the file exists.
+ * Returns undefined if no path is given or the file does not exist.
+ *
+ * @param filePath The path to the file to read
+ * @returns The contents of the file as a string, or undefined if not found
+ */
+export function readOptionalFileContents(filePath?: string): string | undefined {
+  if (!filePath) {
+    return undefined;
+  }
+  if (fs.existsSync(filePath)) {
+    return fs.readFileSync(filePath, 'utf8');
+  }
+  return undefined;
 }
 
 /**

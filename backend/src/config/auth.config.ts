@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { registerAs } from '@nestjs/config';
-import fs from 'fs';
 import z from 'zod';
 
 import { Theme } from './theme.enum';
@@ -13,6 +12,7 @@ import {
   parseOptionalBoolean,
   parseOptionalNumber,
   printConfigErrorAndExit,
+  readOptionalFileContents,
   toArrayConfig,
 } from './utils';
 import { buildErrorMessage, extractDescriptionFromZodIssue } from './zod-error-message';
@@ -147,11 +147,7 @@ export default registerAs('authConfig', () => {
     const caFiles = toArrayConfig(process.env[`HD_AUTH_LDAP_${name}_TLS_CERT_PATHS`], ',');
     let tlsCaCerts = undefined;
     if (caFiles) {
-      tlsCaCerts = caFiles.map((fileName) => {
-        if (fs.existsSync(fileName)) {
-          return fs.readFileSync(fileName, 'utf8');
-        }
-      });
+      tlsCaCerts = caFiles.map((fileName) => readOptionalFileContents(fileName));
     }
     return {
       identifier: name.toLowerCase(),
