@@ -17,6 +17,10 @@ export function createDefaultMockDatabaseConfig(): DatabaseConfig {
     host: 'localhost',
     port: 0,
     username: 'hedgedoc',
+    tls: {
+      enabled: false,
+      rejectUnauthorized: true,
+    },
   };
 }
 
