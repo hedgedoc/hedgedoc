@@ -6,10 +6,16 @@
 import { registerAs } from '@nestjs/config';
 import { Knex } from 'knex';
 import { types as pgTypes } from 'pg';
+import { ConnectionOptions } from 'tls';
 import z from 'zod';
 
 import { DatabaseType } from './database-type.enum';
-import { parseOptionalNumber, printConfigErrorAndExit } from './utils';
+import {
+  parseOptionalBoolean,
+  parseOptionalNumber,
+  printConfigErrorAndExit,
+  readOptionalFileContents,
+} from './utils';
 import { buildErrorMessage, extractDescriptionFromZodIssue } from './zod-error-message';
 import { checkDatabaseHealthWithRawConnection } from '../database/utils/healthcheck';
 
@@ -24,6 +30,34 @@ interface KnexConfigWithPoolConfig extends Knex.Config {
   pool?: KnexPoolConfigWithValidate;
 }
 
+const tlsVersionEnum = z.enum(['TLSv1.2', 'TLSv1.3']);
+
+const dbTlsSchema = z
+  .object({
+    enabled: z.boolean().default(false).describe('HD_DATABASE_TLS_ENABLED'),
+    caPath: z.string().optional().describe('HD_DATABASE_TLS_CA_PATH'),
+    certPath: z.string().optional().describe('HD_DATABASE_TLS_CERT_PATH'),
+    keyPath: z.string().optional().describe('HD_DATABASE_TLS_KEY_PATH'),
+    rejectUnauthorized: z
+      .boolean()
+      .default(true)
+      .describe('HD_DATABASE_TLS_REJECT_UNAUTHORIZED'),
+    ciphers: z.string().optional().describe('HD_DATABASE_TLS_CIPHERS'),
+    minVersion: tlsVersionEnum.optional().describe('HD_DATABASE_TLS_MIN_VERSION'),
+    maxVersion: tlsVersionEnum.optional().describe('HD_DATABASE_TLS_MAX_VERSION'),
+    passphrase: z.string().optional().describe('HD_DATABASE_TLS_PASSPHRASE'),
+  })
+  .superRefine((config, ctx) => {
+    if (config.minVersion && config.maxVersion && config.minVersion > config.maxVersion) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'TLS min version must be less than or equal to TLS max version',
+        path: ['minVersion'],
+        fatal: true,
+      });
+    }
+  });
+
 const sqliteDbSchema = z.object({
   type: z.literal(DatabaseType.SQLITE).describe('HD_DATABASE_TYPE'),
   name: z.string().describe('HD_DATABASE_NAME'),
@@ -36,6 +70,7 @@ const postgresDbSchema = z.object({
   password: z.string().describe('HD_DATABASE_PASSWORD'),
   host: z.string().describe('HD_DATABASE_HOST'),
   port: z.number().positive().max(65535).default(5432).describe('HD_DATABASE_PORT'),
+  tls: dbTlsSchema.default({}),
 });
 
 const mariaDbSchema = z.object({
@@ -45,10 +80,12 @@ const mariaDbSchema = z.object({
   password: z.string().describe('HD_DATABASE_PASSWORD'),
   host: z.string().describe('HD_DATABASE_HOST'),
   port: z.number().positive().max(65535).default(3306).describe('HD_DATABASE_PORT'),
+  tls: dbTlsSchema.default({}),
 });
 
 const dbSchema = z.discriminatedUnion('type', [sqliteDbSchema, mariaDbSchema, postgresDbSchema]);
 
+export type DatabaseTlsConfig = z.infer<typeof dbTlsSchema>;
 export type SqliteDatabaseConfig = z.infer<typeof sqliteDbSchema>;
 export type PostgresDatabaseConfig = z.infer<typeof postgresDbSchema>;
 export type MariadbDatabaseConfig = z.infer<typeof mariaDbSchema>;
@@ -62,6 +99,17 @@ export default registerAs('databaseConfig', () => {
     name: process.env.HD_DATABASE_NAME,
     host: process.env.HD_DATABASE_HOST,
     port: parseOptionalNumber(process.env.HD_DATABASE_PORT),
+    tls: {
+      enabled: parseOptionalBoolean(process.env.HD_DATABASE_TLS_ENABLED),
+      caPath: process.env.HD_DATABASE_TLS_CA_PATH,
+      certPath: process.env.HD_DATABASE_TLS_CERT_PATH,
+      keyPath: process.env.HD_DATABASE_TLS_KEY_PATH,
+      rejectUnauthorized: parseOptionalBoolean(process.env.HD_DATABASE_TLS_REJECT_UNAUTHORIZED),
+      ciphers: process.env.HD_DATABASE_TLS_CIPHERS,
+      minVersion: process.env.HD_DATABASE_TLS_MIN_VERSION,
+      maxVersion: process.env.HD_DATABASE_TLS_MAX_VERSION,
+      passphrase: process.env.HD_DATABASE_TLS_PASSPHRASE,
+    },
   });
   if (databaseConfig.error) {
     const errorMessages = databaseConfig.error.errors.map((issue) =>
@@ -72,6 +120,51 @@ export default registerAs('databaseConfig', () => {
   }
   return databaseConfig.data;
 });
+
+/**
+ * Builds the TLS connection options for PostgreSQL from the TLS config.
+ *
+ * @param tlsConfig The TLS configuration
+ * @returns The TLS connection options or undefined if TLS is not enabled
+ */
+function buildPostgresTlsOptions(tlsConfig: DatabaseTlsConfig): ConnectionOptions | undefined {
+  if (!tlsConfig.enabled) {
+    return undefined;
+  }
+  return {
+    ca: readOptionalFileContents(tlsConfig.caPath),
+    cert: readOptionalFileContents(tlsConfig.certPath),
+    key: readOptionalFileContents(tlsConfig.keyPath),
+    rejectUnauthorized: tlsConfig.rejectUnauthorized,
+    ciphers: tlsConfig.ciphers,
+    minVersion: tlsConfig.minVersion,
+    maxVersion: tlsConfig.maxVersion,
+    passphrase: tlsConfig.passphrase,
+  };
+}
+
+/**
+ * Builds the TLS connection options for MariaDB from the TLS config.
+ *
+ * @param tlsConfig The TLS configuration
+ * @returns The MariaDB TLS configuration object or undefined if TLS is not enabled
+ */
+function buildMariaDbTlsOptions(
+  tlsConfig: DatabaseTlsConfig,
+):
+  | { ca?: string; cert?: string; key?: string; rejectUnauthorized: boolean; cipher?: string }
+  | undefined {
+  if (!tlsConfig.enabled) {
+    return undefined;
+  }
+  return {
+    ca: readOptionalFileContents(tlsConfig.caPath),
+    cert: readOptionalFileContents(tlsConfig.certPath),
+    key: readOptionalFileContents(tlsConfig.keyPath),
+    rejectUnauthorized: tlsConfig.rejectUnauthorized,
+    cipher: tlsConfig.ciphers,
+  };
+}
 
 export function getKnexConfig(databaseConfig: DatabaseConfig): Knex.Config {
   switch (databaseConfig.type) {
@@ -98,6 +191,7 @@ export function getKnexConfig(databaseConfig: DatabaseConfig): Knex.Config {
           password: databaseConfig.password,
           // oxlint-disable-next-line @typescript-eslint/naming-convention
           application_name: 'HedgeDoc',
+          ssl: buildPostgresTlsOptions(databaseConfig.tls),
         },
         pool: {
           min: 0,
@@ -117,6 +211,7 @@ export function getKnexConfig(databaseConfig: DatabaseConfig): Knex.Config {
           database: databaseConfig.name,
           password: databaseConfig.password,
           dateStrings: true,
+          ssl: buildMariaDbTlsOptions(databaseConfig.tls),
         },
         pool: {
           min: 0,
