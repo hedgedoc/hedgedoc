@@ -481,13 +481,13 @@ export class TestSetupBuilder {
   }
 }
 
-export const username1 = 'testuser1';
+export const username1 = 'TestUser1';
 export const password1 = 'AStrongP@sswordForUser1';
 export const displayName1 = 'Test User 1';
-export const username2 = 'testuser2';
+export const username2 = 'TestUser2';
 export const password2 = 'AStrongP@sswordForUser2';
 export const displayName2 = 'Test User 2';
-export const username3 = 'testuser3';
+export const username3 = 'TestUser3';
 export const password3 = 'AStrongP@sswordForUser3';
 export const displayName3 = 'Test User 3';
 

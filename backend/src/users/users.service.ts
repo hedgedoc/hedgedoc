@@ -203,7 +203,8 @@ export class UsersService {
     const dbActor = transaction ? transaction : this.knex;
     const result = await dbActor(TableUser)
       .select(FieldNameUser.username)
-      .where(FieldNameUser.username, username);
+      // @ts-ignore
+      .whereEqualLowercase(FieldNameUser.username, username);
     return result.length === 1;
   }
 
@@ -234,7 +235,8 @@ export class UsersService {
   async getUserIdByUsername(username: string): Promise<number> {
     const userId = await this.knex(TableUser)
       .select(FieldNameUser.id)
-      .where(FieldNameUser.username, username)
+      // @ts-ignore
+      .whereEqualLowercase(FieldNameUser.username, username)
       .first();
     if (userId === undefined) {
       throw new NotInDBError(
@@ -278,7 +280,8 @@ export class UsersService {
   async getUserDtoByUsername(username: string): Promise<UserInfoDto> {
     const user = await this.knex(TableUser)
       .select()
-      .where(FieldNameUser.username, username)
+      // @ts-ignore
+      .whereEqualLowercase(FieldNameUser.username, username)
       .first();
     if (!user) {
       throw new NotInDBError(`User with username "${username}" does not exist`);
