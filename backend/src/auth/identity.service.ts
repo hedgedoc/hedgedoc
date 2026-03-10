@@ -56,9 +56,16 @@ export class IdentityService {
     authProviderType: AuthProviderType,
     authProviderIdentifier: string | null,
   ): Promise<Identity> {
-    const identity = await this.knex(TableIdentity)
-      .select()
-      .where(FieldNameIdentity.providerUserId, authProviderUserId)
+    let queryBuilder = this.knex(TableIdentity).select();
+    if (authProviderType === AuthProviderType.LOCAL) {
+      queryBuilder = queryBuilder.whereEqualLowercase(
+        FieldNameIdentity.providerUserId,
+        authProviderUserId,
+      );
+    } else {
+      queryBuilder = queryBuilder.where(FieldNameIdentity.providerUserId, authProviderUserId);
+    }
+    const identity = await queryBuilder
       .andWhere(FieldNameIdentity.providerType, authProviderType)
       .andWhere(FieldNameIdentity.providerIdentifier, authProviderIdentifier)
       .first();
