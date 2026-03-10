@@ -802,6 +802,22 @@ describe('Notes', () => {
           canEdit: canEdit,
         });
       });
+      it(`with canEdit ${canEdit} with uper case username`, async () => {
+        await agentUser1
+          .put(
+            `${PRIVATE_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2.toUpperCase()}`,
+          )
+          .send({
+            canEdit: canEdit,
+          })
+          .expect('Content-Type', /json/)
+          .expect(200);
+        const permissions = await testSetup.permissionsService.getPermissionsDtoForNote(noteId);
+        expect(permissions.sharedToUsers[0]).toEqual({
+          username: username2,
+          canEdit: canEdit,
+        });
+      });
       it(`with canEdit ${canEdit} with upper case alias`, async () => {
         await agentUser1
           .put(
@@ -879,6 +895,14 @@ describe('Notes', () => {
     it('the owner can delete user permissions', async () => {
       await agentUser1
         .delete(`${PRIVATE_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2}`)
+        .expect('Content-Type', /json/)
+        .expect(200);
+    });
+    it('the owner can delete user permissions using an uppercase username', async () => {
+      await agentUser1
+        .delete(
+          `${PRIVATE_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2.toUpperCase()}`,
+        )
         .expect('Content-Type', /json/)
         .expect(200);
     });
