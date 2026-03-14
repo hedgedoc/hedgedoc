@@ -1487,13 +1487,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zxing/text-encoding@npm:0.9.0":
-  version: 0.9.0
-  resolution: "@zxing/text-encoding@npm:0.9.0"
-  checksum: 10/268e4ef64b8eaa32b990240bdfd1f7b3e2b501a6ed866a565f7c9747f04ac884fbe0537fe12bb05d9241b98fb111270c0fd0023ef0a02d23a6619b4589e98f6b
-  languageName: node
-  linkType: hard
-
 "HedgeDoc@workspace:.":
   version: 0.0.0-use.local
   resolution: "HedgeDoc@workspace:."
@@ -1599,7 +1592,7 @@ __metadata:
     method-override: "npm:3.0.0"
     mini-css-extract-plugin: "npm:1.6.2"
     minimist: "npm:1.2.8"
-    minio: "npm:8.0.6"
+    minio: "npm:8.0.7"
     mocha: "npm:11.7.5"
     mock-require: "npm:3.0.3"
     moment: "npm:2.30.1"
@@ -6931,7 +6924,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-xml-parser@npm:^4.1.3, fast-xml-parser@npm:^4.4.1":
+"fast-xml-builder@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "fast-xml-builder@npm:1.1.3"
+  dependencies:
+    path-expression-matcher: "npm:^1.1.3"
+  checksum: 10/125e9b05de57a0d9b5d1f6298a4195028a790f166124395473f28f5fc1c254b3b37eae3071a11841f53f44a610c776f86c790a05d2219dd3aaa1bc563e792377
+  languageName: node
+  linkType: hard
+
+"fast-xml-parser@npm:^4.1.3":
   version: 4.5.3
   resolution: "fast-xml-parser@npm:4.5.3"
   dependencies:
@@ -6939,6 +6941,19 @@ __metadata:
   bin:
     fxparser: src/cli/cli.js
   checksum: 10/ca22bf9d65c10b8447c1034c13403e90ecee210e2b3852690df3d8a42b8a46ec655fae7356096abd98a15b89ddaf11878587b1773e0c3be4cbc2ac4af4c7bf95
+  languageName: node
+  linkType: hard
+
+"fast-xml-parser@npm:^5.3.4":
+  version: 5.5.5
+  resolution: "fast-xml-parser@npm:5.5.5"
+  dependencies:
+    fast-xml-builder: "npm:^1.1.3"
+    path-expression-matcher: "npm:^1.1.3"
+    strnum: "npm:^2.1.2"
+  bin:
+    fxparser: src/cli/cli.js
+  checksum: 10/2f13b9364d51cd3461f0bd7f6f271e1d68e87c044d4e6fc41a0bc5bfc3dc62965190c22a904175e6f825f94250c4a45acfdfb5eef1d5a631e072184b74e14df6
   languageName: node
   linkType: hard
 
@@ -11076,25 +11091,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minio@npm:8.0.6":
-  version: 8.0.6
-  resolution: "minio@npm:8.0.6"
+"minio@npm:8.0.7":
+  version: 8.0.7
+  resolution: "minio@npm:8.0.7"
   dependencies:
     async: "npm:^3.2.4"
     block-stream2: "npm:^2.1.0"
     browser-or-node: "npm:^2.1.1"
     buffer-crc32: "npm:^1.0.0"
     eventemitter3: "npm:^5.0.1"
-    fast-xml-parser: "npm:^4.4.1"
+    fast-xml-parser: "npm:^5.3.4"
     ipaddr.js: "npm:^2.0.1"
     lodash: "npm:^4.17.21"
     mime-types: "npm:^2.1.35"
     query-string: "npm:^7.1.3"
     stream-json: "npm:^1.8.0"
     through2: "npm:^4.0.2"
-    web-encoding: "npm:^1.1.5"
     xml2js: "npm:^0.5.0 || ^0.6.2"
-  checksum: 10/b01897538585c8854a265a5643133c5302c606eb358e3979f6e9ebced91132f5224073e704109cb237d563473424f1be6cc343b1ea68f4fc24b6453a369187d5
+  checksum: 10/0d9eec82b8cd6acc71b9977942ef2f30b77e010a9d22ff56852b1d65b581fd8d7174e499e2dae363aae7116008fa766c760bcee85ffe9be129fbe106b45e4269
   languageName: node
   linkType: hard
 
@@ -12458,6 +12472,13 @@ __metadata:
   version: 4.0.0
   resolution: "path-exists@npm:4.0.0"
   checksum: 10/505807199dfb7c50737b057dd8d351b82c033029ab94cb10a657609e00c1bc53b951cfdbccab8de04c5584d5eff31128ce6afd3db79281874a5ef2adbba55ed1
+  languageName: node
+  linkType: hard
+
+"path-expression-matcher@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "path-expression-matcher@npm:1.1.3"
+  checksum: 10/9a607d0bf9807cf86b0a29fb4263f0c00285c13bedafb6ad3efc8bc87ae878da2faf657a9138ac918726cb19f147235a0ca695aec3e4ea1ee04641b6520e6c9e
   languageName: node
   linkType: hard
 
@@ -15949,6 +15970,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"strnum@npm:^2.1.2":
+  version: 2.2.0
+  resolution: "strnum@npm:2.2.0"
+  checksum: 10/2969dbc8441f5af1b55db1d2fcea64a8f912de18515b57f85574e66bdb8f30ae76c419cf1390b343d72d687e2aea5aca82390f18b9e0de45d6bcc6d605eb9385
+  languageName: node
+  linkType: hard
+
 "strtok3@npm:^10.3.4":
   version: 10.3.4
   resolution: "strtok3@npm:10.3.4"
@@ -17091,7 +17119,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"util@npm:^0.12.3, util@npm:^0.12.4":
+"util@npm:^0.12.4":
   version: 0.12.5
   resolution: "util@npm:0.12.5"
   dependencies:
@@ -17394,19 +17422,6 @@ __metadata:
     watchpack-chokidar2:
       optional: true
   checksum: 10/bcb745cfd06fb69ebd09e7c69705d8b618fa5c28ab054bc65a2789a3ccfeab016116ff99c2a3b5d6532bcdad5a76161864697e9166dba58f8184eb81729c5c36
-  languageName: node
-  linkType: hard
-
-"web-encoding@npm:^1.1.5":
-  version: 1.1.5
-  resolution: "web-encoding@npm:1.1.5"
-  dependencies:
-    "@zxing/text-encoding": "npm:0.9.0"
-    util: "npm:^0.12.3"
-  dependenciesMeta:
-    "@zxing/text-encoding":
-      optional: true
-  checksum: 10/243518cfa8388ac05eeb4041bd330d38c599476ff9a93239b386d1ba2af130089a2fcefb0cf65b385f989105ff460ae69dca7e42236f4d98dc776b04e558cdb5
   languageName: node
   linkType: hard
 
