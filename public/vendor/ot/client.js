@@ -219,19 +219,26 @@ ot.Client = (function (global) {
     this.acknowlaged = acknowlaged;
     this.client = client;
     this.revision = revision;
+    this.pendingOps = [];
   }
   Client.Stale = Stale;
 
   Stale.prototype.applyClient = function (client, operation) {
-    return new StaleWithBuffer(this.acknowlaged, operation, client, this.revision);
+    var swb = new StaleWithBuffer(this.acknowlaged, operation, client, this.revision);
+    swb.pendingOps = this.pendingOps;
+    return swb;
   };
 
   Stale.prototype.applyServer = function (client, revision, operation) {
-    throw new Error("Ignored server-side change.");
+    // Buffer incoming operations while waiting for the missing operations
+    // response. These will be applied sequentially after the missing ops.
+    this.pendingOps.push({ revision: revision, operation: operation });
+    return this;
   };
 
   Stale.prototype.applyOperations = function (client, head, operations) {
     var transform = this.acknowlaged.constructor.transform;
+    // Apply the requested missing operations (concurrent with acknowlaged)
     for (var i = 0; i < operations.length; i++) {
       var op = ot.TextOperation.fromJSON(operations[i]);
       var pair = transform(this.acknowlaged, op);
@@ -239,6 +246,14 @@ ot.Client = (function (global) {
       this.acknowlaged = pair[0];
     }
     client.revision = this.revision;
+    // Apply any operations that arrived while we were waiting for the
+    // missing operations. These are sequential (not concurrent), so they
+    // can be applied directly like Synchronized.applyServer would.
+    for (var j = 0; j < this.pendingOps.length; j++) {
+      var pending = this.pendingOps[j];
+      client.revision = pending.revision;
+      client.applyOperation(pending.operation);
+    }
     return synchronized_;
   };
 
@@ -261,6 +276,7 @@ ot.Client = (function (global) {
     this.buffer = buffer;
     this.client = client;
     this.revision = revision;
+    this.pendingOps = [];
   }
   Client.StaleWithBuffer = StaleWithBuffer;
 
@@ -270,11 +286,15 @@ ot.Client = (function (global) {
   };
 
   StaleWithBuffer.prototype.applyServer = function (client, revision, operation) {
-    throw new Error("Ignored server-side change.");
+    // Buffer incoming operations while waiting for the missing operations
+    // response. These will be applied sequentially after the missing ops.
+    this.pendingOps.push({ revision: revision, operation: operation });
+    return this;
   };
 
   StaleWithBuffer.prototype.applyOperations = function (client, head, operations) {
     var transform = this.acknowlaged.constructor.transform;
+    // Apply the requested missing operations (concurrent with acknowlaged and buffer)
     for (var i = 0; i < operations.length; i++) {
       var op = ot.TextOperation.fromJSON(operations[i]);
       var pair1 = transform(this.acknowlaged, op);
@@ -284,6 +304,16 @@ ot.Client = (function (global) {
       this.buffer = pair2[0];
     }
     client.revision = this.revision;
+    // Apply any operations that arrived while we were waiting for the
+    // missing operations. These are sequential (not concurrent), so we
+    // transform the buffer against them and apply them to the document.
+    for (var j = 0; j < this.pendingOps.length; j++) {
+      var pending = this.pendingOps[j];
+      var pair3 = transform(this.buffer, pending.operation);
+      client.applyOperation(pair3[1]);
+      this.buffer = pair3[0];
+      client.revision = pending.revision;
+    }
     client.sendOperation(client.revision, this.buffer);
     return new AwaitingConfirm(this.buffer);
   };
