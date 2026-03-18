@@ -52,6 +52,7 @@ To copy this checklist please go to [this link](https://github.com/hedgedoc/hedg
 mkdir /tmp/hedgedoc && cd /tmp/hedgedoc
 git clone -b master https://github.com/hedgedoc/hedgedoc.git .
 yarn install
+yarn build:ot
 yarn build
 cd ..
 tar cvzf hedgedoc-x.y.z.tar.gz --sort=name --exclude hedgedoc/node_modules --exclude hedgedoc/.git --exclude hedgedoc/.github --exclude hedgedoc/.yarn/cache hedgedoc

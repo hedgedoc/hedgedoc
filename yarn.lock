@@ -1635,6 +1635,7 @@ __metadata:
     string-loader: "npm:0.0.1"
     toobusy-js: "npm:0.5.1"
     turndown: "npm:7.2.2"
+    uglify-js: "npm:3.19.3"
     umzug: "npm:2.3.0"
     url-loader: "npm:4.1.1"
     utf-8-validate: "npm:6.0.6"
@@ -16655,6 +16656,15 @@ __metadata:
   version: 1.0.6
   resolution: "uc.micro@npm:1.0.6"
   checksum: 10/6898bb556319a38e9cf175e3628689347bd26fec15fc6b29fa38e0045af63075ff3fea4cf1fdba9db46c9f0cbf07f2348cd8844889dd31ebd288c29fe0d27e7a
+  languageName: node
+  linkType: hard
+
+"uglify-js@npm:3.19.3":
+  version: 3.19.3
+  resolution: "uglify-js@npm:3.19.3"
+  bin:
+    uglifyjs: bin/uglifyjs
+  checksum: 10/6b9639c1985d24580b01bb0ab68e78de310d38eeba7db45bec7850ab4093d8ee464d80ccfaceda9c68d1c366efbee28573b52f95e69ac792354c145acd380b11
   languageName: node
   linkType: hard
 
