@@ -27,7 +27,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
@@ -105,7 +105,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
@@ -155,7 +155,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
           /* oxlint-enable @typescript-eslint/naming-convention */
@@ -179,7 +179,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
@@ -204,7 +204,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
           /* oxlint-enable @typescript-eslint/naming-convention */
@@ -228,7 +228,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
           /* oxlint-enable @typescript-eslint/naming-convention */
@@ -252,7 +252,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
@@ -278,7 +278,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
@@ -324,7 +324,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: invalidforbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: invalidforbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
@@ -349,7 +349,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: negativeMaxDocumentLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
@@ -371,7 +371,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: floatMaxDocumentLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
@@ -393,7 +393,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: invalidMaxDocumentLength,
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
@@ -415,7 +415,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: wrongDefaultPermission,
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
@@ -437,7 +437,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: wrongDefaultPermission,
@@ -459,7 +459,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
@@ -482,7 +482,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
@@ -513,7 +513,7 @@ describe('noteConfig', () => {
             const restore = mockedEnv(
               {
                 /* oxlint-disable @typescript-eslint/naming-convention */
-                HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+                HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
                 HD_NOTE_MAX_LENGTH: maxLength.toString(),
                 HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: everyonePermission,
                 HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: loggedInPermission,
@@ -538,7 +538,7 @@ describe('noteConfig', () => {
           const restore = mockedEnv(
             {
               /* oxlint-disable @typescript-eslint/naming-convention */
-              HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+              HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
               HD_NOTE_MAX_LENGTH: maxLength.toString(),
               HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: defaultEveryone,
               HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: PermissionLevelNames[PermissionLevel.FULL],
@@ -565,7 +565,7 @@ describe('noteConfig', () => {
           const restore = mockedEnv(
             {
               /* oxlint-disable @typescript-eslint/naming-convention */
-              HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+              HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
               HD_NOTE_MAX_LENGTH: maxLength.toString(),
               HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: defaultEveryone,
               HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: maxGuestLevel,
@@ -589,7 +589,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
@@ -612,7 +612,7 @@ describe('noteConfig', () => {
       const restore = mockedEnv(
         {
           /* oxlint-disable @typescript-eslint/naming-convention */
-          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(' , '),
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
