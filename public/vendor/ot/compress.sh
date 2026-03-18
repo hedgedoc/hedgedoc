@@ -1,4 +1,4 @@
-uglifyjs --compress --mangle --output ot.min.js \
+yarn uglifyjs --compress --mangle --output ot.min.js \
 ./text-operation.js \
 ./selection.js \
 ./wrapped-operation.js \
