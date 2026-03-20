@@ -58,6 +58,7 @@ export class IdentityService {
   ): Promise<Identity> {
     let queryBuilder = this.knex(TableIdentity).select();
     if (authProviderType === AuthProviderType.LOCAL) {
+      // @ts-ignore
       queryBuilder = queryBuilder.whereEqualLowercase(
         FieldNameIdentity.providerUserId,
         authProviderUserId,

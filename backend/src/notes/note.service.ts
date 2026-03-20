@@ -204,6 +204,7 @@ export class NoteService {
 
     const note = await dbActor(TableAlias)
       .select<Pick<Note, FieldNameNote.id>>(`${TableNote}.${FieldNameNote.id}`)
+      // @ts-ignore
       .whereEqualLowercase(FieldNameAlias.alias, alias)
       .join(TableNote, `${TableNote}.${FieldNameNote.id}`, `${TableAlias}.${FieldNameAlias.noteId}`)
       .first();
