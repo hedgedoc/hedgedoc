@@ -127,6 +127,7 @@ export class AliasService {
       // Then set the specified alias to primary
       const numberOfUpdatedPrimaryAliases = await transaction(TableAlias)
         .update(FieldNameAlias.isPrimary, true)
+        // @ts-ignore
         .whereEqualLowercase(FieldNameAlias.alias, alias)
         .andWhere(FieldNameAlias.noteId, noteId);
 
@@ -154,6 +155,7 @@ export class AliasService {
     await this.knex.transaction(async (transaction) => {
       const aliases = await transaction(TableAlias)
         .select()
+        // @ts-ignore
         .whereEqualLowercase(FieldNameAlias.alias, alias);
       if (aliases.length !== 1) {
         throw new NotInDBError(
@@ -292,6 +294,7 @@ export class AliasService {
     const dbActor = transaction ? transaction : this.knex;
     const result = await dbActor(TableAlias)
       .select(FieldNameAlias.alias)
+      // @ts-ignore
       .whereEqualLowercase(FieldNameAlias.alias, alias);
     if (result.length === 1) {
       this.logger.log(`A note with the alias '${alias}' already exists.`, 'isAliasUsed');
