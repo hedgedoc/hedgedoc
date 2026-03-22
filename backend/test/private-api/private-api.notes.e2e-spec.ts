@@ -687,7 +687,6 @@ describe('Notes', () => {
       it('allows the owner to discard all revisions even via an upper case alias', async () => {
         await agentUser1
           .delete(`${PRIVATE_API_PREFIX}/notes/${noteAlias1.toUpperCase()}/revisions`)
-          .set('Content-Type', 'application/json')
           .expect(204);
         const after = await testSetup.revisionsService.getAllRevisionMetadataDto(noteId);
         expect(after).toHaveLength(1);
