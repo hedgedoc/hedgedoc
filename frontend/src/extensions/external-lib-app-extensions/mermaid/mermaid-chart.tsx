@@ -26,6 +26,32 @@ const loadMermaid = async (): Promise<(typeof import('mermaid'))['default']> => 
 }
 
 /**
+ * Strip stray HTML wrapper tags that are never valid Mermaid syntax
+ * but may appear via copy-paste from rich-text sources.
+ * Converts <br> / <br/> to newline so line breaks survive the cleanup.
+ * Uses flexible whitespace so variants like "</ p>" or "</p >" are removed too.
+ */
+const sanitizeMermaidCode = (raw: string): string => {
+  const tagNames =
+    'p|div|span|ul|ol|li|h[1-6]|strong|em|b|i|a|table|tr|td|th|thead|tbody|blockquote'
+  // Opening and self-closing style tags, optional attrs, flexible spaces
+  const openOrCloseTag = new RegExp(
+    `<\\s*/?\\s*(${tagNames})(?:\\s[^>]*)?\\s*>`,
+    'gi'
+  )
+  return raw
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(openOrCloseTag, '')
+    // Encoded tags sometimes appear in pasted content
+    .replace(/&lt;\s*\/?\s*p(?:\s[^&]*)?&gt;/gi, '')
+    .replace(/&lt;\s*br\s*\/?\s*&gt;/gi, '\n')
+    // Final sweep: orphan closing/opening p tags (any spacing)
+    .replace(/<\s*\/\s*p\s*>/gi, '')
+    .replace(/<\s*p(?:\s[^>]*)?\s*>/gi, '')
+    .replace(/\n{3,}/g, '\n\n')
+}
+
+/**
  * Renders a mermaid diagram.
  *
  * @param code The code for the diagram.
@@ -42,18 +68,40 @@ export const MermaidChart: React.FC<CodeProps> = ({ code }) => {
     const mermaid = await loadMermaid()
 
     if (!mermaidInitialized) {
-      mermaid.initialize({ startOnLoad: false, securityLevel: 'sandbox' })
+      mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: 'sandbox',
+        flowchart: {
+          nodeSpacing: 50,
+          rankSpacing: 60,
+          diagramPadding: 16,
+          wrappingWidth: 220,
+          subGraphTitleMargin: { top: 10, bottom: 6 }
+        },
+        sequence: {
+          diagramMarginX: 16,
+          diagramMarginY: 16,
+          boxMargin: 10,
+          noteMargin: 10,
+          messageMargin: 40
+        },
+        themeVariables: {
+          fontSize: '14px'
+        }
+      })
       mermaidInitialized = true
     }
+
+    const sanitized = sanitizeMermaidCode(code)
 
     try {
       if (!diagramContainer.current) {
         return
       }
-      await mermaid.parse(code)
+      await mermaid.parse(sanitized)
       delete diagramContainer.current.dataset.processed
-      diagramContainer.current.textContent = code
-      await mermaid.init(undefined, diagramContainer.current)
+      diagramContainer.current.textContent = sanitized
+      await mermaid.run({ nodes: [diagramContainer.current] })
     } catch (error) {
       const message = (error as Error).message
       log.error(error)
@@ -67,7 +115,7 @@ export const MermaidChart: React.FC<CodeProps> = ({ code }) => {
       {error !== undefined && <ApplicationErrorAlert className={'text-wrap'}>{error?.message}</ApplicationErrorAlert>}
       <div
         {...cypressId('mermaid-frame')}
-        className={`text-center ${styles['mermaid']} bg-dark text-black`}
+        className={`text-center ${styles['mermaid']}`}
         ref={diagramContainer}
       />
     </Fragment>

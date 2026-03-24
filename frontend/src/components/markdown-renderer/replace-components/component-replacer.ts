@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { Element, Node } from 'domhandler'
-import { isText } from 'domhandler'
+import { isTag, isText } from 'domhandler'
 import type { ReactElement } from 'react'
 
 export type ValidReactDomElement = ReactElement | string | null
@@ -38,6 +38,22 @@ export abstract class ComponentReplacer {
   protected static extractTextChildContent(node: Element): string {
     const childrenTextNode = node.children[0]
     return isText(childrenTextNode) ? childrenTextNode.data : ''
+  }
+
+  /**
+   * Concatenates all text from descendant text nodes (skips comments / directives).
+   * Needed when HTML-in-markdown wraps fence content in nested elements (e.g. {@code <code><p>…</p></code>}).
+   */
+  protected static collectDescendantText(element: Element): string {
+    let out = ''
+    for (const child of element.children) {
+      if (isText(child)) {
+        out += child.data
+      } else if (isTag(child)) {
+        out += ComponentReplacer.collectDescendantText(child)
+      }
+    }
+    return out
   }
 
   /**

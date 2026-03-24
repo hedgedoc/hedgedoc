@@ -37,8 +37,13 @@ export class CodeBlockComponentReplacer extends ComponentReplacer {
    * @return The text content or undefined if the element isn't a code block or has the wrong language attribute.
    */
   public static extractTextFromCodeNode(element: Element, language: string): string | undefined {
-    return element.name === 'code' && element.attribs['data-highlight-language'] === language && element.children[0]
-      ? ComponentReplacer.extractTextChildContent(element)
-      : undefined
+    if (element.name !== 'code' || element.attribs['data-highlight-language'] !== language) {
+      return undefined
+    }
+    if (element.children.length === 0) {
+      return undefined
+    }
+    const text = ComponentReplacer.collectDescendantText(element)
+    return text.length > 0 ? text : undefined
   }
 }

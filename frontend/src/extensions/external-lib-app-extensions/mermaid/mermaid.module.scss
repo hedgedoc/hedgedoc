@@ -4,6 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-.mermaid > svg {
+.mermaid {
   background-color: #f8f9fa;
+  border-radius: 6px;
+  padding: 8px;
+  overflow-x: auto;
+}
+
+.mermaid > svg,
+.mermaid > iframe {
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
 }
