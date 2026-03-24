@@ -50,9 +50,20 @@ export class ExploreController {
     @Query('sort') sort?: OptionalSortMode,
     @Query('search') search?: string,
     @Query('type') type?: OptionalNoteType,
+    @Query('folderId') folderIdParam?: string,
   ): Promise<NoteExploreEntryDto[]> {
     this.checkQueryParams(page, sort, type);
-    return this.exploreService.getMyNoteExploreEntries(userId, page, type, sort, search);
+    let folderId: number | null | undefined;
+    if (folderIdParam === 'null') {
+      folderId = null;
+    } else if (folderIdParam !== undefined && folderIdParam !== '') {
+      const parsed = parseInt(folderIdParam, 10);
+      if (Number.isNaN(parsed)) {
+        throw new BadRequestException('folderId must be a number or "null"');
+      }
+      folderId = parsed;
+    }
+    return this.exploreService.getMyNoteExploreEntries(userId, page, type, sort, search, folderId);
   }
 
   @Get('shared')

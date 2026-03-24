@@ -71,18 +71,21 @@ export async function seed(knex: Knex): Promise<void> {
       [FieldNameNote.ownerId]: 1,
       [FieldNameNote.version]: 2,
       [FieldNameNote.createdAt]: dateTimeToDB(getCurrentDateTime()),
+      [FieldNameNote.folderId]: null,
       [FieldNameNote.publiclyVisible]: false,
     },
     {
       [FieldNameNote.ownerId]: 2,
       [FieldNameNote.version]: 2,
       [FieldNameNote.createdAt]: dateTimeToDB(getCurrentDateTime()),
+      [FieldNameNote.folderId]: null,
       [FieldNameNote.publiclyVisible]: false,
     },
     {
       [FieldNameNote.ownerId]: 2,
       [FieldNameNote.version]: 2,
       [FieldNameNote.createdAt]: dateTimeToDB(getCurrentDateTime()),
+      [FieldNameNote.folderId]: null,
       [FieldNameNote.publiclyVisible]: false,
     },
   ]);

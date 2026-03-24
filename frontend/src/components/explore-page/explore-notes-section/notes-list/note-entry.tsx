@@ -20,12 +20,14 @@ import { useUiNotifications } from '../../../notifications/ui-notification-bound
 import type { NoteExploreEntryInterface } from '@hedgedoc/commons'
 import { useTranslatedText } from '../../../../hooks/common/use-translated-text'
 import { Trans, useTranslation } from 'react-i18next'
+import { MoveToFolderMenuEntry } from './move-to-folder-menu-entry'
 import { PinNoteMenuEntry } from './pin-note-menu-entry'
 
 interface NoteListEntryProps extends NoteExploreEntryInterface {
   isPinned: boolean
   showLastVisitedTime?: boolean
   updateExplorePage: () => void
+  folderPath?: string
 }
 
 /**
@@ -47,12 +49,14 @@ export const NoteListEntry: React.FC<NoteListEntryProps> = ({
   title,
   tags,
   type,
+  folderId,
   lastChangedAt,
   lastVisitedAt,
   owner,
   isPinned,
   showLastVisitedTime,
-  updateExplorePage
+  updateExplorePage,
+  folderPath
 }) => {
   useTranslation()
   const { showErrorNotificationBuilder } = useUiNotifications()
@@ -91,6 +95,12 @@ export const NoteListEntry: React.FC<NoteListEntryProps> = ({
         <Link href={`/n/${primaryAlias}`} className={'text-decoration-none'}>
           {title !== '' ? title : <i className={'fst-italic'}>{fallbackUntitled}</i>}
         </Link>
+        {folderPath && (
+          <>
+            <br />
+            <small className={'text-muted'}>{folderPath}</small>
+          </>
+        )}
         {tags.length > 0 && <br />}
         <NoteTags tags={tags} />
       </div>
@@ -112,6 +122,13 @@ export const NoteListEntry: React.FC<NoteListEntryProps> = ({
             onConfirm={onClickDeleteNote}
           />
           <PinNoteMenuEntry noteAlias={primaryAlias} isPinned={isPinned} />
+          {owner !== null && currentUser?.username === owner && (
+            <MoveToFolderMenuEntry
+              noteAlias={primaryAlias}
+              currentFolderId={folderId}
+              onMoved={updateExplorePage}
+            />
+          )}
         </Dropdown.Menu>
       </Dropdown>
     </div>

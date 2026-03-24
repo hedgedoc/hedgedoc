@@ -16,6 +16,7 @@ import { SortMode } from '@hedgedoc/commons'
 
 export interface ExploreNotesSectionProps {
   mode: Mode
+  folderId?: number | null
 }
 
 /**
@@ -23,7 +24,7 @@ export interface ExploreNotesSectionProps {
  *
  * @param mode The current mode of the explore page, for example to show public notes or own notes.
  */
-export const ExploreNotesSection: React.FC<ExploreNotesSectionProps> = ({ mode }) => {
+export const ExploreNotesSection: React.FC<ExploreNotesSectionProps> = ({ mode, folderId }) => {
   const [searchFilter, setSearchFilter] = useUrlParamState<string | null>('search', null)
   const [sortMode, setSortMode] = useUrlParamState<SortMode>(
     'sort',
@@ -49,7 +50,7 @@ export const ExploreNotesSection: React.FC<ExploreNotesSectionProps> = ({ mode }
         <FilterBySearchTerm value={searchFilter} onChange={setSearchFilter} />
         <SortButton selected={sortMode} onChange={setSortMode} showLastVisitedOptions={mode === Mode.VISITED} />
       </search>
-      <NotesList mode={mode} sort={sortMode} searchFilter={searchFilter} typeFilter={filterByType} />
+      <NotesList mode={mode} sort={sortMode} searchFilter={searchFilter} typeFilter={filterByType} folderId={folderId ?? null} />
     </Fragment>
   )
 }

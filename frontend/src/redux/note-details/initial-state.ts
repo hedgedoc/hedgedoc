@@ -8,6 +8,7 @@ import { defaultNoteFrontmatter } from '@hedgedoc/commons'
 
 export const initialState: NoteDetails = {
   lastUpdatedBy: null,
+  folderId: null,
   version: 0,
   markdownContent: {
     plain: '',

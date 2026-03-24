@@ -104,6 +104,7 @@ export class NoteService {
           [FieldNameNote.ownerId]: ownerUserId,
           [FieldNameNote.version]: 2,
           [FieldNameNote.createdAt]: createdAt,
+          [FieldNameNote.folderId]: null,
           [FieldNameNote.publiclyVisible]: this.noteConfig.permissions.default.publiclyVisible,
         },
         [FieldNameNote.id],
@@ -279,7 +280,7 @@ export class NoteService {
     const aliases = await this.aliasService.getAllAliases(noteId, transaction);
     const noteAliases = this.aliasService.toNoteAliasesDto(aliases);
     const note = await transaction(TableNote)
-      .select(FieldNameNote.createdAt, FieldNameNote.version)
+      .select(FieldNameNote.createdAt, FieldNameNote.version, FieldNameNote.folderId)
       .where(FieldNameNote.id, noteId)
       .first();
     if (note === undefined) {
@@ -291,6 +292,7 @@ export class NoteService {
     }
     const createdAtString = note[FieldNameNote.createdAt];
     const version = note[FieldNameNote.version];
+    const folderId = note[FieldNameNote.folderId] ?? null;
     const createdAt = dateTimeToISOString(dbToDateTime(createdAtString));
 
     const latestRevision = await this.revisionsService.getLatestRevision(noteId, transaction);
@@ -331,6 +333,7 @@ export class NoteService {
       tags,
       createdAt,
       editedBy,
+      folderId,
       permissions,
       version,
       updatedAt,

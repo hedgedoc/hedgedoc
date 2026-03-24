@@ -7,6 +7,7 @@
 export * from './alias.js'
 export * from './api-token.js'
 export * from './authorship-info.js'
+export * from './folder.js'
 export * from './group.js'
 export * from './group-user.js'
 export * from './identity.js'

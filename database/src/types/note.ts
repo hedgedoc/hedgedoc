@@ -22,6 +22,9 @@ export interface Note {
   /** Timestamp when the note was created */
   [FieldNameNote.createdAt]: string
 
+  /** The ID of the folder this note belongs to, if any */
+  [FieldNameNote.folderId]: number | null
+
   /** If a note should be visible in the public notes section */
   [FieldNameNote.publiclyVisible]: boolean
 }
@@ -31,6 +34,7 @@ export enum FieldNameNote {
   ownerId = 'owner_id',
   version = 'version',
   createdAt = 'created_at',
+  folderId = 'folder_id',
   publiclyVisible = 'publicly_visible',
 }
 
@@ -40,3 +44,4 @@ export type TypeInsertNote = Omit<Note, FieldNameNote.id>
 export type TypeUpdateNote =
   | Pick<Note, FieldNameNote.ownerId>
   | Pick<Note, FieldNameNote.publiclyVisible>
+  | Pick<Note, FieldNameNote.folderId>

@@ -54,6 +54,7 @@ describe('build state from set note data from server', () => {
         },
         tags: ['tag'],
         title: 'title',
+        folderId: null,
         updatedAt: '2020-05-25T09:08:34.123',
         lastUpdatedBy: 'updateusername'
       },
@@ -101,6 +102,7 @@ describe('build state from set note data from server', () => {
       createdAt: '2012-05-25T09:08:34.123',
       updatedAt: '2020-05-25T09:08:34.123',
       lastUpdatedBy: 'updateusername',
+      folderId: null,
       aliases: ['alias'],
       primaryAlias: 'alias',
       version: 5678,

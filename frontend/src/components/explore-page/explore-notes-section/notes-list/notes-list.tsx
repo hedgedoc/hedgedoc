@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import type { NoteExploreEntryInterface, NoteType, SortMode } from '@hedgedoc/commons'
+import type { FolderInterface, NoteExploreEntryInterface, NoteType, SortMode } from '@hedgedoc/commons'
 import { Mode } from '../../mode-selection/mode'
 import { getExplorePageEntries } from '../../../../api/explore'
 import { NoteListEntry } from './note-entry'
@@ -14,12 +14,14 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import equal from 'fast-deep-equal'
+import { getFolders } from '../../../../api/folders'
 
 export interface NotesListProps {
   mode: Mode
   sort: SortMode
   searchFilter: string | null
   typeFilter: NoteType | null
+  folderId: number | null
 }
 
 /**
@@ -30,8 +32,9 @@ export interface NotesListProps {
  * @param searchFilter An optional search filter to apply, e.g. to filter for notes containing a specific string.
  * @param typeFilter An optional note type filter to apply, e.g. to show only documents or only slides.
  */
-export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, typeFilter }) => {
+export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, typeFilter, folderId }) => {
   const [entries, setEntries] = useState<NoteExploreEntryInterface[]>([])
+  const [folders, setFolders] = useState<FolderInterface[]>([])
   const { showErrorNotificationBuilder } = useUiNotifications()
   const [moreDataAvailable, setMoreDataAvailable] = useState(true)
   const lastPage = useRef<number>(0)
@@ -40,9 +43,9 @@ export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, 
 
   const fetchNextPage = useCallback(
     (replaceOldEntries: boolean = false) => {
-      lastFilters.current = { mode, sort, searchFilter, typeFilter }
+      lastFilters.current = { mode, sort, searchFilter, typeFilter, folderId }
       lastPage.current += 1
-      getExplorePageEntries(mode, sort, searchFilter, typeFilter, lastPage.current)
+      getExplorePageEntries(mode, sort, searchFilter, typeFilter, lastPage.current, folderId ?? undefined)
         .then((data) => {
           if (data.length === 0) {
             setMoreDataAvailable(false)
@@ -59,7 +62,7 @@ export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, 
         })
         .catch(showErrorNotificationBuilder('explore.errorLoadingEntries'))
     },
-    [mode, sort, searchFilter, typeFilter, showErrorNotificationBuilder]
+    [mode, sort, searchFilter, typeFilter, folderId, showErrorNotificationBuilder]
   )
 
   const updateExplorePage = useCallback(() => {
@@ -68,12 +71,37 @@ export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, 
     fetchNextPage(true)
   }, [setMoreDataAvailable, fetchNextPage])
 
+  const updateFolderCache = useCallback(() => {
+    getFolders().then(setFolders).catch(showErrorNotificationBuilder('Failed to load folders'))
+  }, [showErrorNotificationBuilder])
+
+  const folderPathMap = useMemo(() => {
+    const byId = new Map<number, FolderInterface>()
+    for (const folder of folders) {
+      byId.set(folder.id, folder)
+    }
+
+    const pathById = new Map<number, string>()
+    for (const folder of folders) {
+      const segments: string[] = []
+      let current: FolderInterface | undefined = folder
+      while (current) {
+        segments.unshift(current.name)
+        current = current.parentFolderId === null ? undefined : byId.get(current.parentFolderId)
+      }
+      pathById.set(folder.id, segments.join(' / '))
+    }
+
+    return pathById
+  }, [folders])
+
   const noteEntries = useMemo(() => {
     return entries.map((note) => {
       const isPinned = pinnedNotes[note.primaryAlias] !== undefined
       return (
         <NoteListEntry
           {...note}
+          folderPath={note.folderId === null ? undefined : folderPathMap.get(note.folderId)}
           key={note.primaryAlias}
           isPinned={isPinned}
           showLastVisitedTime={mode === Mode.VISITED}
@@ -81,14 +109,33 @@ export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, 
         />
       )
     })
-  }, [entries, mode, pinnedNotes, updateExplorePage])
+  }, [entries, folderPathMap, mode, pinnedNotes, updateExplorePage])
 
   // Update entries when filters change
   useEffect(() => {
-    if (!equal(lastFilters.current, { mode, sort, searchFilter, typeFilter })) {
+    if (!equal(lastFilters.current, { mode, sort, searchFilter, typeFilter, folderId })) {
       updateExplorePage()
     }
-  }, [updateExplorePage, mode, sort, searchFilter, typeFilter])
+  }, [updateExplorePage, mode, sort, searchFilter, typeFilter, folderId])
+
+  // Load folders once to show folder paths under note titles.
+  useEffect(() => {
+    updateFolderCache()
+  }, [updateFolderCache])
+
+  // Refetch when the user returns to this tab (e.g. after editing a note)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        updateExplorePage()
+        updateFolderCache()
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+  }, [updateExplorePage, updateFolderCache])
 
   return (
     <InfiniteScroll

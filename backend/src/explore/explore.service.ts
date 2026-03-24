@@ -41,6 +41,7 @@ export interface QueryResult {
   title: string;
   noteType: NoteType;
   ownerUsername: string;
+  folderId: number | null;
   lastChangedAt: string;
   lastVisitedAt: string | null;
   revisionUuid: string;
@@ -84,6 +85,7 @@ export class ExploreService {
     noteType?: NoteType | '',
     sortBy?: OptionalSortMode,
     search?: string,
+    folderId?: number | null,
   ): Promise<NoteExploreEntryDto[]> {
     return await this.knex.transaction(async (transaction) => {
       const queryBase = transaction(TableNote);
@@ -92,6 +94,13 @@ export class ExploreService {
         query = this.joinWithTableVisitedNote(query);
       }
       query = query.andWhere(`${TableNote}.${FieldNameNote.ownerId}`, userId);
+      if (folderId !== undefined) {
+        if (folderId === null) {
+          query = query.whereNull(`${TableNote}.${FieldNameNote.folderId}`);
+        } else {
+          query = query.andWhere(`${TableNote}.${FieldNameNote.folderId}`, folderId);
+        }
+      }
       query = this.applyFiltersToQuery(query, noteType, search);
       query = this.applySortingToQuery(query, sortBy);
       query = this.applyPaginationToQuery(query, page);
@@ -320,6 +329,7 @@ export class ExploreService {
         type: result.noteType,
         tags: result.tags,
         owner: result.ownerUsername,
+        folderId: result.folderId ?? null,
         lastChangedAt: DateTime.fromSQL(result.lastChangedAt, {
           zone: 'UTC',
         }).toISO(),
@@ -359,6 +369,7 @@ export class ExploreService {
         noteType: `${TableRevision}.${FieldNameRevision.noteType}`,
         ownerUsername: `${TableUser}.${FieldNameUser.username}`,
         createdAt: `${TableNote}.${FieldNameNote.createdAt}`,
+        folderId: `${TableNote}.${FieldNameNote.folderId}`,
         lastChangedAt: `${TableRevision}.${FieldNameRevision.createdAt}`,
         revisionUuid: `${TableRevision}.${FieldNameRevision.uuid}`,
       })

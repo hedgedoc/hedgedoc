@@ -14,6 +14,7 @@ export const NoteExploreEntrySchema = z
     type: z.nativeEnum(NoteType).describe('The type of the note (document or slide)'),
     tags: z.array(z.string()).describe('The tags of the note'),
     owner: z.string().nullable().describe('The owner of the note'),
+    folderId: z.number().nullable().describe('The folder this note belongs to'),
     lastChangedAt: z.string().datetime().describe('The last time the note was changed'),
     lastVisitedAt: z
       .string()

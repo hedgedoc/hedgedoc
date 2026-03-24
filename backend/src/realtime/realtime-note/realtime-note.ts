@@ -18,7 +18,7 @@ export interface RealtimeNoteEventMap extends EventMap {
   yDocUpdate: (update: number[], origin: unknown) => void;
 }
 
-const LIFETIME_WITHOUT_CLIENTS = 10 * 1000; // 10 seconds
+const LIFETIME_WITHOUT_CLIENTS = 1 * 1000; // 1 second
 
 /**
  * Represents a note currently being edited by a number of clients.

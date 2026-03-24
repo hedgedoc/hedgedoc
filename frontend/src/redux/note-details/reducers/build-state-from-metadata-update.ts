@@ -16,6 +16,7 @@ export const buildStateFromMetadataUpdate = (state: NoteDetails, noteMetadata: N
   return {
     ...state,
     lastUpdatedBy: noteMetadata.lastUpdatedBy,
+    folderId: noteMetadata.folderId,
     permissions: noteMetadata.permissions,
     editedBy: noteMetadata.editedBy,
     primaryAlias: noteMetadata.primaryAlias,

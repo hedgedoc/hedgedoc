@@ -17,7 +17,8 @@ export const createURLSearchParams = (
   sort: SortMode,
   searchFilter: string | null,
   typeFilter: NoteType | null,
-  page: number
+  page: number,
+  folderId?: number | null,
 ): string => {
   const params = new URLSearchParams()
   params.set('sort', sort)
@@ -27,6 +28,9 @@ export const createURLSearchParams = (
   }
   if (typeFilter) {
     params.set('type', typeFilter)
+  }
+  if (folderId !== undefined) {
+    params.set('folderId', folderId === null ? 'null' : folderId.toString())
   }
   return params.toString()
 }

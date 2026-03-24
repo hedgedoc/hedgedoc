@@ -13,6 +13,7 @@ export const NoteMetadataUpdateSchema = z
     description: z
       .string()
       .describe('The new description of the note. Can not contain any markup but might be empty.'),
+    folderId: z.number().nullable().optional().describe('The ID of the folder this note is moving to, if any'),
     tags: z.array(z.string()).describe('The new tags for this note.'),
   })
   .describe('DTO for updating the note metadata')

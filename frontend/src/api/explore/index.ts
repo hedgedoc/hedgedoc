@@ -53,12 +53,13 @@ export const getExplorePageEntries = async (
   sort: SortMode,
   searchFilter: string | null,
   typeFilter: NoteType | null,
-  page: number
+  page: number,
+  folderId?: number | null,
 ): Promise<NoteExploreEntryInterface[]> => {
   if (mode !== Mode.VISITED && (sort === SortMode.LAST_VISITED_DESC || sort === SortMode.LAST_VISITED_ASC)) {
     throw new Error('Invalid sort mode for the selected explore mode')
   }
-  const params = createURLSearchParams(sort, searchFilter, typeFilter, page)
+  const params = createURLSearchParams(sort, searchFilter, typeFilter, page, mode === Mode.MY_NOTES ? folderId : undefined)
   const response = await new GetApiRequestBuilder<NoteExploreEntryInterface[]>(
     `explore/${mode}?${params}`
   ).sendRequest()

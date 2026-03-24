@@ -22,6 +22,7 @@ export const NoteMetadataSchema = NoteAliasesSchema.merge(
       .string()
       .datetime({ offset: false })
       .describe('The timestamp when the note was last updated'),
+    folderId: z.number().nullable().describe('The ID of the folder this note belongs to'),
     lastUpdatedBy: z.string().nullable().describe('The user that last updated the note'),
     createdAt: z
       .string()

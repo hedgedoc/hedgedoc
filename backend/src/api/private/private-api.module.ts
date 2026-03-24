@@ -9,6 +9,7 @@ import { AliasModule } from '../../alias/alias.module';
 import { ApiTokenModule } from '../../api-token/api-token.module';
 import { AuthModule } from '../../auth/auth.module';
 import { ExploreModule } from '../../explore/explore.module';
+import { FolderModule } from '../../folders/folder.module';
 import { FrontendConfigModule } from '../../frontend-config/frontend-config.module';
 import { GroupsModule } from '../../groups/groups.module';
 import { MediaModule } from '../../media/media.module';
@@ -30,6 +31,7 @@ import { GroupsController } from './groups/groups.controller';
 import { MeController } from './me/me.controller';
 import { MediaController } from './media/media.controller';
 import { NotesController } from './notes/notes.controller';
+import { FoldersController } from './folders/folders.controller';
 import { UsersController } from './users/users.controller';
 
 @Module({
@@ -45,6 +47,7 @@ import { UsersController } from './users/users.controller';
     AuthModule,
     GroupsModule,
     NoteModule,
+    FolderModule,
   ],
   controllers: [
     ApiTokensController,
@@ -62,6 +65,7 @@ import { UsersController } from './users/users.controller';
     LdapController,
     LocalController,
     OidcController,
+    FoldersController,
   ],
 })
 export class PrivateApiModule {}
