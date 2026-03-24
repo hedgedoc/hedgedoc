@@ -7,8 +7,7 @@ import { Provider } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { FieldNameSession, TableSession } from '@hedgedoc/database';
-import { serialize } from 'cookie';
-import { sign } from 'cookie-signature';
+import { fastifyCookie } from '@fastify/cookie';
 import type { Tracker } from 'knex-mock-client';
 import { IncomingMessage } from 'node:http';
 import { Socket } from 'node:net';
@@ -101,18 +100,22 @@ describe('SessionService', () => {
     });
     it('returns empty Optional if cookie is malformed', async () => {
       const testRequest = new IncomingMessage(mockSocket);
-      testRequest.headers.cookie = serialize(HEDGEDOC_SESSION, 'foo', {});
+      testRequest.headers.cookie = fastifyCookie.serialize(HEDGEDOC_SESSION, 'foo', {});
       expect(() => service.extractSessionIdFromRequest(testRequest)).toThrow(Error);
     });
     it('returns empty Optional if cookie has invalid signature', async () => {
       const testRequest = new IncomingMessage(mockSocket);
-      testRequest.headers.cookie = serialize(HEDGEDOC_SESSION, `s:${sessionId}:fakeSignature`, {});
+      testRequest.headers.cookie = fastifyCookie.serialize(
+        HEDGEDOC_SESSION,
+        `s:${sessionId}:fakeSignature`,
+        {},
+      );
       expect(() => service.extractSessionIdFromRequest(testRequest)).toThrow(Error);
     });
     it('returns the correct id for session id', () => {
-      const signature = sign(sessionId, authConfig.session.secret);
+      const signature = fastifyCookie.sign(sessionId, authConfig.session.secret);
       const testRequest = new IncomingMessage(mockSocket);
-      testRequest.headers.cookie = serialize(HEDGEDOC_SESSION, `s:${signature}`, {});
+      testRequest.headers.cookie = fastifyCookie.serialize(HEDGEDOC_SESSION, `s:${signature}`, {});
       expect(service.extractSessionIdFromRequest(testRequest)).toEqual(sessionId);
     });
   });

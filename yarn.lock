@@ -2898,8 +2898,6 @@ __metadata:
     class-transformer: "npm:0.5.1"
     class-validator: "npm:0.14.3"
     cli-color: "npm:2.0.4"
-    cookie: "npm:1.1.1"
-    cookie-signature: "npm:1.2.2"
     diff: "npm:8.0.3"
     file-type: "npm:16.5.4"
     htmlparser2: "npm:9.1.0"
@@ -8095,13 +8093,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie-signature@npm:1.2.2":
-  version: 1.2.2
-  resolution: "cookie-signature@npm:1.2.2"
-  checksum: 10c0/54e05df1a293b3ce81589b27dddc445f462f6fa6812147c033350cd3561a42bc14481674e05ed14c7bd0ce1e8bb3dc0e40851bad75415733711294ddce0b7bc6
-  languageName: node
-  linkType: hard
-
 "cookie@npm:*":
   version: 1.0.1
   resolution: "cookie@npm:1.0.1"
@@ -8109,7 +8100,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:1.1.1, cookie@npm:^1.0.0, cookie@npm:^1.0.1":
+"cookie@npm:^1.0.0, cookie@npm:^1.0.1":
   version: 1.1.1
   resolution: "cookie@npm:1.1.1"
   checksum: 10c0/79c4ddc0fcad9c4f045f826f42edf54bcc921a29586a4558b0898277fa89fb47be95bc384c2253f493af7b29500c830da28341274527328f18eba9f58afa112c
