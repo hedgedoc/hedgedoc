@@ -3,17 +3,17 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { FieldNameUser, User } from '@hedgedoc/database';
-import { Optional } from '@mrdrogdrog/optional';
 import { Inject, Injectable } from '@nestjs/common';
-import { parse as parseCookie } from 'cookie';
-import { unsign } from 'cookie-signature';
+import { fastifyCookie } from '@fastify/cookie';
 import { IncomingMessage } from 'http';
+import { InjectConnection } from 'nest-knexjs';
+import { Knex } from 'knex';
+import { promisify } from 'node:util';
 
 import authConfiguration, { AuthConfig } from '../config/auth.config';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { HEDGEDOC_SESSION } from '../utils/session';
-import { KeyvSessionStore } from './keyv-session-store';
+import { KnexSessionStore } from './knex-session-store';
 
 /**
  * Finds {@link Session sessions} by session id and verifies session cookies.
@@ -21,17 +21,21 @@ import { KeyvSessionStore } from './keyv-session-store';
 @Injectable()
 export class SessionService {
   private static readonly sessionCookieContentRegex = /^s:(([^.]+)\.(.+))$/;
-  private readonly sessionStore: KeyvSessionStore;
+  private readonly sessionStore: KnexSessionStore;
 
   constructor(
     private readonly logger: ConsoleLoggerService,
 
     @Inject(authConfiguration.KEY)
     private authConfig: AuthConfig,
+
+    @InjectConnection()
+    private readonly knex: Knex,
   ) {
     this.logger.setContext(SessionService.name);
-    this.sessionStore = new KeyvSessionStore({
+    this.sessionStore = new KnexSessionStore({
       ttl: authConfig.session.lifetime,
+      knex: this.knex,
     });
   }
 
@@ -41,7 +45,7 @@ export class SessionService {
    *
    * @returns The used session store
    */
-  getSessionStore(): KeyvSessionStore {
+  getFastifySessionStore(): KnexSessionStore {
     return this.sessionStore;
   }
 
@@ -51,9 +55,10 @@ export class SessionService {
    * @param sessionId The session id for which the owning user should be found
    * @returns A Promise that either resolves with the username or rejects with an error
    */
-  async getUserIdForSessionId(sessionId: string): Promise<User[FieldNameUser.id] | undefined> {
-    const session = await this.sessionStore.getAsync(sessionId);
-    return session?.userId;
+  async getUserIdForSessionId(sessionId: string): Promise<number | undefined> {
+    const getSession = promisify(this.sessionStore.get.bind(this.sessionStore));
+    const session = await getSession(sessionId);
+    return session?.userId ?? undefined;
   }
 
   /**
@@ -64,10 +69,13 @@ export class SessionService {
    * @throws Error if the cookie has been found but the content is malformed
    * @throws Error if the cookie has been found but the content isn't signed
    */
-  extractSessionIdFromRequest(request: IncomingMessage): Optional<string> {
-    return Optional.ofNullable(request.headers?.cookie)
-      .map((cookieHeader) => parseCookie(cookieHeader)[HEDGEDOC_SESSION])
-      .map((rawCookie) => this.extractVerifiedSessionIdFromCookieContent(rawCookie));
+  extractSessionIdFromRequest(request: IncomingMessage): string | null {
+    const cookies = fastifyCookie.parse(request.headers.cookie ?? '');
+    const sessionCookie = cookies[HEDGEDOC_SESSION];
+    if (!sessionCookie) {
+      return null;
+    }
+    return this.extractVerifiedSessionIdFromCookieContent(sessionCookie);
   }
 
   /**
@@ -83,7 +91,7 @@ export class SessionService {
     if (parsedCookie === null) {
       throw new Error(`cookie "${HEDGEDOC_SESSION}" doesn't look like a signed session cookie`);
     }
-    if (unsign(parsedCookie[1], this.authConfig.session.secret) === false) {
+    if (!fastifyCookie.unsign(parsedCookie[1], this.authConfig.session.secret).valid) {
       throw new Error(`signature of cookie "${HEDGEDOC_SESSION}" isn't valid.`);
     }
     return parsedCookie[2];

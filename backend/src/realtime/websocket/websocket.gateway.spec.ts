@@ -5,7 +5,6 @@
  */
 import { PermissionLevel } from '@hedgedoc/commons';
 import { FieldNameUser } from '@hedgedoc/database';
-import { Optional } from '@mrdrogdrog/optional';
 import { Provider } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { EventEmitter2 } from '@nestjs/event-emitter';
@@ -112,11 +111,8 @@ describe('Websocket gateway', () => {
 
     jest
       .spyOn(sessionService, 'extractSessionIdFromRequest')
-      .mockImplementation(
-        (request: IncomingMessage): Optional<string> =>
-          Optional.ofNullable(
-            request.headers?.cookie === mockedValidSessionCookie ? mockedSessionIdWithUser : null,
-          ),
+      .mockImplementation((request: IncomingMessage): string | null =>
+        request.headers?.cookie === mockedValidSessionCookie ? mockedSessionIdWithUser : null,
       );
 
     const mockUsername = 'Testy';

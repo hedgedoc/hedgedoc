@@ -17,9 +17,9 @@ interface RateLimitConfig {
  * Extracts the user ID from the session if present.
  *
  * @param req The incoming Fastify request
- * @returns The user ID if authenticated, undefined otherwise
+ * @returns The user ID if authenticated, null otherwise
  */
-function getUserIdFromSession(req: FastifyRequest): number | undefined {
+function getUserIdFromSession(req: FastifyRequest): number | null {
   return (req as RequestWithSession).session?.userId;
 }
 
@@ -33,7 +33,7 @@ function getUserIdFromSession(req: FastifyRequest): number | undefined {
  */
 export function generateRateLimitKey(req: FastifyRequest): string {
   const userId = getUserIdFromSession(req);
-  if (userId !== undefined) {
+  if (userId !== null) {
     return `user:${userId}`;
   }
   return `ip:${req.ip}`;

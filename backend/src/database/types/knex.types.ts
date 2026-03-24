@@ -16,6 +16,7 @@ import {
   NoteUserPermission,
   Revision,
   RevisionTag,
+  Session,
   TableAlias,
   TableApiToken,
   TableAuthorshipInfo,
@@ -28,6 +29,7 @@ import {
   TableNoteUserPermission,
   TableRevision,
   TableRevisionTag,
+  TableSession,
   TableUser,
   TableUserPinnedNote,
   TypeInsertGroup,
@@ -71,6 +73,7 @@ declare module 'knex/types/tables.js' {
       NoteUserPermission,
       TypeUpdateNoteUserPermission
     >;
+    [TableSession]: Session;
     [TableRevision]: KnexOriginal.CompositeTableType<Revision>;
     [TableRevisionTag]: RevisionTag;
     [TableUser]: KnexOriginal.CompositeTableType<User, TypeInsertUser, TypeUpdateUser>;

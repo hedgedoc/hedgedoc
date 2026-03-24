@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { promisify } from 'node:util';
 import { AuthProviderType } from '@hedgedoc/commons';
 import {
   BadRequestException,
@@ -41,20 +42,21 @@ export class AuthController {
   @UseGuards(SessionGuard)
   @Delete('logout')
   @OpenApi(200, 400, 401)
-  logout(@Req() request: RequestWithSession): LogoutResponseDto {
+  async logout(@Req() request: RequestWithSession): Promise<LogoutResponseDto> {
     let logoutUrl: string | null = null;
-    if (request.session.authProviderType === AuthProviderType.OIDC) {
+    if (request.session.loginAuthProviderType === AuthProviderType.OIDC) {
       logoutUrl = this.oidcService.getLogoutUrl(request);
     }
-    request.session.destroy((err) => {
-      if (err) {
-        this.logger.error('Error during logout:' + String(err), undefined, 'logout');
-        throw new InternalServerErrorException('Unable to log out');
-      }
-    });
-    return LogoutResponseDto.create({
-      redirect: logoutUrl || '/',
-    });
+    const destroySessionPromise = promisify(request.session.destroy).bind(request.session);
+    try {
+      await destroySessionPromise();
+      return LogoutResponseDto.create({
+        redirect: logoutUrl || '/',
+      });
+    } catch (error) {
+      this.logger.error('Error during logout:' + String(error), undefined, 'logout');
+      throw new InternalServerErrorException('Unable to log out');
+    }
   }
 
   @Get('pending-user')
@@ -88,16 +90,22 @@ export class AuthController {
         request.session.pendingUser.authProviderIdentifier,
         request.session.pendingUser.providerUserId,
       );
-    request.session.authProviderType = request.session.pendingUser.authProviderType;
-    request.session.authProviderIdentifier = request.session.pendingUser.authProviderIdentifier;
+    request.session.loginAuthProviderType = request.session.pendingUser.authProviderType;
+    request.session.loginAuthProviderIdentifier =
+      request.session.pendingUser.authProviderIdentifier;
     // Cleanup
-    request.session.pendingUser = undefined;
+    request.session.pendingUser = null;
   }
 
   @Delete('pending-user')
   @OpenApi(204, 400)
   deletePendingUserData(@Req() request: RequestWithSession): void {
-    request.session.pendingUser = undefined;
-    request.session.oidc = undefined;
+    request.session.pendingUser = null;
+    request.session.oidc = {
+      idToken: null,
+      sid: null,
+      loginCode: null,
+      loginState: null,
+    };
   }
 }

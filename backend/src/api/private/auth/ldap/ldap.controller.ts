@@ -58,8 +58,8 @@ export class LdapController {
           userInfo.photoUrl,
         );
       }
-      request.session.authProviderType = AuthProviderType.LDAP;
-      request.session.authProviderIdentifier = ldapIdentifier;
+      request.session.loginAuthProviderType = AuthProviderType.LDAP;
+      request.session.loginAuthProviderIdentifier = ldapIdentifier;
       request.session.userId = identity[FieldNameIdentity.userId];
       return LdapLoginResponseDto.create({ newUser: false });
     } catch (error) {

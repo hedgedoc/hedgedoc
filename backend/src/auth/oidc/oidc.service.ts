@@ -173,8 +173,8 @@ export class OidcService {
     const client = clientConfig.client;
     const oidcConfig = clientConfig.config;
     const params = client.callbackParams(request.raw);
-    const code = request.session.oidc?.loginCode;
-    const state = request.session.oidc?.loginState;
+    const code = request.session.oidc?.loginCode ?? undefined;
+    const state = request.session.oidc?.loginState ?? undefined;
     const isAutodiscovered = clientConfig.config.authorizeUrl === undefined;
     const callbackMethod = isAutodiscovered
       ? client.callback.bind(client)
@@ -185,8 +185,14 @@ export class OidcService {
       state,
     });
 
+    // If the id_token is not present, we are not able to extract claims like the sessionId from it, therefore we set it to null.
+    // This is the case with non-OIDC-compliant OAuth2 auth providers like GitHub.
+    const sid = tokenSet.id_token ? ((tokenSet.claims()?.sid as string | undefined) ?? null) : null;
     request.session.oidc = {
-      idToken: tokenSet.id_token,
+      idToken: tokenSet.id_token ?? null,
+      sid,
+      loginState: null,
+      loginCode: null,
     };
     const userInfoResponse = await client.userinfo(tokenSet);
     const userId = OidcService.getResponseFieldValue(
@@ -270,7 +276,7 @@ export class OidcService {
    * @returns The logout URL if the user is logged in with OIDC, or null if there is no URL to redirect to
    */
   getLogoutUrl(request: RequestWithSession): string | null {
-    const oidcIdentifier = request.session.authProviderIdentifier;
+    const oidcIdentifier = request.session.loginAuthProviderIdentifier;
     if (!oidcIdentifier) {
       return null;
     }

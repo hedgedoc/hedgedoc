@@ -4,7 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { AuthProviderType } from '@hedgedoc/commons';
-import { Body, Controller, Delete, Get, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  InternalServerErrorException,
+  Put,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../auth/session.guard';
@@ -16,6 +25,8 @@ import { UsersService } from '../../../users/users.service';
 import { OpenApi } from '../../utils/decorators/openapi.decorator';
 import { RequestUserId } from '../../utils/decorators/request-user-id.decorator';
 import { SessionAuthProvider } from '../../utils/decorators/session-authprovider.decorator';
+import { promisify } from 'node:util';
+import { RequestWithSession } from '../../utils/request.type';
 
 @UseGuards(SessionGuard)
 @OpenApi(401)
@@ -49,7 +60,10 @@ export class MeController {
 
   @Delete()
   @OpenApi(204, 404, 500)
-  async deleteUser(@RequestUserId() userId: number): Promise<void> {
+  async deleteUser(
+    @Req() request: RequestWithSession,
+    @RequestUserId() userId: number,
+  ): Promise<void> {
     const mediaUploads = await this.mediaService.getMediaUploadUuidsByUserId(userId);
     for (const mediaUpload of mediaUploads) {
       await this.mediaService.deleteFile(mediaUpload);
@@ -57,6 +71,11 @@ export class MeController {
     this.logger.debug(`Deleted all media uploads for user with id ${userId}`);
     await this.userService.deleteUser(userId);
     this.logger.debug(`Deleted user with id ${userId}`);
+    const destroySessionPromise = promisify(request.session.destroy).bind(request.session);
+    destroySessionPromise().catch((error) => {
+      this.logger.error('Error while destroying session:' + String(error), undefined, 'deleteUser');
+      throw new InternalServerErrorException('Error trying to destroy session of deleted user');
+    });
   }
 
   @Put('profile')

@@ -6,7 +6,7 @@
 import { AuthProviderType } from '@hedgedoc/commons';
 import { FieldNameNote, FieldNameUser, Note, User } from '@hedgedoc/database';
 import { FastifyRequest } from 'fastify';
-import { SessionState } from 'src/sessions/session-state.type';
+import { SessionState } from 'src/sessions/session-state';
 
 export type CompleteRequest = FastifyRequest & {
   userId?: User[FieldNameUser.id];
