@@ -40,6 +40,8 @@ const {
   TableUser,
   TableUserPinnedNote,
   TableVisitedNote,
+  FieldNameSession,
+  TableSession,
 } = require('@hedgedoc/database');
 
 const up = async function (knex) {
@@ -401,10 +403,52 @@ const up = async function (knex) {
     table.index([FieldNameVisitedNote.userId], 'idx_visited_notes_user_id');
     table.index([FieldNameVisitedNote.noteId], 'idx_visited_notes_note_id');
   });
+
+  // Create session table
+  await knex.schema.createTable(TableSession, (table) => {
+    table.string(FieldNameSession.id).primary();
+    table
+      .integer(FieldNameSession.userId)
+      .unsigned()
+      .nullable()
+      .references(FieldNameUser.id)
+      .inTable(TableUser)
+      .onDelete('CASCADE');
+    table.string(FieldNameSession.csrfToken).nullable();
+    table
+      .enu(
+        FieldNameSession.loginAuthProviderType,
+        [
+          AuthProviderType.LDAP,
+          AuthProviderType.LOCAL,
+          AuthProviderType.OIDC,
+          AuthProviderType.GUEST,
+        ],
+        {
+          useNative: true,
+          enumName: FieldNameSession.loginAuthProviderType,
+        },
+      )
+      .nullable();
+    table.string(FieldNameSession.loginAuthProviderIdentifier).nullable();
+    table.string(FieldNameSession.oidcIdToken).nullable();
+    table.string(FieldNameSession.oidcSid).nullable();
+    table.string(FieldNameSession.oidcLoginState).nullable();
+    table.string(FieldNameSession.oidcLoginCode).nullable();
+    table.text(FieldNameSession.pendingUserData);
+    table.timestamp(FieldNameSession.createdAt, { useTz: false, precision: 3 }).notNullable();
+    table.timestamp(FieldNameSession.updatedAt, { useTz: false, precision: 3 }).notNullable();
+    table.timestamp(FieldNameSession.expiresAt, { useTz: false, precision: 3 }).notNullable();
+
+    table.index([FieldNameSession.userId], 'idx_session_user_id');
+    table.index([FieldNameSession.oidcSid], 'idx_session_oidc_sid');
+    table.index([FieldNameSession.expiresAt], 'idx_session_expires_at');
+  });
 };
 
 const down = async function (knex) {
   // Drop tables in reverse order of creation to avoid integer key constraints
+  await knex.schema.dropTableIfExists(TableSession);
   await knex.schema.dropTableIfExists(TableVisitedNote);
   await knex.schema.dropTableIfExists(TableUserPinnedNote);
   await knex.schema.dropTableIfExists(TableMediaUpload);

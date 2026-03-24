@@ -48,6 +48,8 @@ export class OidcController {
     request.session.oidc = {
       loginCode: code,
       loginState: state,
+      idToken: null,
+      sid: null,
     };
     request.session.pendingUser = {
       authProviderType: AuthProviderType.OIDC,
@@ -92,9 +94,9 @@ export class OidcController {
       }
 
       request.session.userId = userId;
-      request.session.authProviderType = AuthProviderType.OIDC;
-      request.session.authProviderIdentifier = oidcIdentifier;
-      request.session.pendingUser = undefined;
+      request.session.loginAuthProviderType = AuthProviderType.OIDC;
+      request.session.loginAuthProviderIdentifier = oidcIdentifier;
+      request.session.pendingUser = null;
       return { url: '/' };
     } catch (error) {
       if (error instanceof HttpException) {

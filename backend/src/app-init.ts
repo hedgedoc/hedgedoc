@@ -73,12 +73,12 @@ export async function setupApp(
   await setupSessionMiddleware(
     app as INestApplication,
     authConfig,
-    app.get(SessionService).getSessionStore(),
+    app.get(SessionService).getFastifySessionStore(),
   );
 
   // Setup CSRF protection
   await app.register(fastifyCsrfProtection, {
-    cookieKey: 'hedgedoc-csrf',
+    sessionKey: 'csrfToken',
     sessionPlugin: '@fastify/session',
     getToken: (req) => req.headers['csrf-token'] as string | undefined,
   });

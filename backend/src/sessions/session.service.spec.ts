@@ -6,6 +6,7 @@
 import { Provider } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
+import { FieldNameSession, TableSession } from '@hedgedoc/database';
 import { serialize } from 'cookie';
 import { sign } from 'cookie-signature';
 import type { Tracker } from 'knex-mock-client';
@@ -16,6 +17,7 @@ import { Mock } from 'ts-mockery';
 import appConfigMock from '../config/mock/app.config.mock';
 import { createDefaultMockAuthConfig, registerAuthConfig } from '../config/mock/auth.config.mock';
 import { mockKnexDb } from '../database/mock/provider';
+import { mockSelect } from '../database/mock/mock-queries';
 import { LoggerModule } from '../logger/logger.module';
 import { HEDGEDOC_SESSION } from '../utils/session';
 import { SessionService } from './session.service';
@@ -48,7 +50,7 @@ describe('SessionService', () => {
   });
 
   it('getSessionStore', () => {
-    const store = service.getSessionStore();
+    const store = service.getFastifySessionStore();
     expect(store).toBeDefined();
   });
 
@@ -56,24 +58,35 @@ describe('SessionService', () => {
     it('returns the correct user id for session id', async () => {
       const testSessionId = 'testSessionId';
       const testUserId = 1337;
-      const sessionsStore = service.getSessionStore();
-      sessionsStore.set(
-        testSessionId,
-        {
-          cookie: {
-            originalMaxAge: null,
+      mockSelect(
+        tracker,
+        [],
+        TableSession,
+        [FieldNameSession.id, FieldNameSession.expiresAt],
+        [
+          {
+            [FieldNameSession.id]: testSessionId,
+            [FieldNameSession.userId]: testUserId,
+            [FieldNameSession.csrfToken]: null,
+            [FieldNameSession.loginAuthProviderType]: null,
+            [FieldNameSession.loginAuthProviderIdentifier]: null,
+            [FieldNameSession.oidcIdToken]: null,
+            [FieldNameSession.oidcSid]: null,
+            [FieldNameSession.oidcLoginCode]: null,
+            [FieldNameSession.oidcLoginState]: null,
+            [FieldNameSession.pendingUserData]: '{}',
+            [FieldNameSession.createdAt]: '2025-01-01 00:00:00',
+            [FieldNameSession.updatedAt]: '2025-01-01 00:00:00',
+            [FieldNameSession.expiresAt]: '2099-12-31 00:00:00',
           },
-          userId: testUserId,
-        },
-        async (error) => {
-          expect(error).toBeUndefined();
-          const result = await service.getUserIdForSessionId(testSessionId);
-          expect(result).toEqual(testUserId);
-        },
+        ],
       );
+      const result = await service.getUserIdForSessionId(testSessionId);
+      expect(result).toEqual(testUserId);
     });
     it('returns undefined for non-valid session id', async () => {
       const testSessionId = 'non-valid-session-id';
+      mockSelect(tracker, [], TableSession, [FieldNameSession.id, FieldNameSession.expiresAt], []);
       const result = await service.getUserIdForSessionId(testSessionId);
       expect(result).toBeUndefined();
     });
@@ -82,9 +95,9 @@ describe('SessionService', () => {
   describe('extractSessionIdFromRequest', () => {
     const mockSocket = Mock.of<Socket>();
     const sessionId = 'testSessionId';
-    it('returns empty Optional if no cookie header is set', () => {
+    it('returns null if no cookie header is set', () => {
       const testRequest = new IncomingMessage(mockSocket);
-      expect(service.extractSessionIdFromRequest(testRequest).isEmpty()).toBe(true);
+      expect(service.extractSessionIdFromRequest(testRequest)).toBeNull();
     });
     it('returns empty Optional if cookie is malformed', async () => {
       const testRequest = new IncomingMessage(mockSocket);
@@ -100,7 +113,7 @@ describe('SessionService', () => {
       const signature = sign(sessionId, authConfig.session.secret);
       const testRequest = new IncomingMessage(mockSocket);
       testRequest.headers.cookie = serialize(HEDGEDOC_SESSION, `s:${signature}`, {});
-      expect(service.extractSessionIdFromRequest(testRequest).get()).toEqual(sessionId);
+      expect(service.extractSessionIdFromRequest(testRequest)).toEqual(sessionId);
     });
   });
 });
