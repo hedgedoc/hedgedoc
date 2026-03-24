@@ -51,8 +51,6 @@
     "class-transformer": "0.5.1",
     "class-validator": "0.14.3",
     "cli-color": "2.0.4",
-    "cookie": "1.1.1",
-    "cookie-signature": "1.2.2",
     "diff": "8.0.3",
     "file-type": "16.5.4",
     "htmlparser2": "9.1.0",
