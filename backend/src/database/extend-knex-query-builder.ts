@@ -9,7 +9,7 @@ import { QueryBuilder } from 'knex';
 export function extendKnexQueryBuilder() {
   try {
     QueryBuilder.extend('whereEqualLowercase', function (field: string, value: string) {
-      return this.where(this.client.raw(`lower("${field}")`), '=', value.toLowerCase());
+      return this.whereRaw('LOWER(??) = ?', [field, value.toLowerCase()]);
     });
   } catch (e) {
     console.warn('Could not extend KnexQueryBuilder with whereEqualLowercase');
