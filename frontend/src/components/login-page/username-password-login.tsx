@@ -9,7 +9,6 @@ import React, { type FormEvent, useCallback, useMemo, useRef, useState } from 'r
 import { Trans, useTranslation } from 'react-i18next'
 import { fetchAndSetUser } from './utils/fetch-and-set-user'
 import { useOnInputChange } from '../../hooks/common/use-on-input-change'
-import { useLowercaseOnInputChange } from '../../hooks/common/use-lowercase-on-input-change'
 import { UsernameField } from '../common/fields/username-field'
 import { PasswordField } from './password-field'
 import { Alert, Card, Form } from 'react-bootstrap'
@@ -18,7 +17,6 @@ import { ActionButton } from '../common/action-button'
 export interface UsernamePasswordLoginProps {
   authProviderIdentifier?: string
   providerName?: string
-  lowercaseUsername: boolean
   errorMapping: (rawError: Error) => string | null
   doLogin: (username: string, password: string, authProviderIdentifier?: string) => Promise<{ newUser?: boolean }>
 }
@@ -29,14 +27,12 @@ export interface UsernamePasswordLoginProps {
  * @param authProviderIdentifier The identifier of the auth provider, in case this is required for the login method.
  * @param providerName The display name of the authentication provider.
  * @param doLogin Function that performs the login with username, password, and optional auth provider identifier.
- * @param lowercaseUsername Whether to automatically convert the username input to lowercase.
  * @param errorMapping Function that maps raw errors to user-friendly error messages.
  */
 export const UsernamePasswordLogin: React.FC<UsernamePasswordLoginProps> = ({
   authProviderIdentifier,
   providerName,
   doLogin,
-  lowercaseUsername,
   errorMapping
 }) => {
   const { t } = useTranslation()
@@ -89,7 +85,7 @@ export const UsernamePasswordLogin: React.FC<UsernamePasswordLoginProps> = ({
     [username, password, authProviderIdentifier, router, doLogin, errorMapping]
   )
 
-  const onUsernameChange = lowercaseUsername ? useLowercaseOnInputChange(setUsername) : useOnInputChange(setUsername)
+  const onUsernameChange = useOnInputChange(setUsername)
   const onPasswordChange = useOnInputChange(setPassword)
 
   return (

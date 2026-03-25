@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useLowercaseOnInputChange } from '../../../../../../hooks/common/use-lowercase-on-input-change'
 import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
 import { UiIcon } from '../../../../../common/icons/ui-icon'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
@@ -15,6 +14,7 @@ import { useUiNotifications } from '../../../../../notifications/ui-notification
 import { setUserPermission } from '../../../../../../api/permissions'
 import { setNotePermissionsFromServer } from '../../../../../../redux/note-details/methods'
 import { ErrorToI18nKeyMapper } from '../../../../../../api/common/error-to-i18n-key-mapper'
+import { useOnInputChange } from '../../../../../../hooks/common/use-on-input-change'
 
 export interface PermissionAddEntryFieldProps {
   i18nKey: string
@@ -31,7 +31,7 @@ export const PermissionAddEntryField: React.FC<PermissionAddEntryFieldProps & Pe
   disabled
 }) => {
   const [newEntryIdentifier, setNewEntryIdentifier] = useState('')
-  const onChange = useLowercaseOnInputChange(setNewEntryIdentifier)
+  const onChange = useOnInputChange(setNewEntryIdentifier)
   const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const { showErrorNotificationBuilder } = useUiNotifications()
 

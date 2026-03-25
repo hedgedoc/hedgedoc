@@ -51,7 +51,6 @@ export const LdapLoginCards: React.FC = () => {
             providerName={ldapProvider.providerName}
             authProviderIdentifier={ldapProvider.identifier}
             errorMapping={errorMapping}
-            lowercaseUsername={false}
             doLogin={performLdapLogin}
           />
         )
