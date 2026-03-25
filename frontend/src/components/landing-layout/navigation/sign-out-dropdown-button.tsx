@@ -13,6 +13,7 @@ import React, { useCallback } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { BoxArrowRight as IconBoxArrowRight } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
+import { refreshCsrfToken } from '../../../redux/csrf-token/methods'
 
 /**
  * Renders a sign-out button as a dropdown item for the user-dropdown.
@@ -25,7 +26,10 @@ export const SignOutDropdownButton: React.FC = () => {
   const onSignOut = useCallback(() => {
     clearUser()
     doLogout()
-      .then((logoutResponse) => router.push(logoutResponse.redirect))
+      .then(async (logoutResponse) => {
+        await refreshCsrfToken()
+        router.push(logoutResponse.redirect)
+      })
       .catch(showErrorNotificationBuilder('login.logoutFailed'))
   }, [showErrorNotificationBuilder, router])
 
