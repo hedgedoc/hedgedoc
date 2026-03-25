@@ -13,7 +13,6 @@ import { Trans, useTranslation } from 'react-i18next'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import type { ApiError } from '../../../../api/common/api-error'
 import { doLocalRegister } from '../../../../api/auth/local'
-import { useLowercaseOnInputChange } from '../../../../hooks/common/use-lowercase-on-input-change'
 import { useOnInputChange } from '../../../../hooks/common/use-on-input-change'
 import { UsernameLabelField } from '../../../common/fields/username-label-field'
 import { DisplayNameField } from '../../../common/fields/display-name-field'
@@ -67,7 +66,7 @@ export const LocalRegisterForm: NextPage = () => {
     return error?.backendErrorName === 'PasswordTooWeakError'
   }, [error])
 
-  const onUsernameChange = useLowercaseOnInputChange(setUsername)
+  const onUsernameChange = useOnInputChange(setUsername)
   const onDisplayNameChange = useOnInputChange(setDisplayName)
   const onPasswordChange = useOnInputChange(setPassword)
   const onPasswordAgainChange = useOnInputChange(setPasswordAgain)

@@ -48,7 +48,7 @@ export const LocalLoginCard: React.FC = () => {
 
   return (
     <Card>
-      <UsernamePasswordLogin lowercaseUsername={true} doLogin={performLocalLogin} errorMapping={errorMapping} />
+      <UsernamePasswordLogin doLogin={performLocalLogin} errorMapping={errorMapping} />
       {frontendConfig.allowRegister && (
         <>
           <hr className={'m-0'} />
