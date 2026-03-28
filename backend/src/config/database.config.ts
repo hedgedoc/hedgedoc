@@ -117,6 +117,7 @@ export function getKnexConfig(databaseConfig: DatabaseConfig): Knex.Config {
           database: databaseConfig.name,
           password: databaseConfig.password,
           dateStrings: true,
+          charset: 'utf8mb4',
         },
         pool: {
           min: 0,

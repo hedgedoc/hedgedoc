@@ -236,6 +236,7 @@ export class TestSetupBuilder {
             host: process.env.HD_DATABASE_HOST || 'localhost',
             port: parseInt(process.env.HD_DATABASE_PORT || '3306'),
             dateStrings: true,
+            charset: 'utf8mb4',
           },
         };
       default:
