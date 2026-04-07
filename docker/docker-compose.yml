@@ -3,13 +3,17 @@
 ---
 services:
   backend:
-    image: ghcr.io/hedgedoc/hedgedoc/backend:develop
+    build:
+      context: ..
+      dockerfile: docker/backend.Dockerfile
     volumes:
       - ./.env:/usr/src/app/backend/.env
       - hedgedoc_uploads:/usr/src/app/backend/uploads
 
   frontend:
-    image: ghcr.io/hedgedoc/hedgedoc/frontend:develop
+    build:
+      context: ..
+      dockerfile: docker/frontend.Dockerfile
     environment:
       HD_BASE_URL: "${HD_BASE_URL}"
 
