@@ -5,7 +5,7 @@ services:
   backend:
     build:
       context: ..
-      dockerfile: docker/backend.Dockerfile
+      dockerfile: backend/docker/Dockerfile
     volumes:
       - ./.env:/usr/src/app/backend/.env
       - hedgedoc_uploads:/usr/src/app/backend/uploads
@@ -13,7 +13,7 @@ services:
   frontend:
     build:
       context: ..
-      dockerfile: docker/frontend.Dockerfile
+      dockerfile: frontend/docker/Dockerfile
     environment:
       HD_BASE_URL: "${HD_BASE_URL}"
 
