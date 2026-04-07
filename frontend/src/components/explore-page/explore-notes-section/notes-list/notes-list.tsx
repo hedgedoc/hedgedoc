@@ -91,23 +91,8 @@ export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, 
   }, [updateExplorePage, mode, sort, searchFilter, typeFilter])
 
   return (
-    <InfiniteScroll
-      dataLength={entries.length}
-      next={fetchNextPage}
-      hasMore={moreDataAvailable}
-      loader={
-        <div className={'text-center fs-3'}>
-          <Trans i18nKey={'explore.loadingMore'} />
-        </div>
-      }
-      endMessage={
-        <div className={'text-center fs-4'}>
-          <p>
-            <Trans i18nKey={'explore.noMoreNotesFound'} />
-          </p>
-        </div>
-      }>
+    <div className={styles.notesGrid}>
       {noteEntries}
-    </InfiniteScroll>
+    </div>
   )
 }

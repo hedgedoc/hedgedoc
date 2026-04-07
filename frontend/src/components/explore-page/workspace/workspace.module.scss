@@ -1,0 +1,120 @@
+.workspaceContainer {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  height: 100vh;
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+}
+
+.sidebar {
+  background-color: #121212;
+  border-right: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.mainContent {
+  padding: 30px;
+  overflow-y: auto;
+  background-color: #1a1a1a;
+}
+
+.createButton {
+  background-color: #8a2be2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 600;
+  width: 100%;
+  margin-bottom: 24px;
+  transition: background-color 0.2s;
+  cursor: pointer;
+  &:hover {
+    background-color: #a040f0;
+  }
+}
+
+.sectionHeader {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #888;
+  margin: 20px 0 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #ccc;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+  &:hover {
+    background-color: #2a2a2a;
+    color: white;
+  }
+  .count {
+    font-size: 0.7rem;
+    background-color: #333;
+    padding: 2px 6px;
+    border-radius: 10px;
+    color: #888;
+  }
+}
+
+.notesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.noteCard {
+  background-color: #252525;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 160px;
+  position: relative;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+    border-color: #444;
+  }
+  .cardTitle {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: #eee;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .cardFooter {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: #777;
+  }
+  .cardIcon {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    color: #555;
+  }
+}
