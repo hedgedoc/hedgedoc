@@ -15,7 +15,6 @@ import type { CursorSelection } from '../tool-bar/formatters/types/cursor-select
 import type { EditorView } from '@codemirror/view'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useBaseUrl } from '../../../../hooks/common/use-base-url'
 import type { ApiError } from 'next/dist/server/api-utils'
 
 /**
@@ -39,7 +38,6 @@ type handleUploadSignature = (
 export const useHandleUpload = (): handleUploadSignature => {
   const { t } = useTranslation()
   const { showErrorNotificationBuilder } = useUiNotifications()
-  const baseUrl = useBaseUrl()
 
   return useCallback(
     (view, file, cursorSelection, description, additionalUrlText) => {
@@ -62,8 +60,7 @@ export const useHandleUpload = (): handleUploadSignature => {
       })
       uploadFile(noteAlias, file)
         .then((uuid) => {
-          const fullUrl = `${baseUrl}media/${uuid}`
-          const replacement = `![${description ?? file.name ?? ''}](${fullUrl}${additionalUrlText ?? ''})`
+          const replacement = `![${description ?? file.name ?? ''}](media/${uuid}${additionalUrlText ?? ''})`
           changeContent(({ markdownContent }) => [
             replaceInContent(markdownContent, uploadPlaceholder, replacement),
             undefined
@@ -81,6 +78,6 @@ export const useHandleUpload = (): handleUploadSignature => {
           ])
         })
     },
-    [showErrorNotificationBuilder, t, baseUrl]
+    [showErrorNotificationBuilder, t]
   )
 }
