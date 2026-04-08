@@ -12,6 +12,7 @@ import { useUiNotifications } from '../../notifications/ui-notification-boundary
 import React, { useCallback } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
+import { refreshCsrfToken } from '../../../redux/csrf-token/methods'
 
 /**
  * Confirmation modal for deleting your account.
@@ -27,7 +28,10 @@ export const AccountDeletionModal: React.FC<ModalVisibilityProps> = ({ show, onH
     deleteUser()
       .then(() => {
         clearUser()
-        return dispatchUiNotification(
+        return refreshCsrfToken()
+      })
+      .then(() => {
+        dispatchUiNotification(
           'profile.modal.deleteUser.notificationTitle',
           'profile.modal.deleteUser.notificationText',
           {}
