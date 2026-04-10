@@ -10,7 +10,8 @@ on:
     paths: ['docs/**']
 
 env:
-  NETLIFY_VERSION: 13.2.2
+  # renovate: datasource=npm depName=netlify-cli
+  NETLIFY_VERSION: 24.1.1
   NODEJS_VERSION: 24
   PYTHON_VERSION: 3.11
 
@@ -49,4 +50,4 @@ jobs:
       - name: Run netlify CLI deployment
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: "npx -y netlify-cli@${{ env.NETLIFY_VERSION }} deploy --build --prod --message \"${{ github.event.head_commit.id }}\""
+        run: "npx -y netlify-cli@${{ env.NETLIFY_VERSION }} deploy --prod --message \"${{ github.event.head_commit.id }}\""
