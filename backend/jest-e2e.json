@@ -19,5 +19,7 @@
   },
   "coverageDirectory": "./coverage-e2e",
   "testTimeout": 15000,
-  "reporters": ["default", "github-actions"]
+  "reporters": ["default", "github-actions"],
+  "maxWorkers": 4,
+  "workerIdleMemoryLimit": "1GB"
 }
