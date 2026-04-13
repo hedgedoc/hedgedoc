@@ -150,6 +150,7 @@ export class TestSetup {
    * Cleans up Fastify, NestJS, and the database from a test run.
    */
   public async cleanup(): Promise<void> {
+    this.app.getHttpServer().closeAllConnections();
     await this.app.close();
     if (this.knexInstance) {
       await this.knexInstance.destroy();
