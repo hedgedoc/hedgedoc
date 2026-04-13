@@ -4,15 +4,29 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { CanActivate, ExecutionContext, Injectable, ForbiddenException } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import type { FastifyRequest, FastifyReply } from 'fastify';
+
+import { CSRF_EXEMPT_KEY } from '../../utils/decorators/csrf-exempt.decorator';
 
 const UNPROTECTED_METHODS = ['GET', 'HEAD', 'OPTIONS'];
 
 @Injectable()
 export class CsrfGuard implements CanActivate {
+  constructor(private reflector: Reflector) {}
+
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<FastifyRequest>();
     const reply = context.switchToHttp().getResponse<FastifyReply>();
+
+    // Ignore if the @CsrfExempt() decorator is set for the route
+    const isCsrfExempt = this.reflector.getAllAndOverride<boolean>(CSRF_EXEMPT_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+    if (isCsrfExempt) {
+      return true;
+    }
 
     // Ignore unprotected methods (GET, HEAD, OPTIONS)
     const method = request.method.toUpperCase();
