@@ -18,6 +18,10 @@ export interface SessionStoreOptions {
   knex: Knex;
 }
 
+export interface FastifySessionWithId extends FastifySession {
+  id: string;
+}
+
 /**
  * Fastify session store implementation using Knex for database operations
  */
@@ -54,6 +58,7 @@ export class KnexSessionStore implements SessionStore {
   ): void {
     const nowDbTime = dateTimeToDB(getCurrentDateTime());
     this.knex(TableSession)
+      .select()
       .where(FieldNameSession.id, sessionId)
       .andWhere(FieldNameSession.expiresAt, '>', nowDbTime)
       .first()
@@ -62,6 +67,44 @@ export class KnexSessionStore implements SessionStore {
         return callback(null, data);
       })
       .catch((error: Error) => callback(error));
+  }
+
+  /**
+   * Retrieves all sessions for a given user ID
+   * @param userId The ID of the user to retrieve sessions for
+   * @returns A promise that resolves to an array of sessions for the user
+   */
+  async getAllByUser(userId: number): Promise<FastifySessionWithId[]> {
+    const nowDbTime = dateTimeToDB(getCurrentDateTime());
+    const entries = await this.knex<Session>(TableSession)
+      .select()
+      .where(FieldNameSession.userId, userId)
+      .andWhere(FieldNameSession.expiresAt, '>', nowDbTime);
+    return entries.map((entry) => ({
+      ...this.convertDatabaseEntryToSession(entry),
+      id: entry[FieldNameSession.id],
+    }));
+  }
+
+  /**
+   * Retrieves a session based on the OIDC session id (sid)
+   * @param oidcSid The OIDC session id (sid) to retrieve the session for
+   * @returns The session if found, otherwise null
+   */
+  async getByOidcSid(oidcSid: string): Promise<FastifySessionWithId | null> {
+    const nowDbTime = dateTimeToDB(getCurrentDateTime());
+    const entry = await this.knex<Session>(TableSession)
+      .select()
+      .where(FieldNameSession.oidcSid, oidcSid)
+      .andWhere(FieldNameSession.expiresAt, '>', nowDbTime)
+      .first();
+    if (entry === undefined) {
+      return null;
+    }
+    return {
+      ...this.convertDatabaseEntryToSession(entry),
+      id: entry[FieldNameSession.id],
+    };
   }
 
   /**
@@ -92,6 +135,8 @@ export class KnexSessionStore implements SessionStore {
       .catch((error: Error) => callback(error));
   }
 
+  private convertDatabaseEntryToSession(dbEntry: Session): FastifySession;
+  private convertDatabaseEntryToSession(dbEntry: Session | null): FastifySession | null;
   private convertDatabaseEntryToSession(dbEntry: Session | null): FastifySession | null {
     if (dbEntry === null) {
       return null;

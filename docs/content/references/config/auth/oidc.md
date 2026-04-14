@@ -24,8 +24,26 @@ As redirect URL you should configure
 `https://hedgedoc.example.com/api/private/auth/oidc/$NAME/callback` where `$NAME`
 is the identifier of the OIDC server. Remember to update the domain to your one.
 
-You can also configure servers that only support plain OAuth2 but
-no OIDC (e.g., GitHub or Discord). In this case, you need the following additional variables:
+## Back-Channel Logout
+
+HedgeDoc supports
+[OpenID Connect Back-Channel Logout 1.0](https://openid.net/specs/openid-connect-backchannel-1_0.html)
+which allows OIDC providers to directly notify HedgeDoc when a user logs out at the provider side.
+This ensures that user sessions are terminated immediately when they log out from the identity
+provider (Single Sign-Out).
+
+To enable back-channel logout, you need to register the back-channel logout URI at your
+OIDC provider:
+`https://hedgedoc.example.com/api/private/auth/oidc/$NAME/backchannel-logout`
+
+Replace `$NAME` with the identifier of the OIDC server. Update your domain as well.
+
+No configuration is needed on the HedgeDoc side.
+
+## OAuth2 fallback for non-OIDC-compliant servers
+
+You can also configure servers that only support plain OAuth2 but no OIDC (e.g., GitHub or Discord).
+In this case, you need the following additional variables:
 
 | environment variable                       | default              | example                                    | description                                                                              |
 |--------------------------------------------|----------------------|--------------------------------------------|------------------------------------------------------------------------------------------|
