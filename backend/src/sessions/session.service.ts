@@ -79,6 +79,38 @@ export class SessionService {
   }
 
   /**
+   * Terminates the session with the given OIDC session id (sid)
+   *
+   * @param sid The OIDC session id to terminate
+   * @returns A promise that resolves to true if the session was terminated successfully, false otherwise
+   */
+  async terminateSessionByOidcSid(sid: string): Promise<boolean> {
+    const session = await this.sessionStore.getByOidcSid(sid);
+    if (session === null) {
+      return false;
+    }
+    const sessionId = session.id;
+    await promisify(this.sessionStore.destroy.bind(this.sessionStore))(sessionId);
+    return true;
+  }
+
+  /**
+   * Terminates all sessions initiated by a specific user id
+   * @param userId The user id of the user whose sessions should be terminated
+   * @returns The number of terminated sessions
+   */
+  async terminateAllSessionsOfUser(userId: number): Promise<number> {
+    const sessions = await this.sessionStore.getAllByUser(userId);
+    const sessionIds = sessions.map((session) => session.id);
+    await Promise.all(
+      sessionIds.map((sessionId) =>
+        promisify(this.sessionStore.destroy.bind(this.sessionStore))(sessionId),
+      ),
+    );
+    return sessionIds.length;
+  }
+
+  /**
    * Parses the given session cookie content and extracts the session id
    *
    * @param rawCookie The cookie to parse
