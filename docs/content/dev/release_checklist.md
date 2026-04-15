@@ -81,7 +81,7 @@ Use this tar ball to test the following things:
 
 - [ ] User registration works
 - [ ] User login works
-- [ ] User self-deletion works
+- [ ] User self-deletion works (notes are deleted as well)
 
 ### Notes
 
@@ -108,7 +108,7 @@ Use this tar ball to test the following things:
 
 - [ ] Postgres works
 
-Run `docker run -d --name=hd1-pg -p 5432:5432 -e POSTGRES_USER=hd1db -e POSTGRES_PASSWORD=hd1db -e POSTGRES_DB=hd1db postgres:latest`
+Run `docker run -d --name=hd1-pg -p 5432:5432 -e POSTGRES_USER=hd1db -e POSTGRES_PASSWORD=hd1db -e POSTGRES_DB=hd1db --rm postgres:latest`
 and put this into your config:
 ```
 "db": {
@@ -196,10 +196,11 @@ opengraph:
 ### Auth
 
 - [ ] SAML
-  - config
+  - Download certificate from Authentik Admin -> Certificates -> auth.hedgedoc.cloud to `/tmp/auth.hedgedoc.cloud.pem`
+  - add to config.json:
 ```
 "saml": {
-  "idpSsoUrl": "https://auth.hedgedoc.cloud/application/saml/test-hd1/sso/binding/redirect/",
+  "idpSsoUrl": "https://auth.hedgedoc.cloud/application/saml/test-hd1-saml/sso/binding/redirect/",
   "idpCert": "/tmp/auth.hedgedoc.cloud.pem",
   "identifierFormat": "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent",
   "attribute": {
@@ -226,9 +227,10 @@ opengraph:
 }
 ```
 - [ ] OAuth2
+  - add to config.json and replace `REDACTED` with the proper client ID and secret
 ```
 "oauth2": {
-  "baseURL": "https://auth.hedgedoc.cloud/application/o/test-hedgedoc/",
+  "baseURL": "https://auth.hedgedoc.cloud/application/o/test-hd1-oauth2/",
   "userProfileURL": "https://auth.hedgedoc.cloud/application/o/userinfo/",
   "tokenURL": "https://auth.hedgedoc.cloud/application/o/token/",
   "authorizationURL": "https://auth.hedgedoc.cloud/application/o/authorize/",
