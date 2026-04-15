@@ -41,7 +41,7 @@
     "dompurify": "3.3.2",
     "ejs": "3.1.10",
     "express": "4.22.1",
-    "express-rate-limit": "8.2.1",
+    "express-rate-limit": "8.3.2",
     "express-session": "1.19.0",
     "file-type": "21.3.2",
     "formidable": "2.1.5",
