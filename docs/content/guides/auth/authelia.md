@@ -22,12 +22,11 @@ identity_providers:
     refresh_token_lifespan: 90m
     enable_client_debug_messages: false
     clients:
-      - id: HedgeDoc # this should be changed to something more secure
-        description: HedgeDoc SSO
+      - client_id: <random client id>
+        client_name: HedgeDoc
         secret: <client secret here>
         public: false
         authorization_policy: two_factor
-        audience: []
         scopes:
           - openid
           - email
@@ -43,7 +42,7 @@ identity_providers:
           - form_post
           - query
           - fragment
-        userinfo_signing_algorithm: none
+        token_endpoint_auth_method: 'client_secret_post'
 ```
 
 4. Restart Authelia to apply to new configuration and check for any errors in the log
@@ -53,7 +52,7 @@ identity_providers:
 - CMD_URL_ADDPORT=false
 - CMD_PROTOCOL_USESSL=true
 - CMD_OAUTH2_PROVIDERNAME=Authelia
-- CMD_OAUTH2_CLIENT_ID=HedgeDoc
+- CMD_OAUTH2_CLIENT_ID=<client id here>
 - CMD_OAUTH2_CLIENT_SECRET=<client secret here>
 - CMD_OAUTH2_SCOPE=openid email profile
 - CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR=sub
@@ -61,7 +60,7 @@ identity_providers:
 - CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR=email
 - CMD_OAUTH2_USER_PROFILE_URL=https://<your-authelia-url>/api/oidc/userinfo
 - CMD_OAUTH2_TOKEN_URL=https://<your-authelia-url>/api/oidc/token
-- CMD_OAUTH2_AUTHORIZATION_URL=https://<your-authelia-url>/api/oidc/authorize
+- CMD_OAUTH2_AUTHORIZATION_URL=https://<your-authelia-url>/api/oidc/authorization
 ```
 
 6. Run `docker-compose up -d` on HedgeDoc to apply your settings.
