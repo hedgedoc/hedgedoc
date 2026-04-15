@@ -1530,7 +1530,7 @@ __metadata:
     dompurify: "npm:3.4.0"
     ejs: "npm:3.1.10"
     emojify.js: "npm:1.1.0"
-    esbuild-loader: "npm:4.4.2"
+    esbuild-loader: "npm:4.4.3"
     eslint: "npm:9.39.4"
     eslint-config-standard: "npm:17.1.0"
     eslint-plugin-import: "npm:2.32.0"
@@ -6225,17 +6225,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild-loader@npm:4.4.2":
-  version: 4.4.2
-  resolution: "esbuild-loader@npm:4.4.2"
+"esbuild-loader@npm:4.4.3":
+  version: 4.4.3
+  resolution: "esbuild-loader@npm:4.4.3"
   dependencies:
     esbuild: "npm:^0.27.1"
     get-tsconfig: "npm:^4.10.1"
     loader-utils: "npm:^2.0.4"
-    webpack-sources: "npm:^1.4.3"
+    webpack-sources: "npm:^3.3.4"
   peerDependencies:
     webpack: ^4.40.0 || ^5.0.0
-  checksum: 10/d4c2f5a53f0e204bf9dc87f6767e59080fed016a3f54d8878a519a06fc82918bdb598f8eaab3bd47489566f4112f4737f1e00a5611f012e88d8d1f92eb8ccec6
+  checksum: 10/e5f7c2152e06abba37612c1c30d3ae161cc0c3168f671f4e7d37b1925155c6a4f80a3fde452370164a6069ec7d3cf34d064443efce83ecb975b0576cb0b909ec
   languageName: node
   linkType: hard
 
@@ -17574,6 +17574,13 @@ __metadata:
     source-list-map: "npm:^2.0.0"
     source-map: "npm:~0.6.1"
   checksum: 10/6237c5d1ba639a5d67bd1135c9bba487eadbd04c5e75a2849508013f13cb4b57387e689e0991c19a14a87085be7cc0b8dd1515422ae351f6e3f813ed100ccbb8
+  languageName: node
+  linkType: hard
+
+"webpack-sources@npm:^3.3.4":
+  version: 3.3.4
+  resolution: "webpack-sources@npm:3.3.4"
+  checksum: 10/714427b235b04c2d7cf229f204b9e65145ea3643da3c7b139ebfa8a51056238d1e3a2a47c3cc3fc8eab71ed4300f66405cdc7cff29cd2f7f6b71086252f81cf1
   languageName: node
   linkType: hard
 
