@@ -1,10 +1,14 @@
 # Release Notes
 
-## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
+## <i class="fa fa-tag"></i> 1.10.8 <i class="fa fa-calendar-o"></i> 2026-04-15
 
 ### Bugfixes
+
 - Fix data loss when 5+ users edit a document concurrently, caused by the OT client discarding operations during revision gap recovery ([#6342](https://github.com/hedgedoc/hedgedoc/issues/6342))
 - Add defensive null checks to `hex2rgb` to prevent crashes from non-hex color values
+
+### Contributors
+- [Dex Devlon](https://github.com/bxff)
 
 ## <i class="fa fa-tag"></i> 1.10.7 <i class="fa fa-calendar-o"></i> 2026-02-24
 
