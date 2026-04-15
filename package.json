@@ -102,7 +102,7 @@
     "toobusy-js": "0.5.1",
     "umzug": "2.3.0",
     "uuid": "11.1.0",
-    "validator": "13.15.26",
+    "validator": "13.15.35",
     "winston": "3.19.0",
     "xss": "1.0.15"
   },
