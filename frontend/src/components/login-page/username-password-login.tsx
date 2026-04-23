@@ -60,7 +60,6 @@ export const UsernamePasswordLogin: React.FC<UsernamePasswordLoginProps> = ({
 
   const onLoginSubmit = useCallback(
     (event: FormEvent) => {
-      let redirect = false
       setError(null)
       setLoading(true)
       lastUsernamePassword.current = [username, password]
@@ -69,13 +68,7 @@ export const UsernamePasswordLogin: React.FC<UsernamePasswordLoginProps> = ({
           if (response.newUser) {
             router.push('/new-user')
           } else {
-            redirect = true
             return fetchAndSetUser()
-          }
-        })
-        .then(() => {
-          if (redirect) {
-            router.push('/')
           }
         })
         .catch((error: Error) => setError(errorMapping(error)))

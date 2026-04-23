@@ -5,7 +5,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { NextPage } from 'next'
-import { useRouter } from 'next/navigation'
 import type { FormEvent } from 'react'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
@@ -21,7 +20,6 @@ import { PasswordAgainField } from '../../../common/fields/password-again-field'
 import { RegisterInfos } from './register-infos'
 import { RegisterError } from './register-error'
 import { fetchAndSetUser } from '../../utils/fetch-and-set-user'
-import { useGetPostLoginRedirectUrl } from '../../utils/use-get-post-login-redirect-url'
 import { MAX_USERNAME_LENGTH, MIN_PASSWORD_LENGTH, MIN_USERNAME_LENGTH } from '@hedgedoc/commons'
 
 /**
@@ -29,7 +27,6 @@ import { MAX_USERNAME_LENGTH, MIN_PASSWORD_LENGTH, MIN_USERNAME_LENGTH } from '@
  */
 export const LocalRegisterForm: NextPage = () => {
   useTranslation()
-  const router = useRouter()
 
   const [username, setUsername] = useState('')
   const [displayName, setDisplayName] = useState('')
@@ -38,18 +35,16 @@ export const LocalRegisterForm: NextPage = () => {
   const [error, setError] = useState<ApiError>()
 
   const { dispatchUiNotification } = useUiNotifications()
-  const postLoginRedirectUrl = useGetPostLoginRedirectUrl()
 
   const doRegisterSubmit = useCallback(
     (event: FormEvent) => {
       doLocalRegister(username, displayName, password)
         .then(() => fetchAndSetUser())
         .then(() => dispatchUiNotification('login.register.success.title', 'login.register.success.message', {}))
-        .then(() => router.push(postLoginRedirectUrl))
         .catch((error: ApiError) => setError(error))
       event.preventDefault()
     },
-    [username, displayName, password, dispatchUiNotification, router, postLoginRedirectUrl]
+    [username, displayName, password, dispatchUiNotification]
   )
 
   const ready = useMemo(() => {

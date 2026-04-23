@@ -51,12 +51,9 @@ export const NewUserCard: React.FC = () => {
         profilePicture
       })
         .then(() => fetchAndSetUser())
-        .then(() => {
-          router.push('/')
-        })
         .catch(showErrorNotificationBuilder('login.welcome.error'))
     },
-    [pictureChoice, value, username, displayName, showErrorNotificationBuilder, router]
+    [pictureChoice, value, username, displayName, showErrorNotificationBuilder]
   )
 
   const cancelUserCreation = useCallback(() => {
