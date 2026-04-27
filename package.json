@@ -139,7 +139,7 @@
     "@eslint/eslintrc": "3.3.5",
     "@eslint/js": "9.39.4",
     "@hedgedoc/codemirror-5": "5.65.12",
-    "abcjs": "6.6.2",
+    "abcjs": "6.6.3",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.3",
     "babel-loader": "7.1.5",
