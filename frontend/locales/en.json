@@ -614,7 +614,7 @@
   "notifications": {
     "noteDeleted": {
       "title": "Note '{{noteTitle}}' deleted",
-      "text": "You were redirected to the history page, because the note you just edited was deleted."
+      "text": "You were redirected to the explore page, because the note you just edited was deleted."
     }
   },
   "realtime": {
