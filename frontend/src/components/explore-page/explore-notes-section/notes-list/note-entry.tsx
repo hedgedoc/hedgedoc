@@ -21,6 +21,7 @@ import type { NoteExploreEntryInterface } from '@hedgedoc/commons'
 import { useTranslatedText } from '../../../../hooks/common/use-translated-text'
 import { Trans, useTranslation } from 'react-i18next'
 import { PinNoteMenuEntry } from './pin-note-menu-entry'
+import styles from './note-entry.module.css'
 
 interface NoteListEntryProps extends NoteExploreEntryInterface {
   isPinned: boolean
@@ -94,10 +95,10 @@ export const NoteListEntry: React.FC<NoteListEntryProps> = ({
         {tags.length > 0 && <br />}
         <NoteTags tags={tags} />
       </div>
-      <div className={'me-4'}>
+      <div className={styles['metadata-box']}>
         <UserAvatarForUsername username={owner} />
         <br />
-        <small className={'text-muted float-end'}>
+        <small className={'text-muted'}>
           <Trans i18nKey={relativeTime.key} values={{ timeAgo: relativeTime.value }} />
         </small>
       </div>
