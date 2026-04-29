@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import styles from './fullscreen-button.module.scss'
+import styles from './fullscreen-button.module.css'
 import React from 'react'
 import {
   ArrowsFullscreen as IconArrowsFullscreen,
@@ -18,6 +18,7 @@ import { useNoteLinks } from '../../../hooks/common/use-note-links'
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { NoteType } from '@hedgedoc/commons'
 import { LinkType } from '../../editor-page/sidebar/specific-sidebar-entries/share-note-sidebar-entry/share-modal/note-url-field'
+import { concatCssClasses } from '../../../utils/concat-css-classes'
 
 interface FullscreenButtonProps {
   linkToEditor: boolean
@@ -55,7 +56,15 @@ export const FullscreenButton: React.FC<FullscreenButtonProps> = ({ linkToEditor
   }
 
   return (
-    <Link href={correctLink} passHref={true} target={'_blank'} className={styles['fullscreen-button']}>
+    <Link
+      href={correctLink}
+      passHref={true}
+      target={'_blank'}
+      className={concatCssClasses({
+        [styles['fullscreen-button']]: true,
+        [styles['editor']]: !linkToEditor,
+        [styles['readonly']]: linkToEditor
+      })}>
       <Button variant={'secondary'}>
         <UiIcon icon={icon} />
       </Button>

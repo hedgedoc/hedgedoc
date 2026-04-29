@@ -6,9 +6,14 @@
 
 .fullscreen-button {
   position: fixed;
-  right: 4rem;
   bottom: 1rem;
   z-index: 900;
+  &.editor {
+    right: 4rem;
+  }
+  &.readonly {
+    right: 1.5rem;
+  }
 }
 
 @media print {
