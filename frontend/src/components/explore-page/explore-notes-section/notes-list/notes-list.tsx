@@ -103,7 +103,7 @@ export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, 
         </div>
       }
       endMessage={
-        <div className={'text-center fs-4'}>
+        <div className={'text-center fs-4 mt-4'}>
           <p>
             <Trans i18nKey={'explore.noMoreNotesFound'} />
           </p>
