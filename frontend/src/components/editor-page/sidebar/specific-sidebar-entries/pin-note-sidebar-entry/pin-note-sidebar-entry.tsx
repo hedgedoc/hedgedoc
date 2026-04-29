@@ -14,7 +14,7 @@ import { Pin as IconPin } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 import { WaitSpinner } from '../../../../common/wait-spinner/wait-spinner'
 import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
-import { setPinnedState } from '../../../../../api/explore'
+import { setNotePinStatus } from '../../../../../redux/pinned-notes/methods'
 
 /**
  * Sidebar entry button that toggles the pinned status of the current note in the history.
@@ -34,7 +34,7 @@ export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ class
       return
     }
     setLoading(true)
-    setPinnedState(noteAlias, !isPinned)
+    setNotePinStatus(noteAlias, !isPinned)
       .catch(showErrorNotificationBuilder(`explore.pinnedNotes.${isPinned ? 'un' : ''}pinError`, { alias: noteAlias }))
       .finally(() => setLoading(false))
   }, [noteAlias, isPinned, showErrorNotificationBuilder])
