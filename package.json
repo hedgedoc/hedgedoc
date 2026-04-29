@@ -38,7 +38,7 @@
     "cookie-parser": "1.4.7",
     "deep-freeze": "0.0.1",
     "diff-match-patch": "git+https://github.com/hackmdio/diff-match-patch.git#commit=59a9395ad9fe143e601e7ae5765ed943bdd2b11e",
-    "dompurify": "3.4.0",
+    "dompurify": "3.4.1",
     "ejs": "3.1.10",
     "express": "4.22.1",
     "express-rate-limit": "8.3.2",
