@@ -8,9 +8,8 @@ import { useIsNotePinned } from '../../../../../hooks/common/use-is-note-pinned'
 import { concatCssClasses } from '../../../../../utils/concat-css-classes'
 import { SidebarButton } from '../../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../../types'
-import styles from './pin-note-sidebar-entry.module.css'
 import React, { useCallback, useState } from 'react'
-import { Pin as IconPin } from 'react-bootstrap-icons'
+import { Pin as IconPin, PinFill as IconPinFill } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 import { WaitSpinner } from '../../../../common/wait-spinner/wait-spinner'
 import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
@@ -49,11 +48,7 @@ export const PinNoteSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ class
   }
 
   return (
-    <SidebarButton
-      icon={IconPin}
-      hide={hide}
-      onClick={onPinClicked}
-      className={concatCssClasses(className, { [styles['highlighted']]: isPinned })}>
+    <SidebarButton icon={isPinned ? IconPinFill : IconPin} hide={hide} onClick={onPinClicked} className={className}>
       <Trans i18nKey={`explore.pinnedNotes.is${isPinned ? 'Pinned' : 'Unpinned'}`} />
     </SidebarButton>
   )
