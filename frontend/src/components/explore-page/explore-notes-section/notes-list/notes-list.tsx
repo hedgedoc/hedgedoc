@@ -14,6 +14,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { useUiNotifications } from '../../../notifications/ui-notification-boundary'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import equal from 'fast-deep-equal'
+import styles from './note-entry.module.css'
 
 export interface NotesListProps {
   mode: Mode
@@ -92,6 +93,7 @@ export const NotesList: React.FC<NotesListProps> = ({ mode, sort, searchFilter, 
 
   return (
     <InfiniteScroll
+      className={styles['infinite-scroll']}
       dataLength={entries.length}
       next={fetchNextPage}
       hasMore={moreDataAvailable}
