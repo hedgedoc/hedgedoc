@@ -1035,7 +1035,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>=10.0.0":
+"@types/node@npm:*, @types/node@npm:>=10.0.0, @types/node@npm:>=18":
   version: 25.6.0
   resolution: "@types/node@npm:25.6.0"
   dependencies:
@@ -1050,15 +1050,6 @@ __metadata:
   dependencies:
     undici-types: "npm:~6.21.0"
   checksum: 10/8adcf9c2e9e7c524196efdd5ee60ebeda980b4ec9b5b8650e2341a2cabe46d368f3a4e4c0050b3bf26eb9cf383453ea2193ec5604079cdf9493a11a742f62018
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^24.0.13":
-  version: 24.12.2
-  resolution: "@types/node@npm:24.12.2"
-  dependencies:
-    undici-types: "npm:~7.16.0"
-  checksum: 10/99b9f15e67a4b3c39b39ad83ee0febad7f0b4709c004863104d7acfa4146dd7e58c12a08a9a7ff2be8c2eefd0063bf991fade0879d7c4a370a0ee7fd4c799e8a
   languageName: node
   linkType: hard
 
@@ -1579,7 +1570,7 @@ __metadata:
     lodash: "npm:4.18.1"
     lutim: "npm:1.0.3"
     lz-string: "git+https://github.com/hackmdio/lz-string.git#commit=6edfccb79cd8c210f03fd3bf18e41ca144fbeefb"
-    mariadb: "npm:3.4.5"
+    mariadb: "npm:3.5.2"
     markdown-it: "npm:13.0.2"
     markdown-it-abbr: "npm:1.0.4"
     markdown-it-container: "npm:3.0.0"
@@ -10107,16 +10098,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mariadb@npm:3.4.5":
-  version: 3.4.5
-  resolution: "mariadb@npm:3.4.5"
+"mariadb@npm:3.5.2":
+  version: 3.5.2
+  resolution: "mariadb@npm:3.5.2"
   dependencies:
     "@types/geojson": "npm:^7946.0.16"
-    "@types/node": "npm:^24.0.13"
+    "@types/node": "npm:>=18"
     denque: "npm:^2.1.0"
-    iconv-lite: "npm:^0.6.3"
+    iconv-lite: "npm:^0.7.2"
     lru-cache: "npm:^10.4.3"
-  checksum: 10/dce0d25124736a0b1db9ed002a8c0cfc54c0ebfce92f26b085fc8ef06f5c8873d49a55c5af61787acbd16bce8945cec862f8be9907202014c313c6a6e3f1f34e
+  checksum: 10/30743f1e4c75bd93220ea7e9900711fca550c494b942f6c498c81d898af3514531dc2eb7abaee64e6ae2c7d80579640f3f3fd8f37ac1bd8da499be0da00f3e87
   languageName: node
   linkType: hard
 
@@ -16835,13 +16826,6 @@ __metadata:
   version: 6.21.0
   resolution: "undici-types@npm:6.21.0"
   checksum: 10/ec8f41aa4359d50f9b59fa61fe3efce3477cc681908c8f84354d8567bb3701fafdddf36ef6bff307024d3feb42c837cf6f670314ba37fc8145e219560e473d14
-  languageName: node
-  linkType: hard
-
-"undici-types@npm:~7.16.0":
-  version: 7.16.0
-  resolution: "undici-types@npm:7.16.0"
-  checksum: 10/db43439f69c2d94cc29f75cbfe9de86df87061d6b0c577ebe9bb3255f49b22c50162a7d7eb413b0458b6510b8ca299ac7cff38c3a29fbd31af9f504bcf7fbc0d
   languageName: node
   linkType: hard
 
