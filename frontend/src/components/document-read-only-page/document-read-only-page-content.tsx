@@ -11,6 +11,8 @@ import { DocumentInfobar } from './document-infobar'
 import React, { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FullscreenButton } from '../render-page/fullscreen-button/fullscreen-button'
+import { CommunicatorImageLightbox } from '../markdown-renderer/extensions/image/communicator-image-lightbox'
+import { ExtensionEventEmitterProvider } from '../markdown-renderer/hooks/use-extension-event-emitter'
 
 /**
  * Renders the read-only version of a note with a header bar that contains information about the note.
@@ -22,12 +24,15 @@ export const DocumentReadOnlyPageContent: React.FC = () => {
   return (
     <Fragment>
       <DocumentInfobar />
-      <RendererIframe
-        frameClasses={'flex-fill h-100 w-100'}
-        markdownContentLines={markdownContentLines}
-        rendererType={RendererType.DOCUMENT}
-        onRendererStatusChange={setRendererStatus}
-      />
+      <ExtensionEventEmitterProvider>
+        <CommunicatorImageLightbox />
+        <RendererIframe
+          frameClasses={'flex-fill h-100 w-100'}
+          markdownContentLines={markdownContentLines}
+          rendererType={RendererType.DOCUMENT}
+          onRendererStatusChange={setRendererStatus}
+        />
+      </ExtensionEventEmitterProvider>
       <FullscreenButton linkToEditor={true} />
     </Fragment>
   )
