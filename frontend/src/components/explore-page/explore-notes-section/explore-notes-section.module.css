@@ -1,0 +1,13 @@
+/*
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+.filter-and-nav-box {
+  position: sticky;
+  z-index: 1020;
+  top: 0;
+  padding-block-end: 0.25rem;
+  background-color: var(--bs-body-bg);
+}

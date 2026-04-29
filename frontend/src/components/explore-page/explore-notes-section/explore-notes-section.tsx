@@ -13,6 +13,8 @@ import { useUrlParamState } from '../../../hooks/common/use-url-param-state'
 import { SortButton } from './filters/sort-button'
 import { NotesList } from './notes-list/notes-list'
 import { SortMode } from '@hedgedoc/commons'
+import { ModeSelection } from '../mode-selection/mode-selection'
+import styles from './explore-notes-section.module.css'
 
 export interface ExploreNotesSectionProps {
   mode: Mode
@@ -44,11 +46,14 @@ export const ExploreNotesSection: React.FC<ExploreNotesSectionProps> = ({ mode }
 
   return (
     <Fragment>
-      <search className={'d-flex gap-2 mb-2'}>
-        <FilterByNoteType value={filterByType} onChange={setFilterByType} />
-        <FilterBySearchTerm value={searchFilter} onChange={setSearchFilter} />
-        <SortButton selected={sortMode} onChange={setSortMode} showLastVisitedOptions={mode === Mode.VISITED} />
-      </search>
+      <div className={styles['filter-and-nav-box']}>
+        <ModeSelection />
+        <search className={'d-flex gap-2 mb-2'}>
+          <FilterByNoteType value={filterByType} onChange={setFilterByType} />
+          <FilterBySearchTerm value={searchFilter} onChange={setSearchFilter} />
+          <SortButton selected={sortMode} onChange={setSortMode} showLastVisitedOptions={mode === Mode.VISITED} />
+        </search>
+      </div>
       <NotesList mode={mode} sort={sortMode} searchFilter={searchFilter} typeFilter={filterByType} />
     </Fragment>
   )
