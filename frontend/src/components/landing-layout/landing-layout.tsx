@@ -8,7 +8,7 @@ import React from 'react'
 import { Container } from 'react-bootstrap'
 
 /**
- * Renders the layout for both intro and history page.
+ * Renders the layout for both intro and explore page.
  *
  * @param children The children that should be rendered on the page.
  */
