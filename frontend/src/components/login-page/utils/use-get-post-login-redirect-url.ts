@@ -9,7 +9,7 @@ const defaultFallback = '/explore/my'
 
 /**
  * Returns the URL that the user should be redirected to after logging in.
- * If no parameter has been provided or if the URL is not relative, then "/history" will be used.
+ * If no parameter has been provided or if the URL is not relative, then "/explore/my" will be used.
  */
 export const useGetPostLoginRedirectUrl = (): string => {
   const redirectBackUrl = useSingleStringUrlParameter('redirectBackTo', defaultFallback)

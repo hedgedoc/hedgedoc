@@ -10,7 +10,7 @@ import { useGetPostLoginRedirectUrl } from './utils/use-get-post-login-redirect-
 
 /**
  * Redirects the browser to the relative URL that is provided via "redirectBackTo" URL parameter.
- * If no parameter has been provided or if the URL is not relative, then "/history" will be used.
+ * If no parameter has been provided or if the URL is not relative, then "/explore/my" will be used.
  */
 export const RedirectToParamOrExplore: React.FC = () => {
   const redirectUrl = useGetPostLoginRedirectUrl()
