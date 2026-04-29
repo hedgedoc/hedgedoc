@@ -9,7 +9,6 @@ import type { PropsWithChildren } from 'react'
 import React, { Fragment, useEffect } from 'react'
 import { Container } from 'react-bootstrap'
 import { Welcome } from '../../../components/explore-page/welcome'
-import { ModeSelection } from '../../../components/explore-page/mode-selection/mode-selection'
 import { PinnedNotes } from '../../../components/explore-page/pinned-notes/pinned-notes'
 import { loadPinnedNotes } from '../../../redux/pinned-notes/methods'
 import { useUiNotifications } from '../../../components/notifications/ui-notification-boundary'
@@ -32,10 +31,7 @@ export default function ExploreLayout({ children }: ExploreLayoutProps) {
         <Welcome />
       </Container>
       <PinnedNotes />
-      <Container>
-        <ModeSelection />
-        {children}
-      </Container>
+      <Container>{children}</Container>
     </Fragment>
   )
 }
