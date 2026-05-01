@@ -9,7 +9,7 @@ import type { NoteDetails } from '../../../../../../redux/note-details/types'
 import { mockI18n } from '../../../../../../test-utils/mock-i18n'
 import { mockNotePermissions } from '../../../../../../test-utils/mock-note-permissions'
 import { AliasesAddForm } from './aliases-add-form'
-import { act, render, screen } from '@testing-library/react'
+import { act, render, type RenderResult, screen } from '@testing-library/react'
 import testEvent from '@testing-library/user-event'
 import React from 'react'
 import { mockUiNotifications } from '../../../../../../test-utils/mock-ui-notifications'
@@ -20,6 +20,9 @@ jest.mock('../../../../../../hooks/common/use-application-state')
 jest.mock('../../../../../notifications/ui-notification-boundary')
 
 describe('AliasesAddForm', () => {
+  let view: RenderResult
+  let input: HTMLElement
+  let button: HTMLElement
   beforeEach(async () => {
     await mockI18n()
     mockUiNotifications()
@@ -28,6 +31,9 @@ describe('AliasesAddForm', () => {
     mockNotePermissions('test', 'test', undefined, {
       noteDetails: { primaryAlias: 'mock-alias-primary' } as NoteDetails
     })
+    view = render(<AliasesAddForm />)
+    input = await screen.findByTestId('addAliasInput')
+    button = await screen.findByTestId('addAliasButton')
   })
 
   afterAll(() => {
@@ -36,17 +42,25 @@ describe('AliasesAddForm', () => {
   })
 
   it('renders the input form', async () => {
-    const view = render(<AliasesAddForm />)
     expect(view.container).toMatchSnapshot()
-    const button = await screen.findByTestId('addAliasButton')
+  })
+  it('valid alias does not show error and enables submit button', async () => {
     expect(button).toBeDisabled()
-    const input = await screen.findByTestId('addAliasInput')
     await testEvent.type(input, 'mock-alias-new')
+    expect(input).not.toHaveClass('is-invalid')
     expect(button).toBeEnabled()
     await act<void>(() => {
       button.click()
     })
     expect(AliasModule.addAlias).toHaveBeenCalledWith('mock-alias-primary', 'mock-alias-new')
     expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
+  })
+
+  it('invalid alias shows error and disables submit button', async () => {
+    input = await screen.findByTestId('addAliasInput')
+    await testEvent.type(input, ' ')
+    expect(input).toHaveClass('is-invalid')
+    button = await screen.findByTestId('addAliasButton')
+    expect(button).toBeDisabled()
   })
 })
