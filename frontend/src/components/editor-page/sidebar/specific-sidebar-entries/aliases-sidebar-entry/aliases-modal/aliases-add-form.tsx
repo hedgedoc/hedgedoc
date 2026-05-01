@@ -46,6 +46,9 @@ export const AliasesAddForm: React.FC = () => {
   const onNewAliasInputChange = useOnInputChange(setNewAlias)
 
   const newAliasValid = useMemo(() => {
+    if (newAlias === '') {
+      return true
+    }
     return ALIAS_REGEX.test(newAlias)
   }, [newAlias])
 
