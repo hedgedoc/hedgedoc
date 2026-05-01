@@ -448,7 +448,8 @@
         },
         "inconsistent": "This permission is overridden by another permission",
         "visibility": "Visibility",
-        "publiclyVisible": "Show on the public explore page"
+        "publiclyVisible": "Show on the public explore page",
+        "publiclyVisibleExplanation": "Activating this does not circumvent any permissions set.\nSo only users that are otherwise allowed to view this note, can find it on the public explore page."
       },
       "shareLink": {
         "title": "Share link",
