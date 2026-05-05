@@ -8,7 +8,7 @@ import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-re
 import { PutApiRequestBuilder } from '../common/api-request-builder/put-api-request-builder'
 import type { AliasCreateInterface, AliasUpdateInterface } from '@hedgedoc/commons'
 import { GetApiRequestBuilder } from '../common/api-request-builder/get-api-request-builder'
-import type { NoteAliasesInterface } from '@hedgedoc/commons/dist/esm'
+import type { NoteAliasesInterface } from '@hedgedoc/commons'
 
 /**
  * Fetches the list of available aliases for a given note identified by one known alias.

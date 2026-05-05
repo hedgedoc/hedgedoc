@@ -14,7 +14,7 @@ import { buildStateFromMetadataUpdate } from './reducers/build-state-from-metada
 import type { CursorSelection } from '../../components/editor-page/editor-pane/tool-bar/formatters/types/cursor-selection'
 import { buildStateFromUpdateCursorPosition } from './reducers/build-state-from-update-cursor-position'
 import type { NoteInterface, NoteMetadataInterface, NotePermissionsInterface } from '@hedgedoc/commons'
-import type { NoteAliasesInterface } from '@hedgedoc/commons/dist/esm'
+import type { NoteAliasesInterface } from '@hedgedoc/commons'
 import { buildStateFromAliasesUpdate } from './reducers/build-state-from-aliases-update'
 
 const noteDetailsSlice = createSlice({

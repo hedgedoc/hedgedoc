@@ -6,13 +6,14 @@
 import { measurePerformance } from '../../../utils/measure-performance'
 import type { ParserOptions } from '@hedgedoc/html-to-react'
 import { convertHtmlToReact } from '@hedgedoc/html-to-react'
-import DOMPurify from 'dompurify'
 // see https://github.com/cure53/DOMPurify/issues/1034#issuecomment-2493211056
+import type { Config as DOMPurifyConfig } from 'dompurify'
+import DOMPurify from 'dompurify'
 import React, { Fragment, useMemo } from 'react'
 
 export interface HtmlToReactProps {
   htmlCode: string
-  domPurifyConfig?: DOMPurify.Config
+  domPurifyConfig?: DOMPurifyConfig
   parserOptions?: ParserOptions
 }
 

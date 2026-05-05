@@ -11,7 +11,7 @@ import { useConfiguredMarkdownIt } from './hooks/use-configured-markdown-it'
 import { LineContentToLineIdMapper } from './utils/line-content-to-line-id-mapper'
 import { NodeToReactTransformer } from './utils/node-to-react-transformer'
 import type { ParserOptions } from '@hedgedoc/html-to-react'
-import type DOMPurify from 'dompurify'
+import type { Config as DOMPurifyConfig } from 'dompurify'
 import React, { useEffect, useMemo } from 'react'
 
 export interface MarkdownToReactProps {
@@ -70,7 +70,7 @@ export const MarkdownToReact: React.FC<MarkdownToReactProps> = ({
       markdownIt.render(markdownContentLines.join('\n'))
     )
   }, [markdownContentLines, markdownIt])
-  const domPurifyConfig: DOMPurify.Config = useMemo(
+  const domPurifyConfig: DOMPurifyConfig = useMemo(
     () => ({
       ADD_TAGS: markdownRenderExtensions.flatMap((extension) => extension.buildTagNameAllowList())
     }),
