@@ -10,9 +10,7 @@ import {
 } from '../../../components/markdown-renderer/replace-components/component-replacer'
 import { BlockquoteExtraTagMarkdownExtension } from './blockquote-extra-tag-markdown-extension'
 import { Optional } from '@mrdrogdrog/optional'
-import type { Element } from 'domhandler'
-import { isText } from 'domhandler'
-import type { Text } from 'domhandler/lib/node'
+import { isText, type Text, type Element } from 'domhandler'
 
 /**
  * Replaces <blockquote-tag> elements with "color" as label and a valid color as content
