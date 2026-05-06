@@ -15,7 +15,7 @@ export const RegisterInfos: React.FC = () => {
   useTranslation()
   const specialUrls = useFrontendConfig().specialUrls
 
-  if (specialUrls.termsOfUse === undefined && specialUrls.privacy === undefined) {
+  if (specialUrls.termsOfUse === null && specialUrls.privacy === null) {
     return null
   }
 
@@ -23,12 +23,12 @@ export const RegisterInfos: React.FC = () => {
     <>
       <Trans i18nKey='login.register.infoTermsPrivacy' />
       <ul>
-        {specialUrls.termsOfUse !== undefined && (
+        {specialUrls.termsOfUse !== null && (
           <li>
             <TranslatedExternalLink i18nKey='appbar.help.legal.termsOfUse' href={specialUrls.termsOfUse ?? ''} />
           </li>
         )}
-        {specialUrls.privacy !== undefined && (
+        {specialUrls.privacy !== null && (
           <li>
             <TranslatedExternalLink i18nKey='appbar.help.legal.privacy' href={specialUrls.privacy ?? ''} />
           </li>
