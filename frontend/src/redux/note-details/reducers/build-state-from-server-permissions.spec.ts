@@ -24,7 +24,8 @@ describe('build state from server permissions', () => {
           groupName: 'test-group',
           canEdit: false
         }
-      ]
+      ],
+      publiclyVisible: false
     }
     expect(buildStateFromServerPermissions(state, permissions)).toStrictEqual({ ...state, permissions: permissions })
   })

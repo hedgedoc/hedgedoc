@@ -33,7 +33,7 @@ export const PinnedNoteCard: React.FC<NoteExploreEntryInterface> = ({ title, las
   const lastChangedString = useMemo(() => formatChangedAt(lastChangedAt), [lastChangedAt])
 
   const onClickUnpin = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
+    (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault()
       unpinNote(primaryAlias).catch(
         showErrorNotificationBuilder('explore.pinnedNotes.unpinError', { name: primaryAlias })
@@ -46,10 +46,10 @@ export const PinnedNoteCard: React.FC<NoteExploreEntryInterface> = ({ title, las
     <Card className={`${styles.card}`} as={Link} href={`/n/${primaryAlias}`}>
       <Card.Body className={`${styles.cardBody}`}>
         <div className={'d-flex align-items-center'}>
-          <div onClick={onClickUnpin} title={labelUnpinNote}>
+          <button type={'button'} onClick={onClickUnpin} title={labelUnpinNote} className={'unstyled-button'}>
             <UiIcon icon={IconPinned} size={1.5} className={`${styles.bookmark}`} />
             <div className={`${styles.star}`} />
-          </div>
+          </button>
           <span className={'me-2'}>
             <NoteTypeIcon noteType={type} size={3} />
           </span>

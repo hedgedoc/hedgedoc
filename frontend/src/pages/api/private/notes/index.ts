@@ -38,7 +38,8 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
               groupName: '_LOGGED_IN',
               canEdit: false
             }
-          ]
+          ],
+          publiclyVisible: true
         }
       },
       editedByAtPosition: []

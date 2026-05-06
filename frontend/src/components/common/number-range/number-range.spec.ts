@@ -5,7 +5,7 @@
  */
 import { createNumberRangeArray } from './number-range'
 
-describe('number range', () => {
+describe('createNumberRangeArray', () => {
   it('creates an empty number range', () => {
     expect(createNumberRangeArray(0)).toEqual([])
   })
@@ -15,6 +15,6 @@ describe('number range', () => {
   })
 
   it('fails with a negative range', () => {
-    expect(() => createNumberRangeArray(-1)).toThrow()
+    expect(() => createNumberRangeArray(-1)).toThrow('Invalid array length')
   })
 })

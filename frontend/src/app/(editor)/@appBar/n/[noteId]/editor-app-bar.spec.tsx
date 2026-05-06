@@ -38,7 +38,8 @@ const mockedCommonAppState = {
           canEdit: false
         }
       ] as NoteGroupPermissionEntryInterface[],
-      sharedToUsers: [] as NoteUserPermissionEntryInterface[]
+      sharedToUsers: [] as NoteUserPermissionEntryInterface[],
+      publiclyVisible: false
     }
   },
   user: {

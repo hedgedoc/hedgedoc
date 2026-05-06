@@ -14,14 +14,14 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
       createdAt: '2022-03-20T20:36:32Z',
       uuid: '5355ed83-7e12-4db0-95ed-837e124db08c',
       fileName: 'dummy.png',
-      noteId: 'features'
+      noteAlias: 'features'
     },
     {
       username: 'tilman',
       createdAt: '2022-03-20T20:36:57+0000',
       uuid: '656745ab-fbf9-47f1-a745-abfbf9a7f10c',
       fileName: 'dummy2.png',
-      noteId: null
+      noteAlias: null
     }
   ])
 }

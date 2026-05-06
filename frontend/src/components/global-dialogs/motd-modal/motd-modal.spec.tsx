@@ -58,13 +58,13 @@ describe('motd modal', () => {
       </MotdProvider>
     )
     await screen.findByTestId('motd-renderer')
-    expect(view.container).toMatchSnapshot()
+    expect(view.container).toMatchSnapshot('renders motd modal')
 
     const button = await screen.findByTestId('motd-dismiss')
     await act<void>(() => {
       button.click()
     })
-    expect(view.container).toMatchSnapshot()
+    expect(view.container).toMatchSnapshot('modal is dismissed')
   })
 
   it("doesn't render a modal if no motd has been fetched", async () => {

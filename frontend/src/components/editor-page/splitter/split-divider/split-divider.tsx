@@ -66,7 +66,14 @@ export const SplitDivider: React.FC<SplitDividerProps> = ({
           <Button variant={focusLeft ? 'secondary' : 'light'} onClick={onLeftButtonClick}>
             <UiIcon icon={IconArrowLeft} />
           </Button>
-          <span onMouseDown={onGrab} onTouchStart={onGrab} className={styles['grabber']}>
+          {/* oxlint-disable-next-line jsx_a11y/no-static-element-interactions */}
+          <span
+            role={'separator'}
+            aria-orientation={'vertical'}
+            tabIndex={0}
+            onMouseDown={onGrab}
+            onTouchStart={onGrab}
+            className={styles['grabber']}>
             <UiIcon icon={IconArrowLeftRight} />
           </span>
           <Button variant={focusRight ? 'secondary' : 'light'} onClick={onRightButtonClick}>

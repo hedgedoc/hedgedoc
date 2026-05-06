@@ -87,7 +87,7 @@ export const UiNotificationBoundary: React.FC<PropsWithChildren> = ({ children }
     (messageI18nKey: string, messageI18nOptions: Record<string, unknown> = {}, showErrorMessage = false) =>
       (error: Error): void => {
         log.error(t(messageI18nKey, messageI18nOptions), error)
-         dispatchUiNotification('common.errorOccurred', messageI18nKey, {
+        dispatchUiNotification('common.errorOccurred', messageI18nKey, {
           contentI18nOptions: showErrorMessage
             ? { ...messageI18nOptions, errorMessage: error.message }
             : messageI18nOptions,

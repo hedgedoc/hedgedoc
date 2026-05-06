@@ -37,6 +37,7 @@ export interface ClickShieldProps extends PropsWithChildren<PropsWithDataCypress
  * @param targetDescription The name of the target service
  * @param hoverIcon The name of an icon that should be shown in the preview
  * @param fallbackBackgroundColor A color that should be used if no background image was provided or could be loaded.
+ * @param fallbackLink The link that should be shown in the print preview.
  * @param children The children element that should be shielded.
  */
 export const ClickShield: React.FC<ClickShieldProps> = ({
@@ -130,7 +131,7 @@ export const ClickShield: React.FC<ClickShieldProps> = ({
   return (
     <Fragment>
       <span className={containerClassName} {...cypressId(props['data-cypress-id'])}>
-        <span className={`d-inline-block ratio ratio-16x9 ${styles['click-shield']}`} onClick={doShowChildren}>
+        <button className={`d-inline-block ratio ratio-16x9 ${styles['click-shield']}`} onClick={doShowChildren}>
           {previewBackground}
           <span className={`${styles['preview-hover']}`}>
             <span>
@@ -138,7 +139,7 @@ export const ClickShield: React.FC<ClickShieldProps> = ({
             </span>
             {icon}
           </span>
-        </span>
+        </button>
       </span>
       <PrintLink link={fallbackLink} />
     </Fragment>

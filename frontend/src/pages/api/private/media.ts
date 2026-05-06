@@ -22,7 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
     {
       uuid: 'e81f57cd-5866-4253-9f57-cd5866a253ca',
       fileName: 'avatar.png',
-      noteId: null,
+      noteAlias: null,
       username: 'test',
       createdAt: '2022-02-27T21:54:23.856Z'
     },

@@ -6,22 +6,16 @@
 import { mockI18n } from '../../../../test-utils/mock-i18n'
 import { SingleLineRegexLinter } from './single-line-regex-linter'
 import type { Diagnostic } from '@codemirror/lint'
-import type { EditorState, Text } from '@codemirror/state'
-import type { EditorView } from '@codemirror/view'
-import { Mock } from 'ts-mockery'
+import { mockEditorView } from './mock-editor-view'
 
-export const mockEditorView = (content: string): EditorView => {
-  const docMock = Mock.of<Text>()
-  docMock.toString = () => content
-  return Mock.of<EditorView>({
-    state: Mock.of<EditorState>({
-      doc: docMock
-    }),
-    dispatch: jest.fn()
-  })
-}
-
-const testSingleLineRegexLinter = (
+/**
+ * Expects that the linter returns the expected diagnostics for the given regex and content.
+ * @param regex The regex that should be used to find the expected diagnostics
+ * @param replace The function that should be used to replace the matched text
+ * @param content The content that should be used to find the expected diagnostics
+ * @param expectedDiagnostics Array of expected diagnostics that should be returned by the linter
+ */
+const expectSingleLineRegexLinterResult = (
   regex: RegExp,
   replace: (match: string) => string,
   content: string,
@@ -48,7 +42,7 @@ describe('SingleLineRegexLinter', () => {
     await mockI18n()
   })
   it('works for a simple regex', () => {
-    testSingleLineRegexLinter(/^foo$/, () => 'bar', 'This\nis\na\ntest\nfoo\nbar\n123', [
+    expectSingleLineRegexLinterResult(/^foo$/, () => 'bar', 'This\nis\na\ntest\nfoo\nbar\n123', [
       {
         from: 15,
         to: 18
@@ -56,7 +50,7 @@ describe('SingleLineRegexLinter', () => {
     ])
   })
   it('works for a multiple hits', () => {
-    testSingleLineRegexLinter(/^foo$/, () => 'bar', 'This\nfoo\na\ntest\nfoo\nbar\n123', [
+    expectSingleLineRegexLinterResult(/^foo$/, () => 'bar', 'This\nfoo\na\ntest\nfoo\nbar\n123', [
       {
         from: 5,
         to: 8
@@ -68,6 +62,6 @@ describe('SingleLineRegexLinter', () => {
     ])
   })
   it('work if there are no hits', () => {
-    testSingleLineRegexLinter(/^nothing$/, () => 'bar', 'This\nfoo\na\ntest\nfoo\nbar\n123', [])
+    expectSingleLineRegexLinterResult(/^nothing$/, () => 'bar', 'This\nfoo\na\ntest\nfoo\nbar\n123', [])
   })
 })

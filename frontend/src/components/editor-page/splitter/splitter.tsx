@@ -142,7 +142,13 @@ export const Splitter: React.FC<SplitterProps> = ({ additionalContainerClassName
         resizingInProgress ? ' ' + styles.resizing : ''
       }`}>
       {resizingInProgress && (
+        // oxlint-disable-next-line jsx_a11y/no-static-element-interactions
         <div
+          role={'separator'}
+          aria-orientation={'vertical'}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={adjustedRelativeSplitValue}
           className={styles['move-overlay']}
           onTouchMove={onMove}
           onMouseMove={onMove}

@@ -17,15 +17,12 @@ jest.mock('../../../../../../redux/note-details/methods')
 jest.mock('../../../../../notifications/ui-notification-boundary')
 jest.mock('../../../../../../hooks/common/use-application-state')
 
-const deletePromise = Promise.resolve()
-const markAsPrimaryPromise = Promise.resolve({ name: 'mock-alias', isPrimaryAlias: true })
-
 describe('AliasesListEntry', () => {
   beforeEach(async () => {
     await mockI18n()
     mockUiNotifications()
-    jest.spyOn(AliasModule, 'deleteAlias').mockImplementation(() => deletePromise)
-    jest.spyOn(AliasModule, 'markAliasAsPrimary').mockImplementation(() => markAsPrimaryPromise)
+    jest.spyOn(AliasModule, 'deleteAlias').mockImplementation(() => Promise.resolve())
+    jest.spyOn(AliasModule, 'markAliasAsPrimary').mockImplementation(() => Promise.resolve())
     jest.spyOn(NoteDetailsReduxModule, 'updateMetadata').mockImplementation(() => Promise.resolve())
   })
 
@@ -67,7 +64,6 @@ describe('AliasesListEntry', () => {
       buttonRemove.click()
     })
     expect(AliasModule.deleteAlias).toBeCalledWith('mock-alias-other')
-    await deletePromise
     expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
   })
 
@@ -82,7 +78,6 @@ describe('AliasesListEntry', () => {
       buttonMakePrimary.click()
     })
     expect(AliasModule.markAliasAsPrimary).toBeCalledWith('mock-alias-other')
-    await markAsPrimaryPromise
     expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
   })
 

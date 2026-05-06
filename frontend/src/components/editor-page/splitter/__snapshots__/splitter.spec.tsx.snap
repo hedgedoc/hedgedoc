@@ -34,7 +34,10 @@ exports[`Splitter resize can change size with mouse 1`] = `
             BootstrapIconMock_ArrowLeft
           </button>
           <span
+            aria-orientation="vertical"
             class="grabber"
+            role="separator"
+            tabindex="0"
           >
             BootstrapIconMock_ArrowLeftRight
           </span>
@@ -62,7 +65,7 @@ exports[`Splitter resize can change size with mouse 1`] = `
 </div>
 `;
 
-exports[`Splitter resize can change size with touch 1`] = `
+exports[`Splitter resize can change size with touch: touch initial 1`] = `
 <div>
   <div
     class="flex-fill flex-row d-flex "
@@ -96,7 +99,10 @@ exports[`Splitter resize can change size with touch 1`] = `
             BootstrapIconMock_ArrowLeft
           </button>
           <span
+            aria-orientation="vertical"
             class="grabber"
+            role="separator"
+            tabindex="0"
           >
             BootstrapIconMock_ArrowLeftRight
           </span>
@@ -124,7 +130,7 @@ exports[`Splitter resize can change size with touch 1`] = `
 </div>
 `;
 
-exports[`Splitter resize can change size with touch 2`] = `
+exports[`Splitter resize can change size with touch: touch move to left 1`] = `
 <div>
   <div
     class="flex-fill flex-row d-flex "
@@ -158,7 +164,10 @@ exports[`Splitter resize can change size with touch 2`] = `
             BootstrapIconMock_ArrowLeft
           </button>
           <span
+            aria-orientation="vertical"
             class="grabber"
+            role="separator"
+            tabindex="0"
           >
             BootstrapIconMock_ArrowLeftRight
           </span>
@@ -186,7 +195,7 @@ exports[`Splitter resize can change size with touch 2`] = `
 </div>
 `;
 
-exports[`Splitter resize can change size with touch 3`] = `
+exports[`Splitter resize can change size with touch: touch move to middle 1`] = `
 <div>
   <div
     class="flex-fill flex-row d-flex "
@@ -220,7 +229,10 @@ exports[`Splitter resize can change size with touch 3`] = `
             BootstrapIconMock_ArrowLeft
           </button>
           <span
+            aria-orientation="vertical"
             class="grabber"
+            role="separator"
+            tabindex="0"
           >
             BootstrapIconMock_ArrowLeftRight
           </span>
@@ -248,7 +260,7 @@ exports[`Splitter resize can change size with touch 3`] = `
 </div>
 `;
 
-exports[`Splitter resize can change size with touch 4`] = `
+exports[`Splitter resize can change size with touch: touch move to right 1`] = `
 <div>
   <div
     class="flex-fill flex-row d-flex "
@@ -282,7 +294,10 @@ exports[`Splitter resize can change size with touch 4`] = `
             BootstrapIconMock_ArrowLeft
           </button>
           <span
+            aria-orientation="vertical"
             class="grabber"
+            role="separator"
+            tabindex="0"
           >
             BootstrapIconMock_ArrowLeftRight
           </span>
