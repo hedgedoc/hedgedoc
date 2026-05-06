@@ -3,6 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeAll, beforeEach, afterEach, jest } from '@jest/globals';
+import type { SpyInstance } from 'jest-mock';
 import {
   FieldNameAlias,
   FieldNameAuthorshipInfo,
@@ -155,8 +157,7 @@ describe('RevisionsService', () => {
   });
 
   describe('purgeRevisions', () => {
-    let spyOnGetPrimaryAlias: jest.SpyInstance;
-    // oxlint-disable-next-line func-style
+    let spyOnGetPrimaryAlias: SpyInstance<typeof aliasService.getPrimaryAliasByNoteId>;
     const buildMockSelect = (returnValues: unknown) => {
       mockSelect(tracker, [], TableRevision, [FieldNameRevision.noteId], returnValues);
     };

@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeAll, afterAll, jest } from '@jest/globals';
 import { MessageType, RealtimeDoc } from '@hedgedoc/commons';
 
 import { RealtimeNote } from './realtime-note';

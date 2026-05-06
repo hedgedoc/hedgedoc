@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeAll, beforeEach, afterEach, jest } from '@jest/globals';
 import { AuthProviderType } from '@hedgedoc/commons';
 import { FieldNameSession, Session, TableSession } from '@hedgedoc/database';
 import { Session as FastifySession } from 'fastify';

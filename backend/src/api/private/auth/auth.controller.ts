@@ -47,7 +47,7 @@ export class AuthController {
     if (request.session.loginAuthProviderType === AuthProviderType.OIDC) {
       logoutUrl = this.oidcService.getLogoutUrl(request);
     }
-    const destroySessionPromise = promisify(request.session.destroy).bind(request.session);
+    const destroySessionPromise = promisify(request.session.destroy.bind(request.session));
     try {
       await destroySessionPromise();
       return LogoutResponseDto.create({

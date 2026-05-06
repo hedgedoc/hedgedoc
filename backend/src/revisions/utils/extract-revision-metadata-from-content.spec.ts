@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect } from '@jest/globals';
 import { extractRevisionMetadataFromContent } from './extract-revision-metadata-from-content';
 
 describe('revision entity', () => {

@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeAll, beforeEach, afterEach, jest } from '@jest/globals';
 import { SortMode } from '@hedgedoc/commons';
 import { OptionalNoteType, OptionalSortMode } from '@hedgedoc/commons';
 import {

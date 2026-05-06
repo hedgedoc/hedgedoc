@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { Tracker } from 'knex-mock-client';
+import { expect } from '@jest/globals';
 
 export const IS_FIRST = 1;
 

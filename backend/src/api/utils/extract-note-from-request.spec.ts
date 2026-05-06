@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeEach } from '@jest/globals';
 import { Note } from '@hedgedoc/database';
 import { Mock } from 'ts-mockery';
 

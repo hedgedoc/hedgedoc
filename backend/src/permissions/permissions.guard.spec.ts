@@ -3,21 +3,23 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeEach, jest } from '@jest/globals';
+import type { SpyInstance } from 'jest-mock';
 import { PermissionLevel, PermissionLevelNames } from '@hedgedoc/commons';
-import { ExecutionContext } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
+import type { ExecutionContext } from '@nestjs/common';
+import type { Reflector } from '@nestjs/core';
 import { Mock } from 'ts-mockery';
 
 import * as ExtractNoteIdOrAliasModule from '../api/utils/extract-note-id-from-request';
-import { CompleteRequest } from '../api/utils/request.type';
-import { ConsoleLoggerService } from '../logger/console-logger.service';
-import { PermissionService } from './permission.service';
+import type { CompleteRequest } from '../api/utils/request.type';
+import type { ConsoleLoggerService } from '../logger/console-logger.service';
+import type { PermissionService } from './permission.service';
 import { PermissionsGuard } from './permissions.guard';
 import { PERMISSION_METADATA_KEY } from './require-permission.decorator';
+import type { extractNoteIdFromRequest } from '../api/utils/extract-note-id-from-request';
 
 jest.mock('../api/utils/extract-note-id-from-request');
 
-// oxlint-disable-next-line func-style
 const buildContext = (userId: number | undefined, handler: () => void): ExecutionContext => {
   const request = Mock.of<CompleteRequest>({
     userId: userId,
@@ -38,7 +40,7 @@ describe('PermissionsGuard', () => {
   let handler: () => void;
   let permissionsService: PermissionService;
   let permissionGuard: PermissionsGuard;
-  let spyOnExtractNoteId: jest.SpyInstance;
+  let spyOnExtractNoteId: SpyInstance<typeof extractNoteIdFromRequest>;
 
   const mockUserId = 42;
   const mockNoteId = 23;

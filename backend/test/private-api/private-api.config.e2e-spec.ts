@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, afterEach } from '@jest/globals';
 import { PRIVATE_API_PREFIX } from '../../src/app.module';
 import { getServerVersionFromPackageJson } from '../../src/utils/server-version';
 import { TestSetup, TestSetupBuilder } from '../test-setup';

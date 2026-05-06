@@ -45,7 +45,7 @@ export class CsrfGuard implements CanActivate {
       throw new ForbiddenException('CSRF token required');
     }
 
-    const csrfProtection = request.server.csrfProtection;
+    const csrfProtection = request.server.csrfProtection.bind(request.server);
     if (!csrfProtection) {
       throw new ForbiddenException('CSRF protection failed to load');
     }

@@ -71,8 +71,8 @@ export class MeController {
     this.logger.debug(`Deleted all media uploads for user with id ${userId}`);
     await this.userService.deleteUser(userId);
     this.logger.debug(`Deleted user with id ${userId}`);
-    const destroySessionPromise = promisify(request.session.destroy).bind(request.session);
-    destroySessionPromise().catch((error) => {
+    const destroySessionPromise = promisify(request.session.destroy.bind(request.session));
+    destroySessionPromise().catch((error: Error) => {
       this.logger.error('Error while destroying session:' + String(error), undefined, 'deleteUser');
       throw new InternalServerErrorException('Error trying to destroy session of deleted user');
     });

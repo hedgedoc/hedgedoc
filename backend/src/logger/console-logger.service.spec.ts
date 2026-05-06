@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect } from '@jest/globals';
 import { ConsoleLoggerService } from './console-logger.service';
 
 describe('sanitize', () => {

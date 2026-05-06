@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, jest } from '@jest/globals';
 import argon2 from '@node-rs/argon2';
 
 import {

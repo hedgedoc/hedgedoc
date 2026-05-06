@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeEach, afterEach } from '@jest/globals';
 import request from 'supertest';
 import { ApiTokenWithSecretInterface } from '@hedgedoc/commons';
 import { dateTimeToISOString, getCurrentDateTime } from '../../src/utils/datetime';

@@ -4,6 +4,17 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
+  describe,
+  it,
+  expect,
+  beforeAll,
+  beforeEach,
+  afterAll,
+  afterEach,
+  jest,
+} from '@jest/globals';
+import type { SpyInstance } from 'jest-mock';
+import {
   Message,
   MessageTransporter,
   MessageType,
@@ -12,7 +23,7 @@ import {
 
 import { RealtimeUserStatusAdapter } from './realtime-user-status-adapter';
 
-type SendMessageSpy = jest.SpyInstance<void, [content: Message<MessageType>]>;
+type SendMessageSpy = SpyInstance<typeof MessageTransporter.prototype.sendMessage>;
 
 describe('realtime user status adapter', () => {
   let clientLoggedIn1: RealtimeUserStatusAdapter | undefined;

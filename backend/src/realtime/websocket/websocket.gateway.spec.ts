@@ -3,6 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeEach, jest } from '@jest/globals';
+import type { SpyInstance } from 'jest-mock';
 import { PermissionLevel } from '@hedgedoc/commons';
 import { FieldNameUser } from '@hedgedoc/database';
 import { Provider } from '@nestjs/common';
@@ -48,8 +50,8 @@ describe('Websocket gateway', () => {
   let permissionsService: PermissionService;
   let mockedWebsocketConnection: RealtimeConnection;
   let mockedWebsocket: WebSocket;
-  let mockedWebsocketCloseSpy: jest.SpyInstance;
-  let addClientSpy: jest.SpyInstance;
+  let mockedWebsocketCloseSpy: SpyInstance<typeof WebSocket.WebSocket.prototype.close>;
+  let addClientSpy: SpyInstance<typeof RealtimeNote.prototype.addClient>;
 
   const mockedValidSessionCookie = 'mockedValidSessionCookie';
   const mockedSessionIdWithUser = 'mockedSessionIdWithUser';

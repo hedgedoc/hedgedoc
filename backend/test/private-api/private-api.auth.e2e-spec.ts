@@ -7,6 +7,7 @@
 @typescript-eslint/no-unsafe-assignment,
 @typescript-eslint/no-unsafe-member-access
 */
+import { describe, it, expect, beforeEach, afterEach } from '@jest/globals';
 import request from 'supertest';
 import { AuthProviderType, FieldNameIdentity, FieldNameUser } from '@hedgedoc/database';
 import { checkPassword } from '../../src/utils/password';

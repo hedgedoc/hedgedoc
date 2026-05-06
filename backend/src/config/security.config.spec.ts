@@ -3,6 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
+import type { SpyInstance } from 'jest-mock';
 import mockedEnv from 'mocked-env';
 
 import securityConfig from './security.config';
@@ -131,7 +133,7 @@ describe('securityConfig: rate limiting', () => {
   });
 
   describe('throws error', () => {
-    let spyConsoleError: jest.SpyInstance;
+    let spyConsoleError: SpyInstance;
     let spyProcessExit: jest.Mock;
     let originalProcess: typeof process;
 

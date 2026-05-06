@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeEach, afterEach } from '@jest/globals';
 import { PUBLIC_API_PREFIX } from '../../src/app.module';
 import type { AliasUpdateDto } from '../../src/dtos/alias-update.dto';
 import { NotInDBError } from '../../src/errors/errors';
@@ -33,6 +34,7 @@ describe('Alias', () => {
 
   describe(`POST ${PUBLIC_API_PREFIX}/alias`, () => {
     describe.each(AliasTestCases)('create normal alias', (testName, aliasToUse, aliasToQuery) => {
+      // oxlint-disable-next-line jest/valid-title
       it(testName, async () => {
         const newAliasDto: AliasCreateDto = {
           noteAlias: noteAlias1,
@@ -126,6 +128,7 @@ describe('Alias', () => {
     describe.each(AliasTestCases)(
       'updates a note with a normal alias',
       (testName, aliasToUse, aliasToQuery) => {
+        // oxlint-disable-next-line jest/valid-title
         it(testName, async () => {
           await testSetup.aliasService.addAlias(noteId, aliasToUse);
           const metadata = await agent
@@ -203,6 +206,7 @@ describe('Alias', () => {
     describe.each(AliasTestCases)(
       'deletes a normal alias',
       (testName, aliasToUse, aliasToQuery) => {
+        // oxlint-disable-next-line jest/valid-title
         it(testName, async () => {
           await testSetup.aliasService.addAlias(testSetup.ownedNoteIds[0], aliasToUse);
 
@@ -244,6 +248,7 @@ describe('Alias', () => {
       });
 
       describe.each(AliasTestCases)('if alias is primary', (testName, aliasToUse, aliasToQuery) => {
+        // oxlint-disable-next-line jest/valid-title
         it(testName, async () => {
           // add another alias
           await testSetup.aliasService.addAlias(testSetup.ownedNoteIds[0], aliasToUse);

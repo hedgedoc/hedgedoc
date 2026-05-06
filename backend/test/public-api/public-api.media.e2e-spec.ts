@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
 import { PUBLIC_API_PREFIX } from '../../src/app.module';
 import type { MediaUploadDto } from '../../src/dtos/media-upload.dto';
 import { ConsoleLoggerService } from '../../src/logger/console-logger.service';
