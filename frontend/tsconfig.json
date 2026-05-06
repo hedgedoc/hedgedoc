@@ -13,7 +13,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -30,6 +30,7 @@
     ]
   },
   "include": [
+    "src/external-types/css/index.d.ts",
     "src/external-types/images/index.d.ts",
     "next-env.d.ts",
     "**/*.ts",
