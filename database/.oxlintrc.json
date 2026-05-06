@@ -6,5 +6,10 @@
   ],
   "env": {
     "node": true
+  },
+  "options": {
+    "typeAware": true,
+    "typeCheck": true,
+    "maxWarnings": 0
   }
 }

@@ -14,5 +14,10 @@
   "env": {
     "node": true,
     "jest": true
+  },
+  "options": {
+    "typeAware": true,
+    "typeCheck": true,
+    "maxWarnings": 0
   }
 }
