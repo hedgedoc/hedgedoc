@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, expect, it } from '@jest/globals'
 import { convertInlineStyleToMap } from './convertInlineStyleToMap.js'
 
 describe('convertInlineStyleToMap', () => {

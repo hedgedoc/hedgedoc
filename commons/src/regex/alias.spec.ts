@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+// oxlint-disable jest/valid-title
 import { describe, expect, it } from '@jest/globals'
 import { ALIAS_REGEX } from './alias.js'
 

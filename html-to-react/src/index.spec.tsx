@@ -5,11 +5,11 @@
  */
 
 import { renderToStaticMarkup } from 'react-dom/server'
-import { convertHtmlToReact, ParserOptions } from './convertHtmlToReact.js'
+import { convertHtmlToReact, type ParserOptions } from './convertHtmlToReact.js'
 import { convertNodeToReactElement } from './convertNodeToReactElement.js'
 import { Document, isTag, isText } from 'domhandler'
-import { NodeToReactElementTransformer } from './NodeToReactElementTransformer.js'
-import React, { ReactElement } from 'react'
+import type { NodeToReactElementTransformer } from './NodeToReactElementTransformer.js'
+import React, { type ReactElement } from 'react'
 import { describe, expect, it } from '@jest/globals'
 
 const expectSameHtml = function (html: string, options: ParserOptions = {}) {
