@@ -3,20 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { BadRequestException, ValidationPipe } from '@nestjs/common';
+import { BadRequestException, PipeTransform } from '@nestjs/common';
+import { createZodValidationPipe } from 'nestjs-zod';
+import { ZodError } from 'zod';
 
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 
-export function setupValidationPipe(logger: ConsoleLoggerService): ValidationPipe {
-  // This issue is only relevant for usage of class-validator, however we use Zod
-  // oxlint-disable-next-line @darraghor/nestjs-typed/should-specify-forbid-unknown-values
-  return new ValidationPipe({
-    forbidUnknownValues: false,
-    skipMissingProperties: false,
-    transform: true,
-    exceptionFactory: (errors): BadRequestException => {
-      // strip the trailing newline for cleaner logs
-      const errorMessage = errors.toString().trimEnd();
+export function setupValidationPipe(logger: ConsoleLoggerService): PipeTransform {
+  const ZodValidationPipe = createZodValidationPipe({
+    createValidationException: (error: ZodError): BadRequestException => {
+      const errorMessage = error.toString().trimEnd();
       logger.debug(
         `Errors were encountered while validating a request:\n${errorMessage}`,
         'ValidationPipe',
@@ -26,4 +22,6 @@ export function setupValidationPipe(logger: ConsoleLoggerService): ValidationPip
       );
     },
   });
+
+  return new ZodValidationPipe();
 }

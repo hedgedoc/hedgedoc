@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeEach, afterEach } from '@jest/globals';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import type request from 'supertest';

@@ -3,6 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeAll, beforeEach, afterEach, jest } from '@jest/globals';
+import type { SpyInstance } from 'jest-mock';
 import { FieldNameAlias, TableAlias } from '@hedgedoc/database';
 import { Provider } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -27,7 +29,6 @@ import { LoggerModule } from '../logger/logger.module';
 import { AliasService } from './alias.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { NoteEventMap } from '../events';
-import SpyInstance = jest.SpyInstance;
 
 describe('AliasService', () => {
   const alias1 = 'testAlias1';

@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeAll, afterEach, jest } from '@jest/globals';
 import { FieldNameUser, TableUser, User } from '@hedgedoc/database';
 import { BadRequestException, Provider } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -216,6 +217,7 @@ describe('UsersService', () => {
     ['returns true if username already exists', [{ [FieldNameUser.username]: username }], true],
     ['returns false if username does not already exists', [], false],
   ])('isUsernameTaken', (title, returnValue, result) => {
+    // oxlint-disable-next-line jest/valid-title
     it(title, async () => {
       mockSelect(tracker, [FieldNameUser.username], TableUser, FieldNameUser.username, returnValue);
       expect(await service.isUsernameTaken(username)).toBe(result);
@@ -228,6 +230,7 @@ describe('UsersService', () => {
     ['returns false if user does not exist', [], false],
     ['returns true if user is not a guest', [{ [FieldNameUser.username]: username }], true],
   ])('isRegisteredUser', (title, returnValue, result) => {
+    // oxlint-disable-next-line jest/valid-title
     it(title, async () => {
       mockSelect(tracker, [FieldNameUser.username], TableUser, FieldNameUser.id, returnValue);
       expect(await service.isRegisteredUser(userId)).toBe(result);

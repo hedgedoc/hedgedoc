@@ -311,7 +311,9 @@ export class OidcService {
     field: string,
     defaultValue: T,
   ): string | T {
-    return response[field] ? String(response[field]) : defaultValue;
+    return field in response && response[field] !== undefined && response[field] !== null
+      ? (response[field] as string | T)
+      : defaultValue;
   }
 
   /**

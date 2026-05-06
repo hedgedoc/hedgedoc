@@ -5,6 +5,7 @@
  */
 import { MockedBackendTransportAdapter, YDocSyncServerAdapter } from '@hedgedoc/commons';
 import { FieldNameUser, User } from '@hedgedoc/database';
+import { jest } from '@jest/globals';
 import { Mock } from 'ts-mockery';
 
 import { RealtimeConnection } from '../realtime-connection';

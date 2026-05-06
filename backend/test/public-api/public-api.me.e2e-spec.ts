@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+import { describe, it, expect, beforeEach, afterEach } from '@jest/globals';
 import { PUBLIC_API_PREFIX } from '../../src/app.module';
 import { NoteMetadataDto } from '../../src/dtos/note-metadata.dto';
 import {
@@ -8,11 +14,6 @@ import {
   TestSetupBuilder,
   username1,
 } from '../test-setup';
-/*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
- *
- * SPDX-License-Identifier: AGPL-3.0-only
- */
 import { AuthProviderType, FieldNameUser } from '@hedgedoc/database';
 import { promises as fs } from 'fs';
 import { join } from 'path';
@@ -77,7 +78,7 @@ describe('Me', () => {
   });
   describe(`GET ${PUBLIC_API_PREFIX}/me/media`, () => {
     let newNoteId1: number;
-    const imageIds = [];
+    const imageIds: string[] = [];
     beforeEach(async () => {
       newNoteId1 = await testSetup.notesService.getNoteIdByAlias(noteAlias1);
     });

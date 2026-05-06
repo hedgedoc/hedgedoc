@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
 import {
   MessageTransporter,
   MockedBackendTransportAdapter,

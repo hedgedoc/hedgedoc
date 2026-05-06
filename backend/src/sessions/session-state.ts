@@ -68,5 +68,5 @@ export interface SessionState {
 }
 
 declare module 'fastify' {
-  interface Session extends SessionState {}
+  interface Session extends Omit<SessionState, 'cookie'> {}
 }

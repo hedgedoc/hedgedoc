@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, afterEach, jest } from '@jest/globals';
 import { promises as fs } from 'fs';
 
 import { clearCachedVersion, getServerVersionFromPackageJson } from './server-version';

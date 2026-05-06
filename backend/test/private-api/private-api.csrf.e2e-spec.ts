@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeEach, afterEach } from '@jest/globals';
 import { PRIVATE_API_PREFIX } from '../../src/app.module';
 import { password1, TestSetup, TestSetupBuilder, username1 } from '../test-setup';
 import { setupAgent } from './utils/setup-agent';

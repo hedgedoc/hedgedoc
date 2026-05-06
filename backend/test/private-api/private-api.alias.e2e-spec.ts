@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeEach, afterEach } from '@jest/globals';
 import { PRIVATE_API_PREFIX } from '../../src/app.module';
 import type { TestSetup } from '../test-setup';
 import { noteAlias1, password3, TestSetupBuilder, username3 } from '../test-setup';
@@ -85,6 +86,7 @@ describe('Alias', () => {
       });
     });
     describe.each(AliasTestCases)('returns the note', (testName, _aliasToUse, aliasToQuery) => {
+      // oxlint-disable-next-line jest/valid-title
       it(testName, async () => {
         const result = await agentUser1
           .get(`${PRIVATE_API_PREFIX}/alias/${aliasToQuery}`)
@@ -107,6 +109,7 @@ describe('Alias', () => {
     };
 
     describe.each(AliasTestCases)('creates', (testName, alias) => {
+      // oxlint-disable-next-line jest/valid-title
       it(testName, async () => {
         newAliasDto.newAlias = alias;
         await agentUser1
@@ -179,6 +182,7 @@ describe('Alias', () => {
     const newAlias = DefaultTestAlias;
 
     describe.each(AliasTestCases)('correctly set primary alias', (testName, alias) => {
+      // oxlint-disable-next-line jest/valid-title
       it(testName, async () => {
         await testSetup.aliasService.addAlias(noteId, newAlias);
         await agentUser1
@@ -242,10 +246,13 @@ describe('Alias', () => {
       await testSetup.aliasService.addAlias(noteId, newAlias);
     });
     describe.each(AliasTestCases)('correctly deletes the alias', (testName, alias) => {
+      // oxlint-disable-next-line jest/valid-title
       it(testName, async () => {
         await expect(testSetup.notesService.getNoteIdByAlias(newAlias)).resolves.toBe(noteId);
         await agentUser1.delete(`${PRIVATE_API_PREFIX}/alias/${alias}`).expect(204);
-        await expect(testSetup.notesService.getNoteIdByAlias(newAlias)).rejects.toThrow();
+        await expect(testSetup.notesService.getNoteIdByAlias(newAlias)).rejects.toThrow(
+          'Could not find note',
+        );
       });
     });
 

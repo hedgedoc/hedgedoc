@@ -3,6 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
+import type { SpyInstance } from 'jest-mock';
 import * as realtimeNoteModule from './realtime-note';
 import { RealtimeNote } from './realtime-note';
 import { RealtimeNoteStore } from './realtime-note-store';
@@ -10,7 +12,9 @@ import { RealtimeNoteStore } from './realtime-note-store';
 describe('RealtimeNoteStore', () => {
   let realtimeNoteStore: RealtimeNoteStore;
   let mockedRealtimeNote: RealtimeNote;
-  let realtimeNoteConstructorSpy: jest.SpyInstance;
+  let realtimeNoteConstructorSpy: SpyInstance<
+    (noteId: number, initialTextContent: string, initialYjsState?: number[]) => RealtimeNote
+  >;
   const mockedContent = 'mockedContent';
   const mockedNoteId = 4711;
 

@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeEach, afterEach } from '@jest/globals';
 import { PRIVATE_API_PREFIX } from '../../src/app.module';
 import type { NoteMetadataDto } from '../../src/dtos/note-metadata.dto';
 import { NotInDBError } from '../../src/errors/errors';

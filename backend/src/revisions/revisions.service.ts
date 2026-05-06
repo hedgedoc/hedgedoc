@@ -134,6 +134,8 @@ export class RevisionsService {
         recordMap.set(
           revision[FieldNameRevision.uuid],
           RevisionMetadataDto.create({
+            // We're extending a DTO here which is technically a class but valid in this case.
+            // oxlint-disable-next-line typescript/no-misused-spread
             ...currentMappedRevision,
             authorUsernames,
             authorGuestUuids,

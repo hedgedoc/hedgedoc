@@ -306,7 +306,9 @@ export class NoteService {
       transaction,
     );
     this.logger.debug(`Retrieved ${updateUsers.users.length} users`, 'innerToNoteMetadataDto');
-    updateUsers.users.sort();
+    updateUsers.users.sort(
+      (a, b) => dbToDateTime(a.createdAt).toMillis() - dbToDateTime(b.createdAt).toMillis(),
+    );
 
     const updatedAt = dateTimeToISOString(
       dbToDateTime(latestRevision[FieldNameRevision.createdAt]),
@@ -326,6 +328,8 @@ export class NoteService {
     this.logger.debug(`updatedAt ${updatedAt}`, 'innerToNoteMetadataDto');
 
     return NoteMetadataDto.create({
+      // We're expanding a DTO here which is technically a class - in this case this is fine.
+      // oxlint-disable-next-line typescript/no-misused-spread
       ...noteAliases,
       title: latestRevision.title,
       description: latestRevision.description,

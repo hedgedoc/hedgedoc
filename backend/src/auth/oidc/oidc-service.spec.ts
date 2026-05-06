@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
 import { AuthProviderType } from '@hedgedoc/commons';
 import { FieldNameIdentity, Identity } from '@hedgedoc/database';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
@@ -71,8 +72,8 @@ describe('OidcService', () => {
         {
           provide: SessionService,
           useValue: Mock.of<SessionService>({
-            terminateSessionByOidcSid: jest.fn(),
-            terminateAllSessionsOfUser: jest.fn(),
+            terminateSessionByOidcSid: jest.fn<typeof sessionService.terminateSessionByOidcSid>(),
+            terminateAllSessionsOfUser: jest.fn<typeof sessionService.terminateAllSessionsOfUser>(),
           }),
         },
         {

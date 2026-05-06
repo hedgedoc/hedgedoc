@@ -11,7 +11,7 @@ export function extendKnexQueryBuilder() {
     QueryBuilder.extend('whereEqualLowercase', function (field: string, value: string) {
       return this.whereRaw('LOWER(??) = ?', [field, value.toLowerCase()]);
     });
-  } catch (e) {
+  } catch {
     console.warn('Could not extend KnexQueryBuilder with whereEqualLowercase');
   }
 }

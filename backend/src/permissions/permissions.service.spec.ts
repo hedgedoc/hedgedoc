@@ -3,6 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeAll, beforeEach, afterEach, jest } from '@jest/globals';
+import type { SpyInstance } from 'jest-mock';
 import { PermissionLevel } from '@hedgedoc/commons';
 import {
   FieldNameGroup,
@@ -11,6 +13,7 @@ import {
   FieldNameNoteGroupPermission,
   FieldNameNoteUserPermission,
   FieldNameUser,
+  Group,
   TableGroup,
   TableMediaUpload,
   TableNote,
@@ -44,6 +47,7 @@ import { RevisionsService } from '../revisions/revisions.service';
 import { UsersService } from '../users/users.service';
 import { PermissionService } from './permission.service';
 import { determinePermissionTestCases } from './test/determine-permission.fixture';
+import { Mock } from 'ts-mockery';
 
 describe('PermissionsService', () => {
   let service: PermissionService;
@@ -67,7 +71,7 @@ describe('PermissionsService', () => {
   beforeAll(async () => {
     [tracker, knexProvider] = mockKnexDb();
 
-    const module: TestingModule = await Test.createTestingModule({
+    const testingModule: TestingModule = await Test.createTestingModule({
       providers: [
         PermissionService,
         knexProvider,
@@ -93,12 +97,10 @@ describe('PermissionsService', () => {
       ],
     }).compile();
 
-    service = module.get<PermissionService>(PermissionService);
-    usersService = module.get<UsersService>(UsersService);
-    groupsService = module.get<GroupsService>(GroupsService);
+    service = testingModule.get<PermissionService>(PermissionService);
+    usersService = testingModule.get<UsersService>(UsersService);
+    groupsService = testingModule.get<GroupsService>(GroupsService);
   });
-
-  beforeEach(() => {});
 
   afterEach(() => {
     tracker.reset();
@@ -111,7 +113,6 @@ describe('PermissionsService', () => {
       expectBindings(tracker, 'select', [[mockMediaUploadUuid]], true);
     });
 
-    // oxlint-disable-next-line func-style
     const buildMockSelect = (returnValues: unknown) => {
       mockSelect(
         tracker,
@@ -179,7 +180,6 @@ describe('PermissionsService', () => {
   });
 
   describe('isOwner', () => {
-    // oxlint-disable-next-line func-style
     const buildMockSelect = (returnValues: unknown) => {
       mockSelect(tracker, [FieldNameNote.ownerId], TableNote, FieldNameNote.id, returnValues);
     };
@@ -211,7 +211,7 @@ describe('PermissionsService', () => {
   });
 
   describe('checkIfUserMayCreateNote', () => {
-    let spyUserServiceIsRegisteredUser: jest.SpyInstance;
+    let spyUserServiceIsRegisteredUser: SpyInstance<typeof usersService.isRegisteredUser>;
     beforeEach(() => {
       spyUserServiceIsRegisteredUser = jest.spyOn(usersService, 'isRegisteredUser');
     });
@@ -232,9 +232,9 @@ describe('PermissionsService', () => {
   });
 
   describe('determinePermission', () => {
-    let spyOnPermissionsServiceIsOwner: jest.SpyInstance;
-    let spyOnUserServiceIsRegisteredUser: jest.SpyInstance;
-    let spyOnGroupServiceGetGroupsForUser: jest.SpyInstance;
+    let spyOnPermissionsServiceIsOwner: SpyInstance<typeof service.isOwner>;
+    let spyOnUserServiceIsRegisteredUser: SpyInstance<typeof usersService.isRegisteredUser>;
+    let spyOnGroupServiceGetGroupsForUser: SpyInstance<typeof groupsService.getGroupsForUser>;
 
     beforeEach(() => {
       spyOnPermissionsServiceIsOwner = jest.spyOn(service, 'isOwner');
@@ -271,16 +271,16 @@ describe('PermissionsService', () => {
         // Groups
         spyOnGroupServiceGetGroupsForUser.mockImplementation(() => {
           const alwaysAvailableGroups = [
-            { [FieldNameGroup.id]: mockGroupIdEveryone },
-            { [FieldNameGroup.id]: mockGroupId1 },
+            Mock.of<Group>({ [FieldNameGroup.id]: mockGroupIdEveryone }),
+            Mock.of<Group>({ [FieldNameGroup.id]: mockGroupId1 }),
           ];
-          const loggedInGroup = {
+          const loggedInGroup = Mock.of<Group>({
             [FieldNameGroup.id]: mockGroupIdLoggedIn,
-          };
+          });
           if (testCase.isRegisteredUser) {
-            return [...alwaysAvailableGroups, loggedInGroup];
+            return Promise.resolve([...alwaysAvailableGroups, loggedInGroup]);
           }
-          return alwaysAvailableGroups;
+          return Promise.resolve(alwaysAvailableGroups);
         });
         // GroupPermissions
         mockSelect(
@@ -315,7 +315,7 @@ describe('PermissionsService', () => {
   });
 
   describe('setUserPermission', () => {
-    let spyOnIsOwner: jest.SpyInstance;
+    let spyOnIsOwner: SpyInstance<typeof service.isOwner>;
     beforeEach(() => {
       spyOnIsOwner = jest.spyOn(service, 'isOwner');
     });
@@ -325,7 +325,7 @@ describe('PermissionsService', () => {
       expect(spyOnIsOwner).toHaveBeenCalledTimes(1);
     });
     describe('user is not owner', () => {
-      let spyOnIsRegisteredUser: jest.SpyInstance;
+      let spyOnIsRegisteredUser: SpyInstance<typeof usersService.isRegisteredUser>;
       beforeEach(() => {
         spyOnIsOwner.mockResolvedValue(false);
         spyOnIsRegisteredUser = jest.spyOn(usersService, 'isRegisteredUser');
@@ -338,8 +338,8 @@ describe('PermissionsService', () => {
       });
       it('and user is registered', async () => {
         const spyOneNotifyOthers = jest.spyOn(
-          // oxlint-disable-next-line @typescript-eslint/no-explicit-any
-          service as any,
+          // Typecast is required as we're mocking a private method here
+          service as typeof service & { notifyOthers: (_: number) => void },
           'notifyOthers',
         );
         spyOnIsRegisteredUser.mockResolvedValue(true);
@@ -356,11 +356,11 @@ describe('PermissionsService', () => {
   });
 
   describe('removeUserPermission', () => {
-    let spyOneNotifyOthers: jest.SpyInstance;
+    let spyOneNotifyOthers: SpyInstance;
     beforeEach(() => {
       spyOneNotifyOthers = jest.spyOn(
-        // oxlint-disable-next-line @typescript-eslint/no-explicit-any
-        service as any,
+        // Typecast is required as we're mocking a private method here
+        service as typeof service & { notifyOthers: (_: number) => void },
         'notifyOthers',
       );
     });
@@ -403,8 +403,8 @@ describe('PermissionsService', () => {
   describe('setGroupPermission', () => {
     it('correctly sets group permissions and notifies other user', async () => {
       const spyOneNotifyOthers = jest.spyOn(
-        // oxlint-disable-next-line @typescript-eslint/no-explicit-any
-        service as any,
+        // Typecast is required as we're mocking a private method here
+        service as typeof service & { notifyOthers: (_: number) => void },
         'notifyOthers',
       );
       mockInsert(tracker, TableNoteGroupPermission, [
@@ -419,15 +419,14 @@ describe('PermissionsService', () => {
   });
 
   describe('removeGroupPermission', () => {
-    let spyOneNotifyOthers: jest.SpyInstance;
+    let spyOneNotifyOthers: SpyInstance;
     beforeEach(() => {
       spyOneNotifyOthers = jest.spyOn(
-        // oxlint-disable-next-line @typescript-eslint/no-explicit-any
-        service as any,
+        // Typecast is required as we're mocking a private method here
+        service as typeof service & { notifyOthers: (_: number) => void },
         'notifyOthers',
       );
     });
-    // oxlint-disable-next-line func-style
     const buildMockDelete = (deletedEntries: number) => {
       mockDelete(
         tracker,
@@ -453,15 +452,14 @@ describe('PermissionsService', () => {
   });
 
   describe('changeOwner', () => {
-    let spyOneNotifyOthers: jest.SpyInstance;
+    let spyOneNotifyOthers: SpyInstance;
     beforeEach(() => {
       spyOneNotifyOthers = jest.spyOn(
-        // oxlint-disable-next-line @typescript-eslint/no-explicit-any
-        service as any,
+        // Typecast is required as we're mocking a private method here
+        service as typeof service & { notifyOthers: (_: number) => void },
         'notifyOthers',
       );
     });
-    // oxlint-disable-next-line func-style
     const buildMockUpdate = (updatedEntries: number) => {
       mockUpdate(tracker, TableNote, [FieldNameNote.ownerId], FieldNameNote.id, updatedEntries);
     };
@@ -480,7 +478,6 @@ describe('PermissionsService', () => {
   });
 
   describe('changePubliclyVisibly', () => {
-    // oxlint-disable-next-line func-style
     const buildMockUpdate = (updatedEntries: number) => {
       mockUpdate(
         tracker,
@@ -503,7 +500,6 @@ describe('PermissionsService', () => {
   });
 
   describe('getPermissionsDtoForNote', () => {
-    // oxlint-disable-next-line func-style
     const buildMockOwnerSelect = (returnValues: unknown) => {
       mockSelect(
         tracker,
@@ -523,7 +519,6 @@ describe('PermissionsService', () => {
         ],
       );
     };
-    // oxlint-disable-next-line func-style
     const buildMockUserPermissionsSelect = (returnValues: unknown) => {
       mockSelect(
         tracker,
@@ -543,7 +538,6 @@ describe('PermissionsService', () => {
         ],
       );
     };
-    // oxlint-disable-next-line func-style
     const buildMockGroupPermissionsSelect = (returnValues: unknown) => {
       mockSelect(
         tracker,

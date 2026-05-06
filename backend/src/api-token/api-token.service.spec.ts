@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { describe, it, expect, beforeAll, beforeEach, afterEach, jest } from '@jest/globals';
 import { FieldNameApiToken, TableApiToken } from '@hedgedoc/database';
 import { Provider } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
