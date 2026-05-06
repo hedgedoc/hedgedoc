@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register Infos does not show any links if the frontend config links are null: no links 1`] = `<div />`;
+
+exports[`Register Infos only shows privacy links: privacy link 1`] = `
+<div>
+  login.register.infoTermsPrivacy
+  <ul>
+    <li>
+      <a
+        class=""
+        dir="auto"
+        href="https://example.com/privacy"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        appbar.help.legal.privacy
+      </a>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Register Infos only shows termsOfUse links: termsOfUse link 1`] = `
+<div>
+  login.register.infoTermsPrivacy
+  <ul>
+    <li>
+      <a
+        class=""
+        dir="auto"
+        href="https://example.com/terms-of-use"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        appbar.help.legal.termsOfUse
+      </a>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Register Infos show privacy and termsOfUse links: privacy and termsOfUse link 1`] = `
+<div>
+  login.register.infoTermsPrivacy
+  <ul>
+    <li>
+      <a
+        class=""
+        dir="auto"
+        href="https://example.com/terms-of-use"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        appbar.help.legal.termsOfUse
+      </a>
+    </li>
+    <li>
+      <a
+        class=""
+        dir="auto"
+        href="https://example.com/privacy"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        appbar.help.legal.privacy
+      </a>
+    </li>
+  </ul>
+</div>
+`;
