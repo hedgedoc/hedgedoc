@@ -50,7 +50,8 @@ describe('build state from set note data from server', () => {
               canEdit: true,
               username: 'shareusername'
             }
-          ]
+          ],
+          publiclyVisible: false
         },
         tags: ['tag'],
         title: 'title',
@@ -118,7 +119,8 @@ describe('build state from set note data from server', () => {
             canEdit: true,
             username: 'shareusername'
           }
-        ]
+        ],
+        publiclyVisible: false
       }
     }
 

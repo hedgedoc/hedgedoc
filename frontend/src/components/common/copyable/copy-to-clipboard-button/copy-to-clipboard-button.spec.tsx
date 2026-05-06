@@ -31,9 +31,9 @@ describe('Copy to clipboard button', () => {
     jest.resetModules()
   })
 
-  const testButton = async (expectSuccess: boolean) => {
+  const expectButtonSnapshot = async (expectSuccess: boolean) => {
     const view = render(<CopyToClipboardButton content={copyContent} />)
-    expect(view.container).toMatchSnapshot()
+    expect(view.container).toMatchSnapshot('renders copy button')
     const button = await screen.findByTitle('renderer.highlightCode.copyCode')
     act(() => {
       button.click()
@@ -41,7 +41,7 @@ describe('Copy to clipboard button', () => {
     const tooltip = await screen.findByRole('tooltip')
     expect(tooltip).toHaveTextContent(expectSuccess ? 'copyOverlay.success' : 'copyOverlay.error')
     expect(tooltip).toHaveAttribute('id', overlayId)
-    expect(view.container).toMatchSnapshot()
+    expect(view.container).toMatchSnapshot('renders copy button with tooltip')
   }
 
   const mockClipboard = (copyIsSuccessful: boolean): jest.Mock => {
@@ -58,13 +58,13 @@ describe('Copy to clipboard button', () => {
 
   it('shows an success text if writing succeeded', async () => {
     const writeTextToClipboardSpy = mockClipboard(true)
-    await testButton(true)
+    await expectButtonSnapshot(true)
     expect(writeTextToClipboardSpy).toHaveBeenCalledWith(copyContent)
   })
 
   it('shows an error text if writing failed', async () => {
     const writeTextToClipboardSpy = mockClipboard(false)
-    await testButton(false)
+    await expectButtonSnapshot(false)
     expect(writeTextToClipboardSpy).toHaveBeenCalledWith(copyContent)
   })
 
@@ -73,6 +73,6 @@ describe('Copy to clipboard button', () => {
       clipboard: undefined
     })
 
-    await testButton(false)
+    await expectButtonSnapshot(false)
   })
 })

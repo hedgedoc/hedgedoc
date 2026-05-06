@@ -54,7 +54,7 @@ export const TableSizePickerPopover = React.forwardRef<HTMLDivElement, TableSize
           createNumberRangeArray(10).map((col: number) => {
             const selected = tableSize && row < tableSize.rows && col < tableSize.columns
             return (
-              <div
+              <button
                 key={`${row}_${col}`}
                 className={concatCssClasses(styles.cell, { [styles.selected]: selected })}
                 {...cypressAttribute('selected', selected ? 'true' : 'false')}

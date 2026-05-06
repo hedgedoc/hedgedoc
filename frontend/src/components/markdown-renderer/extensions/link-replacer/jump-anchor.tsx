@@ -34,7 +34,7 @@ export const JumpAnchor: React.FC<JumpAnchorProps> = ({ jumpTargetId, children, 
   )
 
   return (
-    <a {...props} onClick={jumpToTargetId}>
+    <a {...props} onClick={jumpToTargetId} href={`#${jumpTargetId}`}>
       {children}
     </a>
   )

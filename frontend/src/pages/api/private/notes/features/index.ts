@@ -40,7 +40,8 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
             groupName: '_EVERYONE',
             canEdit: false
           }
-        ]
+        ],
+        publiclyVisible: true
       }
     },
     editedByAtPosition: []

@@ -5,7 +5,6 @@
  */
 import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import { useIsNotePinned } from '../../../../../hooks/common/use-is-note-pinned'
-import { concatCssClasses } from '../../../../../utils/concat-css-classes'
 import { SidebarButton } from '../../sidebar-button/sidebar-button'
 import type { SpecificSidebarEntryProps } from '../../types'
 import React, { useCallback, useState } from 'react'

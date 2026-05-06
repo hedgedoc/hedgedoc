@@ -59,7 +59,7 @@ describe('Splitter', () => {
 
     it('can change size with touch', async () => {
       const view = render(<Splitter left={<>left</>} right={<>right</>} />)
-      expect(view.container).toMatchSnapshot()
+      expect(view.container).toMatchSnapshot('touch initial')
       const divider = await screen.findByTestId('splitter-divider')
       const target: EventTarget = Mock.of<EventTarget>()
       const defaultTouchEvent: Omit<Touch, 'clientX'> = {
@@ -87,7 +87,7 @@ describe('Splitter', () => {
         })
       )
       fireEvent.touchEnd(window)
-      expect(view.container).toMatchSnapshot()
+      expect(view.container).toMatchSnapshot('touch move to left')
 
       fireEvent.touchStart(divider, {})
       fireEvent.touchMove(
@@ -100,7 +100,7 @@ describe('Splitter', () => {
         })
       )
       fireEvent.touchCancel(window)
-      expect(view.container).toMatchSnapshot()
+      expect(view.container).toMatchSnapshot('touch move to right')
 
       fireEvent.touchMove(
         window,
@@ -111,7 +111,7 @@ describe('Splitter', () => {
           ]
         })
       )
-      expect(view.container).toMatchSnapshot()
+      expect(view.container).toMatchSnapshot('touch move to middle')
     })
   })
 })

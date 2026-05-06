@@ -44,7 +44,14 @@ export const GistFrame: React.FC<IdProps> = ({ id }) => {
         src={`https://gist.github.com/${id}.pibb`}
       />
       <span className={`${styles['gist-resizer-row']} d-print-none`}>
-        <span className={styles['gist-resizer']} onMouseDown={onStart} onTouchStart={onStart} />
+        {/* oxlint-disable-next-line jsx_a11y/no-static-element-interactions */}
+        <span
+          role={'separator'}
+          aria-orientation={'horizontal'}
+          className={styles['gist-resizer']}
+          onMouseDown={onStart}
+          onTouchStart={onStart}
+        />
       </span>
     </ClickShield>
   )

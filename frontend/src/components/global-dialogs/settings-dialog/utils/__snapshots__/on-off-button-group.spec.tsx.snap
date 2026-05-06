@@ -28,7 +28,7 @@ exports[`Settings On-Off Button Group accepts custom labels 1`] = `
 </div>
 `;
 
-exports[`Settings On-Off Button Group can switch value 1`] = `
+exports[`Settings On-Off Button Group can switch value: defaults to off 1`] = `
 <div>
   <div
     class="btn-group"
@@ -56,7 +56,7 @@ exports[`Settings On-Off Button Group can switch value 1`] = `
 </div>
 `;
 
-exports[`Settings On-Off Button Group can switch value 2`] = `
+exports[`Settings On-Off Button Group can switch value: is set to on 1`] = `
 <div>
   <div
     class="btn-group"

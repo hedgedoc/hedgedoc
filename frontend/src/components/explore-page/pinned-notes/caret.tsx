@@ -13,6 +13,7 @@ import {
 } from 'react-bootstrap-icons'
 import styles from './caret.module.scss'
 import { UiIcon } from '../../common/icons/ui-icon'
+import { concatCssClasses } from '../../../utils/concat-css-classes'
 
 interface CaretProps {
   left: boolean
@@ -32,8 +33,13 @@ export const Caret: React.FC<CaretProps> = ({ active, left, onClick }) => {
   const inactiveIcon = useMemo(() => (left ? IconCaretLeftEmpty : IconCaretRightEmpty), [left])
 
   return (
-    <div onClick={active ? onClick : undefined} className={`${active ? styles.active : undefined}`}>
+    <button
+      onClick={active ? onClick : undefined}
+      disabled={!active}
+      className={concatCssClasses('unstyled-button', {
+        [styles.active]: active
+      })}>
       <UiIcon icon={active ? activeIcon : inactiveIcon} size={2} />
-    </div>
+    </button>
   )
 }

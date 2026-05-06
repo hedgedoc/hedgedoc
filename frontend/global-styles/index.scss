@@ -76,3 +76,9 @@
 .overflow-y-hidden {
   overflow-y: hidden !important;
 }
+
+.unstyled-button {
+  appearance: none;
+  background: transparent;
+  border: none;
+}

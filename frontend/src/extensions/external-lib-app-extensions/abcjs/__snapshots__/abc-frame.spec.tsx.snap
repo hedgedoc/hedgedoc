@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AbcFrame renders a music sheet 1`] = `
+exports[`AbcFrame renders a music sheet: before rendering abcjs 1`] = `
 <div>
   <div
     class="m-3 d-flex align-items-center justify-content-center"
@@ -10,7 +10,7 @@ exports[`AbcFrame renders a music sheet 1`] = `
 </div>
 `;
 
-exports[`AbcFrame renders a music sheet 2`] = `
+exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
 <div>
   <div
     class="abcjs-score bg-white text-black svg-container"
@@ -2444,7 +2444,7 @@ exports[`AbcFrame renders a music sheet 2`] = `
 </div>
 `;
 
-exports[`AbcFrame renders an error if abcjs file can't be loaded 1`] = `
+exports[`AbcFrame renders an error if abcjs file can't be loaded: before rendering abcjs 1`] = `
 <div>
   <div
     class="m-3 d-flex align-items-center justify-content-center"
@@ -2454,7 +2454,7 @@ exports[`AbcFrame renders an error if abcjs file can't be loaded 1`] = `
 </div>
 `;
 
-exports[`AbcFrame renders an error if abcjs file can't be loaded 2`] = `
+exports[`AbcFrame renders an error if abcjs file can't be loaded: with loading error message shown 1`] = `
 <div>
   <div
     class="fade alert alert-danger show"
@@ -2465,7 +2465,7 @@ exports[`AbcFrame renders an error if abcjs file can't be loaded 2`] = `
 </div>
 `;
 
-exports[`AbcFrame renders an error if abcjs render function crashes 1`] = `
+exports[`AbcFrame renders an error if abcjs render function crashes: before rendering abcjs 1`] = `
 <div>
   <div
     class="m-3 d-flex align-items-center justify-content-center"
@@ -2475,13 +2475,13 @@ exports[`AbcFrame renders an error if abcjs render function crashes 1`] = `
 </div>
 `;
 
-exports[`AbcFrame renders an error if abcjs render function crashes 2`] = `
+exports[`AbcFrame renders an error if abcjs render function crashes: with rendering error message shown 1`] = `
 <div>
   <div>
     <h3>
       This is a mock for ApplicationErrorAlert.
     </h3>
-    Props: 
+    Props:
     <code>
       {}
     </code>

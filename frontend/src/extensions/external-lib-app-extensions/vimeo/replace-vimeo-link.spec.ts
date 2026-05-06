@@ -6,7 +6,7 @@
 import { replaceVimeoLinkMarkdownItPlugin } from './replace-vimeo-link'
 import MarkdownIt from 'markdown-it'
 
-describe('Replace youtube link', () => {
+describe('Replace vimeo link', () => {
   let markdownIt: MarkdownIt
 
   beforeEach(() => {
@@ -22,7 +22,7 @@ describe('Replace youtube link', () => {
     ;['player.', ''].forEach((subdomain) => {
       ;['vimeo.com'].forEach((domain) => {
         const origin = `${protocol}${subdomain}${domain}/`
-        describe(origin, () => {
+        describe(`Replacer for ${origin}`, () => {
           const validUrl = `${origin}23237102`
           it(`can detect a correct vimeo video url`, () => {
             expect(markdownIt.renderInline(validUrl)).toBe("<app-vimeo id='23237102'></app-vimeo>")

@@ -5,9 +5,9 @@
  */
 import { mockI18n } from '../../../../test-utils/mock-i18n'
 import { FrontmatterLinter } from './frontmatter-linter'
-import { mockEditorView } from './single-line-regex-linter.spec'
 import type { Diagnostic } from '@codemirror/lint'
 import { t } from 'i18next'
+import { mockEditorView } from './mock-editor-view'
 
 const testFrontmatterLinter = (
   editorContent: string,

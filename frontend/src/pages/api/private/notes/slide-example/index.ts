@@ -47,7 +47,8 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
             groupName: 'hedgedoc-devs',
             canEdit: true
           }
-        ]
+        ],
+        publiclyVisible: true
       }
     },
     editedByAtPosition: []

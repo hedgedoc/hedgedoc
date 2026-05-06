@@ -36,9 +36,9 @@ describe('AbcFrame', () => {
       />
     )
     const view = render(element)
-    expect(view.container).toMatchSnapshot()
+    expect(view.container).toMatchSnapshot('before rendering abcjs')
     expect(await screen.findByText('Sheet Music for "Speed the Plough"')).toBeInTheDocument()
-    expect(view.container).toMatchSnapshot()
+    expect(view.container).toMatchSnapshot('with rendered abcjs')
   })
 
   it("renders an error if abcjs file can't be loaded", async () => {
@@ -53,9 +53,9 @@ describe('AbcFrame', () => {
       />
     )
     const view = render(element)
-    expect(view.container).toMatchSnapshot()
+    expect(view.container).toMatchSnapshot('before rendering abcjs')
     expect(await screen.findByText('common.errorWhileLoading')).toBeInTheDocument()
-    expect(view.container).toMatchSnapshot()
+    expect(view.container).toMatchSnapshot('with loading error message shown')
   })
 
   it('renders an error if abcjs render function crashes', async () => {
@@ -72,8 +72,8 @@ describe('AbcFrame', () => {
       />
     )
     const view = render(element)
-    expect(view.container).toMatchSnapshot()
+    expect(view.container).toMatchSnapshot('before rendering abcjs')
     expect(await screen.findByText('editor.embeddings.abcJs.errorWhileRendering')).toBeInTheDocument()
-    expect(view.container).toMatchSnapshot()
+    expect(view.container).toMatchSnapshot('with rendering error message shown')
   })
 })
