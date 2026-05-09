@@ -116,7 +116,7 @@
       "^.+\\.(t|j)s$": [
         "ts-jest",
         {
-          "tsconfig": "test/tsconfig.json",
+          "tsconfig": "jest.tsconfig.json",
           "diagnostics": {
             "ignoreCodes": [
               151002
@@ -125,6 +125,10 @@
         }
       ]
     },
+    "transformIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/../commons/dist/cjs/"
+    ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "reporters": [

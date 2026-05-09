@@ -153,6 +153,7 @@ describe('FrontendConfigService', () => {
             type: AuthProviderType.LDAP,
             providerName: authConfig.ldap[0].providerName,
             identifier: authConfig.ldap[0].identifier,
+            theme: null,
           });
         }
         if (authConfig.oidc.length > 0) {
@@ -162,6 +163,7 @@ describe('FrontendConfigService', () => {
             type: AuthProviderType.OIDC,
             providerName: authConfig.oidc[0].providerName,
             identifier: authConfig.oidc[0].identifier,
+            theme: null,
           });
         }
       });
