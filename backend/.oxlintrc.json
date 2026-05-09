@@ -23,6 +23,7 @@
         "typescript/no-unsafe-member-access": "off",
         "typescript/require-await": "off",
         "typescript/explicit-function-return-type": "off",
+        "typescript/no-useless-default-assignment": "off",
         "jest/no-standalone-expect": "off"
       }
     },
