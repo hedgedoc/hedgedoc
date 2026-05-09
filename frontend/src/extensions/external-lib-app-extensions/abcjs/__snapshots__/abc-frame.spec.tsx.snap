@@ -2481,7 +2481,7 @@ exports[`AbcFrame renders an error if abcjs render function crashes: with render
     <h3>
       This is a mock for ApplicationErrorAlert.
     </h3>
-    Props:
+    Props: 
     <code>
       {}
     </code>
