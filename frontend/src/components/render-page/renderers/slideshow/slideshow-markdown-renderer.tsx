@@ -11,11 +11,11 @@ import { RendererType } from '../../window-post-message-communicator/rendering-m
 import type { CommonMarkdownRendererProps } from '../common-markdown-renderer-props'
 import { LoadingSlide } from './loading-slide'
 import styles from './slideshow.module.scss'
-import type { SlideOptions } from '@hedgedoc/commons'
+import type { RevealOptions } from 'reveal.js'
 import React, { useMemo, useRef } from 'react'
 
 export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererProps {
-  slideOptions?: SlideOptions
+  slideOptions?: RevealOptions
 }
 
 /**

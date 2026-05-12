@@ -3,9 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { NoteFrontmatter, NoteTextDirection, NoteType } from '../note-frontmatter/frontmatter.js'
-import { generateNoteTitle } from './generate-note-title.js'
 import { describe, expect, it } from '@jest/globals'
+import type { NoteFrontmatter } from '../note-frontmatter/note-frontmatter.js'
+import { NoteType } from '../note-frontmatter/note-type.js'
+import { generateNoteTitle } from './generate-note-title.js'
+import { NoteTextDirection } from '../note-frontmatter/note-text-direction.js'
 
 const testFrontmatter: NoteFrontmatter = {
   title: '',
@@ -14,7 +16,7 @@ const testFrontmatter: NoteFrontmatter = {
   robots: '',
   lang: 'en',
   dir: NoteTextDirection.LTR,
-  newlinesAreBreaks: true,
+  breaks: true,
   license: '',
   type: NoteType.DOCUMENT,
   opengraph: {},

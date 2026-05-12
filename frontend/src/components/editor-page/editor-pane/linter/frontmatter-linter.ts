@@ -6,7 +6,7 @@
 import type { Linter } from './linter'
 import type { Diagnostic } from '@codemirror/lint'
 import type { EditorView } from '@codemirror/view'
-import { extractFrontmatter, parseRawFrontmatterFromYaml, parseTags } from '@hedgedoc/commons'
+import { extractFrontmatter, parseNoteFrontmatter, parseTagsField } from '@hedgedoc/commons'
 import { t } from 'i18next'
 
 /**
@@ -24,13 +24,15 @@ export class FrontmatterLinter implements Linter {
     const frontmatterLines = lines.slice(1, frontmatterExtraction.lineOffset - 1)
     const startOfYaml = lines[0].length + 1
     const endOfYaml = startOfYaml + frontmatterLines.join('\n').length
-    const rawNoteFrontmatter = parseRawFrontmatterFromYaml(frontmatterExtraction.rawText)
-    if (rawNoteFrontmatter.error) {
-      return this.createErrorDiagnostics(startOfYaml, endOfYaml, rawNoteFrontmatter.error, 'error')
-    } else if (rawNoteFrontmatter.warning) {
-      return this.createErrorDiagnostics(startOfYaml, endOfYaml, rawNoteFrontmatter.warning, 'warning')
-    } else if (!Array.isArray(rawNoteFrontmatter.value.tags)) {
-      return this.createReplaceSingleStringTagsDiagnostic(rawNoteFrontmatter.value.tags, frontmatterLines, startOfYaml)
+    const frontmatterParseResult = parseNoteFrontmatter(frontmatterExtraction.rawText)
+    if (frontmatterParseResult.error) {
+      return this.createErrorDiagnostics(startOfYaml, endOfYaml, frontmatterParseResult.error, 'error')
+    } else if (frontmatterParseResult.usesDeprecatedTagsFormat) {
+      return this.createReplaceSingleStringTagsDiagnostic(
+        frontmatterParseResult.rawTagsField,
+        frontmatterLines,
+        startOfYaml
+      )
     }
     return []
   }
@@ -52,12 +54,12 @@ export class FrontmatterLinter implements Linter {
   }
 
   private createReplaceSingleStringTagsDiagnostic(
-    rawTags: string,
+    rawTags: unknown,
     frontmatterLines: string[],
     startOfYaml: number
   ): Diagnostic[] {
-    const tags: string[] = parseTags(rawTags)
-    const replacedText = 'tags:\n- ' + tags.join('\n- ')
+    const tags = this.parseDeprecatedTags(rawTags)
+    const replacedText = `tags:\n- ${tags.join('\n- ')}`
     const tagsLineIndex = frontmatterLines.findIndex((value) => value.startsWith('tags: '))
     const linesBeforeTagsLine = frontmatterLines.slice(0, tagsLineIndex)
     const from = startOfYaml + linesBeforeTagsLine.join('\n').length + linesBeforeTagsLine.length
@@ -80,5 +82,18 @@ export class FrontmatterLinter implements Linter {
         severity: 'warning'
       }
     ]
+  }
+
+  private parseDeprecatedTags(rawTags: unknown): string[] {
+    if (rawTags === undefined || rawTags === null) {
+      return []
+    }
+    if (typeof rawTags === 'string' || Array.isArray(rawTags)) {
+      return parseTagsField(rawTags)
+    }
+    if (typeof rawTags === 'number' || typeof rawTags === 'boolean' || typeof rawTags === 'bigint') {
+      return parseTagsField(String(rawTags))
+    }
+    return []
   }
 }

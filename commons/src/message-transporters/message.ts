@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { RealtimeUser, RemoteCursor } from './realtime-user.js'
+import type { RealtimeUser, RemoteCursor } from './realtime-user.js'
 
 export enum MessageType {
   NOTE_CONTENT_STATE_REQUEST = 'NOTE_CONTENT_STATE_REQUEST',

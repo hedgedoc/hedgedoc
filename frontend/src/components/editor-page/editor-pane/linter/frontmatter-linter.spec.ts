@@ -75,6 +75,12 @@ describe('FrontmatterLinter', () => {
       )
     })
   })
+  it('does not warn for the new array format', () => {
+    const frontmatterLinter = new FrontmatterLinter()
+    const editorView = mockEditorView('---\ntags:\n- a\n---')
+
+    expect(frontmatterLinter.lint(editorView)).toStrictEqual([])
+  })
   it('with invalid yaml', () => {
     testFrontmatterLinter('---\n1\n  2: 3\n---', {
       from: 4,

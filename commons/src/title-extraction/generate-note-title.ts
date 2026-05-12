@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { NoteFrontmatter } from '../note-frontmatter/frontmatter.js'
+import type { NoteFrontmatter } from '../note-frontmatter/note-frontmatter.js'
 
 /**
  * Generates the note title from the given frontmatter or the first heading in the markdown content.

@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Logger } from '../../../utils/logger'
-import type { SlideOptions } from '@hedgedoc/commons'
 import { useEffect, useRef, useState } from 'react'
 import type Reveal from 'reveal.js'
+import type { RevealOptions } from 'reveal.js'
 
 const log = new Logger('reveal.js')
 
@@ -33,7 +33,7 @@ const initialSlideState: SlideState = {
  * @return The current state of reveal.js
  * @see https://revealjs.com/
  */
-export const useReveal = (markdownContentLines: string[], slideOptions?: SlideOptions): REVEAL_STATUS => {
+export const useReveal = (markdownContentLines: string[], slideOptions?: RevealOptions): REVEAL_STATUS => {
   const [deck, setDeck] = useState<Reveal>()
   const [revealStatus, setRevealStatus] = useState<REVEAL_STATUS>(REVEAL_STATUS.NOT_INITIALISED)
   const currentSlideState = useRef<SlideState>(initialSlideState)
