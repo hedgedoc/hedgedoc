@@ -15,7 +15,7 @@ import { useMemo } from 'react'
  */
 export const useSendAdditionalConfigurationToRenderer = (rendererReady: boolean): void => {
   const darkModePreference = useApplicationState((state) => state.darkMode.darkModePreference)
-  const newlinesAreBreaks = useApplicationState((state) => state.noteDetails?.frontmatter.newlinesAreBreaks)
+  const newlinesAreBreaks = useApplicationState((state) => state.noteDetails?.frontmatter.breaks)
 
   useSendToRenderer(
     useMemo(() => {

@@ -20,7 +20,7 @@ describe('revision entity', () => {
       '---\ntitle: \n  - 1\n  - 2\n---\nThis is a note content',
     );
 
-    expect(title).toBe('');
+    expect(title).toBe('1,2');
     expect(description).toBe('');
     expect(tags).toStrictEqual([]);
   });

@@ -5,7 +5,7 @@
  */
 import type { DarkModePreference } from '../../../redux/dark-mode/types'
 import type { ScrollState } from '../../editor-page/synced-scroll/scroll-props'
-import type { SlideOptions } from '@hedgedoc/commons'
+import type { RevealOptions } from 'reveal.js'
 
 export enum CommunicationMessageType {
   SET_MARKDOWN_CONTENT = 'SET_MARKDOWN_CONTENT',
@@ -81,7 +81,7 @@ export interface SetScrollStateMessage {
 
 export interface SetSlideOptionsMessage {
   type: CommunicationMessageType.SET_SLIDE_OPTIONS
-  slideOptions: SlideOptions
+  slideOptions: RevealOptions
 }
 
 export interface OnHeightChangeMessage {

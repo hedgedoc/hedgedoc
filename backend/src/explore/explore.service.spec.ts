@@ -5,7 +5,7 @@
  */
 import { describe, it, expect, beforeAll, beforeEach, afterEach, jest } from '@jest/globals';
 import { SortMode } from '@hedgedoc/commons';
-import { OptionalNoteType, OptionalSortMode } from '@hedgedoc/commons';
+import type { OptionalSortMode } from '@hedgedoc/commons';
 import {
   FieldNameGroup,
   FieldNameNote,
@@ -157,7 +157,7 @@ describe('ExploreService', () => {
         /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) as "latest_revisions_per_note" where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note"."owner_id" = \$3 and LOWER\("revision"."title"\) LIKE \$4 order by "revision"."created_at" desc limit \$5/,
         [1, true, mockUserId, '%test%', ENTRIES_PER_PAGE_LIMIT],
       ],
-    ] as [string, OptionalNoteType, OptionalSortMode, string, RegExp, unknown[]][])(
+    ] as [string, NoteType, OptionalSortMode, string, RegExp, unknown[]][])(
       'correctly get all notes owned by user with',
       (name, noteType, sortBy, search, regex, bindings) => {
         // oxlint-disable-next-line jest/valid-title
@@ -226,7 +226,7 @@ describe('ExploreService', () => {
         /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid" from "note_user_permission" inner join "note" on "note_user_permission"."note_id" = "note"."id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) as "latest_revisions_per_note" where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_user_permission"."user_id" = \$3 and LOWER\("revision"."title"\) LIKE \$4 order by "revision"."created_at" desc limit \$5/,
         [1, true, mockUserId, '%test%', ENTRIES_PER_PAGE_LIMIT],
       ],
-    ] as [string, OptionalNoteType, OptionalSortMode, string, RegExp, unknown[]][])(
+    ] as [string, NoteType, OptionalSortMode, string, RegExp, unknown[]][])(
       'correctly get all notes shared with the user with',
       (name, noteType, sortBy, search, regex, bindings) => {
         // oxlint-disable-next-line jest/valid-title
@@ -295,7 +295,7 @@ describe('ExploreService', () => {
         /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid" from "note" inner join "note_group_permission" on "note"."id" = "note_group_permission"."note_id" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) as "latest_revisions_per_note" where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" where "alias"."is_primary" = \$2 and "note_group_permission"."group_id" = \$3 and "note"."publicly_visible" = \$4 and LOWER\("revision"."title"\) LIKE \$5 order by "revision"."created_at" desc limit \$6/,
         [1, true, mockEveryoneGroupId, true, '%test%', ENTRIES_PER_PAGE_LIMIT],
       ],
-    ] as [string, OptionalNoteType, OptionalSortMode, string, RegExp, unknown[]][])(
+    ] as [string, NoteType, OptionalSortMode, string, RegExp, unknown[]][])(
       'correctly get all public notes with',
       (name, noteType, sortBy, search, regex, bindings) => {
         // oxlint-disable-next-line jest/valid-title
@@ -403,7 +403,7 @@ describe('ExploreService', () => {
         /select "alias"."alias" as "primaryAlias", "revision"."title" as "title", "revision"."note_type" as "noteType", "user"."username" as "ownerUsername", "note"."created_at" as "createdAt", "revision"."created_at" as "lastChangedAt", "revision"."uuid" as "revisionUuid", "visited_notes"."visited_at" as "lastVisitedAt", "note"."id" as "noteId" from "note" inner join "alias" on "alias"."note_id" = "note"."id" inner join "user" on "user"."id" = "note"."owner_id" inner join \(select "uuid", "note_id" from \(select "uuid", "note_id", row_number\(\) over \(partition by "note_id" order by "created_at" desc\) as rn from "revision"\) as "latest_revisions_per_note" where "rn" = \$1\) as "latest_revision" on "latest_revision"."note_id" = "note"."id" inner join "revision" on "revision"."note_id" = "note"."id" and "revision"."uuid" = "latest_revision"."uuid" left join "visited_notes" on "visited_notes"."note_id" = "note"."id" where "alias"."is_primary" = \$2 and "visited_notes"."user_id" = \$3 and LOWER\("revision"."title"\) LIKE \$4 order by "revision"."created_at" desc limit \$5/,
         [1, true, mockUserId, '%test%', ENTRIES_PER_PAGE_LIMIT],
       ],
-    ] as [string, OptionalNoteType, OptionalSortMode, string, RegExp, unknown[]][])(
+    ] as [string, NoteType, OptionalSortMode, string, RegExp, unknown[]][])(
       'correctly get all notes visited by the user with',
       (name, noteType, sortBy, search, regex, bindings) => {
         // oxlint-disable-next-line jest/valid-title

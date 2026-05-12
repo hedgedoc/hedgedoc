@@ -7,13 +7,7 @@ import { calculateLineStartIndexes } from './calculate-line-start-indexes'
 import { initialState } from './initial-state'
 import type { NoteDetails } from './types'
 import type { FrontmatterExtractionResult, NoteFrontmatter } from '@hedgedoc/commons'
-import {
-  convertRawFrontmatterToNoteFrontmatter,
-  extractFrontmatter,
-  generateNoteTitle,
-  parseRawFrontmatterFromYaml
-} from '@hedgedoc/commons'
-import { Optional } from '@mrdrogdrog/optional'
+import { extractFrontmatter, generateNoteTitle, parseNoteFrontmatter } from '@hedgedoc/commons'
 
 /**
  * Copies a {@link NoteDetails} but with another markdown content.
@@ -93,12 +87,12 @@ const buildStateFromFrontmatterUpdate = (
   return buildStateFromFrontmatter(state, parseFrontmatter(frontmatterExtraction), frontmatterExtraction)
 }
 
-const parseFrontmatter = (frontmatterExtraction: FrontmatterExtractionResult) => {
-  return Optional.of(parseRawFrontmatterFromYaml(frontmatterExtraction.rawText))
-    .filter((frontmatter) => frontmatter.error === undefined)
-    .map((frontmatter) => frontmatter.value)
-    .map((value) => convertRawFrontmatterToNoteFrontmatter(value))
-    .orElse(initialState.frontmatter)
+const parseFrontmatter = (frontmatterExtraction: FrontmatterExtractionResult): NoteFrontmatter => {
+  const parseResult = parseNoteFrontmatter(frontmatterExtraction.rawText)
+  if (parseResult.error !== undefined) {
+    return initialState.frontmatter
+  }
+  return parseResult.value
 }
 
 const buildStateFromFrontmatter = (

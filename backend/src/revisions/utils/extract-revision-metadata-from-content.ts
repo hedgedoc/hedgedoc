@@ -4,14 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import {
-  convertRawFrontmatterToNoteFrontmatter,
   defaultNoteFrontmatter,
   extractFirstHeading,
   extractFrontmatter,
   generateNoteTitle,
-  NoteFrontmatter,
+  type NoteFrontmatter,
   NoteType,
-  parseRawFrontmatterFromYaml,
+  parseNoteFrontmatter,
 } from '@hedgedoc/commons';
 import { parseDocument } from 'htmlparser2';
 import MarkdownIt from 'markdown-it';
@@ -81,11 +80,11 @@ function parseFrontmatter(content: string): FrontmatterParserResult | undefined 
   }
 
   const firstLineOfContentIndex = extractionResult.lineOffset + 1;
-  const rawDataValidation = parseRawFrontmatterFromYaml(rawText);
+  const frontmatterParseResult = parseNoteFrontmatter(rawText);
   const noteFrontmatter =
-    rawDataValidation.error !== undefined
+    frontmatterParseResult.error !== undefined
       ? defaultNoteFrontmatter
-      : convertRawFrontmatterToNoteFrontmatter(rawDataValidation.value);
+      : frontmatterParseResult.value;
   return {
     frontmatter: noteFrontmatter,
     firstLineOfContentIndex: firstLineOfContentIndex,

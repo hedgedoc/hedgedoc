@@ -78,7 +78,7 @@ describe('build state from set note data from server', () => {
         lang: 'en',
         license: '',
         dir: NoteTextDirection.LTR,
-        newlinesAreBreaks: true,
+        breaks: true,
         type: NoteType.DOCUMENT,
         opengraph: {},
         slideOptions: {
