@@ -432,8 +432,12 @@ describe('Explore', () => {
     it('throws error if note is forbidden', async () => {
       await agentUser1
         .put(`${PRIVATE_API_PREFIX}/explore/pin/${forbiddenAlias}`)
+        .set('Content-Type', 'application/json')
+        .send({
+          isPinned: true,
+        })
         .expect('Content-Type', /json/)
-        .expect(400);
+        .expect(403);
     });
   });
 });
