@@ -18,8 +18,8 @@ describe('securityConfig: rate limiting', () => {
     HD_SECURITY_RATE_LIMIT_AUTHENTICATED_WINDOW: '300',
     HD_SECURITY_RATE_LIMIT_UNAUTHENTICATED_MAX: '100',
     HD_SECURITY_RATE_LIMIT_UNAUTHENTICATED_WINDOW: '300',
-    HD_SECURITY_RATE_LIMIT_AUTH_MAX: '20',
-    HD_SECURITY_RATE_LIMIT_AUTH_WINDOW: '600',
+    HD_SECURITY_RATE_LIMIT_AUTH_MAX: '40',
+    HD_SECURITY_RATE_LIMIT_AUTH_WINDOW: '900',
     HD_SECURITY_RATE_LIMIT_BYPASS: '127.0.0.1,::1',
     /* oxlint-enable @typescript-eslint/naming-convention */
   };
@@ -41,8 +41,8 @@ describe('securityConfig: rate limiting', () => {
       expect(config.rateLimit.authenticated.window).toEqual(300);
       expect(config.rateLimit.unauthenticated.max).toEqual(100);
       expect(config.rateLimit.unauthenticated.window).toEqual(300);
-      expect(config.rateLimit.auth.max).toEqual(20);
-      expect(config.rateLimit.auth.window).toEqual(600);
+      expect(config.rateLimit.auth.max).toEqual(40);
+      expect(config.rateLimit.auth.window).toEqual(900);
       expect(config.rateLimit.bypass).toEqual(['127.0.0.1', '::1']);
       restore();
     });
@@ -61,8 +61,8 @@ describe('securityConfig: rate limiting', () => {
       expect(config.rateLimit.authenticated.window).toEqual(300);
       expect(config.rateLimit.unauthenticated.max).toEqual(100);
       expect(config.rateLimit.unauthenticated.window).toEqual(300);
-      expect(config.rateLimit.auth.max).toEqual(20);
-      expect(config.rateLimit.auth.window).toEqual(600);
+      expect(config.rateLimit.auth.max).toEqual(40);
+      expect(config.rateLimit.auth.window).toEqual(900);
       expect(config.rateLimit.bypass).toEqual([]);
       restore();
     });

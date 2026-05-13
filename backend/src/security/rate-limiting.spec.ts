@@ -24,7 +24,7 @@ describe('rate limiting', () => {
       publicApi: { max: 150, window: 300 },
       authenticated: { max: 600, window: 300 },
       unauthenticated: { max: 100, window: 300 },
-      auth: { max: 20, window: 600 },
+      auth: { max: 40, window: 900 },
     },
   });
 
@@ -95,8 +95,8 @@ describe('rate limiting', () => {
 
   it('uses auth limits for auth endpoints', () => {
     const request = createMockedRequest({ url: '/api/private/auth/login' });
-    expect(getTimeWindowByRequestWithSecurityConfig(securityConfig)(request, 'key')).toBe(600000);
-    expect(getMaxLimitByRequestWithSecurityConfig(securityConfig)(request, 'key')).toBe(20);
+    expect(getTimeWindowByRequestWithSecurityConfig(securityConfig)(request, 'key')).toBe(900000);
+    expect(getMaxLimitByRequestWithSecurityConfig(securityConfig)(request, 'key')).toBe(40);
   });
 
   it('returns infinity when the configured max is zero', () => {

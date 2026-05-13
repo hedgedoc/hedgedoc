@@ -45,6 +45,6 @@ Setting a `*_MAX` value to `0` effectively disables rate limiting for that tier
 | `HD_SECURITY_RATE_LIMIT_AUTHENTICATED_WINDOW`   | 300     | Time window in seconds for authenticated usage                     |
 | `HD_SECURITY_RATE_LIMIT_UNAUTHENTICATED_MAX`    | 100     | Maximum requests for unauthenticated usage                         |
 | `HD_SECURITY_RATE_LIMIT_UNAUTHENTICATED_WINDOW` | 300     | Time window in seconds for unauthenticated usage                   |
-| `HD_SECURITY_RATE_LIMIT_AUTH_MAX`               | 20      | Maximum of auth request attempts                                   |
-| `HD_SECURITY_RATE_LIMIT_AUTH_WINDOW`            | 600     | Time window in seconds for auth request attempts                   |
+| `HD_SECURITY_RATE_LIMIT_AUTH_MAX`               | 40      | Maximum of auth request attempts                                   |
+| `HD_SECURITY_RATE_LIMIT_AUTH_WINDOW`            | 900     | Time window in seconds for auth request attempts                   |
 | `HD_SECURITY_RATE_LIMIT_BYPASS`                 | *none*  | Bypass rate limiting for these IP addresses (comma-separated list) |

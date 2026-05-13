@@ -54,12 +54,12 @@ const securityConfigSchema = z.object({
         .describe('HD_SECURITY_RATE_LIMIT_UNAUTHENTICATED_WINDOW'),
     }),
     auth: z.object({
-      max: z.number().int().nonnegative().default(20).describe('HD_SECURITY_RATE_LIMIT_AUTH_MAX'),
+      max: z.number().int().nonnegative().default(40).describe('HD_SECURITY_RATE_LIMIT_AUTH_MAX'),
       window: z
         .number()
         .int()
         .positive()
-        .default(600)
+        .default(900)
         .describe('HD_SECURITY_RATE_LIMIT_AUTH_WINDOW'),
     }),
     bypass: z
