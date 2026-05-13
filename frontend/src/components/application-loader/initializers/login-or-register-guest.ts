@@ -8,6 +8,7 @@ import { logInGuest, registerGuest } from '../../../api/auth/guest'
 import { store } from '../../../redux'
 import { fetchAndSetUser } from '../../login-page/utils/fetch-and-set-user'
 import { Logger } from '../../../utils/logger'
+import { RateLimitError } from '../../../api/common/api-error'
 
 const logger = new Logger('LoginOrRegisterGuest')
 
@@ -19,6 +20,7 @@ const logger = new Logger('LoginOrRegisterGuest')
  * The uuid is stored in local storage afterward.
  *
  * @param ignoreSavedUuid If true, the function will not check for a saved guest uuid in local storage
+ * @throws RateLimitError if the rate limit is exceeded back to the application-loader
  */
 export const loginOrRegisterGuest = async (ignoreSavedUuid?: boolean): Promise<void> => {
   const userState = store.getState().user
@@ -34,6 +36,9 @@ export const loginOrRegisterGuest = async (ignoreSavedUuid?: boolean): Promise<v
   logInGuest(guestUuid)
     .then(fetchAndSetUser)
     .catch((error: unknown) => {
+      if (error instanceof RateLimitError) {
+        throw error
+      }
       logger.error('Error logging in guest user', error)
       return loginOrRegisterGuest(true)
     })

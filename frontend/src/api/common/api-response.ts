@@ -28,14 +28,6 @@ export class ApiResponse<ResponseType> {
     return this.response
   }
 
-  static isSuccessfulResponse(response: Response): boolean {
-    return response.status >= 400
-  }
-
-  isSuccessful(): boolean {
-    return ApiResponse.isSuccessfulResponse(this.response)
-  }
-
   /**
    * Returns the response as parsed JSON. An error will be thrown if the response is not JSON encoded.
    *

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ApiError } from '../api-error'
+import { ApiError, RateLimitError } from '../api-error'
 import type { ApiErrorResponse } from '../api-error-response'
 import { ApiResponse } from '../api-response'
 import { defaultConfig, defaultHeaders } from '../default-config'
@@ -69,6 +69,12 @@ export abstract class ApiRequestBuilder<ResponseType> {
       headers: this.customRequestHeaders,
       body: this.requestBody
     })
+
+    if (response.status === 429) {
+      // Default to 5 minutes if no header response received
+      const rateLimitResetSeconds = Number.parseInt(response.headers.get('RateLimit-Reset') ?? '300')
+      throw new RateLimitError(rateLimitResetSeconds)
+    }
 
     if (response.status >= 400) {
       const backendError = await this.readApiErrorResponseFromBody(response)
