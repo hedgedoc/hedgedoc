@@ -40,12 +40,6 @@ export const RevisionModalFooter: React.FC<RevisionModalFooterProps> = ({
   const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const { showErrorNotificationBuilder } = useUiNotifications()
 
-  const onRevertToRevision = useCallback(() => {
-    // TODO Websocket message handler missing
-    //  see https://github.com/hedgedoc/hedgedoc/issues/1984
-    window.alert('Not yet implemented. Requires websocket.')
-  }, [])
-
   const onDownloadRevision = useCallback(() => {
     if (selectedRevisionId === undefined || noteAlias === undefined) {
       return
@@ -73,13 +67,6 @@ export const RevisionModalFooter: React.FC<RevisionModalFooterProps> = ({
         {...cypressId('revision.modal.delete.button')}
         disabled={disableDeleteRevisions}>
         <Trans i18nKey={'editor.modal.deleteRevision.button'} />
-      </Button>
-      <Button
-        variant='danger'
-        disabled={selectedRevisionId === undefined}
-        onClick={onRevertToRevision}
-        {...cypressId('revision.modal.revert.button')}>
-        <Trans i18nKey={'editor.modal.revision.revertButton'} />
       </Button>
       <Button
         variant='primary'
