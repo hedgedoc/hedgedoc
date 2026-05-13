@@ -20,7 +20,7 @@ interface RateLimitConfig {
  * @returns The user ID if authenticated, null otherwise
  */
 function getUserIdFromSession(req: FastifyRequest): number | null {
-  return (req as RequestWithSession).session?.userId;
+  return (req as RequestWithSession).session?.userId ?? null;
 }
 
 /**
@@ -53,18 +53,25 @@ function getRateLimitConfigByRequest(
   const path = req.routeOptions?.url ?? req.url;
   const userId = getUserIdFromSession(req);
 
-  // Auth endpoints
+  // Logout is never rate-limited
+  if (path === '/api/private/auth/logout') {
+    return {
+      max: Infinity,
+    };
+  }
+
+  // Auth endpoints except logout
   if (path.includes('/api/private/auth/')) {
     return securityConfig.rateLimit.auth;
   }
 
   // Public API, authenticated
-  if (path.startsWith('/api/v2') && userId !== undefined) {
+  if (path.startsWith('/api/v2') && userId !== null) {
     return securityConfig.rateLimit.publicApi;
   }
 
   // Private API, authenticated
-  if (path.startsWith('/api/private') && userId !== undefined) {
+  if (path.startsWith('/api/private') && userId !== null) {
     return securityConfig.rateLimit.authenticated;
   }
 
