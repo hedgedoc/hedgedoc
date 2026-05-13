@@ -53,15 +53,15 @@ function getRateLimitConfigByRequest(
   const path = req.routeOptions?.url ?? req.url;
   const userId = getUserIdFromSession(req);
 
-  // Logout is never rate-limited
-  if (path === '/api/private/auth/logout') {
+  // Logout and monitoring are never rate-limited
+  if (path === '/api/private/auth/logout' || path.startsWith('/api/private/monitoring')) {
     return {
       max: Infinity,
     };
   }
 
   // Auth endpoints except logout
-  if (path.includes('/api/private/auth/')) {
+  if (path.startsWith('/api/private/auth/')) {
     return securityConfig.rateLimit.auth;
   }
 
