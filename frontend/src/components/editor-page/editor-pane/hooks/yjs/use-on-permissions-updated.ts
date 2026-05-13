@@ -12,6 +12,7 @@ import { useEffect } from 'react'
 import { Logger } from '../../../../../utils/logger'
 import { DEFAULT_FALLBACK_URL } from '../../../../login-page/utils/use-get-post-login-redirect-url'
 import { useRouter } from 'next/navigation'
+import { ApiError } from '../../../../../api/common/api-error'
 
 const logger = new Logger('useOnPermissionsUpdated')
 
@@ -21,18 +22,26 @@ const logger = new Logger('useOnPermissionsUpdated')
  * @param websocketConnection The websocket connection that emits the permissions changed event
  */
 export const useOnPermissionsUpdated = (websocketConnection: MessageTransporter): void => {
-  const { showErrorNotificationBuilder } = useUiNotifications()
+  const { showErrorNotificationBuilder, dispatchUiNotification } = useUiNotifications()
   const router = useRouter()
 
   useEffect(() => {
     const listener = websocketConnection.on(
       MessageType.PERMISSIONS_UPDATED,
       () => {
-        updateNotePermissions().catch(() => {
-          logger.error(
-            `Got an error while updating note permissions after receiving ${MessageType.PERMISSIONS_UPDATED}. Returning the user to explore page`
-          )
-          router.replace(DEFAULT_FALLBACK_URL)
+        updateNotePermissions().catch((error: unknown) => {
+          if (error instanceof ApiError && error.statusCode === 403) {
+            logger.error(
+              `Got an error while updating note permissions after receiving ${MessageType.PERMISSIONS_UPDATED}. Returning the user to explore page`
+            )
+            dispatchUiNotification(
+              'notifications.notePermissionsRevoked.title',
+              'notifications.notePermissionsRevoked.text',
+              {}
+            )
+            return router.replace(DEFAULT_FALLBACK_URL)
+          }
+          showErrorNotificationBuilder('common.errorWhileLoading', { name: 'note permission update' })
         })
       },
       {
@@ -42,5 +51,5 @@ export const useOnPermissionsUpdated = (websocketConnection: MessageTransporter)
     return () => {
       listener.off()
     }
-  }, [showErrorNotificationBuilder, websocketConnection, router])
+  }, [showErrorNotificationBuilder, dispatchUiNotification, websocketConnection, router])
 }

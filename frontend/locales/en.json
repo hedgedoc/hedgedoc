@@ -616,6 +616,10 @@
     "noteDeleted": {
       "title": "Note '{{noteTitle}}' deleted",
       "text": "You were redirected to the explore page, because the note you just edited was deleted."
+    },
+    "notePermissionsRevoked": {
+      "title": "Access permission for note was revoked",
+      "text": "You were redirected to the explore page, because the permissions for the note you just edited were revoked."
     }
   },
   "realtime": {
