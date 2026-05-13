@@ -17,6 +17,7 @@ import { Eye as IconEye, Pencil as IconPencil, SlashCircle as IconSlashCircle } 
 import { useTranslation } from 'react-i18next'
 import { PermissionInconsistentAlert } from './permission-inconsistent-alert'
 import { cypressId } from '../../../../../../utils/cypress-attribute'
+import { ErrorToI18nKeyMapper } from '../../../../../../api/common/error-to-i18n-key-mapper'
 
 export interface PermissionEntrySpecialGroupProps {
   level: PermissionLevel
@@ -50,7 +51,13 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
       })
-      .catch(showErrorNotificationBuilder('editor.modal.permissions.error'))
+      .catch((error) => {
+        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.modal.permissions.error')
+          .withHttpCode(404, 'missingUser')
+          .withHttpCode(403, 'missingPermissions')
+          .orFallbackI18nKey('other')
+        showErrorNotificationBuilder(errorI18nKey)(error)
+      })
   }, [noteAlias, showErrorNotificationBuilder, type])
 
   const onSetEntryWriteable = useCallback(() => {
@@ -61,7 +68,13 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
       })
-      .catch(showErrorNotificationBuilder('editor.modal.permissions.error'))
+      .catch((error) => {
+        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.modal.permissions.error')
+          .withHttpCode(404, 'missingUser')
+          .withHttpCode(403, 'missingPermissions')
+          .orFallbackI18nKey('other')
+        showErrorNotificationBuilder(errorI18nKey)(error)
+      })
   }, [noteAlias, showErrorNotificationBuilder, type])
 
   const onSetEntryDenied = useCallback(() => {
@@ -72,7 +85,13 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
       .then((updatedPermissions) => {
         setNotePermissionsFromServer(updatedPermissions)
       })
-      .catch(showErrorNotificationBuilder('editor.modal.permissions.error'))
+      .catch((error) => {
+        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.modal.permissions.error')
+          .withHttpCode(404, 'missingUser')
+          .withHttpCode(403, 'missingPermissions')
+          .orFallbackI18nKey('other')
+        showErrorNotificationBuilder(errorI18nKey)(error)
+      })
   }, [noteAlias, showErrorNotificationBuilder, type])
 
   const name = useMemo(() => {
