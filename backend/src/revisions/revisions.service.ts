@@ -479,16 +479,16 @@ export class RevisionsService {
           `${TableRevision}.${FieldNameRevision.noteId}`,
         )
         .select(
-          FieldNameRevision.uuid,
+          `${TableRevision}.${FieldNameRevision.uuid}`,
           `${TableRevision}.${FieldNameRevision.noteId}`,
-          FieldNameRevision.content,
-          FieldNameAlias.alias,
+          `${TableRevision}.${FieldNameRevision.content}`,
+          `${TableAlias}.${FieldNameAlias.alias}`,
         )
-        .whereIn(FieldNameRevision.noteId, uniqueNoteIds)
-        .andWhere(FieldNameAlias.isPrimary, true)
+        .whereIn(`${TableRevision}.${FieldNameRevision.noteId}`, uniqueNoteIds)
+        .andWhere(`${TableAlias}.${FieldNameAlias.isPrimary}`, true)
         .orderBy([
-          { column: FieldNameRevision.noteId },
-          { column: FieldNameRevision.createdAt, order: 'ASC' },
+          { column: `${TableRevision}.${FieldNameRevision.noteId}` },
+          { column: `${TableRevision}.${FieldNameRevision.createdAt}`, order: 'ASC' },
         ]);
 
       let lastNoteId = -1;

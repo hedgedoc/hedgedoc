@@ -563,10 +563,10 @@ describe('RevisionsService', () => {
       mockSelect(
         tracker,
         [
-          FieldNameRevision.uuid,
+          `${TableRevision}"."${FieldNameRevision.uuid}`,
           `${TableRevision}"."${FieldNameRevision.noteId}`,
-          FieldNameRevision.content,
-          FieldNameAlias.alias,
+          `${TableRevision}"."${FieldNameRevision.content}`,
+          `${TableAlias}"."${FieldNameAlias.alias}`,
         ],
         TableRevision,
         [FieldNameRevision.noteId, FieldNameAlias.isPrimary],
