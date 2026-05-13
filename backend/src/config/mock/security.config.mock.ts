@@ -24,8 +24,8 @@ export function createDefaultMockSecurityConfig(): SecurityConfig {
         window: 300,
       },
       auth: {
-        max: 20,
-        window: 600,
+        max: 40,
+        window: 900,
       },
       bypass: [],
     },
