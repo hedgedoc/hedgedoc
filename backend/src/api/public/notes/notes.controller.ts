@@ -49,7 +49,7 @@ import { ApiTokenGuard } from '../../utils/guards/api-token.guard';
 import { GetNoteIdInterceptor } from '../../utils/interceptors/get-note-id.interceptor';
 
 @UseGuards(ApiTokenGuard, PermissionsGuard)
-@OpenApi(401)
+@OpenApi(401, 403, 429)
 @ApiTags('notes')
 @ApiSecurity('token')
 @Controller('notes')
@@ -68,7 +68,7 @@ export class NotesController {
 
   @RequirePermission(PermissionLevel.FULL)
   @Post()
-  @OpenApi(201, 403, 409, 413)
+  @OpenApi(201, 409, 413)
   async createNote(
     @RequestUserId() userId: number,
     @MarkdownBody() text: string,
@@ -86,7 +86,6 @@ export class NotesController {
       description: 'Get information about the newly created note',
       schema: NoteSchema,
     },
-    403,
     404,
   )
   async getNote(
@@ -105,7 +104,6 @@ export class NotesController {
       schema: NoteSchema,
     },
     400,
-    403,
     409,
     413,
   )
@@ -122,7 +120,7 @@ export class NotesController {
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.FULL)
   @Delete(':noteAlias')
-  @OpenApi(204, 403, 404, 500)
+  @OpenApi(204, 404, 500)
   async deleteNote(
     @RequestUserId() userId: number,
     @RequestNoteId() noteId: number,
@@ -151,7 +149,6 @@ export class NotesController {
       description: 'The new, changed note',
       schema: NoteSchema,
     },
-    403,
     404,
   )
   async updateNote(
@@ -173,7 +170,6 @@ export class NotesController {
       description: 'The raw markdown content of the note',
       mimeType: 'text/markdown',
     },
-    403,
     404,
   )
   async getNoteContent(
@@ -192,7 +188,6 @@ export class NotesController {
       description: 'The metadata of the note',
       schema: NoteMetadataSchema,
     },
-    403,
     404,
   )
   async getNoteMetadata(@RequestNoteId() noteId: number): Promise<NoteMetadataDto> {
@@ -208,7 +203,6 @@ export class NotesController {
       description: 'Get the permissions for a note',
       schema: NotePermissionsSchema,
     },
-    403,
     404,
   )
   async getPermissions(@RequestNoteId() noteId: number): Promise<NotePermissionsDto> {
@@ -224,7 +218,6 @@ export class NotesController {
       description: 'Set the permissions for a user on a note',
       schema: NotePermissionsSchema,
     },
-    403,
     404,
   )
   async setUserPermission(
@@ -247,7 +240,6 @@ export class NotesController {
       description: 'Remove the permission for a user on a note',
       schema: NotePermissionsSchema,
     },
-    403,
     404,
   )
   async removeUserPermission(
@@ -269,7 +261,6 @@ export class NotesController {
       description: 'Set the permissions for a group on a note',
       schema: NotePermissionsSchema,
     },
-    403,
     404,
   )
   async setGroupPermission(
@@ -292,7 +283,6 @@ export class NotesController {
       description: 'Remove the permission for a group on a note',
       schema: NotePermissionsSchema,
     },
-    403,
     404,
   )
   async removeGroupPermission(
@@ -313,7 +303,6 @@ export class NotesController {
       description: 'Changes the owner of the note',
       schema: NoteSchema,
     },
-    403,
     404,
   )
   async changeOwner(
@@ -335,7 +324,6 @@ export class NotesController {
       description: 'Changes the owner of the note',
       schema: NoteSchema,
     },
-    403,
     404,
   )
   async change(
@@ -357,7 +345,6 @@ export class NotesController {
       isArray: true,
       schema: RevisionMetadataSchema,
     },
-    403,
     404,
   )
   async getNoteRevisions(@RequestNoteId() noteId: number): Promise<RevisionMetadataDto[]> {
@@ -373,7 +360,6 @@ export class NotesController {
       description: 'Revision of the note for the given id or aliases',
       schema: RevisionSchema,
     },
-    403,
     404,
   )
   async getNoteRevision(@Param('revisionUuid') revisionUuid: string): Promise<RevisionDto> {

@@ -14,6 +14,7 @@ import { UsersService } from '../../../users/users.service';
 import { OpenApi } from '../../utils/decorators/openapi.decorator';
 
 @ApiTags('users')
+@OpenApi(403, 429)
 @Controller('users')
 export class UsersController {
   constructor(

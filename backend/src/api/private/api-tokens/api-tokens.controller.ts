@@ -19,7 +19,7 @@ import { OpenApi } from '../../utils/decorators/openapi.decorator';
 import { RequestUserId } from '../../utils/decorators/request-user-id.decorator';
 
 @UseGuards(SessionGuard)
-@OpenApi(401)
+@OpenApi(401, 403, 429)
 @ApiTags('tokens')
 @Controller('tokens')
 export class ApiTokensController {

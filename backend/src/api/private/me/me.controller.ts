@@ -29,7 +29,7 @@ import { promisify } from 'node:util';
 import { RequestWithSession } from '../../utils/request.type';
 
 @UseGuards(SessionGuard)
-@OpenApi(401)
+@OpenApi(401, 403, 429)
 @ApiTags('me')
 @Controller('me')
 export class MeController {

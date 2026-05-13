@@ -53,7 +53,7 @@ import { RequestUserId } from '../../utils/decorators/request-user-id.decorator'
 import { GetNoteIdInterceptor } from '../../utils/interceptors/get-note-id.interceptor';
 
 @UseGuards(SessionGuard, PermissionsGuard)
-@OpenApi(401, 403)
+@OpenApi(401, 403, 429)
 @ApiTags('notes')
 @Controller('notes')
 export class NotesController {
@@ -181,7 +181,7 @@ export class NotesController {
   }
 
   @Put(':noteAlias/metadata/permissions/users/:username')
-  @OpenApi(200, 403, 404)
+  @OpenApi(200, 404)
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.FULL)
   async setUserPermission(
@@ -194,9 +194,10 @@ export class NotesController {
     return await this.permissionService.getPermissionsDtoForNote(noteId);
   }
 
+  @Delete(':noteAlias/metadata/permissions/users/:username')
+  @OpenApi(200, 400)
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.FULL)
-  @Delete(':noteAlias/metadata/permissions/users/:username')
   async removeUserPermission(
     @RequestNoteId() noteId: number,
     @Param('username') username: NoteUserPermissionEntryDto['username'],
@@ -213,9 +214,10 @@ export class NotesController {
     }
   }
 
+  @Put(':noteAlias/metadata/permissions/groups/:groupName')
+  @OpenApi(200, 400, 404)
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.FULL)
-  @Put(':noteAlias/metadata/permissions/groups/:groupName')
   async setGroupPermission(
     @RequestNoteId() noteId: number,
     @Param('groupName') groupName: NoteGroupPermissionUpdateDto['groupName'],
@@ -235,10 +237,11 @@ export class NotesController {
     return await this.permissionService.getPermissionsDtoForNote(noteId);
   }
 
+  @Delete(':noteAlias/metadata/permissions/groups/:groupName')
+  @OpenApi(200, 404)
   @UseInterceptors(GetNoteIdInterceptor)
   @RequirePermission(PermissionLevel.FULL)
   @UseGuards(PermissionsGuard)
-  @Delete(':noteAlias/metadata/permissions/groups/:groupName')
   async removeGroupPermission(
     @RequestNoteId() noteId: number,
     @Param('groupName') groupName: NoteGroupPermissionEntryDto['groupName'],

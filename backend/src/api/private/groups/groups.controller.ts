@@ -13,7 +13,7 @@ import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { OpenApi } from '../../utils/decorators/openapi.decorator';
 
 @UseGuards(SessionGuard)
-@OpenApi(401, 403)
+@OpenApi(401, 403, 429)
 @ApiTags('groups')
 @Controller('groups')
 export class GroupsController {
