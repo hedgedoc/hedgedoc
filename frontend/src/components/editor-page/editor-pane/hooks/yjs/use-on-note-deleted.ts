@@ -10,6 +10,7 @@ import { MessageType } from '@hedgedoc/commons'
 import type { Listener } from 'eventemitter2'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect } from 'react'
+import { DEFAULT_FALLBACK_URL } from '../../../../login-page/utils/use-get-post-login-redirect-url'
 
 /**
  * Hook that redirects the user to the history page and displays a notification when the note is deleted.
@@ -27,7 +28,7 @@ export const useOnNoteDeleted = (websocketConnection: MessageTransporter): void 
         noteTitle
       }
     })
-    router.push('/explore/my')
+    router.push(DEFAULT_FALLBACK_URL)
   }, [router, noteTitle, dispatchUiNotification])
 
   useEffect(() => {
