@@ -84,6 +84,15 @@ describe('rate limiting', () => {
     expect(getMaxLimitByRequestWithSecurityConfig(securityConfig)(request, 'key')).toBe(Infinity);
   });
 
+  it('never rate limits monitoring requests', () => {
+    const request = createMockedRequest({
+      url: '/api/private/monitoring/prometheus',
+      ip: '192.0.2.4',
+    });
+    expect(getTimeWindowByRequestWithSecurityConfig(securityConfig)(request, 'key')).toBe(0);
+    expect(getMaxLimitByRequestWithSecurityConfig(securityConfig)(request, 'key')).toBe(Infinity);
+  });
+
   it('uses auth limits for auth endpoints', () => {
     const request = createMockedRequest({ url: '/api/private/auth/login' });
     expect(getTimeWindowByRequestWithSecurityConfig(securityConfig)(request, 'key')).toBe(600000);
