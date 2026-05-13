@@ -30,7 +30,7 @@ import { RequestUserId } from '../../utils/decorators/request-user-id.decorator'
 type OptionalNoteType = NoteType | '';
 
 @UseGuards(SessionGuard)
-@OpenApi(401, 403)
+@OpenApi(401, 403, 429)
 @ApiTags('explore')
 @Controller('explore')
 export class ExploreController {

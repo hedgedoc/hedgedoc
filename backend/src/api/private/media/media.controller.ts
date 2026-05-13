@@ -33,7 +33,7 @@ import { RequestUserId } from '../../utils/decorators/request-user-id.decorator'
 import { NoteHeaderInterceptor } from '../../utils/interceptors/note-header.interceptor';
 
 @UseGuards(SessionGuard)
-@OpenApi(401)
+@OpenApi(401, 403, 429)
 @ApiTags('media')
 @Controller('media')
 export class MediaController {

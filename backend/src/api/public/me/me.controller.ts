@@ -25,7 +25,7 @@ import { RequestUserId } from '../../utils/decorators/request-user-id.decorator'
 import { ApiTokenGuard } from '../../utils/guards/api-token.guard';
 
 @UseGuards(ApiTokenGuard)
-@OpenApi(401)
+@OpenApi(401, 403, 429)
 @ApiTags('me')
 @ApiSecurity('token')
 @Controller('me')

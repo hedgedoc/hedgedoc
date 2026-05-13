@@ -12,10 +12,9 @@ export const badRequestDescription = "The request is malformed and can't be proc
 export const unauthorizedDescription = 'Authorization information is missing or invalid';
 export const forbiddenDescription = 'Access to the requested resource is not permitted';
 export const notFoundDescription = 'The requested resource was not found';
-export const successfullyDeletedDescription = 'The requested resource was successfully deleted';
-export const unprocessableEntityDescription = "The request change can't be processed";
 export const conflictDescription =
   'The request conflicts with the current state of the application';
 export const payloadTooLargeDescription =
   'The note is longer than the maximal allowed length of a note';
+export const tooManyRequestsDescription = 'The request triggered a rate limit.';
 export const internalServerErrorDescription = 'The request triggered an internal server error.';

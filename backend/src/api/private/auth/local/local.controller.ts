@@ -54,7 +54,7 @@ export class LocalController {
 
   @UseGuards(LoginEnabledGuard, SessionGuard)
   @Put()
-  @OpenApi(200, 400, 401)
+  @OpenApi(200, 400, 401, 403, 429)
   async updatePassword(
     @RequestUserId() userId: number,
     @Body() changePasswordDto: UpdatePasswordDto,
@@ -70,7 +70,7 @@ export class LocalController {
 
   @UseGuards(LoginEnabledGuard)
   @Post('login')
-  @OpenApi(201, 400, 401)
+  @OpenApi(201, 400, 401, 429)
   async login(
     @Req()
     request: RequestWithSession,

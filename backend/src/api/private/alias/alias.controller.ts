@@ -30,7 +30,7 @@ import { PermissionLevel } from '@hedgedoc/commons';
 import { NoteAliasesDto } from '../../../dtos/note-aliases.dto';
 
 @UseGuards(SessionGuard)
-@OpenApi(401)
+@OpenApi(401, 403, 429)
 @ApiTags('alias')
 @Controller('alias')
 export class AliasController {

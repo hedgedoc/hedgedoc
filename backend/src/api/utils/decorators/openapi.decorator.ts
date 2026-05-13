@@ -4,36 +4,53 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { applyDecorators, Header, HttpCode } from '@nestjs/common';
+import type { ApiResponseNoStatusOptions } from '@nestjs/swagger';
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
   ApiCreatedResponse,
+  ApiForbiddenResponse,
   ApiFoundResponse,
   ApiInternalServerErrorResponse,
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiProduces,
-  ApiResponseNoStatusOptions,
+  ApiTooManyRequestsResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { zodToOpenAPI } from 'nestjs-zod';
-import { ZodSchema } from 'zod';
+import type { ZodSchema } from 'zod';
 
 import {
   badRequestDescription,
   conflictDescription,
   createdDescription,
+  forbiddenDescription,
   foundDescription,
   internalServerErrorDescription,
   noContentDescription,
   notFoundDescription,
   okDescription,
   payloadTooLargeDescription,
+  tooManyRequestsDescription,
   unauthorizedDescription,
 } from '../descriptions';
 
-export type HttpStatusCodes = 200 | 201 | 204 | 302 | 400 | 401 | 403 | 404 | 409 | 413 | 500 | 503;
+export type HttpStatusCodes =
+  | 200
+  | 201
+  | 204
+  | 302
+  | 400
+  | 401
+  | 403
+  | 404
+  | 409
+  | 413
+  | 429
+  | 500
+  | 503;
 
 /**
  * Defines what the open api route should document.
@@ -154,6 +171,13 @@ export const OpenApi = (
           }),
         );
         break;
+      case 403:
+        decoratorsToApply.push(
+          ApiForbiddenResponse({
+            description: description ?? forbiddenDescription,
+          }),
+        );
+        break;
       case 404:
         decoratorsToApply.push(
           ApiNotFoundResponse({
@@ -172,6 +196,13 @@ export const OpenApi = (
         decoratorsToApply.push(
           ApiConflictResponse({
             description: description ?? payloadTooLargeDescription,
+          }),
+        );
+        break;
+      case 429:
+        decoratorsToApply.push(
+          ApiTooManyRequestsResponse({
+            description: description ?? tooManyRequestsDescription,
           }),
         );
         break;

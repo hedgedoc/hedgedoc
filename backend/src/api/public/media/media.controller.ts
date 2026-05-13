@@ -33,7 +33,7 @@ import { ApiTokenGuard } from '../../utils/guards/api-token.guard';
 import { NoteHeaderInterceptor } from '../../utils/interceptors/note-header.interceptor';
 
 @UseGuards(ApiTokenGuard)
-@OpenApi(401)
+@OpenApi(401, 403, 429)
 @ApiTags('media')
 @ApiSecurity('token')
 @Controller('media')
@@ -70,7 +70,6 @@ export class MediaController {
       schema: MediaUploadSchema,
     },
     400,
-    403,
     404,
     500,
   )
@@ -105,7 +104,7 @@ export class MediaController {
   }
 
   @Delete(':uuid')
-  @OpenApi(204, 403, 404, 500)
+  @OpenApi(204, 404, 500)
   async deleteMedia(@RequestUserId() userId: number, @Param('uuid') uuid: string): Promise<void> {
     const mediaUpload = await this.mediaService.findUploadByUuid(uuid);
     if (await this.permissionsService.checkMediaDeletePermission(userId, uuid)) {

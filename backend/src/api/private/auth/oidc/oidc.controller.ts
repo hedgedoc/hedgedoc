@@ -44,7 +44,7 @@ export class OidcController {
 
   @Get(':oidcIdentifier')
   @Redirect()
-  @OpenApi(201, 400, 401)
+  @OpenApi(201, 400, 401, 429)
   loginWithOpenIdConnect(
     @Req() request: RequestWithSession,
     @Param('oidcIdentifier') oidcIdentifier: string,

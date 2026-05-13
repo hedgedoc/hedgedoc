@@ -29,7 +29,7 @@ import { RequestUserId } from '../../utils/decorators/request-user-id.decorator'
 import { ApiTokenGuard } from '../../utils/guards/api-token.guard';
 
 @UseGuards(ApiTokenGuard)
-@OpenApi(401)
+@OpenApi(401, 403, 429)
 @ApiTags('alias')
 @ApiSecurity('token')
 @Controller('alias')
@@ -50,7 +50,6 @@ export class AliasController {
       description: 'The new alias',
       schema: AliasSchema,
     },
-    403,
     404,
   )
   async addAlias(
@@ -74,7 +73,6 @@ export class AliasController {
       description: 'The updated aliases',
       schema: AliasSchema,
     },
-    403,
     404,
   )
   async makeAliasPrimary(
@@ -102,7 +100,6 @@ export class AliasController {
       description: 'The aliases was deleted',
     },
     400,
-    403,
     404,
   )
   async removeAlias(@RequestUserId() user: number, @Param('alias') alias: string): Promise<void> {
