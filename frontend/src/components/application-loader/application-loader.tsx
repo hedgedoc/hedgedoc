@@ -28,7 +28,7 @@ export const ApplicationLoader: React.FC<PropsWithChildren> = ({ children }) => 
         await task.task()
       } catch (reason: unknown) {
         log.error('Error while initialising application', reason)
-        throw new ApplicationLoaderError(task.name)
+        throw new ApplicationLoaderError(task.name, reason)
       }
     }
   }, [])

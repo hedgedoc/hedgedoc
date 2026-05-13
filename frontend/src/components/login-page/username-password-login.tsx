@@ -13,6 +13,7 @@ import { UsernameField } from '../common/fields/username-field'
 import { PasswordField } from './password-field'
 import { Alert, Card, Form } from 'react-bootstrap'
 import { ActionButton } from '../common/action-button'
+import { RateLimitError } from '../../api/common/api-error'
 
 export interface UsernamePasswordLoginProps {
   authProviderIdentifier?: string
@@ -71,11 +72,21 @@ export const UsernamePasswordLogin: React.FC<UsernamePasswordLoginProps> = ({
             return fetchAndSetUser()
           }
         })
-        .catch((error: Error) => setError(errorMapping(error)))
+        .catch((error: Error) => {
+          if (error instanceof RateLimitError) {
+            setError(
+              t('errors.rateLimitExceeded.description', {
+                resetIn: error.getResetIn()
+              })
+            )
+          } else {
+            setError(errorMapping(error))
+          }
+        })
         .finally(() => setLoading(false))
       event.preventDefault()
     },
-    [username, password, authProviderIdentifier, router, doLogin, errorMapping]
+    [username, password, authProviderIdentifier, router, doLogin, errorMapping, t]
   )
 
   const onUsernameChange = useOnInputChange(setUsername)

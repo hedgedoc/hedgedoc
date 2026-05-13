@@ -610,6 +610,10 @@
     "noteCreationFailed": {
       "title": "Note could not be created",
       "description": "The note could not be created. Maybe you don't have permission to create notes."
+    },
+    "rateLimitExceeded": {
+      "title": "Rate limit exceeded",
+      "description": "You have made too many requests in short time. Please wait a moment and try again {{resetIn}}."
     }
   },
   "notifications": {
