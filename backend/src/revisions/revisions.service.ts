@@ -438,6 +438,22 @@ export class RevisionsService {
    * Deletes old revisions except the latest one if the clean-up is enabled
    */
   async removeOldRevisions(): Promise<void> {
+    // Algorithm:
+    // 1. Count all revisions older than revisionRetentionDays -> SQL should return map (noteId, revisionCount)
+    // 2. Count all revisions exactly as old as revisionRetentionDays or newer for all noteIds found in step 1 -> SQL should return map (noteId, revisionCount)
+    // 3. Sort noteIds in 3 categories:
+    //    a) noteId has only one revision older than revisionRetentionDays and no newer revision
+    //    b) noteId has multiple revisions older than revisionRetentionDays and no newer revision
+    //    c) noteId has at least one newer revision
+    // 4. Skip all noteIds from category 3a -> these may not be deleted to avoid data-loss
+    // 5. Loop over all noteIds from category 3b and do:
+    //    1. Find newest revision and update `patch` to diff between empty string and `content`
+    //    2. Delete all revisions for this noteId except the newest revision
+    // 6. Loop over all noteIds from category 3c and do:
+    //    1. Find oldest revision that is either exactly as old as or newer than revisionRetentionDays
+    //    2. Update that revision's `patch` to the diff between empty string and `content`
+    //    3. Delete all revisions for this noteId older than revisionRetentionDays
+
     const currentTime = getCurrentDateTime();
     const revisionRetentionDays: number = this.noteConfig.revisionRetentionDays;
     if (revisionRetentionDays <= 0) {
