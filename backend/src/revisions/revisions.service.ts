@@ -5,7 +5,6 @@
  */
 import {
   AuthorshipInfo,
-  FieldNameAlias,
   FieldNameAuthorshipInfo,
   FieldNameNote,
   FieldNameRevision,
@@ -14,7 +13,6 @@ import {
   Note,
   Revision,
   RevisionTag,
-  TableAlias,
   TableAuthorshipInfo,
   TableRevision,
   TableRevisionTag,
@@ -41,6 +39,11 @@ import {
   getCurrentDateTime,
 } from '../utils/datetime';
 import { extractRevisionMetadataFromContent } from './utils/extract-revision-metadata-from-content';
+
+interface NoteRevisionCountDbResult {
+  [FieldNameRevision.noteId]: number;
+  count: string;
+}
 
 interface RevisionUserInfo {
   users: {
@@ -438,86 +441,140 @@ export class RevisionsService {
 
   /**
    * Deletes old revisions except the latest one if the clean-up is enabled
+   *
+   * This follows the following algorithm:
+   * 1. Count all revisions older than revisionRetentionDays -> SQL should return map (noteId, revisionCount)
+   * 2. Count all revisions exactly as old as revisionRetentionDays or newer for all noteIds found in step 1 -> SQL should return map (noteId, revisionCount)
+   * 3. Sort noteIds in 3 categories:
+   *    a) noteId has only one revision older than revisionRetentionDays and no newer revision
+   *    b) noteId has multiple revisions older than revisionRetentionDays and no newer revision
+   *    c) noteId has at least one newer revision
+   * 4. Skip all noteIds from category 3a -> these may not be deleted to avoid data-loss
+   * 5. Loop over all noteIds from category 3b and do:
+   *    1. Find newest revision and update `patch` to diff between empty string and `content`
+   *    2. Delete all revisions for this noteId except the newest revision
+   * 6. Loop over all noteIds from category 3c and do:
+   *    1. Find oldest revision that is either exactly as old as or newer than revisionRetentionDays
+   *    2. Update that revision's `patch` to the diff between empty string and `content`
+   *    3. Delete all revisions for this noteId older than revisionRetentionDays
    */
   async removeOldRevisions(): Promise<void> {
-    const currentTime = getCurrentDateTime();
     const revisionRetentionDays: number = this.noteConfig.revisionRetentionDays;
     if (revisionRetentionDays <= 0) {
       return;
     }
+
+    const currentTime = getCurrentDateTime();
     const oldestRevisionToKeepTime = currentTime.minus({
       days: revisionRetentionDays,
     });
     const oldestRevisionToKeepDBTime = dateTimeToDB(oldestRevisionToKeepTime);
+
     await this.knex.transaction(async (transaction) => {
-      // Delete old revisions
-      const noteIdsWhereRevisionsWillBeDeleted = await transaction(TableRevision)
+      // 1. Count all revisions older than revisionRetentionDays -> SQL should return map (noteId, revisionCount)
+      const oldRevisionCountDbResult = (await transaction(TableRevision)
         .select(FieldNameRevision.noteId)
-        .where(FieldNameRevision.createdAt, '<=', oldestRevisionToKeepDBTime);
+        .count(`${FieldNameRevision.uuid} as count`)
+        .where(FieldNameRevision.createdAt, '<', oldestRevisionToKeepDBTime)
+        .groupBy(FieldNameRevision.noteId)) as NoteRevisionCountDbResult[];
 
-      await transaction(TableRevision)
-        .where(FieldNameRevision.createdAt, '<=', oldestRevisionToKeepDBTime)
-        .delete();
-
-      this.logger.log(
-        `${noteIdsWhereRevisionsWillBeDeleted.length} old revisions were removed from the DB`,
-        'removeOldRevisions',
+      const oldRevisionsCount = new Map<number, number>(
+        oldRevisionCountDbResult.map((entry) => [entry.note_id, Number(entry.count)]),
       );
 
-      if (noteIdsWhereRevisionsWillBeDeleted.length === 0) {
+      if (oldRevisionsCount.size === 0) {
+        this.logger.debug('No old revisions found for removal', 'removeOldRevisions');
         return;
       }
 
-      const uniqueNoteIds = Array.from(
-        new Set(noteIdsWhereRevisionsWillBeDeleted.map((entry) => entry[FieldNameRevision.noteId])),
+      const oldNoteIds = [...oldRevisionsCount.keys()];
+
+      // 2. Count all revisions exactly as old as revisionRetentionDays or newer for all noteIds found in step 1
+      const newRevisionsCountDbResult = (await transaction(TableRevision)
+        .select(FieldNameRevision.noteId)
+        .count(`${FieldNameRevision.uuid} as count`)
+        .whereIn(FieldNameRevision.noteId, oldNoteIds)
+        .andWhere(FieldNameRevision.createdAt, '>=', oldestRevisionToKeepDBTime)
+        .groupBy(FieldNameRevision.noteId)) as NoteRevisionCountDbResult[];
+      const newRevisionsCount = new Map<number, number>(
+        newRevisionsCountDbResult.map((entry) => [entry.note_id, Number(entry.count)]),
       );
 
-      const revisionsToUpdate = await transaction(TableRevision)
-        .join(
-          TableAlias,
-          `${TableAlias}.${FieldNameAlias.noteId}`,
-          `${TableRevision}.${FieldNameRevision.noteId}`,
-        )
-        .select(
-          `${TableRevision}.${FieldNameRevision.uuid}`,
-          `${TableRevision}.${FieldNameRevision.noteId}`,
-          `${TableRevision}.${FieldNameRevision.content}`,
-          `${TableAlias}.${FieldNameAlias.alias}`,
-        )
-        .whereIn(`${TableRevision}.${FieldNameRevision.noteId}`, uniqueNoteIds)
-        .andWhere(`${TableAlias}.${FieldNameAlias.isPrimary}`, true)
-        .orderBy([
-          { column: `${TableRevision}.${FieldNameRevision.noteId}` },
-          { column: `${TableRevision}.${FieldNameRevision.createdAt}`, order: 'ASC' },
-        ]);
+      // 3. Sort noteIds in 3 categories
+      const notesWithOnlyOneRevision: number[] = [];
+      const notesWithMultipleOldRevisionsButNoNewOnes: number[] = [];
+      const notesWithNewRevisions: number[] = [];
 
-      let lastNoteId = -1;
-      let lastContent = '';
-
-      for (const revisionToUpdate of revisionsToUpdate) {
-        const id = revisionToUpdate[FieldNameRevision.uuid];
-        const noteId = revisionToUpdate[FieldNameRevision.noteId];
-        const primaryAlias = revisionToUpdate[FieldNameAlias.alias];
-        const content = revisionToUpdate[FieldNameRevision.content];
-
-        let newPatch = '';
-        if (noteId !== lastNoteId) {
-          newPatch = createPatch(
-            primaryAlias,
-            '', // There is no older Revision
-            content,
-          );
-        } else {
-          newPatch = createPatch(primaryAlias, lastContent, content);
+      for (const [noteId, oldCount] of oldRevisionsCount) {
+        const newCount = newRevisionsCount.get(noteId) ?? 0;
+        if (newCount === 0 && oldCount === 1) {
+          // a) noteId has only one revision older than revisionRetentionDays and no newer revision
+          notesWithOnlyOneRevision.push(noteId);
+        } else if (newCount === 0 && oldCount > 1) {
+          // b) noteId has multiple revisions older than revisionRetentionDays and no newer revision
+          notesWithMultipleOldRevisionsButNoNewOnes.push(noteId);
+        } else if (newCount > 0) {
+          // c) noteId has at least one newer revision
+          notesWithNewRevisions.push(noteId);
         }
+      }
 
+      // 5. Loop over all noteIds from category 3b
+      for (const noteId of notesWithMultipleOldRevisionsButNoNewOnes) {
+        // 5.1. Find newest revision
+        const newestRevision = await transaction(TableRevision)
+          .select(FieldNameRevision.uuid, FieldNameRevision.content)
+          .where(FieldNameRevision.noteId, noteId)
+          .orderBy(FieldNameRevision.createdAt, 'desc')
+          .first();
+        if (newestRevision === undefined) {
+          continue;
+        }
+        const primaryAlias = await this.aliasService.getPrimaryAliasByNoteId(noteId, transaction);
+        const newPatch = createPatch(primaryAlias, '', newestRevision[FieldNameRevision.content]);
         await transaction(TableRevision)
           .update(FieldNameRevision.patch, newPatch)
-          .where(FieldNameRevision.uuid, id);
-
-        lastNoteId = noteId;
-        lastContent = content;
+          .where(FieldNameRevision.uuid, newestRevision[FieldNameRevision.uuid]);
+        // 5.2. Delete all revisions for this noteId except the newest revision
+        await transaction(TableRevision)
+          .where(FieldNameRevision.noteId, noteId)
+          .andWhere(FieldNameRevision.uuid, '!=', newestRevision[FieldNameRevision.uuid])
+          .delete();
       }
+
+      // 6. Loop over all noteIds from category 3c
+      for (const noteId of notesWithNewRevisions) {
+        // 6.1. Find oldest revision that is either exactly as old as or newer than revisionRetentionDays
+        const oldestKeptRevision = await transaction(TableRevision)
+          .select(FieldNameRevision.uuid, FieldNameRevision.content)
+          .where(FieldNameRevision.noteId, noteId)
+          .andWhere(FieldNameRevision.createdAt, '>=', oldestRevisionToKeepDBTime)
+          .orderBy(FieldNameRevision.createdAt, 'asc')
+          .first();
+        if (oldestKeptRevision === undefined) {
+          continue;
+        }
+        const primaryAlias = await this.aliasService.getPrimaryAliasByNoteId(noteId, transaction);
+        // 6.2. Update that revision's `patch` to the diff between empty string and `content`
+        const newPatch = createPatch(
+          primaryAlias,
+          '',
+          oldestKeptRevision[FieldNameRevision.content],
+        );
+        await transaction(TableRevision)
+          .update(FieldNameRevision.patch, newPatch)
+          .where(FieldNameRevision.uuid, oldestKeptRevision[FieldNameRevision.uuid]);
+        // 6.3. Delete all revisions for this noteId older than revisionRetentionDays
+        await transaction(TableRevision)
+          .where(FieldNameRevision.noteId, noteId)
+          .andWhere(FieldNameRevision.createdAt, '<', oldestRevisionToKeepDBTime)
+          .delete();
+      }
+
+      this.logger.debug(
+        `Removed old revisions from ${notesWithMultipleOldRevisionsButNoNewOnes.length + notesWithNewRevisions.length} notes (skipped ${notesWithOnlyOneRevision.length} notes with only one revision)`,
+        'removeOldRevisions',
+      );
     });
   }
 }

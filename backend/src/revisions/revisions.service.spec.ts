@@ -6,13 +6,11 @@
 import { describe, it, expect, beforeAll, beforeEach, afterEach, jest } from '@jest/globals';
 import type { SpyInstance } from 'jest-mock';
 import {
-  FieldNameAlias,
   FieldNameAuthorshipInfo,
   FieldNameRevision,
   FieldNameRevisionTag,
   FieldNameUser,
   NoteType,
-  TableAlias,
   TableAuthorshipInfo,
   TableRevision,
   TableRevisionTag,
@@ -29,8 +27,14 @@ import { AliasService } from '../alias/alias.service';
 import appConfigMock from '../config/mock/app.config.mock';
 import { createDefaultMockNoteConfig, registerNoteConfig } from '../config/mock/note.config.mock';
 import { NoteConfig } from '../config/note.config';
-import { expectBindings } from '../database/mock/expect-bindings';
-import { mockDelete, mockInsert, mockSelect, mockUpdate } from '../database/mock/mock-queries';
+import { expectBindings, IS_FIRST } from '../database/mock/expect-bindings';
+import {
+  mockDelete,
+  mockInsert,
+  mockQuery,
+  mockSelect,
+  mockUpdate,
+} from '../database/mock/mock-queries';
 import { mockKnexDb } from '../database/mock/provider';
 import { GenericDBError, NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
@@ -502,36 +506,14 @@ describe('RevisionsService', () => {
   });
 
   describe('removeOldRevisions', () => {
-    const now = 1758653425;
     let expectedDateTime: string;
+    let spyOnGetPrimaryAlias: SpyInstance<typeof aliasService.getPrimaryAliasByNoteId>;
+
     beforeEach(() => {
       jest.useFakeTimers();
-      jest.setSystemTime(now);
+      jest.setSystemTime(new Date(2026, 7, 8, 21, 10, 0));
       noteConfig.revisionRetentionDays = 1;
       expectedDateTime = dateTimeToDB(getCurrentDateTime().minus({ days: 1 }));
-    });
-    afterEach(() => {
-      jest.useRealTimers();
-    });
-    it("doesn't run if revisionRetentionDays is set to <= 0", async () => {
-      noteConfig.revisionRetentionDays = 0;
-      await service.removeOldRevisions();
-      expectBindings(tracker, 'delete', [[]], false, true);
-    });
-    it("doesn't update if no revisions were removed", async () => {
-      mockDelete(tracker, TableRevision, [FieldNameRevision.createdAt], []);
-      mockSelect(
-        tracker,
-        [FieldNameRevision.noteId],
-        TableRevision,
-        [FieldNameRevision.createdAt],
-        [],
-      );
-      await service.removeOldRevisions();
-      expectBindings(tracker, 'delete', [[expectedDateTime]]);
-      expectBindings(tracker, 'select', [[expectedDateTime]]);
-    });
-    it('updates notes if revisions were deleted', async () => {
       // The typecast is required since jest does not see all signatures of the mocked function
       // and assumes using the first signature, which is wrong here and leads to a type error
       (
@@ -539,61 +521,134 @@ describe('RevisionsService', () => {
           (a: string, b: string, c: string) => string
         >
       ).mockImplementation((a, b, c) => `${mockPatch}\n${a}\n${b}\n${c}`);
-      mockDelete(
+      spyOnGetPrimaryAlias = jest
+        .spyOn(aliasService, 'getPrimaryAliasByNoteId')
+        .mockResolvedValue(mockPrimaryAlias);
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    it("doesn't run if revisionRetentionDays is set to <= 0", async () => {
+      noteConfig.revisionRetentionDays = 0;
+      await service.removeOldRevisions();
+      expectBindings(tracker, 'select', [[]], false, true);
+    });
+
+    it("doesn't do any work if no old revisions exist", async () => {
+      mockQuery(
+        'select',
         tracker,
-        TableRevision,
-        [FieldNameRevision.createdAt],
-        [
-          {
-            [FieldNameRevision.noteId]: mockNoteId,
-          },
-        ],
+        /select "note_id", count\("uuid"\) as "count" from "revision" where "created_at" < .* group by "note_id"/,
+        [],
+      );
+      await service.removeOldRevisions();
+      expect(spyOnGetPrimaryAlias).not.toHaveBeenCalled();
+      expectBindings(tracker, 'select', [[expectedDateTime]]);
+    });
+
+    it('skips noteIds that only have a single old revision and no newer revision (category 3a)', async () => {
+      mockQuery(
+        'select',
+        tracker,
+        /select "note_id", count\("uuid"\) as "count" from "revision" where "created_at" < .* group by "note_id"/,
+        [{ note_id: mockNoteId, count: '1' }],
+      );
+      mockQuery(
+        'select',
+        tracker,
+        /select "note_id", count\("uuid"\) as "count" from "revision" where "note_id" in .* and "created_at" >= .* group by "note_id"/,
+        [],
+      );
+      await service.removeOldRevisions();
+      expect(spyOnGetPrimaryAlias).not.toHaveBeenCalled();
+      expectBindings(tracker, 'select', [[expectedDateTime], [mockNoteId, expectedDateTime]]);
+    });
+
+    it('handles category 3b noteIds by keeping the newest revision and deleting the rest', async () => {
+      mockQuery(
+        'select',
+        tracker,
+        /select "note_id", count\("uuid"\) as "count" from "revision" where "created_at" < .* group by "note_id"/,
+        [{ note_id: mockNoteId, count: '2' }],
+      );
+      mockQuery(
+        'select',
+        tracker,
+        /select "note_id", count\("uuid"\) as "count" from "revision" where "note_id" in .* and "created_at" >= .* group by "note_id"/,
+        [],
       );
       mockSelect(
         tracker,
-        [FieldNameRevision.noteId],
+        [FieldNameRevision.uuid, FieldNameRevision.content],
         TableRevision,
-        [FieldNameRevision.createdAt],
-        [
-          {
-            [FieldNameRevision.noteId]: mockNoteId,
-          },
-        ],
-      );
-      mockSelect(
-        tracker,
-        [
-          `${TableRevision}"."${FieldNameRevision.uuid}`,
-          `${TableRevision}"."${FieldNameRevision.noteId}`,
-          `${TableRevision}"."${FieldNameRevision.content}`,
-          `${TableAlias}"."${FieldNameAlias.alias}`,
-        ],
-        TableRevision,
-        [FieldNameRevision.noteId, FieldNameAlias.isPrimary],
+        FieldNameRevision.noteId,
         [
           {
             [FieldNameRevision.uuid]: mockRevisionUuid1,
-            [`${TableRevision}.${FieldNameRevision.noteId}`]: mockNoteId,
             [FieldNameRevision.content]: mockContent1,
-            [FieldNameAlias.alias]: mockPrimaryAlias,
-          },
-        ],
-        [
-          {
-            joinTable: TableAlias,
-            keyLeft: FieldNameAlias.noteId,
-            keyRight: FieldNameRevision.noteId,
           },
         ],
       );
       mockUpdate(tracker, TableRevision, [FieldNameRevision.patch], FieldNameRevision.uuid, 1);
+      mockDelete(tracker, TableRevision, [FieldNameRevision.noteId, FieldNameRevision.uuid], 1);
       await service.removeOldRevisions();
-
-      expectBindings(tracker, 'delete', [[expectedDateTime]]);
-      expectBindings(tracker, 'select', [[expectedDateTime], [mockNoteId, true]]);
+      expect(spyOnGetPrimaryAlias).toHaveBeenCalledTimes(1);
+      expect(spyOnGetPrimaryAlias).toHaveBeenCalledWith(mockNoteId, expect.anything());
+      expect(tracker.history.select).toHaveLength(3);
+      expect(tracker.history.select[0].bindings).toEqual([expectedDateTime]);
+      expect(tracker.history.select[1].bindings).toEqual([mockNoteId, expectedDateTime]);
+      expect(tracker.history.select[2].bindings).toEqual([mockNoteId, IS_FIRST]);
       expectBindings(tracker, 'update', [
         [`${mockPatch}\n${mockPrimaryAlias}\n\n${mockContent1}`, mockRevisionUuid1],
       ]);
+      expectBindings(tracker, 'delete', [[mockNoteId, mockRevisionUuid1]]);
+    });
+
+    it('handles category 3c noteIds by keeping the oldest revision within the retention period', async () => {
+      mockQuery(
+        'select',
+        tracker,
+        /select "note_id", count\("uuid"\) as "count" from "revision" where "created_at" < .* group by "note_id"/,
+        [{ note_id: mockNoteId, count: '1' }],
+      );
+      mockQuery(
+        'select',
+        tracker,
+        /select "note_id", count\("uuid"\) as "count" from "revision" where "note_id" in .* and "created_at" >= .* group by "note_id"/,
+        [{ note_id: mockNoteId, count: '2' }],
+      );
+      mockSelect(
+        tracker,
+        [FieldNameRevision.uuid, FieldNameRevision.content],
+        TableRevision,
+        [FieldNameRevision.noteId, FieldNameRevision.createdAt],
+        [
+          {
+            [FieldNameRevision.uuid]: mockRevisionUuid1,
+            [FieldNameRevision.content]: mockContent1,
+          },
+        ],
+      );
+      mockUpdate(tracker, TableRevision, [FieldNameRevision.patch], FieldNameRevision.uuid, 1);
+      mockDelete(
+        tracker,
+        TableRevision,
+        [FieldNameRevision.noteId, FieldNameRevision.createdAt],
+        1,
+      );
+      await service.removeOldRevisions();
+      expect(spyOnGetPrimaryAlias).toHaveBeenCalledTimes(1);
+      expect(spyOnGetPrimaryAlias).toHaveBeenCalledWith(mockNoteId, expect.anything());
+      expect(tracker.history.select).toHaveLength(3);
+      expect(tracker.history.select[0].bindings).toEqual([expectedDateTime]);
+      expect(tracker.history.select[1].bindings).toEqual([mockNoteId, expectedDateTime]);
+      expect(tracker.history.select[2].bindings).toEqual([mockNoteId, expectedDateTime, IS_FIRST]);
+      expectBindings(tracker, 'update', [
+        [`${mockPatch}\n${mockPrimaryAlias}\n\n${mockContent1}`, mockRevisionUuid1],
+      ]);
+      expectBindings(tracker, 'delete', [[mockNoteId, expectedDateTime]]);
     });
   });
 });
