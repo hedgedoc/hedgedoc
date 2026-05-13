@@ -11,6 +11,7 @@ import type { PermissionDisabledProps } from './permission-disabled.prop'
 import React, { type ChangeEvent, Fragment, useCallback } from 'react'
 import { Trans } from 'react-i18next'
 import { Form, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { ErrorToI18nKeyMapper } from '../../../../../../api/common/error-to-i18n-key-mapper'
 
 /**
  * Section in the permissions modal for managing whether the note should be visible on the explore page.
@@ -32,7 +33,12 @@ export const PermissionSectionVisibility: React.FC<PermissionDisabledProps> = ({
         .then((updatedPermissions) => {
           setNotePermissionsFromServer(updatedPermissions)
         })
-        .catch(showErrorNotificationBuilder('editor.modal.permissions.error'))
+        .catch((error) => {
+          const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.modal.permissions.error')
+            .withHttpCode(403, 'missingPermissions')
+            .orFallbackI18nKey('other')
+          showErrorNotificationBuilder(errorI18nKey)(error)
+        })
     },
     [noteAlias, showErrorNotificationBuilder]
   )
