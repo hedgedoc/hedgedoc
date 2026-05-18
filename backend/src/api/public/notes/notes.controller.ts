@@ -362,8 +362,11 @@ export class NotesController {
     },
     404,
   )
-  async getNoteRevision(@Param('revisionUuid') revisionUuid: string): Promise<RevisionDto> {
-    return await this.revisionsService.getRevisionDto(revisionUuid);
+  async getNoteRevision(
+    @Param('revisionUuid') revisionUuid: string,
+    @RequestNoteId() noteId: number,
+  ): Promise<RevisionDto> {
+    return await this.revisionsService.getRevisionDto(revisionUuid, noteId);
   }
 
   @UseInterceptors(GetNoteIdInterceptor)
