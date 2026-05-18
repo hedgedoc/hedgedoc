@@ -219,11 +219,13 @@ describe('RevisionsService', () => {
           FieldNameRevision.patch,
         ],
         TableRevision,
-        FieldNameRevision.uuid,
+        [FieldNameRevision.uuid, FieldNameRevision.noteId],
         [],
       );
-      await expect(service.getRevisionDto(mockRevisionUuid1)).rejects.toThrow(NotInDBError);
-      expectBindings(tracker, 'select', [[mockRevisionUuid1]], true);
+      await expect(service.getRevisionDto(mockRevisionUuid1, mockNoteId)).rejects.toThrow(
+        NotInDBError,
+      );
+      expectBindings(tracker, 'select', [[mockRevisionUuid1, mockNoteId]], true);
     });
 
     it('correctly returns the fetched revision', async () => {
@@ -238,7 +240,7 @@ describe('RevisionsService', () => {
           FieldNameRevision.patch,
         ],
         TableRevision,
-        FieldNameRevision.uuid,
+        [FieldNameRevision.uuid, FieldNameRevision.noteId],
         [
           {
             [FieldNameRevision.uuid]: mockRevisionUuid1,
@@ -253,7 +255,7 @@ describe('RevisionsService', () => {
           },
         ],
       );
-      const result = await service.getRevisionDto(mockRevisionUuid1);
+      const result = await service.getRevisionDto(mockRevisionUuid1, mockNoteId);
       expect(result).toStrictEqual({
         uuid: mockRevisionUuid1,
         content: mockContent1,
@@ -263,7 +265,7 @@ describe('RevisionsService', () => {
         description: mockDescription,
         patch: mockPatch,
       });
-      expectBindings(tracker, 'select', [[mockRevisionUuid1]], true);
+      expectBindings(tracker, 'select', [[mockRevisionUuid1, mockNoteId]], true);
     });
   });
 

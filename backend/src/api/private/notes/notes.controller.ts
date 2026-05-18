@@ -176,8 +176,11 @@ export class NotesController {
   @OpenApi(200, 404)
   @RequirePermission(PermissionLevel.READ)
   @UseInterceptors(GetNoteIdInterceptor)
-  async getNoteRevision(@Param('revisionUuid') revisionUuid: string): Promise<RevisionDto> {
-    return await this.revisionsService.getRevisionDto(revisionUuid);
+  async getNoteRevision(
+    @Param('revisionUuid') revisionUuid: string,
+    @RequestNoteId() noteId: number,
+  ): Promise<RevisionDto> {
+    return await this.revisionsService.getRevisionDto(revisionUuid, noteId);
   }
 
   @Put(':noteAlias/metadata/permissions/users/:username')

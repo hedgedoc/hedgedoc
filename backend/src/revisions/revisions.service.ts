@@ -203,10 +203,11 @@ export class RevisionsService {
    * Get a revision by its UUID
    *
    * @param revisionUuid The UUID of the revision to get
+   * @param noteId The id of the note this revision belongs to
    * @returns The revision DTO
    * @throws NotInDBError if the revision with the given UUID does not exist
    */
-  async getRevisionDto(revisionUuid: string): Promise<RevisionDto> {
+  async getRevisionDto(revisionUuid: string, noteId: number): Promise<RevisionDto> {
     const revision = await this.knex(TableRevision)
       .select(
         FieldNameRevision.uuid,
@@ -217,6 +218,7 @@ export class RevisionsService {
         FieldNameRevision.patch,
       )
       .where(FieldNameRevision.uuid, revisionUuid)
+      .andWhere(FieldNameRevision.noteId, noteId)
       .first();
     if (revision === undefined) {
       throw new NotInDBError(
