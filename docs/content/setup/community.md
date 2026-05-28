@@ -83,6 +83,7 @@ HedgeDoc is available in the Arch Linux _community_ repository.
 
 ### FreeBSD
 
-HedgeDoc is available in the FreeBSD _ports_ repository. After installation, customise your `config.json` file, referring to the official HedgeDoc documentation.
+HedgeDoc was available in the FreeBSD _ports_ repository.
+However, it has been removed due to lack of maintenance.
 
 [Ports Repository](https://freshports.org/www/hedgedoc)
