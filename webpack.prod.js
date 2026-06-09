@@ -18,7 +18,7 @@ module.exports = [
         new EsbuildPlugin({
           target: 'es2015',
           format: 'cjs',
-          exclude: ['MathJax/extensions/a11y/mathmaps', 'reveal.js/plugin/markdown/marked.js']
+          exclude: ['MathJax/extensions/a11y/mathmaps', 'reveal.js/plugin/markdown/marked.js', 'constrain-object.min.js']
         })
       ],
       splitChunks: {

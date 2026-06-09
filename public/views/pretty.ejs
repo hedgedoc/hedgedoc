@@ -15,7 +15,7 @@
     <meta name="description" content="<%= description %>">
     <% } %>
     <% for (var og in opengraph) { %>
-    <% if (opengraph.hasOwnProperty(og) && opengraph[og].trim() !== '') { %>
+    <% if (opengraph.hasOwnProperty(og) && typeof opengraph[og] === 'string' && opengraph[og].trim() !== '') { %>
     <meta property="og:<%= og %>" content="<%= opengraph[og] %>">
     <% }} if (!opengraph.hasOwnProperty('image')) { %>
     <meta property="og:image" content="<%- serverURL %>/icons/android-chrome-512x512.png">

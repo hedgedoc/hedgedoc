@@ -1247,7 +1247,11 @@ function meta (state, start, end, silent) {
   if (line >= end) return false
 
   try {
-    md.meta = window.jsyaml.safeLoad(data.join('\n')) || {}
+    const parsed = window.jsyaml.load(data.join('\n')) || {}
+    md.meta = window.ConstrainObject.constrainObject(parsed, {
+      onCycle: 'omit',
+      maxDepth: 4
+    })
     delete md.metaError
   } catch (err) {
     md.metaError = err

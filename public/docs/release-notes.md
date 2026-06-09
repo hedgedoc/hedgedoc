@@ -16,6 +16,10 @@ Thanks to [Chandler Johnson](https://github.com/chndlrx) for reporting!
 - Allow configuration of login / signup rate-limits
 - Allow configuration of Cloudflare usage in regards rate-limits
 
+### Bugfixes
+
+- Made frontmatter parsing resilient to massive YAML alias expansion ("YAML bomb")
+
 ## <i class="fa fa-tag"></i> 1.10.8 <i class="fa fa-calendar-o"></i> 2026-04-15
 
 ### Bugfixes
