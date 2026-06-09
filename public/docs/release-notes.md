@@ -1,5 +1,11 @@
 # Release Notes
 
+## <i class="fa fa-tag"></i> 1.x <i class="fa fa-calendar-o"></i> UNRELEASED
+
+### Enhancements
+
+- Added a warning page when clicking external links
+
 ## <i class="fa fa-tag"></i> 1.10.8 <i class="fa fa-calendar-o"></i> 2026-04-15
 
 ### Bugfixes

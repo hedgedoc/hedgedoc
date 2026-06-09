@@ -126,5 +126,13 @@
     "Protected - Only owner can edit (forbid guests)": "Protected - Only owner can edit (forbid guests)",
     "Private - Only owner can view & edit": "Private - Only owner can view & edit",
     "changed": "changed",
-    "created": "created"
+    "created": "created",
+    "You've clicked a link that points to an external page.": "You've clicked a link that points to an external page.",
+    "External link": "External link",
+    "Invalid link": "Invalid link",
+    "Do you want to continue?": "Do you want to continue?",
+    "Continue to external page": "Continue to external page",
+    "Back to your note": "Back to your note",
+    "The provided link is not a valid URL.": "The provided link is not a valid URL.",
+    "The content of that page is unrelated to HedgeDoc. Do not enter your HedgeDoc credentials there.": "The content of that page is unrelated to HedgeDoc. Do not enter your HedgeDoc credentials there."
 }

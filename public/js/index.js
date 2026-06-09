@@ -55,6 +55,7 @@ import {
   renderTOC,
   renderTags,
   renderTitle,
+  rewriteExternalLinks,
   scrollToHash,
   smoothHashScroll,
   updateLastChange,
@@ -3498,6 +3499,7 @@ function updateViewInner () {
   }
   removeDOMEvents(ui.area.markdown)
   finishView(ui.area.markdown)
+  rewriteExternalLinks(ui.area.markdown)
   autoLinkify(ui.area.markdown)
   deduplicatedHeaderId(ui.area.markdown)
   renderTOC(ui.area.markdown)
