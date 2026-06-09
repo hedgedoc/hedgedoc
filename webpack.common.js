@@ -137,6 +137,11 @@ module.exports = {
           context: path.join(__dirname, 'node_modules/reveal.js'),
           from: 'plugin',
           to: 'reveal.js/plugin'
+        },
+        {
+          context: path.join(__dirname, 'node_modules/constrain-object/dist'),
+          from: 'index.iife.js',
+          to: 'constrain-object.min.js'
         }
       ]
     }),
@@ -301,11 +306,16 @@ module.exports = {
     'socket.io-client': 'io',
     'jquery': '$',
     'moment': 'moment',
-    'select2': 'select2'
+    'select2': 'select2',
+    'constrain-object': 'ConstrainObject'
   },
 
   module: {
     rules: [
+      {
+        test: /\.mjs$/,
+        type: 'javascript/auto'
+      },
       {
         test: require.resolve(path.join(__dirname, 'public/vendor/codemirror-spell-checker/spell-checker.min.js')),
         use: {

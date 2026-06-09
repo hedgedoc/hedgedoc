@@ -412,16 +412,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hedgedoc/meta-marked@npm:14.1.0":
-  version: 14.1.0
-  resolution: "@hedgedoc/meta-marked@npm:14.1.0"
-  dependencies:
-    js-yaml: "npm:~4.1.0"
-    marked: "npm:14.1.0"
-  checksum: 10/f14edf09cd7d33e20ae1a0e8895688613691acf55cc204b96134bbc5a9ab85df4cc73deea26baebf897b18f315bb0e144df0a34519813aae9aaae9293cae2db2
-  languageName: node
-  linkType: hard
-
 "@humanfs/core@npm:^0.19.1":
   version: 0.19.1
   resolution: "@humanfs/core@npm:0.19.1"
@@ -1501,7 +1491,6 @@ __metadata:
     "@eslint/eslintrc": "npm:3.3.5"
     "@eslint/js": "npm:9.39.4"
     "@hedgedoc/codemirror-5": "npm:5.65.12"
-    "@hedgedoc/meta-marked": "npm:14.1.0"
     "@node-saml/passport-saml": "npm:5.1.0"
     "@passport-next/passport-openid": "npm:1.0.0"
     Idle.Js: "git+https://github.com/shawnmclean/Idle.js#commit=2b57cc6e49d177b7ddce0cca00ef5cbe07453541"
@@ -1528,6 +1517,7 @@ __metadata:
     compression: "npm:1.8.1"
     connect-flash: "npm:0.1.1"
     connect-session-sequelize: "npm:8.0.6"
+    constrain-object: "npm:1.1.0"
     cookie: "npm:1.1.1"
     cookie-parser: "npm:1.4.7"
     copy-webpack-plugin: "npm:6.4.1"
@@ -1569,7 +1559,7 @@ __metadata:
     jquery-ui: "npm:1.14.2"
     js-cookie: "npm:3.0.8"
     js-sequence-diagrams: "git+https://github.com/hedgedoc/js-sequence-diagrams.git"
-    js-yaml: "npm:3.14.2"
+    js-yaml: "npm:4.2.0"
     jsdom: "npm:24.1.3"
     jsonlint: "npm:1.6.3"
     keymaster: "npm:1.6.2"
@@ -1964,15 +1954,6 @@ __metadata:
     delegates: "npm:^1.0.0"
     readable-stream: "npm:^3.6.0"
   checksum: 10/390731720e1bf9ed5d0efc635ea7df8cbc4c90308b0645a932f06e8495a0bf1ecc7987d3b97e805f62a17d6c4b634074b25200aa4d149be2a7b17250b9744bc4
-  languageName: node
-  linkType: hard
-
-"argparse@npm:^1.0.7":
-  version: 1.0.10
-  resolution: "argparse@npm:1.0.10"
-  dependencies:
-    sprintf-js: "npm:~1.0.2"
-  checksum: 10/c6a621343a553ff3779390bb5ee9c2263d6643ebcd7843227bdde6cc7adbed796eb5540ca98db19e3fd7b4714e1faa51551f8849b268bb62df27ddb15cbcd91e
   languageName: node
   linkType: hard
 
@@ -4292,6 +4273,13 @@ __metadata:
   version: 1.0.0
   resolution: "constants-browserify@npm:1.0.0"
   checksum: 10/49ef0babd907616dddde6905b80fe44ad5948e1eaaf6cf65d5f23a8c60c029ff63a1198c364665be1d6b2cb183d7e12921f33049cc126734ade84a3cfdbc83f6
+  languageName: node
+  linkType: hard
+
+"constrain-object@npm:1.1.0":
+  version: 1.1.0
+  resolution: "constrain-object@npm:1.1.0"
+  checksum: 10/0500dad5fd2d01c2c7269259bec731cfb0a2ee7dcef33d0cb92b3ff32dd15d60e47f1fd23da6678aa09f3d4ec3a032b99e2950364c6fa088c64d463c01fd3eec
   languageName: node
   linkType: hard
 
@@ -6640,16 +6628,6 @@ __metadata:
     acorn-jsx: "npm:^5.3.2"
     eslint-visitor-keys: "npm:^4.2.1"
   checksum: 10/9b355b32dbd1cc9f57121d5ee3be258fab87ebeb7c83fc6c02e5af1a74fc8c5ba79fe8c663e69ea112c3e84a1b95e6a2067ac4443ee7813bb85ac7581acb8bf9
-  languageName: node
-  linkType: hard
-
-"esprima@npm:^4.0.0":
-  version: 4.0.1
-  resolution: "esprima@npm:4.0.1"
-  bin:
-    esparse: ./bin/esparse.js
-    esvalidate: ./bin/esvalidate.js
-  checksum: 10/f1d3c622ad992421362294f7acf866aa9409fbad4eb2e8fa230bd33944ce371d32279667b242d8b8907ec2b6ad7353a717f3c0e60e748873a34a7905174bc0eb
   languageName: node
   linkType: hard
 
@@ -9292,19 +9270,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:3.14.2":
-  version: 3.14.2
-  resolution: "js-yaml@npm:3.14.2"
+"js-yaml@npm:4.2.0":
+  version: 4.2.0
+  resolution: "js-yaml@npm:4.2.0"
   dependencies:
-    argparse: "npm:^1.0.7"
-    esprima: "npm:^4.0.0"
+    argparse: "npm:^2.0.1"
   bin:
     js-yaml: bin/js-yaml.js
-  checksum: 10/172e0b6007b0bf0fc8d2469c94424f7dd765c64a047d2b790831fecef2204a4054eabf4d911eb73ab8c9a3256ab8ba1ee8d655b789bf24bf059c772acc2075a1
+  checksum: 10/51de2067a2b44b07ba5206132e56005f8b568ff279bb4d2f645068958c56fa4827d40a6841c983234671fa0a134bf094d0b0717873c2a3d319185297af145a6d
   languageName: node
   linkType: hard
 
-"js-yaml@npm:^4.1.0, js-yaml@npm:^4.1.1, js-yaml@npm:~4.1.0":
+"js-yaml@npm:^4.1.0, js-yaml@npm:^4.1.1":
   version: 4.1.1
   resolution: "js-yaml@npm:4.1.1"
   dependencies:
@@ -10244,15 +10221,6 @@ __metadata:
   bin:
     markdown-it: bin/markdown-it.js
   checksum: 10/4f48271bbd44d16502efd4148d7c05ca1fb4b50719a07d34c91e8d16f8d065c558fed0fafe07cd13ca5958096bfe295b37cd4f042add7ec49f73c70154e75f58
-  languageName: node
-  linkType: hard
-
-"marked@npm:14.1.0":
-  version: 14.1.0
-  resolution: "marked@npm:14.1.0"
-  bin:
-    marked: bin/marked.js
-  checksum: 10/1a930dd87a3994cc4fcc72c4668c548429d0e6363b8f7660193c106fa1cadcde5c813cfc3fe4be42b9f18b3652ba73469fb6c718215b0dbf8ddb9de2d1f5ab38
   languageName: node
   linkType: hard
 
@@ -15759,13 +15727,6 @@ __metadata:
   version: 4.2.0
   resolution: "split2@npm:4.2.0"
   checksum: 10/09bbefc11bcf03f044584c9764cd31a252d8e52cea29130950b26161287c11f519807c5e54bd9e5804c713b79c02cefe6a98f4688630993386be353e03f534ab
-  languageName: node
-  linkType: hard
-
-"sprintf-js@npm:~1.0.2":
-  version: 1.0.3
-  resolution: "sprintf-js@npm:1.0.3"
-  checksum: 10/c34828732ab8509c2741e5fd1af6b767c3daf2c642f267788f933a65b1614943c282e74c4284f4fa749c264b18ee016a0d37a3e5b73aee446da46277d3a85daa
   languageName: node
   linkType: hard
 
