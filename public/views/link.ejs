@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('hedgedoc/head') %>
+    <link rel="stylesheet" href="<%- serverURL %>/css/center.css">
+</head>
+
+<body>
+    <%- include('hedgedoc/header') %>
+    <div class="container-fluid text-center">
+        <div class="vertical-center-row">
+            <h1>
+                <% if (valid) { %>
+                <%= __('External link') %>
+                <% } else { %>
+                <%= __('Invalid link') %>
+                <% } %>
+            </h1>
+            <p>
+              <%= __('You\'ve clicked a link that points to an external page.') %>
+              <br>
+              <%= __('The content of that page is unrelated to HedgeDoc. Do not enter your HedgeDoc credentials there.') %>
+            </p>
+            <% if (valid) { %>
+            <p><code class="text-break"><%- targetURL %></code></p>
+            <p><%= __('Do you want to continue?') %></p>
+            <p>
+                <a class="btn btn-primary" href="<%- targetURL %>"><%= __('Continue to external page') %></a>
+                <a class="btn btn-default" href="<%- serverURL %>/<%- noteURL %>"><%= __('Back to your note') %></a>
+            </p>
+            <% } else { %>
+            <p class="text-danger"><strong><%= __('The provided link is not a valid URL.') %></strong></p>
+            <p>
+                <a class="btn btn-default" href="<%- serverURL %>/<%- noteURL %>"><%= __('Back to your note') %></a>
+            </p>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

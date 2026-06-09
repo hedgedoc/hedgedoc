@@ -557,10 +557,6 @@ export function postProcess (code) {
     html = html.replace(/@import url\(([^)]*)\);?/gi, '')
     $(value).html(html)
   })
-  // link should open in new window or tab
-  // also add noopener to prevent clickjacking
-  // See details: https://mathiasbynens.github.io/rel-noopener/
-  result.find('a:not([href^="#"]):not([target])').attr('target', '_blank').attr('rel', 'noopener')
 
   // If it's hashtag link then make it base uri independent
   result.find('a[href^="#"]').each((index, linkTag) => {
@@ -568,6 +564,7 @@ export function postProcess (code) {
     currentLocation.hash = linkTag.hash
     linkTag.href = currentLocation.toString()
   })
+  rewriteExternalLinks(result)
 
   // update continue line numbers
   const linenumberdivs = result.find('.gutter.linenumber').toArray()
@@ -592,6 +589,30 @@ export function postProcess (code) {
   return result
 }
 window.postProcess = postProcess
+
+// rewrite external links to go through the /_link warning page
+export function rewriteExternalLinks (view) {
+  view.find('a[href]').each((index, linkTag) => {
+    const anchor = $(linkTag)
+    const href = anchor.attr('href')
+    if (!href || href.startsWith('#')) {
+      return
+    }
+    let parsed
+    try {
+      parsed = new URL(href)
+    } catch (err) {
+      return
+    }
+    // only rewrite links that have an absolute http(s) URL on a different origin
+    if (!['http:', 'https:'].includes(parsed.protocol) || parsed.origin === window.location.origin) {
+      return
+    }
+    const noteURL = window.location.pathname.split('/').pop()
+    anchor.attr('href', `${window.location.origin}/_link?url=${encodeURIComponent(parsed.href)}&note=${noteURL}`)
+  })
+}
+window.rewriteExternalLinks = rewriteExternalLinks
 
 const domevents = Object.getOwnPropertyNames(document).concat(Object.getOwnPropertyNames(Object.getPrototypeOf(Object.getPrototypeOf(document)))).concat(Object.getOwnPropertyNames(Object.getPrototypeOf(window))).filter(function (i) {
   return !i.indexOf('on') && (document[i] === null || typeof document[i] === 'function')
