@@ -12,7 +12,8 @@ We currently support the `amd64` and `arm64` architectures.
 The easiest way to get started with HedgeDoc and Docker is to use the following `docker-compose.yml`:
 
 !!! warning
-    This is a minimal example to get started quickly and not intended for production use.
+    This is a minimal example to get started quickly and not intended for production use.  
+    For more information about production use see [this guide](/guides/production-ready).
 
 ```yaml
 version: '3'
