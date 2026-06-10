@@ -6,6 +6,8 @@
 
 - Added a warning page when clicking external links
 - Improve the config.json.example file, which is used by `bin/setup`
+- Allow configuration of login / signup rate-limits
+- Allow configuration of Cloudflare usage in regards rate-limits
 
 ## <i class="fa fa-tag"></i> 1.10.8 <i class="fa fa-calendar-o"></i> 2026-04-15
 
