@@ -14,6 +14,7 @@ nav:
           - 'Manual Installation': setup/manual-setup.md
       - 'Community Installation Methods': setup/community.md
   - Guides:
+      - 'Production Ready': guides/production-ready.md
       - 'Reverse Proxy': guides/reverse-proxy.md
       - Authentication:
           - LDAP: guides/auth/ldap-ad.md
