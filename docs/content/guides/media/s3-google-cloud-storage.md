@@ -63,7 +63,7 @@ In order to view the images uploaded to HedgeDoc the storage bucket needs to be 
 
 ## Configure HedgeDoc
 
-Set the following environment variables (or the [corresponding config.json values](/configuration/#amazon-s3)):
+Set the following environment variables (or the [corresponding config.json values](../../configuration.md#amazon-s3)):
 
 ```env
 CMD_IMAGE_UPLOAD_TYPE="s3"

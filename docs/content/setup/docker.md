@@ -13,7 +13,7 @@ The easiest way to get started with HedgeDoc and Docker is to use the following 
 
 !!! warning
     This is a minimal example to get started quickly and not intended for production use.  
-    For more information about production use see [this guide](/guides/production-ready).
+    For more information about production use see [this guide](../guides/production-ready.md).
 
 ```yaml
 version: '3'
@@ -47,7 +47,7 @@ volumes:
 ```
 After executing `docker-compose up`, HedgeDoc should be available at [http://localhost:3000](http://localhost:3000).  
 You can now continue to configure your container with environment variables.
-Check out [the configuration docs](/configuration) for more details.
+Check out [the configuration docs](../configuration.md) for more details.
 
 ## File Permissions
 
@@ -83,7 +83,7 @@ Then run `docker-compose up` to start HedgeDoc again.
 ### Migrating from CodiMD & HackMD
 
 If you currently use CodiMD or HackMD, you should be able to swap the docker image for ours.
-See [the general migration hints](/setup/getting-started/#migrating-from-codimd-hackmd) for compatibility details.
+See [the general migration hints](../setup/getting-started.md#migrating-from-codimd-hackmd) for compatibility details.
 
 
 ## Backup

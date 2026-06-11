@@ -25,7 +25,7 @@ title: meta title
 
 ## description
 
-This option will set the note description as a `<meta name="description">` tag. This only affects the [Publish](../features#Share-Notes) function.
+This option will set the note description as a `<meta name="description">` tag. This only affects the Publish function.
 
 > default: not set
 
