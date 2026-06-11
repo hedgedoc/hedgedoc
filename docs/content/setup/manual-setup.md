@@ -56,7 +56,7 @@
 
 If you want to upgrade HedgeDoc from an older version, follow these steps:
 
-1. Check if you still meet the [requirements at the top of this document](#requirements-on-your-server).
+1. Check if you still meet the [requirements at the top of this document](#manual-installation).
 2. Ensure you read the [release notes](https://hedgedoc.org/releases/) of all versions between your current version
    and the latest release.
 2. Fully stop your old HedgeDoc server.
