@@ -34,7 +34,7 @@
         <small>
             <span>
                 <% if(lastchangeuserprofile) { %>
-                    <span class="ui-lastchangeuser">&thinsp;<i class="ui-user-icon small" style="background-image: url(<%- lastchangeuserprofile.photo %>);" data-toggle="tooltip" data-placement="right" title="<%- lastchangeuserprofile.name %>"></i></span>
+                    <span class="ui-lastchangeuser">&thinsp;<i class="ui-user-icon small" style="background-image: url(<%- lastchangeuserprofile.photo %>);" data-toggle="tooltip" data-placement="right" title="<%= lastchangeuserprofile.name %>"></i></span>
                 <% } else { %>
                   <span class="ui-no-lastchangeuser">&thinsp;<i class="fa fa-clock-o fa-fw" style="width: 18px;"></i></span>
                 <% } %>
@@ -45,7 +45,7 @@
             <br>
             <% if(ownerprofile && owner !== lastchangeuser) { %>
             <span class="ui-owner">
-                &thinsp;<i class="ui-user-icon small" style="background-image: url(<%- ownerprofile.photo %>);" data-toggle="tooltip" data-placement="right" title="<%- ownerprofile.name %>"></i>
+                &thinsp;<i class="ui-user-icon small" style="background-image: url(<%- ownerprofile.photo %>);" data-toggle="tooltip" data-placement="right" title="<%= ownerprofile.name %>"></i>
                 &nbsp;<span class="text-uppercase">owned this note</span>
             </span>
             <% } %>
