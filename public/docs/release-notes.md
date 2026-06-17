@@ -2,6 +2,13 @@
 
 ## <i class="fa fa-tag"></i> 1.x <i class="fa fa-calendar-o"></i> UNRELEASED
 
+### Security fixes
+
+This release contains a ... security fix:
+- [GHSA-6c2w-8w96-3pcv](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-6c2w-8w96-3pcv) reports a possible HTML injection via the localpart of an email address.
+
+Thanks to [Chandler Johnson](https://github.com/chndlrx) for reporting!
+
 ### Enhancements
 
 - Added a warning page when clicking external links
