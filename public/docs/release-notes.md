@@ -1,24 +1,28 @@
 # Release Notes
 
-## <i class="fa fa-tag"></i> 1.x <i class="fa fa-calendar-o"></i> UNRELEASED
+## <i class="fa fa-tag"></i> 1.11.0 <i class="fa fa-calendar-o"></i> 2026-06-18
 
 ### Security fixes
 
-This release contains a ... security fix:
+This release contains four security fixes:
 - [GHSA-6c2w-8w96-3pcv](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-6c2w-8w96-3pcv) reports a possible HTML injection via the localpart of an email address.
+- [GHSA-qj78-mjch-wwrv](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-qj78-mjch-wwrv) reports a possible Denial-of-Service attack using the YAML frontmatter parsing.
+- [GHSA-8v9p-5j95-826j](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-8v9p-5j95-826j) reports a possible CSRF attack vector in the GitHub Gist export.
+- [GHSA-2f9f-w8xq-276v](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-2f9f-w8xq-276v) reports a rate-limiting bypass by abusing the CF-Connecting-IP header.
 
-Thanks to [Chandler Johnson](https://github.com/chndlrx) for reporting!
+Thanks to [Chandler Johnson](https://github.com/chndlrx), [taylorodell](https://github.com/taylorodell) and [alanturing881](https://github.com/alanturing881) for reporting!
+
+### Important notices
+
+- When using Cloudflare in front of HedgeDoc, you should set `rateLimitUsingCloudflare` in the config.json or `CMD_RATE_LIMIT_USING_CLOUDFLARE` as environment variable to `true`.
 
 ### Enhancements
 
 - Added a warning page when clicking external links
 - Improve the config.json.example file, which is used by `bin/setup`
 - Allow configuration of login / signup rate-limits
-- Allow configuration of Cloudflare usage in regards rate-limits
-
-### Bugfixes
-
-- Made frontmatter parsing resilient to massive YAML alias expansion ("YAML bomb")
+- Allow configuration of Cloudflare usage in regards of rate-limits
+- Several improvements in the documentation at <https://docs.hedgedoc.org>
 
 ## <i class="fa fa-tag"></i> 1.10.8 <i class="fa fa-calendar-o"></i> 2026-04-15
 
