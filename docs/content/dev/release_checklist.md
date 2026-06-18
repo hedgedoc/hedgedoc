@@ -82,6 +82,8 @@ Use this tar ball to test the following things:
 - [ ] User registration works
 - [ ] User login works
 - [ ] User self-deletion works (notes are deleted as well)
+- [ ] User data export works
+- [ ] Rate-limiting for basic user/password (`curl -X POST --data email=test@example.com%40password=123456 http://localhost:3000/login`)
 
 ### Notes
 
@@ -187,11 +189,12 @@ opengraph:
 ---
 ```
 
-### GDPR features
+### Slides
 
-- [ ] Delete account works
-- [ ] When account is deleted, verify notes are gone as well
-- [ ] Data export works
+<http://localhost:3000/slide-example>
+
+- [ ] Make sure the slide mode works as intended
+- [ ] Speaker view is toggled by `S`
 
 ### Auth
 
@@ -245,11 +248,12 @@ opengraph:
 ```
 - [ ] GitHub
 - [ ] GitLab
-- [ ] Rate-limiting for basic user/password (try to login with e.g. test@example.com and invalid password about 10 to 15 times in a row -> you should receive a message "Too many requests" at some point)
 
 ### Docker images
 
-You need to clone the [container repo](https://github.com/hedgedoc/container) and use the commands in the root there.
+1. You should push the release branch to Github
+2. You need to clone the [container repo](https://github.com/hedgedoc/container) and use the commands in the root there.
+3. Edit `debian/Dockerfile` and `alpine/Dockerfile` to use the release branch instead of the `master` branch for building
 
 - [ ] debian
 
@@ -275,7 +279,7 @@ You need to clone the [container repo](https://github.com/hedgedoc/container) an
   docker buildx build -f alpine/Dockerfile -t hedgedoc-local:1.x.y-alpine .
   docker run --rm -p 3000:3000 -e CMD_DOMAIN="localhost" -e CMD_URL_ADDPORT=true -e "CMD_DB_URL=sqlite://:memory:" hedgedoc-local:1.x.y-alpine
   ```
-  The server is then accessable via http://localhost:3000. The log should inlcude a line like
+  The server is then accessable via <http://localhost:3000>. The log should inlcude a line like
 
   ```
   127.0.0.1 - - [06/Dec/2025:16:17:51 +0000] "GET /_health HTTP/1.1" 200 14 "-" "hedgedoc-container-healthcheck/1.2"
@@ -302,4 +306,5 @@ You need to clone the [container repo](https://github.com/hedgedoc/container) an
 - [ ] Merge Release PR in <https://github.com/hedgedoc/social-media>
   - (optional) All people doing the release boost the post
 - [ ] Share the good news in the Matrix-Chatroom
+- [ ] Request CVEs (if applicable)
 - [ ] Change this release checklist if necessary
