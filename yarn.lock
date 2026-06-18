@@ -1600,7 +1600,7 @@ __metadata:
     mini-css-extract-plugin: "npm:1.6.2"
     minimist: "npm:1.2.8"
     minio: "npm:8.0.7"
-    mocha: "npm:11.7.5"
+    mocha: "npm:11.7.6"
     mock-require: "npm:3.0.3"
     moment: "npm:2.30.1"
     morgan: "npm:1.11.0"
@@ -11410,9 +11410,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mocha@npm:11.7.5":
-  version: 11.7.5
-  resolution: "mocha@npm:11.7.5"
+"mocha@npm:11.7.6":
+  version: 11.7.6
+  resolution: "mocha@npm:11.7.6"
   dependencies:
     browser-stdout: "npm:^1.3.1"
     chokidar: "npm:^4.0.1"
@@ -11438,7 +11438,7 @@ __metadata:
   bin:
     _mocha: bin/_mocha
     mocha: bin/mocha.js
-  checksum: 10/878fcec45d79dad3ec01b896ae75eabd0075b8f91866b338b81b2ef8a2279f1e70fb07fc89054108a46864fbc1e6f6898dc31e64c033ded585748c5fcbf7e704
+  checksum: 10/a083a65d4a2e74129ef06a77246088159e6dda09f3098e53b93edfd3df32a16d4c32a8ad37845da896365c29da44d1c0d5e6daa8062ad21dec2ebff71ce785c6
   languageName: node
   linkType: hard
 
