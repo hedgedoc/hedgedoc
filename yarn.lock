@@ -1573,7 +1573,7 @@ __metadata:
     jsdom: "npm:24.1.3"
     jsonlint: "npm:1.6.3"
     keymaster: "npm:1.6.2"
-    less: "npm:4.6.4"
+    less: "npm:4.6.6"
     less-loader: "npm:7.3.0"
     list.js: "npm:2.3.1"
     lodash: "npm:4.18.1"
@@ -9617,15 +9617,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"less@npm:4.6.4":
-  version: 4.6.4
-  resolution: "less@npm:4.6.4"
+"less@npm:4.6.6":
+  version: 4.6.6
+  resolution: "less@npm:4.6.6"
   dependencies:
     copy-anything: "npm:^3.0.5"
     errno: "npm:^0.1.1"
     graceful-fs: "npm:^4.1.2"
     image-size: "npm:~0.5.0"
-    make-dir: "npm:^2.1.0"
+    make-dir: "npm:^5.1.0"
     mime: "npm:^1.4.1"
     needle: "npm:^3.1.0"
     parse-node-version: "npm:^1.0.1"
@@ -9647,7 +9647,7 @@ __metadata:
       optional: true
   bin:
     lessc: bin/lessc
-  checksum: 10/8463c56e3eeac147ce4da7a2e7178e685fe2f8579c165c79381a3a4f87d70555058c9d1ebf420e272e90f3ee9b488cb3d418ed0c7a5681d26d20c5c1a956ea50
+  checksum: 10/2d3cba18c8b2994984d4eeba16eebf8ac220e1f72d3f5e7aa98b22c4dcb7464995c72aca3c052719d1345b5daed68a1aaea55faa65ad84816d0e74a4d6864b76
   languageName: node
   linkType: hard
 
@@ -10021,7 +10021,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"make-dir@npm:^2.0.0, make-dir@npm:^2.1.0":
+"make-dir@npm:^2.0.0":
   version: 2.1.0
   resolution: "make-dir@npm:2.1.0"
   dependencies:
@@ -10037,6 +10037,13 @@ __metadata:
   dependencies:
     semver: "npm:^6.0.0"
   checksum: 10/484200020ab5a1fdf12f393fe5f385fc8e4378824c940fba1729dcd198ae4ff24867bc7a5646331e50cead8abff5d9270c456314386e629acec6dff4b8016b78
+  languageName: node
+  linkType: hard
+
+"make-dir@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "make-dir@npm:5.1.0"
+  checksum: 10/372abd9cbb2029bead4efe6c369c9af8ae77773d9a31ed5378fd7ae8072f06ea272aec5c7aba7543d3b8578a45b0bf90d86a78ab311afa4bc3446000977095a9
   languageName: node
   linkType: hard
 
