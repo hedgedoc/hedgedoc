@@ -1567,7 +1567,7 @@ __metadata:
     jquery: "npm:3.7.1"
     jquery-mousewheel: "npm:3.2.2"
     jquery-ui: "npm:1.14.2"
-    js-cookie: "npm:3.0.5"
+    js-cookie: "npm:3.0.8"
     js-sequence-diagrams: "git+https://github.com/hedgedoc/js-sequence-diagrams.git"
     js-yaml: "npm:3.14.2"
     jsdom: "npm:24.1.3"
@@ -9244,10 +9244,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-cookie@npm:3.0.5":
-  version: 3.0.5
-  resolution: "js-cookie@npm:3.0.5"
-  checksum: 10/366494b1630b9fb8abaef3659748db5dfd52c58c6fc3459b9f0a03b492593bc1b01c6dfcc066b46f6413c28edb3a00cc68fb61ea8cdf6991bedf1f100f8a389d
+"js-cookie@npm:3.0.8":
+  version: 3.0.8
+  resolution: "js-cookie@npm:3.0.8"
+  checksum: 10/6bc10dc1ef0ad4780cd43a0413702d0b8d9d8d167c4fb605ae66c388270dece6b4cad4c8944654cc67b6e0e7639da379a7b48e7b7ad8711a80f60aba6a915548
   languageName: node
   linkType: hard
 
