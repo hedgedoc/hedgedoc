@@ -18,7 +18,6 @@ import hex2rgb from '../vendor/ot/hex2rgb'
 import { saveAs } from 'file-saver'
 import chance from 'chance'
 import store from 'store'
-import url from 'wurl'
 import { Spinner } from 'spin.js'
 
 import _ from 'lodash'
@@ -1798,7 +1797,7 @@ $('#gistImportModalConfirm').click(function () {
       false
     )
   } else {
-    const hostname = url('hostname', gisturl)
+    const hostname = new URL(gisturl).hostname
     if (hostname !== 'gist.github.com') {
       showMessageModal(
         '<i class="fa fa-github"></i> Import from Gist',
@@ -1809,7 +1808,8 @@ $('#gistImportModalConfirm').click(function () {
       )
     } else {
       ui.spinner.show()
-      $.get('https://api.github.com/gists/' + url('-1', gisturl))
+      const gistId = new URL(gisturl).pathname.split('/').pop()
+      $.get('https://api.github.com/gists/' + gistId)
         .done(function (data) {
           if (data.files) {
             let contents = ''
