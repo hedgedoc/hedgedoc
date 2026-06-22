@@ -10,9 +10,10 @@
 - Enabled `.webp` for file uploads (for all backends but `imgur`, since it does not support it)
 - Removed unnecessary entries in the XSS whitelist
 
-### Refactor
+### Refactoring / Clean-up
 
 - Removed the old Temp database object and related API endpoints. This was used by a very old way of migrating the history and is no longer needed.
+- Removed unused `allowOrigin` (environment variable `CMD_ALLOW_ORIGIN`) config option.
 
 ### Bugfixes
 
