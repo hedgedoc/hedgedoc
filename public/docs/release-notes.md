@@ -1,5 +1,12 @@
 # Release Notes
 
+## <i class="fa fa-tag"></i> 1.x <i class="fa fa-calendar-o"></i> UNRELEASED
+
+### Refactoring / Clean-up
+
+- Removed the old Temp database object and related API endpoints. This was used by a very old way of migrating the history and is no longer needed.
+- Removed unused `allowOrigin` (environment variable `CMD_ALLOW_ORIGIN`) config option.
+
 ## <i class="fa fa-tag"></i> 1.11.0 <i class="fa fa-calendar-o"></i> 2026-06-18
 
 ### Security fixes
