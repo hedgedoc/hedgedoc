@@ -1809,7 +1809,8 @@ $('#gistImportModalConfirm').click(function () {
       )
     } else {
       ui.spinner.show()
-      $.get('https://api.github.com/gists/' + url('-1', gisturl))
+      const gistId = new URL(gisturl).pathname.split('/').pop()
+      $.get('https://api.github.com/gists/' + gistId)
         .done(function (data) {
           if (data.files) {
             let contents = ''

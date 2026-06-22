@@ -61,7 +61,6 @@ const options = {
 }
 const historyList = new List('history', options)
 
-window.migrateHistoryFromTempCallback = pageInit
 setloginStateChangeEvent(pageInit)
 
 pageInit()
