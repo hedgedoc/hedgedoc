@@ -10,10 +10,13 @@
 - Enabled `.webp` for file uploads (for all backends but `imgur`, since it does not support it)
 - Removed unnecessary entries in the XSS whitelist
 
+### Refactor
+
+- Removed the old Temp database object and related API endpoints. This was used by a very old way of migrating the history and is no longer needed.
+
 ### Bugfixes
 
 - Restore native browser zoom-in keyboard shortcuts in the editor ([#6244](https://github.com/hedgedoc/hedgedoc/issues/6244))
-
 
 ## <i class="fa fa-tag"></i> 1.11.0 <i class="fa fa-calendar-o"></i> 2026-06-18
 
