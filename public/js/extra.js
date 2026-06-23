@@ -592,6 +592,7 @@ window.postProcess = postProcess
 
 // rewrite external links to go through the /_link warning page
 export function rewriteExternalLinks (view) {
+  const whitelist = window.externalLinkWhitelist || []
   view.find('a[href]').each((index, linkTag) => {
     const anchor = $(linkTag)
     const href = anchor.attr('href')
@@ -606,6 +607,11 @@ export function rewriteExternalLinks (view) {
     }
     // only rewrite links that have an absolute http(s) URL on a different origin
     if (!['http:', 'https:'].includes(parsed.protocol) || parsed.origin === window.location.origin) {
+      return
+    }
+    // skip rewriting for whitelisted domains (exact match or subdomain, case-insensitive)
+    const hostname = parsed.hostname.toLowerCase()
+    if (whitelist.some(domain => { const d = domain.toLowerCase(); return hostname === d || hostname.endsWith('.' + d) })) {
       return
     }
     const noteURL = window.location.pathname.split('/').pop()
