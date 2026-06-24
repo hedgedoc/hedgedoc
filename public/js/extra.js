@@ -611,7 +611,10 @@ export function rewriteExternalLinks (view) {
     }
     // skip rewriting for whitelisted domains (exact match or subdomain, case-insensitive)
     const hostname = parsed.hostname.toLowerCase()
-    if (whitelist.some(domain => { const d = domain.toLowerCase(); return hostname === d || hostname.endsWith('.' + d) })) {
+    if (whitelist.some(domain => {
+      const lowercaseDomain = domain.toLowerCase()
+      return hostname === lowercaseDomain || hostname.endsWith('.' + lowercaseDomain)
+    })) {
       return
     }
     const noteURL = window.location.pathname.split('/').pop()
