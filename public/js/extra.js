@@ -592,6 +592,9 @@ window.postProcess = postProcess
 
 // rewrite external links to go through the /_link warning page
 export function rewriteExternalLinks (view) {
+  if (window.externalLinkWarning === false) {
+    return
+  }
   const whitelist = window.externalLinkWhitelist || []
   view.find('a[href]').each((index, linkTag) => {
     const anchor = $(linkTag)
