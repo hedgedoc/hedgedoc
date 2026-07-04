@@ -12,10 +12,10 @@
 ### Security fixes
 
 This release contains four security fixes:
-- [GHSA-6c2w-8w96-3pcv](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-6c2w-8w96-3pcv) reports a possible HTML injection via the localpart of an email address.
-- [GHSA-qj78-mjch-wwrv](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-qj78-mjch-wwrv) reports a possible Denial-of-Service attack using the YAML frontmatter parsing.
-- [GHSA-8v9p-5j95-826j](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-8v9p-5j95-826j) reports a possible CSRF attack vector in the GitHub Gist export.
-- [GHSA-2f9f-w8xq-276v](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-2f9f-w8xq-276v) reports a rate-limiting bypass by abusing the CF-Connecting-IP header.
+- [CVE-2026-58487](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-6c2w-8w96-3pcv) reports a possible HTML injection via the localpart of an email address.
+- [CVE-2026-58486](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-qj78-mjch-wwrv) reports a possible Denial-of-Service attack using the YAML frontmatter parsing.
+- [CVE-2026-58489](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-8v9p-5j95-826j) reports a possible CSRF attack vector in the GitHub Gist export.
+- [CVE-2026-58488](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-2f9f-w8xq-276v) reports a rate-limiting bypass by abusing the CF-Connecting-IP header.
 
 Thanks to [Chandler Johnson](https://github.com/chndlrx), [taylorodell](https://github.com/taylorodell) and [alanturing881](https://github.com/alanturing881) for reporting!
 
