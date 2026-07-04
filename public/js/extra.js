@@ -612,11 +612,14 @@ export function rewriteExternalLinks (view) {
     if (!['http:', 'https:'].includes(parsed.protocol) || parsed.origin === window.location.origin) {
       return
     }
-    // skip rewriting for whitelisted domains (exact match or subdomain, case-insensitive)
+    // skip rewriting for whitelisted domains while differentiating between wildcard entries and plain host entries
     const hostname = parsed.hostname.toLowerCase()
     if (whitelist.some(domain => {
       const lowercaseDomain = domain.toLowerCase()
-      return hostname === lowercaseDomain || hostname.endsWith('.' + lowercaseDomain)
+      if (lowercaseDomain.startsWith('*.')) {
+        return hostname.endsWith('.' + lowercaseDomain.slice(2))
+      }
+      return hostname === lowercaseDomain
     })) {
       return
     }
