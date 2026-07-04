@@ -10,6 +10,8 @@ import { FastifyReply } from 'fastify';
 import { OpenApi } from '../api/utils/decorators/openapi.decorator';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { MediaService } from '../media/media.service';
+import { RequestUserId } from '../api/utils/decorators/request-user-id.decorator';
+import { PermissionError } from '../errors/errors';
 
 @OpenApi()
 @ApiTags('media-redirect')
@@ -24,8 +26,15 @@ export class MediaRedirectController {
 
   @Get(':uuid')
   @OpenApi(302, 404, 500)
-  async getMedia(@Param('uuid') uuid: string, @Res() response: FastifyReply): Promise<void> {
+  async getMedia(
+    @RequestUserId() userId: number,
+    @Param('uuid') uuid: string,
+    @Res() response: FastifyReply,
+  ): Promise<void> {
+    if (!(await this.mediaService.canUserAccessUpload(userId, uuid))) {
+      throw new PermissionError('You do not have permission to access this media upload.');
+    }
     const url = await this.mediaService.getFileUrl(uuid);
-    response.redirect(url);
+    await response.redirect(url);
   }
 }

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { MediaUploadSchema, PermissionLevel } from '@hedgedoc/commons';
-import { FieldNameMediaUpload } from '@hedgedoc/database';
 import {
   BadRequestException,
   Controller,
@@ -78,7 +77,7 @@ export class MediaController {
   @RequirePermission(PermissionLevel.WRITE)
   async uploadMedia(
     @RequestUserId() userId: number,
-    @FastifyFile('file') file: MulterFile,
+    @FastifyFile('file') file: MulterFile | undefined,
     @RequestNoteId() noteId: number,
   ): Promise<MediaUploadDto> {
     if (file === undefined) {
@@ -94,31 +93,34 @@ export class MediaController {
       userId,
       noteId,
     );
-    return (await this.mediaService.getMediaUploadDtosByUuids([uploadUuid]))[0];
+    return await this.mediaService.getMediaUploadDtoByUuid(uploadUuid);
   }
 
   @Get(':uuid')
   @OpenApi(200, 404, 500)
-  async getMedia(@Param('uuid') uuid: string): Promise<MediaUploadDto> {
-    return (await this.mediaService.getMediaUploadDtosByUuids([uuid]))[0];
+  async getMedia(
+    @RequestUserId() userId: number,
+    @Param('uuid') uuid: string,
+  ): Promise<MediaUploadDto> {
+    if (!(await this.mediaService.canUserAccessUpload(userId, uuid))) {
+      throw new PermissionError('You do not have permission to access this media upload.');
+    }
+    return await this.mediaService.getMediaUploadDtoByUuid(uuid);
   }
 
   @Delete(':uuid')
   @OpenApi(204, 404, 500)
   async deleteMedia(@RequestUserId() userId: number, @Param('uuid') uuid: string): Promise<void> {
-    const mediaUpload = await this.mediaService.findUploadByUuid(uuid);
     if (await this.permissionsService.checkMediaDeletePermission(userId, uuid)) {
       this.logger.debug(`Deleting '${uuid}' for user '${userId}'`, 'deleteMedia');
       await this.mediaService.deleteFile(uuid);
-    } else {
-      this.logger.warn(
-        `${userId} tried to delete '${uuid}', but is not the owner of upload or connected note`,
-        'deleteMedia',
-      );
-      const mediaUploadNote = mediaUpload[FieldNameMediaUpload.noteId];
-      throw new PermissionError(
-        `Neither file '${uuid}' nor note '${mediaUploadNote ?? 'unknown'}'is owned by '${userId}'`,
-      );
+      return;
     }
+
+    this.logger.warn(
+      `${userId} tried to delete '${uuid}', but is not the owner of upload or connected note`,
+      'deleteMedia',
+    );
+    throw new PermissionError(`Neither file '${uuid}' nor a linked note is owned by the user`);
   }
 }

@@ -9,6 +9,7 @@ import { PermissionLevel } from '@hedgedoc/commons';
 import {
   FieldNameGroup,
   FieldNameMediaUpload,
+  FieldNameMediaUploadNote,
   FieldNameNote,
   FieldNameNoteGroupPermission,
   FieldNameNoteUserPermission,
@@ -16,6 +17,7 @@ import {
   Group,
   TableGroup,
   TableMediaUpload,
+  TableMediaUploadNote,
   TableNote,
   TableNoteGroupPermission,
   TableNoteUserPermission,
@@ -109,70 +111,58 @@ describe('PermissionsService', () => {
   });
 
   describe('checkMediaDeletePermission', () => {
-    afterEach(() => {
-      expectBindings(tracker, 'select', [[mockMediaUploadUuid]], true);
-    });
-
-    const buildMockSelect = (returnValues: unknown) => {
+    const buildMockSelect = (uploadValues: unknown, linkedNoteValues?: unknown) => {
       mockSelect(
         tracker,
-        [
-          `${TableMediaUpload}"."${FieldNameMediaUpload.userId}`,
-          `${TableNote}"."${FieldNameNote.ownerId}`,
-        ],
+        [FieldNameMediaUpload.userId],
         TableMediaUpload,
         FieldNameMediaUpload.uuid,
-        returnValues,
-        [
-          {
-            joinTable: TableNote,
-            keyLeft: FieldNameNote.id,
-            keyRight: FieldNameMediaUpload.noteId,
-          },
-        ],
+        uploadValues,
       );
+      if (linkedNoteValues !== undefined) {
+        mockSelect(
+          tracker,
+          [FieldNameMediaUploadNote.noteId],
+          TableMediaUploadNote,
+          FieldNameMediaUploadNote.mediaUploadUuid,
+          linkedNoteValues,
+        );
+      }
     };
 
     it('throws NotInDBError if dbResult is undefined', async () => {
-      buildMockSelect([]);
+      buildMockSelect(undefined);
       await expect(
         service.checkMediaDeletePermission(mockUserId1, mockMediaUploadUuid),
       ).rejects.toThrow(NotInDBError);
-      expectBindings(tracker, 'select', [[mockMediaUploadUuid]], true);
     });
 
     describe('return true', () => {
       it('for media owner', async () => {
-        buildMockSelect([
-          {
-            [FieldNameMediaUpload.userId]: mockUserId1,
-            [FieldNameNote.ownerId]: mockUserId2,
-          },
-        ]);
+        buildMockSelect([{ [FieldNameMediaUpload.userId]: mockUserId1 }]);
         expect(
           await service.checkMediaDeletePermission(mockUserId1, mockMediaUploadUuid),
         ).toBeTruthy();
       });
       it('for note owner', async () => {
-        buildMockSelect([
-          {
-            [FieldNameMediaUpload.userId]: mockUserId2,
-            [FieldNameNote.ownerId]: mockUserId1,
-          },
-        ]);
+        buildMockSelect(
+          [{ [FieldNameMediaUpload.userId]: mockUserId2 }],
+          [{ [FieldNameMediaUploadNote.noteId]: mockNoteId }],
+        );
+        const spyOnIsOwner = jest.spyOn(service, 'isOwner').mockResolvedValue(true);
         expect(
           await service.checkMediaDeletePermission(mockUserId1, mockMediaUploadUuid),
         ).toBeTruthy();
+        expect(spyOnIsOwner).toHaveBeenCalledWith(mockUserId1, mockNoteId);
       });
     });
 
     it('returns false for a non-owner', async () => {
-      buildMockSelect([
-        {
-          [FieldNameMediaUpload.userId]: mockUserId2,
-          [FieldNameNote.ownerId]: mockUserId2,
-        },
-      ]);
+      buildMockSelect(
+        [{ [FieldNameMediaUpload.userId]: mockUserId2 }],
+        [{ [FieldNameMediaUploadNote.noteId]: mockNoteId }],
+      );
+      jest.spyOn(service, 'isOwner').mockResolvedValue(false);
       expect(
         await service.checkMediaDeletePermission(mockUserId1, mockMediaUploadUuid),
       ).toBeFalsy();

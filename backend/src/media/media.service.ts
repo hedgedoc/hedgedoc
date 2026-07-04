@@ -3,17 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MediaBackendType } from '@hedgedoc/commons';
+import { MediaBackendType, PermissionLevel } from '@hedgedoc/commons';
 import {
-  Alias,
-  FieldNameAlias,
   FieldNameMediaUpload,
+  FieldNameMediaUploadNote,
   FieldNameNote,
   FieldNameUser,
   MediaUpload,
   Note,
-  TableAlias,
   TableMediaUpload,
+  TableMediaUploadNote,
   TableUser,
   User,
 } from '@hedgedoc/database';
@@ -28,6 +27,7 @@ import mediaConfiguration, { MediaConfig } from '../config/media.config';
 import { MediaUploadDto } from '../dtos/media-upload.dto';
 import { ClientError, NotInDBError } from '../errors/errors';
 import { ConsoleLoggerService } from '../logger/console-logger.service';
+import { PermissionService } from '../permissions/permission.service';
 import {
   dateTimeToDB,
   dateTimeToISOString,
@@ -56,6 +56,8 @@ export class MediaService {
 
     @Inject(mediaConfiguration.KEY)
     private mediaConfig: MediaConfig,
+
+    private readonly permissionService: PermissionService,
   ) {
     this.logger.setContext(MediaService.name);
     this.mediaBackendType = this.chooseBackendType();
@@ -105,7 +107,7 @@ export class MediaService {
     userId: User[FieldNameUser.id],
     noteId: Note[FieldNameNote.id],
   ): Promise<string> {
-    this.logger.debug(`Saving file for note '${noteId}' and user '${userId}'`, 'saveFile');
+    this.logger.debug(`Saving file for user '${userId}'`, 'saveFile');
     const fileTypeResult = await FileType.fromBuffer(fileBuffer);
     if (!fileTypeResult) {
       throw new ClientError('Could not detect file type.');
@@ -115,14 +117,19 @@ export class MediaService {
     }
     const uuid = uuidV7();
     const backendData = await this.mediaBackend.saveFile(uuid, fileBuffer, fileTypeResult);
-    await this.knex(TableMediaUpload).insert({
-      [FieldNameMediaUpload.uuid]: uuid,
-      [FieldNameMediaUpload.fileName]: fileName,
-      [FieldNameMediaUpload.userId]: userId,
-      [FieldNameMediaUpload.noteId]: noteId,
-      [FieldNameMediaUpload.backendType]: this.mediaBackendType,
-      [FieldNameMediaUpload.backendData]: backendData,
-      [FieldNameMediaUpload.createdAt]: dateTimeToDB(getCurrentDateTime()),
+    await this.knex.transaction(async (transaction) => {
+      await transaction(TableMediaUpload).insert({
+        [FieldNameMediaUpload.uuid]: uuid,
+        [FieldNameMediaUpload.fileName]: fileName,
+        [FieldNameMediaUpload.userId]: userId,
+        [FieldNameMediaUpload.backendType]: this.mediaBackendType,
+        [FieldNameMediaUpload.backendData]: backendData,
+        [FieldNameMediaUpload.createdAt]: dateTimeToDB(getCurrentDateTime()),
+      });
+      await transaction(TableMediaUploadNote).insert({
+        [FieldNameMediaUploadNote.mediaUploadUuid]: uuid,
+        [FieldNameMediaUploadNote.noteId]: noteId,
+      });
     });
     return uuid;
   }
@@ -139,7 +146,7 @@ export class MediaService {
       .select(FieldNameMediaUpload.backendData)
       .where(FieldNameMediaUpload.uuid, uuid)
       .first();
-    if (backendData == undefined) {
+    if (backendData === undefined) {
       throw new NotInDBError(
         `Can't find backend data for '${uuid}'`,
         this.logger.getContext(),
@@ -151,28 +158,50 @@ export class MediaService {
   }
 
   /**
-   * Retrieves the URL to a media upload file
+   * Resolves a media upload into either a redirect URL (for backends that
+   * expose a publicly accessible, time-limited URL like Azure, S3, imgur, or
+   * WebDAV) or the file content + content type (for the local filesystem
+   * backend so the controller can stream the bytes.
    *
-   * @param uuid the uuid of the file to get the URL for
-   * @returns the URL of the file
-   * @throws MediaBackendError if there was an error retrieving the url
+   * @param uuid The UUID of the media upload
+   * @returns A discriminated union describing how the controller should respond
    */
-  async getFileUrl(uuid: string): Promise<string> {
+  async getFileResponse(uuid: string): Promise<MediaResponse> {
+    if (!validateUuid(uuid)) {
+      throw new NotInDBError(
+        'Invalid media upload id provided',
+        this.logger.getContext(),
+        'getFileResponse',
+      );
+    }
     const mediaUpload = await this.knex(TableMediaUpload)
-      .select(FieldNameMediaUpload.backendType, FieldNameMediaUpload.backendData)
+      .select(
+        FieldNameMediaUpload.backendType,
+        FieldNameMediaUpload.backendData,
+        FieldNameMediaUpload.fileName,
+      )
       .where(FieldNameMediaUpload.uuid, uuid)
       .first();
+
     if (mediaUpload === undefined) {
       throw new NotInDBError(
         `Can't find backend data for '${uuid}'`,
         this.logger.getContext(),
-        'getFileUrl',
+        'getFileResponse',
       );
     }
+
     const backendName = mediaUpload[FieldNameMediaUpload.backendType];
-    const backend = this.getBackendFromType(backendName);
     const backendData = mediaUpload[FieldNameMediaUpload.backendData];
-    return await backend.getFileUrl(uuid, backendData);
+
+    const backend = this.getBackendFromType(backendName);
+    if (backendName === MediaBackendType.FILESYSTEM) {
+      const fileResponse = await (backend as FilesystemBackend).getFileResponse(uuid, backendData);
+      return { type: 'file', ...fileResponse };
+    }
+
+    const url = await backend.getFileUrl(uuid, backendData);
+    return { type: 'redirect', url };
   }
 
   /**
@@ -188,7 +217,7 @@ export class MediaService {
       .where(FieldNameMediaUpload.uuid, uuid)
       .first();
     if (mediaUpload === undefined) {
-      throw new NotInDBError(`MediaUpload with uuid '${uuid}' not found`);
+      throw new NotInDBError(`MediaUpload with given uuid was not found`);
     }
     return mediaUpload;
   }
@@ -209,7 +238,7 @@ export class MediaService {
   }
 
   /**
-   * Lists all uploads to a specific note
+   * Lists all uploads linked to a specific note
    *
    * @param noteId the specific user
    * @returns An array of media uploads owned by the user
@@ -217,30 +246,135 @@ export class MediaService {
   async getMediaUploadUuidsByNoteId(
     noteId: number,
   ): Promise<MediaUpload[FieldNameMediaUpload.uuid][]> {
-    return await this.knex.transaction(async (transaction) => {
-      const results = await transaction(TableMediaUpload)
-        .select(FieldNameMediaUpload.uuid)
-        .where(FieldNameMediaUpload.noteId, noteId);
-      return results.map((result) => result[FieldNameMediaUpload.uuid]);
+    const results = await this.knex(TableMediaUploadNote)
+      .select(FieldNameMediaUploadNote.mediaUploadUuid)
+      .where(FieldNameMediaUploadNote.noteId, noteId);
+    return results.map((result) => result[FieldNameMediaUploadNote.mediaUploadUuid]);
+  }
+
+  /**
+   * Removes a note association from a media upload.
+   *
+   * @param uuid The UUID of the media upload
+   * @param noteId The ID of the note to disassociate from the media upload
+   */
+  async removeNoteFromMediaUpload(uuid: string, noteId: number): Promise<void> {
+    this.logger.debug(
+      `Removing note '${noteId}' from mediaUpload: ${uuid}`,
+      'removeNoteFromMediaUpload',
+    );
+    await this.knex(TableMediaUploadNote)
+      .where(FieldNameMediaUploadNote.mediaUploadUuid, uuid)
+      .andWhere(FieldNameMediaUploadNote.noteId, noteId)
+      .delete();
+  }
+
+  /**
+   * Adds a note association to a media upload.
+   *
+   * @param uuid The UUID of the media upload
+   * @param noteId The ID of the note to associate with the media upload
+   */
+  async addNoteToMediaUpload(uuid: string, noteId: number): Promise<void> {
+    await this.knex(TableMediaUploadNote)
+      .insert({
+        [FieldNameMediaUploadNote.mediaUploadUuid]: uuid,
+        [FieldNameMediaUploadNote.noteId]: noteId,
+      })
+      .onConflict([FieldNameMediaUploadNote.mediaUploadUuid, FieldNameMediaUploadNote.noteId])
+      .ignore();
+  }
+
+  /**
+   * Checks whether a user may access a media upload.
+   *
+   * @param userId The id of the user to check
+   * @param uuid The UUID of the media upload to check against
+   * @returns true if the user has access, false otherwise
+   */
+  async canUserAccessUpload(userId: number, uuid: string): Promise<boolean> {
+    const mediaUpload = await this.knex(TableMediaUpload)
+      .select(FieldNameMediaUpload.userId)
+      .where(FieldNameMediaUpload.uuid, uuid)
+      .first();
+    if (mediaUpload === undefined) {
+      throw new NotInDBError(`MediaUpload with given uuid was not found`);
+    }
+    const linkedNoteIds = await this.getLinkedNoteIds(uuid);
+
+    if (userId === null) {
+      return false;
+    }
+
+    if (linkedNoteIds.length === 0) {
+      return mediaUpload[FieldNameMediaUpload.userId] === userId;
+    }
+    for (const noteId of linkedNoteIds) {
+      const linkedNotePermission = await this.permissionService.determinePermission(userId, noteId);
+      if (linkedNotePermission >= PermissionLevel.READ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Retrieves a media upload DTO by UUID.
+   *
+   * @param uuid The UUID to fetch the media upload DTO for
+   * @returns The {@link MediaUploadDto}
+   */
+  async getMediaUploadDtoByUuid(uuid: string): Promise<MediaUploadDto> {
+    const mediaUpload = await this.knex(TableMediaUpload)
+      .join(
+        TableUser,
+        `${TableUser}.${FieldNameUser.id}`,
+        `${TableMediaUpload}.${FieldNameMediaUpload.userId}`,
+      )
+      .select(
+        `${TableMediaUpload}.${FieldNameMediaUpload.uuid}`,
+        `${TableMediaUpload}.${FieldNameMediaUpload.fileName}`,
+        `${TableMediaUpload}.${FieldNameMediaUpload.createdAt}`,
+        `${TableUser}.${FieldNameUser.username}`,
+      )
+      .where(`${TableMediaUpload}.${FieldNameMediaUpload.uuid}`, uuid)
+      .first();
+
+    if (mediaUpload === undefined) {
+      throw new NotInDBError(`MediaUpload with given uuid was not found`);
+    }
+
+    return MediaUploadDto.create({
+      uuid: mediaUpload[FieldNameMediaUpload.uuid],
+      fileName: mediaUpload[FieldNameMediaUpload.fileName],
+      linkedNoteCount: (await this.getLinkedNoteIds(uuid)).length,
+      createdAt: dateTimeToISOString(dbToDateTime(mediaUpload[FieldNameMediaUpload.createdAt])),
+      username: mediaUpload[FieldNameUser.username],
     });
   }
 
   /**
-   * Sets the note of a mediaUpload to null
+   * Retrieves media upload DTOs by a list of their UUIDs.
    *
-   * @param uuid the media upload to be changed
+   *
    */
-  async removeNoteFromMediaUpload(uuid: string): Promise<void> {
-    this.logger.debug('Setting note to null for mediaUpload: ' + uuid, 'removeNoteFromMediaUpload');
-    await this.knex(TableMediaUpload)
-      .update({
-        [FieldNameMediaUpload.noteId]: null,
-      })
-      .where(FieldNameMediaUpload.uuid, uuid);
+  async getMediaUploadDtosByUuids(uuids: string[]): Promise<MediaUploadDto[]> {
+    return await Promise.all(uuids.map(async (uuid) => await this.getMediaUploadDtoByUuid(uuid)));
   }
 
   /**
-   * Returns the backend type that is configured in the media configuration
+   * Retrieves an array of note IDs linked to the specified media upload UUID.
+   */
+  private async getLinkedNoteIds(uuid: string): Promise<number[]> {
+    const results = await this.knex(TableMediaUploadNote)
+      .select(FieldNameMediaUploadNote.noteId)
+      .where(FieldNameMediaUploadNote.mediaUploadUuid, uuid);
+    return results.map((result) => result[FieldNameMediaUploadNote.noteId]);
+  }
+
+  /**
+   * Returns the backend type that is configured in the media configuration.
    */
   private chooseBackendType(): MediaBackendType {
     switch (this.mediaConfig.backend.type as string) {
@@ -278,51 +412,5 @@ export class MediaService {
       case MediaBackendType.WEBDAV:
         return this.moduleRef.get(WebdavBackend);
     }
-  }
-
-  /**
-   * Retrieves media upload DTOs by a list of their UUIDs
-   *
-   * @param uuids The UUIDs of the media uploads to retrieve
-   * @returns An array of MediaUploadDto objects containing the details of the media uploads
-   */
-  async getMediaUploadDtosByUuids(uuids: string[]): Promise<MediaUploadDto[]> {
-    const mediaUploads = await this.knex(TableMediaUpload)
-      .select<
-        (Pick<
-          MediaUpload,
-          FieldNameMediaUpload.uuid | FieldNameMediaUpload.fileName | FieldNameMediaUpload.createdAt
-        > &
-          Pick<User, FieldNameUser.username> &
-          Pick<Alias, FieldNameAlias.alias>)[]
-      >(
-        `${TableMediaUpload}.${FieldNameMediaUpload.uuid}`,
-        `${TableMediaUpload}.${FieldNameMediaUpload.fileName}`,
-        `${TableMediaUpload}.${FieldNameMediaUpload.createdAt}`,
-        `${TableUser}.${FieldNameUser.username}`,
-        `${TableAlias}.${FieldNameAlias.alias}`,
-      )
-      .join(
-        TableAlias,
-        `${TableAlias}.${FieldNameAlias.noteId}`,
-        `${TableMediaUpload}.${FieldNameMediaUpload.noteId}`,
-      )
-      .join(
-        TableUser,
-        `${TableUser}.${FieldNameUser.id}`,
-        `${TableMediaUpload}.${FieldNameMediaUpload.userId}`,
-      )
-      .whereIn(FieldNameMediaUpload.uuid, uuids)
-      .andWhere(FieldNameAlias.isPrimary, true);
-
-    return mediaUploads.map((mediaUpload) =>
-      MediaUploadDto.create({
-        uuid: mediaUpload[FieldNameMediaUpload.uuid],
-        fileName: mediaUpload[FieldNameMediaUpload.fileName],
-        noteAlias: mediaUpload[FieldNameAlias.alias],
-        createdAt: dateTimeToISOString(dbToDateTime(mediaUpload[FieldNameMediaUpload.createdAt])),
-        username: mediaUpload[FieldNameUser.username],
-      }),
-    );
   }
 }

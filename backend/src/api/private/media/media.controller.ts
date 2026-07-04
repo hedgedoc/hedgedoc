@@ -3,17 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MediaUploadSchema } from '@hedgedoc/commons';
-import { PermissionLevel } from '@hedgedoc/commons';
+import { MediaUploadSchema, PermissionLevel } from '@hedgedoc/commons';
+import { FieldNameMediaUpload } from '@hedgedoc/database';
 import {
-  BadRequestException,
   Controller,
   Delete,
   Get,
   Param,
   Post,
+  Put,
   UseGuards,
   UseInterceptors,
+  BadRequestException,
 } from '@nestjs/common';
 import { ApiBody, ApiConsumes, ApiHeader, ApiTags } from '@nestjs/swagger';
 
@@ -23,6 +24,7 @@ import { PermissionError } from '../../../errors/errors';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
 import { MediaService } from '../../../media/media.service';
 import { MulterFile } from '../../../media/multer-file.interface';
+import { NoteService } from '../../../notes/note.service';
 import { PermissionService } from '../../../permissions/permission.service';
 import { PermissionsGuard } from '../../../permissions/permissions.guard';
 import { RequirePermission } from '../../../permissions/require-permission.decorator';
@@ -40,6 +42,7 @@ export class MediaController {
   constructor(
     private readonly logger: ConsoleLoggerService,
     private mediaService: MediaService,
+    private noteService: NoteService,
     private permissionsService: PermissionService,
   ) {
     this.logger.setContext(MediaController.name);
@@ -80,7 +83,7 @@ export class MediaController {
     @FastifyFile('file') file: MulterFile | undefined,
     @RequestNoteId() noteId: number,
     @RequestUserId() userId: number,
-  ): Promise<string> {
+  ): Promise<MediaUploadDto> {
     if (file === undefined) {
       throw new BadRequestException('Request does not contain a file');
     }
@@ -88,13 +91,46 @@ export class MediaController {
       `Received filename '${file.originalname}' for note '${noteId}' from user '${userId}'`,
       'uploadMedia',
     );
-    return await this.mediaService.saveFile(file.originalname, file.buffer, userId, noteId);
+    const uploadUuid = await this.mediaService.saveFile(
+      file.originalname,
+      file.buffer,
+      userId,
+      noteId,
+    );
+    return await this.mediaService.getMediaUploadDtoByUuid(uploadUuid);
+  }
+
+  @Put(':uuid/notes/:noteAlias')
+  @OpenApi(204, 403, 404, 500)
+  async linkMediaToNote(
+    @RequestUserId() userId: number,
+    @Param('uuid') uuid: string,
+    @Param('noteAlias') noteAlias: string,
+  ): Promise<void> {
+    const mediaUpload = await this.mediaService.findUploadByUuid(uuid);
+    const noteIdNumber = await this.noteService.getNoteIdByAlias(noteAlias);
+    if (mediaUpload[FieldNameMediaUpload.userId] !== userId) {
+      throw new PermissionError('Only the uploader may link this media upload to a note');
+    }
+    if (
+      (await this.permissionsService.determinePermission(userId, noteIdNumber)) <
+      PermissionLevel.WRITE
+    ) {
+      throw new PermissionError('You do not have permission to write to this note');
+    }
+    await this.mediaService.addNoteToMediaUpload(uuid, noteIdNumber);
   }
 
   @Get(':uuid')
   @OpenApi(200, 404, 500)
-  async getMedia(@Param('uuid') uuid: string): Promise<MediaUploadDto> {
-    return (await this.mediaService.getMediaUploadDtosByUuids([uuid]))[0];
+  async getMedia(
+    @RequestUserId() userId: number,
+    @Param('uuid') uuid: string,
+  ): Promise<MediaUploadDto> {
+    if (!(await this.mediaService.canUserAccessUpload(userId, uuid))) {
+      throw new PermissionError('You do not have permission to access this media upload');
+    }
+    return await this.mediaService.getMediaUploadDtoByUuid(uuid);
   }
 
   @Delete(':uuid')
@@ -106,12 +142,10 @@ export class MediaController {
     );
     if (!hasUserMediaDeletePermission) {
       this.logger.warn(
-        `${userId} tried to delete '${uuid}', but is not the owner of upload or connected note`,
+        `User ${userId} tried to delete '${uuid}', but is not the owner of upload or connected note`,
         'deleteMedia',
       );
-      throw new PermissionError(
-        `'${userId}' does neither own the upload '${uuid}' nor the note associacted with this upload'`,
-      );
+      throw new PermissionError(`User does neither own the upload '${uuid}' nor a linked note`);
     }
     this.logger.debug(`Deleting '${uuid}' for user '${userId}'`, 'deleteMedia');
     await this.mediaService.deleteFile(uuid);
