@@ -7,6 +7,7 @@ import { PermissionLevel } from '@hedgedoc/commons';
 import {
   FieldNameGroup,
   FieldNameMediaUpload,
+  FieldNameMediaUploadNote,
   FieldNameNote,
   FieldNameNoteGroupPermission,
   FieldNameNoteUserPermission,
@@ -15,6 +16,7 @@ import {
   Note,
   TableGroup,
   TableMediaUpload,
+  TableMediaUploadNote,
   TableNote,
   TableNoteGroupPermission,
   TableNoteUserPermission,
@@ -68,24 +70,12 @@ export class PermissionService {
     userId: number,
     mediaUploadUuid: string,
   ): Promise<boolean> {
-    const dbResult = await this.knex(TableMediaUpload)
-      .join(
-        TableNote,
-        `${TableNote}.${FieldNameNote.id}`,
-        '=',
-        `${TableMediaUpload}.${FieldNameMediaUpload.noteId}`,
-      )
-      .select<{
-        [FieldNameMediaUpload.userId]: number;
-        [FieldNameNote.ownerId]: number;
-      }>(
-        `${TableMediaUpload}.${FieldNameMediaUpload.userId}`,
-        `${TableNote}.${FieldNameNote.ownerId}`,
-      )
-      .where(`${TableMediaUpload}.${FieldNameMediaUpload.uuid}`, mediaUploadUuid)
+    const mediaUpload = await this.knex(TableMediaUpload)
+      .select(FieldNameMediaUpload.userId)
+      .where(FieldNameMediaUpload.uuid, mediaUploadUuid)
       .first();
 
-    if (dbResult === undefined) {
+    if (mediaUpload === undefined) {
       throw new NotInDBError(
         `There is no upload with the id ${mediaUploadUuid}`,
         this.logger.getContext(),
@@ -93,9 +83,34 @@ export class PermissionService {
       );
     }
 
-    return (
-      dbResult[FieldNameMediaUpload.userId] === userId || dbResult[FieldNameNote.ownerId] === userId
-    );
+    if (mediaUpload[FieldNameMediaUpload.userId] === userId) {
+      return true;
+    }
+
+    return await this.canDeleteViaAnyLinkedNote(userId, mediaUploadUuid);
+  }
+
+  /**
+   * Determines whether the user has permission to delete via any linked note
+   * associated with the given media upload UUID.
+   *
+   * @param userId The id of the user requesting deletion.
+   * @param mediaUploadUuid The UUID of the media upload.
+   * @returns A promise that resolves to `true` if the user has permission to delete through one of the linked notes, otherwise `false`.
+   */
+  private async canDeleteViaAnyLinkedNote(
+    userId: number,
+    mediaUploadUuid: string,
+  ): Promise<boolean> {
+    const noteIds = await this.knex(TableMediaUploadNote)
+      .pluck(FieldNameMediaUploadNote.noteId)
+      .where(FieldNameMediaUploadNote.mediaUploadUuid, mediaUploadUuid);
+    for (const noteId of noteIds) {
+      if (await this.isOwner(userId, noteId)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**

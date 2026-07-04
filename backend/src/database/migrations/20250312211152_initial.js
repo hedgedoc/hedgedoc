@@ -32,6 +32,7 @@ const {
   TableGroupUser,
   TableIdentity,
   TableMediaUpload,
+  TableMediaUploadNote,
   TableNote,
   TableNoteGroupPermission,
   TableNoteUserPermission,
@@ -41,6 +42,7 @@ const {
   TableUserPinnedNote,
   TableVisitedNote,
   FieldNameSession,
+  FieldNameMediaUploadNote,
   TableSession,
 } = require('@hedgedoc/database');
 
@@ -319,13 +321,6 @@ const up = async function (knex) {
   await knex.schema.createTable(TableMediaUpload, (table) => {
     table.uuid(FieldNameMediaUpload.uuid).primary();
     table
-      .integer(FieldNameMediaUpload.noteId)
-      .unsigned()
-      .nullable()
-      .references(FieldNameNote.id)
-      .inTable(TableNote)
-      .onDelete('SET NULL');
-    table
       .integer(FieldNameMediaUpload.userId)
       .unsigned()
       .notNullable()
@@ -353,8 +348,30 @@ const up = async function (knex) {
       useTz: false,
       precision: 3,
     });
-    table.index([FieldNameMediaUpload.noteId], 'idx_media_upload_note_id');
     table.index([FieldNameMediaUpload.userId], 'idx_media_upload_user_id');
+  });
+
+  // Create media_upload_note join table
+  await knex.schema.createTable(TableMediaUploadNote, (table) => {
+    table
+      .uuid(FieldNameMediaUploadNote.mediaUploadUuid)
+      .notNullable()
+      .references(FieldNameMediaUpload.uuid)
+      .inTable(TableMediaUpload)
+      .onDelete('CASCADE');
+    table
+      .integer(FieldNameMediaUploadNote.noteId)
+      .unsigned()
+      .notNullable()
+      .references(FieldNameNote.id)
+      .inTable(TableNote)
+      .onDelete('CASCADE');
+    table.primary([FieldNameMediaUploadNote.mediaUploadUuid, FieldNameMediaUploadNote.noteId]);
+    table.index(
+      [FieldNameMediaUploadNote.mediaUploadUuid],
+      'idx_media_upload_note_media_upload_uuid',
+    );
+    table.index([FieldNameMediaUploadNote.noteId], 'idx_media_upload_note_note_id');
   });
 
   // Create user_pinned_note table
@@ -451,6 +468,7 @@ const down = async function (knex) {
   await knex.schema.dropTableIfExists(TableSession);
   await knex.schema.dropTableIfExists(TableVisitedNote);
   await knex.schema.dropTableIfExists(TableUserPinnedNote);
+  await knex.schema.dropTableIfExists(TableMediaUploadNote);
   await knex.schema.dropTableIfExists(TableMediaUpload);
   await knex.schema.dropTableIfExists(TableNoteGroupPermission);
   await knex.schema.dropTableIfExists(TableNoteUserPermission);

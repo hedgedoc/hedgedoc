@@ -14,15 +14,11 @@ export enum MediaBackendType {
 
 /**
  * A media upload object represents an uploaded file. While the file itself is stored in the configured storage backend,
- * the metadata is stored in the database. Uploads are attached to the {@link Note} where they were uploaded, but can be
- * detached by deleting the note and setting the option to keep the media files.
+ * the metadata is stored in the database. Uploads can be linked to zero or more notes.
  */
 export interface MediaUpload {
   /** UUID (v7) identifying the media upload. Is public and unique */
   [FieldNameMediaUpload.uuid]: string
-
-  /** The id of the attached {@link Note} or null if the media upload was detached from a note */
-  [FieldNameMediaUpload.noteId]: number | null
 
   /** The id of the {@link User} who uploaded the media file */
   [FieldNameMediaUpload.userId]: number
@@ -42,7 +38,6 @@ export interface MediaUpload {
 
 export enum FieldNameMediaUpload {
   uuid = 'uuid',
-  noteId = 'note_id',
   userId = 'user_id',
   fileName = 'file_name',
   backendType = 'backend_type',
@@ -52,4 +47,16 @@ export enum FieldNameMediaUpload {
 
 export const TableMediaUpload = 'media_upload'
 
-export type TypeUpdateMediaUpload = Pick<MediaUpload, FieldNameMediaUpload.noteId>
+export const TableMediaUploadNote = 'media_upload_note'
+
+export enum FieldNameMediaUploadNote {
+  mediaUploadUuid = 'media_upload_uuid',
+  noteId = 'note_id',
+}
+
+export type TypeUpdateMediaUpload = never
+
+export interface MediaUploadNote {
+  [FieldNameMediaUploadNote.mediaUploadUuid]: string
+  [FieldNameMediaUploadNote.noteId]: number
+}

@@ -11,9 +11,10 @@ import { ImgurBackend } from './backends/imgur-backend';
 import { S3Backend } from './backends/s3-backend';
 import { WebdavBackend } from './backends/webdav-backend';
 import { MediaService } from './media.service';
+import { PermissionsModule } from '../permissions/permissions.module';
 
 @Module({
-  imports: [],
+  imports: [PermissionsModule],
   providers: [
     MediaService,
     FilesystemBackend,

@@ -134,7 +134,7 @@ export class NotesController {
       if (!noteMediaDeletionDto.keepMedia) {
         await this.mediaService.deleteFile(mediaUpload);
       } else {
-        await this.mediaService.removeNoteFromMediaUpload(mediaUpload);
+        await this.mediaService.removeNoteFromMediaUpload(mediaUpload, noteId);
       }
     }
     await this.noteService.deleteNote(noteId);
