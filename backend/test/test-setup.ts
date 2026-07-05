@@ -68,6 +68,7 @@ import { ConsoleLoggerService } from '../src/logger/console-logger.service';
 import { LoggerModule } from '../src/logger/logger.module';
 import { FilesystemBackend } from '../src/media/backends/filesystem-backend';
 import { MediaModule } from '../src/media/media.module';
+import { MediaRedirectModule } from '../src/media-redirect/media-redirect.module';
 import { MediaService } from '../src/media/media.service';
 import { MonitoringModule } from '../src/monitoring/monitoring.module';
 import { NoteService } from '../src/notes/note.service';
@@ -262,6 +263,10 @@ export class TestSetupBuilder {
         path: PRIVATE_API_PREFIX,
         module: PrivateApiModule,
       },
+      {
+        path: '/media',
+        module: MediaRedirectModule,
+      },
     ];
     process.env.HD_BASE_URL = `https://${testId}.example.com`;
 
@@ -308,6 +313,7 @@ export class TestSetupBuilder {
         FrontendConfigModule,
         AuthModule,
         SessionModule,
+        MediaRedirectModule,
         EventEmitterModule.forRoot(eventModuleConfig),
       ],
       providers: [

@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MediaBackendType } from '@hedgedoc/commons';
 import { HttpAdapterHost } from '@nestjs/core';
 import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { WsAdapter } from '@nestjs/platform-ws';
@@ -111,17 +110,6 @@ export async function setupApp(
   app.useGlobalPipes(setupValidationPipe(logger));
 
   // Map URL paths to directories
-  if (mediaConfig.backend.type === MediaBackendType.FILESYSTEM) {
-    logger.log(
-      `Serving the local folder '${mediaConfig.backend.filesystem.uploadPath}' under '/uploads'`,
-      'AppBootstrap',
-    );
-    const path = await import('path');
-    await app.register(import('@fastify/static'), {
-      root: path.resolve(mediaConfig.backend.filesystem.uploadPath),
-      prefix: '/uploads/',
-    });
-  }
   logger.log(`Serving the local folder 'public' under '/public'`, 'AppBootstrap');
   const path = await import('path');
   await app.register(import('@fastify/static'), {
