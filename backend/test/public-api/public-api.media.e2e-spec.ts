@@ -180,10 +180,12 @@ describe('Media', () => {
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
         .expect(403);
 
+      // The second user has no access to the file at all, neither as the
+      // uploader nor via a linked note, so the read endpoint also rejects.
       await agent
-        .get(`/uploads/${upload}.png`)
+        .get(`/media/${upload}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
-        .expect(200);
+        .expect(403);
 
       // delete upload for real
       await agent
@@ -193,7 +195,7 @@ describe('Media', () => {
 
       // Test if file is really deleted
       await agent
-        .get(`/uploads/${upload}.png`)
+        .get(`/media/${upload}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect(404);
     });
@@ -217,10 +219,12 @@ describe('Media', () => {
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
         .expect(403);
 
+      // The second user has no access to the file at all, neither as the
+      // uploader nor via a linked note, so the read endpoint also rejects.
       await agent
-        .get(`/uploads/${upload}.png`)
+        .get(`/media/${upload}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
-        .expect(200);
+        .expect(403);
 
       // delete upload for real
       await agent
@@ -230,7 +234,7 @@ describe('Media', () => {
 
       // Test if file is really deleted
       await agent
-        .get(`/uploads/${upload}.png`)
+        .get(`/media/${upload}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[2].secret}`)
         .expect(404);
     });

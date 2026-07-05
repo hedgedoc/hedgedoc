@@ -6,6 +6,7 @@
 import { MediaUploadSchema, PermissionLevel } from '@hedgedoc/commons';
 import { FieldNameMediaUpload } from '@hedgedoc/database';
 import {
+  BadRequestException,
   Controller,
   Delete,
   Get,
@@ -14,7 +15,6 @@ import {
   Put,
   UseGuards,
   UseInterceptors,
-  BadRequestException,
 } from '@nestjs/common';
 import { ApiBody, ApiConsumes, ApiHeader, ApiTags } from '@nestjs/swagger';
 
@@ -128,7 +128,7 @@ export class MediaController {
     @Param('uuid') uuid: string,
   ): Promise<MediaUploadDto> {
     if (!(await this.mediaService.canUserAccessUpload(userId, uuid))) {
-      throw new PermissionError('You do not have permission to access this media upload');
+      throw new PermissionError('You do not have permission to access this media upload.');
     }
     return await this.mediaService.getMediaUploadDtoByUuid(uuid);
   }

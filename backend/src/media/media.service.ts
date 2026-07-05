@@ -40,6 +40,7 @@ import { ImgurBackend } from './backends/imgur-backend';
 import { S3Backend } from './backends/s3-backend';
 import { WebdavBackend } from './backends/webdav-backend';
 import { MediaBackend } from './media-backend.interface';
+import { MediaResponse } from './media-response.interface'
 
 @Injectable()
 export class MediaService {
@@ -292,7 +293,7 @@ export class MediaService {
    * @param uuid The UUID of the media upload to check against
    * @returns true if the user has access, false otherwise
    */
-  async canUserAccessUpload(userId: number, uuid: string): Promise<boolean> {
+  async canUserAccessUpload(userId: number | null, uuid: string): Promise<boolean> {
     const mediaUpload = await this.knex(TableMediaUpload)
       .select(FieldNameMediaUpload.userId)
       .where(FieldNameMediaUpload.uuid, uuid)
@@ -302,13 +303,14 @@ export class MediaService {
     }
     const linkedNoteIds = await this.getLinkedNoteIds(uuid);
 
+    if (linkedNoteIds.length === 0) {
+      return mediaUpload[FieldNameMediaUpload.userId] === userId;
+    }
+
     if (userId === null) {
       return false;
     }
 
-    if (linkedNoteIds.length === 0) {
-      return mediaUpload[FieldNameMediaUpload.userId] === userId;
-    }
     for (const noteId of linkedNoteIds) {
       const linkedNotePermission = await this.permissionService.determinePermission(userId, noteId);
       if (linkedNotePermission >= PermissionLevel.READ) {

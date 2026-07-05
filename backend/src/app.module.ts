@@ -35,8 +35,8 @@ import { FrontendConfigService } from './frontend-config/frontend-config.service
 import { GroupsModule } from './groups/groups.module';
 import { KnexLoggerService } from './logger/knex-logger.service';
 import { LoggerModule } from './logger/logger.module';
-import { MediaRedirectModule } from './media-redirect/media-redirect.module';
 import { MediaModule } from './media/media.module';
+import { MediaRedirectModule } from './media-redirect/media-redirect.module';
 import { MessageModule } from './message/message.module';
 import { MonitoringModule } from './monitoring/monitoring.module';
 import { PermissionsModule } from './permissions/permissions.module';

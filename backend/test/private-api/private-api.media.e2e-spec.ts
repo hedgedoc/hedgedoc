@@ -64,9 +64,15 @@ describe('Media', () => {
           .set('HedgeDoc-Note', noteAlias1)
           .expect(201);
         uuid = uploadResponse.body.uuid;
-        const apiResponse = await agentUser1.get(`${PRIVATE_API_PREFIX}/media/${uuid}`);
-        expect(apiResponse.statusCode).toEqual(200);
-        const downloadResponse = await agentUser1.get(`/uploads/${uuid}.png`);
+        const downloadResponse = await agentUser1
+          .get(`/media/${uuid}`)
+          .buffer(true)
+          .parse((response, callback) => {
+            const chunks: Buffer[] = [];
+            response.on('data', (chunk: Buffer) => chunks.push(chunk));
+            response.on('end', () => callback(null, Buffer.concat(chunks)));
+          });
+        expect(downloadResponse.statusCode).toEqual(200);
         expect(downloadResponse.body).toEqual(testImage);
       });
       it('with user and uppercase note alias', async () => {
@@ -76,9 +82,15 @@ describe('Media', () => {
           .set('HedgeDoc-Note', noteAlias1.toUpperCase())
           .expect(201);
         uuid = uploadResponse.body.uuid;
-        const apiResponse = await agentUser1.get(`${PRIVATE_API_PREFIX}/media/${uuid}`);
-        expect(apiResponse.statusCode).toEqual(200);
-        const downloadResponse = await agentUser1.get(`/uploads/${uuid}.png`);
+        const downloadResponse = await agentUser1
+          .get(`/media/${uuid}`)
+          .buffer(true)
+          .parse((response, callback) => {
+            const chunks: Buffer[] = [];
+            response.on('data', (chunk: Buffer) => chunks.push(chunk));
+            response.on('end', () => callback(null, Buffer.concat(chunks)));
+          });
+        expect(downloadResponse.statusCode).toEqual(200);
         expect(downloadResponse.body).toEqual(testImage);
       });
       it('with guest user', async () => {
@@ -94,9 +106,15 @@ describe('Media', () => {
           .set('HedgeDoc-Note', noteDtoResponse.body.metadata.primaryAlias)
           .expect(201);
         uuid = uploadResponse.body.uuid;
-        const apiResponse = await agentGuestUser.get(`${PRIVATE_API_PREFIX}/media/${uuid}`);
-        expect(apiResponse.statusCode).toEqual(200);
-        const downloadResponse = await agentGuestUser.get(`/uploads/${uuid}.png`);
+        const downloadResponse = await agentGuestUser
+          .get(`/media/${uuid}`)
+          .buffer(true)
+          .parse((response, callback) => {
+            const chunks: Buffer[] = [];
+            response.on('data', (chunk: Buffer) => chunks.push(chunk));
+            response.on('end', () => callback(null, Buffer.concat(chunks)));
+          });
+        expect(downloadResponse.statusCode).toEqual(200);
         expect(downloadResponse.body).toEqual(testImage);
       });
       it('with guest user and uppercase note alias', async () => {
@@ -112,9 +130,15 @@ describe('Media', () => {
           .set('HedgeDoc-Note', noteDtoResponse.body.metadata.primaryAlias.toUpperCase())
           .expect(201);
         uuid = uploadResponse.body.uuid;
-        const apiResponse = await agentGuestUser.get(`${PRIVATE_API_PREFIX}/media/${uuid}`);
-        expect(apiResponse.statusCode).toEqual(200);
-        const downloadResponse = await agentGuestUser.get(`/uploads/${uuid}.png`);
+        const downloadResponse = await agentGuestUser
+          .get(`/media/${uuid}`)
+          .buffer(true)
+          .parse((response, callback) => {
+            const chunks: Buffer[] = [];
+            response.on('data', (chunk: Buffer) => chunks.push(chunk));
+            response.on('end', () => callback(null, Buffer.concat(chunks)));
+          });
+        expect(downloadResponse.statusCode).toEqual(200);
         expect(downloadResponse.body).toEqual(testImage);
       });
     });
@@ -219,11 +243,11 @@ describe('Media', () => {
         testSetup.ownedNoteIds[0],
       );
 
-      await agentUser1.get(`/uploads/${uuid}.png`).expect(200);
+      await agentUser1.get(`/media/${uuid}`).expect(200);
 
       await agentUser1.delete(`${PRIVATE_API_PREFIX}/media/${uuid}`).expect(204);
 
-      await agentUser1.get(`/uploads/${uuid}.png`).expect(404);
+      await agentUser1.get(`/media/${uuid}`).expect(404);
     });
     it('allowed if user is owner of note', async () => {
       const uuid = await testSetup.mediaService.saveFile(
@@ -233,11 +257,11 @@ describe('Media', () => {
         testSetup.ownedNoteIds[0],
       );
 
-      await agentUser1.get(`/uploads/${uuid}.png`).expect(200);
+      await agentUser1.get(`/media/${uuid}`).expect(200);
 
       await agentUser1.delete(`${PRIVATE_API_PREFIX}/media/${uuid}`).expect(204);
 
-      await agentUser1.get(`/uploads/${uuid}.png`).expect(404);
+      await agentUser1.get(`/media/${uuid}`).expect(404);
     });
     it("other user can't delete", async () => {
       const uuid = await testSetup.mediaService.saveFile(

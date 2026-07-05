@@ -189,33 +189,45 @@ describe('MediaService', () => {
     });
   });
 
-  describe('getFileUrl', () => {
-    it('returns file url if found', async () => {
+  describe('getFileResponse', () => {
+    it('returns the file content for the filesystem backend', async () => {
       mockSelect(
         tracker,
         [
           FieldNameMediaUpload.backendType,
-          FieldNameMediaUpload.backendData],
+
+          FieldNameMediaUpload.backendData,
+          FieldNameMediaUpload.fileName,
+        ],
         TableMediaUpload,
         FieldNameMediaUpload.uuid,
         {
           [FieldNameMediaUpload.backendType]: backendType,
           [FieldNameMediaUpload.backendData]: backendData,
+          [FieldNameMediaUpload.fileName]: fileName,
         },
       );
       // As the media service loads the used backend dynamically, we need to
       // spy on fileSystemBackend here instead of service.mediaBackend
       jest
-        .spyOn(fileSystemBackend, 'getFileUrl')
+        .spyOn(fileSystemBackend, 'getFileResponse')
         .mockImplementationOnce(
-          async (givenUuid: string, givenBackendData: string | null): Promise<string> => {
+          async (
+            givenUuid: string,
+            givenBackendData: string | null,
+          ): Promise<{ buffer: Buffer; contentType: string; fileName: string }> => {
             expect(givenUuid).toBe(uuid);
             expect(givenBackendData).toBe(backendData);
-            return `http://example.com/${fileName}`;
+            return { buffer: fileBuffer, contentType: 'image/png', fileName: `${uuid}.png` };
           },
         );
-      const result = await service.getFileUrl(uuid);
-      expect(result).toBe(`http://example.com/${fileName}`);
+      const result = await service.getFileResponse(uuid);
+      expect(result).toEqual({
+        kind: 'file',
+        buffer: fileBuffer,
+        contentType: 'image/png',
+        fileName,
+      });
       expect(tracker.history.select).toHaveLength(1);
       expect(tracker.history.select[0].bindings).toEqual([uuid, 1]);
     });
