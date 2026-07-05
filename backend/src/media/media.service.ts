@@ -21,7 +21,7 @@ import { ModuleRef } from '@nestjs/core';
 import * as FileType from 'file-type';
 import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
-import { v7 as uuidV7 } from 'uuid';
+import { v7 as uuidV7, validate as validateUuid } from 'uuid';
 
 import mediaConfiguration, { MediaConfig } from '../config/media.config';
 import { MediaUploadDto } from '../dtos/media-upload.dto';
@@ -40,7 +40,7 @@ import { ImgurBackend } from './backends/imgur-backend';
 import { S3Backend } from './backends/s3-backend';
 import { WebdavBackend } from './backends/webdav-backend';
 import { MediaBackend } from './media-backend.interface';
-import { MediaResponse } from './media-response.interface'
+import { MediaResponse } from './media-response.interface';
 
 @Injectable()
 export class MediaService {
@@ -213,6 +213,13 @@ export class MediaService {
    * @throws NotInDBError if the MediaUpload entity with the provided UUID is not found in the database
    */
   async findUploadByUuid(uuid: string): Promise<MediaUpload> {
+    if (!validateUuid(uuid)) {
+      throw new NotInDBError(
+        'Invalid media upload id provided',
+        this.logger.getContext(),
+        'findUploadByUuid',
+      );
+    }
     const mediaUpload = await this.knex(TableMediaUpload)
       .select()
       .where(FieldNameMediaUpload.uuid, uuid)
@@ -328,6 +335,13 @@ export class MediaService {
    * @returns The {@link MediaUploadDto}
    */
   async getMediaUploadDtoByUuid(uuid: string): Promise<MediaUploadDto> {
+    if (!validateUuid(uuid)) {
+      throw new NotInDBError(
+        'Invalid media upload id provided',
+        this.logger.getContext(),
+        'getMediaUploadDtoByUuid',
+      );
+    }
     const mediaUpload = await this.knex(TableMediaUpload)
       .join(
         TableUser,

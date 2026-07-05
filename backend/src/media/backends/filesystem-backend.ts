@@ -13,7 +13,7 @@ import mediaConfiguration, { MediaConfig } from '../../config/media.config';
 import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
-import { MediaFileResponse } from '../media-response.interface'
+import { MediaFileResponse } from '../media-response.interface';
 
 @Injectable()
 export class FilesystemBackend implements MediaBackend {
@@ -83,7 +83,7 @@ export class FilesystemBackend implements MediaBackend {
     if (!backendData) {
       throw new MediaBackendError('No backend data provided');
     }
-    const { ext, mime } = JSON.parse(backendData) as { ext: string, mime: string };
+    const { ext, mime } = JSON.parse(backendData) as { ext: string; mime: string };
     if (!ext) {
       throw new MediaBackendError('No file extension in backend data');
     }
@@ -94,6 +94,9 @@ export class FilesystemBackend implements MediaBackend {
   }
 
   private getFilePath(fileName: string, extension: string): string {
+    if (!/^[a-zA-Z0-9]+$/.test(extension)) {
+      throw new MediaBackendError(`Invalid file extension: ${extension}`);
+    }
     return join(this.uploadDirectory, `${fileName}.${extension}`);
   }
 
