@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import type { MediaUploadInterface } from '@hedgedoc/commons'
 import { DeleteApiRequestBuilder } from '../common/api-request-builder/delete-api-request-builder'
 import { PostApiRequestBuilder } from '../common/api-request-builder/post-api-request-builder'
 import type { ImageProxyRequestDto, ImageProxyResponse } from './types'
@@ -34,11 +35,12 @@ export const getProxiedUrl = async (imageUrl: string): Promise<ImageProxyRespons
 export const uploadFile = async (noteAlias: string, media: File): Promise<string> => {
   const postData = new FormData()
   postData.append('file', media)
-  const response = await new PostApiRequestBuilder<string, void>('media')
+  const response = await new PostApiRequestBuilder<MediaUploadInterface, void>('media')
     .withHeader('HedgeDoc-Note', noteAlias)
     .withBody(postData)
     .sendRequest()
-  return response.getResponse().text()
+  const upload = await response.asParsedJsonObject()
+  return upload.uuid
 }
 
 /**
