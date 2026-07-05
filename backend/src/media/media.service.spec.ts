@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { describe, it, expect, beforeAll, afterEach, jest } from '@jest/globals';
+import { describe, it, expect, beforeAll, beforeEach, afterEach, jest } from '@jest/globals';
 import {
   FieldNameMediaUpload,
   FieldNameMediaUploadNote,
@@ -38,6 +38,7 @@ describe('MediaService', () => {
   const userId = 1;
   const noteId = 2;
   const uuid = '0198c9b6-117f-7215-93e2-5ca4b718225f';
+  const invalidUuid = 'not-a-valid-uuid';
   const fileName = 'test.png';
   const backendType = MediaBackendType.FILESYSTEM;
   const backendData = JSON.stringify({ ext: 'png' });
@@ -71,6 +72,10 @@ describe('MediaService', () => {
 
     service = module.get<MediaService>(MediaService);
     fileSystemBackend = module.get<FilesystemBackend>(FilesystemBackend);
+  });
+
+  beforeEach(() => {
+    jest.spyOn(uuidModule, 'validate').mockReturnValue(true);
   });
 
   afterEach(() => {
@@ -223,10 +228,10 @@ describe('MediaService', () => {
         );
       const result = await service.getFileResponse(uuid);
       expect(result).toEqual({
-        kind: 'file',
+        type: 'file',
         buffer: fileBuffer,
         contentType: 'image/png',
-        fileName,
+        fileName: `${uuid}.png`,
       });
       expect(tracker.history.select).toHaveLength(1);
       expect(tracker.history.select[0].bindings).toEqual([uuid, 1]);
@@ -269,6 +274,14 @@ describe('MediaService', () => {
       mockSelect(tracker, [], TableMediaUpload, FieldNameMediaUpload.uuid, undefined);
       await expect(service.findUploadByUuid(uuid)).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'select', [[uuid]], true);
+    });
+
+    it('throws NotInDBError when given an invalid uuid', async () => {
+      jest.spyOn(uuidModule, 'validate').mockReturnValueOnce(false);
+      await expect(service.findUploadByUuid(invalidUuid)).rejects.toThrow(
+        new NotInDBError('Invalid media upload id provided', 'MediaService', 'findUploadByUuid'),
+      );
+      expect(tracker.history.select).toHaveLength(0);
     });
   });
 
@@ -344,6 +357,20 @@ describe('MediaService', () => {
           username,
         },
       ]);
+    });
+  });
+
+  describe('getMediaUploadDtoByUuid', () => {
+    it('throws NotInDBError when given an invalid uuid', async () => {
+      jest.spyOn(uuidModule, 'validate').mockReturnValueOnce(false);
+      await expect(service.getMediaUploadDtoByUuid(invalidUuid)).rejects.toThrow(
+        new NotInDBError(
+          'Invalid media upload id provided',
+          'MediaService',
+          'getMediaUploadDtoByUuid',
+        ),
+      );
+      expect(tracker.history.select).toHaveLength(0);
     });
   });
 });
