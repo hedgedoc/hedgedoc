@@ -19,7 +19,7 @@ This documentation will cover HTTPS setup, with comments for HTTP setup.
 | `domain` | `CMD_DOMAIN` | The full domain where your instance will be available | `hedgedoc.example.com` |
 | `host` | `CMD_HOST` | An ip or domain name that is only available to HedgeDoc and your reverse proxy | `localhost` |
 | `port` | `CMD_PORT` | An available port number on that IP | `3000` |
-| `path` | `CMD_PATH` | path to UNIX domain socket to listen on (if specified, `host` or `CMD_HOST` and `port` or `CMD_PORT` are ignored) | `/var/run/hedgedoc.sock` |
+| `path` | `CMD_PATH` | path to UNIX domain socket to listen on (if specified, `host` or `CMD_HOST` and `port` or `CMD_PORT` are ignored for listening; however, `port` or `CMD_PORT` is still used for URL generation when `urlAddPort` is enabled) | `/var/run/hedgedoc.sock` |
 | `protocolUseSSL` | `CMD_PROTOCOL_USESSL` | `true` if you want to serve your instance over SSL (HTTPS), `false` if you want to use plain HTTP | `true` |
 | `useSSL` |  | `false`, the communications between HedgeDoc and the proxy are unencrypted | `false` |
 | `urlAddPort` | `CMD_URL_ADDPORT` | `false`, HedgeDoc should not append its port to the URLs it links | `false` |
