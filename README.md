@@ -26,6 +26,7 @@ HedgeDoc lets you create real-time collaborative markdown notes.
 - ℹ️ Read all about HedgeDoc and the history of the project on [our website](https://hedgedoc.org)
 - 🧪 Try out HedgeDoc with the [demo instance][hedgedoc-demo]. Check out the [features page][hedgedoc-demo-features]!
 - 💽 Install HedgeDoc yourself using the [install guide](https://docs.hedgedoc.org/setup/getting-started/)
+- ☁️ Prefer a managed instance? [![Deploy with Zenith](https://cdn.zenith.hosting/buttons/deploy-with-zenith.svg)](https://zenith.hosting/host/hedgedoc)
 - ❓ Questions? Join our [Matrix chat][matrix.org-url] or the [community forums][hedgedoc-community]
 - 💬 Stay up to date by subscribing to the [release feed][github-release-feed]
 
