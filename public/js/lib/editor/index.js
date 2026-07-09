@@ -197,15 +197,6 @@ export default class Editor {
       'Shift-Ctrl-6': cm => {
         utils.wrapTextWith(this.editor, cm, '^')
       },
-      'Ctrl-+': cm => {
-        utils.wrapTextWith(this.editor, cm, '+')
-      },
-      'Shift-Ctrl-=': cm => {
-        utils.wrapTextWith(this.editor, cm, '+')
-      },
-      'Ctrl-=': cm => {
-        utils.wrapTextWith(this.editor, cm, '=')
-      },
       'Shift-Ctrl-Backspace': cm => {
         utils.wrapTextWith(this.editor, cm, 'Backspace')
       }
