@@ -7,6 +7,11 @@
 - Added external link whitelist setting (`externalLinkWhitelist` in config.json or `CMD_EXTERNAL_LINK_WHITELIST`) to skip warning page for certain domains
 - Enabled `.webp` for file uploads (for all backends but `imgur`, since it does not support it)
 
+### Bugfixes
+
+- Restore native browser zoom-in keyboard shortcuts in the editor ([#6244](https://github.com/hedgedoc/hedgedoc/issues/6244))
+
+
 ## <i class="fa fa-tag"></i> 1.11.0 <i class="fa fa-calendar-o"></i> 2026-06-18
 
 ### Security fixes
