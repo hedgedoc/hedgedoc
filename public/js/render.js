@@ -24,6 +24,8 @@ whiteList.kbd = []
 whiteList.iframe = ['allowfullscreen', 'name', 'referrerpolicy', 'src', 'width', 'height']
 // allow summary tag
 whiteList.summary = []
+// allow details tag
+whiteList.details = ['open']
 // allow ruby tag
 whiteList.ruby = []
 // allow rp tag for ruby

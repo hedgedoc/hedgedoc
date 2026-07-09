@@ -10,7 +10,8 @@
 ### Bugfixes
 
 - Restore native browser zoom-in keyboard shortcuts in the editor ([#6244](https://github.com/hedgedoc/hedgedoc/issues/6244))
-
+- Fix revision history corruption during backward patch application (unpatching) ([#6513](https://github.com/hedgedoc/hedgedoc/issues/6513))
+- Add HTML `<details>` tag to the client-side XSS filter whitelist ([#6513](https://github.com/hedgedoc/hedgedoc/issues/6513))
 
 ## <i class="fa fa-tag"></i> 1.11.0 <i class="fa fa-calendar-o"></i> 2026-06-18
 
