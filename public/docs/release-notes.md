@@ -1,5 +1,11 @@
 # Release Notes
 
+## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
+
+### Enhancements
+
+- Automatically skip the login modal if no form-based login and exactly one external login provider is configured
+
 ## <i class="fa fa-tag"></i> 1.11.1 <i class="fa fa-calendar-o"></i> 2026-07-24
 
 ### Security fixes
