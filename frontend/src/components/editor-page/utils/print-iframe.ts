@@ -7,7 +7,7 @@
 import { useIsRendererReady } from '../../render-page/window-post-message-communicator/hooks/use-is-renderer-ready'
 import { useCallback } from 'react'
 import { setPrintMode } from '../../../redux/print-mode/methods'
-import { useEditorToRendererCommunicator } from '../render-context/editor-to-renderer-communicator-context-provider'
+import { useOptionalEditorToRendererCommunicator } from '../render-context/editor-to-renderer-communicator-context-provider'
 import { CommunicationMessageType } from '../../render-page/window-post-message-communicator/rendering-message'
 
 const TIMEOUT_BEFORE_PRINT = 25
@@ -16,7 +16,7 @@ const TIMEOUT_BEFORE_PRINT = 25
  * Prints the content of the renderer iframe.
  */
 export const usePrintIframe = (): (() => void) => {
-  const iframeCommunicator = useEditorToRendererCommunicator()
+  const iframeCommunicator = useOptionalEditorToRendererCommunicator()
   const rendererReady = useIsRendererReady()
 
   return useCallback(() => {

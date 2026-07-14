@@ -15,6 +15,10 @@ import { Logger } from '../../../utils/logger'
 const logger = new Logger('EditorToRendererCommunicator')
 const EditorToRendererCommunicatorContext = createContext<EditorToRendererCommunicator | undefined>(undefined)
 
+export const useOptionalEditorToRendererCommunicator = (): EditorToRendererCommunicator | undefined => {
+  return useContext(EditorToRendererCommunicatorContext)
+}
+
 /**
  * Provides the {@link EditorToRendererCommunicator editor to renderer iframe communicator} that is set by a {@link EditorToRendererCommunicatorContextProvider context provider}.
  *
@@ -22,7 +26,7 @@ const EditorToRendererCommunicatorContext = createContext<EditorToRendererCommun
  * @throws {Error} if no communicator was received
  */
 export const useEditorToRendererCommunicator = (): EditorToRendererCommunicator | undefined => {
-  const communicatorFromContext = useContext(EditorToRendererCommunicatorContext)
+  const communicatorFromContext = useOptionalEditorToRendererCommunicator()
   if (!communicatorFromContext) {
     logger.error('No editor-to-renderer-iframe-communicator received. Did you forget to use the provider component?')
     return undefined
