@@ -37,6 +37,7 @@ declare module 'reveal.js' {
     transitionSpeed?: string | undefined
     backgroundTransition?: string | undefined
     viewDistance?: number | undefined
+    view?: 'print' | 'reader' | 'scroll' | undefined
 
     // https://github.com/hakimel/reveal.js/#parallax-background
     // Parallax background image

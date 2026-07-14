@@ -9,6 +9,8 @@ import { useCallback } from 'react'
 import { setPrintMode } from '../../../redux/print-mode/methods'
 import { useEditorToRendererCommunicator } from '../render-context/editor-to-renderer-communicator-context-provider'
 import { CommunicationMessageType } from '../../render-page/window-post-message-communicator/rendering-message'
+import { useApplicationState } from '../../../hooks/common/use-application-state'
+import { NoteType } from '@hedgedoc/commons'
 
 const TIMEOUT_BEFORE_PRINT = 25
 
@@ -18,9 +20,18 @@ const TIMEOUT_BEFORE_PRINT = 25
 export const usePrintIframe = (): (() => void) => {
   const iframeCommunicator = useEditorToRendererCommunicator()
   const rendererReady = useIsRendererReady()
+  const isSlideDeck = useApplicationState((state) => state.noteDetails?.frontmatter.type === NoteType.SLIDE)
 
   return useCallback(() => {
-    if (!rendererReady) {
+    if (!rendererReady || !iframeCommunicator) {
+      return
+    }
+
+    if (isSlideDeck) {
+      iframeCommunicator.sendMessageToOtherSide({
+        type: CommunicationMessageType.SET_PRINT_MODE,
+        printMode: true
+      })
       return
     }
 
@@ -39,7 +50,7 @@ export const usePrintIframe = (): (() => void) => {
         printMode: false
       })
     }, TIMEOUT_BEFORE_PRINT)
-  }, [rendererReady, iframeCommunicator])
+  }, [iframeCommunicator, isSlideDeck, rendererReady])
 }
 
 /**
@@ -50,6 +61,9 @@ export const usePrintIframe = (): (() => void) => {
 export const usePrintSelf = () => {
   return useCallback(() => {
     setPrintMode(true)
+    if (document.querySelector('.reveal')) {
+      return
+    }
     setTimeout(() => {
       window.print()
       setPrintMode(false)
