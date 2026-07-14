@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
+import { useDarkModeState } from '../../../hooks/dark-mode/use-dark-mode-state'
 import { cypressId } from '../../../utils/cypress-attribute'
 import { Logger } from '../../../utils/logger'
 import styles from './mermaid.module.scss'
@@ -14,7 +15,7 @@ import { ApplicationErrorAlert } from '../../../components/common/application-er
 
 const log = new Logger('MermaidChart')
 
-let mermaidInitialized = false
+let mermaidInitializedDarkMode: boolean | undefined
 
 const loadMermaid = async (): Promise<(typeof import('mermaid'))['default']> => {
   try {
@@ -34,6 +35,7 @@ const loadMermaid = async (): Promise<(typeof import('mermaid'))['default']> => 
 export const MermaidChart: React.FC<CodeProps> = ({ code }) => {
   const diagramContainer = useRef<HTMLDivElement>(null)
   const { t } = useTranslation()
+  const darkModeEnabled = useDarkModeState()
   const { error } = useAsync(async () => {
     if (!diagramContainer.current) {
       return
@@ -41,9 +43,14 @@ export const MermaidChart: React.FC<CodeProps> = ({ code }) => {
 
     const mermaid = await loadMermaid()
 
-    if (!mermaidInitialized) {
-      mermaid.initialize({ startOnLoad: false, securityLevel: 'sandbox' })
-      mermaidInitialized = true
+    if (mermaidInitializedDarkMode !== darkModeEnabled) {
+      mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: 'antiscript',
+        theme: darkModeEnabled ? 'dark' : 'default',
+        darkMode: darkModeEnabled
+      })
+      mermaidInitializedDarkMode = darkModeEnabled
     }
 
     try {
@@ -53,23 +60,21 @@ export const MermaidChart: React.FC<CodeProps> = ({ code }) => {
       await mermaid.parse(code)
       delete diagramContainer.current.dataset.processed
       diagramContainer.current.textContent = code
-      await mermaid.init(undefined, diagramContainer.current)
+      await mermaid.run({
+        nodes: [diagramContainer.current]
+      })
     } catch (error) {
       const message = (error as Error).message
       log.error(error)
       diagramContainer.current?.querySelectorAll('iframe').forEach((child) => child.remove())
       throw new Error(message ?? t('renderer.mermaid.unknownError'))
     }
-  }, [code, t])
+  }, [code, darkModeEnabled, t])
 
   return (
     <Fragment>
       {error !== undefined && <ApplicationErrorAlert className={'text-wrap'}>{error?.message}</ApplicationErrorAlert>}
-      <div
-        {...cypressId('mermaid-frame')}
-        className={`text-center ${styles['mermaid']} bg-dark text-black`}
-        ref={diagramContainer}
-      />
+      <div {...cypressId('mermaid-frame')} className={`text-center ${styles['mermaid']}`} ref={diagramContainer} />
     </Fragment>
   )
 }
