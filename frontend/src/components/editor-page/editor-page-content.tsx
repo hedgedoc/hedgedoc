@@ -19,6 +19,9 @@ import React, { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import './print.scss'
 import { usePrintKeyboardShortcut } from './hooks/use-print-keyboard-shortcut'
+import { NoteType } from '@hedgedoc/commons'
+import { useApplicationState } from '../../hooks/common/use-application-state'
+import { buildCursorLineScrollState } from './synced-scroll/cursor-line-scroll-state'
 
 export enum ScrollSource {
   EDITOR = 'editor',
@@ -37,6 +40,20 @@ export const EditorPageContent: React.FC = () => {
   const [rendererScrollState, onEditorScroll] = useScrollState(scrollSource, ScrollSource.RENDERER)
   const setRendererToScrollSource = useSetScrollSource(scrollSource, ScrollSource.RENDERER)
   const setEditorToScrollSource = useSetScrollSource(scrollSource, ScrollSource.EDITOR)
+  const syncScrollEnabled = useApplicationState((state) => state.editorConfig.syncScroll)
+  const noteType = useApplicationState((state) => state.noteDetails?.frontmatter.type)
+  const cursorPosition = useApplicationState((state) => state.noteDetails?.selection.from)
+  const lineStartIndexes = useApplicationState((state) => state.noteDetails?.markdownContent.lineStartIndexes ?? [])
+  const cursorScrollState = useMemo(
+    () => buildCursorLineScrollState(lineStartIndexes, cursorPosition),
+    [cursorPosition, lineStartIndexes]
+  )
+  const rendererPaneScrollState = useMemo(() => {
+    if (noteType !== NoteType.SLIDE) {
+      return rendererScrollState
+    }
+    return syncScrollEnabled ? cursorScrollState : null
+  }, [cursorScrollState, noteType, rendererScrollState, syncScrollEnabled])
 
   const leftPane = useMemo(
     () => (
@@ -55,10 +72,10 @@ export const EditorPageContent: React.FC = () => {
         frameClasses={'h-100 w-100'}
         onMakeScrollSource={setRendererToScrollSource}
         onScroll={onMarkdownRendererScroll}
-        scrollState={rendererScrollState}
+        scrollState={rendererPaneScrollState}
       />
     ),
-    [onMarkdownRendererScroll, rendererScrollState, setRendererToScrollSource]
+    [onMarkdownRendererScroll, rendererPaneScrollState, setRendererToScrollSource]
   )
 
   const editorExtensionComponents = useComponentsFromAppExtensions()
