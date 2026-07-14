@@ -30,10 +30,15 @@ const initialSlideState: SlideState = {
  *
  * @param markdownContentLines An array of markdown lines.
  * @param slideOptions The slide options.
+ * @param targetSlideState The slide that should be shown.
  * @return The current state of reveal.js
  * @see https://revealjs.com/
  */
-export const useReveal = (markdownContentLines: string[], slideOptions?: RevealOptions): REVEAL_STATUS => {
+export const useReveal = (
+  markdownContentLines: string[],
+  slideOptions?: RevealOptions,
+  targetSlideState?: SlideState
+): REVEAL_STATUS => {
   const [deck, setDeck] = useState<Reveal>()
   const [revealStatus, setRevealStatus] = useState<REVEAL_STATUS>(REVEAL_STATUS.NOT_INITIALISED)
   const currentSlideState = useRef<SlideState>(initialSlideState)
@@ -94,6 +99,13 @@ export const useReveal = (markdownContentLines: string[], slideOptions?: RevealO
     log.debug('Apply config', slideOptions)
     deck.configure(slideOptions)
   }, [deck, revealStatus, slideOptions])
+
+  useEffect(() => {
+    if (!deck || targetSlideState === undefined || revealStatus !== REVEAL_STATUS.INITIALISED) {
+      return
+    }
+    deck.slide(targetSlideState.indexHorizontal, targetSlideState.indexVertical)
+  }, [deck, revealStatus, targetSlideState])
 
   return revealStatus
 }

@@ -7,14 +7,16 @@ import { RevealMarkdownExtension } from '../../../markdown-renderer/extensions/r
 import { useMarkdownExtensions } from '../../../markdown-renderer/hooks/use-markdown-extensions'
 import { REVEAL_STATUS, useReveal } from '../../../markdown-renderer/hooks/use-reveal'
 import { MarkdownToReact } from '../../../markdown-renderer/markdown-to-react/markdown-to-react'
+import type { ScrollProps } from '../../../editor-page/synced-scroll/scroll-props'
 import { RendererType } from '../../window-post-message-communicator/rendering-message'
 import type { CommonMarkdownRendererProps } from '../common-markdown-renderer-props'
 import { LoadingSlide } from './loading-slide'
+import { findSlideForLine } from './slide-line-mapping'
 import styles from './slideshow.module.scss'
 import type { RevealOptions } from 'reveal.js'
 import React, { useMemo, useRef } from 'react'
 
-export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererProps {
+export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererProps, Pick<ScrollProps, 'scrollState'> {
   slideOptions?: RevealOptions
 }
 
@@ -30,6 +32,7 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps>
   markdownContentLines,
   baseUrl,
   newLinesAreBreaks,
+  scrollState,
   slideOptions
 }) => {
   const markdownBodyRef = useRef<HTMLDivElement>(null)
@@ -40,7 +43,11 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps>
     useMemo(() => [new RevealMarkdownExtension()], [])
   )
 
-  const revealStatus = useReveal(markdownContentLines, slideOptions)
+  const targetSlideState = useMemo(
+    () => (scrollState ? findSlideForLine(markdownContentLines, scrollState.firstLineInView) : undefined),
+    [markdownContentLines, scrollState]
+  )
+  const revealStatus = useReveal(markdownContentLines, slideOptions, targetSlideState)
 
   const slideShowDOM = useMemo(
     () =>
