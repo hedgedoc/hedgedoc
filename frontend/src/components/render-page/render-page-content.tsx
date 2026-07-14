@@ -183,6 +183,7 @@ export const RenderPageContent: React.FC = () => {
             markdownContentLines={deferredMarkdownContentLines}
             baseUrl={baseConfiguration.baseUrl}
             newLinesAreBreaks={newLinesAreBreaks}
+            scrollState={scrollState}
             slideOptions={slideOptions}
           />
         )
