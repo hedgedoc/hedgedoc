@@ -1,7 +1,7 @@
 # Manual Installation
 
 !!! info "Requirements on your server"
-    - Node.js 18 or later
+    - Node.js 20 or later
       We recommend to run HedgeDoc with the latest LTS release of Node.js.
     - Database (PostgreSQL, MySQL, MariaDB, SQLite)  
       The database must use charset `utf8`. This is typically the default in PostgreSQL and SQLite.  
