@@ -18,6 +18,12 @@ import React, { useMemo, useRef } from 'react'
 
 export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererProps, Pick<ScrollProps, 'scrollState'> {
   slideOptions?: RevealOptions
+  printMode?: boolean
+  onPrintModeConsumed?: () => void
+}
+
+type SlideshowMarkdownRendererContentProps = SlideshowMarkdownRendererProps & {
+  printMode: boolean
 }
 
 /**
@@ -29,11 +35,18 @@ export interface SlideshowMarkdownRendererProps extends CommonMarkdownRendererPr
  * @param newLinesAreBreaks If newlines are rendered as breaks or not
  */
 export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps> = ({
+  printMode = false,
+  ...props
+}) => <SlideshowMarkdownRendererContent key={printMode ? 'print' : 'preview'} printMode={printMode} {...props} />
+
+const SlideshowMarkdownRendererContent: React.FC<SlideshowMarkdownRendererContentProps> = ({
   markdownContentLines,
   baseUrl,
   newLinesAreBreaks,
   scrollState,
-  slideOptions
+  slideOptions,
+  printMode,
+  onPrintModeConsumed
 }) => {
   const markdownBodyRef = useRef<HTMLDivElement>(null)
 
@@ -47,11 +60,11 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps>
     () => (scrollState ? findSlideForLine(markdownContentLines, scrollState.firstLineInView) : undefined),
     [markdownContentLines, scrollState]
   )
-  const revealStatus = useReveal(markdownContentLines, slideOptions, targetSlideState)
+  const revealStatus = useReveal(markdownContentLines, slideOptions, targetSlideState, printMode, onPrintModeConsumed)
 
   const slideShowDOM = useMemo(
     () =>
-      revealStatus === REVEAL_STATUS.INITIALISED ? (
+      revealStatus === REVEAL_STATUS.INITIALISED || printMode ? (
         <MarkdownToReact
           markdownContentLines={markdownContentLines}
           markdownRenderExtensions={extensions}
@@ -61,7 +74,7 @@ export const SlideshowMarkdownRenderer: React.FC<SlideshowMarkdownRendererProps>
       ) : (
         <LoadingSlide />
       ),
-    [extensions, markdownContentLines, newLinesAreBreaks, revealStatus]
+    [extensions, markdownContentLines, newLinesAreBreaks, printMode, revealStatus]
   )
 
   return (

@@ -19,6 +19,7 @@ import { EventEmitter2 } from 'eventemitter2'
 import React, { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
 import { setPrintMode } from '../../redux/print-mode/methods'
 import { usePrintKeyboardShortcut } from '../editor-page/hooks/use-print-keyboard-shortcut'
+import { useApplicationState } from '../../hooks/common/use-application-state'
 
 /**
  * Wraps the markdown rendering in an iframe.
@@ -33,6 +34,9 @@ export const RenderPageContent: React.FC = () => {
   const sendScrolling = useRef<boolean>(false)
   const [newLinesAreBreaks, setNewLinesAreBreaks] = useState<boolean>(true)
   const [slideOptions, setSlideOptions] = useState<RevealOptions>()
+  const printMode = useApplicationState((state) => state.printMode)
+
+  const resetPrintMode = useCallback(() => setPrintMode(false), [])
 
   useRendererReceiveHandler(
     CommunicationMessageType.SET_SLIDE_OPTIONS,
@@ -185,6 +189,8 @@ export const RenderPageContent: React.FC = () => {
             newLinesAreBreaks={newLinesAreBreaks}
             scrollState={scrollState}
             slideOptions={slideOptions}
+            printMode={printMode}
+            onPrintModeConsumed={resetPrintMode}
           />
         )
       case RendererType.SIMPLE:
@@ -206,6 +212,8 @@ export const RenderPageContent: React.FC = () => {
     onHeightChange,
     onMakeScrollSource,
     onScroll,
+    printMode,
+    resetPrintMode,
     scrollState,
     slideOptions
   ])
