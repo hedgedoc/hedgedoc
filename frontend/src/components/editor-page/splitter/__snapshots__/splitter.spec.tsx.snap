@@ -17,9 +17,15 @@ exports[`Splitter resize can change size with mouse 1`] = `
       </div>
     </div>
     <div
+      aria-orientation="vertical"
+      aria-valuemax="100"
+      aria-valuemin="0"
+      aria-valuenow="50"
       class="divider"
       data-testid="splitter-divider"
       id="editor-splitter"
+      role="separator"
+      tabindex="0"
     >
       <div
         class="middle"
@@ -34,10 +40,7 @@ exports[`Splitter resize can change size with mouse 1`] = `
             BootstrapIconMock_ArrowLeft
           </button>
           <span
-            aria-orientation="vertical"
             class="grabber"
-            role="separator"
-            tabindex="0"
           >
             BootstrapIconMock_ArrowLeftRight
           </span>
@@ -82,9 +85,15 @@ exports[`Splitter resize can change size with touch: touch initial 1`] = `
       </div>
     </div>
     <div
+      aria-orientation="vertical"
+      aria-valuemax="100"
+      aria-valuemin="0"
+      aria-valuenow="50"
       class="divider"
       data-testid="splitter-divider"
       id="editor-splitter"
+      role="separator"
+      tabindex="0"
     >
       <div
         class="middle"
@@ -99,10 +108,7 @@ exports[`Splitter resize can change size with touch: touch initial 1`] = `
             BootstrapIconMock_ArrowLeft
           </button>
           <span
-            aria-orientation="vertical"
             class="grabber"
-            role="separator"
-            tabindex="0"
           >
             BootstrapIconMock_ArrowLeftRight
           </span>
@@ -147,9 +153,15 @@ exports[`Splitter resize can change size with touch: touch move to left 1`] = `
       </div>
     </div>
     <div
+      aria-orientation="vertical"
+      aria-valuemax="100"
+      aria-valuemin="0"
+      aria-valuenow="50"
       class="divider"
       data-testid="splitter-divider"
       id="editor-splitter"
+      role="separator"
+      tabindex="0"
     >
       <div
         class="middle"
@@ -164,10 +176,7 @@ exports[`Splitter resize can change size with touch: touch move to left 1`] = `
             BootstrapIconMock_ArrowLeft
           </button>
           <span
-            aria-orientation="vertical"
             class="grabber"
-            role="separator"
-            tabindex="0"
           >
             BootstrapIconMock_ArrowLeftRight
           </span>
@@ -212,9 +221,15 @@ exports[`Splitter resize can change size with touch: touch move to middle 1`] = 
       </div>
     </div>
     <div
+      aria-orientation="vertical"
+      aria-valuemax="100"
+      aria-valuemin="0"
+      aria-valuenow="50"
       class="divider"
       data-testid="splitter-divider"
       id="editor-splitter"
+      role="separator"
+      tabindex="0"
     >
       <div
         class="middle"
@@ -229,10 +244,7 @@ exports[`Splitter resize can change size with touch: touch move to middle 1`] = 
             BootstrapIconMock_ArrowLeft
           </button>
           <span
-            aria-orientation="vertical"
             class="grabber"
-            role="separator"
-            tabindex="0"
           >
             BootstrapIconMock_ArrowLeftRight
           </span>
@@ -277,9 +289,15 @@ exports[`Splitter resize can change size with touch: touch move to right 1`] = `
       </div>
     </div>
     <div
+      aria-orientation="vertical"
+      aria-valuemax="100"
+      aria-valuemin="0"
+      aria-valuenow="50"
       class="divider"
       data-testid="splitter-divider"
       id="editor-splitter"
+      role="separator"
+      tabindex="0"
     >
       <div
         class="middle"
@@ -294,10 +312,7 @@ exports[`Splitter resize can change size with touch: touch move to right 1`] = `
             BootstrapIconMock_ArrowLeft
           </button>
           <span
-            aria-orientation="vertical"
             class="grabber"
-            role="separator"
-            tabindex="0"
           >
             BootstrapIconMock_ArrowLeftRight
           </span>
