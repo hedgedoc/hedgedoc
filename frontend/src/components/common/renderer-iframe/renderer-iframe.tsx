@@ -186,7 +186,10 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
         title='render'
         {...(isTestMode
           ? {}
-          : { sandbox: 'allow-downloads allow-same-origin allow-scripts allow-popups allow-modals' })}
+          : {
+              sandbox:
+                'allow-downloads allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-modals'
+            })}
         allowFullScreen={true}
         ref={frameReference}
         referrerPolicy={'no-referrer'}
