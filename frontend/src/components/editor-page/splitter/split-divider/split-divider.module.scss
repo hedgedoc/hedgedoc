@@ -1,22 +1,46 @@
 /*
- * SPDX-FileCopyrightText: 2021 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 .divider {
-  width: 15px;
-  background: var(--bs-body-bg);
+  width: 5px;
+  // This ensures that the handle area is thicker but the visual representation is still thin
+  background: linear-gradient(
+    to right,
+    transparent 0,
+    transparent 2px,
+    var(--bs-border-color) 2px,
+    var(--bs-border-color) 3px,
+    transparent 3px
+  );
   z-index: 1;
-  box-shadow: 0 0 6px var(--bs-gray-400);
+  cursor: col-resize;
+  position: relative;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 -5px;
+  }
+
+  :global(.btn) {
+    cursor: default;
+  }
 }
 
 .grabber {
   cursor: col-resize;
+  user-select: none;
+
+  > * {
+    pointer-events: none;
+  }
 }
 
 .middle {

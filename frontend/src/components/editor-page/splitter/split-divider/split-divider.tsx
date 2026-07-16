@@ -7,7 +7,8 @@ import { concatCssClasses } from '../../../../utils/concat-css-classes'
 import { testId } from '../../../../utils/test-id'
 import { UiIcon } from '../../../common/icons/ui-icon'
 import styles from './split-divider.module.scss'
-import React, { useMemo } from 'react'
+import type { MouseEvent, TouchEvent } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Button } from 'react-bootstrap'
 import {
   ArrowLeft as IconArrowLeft,
@@ -28,6 +29,7 @@ export interface SplitDividerProps {
   forceOpen: boolean
   focusLeft: boolean
   focusRight: boolean
+  splitValue: number
   dividerButtonsShift: DividerButtonsShift
 }
 
@@ -42,6 +44,7 @@ export interface SplitDividerProps {
  * @param focusLeft defines if the left button should be focused
  * @param focusRight defines if the right button should be focused
  * @param forceOpen defines if the arrow buttons should always be visible
+ * @param splitValue the currently selected split position in percent
  */
 export const SplitDivider: React.FC<SplitDividerProps> = ({
   onGrab,
@@ -50,7 +53,8 @@ export const SplitDivider: React.FC<SplitDividerProps> = ({
   dividerButtonsShift,
   focusLeft,
   focusRight,
-  forceOpen
+  forceOpen,
+  splitValue
 }) => {
   const className = useMemo(() => {
     return concatCssClasses(styles.middle, {
@@ -59,24 +63,53 @@ export const SplitDivider: React.FC<SplitDividerProps> = ({
     })
   }, [dividerButtonsShift, forceOpen])
 
+  const stopResizing = useCallback((event: MouseEvent | TouchEvent) => {
+    event.stopPropagation()
+  }, [])
+
+  const startResizingFromIndicator = useCallback(
+    (event: MouseEvent | TouchEvent) => {
+      event.stopPropagation()
+      onGrab()
+    },
+    [onGrab]
+  )
+
   return (
-    <div className={styles.divider} {...testId('splitter-divider')} id={'editor-splitter'}>
-      <div className={className}>
+    // oxlint-disable-next-line jsx_a11y/no-static-element-interactions
+    <div
+      className={styles.divider}
+      id={'editor-splitter'}
+      role={'separator'}
+      aria-orientation={'vertical'}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={splitValue}
+      tabIndex={0}
+      {...testId('splitter-divider')}
+      onMouseDown={onGrab}
+      onTouchStart={onGrab}>
+      {/* oxlint-disable-next-line jsx_a11y/no-static-element-interactions */}
+      <div className={className} onMouseDown={startResizingFromIndicator} onTouchStart={startResizingFromIndicator}>
         <div className={styles.buttons}>
-          <Button variant={focusLeft ? 'secondary' : 'light'} onClick={onLeftButtonClick}>
+          <Button
+            variant={focusLeft ? 'secondary' : 'light'}
+            onClick={onLeftButtonClick}
+            onMouseDown={stopResizing}
+            onTouchStart={stopResizing}>
             <UiIcon icon={IconArrowLeft} />
           </Button>
-          {/* oxlint-disable-next-line jsx_a11y/no-static-element-interactions */}
           <span
-            role={'separator'}
-            aria-orientation={'vertical'}
-            tabIndex={0}
-            onMouseDown={onGrab}
-            onTouchStart={onGrab}
-            className={styles['grabber']}>
+            className={styles['grabber']}
+            onMouseDownCapture={startResizingFromIndicator}
+            onTouchStartCapture={startResizingFromIndicator}>
             <UiIcon icon={IconArrowLeftRight} />
           </span>
-          <Button variant={focusRight ? 'secondary' : 'light'} onClick={onRightButtonClick}>
+          <Button
+            variant={focusRight ? 'secondary' : 'light'}
+            onClick={onRightButtonClick}
+            onMouseDown={stopResizing}
+            onTouchStart={stopResizing}>
             <UiIcon icon={IconArrowRight} />
           </Button>
         </div>
