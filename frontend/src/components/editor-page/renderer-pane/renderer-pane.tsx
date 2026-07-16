@@ -8,12 +8,17 @@ import { useTrimmedNoteMarkdownContentWithoutFrontmatter } from '../../../hooks/
 import { setRendererStatus } from '../../../redux/renderer-status/methods'
 import type { RendererIframeProps } from '../../common/renderer-iframe/renderer-iframe'
 import { RendererIframe } from '../../common/renderer-iframe/renderer-iframe'
-import { RendererType } from '../../render-page/window-post-message-communicator/rendering-message'
+import { useSendToRenderer } from '../../render-page/window-post-message-communicator/hooks/use-send-to-renderer'
+import {
+  CommunicationMessageType,
+  RendererType
+} from '../../render-page/window-post-message-communicator/rendering-message'
 import { useOnScrollWithLineOffset } from './hooks/use-on-scroll-with-line-offset'
 import { useScrollStateWithoutLineOffset } from './hooks/use-scroll-state-without-line-offset'
 import { NoteType } from '@hedgedoc/commons'
-import React, { Fragment } from 'react'
+import React, { Fragment, useMemo } from 'react'
 import { FullscreenButton } from '../../render-page/fullscreen-button/fullscreen-button'
+import type { RevealOptions } from 'reveal.js'
 
 export type RendererPaneProps = Omit<
   RendererIframeProps,
@@ -30,8 +35,25 @@ export type RendererPaneProps = Omit<
 export const RendererPane: React.FC<RendererPaneProps> = ({ scrollState, onScroll, ...props }) => {
   const trimmedContentLines = useTrimmedNoteMarkdownContentWithoutFrontmatter()
   const noteType = useApplicationState((state) => state.noteDetails?.frontmatter.type)
+  const slideOptions = useApplicationState((state) => state.noteDetails?.frontmatter.slideOptions)
+  const rendererReady = useApplicationState((state) => state.rendererStatus.rendererReady)
   const adjustedOnScroll = useOnScrollWithLineOffset(onScroll ?? null)
   const adjustedScrollState = useScrollStateWithoutLineOffset(scrollState ?? null)
+  const previewSlideOptions = useMemo<RevealOptions | null>(() => {
+    return noteType === NoteType.SLIDE ? { ...slideOptions, controls: false } : null
+  }, [noteType, slideOptions])
+
+  useSendToRenderer(
+    useMemo(() => {
+      return previewSlideOptions === null
+        ? null
+        : {
+            type: CommunicationMessageType.SET_SLIDE_OPTIONS,
+            slideOptions: previewSlideOptions
+          }
+    }, [previewSlideOptions]),
+    rendererReady
+  )
 
   if (!noteType) {
     return null
