@@ -85,7 +85,7 @@ The source code of the module can be found [here](https://git.selfprivacy.org/Se
 
 HedgeDoc is available in the Arch Linux _community_ repository.
 
-[Link to the package](https://archlinux.org/packages/community/any/hedgedoc/)
+[Link to the package](https://archlinux.org/packages/extra/any/hedgedoc/)
 
 ### FreeBSD
 
