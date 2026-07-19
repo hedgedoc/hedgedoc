@@ -6,7 +6,7 @@
 
 - Added external link whitelist setting (`externalLinkWhitelist` in config.json or `CMD_EXTERNAL_LINK_WHITELIST`) to skip warning page for certain domains
 - Enabled `.webp` for file uploads (for all backends but `imgur`, since it does not support it)
-- Added `CMD_OAUTH2_AUTO_LOGIN` configuration to skip the login modal
+- Automatically skip the login modal if no form-based login and exactly one external login provider is configured
 
 ## <i class="fa fa-tag"></i> 1.11.0 <i class="fa fa-calendar-o"></i> 2026-06-18
 

@@ -248,11 +248,19 @@ app.locals.authProviders = {
   samlProviderName: config.saml.providerName,
   oauth2: config.isOAuth2Enable,
   oauth2ProviderName: config.oauth2.providerName,
-  oauth2AutoLogin: config.isOAuth2Enable && config.oauth2.autoLogin,
   openID: config.isOpenIDEnable,
   email: config.isEmailEnable,
   allowEmailRegister: config.allowEmailRegister
 }
+
+// If none of the form-based methods (LDAP, Email, OpenID) are configured and
+// exactly one redirect-style external provider is, skip the "Choose method"
+// dialog and link "Sign In" straight to that provider's login page.
+const externalProviderKeys = ['facebook', 'twitter', 'github', 'gitlab', 'mattermost', 'dropbox', 'google', 'saml', 'oauth2']
+const enabledExternalProviders = externalProviderKeys.filter((key) => app.locals.authProviders[key])
+app.locals.authProviders.autoLoginProvider = (!app.locals.authProviders.ldap && !app.locals.authProviders.email && !app.locals.authProviders.openID && enabledExternalProviders.length === 1)
+  ? enabledExternalProviders[0]
+  : null
 
 // Export/Import menu items
 app.locals.enableDropBoxSave = config.isDropboxEnable
