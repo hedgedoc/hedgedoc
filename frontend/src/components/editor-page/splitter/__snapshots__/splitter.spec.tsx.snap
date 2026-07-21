@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Splitter resize can change size with mouse 1`] = `
+exports[`Splitter resize can change size with mouse: mouse initial 1`] = `
 <div>
   <div
     class="flex-fill flex-row d-flex "
@@ -57,6 +57,210 @@ exports[`Splitter resize can change size with mouse 1`] = `
       class="right"
       id="editor-view-pane"
       style="width: calc(100% - 50%);"
+    >
+      <div
+        class="inner"
+      >
+        right
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with mouse: mouse move to left 1`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="left"
+      id="editor-edit-pane"
+      style="width: calc(0% - 5px);"
+    >
+      <div
+        class="inner"
+      >
+        left
+      </div>
+    </div>
+    <div
+      aria-orientation="vertical"
+      aria-valuemax="100"
+      aria-valuemin="0"
+      aria-valuenow="0"
+      class="divider"
+      data-testid="splitter-divider"
+      id="editor-splitter"
+      role="separator"
+      tabindex="0"
+    >
+      <div
+        class="middle shift-right"
+      >
+        <div
+          class="buttons"
+        >
+          <button
+            class="btn btn-secondary"
+            type="button"
+          >
+            BootstrapIconMock_ArrowLeft
+          </button>
+          <span
+            class="grabber"
+          >
+            BootstrapIconMock_ArrowLeftRight
+          </span>
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            BootstrapIconMock_ArrowRight
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="right"
+      id="editor-view-pane"
+      style="width: calc(100% - 0%);"
+    >
+      <div
+        class="inner"
+      >
+        right
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with mouse: mouse move to middle 1`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="left"
+      id="editor-edit-pane"
+      style="width: calc(50% - 5px);"
+    >
+      <div
+        class="inner"
+      >
+        left
+      </div>
+    </div>
+    <div
+      aria-orientation="vertical"
+      aria-valuemax="100"
+      aria-valuemin="0"
+      aria-valuenow="50"
+      class="divider"
+      data-testid="splitter-divider"
+      id="editor-splitter"
+      role="separator"
+      tabindex="0"
+    >
+      <div
+        class="middle"
+      >
+        <div
+          class="buttons"
+        >
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            BootstrapIconMock_ArrowLeft
+          </button>
+          <span
+            class="grabber"
+          >
+            BootstrapIconMock_ArrowLeftRight
+          </span>
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            BootstrapIconMock_ArrowRight
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="right"
+      id="editor-view-pane"
+      style="width: calc(100% - 50%);"
+    >
+      <div
+        class="inner"
+      >
+        right
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Splitter resize can change size with mouse: mouse move to right 1`] = `
+<div>
+  <div
+    class="flex-fill flex-row d-flex "
+  >
+    <div
+      class="left"
+      id="editor-edit-pane"
+      style="width: calc(100% - 5px);"
+    >
+      <div
+        class="inner"
+      >
+        left
+      </div>
+    </div>
+    <div
+      aria-orientation="vertical"
+      aria-valuemax="100"
+      aria-valuemin="0"
+      aria-valuenow="100"
+      class="divider"
+      data-testid="splitter-divider"
+      id="editor-splitter"
+      role="separator"
+      tabindex="0"
+    >
+      <div
+        class="middle shift-left"
+      >
+        <div
+          class="buttons"
+        >
+          <button
+            class="btn btn-light"
+            type="button"
+          >
+            BootstrapIconMock_ArrowLeft
+          </button>
+          <span
+            class="grabber"
+          >
+            BootstrapIconMock_ArrowLeftRight
+          </span>
+          <button
+            class="btn btn-secondary"
+            type="button"
+          >
+            BootstrapIconMock_ArrowRight
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="right"
+      id="editor-view-pane"
+      style="width: calc(100% - 100%);"
     >
       <div
         class="inner"
@@ -144,7 +348,7 @@ exports[`Splitter resize can change size with touch: touch move to left 1`] = `
     <div
       class="left"
       id="editor-edit-pane"
-      style="width: calc(50% - 5px);"
+      style="width: calc(0% - 5px);"
     >
       <div
         class="inner"
@@ -156,7 +360,7 @@ exports[`Splitter resize can change size with touch: touch move to left 1`] = `
       aria-orientation="vertical"
       aria-valuemax="100"
       aria-valuemin="0"
-      aria-valuenow="50"
+      aria-valuenow="0"
       class="divider"
       data-testid="splitter-divider"
       id="editor-splitter"
@@ -164,13 +368,13 @@ exports[`Splitter resize can change size with touch: touch move to left 1`] = `
       tabindex="0"
     >
       <div
-        class="middle"
+        class="middle shift-right"
       >
         <div
           class="buttons"
         >
           <button
-            class="btn btn-light"
+            class="btn btn-secondary"
             type="button"
           >
             BootstrapIconMock_ArrowLeft
@@ -192,7 +396,7 @@ exports[`Splitter resize can change size with touch: touch move to left 1`] = `
     <div
       class="right"
       id="editor-view-pane"
-      style="width: calc(100% - 50%);"
+      style="width: calc(100% - 0%);"
     >
       <div
         class="inner"
@@ -212,7 +416,7 @@ exports[`Splitter resize can change size with touch: touch move to middle 1`] = 
     <div
       class="left"
       id="editor-edit-pane"
-      style="width: calc(50% - 5px);"
+      style="width: calc(26% - 5px);"
     >
       <div
         class="inner"
@@ -224,7 +428,7 @@ exports[`Splitter resize can change size with touch: touch move to middle 1`] = 
       aria-orientation="vertical"
       aria-valuemax="100"
       aria-valuemin="0"
-      aria-valuenow="50"
+      aria-valuenow="26"
       class="divider"
       data-testid="splitter-divider"
       id="editor-splitter"
@@ -260,7 +464,7 @@ exports[`Splitter resize can change size with touch: touch move to middle 1`] = 
     <div
       class="right"
       id="editor-view-pane"
-      style="width: calc(100% - 50%);"
+      style="width: calc(100% - 26%);"
     >
       <div
         class="inner"
@@ -280,7 +484,7 @@ exports[`Splitter resize can change size with touch: touch move to right 1`] = `
     <div
       class="left"
       id="editor-edit-pane"
-      style="width: calc(50% - 5px);"
+      style="width: calc(100% - 5px);"
     >
       <div
         class="inner"
@@ -292,7 +496,7 @@ exports[`Splitter resize can change size with touch: touch move to right 1`] = `
       aria-orientation="vertical"
       aria-valuemax="100"
       aria-valuemin="0"
-      aria-valuenow="50"
+      aria-valuenow="100"
       class="divider"
       data-testid="splitter-divider"
       id="editor-splitter"
@@ -300,7 +504,7 @@ exports[`Splitter resize can change size with touch: touch move to right 1`] = `
       tabindex="0"
     >
       <div
-        class="middle"
+        class="middle shift-left"
       >
         <div
           class="buttons"
@@ -317,7 +521,7 @@ exports[`Splitter resize can change size with touch: touch move to right 1`] = `
             BootstrapIconMock_ArrowLeftRight
           </span>
           <button
-            class="btn btn-light"
+            class="btn btn-secondary"
             type="button"
           >
             BootstrapIconMock_ArrowRight
@@ -328,7 +532,7 @@ exports[`Splitter resize can change size with touch: touch move to right 1`] = `
     <div
       class="right"
       id="editor-view-pane"
-      style="width: calc(100% - 50%);"
+      style="width: calc(100% - 100%);"
     >
       <div
         class="inner"

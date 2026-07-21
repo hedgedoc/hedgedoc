@@ -60,7 +60,7 @@ describe('Splitter', () => {
         editorConfig: { splitPosition: 50 } as EditorConfig
       })
       const view = render(<Splitter left={<>left</>} right={<>right</>} />)
-      expect(view.container).toMatchSnapshot()
+      expect(view.container).toMatchSnapshot('mouse initial')
       const divider = await screen.findByTestId('splitter-divider')
 
       fireEvent.mouseDown(divider, {})
@@ -68,12 +68,18 @@ describe('Splitter', () => {
       fireEvent.mouseMove(moveOverlay, Mock.of<MouseEvent>({ buttons: 1, clientX: 1920 }))
       fireEvent.mouseUp(moveOverlay)
       expect(setEditorSplitPosition).toHaveBeenCalledWith(100)
+      mockAppState({ editorConfig: { splitPosition: 100 } as EditorConfig })
+      view.rerender(<Splitter left={<>left</>} right={<>right</>} />)
+      expect(view.container).toMatchSnapshot('mouse move to right')
 
-      fireEvent.mouseDown(divider, {})
+      fireEvent.mouseDown(await screen.findByTestId('splitter-divider'), {})
       moveOverlay = findMoveOverlay(view.container)
       fireEvent.mouseMove(moveOverlay, Mock.of<MouseEvent>({ buttons: 1, clientX: 0 }))
       fireEvent.mouseUp(moveOverlay)
       expect(setEditorSplitPosition).toHaveBeenCalledWith(0)
+      mockAppState({ editorConfig: { splitPosition: 0 } as EditorConfig })
+      view.rerender(<Splitter left={<>left</>} right={<>right</>} />)
+      expect(view.container).toMatchSnapshot('mouse move to left')
 
       const grabber = findGrabber(view.container)
       fireEvent.mouseDown(grabber, {})
@@ -81,6 +87,9 @@ describe('Splitter', () => {
       fireEvent.mouseMove(moveOverlay, Mock.of<MouseEvent>({ buttons: 1, clientX: 960 }))
       fireEvent.mouseUp(moveOverlay)
       expect(setEditorSplitPosition).toHaveBeenCalledWith(50)
+      mockAppState({ editorConfig: { splitPosition: 50 } as EditorConfig })
+      view.rerender(<Splitter left={<>left</>} right={<>right</>} />)
+      expect(view.container).toMatchSnapshot('mouse move to middle')
 
       fireEvent.mouseMove(window, Mock.of<MouseEvent>({ buttons: 1, clientX: 1920 }))
       expect(setEditorSplitPosition).toHaveBeenCalledWith(100)
@@ -118,9 +127,11 @@ describe('Splitter', () => {
       )
       fireEvent.touchEnd(moveOverlay)
       expect(setEditorSplitPosition).toHaveBeenCalledWith(100)
-      expect(view.container).toMatchSnapshot('touch move to left')
+      mockAppState({ editorConfig: { splitPosition: 100 } as EditorConfig })
+      view.rerender(<Splitter left={<>left</>} right={<>right</>} />)
+      expect(view.container).toMatchSnapshot('touch move to right')
 
-      fireEvent.touchStart(divider, {})
+      fireEvent.touchStart(await screen.findByTestId('splitter-divider'), {})
       moveOverlay = findMoveOverlay(view.container)
       fireEvent.touchMove(
         moveOverlay,
@@ -133,7 +144,9 @@ describe('Splitter', () => {
       )
       fireEvent.touchCancel(moveOverlay)
       expect(setEditorSplitPosition).toHaveBeenCalledWith(0)
-      expect(view.container).toMatchSnapshot('touch move to right')
+      mockAppState({ editorConfig: { splitPosition: 0 } as EditorConfig })
+      view.rerender(<Splitter left={<>left</>} right={<>right</>} />)
+      expect(view.container).toMatchSnapshot('touch move to left')
 
       const grabber = findGrabber(view.container)
       fireEvent.touchStart(grabber, {})
@@ -149,6 +162,8 @@ describe('Splitter', () => {
       )
       fireEvent.touchEnd(moveOverlay)
       expect(setEditorSplitPosition).toHaveBeenCalledWith(expect.closeTo(26, 1))
+      mockAppState({ editorConfig: { splitPosition: 26 } as EditorConfig })
+      view.rerender(<Splitter left={<>left</>} right={<>right</>} />)
       expect(view.container).toMatchSnapshot('touch move to middle')
     })
   })
