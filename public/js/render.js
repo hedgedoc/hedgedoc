@@ -18,22 +18,14 @@ whiteList.ol = ['start']
 whiteList.li = ['value']
 // allow style tag
 whiteList.style = []
-// allow kbd tag
-whiteList.kbd = []
 // allow ifram tag with some safe attributes
 whiteList.iframe = ['allowfullscreen', 'name', 'referrerpolicy', 'src', 'width', 'height']
-// allow summary tag
-whiteList.summary = []
 // allow ruby tag
 whiteList.ruby = []
 // allow rp tag for ruby
 whiteList.rp = []
 // allow rt tag for ruby
 whiteList.rt = []
-// allow figure tag
-whiteList.figure = []
-// allow figcaption tag
-whiteList.figcaption = []
 
 const filterXSSOptions = {
   allowCommentTag: true,

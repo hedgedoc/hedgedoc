@@ -8,6 +8,7 @@
 - Added external link warning setting (`externalLinkWarning` in config.json or `CMD_EXTERNAL_LINK_WARNING`) to disable the external link warning page entirely
 - Fixed external link warning for subpath instances
 - Enabled `.webp` for file uploads (for all backends but `imgur`, since it does not support it)
+- Removed unnecessary entries in the XSS whitelist
 
 ### Bugfixes
 
