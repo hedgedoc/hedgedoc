@@ -624,7 +624,8 @@ export function rewriteExternalLinks (view) {
       return
     }
     const noteURL = window.location.pathname.split('/').pop()
-    anchor.attr('href', `${window.location.origin}/_link?url=${encodeURIComponent(parsed.href)}&note=${noteURL}`)
+    const urlPath = window.urlpath ? `/${window.urlpath}` : ''
+    anchor.attr('href', `${window.location.origin}${urlPath}/_link?url=${encodeURIComponent(parsed.href)}&note=${noteURL}`)
   })
 }
 window.rewriteExternalLinks = rewriteExternalLinks
