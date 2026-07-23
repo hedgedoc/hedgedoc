@@ -960,6 +960,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/less@npm:^3.0.8":
+  version: 3.0.8
+  resolution: "@types/less@npm:3.0.8"
+  checksum: 10/7b4dd5d1fec813883c0f5e659a06cc0634da163925f3c9246cefcfb98f99682fd7135e2eb8dbba66ddfd582a8776a44ed78e06ebbfd89682771c8f12ebfe1146
+  languageName: node
+  linkType: hard
+
 "@types/mdast@npm:^3.0.0":
   version: 3.0.15
   resolution: "@types/mdast@npm:3.0.15"
@@ -1538,7 +1545,7 @@ __metadata:
     jsonlint: "npm:1.6.3"
     keymaster: "npm:1.6.2"
     less: "npm:4.8.0"
-    less-loader: "npm:7.3.0"
+    less-loader: "npm:13.0.0"
     list.js: "npm:2.3.1"
     lodash: "npm:4.18.1"
     lutim: "npm:1.0.3"
@@ -9499,13 +9506,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"klona@npm:^2.0.4":
-  version: 2.0.6
-  resolution: "klona@npm:2.0.6"
-  checksum: 10/ed7e2c9af58cb646e758e60b75dec24bf72466066290f78c515a2bae23a06fa280f11ff3210c43b94a18744954aa5358f9d46583d5e4c36da073ecc3606355c4
-  languageName: node
-  linkType: hard
-
 "kuler@npm:^2.0.0":
   version: 2.0.0
   resolution: "kuler@npm:2.0.0"
@@ -9569,17 +9569,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"less-loader@npm:7.3.0":
-  version: 7.3.0
-  resolution: "less-loader@npm:7.3.0"
+"less-loader@npm:13.0.0":
+  version: 13.0.0
+  resolution: "less-loader@npm:13.0.0"
   dependencies:
-    klona: "npm:^2.0.4"
-    loader-utils: "npm:^2.0.0"
-    schema-utils: "npm:^3.0.0"
+    "@types/less": "npm:^3.0.8"
   peerDependencies:
+    "@rspack/core": 0.x || ^1.0.0 || ^2.0.0-0
     less: ^3.5.0 || ^4.0.0
-    webpack: ^4.0.0 || ^5.0.0
-  checksum: 10/81bfbddd4d9f4eb6ffe1415a8319d2abdac7f5abc58e98b2a17794f04366751a3b4324650e6166eb7acf1f2bc6527d1e2bac5c56204824be1e5675ae422e08ba
+    webpack: ^5.0.0
+  peerDependenciesMeta:
+    "@rspack/core":
+      optional: true
+    webpack:
+      optional: true
+  checksum: 10/b88d3ae67e81df863a492734f1d94ae29e226d101612b0efa668826813f42ba945584ddafacc811423ecb5c82d0fb5c50321af539ed5bd9141a11f02f525dc64
   languageName: node
   linkType: hard
 
