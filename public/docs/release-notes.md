@@ -18,6 +18,7 @@
 ### Bugfixes
 
 - Restore native browser zoom-in keyboard shortcuts in the editor ([#6244](https://github.com/hedgedoc/hedgedoc/issues/6244))
+- Nested list items render properly again in the preview pane for slides ([#6080](https://github.com/hedgedoc/hedgedoc/issues/6080))
 
 ## <i class="fa fa-tag"></i> 1.11.0 <i class="fa fa-calendar-o"></i> 2026-06-18
 
