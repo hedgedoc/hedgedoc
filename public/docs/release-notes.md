@@ -2,6 +2,10 @@
 
 ## <i class="fa fa-tag"></i> 1.11.1 <i class="fa fa-calendar-o"></i> 2026-07-24
 
+### Security fixes
+
+- [GHSA-93w7-49m2-cqwg](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-93w7-49m2-cqwg) reports possible corruption of permission values due to missing validation. This should not impact permission checks, except when the note owner intentionally set their note permission to something invalid.
+
 ### Enhancements
 
 - Added external link warning setting (`externalLinkWarning` in config.json or `CMD_EXTERNAL_LINK_WARNING`) to disable the external link warning page entirely
