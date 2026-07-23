@@ -137,8 +137,8 @@
     "url": "https://github.com/hedgedoc/hedgedoc.git"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "3.3.5",
-    "@eslint/js": "9.39.4",
+    "@eslint/eslintrc": "3.3.6",
+    "@eslint/js": "9.39.5",
     "@hedgedoc/codemirror-5": "5.65.12",
     "abcjs": "6.6.3",
     "babel-cli": "6.26.0",
@@ -154,7 +154,7 @@
     "css-loader": "5.2.7",
     "emojify.js": "1.1.0",
     "esbuild-loader": "4.5.0",
-    "eslint": "9.39.4",
+    "eslint": "9.39.5",
     "eslint-config-standard": "17.1.0",
     "eslint-plugin-import": "2.32.0",
     "eslint-plugin-n": "17.24.0",
