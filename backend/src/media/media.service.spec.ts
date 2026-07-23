@@ -3,15 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { describe, it, expect, beforeAll, afterEach, jest } from '@jest/globals';
+import { describe, it, expect, beforeAll, beforeEach, afterEach, jest } from '@jest/globals';
 import {
-  FieldNameAlias,
   FieldNameMediaUpload,
-  FieldNameUser,
+  FieldNameMediaUploadNote,
   MediaBackendType,
-  TableAlias,
   TableMediaUpload,
-  TableUser,
+  TableMediaUploadNote,
 } from '@hedgedoc/database';
 import { Provider } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -24,10 +22,11 @@ import appConfigMock from '../config/mock/app.config.mock';
 import databaseConfigMock from '../config/mock/database.config.mock';
 import mediaConfigMock from '../config/mock/media.config.mock';
 import { expectBindings } from '../database/mock/expect-bindings';
-import { mockDelete, mockInsert, mockSelect, mockUpdate } from '../database/mock/mock-queries';
+import { mockDelete, mockInsert, mockSelect } from '../database/mock/mock-queries';
 import { mockKnexDb } from '../database/mock/provider';
 import { ClientError, NotInDBError } from '../errors/errors';
 import { LoggerModule } from '../logger/logger.module';
+import { PermissionService } from '../permissions/permission.service';
 import { dateTimeToDB, getCurrentDateTime } from '../utils/datetime';
 import { FilesystemBackend } from './backends/filesystem-backend';
 import { MediaService } from './media.service';
@@ -39,13 +38,12 @@ describe('MediaService', () => {
   const userId = 1;
   const noteId = 2;
   const uuid = '0198c9b6-117f-7215-93e2-5ca4b718225f';
+  const invalidUuid = 'not-a-valid-uuid';
   const fileName = 'test.png';
   const backendType = MediaBackendType.FILESYSTEM;
   const backendData = JSON.stringify({ ext: 'png' });
   const fileBuffer = Buffer.from('test');
   const username = 'testuser';
-  const alias = 'note-alias';
-  const createdAt = '2025-11-05 20:39:25';
   const createdAtIso = '2025-11-05T20:39:25.000Z';
 
   let service: MediaService;
@@ -57,7 +55,12 @@ describe('MediaService', () => {
     [tracker, knexProvider] = mockKnexDb();
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [MediaService, knexProvider, FilesystemBackend],
+      providers: [
+        MediaService,
+        knexProvider,
+        FilesystemBackend,
+        { provide: PermissionService, useValue: { canReadNote: jest.fn() } },
+      ],
       imports: [
         LoggerModule,
         await ConfigModule.forRoot({
@@ -69,6 +72,10 @@ describe('MediaService', () => {
 
     service = module.get<MediaService>(MediaService);
     fileSystemBackend = module.get<FilesystemBackend>(FilesystemBackend);
+  });
+
+  beforeEach(() => {
+    jest.spyOn(uuidModule, 'validate').mockReturnValue(true);
   });
 
   afterEach(() => {
@@ -97,11 +104,16 @@ describe('MediaService', () => {
           FieldNameMediaUpload.backendType,
           FieldNameMediaUpload.createdAt,
           FieldNameMediaUpload.fileName,
-          FieldNameMediaUpload.noteId,
           FieldNameMediaUpload.userId,
           FieldNameMediaUpload.uuid,
         ],
         [{ [FieldNameMediaUpload.uuid]: uuid }],
+      );
+      mockInsert(
+        tracker,
+        TableMediaUploadNote,
+        [FieldNameMediaUploadNote.mediaUploadUuid, FieldNameMediaUploadNote.noteId],
+        [{ [FieldNameMediaUploadNote.mediaUploadUuid]: uuid }],
       );
       jest
         .spyOn(service.mediaBackend, 'saveFile')
@@ -121,7 +133,8 @@ describe('MediaService', () => {
       const result = await service.saveFile(fileName, fileBuffer, userId, noteId);
       expect(result).toBe(uuid);
       expectBindings(tracker, 'insert', [
-        [backendData, backendType, dateTimeToDB(now), fileName, noteId, userId, uuid],
+        [backendData, backendType, dateTimeToDB(now), fileName, userId, uuid],
+        [uuid, noteId],
       ]);
       jest.useRealTimers();
     });
@@ -181,44 +194,70 @@ describe('MediaService', () => {
     });
   });
 
-  describe('getFileUrl', () => {
-    it('returns file url if found', async () => {
+  describe('getFileResponse', () => {
+    it('returns the file content for the filesystem backend', async () => {
       mockSelect(
         tracker,
-        [FieldNameMediaUpload.backendType, FieldNameMediaUpload.backendData],
+        [
+          FieldNameMediaUpload.backendType,
+
+          FieldNameMediaUpload.backendData,
+          FieldNameMediaUpload.fileName,
+        ],
         TableMediaUpload,
         FieldNameMediaUpload.uuid,
         {
           [FieldNameMediaUpload.backendType]: backendType,
           [FieldNameMediaUpload.backendData]: backendData,
+          [FieldNameMediaUpload.fileName]: fileName,
         },
       );
       // As the media service loads the used backend dynamically, we need to
       // spy on fileSystemBackend here instead of service.mediaBackend
       jest
-        .spyOn(fileSystemBackend, 'getFileUrl')
+        .spyOn(fileSystemBackend, 'getFileResponse')
         .mockImplementationOnce(
-          async (givenUuid: string, givenBackendData: string | null): Promise<string> => {
+          async (
+            givenUuid: string,
+            givenBackendData: string | null,
+          ): Promise<{ buffer: Buffer; contentType: string; fileName: string }> => {
             expect(givenUuid).toBe(uuid);
             expect(givenBackendData).toBe(backendData);
-            return `http://example.com/${fileName}`;
+            return { buffer: fileBuffer, contentType: 'image/png', fileName: `${uuid}.png` };
           },
         );
-      const result = await service.getFileUrl(uuid);
-      expect(result).toBe(`http://example.com/${fileName}`);
-      expectBindings(tracker, 'select', [[uuid]], true);
+      const result = await service.getFileResponse(uuid);
+      expect(result).toEqual({
+        type: 'file',
+        buffer: fileBuffer,
+        contentType: 'image/png',
+        fileName: `${uuid}.png`,
+      });
+      expect(tracker.history.select).toHaveLength(1);
+      expect(tracker.history.select[0].bindings).toEqual([uuid, 1]);
     });
 
     it('throws NotInDBError if not found', async () => {
       mockSelect(
         tracker,
-        [FieldNameMediaUpload.backendType, FieldNameMediaUpload.backendData],
+        [
+          FieldNameMediaUpload.backendType,
+          FieldNameMediaUpload.backendData,
+          FieldNameMediaUpload.fileName,
+        ],
         TableMediaUpload,
         FieldNameMediaUpload.uuid,
         undefined,
       );
-      await expect(service.getFileUrl(uuid)).rejects.toThrow(NotInDBError);
-      expectBindings(tracker, 'select', [[uuid]], true);
+      await expect(service.getFileResponse(uuid)).rejects.toThrow(NotInDBError);
+    });
+
+    it('throws NotInDBError when given an invalid uuid', async () => {
+      jest.spyOn(uuidModule, 'validate').mockReturnValueOnce(false);
+      await expect(service.getFileResponse(invalidUuid)).rejects.toThrow(
+        new NotInDBError('Invalid media upload id provided', 'MediaService', 'getFileResponse'),
+      );
+      expect(tracker.history.select).toHaveLength(0);
     });
   });
 
@@ -235,6 +274,14 @@ describe('MediaService', () => {
       mockSelect(tracker, [], TableMediaUpload, FieldNameMediaUpload.uuid, undefined);
       await expect(service.findUploadByUuid(uuid)).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'select', [[uuid]], true);
+    });
+
+    it('throws NotInDBError when given an invalid uuid', async () => {
+      jest.spyOn(uuidModule, 'validate').mockReturnValueOnce(false);
+      await expect(service.findUploadByUuid(invalidUuid)).rejects.toThrow(
+        new NotInDBError('Invalid media upload id provided', 'MediaService', 'findUploadByUuid'),
+      );
+      expect(tracker.history.select).toHaveLength(0);
     });
   });
 
@@ -256,12 +303,12 @@ describe('MediaService', () => {
 
   describe('getMediaUploadUuidsByNoteId', () => {
     it('returns uuids for note', async () => {
-      const rows = [{ [FieldNameMediaUpload.uuid]: uuid }];
+      const rows = [{ [FieldNameMediaUploadNote.mediaUploadUuid]: uuid }];
       mockSelect(
         tracker,
-        [FieldNameMediaUpload.uuid],
-        TableMediaUpload,
-        FieldNameMediaUpload.noteId,
+        [FieldNameMediaUploadNote.mediaUploadUuid],
+        TableMediaUploadNote,
+        FieldNameMediaUploadNote.noteId,
         rows,
       );
       const result = await service.getMediaUploadUuidsByNoteId(noteId);
@@ -270,15 +317,13 @@ describe('MediaService', () => {
   });
 
   describe('removeNoteFromMediaUpload', () => {
-    it('updates noteId to null', async () => {
-      mockUpdate(
-        tracker,
-        TableMediaUpload,
-        [FieldNameMediaUpload.noteId],
-        FieldNameMediaUpload.uuid,
-      );
-      await service.removeNoteFromMediaUpload(uuid);
-      expectBindings(tracker, 'update', [[null, uuid]]);
+    it('deletes note association', async () => {
+      mockDelete(tracker, TableMediaUploadNote, [
+        FieldNameMediaUploadNote.mediaUploadUuid,
+        FieldNameMediaUploadNote.noteId,
+      ]);
+      await service.removeNoteFromMediaUpload(uuid, noteId);
+      expectBindings(tracker, 'delete', [[uuid, noteId]]);
     });
   });
 
@@ -294,49 +339,38 @@ describe('MediaService', () => {
 
   describe('getMediaUploadDtosByUuids', () => {
     it('returns media upload dtos', async () => {
-      const rows = [
-        {
-          [FieldNameMediaUpload.uuid]: uuid,
-          [FieldNameMediaUpload.fileName]: fileName,
-          [FieldNameMediaUpload.createdAt]: createdAt,
-          [FieldNameUser.username]: username,
-          [FieldNameAlias.alias]: alias,
-        },
-      ];
-      mockSelect(
-        tracker,
-        [
-          `${TableMediaUpload}"."${FieldNameMediaUpload.uuid}`,
-          `${TableMediaUpload}"."${FieldNameMediaUpload.fileName}`,
-          `${TableMediaUpload}"."${FieldNameMediaUpload.createdAt}`,
-          `${TableUser}"."${FieldNameUser.username}`,
-          `${TableAlias}"."${FieldNameAlias.alias}`,
-        ],
-        TableMediaUpload,
-        FieldNameMediaUpload.uuid,
-        rows,
-        [
-          {
-            joinTable: TableAlias,
-            keyLeft: FieldNameAlias.noteId,
-          },
-          {
-            joinTable: TableUser,
-            keyLeft: FieldNameUser.id,
-            keyRight: FieldNameMediaUpload.userId,
-          },
-        ],
-      );
+      const dtoSpy = jest.spyOn(service, 'getMediaUploadDtoByUuid').mockResolvedValueOnce({
+        uuid,
+        fileName,
+        linkedNoteCount: 1,
+        createdAt: createdAtIso,
+        username,
+      });
       const result = await service.getMediaUploadDtosByUuids([uuid]);
+      expect(dtoSpy).toHaveBeenCalledWith(uuid);
       expect(result).toEqual([
         {
           uuid,
           fileName,
-          noteAlias: alias,
+          linkedNoteCount: 1,
           createdAt: createdAtIso,
           username,
         },
       ]);
+    });
+  });
+
+  describe('getMediaUploadDtoByUuid', () => {
+    it('throws NotInDBError when given an invalid uuid', async () => {
+      jest.spyOn(uuidModule, 'validate').mockReturnValueOnce(false);
+      await expect(service.getMediaUploadDtoByUuid(invalidUuid)).rejects.toThrow(
+        new NotInDBError(
+          'Invalid media upload id provided',
+          'MediaService',
+          'getMediaUploadDtoByUuid',
+        ),
+      );
+      expect(tracker.history.select).toHaveLength(0);
     });
   });
 });

@@ -10,10 +10,11 @@ export const MediaUploadSchema = z
   .object({
     uuid: z.string().uuid().describe('The uuid of the media file'),
     fileName: z.string().describe('The original filename of the media upload'),
-    noteAlias: z
-      .string()
-      .nullable()
-      .describe('The note alias to which the uploaded file is linked to'),
+    linkedNoteCount: z
+      .number()
+      .int()
+      .nonnegative()
+      .describe('How many notes are linked to the upload'),
     createdAt: z
       .string()
       .datetime({ offset: false, local: false })

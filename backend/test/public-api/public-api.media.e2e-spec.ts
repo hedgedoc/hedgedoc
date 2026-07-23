@@ -140,7 +140,7 @@ describe('Media', () => {
       expect(
         isoStringToDateTime(mediaDto.createdAt).toMillis() - hardCodedNow.toMillis(),
       ).toBeLessThan(100);
-      expect(mediaDto.noteAlias).toEqual(noteAlias1);
+      expect(mediaDto.linkedNoteCount).toEqual(1);
       expect(mediaDto.fileName).toEqual(fileName);
       expect(mediaDto.username).toEqual(username1);
       jest.useRealTimers();
@@ -164,7 +164,7 @@ describe('Media', () => {
       // upload a file with the default test user
       const testNote = await testSetup.notesService.createNote(
         'test content',
-        testSetup.userIds[2],
+        testSetup.userIds[0],
         'test_delete_media_file',
       );
       const upload = await testSetup.mediaService.saveFile(
@@ -180,10 +180,12 @@ describe('Media', () => {
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
         .expect(403);
 
+      // The second user has no access to the file at all, neither as the
+      // uploader nor via a linked note, so the read endpoint also rejects.
       await agent
-        .get(`/uploads/${upload}.png`)
+        .get(`/media/${upload}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
-        .expect(200);
+        .expect(403);
 
       // delete upload for real
       await agent
@@ -193,8 +195,8 @@ describe('Media', () => {
 
       // Test if file is really deleted
       await agent
-        .get(`/uploads/${upload}.png`)
-        .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
+        .get(`/media/${upload}`)
+        .set('Authorization', `Bearer ${testSetup.authTokens[0].secret}`)
         .expect(404);
     });
     it('deleting user is owner of note', async () => {
@@ -217,10 +219,12 @@ describe('Media', () => {
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
         .expect(403);
 
+      // The second user has no access to the file at all, neither as the
+      // uploader nor via a linked note, so the read endpoint also rejects.
       await agent
-        .get(`/uploads/${upload}.png`)
+        .get(`/media/${upload}`)
         .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
-        .expect(200);
+        .expect(403);
 
       // delete upload for real
       await agent
@@ -230,8 +234,8 @@ describe('Media', () => {
 
       // Test if file is really deleted
       await agent
-        .get(`/uploads/${upload}.png`)
-        .set('Authorization', `Bearer ${testSetup.authTokens[1].secret}`)
+        .get(`/media/${upload}`)
+        .set('Authorization', `Bearer ${testSetup.authTokens[2].secret}`)
         .expect(404);
     });
     it('errors if the user does not own the file', async () => {

@@ -12,6 +12,10 @@ import type { TestSetup } from '../test-setup';
 import { noteAlias1, TestSetupBuilder } from '../test-setup';
 import { ensureDeleted } from '../utils';
 import { setupAgent } from './utils/setup-agent';
+import { MediaUploadDto } from '../../src/dtos/media-upload.dto';
+import { SpecialGroup } from '@hedgedoc/commons';
+
+type PartialMediaUploadResponse = Pick<MediaUploadDto, 'fileName' | 'linkedNoteCount'>;
 
 describe('Media', () => {
   let testSetup: TestSetup;
@@ -25,6 +29,7 @@ describe('Media', () => {
 
   let userId: number;
   let testImage: Buffer;
+  const testFileName = 'test.png';
 
   beforeEach(async () => {
     testSetup = await TestSetupBuilder.create().withUsers().withNotes().build();
@@ -58,10 +63,16 @@ describe('Media', () => {
           .attach('file', 'test/private-api/fixtures/test.png')
           .set('HedgeDoc-Note', noteAlias1)
           .expect(201);
-        uuid = uploadResponse.text;
-        const apiResponse = await agentUser1.get(`${PRIVATE_API_PREFIX}/media/${uuid}`);
-        expect(apiResponse.statusCode).toEqual(200);
-        const downloadResponse = await agentUser1.get(`/uploads/${uuid}.png`);
+        uuid = uploadResponse.body.uuid;
+        const downloadResponse = await agentUser1
+          .get(`/media/${uuid}`)
+          .buffer(true)
+          .parse((response, callback) => {
+            const chunks: Buffer[] = [];
+            response.on('data', (chunk: Buffer) => chunks.push(chunk));
+            response.on('end', () => callback(null, Buffer.concat(chunks)));
+          });
+        expect(downloadResponse.statusCode).toEqual(200);
         expect(downloadResponse.body).toEqual(testImage);
       });
       it('with user and uppercase note alias', async () => {
@@ -70,10 +81,16 @@ describe('Media', () => {
           .attach('file', 'test/private-api/fixtures/test.png')
           .set('HedgeDoc-Note', noteAlias1.toUpperCase())
           .expect(201);
-        uuid = uploadResponse.text;
-        const apiResponse = await agentUser1.get(`${PRIVATE_API_PREFIX}/media/${uuid}`);
-        expect(apiResponse.statusCode).toEqual(200);
-        const downloadResponse = await agentUser1.get(`/uploads/${uuid}.png`);
+        uuid = uploadResponse.body.uuid;
+        const downloadResponse = await agentUser1
+          .get(`/media/${uuid}`)
+          .buffer(true)
+          .parse((response, callback) => {
+            const chunks: Buffer[] = [];
+            response.on('data', (chunk: Buffer) => chunks.push(chunk));
+            response.on('end', () => callback(null, Buffer.concat(chunks)));
+          });
+        expect(downloadResponse.statusCode).toEqual(200);
         expect(downloadResponse.body).toEqual(testImage);
       });
       it('with guest user', async () => {
@@ -88,10 +105,16 @@ describe('Media', () => {
           .attach('file', 'test/private-api/fixtures/test.png')
           .set('HedgeDoc-Note', noteDtoResponse.body.metadata.primaryAlias)
           .expect(201);
-        uuid = uploadResponse.text;
-        const apiResponse = await agentGuestUser.get(`${PRIVATE_API_PREFIX}/media/${uuid}`);
-        expect(apiResponse.statusCode).toEqual(200);
-        const downloadResponse = await agentGuestUser.get(`/uploads/${uuid}.png`);
+        uuid = uploadResponse.body.uuid;
+        const downloadResponse = await agentGuestUser
+          .get(`/media/${uuid}`)
+          .buffer(true)
+          .parse((response, callback) => {
+            const chunks: Buffer[] = [];
+            response.on('data', (chunk: Buffer) => chunks.push(chunk));
+            response.on('end', () => callback(null, Buffer.concat(chunks)));
+          });
+        expect(downloadResponse.statusCode).toEqual(200);
         expect(downloadResponse.body).toEqual(testImage);
       });
       it('with guest user and uppercase note alias', async () => {
@@ -106,10 +129,16 @@ describe('Media', () => {
           .attach('file', 'test/private-api/fixtures/test.png')
           .set('HedgeDoc-Note', noteDtoResponse.body.metadata.primaryAlias.toUpperCase())
           .expect(201);
-        uuid = uploadResponse.text;
-        const apiResponse = await agentGuestUser.get(`${PRIVATE_API_PREFIX}/media/${uuid}`);
-        expect(apiResponse.statusCode).toEqual(200);
-        const downloadResponse = await agentGuestUser.get(`/uploads/${uuid}.png`);
+        uuid = uploadResponse.body.uuid;
+        const downloadResponse = await agentGuestUser
+          .get(`/media/${uuid}`)
+          .buffer(true)
+          .parse((response, callback) => {
+            const chunks: Buffer[] = [];
+            response.on('data', (chunk: Buffer) => chunks.push(chunk));
+            response.on('end', () => callback(null, Buffer.concat(chunks)));
+          });
+        expect(downloadResponse.statusCode).toEqual(200);
         expect(downloadResponse.body).toEqual(testImage);
       });
     });
@@ -162,38 +191,81 @@ describe('Media', () => {
     });
   });
 
+  describe(`GET ${PRIVATE_API_PREFIX}/media/:uuid`, () => {
+    let mediaUploadUuid: string;
+    beforeEach(async () => {
+      mediaUploadUuid = await testSetup.mediaService.saveFile(
+        testFileName,
+        testImage,
+        userId,
+        testSetup.ownedNoteIds[0],
+      );
+      // Make note non-readable to guests to test access forbidden case
+      const specialGroupEveryoneId = await testSetup.groupService.getGroupIdByName(
+        SpecialGroup.EVERYONE,
+      );
+      await testSetup.permissionsService.removeGroupPermission(
+        testSetup.ownedNoteIds[0],
+        specialGroupEveryoneId,
+      );
+    });
+    it('returns correct data for owner', async () => {
+      // agentUser1 is the uploader and therefore owner
+      const response = await agentUser1
+        .get(`${PRIVATE_API_PREFIX}/media/${mediaUploadUuid}`)
+        .expect(200);
+      expect(response.headers['content-type']).toContain('application/json');
+      const jsonResponse = response.body as PartialMediaUploadResponse;
+      expect(jsonResponse.fileName).toEqual(testFileName);
+      expect(jsonResponse.linkedNoteCount).toEqual(1);
+    });
+    it('returns correct data for user with read-access to a linked note', async () => {
+      // agentUser2 has read-permission to the note via the logged-in special group
+      const response = await agentUser2
+        .get(`${PRIVATE_API_PREFIX}/media/${mediaUploadUuid}`)
+        .expect(200);
+      expect(response.headers['content-type']).toContain('application/json');
+      const jsonResponse = response.body as PartialMediaUploadResponse;
+      expect(jsonResponse.fileName).toEqual(testFileName);
+      expect(jsonResponse.linkedNoteCount).toEqual(1);
+    });
+    it('rejects with PermissionError for user with no read-access to a linked note', async () => {
+      await agentGuestUser.get(`${PRIVATE_API_PREFIX}/media/${mediaUploadUuid}`).expect(403);
+    });
+  });
+
   describe(`DELETE ${PRIVATE_API_PREFIX}/media/:filename`, () => {
     it('allowed if user is owner of file', async () => {
       const uuid = await testSetup.mediaService.saveFile(
-        'test.png',
+        testFileName,
         testImage,
         userId,
         testSetup.ownedNoteIds[0],
       );
 
-      await agentUser1.get(`/uploads/${uuid}.png`).expect(200);
+      await agentUser1.get(`/media/${uuid}`).expect(200);
 
       await agentUser1.delete(`${PRIVATE_API_PREFIX}/media/${uuid}`).expect(204);
 
-      await agentUser1.get(`/uploads/${uuid}.png`).expect(404);
+      await agentUser1.get(`/media/${uuid}`).expect(404);
     });
     it('allowed if user is owner of note', async () => {
       const uuid = await testSetup.mediaService.saveFile(
-        'test.png',
+        testFileName,
         testImage,
         testSetup.userIds[1],
         testSetup.ownedNoteIds[0],
       );
 
-      await agentUser1.get(`/uploads/${uuid}.png`).expect(200);
+      await agentUser1.get(`/media/${uuid}`).expect(200);
 
       await agentUser1.delete(`${PRIVATE_API_PREFIX}/media/${uuid}`).expect(204);
 
-      await agentUser1.get(`/uploads/${uuid}.png`).expect(404);
+      await agentUser1.get(`/media/${uuid}`).expect(404);
     });
     it("other user can't delete", async () => {
       const uuid = await testSetup.mediaService.saveFile(
-        'test.png',
+        testFileName,
         testImage,
         testSetup.userIds[0],
         testSetup.ownedNoteIds[0],
@@ -203,13 +275,64 @@ describe('Media', () => {
     });
     it("guest user can't delete", async () => {
       const uuid = await testSetup.mediaService.saveFile(
-        'test.png',
+        testFileName,
         testImage,
         testSetup.userIds[0],
         testSetup.ownedNoteIds[0],
       );
 
       await agentGuestUser.delete(`${PRIVATE_API_PREFIX}/media/${uuid}`).expect(403);
+    });
+  });
+
+  describe(`PUT ${PRIVATE_API_PREFIX}/media/:uuid/notes/:noteAlias`, () => {
+    it('links media to a note by alias', async () => {
+      const targetAlias = 'media_link_target';
+      const targetNoteId = await testSetup.notesService.createNote(
+        'test content',
+        testSetup.userIds[0],
+        targetAlias,
+      );
+      const uuid = await testSetup.mediaService.saveFile(
+        testFileName,
+        testImage,
+        testSetup.userIds[0],
+        testSetup.ownedNoteIds[0],
+      );
+
+      await agentUser1
+        .put(`${PRIVATE_API_PREFIX}/media/${uuid}/notes/${targetAlias.toUpperCase()}`)
+        .expect(204);
+
+      const mediaResponse = await agentUser1.get(`${PRIVATE_API_PREFIX}/media/${uuid}`).expect(200);
+      expect(mediaResponse.body.linkedNoteCount).toEqual(2);
+
+      const linkedUploads = await testSetup.mediaService.getMediaUploadUuidsByNoteId(targetNoteId);
+      expect(linkedUploads).toContain(uuid);
+    });
+
+    it('rejects users who are not the uploader', async () => {
+      const targetAlias = 'media_link_foreign_uploader';
+      await testSetup.notesService.createNote('test content', testSetup.userIds[1], targetAlias);
+      const uuid = await testSetup.mediaService.saveFile(
+        testFileName,
+        testImage,
+        testSetup.userIds[0],
+        testSetup.ownedNoteIds[0],
+      );
+
+      await agentUser2.put(`${PRIVATE_API_PREFIX}/media/${uuid}/notes/${targetAlias}`).expect(403);
+    });
+
+    it('returns 404 for unknown note aliases', async () => {
+      const uuid = await testSetup.mediaService.saveFile(
+        testFileName,
+        testImage,
+        testSetup.userIds[0],
+        testSetup.ownedNoteIds[0],
+      );
+
+      await agentUser1.put(`${PRIVATE_API_PREFIX}/media/${uuid}/notes/does_not_exist`).expect(404);
     });
   });
 });

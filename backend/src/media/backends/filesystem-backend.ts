@@ -13,6 +13,7 @@ import mediaConfiguration, { MediaConfig } from '../../config/media.config';
 import { MediaBackendError } from '../../errors/errors';
 import { ConsoleLoggerService } from '../../logger/console-logger.service';
 import { MediaBackend } from '../media-backend.interface';
+import { MediaFileResponse } from '../media-response.interface';
 
 @Injectable()
 export class FilesystemBackend implements MediaBackend {
@@ -39,7 +40,7 @@ export class FilesystemBackend implements MediaBackend {
     await this.ensureDirectory();
     try {
       await fs.writeFile(filePath, buffer, null);
-      return JSON.stringify({ ext: fileType.ext });
+      return JSON.stringify({ ext: fileType.ext, mime: fileType.mime });
     } catch (e) {
       this.logger.error((e as Error).message, (e as Error).stack, 'saveFile');
       throw new MediaBackendError(`Could not save file '${filePath}'`);
@@ -63,18 +64,39 @@ export class FilesystemBackend implements MediaBackend {
     }
   }
 
-  getFileUrl(uuid: string, backendData: string): Promise<string> {
+  getFileUrl(uuid: string, _: string): Promise<string> {
+    return Promise.resolve(`/media/${uuid}`);
+  }
+
+  /**
+   * Reads the file from the local filesystem and returns its content together
+   * with the detected MIME type..
+   *
+   * @param uuid Unique identifier of the uploaded file
+   * @param backendData Internal backend data
+   * @returns Object containing the file buffer and the detected MIME type
+   */
+  async getFileResponse(
+    uuid: string,
+    backendData: string | null,
+  ): Promise<Omit<MediaFileResponse, 'type'>> {
     if (!backendData) {
       throw new MediaBackendError('No backend data provided');
     }
-    const { ext } = JSON.parse(backendData) as { ext: string };
+    const { ext, mime } = JSON.parse(backendData) as { ext: string; mime: string };
     if (!ext) {
       throw new MediaBackendError('No file extension in backend data');
     }
-    return Promise.resolve(`/uploads/${uuid}.${ext}`);
+    const filePath = this.getFilePath(uuid, ext);
+    const buffer = await fs.readFile(filePath);
+    const contentType = mime ?? 'application/octet-stream';
+    return { buffer, contentType, fileName: `${uuid}.${ext}` };
   }
 
   private getFilePath(fileName: string, extension: string): string {
+    if (!/^[a-zA-Z0-9]+$/.test(extension)) {
+      throw new MediaBackendError(`Invalid file extension: ${extension}`);
+    }
     return join(this.uploadDirectory, `${fileName}.${extension}`);
   }
 
