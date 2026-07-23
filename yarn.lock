@@ -1498,7 +1498,7 @@ __metadata:
     css-loader: "npm:5.2.7"
     deep-freeze: "npm:0.0.1"
     diff-match-patch: "git+https://github.com/hackmdio/diff-match-patch.git#commit=59a9395ad9fe143e601e7ae5765ed943bdd2b11e"
-    dompurify: "npm:3.4.11"
+    dompurify: "npm:3.4.12"
     ejs: "npm:3.1.10"
     emojify.js: "npm:1.1.0"
     esbuild-loader: "npm:4.5.0"
@@ -5782,15 +5782,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:3.4.11":
-  version: 3.4.11
-  resolution: "dompurify@npm:3.4.11"
+"dompurify@npm:3.4.12":
+  version: 3.4.12
+  resolution: "dompurify@npm:3.4.12"
   dependencies:
     "@types/trusted-types": "npm:^2.0.7"
   dependenciesMeta:
     "@types/trusted-types":
       optional: true
-  checksum: 10/d0473e1a22ed9cc23d86ef426717bce866913d1a725512a9478985bd917b272e0faba5f1d6ad8b2e37f3f4219206c4385162d7c984cfedcd23396e1e6ae0bc5e
+  checksum: 10/f826b68920887eb75115a162facb42380d1c3fac441548217b30068c9fadeed14f63fa1f7a1d2ab6f63613e5a0f897aa245c9224d4abf7939cd8ae58c04646af
   languageName: node
   linkType: hard
 
