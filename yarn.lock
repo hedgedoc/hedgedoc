@@ -1537,7 +1537,7 @@ __metadata:
     jsdom: "npm:24.1.3"
     jsonlint: "npm:1.6.3"
     keymaster: "npm:1.6.2"
-    less: "npm:4.6.7"
+    less: "npm:4.8.0"
     less-loader: "npm:7.3.0"
     list.js: "npm:2.3.1"
     lodash: "npm:4.18.1"
@@ -5416,7 +5416,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:^3.2.7":
+"debug@npm:^3.2.6, debug@npm:^3.2.7":
   version: 3.2.7
   resolution: "debug@npm:3.2.7"
   dependencies:
@@ -8252,7 +8252,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"iconv-lite@npm:0.4, iconv-lite@npm:~0.4.24":
+"iconv-lite@npm:0.4, iconv-lite@npm:^0.4.4, iconv-lite@npm:~0.4.24":
   version: 0.4.24
   resolution: "iconv-lite@npm:0.4.24"
   dependencies:
@@ -8320,15 +8320,6 @@ __metadata:
   version: 6.0.2
   resolution: "ignore@npm:6.0.2"
   checksum: 10/af39e49996cd989763920e445eff897d0ae1e36b5f27b0e09e14a4fd2df89b362f92e720ecf06ef729056842366527db8561d310e904718810b92ffbcd23056d
-  languageName: node
-  linkType: hard
-
-"image-size@npm:~0.5.0":
-  version: 0.5.5
-  resolution: "image-size@npm:0.5.5"
-  bin:
-    image-size: bin/image-size.js
-  checksum: 10/f41ec6cfccfa6471980e83568033a66ec53f84d1bcb70033e946a7db9c1b6bbf5645ec90fa5a8bdcdc84d86af0032014eff6fa078a60c2398dfce6676c46bdb7
   languageName: node
   linkType: hard
 
@@ -9592,25 +9583,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"less@npm:4.6.7":
-  version: 4.6.7
-  resolution: "less@npm:4.6.7"
+"less@npm:4.8.0":
+  version: 4.8.0
+  resolution: "less@npm:4.8.0"
   dependencies:
     copy-anything: "npm:^3.0.5"
     errno: "npm:^0.1.1"
     graceful-fs: "npm:^4.1.2"
-    image-size: "npm:~0.5.0"
     make-dir: "npm:^5.1.0"
     mime: "npm:^1.4.1"
     needle: "npm:^3.1.0"
     parse-node-version: "npm:^1.0.1"
+    probe-image-size: "npm:^7.2.3"
     source-map: "npm:~0.6.0"
   dependenciesMeta:
     errno:
       optional: true
     graceful-fs:
-      optional: true
-    image-size:
       optional: true
     make-dir:
       optional: true
@@ -9618,11 +9607,13 @@ __metadata:
       optional: true
     needle:
       optional: true
+    probe-image-size:
+      optional: true
     source-map:
       optional: true
   bin:
     lessc: bin/lessc
-  checksum: 10/2b6eefb1266283be36ed417b9eebf504f4d778c2dd1712aa743046d5d2c14cfeaf65bcf808b039f573e25fe63d58ef26189465af88f1f1dda4c5420511a2d37d
+  checksum: 10/a2264aa6a028fc2a803d7d72689251d0bd8b516371903f566a0a956ec9975a6c62c3ed33fe61cf63f71820d654024f7e4552cac43963d6059048e75d79017afb
   languageName: node
   linkType: hard
 
@@ -11525,6 +11516,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"needle@npm:^2.5.2":
+  version: 2.9.1
+  resolution: "needle@npm:2.9.1"
+  dependencies:
+    debug: "npm:^3.2.6"
+    iconv-lite: "npm:^0.4.4"
+    sax: "npm:^1.2.4"
+  bin:
+    needle: ./bin/needle
+  checksum: 10/ad8df9aff519e719ae98bc3e58a2c623961bee0c5bffdd19288d7876fbb80a4ac1116ace7632026396bc0946d3c02b266acf3b9a1bffc7186055423eb7697e62
+  languageName: node
+  linkType: hard
+
 "needle@npm:^3.1.0":
   version: 3.5.0
   resolution: "needle@npm:3.5.0"
@@ -13297,6 +13301,17 @@ __metadata:
   version: 0.1.8
   resolution: "private@npm:0.1.8"
   checksum: 10/192ce0764e1708a40e42ad3b679c8553c275e4ee9d5dcfdf3de99b01d43a6ee3047f0d293e892c003276cde3829f0548e60f77fa49e2e51b380939e662794a1e
+  languageName: node
+  linkType: hard
+
+"probe-image-size@npm:^7.2.3":
+  version: 7.3.0
+  resolution: "probe-image-size@npm:7.3.0"
+  dependencies:
+    lodash.merge: "npm:^4.6.2"
+    needle: "npm:^2.5.2"
+    stream-parser: "npm:~0.3.1"
+  checksum: 10/ced7397e3992e4dc0889471e743b07656c5397e31368911b9929ec79786bcec4b2941fa873f10b287e097d7d4f5cf1a8cf0299cc338d3c6ea4b1dfbaaf7ac1e8
   languageName: node
   linkType: hard
 
@@ -15788,6 +15803,15 @@ __metadata:
   dependencies:
     stream-chain: "npm:^2.2.5"
   checksum: 10/8c97d3078127aaf70197b0e4b5ca668307f1768a4eb1ac4c2030056e1f862d7a11b83094b87d2b04c3c14f76a8a8657eb87b1760d57781c172e3a513c7e2b5fd
+  languageName: node
+  linkType: hard
+
+"stream-parser@npm:~0.3.1":
+  version: 0.3.1
+  resolution: "stream-parser@npm:0.3.1"
+  dependencies:
+    debug: "npm:2"
+  checksum: 10/1ea2bbbb4e3ac39875048b8305c273d03864965275b4b2624418a9622747f7a891817782b31facc3e57c4b083c5dd704739a4b1685d55b34fe75809a03788344
   languageName: node
   linkType: hard
 
