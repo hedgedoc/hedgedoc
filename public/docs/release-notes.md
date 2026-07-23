@@ -1,24 +1,29 @@
 # Release Notes
 
-## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
+## <i class="fa fa-tag"></i> 1.11.1 <i class="fa fa-calendar-o"></i> 2026-07-24
 
 ### Enhancements
 
-- Added external link whitelist setting (`externalLinkWhitelist` in config.json or `CMD_EXTERNAL_LINK_WHITELIST`) to skip warning page for certain domains
 - Added external link warning setting (`externalLinkWarning` in config.json or `CMD_EXTERNAL_LINK_WARNING`) to disable the external link warning page entirely
+- Added external link whitelist setting (`externalLinkWhitelist` in config.json or `CMD_EXTERNAL_LINK_WHITELIST`) to skip warning page for certain domains
+- Added support for webp file uploads (for all backends except `imgur`, since that does not support these)
+
+### Bugfixes
+
 - Fixed external link warning for subpath instances
-- Enabled `.webp` for file uploads (for all backends but `imgur`, since it does not support it)
-- Removed unnecessary entries in the XSS whitelist
+- Restore native browser zoom-in keyboard shortcuts in the editor
+- Nested list items render properly again in the preview pane for slides
 
 ### Refactoring / Clean-up
 
 - Removed the old Temp database object and related API endpoints. This was used by a very old way of migrating the history and is no longer needed.
 - Removed unused `allowOrigin` (environment variable `CMD_ALLOW_ORIGIN`) config option.
+- Removed unnecessary/duplicate entries in the XSS filtering whitelist
 
-### Bugfixes
+### Contributors
 
-- Restore native browser zoom-in keyboard shortcuts in the editor ([#6244](https://github.com/hedgedoc/hedgedoc/issues/6244))
-- Nested list items render properly again in the preview pane for slides ([#6080](https://github.com/hedgedoc/hedgedoc/issues/6080))
+- [Shivam Shukla](https://github.com/Shivam-Shukla0)
+- [Tobi](https://github.com/tldev-de)
 
 ## <i class="fa fa-tag"></i> 1.11.0 <i class="fa fa-calendar-o"></i> 2026-06-18
 
