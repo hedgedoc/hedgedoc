@@ -77,6 +77,12 @@ Use this tar ball to test the following things:
   6. Start the HedgeDoc again. The note with the previously uploaded image should now contain the new image URL. The image should load.
   7. Check that the bucket in Minio contains the uploaded image.
 
+### Config
+
+- [ ] Setting `allowAnonymous: false` disables guest note creation
+- [ ] Setting `enableStatsApi: false` disables /metrics and /status endpoint
+
+
 ### Account system
 
 - [ ] User registration works
@@ -98,6 +104,7 @@ Use this tar ball to test the following things:
 - [ ] Working with 2 (or more) devices on a page works and results in the same document
 - [ ] Uploads work for images
 - [ ] Uploads fail for other data (e.g. binaries)
+- [ ] Opening uploads in new tab downloads them instead of displaying
 
 ### Database
 
@@ -247,7 +254,21 @@ opengraph:
 }
 ```
 - [ ] GitHub
+```
+"github": {
+"clientID": "CHANGE_THIS",
+"clientSecret": "CHANGE_THIS"
+}
+```
 - [ ] GitLab
+```
+"gitlab": {
+    "baseURL": "https://gitlab.fachschaften.org",
+    "clientID": "CHANGE_THIS",
+    "clientSecret": "CHANGE_THIS",
+    "scope": "read_user"
+}
+```
 
 ### Docker images
 
