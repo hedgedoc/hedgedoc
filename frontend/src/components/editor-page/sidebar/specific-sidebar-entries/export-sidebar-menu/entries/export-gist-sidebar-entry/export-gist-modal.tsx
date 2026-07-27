@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -32,18 +32,19 @@ export const ExportGistModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
 
   const { dispatchUiNotification, showErrorNotificationBuilder } = useUiNotifications()
 
-  const textService = useTranslatedText('editor.export.gist.service')
-  const textShortName = useTranslatedText('editor.export.gist.shortName')
-  const textModalTitle = useTranslatedText('editor.export.common.title', { replace: { service: textService } })
-  const textCreateButton = useTranslatedText('editor.export.common.createButton', {
+  const textService = useTranslatedText('editor.importExport.service.gist.name')
+  const textShortName = useTranslatedText('editor.importExport.service.gist.shortName')
+  const textModalTitle = useTranslatedText('editor.importExport.export.title', { replace: { service: textService } })
+  const textCreateButton = useTranslatedText('editor.importExport.export.createButton', {
     replace: { shortName: textShortName }
   })
-  const textNotificationButton = useTranslatedText('editor.export.common.notificationSuccessButton', {
+  const textNotificationButton = useTranslatedText('editor.importExport.export.notificationSuccessButton', {
     replace: {
       shortName: textShortName
     }
   })
-  const textFieldPublic = useTranslatedText('editor.export.gist.fieldPublic')
+  const textFieldPublic = useTranslatedText('editor.importExport.service.gist.makePublic')
+  const textTokenLink = useTranslatedText('editor.importExport.service.gist.tokenLink')
 
   const [ghToken, setGhToken] = useState('')
   const [gistDescription, setGistDescription] = useState('')
@@ -59,8 +60,8 @@ export const ExportGistModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
     createGist(ghToken, noteContent, gistDescription, noteFilename, gistPublic)
       .then((gistUrl) => {
         dispatchUiNotification(
-          'editor.export.common.notificationSuccessTitle',
-          'editor.export.common.notificationSuccessMessage',
+          'editor.importExport.export.notificationSuccessTitle',
+          'editor.importExport.export.notificationSuccessMessage',
           {
             durationInSecond: 30,
             icon: Github,
@@ -77,7 +78,7 @@ export const ExportGistModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
       })
       .catch(
         showErrorNotificationBuilder(
-          'editor.export.common.notificationErrorTitle',
+          'editor.importExport.export.notificationErrorTitle',
           { replace: { shortName: textShortName } },
           true
         )
@@ -100,27 +101,24 @@ export const ExportGistModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
     <CommonModal show={show} onHide={onHide} title={textModalTitle} showCloseButton={true} titleIcon={Github}>
       <Modal.Body>
         <h5 className={'mb-2'}>
-          <Trans i18nKey={'editor.export.common.headingAuthentication'} />
+          <Trans i18nKey={'editor.importExport.common.authentication'} />
         </h5>
         <FormGroup className={'my-2'}>
           <FormLabel>
-            <Trans i18nKey={'editor.export.common.fieldToken'} />
+            <Trans i18nKey={'editor.importExport.common.accessToken'} />
           </FormLabel>
           <FormControl value={ghToken} onChange={onGhTokenChange} type={'password'} isInvalid={!ghTokenFormatValid} />
           <FormText muted={true}>
-            <Trans i18nKey={'editor.export.gist.infoToken'} />{' '}
-            <ExternalLink
-              text={'https://github.com/settings/personal-access-tokens/new'}
-              href={'https://github.com/settings/personal-access-tokens/new'}
-            />
+            <Trans i18nKey={'editor.importExport.service.gist.infoToken'} />{' '}
+            <ExternalLink text={textTokenLink} href={'https://github.com/settings/personal-access-tokens/new'} />
           </FormText>
         </FormGroup>
         <h5 className={'mb-2 mt-4'}>
-          <Trans i18nKey={'editor.export.common.headingSettings'} />
+          <Trans i18nKey={'editor.importExport.export.settings'} />
         </h5>
         <FormGroup className={'my-2'}>
           <FormLabel>
-            <Trans i18nKey={'editor.export.common.fieldDescription'} />
+            <Trans i18nKey={'editor.importExport.common.description'} />
           </FormLabel>
           <FormControl value={gistDescription} onChange={onGistDescriptionChange} type={'text'} />
         </FormGroup>

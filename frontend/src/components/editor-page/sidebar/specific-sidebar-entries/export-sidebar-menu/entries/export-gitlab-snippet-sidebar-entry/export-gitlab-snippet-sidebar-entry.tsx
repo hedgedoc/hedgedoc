@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -20,7 +20,7 @@ export const ExportGitlabSnippetSidebarEntry: React.FC = () => {
   return (
     <Fragment>
       <SidebarButton icon={IconGitlab} onClick={setShowModal}>
-        <Trans i18nKey={'editor.export.gitlab.service'} />
+        <Trans i18nKey={'editor.importExport.service.gitlab.name'} />
       </SidebarButton>
       <ExportGitlabSnippetModal show={showModal} onHide={setHideModal} />
     </Fragment>

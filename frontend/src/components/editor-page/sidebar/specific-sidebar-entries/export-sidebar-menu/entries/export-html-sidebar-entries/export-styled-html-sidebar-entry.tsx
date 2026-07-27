@@ -19,7 +19,7 @@ export const ExportStyledHtmlSidebarEntry: React.FC = () => {
 
   return (
     <SidebarButton onClick={onClick} icon={IconFileEarmarkRichtext}>
-      <Trans i18nKey={'editor.export.styled-html'} />
+      <Trans i18nKey={'editor.importExport.service.styled-html'} />
     </SidebarButton>
   )
 }

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -18,7 +18,7 @@ export const ExportPrintSidebarEntry: React.FC = () => {
 
   return (
     <SidebarButton {...cypressId('menu-export-print')} onClick={printIframe} icon={IconPrinterFill}>
-      <Trans i18nKey={'editor.export.print'} />
+      <Trans i18nKey={'editor.importExport.service.print'} />
     </SidebarButton>
   )
 }
