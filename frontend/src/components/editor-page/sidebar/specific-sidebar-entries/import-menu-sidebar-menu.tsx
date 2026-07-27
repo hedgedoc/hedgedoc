@@ -1,17 +1,18 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { cypressId } from '../../../../utils/cypress-attribute'
-import { IconGitlab } from '../../../common/icons/additional/icon-gitlab'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
 import { SidebarMenu } from '../sidebar-menu/sidebar-menu'
 import type { SpecificSidebarMenuProps } from '../types'
 import { DocumentSidebarMenuSelection } from '../types'
+import { ImportGistSidebarEntry } from './import-code-snippet-sidebar-entry/import-gist-sidebar-entry'
+import { ImportGitlabSnippetSidebarEntry } from './import-code-snippet-sidebar-entry/import-gitlab-snippet-sidebar-entry'
 import { ImportMarkdownSidebarEntry } from './import-markdown-sidebar-entry'
 import React, { Fragment, useCallback } from 'react'
-import { ArrowLeft as IconArrowLeft, CloudUpload as IconCloudUpload, Github as IconGithub } from 'react-bootstrap-icons'
+import { ArrowLeft as IconArrowLeft, CloudUpload as IconCloudUpload } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 import styles from '../sidebar-button/sidebar-button.module.scss'
 import { concatCssClasses } from '../../../../utils/concat-css-classes'
@@ -45,15 +46,11 @@ export const ImportMenuSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         icon={expand ? IconArrowLeft : IconCloudUpload}
         className={concatCssClasses(className, { [styles.main]: expand })}
         onClick={onClickHandler}>
-        <Trans i18nKey={'editor.documentBar.import'} />
+        <Trans i18nKey={'editor.importExport.import.button'} />
       </SidebarButton>
       <SidebarMenu expand={expand}>
-        <SidebarButton icon={IconGithub} disabled={true}>
-          Gist
-        </SidebarButton>
-        <SidebarButton icon={IconGitlab} disabled={true}>
-          Gitlab Snippet
-        </SidebarButton>
+        <ImportGistSidebarEntry />
+        <ImportGitlabSnippetSidebarEntry />
         <ImportMarkdownSidebarEntry />
       </SidebarMenu>
     </Fragment>

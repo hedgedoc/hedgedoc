@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -51,20 +51,20 @@ export const ExportSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         icon={expand ? IconArrowLeft : IconCloudDownload}
         className={concatCssClasses(className, { [styles.main]: expand })}
         onClick={onClickHandler}>
-        <Trans i18nKey={'editor.documentBar.export'} />
+        <Trans i18nKey={'editor.importExport.export.button'} />
       </SidebarButton>
       <SidebarMenu expand={expand}>
         <ExportPrintSidebarEntry />
         <ExportMarkdownSidebarEntry />
         <SidebarButton icon={IconFileCode} disabled={true}>
-          HTML
+          <Trans i18nKey='editor.importExport.service.html' />
         </SidebarButton>
 
         <ExportGistSidebarEntry />
         <ExportGitlabSnippetSidebarEntry />
 
         <SidebarButton icon={IconFileCode} disabled={true}>
-          <Trans i18nKey='editor.export.rawHtml' />
+          <Trans i18nKey='editor.importExport.service.rawHtml' />
         </SidebarButton>
       </SidebarMenu>
     </Fragment>

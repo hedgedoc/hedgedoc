@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -39,14 +39,14 @@ export const ExportGitlabSnippetModal: React.FC<ModalVisibilityProps> = ({ show,
   const [snippetVisibility, setSnippetVisibility] = useState<GitlabSnippetVisibility>(GitlabSnippetVisibility.PRIVATE)
   const [snippetDescription, setSnippetDescription] = useState<string>('')
 
-  const textService = useTranslatedText('editor.export.gitlab.service')
-  const textShortName = useTranslatedText('editor.export.gitlab.shortName')
-  const textModalTitle = useTranslatedText('editor.export.common.title', { replace: { service: textService } })
-  const textTokenLink = useTranslatedText('editor.export.gitlab.infoTokenLink')
-  const textCreateButton = useTranslatedText('editor.export.common.createButton', {
+  const textService = useTranslatedText('editor.importExport.service.gitlab.name')
+  const textShortName = useTranslatedText('editor.importExport.service.gitlab.shortName')
+  const textModalTitle = useTranslatedText('editor.importExport.export.title', { replace: { service: textService } })
+  const textTokenLink = useTranslatedText('editor.importExport.service.gitlab.tokenLink')
+  const textCreateButton = useTranslatedText('editor.importExport.export.createButton', {
     replace: { shortName: textShortName }
   })
-  const textNotificationButton = useTranslatedText('editor.export.common.notificationSuccessButton', {
+  const textNotificationButton = useTranslatedText('editor.importExport.export.notificationSuccessButton', {
     replace: {
       shortName: textShortName
     }
@@ -67,8 +67,8 @@ export const ExportGitlabSnippetModal: React.FC<ModalVisibilityProps> = ({ show,
     createSnippet(gitlabUrl, gitlabToken, noteContent, noteTitle, snippetDescription, noteFilename, snippetVisibility)
       .then((snippetUrl) => {
         dispatchUiNotification(
-          'editor.export.common.notificationSuccessTitle',
-          'editor.export.common.notificationSuccessMessage',
+          'editor.importExport.export.notificationSuccessTitle',
+          'editor.importExport.export.notificationSuccessMessage',
           {
             durationInSecond: 30,
             icon: Github,
@@ -85,7 +85,7 @@ export const ExportGitlabSnippetModal: React.FC<ModalVisibilityProps> = ({ show,
       })
       .catch(
         showErrorNotificationBuilder(
-          'editor.export.common.notificationErrorTitle',
+          'editor.importExport.export.notificationErrorTitle',
           { replace: { shortName: textShortName } },
           true
         )
@@ -110,17 +110,17 @@ export const ExportGitlabSnippetModal: React.FC<ModalVisibilityProps> = ({ show,
     <CommonModal show={show} onHide={onHide} title={textModalTitle} showCloseButton={true} titleIcon={IconGitlab}>
       <Modal.Body>
         <h5 className={'mb-2'}>
-          <Trans i18nKey={'editor.export.common.headingAuthentication'} />
+          <Trans i18nKey={'editor.importExport.common.authentication'} />
         </h5>
         <FormGroup className={'my-2'}>
           <FormLabel>
-            <Trans i18nKey={'editor.export.gitlab.fieldUrl'} />
+            <Trans i18nKey={'editor.importExport.service.gitlab.instanceUrl'} />
           </FormLabel>
           <FormControl value={gitlabUrl} onChange={changeGitlabUrl} type={'url'} placeholder={'https://gitlab.com'} />
         </FormGroup>
         <FormGroup className={'my-2'}>
           <FormLabel>
-            <Trans i18nKey={'editor.export.common.fieldToken'} />
+            <Trans i18nKey={'editor.importExport.common.accessToken'} />
           </FormLabel>
           <FormControl
             value={gitlabToken}
@@ -129,7 +129,7 @@ export const ExportGitlabSnippetModal: React.FC<ModalVisibilityProps> = ({ show,
             isInvalid={gitlabToken === ''}
           />
           <FormText muted={true}>
-            <Trans i18nKey={'editor.export.gitlab.infoToken'} />{' '}
+            <Trans i18nKey={'editor.importExport.service.gitlab.infoToken'} />{' '}
             <ExternalLink
               text={textTokenLink}
               href={`${gitlabUrl ?? 'https://gitlab.com'}/-/user_settings/personal_access_tokens?name=HedgeDoc+snippet+export&scopes=api`}
@@ -137,27 +137,27 @@ export const ExportGitlabSnippetModal: React.FC<ModalVisibilityProps> = ({ show,
           </FormText>
         </FormGroup>
         <h5 className={'mb-2 mt-4'}>
-          <Trans i18nKey={'editor.export.common.headingSettings'} />
+          <Trans i18nKey={'editor.importExport.export.settings'} />
         </h5>
         <FormGroup className={'my-2'}>
           <FormLabel>
-            <Trans i18nKey={'editor.export.common.fieldDescription'} />
+            <Trans i18nKey={'editor.importExport.common.description'} />
           </FormLabel>
           <FormControl value={snippetDescription} onChange={changeSnippetDescription} type={'text'} />
         </FormGroup>
         <FormGroup className={'mt-2'}>
           <FormLabel>
-            <Trans i18nKey={'editor.export.gitlab.fieldVisibility'} />
+            <Trans i18nKey={'editor.importExport.service.gitlab.setVisibility'} />
           </FormLabel>
           <FormControl as={'select'} value={snippetVisibility} onChange={changeSnippetVisibility}>
             <option value={GitlabSnippetVisibility.PRIVATE}>
-              <Trans i18nKey={'editor.export.gitlab.visibility.private'} />
+              <Trans i18nKey={'editor.importExport.service.gitlab.visibility.private'} />
             </option>
             <option value={GitlabSnippetVisibility.INTERNAL}>
-              <Trans i18nKey={'editor.export.gitlab.visibility.internal'} />
+              <Trans i18nKey={'editor.importExport.service.gitlab.visibility.internal'} />
             </option>
             <option value={GitlabSnippetVisibility.PUBLIC}>
-              <Trans i18nKey={'editor.export.gitlab.visibility.public'} />
+              <Trans i18nKey={'editor.importExport.service.gitlab.visibility.public'} />
             </option>
           </FormControl>
         </FormGroup>

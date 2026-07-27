@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,6 +8,7 @@ import { FileContentFormat, readFile } from '../../../../utils/read-file'
 import { UploadInput } from '../../../common/upload-input'
 import { useChangeEditorContentCallback } from '../../change-content-context/use-change-editor-content-callback'
 import { SidebarButton } from '../sidebar-button/sidebar-button'
+import { buildAppendContentFormatter } from './build-append-content-formatter'
 import React, { Fragment, useCallback, useRef } from 'react'
 import { FileText as IconFileText } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
@@ -22,19 +23,7 @@ export const ImportMarkdownSidebarEntry: React.FC = () => {
   const onImportMarkdown = useCallback(
     async (file: File): Promise<void> => {
       const content = await readFile(file, FileContentFormat.TEXT)
-      changeEditorContent?.(({ markdownContent }) => {
-        const newContent = (markdownContent.length === 0 ? '' : '\n') + content
-        return [
-          [
-            {
-              from: markdownContent.length,
-              to: markdownContent.length,
-              insert: newContent
-            }
-          ],
-          undefined
-        ]
-      })
+      changeEditorContent?.(buildAppendContentFormatter(content))
     },
     [changeEditorContent]
   )
@@ -51,7 +40,7 @@ export const ImportMarkdownSidebarEntry: React.FC = () => {
         icon={IconFileText}
         onClick={buttonClick}
         disabled={!changeEditorContent}>
-        <Trans i18nKey={'editor.import.file'} />
+        <Trans i18nKey={'editor.importExport.service.markdown'} />
       </SidebarButton>
       {changeEditorContent !== undefined && (
         <UploadInput

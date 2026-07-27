@@ -305,45 +305,57 @@
         "exceeded": "You've exceeded the maximum length of this note by {{exceeded}} characters. Consider shortening it."
       }
     },
-    "export": {
-      "common": {
+    "importExport": {
+      "service": {
+        "gist": {
+          "name": "GitHub Gist",
+          "shortName": "Gist",
+          "infoToken": "You need a personal access token with the Gists account permission. You can create one in your GitHub settings here:",
+          "tokenLink": "",
+          "makePublic": "Make Gist public?"
+        },
+        "gitlab": {
+          "name": "GitLab snippet",
+          "shortName": "Snippet",
+          "infoToken": "You need a personal access token with the api permission. You can create one in your GitLab user settings here:",
+          "tokenLink": "Preferences → Access tokens",
+          "instanceUrl": "Instance URL",
+          "setVisibility": "Set snippet visibility",
+          "visibility": {
+            "private": "Private",
+            "internal": "Internal",
+            "public": "Public"
+          }
+        },
+        "html": "HTML",
+        "rawHtml": "Raw HTML",
+        "markdown": "Markdown file",
+        "print": "Print"
+      },
+      "export": {
+        "button": "Export",
         "title": "Export to {{service}}",
         "createButton": "Create {{shortName}}",
-        "headingAuthentication": "Authentication",
-        "headingSettings": "Export settings",
-        "fieldToken": "Access token",
-        "fieldDescription": "Description",
         "notificationSuccessTitle": "{{shortName}} successfully created",
         "notificationSuccessMessage": "The note has been exported to {{service}}.",
         "notificationSuccessButton": "Open {{shortName}}",
-        "notificationErrorTitle": "Error while creating {{shortName}}: {{errorMessage}}"
+        "notificationErrorTitle": "Error while creating {{shortName}}: {{errorMessage}}",
+        "settings": "Export settings"
       },
-      "gist": {
-        "service": "GitHub Gist",
-        "shortName": "Gist",
-        "infoToken": "You need a personal access token with the Gists account permission. You can create one in your GitHub settings here:",
-        "fieldPublic": "Make Gist public?"
+      "import": {
+        "button": "Import",
+        "title": "Import from {{service}}",
+        "url": "URL",
+        "anonymousImport": "Leave this empty to import anonymously.",
+        "notificationSuccessTitle": "Import successful",
+        "notificationSuccessMessage": "The content from {{service}} has been appended to the note.",
+        "notificationError": "Error while importing from {{service}}: {{errorMessage}}"
       },
-      "gitlab": {
-        "service": "GitLab snippet",
-        "shortName": "Snippet",
-        "infoToken": "You need a personal access token with the api permission. You can create one in your GitLab user settings here:",
-        "infoTokenLink": "Preferences → Access tokens",
-        "fieldUrl": "GitLab URL",
-        "fieldVisibility": "Set snippet visibility",
-        "visibility": {
-          "private": "Private",
-          "internal": "Internal",
-          "public": "Public"
-        }
-      },
-      "rawHtml": "Raw HTML",
-      "markdown-file": "Markdown file",
-      "print": "Print"
-    },
-    "import": {
-      "clipboard": "Clipboard",
-      "file": "Markdown file"
+      "common": {
+        "authentication": "Authentication",
+        "accessToken": "Access token",
+        "description": "Description"
+      }
     },
     "autocompletions": {
       "link": "Link",
