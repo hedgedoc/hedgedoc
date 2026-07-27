@@ -4,8 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { createNoteWithPrimaryAlias } from '../../../api/notes'
+import { useIsLoggedIn } from '../../../hooks/common/use-is-logged-in'
 import { testId } from '../../../utils/test-id'
 import { UiIcon } from '../icons/ui-icon'
+import { useFrontendConfig } from '../frontend-config-context/use-frontend-config'
 import React, { useCallback, useEffect } from 'react'
 import { Alert, Button } from 'react-bootstrap'
 import {
@@ -15,6 +17,7 @@ import {
 } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 import { useAsyncFn } from 'react-use'
+import { PermissionLevel } from '@hedgedoc/commons'
 
 export interface CreateNonExistingNoteHintProps {
   onNoteCreated: () => void
@@ -30,6 +33,8 @@ export interface CreateNonExistingNoteHintProps {
  */
 export const CreateNonExistingNoteHint: React.FC<CreateNonExistingNoteHintProps> = ({ onNoteCreated, noteId }) => {
   useTranslation()
+  const guestAccessLevel = useFrontendConfig().guestAccess
+  const isLoggedIn = useIsLoggedIn()
 
   const [returnState, createNote] = useAsyncFn(async () => {
     if (noteId !== undefined) {
@@ -47,7 +52,7 @@ export const CreateNonExistingNoteHint: React.FC<CreateNonExistingNoteHintProps>
     }
   }, [onNoteCreated, returnState.value])
 
-  if (noteId === undefined) {
+  if (noteId === undefined || (!isLoggedIn && guestAccessLevel !== PermissionLevel.FULL)) {
     return null
   } else if (returnState.value) {
     return (

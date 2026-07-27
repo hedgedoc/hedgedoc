@@ -4,15 +4,19 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import * as createNoteWithPrimaryAliasModule from '../../../api/notes'
+import { AuthProviderType, PermissionLevel } from '@hedgedoc/commons'
+import { mockAppState } from '../../../test-utils/mock-app-state'
 import { mockI18n } from '../../../test-utils/mock-i18n'
+import * as UseFrontendConfigMock from '../frontend-config-context/use-frontend-config'
 import { CreateNonExistingNoteHint } from './create-non-existing-note-hint'
-import type { NoteInterface, NoteMetadataInterface } from '@hedgedoc/commons'
+import type { FrontendConfigInterface, NoteInterface, NoteMetadataInterface } from '@hedgedoc/commons'
 import { waitForOtherPromisesToFinish } from '@hedgedoc/commons'
 import { act, render, screen, waitFor } from '@testing-library/react'
 import { Mock } from 'ts-mockery'
 
 jest.mock('../../../api/notes')
 jest.mock('../../../hooks/common/use-single-string-url-parameter')
+jest.mock('../frontend-config-context/use-frontend-config')
 
 describe('create non existing note hint', () => {
   const mockedNoteId = 'mockedNoteId'
@@ -45,6 +49,13 @@ describe('create non existing note hint', () => {
     await mockI18n()
   })
 
+  beforeEach(() => {
+    mockAppState({ user: { authProvider: AuthProviderType.LOCAL } })
+    jest
+      .spyOn(UseFrontendConfigMock, 'useFrontendConfig')
+      .mockReturnValue(Mock.of<FrontendConfigInterface>({ guestAccess: PermissionLevel.FULL }))
+  })
+
   afterEach(() => {
     jest.resetAllMocks()
     jest.resetModules()
@@ -54,6 +65,22 @@ describe('create non existing note hint', () => {
     const onNoteCreatedCallback = jest.fn()
     const view = render(
       <CreateNonExistingNoteHint noteId={undefined} onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>
+    )
+    await waitForOtherPromisesToFinish()
+    expect(onNoteCreatedCallback).not.toBeCalled()
+    expect(view.container).toMatchSnapshot()
+  })
+
+  it('renders nothing for a guest without note creation permission', async () => {
+    mockAppState({ user: { authProvider: AuthProviderType.GUEST } })
+    jest
+      .spyOn(UseFrontendConfigMock, 'useFrontendConfig')
+      .mockReturnValue(Mock.of<FrontendConfigInterface>({ guestAccess: PermissionLevel.WRITE }))
+    const onNoteCreatedCallback = jest.fn()
+    const view = render(
+      <CreateNonExistingNoteHint
+        noteId={mockedNoteId}
+        onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>
     )
     await waitForOtherPromisesToFinish()
     expect(onNoteCreatedCallback).not.toBeCalled()
