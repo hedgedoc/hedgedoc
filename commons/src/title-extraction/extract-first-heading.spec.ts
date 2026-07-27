@@ -46,6 +46,17 @@ describe('extract first heading', () => {
       expect(extractFirstHeading(document)).toBe('Image Alt')
     })
 
+    it('ignores MathML duplicated by KaTeX', () => {
+      const headline = new Element(`h${headlineIndex}`, {}, [
+        new Element('span', { class: 'katex-mathml' }, [
+          new Element('math', {}, [new Element('mi', {}, [new Text('alpha')])]),
+        ]),
+        new Element('span', { class: 'katex-html', 'aria-hidden': 'true' }, [new Text('alpha')]),
+      ])
+      const document = new Document([headline])
+      expect(extractFirstHeading(document)).toBe('alpha')
+    })
+
     it('extracts only the first found headline', () => {
       const headline1 = new Element(`h${headlineIndex}`, {}, [new Text(`headline${headlineIndex}`)])
       const headline2 = new Element(`h${headlineIndex}`, {}, [new Text('headline1')])
