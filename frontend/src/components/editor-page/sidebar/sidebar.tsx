@@ -6,7 +6,7 @@
 import { AliasesSidebarEntry } from './specific-sidebar-entries/aliases-sidebar-entry/aliases-sidebar-entry'
 import { DeleteNoteSidebarEntry } from './specific-sidebar-entries/delete-note-sidebar-entry/delete-note-sidebar-entry'
 import { ExportSidebarMenu } from './specific-sidebar-entries/export-sidebar-menu/export-sidebar-menu'
-import { ImportMenuSidebarMenu } from './specific-sidebar-entries/import-menu-sidebar-menu'
+import { ImportMenuSidebarMenu } from './specific-sidebar-entries/import-sidebar-menu/import-menu-sidebar-menu'
 import { MediaBrowserSidebarMenu } from './specific-sidebar-entries/media-browser-sidebar-menu/media-browser-sidebar-menu'
 import { NoteInfoSidebarMenu } from './specific-sidebar-entries/note-info-sidebar-menu/note-info-sidebar-menu'
 import { PermissionsSidebarEntry } from './specific-sidebar-entries/permissions-sidebar-entry/permissions-sidebar-entry'
