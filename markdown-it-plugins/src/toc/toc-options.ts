@@ -37,6 +37,6 @@ export const defaultOptions: TocOptions = {
   linkClass: '',
   level: 1,
   listType: 'ol',
-  allowedTokenTypes: ['text', 'code_inline'],
+  allowedTokenTypes: ['text', 'code_inline', 'math', 'inline_math', 'display_math'],
   slugify: defaultSlugify,
 }

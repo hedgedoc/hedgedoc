@@ -183,4 +183,35 @@ describe('toc', () => {
     `),
     ).toMatchSnapshot()
   })
+
+  it('includes inline math in heading names', () => {
+    const callback = jest.fn()
+    const markdownIt = new MarkdownIt().use(toc, { callback })
+    markdownIt.inline.ruler.before('text', 'inlineMath', (state, silent) => {
+      if (state.src.slice(state.pos, state.pos + 8) !== '$\\alpha$') {
+        return false
+      }
+
+      if (!silent) {
+        const token = state.push('inline_math', '', 0)
+        token.content = '\\alpha'
+      }
+      state.pos += 8
+      return true
+    })
+
+    markdownIt.render('# $\\alpha$-foo')
+
+    expect(callback).toHaveBeenCalledWith({
+      children: [
+        {
+          children: [],
+          level: 1,
+          name: '\\alpha-foo',
+        },
+      ],
+      level: 0,
+      name: '',
+    })
+  })
 })

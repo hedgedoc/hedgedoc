@@ -43,6 +43,8 @@ function extractInnerTextFromTag(node: Element): string {
     return ''
   } else if (node.name === 'img') {
     return findAttribute(node, 'alt')?.value ?? ''
+  } else if (node.name === 'math') {
+    return ''
   } else {
     return node.children.reduce((state, child) => {
       return state + extractInnerTextFromNode(child)
