@@ -8,7 +8,7 @@ import type { CommunicationMessages, EditorToRendererMessageType } from '../rend
 import type { Handler } from '../window-post-message-communicator'
 import { useEffect } from 'react'
 
-export type CommunicationMessageHandler<MESSAGE_TYPE extends EditorToRendererMessageType> = Handler<
+type RendererMessageHandler<MESSAGE_TYPE extends EditorToRendererMessageType> = Handler<
   CommunicationMessages,
   MESSAGE_TYPE
 >
@@ -21,11 +21,14 @@ export type CommunicationMessageHandler<MESSAGE_TYPE extends EditorToRendererMes
  */
 export const useRendererReceiveHandler = <MESSAGE_TYPE extends EditorToRendererMessageType>(
   messageType: MESSAGE_TYPE,
-  handler: CommunicationMessageHandler<MESSAGE_TYPE>
+  handler: RendererMessageHandler<MESSAGE_TYPE>,
 ): void => {
-  const editorToRendererCommunicator = useRendererToEditorCommunicator()
+  const rendererToEditorCommunicator = useRendererToEditorCommunicator()
   useEffect(() => {
-    editorToRendererCommunicator.on(messageType, handler)
-    return () => editorToRendererCommunicator.off(messageType, handler)
-  }, [editorToRendererCommunicator, handler, messageType])
+    if (!handler) {
+      return
+    }
+    rendererToEditorCommunicator.on(messageType, handler)
+    return () => rendererToEditorCommunicator.off(messageType, handler)
+  }, [rendererToEditorCommunicator, handler, messageType])
 }

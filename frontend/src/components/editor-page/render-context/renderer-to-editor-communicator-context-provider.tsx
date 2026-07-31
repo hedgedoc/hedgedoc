@@ -20,7 +20,7 @@ const RendererToEditorCommunicatorContext = createContext<RendererToEditorCommun
  * @return the received communicator
  * @throws {Error} if no communicator was received
  */
-export const useRendererToEditorCommunicator: () => RendererToEditorCommunicator = () => {
+export const useRendererToEditorCommunicator = (): RendererToEditorCommunicator => {
   const communicatorFromContext = useContext(RendererToEditorCommunicatorContext)
   if (!communicatorFromContext) {
     throw new Error('No renderer-to-editor-iframe-communicator received. Did you forget to use the provider component?')

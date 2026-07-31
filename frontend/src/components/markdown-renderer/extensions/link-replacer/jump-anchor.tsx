@@ -5,6 +5,8 @@
  */
 import type { AllHTMLAttributes } from 'react'
 import React, { useCallback } from 'react'
+import { useRendererToEditorCommunicator } from '../../../editor-page/render-context/renderer-to-editor-communicator-context-provider'
+import { CommunicationMessageType } from '../../../render-page/window-post-message-communicator/rendering-message'
 
 export interface JumpAnchorProps extends AllHTMLAttributes<HTMLAnchorElement> {
   jumpTargetId: string
@@ -18,8 +20,13 @@ export interface JumpAnchorProps extends AllHTMLAttributes<HTMLAnchorElement> {
  * @param props Additional props directly given to the link
  */
 export const JumpAnchor: React.FC<JumpAnchorProps> = ({ jumpTargetId, children, ...props }) => {
+  const iframeCommunicator = useRendererToEditorCommunicator()
   const jumpToTargetId = useCallback(
     (event: React.MouseEvent<HTMLElement, MouseEvent>): void => {
+      iframeCommunicator.sendMessageToOtherSide({
+        type: CommunicationMessageType.SET_URL_HASH,
+        hash: jumpTargetId
+      })
       const intoViewElement = document.getElementById(jumpTargetId)
       const scrollElement = document.querySelector('[data-scroll-element]')
       if (!intoViewElement || !scrollElement) {
@@ -30,7 +37,7 @@ export const JumpAnchor: React.FC<JumpAnchorProps> = ({ jumpTargetId, children, 
       scrollElement.scrollTo({ behavior: 'smooth', top: intoViewElement.offsetTop })
       event.preventDefault()
     },
-    [jumpTargetId]
+    [iframeCommunicator, jumpTargetId]
   )
 
   return (

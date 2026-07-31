@@ -11,8 +11,12 @@ import { DocumentMarkdownRenderer } from './renderers/document/document-markdown
 import { SimpleMarkdownRenderer } from './renderers/simple/simple-markdown-renderer'
 import { SlideshowMarkdownRenderer } from './renderers/slideshow/slideshow-markdown-renderer'
 import { useRendererReceiveHandler } from './window-post-message-communicator/hooks/use-renderer-receive-handler'
-import type { BaseConfiguration } from './window-post-message-communicator/rendering-message'
-import { CommunicationMessageType, RendererType } from './window-post-message-communicator/rendering-message'
+import type {
+  BaseConfiguration} from './window-post-message-communicator/rendering-message';
+import {
+  CommunicationMessageType,
+  RendererType
+} from './window-post-message-communicator/rendering-message'
 import { countWords } from './word-counter'
 import type { RevealOptions } from 'reveal.js'
 import { EventEmitter2 } from 'eventemitter2'

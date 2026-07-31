@@ -22,7 +22,7 @@ export const useSendToRenderer = (
 
   useEffect(() => {
     if (message && rendererReady) {
-      iframeCommunicator?.sendMessageToOtherSide(message)
+      iframeCommunicator.sendMessageToOtherSide(message)
     }
   }, [iframeCommunicator, message, rendererReady])
 }

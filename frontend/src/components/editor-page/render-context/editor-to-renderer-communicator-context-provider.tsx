@@ -10,9 +10,7 @@ import { EditorToRendererCommunicator } from '../../render-page/window-post-mess
 import type { PropsWithChildren } from 'react'
 import React, { createContext, useContext, useEffect, useMemo } from 'react'
 import { v4 as uuid } from 'uuid'
-import { Logger } from '../../../utils/logger'
 
-const logger = new Logger('EditorToRendererCommunicator')
 const EditorToRendererCommunicatorContext = createContext<EditorToRendererCommunicator | undefined>(undefined)
 
 /**
@@ -21,11 +19,10 @@ const EditorToRendererCommunicatorContext = createContext<EditorToRendererCommun
  * @return the received communicator
  * @throws {Error} if no communicator was received
  */
-export const useEditorToRendererCommunicator = (): EditorToRendererCommunicator | undefined => {
+export const useEditorToRendererCommunicator = (): EditorToRendererCommunicator => {
   const communicatorFromContext = useContext(EditorToRendererCommunicatorContext)
   if (!communicatorFromContext) {
-    logger.error('No editor-to-renderer-iframe-communicator received. Did you forget to use the provider component?')
-    return undefined
+    throw new Error('No editor-to-renderer-iframe-communicator received. Did you forget to use the provider component?')
   }
   return communicatorFromContext
 }

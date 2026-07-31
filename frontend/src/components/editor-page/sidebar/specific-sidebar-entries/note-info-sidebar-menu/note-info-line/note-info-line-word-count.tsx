@@ -35,7 +35,7 @@ export const NoteInfoLineWordCount: React.FC<NoteInfoLineWordCountProps> = ({ vi
   const rendererReady = useApplicationState((state) => state.rendererStatus.rendererReady)
   useEffect(() => {
     if (rendererReady && visible) {
-      editorToRendererCommunicator?.sendMessageToOtherSide({ type: CommunicationMessageType.GET_WORD_COUNT })
+      editorToRendererCommunicator.sendMessageToOtherSide({ type: CommunicationMessageType.GET_WORD_COUNT })
     }
   }, [editorToRendererCommunicator, rendererReady, visible])
 

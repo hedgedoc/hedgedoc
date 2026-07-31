@@ -8,22 +8,28 @@ import type { CommunicationMessages, RendererToEditorMessageType } from '../rend
 import type { Handler } from '../window-post-message-communicator'
 import { useEffect } from 'react'
 
+type EditorMessageHandler<MESSAGE_TYPE extends RendererToEditorMessageType> = Handler<
+  CommunicationMessages,
+  MESSAGE_TYPE
+> | null
+
+
 /**
  * Sets the handler for the given message type in the current editor to renderer communicator.
  *
  * @param messageType The message type that should be used to listen to.
  * @param handler The handler that should be called if a message with the given message type was received.
  */
-export const useEditorReceiveHandler = <R extends RendererToEditorMessageType>(
-  messageType: R,
-  handler: Handler<CommunicationMessages, R> | null
+export const useEditorReceiveHandler = <MESSAGE_TYPE extends RendererToEditorMessageType>(
+  messageType: MESSAGE_TYPE,
+  handler: EditorMessageHandler<MESSAGE_TYPE>,
 ): void => {
   const editorToRendererCommunicator = useEditorToRendererCommunicator()
   useEffect(() => {
     if (!handler) {
       return
     }
-    editorToRendererCommunicator?.on(messageType, handler)
-    return () => editorToRendererCommunicator?.off(messageType, handler)
+    editorToRendererCommunicator.on(messageType, handler)
+    return () => editorToRendererCommunicator.off(messageType, handler)
   }, [editorToRendererCommunicator, handler, messageType])
 }
