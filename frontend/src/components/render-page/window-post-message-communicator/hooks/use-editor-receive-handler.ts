@@ -13,7 +13,6 @@ type EditorMessageHandler<MESSAGE_TYPE extends RendererToEditorMessageType> = Ha
   MESSAGE_TYPE
 > | null
 
-
 /**
  * Sets the handler for the given message type in the current editor to renderer communicator.
  *
@@ -22,7 +21,7 @@ type EditorMessageHandler<MESSAGE_TYPE extends RendererToEditorMessageType> = Ha
  */
 export const useEditorReceiveHandler = <MESSAGE_TYPE extends RendererToEditorMessageType>(
   messageType: MESSAGE_TYPE,
-  handler: EditorMessageHandler<MESSAGE_TYPE>,
+  handler: EditorMessageHandler<MESSAGE_TYPE>
 ): void => {
   const editorToRendererCommunicator = useEditorToRendererCommunicator()
   useEffect(() => {

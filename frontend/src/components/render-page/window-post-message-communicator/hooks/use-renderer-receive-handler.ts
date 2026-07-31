@@ -21,7 +21,7 @@ type RendererMessageHandler<MESSAGE_TYPE extends EditorToRendererMessageType> = 
  */
 export const useRendererReceiveHandler = <MESSAGE_TYPE extends EditorToRendererMessageType>(
   messageType: MESSAGE_TYPE,
-  handler: RendererMessageHandler<MESSAGE_TYPE>,
+  handler: RendererMessageHandler<MESSAGE_TYPE>
 ): void => {
   const rendererToEditorCommunicator = useRendererToEditorCommunicator()
   useEffect(() => {

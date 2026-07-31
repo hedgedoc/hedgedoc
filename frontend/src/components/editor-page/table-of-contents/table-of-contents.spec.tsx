@@ -7,11 +7,23 @@ import { mockI18n } from '../../../test-utils/mock-i18n'
 import { TableOfContents } from './table-of-contents'
 import type { TocAst } from '@hedgedoc/markdown-it-plugins'
 import { render } from '@testing-library/react'
+import { RendererToEditorCommunicatorContextProvider } from '../render-context/renderer-to-editor-communicator-context-provider'
+import { BaseUrlContextProvider } from '../../common/base-url/base-url-context-provider'
+import * as UseSingleStringUrlParameterMock from '../../../hooks/common/use-single-string-url-parameter'
+
+jest.mock('../../../hooks/common/use-single-string-url-parameter')
 
 describe('Table of contents', () => {
   beforeAll(async () => {
     await mockI18n()
+    jest.spyOn(UseSingleStringUrlParameterMock, 'useSingleStringUrlParameter').mockReturnValue('test-uuid')
   })
+
+  const baseUrls = {
+    editor: 'http://example.com',
+    renderer: 'http://example.com',
+    internalApiUrl: 'http://example.com'
+  }
 
   const level4Ast: TocAst = {
     name: 'Level 4',
@@ -41,14 +53,22 @@ describe('Table of contents', () => {
 
   it('renders correctly', () => {
     const view = render(
-      <TableOfContents ast={level0Ast} className={'customClassName'} baseUrl={'https://example.org'} />
+      <BaseUrlContextProvider baseUrls={baseUrls}>
+        <RendererToEditorCommunicatorContextProvider>
+          <TableOfContents ast={level0Ast} className={'customClassName'} baseUrl={'https://example.org'} />
+        </RendererToEditorCommunicatorContextProvider>
+      </BaseUrlContextProvider>
     )
     expect(view.container).toMatchSnapshot()
   })
 
   it('renders only in requested max depth', () => {
     const view = render(
-      <TableOfContents ast={level0Ast} maxDepth={2} className={'customClassName'} baseUrl={'https://example.org'} />
+      <BaseUrlContextProvider baseUrls={baseUrls}>
+        <RendererToEditorCommunicatorContextProvider>
+          <TableOfContents ast={level0Ast} maxDepth={2} className={'customClassName'} baseUrl={'https://example.org'} />
+        </RendererToEditorCommunicatorContextProvider>
+      </BaseUrlContextProvider>
     )
     expect(view.container).toMatchSnapshot()
   })
