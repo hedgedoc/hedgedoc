@@ -22,7 +22,8 @@ export enum CommunicationMessageType {
   IMAGE_UPLOAD = 'IMAGE_UPLOAD',
   EXTENSION_EVENT = 'EXTENSION_EVENT',
   SET_PRINT_MODE = 'SET_PRINT_MODE',
-  SCROLL_TO_ELEMENT = 'SCROLL_TO_ELEMENT'
+  SCROLL_TO_ELEMENT = 'SCROLL_TO_ELEMENT',
+  SET_URL_HASH = 'SET_URL_HASH'
 }
 
 export interface NoPayloadMessage<TYPE extends CommunicationMessageType> {
@@ -99,6 +100,11 @@ export interface ScrollToElementMessage {
   elementId: string
 }
 
+export interface SetUrlHashMessage {
+  type: CommunicationMessageType.SET_URL_HASH
+  hash: string
+}
+
 export type CommunicationMessages =
   | NoPayloadMessage<CommunicationMessageType.RENDERER_READY>
   | NoPayloadMessage<CommunicationMessageType.ENABLE_RENDERER_SCROLL_SOURCE>
@@ -115,6 +121,7 @@ export type CommunicationMessages =
   | ExtensionEvent
   | SetPrintModeConfigurationMessage
   | ScrollToElementMessage
+  | SetUrlHashMessage
 
 export type EditorToRendererMessageType =
   | CommunicationMessageType.SET_MARKDOWN_CONTENT
@@ -135,6 +142,7 @@ export type RendererToEditorMessageType =
   | CommunicationMessageType.ON_WORD_COUNT_CALCULATED
   | CommunicationMessageType.IMAGE_UPLOAD
   | CommunicationMessageType.EXTENSION_EVENT
+  | CommunicationMessageType.SET_URL_HASH
 
 export enum RendererType {
   DOCUMENT = 'document',

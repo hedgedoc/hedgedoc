@@ -28,13 +28,13 @@ export const usePrintIframe = (): (() => void) => {
     if (!iframe || !iframe.contentWindow) {
       return
     }
-    iframeCommunicator?.sendMessageToOtherSide({
+    iframeCommunicator.sendMessageToOtherSide({
       type: CommunicationMessageType.SET_PRINT_MODE,
       printMode: true
     })
     setTimeout(() => {
       iframe.contentWindow?.print()
-      iframeCommunicator?.sendMessageToOtherSide({
+      iframeCommunicator.sendMessageToOtherSide({
         type: CommunicationMessageType.SET_PRINT_MODE,
         printMode: false
       })

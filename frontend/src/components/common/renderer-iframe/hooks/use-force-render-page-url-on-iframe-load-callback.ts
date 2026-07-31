@@ -27,9 +27,7 @@ export const useForceRenderPageUrlOnIframeLoadCallback = (
   const forcedUrl = useMemo(() => {
     const renderUrl = new URL(rendererBaseUrl)
     renderUrl.pathname += 'render'
-    if (iframeCommunicator !== undefined) {
-      renderUrl.searchParams.set('uuid', iframeCommunicator.getUuid())
-    }
+    renderUrl.searchParams.set('uuid', iframeCommunicator.getUuid())
     return renderUrl.toString()
   }, [iframeCommunicator, rendererBaseUrl])
   const redirectionInProgress = useRef<boolean>(false)

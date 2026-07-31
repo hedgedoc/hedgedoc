@@ -12,12 +12,7 @@ import type { ScrollProps } from '../../editor-page/synced-scroll/scroll-props'
 import { useExtensionEventEmitter } from '../../markdown-renderer/hooks/use-extension-event-emitter'
 import type { CommonMarkdownRendererProps } from '../../render-page/renderers/common-markdown-renderer-props'
 import { useEditorReceiveHandler } from '../../render-page/window-post-message-communicator/hooks/use-editor-receive-handler'
-import type {
-  ExtensionEvent,
-  OnHeightChangeMessage,
-  RendererType,
-  SetScrollStateMessage
-} from '../../render-page/window-post-message-communicator/rendering-message'
+import type { RendererType } from '../../render-page/window-post-message-communicator/rendering-message'
 import { CommunicationMessageType } from '../../render-page/window-post-message-communicator/rendering-message'
 import { WaitSpinner } from '../wait-spinner/wait-spinner'
 import { useEffectOnRenderTypeChange } from './hooks/use-effect-on-render-type-change'
@@ -67,7 +62,7 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
   const [rendererReady, setRendererReady] = useState<boolean>(false)
   const frameReference = useRef<HTMLIFrameElement>(null)
   const iframeCommunicator = useEditorToRendererCommunicator()
-  const log = useMemo(() => new Logger(`RendererIframe[${iframeCommunicator?.getUuid()}]`), [iframeCommunicator])
+  const log = useMemo(() => new Logger(`RendererIframe[${iframeCommunicator.getUuid()}]`), [iframeCommunicator])
 
   const resetRendererReady = useCallback(() => {
     log.debug('Reset render status')
@@ -98,7 +93,7 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
 
   useEffect(() => {
     if (!rendererReady) {
-      iframeCommunicator?.unsetMessageTarget()
+      iframeCommunicator.unsetMessageTarget()
     }
   }, [iframeCommunicator, rendererReady])
 
@@ -111,22 +106,19 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
   useEditorReceiveHandler(
     CommunicationMessageType.EXTENSION_EVENT,
     useMemo(() => {
-      return eventEmitter === undefined
-        ? null
-        : (values: ExtensionEvent) => eventEmitter.emit(values.eventName, values.payload)
+      return eventEmitter === undefined ? null : ({ eventName, payload }) => eventEmitter.emit(eventName, payload)
     }, [eventEmitter])
   )
 
   useEditorReceiveHandler(
     CommunicationMessageType.ON_HEIGHT_CHANGE,
-    useCallback(
-      (values: OnHeightChangeMessage) => {
+    useMemo(() => {
+      return ({ height }) => {
         if (adaptFrameHeightToContent) {
-          setFrameHeight?.(values.height)
+          setFrameHeight?.(height)
         }
-      },
-      [adaptFrameHeightToContent]
-    )
+      }
+    }, [adaptFrameHeightToContent])
   )
 
   useEditorReceiveHandler(
@@ -142,9 +134,9 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
         log.error('Load triggered without content window')
         return
       }
-      iframeCommunicator?.setMessageTarget(otherWindow)
-      iframeCommunicator?.enableCommunication()
-      iframeCommunicator?.sendMessageToOtherSide({
+      iframeCommunicator.setMessageTarget(otherWindow)
+      iframeCommunicator.enableCommunication()
+      iframeCommunicator.sendMessageToOtherSide({
         type: CommunicationMessageType.SET_BASE_CONFIGURATION,
         baseConfiguration: {
           baseUrl: window.location.toString(),
@@ -163,11 +155,19 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
   useSendScrollState(scrollState ?? null, rendererReady)
   useEditorReceiveHandler(
     CommunicationMessageType.SET_SCROLL_STATE,
-    useCallback((values: SetScrollStateMessage) => onScroll?.(values.scrollState), [onScroll])
+    useMemo(() => {
+      return ({ scrollState }) => onScroll?.(scrollState)
+    }, [onScroll])
   )
   useEditorReceiveHandler(
     CommunicationMessageType.ENABLE_RENDERER_SCROLL_SOURCE,
     useCallback(() => onMakeScrollSource?.(), [onMakeScrollSource])
+  )
+  useEditorReceiveHandler(
+    CommunicationMessageType.SET_URL_HASH,
+    useMemo(() => {
+      return ({ hash }) => (window.location.hash = hash)
+    }, [])
   )
 
   const frameClassNames = useMemo(

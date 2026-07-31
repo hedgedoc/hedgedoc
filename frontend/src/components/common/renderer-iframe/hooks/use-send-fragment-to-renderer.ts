@@ -16,7 +16,7 @@ export const useSendFragmentToRenderer = (rendererReady: boolean): void => {
   const iframeCommunicator = useEditorToRendererCommunicator()
 
   useEffect(() => {
-    if (!rendererReady || !iframeCommunicator) {
+    if (!rendererReady) {
       return
     }
 
