@@ -10,8 +10,6 @@ import { useCallback, useEffect, useMemo } from 'react'
  * Hook to listen for the print keyboard shortcut and print the content of the renderer iframe.
  */
 export const usePrintKeyboardShortcut = (): void => {
-  const printCallbackOutside = usePrintIframe()
-  const printCallbackInside = usePrintSelf()
   const isIframe = useMemo(() => window.top !== window.self, [])
 
   const handlePrint = useCallback(
@@ -19,13 +17,13 @@ export const usePrintKeyboardShortcut = (): void => {
       if (event.key === 'p' && (event.ctrlKey || event.metaKey)) {
         event.preventDefault()
         if (isIframe) {
-          printCallbackInside()
+          usePrintSelf()()
         } else {
-          printCallbackOutside()
+          usePrintIframe()()
         }
       }
     },
-    [isIframe, printCallbackInside, printCallbackOutside]
+    [isIframe]
   )
 
   useEffect(() => {
