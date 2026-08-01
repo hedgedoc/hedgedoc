@@ -95,15 +95,19 @@ export const RenderPageContent: React.FC = () => {
         const scrollToElement = (): boolean => {
           const targetElement = document.getElementById(elementId)
           const scrollElement = document.querySelector('[data-scroll-element]')
-          if (targetElement && scrollElement) {
-            sendScrolling.current = true
-            communicator.sendMessageToOtherSide({
-              type: CommunicationMessageType.ENABLE_RENDERER_SCROLL_SOURCE
-            })
-            scrollElement.scrollTo({ behavior: 'smooth', top: targetElement.offsetTop })
-            return true
+          if (!targetElement || !scrollElement) {
+            return false
           }
-          return false
+          sendScrolling.current = true
+          let top = targetElement.offsetTop
+          if (targetElement.parentElement?.className === 'footnote-ref') {
+            top = targetElement.parentElement.offsetTop
+          }
+          communicator.sendMessageToOtherSide({
+            type: CommunicationMessageType.ENABLE_RENDERER_SCROLL_SOURCE
+          })
+          scrollElement.scrollTo({ behavior: 'smooth', top: top })
+          return true
         }
 
         // On initial page load on slower computers, the markdown might not have rendered yet.

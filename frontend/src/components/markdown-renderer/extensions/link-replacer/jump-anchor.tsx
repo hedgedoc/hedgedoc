@@ -27,14 +27,6 @@ export const JumpAnchor: React.FC<JumpAnchorProps> = ({ jumpTargetId, children, 
         type: CommunicationMessageType.SET_URL_HASH,
         hash: jumpTargetId
       })
-      const intoViewElement = document.getElementById(jumpTargetId)
-      const scrollElement = document.querySelector('[data-scroll-element]')
-      if (!intoViewElement || !scrollElement) {
-        return
-      }
-      //It would be much easier to use scrollIntoView here but since the code mirror also uses smooth scroll and bugs like
-      // https://stackoverflow.com/a/63563437/13103995 exist, we must use scrollTo.
-      scrollElement.scrollTo({ behavior: 'smooth', top: intoViewElement.offsetTop })
       event.preventDefault()
     },
     [iframeCommunicator, jumpTargetId]
