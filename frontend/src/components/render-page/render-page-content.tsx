@@ -18,7 +18,7 @@ import type { RevealOptions } from 'reveal.js'
 import { EventEmitter2 } from 'eventemitter2'
 import React, { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
 import { setPrintMode } from '../../redux/print-mode/methods'
-import { usePrintKeyboardShortcut } from '../editor-page/hooks/use-print-keyboard-shortcut'
+import { usePrintSelfKeyboardShortcut } from '../editor-page/hooks/use-print-keyboard-shortcut'
 
 /**
  * Wraps the markdown rendering in an iframe.
@@ -127,7 +127,7 @@ export const RenderPageContent: React.FC = () => {
     )
   )
 
-  usePrintKeyboardShortcut()
+  usePrintSelfKeyboardShortcut()
 
   const onMakeScrollSource = useCallback(() => {
     sendScrolling.current = true
