@@ -86,9 +86,10 @@ export const RendererIframe: React.FC<RendererIframeProps> = ({
   useEffect(
     () => () => {
       log.debug('Component ended')
-      setRendererReady(false)
+      iframeCommunicator.unsetMessageTarget()
+      onRendererStatusChange?.(false)
     },
-    [iframeCommunicator, log]
+    [iframeCommunicator, log, onRendererStatusChange]
   )
 
   useEffect(() => {
