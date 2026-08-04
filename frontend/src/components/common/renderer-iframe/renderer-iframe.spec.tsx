@@ -7,13 +7,16 @@ import { RendererType } from '../../render-page/window-post-message-communicator
 import { render, screen } from '@testing-library/react'
 import { RendererIframe } from './renderer-iframe'
 
+const unsetMessageTarget = jest.fn()
+
 jest.mock('../../editor-page/render-context/editor-to-renderer-communicator-context-provider', () => ({
   useEditorToRendererCommunicator: () => ({
     enableCommunication: jest.fn(),
     getUuid: () => 'test-uuid',
+    isCommunicationEnabled: () => false,
     sendMessageToOtherSide: jest.fn(),
     setMessageTarget: jest.fn(),
-    unsetMessageTarget: jest.fn()
+    unsetMessageTarget
   })
 }))
 
@@ -50,6 +53,8 @@ jest.mock('./hooks/use-send-scroll-state', () => ({
 }))
 
 describe('RendererIframe', () => {
+  beforeEach(() => unsetMessageTarget.mockClear())
+
   it('includes security sandboxing attributes for the iframe', () => {
     render(<RendererIframe markdownContentLines={[]} rendererType={RendererType.DOCUMENT} />)
 
@@ -65,5 +70,21 @@ describe('RendererIframe', () => {
     for (const argument of expectedArguments) {
       expect(renderer).toHaveAttribute('sandbox', expect.stringContaining(argument))
     }
+  })
+
+  it('clears the global renderer status and message target when unmounted', () => {
+    const onRendererStatusChange = jest.fn()
+    const { unmount } = render(
+      <RendererIframe
+        markdownContentLines={[]}
+        rendererType={RendererType.DOCUMENT}
+        onRendererStatusChange={onRendererStatusChange}
+      />
+    )
+
+    unmount()
+
+    expect(unsetMessageTarget).toHaveBeenCalled()
+    expect(onRendererStatusChange).toHaveBeenLastCalledWith(false)
   })
 })
