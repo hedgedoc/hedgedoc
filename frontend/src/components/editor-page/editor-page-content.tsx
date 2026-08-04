@@ -18,7 +18,7 @@ import { PrintWarning } from './print-warning/print-warning'
 import React, { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import './print.scss'
-import { usePrintKeyboardShortcut } from './hooks/use-print-keyboard-shortcut'
+import { usePrintIframeKeyboardShortcut } from './hooks/use-print-keyboard-shortcut'
 import { NoteType } from '@hedgedoc/commons'
 import { useApplicationState } from '../../hooks/common/use-application-state'
 import { buildCursorLineScrollState } from './synced-scroll/cursor-line-scroll-state'
@@ -33,7 +33,7 @@ export enum ScrollSource {
  */
 export const EditorPageContent: React.FC = () => {
   useTranslation()
-  usePrintKeyboardShortcut()
+  usePrintIframeKeyboardShortcut()
 
   const scrollSource = useRef<ScrollSource>(ScrollSource.EDITOR)
   const [editorScrollState, onMarkdownRendererScroll] = useScrollState(scrollSource, ScrollSource.EDITOR)

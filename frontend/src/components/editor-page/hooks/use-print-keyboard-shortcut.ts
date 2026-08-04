@@ -4,26 +4,33 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { usePrintIframe, usePrintSelf } from '../utils/print-iframe'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect } from 'react'
 
 /**
  * Hook to listen for the print keyboard shortcut and print the content of the renderer iframe.
  */
-export const usePrintKeyboardShortcut = (): void => {
-  const isIframe = useMemo(() => window.top !== window.self, [])
+export const usePrintIframeKeyboardShortcut = (): void => {
+  const printIframe = usePrintIframe()
+  usePrintShortcut(printIframe)
+}
 
+/**
+ * Hook to listen for the print keyboard shortcut and print the renderer content from within the iframe.
+ */
+export const usePrintSelfKeyboardShortcut = (): void => {
+  const printSelf = usePrintSelf()
+  usePrintShortcut(printSelf)
+}
+
+const usePrintShortcut = (print: () => void): void => {
   const handlePrint = useCallback(
     (event: KeyboardEvent): void => {
       if (event.key === 'p' && (event.ctrlKey || event.metaKey)) {
         event.preventDefault()
-        if (isIframe) {
-          usePrintSelf()()
-        } else {
-          usePrintIframe()()
-        }
+        print()
       }
     },
-    [isIframe]
+    [print]
   )
 
   useEffect(() => {
