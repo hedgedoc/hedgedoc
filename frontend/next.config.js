@@ -59,6 +59,16 @@ const svgrConfig = {
 /** @type {import('next').NextConfig} */
 const rawNextConfig = {
   webpack: (config) => {
+    // tau-prolog (a dependency of @nodebook/core, used for graph inference)
+    // optionally requires 'fs' and 'readline-sync' (which needs
+    // 'child_process') for file-based consult and REPL input. Neither is used
+    // in the browser, so provide empty modules.
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      child_process: false
+    }
+
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
