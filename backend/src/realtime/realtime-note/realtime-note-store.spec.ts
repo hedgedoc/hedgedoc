@@ -43,7 +43,7 @@ describe('RealtimeNoteStore', () => {
   it("can create a new realtime note with a yjs state if it doesn't exist yet", () => {
     const initialYjsState = [0];
     expect(
-      realtimeNoteStore.create(mockedNoteId, mockedContent, new Uint8Array(initialYjsState).buffer),
+      realtimeNoteStore.create(mockedNoteId, mockedContent, new Uint8Array(initialYjsState)),
     ).toBe(mockedRealtimeNote);
     expect(realtimeNoteConstructorSpy).toHaveBeenCalledWith(
       mockedNoteId,

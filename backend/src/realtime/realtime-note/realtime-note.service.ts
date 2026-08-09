@@ -85,7 +85,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
     const realtimeNote = this.realtimeNoteStore.create(
       noteId,
       lastRevision[FieldNameRevision.content],
-      lastRevision[FieldNameRevision.yjsStateVector]?.buffer ?? undefined,
+      lastRevision[FieldNameRevision.yjsStateVector] ?? undefined,
     );
     realtimeNote.on('beforeDestroy', () => {
       this.saveRealtimeNote(realtimeNote);
