@@ -39,6 +39,7 @@ export const PasswordAgainField: React.FC<PasswordAgainFieldProps> = ({
       <Form.Control
         type='password'
         size='sm'
+        value={value}
         isInvalid={isInvalid}
         isValid={isValid}
         onChange={onChange}
