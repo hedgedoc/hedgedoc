@@ -46,7 +46,7 @@ export const useRealtimeConnection = (): MessageTransporter => {
             reconnectCount.current += 1
             establishWebsocketConnection()
           },
-          Math.max(timeout, WEBSOCKET_RECONNECT_MAX_DURATION)
+          Math.min(timeout, WEBSOCKET_RECONNECT_MAX_DURATION)
         )
       })
       socket.addEventListener('open', () => {
@@ -56,6 +56,13 @@ export const useRealtimeConnection = (): MessageTransporter => {
   }, [messageTransporter, websocketUrl])
 
   const isConnected = useApplicationState((state) => state.realtimeStatus.isConnected)
+
+  useEffect(() => {
+    // When websocketUrl changes (e.g. switching notes), reset connection state
+    // so the connection effect below can establish a fresh connection.
+    reconnectCount.current = 0
+    disconnectReason.current = undefined
+  }, [websocketUrl])
 
   useEffect(() => {
     if (
