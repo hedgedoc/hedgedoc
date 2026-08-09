@@ -27,7 +27,7 @@ export class RealtimeNoteStore {
   public create(
     noteId: number,
     initialTextContent: string,
-    initialYjsState?: ArrayBuffer,
+    initialYjsState?: Uint8Array,
   ): RealtimeNote {
     if (this.noteIdToRealtimeNote.has(noteId)) {
       throw new Error(`Realtime note for note ${noteId} already exists.`);

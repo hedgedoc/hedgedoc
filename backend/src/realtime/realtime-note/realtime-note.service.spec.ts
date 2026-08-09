@@ -203,7 +203,7 @@ describe('RealtimeNoteService', () => {
     expect(realtimeNoteStore.create).toHaveBeenCalledWith(
       mockedNoteId,
       mockedContent,
-      mockedYjsStateBuffer,
+      Buffer.from(mockedYjsStateBuffer),
     );
     expect(setIntervalSpy).not.toHaveBeenCalled();
   });
