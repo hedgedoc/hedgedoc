@@ -593,6 +593,7 @@ window.postProcess = postProcess
 // rewrite external links to go through the /_link warning page
 export function rewriteExternalLinks (view) {
   if (window.externalLinkWarning === false) {
+    view.find('a:not([href^="#"]):not([target])').attr('target', '_blank').attr('rel', 'noopener')
     return
   }
   const whitelist = window.externalLinkWhitelist || []
@@ -621,11 +622,18 @@ export function rewriteExternalLinks (view) {
       }
       return hostname === lowercaseDomain
     })) {
+      if (!anchor.attr('target')) {
+        anchor.attr('target', '_blank').attr('rel', 'noopener')
+      }
       return
     }
-    const noteURL = window.location.pathname.split('/').pop()
     const urlPath = window.urlpath ? `/${window.urlpath}` : ''
-    anchor.attr('href', `${window.location.origin}${urlPath}/_link?url=${encodeURIComponent(parsed.href)}&note=${noteURL}`)
+    const warningURL = `${window.location.origin}${urlPath}/_link?url=${encodeURIComponent(parsed.href)}`
+    anchor.attr('href', warningURL)
+    anchor.on('click', event => {
+      event.preventDefault()
+      window.open(warningURL, '_blank')
+    })
   })
 }
 window.rewriteExternalLinks = rewriteExternalLinks

@@ -6,6 +6,10 @@
 
 - Automatically skip the login modal if no form-based login and exactly one external login provider is configured
 
+### Bugfixes
+
+- All links will be opened in new tabs instead of the same tab as the note. This was changed when the external link warning was implemented and now the old behavior is restored.
+
 ## <i class="fa fa-tag"></i> 1.11.1 <i class="fa fa-calendar-o"></i> 2026-07-24
 
 ### Security fixes
