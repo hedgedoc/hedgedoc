@@ -132,7 +132,7 @@
     "Invalid link": "Invalid link",
     "Do you want to continue?": "Do you want to continue?",
     "Continue to external page": "Continue to external page",
-    "Back to your note": "Back to your note",
+    "Close": "Close",
     "The provided link is not a valid URL.": "The provided link is not a valid URL.",
     "The content of that page is unrelated to HedgeDoc. Do not enter your HedgeDoc credentials there.": "The content of that page is unrelated to HedgeDoc. Do not enter your HedgeDoc credentials there."
 }

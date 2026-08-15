@@ -132,7 +132,7 @@
     "The content of that page is unrelated to HedgeDoc. Do not enter your HedgeDoc credentials there.": "Der Inhalt dieser Seite ist unabhängig von HedgeDoc. Dort keine HedgeDoc-Zugangsdaten eingeben.",
     "Do you want to continue?": "Fortfahren?",
     "Continue to external page": "Weiter zur externen Seite",
-    "Back to your note": "Zurück zur Notiz",
+    "Close": "Schließen",
     "Invalid link": "Ungültiger Link",
     "The provided link is not a valid URL.": "Die angegebene URL ist nicht gültig."
 }

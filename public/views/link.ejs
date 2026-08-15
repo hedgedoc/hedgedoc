@@ -27,15 +27,18 @@
             <p><%= __('Do you want to continue?') %></p>
             <p>
                 <a class="btn btn-primary" href="<%- targetURL %>"><%= __('Continue to external page') %></a>
-                <a class="btn btn-default" href="<%- serverURL %>/<%- noteURL %>"><%= __('Back to your note') %></a>
+                <a class="btn btn-default" id="close-button"><%= __('Close') %></a>
             </p>
             <% } else { %>
             <p class="text-danger"><strong><%= __('The provided link is not a valid URL.') %></strong></p>
             <p>
-                <a class="btn btn-default" href="<%- serverURL %>/<%- noteURL %>"><%= __('Back to your note') %></a>
+                <a class="btn btn-default" id="close-button"><%= __('Close') %></a>
             </p>
             <% } %>
         </div>
     </div>
 </body>
+<script nonce="<%= cspNonce %>">
+    document.getElementById("close-button").addEventListener('click', _ => window.close())
+</script>
 </html>
