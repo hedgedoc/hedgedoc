@@ -1568,7 +1568,7 @@ __metadata:
     mock-require: "npm:3.0.3"
     moment: "npm:2.30.1"
     morgan: "npm:1.11.0"
-    mysql2: "npm:3.23.1"
+    mysql2: "npm:3.23.4"
     nanoid: "npm:3.3.16"
     optimize-css-assets-webpack-plugin: "npm:6.0.1"
     passport: "patch:passport@npm%3A0.7.0#~/.yarn/patches/passport-npm-0.7.0-df02531736.patch"
@@ -8263,7 +8263,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"iconv-lite@npm:^0.7.2, iconv-lite@npm:~0.7.0":
+"iconv-lite@npm:^0.7.2, iconv-lite@npm:^0.7.3, iconv-lite@npm:~0.7.0":
   version: 0.7.3
   resolution: "iconv-lite@npm:0.7.3"
   dependencies:
@@ -11422,21 +11422,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mysql2@npm:3.23.1":
-  version: 3.23.1
-  resolution: "mysql2@npm:3.23.1"
+"mysql2@npm:3.23.4":
+  version: 3.23.4
+  resolution: "mysql2@npm:3.23.4"
   dependencies:
     aws-ssl-profiles: "npm:^1.1.2"
-    denque: "npm:^2.1.0"
     generate-function: "npm:^2.3.1"
-    iconv-lite: "npm:^0.7.2"
+    iconv-lite: "npm:^0.7.3"
     long: "npm:^5.3.2"
     lru.min: "npm:^1.1.4"
     named-placeholders: "npm:^1.1.6"
     sql-escaper: "npm:^1.5.1"
   peerDependencies:
     "@types/node": ">= 8"
-  checksum: 10/fc2fc865069faf438f382926eda57dc1047eafeb3c28804591cc9f71c926469c8ccbff94b1d9c83aab76cd7166febd560308ae64dfcaa4c51cee2ac7ecee95ba
+  checksum: 10/299e953f559bb1727693ee892e38bf2117f5d78cb69d5af033a51b0f8bbc6c465a81e5979177ebeabff3fdc154412586b3640ae110396ab41ddf5bbb54bf50c1
   languageName: node
   linkType: hard
 
