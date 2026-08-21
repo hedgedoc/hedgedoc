@@ -1511,7 +1511,7 @@ __metadata:
     exports-loader: "npm:1.1.1"
     expose-loader: "npm:1.0.3"
     express: "npm:4.22.2"
-    express-rate-limit: "npm:8.6.0"
+    express-rate-limit: "npm:8.6.2"
     express-session: "npm:1.19.0"
     file-loader: "npm:6.2.0"
     file-saver: "npm:2.0.5"
@@ -6781,15 +6781,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express-rate-limit@npm:8.6.0":
-  version: 8.6.0
-  resolution: "express-rate-limit@npm:8.6.0"
+"express-rate-limit@npm:8.6.2":
+  version: 8.6.2
+  resolution: "express-rate-limit@npm:8.6.2"
   dependencies:
     debug: "npm:^4.4.3"
     ip-address: "npm:^10.2.0"
   peerDependencies:
     express: ">= 4.11"
-  checksum: 10/193c346cfae0e2ce43d51d8f0c9d34f96dcd9d8d3675f463583f4440ba585deaab0fddc7a94722516699d9181b593902736b08a7374a6eb9082f7b62dfa8f1c1
+  checksum: 10/cf9d2a286821a650890366ed14f3d582293175b6f540e3f64b5fd276201cacef6c1e218448dd54f4a1e860de48c395e3d8ddda4d4a032812266a19d8d947208a
   languageName: node
   linkType: hard
 
