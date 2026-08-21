@@ -9,7 +9,7 @@
 ### Bugfixes
 
 - All links will be opened in new tabs instead of the same tab as the note. This was changed when the external link warning was implemented and now the old behavior is restored.
-- Fixed a bug in the realtime disconnect handler that could lead to data-loss of users with a flaky connection
+- Fixed multiple bugs in the realtime connection handling that could lead to data-loss of users with a flaky connection
 
 ## <i class="fa fa-tag"></i> 1.11.1 <i class="fa fa-calendar-o"></i> 2026-07-24
 

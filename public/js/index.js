@@ -2233,7 +2233,6 @@ socket.on('delete', function () {
     })
   }
 })
-let retryTimer = null
 socket.on('maintenance', function () {
   cmClient.revision = -1
 })
@@ -2246,21 +2245,17 @@ socket.on('disconnect', function (data) {
   if (!editor.getOption('readOnly')) {
     editor.setOption('readOnly', true)
   }
-  if (!retryTimer) {
-    retryTimer = setInterval(function () {
-      if (!needRefresh) socket.connect()
-    }, 1000)
-  }
-})
-socket.on('reconnect', function (data) {
-  // sync back any change in offline
-  emitUserStatus(true)
-  cursorActivity(editor)
-  socket.emit('online users')
 })
 socket.on('connect', function (data) {
-  clearInterval(retryTimer)
-  retryTimer = null
+  if (socket.recovered) {
+    // sync back any change in offline
+    console.debug('Reconnected client')
+    emitUserStatus(true)
+    cursorActivity(editor)
+    socket.emit('online users')
+    return
+  }
+  console.debug('Client connected (no reconnect)')
   personalInfo.id = socket.id
   showStatus(statusType.connected)
   socket.emit('version')
