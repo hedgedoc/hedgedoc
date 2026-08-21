@@ -350,7 +350,7 @@ $('.ui-clear-history').click(() => {
 
 $('.ui-refresh-history').click(() => {
   const lastTags = $('.ui-use-tags').select2('val')
-  $('.ui-use-tags').select2('val', '')
+  $('.ui-use-tags').val('')
   historyList.filter()
   const lastKeyword = $('.search').val()
   $('.search').val('')
@@ -362,7 +362,7 @@ $('.ui-refresh-history').click(() => {
   historyList.clear()
   parseHistory(historyList, (list, notehistory) => {
     parseHistoryCallback(list, notehistory)
-    $('.ui-use-tags').select2('val', lastTags)
+    $('.ui-use-tags').val(lastTags)
     $('.ui-use-tags').trigger('change')
     historyList.search(lastKeyword)
     $('.search').val(lastKeyword)
