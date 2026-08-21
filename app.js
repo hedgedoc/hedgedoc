@@ -89,6 +89,10 @@ const io = new Server(server, {
     origin: config.serverURL,
     methods: ['GET', 'POST'],
     credentials: true
+  },
+  connectionStateRecovery: {
+    maxDisconnectionDuration: 2 * 60 * 1000,
+    skipMiddlewares: false
   }
 })
 
