@@ -11,9 +11,17 @@ import { escapeHtml, unescapeHtml } from './utils'
 
 import markdownit from 'markdown-it'
 import markdownitContainer from 'markdown-it-container'
-
-/* Defined regex markdown it plugins */
-import Plugin from 'markdown-it-regexp'
+import MarkdownItRegexpPlugin from 'markdown-it-regexp'
+import MarkdownItAbbrPlugin from 'markdown-it-abbr'
+import MarkdownItFootnotePlugin from 'markdown-it-footnote'
+import MarkdownItDeflistPlugin from 'markdown-it-deflist'
+import MarkdownItMarkPlugin from 'markdown-it-mark'
+import MarkdownItInsPlugin from 'markdown-it-ins'
+import MarkdownItSubPlugin from 'markdown-it-sub'
+import MarkdownItSupPlugin from 'markdown-it-sup'
+import MarkdownItMathjaxPlugin from 'markdown-it-mathjax'
+import { full as MarkdownItEmojiPlugin } from 'markdown-it-emoji'
+import MarkdownItImsizePlugin from 'markdown-it-imsize'
 
 require('prismjs/themes/prism.css')
 require('prismjs/components/prism-wiki')
@@ -1059,14 +1067,14 @@ export const md = markdownit('default', {
 })
 window.md = md
 
-md.use(require('markdown-it-abbr'))
-md.use(require('markdown-it-footnote'))
-md.use(require('markdown-it-deflist'))
-md.use(require('markdown-it-mark'))
-md.use(require('markdown-it-ins'))
-md.use(require('markdown-it-sub'))
-md.use(require('markdown-it-sup'))
-md.use(require('markdown-it-mathjax')({
+md.use(MarkdownItAbbrPlugin)
+md.use(MarkdownItFootnotePlugin)
+md.use(MarkdownItDeflistPlugin)
+md.use(MarkdownItMarkPlugin)
+md.use(MarkdownItInsPlugin)
+md.use(MarkdownItSubPlugin)
+md.use(MarkdownItSupPlugin)
+md.use(MarkdownItMathjaxPlugin({
   beforeMath: '<span class="mathjax raw">',
   afterMath: '</span>',
   beforeInlineMath: '<span class="mathjax raw">\\(',
@@ -1074,9 +1082,9 @@ md.use(require('markdown-it-mathjax')({
   beforeDisplayMath: '<span class="mathjax raw">\\[',
   afterDisplayMath: '\\]</span>'
 }))
-md.use(require('markdown-it-imsize'))
+md.use(MarkdownItImsizePlugin)
 
-md.use(require('markdown-it-emoji'), {
+md.use(MarkdownItEmojiPlugin, {
   shortcuts: {}
 })
 
@@ -1147,7 +1155,7 @@ md.renderer.rules.fence = (tokens, idx, options, env, self) => {
 }
 
 // youtube
-const youtubePlugin = new Plugin(
+const youtubePlugin = new MarkdownItRegexpPlugin(
   // regexp to match
   /{%youtube\s*([\w-]{11})\s*%}/,
 
@@ -1165,7 +1173,7 @@ const youtubePlugin = new Plugin(
   }
 )
 // vimeo
-const vimeoPlugin = new Plugin(
+const vimeoPlugin = new MarkdownItRegexpPlugin(
   // regexp to match
   /{%vimeo\s*(\d{6,11})\s*%}/,
 
@@ -1180,7 +1188,7 @@ const vimeoPlugin = new Plugin(
   }
 )
 // gist
-const gistPlugin = new Plugin(
+const gistPlugin = new MarkdownItRegexpPlugin(
   // regexp to match
   /{%gist\s*(\w+\/\w+)\s*%}/,
 
@@ -1190,14 +1198,14 @@ const gistPlugin = new Plugin(
   }
 )
 // TOC
-const tocPlugin = new Plugin(
+const tocPlugin = new MarkdownItRegexpPlugin(
   // regexp to match
   /^\[TOC\]$/i,
 
   (match, utils) => '<div class="toc"></div>'
 )
 // slideshare
-const slidesharePlugin = new Plugin(
+const slidesharePlugin = new MarkdownItRegexpPlugin(
   // regexp to match
   /{%slideshare\s*(\w+\/[\w-]+)\s*%}/,
 
@@ -1209,7 +1217,7 @@ const slidesharePlugin = new Plugin(
   }
 )
 // speakerdeck
-const speakerdeckPlugin = new Plugin(
+const speakerdeckPlugin = new MarkdownItRegexpPlugin(
   // regexp to match
   /{%speakerdeck\s*(\w+\/[\w-]+)\s*%}/,
 
@@ -1221,7 +1229,7 @@ const speakerdeckPlugin = new Plugin(
   }
 )
 // pdf
-const pdfPlugin = new Plugin(
+const pdfPlugin = new MarkdownItRegexpPlugin(
   // regexp to match
   /{%pdf\s*([\d\D]*?)\s*%}/,
 
@@ -1234,7 +1242,7 @@ const pdfPlugin = new Plugin(
   }
 )
 
-const emojijsPlugin = new Plugin(
+const emojijsPlugin = new MarkdownItRegexpPlugin(
   // regexp to match emoji shortcodes :something:
   // We generate an universal regex that guaranteed only contains the
   // emojies we have available. This should prevent all false-positives
