@@ -85,7 +85,6 @@ if (config.enableStatsApi) {
 const io = new Server(server, {
   pingInterval: config.heartbeatInterval,
   pingTimeout: config.heartbeatTimeout,
-  cookie: false,
   cors: {
     origin: config.serverURL,
     methods: ['GET', 'POST'],
