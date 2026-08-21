@@ -275,7 +275,7 @@ app.use(require('./lib/web/statusRouter'))
 app.use(require('./lib/web/auth'))
 app.use(require('./lib/web/historyRouter'))
 app.use(require('./lib/web/userRouter'))
-app.use(require('./lib/web/imageRouter'))
+app.use(require('./lib/web/imageRouter').default)
 app.use(require('./lib/web/note/router'))
 
 // response not found if no any route matxches
