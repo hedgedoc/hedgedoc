@@ -1515,7 +1515,7 @@ __metadata:
     express-session: "npm:1.19.0"
     file-loader: "npm:6.2.0"
     file-saver: "npm:2.0.5"
-    file-type: "npm:21.3.4"
+    file-type: "npm:22.0.2"
     flowchart.js: "npm:1.18.0"
     fork-awesome: "npm:1.2.0"
     formidable: "npm:2.1.5"
@@ -7075,15 +7075,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"file-type@npm:21.3.4":
-  version: 21.3.4
-  resolution: "file-type@npm:21.3.4"
+"file-type@npm:22.0.2":
+  version: 22.0.2
+  resolution: "file-type@npm:22.0.2"
   dependencies:
     "@tokenizer/inflate": "npm:^0.4.1"
-    strtok3: "npm:^10.3.4"
-    token-types: "npm:^6.1.1"
-    uint8array-extras: "npm:^1.4.0"
-  checksum: 10/42d5cf6aafb998fb2f0357e96ea7c48bcce5249f899523a3a5a4c297f4fe2346cc0aff9cf04243ada5c54b6457183550b2a04902b6533cd5e64aaa344d78e0eb
+    strtok3: "npm:^10.3.5"
+    token-types: "npm:^6.1.2"
+    uint8array-extras: "npm:^1.5.0"
+  checksum: 10/931d00b25082d28b0d5acb4f5886bf96608dd04dbbec5944b9120160f5aa6db179bc892195db5ee3e15fe66d0d156db6188d0686fb42830b0d49a577872c99c8
   languageName: node
   linkType: hard
 
@@ -16006,7 +16006,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strtok3@npm:^10.3.4":
+"strtok3@npm:^10.3.5":
   version: 10.3.5
   resolution: "strtok3@npm:10.3.5"
   dependencies:
@@ -16377,7 +16377,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"token-types@npm:^6.1.1":
+"token-types@npm:^6.1.1, token-types@npm:^6.1.2":
   version: 6.1.2
   resolution: "token-types@npm:6.1.2"
   dependencies:
@@ -16654,7 +16654,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uint8array-extras@npm:^1.4.0":
+"uint8array-extras@npm:^1.5.0":
   version: 1.5.0
   resolution: "uint8array-extras@npm:1.5.0"
   checksum: 10/94fd56a2dda6a7445f5176f301f491814c87757d38e4b3c932299ab54d69ec504830e5d5c18ffa20cf694a69a210315be8b4a2c9952c6334da817ea2d2e1dce0
