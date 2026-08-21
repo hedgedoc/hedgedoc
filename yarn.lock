@@ -1551,7 +1551,7 @@ __metadata:
     markdown-it-emoji: "npm:2.0.2"
     markdown-it-footnote: "npm:3.0.3"
     markdown-it-imsize: "npm:2.0.1"
-    markdown-it-ins: "npm:3.0.1"
+    markdown-it-ins: "npm:4.0.0"
     markdown-it-mark: "npm:3.0.1"
     markdown-it-mathjax: "npm:2.0.0"
     markdown-it-regexp: "npm:0.4.0"
@@ -10115,10 +10115,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-it-ins@npm:3.0.1":
-  version: 3.0.1
-  resolution: "markdown-it-ins@npm:3.0.1"
-  checksum: 10/f4ddc456bf67eeae872bd77146723cd6c6a035b2dfa4c8a6f282c1fc6eb35b503836ac567aee4d6550bbd5e67a014003f52bad4c28661387662e215c3c1ab2ae
+"markdown-it-ins@npm:4.0.0":
+  version: 4.0.0
+  resolution: "markdown-it-ins@npm:4.0.0"
+  checksum: 10/848ba55f85124c682de9324ba8a81b7dfe3c0e242a9a4f9a305ae5ae6ada280511b103f82b367012b98696c7d68ee21525efad0e34856bab0d6786ade321d67d
   languageName: node
   linkType: hard
 
