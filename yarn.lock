@@ -1664,7 +1664,7 @@ __metadata:
     umzug: "npm:3.8.3"
     url-loader: "npm:4.1.1"
     utf-8-validate: "npm:6.0.6"
-    uuid: "npm:11.1.1"
+    uuid: "npm:14.0.2"
     validator: "npm:13.15.35"
     velocity-animate: "npm:1.5.2"
     visibilityjs: "npm:2.0.2"
@@ -17037,12 +17037,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:11.1.1":
-  version: 11.1.1
-  resolution: "uuid@npm:11.1.1"
+"uuid@npm:14.0.2":
+  version: 14.0.2
+  resolution: "uuid@npm:14.0.2"
   bin:
-    uuid: dist/esm/bin/uuid
-  checksum: 10/16411d3dc12a08d6691616c09a75e66a7f900ba1beef6628a76fe0602f82fae2ee537b564d0b7bc95c24f58d059ca9b58c75a1e806118efb50e17822ff00ddd2
+    uuid: dist-node/bin/uuid
+  checksum: 10/e8263a76ad7b2d1f246df5a48a5bdf30d886eedbb1d3d74c75356d02b2966f5fffd7790b85afdb3682e4e732d13fca7974626419814f45de6847f78ce03c745e
   languageName: node
   linkType: hard
 
