@@ -1606,7 +1606,7 @@ __metadata:
     rimraf: "npm:6.1.3"
     sanitize-filename: "npm:1.6.4"
     scrypt-kdf: "npm:2.0.1"
-    select2: "npm:3.5.2-browserify"
+    select2: "npm:4.1.0"
     sequelize: "npm:5.22.5"
     socket.io: "npm:4.8.3"
     socket.io-client: "npm:4.8.3"
@@ -14977,10 +14977,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"select2@npm:3.5.2-browserify":
-  version: 3.5.2-browserify
-  resolution: "select2@npm:3.5.2-browserify"
-  checksum: 10/bdfb70ea2b9ca0f26d220d12b5215e2d2ccc1f5a388598f4de3e0b9191d851b3f0279f054a70c8da2fc85ba2a44a9392374ffe6b4ebfb9cedf4af2b35fa2e423
+"select2@npm:4.1.0":
+  version: 4.1.0
+  resolution: "select2@npm:4.1.0"
+  checksum: 10/d23a954781959df35d49d73c31fa183b5b2e7ed811afc557b42acf7f129f3a21d55907ab6d6dff42846efa85144bd8ca72a05efbfe841579354760534d15ef7f
   languageName: node
   linkType: hard
 
