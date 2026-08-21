@@ -1,6 +1,14 @@
 # Release Notes
 
-## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
+## <i class="fa fa-tag"></i> 1.12.0 <i class="fa fa-calendar-o"></i> 2026-08-21
+
+### Important changes
+
+⚠️ **HedgeDoc 1.12.0 and onwards will require Node 20.17 or later in order to run.**  
+Since Node 18 security support was stopped over one year ago, we don't maintain backwards-compatability for that anymore.
+
+Some syntax highlighting languages have been removed and/or changed. You can find more information in
+[the highlight.js docs](https://highlightjs.readthedocs.io/en/latest/upgrade-11.html#built-in-set-of-common-languages).
 
 ### Enhancements
 
@@ -8,8 +16,13 @@
 
 ### Bugfixes
 
-- All links will be opened in new tabs instead of the same tab as the note. This was changed when the external link warning was implemented and now the old behavior is restored.
+- All links will be opened in new tabs instead of the same tab as the note. This was changed when the external link warning was implemented and now the old behavior is restored
 - Fixed multiple bugs in the realtime connection handling that could lead to data-loss of users with a flaky connection
+
+### Contributors
+
+- [Tony Chau](https://github.com/fo5for)
+- [Lars Kiesow](https://github.com/lkiesow)
 
 ## <i class="fa fa-tag"></i> 1.11.1 <i class="fa fa-calendar-o"></i> 2026-07-24
 

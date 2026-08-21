@@ -19,7 +19,7 @@ The easiest way to get started with HedgeDoc and Docker is to use the following 
 version: '3'
 services:
   database:
-    image: postgres:17.7-alpine
+    image: postgres:18.6-alpine
     environment:
       - POSTGRES_USER=hedgedoc
       - POSTGRES_PASSWORD=password
@@ -29,7 +29,7 @@ services:
     restart: always
   app:
     # Make sure to use the latest release from https://hedgedoc.org/latest-release
-    image: quay.io/hedgedoc/hedgedoc:1.11.1
+    image: quay.io/hedgedoc/hedgedoc:1.12.0
     environment:
       - CMD_DB_URL=postgres://hedgedoc:password@database:5432/hedgedoc
       - CMD_DOMAIN=localhost
