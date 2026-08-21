@@ -525,7 +525,9 @@ export function finishView (view) {
             if (!languages.includes(reallang)) {
               result = hljs.highlightAuto(code)
             } else {
-              result = hljs.highlight(reallang, code)
+              result = hljs.highlight(code, {
+                language: reallang
+              })
             }
             if (codeDiv.length > 0) codeDiv.html(result.value)
             else langDiv.html(result.value)
