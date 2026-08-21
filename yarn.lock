@@ -1556,7 +1556,7 @@ __metadata:
     markdown-it-mathjax: "npm:2.0.0"
     markdown-it-regexp: "npm:0.4.0"
     markdown-it-sub: "npm:1.0.0"
-    markdown-it-sup: "npm:1.0.0"
+    markdown-it-sup: "npm:2.0.0"
     mathjax: "npm:2.7.9"
     mattermost: "npm:3.4.0"
     mermaid: "npm:9.1.7"
@@ -10150,10 +10150,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-it-sup@npm:1.0.0":
-  version: 1.0.0
-  resolution: "markdown-it-sup@npm:1.0.0"
-  checksum: 10/9e593acb8c79dbb917645affde3c46ecb50baa59c740ffe4ecc7bfa470b5b746338f12c65219d6c4112f9f2b01b68cbd151aaabbac878f34e07c7120e5959324
+"markdown-it-sup@npm:2.0.0":
+  version: 2.0.0
+  resolution: "markdown-it-sup@npm:2.0.0"
+  checksum: 10/d7f421e5121c3d53de76d30459797bd6678b511ac3a3bc3d938880f7d26e83b88ac1e9d90eee7f13363e6e56001174319264baceb7f9288c9df7cdb6bd8c0beb
   languageName: node
   linkType: hard
 
