@@ -79,17 +79,17 @@ Use this tar ball to test the following things:
 
 ### Config
 
-- [ ] Setting `allowAnonymous: false` disables guest note creation
-- [ ] Setting `enableStatsApi: false` disables /metrics and /status endpoint
+- [ ] Setting `"allowAnonymous": false,` disables guest note creation
+- [ ] Setting `"enableStatsApi": false` disables /metrics and /status endpoint
 
 
 ### Account system
 
 - [ ] User registration works
 - [ ] User login works
-- [ ] User self-deletion works (notes are deleted as well)
 - [ ] User data export works
-- [ ] Rate-limiting for basic user/password (`curl -X POST --data email=test@example.com%40password=123456 http://localhost:3000/login`)
+- [ ] User self-deletion works (notes are deleted as well)
+- [ ] Rate-limiting for basic user/password (`watch -n 1 curl -sSD - -o /dev/null -X POST --data email=test@example.com%40password=123456 http://localhost:3000/login`)
 
 ### Notes
 
@@ -102,7 +102,9 @@ Use this tar ball to test the following things:
 - [ ] API `POST /new/some-test-note` works when FreeURL-mode is enabled
 - [ ] API `POST /new/some-test-note` fails when FreeURL-mode is disabled
 - [ ] Working with 2 (or more) devices on a page works and results in the same document
-- [ ] Uploads work for images
+- [ ] Uploads work for
+  - [ ] .svg file
+  - [ ] .png / .jpeg / .webm file
 - [ ] Uploads fail for other data (e.g. binaries)
 - [ ] Opening uploads in new tab downloads them instead of displaying
 
@@ -149,10 +151,10 @@ and put this into your config:
 ### Features page
 
 - [ ] Loading `/features` results in no browser console errors (they may appear for iframed code)
-- [ ] Diagrams render without error
-- [ ] MathJAX rendering works for inline `$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$`
-- [ ] MathJAX rendering works for multi-line (see features page)
 - [ ] Codeblocks areas are highlighted and have line numbers in front.
+- [ ] Diagrams render without error
+- [ ] MathJAX rendering works for multi-line (see features page)
+- [ ] MathJAX rendering works for inline `$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$`
 
 ### Table of content (TOC) tests
 
@@ -277,40 +279,37 @@ opengraph:
 3. Edit `debian/Dockerfile` and `alpine/Dockerfile` to use the release branch instead of the `master` branch for building
 
 - [ ] debian
+```
+docker buildx build -f debian/Dockerfile -t hedgedoc-local:1.x.y-debian .
+docker run --rm -p 3000:3000 -e CMD_DOMAIN="localhost" -e CMD_URL_ADDPORT=true -e "CMD_DB_URL=sqlite://:memory:" hedgedoc-local:1.x.y-debian
+```
+The server is then accessable via <http://localhost:3000>. The log should inlcude a line like
 
-  ```
-  docker buildx build -f debian/Dockerfile -t hedgedoc-local:1.x.y-debian .
-  docker run --rm -p 3000:3000 -e CMD_DOMAIN="localhost" -e CMD_URL_ADDPORT=true -e "CMD_DB_URL=sqlite://:memory:" hedgedoc-local:1.x.y-debian
-  ```
-  The server is then accessable via <http://localhost:3000>. The log should inlcude a line like
+```
+127.0.0.1 - - [06/Dec/2025:16:17:51 +0000] "GET /_health HTTP/1.1" 200 14 "-" "hedgedoc-container-healthcheck/1.2"
+```
 
-  ```
-  127.0.0.1 - - [06/Dec/2025:16:17:51 +0000] "GET /_health HTTP/1.1" 200 14 "-" "hedgedoc-container-healthcheck/1.2"
-  ```
+You should also check `docker ps` for
 
-  You should also check `docker ps` for
-
-  ```
-  hedgedoc-local:1.x.y-debian                     "/usr/local/bin/dock…"   29 seconds ago   Up 28 seconds (healthy)
-  ```
-
+```
+hedgedoc-local:1.x.y-debian                     "/usr/local/bin/dock…"   29 seconds ago   Up 28 seconds (healthy)
+```
 - [ ] alpine
+```
+docker buildx build -f alpine/Dockerfile -t hedgedoc-local:1.x.y-alpine .
+docker run --rm -p 3000:3000 -e CMD_DOMAIN="localhost" -e CMD_URL_ADDPORT=true -e "CMD_DB_URL=sqlite://:memory:" hedgedoc-local:1.x.y-alpine
+```
+The server is then accessable via <http://localhost:3000>. The log should inlcude a line like
 
-  ```
-  docker buildx build -f alpine/Dockerfile -t hedgedoc-local:1.x.y-alpine .
-  docker run --rm -p 3000:3000 -e CMD_DOMAIN="localhost" -e CMD_URL_ADDPORT=true -e "CMD_DB_URL=sqlite://:memory:" hedgedoc-local:1.x.y-alpine
-  ```
-  The server is then accessable via <http://localhost:3000>. The log should inlcude a line like
+```
+127.0.0.1 - - [06/Dec/2025:16:17:51 +0000] "GET /_health HTTP/1.1" 200 14 "-" "hedgedoc-container-healthcheck/1.2"
+```
 
-  ```
-  127.0.0.1 - - [06/Dec/2025:16:17:51 +0000] "GET /_health HTTP/1.1" 200 14 "-" "hedgedoc-container-healthcheck/1.2"
-  ```
+You should also check `docker ps` for
 
-  You should also check `docker ps` for
-
-  ```
-  hedgedoc-local:1.x.y-alpine                     "/usr/local/bin/dock…"   29 seconds ago   Up 28 seconds (healthy)
-  ```
+```
+hedgedoc-local:1.x.y-alpine                     "/usr/local/bin/dock…"   29 seconds ago   Up 28 seconds (healthy)
+```
 
 
 ## Release:
