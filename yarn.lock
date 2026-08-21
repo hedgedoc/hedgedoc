@@ -1614,7 +1614,7 @@ __metadata:
     validator: "npm:13.15.35"
     velocity-animate: "npm:1.5.2"
     visibilityjs: "npm:2.0.2"
-    viz.js: "npm:1.8.2"
+    viz.js: "npm:2.1.2"
     webpack: "npm:4.47.0"
     webpack-cli: "npm:4.10.0"
     webpack-merge: "npm:5.10.0"
@@ -17432,10 +17432,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viz.js@npm:1.8.2":
-  version: 1.8.2
-  resolution: "viz.js@npm:1.8.2"
-  checksum: 10/a6da5ef4a52f93e81ac5c49c051927226eaa687a01853019e2638c57c176a03f7661968ef85045a22444b7a7cc54552d9336fd924e099b68b062f7f1630cd41b
+"viz.js@npm:2.1.2":
+  version: 2.1.2
+  resolution: "viz.js@npm:2.1.2"
+  checksum: 10/10463ef918dac55ece0bfe3e040921407b4e9c9c3ad9a9910f3cf50235230f651b65920feef2260adcc56925bd501df6ac717f20d91142249a5704d26dfd956e
   languageName: node
   linkType: hard
 
