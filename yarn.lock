@@ -1468,7 +1468,7 @@ __metadata:
     "@node-saml/passport-saml": "npm:5.1.0"
     "@passport-next/passport-openid": "npm:1.0.0"
     Idle.Js: "git+https://github.com/shawnmclean/Idle.js#commit=2b57cc6e49d177b7ddce0cca00ef5cbe07453541"
-    abcjs: "npm:6.6.4"
+    abcjs: "npm:6.7.0"
     archiver: "npm:7.0.1"
     async: "npm:3.2.6"
     aws-sdk: "npm:2.1693.0"
@@ -1663,10 +1663,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"abcjs@npm:6.6.4":
-  version: 6.6.4
-  resolution: "abcjs@npm:6.6.4"
-  checksum: 10/60cb31434c75ea323c3d4ee94db1b93f67a83b3168fe09a148ce12cd4d6b46dfa5956815ee0bf97d35e0b84d2316e843848195cb8133a92ba0a7d3a6e412609f
+"abcjs@npm:6.7.0":
+  version: 6.7.0
+  resolution: "abcjs@npm:6.7.0"
+  checksum: 10/9d871c4f77d200b3620ce5d243a30830116595382e92dbffbe17dd147994de4804b5c5f1cf2a951af1e407f1d960e0e78577e7a51eae84fefbab77f6105923f3
   languageName: node
   linkType: hard
 
