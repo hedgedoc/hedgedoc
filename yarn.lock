@@ -1576,7 +1576,7 @@ __metadata:
     globals: "npm:17.11.0"
     graceful-fs: "npm:4.2.11"
     helmet: "npm:8.3.0"
-    highlight.js: "npm:10.7.3"
+    highlight.js: "npm:11.12.0"
     html-webpack-plugin: "npm:4.5.2"
     i18n: "npm:0.15.3"
     imports-loader: "npm:1.2.0"
@@ -8127,10 +8127,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highlight.js@npm:10.7.3":
-  version: 10.7.3
-  resolution: "highlight.js@npm:10.7.3"
-  checksum: 10/db8d10a541936b058e221dbde77869664b2b45bca75d660aa98065be2cd29f3924755fbc7348213f17fd931aefb6e6597448ba6fe82afba6d8313747a91983ee
+"highlight.js@npm:11.12.0":
+  version: 11.12.0
+  resolution: "highlight.js@npm:11.12.0"
+  checksum: 10/1aecfae8aaf230bc38daa81b91fdd3b3e2765b5d18fd1d83dbc85513552336028e71f0e827417ebec2b88ac2e6c903ac6ccfca0772a471768d9236a99f3f540d
   languageName: node
   linkType: hard
 
