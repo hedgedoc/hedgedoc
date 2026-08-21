@@ -44,7 +44,7 @@
     "express-rate-limit": "8.6.2",
     "express-session": "1.19.0",
     "file-type": "21.3.4",
-    "formidable": "2.1.5",
+    "formidable": "3.5.4",
     "graceful-fs": "4.2.11",
     "helmet": "8.3.0",
     "i18n": "0.15.3",
