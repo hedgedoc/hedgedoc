@@ -1533,7 +1533,7 @@ __metadata:
     jquery-ui: "npm:1.14.2"
     js-cookie: "npm:3.0.8"
     js-sequence-diagrams: "git+https://github.com/hedgedoc/js-sequence-diagrams.git"
-    js-yaml: "npm:4.3.0"
+    js-yaml: "npm:4.3.1"
     jsdom: "npm:24.1.3"
     jsonlint: "npm:1.6.3"
     keymaster: "npm:1.6.2"
@@ -9238,7 +9238,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:4.3.0, js-yaml@npm:^4.1.0, js-yaml@npm:^4.3.0":
+"js-yaml@npm:4.3.1":
+  version: 4.3.1
+  resolution: "js-yaml@npm:4.3.1"
+  dependencies:
+    argparse: "npm:^2.0.1"
+  bin:
+    js-yaml: bin/js-yaml.js
+  checksum: 10/2ce71b5d632abbd77da80447bf860e8a0264e54bffe94840984887d58b023761495b523727547904517a6107a1ef189854b361e0fc44995ee13a84f222d7bd42
+  languageName: node
+  linkType: hard
+
+"js-yaml@npm:^4.1.0, js-yaml@npm:^4.3.0":
   version: 4.3.0
   resolution: "js-yaml@npm:4.3.0"
   dependencies:
