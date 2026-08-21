@@ -21,7 +21,8 @@ require('../css/extra.css')
 require('../css/slide-preview.css')
 require('../css/site.css')
 
-require('highlight.js/styles/github-gist.css')
+require('highlight.js/styles/github.css')
+require('../css/highlightjs.css')
 
 const markdown = $('#doc.markdown-body')
 const text = markdown.text()
