@@ -1547,7 +1547,7 @@ __metadata:
     markdown-it: "npm:13.0.2"
     markdown-it-abbr: "npm:1.0.4"
     markdown-it-container: "npm:3.0.0"
-    markdown-it-deflist: "npm:2.1.0"
+    markdown-it-deflist: "npm:4.0.0"
     markdown-it-emoji: "npm:2.0.2"
     markdown-it-footnote: "npm:3.0.3"
     markdown-it-imsize: "npm:2.0.1"
@@ -10076,10 +10076,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-it-deflist@npm:2.1.0":
-  version: 2.1.0
-  resolution: "markdown-it-deflist@npm:2.1.0"
-  checksum: 10/e563e67e8e8dca73cb08545421517e835ce1393a071f20cec40783b9d4209d6cb71e0a4595662955545959cb920f3953ee0f69217f5b0cce1a48dca79ff886a5
+"markdown-it-deflist@npm:4.0.0":
+  version: 4.0.0
+  resolution: "markdown-it-deflist@npm:4.0.0"
+  checksum: 10/bb035a9766e51ff08bca79bde3a8c33366e0931d45c2782a3026ddbb8e95b7f7c23bd5240551c2ecbef8ae4282937e844d0843923988329d3c4507b3897247a7
   languageName: node
   linkType: hard
 
