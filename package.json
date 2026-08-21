@@ -95,7 +95,7 @@
     "readline-sync": "1.4.10",
     "rimraf": "6.1.3",
     "sanitize-filename": "1.6.4",
-    "scrypt-kdf": "4.0.0",
+    "scrypt-kdf": "3.0.0",
     "sequelize": "5.22.5",
     "socket.io": "4.8.3",
     "sqlite3": "5.1.7",
