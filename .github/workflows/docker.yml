@@ -25,7 +25,7 @@ jobs:
       matrix:
         component: [ 'backend', 'frontend' ]
     steps:
-      - uses: actions/checkout@v6.0.2
+      - uses: actions/checkout@v6.1.0
 
       - name: Generate Docker metadata for ${{ matrix.component }}
         id: meta-data
