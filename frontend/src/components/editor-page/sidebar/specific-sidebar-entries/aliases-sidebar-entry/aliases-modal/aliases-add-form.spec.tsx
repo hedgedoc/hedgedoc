@@ -53,7 +53,7 @@ describe('AliasesAddForm', () => {
       button.click()
     })
     expect(AliasModule.addAlias).toHaveBeenCalledWith('mock-alias-primary', 'mock-alias-new')
-    expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
+    expect(NoteDetailsReduxModule.updateMetadata).toHaveBeenCalled()
   })
 
   it('invalid alias shows error and disables submit button', async () => {

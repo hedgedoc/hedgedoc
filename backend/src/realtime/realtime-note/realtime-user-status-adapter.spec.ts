@@ -13,7 +13,6 @@ import {
   afterEach,
   jest,
 } from '@jest/globals';
-import type { SpyInstance } from 'jest-mock';
 import {
   Message,
   MessageTransporter,
@@ -23,7 +22,7 @@ import {
 
 import { RealtimeUserStatusAdapter } from './realtime-user-status-adapter';
 
-type SendMessageSpy = SpyInstance<typeof MessageTransporter.prototype.sendMessage>;
+type SendMessageSpy = jest.Spied<typeof MessageTransporter.prototype.sendMessage>;
 
 describe('realtime user status adapter', () => {
   let clientLoggedIn1: RealtimeUserStatusAdapter | undefined;

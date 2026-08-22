@@ -66,6 +66,6 @@ describe('markdown to react', () => {
       />
     )
     expect(view.container).toMatchSnapshot()
-    expect(doAfterCallback).toBeCalled()
+    expect(doAfterCallback).toHaveBeenCalled()
   })
 })

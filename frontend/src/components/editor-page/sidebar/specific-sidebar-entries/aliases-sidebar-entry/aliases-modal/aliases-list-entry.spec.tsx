@@ -42,7 +42,7 @@ describe('AliasesListEntry', () => {
     await act<void>(() => {
       button.click()
     })
-    expect(AliasModule.deleteAlias).not.toBeCalledWith('mock-alias-primary')
+    expect(AliasModule.deleteAlias).not.toHaveBeenCalledWith('mock-alias-primary')
   })
 
   it('renders an AliasesListEntry that is primary', () => {
@@ -63,8 +63,8 @@ describe('AliasesListEntry', () => {
     await act<void>(() => {
       buttonRemove.click()
     })
-    expect(AliasModule.deleteAlias).toBeCalledWith('mock-alias-other')
-    expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
+    expect(AliasModule.deleteAlias).toHaveBeenCalledWith('mock-alias-other')
+    expect(NoteDetailsReduxModule.updateMetadata).toHaveBeenCalled()
   })
 
   it('marks alias as primary if non-primary', async () => {
@@ -77,8 +77,8 @@ describe('AliasesListEntry', () => {
     await act<void>(() => {
       buttonMakePrimary.click()
     })
-    expect(AliasModule.markAliasAsPrimary).toBeCalledWith('mock-alias-other')
-    expect(NoteDetailsReduxModule.updateMetadata).toBeCalled()
+    expect(AliasModule.markAliasAsPrimary).toHaveBeenCalledWith('mock-alias-other')
+    expect(NoteDetailsReduxModule.updateMetadata).toHaveBeenCalled()
   })
 
   it('renders an AliasesListEntry that is not primary', () => {

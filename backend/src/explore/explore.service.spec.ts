@@ -92,7 +92,7 @@ describe('ExploreService', () => {
   });
 
   beforeEach(() => {
-    jest.useFakeTimers();
+    jest.useFakeTimers({ doNotFake: ['setTimeout'] });
     now = getCurrentDateTime();
     selectedRows = [
       {

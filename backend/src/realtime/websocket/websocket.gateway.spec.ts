@@ -4,17 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
-import type { SpyInstance } from 'jest-mock';
 import { PermissionLevel } from '@hedgedoc/commons';
 import { FieldNameUser } from '@hedgedoc/database';
-import { Provider } from '@nestjs/common';
+import type { Provider } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { SchedulerRegistry } from '@nestjs/schedule';
-import { Test, TestingModule } from '@nestjs/testing';
-import { IncomingMessage } from 'http';
+import { Test, type TestingModule } from '@nestjs/testing';
+import type { IncomingMessage } from 'http';
 import { Mock } from 'ts-mockery';
-import WebSocket from 'ws';
+import type WebSocket from 'ws';
 
 import { AliasService } from '../../alias/alias.service';
 import appConfigMock from '../../config/mock/app.config.mock';
@@ -50,8 +49,8 @@ describe('Websocket gateway', () => {
   let permissionsService: PermissionService;
   let mockedWebsocketConnection: RealtimeConnection;
   let mockedWebsocket: WebSocket;
-  let mockedWebsocketCloseSpy: SpyInstance<typeof WebSocket.WebSocket.prototype.close>;
-  let addClientSpy: SpyInstance<typeof RealtimeNote.prototype.addClient>;
+  let mockedWebsocketCloseSpy: jest.Spied<typeof WebSocket.prototype.close>;
+  let addClientSpy: jest.Spied<typeof RealtimeNote.prototype.addClient>;
 
   const mockedValidSessionCookie = 'mockedValidSessionCookie';
   const mockedSessionIdWithUser = 'mockedSessionIdWithUser';

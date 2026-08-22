@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { describe, it, expect, beforeAll, beforeEach, afterEach, jest } from '@jest/globals';
-import type { SpyInstance } from 'jest-mock';
 import {
   FieldNameAuthorshipInfo,
   FieldNameRevision,
@@ -161,7 +160,7 @@ describe('RevisionsService', () => {
   });
 
   describe('purgeRevisions', () => {
-    let spyOnGetPrimaryAlias: SpyInstance<typeof aliasService.getPrimaryAliasByNoteId>;
+    let spyOnGetPrimaryAlias: jest.Spied<typeof aliasService.getPrimaryAliasByNoteId>;
     const buildMockSelect = (returnValues: unknown) => {
       mockSelect(tracker, [], TableRevision, [FieldNameRevision.noteId], returnValues);
     };
@@ -391,7 +390,7 @@ describe('RevisionsService', () => {
     });
 
     it('uses a correct diff when an old revision is present', async () => {
-      jest.useFakeTimers();
+      jest.useFakeTimers({ doNotFake: ['setTimeout'] });
       const now = getCurrentDateTime();
       mockInsert(
         tracker,
@@ -426,7 +425,7 @@ describe('RevisionsService', () => {
       jest.useRealTimers();
     });
     it('creates a correct revision when no old revisions are present', async () => {
-      jest.useFakeTimers();
+      jest.useFakeTimers({ doNotFake: ['setTimeout'] });
       const now = getCurrentDateTime();
       mockInsert(
         tracker,
@@ -507,10 +506,10 @@ describe('RevisionsService', () => {
 
   describe('removeOldRevisions', () => {
     let expectedDateTime: string;
-    let spyOnGetPrimaryAlias: SpyInstance<typeof aliasService.getPrimaryAliasByNoteId>;
+    let spyOnGetPrimaryAlias: jest.Spied<typeof aliasService.getPrimaryAliasByNoteId>;
 
     beforeEach(() => {
-      jest.useFakeTimers();
+      jest.useFakeTimers({ doNotFake: ['setTimeout'] });
       jest.setSystemTime(new Date(2026, 7, 8, 21, 10, 0));
       noteConfig.revisionRetentionDays = 1;
       expectedDateTime = dateTimeToDB(getCurrentDateTime().minus({ days: 1 }));

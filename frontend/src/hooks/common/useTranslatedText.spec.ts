@@ -27,7 +27,7 @@ describe('useTranslatedText', () => {
     const { result } = renderHook(() => useTranslatedText(mockKey))
 
     expect(result.current).toBe(mockTranslation)
-    expect(translateFunction).toBeCalledWith(mockKey)
+    expect(translateFunction).toHaveBeenCalledWith(mockKey)
   })
 
   it('translates text with options', () => {
@@ -35,6 +35,6 @@ describe('useTranslatedText', () => {
     const { result } = renderHook(() => useTranslatedText(mockKey, mockOptions))
 
     expect(result.current).toBe(mockTranslation)
-    expect(translateFunction).toBeCalledWith(mockKey, mockOptions)
+    expect(translateFunction).toHaveBeenCalledWith(mockKey, mockOptions)
   })
 })

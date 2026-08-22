@@ -35,7 +35,7 @@ describe('build state from task list update', () => {
     }
     const result = buildStateFromTaskListUpdate(startState, 0, true)
     expect(result).toBe(startState)
-    expect(buildStateFromUpdatedMarkdownContentLinesMock).toBeCalledTimes(0)
+    expect(buildStateFromUpdatedMarkdownContentLinesMock).toHaveBeenCalledTimes(0)
   })
 
   it(`can change the state of a task to checked`, () => {
@@ -45,7 +45,7 @@ describe('build state from task list update', () => {
     }
     const result = buildStateFromTaskListUpdate(startState, 1, true)
     expect(result).toBe(mockedNoteDetails)
-    expect(buildStateFromUpdatedMarkdownContentLinesMock).toBeCalledWith(startState, [
+    expect(buildStateFromUpdatedMarkdownContentLinesMock).toHaveBeenCalledWith(startState, [
       'no task',
       '- [x] not checked',
       '- [x] checked'
@@ -59,7 +59,7 @@ describe('build state from task list update', () => {
     }
     const result = buildStateFromTaskListUpdate(startState, 2, false)
     expect(result).toBe(mockedNoteDetails)
-    expect(buildStateFromUpdatedMarkdownContentLinesMock).toBeCalledWith(startState, [
+    expect(buildStateFromUpdatedMarkdownContentLinesMock).toHaveBeenCalledWith(startState, [
       'no task',
       '- [ ] not checked',
       '- [ ] checked'

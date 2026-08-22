@@ -6,8 +6,7 @@
 import { MessageTransporter } from '../message-transporters/index.js'
 import { Message, MessageType } from '../message-transporters/message.js'
 import { RealtimeDoc } from './realtime-doc.js'
-import { Listener } from 'eventemitter2'
-import { EventEmitter2 } from 'eventemitter2'
+import EventEmitter2, { type Listener } from 'eventemitter2'
 
 type EventMap = Record<'synced' | 'desynced', () => void>
 

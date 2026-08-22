@@ -27,7 +27,7 @@ describe('measure performance', () => {
     expect(result).toBe('value')
     expect(markMock).toHaveBeenNthCalledWith(1, startMaker)
     expect(markMock).toHaveBeenNthCalledWith(2, endMarker)
-    expect(measureMock).toBeCalledWith(measurementName, startMaker, endMarker)
+    expect(measureMock).toHaveBeenCalledWith(measurementName, startMaker, endMarker)
   })
 
   it('runs the task without global performance functions', () => {

@@ -4,11 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { describe, it, expect, beforeAll, beforeEach, afterEach, jest } from '@jest/globals';
-import type { SpyInstance } from 'jest-mock';
 import { FieldNameAlias, TableAlias } from '@hedgedoc/database';
-import { Provider } from '@nestjs/common';
+import type { Provider } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test, type TestingModule } from '@nestjs/testing';
 import type { Tracker } from 'knex-mock-client';
 
 import appConfigMock from '../config/mock/app.config.mock';
@@ -28,7 +27,7 @@ import {
 import { LoggerModule } from '../logger/logger.module';
 import { AliasService } from './alias.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { NoteEventMap } from '../events';
+import type { NoteEventMap } from '../events';
 
 describe('AliasService', () => {
   const alias1 = 'testAlias1';
@@ -60,14 +59,10 @@ describe('AliasService', () => {
     service = module.get<AliasService>(AliasService);
   });
 
-  let spyOnNotifyOthers: SpyInstance;
+  let spyOnNotifyOthers: jest.Spied<any>;
 
   beforeEach(() => {
-    spyOnNotifyOthers = jest.spyOn(
-      // oxlint-disable-next-line @typescript-eslint/no-explicit-any
-      service as any,
-      'notifyOthers',
-    );
+    spyOnNotifyOthers = jest.spyOn(service as any, 'notifyOthers');
   });
 
   afterEach(() => {

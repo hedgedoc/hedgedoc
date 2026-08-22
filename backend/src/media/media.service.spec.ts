@@ -90,7 +90,7 @@ describe('MediaService', () => {
 
   describe('saveFile', () => {
     it('inserts a new media upload and returns uuid', async () => {
-      jest.useFakeTimers();
+      jest.useFakeTimers({ doNotFake: ['setTimeout'] });
       const now = getCurrentDateTime();
       jest.spyOn(fileTypeModule, 'fromBuffer').mockResolvedValue({ mime: 'image/png', ext: 'png' });
       // This invalid Uint8Array typecast is required as TypeScript does not accept

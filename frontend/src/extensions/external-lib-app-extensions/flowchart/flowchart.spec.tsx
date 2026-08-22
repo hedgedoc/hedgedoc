@@ -69,7 +69,7 @@ describe('Flowchart', () => {
     )
     await screen.findByText(successText)
     expect(view.container).toMatchSnapshot()
-    expect(mockDrawSvg).toBeCalled()
+    expect(mockDrawSvg).toHaveBeenCalled()
   })
 
   it('handles error while rendering', async () => {
@@ -82,7 +82,7 @@ describe('Flowchart', () => {
     )
     await screen.findByText('renderer.flowchart.invalidSyntax')
     expect(view.container).toMatchSnapshot()
-    expect(mockDrawSvg).not.toBeCalled()
+    expect(mockDrawSvg).not.toHaveBeenCalled()
   })
 
   it('handles error if lib loading failed', async () => {

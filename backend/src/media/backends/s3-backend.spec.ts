@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
-import type { SpyInstance } from 'jest-mock';
 import { MediaBackendType } from '@hedgedoc/commons';
 import * as MinioModule from 'minio';
 import { Client, ClientOptions } from 'minio';
@@ -28,7 +27,7 @@ describe('s3 backend', () => {
   });
 
   let mockedClient: Client;
-  let clientConstructorSpy: SpyInstance<(params: ClientOptions) => Client>;
+  let clientConstructorSpy: jest.Spied<(params: ClientOptions) => Client>;
 
   beforeEach(() => {
     mockedClient = Mock.of<Client>({

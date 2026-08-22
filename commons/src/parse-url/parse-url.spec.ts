@@ -23,7 +23,7 @@ describe('validate url', () => {
       expect(() => parseUrl('example.org').isEmpty()).toBeTruthy()
     })
     it("doesn't work any other protocol", () => {
-      expect(() => parseUrl('git://example.org').get()).toThrowError(WrongProtocolError)
+      expect(() => parseUrl('git://example.org').get()).toThrow(WrongProtocolError)
     })
   })
 

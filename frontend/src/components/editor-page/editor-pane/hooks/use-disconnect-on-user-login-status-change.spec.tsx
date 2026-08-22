@@ -35,32 +35,32 @@ describe('use logout on user change', () => {
   it("doesn't disconnect if user is logged in before", () => {
     mockUseApplicationState(true)
     render(<TestComponent messageTransporter={messageTransporter} />)
-    expect(disconnectCallback).not.toBeCalled()
+    expect(disconnectCallback).not.toHaveBeenCalled()
   })
 
   it("doesn't disconnect if user is not logged in before", () => {
     mockUseApplicationState(false)
     render(<TestComponent messageTransporter={messageTransporter} />)
-    expect(disconnectCallback).not.toBeCalled()
+    expect(disconnectCallback).not.toHaveBeenCalled()
   })
 
   it('disconnects if user switches from logged in to logged out', () => {
     mockUseApplicationState(true)
     const view = render(<TestComponent messageTransporter={messageTransporter} />)
-    expect(disconnectCallback).not.toBeCalled()
+    expect(disconnectCallback).not.toHaveBeenCalled()
 
     mockUseApplicationState(false)
     view.rerender(<TestComponent messageTransporter={messageTransporter} />)
-    expect(disconnectCallback).toBeCalled()
+    expect(disconnectCallback).toHaveBeenCalled()
   })
 
   it('disconnects if user switches from logged out to logged in', () => {
     mockUseApplicationState(false)
     const view = render(<TestComponent messageTransporter={messageTransporter} />)
-    expect(disconnectCallback).not.toBeCalled()
+    expect(disconnectCallback).not.toHaveBeenCalled()
 
     mockUseApplicationState(true)
     view.rerender(<TestComponent messageTransporter={messageTransporter} />)
-    expect(disconnectCallback).toBeCalled()
+    expect(disconnectCallback).toHaveBeenCalled()
   })
 })

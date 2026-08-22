@@ -183,7 +183,7 @@ describe('ApiTokenService', () => {
       let expectedValidUntil: string;
 
       beforeEach(() => {
-        jest.useFakeTimers().setSystemTime(new Date(mockCreatedAtIso));
+        jest.useFakeTimers({ doNotFake: ['setTimeout'] }).setSystemTime(new Date(mockCreatedAtIso));
         jest
           .spyOn(passwordUtils, 'bufferToBase64Url')
           .mockReturnValue(validSecret)
@@ -361,7 +361,7 @@ describe('ApiTokenService', () => {
   describe('removeInvalidTokens', () => {
     it('works', async () => {
       const mockTime = isoStringToDateTime(mockCreatedAtIso);
-      jest.useFakeTimers().setSystemTime(new Date(mockCreatedAtIso));
+      jest.useFakeTimers({ doNotFake: ['setTimeout'] }).setSystemTime(new Date(mockCreatedAtIso));
       mockDelete(tracker, TableApiToken, [FieldNameApiToken.validUntil], 1);
       await service.removeInvalidTokens();
       expectBindings(tracker, 'delete', [[dateTimeToDB(mockTime)]]);

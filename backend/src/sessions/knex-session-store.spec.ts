@@ -48,7 +48,7 @@ describe('KnexSessionStore', () => {
   });
 
   beforeEach(() => {
-    jest.useFakeTimers().setSystemTime(new Date(mockNowIso));
+    jest.useFakeTimers({ doNotFake: ['setTimeout'] }).setSystemTime(new Date(mockNowIso));
   });
 
   afterEach(() => {

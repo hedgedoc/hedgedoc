@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
-import type { SpyInstance } from 'jest-mock';
 import { Note } from '@hedgedoc/database';
 import { CallHandler, ExecutionContext } from '@nestjs/common';
 import { HttpArgumentsHost } from '@nestjs/common/interfaces/features/arguments-host.interface';
@@ -24,7 +23,7 @@ describe('get note interceptor', () => {
   });
 
   let notesService: NoteService;
-  let noteFetchSpy: SpyInstance<typeof notesService.getNoteIdByAlias>;
+  let noteFetchSpy: jest.Spied<typeof notesService.getNoteIdByAlias>;
 
   beforeEach(() => {
     notesService = Mock.of<NoteService>({
