@@ -23,7 +23,9 @@ export enum CommunicationMessageType {
   EXTENSION_EVENT = 'EXTENSION_EVENT',
   SET_PRINT_MODE = 'SET_PRINT_MODE',
   SCROLL_TO_ELEMENT = 'SCROLL_TO_ELEMENT',
-  SET_URL_HASH = 'SET_URL_HASH'
+  SET_URL_HASH = 'SET_URL_HASH',
+  EXPORT_HTML_REQUEST = 'EXPORT_HTML_REQUEST',
+  EXPORT_HTML_RESPONSE = 'EXPORT_HTML_RESPONSE'
 }
 
 export interface NoPayloadMessage<TYPE extends CommunicationMessageType> {
@@ -105,6 +107,16 @@ export interface SetUrlHashMessage {
   hash: string
 }
 
+export interface ExportHtmlRequestMessage {
+  type: CommunicationMessageType.EXPORT_HTML_REQUEST
+  noteUrl: string
+}
+
+export interface ExportHtmlResponseMessage {
+  type: CommunicationMessageType.EXPORT_HTML_RESPONSE
+  html: string
+}
+
 export type CommunicationMessages =
   | NoPayloadMessage<CommunicationMessageType.RENDERER_READY>
   | NoPayloadMessage<CommunicationMessageType.ENABLE_RENDERER_SCROLL_SOURCE>
@@ -122,6 +134,8 @@ export type CommunicationMessages =
   | SetPrintModeConfigurationMessage
   | ScrollToElementMessage
   | SetUrlHashMessage
+  | ExportHtmlRequestMessage
+  | ExportHtmlResponseMessage
 
 export type EditorToRendererMessageType =
   | CommunicationMessageType.SET_MARKDOWN_CONTENT
@@ -133,6 +147,7 @@ export type EditorToRendererMessageType =
   | CommunicationMessageType.DISABLE_RENDERER_SCROLL_SOURCE
   | CommunicationMessageType.SET_PRINT_MODE
   | CommunicationMessageType.SCROLL_TO_ELEMENT
+  | CommunicationMessageType.EXPORT_HTML_REQUEST
 
 export type RendererToEditorMessageType =
   | CommunicationMessageType.RENDERER_READY
@@ -143,6 +158,7 @@ export type RendererToEditorMessageType =
   | CommunicationMessageType.IMAGE_UPLOAD
   | CommunicationMessageType.EXTENSION_EVENT
   | CommunicationMessageType.SET_URL_HASH
+  | CommunicationMessageType.EXPORT_HTML_RESPONSE
 
 export enum RendererType {
   DOCUMENT = 'document',
