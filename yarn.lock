@@ -2866,7 +2866,7 @@ __metadata:
     domhandler: "npm:5.0.3"
     eventemitter2: "npm:6.4.9"
     jest: "npm:29.7.0"
-    js-yaml: "npm:4.1.1"
+    js-yaml: "npm:4.3.1"
     reveal.js: "npm:5.2.1"
     ts-jest: "npm:29.4.6"
     typescript: "npm:5.9.3"
@@ -12427,6 +12427,17 @@ __metadata:
   bin:
     js-yaml: bin/js-yaml.js
   checksum: 10c0/561c7d7088c40a9bb53cc75becbfb1df6ae49b34b5e6e5a81744b14ae8667ec564ad2527709d1a6e7d5e5fa6d483aa0f373a50ad98d42fde368ec4a190d4fae7
+  languageName: node
+  linkType: hard
+
+"js-yaml@npm:4.3.1":
+  version: 4.3.1
+  resolution: "js-yaml@npm:4.3.1"
+  dependencies:
+    argparse: "npm:^2.0.1"
+  bin:
+    js-yaml: bin/js-yaml.js
+  checksum: 10c0/13c500ca322e0c3f8c81686e6ecda96d2ea37b45247a420c17c7db36932d6965cc27391abc2d1a104501600e7f0d947a5f8b7be6db619c4fefa87901b3512807
   languageName: node
   linkType: hard
 
