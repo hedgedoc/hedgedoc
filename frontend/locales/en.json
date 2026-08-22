@@ -953,6 +953,44 @@
         "description": "Set a equals sign after the language to show line numbers. You can specify a start line number after the equal sign or a plus to continue the line numbers from the last code block.",
         "example": "```markdown=12\nline1\n```\n```markdown=+\nline2\n```\n```markdown=\nline3\n```"
       }
+    },
+    "nodeBook": {
+      "title": "nodeBook",
+      "conceptMap": {
+        "title": "Concept Map",
+        "description": "Create knowledge graphs by declaring nodes with `# Name [Type]` headings, adding attributes with `name: value;` (the `has` prefix is optional), and connecting nodes with `<relation> Target;` edges. Use `<relation> N Target;` for weighted edges — the number displays as a circled digit on the arc. Prefix a relation or an attribute with `!` to assert it does NOT hold (e.g. `!<has> external ear;` or `!color: green;`) — negated relations are drawn as a dashed red barred edge, and negated attributes appear struck through.",
+        "example": "```nodeBook\n# Earth [Planet]\ndiameter: 12742 *km*;\nstate: \"solid\";\n!color: green;\n<orbits> Sun;\n<has satellite> Moon;\n!<has satellite> Ring;\n\n# Sun [Star]\nspectral type: \"G2V\";\n\n# Moon [Satellite]\ndiameter: 3474 *km*;\n```"
+      },
+      "petriNet": {
+        "title": "Petri Net",
+        "description": "Model processes with `[Transition]` nodes. Connect inputs with `<has prior_state>` and outputs with `<has post_state>`. Arc weights specify how many tokens are consumed or produced per firing (e.g. `<has prior_state> 6 CO2;` needs 6 tokens). Click enabled (green) transitions to simulate. A deadlock banner appears when no transition can fire.",
+        "example": "```nodeBook\n# Photosynthesis [Transition]\n<has prior_state> 6 CO2;\n<has prior_state> 6 H2O;\n<has prior_state> Sunlight;\n<has post_state> Glucose;\n<has post_state> 6 O2;\n\n# CO2 [Molecule]\n# H2O [Molecule]\n# Sunlight [Energy]\n# Glucose [Molecule]\n# O2 [Molecule]\n```"
+      },
+      "accounting": {
+        "title": "Double-Entry Accounting",
+        "description": "Model accounting transactions as Petri net transitions using `[Transaction]` nodes. Use `<debit>` and `<credit>` relations to move value between accounts. Declare accounts with `[Asset]`, `[Liability]`, `[Equity]`, `[Revenue]`, or `[Expense]` types and set initial balances with `balance: amount;`. Add `currency: EUR;` at the top to set the currency (supports USD, EUR, GBP, INR, JPY, PHP, and more). Click transactions to simulate — disabled when source accounts have insufficient balance.",
+        "example": "```nodeBook\ncurrency: INR;\n\n# Cash [Asset]\nbalance: 50000;\n\n# Buy Inventory [Transaction]\ndate: 2026-01-15;\n<debit> 25000 Inventory;\n<credit> 25000 Cash;\n```"
+      },
+      "mindMap": {
+        "title": "Mind Map",
+        "description": "Create hierarchical mind maps with a `# Root <relation>` heading followed by indented list items. Each indentation level defines a deeper branch. The relation label is used for all edges in the tree.",
+        "example": "```nodeBook\n# Science <branches into>\n- Physics\n  - Mechanics\n  - Thermodynamics\n- Chemistry\n  - Organic\n  - Inorganic\n- Biology\n  - Botany\n  - Zoology\n```"
+      },
+      "morphs": {
+        "title": "Polymorphic Nodes",
+        "description": "Add `## Morph Name` sub-headings under a `#` node to define polymorphic states. Each morph can have its own attributes and relations. Click a node in the graph to switch between its morphs using the state selector.",
+        "example": "```nodeBook\n# Water [Molecule]\nmolecular formula: \"H2O\";\nstate: \"liquid\";\n\n## Ice\nstate: \"solid\";\ntemperature: 0 *Celsius*;\n\n## Steam\nstate: \"gas\";\ntemperature: 100 *Celsius*;\n```"
+      },
+      "negation": {
+        "title": "Negation",
+        "description": "Prefix a relation or an attribute line with `!` to assert it does NOT hold — an explicit negative fact, distinct from simply leaving it out. Use `!<relation> Target;` to negate a relation and `!name: value;` to negate an attribute (the optional `has` prefix and modifiers like units still work). Negated relations render as a dashed red barred edge; negated attributes appear struck through with a `not` tag. Negated facts are excluded from inference and inheritance.",
+        "example": "```nodeBook\n# Snake [Animal]\n!<has> external ear;\n!color: green;\n\n# Pig [Animal]\n!<has> scales;\n\n# Penguin [Bird]\n!<can> fly;\nhabitat: \"Antarctica\";\n```"
+      }
+    },
+    "nodeBook-schema": {
+      "title": "nodeBook Schema",
+      "description": "Define custom node types, relation types, and attribute types in a `nodeBook-schema` code block. These schemas enable validation of your knowledge graphs via the Validate button.",
+      "example": "```nodeBook-schema\nnodeType: Planet, A celestial body, parent: Object\nrelationType: orbits, One body orbits another, domain: Planet, range: Star\nattributeType: diameter, float, Size measurement, unit: km, domain: Planet\nattributeType: mass, float, Mass of the object, unit: kg, domain: Planet\n```"
     }
   },
   "print": {

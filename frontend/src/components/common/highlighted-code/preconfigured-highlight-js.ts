@@ -386,4 +386,8 @@ hljs.registerLanguage('xquery', xquery)
 hljs.registerLanguage('zephir', zephir)
 hljs.registerLanguage('wasmn', wasm)
 
+import cnl from '../../../extensions/external-lib-app-extensions/nodebook/nodebook-hljs-language'
+hljs.registerLanguage('cnl', cnl)
+hljs.registerLanguage('nodeBook', cnl)
+
 export default hljs

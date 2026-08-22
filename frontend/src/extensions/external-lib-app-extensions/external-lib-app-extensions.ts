@@ -11,6 +11,7 @@ import { GistAppExtension } from './gist/gist-app-extension'
 import { GraphvizAppExtension } from './graphviz/graphviz-app-extension'
 import { KatexAppExtension } from './katex/katex-app-extension'
 import { MermaidAppExtension } from './mermaid/mermaid-app-extension'
+import { NodeBookAppExtension } from './nodebook/nodebook-app-extension'
 import { PlantumlAppExtension } from './plantuml/plantuml-app-extension'
 import { VegaLiteAppExtension } from './vega-lite/vega-lite-app-extension'
 import { VimeoAppExtension } from './vimeo/vimeo-app-extension'
@@ -27,6 +28,7 @@ export const externalLibAppExtensions: AppExtension[] = [
   new KatexAppExtension(),
   new AsciinemaAppExtension(),
   new MermaidAppExtension(),
+  new NodeBookAppExtension(),
   new PlantumlAppExtension(),
   new VegaLiteAppExtension(),
   new VimeoAppExtension(),
