@@ -5724,6 +5724,48 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@turbo/darwin-64@npm:2.10.11":
+  version: 2.10.11
+  resolution: "@turbo/darwin-64@npm:2.10.11"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@turbo/darwin-arm64@npm:2.10.11":
+  version: 2.10.11
+  resolution: "@turbo/darwin-arm64@npm:2.10.11"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@turbo/linux-64@npm:2.10.11":
+  version: 2.10.11
+  resolution: "@turbo/linux-64@npm:2.10.11"
+  conditions: (os=android | os=linux) & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@turbo/linux-arm64@npm:2.10.11":
+  version: 2.10.11
+  resolution: "@turbo/linux-arm64@npm:2.10.11"
+  conditions: (os=android | os=linux) & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@turbo/windows-64@npm:2.10.11":
+  version: 2.10.11
+  resolution: "@turbo/windows-64@npm:2.10.11"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@turbo/windows-arm64@npm:2.10.11":
+  version: 2.10.11
+  resolution: "@turbo/windows-arm64@npm:2.10.11"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
 "@tybys/wasm-util@npm:^0.9.0":
   version: 0.9.0
   resolution: "@tybys/wasm-util@npm:0.9.0"
@@ -11191,7 +11233,7 @@ __metadata:
     oxfmt: "npm:0.49.0"
     oxlint: "npm:1.63.0"
     oxlint-tsgolint: "npm:0.22.1"
-    turbo: "npm:2.8.13"
+    turbo: "npm:2.10.11"
   languageName: unknown
   linkType: soft
 
@@ -17629,74 +17671,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turbo-darwin-64@npm:2.8.13":
-  version: 2.8.13
-  resolution: "turbo-darwin-64@npm:2.8.13"
-  conditions: os=darwin & cpu=x64
-  languageName: node
-  linkType: hard
-
-"turbo-darwin-arm64@npm:2.8.13":
-  version: 2.8.13
-  resolution: "turbo-darwin-arm64@npm:2.8.13"
-  conditions: os=darwin & cpu=arm64
-  languageName: node
-  linkType: hard
-
-"turbo-linux-64@npm:2.8.13":
-  version: 2.8.13
-  resolution: "turbo-linux-64@npm:2.8.13"
-  conditions: os=linux & cpu=x64
-  languageName: node
-  linkType: hard
-
-"turbo-linux-arm64@npm:2.8.13":
-  version: 2.8.13
-  resolution: "turbo-linux-arm64@npm:2.8.13"
-  conditions: os=linux & cpu=arm64
-  languageName: node
-  linkType: hard
-
-"turbo-windows-64@npm:2.8.13":
-  version: 2.8.13
-  resolution: "turbo-windows-64@npm:2.8.13"
-  conditions: os=win32 & cpu=x64
-  languageName: node
-  linkType: hard
-
-"turbo-windows-arm64@npm:2.8.13":
-  version: 2.8.13
-  resolution: "turbo-windows-arm64@npm:2.8.13"
-  conditions: os=win32 & cpu=arm64
-  languageName: node
-  linkType: hard
-
-"turbo@npm:2.8.13":
-  version: 2.8.13
-  resolution: "turbo@npm:2.8.13"
+"turbo@npm:2.10.11":
+  version: 2.10.11
+  resolution: "turbo@npm:2.10.11"
   dependencies:
-    turbo-darwin-64: "npm:2.8.13"
-    turbo-darwin-arm64: "npm:2.8.13"
-    turbo-linux-64: "npm:2.8.13"
-    turbo-linux-arm64: "npm:2.8.13"
-    turbo-windows-64: "npm:2.8.13"
-    turbo-windows-arm64: "npm:2.8.13"
+    "@turbo/darwin-64": "npm:2.10.11"
+    "@turbo/darwin-arm64": "npm:2.10.11"
+    "@turbo/linux-64": "npm:2.10.11"
+    "@turbo/linux-arm64": "npm:2.10.11"
+    "@turbo/windows-64": "npm:2.10.11"
+    "@turbo/windows-arm64": "npm:2.10.11"
   dependenciesMeta:
-    turbo-darwin-64:
+    "@turbo/darwin-64":
       optional: true
-    turbo-darwin-arm64:
+    "@turbo/darwin-arm64":
       optional: true
-    turbo-linux-64:
+    "@turbo/linux-64":
       optional: true
-    turbo-linux-arm64:
+    "@turbo/linux-arm64":
       optional: true
-    turbo-windows-64:
+    "@turbo/windows-64":
       optional: true
-    turbo-windows-arm64:
+    "@turbo/windows-arm64":
       optional: true
   bin:
     turbo: bin/turbo
-  checksum: 10c0/c66f4a8ef0b1aa00961f3139faa89f4cfed9e9fe429464a8ee59ec063f89b35bb557d293202a0a8fd4ac73da3c8887eb360cee8399b4015a099f2e6791521a8f
+  checksum: 10c0/685e8241c72ae8e1dffa33a6625ffbb4d6b2a2fb6ae8cc288c0203bbe6ac045fd27709880df28da16ccf01821e98332c007f3311436c48ebbd1b649f25f1d2a2
   languageName: node
   linkType: hard
 
