@@ -2912,7 +2912,7 @@ __metadata:
     tsx: "npm:4.21.0"
     typescript: "npm:5.9.3"
     uuid: "npm:11.1.1"
-    ws: "npm:8.19.0"
+    ws: "npm:8.21.3"
     yjs: "npm:13.6.29"
     zod: "npm:3.25.76"
   languageName: unknown
@@ -2933,7 +2933,7 @@ __metadata:
     reveal.js: "npm:5.2.1"
     ts-jest: "npm:29.4.6"
     typescript: "npm:5.9.3"
-    ws: "npm:8.19.0"
+    ws: "npm:8.21.3"
     yjs: "npm:13.6.29"
     zod: "npm:3.25.76"
   languageName: unknown
@@ -3083,7 +3083,7 @@ __metadata:
     vega-embed: "npm:6.29.0"
     vega-lite: "npm:5.23.0"
     words-count: "npm:2.0.2"
-    ws: "npm:8.19.0"
+    ws: "npm:8.21.3"
     yjs: "npm:13.6.29"
   languageName: unknown
   linkType: soft
@@ -18952,9 +18952,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:8.19.0":
-  version: 8.19.0
-  resolution: "ws@npm:8.19.0"
+"ws@npm:8.21.3":
+  version: 8.21.3
+  resolution: "ws@npm:8.21.3"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ">=5.0.2"
@@ -18963,7 +18963,7 @@ __metadata:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: 10c0/4741d9b9bc3f9c791880882414f96e36b8b254e34d4b503279d6400d9a4b87a033834856dbdd94ee4b637944df17ea8afc4bce0ff4a1560d2166be8855da5b04
+  checksum: 10c0/7b28dc2863ea0e2cece68d142a3eee90361021b73f750431e6d8076bb7dede5fdfdb75b3d29534b62f411261147b76b1bc80fb5cc63ab0aabd467280e85b22e0
   languageName: node
   linkType: hard
 
