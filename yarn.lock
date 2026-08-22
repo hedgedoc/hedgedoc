@@ -2763,13 +2763,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fastify/session@npm:11.1.1":
-  version: 11.1.1
-  resolution: "@fastify/session@npm:11.1.1"
+"@fastify/session@npm:11.1.2":
+  version: 11.1.2
+  resolution: "@fastify/session@npm:11.1.2"
   dependencies:
-    fastify-plugin: "npm:^5.0.1"
+    fastify-plugin: "npm:^6.0.0"
     safe-stable-stringify: "npm:^2.4.3"
-  checksum: 10c0/61ad044b1ec6f8bba36ebd1969d839859d724c417d6838063bb59a1946864833557d36bf213c00e2e67326c151f6eb34328cce05543d9149aa40e8d205f502ff
+  checksum: 10c0/269486c1a758e2448764834bb5b5cfdb7bd23b57cf6786df56e642c8db91b6df4fb1372842d866d3e0f1384432f5cfaa2b7305632d4c3aa199e0fef5f5a85b3b
   languageName: node
   linkType: hard
 
@@ -2842,7 +2842,7 @@ __metadata:
     "@fastify/multipart": "npm:9.4.0"
     "@fastify/rate-limit": "npm:10.3.0"
     "@fastify/secure-session": "npm:8.3.0"
-    "@fastify/session": "npm:11.1.1"
+    "@fastify/session": "npm:11.1.2"
     "@fastify/static": "npm:9.0.0"
     "@hedgedoc/commons": "workspace:commons"
     "@hedgedoc/database": "workspace:database"
@@ -10411,10 +10411,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastify-plugin@npm:5.1.0, fastify-plugin@npm:^5.0.0, fastify-plugin@npm:^5.0.1":
+"fastify-plugin@npm:5.1.0, fastify-plugin@npm:^5.0.0":
   version: 5.1.0
   resolution: "fastify-plugin@npm:5.1.0"
   checksum: 10c0/61b330b8cb03a3581b796d745137499a782934abcf65dbf9a41d07248520cfd220b3ae8b16afeaf81af712e68e1ac24352895132cfeb2b372c66662c0170f365
+  languageName: node
+  linkType: hard
+
+"fastify-plugin@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "fastify-plugin@npm:6.0.0"
+  checksum: 10c0/4d9207efcbb0e6e8bd849eb8e00b097ae2d73590b1499f51d0bed135d08664e19d9428f2e8fc1a126b55ec4d2ac011dbcc72e753c255c46a751d6d34b57e5d4f
   languageName: node
   linkType: hard
 

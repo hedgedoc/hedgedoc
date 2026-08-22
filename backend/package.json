@@ -28,7 +28,7 @@
     "@fastify/multipart": "9.4.0",
     "@fastify/rate-limit": "10.3.0",
     "@fastify/secure-session": "8.3.0",
-    "@fastify/session": "11.1.1",
+    "@fastify/session": "11.1.2",
     "@fastify/static": "9.0.0",
     "@hedgedoc/commons": "workspace:commons",
     "@hedgedoc/database": "workspace:database",
