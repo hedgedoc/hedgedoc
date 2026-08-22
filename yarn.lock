@@ -2878,7 +2878,7 @@ __metadata:
     "@zxcvbn-ts/language-common": "npm:3.0.4"
     "@zxcvbn-ts/language-en": "npm:3.0.2"
     base32-encode: "npm:1.2.0"
-    better-sqlite3: "npm:12.6.2"
+    better-sqlite3: "npm:12.11.1"
     class-transformer: "npm:0.5.1"
     class-validator: "npm:0.14.3"
     cli-color: "npm:2.0.4"
@@ -7520,14 +7520,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"better-sqlite3@npm:12.6.2":
-  version: 12.6.2
-  resolution: "better-sqlite3@npm:12.6.2"
+"better-sqlite3@npm:12.11.1":
+  version: 12.11.1
+  resolution: "better-sqlite3@npm:12.11.1"
   dependencies:
     bindings: "npm:^1.5.0"
     node-gyp: "npm:latest"
     prebuild-install: "npm:^7.1.1"
-  checksum: 10c0/a58fb3f7a7f5469ba0b8de0855aa67396ff34f951a6975746e4b21987f530be6a34427d1d4bd5958cf48c67ed7ba1df038ae163d2ee9d944237f6b8112f6640d
+  checksum: 10c0/162d3fa6c19a68191d09537bd113bd54a636c9fb38b0fc0796f4f270032770695ef35a1bca041a0a0fa9bfa47e20b9e17c94484a3899c31f38881af4d12b7fa5
   languageName: node
   linkType: hard
 
