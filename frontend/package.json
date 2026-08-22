@@ -116,7 +116,7 @@
     "vega-embed": "6.29.0",
     "vega-lite": "5.23.0",
     "words-count": "2.0.2",
-    "ws": "8.19.0",
+    "ws": "8.21.3",
     "yjs": "13.6.29"
   },
   "devDependencies": {
