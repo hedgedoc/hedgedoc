@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`blockquote extra tag renders the tag "> [color=#f00] text" correctly 1`] = `
 <div>
@@ -8,7 +8,7 @@ exports[`blockquote extra tag renders the tag "> [color=#f00] text" correctly 1`
   
 
   <blockquote
-    style="border-left-color: #f00;"
+    style="border-left-color: rgb(255, 0, 0);"
   >
     
 

@@ -66,7 +66,7 @@ describe('UsersService', () => {
     });
 
     it('inserts a new user', async () => {
-      jest.useFakeTimers();
+      jest.useFakeTimers({ doNotFake: ['setTimeout'] });
       const now = getCurrentDateTime();
       mockSelect(tracker, [FieldNameUser.username], TableUser, FieldNameUser.username);
       mockInsert(
@@ -115,7 +115,7 @@ describe('UsersService', () => {
 
   describe('createGuestUser', () => {
     it('inserts a new guest user', async () => {
-      jest.useFakeTimers();
+      jest.useFakeTimers({ doNotFake: ['setTimeout'] });
       const now = getCurrentDateTime();
       // This wrong typecast is required since TypeScript does not see that
       // `uuid.v4()` returns a string or a Uint8Array based on the given options
@@ -318,7 +318,7 @@ describe('UsersService', () => {
 
   describe('getUserById', () => {
     it('returns User if user does exists', async () => {
-      jest.useFakeTimers();
+      jest.useFakeTimers({ doNotFake: ['setTimeout'] });
       const now = getCurrentDateTime();
       mockSelect(tracker, [], TableUser, FieldNameUser.id, [
         {

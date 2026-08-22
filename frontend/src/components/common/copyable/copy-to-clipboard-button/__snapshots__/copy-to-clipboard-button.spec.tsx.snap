@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Copy to clipboard button show an error text if clipboard api isn't available: renders copy button 1`] = `
 <div>

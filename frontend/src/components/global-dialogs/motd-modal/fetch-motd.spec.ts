@@ -25,7 +25,7 @@ describe('fetch motd', () => {
     responseText: string,
     lastModified: string | null,
     etag?: string | null
-  ): jest.SpyInstance<Promise<Response>> => {
+  ): jest.Spied<typeof fetch> => {
     return jest.spyOn(global, 'fetch').mockImplementation((url: RequestInfo | URL) => {
       if (url !== motdUrl) {
         return Promise.reject(new Error('wrong url'))

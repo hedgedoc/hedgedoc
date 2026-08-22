@@ -67,7 +67,7 @@ describe('create non existing note hint', () => {
       <CreateNonExistingNoteHint noteId={undefined} onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>
     )
     await waitForOtherPromisesToFinish()
-    expect(onNoteCreatedCallback).not.toBeCalled()
+    expect(onNoteCreatedCallback).not.toHaveBeenCalled()
     expect(view.container).toMatchSnapshot()
   })
 
@@ -83,7 +83,7 @@ describe('create non existing note hint', () => {
         onNoteCreated={onNoteCreatedCallback}></CreateNonExistingNoteHint>
     )
     await waitForOtherPromisesToFinish()
-    expect(onNoteCreatedCallback).not.toBeCalled()
+    expect(onNoteCreatedCallback).not.toHaveBeenCalled()
     expect(view.container).toMatchSnapshot()
   })
 
@@ -97,7 +97,7 @@ describe('create non existing note hint', () => {
     )
     await screen.findByTestId('createNoteMessage')
     await waitForOtherPromisesToFinish()
-    expect(onNoteCreatedCallback).not.toBeCalled()
+    expect(onNoteCreatedCallback).not.toHaveBeenCalled()
     expect(view.container).toMatchSnapshot()
   })
 
@@ -117,7 +117,7 @@ describe('create non existing note hint', () => {
       expect(await screen.findByTestId('loadingMessage')).toBeInTheDocument()
     })
     await waitForOtherPromisesToFinish()
-    expect(onNoteCreatedCallback).not.toBeCalled()
+    expect(onNoteCreatedCallback).not.toHaveBeenCalled()
     expect(view.container).toMatchSnapshot()
   })
 
@@ -137,7 +137,7 @@ describe('create non existing note hint', () => {
       expect(await screen.findByTestId('noteCreated')).toBeInTheDocument()
     })
     await waitForOtherPromisesToFinish()
-    expect(onNoteCreatedCallback).toBeCalled()
+    expect(onNoteCreatedCallback).toHaveBeenCalled()
     expect(view.container).toMatchSnapshot()
   })
 
@@ -157,7 +157,7 @@ describe('create non existing note hint', () => {
       expect(await screen.findByTestId('failedMessage')).toBeInTheDocument()
     })
     await waitForOtherPromisesToFinish()
-    expect(onNoteCreatedCallback).not.toBeCalled()
+    expect(onNoteCreatedCallback).not.toHaveBeenCalled()
     expect(view.container).toMatchSnapshot()
   })
 })

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { describe, it, expect, beforeAll, beforeEach, afterEach, jest } from '@jest/globals';
-import type { SpyInstance } from 'jest-mock';
 import { PermissionLevel } from '@hedgedoc/commons';
 import {
   FieldNameAlias,
@@ -144,7 +143,7 @@ describe('NoteService', () => {
   describe('createNote', () => {
     let now: DateTime;
     beforeEach(() => {
-      jest.useFakeTimers();
+      jest.useFakeTimers({ doNotFake: ['setTimeout'] });
       now = getCurrentDateTime();
     });
     afterEach(() => {
@@ -209,12 +208,12 @@ describe('NoteService', () => {
       ],
     ])('inserts a new note', (everyoneLevel, loggedInLevel, inputAlias, outputAlias, descr) => {
       let result: number;
-      let mockEnsureAliasIsAvailable: SpyInstance<typeof aliasService.ensureAliasIsAvailable>;
-      let mockGenerateRandomAlias: SpyInstance<typeof aliasService.generateRandomAlias>;
-      let mockAddAlias: SpyInstance<typeof aliasService.addAlias>;
-      let mockCreateRevision: SpyInstance<typeof revisionService.createRevision>;
-      let mockGetGroupIdByName: SpyInstance<typeof groupsService.getGroupIdByName>;
-      let mockSetGroupPermission: SpyInstance<typeof permissionService.setGroupPermission>;
+      let mockEnsureAliasIsAvailable: jest.Spied<typeof aliasService.ensureAliasIsAvailable>;
+      let mockGenerateRandomAlias: jest.Spied<typeof aliasService.generateRandomAlias>;
+      let mockAddAlias: jest.Spied<typeof aliasService.addAlias>;
+      let mockCreateRevision: jest.Spied<typeof revisionService.createRevision>;
+      let mockGetGroupIdByName: jest.Spied<typeof groupsService.getGroupIdByName>;
+      let mockSetGroupPermission: jest.Spied<typeof permissionService.setGroupPermission>;
       beforeEach(() => {
         mockEnsureAliasIsAvailable = jest
           .spyOn(aliasService, 'ensureAliasIsAvailable')
@@ -308,8 +307,8 @@ describe('NoteService', () => {
   /* oxlint-enable jest/no-conditional-expect */
 
   describe('getNoteContent', () => {
-    let realtimeNoteStoreSpy: SpyInstance<typeof realtimeNoteStore.find>;
-    let revsisionServiceSpy: SpyInstance<typeof revisionService.getLatestRevision>;
+    let realtimeNoteStoreSpy: jest.Spied<typeof realtimeNoteStore.find>;
+    let revsisionServiceSpy: jest.Spied<typeof revisionService.getLatestRevision>;
 
     beforeEach(() => {
       realtimeNoteStoreSpy = jest.spyOn(realtimeNoteStore, 'find');
@@ -342,7 +341,7 @@ describe('NoteService', () => {
   });
 
   describe('getNoteIdByAlias', () => {
-    let aliasServiceSpy: SpyInstance<typeof aliasService.isAliasForbidden>;
+    let aliasServiceSpy: jest.Spied<typeof aliasService.isAliasForbidden>;
     const buildMockSelect = (returnValues: unknown) => {
       mockSelect(
         tracker,
@@ -390,7 +389,7 @@ describe('NoteService', () => {
   });
 
   describe('deleteNote', () => {
-    let eventEmitterSpy: SpyInstance<typeof eventEmitter.emit>;
+    let eventEmitterSpy: jest.Spied<typeof eventEmitter.emit>;
     beforeEach(() => {
       eventEmitterSpy = jest.spyOn(eventEmitter, 'emit').mockReturnValue(true);
     });
@@ -411,8 +410,8 @@ describe('NoteService', () => {
   });
 
   describe('updateNote', () => {
-    let eventEmitterSpy: SpyInstance<typeof eventEmitter.emit>;
-    let revisionServiceSpy: SpyInstance<typeof revisionService.createRevision>;
+    let eventEmitterSpy: jest.Spied<typeof eventEmitter.emit>;
+    let revisionServiceSpy: jest.Spied<typeof revisionService.createRevision>;
     beforeEach(() => {
       eventEmitterSpy = jest.spyOn(eventEmitter, 'emit').mockReturnValue(true);
       revisionServiceSpy = jest
@@ -428,10 +427,10 @@ describe('NoteService', () => {
   });
 
   describe('toNoteMetadataDto', () => {
-    let spyAliasService: SpyInstance<typeof aliasService.getAllAliases>;
+    let spyAliasService: jest.Spied<typeof aliasService.getAllAliases>;
 
     beforeEach(() => {
-      jest.useFakeTimers();
+      jest.useFakeTimers({ doNotFake: ['setTimeout'] });
       spyAliasService = jest.spyOn(aliasService, 'getAllAliases');
     });
 

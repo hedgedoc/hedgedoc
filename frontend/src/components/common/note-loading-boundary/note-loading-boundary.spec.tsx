@@ -83,7 +83,9 @@ describe('Note loading boundary', () => {
     })
   }
 
-  const mockSetNoteInRedux = (expectedNote: NoteInterface): jest.SpyInstance<void, [apiResponse: NoteInterface]> => {
+  const mockSetNoteInRedux = (
+    expectedNote: NoteInterface
+  ): jest.Spied<typeof setNoteDataFromServerModule.setNoteDataFromServer> => {
     return jest.spyOn(setNoteDataFromServerModule, 'setNoteDataFromServer').mockImplementation((givenNote) => {
       expect(givenNote).toBe(expectedNote)
     })
@@ -102,7 +104,7 @@ describe('Note loading boundary', () => {
     await screen.findByTestId('LoadingScreen')
     await screen.findByTestId('success')
     expect(view.container).toMatchSnapshot()
-    expect(setNoteInReduxFunctionMock).toBeCalledWith(mockedNote)
+    expect(setNoteInReduxFunctionMock).toHaveBeenCalledWith(mockedNote)
   })
 
   it('shows an error', async () => {
@@ -118,6 +120,6 @@ describe('Note loading boundary', () => {
     await screen.findByTestId('LoadingScreen')
     await screen.findByTestId('CommonErrorPage')
     expect(view.container).toMatchSnapshot()
-    expect(setNoteInReduxFunctionMock).not.toBeCalled()
+    expect(setNoteInReduxFunctionMock).not.toHaveBeenCalled()
   })
 })

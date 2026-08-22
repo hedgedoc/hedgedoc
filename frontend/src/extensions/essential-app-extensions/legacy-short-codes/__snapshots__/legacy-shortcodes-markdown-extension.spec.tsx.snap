@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Legacy shortcodes markdown extension transforms a pdf short code into an URL 1`] = `
 <div>

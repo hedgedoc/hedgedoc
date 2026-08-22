@@ -10,11 +10,16 @@ set -e
 cleanup () {
     if [ -d ../tmp/src/pages/api ]; then
         echo "🦔 > Moving Mock API files back"
-        mv ../tmp/src/pages/api src/pages
+        if [ -d src/pages/api ]; then
+            rm -rf ../tmp/src/pages/api
+        else
+            mv ../tmp/src/pages/api src/pages
+        fi
     fi
 }
 
 trap cleanup EXIT
+cleanup
 
 echo "🦔 Frontend Production Build"
 echo "🦔 > Clearing existing builds"

@@ -3,19 +3,24 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "lib": [
-      "es2022",
+      "esnext",
       "dom"
     ],
     "declaration": true,
     "strict": true,
-    "allowSyntheticDefaultImports": true,
+    "rootDir": ".",
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
-    "allowJs": true,
-    "declarationMap":true,
     "sourceMap": true,
-    "typeRoots": ["./types"]
+    "typeRoots": ["./types", "../node_modules/@types"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target" : "ESNext",
+    "isolatedModules": true,
+    "outDir": "./dist",
+    "types": ["node"],
+    "declarationDir": "./dist"
   },
   "include": ["./src", "./types"],
-  "exclude": ["./dist", "**/*.test.ts"]
+  "exclude": ["./dist", "**/*.spec.ts"]
 }

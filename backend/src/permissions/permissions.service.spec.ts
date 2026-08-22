@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { describe, it, expect, beforeAll, beforeEach, afterEach, jest } from '@jest/globals';
-import type { SpyInstance } from 'jest-mock';
 import { PermissionLevel } from '@hedgedoc/commons';
 import {
   FieldNameGroup,
@@ -201,7 +200,7 @@ describe('PermissionsService', () => {
   });
 
   describe('checkIfUserMayCreateNote', () => {
-    let spyUserServiceIsRegisteredUser: SpyInstance<typeof usersService.isRegisteredUser>;
+    let spyUserServiceIsRegisteredUser: jest.Spied<typeof usersService.isRegisteredUser>;
     beforeEach(() => {
       spyUserServiceIsRegisteredUser = jest.spyOn(usersService, 'isRegisteredUser');
     });
@@ -222,9 +221,9 @@ describe('PermissionsService', () => {
   });
 
   describe('determinePermission', () => {
-    let spyOnPermissionsServiceIsOwner: SpyInstance<typeof service.isOwner>;
-    let spyOnUserServiceIsRegisteredUser: SpyInstance<typeof usersService.isRegisteredUser>;
-    let spyOnGroupServiceGetGroupsForUser: SpyInstance<typeof groupsService.getGroupsForUser>;
+    let spyOnPermissionsServiceIsOwner: jest.Spied<typeof service.isOwner>;
+    let spyOnUserServiceIsRegisteredUser: jest.Spied<typeof usersService.isRegisteredUser>;
+    let spyOnGroupServiceGetGroupsForUser: jest.Spied<typeof groupsService.getGroupsForUser>;
 
     beforeEach(() => {
       spyOnPermissionsServiceIsOwner = jest.spyOn(service, 'isOwner');
@@ -305,7 +304,7 @@ describe('PermissionsService', () => {
   });
 
   describe('setUserPermission', () => {
-    let spyOnIsOwner: SpyInstance<typeof service.isOwner>;
+    let spyOnIsOwner: jest.Spied<typeof service.isOwner>;
     beforeEach(() => {
       spyOnIsOwner = jest.spyOn(service, 'isOwner');
     });
@@ -315,7 +314,7 @@ describe('PermissionsService', () => {
       expect(spyOnIsOwner).toHaveBeenCalledTimes(1);
     });
     describe('user is not owner', () => {
-      let spyOnIsRegisteredUser: SpyInstance<typeof usersService.isRegisteredUser>;
+      let spyOnIsRegisteredUser: jest.Spied<typeof usersService.isRegisteredUser>;
       beforeEach(() => {
         spyOnIsOwner.mockResolvedValue(false);
         spyOnIsRegisteredUser = jest.spyOn(usersService, 'isRegisteredUser');
@@ -346,7 +345,7 @@ describe('PermissionsService', () => {
   });
 
   describe('removeUserPermission', () => {
-    let spyOneNotifyOthers: SpyInstance;
+    let spyOneNotifyOthers: jest.Spied<any>;
     beforeEach(() => {
       spyOneNotifyOthers = jest.spyOn(
         // Typecast is required as we're mocking a private method here
@@ -409,7 +408,7 @@ describe('PermissionsService', () => {
   });
 
   describe('removeGroupPermission', () => {
-    let spyOneNotifyOthers: SpyInstance;
+    let spyOneNotifyOthers: jest.Spied<any>;
     beforeEach(() => {
       spyOneNotifyOthers = jest.spyOn(
         // Typecast is required as we're mocking a private method here
@@ -442,7 +441,7 @@ describe('PermissionsService', () => {
   });
 
   describe('changeOwner', () => {
-    let spyOneNotifyOthers: SpyInstance;
+    let spyOneNotifyOthers: jest.Spied<any>;
     beforeEach(() => {
       spyOneNotifyOthers = jest.spyOn(
         // Typecast is required as we're mocking a private method here

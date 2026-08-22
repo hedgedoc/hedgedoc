@@ -17,6 +17,12 @@
       }
     ]
   },
+  "transformIgnorePatterns": [
+    "/node_modules/",
+    "/commons/dist/",
+    "/database/dist/cjs/",
+    "/database/migrations/"
+  ],
   "coverageDirectory": "./coverage-e2e",
   "testTimeout": 15000,
   "reporters": ["default", "github-actions"],

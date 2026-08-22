@@ -3,6 +3,7 @@
   "version": "2.0.0-alpha.3",
   "description": "Realtime collaborative markdown notes on all platforms.",
   "author": "",
+  "type": "module",
   "private": true,
   "license": "AGPL-3.0",
   "scripts": {
@@ -17,8 +18,8 @@
     "test:watch": "jest --watch",
     "test:ci": "jest --coverage --runInBand",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config jest-e2e.json",
-    "test:e2e:ci": "jest --config jest-e2e.json --coverage",
+    "test:e2e": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --experimental-vm-modules\" jest --config jest-e2e.json",
+    "test:e2e:ci": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --experimental-vm-modules\" jest --config jest-e2e.json --coverage --runInBand",
     "knex": "tsx ../node_modules/.bin/knex --migrations-directory src/database/migrations --knexfile ./knexfile.ts"
   },
   "dependencies": {
@@ -93,12 +94,12 @@
     "@types/source-map-support": "0.5.10",
     "@types/supertest": "2.0.16",
     "@types/ws": "8.18.1",
-    "jest": "29.7.0",
+    "jest": "30.4.2",
     "knex-mock-client": "3.0.2",
     "mocked-env": "1.3.5",
     "source-map-support": "0.5.21",
     "supertest": "6.3.4",
-    "ts-jest": "29.4.6",
+    "ts-jest": "29.4.12",
     "ts-mockery": "1.2.0",
     "tsconfig-paths": "4.2.0",
     "tsx": "4.23.12",
@@ -126,8 +127,7 @@
       ]
     },
     "transformIgnorePatterns": [
-      "/node_modules/",
-      "<rootDir>/../commons/dist/cjs/"
+      "/node_modules/"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
@@ -136,5 +136,5 @@
       "github-actions"
     ]
   },
-  "packageManager": "yarn@4.12.0"
+  "packageManager": "yarn@4.17.1"
 }

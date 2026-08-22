@@ -5,7 +5,7 @@
  */
 import { ConnectionStateEvent, Message, MessagePayloads, MessageType } from './message.js'
 import { TransportAdapter } from './transport-adapter.js'
-import { EventEmitter2, Listener } from 'eventemitter2'
+import EventEmitter2, { type Listener } from 'eventemitter2'
 import { DisconnectReasonCode } from './disconnect_reason.js'
 
 export type AllEvents = MessageType | ConnectionStateEvent
@@ -35,7 +35,7 @@ export class MessageTransporter extends EventEmitter2<MessageEventPayloadMap> {
   private destroyOnConnectedEventHandler: undefined | (() => void)
   private thisSideReady = false
   private otherSideReady = false
-  private readyInterval: NodeJS.Timeout | undefined
+  private readyInterval: ReturnType<typeof setInterval> | undefined
 
   /**
    * Send a message to the other side using the currently set message transporter.

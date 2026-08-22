@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
-import type { SpyInstance } from 'jest-mock';
 import { PermissionLevel, PermissionLevelNames } from '@hedgedoc/commons';
 import type { ExecutionContext } from '@nestjs/common';
 import type { Reflector } from '@nestjs/core';
@@ -40,7 +39,7 @@ describe('PermissionsGuard', () => {
   let handler: () => void;
   let permissionsService: PermissionService;
   let permissionGuard: PermissionsGuard;
-  let spyOnExtractNoteId: SpyInstance<typeof extractNoteIdFromRequest>;
+  let spyOnExtractNoteId: jest.Spied<typeof extractNoteIdFromRequest>;
 
   const mockUserId = 42;
   const mockNoteId = 23;

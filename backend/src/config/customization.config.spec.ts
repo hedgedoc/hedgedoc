@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
-import type { SpyInstance } from 'jest-mock';
 import mockedEnv from 'mocked-env';
 
 import customizationConfig from './customization.config';
@@ -45,7 +44,7 @@ describe('customizationConfig', () => {
   });
 
   describe('throws error', () => {
-    let spyConsoleError: SpyInstance;
+    let spyConsoleError: jest.Spied<typeof console.error>;
     let spyProcessExit: jest.Mock;
     let originalProcess: typeof process;
 

@@ -17,6 +17,10 @@ fi
 echo "🦔 > Building NestJS application"
 nest build
 
+echo "🦔 > Marking production build as CommonJS"
+cp src/database/migrations/package.json dist/package.json
+cp src/database/migrations/package.json dist/src/database/migrations/package.json
+
 if [ -d "dist/src/database/migrations" ]; then
   echo "🦔 > Removing TypeScript definitions from migrations folder"
   rm -f dist/src/database/migrations/*.d.ts 2>/dev/null || true
@@ -25,4 +29,3 @@ fi
 
 echo "🦔 > Done building backend"
 exit 0
-

@@ -76,11 +76,11 @@ describe('Logger', () => {
 
       new Logger('prefix').debug('beans')
 
-      expect(infoLogMock).not.toBeCalled()
-      expect(warnLogMock).not.toBeCalled()
-      expect(errorLogMock).not.toBeCalled()
-      expect(debugLogMock).not.toBeCalled()
-      expect(defaultLogMock).not.toBeCalled()
+      expect(infoLogMock).not.toHaveBeenCalled()
+      expect(warnLogMock).not.toHaveBeenCalled()
+      expect(errorLogMock).not.toHaveBeenCalled()
+      expect(debugLogMock).not.toHaveBeenCalled()
+      expect(defaultLogMock).not.toHaveBeenCalled()
     })
 
     it('will enable debug logging in production mode but with local storage setting', () => {
@@ -90,16 +90,16 @@ describe('Logger', () => {
 
       new Logger('prefix').debug('muffin')
 
-      expect(infoLogMock).not.toBeCalled()
-      expect(warnLogMock).not.toBeCalled()
-      expect(errorLogMock).not.toBeCalled()
+      expect(infoLogMock).not.toHaveBeenCalled()
+      expect(warnLogMock).not.toHaveBeenCalled()
+      expect(errorLogMock).not.toHaveBeenCalled()
       expect(debugLogMock).toHaveBeenCalledWith(
         '%c[2021-10-25 01:02:03] %c(prefix)',
         'color: yellow',
         'color: green',
         'muffin'
       )
-      expect(defaultLogMock).not.toBeCalled()
+      expect(defaultLogMock).not.toHaveBeenCalled()
     })
 
     it('wont log in production mode but without local storage access', () => {
@@ -109,11 +109,11 @@ describe('Logger', () => {
 
       new Logger('prefix').debug('beans')
 
-      expect(infoLogMock).not.toBeCalled()
-      expect(warnLogMock).not.toBeCalled()
-      expect(errorLogMock).not.toBeCalled()
-      expect(debugLogMock).not.toBeCalled()
-      expect(defaultLogMock).not.toBeCalled()
+      expect(infoLogMock).not.toHaveBeenCalled()
+      expect(warnLogMock).not.toHaveBeenCalled()
+      expect(errorLogMock).not.toHaveBeenCalled()
+      expect(debugLogMock).not.toHaveBeenCalled()
+      expect(defaultLogMock).not.toHaveBeenCalled()
     })
 
     it('will enable debug logging enabled in test mode', () => {
@@ -123,16 +123,16 @@ describe('Logger', () => {
 
       new Logger('prefix').debug('muffin')
 
-      expect(infoLogMock).not.toBeCalled()
-      expect(warnLogMock).not.toBeCalled()
-      expect(errorLogMock).not.toBeCalled()
+      expect(infoLogMock).not.toHaveBeenCalled()
+      expect(warnLogMock).not.toHaveBeenCalled()
+      expect(errorLogMock).not.toHaveBeenCalled()
       expect(debugLogMock).toHaveBeenCalledWith(
         '%c[2021-10-25 03:04:05] %c(prefix)',
         'color: yellow',
         'color: green',
         'muffin'
       )
-      expect(defaultLogMock).not.toBeCalled()
+      expect(defaultLogMock).not.toHaveBeenCalled()
     })
 
     it('will enable debug logging enabled in dev mode', () => {
@@ -142,16 +142,16 @@ describe('Logger', () => {
 
       new Logger('prefix').debug('muffin')
 
-      expect(infoLogMock).not.toBeCalled()
-      expect(warnLogMock).not.toBeCalled()
-      expect(errorLogMock).not.toBeCalled()
+      expect(infoLogMock).not.toHaveBeenCalled()
+      expect(warnLogMock).not.toHaveBeenCalled()
+      expect(errorLogMock).not.toHaveBeenCalled()
       expect(debugLogMock).toHaveBeenCalledWith(
         '%c[2021-10-25 04:05:06] %c(prefix)',
         'color: yellow',
         'color: green',
         'muffin'
       )
-      expect(defaultLogMock).not.toBeCalled()
+      expect(defaultLogMock).not.toHaveBeenCalled()
     })
   })
 
@@ -166,10 +166,10 @@ describe('Logger', () => {
       'color: green',
       'toast'
     )
-    expect(warnLogMock).not.toBeCalled()
-    expect(errorLogMock).not.toBeCalled()
-    expect(debugLogMock).not.toBeCalled()
-    expect(defaultLogMock).not.toBeCalled()
+    expect(warnLogMock).not.toHaveBeenCalled()
+    expect(errorLogMock).not.toHaveBeenCalled()
+    expect(debugLogMock).not.toHaveBeenCalled()
+    expect(defaultLogMock).not.toHaveBeenCalled()
     new Logger('prefix').info('toast')
   })
 
@@ -178,16 +178,16 @@ describe('Logger', () => {
 
     new Logger('prefix').warn('eggs')
 
-    expect(infoLogMock).not.toBeCalled()
+    expect(infoLogMock).not.toHaveBeenCalled()
     expect(warnLogMock).toHaveBeenCalledWith(
       '%c[2021-10-25 06:07:08] %c(prefix)',
       'color: yellow',
       'color: green',
       'eggs'
     )
-    expect(errorLogMock).not.toBeCalled()
-    expect(debugLogMock).not.toBeCalled()
-    expect(defaultLogMock).not.toBeCalled()
+    expect(errorLogMock).not.toHaveBeenCalled()
+    expect(debugLogMock).not.toHaveBeenCalled()
+    expect(defaultLogMock).not.toHaveBeenCalled()
   })
 
   it('logs a error message into the console', () => {
@@ -195,15 +195,15 @@ describe('Logger', () => {
 
     new Logger('prefix').error('bacon')
 
-    expect(infoLogMock).not.toBeCalled()
-    expect(warnLogMock).not.toBeCalled()
+    expect(infoLogMock).not.toHaveBeenCalled()
+    expect(warnLogMock).not.toHaveBeenCalled()
     expect(errorLogMock).toHaveBeenCalledWith(
       '%c[2021-10-25 07:08:09] %c(prefix)',
       'color: yellow',
       'color: green',
       'bacon'
     )
-    expect(debugLogMock).not.toBeCalled()
-    expect(defaultLogMock).not.toBeCalled()
+    expect(debugLogMock).not.toHaveBeenCalled()
+    expect(defaultLogMock).not.toHaveBeenCalled()
   })
 })

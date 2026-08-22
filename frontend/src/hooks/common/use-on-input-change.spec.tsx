@@ -22,6 +22,6 @@ describe('useOnInputChange', () => {
     const element: HTMLInputElement = await screen.findByTestId('input')
     fireEvent.change(element, { target: { value: testValue } })
 
-    expect(callback).toBeCalledWith(testValue)
+    expect(callback).toHaveBeenCalledWith(testValue)
   })
 })

@@ -3,8 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { EventMap } from 'eventemitter2'
-import { EventEmitter2 } from 'eventemitter2'
+import EventEmitter2, { type EventMap } from 'eventemitter2'
 import { applyUpdate, Doc, encodeStateAsUpdate, encodeStateVector, Text as YText } from 'yjs'
 
 const MARKDOWN_CONTENT_CHANNEL_NAME = 'markdownContent'

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Splitter resize can change size with mouse: mouse initial 1`] = `
 <div>
@@ -56,7 +56,7 @@ exports[`Splitter resize can change size with mouse: mouse initial 1`] = `
     <div
       class="right"
       id="editor-view-pane"
-      style="width: calc(100% - 50%);"
+      style="width: calc(50%);"
     >
       <div
         class="inner"
@@ -124,7 +124,7 @@ exports[`Splitter resize can change size with mouse: mouse move to left 1`] = `
     <div
       class="right"
       id="editor-view-pane"
-      style="width: calc(100% - 0%);"
+      style="width: calc(100%);"
     >
       <div
         class="inner"
@@ -192,7 +192,7 @@ exports[`Splitter resize can change size with mouse: mouse move to middle 1`] = 
     <div
       class="right"
       id="editor-view-pane"
-      style="width: calc(100% - 50%);"
+      style="width: calc(50%);"
     >
       <div
         class="inner"
@@ -260,7 +260,7 @@ exports[`Splitter resize can change size with mouse: mouse move to right 1`] = `
     <div
       class="right"
       id="editor-view-pane"
-      style="width: calc(100% - 100%);"
+      style="width: calc(0%);"
     >
       <div
         class="inner"
@@ -328,7 +328,7 @@ exports[`Splitter resize can change size with touch: touch initial 1`] = `
     <div
       class="right"
       id="editor-view-pane"
-      style="width: calc(100% - 50%);"
+      style="width: calc(50%);"
     >
       <div
         class="inner"
@@ -396,7 +396,7 @@ exports[`Splitter resize can change size with touch: touch move to left 1`] = `
     <div
       class="right"
       id="editor-view-pane"
-      style="width: calc(100% - 0%);"
+      style="width: calc(100%);"
     >
       <div
         class="inner"
@@ -464,7 +464,7 @@ exports[`Splitter resize can change size with touch: touch move to middle 1`] = 
     <div
       class="right"
       id="editor-view-pane"
-      style="width: calc(100% - 26%);"
+      style="width: calc(74%);"
     >
       <div
         class="inner"
@@ -532,7 +532,7 @@ exports[`Splitter resize can change size with touch: touch move to right 1`] = `
     <div
       class="right"
       id="editor-view-pane"
-      style="width: calc(100% - 100%);"
+      style="width: calc(0%);"
     >
       <div
         class="inner"

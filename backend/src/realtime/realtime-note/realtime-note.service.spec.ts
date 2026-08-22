@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { describe, it, expect, beforeAll, beforeEach, afterAll, jest } from '@jest/globals';
-import type { SpyInstance } from 'jest-mock';
 import { PermissionLevel } from '@hedgedoc/commons';
 import { FieldNameRevision, Revision } from '@hedgedoc/database';
 import { SchedulerRegistry } from '@nestjs/schedule';
@@ -33,13 +32,13 @@ describe('RealtimeNoteService', () => {
   let mockedPermissionService: PermissionService;
   let consoleLoggerService: ConsoleLoggerService;
   let mockedNoteConfig: NoteConfig;
-  let addIntervalSpy: SpyInstance<typeof SchedulerRegistry.prototype.addInterval>;
-  let setIntervalSpy: SpyInstance<typeof setInterval>;
-  let clearIntervalSpy: SpyInstance<typeof clearInterval>;
+  let addIntervalSpy: jest.Spied<typeof SchedulerRegistry.prototype.addInterval>;
+  let setIntervalSpy: jest.Spied<typeof setInterval>;
+  let clearIntervalSpy: jest.Spied<typeof clearInterval>;
   let clientWithReadWrite: RealtimeConnection;
   let clientWithRead: RealtimeConnection;
   let clientWithoutReadWrite: RealtimeConnection;
-  let deleteIntervalSpy: SpyInstance<typeof SchedulerRegistry.prototype.deleteInterval>;
+  let deleteIntervalSpy: jest.Spied<typeof SchedulerRegistry.prototype.deleteInterval>;
 
   const readWriteUserId = 2;
   const onlyReadUserId = 1;
@@ -111,7 +110,7 @@ describe('RealtimeNoteService', () => {
 
     addIntervalSpy = jest.spyOn(schedulerRegistry, 'addInterval');
     deleteIntervalSpy = jest.spyOn(schedulerRegistry, 'deleteInterval');
-    setIntervalSpy = jest.spyOn(global, 'setInterval') as SpyInstance<typeof setInterval>;
+    setIntervalSpy = jest.spyOn(global, 'setInterval') as jest.Spied<typeof setInterval>;
     clearIntervalSpy = jest.spyOn(global, 'clearInterval');
 
     clientWithReadWrite = new MockConnectionBuilder(realtimeNote)
@@ -210,8 +209,8 @@ describe('RealtimeNoteService', () => {
   });
 
   describe('handleNoteAliasesChanged', () => {
-    let spyRealtimeNoteStoreFind: SpyInstance<typeof realtimeNoteStore.find>;
-    let spyAnnounceAliasesUpdate: SpyInstance<typeof realtimeNote.announceAliasesUpdate>;
+    let spyRealtimeNoteStoreFind: jest.Spied<typeof realtimeNoteStore.find>;
+    let spyAnnounceAliasesUpdate: jest.Spied<typeof realtimeNote.announceAliasesUpdate>;
 
     beforeEach(() => {
       spyRealtimeNoteStoreFind = jest.spyOn(realtimeNoteStore, 'find').mockImplementation(() => {
