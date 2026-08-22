@@ -337,7 +337,7 @@
           "public": "Public"
         }
       },
-      "rawHtml": "Raw HTML",
+      "unstyled-html": "Unstyled HTML",
       "markdown-file": "Markdown file",
       "print": "Print"
     },

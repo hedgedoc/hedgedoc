@@ -20,6 +20,7 @@ import React, { useCallback, useDeferredValue, useEffect, useMemo, useRef, useSt
 import { setPrintMode } from '../../redux/print-mode/methods'
 import { usePrintSelfKeyboardShortcut } from '../editor-page/hooks/use-print-keyboard-shortcut'
 import { useApplicationState } from '../../hooks/common/use-application-state'
+import { useOnHtmlExportRequest } from './hooks/use-on-html-export-request'
 
 /**
  * Wraps the markdown rendering in an iframe.
@@ -83,6 +84,8 @@ export const RenderPageContent: React.FC = () => {
       })
     }, [communicator])
   )
+
+  useOnHtmlExportRequest(communicator)
 
   useRendererReceiveHandler(
     CommunicationMessageType.SET_PRINT_MODE,
