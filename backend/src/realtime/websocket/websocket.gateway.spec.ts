@@ -172,12 +172,11 @@ describe('Websocket gateway', () => {
 
     jest
       .spyOn(permissionsService, 'determinePermission')
-      .mockImplementation(
-        async (userId: number, noteId: number): Promise<PermissionLevel> =>
-          (userId === mockUserId && noteId === mockedValidNoteId && userHasReadPermissions) ||
-          (userId === null && noteId === mockedValidGuestNoteId)
-            ? PermissionLevel.READ
-            : PermissionLevel.DENY,
+      .mockImplementation(async (userId: number, noteId: number): Promise<PermissionLevel> =>
+        (userId === mockUserId && noteId === mockedValidNoteId && userHasReadPermissions) ||
+        (userId === null && noteId === mockedValidGuestNoteId)
+          ? PermissionLevel.READ
+          : PermissionLevel.DENY,
       );
 
     const mockedRealtimeNote = Mock.of<RealtimeNote>({
