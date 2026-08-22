@@ -3077,7 +3077,7 @@ __metadata:
     ts-node: "npm:11.0.0-beta.1"
     twemoji-colr-font: "npm:15.0.3"
     typescript: "npm:5.9.3"
-    user-agent-data-types: "npm:0.4.2"
+    user-agent-data-types: "npm:0.4.3"
     uuid: "npm:11.1.1"
     vega: "npm:5.30.0"
     vega-embed: "npm:6.29.0"
@@ -18003,10 +18003,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"user-agent-data-types@npm:0.4.2":
-  version: 0.4.2
-  resolution: "user-agent-data-types@npm:0.4.2"
-  checksum: 10c0/acb84ede08a6e7fc08c0d32a76992f36e630e1b88b0088425566e78f0c0b2ce790c1b851c0ca9c326a1a6d041220bcab8d592bbfb39ceb50efcaa5d06044e6ba
+"user-agent-data-types@npm:0.4.3":
+  version: 0.4.3
+  resolution: "user-agent-data-types@npm:0.4.3"
+  checksum: 10c0/c20a944bc6a84739c548d2092dbc58f7cb9ec09ed7792e9e4e4ded27802b6470581701115e645bf85a757d53772dcf654f371303275f0acdc0fe13bbaf833e7a
   languageName: node
   linkType: hard
 
