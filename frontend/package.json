@@ -103,7 +103,7 @@
     "react-i18next": "15.7.4",
     "react-infinite-scroll-component": "6.1.1",
     "react-redux": "9.2.0",
-    "react-use": "17.6.0",
+    "react-use": "17.6.1",
     "redux": "5.0.1",
     "reveal.js": "5.2.1",
     "sanitize-filename": "1.6.3",
