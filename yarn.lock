@@ -2880,7 +2880,7 @@ __metadata:
     base32-encode: "npm:1.2.0"
     better-sqlite3: "npm:12.6.2"
     class-transformer: "npm:0.5.1"
-    class-validator: "npm:0.14.3"
+    class-validator: "npm:0.15.1"
     cli-color: "npm:2.0.4"
     diff: "npm:8.0.4"
     file-type: "npm:16.5.4"
@@ -7998,14 +7998,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"class-validator@npm:0.14.3":
-  version: 0.14.3
-  resolution: "class-validator@npm:0.14.3"
+"class-validator@npm:0.15.1":
+  version: 0.15.1
+  resolution: "class-validator@npm:0.15.1"
   dependencies:
     "@types/validator": "npm:^13.15.3"
     libphonenumber-js: "npm:^1.11.1"
-    validator: "npm:^13.15.20"
-  checksum: 10c0/6d451c359aecb04479b95034b10cca02015d3b6f34480574c618c070e12f3676cb4cdfa76bfa61353356a483ff01326e9ce3f07ef584be6c31806190117f7fa4
+    validator: "npm:^13.15.22"
+  checksum: 10c0/bc030e0118d79a5fc2d053dfd4c7475092dd159222eafe946c2b01d7ff22a0a8075c8713a96239a3db536ff2a18e18d791c3a6bfabd66dbac077f7d3fd950402
   languageName: node
   linkType: hard
 
@@ -18103,10 +18103,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"validator@npm:^13.15.20":
-  version: 13.15.23
-  resolution: "validator@npm:13.15.23"
-  checksum: 10c0/22a05ec6a98d48d2b6fb34d43ce854af61d15842362d142e64cfca0325d4d0c2d1051d9f9d3a0f741e58ea888f73a35baf7a2a810f5aed0f89183bd5040f0177
+"validator@npm:^13.15.22":
+  version: 13.15.35
+  resolution: "validator@npm:13.15.35"
+  checksum: 10c0/1958ebcad578128d154853a2b9bf5b95e7738dcc7d1d065e50a969812272312ec379dcaf375b9d7545e04a71de6755f60f5a4b49c1405737a9c80e11da297eef
   languageName: node
   linkType: hard
 
