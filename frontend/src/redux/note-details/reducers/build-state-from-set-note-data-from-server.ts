@@ -17,8 +17,7 @@ import type { NoteInterface } from '@hedgedoc/commons'
  */
 export const buildStateFromServerInterface = (dto: NoteInterface): NoteDetails => {
   const newState = convertNoteInterfaceToNoteDetails(dto)
-  const rebuiltState = buildStateFromUpdatedMarkdownContent(newState, newState.markdownContent.plain)
-  return rebuiltState.title === "" ? { ...rebuiltState, title: dto.metadata.title } : rebuiltState
+  return buildStateFromUpdatedMarkdownContent(newState, newState.markdownContent.plain)
 }
 
 /**
