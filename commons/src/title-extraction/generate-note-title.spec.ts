@@ -54,4 +54,14 @@ describe('generate note title', () => {
     const actual = generateNoteTitle({ ...testFrontmatter }, () => 'first-heading')
     expect(actual).toEqual('first-heading')
   })
+
+  it('falls back to the previous title when the first heading is empty', () => {
+    const actual = generateNoteTitle({ ...testFrontmatter }, () => '', 'previous')
+    expect(actual).toEqual('previous')
+  })
+
+  it('returns an empty string if no title source is available', () => {
+    const actual = generateNoteTitle({ ...testFrontmatter }, () => undefined)
+    expect(actual).toEqual('')
+  })
 })
