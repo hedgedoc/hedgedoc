@@ -29,6 +29,7 @@ export const NewPasswordField: React.FC<CommonFieldProps> = ({ onChange, value, 
       <Form.Control
         type='password'
         size='sm'
+        value={value}
         isValid={isValid}
         isInvalid={hasError}
         onChange={onChange}
