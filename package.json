@@ -49,7 +49,7 @@
     "dotenv-cli": "11.0.0",
     "oxfmt": "0.49.0",
     "oxlint": "1.63.0",
-    "oxlint-tsgolint": "0.22.1",
+    "oxlint-tsgolint": "0.25.0",
     "turbo": "2.10.11"
   }
 }
