@@ -2913,7 +2913,7 @@ __metadata:
     typescript: "npm:5.9.3"
     uuid: "npm:11.1.1"
     ws: "npm:8.21.3"
-    yjs: "npm:13.6.29"
+    yjs: "npm:13.6.32"
     zod: "npm:3.25.76"
   languageName: unknown
   linkType: soft
@@ -2934,7 +2934,7 @@ __metadata:
     ts-jest: "npm:29.4.6"
     typescript: "npm:5.9.3"
     ws: "npm:8.21.3"
-    yjs: "npm:13.6.29"
+    yjs: "npm:13.6.32"
     zod: "npm:3.25.76"
   languageName: unknown
   linkType: soft
@@ -3084,7 +3084,7 @@ __metadata:
     vega-lite: "npm:5.23.0"
     words-count: "npm:2.0.2"
     ws: "npm:8.21.3"
-    yjs: "npm:13.6.29"
+    yjs: "npm:13.6.32"
   languageName: unknown
   linkType: soft
 
@@ -19103,21 +19103,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yjs@npm:13.6.29":
-  version: 13.6.29
-  resolution: "yjs@npm:13.6.29"
+"yjs@npm:13.6.32":
+  version: 13.6.32
+  resolution: "yjs@npm:13.6.32"
   dependencies:
     lib0: "npm:^0.2.99"
-  checksum: 10c0/f300786ea63deac8a83e85598707ab9542e0a90b72fc0a1bcc77a58e618799de531ba4f85bcf349e647ad9e72bc4186edf50c4ecf67c8144cd53d3ac80d27351
+  checksum: 10c0/07b50f475d3749a6b135e959fdc805eea8e7fdad4d6177b151c9d30463399577586252e34b3949fdd03260ee7b8526fa01a8b10c64e2506fc96ca6e22ae58032
   languageName: node
   linkType: hard
 
-"yjs@patch:yjs@npm%3A13.6.29#./.yarn/patches/yjs-remove-import-warning-in-test.patch::locator=hedgedoc%40workspace%3A.":
-  version: 13.6.29
-  resolution: "yjs@patch:yjs@npm%3A13.6.29#./.yarn/patches/yjs-remove-import-warning-in-test.patch::version=13.6.29&hash=e7d95b&locator=hedgedoc%40workspace%3A."
+"yjs@patch:yjs@npm%3A13.6.32#./.yarn/patches/yjs-remove-import-warning-in-test.patch::locator=hedgedoc%40workspace%3A.":
+  version: 13.6.32
+  resolution: "yjs@patch:yjs@npm%3A13.6.32#./.yarn/patches/yjs-remove-import-warning-in-test.patch::version=13.6.32&hash=e7d95b&locator=hedgedoc%40workspace%3A."
   dependencies:
     lib0: "npm:^0.2.99"
-  checksum: 10c0/bfcad96135f972d528f4ac158356d74a0fe1be2631782b7b3aa0edab8403e641a26631d5667c5105a505740f9b3c3fdb38f262fc6233e60bb0005adb58652b2d
+  checksum: 10c0/4e9966c918a6a5cfa492293eb17ccab49bee636ef10e4f6ff4c56b424df492f814c1ba78c71462d257a56dc8a8e2321fe5ede623b9e42b5e8bf02d35291b713a
   languageName: node
   linkType: hard
 
