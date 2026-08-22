@@ -61,7 +61,7 @@ const buildStateFromMarkdownContentAndLines = (
       },
       startOfContentLineOffset: 0,
       rawFrontmatter: '',
-      title: generateNoteTitle(initialState.frontmatter, () => state.firstHeading),
+      title: state.title || generateNoteTitle(initialState.frontmatter, () => state.firstHeading),
       frontmatter: initialState.frontmatter
     }
   }
@@ -102,7 +102,7 @@ const buildStateFromFrontmatter = (
 ) => {
   return {
     ...state,
-    title: generateNoteTitle(noteFrontmatter, () => state.firstHeading),
+    title: state.title || generateNoteTitle(noteFrontmatter, () => state.firstHeading),
     rawFrontmatter: frontmatterExtraction.rawText,
     frontmatter: noteFrontmatter,
     startOfContentLineOffset: frontmatterExtraction.lineOffset
