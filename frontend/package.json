@@ -106,7 +106,7 @@
     "react-use": "17.6.0",
     "redux": "5.0.1",
     "reveal.js": "5.2.1",
-    "sanitize-filename": "1.6.3",
+    "sanitize-filename": "1.6.4",
     "sass": "1.97.3",
     "sharp": "0.34.5",
     "tlds": "1.261.0",
