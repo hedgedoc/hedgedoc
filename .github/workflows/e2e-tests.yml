@@ -46,7 +46,7 @@ jobs:
           TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
       - name: Upload coverage
-        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
+        uses: codecov/codecov-action@0fb7174895f61a3b6b78fc075e0cd60383518dac # v5.5.5
         with:
           directory: backend/coverage-e2e
           flags: backend, e2e-tests, backend-e2e-tests
