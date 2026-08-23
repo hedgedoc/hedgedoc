@@ -43,8 +43,12 @@
 
   h1, h2, h3, h4, h5, h6 {
     .heading-anchor {
+      color: var(--bs-heading-color);
+      position: absolute;
+      text-decoration: none;
+      border-bottom: none;
       user-select: none;
-      font-size: 0.75em;
+      font-size: 0.7em;
       margin-top: 0.25em;
       opacity: 0.3;
       transition: opacity 0.1s;
@@ -53,6 +57,26 @@
         opacity: 1;
       }
     }
+  }
+
+  h1 .heading-anchor {
+    left: -1rem;
+  }
+
+  h2 .heading-anchor {
+    left: -.85rem;
+  }
+
+  h3 .heading-anchor {
+    left: -.75rem;
+  }
+
+  h4 .heading-anchor {
+    left: -.65rem;
+  }
+
+  h5 .heading-anchor , h6 .heading-anchor {
+    left: -.55rem;
   }
 
   blockquote .blockquote-extra {
