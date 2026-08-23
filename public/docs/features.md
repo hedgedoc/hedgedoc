@@ -219,7 +219,7 @@ When you’re a carpenter making a beautiful chest of drawers, you’re not goin
 
 ### Blockquote Tags
 
-> Using the syntax below to specifiy your **name, time and color** to vary the blockquotes.
+> Using the syntax below to specify your **name, time and color** to vary the blockquotes.
 > [name=ChengHan Wu] [time=Sun, Jun 28, 2015 9:59 PM] [color=#907bf7]
 > > Even support nested blockquotes!
 > > [name=Max Mustermann] [time=Sun, Jun 28, 2015 9:47 PM] [color=red]
