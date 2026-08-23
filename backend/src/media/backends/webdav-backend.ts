@@ -6,7 +6,6 @@
 import { MediaBackendType } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
 import { FileTypeResult } from 'file-type';
-import fetch, { Response } from 'node-fetch';
 import { URL } from 'url';
 
 import mediaConfiguration, { MediaConfig, WebdavMediaConfig } from '../../config/media.config';

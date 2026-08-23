@@ -5,7 +5,6 @@
  */
 import { MediaBackendType } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
-import fetch, { Response } from 'node-fetch';
 import { URLSearchParams } from 'url';
 
 import mediaConfiguration, { ImgurMediaConfig, MediaConfig } from '../../config/media.config';
