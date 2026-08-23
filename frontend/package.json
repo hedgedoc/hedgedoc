@@ -153,5 +153,5 @@
     "typescript": "5.9.3",
     "user-agent-data-types": "0.4.3"
   },
-  "packageManager": "yarn@4.17.1"
+  "packageManager": "yarn@4.18.0"
 }
