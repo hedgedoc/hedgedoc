@@ -14,7 +14,7 @@ import {
 import { Provider } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import * as fileTypeModule from 'file-type';
+import * as commonsModule from '@hedgedoc/commons';
 import type { Tracker } from 'knex-mock-client';
 import * as uuidModule from 'uuid';
 
@@ -31,7 +31,7 @@ import { dateTimeToDB, getCurrentDateTime } from '../utils/datetime';
 import { FilesystemBackend } from './backends/filesystem-backend';
 import { MediaService } from './media.service';
 
-jest.mock('file-type');
+jest.mock('@hedgedoc/commons');
 jest.mock('uuid');
 
 describe('MediaService', () => {
@@ -92,7 +92,9 @@ describe('MediaService', () => {
     it('inserts a new media upload and returns uuid', async () => {
       jest.useFakeTimers({ doNotFake: ['setTimeout'] });
       const now = getCurrentDateTime();
-      jest.spyOn(fileTypeModule, 'fromBuffer').mockResolvedValue({ mime: 'image/png', ext: 'png' });
+      jest
+        .spyOn(commonsModule, 'extractFileType')
+        .mockResolvedValue({ mime: 'image/png', ext: 'png' });
       // This invalid Uint8Array typecast is required as TypeScript does not accept
       // that uuid.v7 can return either a string or Uint8Array based on the options.
       jest.spyOn(uuidModule, 'v7').mockReturnValue(uuid as unknown as Uint8Array);
@@ -121,7 +123,7 @@ describe('MediaService', () => {
           async (
             givenUuid: string,
             buffer: Buffer,
-            fileType?: fileTypeModule.FileTypeResult,
+            fileType?: commonsModule.FileTypeResult,
           ): Promise<string | null> => {
             expect(givenUuid).toBe(uuid);
             expect(buffer).toEqual(fileBuffer);
@@ -140,14 +142,14 @@ describe('MediaService', () => {
     });
 
     it('throws ClientError if file type is not detected', async () => {
-      jest.spyOn(fileTypeModule, 'fromBuffer').mockResolvedValue(undefined);
+      jest.spyOn(commonsModule, 'extractFileType').mockResolvedValue(undefined);
       await expect(service.saveFile(fileName, fileBuffer, userId, noteId)).rejects.toThrow(
         ClientError,
       );
     });
 
     it('throws ClientError if mime type is not allowed', async () => {
-      jest.spyOn(fileTypeModule, 'fromBuffer').mockResolvedValue({
+      jest.spyOn(commonsModule, 'extractFileType').mockResolvedValue({
         // correct MIME type for Windows exe would be
         // application/vnd.microsoft.portable-executable according to IANA,
         // but file-type detects it as the following

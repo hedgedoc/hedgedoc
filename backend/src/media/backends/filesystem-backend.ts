@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MediaBackendType } from '@hedgedoc/commons';
+import { MediaBackendType, type FileTypeResult } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
-import { FileTypeResult } from 'file-type';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 
