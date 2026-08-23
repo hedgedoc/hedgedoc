@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MediaBackendType, PermissionLevel } from '@hedgedoc/commons';
+import { MediaBackendType, PermissionLevel, extractFileType } from '@hedgedoc/commons';
 import {
   FieldNameMediaUpload,
   FieldNameMediaUploadNote,
@@ -18,7 +18,6 @@ import {
 } from '@hedgedoc/database';
 import { Inject, Injectable } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
-import * as FileType from 'file-type';
 import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
 import { v7 as uuidV7, validate as validateUuid } from 'uuid';
@@ -109,7 +108,7 @@ export class MediaService {
     noteId: Note[FieldNameNote.id],
   ): Promise<string> {
     this.logger.debug(`Saving file for user '${userId}'`, 'saveFile');
-    const fileTypeResult = await FileType.fromBuffer(fileBuffer);
+    const fileTypeResult = await extractFileType(fileBuffer);
     if (!fileTypeResult) {
       throw new ClientError('Could not detect file type.');
     }

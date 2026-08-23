@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { FileTypeResult } from 'file-type';
+import { type FileTypeResult } from '@hedgedoc/commons';
 
 export interface MediaBackend {
   /**

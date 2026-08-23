@@ -11,9 +11,8 @@ import {
   generateBlobSASQueryParameters,
   StorageSharedKeyCredential,
 } from '@azure/storage-blob';
-import { MediaBackendType } from '@hedgedoc/commons';
+import { MediaBackendType, type FileTypeResult } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
-import { FileTypeResult } from 'file-type';
 
 import mediaConfiguration, { AzureMediaConfig, MediaConfig } from '../../config/media.config';
 import { MediaBackendError } from '../../errors/errors';
