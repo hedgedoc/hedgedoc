@@ -17,7 +17,7 @@ import styles from '../../sidebar-button/sidebar-button.module.scss'
 import { ExportGistSidebarEntry } from './entries/export-gist-sidebar-entry/export-gist-sidebar-entry'
 import { ExportGitlabSnippetSidebarEntry } from './entries/export-gitlab-snippet-sidebar-entry/export-gitlab-snippet-sidebar-entry'
 import { ExportPrintSidebarEntry } from './entries/export-print-sidebar-entry'
-import { ExportUnstyledHtmlSidebarEntry } from './entries/export-unstyled-html-sidebar-entry/export-unstyled-html-sidebar-entry'
+import { ExportHtmlSidebarEntries } from './entries/export-html-sidebar-entries/export-html-sidebar-entries'
 
 /**
  * Renders the export menu for the sidebar.
@@ -53,7 +53,7 @@ export const ExportSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
       <SidebarMenu expand={expand}>
         <ExportPrintSidebarEntry />
         <ExportMarkdownSidebarEntry />
-        <ExportUnstyledHtmlSidebarEntry />
+        <ExportHtmlSidebarEntries />
 
         <ExportGistSidebarEntry />
         <ExportGitlabSnippetSidebarEntry />

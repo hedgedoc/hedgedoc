@@ -110,6 +110,8 @@ export interface SetUrlHashMessage {
 export interface ExportHtmlRequestMessage {
   type: CommunicationMessageType.EXPORT_HTML_REQUEST
   noteUrl: string
+  noteTitle: string
+  withStyles: boolean
 }
 
 export interface ExportHtmlResponseMessage {

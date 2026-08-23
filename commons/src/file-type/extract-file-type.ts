@@ -3,8 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { fileTypeFromBuffer, type FileTypeResult } from 'file-type'
-import { detectXml } from '@file-type/xml'
+export interface FileTypeResult {
+  mime: string
+  ext: string
+}
 
 /**
  * Extracts the file extension and MIME type from a given file buffer with XML-type detection.
@@ -13,9 +15,13 @@ import { detectXml } from '@file-type/xml'
  * @param imageBuffer The buffer of the file to analyze
  * @returns A promise carrying either undefined if the detection failed or the resulting extension and MIME type
  */
-export const extractFileType = (
+export const extractFileType = async (
   imageBuffer: ArrayBuffer | Uint8Array,
 ): Promise<FileTypeResult | undefined> => {
+  const [{ fileTypeFromBuffer }, { detectXml }] = await Promise.all([
+    import('file-type'),
+    import('@file-type/xml'),
+  ])
   return fileTypeFromBuffer(imageBuffer, {
     customDetectors: [detectXml],
   })
