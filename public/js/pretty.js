@@ -10,6 +10,7 @@ import {
   parseMeta,
   postProcess,
   renderTOC,
+  rewriteExternalLinks,
   scrollToHash,
   smoothHashScroll,
   updateLastChange
@@ -55,6 +56,7 @@ if (md.meta.type && md.meta.type === 'slide') {
   rendered = preventXSS(rendered)
   const result = postProcess(rendered)
   markdown.html(result.html())
+  rewriteExternalLinks(markdown)
 }
 $(document.body).show()
 

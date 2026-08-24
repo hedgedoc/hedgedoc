@@ -574,8 +574,6 @@ export function postProcess (code) {
     currentLocation.hash = linkTag.hash
     linkTag.href = currentLocation.toString()
   })
-  rewriteExternalLinks(result)
-
   // update continue line numbers
   const linenumberdivs = result.find('.gutter.linenumber').toArray()
   for (let i = 0; i < linenumberdivs.length; i++) {
