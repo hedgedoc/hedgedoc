@@ -8,9 +8,10 @@ Also this guides assumes you run HedgeDoc via a [Docker container](../../setup/d
 ## Steps
 
 1. Set up the necessary OpenID Connect parameters in your Authelia `configuration.yml` as explained in the [documentation](https://www.authelia.com/configuration/identity-providers/openid-connect/provider/).
-   Make sure to generate safe secrets (such as `LENGTH=64; tr -cd '[:alnum:]' < /dev/urandom | fold -w "${LENGTH}" | head -n 1 | tr -d '\n' ; echo`)
 
-2. A completed `identity_providers` section of the configuration may look like the following (the chosen Client ID shouldn't actually be this guessable for safety reasons):
+2. Make sure to generate safe secrets (such as `LENGTH=64; tr -cd '[:alnum:]' < /dev/urandom | fold -w "${LENGTH}" | head -n 1 | tr -d '\n' ; echo`)
+
+3. A completed `identity_providers` section of the configuration may look like the following (the chosen Client ID shouldn't actually be this guessable for safety reasons):
 ```yaml
 identity_providers:
   oidc:
@@ -62,9 +63,9 @@ identity_providers:
 ```
 (Note: As of Authelia v4.38.0+, issuer_private_key was deprecated and replaced by jwks. The configuration above uses Authelia's templating engine to securely load the private key and HMAC secret from external Docker secrets files, avoiding plaintext keys in your YAML).
 
-1. Restart Authelia to apply to new configuration and check for any errors in the log.
+4. Restart Authelia to apply to new configuration and check for any errors in the log.
 
-2. In the `docker-compose.yml` of HedgeDoc add the following environment variables (you can choose different attributes for e.g. the display name - all available attributes you can find in the [scope definitions](https://www.authelia.com/docs/configuration/identity-providers/oidc.html#scope-definitions)):
+5. In the `docker-compose.yml` of HedgeDoc add the following environment variables (you can choose different attributes for e.g. the display name - all available attributes you can find in the [scope definitions](https://www.authelia.com/docs/configuration/identity-providers/oidc.html#scope-definitions)):
 ```yaml
 - CMD_URL_ADDPORT=false
 - CMD_PROTOCOL_USESSL=true
@@ -80,6 +81,6 @@ identity_providers:
 - CMD_OAUTH2_TOKEN_URL=https://<your-authelia-url>/api/oidc/token
 - CMD_OAUTH2_AUTHORIZATION_URL=https://<your-authelia-url>/api/oidc/authorization
 ```
-3. Run docker-compose up -d on HedgeDoc to apply your settings.
+6. Run docker-compose up -d on HedgeDoc to apply your settings.
 
-4. Sign in to your HedgeDoc using your Authelia login.
+7. Sign in to your HedgeDoc using your Authelia login.
