@@ -38,6 +38,9 @@ const editorConfigSlice = createSlice({
     },
     setEditorConfig: (state, action: PayloadAction<EditorConfig>) => {
       return action.payload
+    },
+    setAuthorshipHighlightMode: (state, action: PayloadAction<EditorConfig['authorshipHighlightMode']>) => {
+      state.authorshipHighlightMode = action.payload
     }
   }
 })

@@ -15,6 +15,7 @@ import { SpellcheckSettingButtonGroup } from './spellcheck-setting-button-group'
 import { IndentWithTabsSettingButtonGroup } from './indent-with-tabs-setting-button-group'
 import { useApplicationState } from '../../../../hooks/common/use-application-state'
 import { IndentSpacesSettingInput } from './indent-spaces-setting-input'
+import { AuthorshipHighlightModeSettingButtonGroup } from './authorship-highlights-setting-button-group'
 
 /**
  * Shows the editor specific settings.
@@ -33,6 +34,9 @@ export const EditorSettingsTabContent: React.FC = () => {
       </SettingLine>
       <SettingLine i18nKey={'editor.syncScroll'}>
         <SyncScrollSettingButtonGroup />
+      </SettingLine>
+      <SettingLine i18nKey={'editor.authorshipHighlightMode'}>
+        <AuthorshipHighlightModeSettingButtonGroup />
       </SettingLine>
       <SettingLine i18nKey={'editor.lineWrapping'}>
         <LineWrappingSettingButtonGroup />

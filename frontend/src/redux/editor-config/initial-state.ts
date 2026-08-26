@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import type { EditorConfig } from './types'
+import { AuthorshipHighlightMode } from './types'
 
 export const initialState: EditorConfig = {
   splitPosition: 50,
@@ -13,5 +14,6 @@ export const initialState: EditorConfig = {
   spellCheck: true,
   lineWrapping: true,
   indentWithTabs: false,
-  indentSpaces: 2
+  indentSpaces: 2,
+  authorshipHighlightMode: AuthorshipHighlightMode.UNDERLINE
 }

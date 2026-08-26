@@ -10,11 +10,11 @@ import type { ButtonProps } from 'react-bootstrap'
 import { Button } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
 
-type DarkModeToggleButtonProps = Omit<ButtonProps, 'onSelect'> &
+type SettingsToggleButtonProps<T> = Omit<ButtonProps, 'onSelect'> &
   PropsWithDataTestId & {
-    onSelect: (value: number) => void
+    onSelect: (value: T) => void
     selected: boolean
-    value: number
+    value: T
     i18nKeyLabel: string
     i18nKeyTooltip: string
   }
@@ -29,14 +29,14 @@ type DarkModeToggleButtonProps = Omit<ButtonProps, 'onSelect'> &
  * @param props Other button props
  * @constructor
  */
-export const SettingsToggleButton = ({
+export const SettingsToggleButton = <T,>({
   i18nKeyLabel,
   i18nKeyTooltip,
   selected,
   onSelect,
   value,
   ...props
-}: DarkModeToggleButtonProps) => {
+}: SettingsToggleButtonProps<T>) => {
   const title = useTranslatedText(i18nKeyTooltip)
 
   const onChange = useCallback(() => {
