@@ -45,10 +45,10 @@ export class OidcController {
   @Get(':oidcIdentifier')
   @Redirect()
   @OpenApi(201, 400, 401, 429)
-  loginWithOpenIdConnect(
+  async loginWithOpenIdConnect(
     @Req() request: RequestWithSession,
     @Param('oidcIdentifier') oidcIdentifier: string,
-  ): { url: string } {
+  ): Promise<{ url: string }> {
     const code = this.oidcService.generateCode();
     const state = this.oidcService.generateState();
     request.session.oidc = {
@@ -62,6 +62,9 @@ export class OidcController {
       authProviderIdentifier: oidcIdentifier,
     };
     const authorizationUrl = this.oidcService.getAuthorizationUrl(oidcIdentifier, code, state);
+    // Persist before redirecting - the async onSend save otherwise races
+    // @Redirect()'s response and can crash with ERR_HTTP_HEADERS_SENT.
+    await request.session.save();
     return { url: authorizationUrl };
   }
 
@@ -86,6 +89,8 @@ export class OidcController {
       const mayUpdate = this.identityService.mayUpdateIdentity(oidcIdentifier);
 
       if (identity === null) {
+        // See loginWithOpenIdConnect() above.
+        await request.session.save();
         return { url: '/new-user' };
       }
 
@@ -103,6 +108,7 @@ export class OidcController {
       request.session.loginAuthProviderType = AuthProviderType.OIDC;
       request.session.loginAuthProviderIdentifier = oidcIdentifier;
       request.session.pendingUser = null;
+      await request.session.save();
       return { url: '/' };
     } catch (error) {
       if (error instanceof HttpException) {
