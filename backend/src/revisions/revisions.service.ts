@@ -39,6 +39,7 @@ import {
   getCurrentDateTime,
 } from '../utils/datetime';
 import { extractRevisionMetadataFromContent } from './utils/extract-revision-metadata-from-content';
+import type { AbsoluteRangeAuthorship } from '@hedgedoc/commons';
 
 interface NoteRevisionCountDbResult {
   [FieldNameRevision.noteId]: number;
@@ -325,6 +326,7 @@ export class RevisionsService {
    * @param firstRevision Whether this is called for the first revision of a note
    * @param transaction The optional pre-existing database transaction to use
    * @param yjsStateVector The yjs state vector that describes the new content
+   * @param authorshipRanges The range entries describing where each author contributed to the note
    * @returns the created revision or undefined if the revision couldn't be created
    */
   async createRevision(
@@ -333,6 +335,7 @@ export class RevisionsService {
     firstRevision: boolean = false,
     transaction?: Knex,
     yjsStateVector?: ArrayBuffer,
+    authorshipRanges?: AbsoluteRangeAuthorship[],
   ): Promise<void> {
     this.logger.debug(`Creating revision for note '${noteId}'`, 'createRevision');
     if (!transaction) {
@@ -343,11 +346,19 @@ export class RevisionsService {
           firstRevision,
           newTransaction,
           yjsStateVector,
+          authorshipRanges,
         );
       });
       return;
     }
-    await this.innerCreateRevision(noteId, newContent, firstRevision, transaction, yjsStateVector);
+    await this.innerCreateRevision(
+      noteId,
+      newContent,
+      firstRevision,
+      transaction,
+      yjsStateVector,
+      authorshipRanges,
+    );
   }
 
   /**
@@ -359,6 +370,7 @@ export class RevisionsService {
    * @param firstRevision Whether this is called for the first revision of a note
    * @param transaction The database transaction to use
    * @param yjsStateVector The yjs state vector that describes the new content
+   * @param authorshipRanges The range entries describing where each author contributed to the note
    */
   private async innerCreateRevision(
     noteId: number,
@@ -366,6 +378,7 @@ export class RevisionsService {
     firstRevision: boolean,
     transaction: Knex,
     yjsStateVector?: ArrayBuffer,
+    authorshipRanges: AbsoluteRangeAuthorship[] = [],
   ): Promise<void> {
     const latestRevision = firstRevision ? null : await this.getLatestRevision(noteId, transaction);
     const oldContent = latestRevision?.content;
@@ -387,6 +400,7 @@ export class RevisionsService {
         [FieldNameRevision.patch]: patch,
         [FieldNameRevision.title]: title,
         [FieldNameRevision.uuid]: newUuid,
+        // TODO Remove yjs state vector from database
         [FieldNameRevision.yjsStateVector]:
           yjsStateVector !== undefined ? Buffer.from(yjsStateVector) : null,
         [FieldNameRevision.createdAt]: dateTimeToDB(getCurrentDateTime()),
@@ -398,6 +412,18 @@ export class RevisionsService {
         'Failed to insert revision',
         this.logger.getContext(),
         'createRevision',
+      );
+    }
+
+    if (authorshipRanges.length > 0) {
+      await transaction(TableAuthorshipInfo).insert(
+        authorshipRanges.map((authorshipRange) => ({
+          [FieldNameAuthorshipInfo.revisionUuid]: newUuid,
+          [FieldNameAuthorshipInfo.authorId]: 0, // TODO Extract the right user id upfront
+          [FieldNameAuthorshipInfo.startPosition]: authorshipRange.from,
+          [FieldNameAuthorshipInfo.endPosition]: authorshipRange.to,
+          [FieldNameAuthorshipInfo.createdAt]: dateTimeToDB(getCurrentDateTime()),
+        })),
       );
     }
 

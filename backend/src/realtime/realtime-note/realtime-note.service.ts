@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { PermissionLevel } from '@hedgedoc/commons';
+import { PermissionLevel, convertAbsolutePositionAuthorshipsToRanges } from '@hedgedoc/commons';
 import { FieldNameRevision } from '@hedgedoc/database';
 import { Optional } from '@mrdrogdrog/optional';
 import { BeforeApplicationShutdown, Inject, Injectable } from '@nestjs/common';
@@ -46,6 +46,12 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
    */
   public saveRealtimeNote(realtimeNote: RealtimeNote): void {
     const encodedStateUpdate = realtimeNote.getRealtimeDoc().encodeStateAsUpdate();
+    const docLength = realtimeNote.getRealtimeDoc().getCurrentContent().length;
+    const absolutePosAuthorships = realtimeNote.getRealtimeDoc().getAbsolutePositionAuthorships();
+    const authorshipRanges = convertAbsolutePositionAuthorshipsToRanges(
+      absolutePosAuthorships,
+      docLength,
+    );
     const encodedStateUpdateBytes = new Uint8Array(encodedStateUpdate);
     this.revisionsService
       .createRevision(
@@ -54,6 +60,7 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
         false,
         undefined,
         encodedStateUpdateBytes.buffer,
+        authorshipRanges,
       )
       .then(() => {
         realtimeNote.announceMetadataUpdate();

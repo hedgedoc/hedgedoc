@@ -142,6 +142,8 @@ export class RealtimeUserStatusAdapter {
         ownUser: {
           displayName: this.realtimeUser.displayName,
           styleIndex: this.realtimeUser.styleIndex,
+          username: this.realtimeUser.username,
+          guestUuid: this.realtimeUser.guestUuid,
         },
       },
     });
