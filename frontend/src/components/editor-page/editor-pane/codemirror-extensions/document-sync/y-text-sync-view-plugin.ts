@@ -3,13 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import type { ChangeSpec, Transaction } from '@codemirror/state'
-import { Annotation } from '@codemirror/state'
+import type { ChangeSpec, Transaction, Extension } from '@codemirror/state'
+import { Annotation, StateEffect } from '@codemirror/state'
 import type { EditorView, PluginValue, ViewUpdate } from '@codemirror/view'
 import type { Text as YText, Transaction as YTransaction, YTextEvent } from 'yjs'
 import { UndoManager } from 'yjs'
+import { v4 as uuid } from 'uuid'
+import { Logger } from '../../../../../utils/logger'
+import { authorshipsUpdateEffect, type AuthorshipUpdate } from '../authorship-ranges/authorships-update-effect'
+import { authorshipsStateField } from '../authorship-ranges/authorships-state-field'
 
 const syncAnnotation = Annotation.define()
+
+const logger = new Logger('YTextSyncViewPlugin')
 
 /**
  * Synchronizes the content of a codemirror with a {@link YText y.js text channel}.
@@ -24,19 +30,28 @@ export class YTextSyncViewPlugin implements PluginValue {
   constructor(
     private view: EditorView,
     private readonly yText: YText,
+    private readonly ownUserId: string = window.localStorage.getItem('realtime-id') || uuid(), // Todo Use provided value instead of default
     pluginLoaded: () => void
   ) {
     this.observer = this.onYTextUpdate.bind(this)
     this.yText.observe(this.observer)
     this.undoManager = new UndoManager(this.yText, { trackedOrigins: new Set([this]) })
     pluginLoaded()
+    logger.debug('ownUserId', ownUserId)
   }
 
   private onYTextUpdate(event: YTextEvent, transaction: YTransaction): void {
+    logger.debug('onYTextUpdate called')
+    logger.debug(event.delta)
+
     if (transaction.origin === this) {
       return
     }
-    this.view.dispatch({ changes: this.calculateChanges(event), annotations: [syncAnnotation.of(this)] })
+    const changes = this.calculateChanges(event)
+    const annotations = [syncAnnotation.of(this)]
+    const effects = this.calculateEffects(event)
+
+    this.view.dispatch({ changes, annotations, effects })
   }
 
   private calculateChanges(event: YTextEvent): ChangeSpec[] {
@@ -46,7 +61,7 @@ export class YTextSyncViewPlugin implements PluginValue {
           changes.push({ from: position, to: position, insert: delta.insert })
           return [changes, position]
         } else if (delta.delete !== undefined) {
-          changes.push({ from: position, to: position + delta.delete, insert: '' })
+          changes.push({ from: position, to: position + delta.delete })
           return [changes, position + delta.delete]
         } else if (delta.retain !== undefined) {
           return [changes, position + delta.retain]
@@ -59,13 +74,50 @@ export class YTextSyncViewPlugin implements PluginValue {
     return changes
   }
 
+  private calculateEffects(event: YTextEvent): StateEffect<AuthorshipUpdate | Extension>[] {
+    const [effects] = event.delta.reduce<[StateEffect<AuthorshipUpdate>[], number]>(
+      ([effects, position], delta) => {
+        if (delta.insert !== undefined && typeof delta.insert === 'string') {
+          effects.push(
+            authorshipsUpdateEffect.of({
+              from: position,
+              to: position + delta.insert.length,
+              userId: delta.attributes?.authorId as string,
+              isDeletion: false
+            })
+          )
+          return [effects, position + delta.insert.length]
+        } else if (delta.delete !== undefined) {
+          effects.push(
+            authorshipsUpdateEffect.of({
+              from: position,
+              to: position + delta.delete,
+              userId: null,
+              isDeletion: true
+            })
+          )
+          return [effects, position + delta.delete]
+        } else if (delta.retain !== undefined) {
+          return [effects, position + delta.retain]
+        } else {
+          return [effects, position]
+        }
+      },
+      [[], 0]
+    )
+    if (!this.view.state.field(authorshipsStateField, false)) {
+      return [...effects, StateEffect.appendConfig.of([authorshipsStateField])]
+    }
+    return effects
+  }
+
   public update(update: ViewUpdate): void {
     if (!update.docChanged) {
       return
     }
-    update.transactions
-      .filter((transaction) => transaction.annotation(syncAnnotation) !== this)
-      .forEach((transaction) => this.applyTransaction(transaction))
+    const ownTransactions = update.transactions.filter((transaction) => transaction.annotation(syncAnnotation) !== this)
+
+    ownTransactions.forEach((transaction) => this.applyTransaction(transaction))
   }
 
   private applyTransaction(transaction: Transaction): void {
@@ -77,7 +129,9 @@ export class YTextSyncViewPlugin implements PluginValue {
           this.yText.delete(fromA + positionAdjustment, toA - fromA)
         }
         if (insertText.length > 0) {
-          this.yText.insert(fromA + positionAdjustment, insertText)
+          this.yText.insert(fromA + positionAdjustment, insertText, {
+            authorId: this.ownUserId
+          })
         }
         positionAdjustment += insertText.length - (toA - fromA)
       })

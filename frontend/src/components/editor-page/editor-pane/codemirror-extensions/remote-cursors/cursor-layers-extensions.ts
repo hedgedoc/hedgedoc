@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { createCursorCssClass } from './create-cursor-css-class'
+import { createRealtimeColorCssClass } from '../realtime-colors/create-realtime-color-css-class'
 import { RemoteCursorMarker } from './remote-cursor-marker'
 import styles from './style.module.scss'
 import type { Extension, Transaction } from '@codemirror/state'
@@ -89,7 +89,7 @@ export const createSelectionLayer = (): Extension =>
           const selectionRange = EditorSelection.range(remoteCursor.from, remoteCursor.to as number)
           return RectangleMarker.forRange(
             view,
-            `${styles.cursor} ${createCursorCssClass(remoteCursor.styleIndex)}`,
+            `${styles.cursor} ${createRealtimeColorCssClass(remoteCursor.styleIndex)}`,
             selectionRange
           )
         })

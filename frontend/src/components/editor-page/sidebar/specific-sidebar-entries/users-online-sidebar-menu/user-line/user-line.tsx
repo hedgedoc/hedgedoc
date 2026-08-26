@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { UserAvatarForUsername } from '../../../../../common/user-avatar/user-avatar-for-username'
-import { createCursorCssClass } from '../../../../editor-pane/codemirror-extensions/remote-cursors/create-cursor-css-class'
+import { createRealtimeColorCssClass } from '../../../../editor-pane/codemirror-extensions/realtime-colors/create-realtime-color-css-class'
 import { ActiveIndicator } from '../active-indicator'
 import styles from './user-line.module.scss'
 import React, { useMemo } from 'react'
@@ -47,7 +47,7 @@ export const UserLine: React.FC<UserLineProps> = ({ username, displayName, activ
 
   return (
     <div className={'d-flex h-100 w-100'}>
-      <div className={`${styles['user-line-color-indicator']} ${createCursorCssClass(color)}`} />
+      <div className={`${styles['user-line-color-indicator']} ${createRealtimeColorCssClass(color)}`} />
       {avatar}
       <div className={'ms-auto d-flex align-items-center gap-1 h-100'}>
         {!username && <IconIncognito title={guestUserTitle} size={'16px'} className={'text-muted'} />}

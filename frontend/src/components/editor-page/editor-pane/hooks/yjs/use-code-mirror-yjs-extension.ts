@@ -9,6 +9,7 @@ import type { Extension } from '@codemirror/state'
 import { type EditorView, keymap, ViewPlugin } from '@codemirror/view'
 import type { RealtimeDoc, YDocSyncClientAdapter } from '@hedgedoc/commons'
 import { useEffect, useMemo, useState } from 'react'
+import { authorshipsStateField } from '../../codemirror-extensions/authorship-ranges/authorships-state-field'
 
 /**
  * Creates a {@link Extension code mirror extension} that synchronizes an editor with the given {@link YText ytext}.
@@ -24,6 +25,7 @@ export const useCodeMirrorYjsExtension = (doc: RealtimeDoc, syncAdapter: YDocSyn
   const [editorReady, setEditorReady] = useState(false)
   const synchronized = useApplicationState((state) => state.realtimeStatus.isSynced)
   const connected = useApplicationState((state) => state.realtimeStatus.isConnected)
+  const ownUser = useApplicationState((state) => state.realtimeStatus.ownUser)
 
   useEffect(() => {
     if (editorReady && connected && !synchronized) {
@@ -33,7 +35,8 @@ export const useCodeMirrorYjsExtension = (doc: RealtimeDoc, syncAdapter: YDocSyn
 
   return useMemo(() => {
     const yjsViewPlugin = ViewPlugin.define(
-      (view) => new YTextSyncViewPlugin(view, doc.getMarkdownContentChannel(), () => setEditorReady(true))
+      // ToDo: get ownUserId
+      (view) => new YTextSyncViewPlugin(view, doc.getMarkdownContentChannel(), undefined, () => setEditorReady(true))
     )
     const undoAction = (view: EditorView): boolean => {
       const plugin = view.plugin(yjsViewPlugin)
@@ -67,6 +70,6 @@ export const useCodeMirrorYjsExtension = (doc: RealtimeDoc, syncAdapter: YDocSyn
       }
     ])
 
-    return [yjsViewPlugin, yjsUndoRedoKeymap]
+    return [authorshipsStateField.extension, yjsViewPlugin, yjsUndoRedoKeymap]
   }, [doc])
 }
