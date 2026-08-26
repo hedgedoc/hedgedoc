@@ -3074,17 +3074,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fastify/static@npm:9.3.0":
-  version: 9.3.0
-  resolution: "@fastify/static@npm:9.3.0"
+"@fastify/static@npm:10.1.2":
+  version: 10.1.2
+  resolution: "@fastify/static@npm:10.1.2"
   dependencies:
     "@fastify/accept-negotiator": "npm:^2.0.0"
+    "@fastify/error": "npm:^4.0.0"
     "@fastify/send": "npm:^4.0.0"
-    content-disposition: "npm:^1.0.1"
+    content-disposition: "npm:^2.0.1"
     fastify-plugin: "npm:^6.0.0"
     fastq: "npm:^1.17.1"
     glob: "npm:^13.0.0"
-  checksum: 10c0/dafe124b5328b03f52079e9a010452d6727bc71acd2e0ec9c2e208f16e9a1193b194037575128dda03688654ff31dc87ff75dee2e6f56e54d29ed8ce1cf29064
+  checksum: 10c0/020c583b026d783f7ace40229aeb37ba4d605bb46a8d6d2b9b9ec3010d99d25c668862bf36023313b94582879bed3735d19be9ff66df64d5011dd5a9df9908bf
   languageName: node
   linkType: hard
 
@@ -3154,7 +3155,7 @@ __metadata:
     "@fastify/rate-limit": "npm:11.2.0"
     "@fastify/secure-session": "npm:8.3.0"
     "@fastify/session": "npm:11.1.2"
-    "@fastify/static": "npm:9.3.0"
+    "@fastify/static": "npm:10.1.2"
     "@hedgedoc/commons": "workspace:commons"
     "@hedgedoc/database": "workspace:database"
     "@jest/types": "npm:30.3.0"
@@ -9398,10 +9399,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"content-disposition@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "content-disposition@npm:1.0.1"
-  checksum: 10c0/bd7ff1fe8d2542d3a2b9a29428cc3591f6ac27bb5595bba2c69664408a68f9538b14cbd92479796ea835b317a09a527c8c7209c4200381dedb0c34d3b658849e
+"content-disposition@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "content-disposition@npm:2.0.1"
+  checksum: 10c0/8ba0e1f95102343a69a9a4b6f17728209d4ff0402b830b7cda91dcdfbb12eed0201dcd02aaa1e56f9bcf1c5b8ccef4a70e83b58292cf26588d8d5f7d05a0c006
   languageName: node
   linkType: hard
 
