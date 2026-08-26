@@ -95,6 +95,8 @@ export class AuthController {
       request.session.pendingUser.authProviderIdentifier;
     // Cleanup
     request.session.pendingUser = null;
+    // See OidcController.loginWithOpenIdConnect().
+    await request.session.save();
   }
 
   @Delete('pending-user')
