@@ -10,12 +10,13 @@ services:
     environment:
       HD_BASE_URL: "${HD_BASE_URL}"
       HD_INTERNAL_API_URL: http://backend:3000
+      HOSTNAME: "0.0.0.0"
 
   db:
     image: postgres:16
     environment:
-      POSTGRES_USER: "${HD_DATABASE_USER}"
-      POSTGRES_PASSWORD: "${HD_DATABASE_PASS}"
+      POSTGRES_USER: "${HD_DATABASE_USERNAME}"
+      POSTGRES_PASSWORD: "${HD_DATABASE_PASSWORD}"
       POSTGRES_DB: "${HD_DATABASE_NAME}"
     volumes:
       - hedgedoc_postgres:/var/lib/postgresql/data
