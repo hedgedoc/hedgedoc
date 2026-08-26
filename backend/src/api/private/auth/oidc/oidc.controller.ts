@@ -42,6 +42,17 @@ export class OidcController {
     this.logger.setContext(OidcController.name);
   }
 
+  // These GET endpoints have side effects (session mutation), so reject
+  // anything that isn't a real navigation - avoids double-firing from
+  // client-side link prefetching. Only rejects on a positive mismatch.
+  private assertTopLevelNavigation(request: RequestWithSession): void {
+    const mode = request.headers['sec-fetch-mode'];
+    const dest = request.headers['sec-fetch-dest'];
+    if ((mode !== undefined && mode !== 'navigate') || (dest !== undefined && dest !== 'document')) {
+      throw new BadRequestException('This endpoint must be reached via a real browser navigation');
+    }
+  }
+
   @Get(':oidcIdentifier')
   @Redirect()
   @OpenApi(201, 400, 401, 429)
@@ -49,6 +60,7 @@ export class OidcController {
     @Req() request: RequestWithSession,
     @Param('oidcIdentifier') oidcIdentifier: string,
   ): Promise<{ url: string }> {
+    this.assertTopLevelNavigation(request);
     const code = this.oidcService.generateCode();
     const state = this.oidcService.generateState();
     request.session.oidc = {
@@ -76,6 +88,7 @@ export class OidcController {
     @Req() request: RequestWithSession,
   ): Promise<{ url: string }> {
     try {
+      this.assertTopLevelNavigation(request);
       const userInfo = await this.oidcService.extractUserInfoFromCallback(oidcIdentifier, request);
       const oidcUserIdentifier = request.session.pendingUser?.providerUserId;
       if (!oidcUserIdentifier) {
