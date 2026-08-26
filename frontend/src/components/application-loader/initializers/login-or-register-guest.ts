@@ -29,8 +29,15 @@ export const loginOrRegisterGuest = async (ignoreSavedUuid?: boolean): Promise<v
   }
   const guestUuid = ignoreSavedUuid ? null : window.localStorage.getItem('guestUuid')
   if (guestUuid === null) {
-    const { uuid } = await registerGuest()
-    window.localStorage.setItem('guestUuid', uuid)
+    try {
+      const { uuid } = await registerGuest()
+      window.localStorage.setItem('guestUuid', uuid)
+    } catch (error: unknown) {
+      if (error instanceof RateLimitError) {
+        throw error
+      }
+      logger.error('Error registering guest user', error)
+    }
     return
   }
   logInGuest(guestUuid)
