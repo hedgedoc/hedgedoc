@@ -448,7 +448,7 @@ const up = async function (knex) {
       )
       .nullable();
     table.string(FieldNameSession.loginAuthProviderIdentifier).nullable();
-    table.string(FieldNameSession.oidcIdToken).nullable();
+    table.text(FieldNameSession.oidcIdToken).nullable();
     table.string(FieldNameSession.oidcSid).nullable();
     table.string(FieldNameSession.oidcLoginState).nullable();
     table.string(FieldNameSession.oidcLoginCode).nullable();
