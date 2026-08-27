@@ -615,6 +615,12 @@
     "title": "Announcement"
   },
   "errors": {
+    "oidcLogin": {
+      "title": "Login failed",
+      "provider": "The identity provider could not complete the login.",
+      "invalidResponse": "The authentication response could not be verified. Please start the login again.",
+      "internal": "An unexpected error occurred while logging in. Please try again."
+    },
     "notFound": {
       "title": "Page not found",
       "description": "The requested page either does not exist or you don't have permission to access it."

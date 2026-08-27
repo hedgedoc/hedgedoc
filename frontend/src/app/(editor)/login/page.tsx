@@ -15,6 +15,7 @@ import { OneClickLoginCard } from '../../../components/login-page/one-click/one-
 import { GuestCard } from '../../../components/login-page/guest/guest-card'
 import { useIsLoggedIn } from '../../../hooks/common/use-is-logged-in'
 import { LoginLayout } from '../../../components/layout/login-layout'
+import { OidcLoginErrorCard } from '../../../components/login-page/oidc/oidc-login-error-card'
 
 /**
  * Renders the login page with different login methods.
@@ -28,6 +29,7 @@ const LoginPage: NextPage = () => {
 
   return (
     <LoginLayout>
+      <OidcLoginErrorCard />
       <GuestCard />
       <LocalLoginCard />
       <LdapLoginCards />
