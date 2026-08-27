@@ -48,7 +48,10 @@ export class OidcController {
   private assertTopLevelNavigation(request: RequestWithSession): void {
     const mode = request.headers['sec-fetch-mode'];
     const dest = request.headers['sec-fetch-dest'];
-    if ((mode !== undefined && mode !== 'navigate') || (dest !== undefined && dest !== 'document')) {
+    if (
+      (mode !== undefined && mode !== 'navigate') ||
+      (dest !== undefined && dest !== 'document')
+    ) {
       throw new BadRequestException('This endpoint must be reached via a real browser navigation');
     }
   }
