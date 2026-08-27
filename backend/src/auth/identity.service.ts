@@ -79,6 +79,19 @@ export class IdentityService {
   }
 
   /**
+   * Retrieves all authentication identities linked to a user account.
+   *
+   * @param userId The user whose identities should be returned.
+   * @returns The user's linked identities.
+   */
+  async getIdentitiesByUserId(userId: number): Promise<Identity[]> {
+    return await this.knex(TableIdentity)
+      .select()
+      .where(FieldNameIdentity.userId, userId)
+      .orderBy(FieldNameIdentity.createdAt, 'asc');
+  }
+
+  /**
    * Creates a new generic identity
    *
    * @param userId the user the identity should be added to

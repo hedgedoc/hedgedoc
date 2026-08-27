@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { AuthProviderType } from '@hedgedoc/commons';
+import { FieldNameIdentity } from '@hedgedoc/database';
 import {
   Body,
   Controller,
@@ -17,6 +18,8 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 
 import { SessionGuard } from '../../../auth/session.guard';
+import { IdentityService } from '../../../auth/identity.service';
+import { LinkedIdentityDto } from '../../../dtos/linked-identity.dto';
 import { LoginUserInfoDto } from '../../../dtos/login-user-info.dto';
 import { MediaUploadDto } from '../../../dtos/media-upload.dto';
 import { ConsoleLoggerService } from '../../../logger/console-logger.service';
@@ -27,6 +30,7 @@ import { RequestUserId } from '../../utils/decorators/request-user-id.decorator'
 import { SessionAuthProvider } from '../../utils/decorators/session-authprovider.decorator';
 import { promisify } from 'node:util';
 import { RequestWithSession } from '../../utils/request.type';
+import { dateTimeToISOString, dbToDateTime } from '../../../utils/datetime';
 
 @UseGuards(SessionGuard)
 @OpenApi(401, 403, 429)
@@ -37,6 +41,7 @@ export class MeController {
     private readonly logger: ConsoleLoggerService,
     private userService: UsersService,
     private mediaService: MediaService,
+    private identityService: IdentityService,
   ) {
     this.logger.setContext(MeController.name);
   }
@@ -56,6 +61,21 @@ export class MeController {
   async getMyMedia(@RequestUserId() userId: number): Promise<MediaUploadDto[]> {
     const mediaUuids = await this.mediaService.getMediaUploadUuidsByUserId(userId);
     return await this.mediaService.getMediaUploadDtosByUuids(mediaUuids);
+  }
+
+  @Get('identities')
+  @OpenApi(200)
+  async getMyIdentities(
+    @RequestUserId({ forbidGuests: true }) userId: number,
+  ): Promise<LinkedIdentityDto[]> {
+    const identities = await this.identityService.getIdentitiesByUserId(userId);
+    return identities.map((identity) =>
+      LinkedIdentityDto.create({
+        providerType: identity[FieldNameIdentity.providerType],
+        providerIdentifier: identity[FieldNameIdentity.providerIdentifier],
+        createdAt: dateTimeToISOString(dbToDateTime(identity[FieldNameIdentity.createdAt])),
+      }),
+    );
   }
 
   @Delete()

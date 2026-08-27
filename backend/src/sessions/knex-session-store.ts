@@ -127,6 +127,7 @@ export class KnexSessionStore implements SessionStore {
         FieldNameSession.oidcSid,
         FieldNameSession.oidcLoginCode,
         FieldNameSession.oidcLoginState,
+        FieldNameSession.identityLinkData,
         FieldNameSession.expiresAt,
         FieldNameSession.updatedAt,
         // FieldNameSession.createdAt is missing intentionally because this should not be overwritten on updates
@@ -145,6 +146,9 @@ export class KnexSessionStore implements SessionStore {
       userId: dbEntry[FieldNameSession.userId],
       csrfToken: dbEntry[FieldNameSession.csrfToken],
       pendingUser: JSON.parse(dbEntry[FieldNameSession.pendingUserData]),
+      identityLink: dbEntry[FieldNameSession.identityLinkData]
+        ? JSON.parse(dbEntry[FieldNameSession.identityLinkData])
+        : null,
       loginAuthProviderType: dbEntry[FieldNameSession.loginAuthProviderType],
       loginAuthProviderIdentifier: dbEntry[FieldNameSession.loginAuthProviderIdentifier],
       oidc: {
@@ -182,6 +186,9 @@ export class KnexSessionStore implements SessionStore {
       [FieldNameSession.loginAuthProviderType]: session.loginAuthProviderType ?? null,
       [FieldNameSession.loginAuthProviderIdentifier]: session.loginAuthProviderIdentifier ?? null,
       [FieldNameSession.pendingUserData]: JSON.stringify(session.pendingUser ?? {}),
+      [FieldNameSession.identityLinkData]: session.identityLink
+        ? JSON.stringify(session.identityLink)
+        : null,
       [FieldNameSession.oidcIdToken]: session.oidc?.idToken ?? null,
       [FieldNameSession.oidcSid]: session.oidc?.sid ?? null,
       [FieldNameSession.oidcLoginCode]: session.oidc?.loginCode ?? null,

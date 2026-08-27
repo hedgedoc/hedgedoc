@@ -9,13 +9,17 @@ import {
   BadRequestException,
   Body,
   Controller,
+  ConflictException,
+  ForbiddenException,
   Get,
   HttpCode,
+  Inject,
   Param,
   Post,
   Redirect,
   Req,
   UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
 import { HttpException } from '@nestjs/common/exceptions/http.exception';
 import { ApiTags } from '@nestjs/swagger';
@@ -23,12 +27,16 @@ import { errors as oidcErrors } from 'openid-client';
 
 import { IdentityService } from '../../../../auth/identity.service';
 import { OidcService } from '../../../../auth/oidc/oidc.service';
+import { SessionGuard } from '../../../../auth/session.guard';
+import authConfiguration, { AuthConfig } from '../../../../config/auth.config';
 import { BackchannelLogoutDto } from '../../../../dtos/backchannel-logout.dto';
+import { NotInDBError } from '../../../../errors/errors';
 import { ConsoleLoggerService } from '../../../../logger/console-logger.service';
 import { UsersService } from '../../../../users/users.service';
 import { CsrfExempt } from '../../../utils/decorators/csrf-exempt.decorator';
 import { OpenApi } from '../../../utils/decorators/openapi.decorator';
 import { RequestWithSession } from '../../../utils/request.type';
+import { RequestUserId } from '../../../utils/decorators/request-user-id.decorator';
 
 @ApiTags('auth')
 @Controller('/auth/oidc')
@@ -38,6 +46,8 @@ export class OidcController {
     private usersService: UsersService,
     private identityService: IdentityService,
     private oidcService: OidcService,
+    @Inject(authConfiguration.KEY)
+    private authConfig: AuthConfig,
   ) {
     this.logger.setContext(OidcController.name);
   }
@@ -54,6 +64,28 @@ export class OidcController {
     ) {
       throw new BadRequestException('This endpoint must be reached via a real browser navigation');
     }
+  }
+
+  @UseGuards(SessionGuard)
+  @Post(':oidcIdentifier/link')
+  @OpenApi(201, 401, 403, 404, 429)
+  startIdentityLink(
+    @Req() request: RequestWithSession,
+    @RequestUserId({ forbidGuests: true }) userId: number,
+    @Param('oidcIdentifier') oidcIdentifier: string,
+  ): { url: string } {
+    if (!this.authConfig.allowProfileEdits) {
+      throw new ForbiddenException('Profile edits are disabled');
+    }
+    const code = this.oidcService.generateCode();
+    const state = this.oidcService.generateState();
+    request.session.identityLink = {
+      userId,
+      oidcIdentifier,
+      code,
+      state,
+    };
+    return { url: this.oidcService.getAuthorizationUrl(oidcIdentifier, code, state) };
   }
 
   @Get(':oidcIdentifier')
@@ -92,6 +124,47 @@ export class OidcController {
   ): Promise<{ url: string }> {
     this.assertTopLevelNavigation(request);
     try {
+      const identityLink = request.session.identityLink;
+      if (identityLink) {
+        try {
+          if (identityLink.oidcIdentifier !== oidcIdentifier) {
+            throw new BadRequestException('OIDC provider does not match identity link transaction');
+          }
+          const providerUserId = await this.oidcService.getProviderUserIdFromLinkCallback(
+            oidcIdentifier,
+            request,
+            identityLink.code,
+            identityLink.state,
+          );
+          try {
+            const existingIdentity =
+              await this.identityService.getIdentityFromUserIdAndProviderType(
+                providerUserId,
+                AuthProviderType.OIDC,
+                oidcIdentifier,
+              );
+            if (existingIdentity[FieldNameIdentity.userId] !== identityLink.userId) {
+              throw new ConflictException(
+                'This OIDC identity is already linked to another account',
+              );
+            }
+          } catch (error) {
+            if (error instanceof NotInDBError) {
+              await this.identityService.createIdentity(
+                identityLink.userId,
+                AuthProviderType.OIDC,
+                oidcIdentifier,
+                providerUserId,
+              );
+            } else {
+              throw error;
+            }
+          }
+          return { url: '/' };
+        } finally {
+          request.session.identityLink = null;
+        }
+      }
       const userInfo = await this.oidcService.extractUserInfoFromCallback(oidcIdentifier, request);
       const oidcUserIdentifier = request.session.pendingUser?.providerUserId;
       if (!oidcUserIdentifier) {

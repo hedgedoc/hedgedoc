@@ -34,6 +34,20 @@ interface PendingUserSessionState {
   providerUserId?: string;
 }
 
+interface IdentityLinkSessionState {
+  /** The HedgeDoc user to which the identity will be linked. */
+  userId: number;
+
+  /** The OIDC provider selected for the linking transaction. */
+  oidcIdentifier: string;
+
+  /** The PKCE code verifier for the linking transaction. */
+  code: string;
+
+  /** The state value for the linking transaction. */
+  state: string;
+}
+
 export interface SessionState {
   /** Session cookie properties */
   cookie?: {
@@ -65,6 +79,9 @@ export interface SessionState {
 
   /** The user data of the user that is currently being created */
   pendingUser: PendingUserSessionState | null;
+
+  /** OIDC state used while adding an identity to an existing account. */
+  identityLink: IdentityLinkSessionState | null;
 }
 
 declare module 'fastify' {
