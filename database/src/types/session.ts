@@ -40,6 +40,9 @@ export interface Session {
   /** JSON representation of the pending user data on registration */
   [FieldNameSession.pendingUserData]: string
 
+  /** JSON representation of a pending OIDC identity-linking transaction */
+  [FieldNameSession.identityLinkData]: string | null
+
   /** Timestamp when the session was created */
   [FieldNameSession.createdAt]: string
 
@@ -64,6 +67,7 @@ export enum FieldNameSession {
   oidcLoginState = 'oidc_login_state',
   oidcSid = 'oidc_sid',
   pendingUserData = 'pending_user_data',
+  identityLinkData = 'identity_link_data',
   createdAt = 'created_at',
   updatedAt = 'updated_at',
   expiresAt = 'expires_at',

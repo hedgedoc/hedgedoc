@@ -34,6 +34,12 @@ interface OidcClientConfigEntry {
   jwks?: ReturnType<typeof createRemoteJWKSet>;
 }
 
+interface OidcCallbackUserInfo {
+  userInfo: PendingUserInfoDto;
+  providerUserId: string;
+  oidcSessionState: RequestWithSession['session']['oidc'];
+}
+
 @Injectable()
 export class OidcService {
   private clientConfigs: Map<string, OidcClientConfigEntry> = new Map();
@@ -171,6 +177,48 @@ export class OidcService {
     oidcIdentifier: string,
     request: RequestWithSession,
   ): Promise<PendingUserInfoDto> {
+    const oidcSessionState = request.session.oidc;
+    const result = await this.getUserInfoFromCallback(
+      oidcIdentifier,
+      request,
+      oidcSessionState.loginCode ?? undefined,
+      oidcSessionState.loginState ?? undefined,
+    );
+    request.session.oidc = result.oidcSessionState;
+    request.session.pendingUser = {
+      authProviderType: AuthProviderType.OIDC,
+      authProviderIdentifier: oidcIdentifier,
+      providerUserId: result.providerUserId,
+      confirmationData: result.userInfo,
+    };
+    return result.userInfo;
+  }
+
+  /**
+   * Verifies an OIDC callback for an identity-linking transaction.
+   *
+   * @param oidcIdentifier The configured OIDC provider identifier.
+   * @param request The callback request.
+   * @param code The PKCE code verifier from the link transaction.
+   * @param state The state value from the link transaction.
+   * @returns The upstream provider user identifier.
+   */
+  async getProviderUserIdFromLinkCallback(
+    oidcIdentifier: string,
+    request: RequestWithSession,
+    code: string,
+    state: string,
+  ): Promise<string> {
+    const result = await this.getUserInfoFromCallback(oidcIdentifier, request, code, state);
+    return result.providerUserId;
+  }
+
+  private async getUserInfoFromCallback(
+    oidcIdentifier: string,
+    request: RequestWithSession,
+    code: string | undefined,
+    state: string | undefined,
+  ): Promise<OidcCallbackUserInfo> {
     const clientConfig = this.clientConfigs.get(oidcIdentifier);
     if (!clientConfig) {
       throw new NotFoundException('OIDC configuration not found or initialized');
@@ -178,8 +226,6 @@ export class OidcService {
     const client = clientConfig.client;
     const oidcConfig = clientConfig.config;
     const params = client.callbackParams(request.raw);
-    const code = request.session.oidc?.loginCode ?? undefined;
-    const state = request.session.oidc?.loginState ?? undefined;
     const isAutodiscovered = clientConfig.config.authorizeUrl === undefined;
     const callbackMethod = isAutodiscovered
       ? client.callback.bind(client)
@@ -193,7 +239,7 @@ export class OidcService {
     // If the id_token is not present, we are not able to extract claims like the sessionId from it, therefore we set it to null.
     // This is the case with non-OIDC-compliant OAuth2 auth providers like GitHub.
     const sid = tokenSet.id_token ? ((tokenSet.claims()?.sid as string | undefined) ?? null) : null;
-    request.session.oidc = {
+    const oidcSessionState = {
       idToken: tokenSet.id_token ?? null,
       sid,
       loginState: null,
@@ -231,13 +277,11 @@ export class OidcService {
       photoUrl: photoUrl ?? null,
       email: email ?? null,
     };
-    request.session.pendingUser = {
-      authProviderType: AuthProviderType.OIDC,
-      authProviderIdentifier: oidcIdentifier,
+    return {
+      userInfo: PendingUserInfoDto.create(newUserData),
       providerUserId: userId,
-      confirmationData: newUserData,
+      oidcSessionState,
     };
-    return PendingUserInfoDto.create(newUserData);
   }
 
   /**

@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from '@jest/globals';
 import { PRIVATE_API_PREFIX } from '../../src/app.module';
 import { NotInDBError } from '../../src/errors/errors';
+import { AuthProviderType } from '@hedgedoc/commons';
 import {
   displayName1,
   displayName2,
@@ -128,6 +129,48 @@ describe('Me', () => {
       expect(response.body).toHaveLength(1);
       expect(response.body[0].uuid).toEqual(ownImageUuid);
       expect(response.body[0].uuid).not.toEqual(otherUsersImageUuid);
+    });
+  });
+
+  describe(`GET ${PRIVATE_API_PREFIX}/me/identities`, () => {
+    it('returns only the current users linked identities without sensitive data', async () => {
+      await testSetup.identityService.createIdentity(
+        testSetup.userIds[0],
+        AuthProviderType.OIDC,
+        'example-oidc',
+        'oidc-user-1',
+      );
+      await testSetup.identityService.createIdentity(
+        testSetup.userIds[1],
+        AuthProviderType.OIDC,
+        'example-oidc',
+        'oidc-user-2',
+      );
+
+      const response = await agentUser1
+        .get(`${PRIVATE_API_PREFIX}/me/identities`)
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(response.body).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            providerType: AuthProviderType.LOCAL,
+            providerIdentifier: null,
+          }),
+          expect.objectContaining({
+            providerType: AuthProviderType.OIDC,
+            providerIdentifier: 'example-oidc',
+          }),
+        ]),
+      );
+      expect(response.body).toHaveLength(2);
+      expect(response.body[0]).not.toHaveProperty('providerUserId');
+      expect(response.body[0]).not.toHaveProperty('passwordHash');
+    });
+
+    it('rejects guest users', async () => {
+      await agentGuestUser.get(`${PRIVATE_API_PREFIX}/me/identities`).expect(401);
     });
   });
 
