@@ -1,9 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { AuthProviderType } from '@hedgedoc/commons';
+import { AuthProviderType, AuthErrorCodes } from '@hedgedoc/commons';
 import { FieldNameIdentity } from '@hedgedoc/database';
 import {
   BadRequestException,
@@ -11,7 +11,6 @@ import {
   Controller,
   Get,
   HttpCode,
-  InternalServerErrorException,
   Param,
   Post,
   Redirect,
@@ -20,6 +19,7 @@ import {
 } from '@nestjs/common';
 import { HttpException } from '@nestjs/common/exceptions/http.exception';
 import { ApiTags } from '@nestjs/swagger';
+import { errors as oidcErrors } from 'openid-client';
 
 import { IdentityService } from '../../../../auth/identity.service';
 import { OidcService } from '../../../../auth/oidc/oidc.service';
@@ -90,8 +90,8 @@ export class OidcController {
     @Param('oidcIdentifier') oidcIdentifier: string,
     @Req() request: RequestWithSession,
   ): Promise<{ url: string }> {
+    this.assertTopLevelNavigation(request);
     try {
-      this.assertTopLevelNavigation(request);
       const userInfo = await this.oidcService.extractUserInfoFromCallback(oidcIdentifier, request);
       const oidcUserIdentifier = request.session.pendingUser?.providerUserId;
       if (!oidcUserIdentifier) {
@@ -127,11 +127,31 @@ export class OidcController {
       await request.session.save();
       return { url: '/' };
     } catch (error) {
-      if (error instanceof HttpException) {
-        throw error;
+      const errorParams = new URLSearchParams();
+      if (error instanceof oidcErrors.OPError) {
+        errorParams.set('error', AuthErrorCodes.PROVIDER);
+        if (error.error) {
+          errorParams.set('providerError', error.error);
+        }
+        if (error.error_description) {
+          errorParams.set('providerDescription', error.error_description);
+        }
+      } else if (error instanceof oidcErrors.RPError || error instanceof HttpException) {
+        errorParams.set('error', AuthErrorCodes.INVALID_RESPONSE);
+      } else {
+        errorParams.set('error', AuthErrorCodes.INTERNAL);
       }
-      this.logger.log('Error during OIDC callback: ' + String(error), 'callback');
-      throw new InternalServerErrorException();
+
+      this.logger.error(
+        'Error during OIDC callback: ' + String(error),
+        error instanceof Error ? error.stack : undefined,
+        'callback',
+      );
+      request.session.pendingUser = null;
+      request.session.oidc.loginCode = null;
+      request.session.oidc.loginState = null;
+      await request.session.save();
+      return { url: `/login?${errorParams.toString()}` };
     }
   }
 
