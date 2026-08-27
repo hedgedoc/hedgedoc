@@ -7,12 +7,12 @@ import { useBooleanState } from '../../../hooks/common/use-boolean-state'
 import { UiIcon } from '../../common/icons/ui-icon'
 import { AccountDeletionModal } from './account-deletion-modal'
 import React, { Fragment } from 'react'
-import { Button, Card, Row } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import { CloudDownload as IconCloudDownload, Trash as IconTrash } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 
 /**
- * Profile page section that allows to export all data from the account or to delete the account.
+ * Account actions for exporting data or deleting the account.
  */
 export const ProfileAccountManagement: React.FC = () => {
   useTranslation()
@@ -20,25 +20,16 @@ export const ProfileAccountManagement: React.FC = () => {
 
   return (
     <Fragment>
-      <Card className='mb-4'>
-        <Card.Body>
-          <Card.Title>
-            <Trans i18nKey='profile.accountManagement' />
-          </Card.Title>
-          <Row>
-            <Button variant='secondary' href={'me/export'} className='mb-2'>
-              <UiIcon icon={IconCloudDownload} className='mx-2' />
-              <Trans i18nKey='profile.exportUserData' />
-            </Button>
-          </Row>
-          <Row>
-            <Button variant='danger' onClick={showModal}>
-              <UiIcon icon={IconTrash} className='mx-2' />
-              <Trans i18nKey='profile.deleteUser' />
-            </Button>
-          </Row>
-        </Card.Body>
-      </Card>
+      <div className='d-grid gap-2 mt-4'>
+        <Button variant='secondary' href={'me/export'}>
+          <UiIcon icon={IconCloudDownload} className='mx-2' />
+          <Trans i18nKey='profile.exportUserData' />
+        </Button>
+        <Button variant='danger' onClick={showModal}>
+          <UiIcon icon={IconTrash} className='mx-2' />
+          <Trans i18nKey='profile.deleteUser' />
+        </Button>
+      </div>
       <AccountDeletionModal show={modalVisibility} onHide={closeModal} />
     </Fragment>
   )

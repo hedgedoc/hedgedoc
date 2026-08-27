@@ -6,13 +6,10 @@
 import { useApplicationState } from '../../../hooks/common/use-application-state'
 import { useOutlineButtonVariant } from '../../../hooks/dark-mode/use-outline-button-variant'
 import { cypressId } from '../../../utils/cypress-attribute'
-import { UiIcon } from '../../common/icons/ui-icon'
 import { SignOutDropdownButton } from './sign-out-dropdown-button'
-import Link from 'next/link'
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
-import { Person as IconPerson } from 'react-bootstrap-icons'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { UserAvatar } from '../../common/user-avatar/user-avatar'
 
 /**
@@ -38,12 +35,6 @@ export const UserDropdown: React.FC = () => {
       </Dropdown.Toggle>
 
       <Dropdown.Menu className='text-start'>
-        <Link href={'/profile'} passHref={true} legacyBehavior={true}>
-          <Dropdown.Item dir='auto' {...cypressId('user-dropdown-profile-button')}>
-            <UiIcon icon={IconPerson} className='mx-2' />
-            <Trans i18nKey='profile.userProfile' />
-          </Dropdown.Item>
-        </Link>
         <SignOutDropdownButton />
       </Dropdown.Menu>
     </Dropdown>

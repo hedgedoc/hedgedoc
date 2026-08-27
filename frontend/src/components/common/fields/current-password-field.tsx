@@ -14,7 +14,7 @@ import { Trans } from 'react-i18next'
  *
  * @param onChange Hook that is called when the entered password changes.
  */
-export const CurrentPasswordField: React.FC<CommonFieldProps> = ({ onChange }) => {
+export const CurrentPasswordField: React.FC<CommonFieldProps> = ({ onChange, disabled = false }) => {
   const placeholderText = useTranslatedText('login.auth.password')
 
   return (
@@ -28,6 +28,7 @@ export const CurrentPasswordField: React.FC<CommonFieldProps> = ({ onChange }) =
         onChange={onChange}
         placeholder={placeholderText}
         autoComplete='current-password'
+        disabled={disabled}
         required
       />
     </Form.Group>

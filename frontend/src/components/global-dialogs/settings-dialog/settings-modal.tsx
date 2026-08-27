@@ -8,6 +8,8 @@ import type { CommonModalProps } from '../../common/modals/common-modal'
 import { CommonModal } from '../../common/modals/common-modal'
 import { EditorSettingsTabContent } from './editor/editor-settings-tab-content'
 import { GlobalSettingsTabContent } from './global/global-settings-tab-content'
+import { AccountSettingsTabContent } from './account/account-settings-tab-content'
+import { ApiSettingsTabContent } from './api/api-settings-tab-content'
 import React from 'react'
 import { Modal, Tab, Tabs } from 'react-bootstrap'
 import { Gear as IconGear } from 'react-bootstrap-icons'
@@ -21,6 +23,8 @@ import { Gear as IconGear } from 'react-bootstrap-icons'
 export const SettingsModal: React.FC<CommonModalProps> = ({ show, onHide }) => {
   const globalLabelTitle = useTranslatedText('settings.global.label')
   const editorLabelTitle = useTranslatedText('settings.editor.label')
+  const accountLabelTitle = useTranslatedText('settings.account.label')
+  const apiLabelTitle = useTranslatedText('settings.api.label')
 
   return (
     <CommonModal
@@ -37,6 +41,12 @@ export const SettingsModal: React.FC<CommonModalProps> = ({ show, onHide }) => {
           </Tab>
           <Tab title={editorLabelTitle} eventKey={'editor'}>
             <EditorSettingsTabContent />
+          </Tab>
+          <Tab title={accountLabelTitle} eventKey={'account'}>
+            <AccountSettingsTabContent />
+          </Tab>
+          <Tab title={apiLabelTitle} eventKey={'api'}>
+            <ApiSettingsTabContent />
           </Tab>
         </Tabs>
       </Modal.Body>

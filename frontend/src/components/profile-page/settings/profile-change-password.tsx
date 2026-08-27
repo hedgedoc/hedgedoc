@@ -11,19 +11,21 @@ import { NewPasswordField } from '../../common/fields/new-password-field'
 import { PasswordAgainField } from '../../common/fields/password-again-field'
 import type { FormEvent } from 'react'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
-import { Alert, Button, Card, Form } from 'react-bootstrap'
+import { Alert, Button, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { useAsyncFn } from 'react-use'
 import { MIN_PASSWORD_LENGTH } from '@hedgedoc/commons'
+import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
 
 /**
- * Profile page section for changing the password when using internal login.
+ * Form for changing the password of a local identity.
  */
 export const ProfileChangePassword: React.FC = () => {
   useTranslation()
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [newPasswordAgain, setNewPasswordAgain] = useState('')
+  const { allowProfileEdits } = useFrontendConfig()
 
   const formRef = useRef<HTMLFormElement>(null)
 
@@ -66,26 +68,29 @@ export const ProfileChangePassword: React.FC = () => {
   }, [loading, oldPassword, newPassword, newPasswordAgain])
 
   return (
-    <Card className='mb-4'>
-      <Card.Body>
-        <Card.Title>
-          <Trans i18nKey='profile.changePassword.title' />
-        </Card.Title>
-        <Form onSubmit={onSubmitPasswordChange} className='text-left' ref={formRef}>
-          <CurrentPasswordField onChange={onChangeOldPassword} value={oldPassword} />
-          <NewPasswordField onChange={onChangeNewPassword} value={newPassword} />
-          <PasswordAgainField password={newPassword} onChange={onChangeNewPasswordAgain} value={newPasswordAgain} />
-          <Alert className='small my-3' show={!!error && !loading} variant={'danger'}>
-            <Trans i18nKey={error?.message} />
-          </Alert>
-          <Alert className='small my-3' show={!error && !loading && Boolean(changeSucceeded)} variant={'success'}>
-            <Trans i18nKey={'profile.changePassword.successText'} />
-          </Alert>
-          <Button type='submit' variant='primary' disabled={!ready} className={'mt-3'}>
-            <Trans i18nKey='common.save' />
-          </Button>
-        </Form>
-      </Card.Body>
-    </Card>
+    <fieldset className='border rounded p-3 mb-3'>
+      <legend className='float-none w-auto px-2 fs-6'>
+        <Trans i18nKey='profile.changePassword.title' />
+      </legend>
+      <Form onSubmit={onSubmitPasswordChange} className='text-start' ref={formRef}>
+        <CurrentPasswordField onChange={onChangeOldPassword} value={oldPassword} disabled={!allowProfileEdits} />
+        <NewPasswordField onChange={onChangeNewPassword} value={newPassword} disabled={!allowProfileEdits} />
+        <PasswordAgainField
+          password={newPassword}
+          onChange={onChangeNewPasswordAgain}
+          value={newPasswordAgain}
+          disabled={!allowProfileEdits}
+        />
+        <Alert className='small my-3' show={!!error && !loading} variant={'danger'}>
+          <Trans i18nKey={error?.message} />
+        </Alert>
+        <Alert className='small my-3' show={!error && !loading && Boolean(changeSucceeded)} variant={'success'}>
+          <Trans i18nKey={'profile.changePassword.successText'} />
+        </Alert>
+        <Button type='submit' variant='primary' disabled={!allowProfileEdits || !ready} className={'mt-3'}>
+          <Trans i18nKey='common.save' />
+        </Button>
+      </Form>
+    </fieldset>
   )
 }

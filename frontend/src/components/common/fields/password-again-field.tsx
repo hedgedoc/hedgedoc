@@ -25,7 +25,8 @@ export const PasswordAgainField: React.FC<PasswordAgainFieldProps> = ({
   onChange,
   value,
   password,
-  hasError = false
+  hasError = false,
+  disabled = false
 }) => {
   const isInvalid = useMemo(() => value !== '' && password !== value && hasError, [password, value, hasError])
   const isValid = useMemo(() => password !== '' && password === value && !hasError, [password, value, hasError])
@@ -45,6 +46,7 @@ export const PasswordAgainField: React.FC<PasswordAgainFieldProps> = ({
         onChange={onChange}
         placeholder={placeholderText}
         autoComplete='new-password'
+        disabled={disabled}
         required
       />
     </Form.Group>

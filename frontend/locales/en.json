@@ -144,6 +144,14 @@
       "info": "Your profile picture is publicly visible. Depending on your auth provider, you might have more or less choices here."
     },
     "changeDisplayNameFailed": "There was an error changing your display name.",
+    "linkedIdentities": {
+      "title": "Linked identities",
+      "info": "Link an external authentication provider to use it to sign in to this account.",
+      "link": "Link {{provider}}",
+      "linked": "{{provider}} linked",
+      "loadingFailed": "Fetching your linked identities has failed. Try reloading this dialog.",
+      "linkFailed": "Starting the identity linking process failed. Please try again."
+    },
     "accountManagement": "Account management",
     "deleteUser": "Delete user",
     "exportUserData": "Export user data",
@@ -643,6 +651,14 @@
   },
   "settings": {
     "title": "Settings",
+    "account": {
+      "label": "Account",
+      "loginRequired": "Log in to modify your account settings."
+    },
+    "api": {
+      "label": "API",
+      "loginRequired": "Log in to manage API tokens."
+    },
     "editor": {
       "label": "Editor",
       "ligatures": {

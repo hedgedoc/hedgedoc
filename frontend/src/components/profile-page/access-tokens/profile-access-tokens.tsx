@@ -8,7 +8,7 @@ import { useUiNotifications } from '../../notifications/ui-notification-boundary
 import { AccessTokenCreationForm } from './access-token-creation-form/access-token-creation-form'
 import { AccessTokenListEntry } from './access-token-list-entry'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Card, ListGroup } from 'react-bootstrap'
+import { ListGroup } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import type { ApiTokenInterface } from '@hedgedoc/commons'
 
@@ -17,7 +17,7 @@ export interface AccessTokenUpdateProps {
 }
 
 /**
- * Profile page section that shows the user's access tokens and allows to manage them.
+ * Shows the user's API tokens and allows creating or deleting them.
  */
 export const ProfileAccessTokens: React.FC = () => {
   useTranslation()
@@ -45,23 +45,21 @@ export const ProfileAccessTokens: React.FC = () => {
   )
 
   return (
-    <Card className='mb-4 access-tokens'>
-      <Card.Body>
-        <Card.Title>
-          <Trans i18nKey='profile.accessTokens.title' />
-        </Card.Title>
-        <p className='text-start'>
-          <Trans i18nKey='profile.accessTokens.info' />
-        </p>
-        <p className='text-start small'>
-          <Trans i18nKey='profile.accessTokens.infoDev' />
-        </p>
-        <hr />
-        {accessTokens.length === 0 && <Trans i18nKey='profile.accessTokens.noTokens' />}
-        <ListGroup>{tokensDom}</ListGroup>
-        <hr />
-        {accessTokens.length < 200 && <AccessTokenCreationForm onUpdateList={refreshAccessTokens} />}
-      </Card.Body>
-    </Card>
+    <div className='py-3 access-tokens'>
+      <h5>
+        <Trans i18nKey='profile.accessTokens.title' />
+      </h5>
+      <p className='text-start'>
+        <Trans i18nKey='profile.accessTokens.info' />
+      </p>
+      <p className='text-start small'>
+        <Trans i18nKey='profile.accessTokens.infoDev' />
+      </p>
+      <hr />
+      {accessTokens.length === 0 && <Trans i18nKey='profile.accessTokens.noTokens' />}
+      <ListGroup>{tokensDom}</ListGroup>
+      <hr />
+      {accessTokens.length < 200 && <AccessTokenCreationForm onUpdateList={refreshAccessTokens} />}
+    </div>
   )
 }

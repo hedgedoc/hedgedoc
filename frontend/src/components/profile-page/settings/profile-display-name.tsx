@@ -10,18 +10,20 @@ import { DisplayNameField } from '../../common/fields/display-name-field'
 import { useUiNotifications } from '../../notifications/ui-notification-boundary'
 import type { FormEvent } from 'react'
 import React, { useCallback, useMemo, useState } from 'react'
-import { Button, Card, Form } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 import { fetchAndSetUser } from '../../login-page/utils/fetch-and-set-user'
+import { useFrontendConfig } from '../../common/frontend-config-context/use-frontend-config'
 
 /**
- * Profile page section for changing the current display name.
+ * Form for changing the current display name.
  */
 export const ProfileDisplayName: React.FC = () => {
   useTranslation()
   const userName = useApplicationState((state) => state.user?.displayName)
   const [displayName, setDisplayName] = useState(userName ?? '')
   const { showErrorNotificationBuilder } = useUiNotifications()
+  const { allowProfileEdits } = useFrontendConfig()
 
   const onChangeDisplayName = useOnInputChange(setDisplayName)
   const onSubmitNameChange = useCallback(
@@ -39,19 +41,12 @@ export const ProfileDisplayName: React.FC = () => {
   }, [displayName, userName])
 
   return (
-    <Card className='mb-4'>
-      <Card.Body>
-        <Card.Title>
-          <Trans i18nKey='profile.userProfile' />
-        </Card.Title>
-        <Form onSubmit={onSubmitNameChange} className='text-left'>
-          <DisplayNameField onChange={onChangeDisplayName} value={displayName} initialValue={userName} />
+    <Form onSubmit={onSubmitNameChange} className='text-start mb-3'>
+      <DisplayNameField onChange={onChangeDisplayName} value={displayName} initialValue={userName} />
 
-          <Button type='submit' variant='primary' disabled={!formSubmittable}>
-            <Trans i18nKey='common.save' />
-          </Button>
-        </Form>
-      </Card.Body>
-    </Card>
+      <Button type='submit' variant='primary' disabled={!allowProfileEdits || !formSubmittable} className='mt-3'>
+        <Trans i18nKey='common.save' />
+      </Button>
+    </Form>
   )
 }

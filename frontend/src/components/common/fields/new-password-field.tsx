@@ -16,7 +16,12 @@ import { Trans } from 'react-i18next'
  * @param value The currently entered password.
  * @param hasError true to show an error style on the field.
  */
-export const NewPasswordField: React.FC<CommonFieldProps> = ({ onChange, value, hasError = false }) => {
+export const NewPasswordField: React.FC<CommonFieldProps> = ({
+  onChange,
+  value,
+  hasError = false,
+  disabled = false
+}) => {
   const isValid = useMemo(() => value.length >= 6, [value])
 
   const placeholderText = useTranslatedText('login.auth.password')
@@ -35,6 +40,7 @@ export const NewPasswordField: React.FC<CommonFieldProps> = ({ onChange, value, 
         onChange={onChange}
         placeholder={placeholderText}
         autoComplete='new-password'
+        disabled={disabled}
         required
       />
       <Form.Text>
