@@ -452,6 +452,7 @@ const up = async function (knex) {
     table.string(FieldNameSession.oidcSid).nullable();
     table.string(FieldNameSession.oidcLoginState).nullable();
     table.string(FieldNameSession.oidcLoginCode).nullable();
+    table.text(FieldNameSession.identityLinkData).nullable();
     table.text(FieldNameSession.pendingUserData);
     table.timestamp(FieldNameSession.createdAt, { useTz: false, precision: 3 }).notNullable();
     table.timestamp(FieldNameSession.updatedAt, { useTz: false, precision: 3 }).notNullable();

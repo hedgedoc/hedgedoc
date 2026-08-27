@@ -25,6 +25,7 @@ const insertColumns = [
   FieldNameSession.csrfToken,
   FieldNameSession.expiresAt,
   FieldNameSession.id,
+  FieldNameSession.identityLinkData,
   FieldNameSession.loginAuthProviderIdentifier,
   FieldNameSession.loginAuthProviderType,
   FieldNameSession.oidcIdToken,
@@ -102,6 +103,12 @@ describe('KnexSessionStore', () => {
             [FieldNameSession.oidcLoginCode]: 'oidc-code',
             [FieldNameSession.oidcLoginState]: 'oidc-state',
             [FieldNameSession.pendingUserData]: JSON.stringify({ providerUserId: 'prov-1' }),
+            [FieldNameSession.identityLinkData]: JSON.stringify({
+              userId: 42,
+              oidcIdentifier: 'oidc-provider',
+              code: 'link-code',
+              state: 'link-state',
+            }),
             [FieldNameSession.createdAt]: mockNowDb,
             [FieldNameSession.updatedAt]: mockNowDb,
             [FieldNameSession.expiresAt]: mockExpiryDb,
@@ -120,6 +127,12 @@ describe('KnexSessionStore', () => {
         expect(session?.oidc.loginCode).toBe('oidc-code');
         expect(session?.oidc.loginState).toBe('oidc-state');
         expect(session?.pendingUser).toEqual({ providerUserId: 'prov-1' });
+        expect(session?.identityLink).toEqual({
+          userId: 42,
+          oidcIdentifier: 'oidc-provider',
+          code: 'link-code',
+          state: 'link-state',
+        });
         expect(session?.cookie?.expires).toEqual(dbToDateTime(mockExpiryDb).toJSDate());
         expect(session?.cookie?.signed).toBe(true);
         expect(session?.cookie?.secure).toBe('auto');
@@ -143,6 +156,7 @@ describe('KnexSessionStore', () => {
         loginAuthProviderIdentifier: null,
         oidc: { idToken: null, sid: null, loginCode: null, loginState: null },
         pendingUser: null,
+        identityLink: null,
       } as FastifySession;
       store.set('session-1', session, (error) => {
         expect(error).toBeUndefined();
@@ -152,6 +166,7 @@ describe('KnexSessionStore', () => {
             null,
             mockExpiryDb,
             'session-1',
+            null,
             null,
             null,
             null,
@@ -183,6 +198,12 @@ describe('KnexSessionStore', () => {
           loginState: 'oidc-state',
         },
         pendingUser,
+        identityLink: {
+          userId: 42,
+          oidcIdentifier: 'oidc-provider',
+          code: 'link-code',
+          state: 'link-state',
+        },
       } as FastifySession;
       store.set('session-1', session, (error) => {
         expect(error).toBeUndefined();
@@ -192,6 +213,7 @@ describe('KnexSessionStore', () => {
             'my-csrf',
             mockExpiryDb,
             'session-1',
+            JSON.stringify(session.identityLink),
             'oidc-provider',
             AuthProviderType.OIDC,
             'id-tok',
