@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -32,6 +32,7 @@ export const loginOrRegisterGuest = async (ignoreSavedUuid?: boolean): Promise<v
     try {
       const { uuid } = await registerGuest()
       window.localStorage.setItem('guestUuid', uuid)
+      await fetchAndSetUser()
     } catch (error: unknown) {
       if (error instanceof RateLimitError) {
         throw error
@@ -40,13 +41,14 @@ export const loginOrRegisterGuest = async (ignoreSavedUuid?: boolean): Promise<v
     }
     return
   }
-  logInGuest(guestUuid)
-    .then(fetchAndSetUser)
-    .catch((error: unknown) => {
-      if (error instanceof RateLimitError) {
-        throw error
-      }
-      logger.error('Error logging in guest user', error)
-      return loginOrRegisterGuest(true)
-    })
+  try {
+    await logInGuest(guestUuid)
+    await fetchAndSetUser()
+  } catch (error: unknown) {
+    if (error instanceof RateLimitError) {
+      throw error
+    }
+    logger.error('Error logging in guest user', error)
+    await loginOrRegisterGuest(true)
+  }
 }
