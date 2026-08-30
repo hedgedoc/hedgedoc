@@ -50,6 +50,6 @@
     "oxfmt": "0.64.0",
     "oxlint": "1.63.0",
     "oxlint-tsgolint": "0.25.0",
-    "turbo": "2.10.11"
+    "turbo": "2.10.12"
   }
 }
