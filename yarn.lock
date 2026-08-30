@@ -2976,16 +2976,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fastify/multipart@npm:9.4.0":
-  version: 9.4.0
-  resolution: "@fastify/multipart@npm:9.4.0"
+"@fastify/multipart@npm:10.1.1":
+  version: 10.1.1
+  resolution: "@fastify/multipart@npm:10.1.1"
   dependencies:
     "@fastify/busboy": "npm:^3.0.0"
     "@fastify/deepmerge": "npm:^3.0.0"
     "@fastify/error": "npm:^4.0.0"
-    fastify-plugin: "npm:^5.0.0"
+    fastify-plugin: "npm:^6.0.0"
     secure-json-parse: "npm:^4.0.0"
-  checksum: 10c0/4e82b59333dca720ef71b409249291db1955ac6fa7eb6769a83d22e08342fb48fd6e9ca28e553dc2222b58aaebc09392fcf8f680297f2fc259597a7bddd80243
+  checksum: 10c0/25b551a0794798b05af689f2cd5532ba85d9e4f19c40e09f84db5013826d939ee0c0ec3f2fbcbb130d1d84d9f729b84d692aafd0bc34931e87f282eb85465272
   languageName: node
   linkType: hard
 
@@ -3122,7 +3122,7 @@ __metadata:
     "@azure/storage-blob": "npm:12.33.0"
     "@fastify/cookie": "npm:11.0.2"
     "@fastify/csrf-protection": "npm:7.1.0"
-    "@fastify/multipart": "npm:9.4.0"
+    "@fastify/multipart": "npm:10.1.1"
     "@fastify/rate-limit": "npm:10.3.0"
     "@fastify/secure-session": "npm:8.3.0"
     "@fastify/session": "npm:11.1.2"
