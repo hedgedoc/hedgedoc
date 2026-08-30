@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "domelementtype": "3.0.0",
-    "domhandler": "5.0.3",
+    "domhandler": "6.0.1",
     "htmlparser2": "9.1.0"
   },
   "peerDependencies": {

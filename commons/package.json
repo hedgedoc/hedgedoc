@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@file-type/xml": "1.1.1",
-    "domhandler": "5.0.3",
+    "domhandler": "6.0.1",
     "eventemitter2": "6.4.9",
     "file-type": "22.0.2",
     "js-yaml": "5.4.1",

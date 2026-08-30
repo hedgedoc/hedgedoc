@@ -3229,7 +3229,7 @@ __metadata:
     "@types/node": "npm:24.10.7"
     "@types/ws": "npm:8.18.1"
     "@typescript/native": "npm:typescript@7.0.2"
-    domhandler: "npm:5.0.3"
+    domhandler: "npm:6.0.1"
     eventemitter2: "npm:6.4.9"
     file-type: "npm:22.0.2"
     jest: "npm:30.4.2"
@@ -3325,7 +3325,7 @@ __metadata:
     deepmerge: "npm:4.3.1"
     diff: "npm:9.0.0"
     dom-serializer: "npm:2.0.0"
-    domhandler: "npm:5.0.3"
+    domhandler: "npm:6.0.1"
     dompurify: "npm:3.4.14"
     dotenv-cli: "npm:11.0.0"
     emoji-picker-element: "npm:1.29.1"
@@ -3402,7 +3402,7 @@ __metadata:
     "@types/react": "npm:18.3.27"
     "@types/react-dom": "npm:18.3.7"
     domelementtype: "npm:3.0.0"
-    domhandler: "npm:5.0.3"
+    domhandler: "npm:6.0.1"
     htmlparser2: "npm:9.1.0"
     jest: "npm:29.7.0"
     react: "npm:18.3.1"
@@ -10529,7 +10529,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"domelementtype@npm:3.0.0":
+"domelementtype@npm:3.0.0, domelementtype@npm:^3.0.0":
   version: 3.0.0
   resolution: "domelementtype@npm:3.0.0"
   checksum: 10c0/26e8ef992769c4f9bce941eb0cff7ce2ba3f1b3bf77710bb4b029055030625892e83da326cc36b1e444cf3bfdea7d1954791ee2227746387465da9929d16d954
@@ -10543,12 +10543,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"domhandler@npm:5.0.3":
-  version: 5.0.3
-  resolution: "domhandler@npm:5.0.3"
+"domhandler@npm:6.0.1":
+  version: 6.0.1
+  resolution: "domhandler@npm:6.0.1"
   dependencies:
-    domelementtype: "npm:^2.3.0"
-  checksum: 10c0/bba1e5932b3e196ad6862286d76adc89a0dbf0c773e5ced1eb01f9af930c50093a084eff14b8de5ea60b895c56a04d5de8bbc4930c5543d029091916770b2d2a
+    domelementtype: "npm:^3.0.0"
+  checksum: 10c0/8655204dd9612b55813d5880e3e87e134d6dfb2de4bd80f342b3c97f41b167576a8c66c0449c2423999953aedfcda290f7be253a6f9bf71e815afa85f939d44e
   languageName: node
   linkType: hard
 
