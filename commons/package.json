@@ -52,7 +52,6 @@
   "devDependencies": {
     "@jest/types": "29.6.3",
     "@mrdrogdrog/optional": "1.2.1",
-    "@types/js-yaml": "4.0.9",
     "@types/node": "24.10.7",
     "@types/ws": "8.18.1",
     "@typescript/native": "npm:typescript@7.0.2",
