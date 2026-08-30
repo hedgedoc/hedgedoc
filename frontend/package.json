@@ -102,7 +102,7 @@
     "react-diff-viewer": "3.1.1",
     "react-dom": "18.3.1",
     "react-i18next": "15.7.4",
-    "react-infinite-scroll-component": "6.1.1",
+    "react-infinite-scroll-component": "7.2.1",
     "react-redux": "9.3.0",
     "react-use": "17.6.1",
     "redux": "5.0.1",

@@ -3368,7 +3368,7 @@ __metadata:
     react-diff-viewer: "npm:3.1.1"
     react-dom: "npm:18.3.1"
     react-i18next: "npm:15.7.4"
-    react-infinite-scroll-component: "npm:6.1.1"
+    react-infinite-scroll-component: "npm:7.2.1"
     react-redux: "npm:9.3.0"
     react-test-renderer: "npm:18.3.1"
     react-use: "npm:17.6.1"
@@ -16982,14 +16982,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-infinite-scroll-component@npm:6.1.1":
-  version: 6.1.1
-  resolution: "react-infinite-scroll-component@npm:6.1.1"
-  dependencies:
-    throttle-debounce: "npm:^2.1.0"
+"react-infinite-scroll-component@npm:7.2.1":
+  version: 7.2.1
+  resolution: "react-infinite-scroll-component@npm:7.2.1"
   peerDependencies:
-    react: ">=16.0.0"
-  checksum: 10c0/d05c52012238ed29a3fbd687a323614a688c6d26cacb92557ebf056ee6bb91ce9b31aa0775f74e1f79db66f177edafc377017d2cd87f6374ffbc092a4f28a130
+    react: ">=17"
+    react-dom: ">=17"
+  checksum: 10c0/e4b09d46fa4e4ddd80db7d436dca372d16f2b5c8414de5b46c584ba981aa61d741a58e7c80beaef079a58ae7a0d054f40198a491e3534a9d55143c7ba7546c35
   languageName: node
   linkType: hard
 
@@ -18590,13 +18589,6 @@ __metadata:
   dependencies:
     real-require: "npm:^0.2.0"
   checksum: 10c0/f0a47a673af574062df20140ec3e857d679365253fcaa98a76c167c9a053ee03291f4b25bd89b078c7f6a48f07f49d5a49e4f5598bb1c8a263ec15955a018fbd
-  languageName: node
-  linkType: hard
-
-"throttle-debounce@npm:^2.1.0":
-  version: 2.3.0
-  resolution: "throttle-debounce@npm:2.3.0"
-  checksum: 10c0/41648e4cf46f935818af32ecac34f9876c618f24e300551cbe3a0ca2c5828cb8d2f9b73e6e1e2f8c64237f70fbc8c541f9b5c9114da70b33b1ed10ba4cc6b15f
   languageName: node
   linkType: hard
 
