@@ -3164,7 +3164,7 @@ __metadata:
     class-transformer: "npm:0.5.1"
     class-validator: "npm:0.15.1"
     cli-color: "npm:2.0.4"
-    diff: "npm:8.0.4"
+    diff: "npm:9.0.0"
     htmlparser2: "npm:9.1.0"
     jest: "npm:30.4.2"
     jose: "npm:5.10.0"
@@ -3303,7 +3303,7 @@ __metadata:
     d3-graphviz: "npm:5.6.0"
     d3-selection: "npm:3.0.0"
     deepmerge: "npm:4.3.1"
-    diff: "npm:8.0.4"
+    diff: "npm:9.0.0"
     dom-serializer: "npm:2.0.0"
     domhandler: "npm:5.0.3"
     dompurify: "npm:3.4.14"
@@ -10484,10 +10484,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"diff@npm:8.0.4":
-  version: 8.0.4
-  resolution: "diff@npm:8.0.4"
-  checksum: 10c0/7ee5d03926db4039be7252ac3b0abaae1bd122a2ca971e5ca7270e444e36ff83dd906fad1a719740ca347e97ed5dc8f458a76a8391dbcd7aff363bdafb348a00
+"diff@npm:9.0.0":
+  version: 9.0.0
+  resolution: "diff@npm:9.0.0"
+  checksum: 10c0/a971cc88f66071a33bd3942db2f51b57d484e9856265ae45cf44fb28ab2fde91f132d9c26d8be0fb6082d2be94d29e1295c1adb251b7461935d6a2dd304cd161
   languageName: node
   linkType: hard
 
