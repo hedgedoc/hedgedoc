@@ -3354,7 +3354,7 @@ __metadata:
     markdown-it-abbr: "npm:2.0.0"
     markdown-it-anchor: "npm:9.2.1"
     markdown-it-container: "npm:4.0.0"
-    markdown-it-deflist: "npm:3.0.1"
+    markdown-it-deflist: "npm:4.0.0"
     markdown-it-emoji: "npm:3.1.0"
     markdown-it-footnote: "npm:4.0.0"
     markdown-it-ins: "npm:4.0.0"
@@ -14680,10 +14680,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-it-deflist@npm:3.0.1":
-  version: 3.0.1
-  resolution: "markdown-it-deflist@npm:3.0.1"
-  checksum: 10c0/38144a343834bc511fe20400b25ea86f2ea6d3168ac8816a2ab830b051a5e5aebe01bb580e006ad0d64fef3121371f9142220735a603d2358c2caffda45db2be
+"markdown-it-deflist@npm:4.0.0":
+  version: 4.0.0
+  resolution: "markdown-it-deflist@npm:4.0.0"
+  checksum: 10c0/c8da1dd3d90c84bfef3b1cfb3a036854d1ff5253c674f2b26c09cf04022360629f8c763eda66a873e93d49abf82a679a936ec1418767ef4e697c327e7264cacf
   languageName: node
   linkType: hard
 
