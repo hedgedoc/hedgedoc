@@ -3136,7 +3136,7 @@ __metadata:
     "@nestjs/config": "npm:3.3.0"
     "@nestjs/core": "npm:10.4.22"
     "@nestjs/event-emitter": "npm:2.1.1"
-    "@nestjs/platform-fastify": "npm:11.2.1"
+    "@nestjs/platform-fastify": "npm:11.2.3"
     "@nestjs/platform-ws": "npm:10.4.22"
     "@nestjs/schedule": "npm:4.1.2"
     "@nestjs/schematics": "npm:10.2.3"
@@ -4867,9 +4867,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/platform-fastify@npm:11.2.1":
-  version: 11.2.1
-  resolution: "@nestjs/platform-fastify@npm:11.2.1"
+"@nestjs/platform-fastify@npm:11.2.3":
+  version: 11.2.3
+  resolution: "@nestjs/platform-fastify@npm:11.2.3"
   dependencies:
     "@fastify/cors": "npm:11.3.0"
     "@fastify/formbody": "npm:8.0.2"
@@ -4891,7 +4891,7 @@ __metadata:
       optional: true
     "@fastify/view":
       optional: true
-  checksum: 10c0/2c58411b38d231c2fb48648c239a5834b3ad550a1e9a7aec0f05f8134369d83a220388db681b84ec988c9ea173111f32edd5212ceac8fa88e39b23d328bf8717
+  checksum: 10c0/de445d2565ebf46437eb0a75f68af18381d542914c1ea43e713c99114383f121d169bdf85daea785db52d81da0ee182055be507781e55f37fd7c420fe44997cf
   languageName: node
   linkType: hard
 
