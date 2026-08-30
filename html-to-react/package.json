@@ -63,7 +63,7 @@
   "dependencies": {
     "domelementtype": "3.0.0",
     "domhandler": "6.0.1",
-    "htmlparser2": "9.1.0"
+    "htmlparser2": "12.0.0"
   },
   "peerDependencies": {
     "react": ">=16.0"
