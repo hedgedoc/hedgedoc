@@ -61,7 +61,7 @@
     "luxon": "3.7.2",
     "markdown-it": "13.0.2",
     "minio": "8.0.7",
-    "mysql2": "3.23.4",
+    "mysql2": "3.24.2",
     "nest-knexjs": "0.0.34",
     "nestjs-zod": "4.3.1",
     "openid-client": "5.7.1",
