@@ -3381,7 +3381,7 @@ __metadata:
     "@jest/types": "npm:29.6.3"
     "@types/react": "npm:18.3.27"
     "@types/react-dom": "npm:18.3.7"
-    domelementtype: "npm:2.3.0"
+    domelementtype: "npm:3.0.0"
     domhandler: "npm:5.0.3"
     htmlparser2: "npm:9.1.0"
     jest: "npm:29.7.0"
@@ -10533,7 +10533,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"domelementtype@npm:2.3.0, domelementtype@npm:^2.3.0":
+"domelementtype@npm:3.0.0":
+  version: 3.0.0
+  resolution: "domelementtype@npm:3.0.0"
+  checksum: 10c0/26e8ef992769c4f9bce941eb0cff7ce2ba3f1b3bf77710bb4b029055030625892e83da326cc36b1e444cf3bfdea7d1954791ee2227746387465da9929d16d954
+  languageName: node
+  linkType: hard
+
+"domelementtype@npm:^2.3.0":
   version: 2.3.0
   resolution: "domelementtype@npm:2.3.0"
   checksum: 10c0/686f5a9ef0fff078c1412c05db73a0dce096190036f33e400a07e2a4518e9f56b1e324f5c576a0a747ef0e75b5d985c040b0d51945ce780c0dd3c625a18cd8c9
