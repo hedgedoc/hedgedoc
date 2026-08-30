@@ -1940,7 +1940,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.26.9, @babel/runtime@npm:^7.27.6":
+"@babel/runtime@npm:^7.27.6":
   version: 7.28.4
   resolution: "@babel/runtime@npm:7.28.4"
   checksum: 10c0/792ce7af9750fb9b93879cc9d1db175701c4689da890e6ced242ea0207c9da411ccf16dc04e689cc01158b28d7898c40d75598f4559109f761c12ce01e959bf7
@@ -3269,7 +3269,7 @@ __metadata:
     "@next/bundle-analyzer": "npm:14.2.35"
     "@orama/orama": "npm:3.1.18"
     "@react-hook/resize-observer": "npm:2.0.2"
-    "@redux-devtools/core": "npm:4.1.1"
+    "@redux-devtools/core": "npm:5.0.0"
     "@reduxjs/toolkit": "npm:2.12.0"
     "@svgr/webpack": "npm:8.1.0"
     "@testing-library/cypress": "npm:10.1.3"
@@ -5824,29 +5824,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redux-devtools/core@npm:4.1.1":
-  version: 4.1.1
-  resolution: "@redux-devtools/core@npm:4.1.1"
+"@redux-devtools/core@npm:5.0.0":
+  version: 5.0.0
+  resolution: "@redux-devtools/core@npm:5.0.0"
   dependencies:
-    "@babel/runtime": "npm:^7.26.9"
-    "@redux-devtools/instrument": "npm:^2.2.0"
+    "@redux-devtools/instrument": "npm:^3.0.0"
   peerDependencies:
     react: ^16.8.4 || ^17.0.0 || ^18.0.0 || ^19.0.0
     react-redux: ^7.0.0 || ^8.0.0 || ^9.0.0
     redux: ^3.5.2 || ^4.0.0 || ^5.0.0
-  checksum: 10c0/02a436c3c3f46a29e03f12b2659ed48c3952b8ee984fb997401b0fdf84e3df12f65b6fe73679a4d45efa12eff8e202460da1d68e981502514507c0b5abae4676
+  checksum: 10c0/7acb33403322f0add4b7fcdd4ac3fc0cbcf0d3d1311bc31bd990b97b03bcc81a375c3acadeac5483c034572b53386ffb76f05e1a9207853f7f1d5940b68cef4e
   languageName: node
   linkType: hard
 
-"@redux-devtools/instrument@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "@redux-devtools/instrument@npm:2.2.0"
-  dependencies:
-    "@babel/runtime": "npm:^7.23.2"
-    lodash: "npm:^4.17.21"
+"@redux-devtools/instrument@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@redux-devtools/instrument@npm:3.0.0"
   peerDependencies:
     redux: ^3.4.0 || ^4.0.0 || ^5.0.0
-  checksum: 10c0/266cd15f1ef144bbb4a2ea472c096d2a4fa72341c4c892827d633a3c85b62d1240a35aaeab71a29020f1da4da0ab2f778c176fb30c35546f6a5020a26ba1c56a
+  checksum: 10c0/528a92a72332d39ea07d77380ea67f7e3f66bd866e153c70efb9e340265961974bf6e0f3f437758f1c71f46b99c750dd1b1f3648dba751e74e56d0e317b06053
   languageName: node
   linkType: hard
 
