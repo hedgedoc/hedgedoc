@@ -66,7 +66,6 @@
     "nestjs-zod": "4.3.1",
     "openid-client": "5.7.1",
     "pg": "8.23.0",
-    "raw-body": "3.0.2",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2",
     "uuid": "11.1.1",
