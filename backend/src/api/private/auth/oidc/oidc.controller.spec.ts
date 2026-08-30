@@ -115,4 +115,36 @@ describe('OidcController', () => {
     });
     expectSessionIsCleared();
   });
+
+  it('redirects callback errors when no oidc session data exists yet', async () => {
+    const noOidcRequest = Mock.of<RequestWithSession>({
+      headers: {
+        'sec-fetch-dest': 'document',
+        'sec-fetch-mode': 'navigate',
+      },
+      session: {
+        csrfToken: null,
+        loginAuthProviderIdentifier: null,
+        loginAuthProviderType: null,
+        pendingUser: null,
+        save: saveSession,
+        userId: null,
+      } as unknown as RequestWithSession['session'],
+    });
+    jest
+      .spyOn(oidcService, 'extractUserInfoFromCallback')
+      .mockRejectedValue(new oidcErrors.RPError({ message: 'state mismatch' }));
+
+    await expect(controller.callback('test', noOidcRequest)).resolves.toEqual({
+      url: '/login?error=invalid-response',
+    });
+    expect(noOidcRequest.session.pendingUser).toBeNull();
+    expect(noOidcRequest.session.oidc).toEqual({
+      idToken: null,
+      sid: null,
+      loginCode: null,
+      loginState: null,
+    });
+    expect(saveSession).toHaveBeenCalledTimes(1);
+  });
 });
