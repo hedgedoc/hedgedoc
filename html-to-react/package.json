@@ -15,7 +15,7 @@
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "build": "rm -rf dist && tsc --project tsconfig.json",
-    "prepublish": "yarn lint && yarn build && yarn test",
+    "prepublish": "pnpm run lint && pnpm run build && pnpm run test",
     "format": "../node_modules/.bin/oxfmt --check src",
     "format:fix": "../node_modules/.bin/oxfmt src",
     "lint": "../node_modules/.bin/oxlint src",
@@ -75,6 +75,5 @@
   },
   "resolutions": {
     "@types/react": "18.3.27"
-  },
-  "packageManager": "yarn@4.18.0"
+  }
 }
