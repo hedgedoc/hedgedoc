@@ -43,6 +43,9 @@ importers:
       turbo:
         specifier: 2.10.12
         version: 2.10.12
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
 
   backend:
     dependencies:
