@@ -3187,7 +3187,7 @@ __metadata:
     diff: "npm:9.0.0"
     htmlparser2: "npm:12.0.0"
     jest: "npm:30.5.0"
-    jose: "npm:5.10.0"
+    jose: "npm:6.2.10"
     keyv: "npm:5.6.0"
     knex: "npm:3.1.0"
     knex-mock-client: "npm:3.0.2"
@@ -13767,10 +13767,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jose@npm:5.10.0":
-  version: 5.10.0
-  resolution: "jose@npm:5.10.0"
-  checksum: 10c0/e20d9fc58d7e402f2e5f04e824b8897d5579aae60e64cb88ebdea1395311c24537bf4892f7de413fab1acf11e922797fb1b42269bc8fc65089a3749265ccb7b0
+"jose@npm:6.2.10":
+  version: 6.2.10
+  resolution: "jose@npm:6.2.10"
+  checksum: 10c0/799fd8d3d92fe748ebe1f57dbd3dfd917d2e61d9fb39912c72cc674ae61d69414b7cc0ce773df8a0160e849926fc31853aec9caab88c481563d5a8ab6558e107
   languageName: node
   linkType: hard
 
