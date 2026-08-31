@@ -7,8 +7,8 @@
   "license": "AGPL-3.0",
   "scripts": {
     "build": "rm -rf dist && tsc --project tsconfig.json",
-    "test": "jest",
-    "test:ci": "jest --ci",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:ci": "NODE_OPTIONS=--experimental-vm-modules jest --ci",
     "prepublish": "yarn lint && yarn build && yarn test",
     "format": "../node_modules/.bin/oxfmt --check src",
     "format:fix": "../node_modules/.bin/oxfmt src",

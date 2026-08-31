@@ -124,7 +124,7 @@
       ]
     },
     "transformIgnorePatterns": [
-      "/node_modules/"
+      "/node_modules/(?!domhandler|domelementtype)/"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
