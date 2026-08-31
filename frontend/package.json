@@ -113,8 +113,8 @@
     "twemoji-colr-font": "15.0.3",
     "uuid": "11.1.1",
     "vega": "5.30.0",
-    "vega-embed": "6.29.0",
-    "vega-lite": "5.23.0",
+    "vega-embed": "7.1.0",
+    "vega-lite": "6.4.3",
     "words-count": "2.0.2",
     "ws": "8.21.3",
     "yjs": "13.6.32"
