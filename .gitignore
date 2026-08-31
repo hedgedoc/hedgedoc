@@ -30,14 +30,8 @@ dist/
 frontend/cypress/downloads
 frontend/cypress/screenshots
 
-# Yarn 2 without zero-installs
-.yarn/*
-!.yarn/patches
-!.yarn/releases
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions
-.pnp.*
+# pnpm
+.pnpm-store/
 
 # Rathole proxy configuration
 rathole.toml
