@@ -9,7 +9,7 @@
     "build": "rm -rf dist && tsc --project tsconfig.json",
     "test": "jest",
     "test:ci": "jest --ci",
-    "prepublish": "yarn lint && yarn build && yarn test",
+    "prepublish": "pnpm run lint && pnpm run build && pnpm run test",
     "format": "../node_modules/.bin/oxfmt --check src",
     "format:fix": "../node_modules/.bin/oxfmt src",
     "lint": "../node_modules/.bin/oxlint src",
@@ -58,6 +58,5 @@
     "jest": "30.4.2",
     "ts-jest": "29.4.12",
     "typescript": "npm:@typescript/typescript6@6.0.2"
-  },
-  "packageManager": "yarn@4.18.0"
+  }
 }

@@ -132,6 +132,5 @@
       "default",
       "github-actions"
     ]
-  },
-  "packageManager": "yarn@4.18.0"
+  }
 }

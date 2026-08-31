@@ -7,7 +7,7 @@
     "build": "dotenv -v NODE_ENV=production -c production -- ./build.sh",
     "build:mock": "dotenv -v NEXT_PUBLIC_USE_MOCK_API=true -- ./build.sh",
     "build:test": "dotenv -v NODE_ENV=test -v NEXT_PUBLIC_TEST_MODE=true -c test -- ./build.sh",
-    "analyze": "cross-env ANALYZE=true yarn build --profile",
+    "analyze": "cross-env ANALYZE=true pnpm run build --profile",
     "format": "../node_modules/.bin/oxfmt --check src cypress",
     "format:fix": "../node_modules/.bin/oxfmt src cypress",
     "lint": "../node_modules/.bin/oxlint src",
@@ -153,6 +153,5 @@
     "ts-node": "11.0.0-beta.1",
     "typescript": "5.9.3",
     "user-agent-data-types": "0.4.3"
-  },
-  "packageManager": "yarn@4.18.0"
+  }
 }
