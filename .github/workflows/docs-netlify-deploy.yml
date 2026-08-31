@@ -37,7 +37,7 @@ jobs:
           node-version: ${{ env.NODEJS_VERSION }}
 
       - name: Set up Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@v7.0.0
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
