@@ -3394,18 +3394,19 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hedgedoc/html-to-react@workspace:html-to-react"
   dependencies:
-    "@jest/globals": "npm:29.7.0"
+    "@jest/globals": "npm:30.5.0"
     "@jest/types": "npm:29.6.3"
     "@types/react": "npm:18.3.27"
     "@types/react-dom": "npm:18.3.7"
+    "@typescript/native": "npm:typescript@7.0.2"
     domelementtype: "npm:3.0.0"
     domhandler: "npm:6.0.1"
     htmlparser2: "npm:12.0.0"
-    jest: "npm:29.7.0"
+    jest: "npm:30.5.0"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
     ts-jest: "npm:29.4.12"
-    typescript: "npm:5.9.3"
+    typescript: "npm:@typescript/typescript6@6.0.2"
   peerDependencies:
     react: ">=16.0"
   languageName: unknown
@@ -3742,18 +3743,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/globals@npm:29.7.0, @jest/globals@npm:^29.7.0":
-  version: 29.7.0
-  resolution: "@jest/globals@npm:29.7.0"
-  dependencies:
-    "@jest/environment": "npm:^29.7.0"
-    "@jest/expect": "npm:^29.7.0"
-    "@jest/types": "npm:^29.6.3"
-    jest-mock: "npm:^29.7.0"
-  checksum: 10c0/a385c99396878fe6e4460c43bd7bb0a5cc52befb462cc6e7f2a3810f9e7bcce7cdeb51908fd530391ee452dc856c98baa2c5f5fa8a5b30b071d31ef7f6955cea
-  languageName: node
-  linkType: hard
-
 "@jest/globals@npm:30.5.0":
   version: 30.5.0
   resolution: "@jest/globals@npm:30.5.0"
@@ -3763,6 +3752,18 @@ __metadata:
     "@jest/types": "npm:30.5.0"
     jest-mock: "npm:30.5.0"
   checksum: 10c0/adaf26325425d95f6b1dbd9dd9244fb5a0362dbfa4d7db21bce2787da007a2bef22229d0035ad62f8c677e4a93ec8599124ec5bd48c17085eabc732d47ae3e5b
+  languageName: node
+  linkType: hard
+
+"@jest/globals@npm:^29.7.0":
+  version: 29.7.0
+  resolution: "@jest/globals@npm:29.7.0"
+  dependencies:
+    "@jest/environment": "npm:^29.7.0"
+    "@jest/expect": "npm:^29.7.0"
+    "@jest/types": "npm:^29.6.3"
+    jest-mock: "npm:^29.7.0"
+  checksum: 10c0/a385c99396878fe6e4460c43bd7bb0a5cc52befb462cc6e7f2a3810f9e7bcce7cdeb51908fd530391ee452dc856c98baa2c5f5fa8a5b30b071d31ef7f6955cea
   languageName: node
   linkType: hard
 
