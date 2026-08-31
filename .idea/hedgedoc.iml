@@ -3,7 +3,7 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.turbo" />
-      <excludeFolder url="file://$MODULE_DIR$/.yarn" />
+      <excludeFolder url="file://$MODULE_DIR$/.pnpm-store" />
       <excludeFolder url="file://$MODULE_DIR$/backend/.turbo" />
       <excludeFolder url="file://$MODULE_DIR$/backend/coverage" />
       <excludeFolder url="file://$MODULE_DIR$/backend/coverage-e2e" />
