@@ -3382,8 +3382,8 @@ __metadata:
     user-agent-data-types: "npm:0.4.3"
     uuid: "npm:11.1.1"
     vega: "npm:5.30.0"
-    vega-embed: "npm:6.29.0"
-    vega-lite: "npm:5.23.0"
+    vega-embed: "npm:7.1.0"
+    vega-lite: "npm:6.4.3"
     words-count: "npm:2.0.2"
     ws: "npm:8.21.3"
     yjs: "npm:13.6.32"
@@ -5811,13 +5811,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/rollup-linux-x64-gnu@npm:^4.24.4":
-  version: 4.25.0
-  resolution: "@rollup/rollup-linux-x64-gnu@npm:4.25.0"
-  conditions: os=linux & cpu=x64 & libc=glibc
-  languageName: node
-  linkType: hard
-
 "@scarf/scarf@npm:=1.4.0":
   version: 1.4.0
   resolution: "@scarf/scarf@npm:1.4.0"
@@ -6775,6 +6768,13 @@ __metadata:
   version: 1.0.5
   resolution: "@types/estree@npm:1.0.5"
   checksum: 10c0/b3b0e334288ddb407c7b3357ca67dbee75ee22db242ca7c56fe27db4e1a31989cb8af48a84dd401deb787fe10cc6b2ab1ee82dc4783be87ededbe3d53c79c70d
+  languageName: node
+  linkType: hard
+
+"@types/estree@npm:^1.0.8":
+  version: 1.0.9
+  resolution: "@types/estree@npm:1.0.9"
+  checksum: 10c0/3ad3286ca2988cd550dafb8f2ad599c8474868e954fa601a36655bdfefd8039f7c714b8c1c7f2ae219ffbd58bd4660e66fa7479a0120fc02d4777057d4865387
   languageName: node
   linkType: hard
 
@@ -8040,6 +8040,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ansi-styles@npm:^6.2.1":
+  version: 6.2.3
+  resolution: "ansi-styles@npm:6.2.3"
+  checksum: 10c0/23b8a4ce14e18fb854693b95351e286b771d23d8844057ed2e7d083cd3e708376c3323707ec6a24365f7d7eda3ca00327fe04092e29e551499ec4c8b7bfac868
+  languageName: node
+  linkType: hard
+
 "anymatch@npm:^3.0.3, anymatch@npm:^3.1.3, anymatch@npm:~3.1.2":
   version: 3.1.3
   resolution: "anymatch@npm:3.1.3"
@@ -9061,6 +9068,17 @@ __metadata:
     strip-ansi: "npm:^6.0.1"
     wrap-ansi: "npm:^7.0.0"
   checksum: 10c0/4bda0f09c340cbb6dfdc1ed508b3ca080f12992c18d68c6be4d9cf51756033d5266e61ec57529e610dacbf4da1c634423b0c1b11037709cc6b09045cbd815df5
+  languageName: node
+  linkType: hard
+
+"cliui@npm:^9.0.1":
+  version: 9.0.1
+  resolution: "cliui@npm:9.0.1"
+  dependencies:
+    string-width: "npm:^7.2.0"
+    strip-ansi: "npm:^7.1.0"
+    wrap-ansi: "npm:^9.0.0"
+  checksum: 10c0/13441832e9efe7c7a76bd2b8e683555c478d461a9f249dc5db9b17fe8d4b47fa9277b503914b90bd00e4a151abb6b9b02b2288972ffe2e5e3ca40bcb1c2330d3
   languageName: node
   linkType: hard
 
@@ -10600,6 +10618,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"emoji-regex@npm:^10.3.0":
+  version: 10.6.0
+  resolution: "emoji-regex@npm:10.6.0"
+  checksum: 10c0/1e4aa097bb007301c3b4b1913879ae27327fdc48e93eeefefe3b87e495eb33c5af155300be951b4349ff6ac084f4403dc9eff970acba7c1c572d89396a9a32d7
+  languageName: node
+  linkType: hard
+
 "emoji-regex@npm:^8.0.0":
   version: 8.0.0
   resolution: "emoji-regex@npm:8.0.0"
@@ -11777,7 +11802,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-east-asian-width@npm:^1.5.0":
+"get-east-asian-width@npm:^1.0.0, get-east-asian-width@npm:^1.5.0":
   version: 1.6.0
   resolution: "get-east-asian-width@npm:1.6.0"
   checksum: 10c0/7e72e9550fd49ca5b246f9af6bb2afc129c96412845ff6556b3274fd44817a381702ca17028efe9866b261a3d44254cbf21e6c90cf05b4b61675630af776d431
@@ -17585,15 +17610,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.6.3":
-  version: 7.6.3
-  resolution: "semver@npm:7.6.3"
-  bin:
-    semver: bin/semver.js
-  checksum: 10c0/88f33e148b210c153873cb08cfe1e281d518aaa9a666d4d148add6560db5cd3c582f3a08ccb91f38d5f379ead256da9931234ed122057f40bb5766e65e58adaf
-  languageName: node
-  linkType: hard
-
 "semver@npm:^7.7.2, semver@npm:^7.8.5":
   version: 7.8.5
   resolution: "semver@npm:7.8.5"
@@ -18059,6 +18075,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"string-width@npm:^7.0.0, string-width@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "string-width@npm:7.2.0"
+  dependencies:
+    emoji-regex: "npm:^10.3.0"
+    get-east-asian-width: "npm:^1.0.0"
+    strip-ansi: "npm:^7.1.0"
+  checksum: 10c0/eb0430dd43f3199c7a46dcbf7a0b34539c76fe3aa62763d0b0655acdcbdf360b3f66f3d58ca25ba0205f42ea3491fa00f09426d3b7d3040e506878fc7664c9b9
+  languageName: node
+  linkType: hard
+
 "string_decoder@npm:^1.1.1":
   version: 1.3.0
   resolution: "string_decoder@npm:1.3.0"
@@ -18086,7 +18113,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strip-ansi@npm:^7.1.2":
+"strip-ansi@npm:^7.1.0, strip-ansi@npm:^7.1.2":
   version: 7.2.0
   resolution: "strip-ansi@npm:7.2.0"
   dependencies:
@@ -19375,22 +19402,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-embed@npm:6.29.0":
-  version: 6.29.0
-  resolution: "vega-embed@npm:6.29.0"
+"vega-embed@npm:7.1.0":
+  version: 7.1.0
+  resolution: "vega-embed@npm:7.1.0"
   dependencies:
     fast-json-patch: "npm:^3.1.1"
     json-stringify-pretty-compact: "npm:^4.0.0"
-    semver: "npm:^7.6.3"
+    semver: "npm:^7.7.2"
     tslib: "npm:^2.8.1"
-    vega-interpreter: "npm:^1.0.5"
-    vega-schema-url-parser: "npm:^2.2.0"
-    vega-themes: "npm:^2.15.0"
-    vega-tooltip: "npm:^0.35.2"
+    vega-interpreter: "npm:^2.0.0"
+    vega-schema-url-parser: "npm:^3.0.2"
+    vega-themes: "npm:3.0.0"
+    vega-tooltip: "npm:1.0.0"
   peerDependencies:
-    vega: ^5.21.0
+    vega: "*"
     vega-lite: "*"
-  checksum: 10c0/298285cd45647c9958d529fbd0450040b6cdec5e204b2e940807b890046aa4f7b52706f662d980428b6347265cb6909e2b47d4e12e8f59e06b358de581dbbb10
+  checksum: 10c0/d51d26ca7e457693b4e609995e9cb4d28c4df72865baa23cdd5fe80a7a981d8234ac6307c4c312d4166d58ca83ea7e5a520a19f352806d9a79bf06fbadd7543e
   languageName: node
   linkType: hard
 
@@ -19414,6 +19441,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vega-event-selector@npm:~4.0.0":
+  version: 4.0.0
+  resolution: "vega-event-selector@npm:4.0.0"
+  checksum: 10c0/80506c19d0ed9e4e267dd2631e1db062faa87f5983b6d236957988e66c63d2cdff06ac727fcc7f3adb4491f03c2d7049cd471da687592ce3c1f31a8fea285cbb
+  languageName: node
+  linkType: hard
+
 "vega-expression@npm:^5.0.1":
   version: 5.1.0
   resolution: "vega-expression@npm:5.1.0"
@@ -19431,6 +19465,16 @@ __metadata:
     "@types/estree": "npm:^1.0.0"
     vega-util: "npm:^1.17.2"
   checksum: 10c0/b7db95a916b947850baf8b3ab993b422eb1005cf566415478927f3f2c88272cf67909a18d5d95f61f59d37cfd73c979cafa8ab7ee1749c675d48f932b2d3df32
+  languageName: node
+  linkType: hard
+
+"vega-expression@npm:~6.1.0":
+  version: 6.1.0
+  resolution: "vega-expression@npm:6.1.0"
+  dependencies:
+    "@types/estree": "npm:^1.0.8"
+    vega-util: "npm:^2.1.0"
+  checksum: 10c0/985ffcbc884a460c4d825de8b68c0bab167a6c7a42ac7b2642a29c04420ab239e78d8ec6527948db75c40e0700890ce270479e1b00fab919424a4b4ab915225a
   languageName: node
   linkType: hard
 
@@ -19504,10 +19548,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-interpreter@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "vega-interpreter@npm:1.0.5"
-  checksum: 10c0/a14138029fbd3df81e21e2bb668008cf4f0b4d573202484447cd9a80194c5a947248a0d22df75525ffadac9555cf577ad219a6b707f22ce933584bbb7985e7ad
+"vega-interpreter@npm:^2.0.0":
+  version: 2.3.2
+  resolution: "vega-interpreter@npm:2.3.2"
+  dependencies:
+    vega-util: "npm:^2.1.3"
+  checksum: 10c0/7783e36d71fa2dfd190b52282cffe2505f9f32ecbad0fb4b5faba71bea921b06357a92b48a72184880b45abe3cddd1108d8e2bdd12c66a5da9321446f8357285
   languageName: node
   linkType: hard
 
@@ -19523,24 +19569,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-lite@npm:5.23.0":
-  version: 5.23.0
-  resolution: "vega-lite@npm:5.23.0"
+"vega-lite@npm:6.4.3":
+  version: 6.4.3
+  resolution: "vega-lite@npm:6.4.3"
   dependencies:
     json-stringify-pretty-compact: "npm:~4.0.0"
     tslib: "npm:~2.8.1"
-    vega-event-selector: "npm:~3.0.1"
-    vega-expression: "npm:~5.1.1"
-    vega-util: "npm:~1.17.2"
-    yargs: "npm:~17.7.2"
+    vega-event-selector: "npm:~4.0.0"
+    vega-expression: "npm:~6.1.0"
+    vega-util: "npm:~2.1.0"
+    yargs: "npm:~18.0.0"
   peerDependencies:
-    vega: ^5.24.0
+    vega: ^6.0.0
   bin:
     vl2pdf: bin/vl2pdf
     vl2png: bin/vl2png
     vl2svg: bin/vl2svg
     vl2vg: bin/vl2vg
-  checksum: 10c0/8188136d5266d71b05672a18a3553ab79cdaf34b541b104a9985fd783cefcabcd8a5c0b35ac6f73072397ed6c058ee6559c43ada072f0bd6db97e7e743d1955b
+  checksum: 10c0/282cf116f58b5531bf2182b1cdbeae19b798bfd2d47ba53bbe0e9cff46ee5c5b5eed3f7fd4afb80d84d72257eb3ab7d801062c3985ba736e1db5681345db877e
   languageName: node
   linkType: hard
 
@@ -19631,10 +19677,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-schema-url-parser@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "vega-schema-url-parser@npm:2.2.0"
-  checksum: 10c0/286ca81403836ebfa9ec4aaab06195128507c0800e942ab669fab8209ad1b8ca2a6729e2a7e853a7bcbcc598a17806fb4c43e0266640af2e3b89bb7da0a6e2b4
+"vega-schema-url-parser@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "vega-schema-url-parser@npm:3.0.2"
+  checksum: 10c0/d3b3bc3225e00f220fb7f7350451926572202a804c141d4f94e608ec7186acf8d4e7f578d010c0cecfdecd16f2fc42c5aa0dbdf5dec030dd19509b7c4e0d4dbf
   languageName: node
   linkType: hard
 
@@ -19658,13 +19704,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-themes@npm:^2.15.0":
-  version: 2.15.0
-  resolution: "vega-themes@npm:2.15.0"
+"vega-themes@npm:3.0.0":
+  version: 3.0.0
+  resolution: "vega-themes@npm:3.0.0"
   peerDependencies:
     vega: "*"
     vega-lite: "*"
-  checksum: 10c0/e310a421afe95ad3e64949bc7f26fdb97182881a1de6a1e73940c49ac6ac2c344ff67c32c534172e1b94b48c114656ebb0b8f94dbd593f6fac71848e0b9382eb
+  checksum: 10c0/9592bb044b33abf54e1d56ff3d1d507f87d9f90b316bfc0aded3bcac9e0913dd5292c558aa7fa2a7aa01826fc9ee96e4c98f1a6220b7e713b59089a76d0781e3
   languageName: node
   linkType: hard
 
@@ -19679,16 +19725,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-tooltip@npm:^0.35.2":
-  version: 0.35.2
-  resolution: "vega-tooltip@npm:0.35.2"
+"vega-tooltip@npm:1.0.0":
+  version: 1.0.0
+  resolution: "vega-tooltip@npm:1.0.0"
   dependencies:
-    "@rollup/rollup-linux-x64-gnu": "npm:^4.24.4"
-    vega-util: "npm:^1.17.2"
-  dependenciesMeta:
-    "@rollup/rollup-linux-x64-gnu":
-      optional: true
-  checksum: 10c0/9ebd70e687f604dad23d99268df0ef30aadc942237a9ba20f1996252fdfc0a56ce48882ccb80deaf26c62445176bce81ae2caacf051f1cbe42c0de3d3030a10b
+    vega-util: "npm:^2.0.0"
+  checksum: 10c0/f96c908f3981d35257c2577e68b2ed2989b7a075cb3375ff003673035f9f67cbc1bd18fe7a788aca3c51ff65534cd2c3355efff227454d29cd1e84ecca361948
   languageName: node
   linkType: hard
 
@@ -19721,6 +19763,13 @@ __metadata:
   version: 1.17.2
   resolution: "vega-util@npm:1.17.2"
   checksum: 10c0/a1ebf62234dbb0d0ecc5d01b9016f6ed9f40e77bac93ea0213dd24299fe0e2c80d33418f4c4c703532c380eb4f16d0f4df7028ec9249f3f0741ec8271c190b2e
+  languageName: node
+  linkType: hard
+
+"vega-util@npm:^2.0.0, vega-util@npm:^2.1.0, vega-util@npm:^2.1.3, vega-util@npm:~2.1.0":
+  version: 2.1.3
+  resolution: "vega-util@npm:2.1.3"
+  checksum: 10c0/9c89f20439c63252f0bd5af3a2019c7c00fedf8f9a1d72e4bca36114ce5616c07f661009187244f351b2096df2cbf78c21e11709c469a7c632811e0a807f007c
   languageName: node
   linkType: hard
 
@@ -20091,6 +20140,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"wrap-ansi@npm:^9.0.0":
+  version: 9.0.2
+  resolution: "wrap-ansi@npm:9.0.2"
+  dependencies:
+    ansi-styles: "npm:^6.2.1"
+    string-width: "npm:^7.0.0"
+    strip-ansi: "npm:^7.1.0"
+  checksum: 10c0/3305839b9a0d6fb930cb63a52f34d3936013d8b0682ff3ec133c9826512620f213800ffa19ea22904876d5b7e9a3c1f40682f03597d986a4ca881fa7b033688c
+  languageName: node
+  linkType: hard
+
 "wrappy@npm:1":
   version: 1.0.2
   resolution: "wrappy@npm:1.0.2"
@@ -20236,7 +20296,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:17.7.2, yargs@npm:^17.3.1, yargs@npm:~17.7.2":
+"yargs-parser@npm:^22.0.0":
+  version: 22.0.0
+  resolution: "yargs-parser@npm:22.0.0"
+  checksum: 10c0/cb7ef81759c4271cb1d96b9351dbbc9a9ce35d3e1122d2b739bf6c432603824fa02c67cc12dcef6ea80283379d63495686e8f41cc7b06c6576e792aba4d33e1c
+  languageName: node
+  linkType: hard
+
+"yargs@npm:17.7.2, yargs@npm:^17.3.1":
   version: 17.7.2
   resolution: "yargs@npm:17.7.2"
   dependencies:
@@ -20263,6 +20330,20 @@ __metadata:
     y18n: "npm:^5.0.5"
     yargs-parser: "npm:^21.1.1"
   checksum: 10c0/7a28572f7e785a57886e34fdbddb9b28756dec552e1453d5f6e7cdd00ad8721a4e8c4321d33683f5e61cacb36ad43258adbb48396b71ec4ed14abee0fc0d0c1f
+  languageName: node
+  linkType: hard
+
+"yargs@npm:~18.0.0":
+  version: 18.0.0
+  resolution: "yargs@npm:18.0.0"
+  dependencies:
+    cliui: "npm:^9.0.1"
+    escalade: "npm:^3.1.1"
+    get-caller-file: "npm:^2.0.5"
+    string-width: "npm:^7.2.0"
+    y18n: "npm:^5.0.5"
+    yargs-parser: "npm:^22.0.0"
+  checksum: 10c0/bf290e4723876ea9c638c786a5c42ac28e03c9ca2325e1424bf43b94e5876456292d3ed905b853ebbba6daf43ed29e772ac2a6b3c5fb1b16533245d6211778f3
   languageName: node
   linkType: hard
 
