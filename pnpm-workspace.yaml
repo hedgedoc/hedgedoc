@@ -44,7 +44,9 @@ patchedDependencies:
 allowBuilds:
   # Produce real build artefacts (native bindings, downloaded binaries).
   "@parcel/watcher": true
-  better-sqlite3: true
+  # Ships prebuilds for every platform (incl. linuxmusl-x64 for the Alpine
+  # images); building from source would need Python, which those images lack.
+  better-sqlite3: false
   cypress: true
   esbuild: true
   unrs-resolver: true
