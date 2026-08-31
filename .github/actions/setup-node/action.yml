@@ -13,11 +13,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # Must run before actions/setup-node, which needs pnpm on the PATH to
-    # locate the store for its cache. The version comes from the
-    # packageManager field in package.json.
+    # The pnpm version comes from the packageManager field in package.json.
+    # cache: true caches the pnpm store, keyed on the hash of pnpm-lock.yaml,
+    # and prunes it in the post step so it does not grow without bound.
     - name: Set up pnpm
       uses: pnpm/action-setup@v6.0.10
+      with:
+        cache: true
 
     - name: Get cypress version
       id: cypress-version
@@ -38,7 +40,8 @@ runs:
       uses: actions/setup-node@v7.0.0
       with:
         node-version: ${{ inputs.NODEJS_VERSION }}
-        cache: pnpm
+        # The pnpm store is cached by pnpm/action-setup above.
+        package-manager-cache: false
 
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
