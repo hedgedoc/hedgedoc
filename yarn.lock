@@ -2435,12 +2435,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/state@npm:6.7.1":
-  version: 6.7.1
-  resolution: "@codemirror/state@npm:6.7.1"
+"@codemirror/state@npm:6.7.2":
+  version: 6.7.2
+  resolution: "@codemirror/state@npm:6.7.2"
   dependencies:
     "@marijn/find-cluster-break": "npm:^1.0.0"
-  checksum: 10c0/2490b87759d1f4f27f4573a084414bf30bf9ed5dccaa75485334a2d132c039f2255e3bca564fb07c6760a16bf86cc29532475d9fb75cfdb0771b330fe71be4e7
+  checksum: 10c0/2033933f175c04fdea14c5daa0293c01f42ba05c16029b11f5926dc7e1d0a331639151b369f3dd768eba751b45c70b9a9a48cd10921de0ee96bd4121edf66713
   languageName: node
   linkType: hard
 
@@ -2456,15 +2456,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/view@npm:6.43.9":
-  version: 6.43.9
-  resolution: "@codemirror/view@npm:6.43.9"
+"@codemirror/view@npm:6.43.10":
+  version: 6.43.10
+  resolution: "@codemirror/view@npm:6.43.10"
   dependencies:
     "@codemirror/state": "npm:^6.7.0"
     crelt: "npm:^1.0.6"
     style-mod: "npm:^4.1.0"
     w3c-keyname: "npm:^2.2.4"
-  checksum: 10c0/c64b076f2739a9fa8b8c67e01091ddc8d7f653dd66954088fa5837ab30b59152efb959b359b7806662add8cd97011030e0eef8eb77ca71840acd5d824af00b8e
+  checksum: 10c0/03a53c16a1fe6c8cefcc4ae3e5a0ccc1f8533273df857ca67cd49b70dfc7c01f11b3db20edf7743fce7b264ff493a7da14c3ab46eb0edc89969eced14d046f93
   languageName: node
   linkType: hard
 
@@ -3274,9 +3274,9 @@ __metadata:
     "@codemirror/language": "npm:6.12.4"
     "@codemirror/language-data": "npm:6.5.2"
     "@codemirror/lint": "npm:6.9.7"
-    "@codemirror/state": "npm:6.7.1"
+    "@codemirror/state": "npm:6.7.2"
     "@codemirror/theme-one-dark": "npm:6.1.3"
-    "@codemirror/view": "npm:6.43.9"
+    "@codemirror/view": "npm:6.43.10"
     "@dicebear/core": "npm:9.4.3"
     "@dicebear/identicon": "npm:9.4.2"
     "@fontsource/source-sans-pro": "npm:5.3.0"
