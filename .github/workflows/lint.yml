@@ -33,7 +33,7 @@ jobs:
           NODEJS_VERSION: ${{ env.NODEJS_VERSION }}
 
       - name: Run Oxlint
-        run: yarn lint
+        run: pnpm run lint
         shell: bash
         env:
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -41,7 +41,7 @@ jobs:
           TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
       - name: Run Oxfmt
-        run: yarn format
+        run: pnpm run format
         shell: bash
         env:
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
