@@ -76,8 +76,5 @@
   ],
   "engines": {
     "node": ">=12"
-  },
-  "resolutions": {
-    "@types/react": "18.3.27"
   }
 }
