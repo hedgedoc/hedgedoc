@@ -27,24 +27,24 @@ Please see also our [privacy policy][privacy].
 
 Unit testing is done via jest.
 
-1. Run `yarn test`
+1. Run `pnpm test`
 
 ### End2End
 
 We use [cypress][cypress] for e2e tests.
 
-1. Start the frontend with `yarn start:dev:test` (or use a test build using `yarn build:test`
-   which you can start using `yarn start`). The usage of `:test` is mandatory!
-2. Run `yarn test:e2e:open` to open the cypress test loader
+1. Start the frontend with `pnpm start:dev:test` (or use a test build using `pnpm build:test`
+   which you can start using `pnpm start`). The usage of `:test` is mandatory!
+2. Run `pnpm test:e2e:open` to open the cypress test loader
 3. Choose your browser and start a test suite
 
-To run all tests in a headless browser use `yarn test:e2e`
+To run all tests in a headless browser use `pnpm test:e2e`
 
 ### Bundle analysis
 
 You can inspect the generated production-bundle files to look for optimization issues.
 
-1. run `yarn analyze`. This will overwrite any existing builds!
+1. run `pnpm analyze`. This will overwrite any existing builds!
 2. Open the generated `.next/server/analyze/server.html` in your favourite browser
 
 ## Enable Debug Logging in Production

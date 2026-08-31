@@ -13,15 +13,15 @@ All these plugins are (re)created in typescript.
 Everything is licensed under MIT
 
 ## Usage
-Install the lib using `yarn install @hedgedoc/markdown-it-plugins` or `npm i @hedgedoc/markdown-it-plugins`
+Install the lib using `pnpm add @hedgedoc/markdown-it-plugins`, `npm i @hedgedoc/markdown-it-plugins` or `yarn add @hedgedoc/markdown-it-plugins`
 
 ## Development
 If you want to contribute to this lib then:
 - Clone this repository
-- Install the dependencies using `yarn install`. Don't use `npm`!
+- Install the dependencies using `pnpm install`. Don't use `npm` or `yarn`!
 - Make your changes
-- Make sure that your changes are covered by tests. Use `yarn test` to run all tests
-- Make sure that your code follows the code style. Use `yarn lint` to check the style
+- Make sure that your changes are covered by tests. Use `pnpm test` to run all tests
+- Make sure that your code follows the code style. Use `pnpm lint` to check the style
 - Commit your changes (please use [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)) and create a pull request
 
 ## markdown-it-image-size
