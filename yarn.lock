@@ -3339,7 +3339,7 @@ __metadata:
     i18next-resources-to-backend: "npm:1.2.3"
     jest: "npm:30.5.0"
     jest-environment-jsdom: "npm:30.5.0"
-    katex: "npm:0.18.4"
+    katex: "npm:0.18.5"
     luxon: "npm:3.7.2"
     markdown-it: "npm:13.0.2"
     markdown-it-abbr: "npm:2.0.0"
@@ -9190,6 +9190,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:^15.0.0":
+  version: 15.0.0
+  resolution: "commander@npm:15.0.0"
+  checksum: 10c0/539229c171914ea1ccd45ee5f10d924289a12a684ea3a7a44147abe54003c35ed6de9ae4ad198d88c29fdf403dca0428451a388234e6dc01b6faa978fb207206
+  languageName: node
+  linkType: hard
+
 "commander@npm:^6.2.1":
   version: 6.2.1
   resolution: "commander@npm:6.2.1"
@@ -14027,14 +14034,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"katex@npm:0.18.4":
-  version: 0.18.4
-  resolution: "katex@npm:0.18.4"
+"katex@npm:0.18.5":
+  version: 0.18.5
+  resolution: "katex@npm:0.18.5"
   dependencies:
-    commander: "npm:^8.3.0"
+    commander: "npm:^15.0.0"
   bin:
     katex: cli.js
-  checksum: 10c0/a8ecf3079c1748c15856b25f4175a98b6fc5d8e7f567afe8dcf4f63673159036fd2c50527621ec338c6144ae8e18a0103ffd820e175165f6659881c9d9a711b9
+  checksum: 10c0/b0298f887ecf772dc849c176b3518afe22d40f37e5e4fccd9962c4799bee94f4e1cd7a831725123972b99242e02de8396a4a36be4bbf1fb5460775b3f5ef6218
   languageName: node
   linkType: hard
 
