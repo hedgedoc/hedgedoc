@@ -6,7 +6,7 @@
 import { AuthProviderType } from '@hedgedoc/commons';
 import { FieldNameIdentity, Identity, TableIdentity } from '@hedgedoc/database';
 import { Inject, Injectable } from '@nestjs/common';
-import { OptionsGraph, OptionsType, zxcvbnAsync, zxcvbnOptions } from '@zxcvbn-ts/core';
+import { OptionsGraph, OptionsType, ZxcvbnFactory } from '@zxcvbn-ts/core';
 import { adjacencyGraphs, dictionary as zxcvbnCommonDictionary } from '@zxcvbn-ts/language-common';
 import {
   dictionary as zxcvbnEnDictionary,
@@ -25,6 +25,8 @@ import { MIN_PASSWORD_LENGTH } from '@hedgedoc/commons';
 
 @Injectable()
 export class LocalService {
+  private zxcvbn: ZxcvbnFactory;
+
   constructor(
     private readonly logger: ConsoleLoggerService,
     private identityService: IdentityService,
@@ -44,7 +46,7 @@ export class LocalService {
       graphs: adjacencyGraphs as OptionsGraph,
       translations: zxcvbnEnTranslations,
     };
-    zxcvbnOptions.setOptions(options);
+    this.zxcvbn = new ZxcvbnFactory(options);
   }
 
   /**
@@ -133,7 +135,7 @@ export class LocalService {
     if (password.length < MIN_PASSWORD_LENGTH) {
       throw new PasswordTooWeakError();
     }
-    const result = await zxcvbnAsync(password);
+    const result = await this.zxcvbn.checkAsync(password);
     if (result.score < this.authConfig.local.minimalPasswordStrength) {
       throw new PasswordTooWeakError();
     }
