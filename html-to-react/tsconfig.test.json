@@ -1,4 +1,4 @@
 {
-  "extends" : "./tsconfig.esm.json",
-  "exclude": ["dist"]
+  "extends" : "./tsconfig.json",
+  "exclude": ["./dist"]
 }

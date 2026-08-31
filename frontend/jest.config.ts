@@ -16,7 +16,7 @@ const createJestConfig = nextJest({
 // Add any custom config to be passed to Jest
 const customJestConfig = {
   setupFilesAfterEnv: ['@testing-library/jest-dom/jest-globals'],
-  transformIgnorePatterns: ['/commons/dist/'],
+  transformIgnorePatterns: ['/commons/dist/', '/html-to-react/dist/'],
   moduleNameMapper: {
     // Handle module aliases (this will be automatically configured for you soon)
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
