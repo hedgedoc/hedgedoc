@@ -40,3 +40,16 @@ patchedDependencies:
   eventemitter2@6.4.9: patches/eventemitter2@6.4.9.patch
   yjs@13.6.32: patches/yjs@13.6.32.patch
   vega-canvas@1.2.7: patches/vega-canvas@1.2.7.patch
+
+allowBuilds:
+  # Produce real build artefacts (native bindings, downloaded binaries).
+  "@parcel/watcher": true
+  better-sqlite3: true
+  cypress: true
+  esbuild: true
+  unrs-resolver: true
+  # Donation banners and analytics beacons only, no artefacts. Yarn ran these
+  # because enableScripts applied to everything; there is no reason to.
+  "@nestjs/core": false
+  "@scarf/scarf": false
+  es5-ext: false
