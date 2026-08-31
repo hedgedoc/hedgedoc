@@ -3179,7 +3179,7 @@ __metadata:
     "@zxcvbn-ts/core": "npm:3.0.4"
     "@zxcvbn-ts/language-common": "npm:3.0.4"
     "@zxcvbn-ts/language-en": "npm:3.0.2"
-    base32-encode: "npm:1.2.0"
+    base32-encode: "npm:2.0.0"
     better-sqlite3: "npm:13.0.3"
     class-transformer: "npm:0.5.1"
     class-validator: "npm:0.15.1"
@@ -8468,12 +8468,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"base32-encode@npm:1.2.0":
-  version: 1.2.0
-  resolution: "base32-encode@npm:1.2.0"
+"base32-encode@npm:2.0.0":
+  version: 2.0.0
+  resolution: "base32-encode@npm:2.0.0"
   dependencies:
-    to-data-view: "npm:^1.1.0"
-  checksum: 10c0/ebc97b324b90ad64c019a338c2cb9291f7e260584b8222bd0861bf69e0509153263e40ee2546c744cc1849b353339dbd98a0cb08c5c37bab221a41010522a0e2
+    to-data-view: "npm:^2.0.0"
+  checksum: 10c0/b75eb1579edade2ddc8442622b49df80fbe9a41f9228b078a31610bab40366018c033e2f9d8f99c2c6eb11310b6481fcd5557fbaa934bbffcb6def58e6c66f2c
   languageName: node
   linkType: hard
 
@@ -18525,10 +18525,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"to-data-view@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "to-data-view@npm:1.1.0"
-  checksum: 10c0/5dfff586ccb523c8de1c03567ef9a220dbf466f90c3265bf51247e3e69c3857b3fa1b31b77866c4a40ea6245dc4a5f9d5c077a29076c44cab31b97d768034baa
+"to-data-view@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "to-data-view@npm:2.0.0"
+  checksum: 10c0/0029c9e1dfba893755e45ab2f6ddb43d7672a48f30f03ecf25ee94ddf894d1572914e03a3fe76a3da33ade672be7556d5b0da6b8d702464ad0b63a301d72a8dc
   languageName: node
   linkType: hard
 

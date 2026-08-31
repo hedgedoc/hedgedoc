@@ -47,7 +47,7 @@
     "@zxcvbn-ts/core": "3.0.4",
     "@zxcvbn-ts/language-common": "3.0.4",
     "@zxcvbn-ts/language-en": "3.0.2",
-    "base32-encode": "1.2.0",
+    "base32-encode": "2.0.0",
     "better-sqlite3": "13.0.3",
     "class-transformer": "0.5.1",
     "class-validator": "0.15.1",
