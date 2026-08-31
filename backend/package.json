@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@azure/storage-blob": "12.33.0",
-    "@fastify/cookie": "11.0.2",
+    "@fastify/cookie": "11.1.2",
     "@fastify/csrf-protection": "8.0.1",
     "@fastify/multipart": "10.1.1",
     "@fastify/rate-limit": "11.2.0",
