@@ -18,9 +18,6 @@ packages:
 # backend/docker/Dockerfile.
 nodeLinker: hoisted
 
-# pnpm 11 defaults this to 1440 minutes. Yarn had npmMinimalAgeGate: 0.
-minimumReleaseAge: 0
-
 overrides:
   "@types/node": 24.10.7
   domhandler: 6.0.1
