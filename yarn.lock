@@ -3176,9 +3176,9 @@ __metadata:
     "@types/source-map-support": "npm:0.5.10"
     "@types/supertest": "npm:2.0.16"
     "@types/ws": "npm:8.18.1"
-    "@zxcvbn-ts/core": "npm:3.0.4"
-    "@zxcvbn-ts/language-common": "npm:3.0.4"
-    "@zxcvbn-ts/language-en": "npm:3.0.2"
+    "@zxcvbn-ts/core": "npm:4.2.0"
+    "@zxcvbn-ts/language-common": "npm:4.1.3"
+    "@zxcvbn-ts/language-en": "npm:4.1.1"
     base32-encode: "npm:2.0.0"
     better-sqlite3: "npm:13.0.3"
     class-transformer: "npm:0.5.1"
@@ -7792,26 +7792,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zxcvbn-ts/core@npm:3.0.4":
-  version: 3.0.4
-  resolution: "@zxcvbn-ts/core@npm:3.0.4"
+"@zxcvbn-ts/core@npm:4.2.0":
+  version: 4.2.0
+  resolution: "@zxcvbn-ts/core@npm:4.2.0"
   dependencies:
     fastest-levenshtein: "npm:1.0.16"
-  checksum: 10c0/afe266635651303b9dbd0dad73ac9c76261b1d4d6fbb1d657a4d84d5552531346030d483e41b2a349940e11afdf439dcea94c5793faba8f9a9910eff104859e4
+  checksum: 10c0/827eed6aae1126cc023c8180652c66532414694843ce98e4c38b9e9410307bc4d3c414a3e1985bbf82a77e77978867164d7bcccd4ab6bf1ea12fa598e5c173ec
   languageName: node
   linkType: hard
 
-"@zxcvbn-ts/language-common@npm:3.0.4":
-  version: 3.0.4
-  resolution: "@zxcvbn-ts/language-common@npm:3.0.4"
-  checksum: 10c0/0dc6185c4289a876a236e498c4b1b4bd181a56f14068fb5610d7238918cab5ce56e08d5e8c7fe980cd28dbed57650defc202bc57bd1bffc302bb600aec4769c8
+"@zxcvbn-ts/dictionary-compression@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@zxcvbn-ts/dictionary-compression@npm:3.0.1"
+  checksum: 10c0/77654331119eaeb2fb31f71974448f39b950a8a58a36e95d50e4e9324cab5304d6392efc5b2adb50dcbb7e6cf280de93e087c087252ba9473327bce6dff777de
   languageName: node
   linkType: hard
 
-"@zxcvbn-ts/language-en@npm:3.0.2":
-  version: 3.0.2
-  resolution: "@zxcvbn-ts/language-en@npm:3.0.2"
-  checksum: 10c0/b5930a41d014c99f585721c9f14baa0bf4f538de5f444e752fa9e671e6aebd5844bc85b136ba8474753e288320cde33aa5a9c5888ab5f1f7ccb6de0f0dfcf7ba
+"@zxcvbn-ts/language-common@npm:4.1.3":
+  version: 4.1.3
+  resolution: "@zxcvbn-ts/language-common@npm:4.1.3"
+  dependencies:
+    "@zxcvbn-ts/dictionary-compression": "npm:^3.0.1"
+  checksum: 10c0/8672b8440331907505957a3b383bdf784ff6cb4fe51fb521908e44ccb12959c3168285fee7f841a6cccb1655476703c7226e1065cde563a5d03c06c56c69665e
+  languageName: node
+  linkType: hard
+
+"@zxcvbn-ts/language-en@npm:4.1.1":
+  version: 4.1.1
+  resolution: "@zxcvbn-ts/language-en@npm:4.1.1"
+  dependencies:
+    "@zxcvbn-ts/dictionary-compression": "npm:^3.0.1"
+  checksum: 10c0/d6b561163752bd5c2d4eff7693b3de4ef049feee92e658828213dd56ddabcee19248e7dc7173770c5c0ce160b850234bfa9eb9b8bbfd65123729da678ef44df1
   languageName: node
   linkType: hard
 
