@@ -140,7 +140,7 @@
     "@types/react-dom": "18.3.7",
     "@types/ws": "8.18.1",
     "csstype": "3.2.3",
-    "cypress": "13.17.0",
+    "cypress": "15.21.1",
     "cypress-commands": "3.0.0",
     "cypress-fill-command": "1.0.2",
     "dotenv-cli": "11.0.0",
