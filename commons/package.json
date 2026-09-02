@@ -44,7 +44,7 @@
     "eventemitter2": "6.4.9",
     "file-type": "22.0.2",
     "js-yaml": "5.4.1",
-    "reveal.js": "5.2.1",
+    "reveal.js": "6.0.1",
     "ws": "8.21.3",
     "yjs": "13.6.32",
     "zod": "3.25.76"
