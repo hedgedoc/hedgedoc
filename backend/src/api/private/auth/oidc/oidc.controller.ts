@@ -148,8 +148,17 @@ export class OidcController {
         'callback',
       );
       request.session.pendingUser = null;
-      request.session.oidc.loginCode = null;
-      request.session.oidc.loginState = null;
+      // The callback may fail before extractUserInfoFromCallback assigns
+      // session.oidc (e.g. state mismatch on a session that never ran
+      // loginWithOpenIdConnect), so reset the whole object like
+      // AuthController.deletePendingUserData does instead of touching a
+      // possibly-undefined property.
+      request.session.oidc = {
+        idToken: null,
+        sid: null,
+        loginCode: null,
+        loginState: null,
+      };
       await request.session.save();
       return { url: `/login?${errorParams.toString()}` };
     }
