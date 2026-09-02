@@ -2906,7 +2906,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fastify/cookie@npm:11.0.2, @fastify/cookie@npm:^11.0.1":
+"@fastify/cookie@npm:11.1.2":
+  version: 11.1.2
+  resolution: "@fastify/cookie@npm:11.1.2"
+  dependencies:
+    cookie: "npm:^2.0.0"
+    fastify-plugin: "npm:^6.0.0"
+  checksum: 10c0/6fe2e18ad2387a789e4807678d20baa6926c616bfe237cf32dda0dc5de44d3d558220d445f9870444a81808c34f7599e8843b1e015e85dc761c7d5bb1b7b5235
+  languageName: node
+  linkType: hard
+
+"@fastify/cookie@npm:^11.0.1":
   version: 11.0.2
   resolution: "@fastify/cookie@npm:11.0.2"
   dependencies:
@@ -3139,7 +3149,7 @@ __metadata:
   resolution: "@hedgedoc/backend@workspace:backend"
   dependencies:
     "@azure/storage-blob": "npm:12.33.0"
-    "@fastify/cookie": "npm:11.0.2"
+    "@fastify/cookie": "npm:11.1.2"
     "@fastify/csrf-protection": "npm:8.0.1"
     "@fastify/multipart": "npm:10.1.1"
     "@fastify/rate-limit": "npm:11.2.0"
@@ -9387,6 +9397,13 @@ __metadata:
   version: 1.1.1
   resolution: "cookie@npm:1.1.1"
   checksum: 10c0/79c4ddc0fcad9c4f045f826f42edf54bcc921a29586a4558b0898277fa89fb47be95bc384c2253f493af7b29500c830da28341274527328f18eba9f58afa112c
+  languageName: node
+  linkType: hard
+
+"cookie@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "cookie@npm:2.0.1"
+  checksum: 10c0/dcf3bd6ec9d0f4f32be7575e23242866cb53be55fc3d4cf36215638596661cec1327a3b4ca286ba15eba8f2abd443e422b8c5f708af4ea9f75b4d3dedc67ee4c
   languageName: node
   linkType: hard
 
