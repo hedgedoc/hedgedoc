@@ -3197,7 +3197,7 @@ __metadata:
     mocked-env: "npm:1.3.5"
     mysql2: "npm:3.24.2"
     nest-knexjs: "npm:0.0.34"
-    nestjs-zod: "npm:4.3.1"
+    nestjs-zod: "npm:5.5.0"
     openid-client: "npm:5.7.1"
     pg: "npm:8.23.0"
     reflect-metadata: "npm:0.2.2"
@@ -4482,27 +4482,6 @@ __metadata:
     "@emnapi/core": ^1.7.1 || ^2.0.0-alpha.4
     "@emnapi/runtime": ^1.7.1 || ^2.0.0-alpha.4
   checksum: 10c0/6da0a4bf9df79e9abfb3e3d462f6a5d42889be39426040038c9dd5925865585d7dbd06dd439c2ffc20f49ef2751412da5bd748cfb3c5b049142d72c0550f6f79
-  languageName: node
-  linkType: hard
-
-"@nest-zod/z@npm:*":
-  version: 2.0.0
-  resolution: "@nest-zod/z@npm:2.0.0"
-  peerDependencies:
-    "@nestjs/common": ^10.0.0 || ^11.0.0
-    "@nestjs/core": ^10.0.0 || ^11.0.0
-    "@nestjs/swagger": ^7.4.2 || ^8.0.0 || ^11.0.0
-    zod: ">= 3.14.3"
-  peerDependenciesMeta:
-    "@nestjs/common":
-      optional: true
-    "@nestjs/core":
-      optional: true
-    "@nestjs/swagger":
-      optional: true
-    zod:
-      optional: false
-  checksum: 10c0/6fde5a73bc7aa49531ee91d12bc8ffea08dbf4ac803fb3c644066ec9467210ad04194e5d05defa23f913cd55d59ee7c66c3fcf190a16dc73ce331a7ac9721e77
   languageName: node
   linkType: hard
 
@@ -15703,27 +15682,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nestjs-zod@npm:4.3.1":
-  version: 4.3.1
-  resolution: "nestjs-zod@npm:4.3.1"
+"nestjs-zod@npm:5.5.0":
+  version: 5.5.0
+  resolution: "nestjs-zod@npm:5.5.0"
   dependencies:
-    "@nest-zod/z": "npm:*"
     deepmerge: "npm:^4.3.1"
   peerDependencies:
     "@nestjs/common": ^10.0.0 || ^11.0.0
-    "@nestjs/core": ^10.0.0 || ^11.0.0
     "@nestjs/swagger": ^7.4.2 || ^8.0.0 || ^11.0.0
-    zod: ">= 3.14.3"
+    rxjs: ^7.0.0
+    zod: ^3.25.0 || ^4.0.0
   peerDependenciesMeta:
-    "@nestjs/common":
-      optional: true
-    "@nestjs/core":
-      optional: true
     "@nestjs/swagger":
       optional: true
-    zod:
-      optional: false
-  checksum: 10c0/0206185973c51801afa9d6118aa24b5df7f74a19815c2cc7a5408127450e2f7b4ae0f538f34b0bea023708f9e39d72f5c8cbe5ce09818ceae473ee94bb0f27cd
+  checksum: 10c0/210b76bc6eafa7eb3463971b07954a37db9a63a9787d9bdd5a3efce11d4c771966b939276a90aa1a0d73391f612968af4d19a7e9424d98382a50bf518286544e
   languageName: node
   linkType: hard
 
