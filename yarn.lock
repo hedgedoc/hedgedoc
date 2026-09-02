@@ -3308,7 +3308,7 @@ __metadata:
     "@types/react-dom": "npm:18.3.7"
     "@types/ws": "npm:8.18.1"
     "@uiw/react-codemirror": "npm:4.25.11"
-    abcjs: "npm:6.6.2"
+    abcjs: "npm:6.7.0"
     base64-js: "npm:1.5.1"
     bootstrap: "npm:5.3.8"
     copy-webpack-plugin: "npm:12.0.2"
@@ -7831,10 +7831,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"abcjs@npm:6.6.2":
-  version: 6.6.2
-  resolution: "abcjs@npm:6.6.2"
-  checksum: 10c0/1c3575dd7942c6189a9cc8c089fdf565591a3c587e391ebe1b666af6cbe7ab284d16a193ab0628ae7ad73e0556d8682a49e740fd24a77974d2cdba0befb00e57
+"abcjs@npm:6.7.0":
+  version: 6.7.0
+  resolution: "abcjs@npm:6.7.0"
+  checksum: 10c0/8c8ad0285467451aae8a2ebb1d098d0d1fbe65e07d85241e563c4112cd63a48d50f959f6e1c52181aba1648bc9d1586be88b2b4d4bc4f725d6fad5d6995f0d9e
   languageName: node
   linkType: hard
 
