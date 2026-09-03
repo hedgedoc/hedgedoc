@@ -3164,12 +3164,12 @@ __metadata:
     "@nestjs/websockets": "npm:10.4.22"
     "@node-rs/argon2": "npm:2.2.0"
     "@tsconfig/node24": "npm:24.0.5"
-    "@types/better-sqlite3": "npm:7.6.13"
+    "@types/better-sqlite3": "npm:9.6.0"
     "@types/cli-color": "npm:2.0.6"
     "@types/cookie": "npm:1.0.0"
     "@types/cookie-signature": "npm:1.1.2"
     "@types/luxon": "npm:3.7.1"
-    "@types/markdown-it": "npm:13.0.8"
+    "@types/markdown-it": "npm:14.2.0"
     "@types/node": "npm:24.10.7"
     "@types/pg": "npm:8.15.6"
     "@types/source-map-support": "npm:0.5.10"
@@ -3300,12 +3300,12 @@ __metadata:
     "@types/jest": "npm:29.5.14"
     "@types/katex": "npm:0.16.7"
     "@types/luxon": "npm:3.7.1"
-    "@types/markdown-it": "npm:13.0.8"
-    "@types/markdown-it-container": "npm:2.0.9"
+    "@types/markdown-it": "npm:14.2.0"
+    "@types/markdown-it-container": "npm:4.0.1"
     "@types/markdown-it-plantuml": "npm:1.4.4"
     "@types/node": "npm:24.10.7"
-    "@types/react": "npm:18.3.27"
-    "@types/react-dom": "npm:18.3.7"
+    "@types/react": "npm:19.2.18"
+    "@types/react-dom": "npm:19.2.7"
     "@types/ws": "npm:8.18.1"
     "@uiw/react-codemirror": "npm:4.25.11"
     abcjs: "npm:6.6.2"
@@ -3395,8 +3395,8 @@ __metadata:
   dependencies:
     "@jest/globals": "npm:30.5.0"
     "@jest/types": "npm:29.6.3"
-    "@types/react": "npm:18.3.27"
-    "@types/react-dom": "npm:18.3.7"
+    "@types/react": "npm:19.2.18"
+    "@types/react-dom": "npm:19.2.7"
     "@typescript/native": "npm:typescript@7.0.2"
     domelementtype: "npm:3.0.0"
     domhandler: "npm:6.0.1"
@@ -3417,7 +3417,7 @@ __metadata:
   dependencies:
     "@jest/types": "npm:29.6.3"
     "@mrdrogdrog/optional": "npm:1.2.1"
-    "@types/markdown-it": "npm:13.0.8"
+    "@types/markdown-it": "npm:14.2.0"
     html-entities: "npm:2.6.0"
     jest: "npm:29.7.0"
     markdown-it: "npm:13.0.2"
@@ -6353,12 +6353,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/better-sqlite3@npm:7.6.13":
-  version: 7.6.13
-  resolution: "@types/better-sqlite3@npm:7.6.13"
+"@types/better-sqlite3@npm:9.6.0":
+  version: 9.6.0
+  resolution: "@types/better-sqlite3@npm:9.6.0"
   dependencies:
     "@types/node": "npm:*"
-  checksum: 10c0/c4336e7b92343eb0e988ded007c53fa9887b98a38d61175226e86124a1a2c28b1a4e3892873c5041e350b7bfa2901f85c82db1542c4f0eed1d3a899682c92106
+  checksum: 10c0/630273028a281addb0df36d204d0edcd0ab000f55ed89fdc742536a6ead4d4404287ebfb1714f5c58ec2f08fd508baf810e1d8f093ff9d480b9f3fb6495d141a
   languageName: node
   linkType: hard
 
@@ -6868,10 +6868,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/linkify-it@npm:*, @types/linkify-it@npm:^3":
+"@types/linkify-it@npm:*":
   version: 3.0.5
   resolution: "@types/linkify-it@npm:3.0.5"
   checksum: 10c0/696e09975991c649ba37c5585714929fdebf5c64a8bfb99910613ef838337dbbba6c608fccdfa03d6347432586ef12e139bc0e947ae6fec569096fef5cc1c550
+  languageName: node
+  linkType: hard
+
+"@types/linkify-it@npm:^5":
+  version: 5.0.0
+  resolution: "@types/linkify-it@npm:5.0.0"
+  checksum: 10c0/7bbbf45b9dde17bf3f184fee585aef0e7342f6954f0377a24e4ff42ab5a85d5b806aaa5c8d16e2faf2a6b87b2d94467a196b7d2b85c9c7de2f0eaac5487aaab8
   languageName: node
   linkType: hard
 
@@ -6889,12 +6896,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/markdown-it-container@npm:2.0.9":
-  version: 2.0.9
-  resolution: "@types/markdown-it-container@npm:2.0.9"
+"@types/markdown-it-container@npm:4.0.1":
+  version: 4.0.1
+  resolution: "@types/markdown-it-container@npm:4.0.1"
   dependencies:
-    "@types/markdown-it": "npm:*"
-  checksum: 10c0/8558c477408c2ecd3b9419e3ae6da3bddcd480f440d204fcc0912380037797f8823054eab9920c3a05310badbddece77d799bfb94efcfd6b64fd8a3e81960a44
+    "@types/markdown-it": "npm:>=14"
+  checksum: 10c0/790ca2c50143c27dc91b7f3d3c7a8208498efe612dd330acd6d33bf1e345b96ec4864c5781affdfd407c218b6ac278090f8b11e09021e9e8bcadaa68bbd17d74
   languageName: node
   linkType: hard
 
@@ -6917,20 +6924,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/markdown-it@npm:13.0.8":
-  version: 13.0.8
-  resolution: "@types/markdown-it@npm:13.0.8"
+"@types/markdown-it@npm:14.2.0, @types/markdown-it@npm:>=14":
+  version: 14.2.0
+  resolution: "@types/markdown-it@npm:14.2.0"
   dependencies:
-    "@types/linkify-it": "npm:^3"
-    "@types/mdurl": "npm:^1"
-  checksum: 10c0/6d4eaa696c7780726da021618964a9a5cd5891e5771ceca3953819ea5df7f8baeb55a32b4f3b23f1609964a6700c386470b85b105c23c3dfb5eca0bdacc768bf
+    "@types/linkify-it": "npm:^5"
+    "@types/mdurl": "npm:^2"
+  checksum: 10c0/60ff1a0495ef303310744566342c49b4b3e76fbdca82c5ec28d88731fc934b0c63335d25bca6133903c877f2c41c59cdfddefb3626c6ee0780b9573ddf6aefe4
   languageName: node
   linkType: hard
 
-"@types/mdurl@npm:*, @types/mdurl@npm:^1":
+"@types/mdurl@npm:*":
   version: 1.0.5
   resolution: "@types/mdurl@npm:1.0.5"
   checksum: 10c0/8991c781eb94fb3621e48e191251a94057908fc14be60f52bdd7c48684af923ffa77559ea979450a0475f85c08f8a472f99ff9c2ca4308961b9b9d35fd7584f7
+  languageName: node
+  linkType: hard
+
+"@types/mdurl@npm:^2":
+  version: 2.0.0
+  resolution: "@types/mdurl@npm:2.0.0"
+  checksum: 10c0/cde7bb571630ed1ceb3b92a28f7b59890bb38b8f34cd35326e2df43eebfc74985e6aa6fd4184e307393bad8a9e0783a519a3f9d13c8e03788c0f98e5ec869c5e
   languageName: node
   linkType: hard
 
@@ -6975,13 +6989,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prop-types@npm:*":
-  version: 15.7.11
-  resolution: "@types/prop-types@npm:15.7.11"
-  checksum: 10c0/e53423cf9d510515ef8b47ff42f4f1b65a7b7b37c8704e2dbfcb9a60defe0c0e1f3cb1acfdeb466bad44ca938d7c79bffdd51b48ffb659df2432169d0b27a132
-  languageName: node
-  linkType: hard
-
 "@types/prop-types@npm:^15.7.12":
   version: 15.7.14
   resolution: "@types/prop-types@npm:15.7.14"
@@ -6989,12 +6996,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.3.7":
-  version: 18.3.7
-  resolution: "@types/react-dom@npm:18.3.7"
+"@types/react-dom@npm:19.2.7":
+  version: 19.2.7
+  resolution: "@types/react-dom@npm:19.2.7"
   peerDependencies:
-    "@types/react": ^18.0.0
-  checksum: 10c0/8bd309e2c3d1604a28a736a24f96cbadf6c05d5288cfef8883b74f4054c961b6b3a5e997fd5686e492be903c8f3380dba5ec017eff3906b1256529cd2d39603e
+    "@types/react": ^19.2.0
+  checksum: 10c0/226ab7e2b62114125e2276b3dcc3a25060177a673f8abadb7e31f395003de72ad68075c6edc5f51b02dd1e47443920ee030239c474c47fad075ded7410836909
   languageName: node
   linkType: hard
 
@@ -7007,13 +7014,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.3.27":
-  version: 18.3.27
-  resolution: "@types/react@npm:18.3.27"
+"@types/react@npm:19.2.18":
+  version: 19.2.18
+  resolution: "@types/react@npm:19.2.18"
   dependencies:
-    "@types/prop-types": "npm:*"
     csstype: "npm:^3.2.2"
-  checksum: 10c0/a761d2f58de03d0714806cc65d32bb3d73fb33a08dd030d255b47a295e5fff2a775cf1c20b786824d8deb6454eaccce9bc6998d9899c14fc04bbd1b0b0b72897
+  checksum: 10c0/d04216172b4b4362b310017c210dfbe019fb4f4e7dffd0313e70b3acb3051d5c3e76e7e84e3cf4c6a3c824993ffadfe3949e589a6398a09d4200e7670e2962de
   languageName: node
   linkType: hard
 

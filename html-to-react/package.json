@@ -47,8 +47,8 @@
   "devDependencies": {
     "@jest/globals": "30.5.0",
     "@jest/types": "29.6.3",
-    "@types/react": "18.3.27",
-    "@types/react-dom": "18.3.7",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
     "@typescript/native": "npm:typescript@7.0.2",
     "jest": "30.5.0",
     "react": "18.3.1",
@@ -74,7 +74,7 @@
     "node": ">=12"
   },
   "resolutions": {
-    "@types/react": "18.3.27"
+    "@types/react": "19.2.18"
   },
   "packageManager": "yarn@4.18.0"
 }
