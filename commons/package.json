@@ -52,7 +52,7 @@
   "devDependencies": {
     "@jest/types": "29.6.3",
     "@mrdrogdrog/optional": "1.2.1",
-    "@types/node": "24.10.7",
+    "@types/node": "24.13.3",
     "@types/ws": "8.18.1",
     "@typescript/native": "npm:typescript@7.0.2",
     "jest": "30.5.0",
