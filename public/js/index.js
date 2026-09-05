@@ -587,6 +587,16 @@ function setRefreshModal (status) {
     .show()
 }
 
+function setOutOfSyncModal (markdown) {
+  const outOfSyncModal = $('#outOfSyncModal')
+  outOfSyncModal.removeData('bs.modal')
+    .modal({
+      backdrop: 'static',
+      keyboard: false
+    })
+  outOfSyncModal.find('textarea#outOfSyncTextarea').text(markdown)
+}
+
 function setNeedRefresh () {
   needRefresh = true
   editor.setOption('readOnly', true)
@@ -1780,6 +1790,21 @@ $('#refreshModalRefresh').click(function () {
   location.reload(true)
 })
 
+$('#outOfSyncModalReload').click(function () {
+  location.reload(true)
+})
+
+$('#outOfSyncModalCopy').tooltip({
+  trigger: 'manual'
+}).click(function () {
+  const markdownContent = $('#outOfSyncTextarea').text()
+  navigator.clipboard.writeText(markdownContent)
+  $('#outOfSyncModalCopy').tooltip('show')
+  setTimeout(function () {
+    $('#outOfSyncModalCopy').tooltip('hide')
+  }, 2000)
+})
+
 // gist import modal
 $('#gistImportModalClear').click(function () {
   $('#gistImportModalContent').val('')
@@ -2249,8 +2274,17 @@ socket.on('disconnect', function (data) {
 })
 socket.on('connect', function (data) {
   if (socket.recovered) {
-    // sync back any change in offline
     console.debug('Reconnected client')
+    if (cmClient.state.name !== 'Synchronized') {
+      // We can't guarantee a working sync here.
+      // So we check if the user did any changes while they were offline, if so we tell them to copy
+      // everything into a different window and reload the editor.
+      const markdownContent = cmClient.editorAdapter.getValue()
+      console.debug('Can\'t restablish sync')
+      console.debug('Please save the following content.\n', markdownContent)
+      setOutOfSyncModal(markdownContent)
+      return
+    }
     emitUserStatus(true)
     cursorActivity(editor)
     socket.emit('online users')

@@ -5,6 +5,7 @@
 ### Bugfixes
 
 - Fixed opening links in new tabs did not work for published and slideshow views. This was forgotten with the last fix in 1.12.0.
+- Tell the user about an impending data loss immediately after the reconnect.
 
 ## <i class="fa fa-tag"></i> 1.12.0 <i class="fa fa-calendar-o"></i> 2026-08-21
 
