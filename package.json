@@ -15,7 +15,13 @@
     "test": "dotenv -c test -- turbo run test --concurrency 1",
     "test:e2e:ci": "dotenv -c test -- turbo run test:e2e:ci"
   },
-  "packageManager": "pnpm@11.24.0",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.24.0",
+      "onFail": "error"
+    }
+  },
   "devDependencies": {
     "dotenv-cli": "11.0.0",
     "oxfmt": "0.65.0",

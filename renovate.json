@@ -106,6 +106,18 @@
       ],
       "datasourceTemplate": "npm",
       "depNameTemplate": "yjs"
+    },
+    {
+      "customType": "regex",
+      "description": "Update the pnpm version in devEngines.packageManager. Renovate's npm manager cannot read that field yet, see renovatebot/renovate#35338.",
+      "managerFilePatterns": [
+        "/^package\\.json$/"
+      ],
+      "matchStrings": [
+        "\"packageManager\":\\s*\\{\\s*\"name\":\\s*\"pnpm\",\\s*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "npm",
+      "depNameTemplate": "pnpm"
     }
   ]
 }
