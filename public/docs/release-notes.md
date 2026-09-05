@@ -9,6 +9,7 @@
 - Fixed hashtag links opening in new tabs when external link warning is disabled
 - Fixed links with the same origin not opening in new tabs when external link warning is enabled
 - Fixed crash when importing history entries that already exist
+- Fixed text not rendering when placed following a `<br>` HTML tag
 
 ## <i class="fa fa-tag"></i> 1.12.0 <i class="fa fa-calendar-o"></i> 2026-08-21
 

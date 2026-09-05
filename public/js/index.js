@@ -105,6 +105,7 @@ const updateViewDebounce = 100
 const cursorMenuThrottle = 50
 const cursorActivityDebounce = 50
 const cursorAnimatePeriod = 100
+const ELEMENT_NODE = 1
 const supportContainers = ['success', 'info', 'warning', 'danger']
 const supportCodeModes = [
   '1c',
@@ -3527,10 +3528,10 @@ function updateViewInner () {
     }
     // prevent XSS
     rendered = preventXSS(rendered)
-    const result = postProcess(rendered).children().toArray()
-    partialUpdate(result, lastResult, ui.area.markdown.children().toArray())
+    const result = getRenderableContents(postProcess(rendered))
+    partialUpdate(result, lastResult, getRenderableContents(ui.area.markdown))
     if (result && lastResult && result.length !== lastResult.length) {
-      updateDataAttrs(result, ui.area.markdown.children().toArray())
+      updateDataAttrs(result, getRenderableContents(ui.area.markdown))
     }
     lastResult = $(result).clone()
   }
@@ -3580,7 +3581,11 @@ function partialUpdate (src, tar, des) {
     !des ||
     des.length === 0
   ) {
-    ui.area.markdown.html(src)
+    replaceContents(ui.area.markdown, src)
+    return
+  }
+  if (src.some(node => node.nodeType !== ELEMENT_NODE) || tar.some(node => node.nodeType !== ELEMENT_NODE) || des.some(node => node.nodeType !== ELEMENT_NODE)) {
+    replaceContents(ui.area.markdown, src)
     return
   }
   if (src.length === tar.length) {
@@ -3728,6 +3733,14 @@ function partialUpdate (src, tar, des) {
   }
 }
 
+function getRenderableContents (container) {
+  return container.contents().filter((index, node) => node.nodeType === ELEMENT_NODE || node.textContent.trim()).toArray()
+}
+
+function replaceContents (container, contents) {
+  container.empty().append(contents)
+}
+
 function cloneAndRemoveDataAttr (el) {
   if (!el) return
   const rawEl = $(el).clone()
@@ -3737,7 +3750,7 @@ function cloneAndRemoveDataAttr (el) {
 }
 
 function copyAttribute (src, des, attr) {
-  if (src && src.getAttribute(attr) && des) {
+  if (src && src.nodeType === ELEMENT_NODE && src.getAttribute(attr) && des) {
     des.setAttribute(attr, src.getAttribute(attr))
   }
 }
