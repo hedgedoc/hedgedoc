@@ -20,8 +20,8 @@ If you want to contribute to this lib then:
 - Clone this repository
 - Install the dependencies using `pnpm install`. Don't use `npm` or `yarn`!
 - Make your changes
-- Make sure that your changes are covered by tests. Use `pnpm test` to run all tests
-- Make sure that your code follows the code style. Use `pnpm lint` to check the style
+- Make sure that your changes are covered by tests. Use `pnpm run test` to run all tests
+- Make sure that your code follows the code style. Use `pnpm run lint` to check the style
 - Commit your changes (please use [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)) and create a pull request
 
 ## markdown-it-image-size
