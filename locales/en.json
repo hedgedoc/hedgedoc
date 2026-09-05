@@ -134,5 +134,10 @@
     "Continue to external page": "Continue to external page",
     "Close": "Close",
     "The provided link is not a valid URL.": "The provided link is not a valid URL.",
-    "The content of that page is unrelated to HedgeDoc. Do not enter your HedgeDoc credentials there.": "The content of that page is unrelated to HedgeDoc. Do not enter your HedgeDoc credentials there."
+    "The content of that page is unrelated to HedgeDoc. Do not enter your HedgeDoc credentials there.": "The content of that page is unrelated to HedgeDoc. Do not enter your HedgeDoc credentials there.",
+    "Your editor is out of sync": "Your editor is out of sync",
+    "You typed something while being offline, we can't sync you up again. So please copy your content into a different window and reload the editor": "You typed something while being offline, we can't sync you up again. So please copy your content into a different window and reload the editor",
+    "Copied!": "Copied!",
+    "Copy Content": "Copy Content",
+    "Reload Editor": "Reload Editor"
 }

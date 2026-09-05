@@ -1,0 +1,20 @@
+<!-- refresh modal -->
+<div class="modal fade" id="outOfSyncModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel"><%= __('Your editor is out of sync') %></h4>
+            </div>
+            <div class="modal-body">
+                <strong><%= __('You typed something while being offline, we can\'t sync you up again. So please copy your content into a different window and reload the editor') %></strong>
+                <br/>
+                <br/>
+                <textarea readonly="readonly" class="form-control" name="out of sync text" id="outOfSyncTextarea" rows="25" cols="80"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="outOfSyncModalCopy" data-toggle="tooltip" data-placement="top" title="<%= __('Copied!') %>"><%= __('Copy Content') %></button>
+                <button type="button" class="btn btn-primary" id="outOfSyncModalReload"><%= __('Reload Editor') %></button>
+            </div>
+        </div>
+    </div>
+</div>
