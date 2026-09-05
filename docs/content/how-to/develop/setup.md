@@ -57,12 +57,21 @@ If you want to run HedgeDoc in dev mode some preconditions have to be met.
 
 ## Installing the dependencies
 
-Because we use pnpm workspaces, pnpm collects the dependencies of all packages automatically in one
-central top-level `node_modules` folder.
+Because we use pnpm workspaces, pnpm collects the dependencies of all packages automatically.
 To install the dependencies execute `pnpm install` at the top level of the cloned repository.
 Execute this command ONLY there. There is no need to execute the install-command for every package.
 It's important to use [pnpm][pnpm]. We don't support `npm`, `yarn` or any other package
 manager and using anything else than pnpm won't work.
+
+Most dependencies end up in the central top-level `node_modules` directory, but not all of them.
+A package also gets its own `node_modules` directory when it needs a different version of a
+dependency than the one hoisted to the top level. For example `commons` requires `js-yaml` 5 while
+the top level has version 4, so it gets a local copy. On top of that, every package that depends on
+another workspace package gets a `node_modules/@hedgedoc/` directory holding symlinks to it, which
+is how `backend` finds `commons` and `database`.
+
+This is worth knowing when reading `backend/docker/Dockerfile`: the production image cannot simply
+copy the top-level `node_modules`, it has to copy the workspace-local ones as well.
 
 ## Create the configuration
 
