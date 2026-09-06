@@ -25,7 +25,7 @@ and the provided configuration.
    ```
    <!-- markdownlint-enable proper-names -->
 
-2. Install Node.js. You need at least Node 22.13, see `.nvmrc` for the version we develop against.
+2. Install Node.js. You need at least Node 24, see `.nvmrc` for the version we develop against.
 3. Install [pnpm][pnpm]
 4. Install Caddy (select one of the two options)
    - [Download][caddy] and place the `caddy` binary in `dev-reverse-proxy`.
@@ -48,7 +48,7 @@ The following sections describe a more detailed setup of all components.
 
 If you want to run HedgeDoc in dev mode some preconditions have to be met.
 
-1. Make sure that Node.js is installed. You need at least Node 22.13.
+1. Make sure that Node.js is installed. You need at least Node 24.
    See `.nvmrc` for the version we develop against.
 2. Make sure that [pnpm][pnpm] is installed.
    <!-- markdownlint-disable proper-names -->
