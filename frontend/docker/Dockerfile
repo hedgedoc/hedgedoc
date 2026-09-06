@@ -7,7 +7,8 @@ FROM docker.io/node:24.20.0-alpine@sha256:e67514e5d0f6c46656005e1b693b2ec9d52e80
 RUN apk add --no-cache tini
 ENTRYPOINT ["tini", "--"]
 
-# Corepack picks the pnpm version from the packageManager field in package.json
+# Corepack picks the pnpm version from devEngines.packageManager in package.json.
+# That field needs corepack >= 0.31; the pinned base image ships 0.35.
 RUN corepack enable pnpm
 
 # BUILD

@@ -13,7 +13,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # The pnpm version comes from the packageManager field in package.json.
+    # The pnpm version comes from devEngines.packageManager in package.json.
     # cache: true caches the pnpm store, keyed on the hash of pnpm-lock.yaml,
     # and prunes it in the post step so it does not grow without bound.
     - name: Set up pnpm
