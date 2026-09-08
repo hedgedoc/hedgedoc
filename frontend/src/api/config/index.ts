@@ -18,7 +18,7 @@ export const getConfig = async (baseUrl?: string): Promise<FrontendConfigInterfa
     return undefined
   }
   const response = await new GetApiRequestBuilder<FrontendConfigInterface>('config', baseUrl)
-    .withCustomOptions({ next: { revalidate: 60 } })
+    .withCustomOptions({ next: { revalidate: 60 }, cache: undefined })
     .sendRequest()
   return response.asParsedJsonObject()
 }
