@@ -13,17 +13,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Get yarn cache directory path
-      id: yarn-cache-dir-path
-      run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-      shell: bash
-
-    - name: Cache yarn cache
-      uses: actions/cache@v6.1.0
-      id: yarn-cache
+    # The pnpm version comes from devEngines.packageManager in package.json.
+    # cache: true caches the pnpm store, keyed on the hash of pnpm-lock.yaml,
+    # and prunes it in the post step so it does not grow without bound.
+    - name: Set up pnpm
+      uses: pnpm/action-setup@v6.0.10
       with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-yarn
+        cache: true
 
     - name: Get cypress version
       id: cypress-version
@@ -44,9 +40,11 @@ runs:
       uses: actions/setup-node@v7.0.0
       with:
         node-version: ${{ inputs.NODEJS_VERSION }}
+        # The pnpm store is cached by pnpm/action-setup above.
+        package-manager-cache: false
 
     - name: Install dependencies
-      run: yarn install --immutable
+      run: pnpm install --frozen-lockfile
       working-directory: .
       shell: bash
       env:

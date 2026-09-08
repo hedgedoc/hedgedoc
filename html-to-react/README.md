@@ -16,6 +16,8 @@ This library is a hard fork of https://github.com/peternewnham/react-html-parser
 ## Install
 
 ```bash
+pnpm add @hedgedoc/html-to-react
+# or
 npm install @hedgedoc/html-to-react
 # or
 yarn add @hedgedoc/html-to-react

@@ -42,6 +42,5 @@
   "devDependencies": {
     "@types/node": "24.10.7",
     "typescript": "5.9.3"
-  },
-  "packageManager": "yarn@4.18.0"
+  }
 }

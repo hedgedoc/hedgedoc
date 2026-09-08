@@ -88,7 +88,7 @@
     "build": "./build.sh",
     "test": "jest",
     "test:ci": "jest --ci",
-    "prepublish": "rm -rf dist && yarn lint && yarn build && yarn test",
+    "prepublish": "rm -rf dist && pnpm run lint && pnpm run build && pnpm run test",
     "format": "../node_modules/.bin/oxfmt --check src",
     "format:fix": "../node_modules/.bin/oxfmt src",
     "lint": "../node_modules/.bin/oxlint src",
@@ -123,6 +123,5 @@
   },
   "bugs": {
     "url": "https://github.com/hedgedoc/hedgedoc/issues"
-  },
-  "packageManager": "yarn@4.18.0"
+  }
 }

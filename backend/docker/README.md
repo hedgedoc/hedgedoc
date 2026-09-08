@@ -29,4 +29,4 @@ You can build a development image using the `development` target:
 `docker buildx build -t hedgedoc-dev -f backend/docker/Dockerfile --target development .`
 
 You can then, e.g. run tests inside the image:  
-`docker run hedgedoc-dev yarn run test:e2e`
+`docker run hedgedoc-dev pnpm run test:e2e`

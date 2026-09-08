@@ -7,6 +7,10 @@ FROM docker.io/node:24.20.0-alpine@sha256:e67514e5d0f6c46656005e1b693b2ec9d52e80
 RUN apk add --no-cache tini
 ENTRYPOINT ["tini", "--"]
 
+# Corepack picks the pnpm version from devEngines.packageManager in package.json.
+# That field needs corepack >= 0.31; the pinned base image ships 0.35.
+RUN corepack enable pnpm
+
 # BUILD
 FROM base AS builder
 
@@ -14,15 +18,15 @@ RUN apk add --no-cache libc6-compat git
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-ENV YARN_CACHE_FOLDER=/tmp/.yarn
+ENV PNPM_STORE_DIR=/tmp/.pnpm-store
 USER node
 WORKDIR /usr/src/app
 
 COPY --chown=node . .
-RUN --mount=type=cache,sharing=locked,uid=1000,gid=1000,target=/tmp/.yarn \
-    yarn install --immutable
+RUN --mount=type=cache,sharing=locked,uid=1000,gid=1000,target=/tmp/.pnpm-store \
+    pnpm install --frozen-lockfile --store-dir "$PNPM_STORE_DIR"
 
-RUN yarn build --filter=@hedgedoc/frontend --no-cache --no-daemon
+RUN pnpm run build --filter=@hedgedoc/frontend --no-cache --no-daemon
 
 # RUNNER
 FROM base
