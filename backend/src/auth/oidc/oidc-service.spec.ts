@@ -130,7 +130,6 @@ describe('OidcService', () => {
       mockJwtVerify.mockResolvedValue({
         payload: mockPayload,
         protectedHeader: { alg: 'RS256' },
-        key: new Uint8Array(),
       });
 
       await expect(
@@ -154,7 +153,6 @@ describe('OidcService', () => {
       mockJwtVerify.mockResolvedValue({
         payload: mockPayload,
         protectedHeader: { alg: 'RS256' },
-        key: new Uint8Array(),
       });
 
       await expect(
@@ -177,7 +175,6 @@ describe('OidcService', () => {
       mockJwtVerify.mockResolvedValue({
         payload: mockPayload,
         protectedHeader: { alg: 'RS256' },
-        key: new Uint8Array(),
       });
 
       await expect(
@@ -201,7 +198,6 @@ describe('OidcService', () => {
       mockJwtVerify.mockResolvedValue({
         payload: mockPayload,
         protectedHeader: { alg: 'RS256' },
-        key: new Uint8Array(),
       });
 
       await expect(
@@ -224,7 +220,6 @@ describe('OidcService', () => {
       mockJwtVerify.mockResolvedValue({
         payload: mockPayload,
         protectedHeader: { alg: 'RS256' },
-        key: new Uint8Array(),
       });
 
       const mockTerminateByOidcSid =
@@ -253,7 +248,6 @@ describe('OidcService', () => {
       mockJwtVerify.mockResolvedValue({
         payload: mockPayload,
         protectedHeader: { alg: 'RS256' },
-        key: new Uint8Array(),
       });
 
       const mockIdentity: Identity = {
@@ -302,7 +296,6 @@ describe('OidcService', () => {
       mockJwtVerify.mockResolvedValue({
         payload: mockPayload,
         protectedHeader: { alg: 'RS256' },
-        key: new Uint8Array(),
       });
 
       const mockTerminateByOidcSid =

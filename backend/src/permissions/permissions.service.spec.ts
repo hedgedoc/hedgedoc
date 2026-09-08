@@ -328,7 +328,7 @@ describe('PermissionsService', () => {
       it('and user is registered', async () => {
         const spyOneNotifyOthers = jest.spyOn(
           // Typecast is required as we're mocking a private method here
-          service as typeof service & { notifyOthers: (_: number) => void },
+          service as unknown as { notifyOthers: (_: number) => void },
           'notifyOthers',
         );
         spyOnIsRegisteredUser.mockResolvedValue(true);
@@ -393,7 +393,7 @@ describe('PermissionsService', () => {
     it('correctly sets group permissions and notifies other user', async () => {
       const spyOneNotifyOthers = jest.spyOn(
         // Typecast is required as we're mocking a private method here
-        service as typeof service & { notifyOthers: (_: number) => void },
+        service as unknown as { notifyOthers: (_: number) => void },
         'notifyOthers',
       );
       mockInsert(tracker, TableNoteGroupPermission, [

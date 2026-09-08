@@ -77,7 +77,7 @@ describe('realtime note', () => {
     const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
     const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
 
-    const metadataMessage = { type: MessageType.METADATA_UPDATED };
+    const metadataMessage = { type: MessageType.METADATA_UPDATED } as const;
     sut.announceMetadataUpdate();
     expect(sendMessage1Spy).toHaveBeenCalledWith(metadataMessage);
     expect(sendMessage2Spy).toHaveBeenCalledWith(metadataMessage);
@@ -96,7 +96,7 @@ describe('realtime note', () => {
     const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
     const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
 
-    const permissionsMessage = { type: MessageType.PERMISSIONS_UPDATED };
+    const permissionsMessage = { type: MessageType.PERMISSIONS_UPDATED } as const;
     sut.announcePermissionsUpdate();
     expect(sendMessage1Spy).toHaveBeenCalledWith(permissionsMessage);
     expect(sendMessage2Spy).toHaveBeenCalledWith(permissionsMessage);
@@ -118,7 +118,7 @@ describe('realtime note', () => {
     const permissionsMessage = {
       type: MessageType.ALIASES_UPDATED,
       payload: { primaryAlias: undefined },
-    };
+    } as const;
     sut.announceAliasesUpdate();
     expect(sendMessage1Spy).toHaveBeenCalledWith(permissionsMessage);
     expect(sendMessage2Spy).toHaveBeenCalledWith(permissionsMessage);
@@ -141,7 +141,7 @@ describe('realtime note', () => {
     const permissionsMessage = {
       type: MessageType.ALIASES_UPDATED,
       payload: { primaryAlias: primaryAlias },
-    };
+    } as const;
     sut.announceAliasesUpdate(primaryAlias);
     expect(sendMessage1Spy).toHaveBeenCalledWith(permissionsMessage);
     expect(sendMessage2Spy).toHaveBeenCalledWith(permissionsMessage);
@@ -159,7 +159,7 @@ describe('realtime note', () => {
     const sendMessage1Spy = jest.spyOn(client1.getTransporter(), 'sendMessage');
     const sendMessage2Spy = jest.spyOn(client2.getTransporter(), 'sendMessage');
 
-    const deletedMessage = { type: MessageType.DOCUMENT_DELETED };
+    const deletedMessage = { type: MessageType.DOCUMENT_DELETED } as const;
     sut.announceNoteDeletion();
     expect(sendMessage1Spy).toHaveBeenCalledWith(deletedMessage);
     expect(sendMessage2Spy).toHaveBeenCalledWith(deletedMessage);
