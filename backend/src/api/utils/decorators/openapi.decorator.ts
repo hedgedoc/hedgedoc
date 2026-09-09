@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { applyDecorators, Header, HttpCode } from '@nestjs/common';
-import type { ApiResponseNoStatusOptions } from '@nestjs/swagger';
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
@@ -19,8 +18,7 @@ import {
   ApiTooManyRequestsResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { zodToOpenAPI } from 'nestjs-zod';
-import type { ZodSchema } from 'zod';
+import type { ZodType } from 'zod';
 
 import {
   badRequestDescription,
@@ -65,7 +63,7 @@ export interface HttpStatusCodeWithExtraInformation {
   code: HttpStatusCodes;
   description?: string;
   isArray?: boolean;
-  schema?: ZodSchema;
+  schema?: ZodType;
   mimeType?: string;
 }
 
@@ -80,14 +78,12 @@ export interface HttpStatusCodeWithExtraInformation {
  * For non-200 successful responses the appropriate {@link HttpCode} decorator is set
  * @constructor
  */
-// oxlint-disable-next-line @typescript-eslint/naming-convention,func-style
 export const OpenApi = (
   ...httpStatusCodesMaybeWithExtraInformation: (
     | HttpStatusCodes
     | HttpStatusCodeWithExtraInformation
   )[]
-): // oxlint-disable-next-line @typescript-eslint/ban-types
-(<TFunction extends Function, Y>(
+): (<TFunction extends Function, Y>(
   target: object | TFunction,
   propertyKey?: string | symbol,
   descriptor?: TypedPropertyDescriptor<Y>,
@@ -97,7 +93,7 @@ export const OpenApi = (
     let code: HttpStatusCodes = 200;
     let description: string | undefined = undefined;
     let isArray: boolean | undefined = undefined;
-    let schema: ZodSchema | undefined = undefined;
+    let schema: ZodType | undefined = undefined;
 
     if (typeof entry == 'number') {
       code = entry;
@@ -112,16 +108,11 @@ export const OpenApi = (
       }
     }
 
-    let defaultResponseObject: ApiResponseNoStatusOptions = {
+    let defaultResponseObject = {
       description: description ?? createdDescription,
       isArray: isArray,
+      schema: schema,
     };
-    if (schema) {
-      defaultResponseObject = {
-        ...defaultResponseObject,
-        schema: zodToOpenAPI(schema),
-      };
-    }
 
     switch (code) {
       case 200:

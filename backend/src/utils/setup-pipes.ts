@@ -3,16 +3,17 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { BadRequestException, PipeTransform } from '@nestjs/common';
+import type { PipeTransform } from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common';
 import { createZodValidationPipe } from 'nestjs-zod';
-import { ZodError } from 'zod';
+import type { $ZodError } from 'zod/v4/core';
 
-import { ConsoleLoggerService } from '../logger/console-logger.service';
+import type { ConsoleLoggerService } from '../logger/console-logger.service';
 
 export function setupValidationPipe(logger: ConsoleLoggerService): PipeTransform {
   const ZodValidationPipe = createZodValidationPipe({
-    createValidationException: (error: ZodError): BadRequestException => {
-      const errorMessage = error.toString().trimEnd();
+    createValidationException: (error): BadRequestException => {
+      const errorMessage = (error as $ZodError).toString().trimEnd();
       logger.debug(
         `Errors were encountered while validating a request:\n${errorMessage}`,
         'ValidationPipe',
