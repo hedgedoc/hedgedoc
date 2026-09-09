@@ -384,8 +384,8 @@ importers:
         specifier: 7.8.2
         version: 7.8.2
       uuid:
-        specifier: 11.1.1
-        version: 11.1.1
+        specifier: 14.0.2
+        version: 14.0.2
       ws:
         specifier: 8.21.3
         version: 8.21.3
@@ -790,8 +790,8 @@ importers:
         specifier: 15.0.3
         version: 15.0.3
       uuid:
-        specifier: 11.1.1
-        version: 11.1.1
+        specifier: 14.0.2
+        version: 14.0.2
       vega:
         specifier: 5.30.0
         version: 5.30.0
@@ -8385,8 +8385,8 @@ packages:
     resolution: {integrity: sha512-d0z310fCWv5dJwnX1Y/MncBAqGMKEzlBb1AOf7z9K8ALnd0utBX/msg/fA0+sbyN1ihbMsLhrBlnl1ak7Wa0rg==}
     hasBin: true
 
-  uuid@11.1.1:
-    resolution: {integrity: sha512-vIYxrBCC/N/K+Js3qSN88go7kIfNPssr/hHCesKCQNAjmgvYS2oqr69kIufEG+O4+PfezOH4EbIeHCfFov8ZgQ==}
+  uuid@14.0.2:
+    resolution: {integrity: sha512-xZe/16rV4aa+HGSOCiY2YeLT1OybRLrrkL/Rqaq7p7GMVXjFh+6wN4oMYgjFmnSnhY8t6Xpdl2l9qmnHYuMHwQ==}
     hasBin: true
 
   v8-compile-cache-lib@3.0.1:
@@ -15510,7 +15510,7 @@ snapshots:
       roughjs: 4.6.6
       stylis: 4.4.0
       ts-dedent: 2.3.0
-      uuid: 11.1.1
+      uuid: 14.0.2
 
   methods@1.1.2: {}
 
@@ -17353,7 +17353,7 @@ snapshots:
 
   uuid@11.0.3: {}
 
-  uuid@11.1.1: {}
+  uuid@14.0.2: {}
 
   v8-compile-cache-lib@3.0.1: {}
 
