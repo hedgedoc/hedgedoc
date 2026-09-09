@@ -27,7 +27,7 @@ export default registerAs('cspConfig', () => {
     reportURI: process.env.HD_CSP_REPORT_URI,
   });
   if (cspConfig.error) {
-    const errorMessages = cspConfig.error.errors.map((issue) =>
+    const errorMessages = cspConfig.error.issues.map((issue) =>
       extractDescriptionFromZodIssue(issue, 'HD_CSP'),
     );
     const errorMessage = buildErrorMessage(errorMessages);

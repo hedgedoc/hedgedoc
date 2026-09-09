@@ -3,20 +3,23 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { AuthProviderInterface, AuthProviderType } from '@hedgedoc/commons';
+import type { AuthProviderInterface } from '@hedgedoc/commons';
+import { AuthProviderType } from '@hedgedoc/commons';
 import { Inject, Injectable } from '@nestjs/common';
 import { URL } from 'url';
 
-import authConfiguration, { AuthConfig } from '../config/auth.config';
-import customizationConfiguration, { CustomizationConfig } from '../config/customization.config';
-import externalServicesConfiguration, {
-  ExternalServicesConfig,
-} from '../config/external-services.config';
-import noteConfiguration, { NoteConfig } from '../config/note.config';
+import type { AuthConfig } from '../config/auth.config';
+import authConfiguration from '../config/auth.config';
+import type { CustomizationConfig } from '../config/customization.config';
+import customizationConfiguration from '../config/customization.config';
+import type { ExternalServicesConfig } from '../config/external-services.config';
+import externalServicesConfiguration from '../config/external-services.config';
+import type { NoteConfig } from '../config/note.config';
+import noteConfiguration from '../config/note.config';
 import { BrandingDto } from '../dtos/branding.dto';
 import { FrontendConfigDto } from '../dtos/frontend-config.dto';
 import { SpecialUrlDto } from '../dtos/special-urls.dto';
-import { ConsoleLoggerService } from '../logger/console-logger.service';
+import type { ConsoleLoggerService } from '../logger/console-logger.service';
 import { getServerVersionFromPackageJson } from '../utils/server-version';
 
 @Injectable()

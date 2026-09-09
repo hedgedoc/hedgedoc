@@ -63,7 +63,7 @@ const securityConfigSchema = z.object({
         .describe('HD_SECURITY_RATE_LIMIT_AUTH_WINDOW'),
     }),
     bypass: z
-      .array(z.string().ip())
+      .array(z.union([z.ipv4(), z.ipv6()]))
       .optional()
       .default([])
       .describe('HD_SECURITY_RATE_LIMIT_BYPASS'),
@@ -96,7 +96,7 @@ export default registerAs('securityConfig', () => {
   });
 
   if (securityConfig.error) {
-    const errorMessages = securityConfig.error.errors.map((issue) =>
+    const errorMessages = securityConfig.error.issues.map((issue) =>
       extractDescriptionFromZodIssue(issue, 'HD_SECURITY'),
     );
     const errorMessage = buildErrorMessage(errorMessages);

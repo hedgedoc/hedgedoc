@@ -40,8 +40,7 @@ const ldapSchema = z
     tlsCaCerts: z
       .array(
         z.string({
-          // oxlint-disable-next-line @typescript-eslint/naming-convention
-          required_error: 'File not found',
+          error: (issue) => (issue.input === undefined ? 'File not found' : 'Not a string'),
         }),
       )
       .optional()
@@ -68,17 +67,17 @@ const ldapSchema = z
     const tlsMin = config.tlsMinVersion?.replace('TLSv', '');
     const tlsMax = config.tlsMaxVersion?.replace('TLSv', '');
     if (tlsMin && tlsMax && tlsMin > tlsMax) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+      ctx.issues.push({
+        code: 'custom',
         message: 'TLS min version must be less than or equal to TLS max version',
-        fatal: true,
+        input: config,
       });
     }
     if ((tlsMin && tlsMin < '1.2') || (tlsMax && tlsMax < '1.2')) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+      ctx.issues.push({
+        code: 'custom',
         message: 'For security reasons, consider using TLS version 1.2 or higher',
-        fatal: false,
+        input: config,
       });
     }
   });
@@ -86,14 +85,14 @@ const ldapSchema = z
 const oidcSchema = z.object({
   identifier: z.string().describe('HD_AUTH_OIDC_SERVERS'),
   providerName: z.string().default('OpenID Connect').describe('HD_AUTH_OIDC_*_PROVIDER_NAME'),
-  issuer: z.string().url().describe('HD_AUTH_OIDC_*_ISSUER'),
+  issuer: z.url().describe('HD_AUTH_OIDC_*_ISSUER'),
   clientId: z.string().describe('HD_AUTH_OIDC_*_CLIENT_ID'),
   clientSecret: z.string().describe('HD_AUTH_OIDC_*_CLIENT_SECRET'),
-  theme: z.nativeEnum(Theme).optional().describe('HD_AUTH_OIDC_*_THEME'),
-  authorizeUrl: z.string().url().optional().describe('HD_AUTH_OIDC_*_AUTHORIZE_URL'),
-  tokenUrl: z.string().url().optional().describe('HD_AUTH_OIDC_*_TOKEN_URL'),
-  userinfoUrl: z.string().url().optional().describe('HD_AUTH_OIDC_*_USERINFO_URL'),
-  endSessionUrl: z.string().url().optional().describe('HD_AUTH_OIDC_*_END_SESSION_URL'),
+  theme: z.enum(Theme).optional().describe('HD_AUTH_OIDC_*_THEME'),
+  authorizeUrl: z.url().optional().describe('HD_AUTH_OIDC_*_AUTHORIZE_URL'),
+  tokenUrl: z.url().optional().describe('HD_AUTH_OIDC_*_TOKEN_URL'),
+  userinfoUrl: z.url().optional().describe('HD_AUTH_OIDC_*_USERINFO_URL'),
+  endSessionUrl: z.url().optional().describe('HD_AUTH_OIDC_*_END_SESSION_URL'),
   scope: z.string().default('openid profile email').describe('HD_AUTH_OIDC_*_SCOPE'),
   usernameField: z.string().default('preferred_username').describe('HD_AUTH_OIDC_*_USERNAME_FIELD'),
   userIdField: z.string().default('sub').describe('HD_AUTH_OIDC_*_USER_ID_FIELD'),
@@ -220,7 +219,7 @@ export default registerAs('authConfig', () => {
   });
 
   if (authConfig.error) {
-    const errorMessages = authConfig.error.errors.map((issue) =>
+    const errorMessages = authConfig.error.issues.map((issue) =>
       extractDescriptionFromZodIssue(issue, 'HD_AUTH', {
         ldap: ldapServers,
         oidc: oidcServers,

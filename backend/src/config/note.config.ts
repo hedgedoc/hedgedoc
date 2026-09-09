@@ -82,24 +82,24 @@ const schema = z
     const defaultLoggedIn = config.permissions.default.loggedIn;
     const maxGuestLevel = config.permissions.maxGuestLevel;
     if (maxGuestLevel === PermissionLevel.FULL && defaultEveryone !== PermissionLevel.WRITE) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+      ctx.issues.push({
+        code: 'custom',
         message: `'HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL' is set to '${PermissionLevelNames[maxGuestLevel]}', but 'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[defaultEveryone]}'. This does not allow the guest users to write in the notes they can create.`,
-        fatal: true,
+        input: config,
       });
     }
     if (defaultEveryone > maxGuestLevel) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+      ctx.issues.push({
+        code: 'custom',
         message: `'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[defaultEveryone]}', but 'HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL' is set to '${PermissionLevelNames[maxGuestLevel]}'. This does not work since the default level may not be higher than the maximum guest level.`,
-        fatal: true,
+        input: config,
       });
     }
     if (defaultEveryone > defaultLoggedIn) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+      ctx.issues.push({
+        code: 'custom',
         message: `'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${PermissionLevelNames[defaultEveryone]}', but 'HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN' is set to '${PermissionLevelNames[defaultLoggedIn]}'. This would give everyone greater permissions than logged-in users, and is not allowed since it doesn't make sense.`,
-        fatal: true,
+        input: config,
       });
     }
   });
@@ -126,7 +126,7 @@ export default registerAs('noteConfig', () => {
     persistInterval: parseOptionalNumber(process.env.HD_NOTE_PERSIST_INTERVAL),
   });
   if (noteConfig.error) {
-    const errorMessages = noteConfig.error.errors.map((issue) =>
+    const errorMessages = noteConfig.error.issues.map((issue) =>
       extractDescriptionFromZodIssue(issue, 'HD_NOTE'),
     );
     const errorMessage = buildErrorMessage(errorMessages);

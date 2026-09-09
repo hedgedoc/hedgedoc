@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,9 +15,7 @@ describe('externalServices', () => {
   it('correctly parses valid config', () => {
     const restore = mockedEnv(
       {
-        /* oxlint-disable @typescript-eslint/naming-convention */
         HD_PLANTUML_SERVER: plantUmlServer,
-        /* oxlint-enable @typescript-eslint/naming-convention */
       },
       {
         clear: true,
@@ -52,16 +50,14 @@ describe('externalServices', () => {
       const invalid = 'wrong!';
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_PLANTUML_SERVER: invalid,
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
         },
       );
       externalServicesConfig();
-      expect(spyConsoleError.mock.calls[0][0]).toContain('HD_PLANTUML_SERVER: Invalid url');
+      expect(spyConsoleError.mock.calls[0][0]).toContain('HD_PLANTUML_SERVER: Invalid URL');
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
     });
@@ -69,9 +65,7 @@ describe('externalServices', () => {
     it('when image proxy is configured', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_IMAGE_PROXY: imageProxy,
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,

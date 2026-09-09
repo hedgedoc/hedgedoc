@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { ZodIssue } from 'zod';
+import { type $ZodIssue } from 'zod/v4/core';
 
 /**
  * Converts a camelCase string to snake_case.
@@ -25,13 +25,13 @@ function camelToSnakeCase(str: string): string {
  * @returns A formatted error message string
  */
 export function extractDescriptionFromZodIssue(
-  issue: ZodIssue,
+  issue: $ZodIssue,
   prefix: string,
   allArrays?: Record<string, string[]>,
 ): string {
   let identifier: string = prefix;
   for (let index = 0; index < issue.path.length; index++) {
-    const pathSegment = issue.path[index];
+    const pathSegment = issue.path[index] as number;
     if (typeof pathSegment === 'string') {
       identifier += '_' + camelToSnakeCase(pathSegment).toUpperCase();
     } else if (index >= 1) {

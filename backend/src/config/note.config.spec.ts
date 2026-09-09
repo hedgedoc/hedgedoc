@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -27,7 +27,6 @@ describe('noteConfig', () => {
     it('when given correct and complete environment variables', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
@@ -35,7 +34,6 @@ describe('noteConfig', () => {
           HD_NOTE_PERMISSIONS_DEFAULT_PUBLICLY_VISIBLE: publiclyVisible.toString(),
           HD_NOTE_REVISION_RETENTION_DAYS: retentionDays.toString(),
           HD_NOTE_PERSIST_INTERVAL: persistInteval.toString(),
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -57,11 +55,9 @@ describe('noteConfig', () => {
     it('when no HD_NOTE_FORBIDDEN_ALIASES is set', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -80,12 +76,10 @@ describe('noteConfig', () => {
     it('when HD_NOTE_FORBIDDEN_ALIASES is a single item', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAlias,
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -105,12 +99,10 @@ describe('noteConfig', () => {
     it('when HD_NOTE_FORBIDDEN_ALIASES has multiple items', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -130,12 +122,10 @@ describe('noteConfig', () => {
     it('with mixed-case HD_NOTE_FORBIDDEN_ALIASES being transformed to lowercase', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAlias.toUpperCase(),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -155,11 +145,9 @@ describe('noteConfig', () => {
     it('when no HD_NOTE_MAX_LENGTH is set', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -179,12 +167,10 @@ describe('noteConfig', () => {
     it('when no HD_PERMISSION_DEFAULT_EVERYONE is set', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -204,11 +190,9 @@ describe('noteConfig', () => {
     it('when no HD_PERMISSION_DEFAULT_LOGGED_IN is set', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -228,11 +212,9 @@ describe('noteConfig', () => {
     it('when no HD_PERMISSIONS_MAX_GUEST_LEVEL is set', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -252,12 +234,10 @@ describe('noteConfig', () => {
     it('when no HD_NOTE_REVISION_RETENTION_DAYS is set', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -278,12 +258,10 @@ describe('noteConfig', () => {
     it('when no HD_NOTE_PERSIST_INTERVAL is set', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.WRITE],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.WRITE],
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -324,12 +302,10 @@ describe('noteConfig', () => {
     it('when given a non-valid HD_NOTE_FORBIDDEN_ALIASES', async () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: invalidforbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -337,10 +313,10 @@ describe('noteConfig', () => {
       );
       noteConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        'HD_NOTE_FORBIDDEN_ALIASES[0]: String must contain at least 1 character(s)',
+        'HD_NOTE_FORBIDDEN_ALIASES[0]: Too small: expected string to have >=1 characters',
       );
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        'HD_NOTE_FORBIDDEN_ALIASES[1]: String must contain at least 1 character(s)',
+        'HD_NOTE_FORBIDDEN_ALIASES[1]: Too small: expected string to have >=1 characters',
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
@@ -349,12 +325,10 @@ describe('noteConfig', () => {
     it('when given a negative HD_NOTE_MAX_LENGTH', async () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: negativeMaxDocumentLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -362,7 +336,7 @@ describe('noteConfig', () => {
       );
       noteConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        'HD_NOTE_MAX_LENGTH: Number must be greater than 0',
+        'HD_NOTE_MAX_LENGTH: Too small: expected number to be >0',
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
@@ -371,12 +345,10 @@ describe('noteConfig', () => {
     it('when given a non-integer HD_NOTE_MAX_LENGTH', async () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: floatMaxDocumentLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -384,7 +356,7 @@ describe('noteConfig', () => {
       );
       noteConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        'HD_NOTE_MAX_LENGTH: Expected integer, received float',
+        'HD_NOTE_MAX_LENGTH: Invalid input: expected int, received number',
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
@@ -393,12 +365,10 @@ describe('noteConfig', () => {
     it('when given a non-number HD_NOTE_MAX_LENGTH', async () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: invalidMaxDocumentLength,
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -406,7 +376,7 @@ describe('noteConfig', () => {
       );
       noteConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        'HD_NOTE_MAX_LENGTH: Expected number, received nan',
+        'HD_NOTE_MAX_LENGTH: Invalid input: expected number, received NaN',
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
@@ -415,12 +385,10 @@ describe('noteConfig', () => {
     it('when given a non-valid HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE', async () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: wrongDefaultPermission,
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -428,7 +396,7 @@ describe('noteConfig', () => {
       );
       noteConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        `HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: Invalid enum value. Expected '${PermissionLevelNames[PermissionLevel.DENY]}' | '${PermissionLevelNames[PermissionLevel.READ]}' | '${PermissionLevelNames[PermissionLevel.WRITE]}' | '${PermissionLevelNames[PermissionLevel.FULL]}', received 'wrong'`,
+        `HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: Invalid option: expected one of "${PermissionLevelNames[PermissionLevel.DENY]}"|"${PermissionLevelNames[PermissionLevel.READ]}"|"${PermissionLevelNames[PermissionLevel.WRITE]}"|"${PermissionLevelNames[PermissionLevel.FULL]}"`,
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
@@ -437,12 +405,10 @@ describe('noteConfig', () => {
     it('when given a non-valid HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN', async () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: wrongDefaultPermission,
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -450,7 +416,7 @@ describe('noteConfig', () => {
       );
       noteConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        `HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: Invalid enum value. Expected '${PermissionLevelNames[PermissionLevel.DENY]}' | '${PermissionLevelNames[PermissionLevel.READ]}' | '${PermissionLevelNames[PermissionLevel.WRITE]}' | '${PermissionLevelNames[PermissionLevel.FULL]}', received 'wrong'`,
+        `HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: Invalid option: expected one of "${PermissionLevelNames[PermissionLevel.DENY]}"|"${PermissionLevelNames[PermissionLevel.READ]}"|"${PermissionLevelNames[PermissionLevel.WRITE]}"|"${PermissionLevelNames[PermissionLevel.FULL]}"`,
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
@@ -459,13 +425,11 @@ describe('noteConfig', () => {
     it('when given a non-valid HD_PERMISSIONS_MAX_GUEST_LEVEL', async () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: wrongDefaultPermission,
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -473,7 +437,7 @@ describe('noteConfig', () => {
       );
       noteConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        `HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: Invalid enum value. Expected '${PermissionLevelNames[PermissionLevel.DENY]}' | '${PermissionLevelNames[PermissionLevel.READ]}' | '${PermissionLevelNames[PermissionLevel.WRITE]}' | '${PermissionLevelNames[PermissionLevel.FULL]}', received 'wrong'`,
+        `HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: Invalid option: expected one of "${PermissionLevelNames[PermissionLevel.DENY]}"|"${PermissionLevelNames[PermissionLevel.READ]}"|"${PermissionLevelNames[PermissionLevel.WRITE]}"|"${PermissionLevelNames[PermissionLevel.FULL]}"`,
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
@@ -482,13 +446,11 @@ describe('noteConfig', () => {
     it('when HD_PERMISSIONS_MAX_GUEST_LEVEL is set to deny and HD_PERMISSION_DEFAULT_EVERYONE is set', async () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: 'deny',
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -513,12 +475,10 @@ describe('noteConfig', () => {
           it(`when HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE is set to ${everyonePermission}, but HD_PERMISSION_DEFAULT_LOGGED_IN is set to ${loggedInPermission}`, async () => {
             const restore = mockedEnv(
               {
-                /* oxlint-disable @typescript-eslint/naming-convention */
                 HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
                 HD_NOTE_MAX_LENGTH: maxLength.toString(),
                 HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: everyonePermission,
                 HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: loggedInPermission,
-                /* oxlint-enable @typescript-eslint/naming-convention */
               },
               {
                 clear: true,
@@ -538,12 +498,10 @@ describe('noteConfig', () => {
         it(`when HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL is set to ${PermissionLevelNames[PermissionLevel.FULL]} and HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE is set to ${defaultEveryone}`, async () => {
           const restore = mockedEnv(
             {
-              /* oxlint-disable @typescript-eslint/naming-convention */
               HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
               HD_NOTE_MAX_LENGTH: maxLength.toString(),
               HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: defaultEveryone,
               HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: PermissionLevelNames[PermissionLevel.FULL],
-              /* oxlint-enable @typescript-eslint/naming-convention */
             },
             {
               clear: true,
@@ -565,12 +523,10 @@ describe('noteConfig', () => {
         it(`when 'HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE' is set to '${defaultEveryone}', but 'HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL' is set to '${maxGuestLevel}'`, async () => {
           const restore = mockedEnv(
             {
-              /* oxlint-disable @typescript-eslint/naming-convention */
               HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
               HD_NOTE_MAX_LENGTH: maxLength.toString(),
               HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: defaultEveryone,
               HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL: maxGuestLevel,
-              /* oxlint-enable @typescript-eslint/naming-convention */
             },
             {
               clear: true,
@@ -589,13 +545,11 @@ describe('noteConfig', () => {
     it('when given a negative retention days', async () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_REVISION_RETENTION_DAYS: (-1).toString(),
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -603,7 +557,7 @@ describe('noteConfig', () => {
       );
       noteConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        'HD_NOTE_REVISION_RETENTION_DAYS: Number must be greater than or equal to 0',
+        'HD_NOTE_REVISION_RETENTION_DAYS: Too small: expected number to be >=0',
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
@@ -612,14 +566,12 @@ describe('noteConfig', () => {
     it('when given a negative persistence interval', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
           HD_NOTE_MAX_LENGTH: maxLength.toString(),
           HD_NOTE_PERMISSIONS_DEFAULT_EVERYONE: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_PERMISSIONS_DEFAULT_LOGGED_IN: PermissionLevelNames[PermissionLevel.READ],
           HD_NOTE_REVISION_RETENTION_DAYS: retentionDays.toString(),
           HD_NOTE_PERSIST_INTERVAL: (-1).toString(),
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -627,7 +579,7 @@ describe('noteConfig', () => {
       );
       noteConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        'HD_NOTE_PERSIST_INTERVAL: Number must be greater than or equal to 0',
+        'HD_NOTE_PERSIST_INTERVAL: Too small: expected number to be >=0',
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();

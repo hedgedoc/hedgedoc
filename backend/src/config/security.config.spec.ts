@@ -10,7 +10,6 @@ import securityConfig from './security.config';
 
 describe('securityConfig: rate limiting', () => {
   const completeRateLimitConfig = {
-    /* oxlint-disable @typescript-eslint/naming-convention */
     HD_SECURITY_RATE_LIMIT_PUBLIC_API_MAX: '150',
     HD_SECURITY_RATE_LIMIT_PUBLIC_API_WINDOW: '300',
     HD_SECURITY_RATE_LIMIT_AUTHENTICATED_MAX: '600',
@@ -20,7 +19,6 @@ describe('securityConfig: rate limiting', () => {
     HD_SECURITY_RATE_LIMIT_AUTH_MAX: '40',
     HD_SECURITY_RATE_LIMIT_AUTH_WINDOW: '900',
     HD_SECURITY_RATE_LIMIT_BYPASS: '127.0.0.1,::1',
-    /* oxlint-enable @typescript-eslint/naming-convention */
   };
 
   describe('is correctly parsed', () => {
@@ -69,9 +67,7 @@ describe('securityConfig: rate limiting', () => {
     it('when max is set to 0 (disables rate limiting)', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_SECURITY_RATE_LIMIT_PUBLIC_API_MAX: '0',
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -85,9 +81,7 @@ describe('securityConfig: rate limiting', () => {
     it('when bypass is set with a single IPv4 address', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_SECURITY_RATE_LIMIT_BYPASS: '192.168.1.1',
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -101,9 +95,7 @@ describe('securityConfig: rate limiting', () => {
     it('when bypass is set with multiple IP addresses', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_SECURITY_RATE_LIMIT_BYPASS: '127.0.0.1,::1,192.168.1.1',
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -117,9 +109,7 @@ describe('securityConfig: rate limiting', () => {
     it('when bypass is set with IPv6 addresses', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_SECURITY_RATE_LIMIT_BYPASS: '::1,fe80::1',
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -154,9 +144,7 @@ describe('securityConfig: rate limiting', () => {
     it('when max is negative', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_SECURITY_RATE_LIMIT_PUBLIC_API_MAX: '-1',
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -164,7 +152,7 @@ describe('securityConfig: rate limiting', () => {
       );
       securityConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        'HD_SECURITY_RATE_LIMIT_PUBLIC_API_MAX: Number must be greater than or equal to 0',
+        'HD_SECURITY_RATE_LIMIT_PUBLIC_API_MAX: Too small: expected number to be >=0',
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
@@ -173,9 +161,7 @@ describe('securityConfig: rate limiting', () => {
     it('when window is zero', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_SECURITY_RATE_LIMIT_PUBLIC_API_WINDOW: '0',
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -183,7 +169,7 @@ describe('securityConfig: rate limiting', () => {
       );
       securityConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        'HD_SECURITY_RATE_LIMIT_PUBLIC_API_WINDOW: Number must be greater than 0',
+        'HD_SECURITY_RATE_LIMIT_PUBLIC_API_WINDOW: Too small: expected number to be >0',
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
@@ -192,9 +178,7 @@ describe('securityConfig: rate limiting', () => {
     it('when window is negative', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_SECURITY_RATE_LIMIT_AUTHENTICATED_WINDOW: '-300',
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -202,7 +186,7 @@ describe('securityConfig: rate limiting', () => {
       );
       securityConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        'HD_SECURITY_RATE_LIMIT_AUTHENTICATED_WINDOW: Number must be greater than 0',
+        'HD_SECURITY_RATE_LIMIT_AUTHENTICATED_WINDOW: Too small: expected number to be >0',
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
@@ -211,9 +195,7 @@ describe('securityConfig: rate limiting', () => {
     it('when max is not an integer', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_SECURITY_RATE_LIMIT_AUTH_MAX: '20.5',
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -221,7 +203,7 @@ describe('securityConfig: rate limiting', () => {
       );
       securityConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        'HD_SECURITY_RATE_LIMIT_AUTH_MAX: Expected integer',
+        'HD_SECURITY_RATE_LIMIT_AUTH_MAX: Invalid input: expected int, received number',
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
@@ -230,9 +212,7 @@ describe('securityConfig: rate limiting', () => {
     it('when window is not an integer', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_SECURITY_RATE_LIMIT_AUTH_WINDOW: '600.7',
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -240,7 +220,7 @@ describe('securityConfig: rate limiting', () => {
       );
       securityConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        'HD_SECURITY_RATE_LIMIT_AUTH_WINDOW: Expected integer',
+        'HD_SECURITY_RATE_LIMIT_AUTH_WINDOW: Invalid input: expected int, received number',
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
@@ -249,9 +229,7 @@ describe('securityConfig: rate limiting', () => {
     it('when bypass contains an invalid IP address', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_SECURITY_RATE_LIMIT_BYPASS: '127.0.0.1,invalid-ip',
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -259,7 +237,7 @@ describe('securityConfig: rate limiting', () => {
       );
       securityConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        'HD_SECURITY_RATE_LIMIT_BYPASS[1]: Invalid ip',
+        'HD_SECURITY_RATE_LIMIT_BYPASS[1]: Invalid input',
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
@@ -268,9 +246,7 @@ describe('securityConfig: rate limiting', () => {
     it('when bypass contains a malformed IPv4 address', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_SECURITY_RATE_LIMIT_BYPASS: '999.999.999.999',
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -278,7 +254,7 @@ describe('securityConfig: rate limiting', () => {
       );
       securityConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        'HD_SECURITY_RATE_LIMIT_BYPASS[0]: Invalid ip',
+        'HD_SECURITY_RATE_LIMIT_BYPASS[0]: Invalid input',
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();

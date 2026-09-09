@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -7,12 +7,12 @@ import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals
 import * as utilsModule from './utils';
 import mockedEnv from 'mocked-env';
 
-import databaseConfig, {
-  getKnexConfig,
+import type {
   MariadbDatabaseConfig,
   PostgresDatabaseConfig,
   SqliteDatabaseConfig,
 } from './database.config';
+import databaseConfig, { getKnexConfig } from './database.config';
 import { TEST_CERT_FILE_CONTENT } from './shared-test-data';
 
 describe('databaseConfig', () => {
@@ -32,10 +32,8 @@ describe('databaseConfig', () => {
     it('SQLite config', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_DATABASE_TYPE: databaseTypeSqlite,
           HD_DATABASE_NAME: databaseFileSqlite,
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -50,14 +48,12 @@ describe('databaseConfig', () => {
     it('MariaDB config', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_DATABASE_TYPE: databaseTypeMariadb,
           HD_DATABASE_NAME: databaseName,
           HD_DATABASE_USERNAME: databaseUser,
           HD_DATABASE_PASSWORD: databasePass,
           HD_DATABASE_HOST: databaseHost,
           HD_DATABASE_PORT: String(databasePort),
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -76,36 +72,32 @@ describe('databaseConfig', () => {
     it('MariaDB config with TLS defaults when not enabled', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_DATABASE_TYPE: databaseTypeMariadb,
           HD_DATABASE_NAME: databaseName,
           HD_DATABASE_USERNAME: databaseUser,
           HD_DATABASE_PASSWORD: databasePass,
           HD_DATABASE_HOST: databaseHost,
           HD_DATABASE_PORT: String(databasePort),
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
         },
       );
       const config = databaseConfig() as MariadbDatabaseConfig;
-      expect(config.tls.enabled).toBe(false);
-      expect(config.tls.rejectUnauthorized).toBe(true);
+      expect(config.tls?.enabled).toBe(false);
+      expect(config.tls?.rejectUnauthorized).toBe(true);
       restore();
     });
 
     it('Postgres config', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_DATABASE_TYPE: databaseTypePostgres,
           HD_DATABASE_NAME: databaseName,
           HD_DATABASE_USERNAME: databaseUser,
           HD_DATABASE_PASSWORD: databasePass,
           HD_DATABASE_HOST: databaseHost,
           HD_DATABASE_PORT: String(databasePort),
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -124,7 +116,6 @@ describe('databaseConfig', () => {
     it('Postgres config with TLS enabled', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_DATABASE_TYPE: databaseTypePostgres,
           HD_DATABASE_NAME: databaseName,
           HD_DATABASE_USERNAME: databaseUser,
@@ -137,19 +128,18 @@ describe('databaseConfig', () => {
           HD_DATABASE_TLS_MIN_VERSION: 'TLSv1.2',
           HD_DATABASE_TLS_MAX_VERSION: 'TLSv1.3',
           HD_DATABASE_TLS_PASSPHRASE: 'test-passphrase',
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
         },
       );
       const config = databaseConfig() as PostgresDatabaseConfig;
-      expect(config.tls.enabled).toBe(true);
-      expect(config.tls.rejectUnauthorized).toBe(false);
-      expect(config.tls.ciphers).toEqual('TLS_AES_256_GCM_SHA384');
-      expect(config.tls.minVersion).toEqual('TLSv1.2');
-      expect(config.tls.maxVersion).toEqual('TLSv1.3');
-      expect(config.tls.passphrase).toEqual('test-passphrase');
+      expect(config.tls?.enabled).toBe(true);
+      expect(config.tls?.rejectUnauthorized).toBe(false);
+      expect(config.tls?.ciphers).toEqual('TLS_AES_256_GCM_SHA384');
+      expect(config.tls?.minVersion).toEqual('TLSv1.2');
+      expect(config.tls?.maxVersion).toEqual('TLSv1.3');
+      expect(config.tls?.passphrase).toEqual('test-passphrase');
       restore();
     });
 
@@ -158,7 +148,6 @@ describe('databaseConfig', () => {
 
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_DATABASE_TYPE: databaseTypePostgres,
           HD_DATABASE_NAME: databaseName,
           HD_DATABASE_USERNAME: databaseUser,
@@ -168,17 +157,16 @@ describe('databaseConfig', () => {
           HD_DATABASE_TLS_CA_PATH: '/path/to/ca.pem',
           HD_DATABASE_TLS_CERT_PATH: '/path/to/cert.pem',
           HD_DATABASE_TLS_KEY_PATH: '/path/to/key.pem',
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
         },
       );
       const config = databaseConfig() as PostgresDatabaseConfig;
-      expect(config.tls.enabled).toBe(true);
-      expect(config.tls.caPath).toEqual('/path/to/ca.pem');
-      expect(config.tls.certPath).toEqual('/path/to/cert.pem');
-      expect(config.tls.keyPath).toEqual('/path/to/key.pem');
+      expect(config.tls?.enabled).toBe(true);
+      expect(config.tls?.caPath).toEqual('/path/to/ca.pem');
+      expect(config.tls?.certPath).toEqual('/path/to/cert.pem');
+      expect(config.tls?.keyPath).toEqual('/path/to/key.pem');
 
       const knexConfig = getKnexConfig(config);
       const connection = knexConfig.connection as Record<string, unknown>;
@@ -196,7 +184,6 @@ describe('databaseConfig', () => {
 
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_DATABASE_TYPE: databaseTypeMariadb,
           HD_DATABASE_NAME: databaseName,
           HD_DATABASE_USERNAME: databaseUser,
@@ -206,14 +193,13 @@ describe('databaseConfig', () => {
           HD_DATABASE_TLS_CA_PATH: '/path/to/ca.pem',
           HD_DATABASE_TLS_CIPHERS: 'TLS_AES_256_GCM_SHA384',
           HD_DATABASE_TLS_REJECT_UNAUTHORIZED: 'true',
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
         },
       );
       const config = databaseConfig() as MariadbDatabaseConfig;
-      expect(config.tls.enabled).toBe(true);
+      expect(config.tls?.enabled).toBe(true);
 
       const knexConfig = getKnexConfig(config);
       const connection = knexConfig.connection as Record<string, unknown>;
@@ -229,13 +215,11 @@ describe('databaseConfig', () => {
     it('Postgres config without TLS produces no ssl in knex config', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_DATABASE_TYPE: databaseTypePostgres,
           HD_DATABASE_NAME: databaseName,
           HD_DATABASE_USERNAME: databaseUser,
           HD_DATABASE_PASSWORD: databasePass,
           HD_DATABASE_HOST: databaseHost,
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -272,14 +256,12 @@ describe('databaseConfig', () => {
     it('when the port is negative', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_DATABASE_TYPE: databaseTypePostgres,
           HD_DATABASE_NAME: databaseName,
           HD_DATABASE_USERNAME: databaseUser,
           HD_DATABASE_PASSWORD: databasePass,
           HD_DATABASE_HOST: databaseHost,
           HD_DATABASE_PORT: String(invalidDatabasePort),
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -287,7 +269,7 @@ describe('databaseConfig', () => {
       );
       databaseConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        'HD_DATABASE_PORT: Number must be greater than 0',
+        'HD_DATABASE_PORT: Too small: expected number to be >0',
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
@@ -295,14 +277,12 @@ describe('databaseConfig', () => {
     it('when the port is too big', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_DATABASE_TYPE: databaseTypePostgres,
           HD_DATABASE_NAME: databaseName,
           HD_DATABASE_USERNAME: databaseUser,
           HD_DATABASE_PASSWORD: databasePass,
           HD_DATABASE_HOST: databaseHost,
           HD_DATABASE_PORT: String(invalidDatabasePort2),
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -310,7 +290,7 @@ describe('databaseConfig', () => {
       );
       databaseConfig();
       expect(spyConsoleError.mock.calls[0][0]).toContain(
-        'HD_DATABASE_PORT: Number must be less than or equal to 65535',
+        'HD_DATABASE_PORT: Too big: expected number to be <=65535',
       );
       expect(spyProcessExit).toHaveBeenCalledWith(1);
       restore();
@@ -319,7 +299,6 @@ describe('databaseConfig', () => {
     it('when TLS min version is greater than max version', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_DATABASE_TYPE: databaseTypePostgres,
           HD_DATABASE_NAME: databaseName,
           HD_DATABASE_USERNAME: databaseUser,
@@ -328,7 +307,6 @@ describe('databaseConfig', () => {
           HD_DATABASE_TLS_ENABLED: 'true',
           HD_DATABASE_TLS_MIN_VERSION: 'TLSv1.3',
           HD_DATABASE_TLS_MAX_VERSION: 'TLSv1.2',
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
@@ -345,7 +323,6 @@ describe('databaseConfig', () => {
     it('when TLS version is invalid', () => {
       const restore = mockedEnv(
         {
-          /* oxlint-disable @typescript-eslint/naming-convention */
           HD_DATABASE_TYPE: databaseTypePostgres,
           HD_DATABASE_NAME: databaseName,
           HD_DATABASE_USERNAME: databaseUser,
@@ -353,7 +330,6 @@ describe('databaseConfig', () => {
           HD_DATABASE_HOST: databaseHost,
           HD_DATABASE_TLS_ENABLED: 'true',
           HD_DATABASE_TLS_MIN_VERSION: 'TLSv1.0',
-          /* oxlint-enable @typescript-eslint/naming-convention */
         },
         {
           clear: true,
