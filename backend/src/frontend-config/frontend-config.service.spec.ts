@@ -6,15 +6,16 @@
 import { describe, it, expect } from '@jest/globals';
 import { AuthProviderType, PermissionLevel, PermissionLevelNames } from '@hedgedoc/commons';
 import { ConfigModule, registerAs } from '@nestjs/config';
-import { Test, TestingModule } from '@nestjs/testing';
+import type { TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
 import { URL } from 'url';
 
-import { AppConfig } from '../config/app.config';
-import { AuthConfig } from '../config/auth.config';
-import { CustomizationConfig } from '../config/customization.config';
-import { ExternalServicesConfig } from '../config/external-services.config';
+import type { AppConfig } from '../config/app.config';
+import type { AuthConfig } from '../config/auth.config';
+import type { CustomizationConfig } from '../config/customization.config';
+import type { ExternalServicesConfig } from '../config/external-services.config';
 import { Loglevel } from '../config/loglevel.enum';
-import { NoteConfig } from '../config/note.config';
+import type { NoteConfig } from '../config/note.config';
 import { LoggerModule } from '../logger/logger.module';
 import { getServerVersionFromPackageJson } from '../utils/server-version';
 import { FrontendConfigService } from './frontend-config.service';

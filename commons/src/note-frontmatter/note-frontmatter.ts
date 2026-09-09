@@ -13,7 +13,7 @@ import { NoteTextDirection } from './note-text-direction.js'
 
 // Reveal.js provides types but no runtime validation of fields, so we validate them as unknown and accept everything
 const slideOptionsSchema = z
-  .record(z.unknown())
+  .record(z.string(), z.unknown())
   .default(defaultNoteFrontmatter.slideOptions)
   .transform((slideOptions) => slideOptions as Partial<RevealOptions>)
 
@@ -47,7 +47,7 @@ export const NoteFrontmatterSchema = z
       .default(defaultNoteFrontmatter.license)
       .describe('License header field to add to the HTML'),
     opengraph: z
-      .record(z.coerce.string())
+      .record(z.string(), z.coerce.string())
       .default(defaultNoteFrontmatter.opengraph)
       .describe('OpenGraph meta tags'),
     slideOptions: slideOptionsSchema.describe('Reveal.js options for slides'),

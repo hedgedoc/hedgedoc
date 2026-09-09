@@ -13,7 +13,7 @@ import { AuthProviderSchema } from './auth-provider.dto.js'
 
 export const FrontendConfigSchema = z
   .object({
-    guestAccess: z.nativeEnum(PermissionLevel).describe('Maximum access level for guest users'),
+    guestAccess: z.enum(PermissionLevel).describe('Maximum access level for guest users'),
     allowRegister: z.boolean().describe('Are users allowed to register on this instance?'),
     allowProfileEdits: z.boolean().describe('Are users allowed to edit their profile information?'),
     allowChooseUsername: z

@@ -110,7 +110,7 @@ export default registerAs('mediaConfig', () => {
       : DEFAULT_MAX_UPLOAD_SIZE,
   });
   if (mediaConfig.error) {
-    const errorMessages = mediaConfig.error.errors.map((issue) =>
+    const errorMessages = mediaConfig.error.issues.map((issue) =>
       extractDescriptionFromZodIssue(issue, 'HD_MEDIA'),
     );
     const errorMessage = buildErrorMessage(errorMessages);

@@ -36,7 +36,7 @@ export default registerAs('customizationConfig', () => {
     },
   });
   if (customizationConfig.error) {
-    const errorMessages = customizationConfig.error.errors.map((issue) =>
+    const errorMessages = customizationConfig.error.issues.map((issue) =>
       extractDescriptionFromZodIssue(issue, 'HD'),
     );
     const errorMessage = buildErrorMessage(errorMessages);

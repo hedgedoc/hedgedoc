@@ -20,7 +20,7 @@ export const generateNoteTitle = (
 ): string => {
   if (frontmatter?.title) {
     return frontmatter.title.trim()
-  } else if (frontmatter?.opengraph.title) {
+  } else if (frontmatter?.opengraph.title && typeof frontmatter?.opengraph.title === 'string') {
     return frontmatter?.opengraph.title.trim()
   } else {
     return (firstHeadingProvider() ?? '').trim() || previousTitle?.trim() || ''

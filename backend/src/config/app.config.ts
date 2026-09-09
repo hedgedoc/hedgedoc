@@ -5,7 +5,7 @@
  */
 import { NoSubdirectoryAllowedError, parseUrl, WrongProtocolError } from '@hedgedoc/commons';
 import { registerAs } from '@nestjs/config';
-import z, { RefinementCtx } from 'zod';
+import z, { type RefinementCtx } from 'zod';
 
 import { Loglevel } from './loglevel.enum';
 import { parseOptionalBoolean, parseOptionalNumber, printConfigErrorAndExit } from './utils';
@@ -23,28 +23,28 @@ function validateUrl(value: string | undefined, ctx: RefinementCtx): void {
   }
   try {
     if (!parseUrl(value).isPresent()) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.invalid_string,
+      ctx.issues.push({
+        code: 'invalid_format',
         message: "Can't parse as URL",
-        fatal: true,
-        validation: 'url',
+        input: value,
+        format: 'url',
       });
       return z.NEVER;
     }
   } catch (error) {
     if (error instanceof NoSubdirectoryAllowedError) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.invalid_string,
-        message: ctx.path[0] + ' must not contain a subdirectory',
-        fatal: true,
-        validation: 'url',
+      ctx.issues.push({
+        code: 'invalid_format',
+        message: 'must not contain a subdirectory',
+        input: value,
+        format: 'url',
       });
     } else if (error instanceof WrongProtocolError) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.invalid_string,
-        message: ctx.path[0] + ' protocol must be HTTP or HTTPS',
-        fatal: true,
-        validation: 'url',
+      ctx.issues.push({
+        code: 'invalid_format',
+        message: 'protocol must be HTTP or HTTPS',
+        input: value,
+        format: 'url',
       });
     } else {
       throw error;
@@ -61,7 +61,10 @@ const schema = z
       .default('')
       .describe('HD_RENDERER_BASE_URL'),
     backendPort: z.number().positive().int().max(65535).default(3000).describe('HD_BACKEND_PORT'),
-    backendBindIp: z.string().ip().default('127.0.0.1').describe('HD_BACKEND_BIND_IP'),
+    backendBindIp: z
+      .union([z.ipv4(), z.ipv6()])
+      .default('127.0.0.1')
+      .describe('HD_BACKEND_BIND_IP'),
     log: z.object({
       level: z
         .enum(Object.values(Loglevel) as [Loglevel, ...Loglevel[]])
@@ -92,7 +95,7 @@ export default registerAs('appConfig', () => {
     },
   });
   if (appConfig.error) {
-    const errorMessages = appConfig.error.errors.map((issue) =>
+    const errorMessages = appConfig.error.issues.map((issue) =>
       extractDescriptionFromZodIssue(issue, 'HD'),
     );
     const errorMessage = buildErrorMessage(errorMessages);
