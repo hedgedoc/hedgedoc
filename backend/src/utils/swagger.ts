@@ -3,12 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { INestApplication } from '@nestjs/common';
+import type { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { PrivateApiModule } from '../api/private/private-api.module';
 import { PublicApiModule } from '../api/public/public-api.module';
 import { getServerVersionFromPackageJson } from './server-version';
+import { cleanupOpenApiDoc } from 'nestjs-zod';
 
 export const PUBLIC_API_PATH = 'api/doc/v2';
 export const PRIVATE_API_PATH = 'api/doc/private';
@@ -31,7 +32,7 @@ export async function setupPublicApiDocs(app: INestApplication): Promise<void> {
   const publicApi = SwaggerModule.createDocument(app, publicApiOptions, {
     include: [PublicApiModule],
   });
-  SwaggerModule.setup(PUBLIC_API_PATH, app, publicApi);
+  SwaggerModule.setup(PUBLIC_API_PATH, app, cleanupOpenApiDoc(publicApi));
 }
 
 /**
@@ -49,5 +50,5 @@ export async function setupPrivateApiDocs(app: INestApplication): Promise<void> 
   const privateApi = SwaggerModule.createDocument(app, privateApiOptions, {
     include: [PrivateApiModule],
   });
-  SwaggerModule.setup(PRIVATE_API_PATH, app, privateApi);
+  SwaggerModule.setup(PRIVATE_API_PATH, app, cleanupOpenApiDoc(privateApi));
 }
