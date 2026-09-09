@@ -19,7 +19,7 @@ import noteConfiguration from '../config/note.config';
 import { BrandingDto } from '../dtos/branding.dto';
 import { FrontendConfigDto } from '../dtos/frontend-config.dto';
 import { SpecialUrlDto } from '../dtos/special-urls.dto';
-import type { ConsoleLoggerService } from '../logger/console-logger.service';
+import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { getServerVersionFromPackageJson } from '../utils/server-version';
 
 @Injectable()
