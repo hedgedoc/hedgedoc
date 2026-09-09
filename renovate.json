@@ -80,6 +80,13 @@
       "matchPackageNames": [
         "/^@zxcvbn-ts//"
       ]
+    },
+    {
+      "groupName": "zod",
+      "matchPackageNames": [
+        "/zod/",
+        "/nestjs-zod/"
+      ]
     }
   ],
   "customManagers": [
