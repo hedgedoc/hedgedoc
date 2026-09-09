@@ -24,6 +24,7 @@
   "ignorePaths": [
     "docker/docker-compose.yml"
   ],
+  "minimumReleaseAge": "1 day",
   "packageRules": [
     {
       "groupName": "NestJS packages",
