@@ -577,11 +577,11 @@ importers:
         specifier: 6.43.9
         version: 6.43.9
       '@dicebear/core':
-        specifier: 9.4.3
-        version: 9.4.3
+        specifier: 10.7.0
+        version: 10.7.0
       '@dicebear/identicon':
         specifier: 9.4.2
-        version: 9.4.2(@dicebear/core@9.4.3)
+        version: 9.4.2(@dicebear/core@10.7.0)
       '@fontsource/source-sans-pro':
         specifier: 5.3.0
         version: 5.3.0
@@ -1845,9 +1845,9 @@ packages:
   '@cypress/xvfb@1.2.4':
     resolution: {integrity: sha512-skbBzPggOVYCbnGgV+0dmBdW/s77ZkAOXIC1knS8NagwDjBrNC1LuXtQJeiN6l+m7lzmHtaoUw/ctJKdqkG57Q==}
 
-  '@dicebear/core@9.4.3':
-    resolution: {integrity: sha512-9ITrQI57k3p5hKuU8HZJ1d0kPdrmTKEJDOdlKQ8CpaChbtmnD1R+dtWmNz5IesYThXM8F64pJ0ZvJ2rsY8Hciw==}
-    engines: {node: '>=18.0.0'}
+  '@dicebear/core@10.7.0':
+    resolution: {integrity: sha512-JUOzKOd8RUByJJo8ZL+C7YE/pvEsWewfpbWUmR8OIQZWv/PvUQHnohdevySC3icyyxe6EIU/8B/rQgA42us1QA==}
+    engines: {node: '>=22.0.0'}
 
   '@dicebear/identicon@9.4.2':
     resolution: {integrity: sha512-JVDSmZsv11mSWqwAktK5x9Bslht2xY3TFUn8xzu6slAYe1Z7hEXZ76eb+UJ6F4qEzdwZ7xPWzAS6Nb0Y3A0pww==}
@@ -10021,13 +10021,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@dicebear/core@9.4.3':
-    dependencies:
-      '@types/json-schema': 7.0.15
+  '@dicebear/core@10.7.0': {}
 
-  '@dicebear/identicon@9.4.2(@dicebear/core@9.4.3)':
+  '@dicebear/identicon@9.4.2(@dicebear/core@10.7.0)':
     dependencies:
-      '@dicebear/core': 9.4.3
+      '@dicebear/core': 10.7.0
 
   '@discoveryjs/json-ext@0.5.7': {}
 
