@@ -54,4 +54,11 @@ The `SessionGuard`, which is added to each (appropriate) controller method of th
 checks if the provided session is still valid and provides the controller method
 with the correct user.
 
+### CSRF protection
+
+Every state-changing request to the private API must carry a CSRF token, or the backend
+answers `403 CSRF token required`. A token is obtained from `GET /api/private/csrf/token`
+and must be sent back in a **`csrf-token`** request header — note that this is not the
+conventional `x-csrf-token` spelling.
+
 [bearer-token]: https://datatracker.ietf.org/doc/html/rfc6750
