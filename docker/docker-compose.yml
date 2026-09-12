@@ -12,6 +12,10 @@ services:
     image: ghcr.io/hedgedoc/hedgedoc/frontend:develop
     environment:
       HD_BASE_URL: "${HD_BASE_URL}"
+      # Server-side rendering resolves HD_BASE_URL from inside this container,
+      # where it does not point at the proxy. Without this the frontend answers
+      # 500 and logs "fetch failed / ECONNREFUSED" for every page.
+      HD_INTERNAL_API_URL: "http://backend:3000/"
 
   db:
     image: postgres:15
