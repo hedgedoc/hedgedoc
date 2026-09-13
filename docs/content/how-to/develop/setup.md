@@ -83,11 +83,11 @@ For development, we recommend creating an `.env` file.
 
 1. Create an `.env` file. We recommend to use the example file by running `cp .env.example .env`
    You can modify this file according to the [configuration documentation][config-docs].
-2. Make sure that you've set `HD_SESSION_SECRET` in your `.env` file. Otherwise, the backend
-   won't start.
-   > In dev mode you don't need a secure secret. So use any value. If you want to generate a secure
-   > session secret you can use
-   > e.g. `openssl rand -hex 16 | sed -E 's/(.*)/HD_SESSION_SECRET=\1/' >> .env`.
+2. Make sure that you've set `HD_AUTH_SESSION_SECRET` in your `.env` file, with a value that is at
+   least 32 characters long. Otherwise, the backend won't start.
+   > In dev mode you don't need a secure secret, but it must still be at least 32 characters long.
+   > If you want to generate a secure session secret you can use
+   > e.g. `openssl rand -hex 16 | sed -E 's/(.*)/HD_AUTH_SESSION_SECRET=\1/' >> .env`.
 3. Make sure that `HD_BASE_URL` in `.env` is set to the base url where HedgeDoc should be available.
    In local dev environment this is most likely `http://localhost:8080`.
 
