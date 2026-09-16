@@ -5,8 +5,27 @@
  */
 
 :global(.btn-toolbar).toolbar {
+  flex-wrap: nowrap;
+  align-items: center;
+  max-width: 100%;
+  margin-block: 0.25rem;
+  padding-inline-start: 0.25rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+
   :global(.btn) {
-    padding: 0.1875rem 0.5rem;
-    min-width: 30px;
+    flex: 0 0 auto;
+    padding: 0.1875rem;
+    min-width: 2rem;
+    border: 0;
+    border-radius: var(--bs-border-radius);
+
+    &:hover,
+    &:focus-visible {
+      color: var(--bs-body-color);
+      background-color: var(--bs-secondary-bg);
+      box-shadow: none;
+      outline: none;
+    }
   }
 }
