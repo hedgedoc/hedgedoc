@@ -22,6 +22,8 @@ import { usePrintIframeKeyboardShortcut } from './hooks/use-print-keyboard-short
 import { NoteType } from '@hedgedoc/commons'
 import { useApplicationState } from '../../hooks/common/use-application-state'
 import { buildCursorLineScrollState } from './synced-scroll/cursor-line-scroll-state'
+import { EditorBar } from './editor-bar/editor-bar'
+import { ToolBar } from './editor-pane/tool-bar/tool-bar'
 
 export enum ScrollSource {
   EDITOR = 'editor',
@@ -88,11 +90,14 @@ export const EditorPageContent: React.FC = () => {
         <CommunicatorImageLightbox />
         <PrintWarning />
         <div className={'flex-fill d-flex h-100 w-100 overflow-hidden flex-row'}>
-          <Splitter
-            left={leftPane}
-            right={rightPane}
-            additionalContainerClassName={'overflow-hidden position-relative'}
-          />
+          <div className={'flex-fill d-flex flex-column overflow-hidden'}>
+            <EditorBar left={<ToolBar />} />
+            <Splitter
+              left={leftPane}
+              right={rightPane}
+              additionalContainerClassName={'overflow-hidden position-relative'}
+            />
+          </div>
           <Sidebar />
         </div>
       </ExtensionEventEmitterProvider>
