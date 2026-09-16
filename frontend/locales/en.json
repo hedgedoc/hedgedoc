@@ -16,7 +16,10 @@
       "title": "Pinned notes",
       "pin": "Pin this note",
       "unpin": "Unpin this note",
-      "empty": "You don't have any pinned notes yet.",
+      "empty": {
+        "line1": "You don't have any pinned notes yet.",
+        "line2": "Click on the pin button on any note and you'll find it here."
+      },
       "pinError": "Could not pin note {{name}}.",
       "unpinError": "Could not unpin note {{name}}.",
       "loadingError": "Could not load pinned notes.",

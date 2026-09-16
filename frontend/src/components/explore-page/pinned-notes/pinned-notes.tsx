@@ -1,6 +1,6 @@
 'use client'
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -84,9 +84,11 @@ export const PinnedNotes: React.FC = () => {
           </div>
           <Caret active={enableScrollRight} left={false} onClick={scrollToRightClick} />
         </div>
-        <div className={concatCssClasses('mb-4', { 'd-none': pinnedNoteCardsPresent })}>
-          <p className={'fs-4'}>
-            <Trans i18nKey={'explore.pinnedNotes.empty'} />
+        <div className={concatCssClasses('text-secondary', 'mb-4', { 'd-none': pinnedNoteCardsPresent })}>
+          <p>
+            <Trans i18nKey={'explore.pinnedNotes.empty.line1'} />
+            <br />
+            <Trans i18nKey={'explore.pinnedNotes.empty.line2'} />
           </p>
         </div>
       </Container>
