@@ -8,7 +8,6 @@ import { BoldButton } from './buttons/bold-button'
 import { CheckListButton } from './buttons/check-list-button'
 import { CodeFenceButton } from './buttons/code-fence-button'
 import { CollapsibleBlockButton } from './buttons/collapsible-block-button'
-import { CommentButton } from './buttons/comment-button'
 import { HeaderLevelButton } from './buttons/header-level-button'
 import { HighlightButton } from './buttons/highlight-button'
 import { HorizontalLineButton } from './buttons/horizontal-line-button'
@@ -24,6 +23,7 @@ import { UnderlineButton } from './buttons/underline-button'
 import { UnorderedListButton } from './buttons/unordered-list-button'
 import { TablePickerButton } from './table-picker/table-picker-button'
 import styles from './tool-bar.module.scss'
+import { ToolbarMenu } from './toolbar-menu'
 import { ToolbarSeparator } from './toolbar-separator'
 import { UploadImageButton } from './upload-image-button/upload-image-button'
 import React, { Fragment, Suspense } from 'react'
@@ -47,18 +47,22 @@ export const ToolBar: React.FC = () => {
       <ItalicButton />
       <UnderlineButton />
       <StrikethroughButton />
-      <SubscriptButton />
-      <SuperscriptButton />
-      <HighlightButton />
+      <ToolbarMenu>
+        <SubscriptButton />
+        <SuperscriptButton />
+        <HighlightButton />
+      </ToolbarMenu>
 
       <ToolbarSeparator />
 
       <HeaderLevelButton />
-      <CodeFenceButton />
-      <QuotesButton />
       <UnorderedListButton />
       <OrderedListButton />
       <CheckListButton />
+      <ToolbarMenu>
+        <CodeFenceButton />
+        <QuotesButton />
+      </ToolbarMenu>
 
       <ToolbarSeparator />
 
@@ -69,12 +73,13 @@ export const ToolBar: React.FC = () => {
       <ToolbarSeparator />
 
       <TablePickerButton />
-      <HorizontalLineButton />
-      <CollapsibleBlockButton />
-      <CommentButton />
       <Suspense fallback={<Fragment />}>
         <EmojiPickerButton />
       </Suspense>
+      <ToolbarMenu>
+        <HorizontalLineButton />
+        <CollapsibleBlockButton />
+      </ToolbarMenu>
     </ButtonToolbar>
   )
 }

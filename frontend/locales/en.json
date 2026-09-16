@@ -281,7 +281,8 @@
       "collapsibleBlock": "Collapsible block",
       "comment": "Comment",
       "preferences": "Editor settings",
-      "emoji": "Open emoji picker"
+      "emoji": "Open emoji picker",
+      "more": "More options"
     },
     "documentBar": {
       "menu": "Menu",
