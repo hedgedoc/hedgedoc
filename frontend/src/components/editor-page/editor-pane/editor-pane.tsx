@@ -36,7 +36,6 @@ import { useYDocSyncClientAdapter } from './hooks/yjs/use-y-doc-sync-client-adap
 import { useLinter } from './linter/linter'
 import { MaxLengthWarning } from './max-length-warning/max-length-warning'
 import { StatusBar } from './status-bar/status-bar'
-import { ToolBar } from './tool-bar/tool-bar'
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { languages } from '@codemirror/language-data'
 import { lintGutter } from '@codemirror/lint'
@@ -177,7 +176,6 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ scrollState, onScroll, o
       {...cypressId('editor-pane')}
       {...cypressAttribute('editor-ready', String(updateViewContextExtension !== null && isSynced && mayEdit))}>
       <MaxLengthWarning />
-      <ToolBar />
       <ReactCodeMirror
         readOnly={updateViewContextExtension === null || !isSynced || !mayEdit}
         placeholder={placeholderText}
