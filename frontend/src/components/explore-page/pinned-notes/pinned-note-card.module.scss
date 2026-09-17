@@ -26,24 +26,18 @@
   padding: 0;
 }
 
-.bookmark {
+.pin {
   position: absolute;
-  top: -2px;
+  top: 0.5rem;
   right: 1rem;
   padding: 0;
   color: #c40c0c;
   z-index: 2;
-}
 
-.star {
-  position: absolute;
-  top: 0;
-  right: 1.5rem;
-  padding: 0;
-  width: 11px;
-  height: 16px;
-  background-color: #f8df33;
-  z-index: 1;
+  &:hover,
+  &:active {
+    color: var(--bs-dropdown-link-active-color);
+  }
 }
 
 .title {
