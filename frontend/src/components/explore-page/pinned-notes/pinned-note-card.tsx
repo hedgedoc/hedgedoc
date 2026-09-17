@@ -5,7 +5,7 @@
  */
 import React, { type MouseEvent, useMemo } from 'react'
 import { Card } from 'react-bootstrap'
-import { BookmarkStarFill as IconPinned } from 'react-bootstrap-icons'
+import { PinFill as IconPinned } from 'react-bootstrap-icons'
 import styles from './pinned-note-card.module.scss'
 import { useCallback } from 'react'
 import { NoteTypeIcon } from '../../common/note-type-icon/note-type-icon'
@@ -46,9 +46,12 @@ export const PinnedNoteCard: React.FC<NoteExploreEntryInterface> = ({ title, las
     <Card className={`${styles.card}`} as={Link} href={`/n/${primaryAlias}`}>
       <Card.Body className={`${styles.cardBody}`}>
         <div className={'d-flex align-items-center'}>
-          <button type={'button'} onClick={onClickUnpin} title={labelUnpinNote} className={'unstyled-button'}>
-            <UiIcon icon={IconPinned} size={1.5} className={`${styles.bookmark}`} />
-            <div className={`${styles.star}`} />
+          <button
+            type={'button'}
+            onClick={onClickUnpin}
+            title={labelUnpinNote}
+            className={`${styles.pin} unstyled-button`}>
+            <UiIcon icon={IconPinned} />
           </button>
           <span className={'me-2'}>
             <NoteTypeIcon noteType={type} size={3} />
