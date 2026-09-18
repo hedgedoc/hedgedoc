@@ -133,6 +133,28 @@ describe('KnexSessionStore', () => {
   });
 
   describe('set', () => {
+    it('keeps the CSRF token when it updates an existing session', (done) => {
+      mockInsert(tracker, TableSession, insertColumns);
+      const session = {
+        cookie: { originalMaxAge: null },
+        csrfToken: 'my-csrf',
+        userId: null,
+        loginAuthProviderType: null,
+        loginAuthProviderIdentifier: null,
+        oidc: { idToken: null, sid: null, loginCode: null, loginState: null },
+        pendingUser: null,
+      } as FastifySession;
+      store.set('session-1', session, (error) => {
+        expect(error).toBeUndefined();
+        const sql = tracker.history.insert[0].sql;
+        expect(sql).toContain('on conflict ("id") do update set');
+        expect(sql).toContain(
+          `"${FieldNameSession.csrfToken}" = excluded."${FieldNameSession.csrfToken}"`,
+        );
+        done();
+      });
+    });
+
     it('inserts a session where all optional fields are null', (done) => {
       mockInsert(tracker, TableSession, insertColumns);
       const session = {
