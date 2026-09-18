@@ -39,5 +39,7 @@ export const wrapSelection = (
     }
   ]
 
-  return [changes, { from, to: to + symbolEnd.length + symbolStart.length }]
+  const newSelection =
+    from === to ? { from: from + symbolStart.length } : { from, to: to + symbolEnd.length + symbolStart.length }
+  return [changes, newSelection]
 }

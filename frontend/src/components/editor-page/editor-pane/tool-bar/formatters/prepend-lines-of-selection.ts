@@ -22,6 +22,7 @@ export const prependLinesOfSelection = (
   modifyLine: (line: string, lineIndexInBlock: number) => string
 ): [ContentEdits, CursorSelection] => {
   const toIndex = selection.to ?? selection.from
+  const selectionIsEmpty = selection.to === selection.from
   let currentIndex = selection.from
   let indexInBlock = 0
   let newStartOfSelection = selection.from
@@ -48,5 +49,8 @@ export const prependLinesOfSelection = (
       newEndOfSelection = endOfLine + lengthOfAddedPrefixes
     }
   }
-  return [changes, { from: newStartOfSelection, to: newEndOfSelection }]
+  const newSelection = selectionIsEmpty
+    ? { from: selection.from + lengthOfAddedPrefixes }
+    : { from: newStartOfSelection, to: newEndOfSelection }
+  return [changes, newSelection]
 }

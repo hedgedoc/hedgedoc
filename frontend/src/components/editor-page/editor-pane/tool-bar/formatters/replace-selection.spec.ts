@@ -39,7 +39,7 @@ describe('replace selection', () => {
         insert: 'text2'
       }
     ]
-    expect(actual).toEqual([expectedChanges, { from: 2, to: 7 }])
+    expect(actual).toEqual([expectedChanges, { from: 7 }])
   })
 
   it('replaces a single line text', () => {

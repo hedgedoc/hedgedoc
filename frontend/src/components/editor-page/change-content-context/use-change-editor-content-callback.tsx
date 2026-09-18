@@ -35,13 +35,23 @@ export const changeEditorContent = (view: EditorView, formatter: ContentFormatte
 
 /**
  * Provides a {@link ContentFormatter formatter function} that is linked to the current CodeMirror-View
+ *
+ * @param focusEditorAfterChange Whether the CodeMirror view should regain focus after applying the change.
  * @see changeEditorContent
  */
-export const useChangeEditorContentCallback = () => {
+export const useChangeEditorContentCallback = (focusEditorAfterChange = false) => {
   const [codeMirrorRef] = useCodemirrorReferenceContext()
   return useMemo(() => {
-    return !codeMirrorRef ? null : (callback: ContentFormatter) => changeEditorContent(codeMirrorRef, callback)
-  }, [codeMirrorRef])
+    if (!codeMirrorRef) {
+      return null
+    }
+    return (callback: ContentFormatter) => {
+      changeEditorContent(codeMirrorRef, callback)
+      if (focusEditorAfterChange) {
+        codeMirrorRef.focus()
+      }
+    }
+  }, [codeMirrorRef, focusEditorAfterChange])
 }
 
 const convertSelectionToCodeMirrorSelection = (selection: CursorSelection | undefined) => {
