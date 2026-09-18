@@ -45,6 +45,32 @@ describe('add link', () => {
     })
   })
 
+  describe('with an empty selection', () => {
+    it('places the cursor in the link description', () => {
+      const actual = addLink('', { from: 0, to: 0 }, '')
+      const expectedChanges: ContentEdits = [
+        {
+          from: 0,
+          to: 0,
+          insert: '[](https://)'
+        }
+      ]
+      expect(actual).toEqual([expectedChanges, { from: 1 }])
+    })
+
+    it('places the cursor in the image description', () => {
+      const actual = addLink('', { from: 0, to: 0 }, '!')
+      const expectedChanges: ContentEdits = [
+        {
+          from: 0,
+          to: 0,
+          insert: '![](https://)'
+        }
+      ]
+      expect(actual).toEqual([expectedChanges, { from: 2 }])
+    })
+  })
+
   describe('with a normal text selected', () => {
     it('wraps the selection', () => {
       const actual = addLink(

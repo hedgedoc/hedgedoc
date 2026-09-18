@@ -21,7 +21,7 @@ export interface FormatterToolbarButtonProps extends Omit<ToolbarButtonProps, 'o
  * @param formatter The formatter function changes the editor content on click
  */
 export const FormatterToolbarButton: React.FC<FormatterToolbarButtonProps> = ({ i18nKey, icon, formatter }) => {
-  const changeEditorContent = useChangeEditorContentCallback()
+  const changeEditorContent = useChangeEditorContentCallback(true)
 
   const onClick = useCallback(() => {
     changeEditorContent?.(formatter)

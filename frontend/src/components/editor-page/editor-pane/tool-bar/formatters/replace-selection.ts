@@ -30,5 +30,10 @@ export const replaceSelection = (
       insert: (insertNewLine ? '\n' : '') + insertText
     }
   ]
-  return [changes, { from: fromCursor, to: insertText.length + fromCursor + (insertNewLine ? 1 : 0) }]
+  const endOfInsertedText = insertText.length + fromCursor + (insertNewLine ? 1 : 0)
+  const newSelection =
+    selection.to !== undefined && fromCursor === toCursor
+      ? { from: endOfInsertedText }
+      : { from: fromCursor, to: endOfInsertedText }
+  return [changes, newSelection]
 }

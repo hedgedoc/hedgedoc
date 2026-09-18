@@ -28,7 +28,7 @@ export const TablePickerButton: React.FC = () => {
   const [pickerMode, setPickerMode] = useState<PickerMode>(PickerMode.INVISIBLE)
   const onDismiss = useCallback(() => setPickerMode(PickerMode.INVISIBLE), [])
   const onShowModal = useCallback(() => setPickerMode(PickerMode.CUSTOM), [])
-  const changeEditorContent = useChangeEditorContentCallback()
+  const changeEditorContent = useChangeEditorContentCallback(true)
 
   const onSizeSelect = useCallback(
     (rows: number, columns: number) => {

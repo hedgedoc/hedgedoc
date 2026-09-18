@@ -36,7 +36,11 @@ export const addLink = (
       insert: link
     }
   ]
-  return [changes, { from, to: from + link.length }]
+  const newSelection =
+    selection.to !== undefined && from === to
+      ? { from: from + prefix.length + beforeDescription.length }
+      : { from, to: from + link.length }
+  return [changes, newSelection]
 }
 
 const buildLink = (selectedText: string, prefix: string): string => {

@@ -59,7 +59,7 @@ describe('replace lines of selection', () => {
         insert: 'text_0_'
       }
     ]
-    expect(actual).toStrictEqual([expectedChanges, { from: 2, to: 10 }])
+    expect(actual).toStrictEqual([expectedChanges, { from: 9 }])
   })
 
   it('replaces multiple lines', () => {

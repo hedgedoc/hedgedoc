@@ -19,6 +19,31 @@ describe('wrap selection', () => {
     expect(actual).toStrictEqual([[], { from: 0 }])
   })
 
+  it('places the cursor between formatting symbols if the selection is empty', () => {
+    const actual = wrapSelection(
+      {
+        from: 0,
+        to: 0
+      },
+      'before',
+      'after'
+    )
+    const expectedChanges: ContentEdits = [
+      {
+        from: 0,
+        to: 0,
+        insert: 'before'
+      },
+      {
+        from: 0,
+        to: 0,
+        insert: 'after'
+      }
+    ]
+
+    expect(actual).toStrictEqual([expectedChanges, { from: 6 }])
+  })
+
   it(`wraps the selected text in the same line`, () => {
     const actual = wrapSelection(
       {

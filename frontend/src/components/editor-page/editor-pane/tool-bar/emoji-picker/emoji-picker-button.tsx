@@ -21,7 +21,7 @@ import type { OverlayInjectedProps } from 'react-bootstrap/Overlay'
  */
 export const EmojiPickerButton: React.FC = () => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
-  const changeEditorContent = useChangeEditorContentCallback()
+  const changeEditorContent = useChangeEditorContentCallback(true)
   const buttonRef = useRef<HTMLButtonElement>(null)
 
   const onEmojiSelected = useCallback(
