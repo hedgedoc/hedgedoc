@@ -6,7 +6,8 @@
 
 @import "variables.module";
 @import "variables.light";
-@import "~bootstrap/scss/bootstrap";
+@import "./hedgedoc-color";
+@import "./bootstrap-theme";
 @import "~@fontsource/source-sans-pro/index.css";
 @import "~twemoji-colr-font/twemoji";
 @import "~firacode/distr/fira_code";
