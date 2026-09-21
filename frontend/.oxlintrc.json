@@ -1,5 +1,6 @@
 {
   "$schema": "../node_modules/oxlint/configuration_schema.json",
+  "jsPlugins": ["./oxlint-rules/index.mjs"],
   "plugins": [
     "typescript",
     "react",
@@ -21,6 +22,7 @@
     "jest/expect-expect": ["error", {
       "assertFunctionNames": ["expect*", "screen.*", "test*"]
     }],
+    "hedgedoc-frontend/translation-keys": "warn",
     "nextjs/no-img-element": "off"
   },
   "env": {
