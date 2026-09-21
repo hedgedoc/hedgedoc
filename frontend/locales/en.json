@@ -3,6 +3,25 @@
     "slogan": "Ideas grow better together",
     "icon": "HedgeDoc logo with text"
   },
+  "about": {
+    "title": "About",
+    "heading": "About this instance",
+    "project": {
+      "heading": "About the software",
+      "github": "Project on GitHub",
+      "reportIssue": "Report an issue",
+      "helpTranslating": "Help us translating"
+    },
+    "social": {
+      "heading": "Find us on social media",
+      "discourse": "Join the community",
+      "matrix": "Chat with us on Matrix",
+      "mastodon": "Follow us on Mastodon"
+    },
+    "versionInfo": {
+      "title": "Running HedgeDoc on version"
+    }
+  },
   "navigation": {
     "newNote": "New Note"
   },
@@ -116,12 +135,6 @@
     "footer": {
       "releases": "Releases",
       "poweredBy": "Powered by <0></0>"
-    },
-    "versionInfo": {
-      "issueTracker": "Found a bug? Fill an issue!",
-      "sourceCode": "Read the source code",
-      "versionInfo": "Running Version",
-      "title": "Running HedgeDoc on version"
     }
   },
   "profile": {
@@ -512,28 +525,11 @@
         "shortcuts": "Shortcuts",
         "cheatsheet": "Cheatsheet"
       },
-      "instance": {
-        "header": "About this instance",
-        "versionInfo": "Running version",
-        "motdModal": "Show instance announcement"
-      },
       "legal": {
         "header": "Legal",
         "privacy": "Privacy Policy",
         "termsOfUse": "Terms of use",
         "imprint": "Imprint"
-      },
-      "project": {
-        "header": "Project",
-        "github": "Project on GitHub",
-        "reportIssue": "Report an issue",
-        "helpTranslating": "Help us translating"
-      },
-      "social": {
-        "header": "Social",
-        "discourse": "Join the community",
-        "matrix": "Chat with us on Matrix",
-        "mastodon": "Follow us on Mastodon"
       }
     }
   },
