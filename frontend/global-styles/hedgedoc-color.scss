@@ -1,0 +1,27 @@
+/*!
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+:root {
+  --hd-primary: #B51F08;
+  --hd-secondary: #FDD49A;
+  --hd-tertiary: #000000;
+  --hd-background: light-dark(
+    #FFFFFF,
+    #F2F2F2
+  );
+  --hd-text: light-dark(
+    #000000,
+    #ECECEC
+  );
+}
+
+body {
+  color-scheme: light;
+}
+
+body[data-bs-theme='dark'] {
+  color-scheme: dark;
+}
