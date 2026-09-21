@@ -101,7 +101,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="staff-extra clef"
           fill="currentColor"
           stroke="none"
@@ -112,7 +111,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="staff-extra key-signature"
           fill="currentColor"
           stroke="none"
@@ -123,7 +121,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="staff-extra time-signature"
           fill="currentColor"
           stroke="none"
@@ -138,7 +135,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
@@ -161,7 +157,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="0"
           data-name="note"
           fill="currentColor"
@@ -180,7 +175,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="1"
           data-name="note"
           fill="currentColor"
@@ -199,7 +193,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="2"
           data-name="note"
           fill="currentColor"
@@ -218,7 +211,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="3"
           data-name="note"
           fill="currentColor"
@@ -237,7 +229,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="4"
           data-name="note"
           fill="currentColor"
@@ -256,7 +247,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="5"
           data-name="note"
           fill="currentColor"
@@ -275,7 +265,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="6"
           data-name="note"
           fill="currentColor"
@@ -294,7 +283,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="7"
           data-name="note"
           fill="currentColor"
@@ -313,7 +301,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
@@ -324,7 +311,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="8"
           data-name="note"
           fill="currentColor"
@@ -343,7 +329,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="9"
           data-name="note"
           fill="currentColor"
@@ -362,7 +347,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="10"
           data-name="note"
           fill="currentColor"
@@ -381,7 +365,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="11"
           data-name="note"
           fill="currentColor"
@@ -400,7 +383,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="12"
           data-name="note"
           fill="currentColor"
@@ -419,7 +401,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="13"
           data-name="note"
           fill="currentColor"
@@ -438,7 +419,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="14"
           data-name="note"
           fill="currentColor"
@@ -457,7 +437,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="15"
           data-name="note"
           fill="currentColor"
@@ -476,7 +455,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
@@ -487,7 +465,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="16"
           data-name="note"
           fill="currentColor"
@@ -506,7 +483,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="17"
           data-name="note"
           fill="currentColor"
@@ -525,7 +501,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="18"
           data-name="note"
           fill="currentColor"
@@ -544,7 +519,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="19"
           data-name="note"
           fill="currentColor"
@@ -563,7 +537,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="20"
           data-name="note"
           fill="currentColor"
@@ -582,7 +555,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="21"
           data-name="note"
           fill="currentColor"
@@ -601,7 +573,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
@@ -612,7 +583,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="22"
           data-name="note"
           fill="currentColor"
@@ -631,7 +601,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="23"
           data-name="note"
           fill="currentColor"
@@ -650,7 +619,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="24"
           data-name="note"
           fill="currentColor"
@@ -669,7 +637,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="25"
           data-name="note"
           fill="currentColor"
@@ -688,7 +655,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="26"
           data-name="note"
           fill="currentColor"
@@ -707,7 +673,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
@@ -790,7 +755,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="staff-extra clef"
           fill="currentColor"
           stroke="none"
@@ -801,7 +765,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="staff-extra key-signature"
           fill="currentColor"
           stroke="none"
@@ -812,7 +775,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="27"
           data-name="note"
           fill="currentColor"
@@ -831,7 +793,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="28"
           data-name="note"
           fill="currentColor"
@@ -850,7 +811,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="29"
           data-name="note"
           fill="currentColor"
@@ -869,7 +829,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="30"
           data-name="note"
           fill="currentColor"
@@ -888,7 +847,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="31"
           data-name="note"
           fill="currentColor"
@@ -907,7 +865,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="32"
           data-name="note"
           fill="currentColor"
@@ -926,7 +883,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="33"
           data-name="note"
           fill="currentColor"
@@ -945,7 +901,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="34"
           data-name="note"
           fill="currentColor"
@@ -964,7 +919,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
@@ -975,7 +929,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="35"
           data-name="note"
           fill="currentColor"
@@ -994,7 +947,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="36"
           data-name="note"
           fill="currentColor"
@@ -1013,7 +965,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="37"
           data-name="note"
           fill="currentColor"
@@ -1032,7 +983,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="38"
           data-name="note"
           fill="currentColor"
@@ -1051,7 +1001,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="39"
           data-name="note"
           fill="currentColor"
@@ -1070,7 +1019,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="40"
           data-name="note"
           fill="currentColor"
@@ -1089,7 +1037,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="41"
           data-name="note"
           fill="currentColor"
@@ -1108,7 +1055,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="42"
           data-name="note"
           fill="currentColor"
@@ -1127,7 +1073,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
@@ -1138,7 +1083,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="43"
           data-name="note"
           fill="currentColor"
@@ -1157,7 +1101,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="44"
           data-name="note"
           fill="currentColor"
@@ -1176,7 +1119,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="45"
           data-name="note"
           fill="currentColor"
@@ -1195,7 +1137,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="46"
           data-name="note"
           fill="currentColor"
@@ -1214,7 +1155,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="47"
           data-name="note"
           fill="currentColor"
@@ -1233,7 +1173,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="48"
           data-name="note"
           fill="currentColor"
@@ -1252,7 +1191,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
@@ -1263,7 +1201,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="49"
           data-name="note"
           fill="currentColor"
@@ -1282,7 +1219,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="50"
           data-name="note"
           fill="currentColor"
@@ -1301,7 +1237,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="51"
           data-name="note"
           fill="currentColor"
@@ -1320,7 +1255,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
@@ -1409,7 +1343,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="staff-extra clef"
           fill="currentColor"
           stroke="none"
@@ -1420,7 +1353,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="staff-extra key-signature"
           fill="currentColor"
           stroke="none"
@@ -1431,7 +1363,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
@@ -1454,7 +1385,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="52"
           data-name="note"
           fill="currentColor"
@@ -1473,7 +1403,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="53"
           data-name="note"
           fill="currentColor"
@@ -1492,7 +1421,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="54"
           data-name="note"
           fill="currentColor"
@@ -1511,7 +1439,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="55"
           data-name="note"
           fill="currentColor"
@@ -1530,7 +1457,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="56"
           data-name="note"
           fill="currentColor"
@@ -1549,7 +1475,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="57"
           data-name="note"
           fill="currentColor"
@@ -1568,7 +1493,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="58"
           data-name="note"
           fill="currentColor"
@@ -1587,7 +1511,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
@@ -1598,7 +1521,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="59"
           data-name="note"
           fill="currentColor"
@@ -1617,7 +1539,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="60"
           data-name="note"
           fill="currentColor"
@@ -1636,7 +1557,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="61"
           data-name="note"
           fill="currentColor"
@@ -1655,7 +1575,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="62"
           data-name="note"
           fill="currentColor"
@@ -1674,7 +1593,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
@@ -1685,7 +1603,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="63"
           data-name="note"
           fill="currentColor"
@@ -1704,7 +1621,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="64"
           data-name="note"
           fill="currentColor"
@@ -1723,7 +1639,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="65"
           data-name="note"
           fill="currentColor"
@@ -1742,7 +1657,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="66"
           data-name="note"
           fill="currentColor"
@@ -1761,7 +1675,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="67"
           data-name="note"
           fill="currentColor"
@@ -1780,7 +1693,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="68"
           data-name="note"
           fill="currentColor"
@@ -1799,7 +1711,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
@@ -1810,7 +1721,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="69"
           data-name="note"
           fill="currentColor"
@@ -1829,7 +1739,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="70"
           data-name="note"
           fill="currentColor"
@@ -1848,7 +1757,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="71"
           data-name="note"
           fill="currentColor"
@@ -1867,7 +1775,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="72"
           data-name="note"
           fill="currentColor"
@@ -1886,7 +1793,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="73"
           data-name="note"
           fill="currentColor"
@@ -1905,7 +1811,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
@@ -1976,7 +1881,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="staff-extra clef"
           fill="currentColor"
           stroke="none"
@@ -1987,7 +1891,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="staff-extra key-signature"
           fill="currentColor"
           stroke="none"
@@ -1998,7 +1901,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="74"
           data-name="note"
           fill="currentColor"
@@ -2017,7 +1919,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="75"
           data-name="note"
           fill="currentColor"
@@ -2036,7 +1937,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="76"
           data-name="note"
           fill="currentColor"
@@ -2055,7 +1955,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="77"
           data-name="note"
           fill="currentColor"
@@ -2074,7 +1973,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="78"
           data-name="note"
           fill="currentColor"
@@ -2093,7 +1991,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="79"
           data-name="note"
           fill="currentColor"
@@ -2112,7 +2009,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
@@ -2123,7 +2019,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="80"
           data-name="note"
           fill="currentColor"
@@ -2142,7 +2037,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="81"
           data-name="note"
           fill="currentColor"
@@ -2161,7 +2055,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="82"
           data-name="note"
           fill="currentColor"
@@ -2180,7 +2073,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="83"
           data-name="note"
           fill="currentColor"
@@ -2199,7 +2091,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
@@ -2210,7 +2101,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="84"
           data-name="note"
           fill="currentColor"
@@ -2229,7 +2119,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="85"
           data-name="note"
           fill="currentColor"
@@ -2248,7 +2137,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="86"
           data-name="note"
           fill="currentColor"
@@ -2267,7 +2155,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="87"
           data-name="note"
           fill="currentColor"
@@ -2286,7 +2173,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="88"
           data-name="note"
           fill="currentColor"
@@ -2305,7 +2191,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="89"
           data-name="note"
           fill="currentColor"
@@ -2324,7 +2209,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
@@ -2335,7 +2219,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="90"
           data-name="note"
           fill="currentColor"
@@ -2354,7 +2237,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="91"
           data-name="note"
           fill="currentColor"
@@ -2373,7 +2255,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-index="92"
           data-name="note"
           fill="currentColor"
@@ -2392,7 +2273,6 @@ exports[`AbcFrame renders a music sheet: with rendered abcjs 1`] = `
           />
         </g>
         <g
-          class=""
           data-name="bar"
           fill="currentColor"
           stroke="none"
