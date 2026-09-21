@@ -5,10 +5,7 @@
  */
 import { UiIcon } from '../../../../common/icons/ui-icon'
 import { HelpSubmenu } from './submenues/help-submenu'
-import { InstanceSubmenu } from './submenues/instance-submenu'
 import { LegalSubmenu } from './submenues/legal-submenu'
-import { ProjectLinksSubmenu } from './submenues/project-links-submenu'
-import { SocialLinksSubmenu } from './submenues/social-links-submenu'
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { QuestionLg as IconQuestion } from 'react-bootstrap-icons'
@@ -27,13 +24,7 @@ export const HelpDropdown: React.FC = () => {
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <HelpSubmenu />
-        <Dropdown.Divider />
-        <InstanceSubmenu />
         <LegalSubmenu />
-        <Dropdown.Divider />
-        <ProjectLinksSubmenu />
-        <Dropdown.Divider />
-        <SocialLinksSubmenu />
       </Dropdown.Menu>
     </Dropdown>
   )
