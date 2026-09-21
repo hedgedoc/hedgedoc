@@ -12,12 +12,12 @@ import { buildErrorMessage, extractDescriptionFromZodIssue } from './zod-error-m
 const schema = z.object({
   branding: z.object({
     customName: z.string().or(z.null()).describe('HD_BRANDING_CUSTOM_NAME'),
-    customLogo: z.string().url().or(z.null()).describe('HD_BRANDING_CUSTOM_LOGO'),
+    customLogo: z.url().or(z.null()).describe('HD_BRANDING_CUSTOM_LOGO'),
   }),
   urls: z.object({
-    privacy: z.string().url().or(z.null()).describe('HD_URLS_PRIVACY'),
-    termsOfUse: z.string().url().or(z.null()).describe('HD_URLS_TERMS_OF_USE'),
-    imprint: z.string().url().or(z.null()).describe('HD_URLS_IMPRINT'),
+    privacy: z.url().or(z.null()).describe('HD_URLS_PRIVACY'),
+    termsOfUse: z.url().or(z.null()).describe('HD_URLS_TERMS_OF_USE'),
+    imprint: z.url().or(z.null()).describe('HD_URLS_IMPRINT'),
   }),
 });
 
