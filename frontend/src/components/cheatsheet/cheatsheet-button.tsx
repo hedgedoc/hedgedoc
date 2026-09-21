@@ -12,7 +12,6 @@ import { CheatsheetContent } from './cheatsheet-content'
 import { CheatsheetInNewTabButton } from './cheatsheet-in-new-tab-button'
 import React, { Fragment } from 'react'
 import { Button, Modal } from 'react-bootstrap'
-import { Trans } from 'react-i18next'
 
 /**
  * Shows a button that opens the cheatsheet dialog.
@@ -20,7 +19,7 @@ import { Trans } from 'react-i18next'
 export const CheatsheetButton: React.FC = () => {
   const [modalVisibility, showModal, closeModal] = useBooleanState()
   const buttonVariant = useOutlineButtonVariant()
-  const buttonTitle = useTranslatedText('cheatsheet.button')
+  const buttonTitle = useTranslatedText('cheatsheet.modal.title')
 
   return (
     <Fragment>
@@ -31,7 +30,7 @@ export const CheatsheetButton: React.FC = () => {
         variant={buttonVariant}
         size={'sm'}
         onClick={showModal}>
-        <Trans i18nKey={'cheatsheet.button'}></Trans>
+        {buttonTitle}
       </Button>
       <CommonModal
         modalSize={'xl'}
