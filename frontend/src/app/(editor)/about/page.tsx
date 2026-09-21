@@ -7,7 +7,7 @@
  */
 import type { NextPage } from 'next'
 import React from 'react'
-import { LoginLayout } from '../../../components/layout/login-layout'
+import { TwoColumnLayout } from '../../../components/layout/two-column-layout'
 import { CustomBranding } from '../../../components/common/custom-branding/custom-branding'
 import { IntroCustomContent } from '../../../components/intro-page/intro-custom-content'
 import { EditorToRendererCommunicatorContextProvider } from '../../../components/editor-page/render-context/editor-to-renderer-communicator-context-provider'
@@ -24,7 +24,7 @@ const AboutPage: NextPage = () => {
   useTranslation()
 
   return (
-    <LoginLayout
+    <TwoColumnLayout
       leftSide={
         <EditorToRendererCommunicatorContextProvider>
           <div className={'d-flex flex-column align-items-center mt-3'}>
@@ -42,7 +42,7 @@ const AboutPage: NextPage = () => {
       <InstanceVersion />
       <ProjectLinks />
       <SocialLinks />
-    </LoginLayout>
+    </TwoColumnLayout>
   )
 }
 
