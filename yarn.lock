@@ -1614,7 +1614,7 @@ __metadata:
     moment: "npm:2.30.1"
     morgan: "npm:1.11.0"
     mysql2: "npm:3.23.4"
-    nanoid: "npm:3.3.18"
+    nanoid: "npm:3.3.19"
     optimize-css-assets-webpack-plugin: "npm:6.0.1"
     passport: "patch:passport@npm%3A0.7.0#~/.yarn/patches/passport-npm-0.7.0-df02531736.patch"
     passport-dropbox-oauth2: "npm:1.1.0"
@@ -11262,7 +11262,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:3.3.18, nanoid@npm:^3.3.17":
+"nanoid@npm:3.3.19":
+  version: 3.3.19
+  resolution: "nanoid@npm:3.3.19"
+  bin:
+    nanoid: bin/nanoid.cjs
+  checksum: 10/a330adb28dad63eccb0a0c95a2a61353e84b7e067061fff94167803d94be8eef0f7b75cf2da1bece06e8b7afb892abbe52cf0ec33298c817a083eedccd7656e4
+  languageName: node
+  linkType: hard
+
+"nanoid@npm:^3.3.17":
   version: 3.3.18
   resolution: "nanoid@npm:3.3.18"
   bin:
