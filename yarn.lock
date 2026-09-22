@@ -1588,7 +1588,7 @@ __metadata:
     lodash: "npm:4.18.1"
     lutim: "npm:1.0.3"
     lz-string: "git+https://github.com/hackmdio/lz-string.git#commit=6edfccb79cd8c210f03fd3bf18e41ca144fbeefb"
-    mariadb: "npm:3.5.3"
+    mariadb: "npm:3.5.4"
     markdown-it: "npm:14.3.0"
     markdown-it-abbr: "npm:2.0.0"
     markdown-it-container: "npm:4.0.0"
@@ -10090,16 +10090,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mariadb@npm:3.5.3":
-  version: 3.5.3
-  resolution: "mariadb@npm:3.5.3"
+"mariadb@npm:3.5.4":
+  version: 3.5.4
+  resolution: "mariadb@npm:3.5.4"
   dependencies:
     "@types/geojson": "npm:^7946.0.16"
     "@types/node": "npm:>=20"
     denque: "npm:^2.1.0"
     iconv-lite: "npm:^0.7.2"
     lru-cache: "npm:^11.5.0"
-  checksum: 10/7d97ec5d52be6ba443088f6bef6b40e57ebcc7eb0578f770c388e8e03ead52f007240536781ee598ff73688723a6014e24eaeaf36431354b8eec218a5d283096
+  checksum: 10/f3d7d6ed4658723b591b919e5a17e9234c5a9b7d69538ef0ed1fc80d0469d3c2d468a6b1e83ee7373097fea2c063e63bf1677119d724d1553b52bc09e9be5a66
   languageName: node
   linkType: hard
 
