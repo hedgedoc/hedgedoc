@@ -1582,7 +1582,7 @@ __metadata:
     jsdom: "npm:24.1.3"
     jsonlint: "npm:1.6.3"
     keymaster: "npm:1.6.2"
-    less: "npm:4.9.0"
+    less: "npm:4.9.1"
     less-loader: "npm:7.3.0"
     list.js: "npm:2.3.1"
     lodash: "npm:4.18.1"
@@ -9683,9 +9683,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"less@npm:4.9.0":
-  version: 4.9.0
-  resolution: "less@npm:4.9.0"
+"less@npm:4.9.1":
+  version: 4.9.1
+  resolution: "less@npm:4.9.1"
   dependencies:
     copy-anything: "npm:^3.0.5"
     errno: "npm:^0.1.1"
@@ -9713,7 +9713,7 @@ __metadata:
       optional: true
   bin:
     lessc: bin/lessc
-  checksum: 10/61f8f40d0029dc411b3fae523c6d5d415e51f45cf48bb821febe8cbd0d03994884980c2dfd41af6e5307f7986fb931a84db20ec5e735d385eb8a40bc5cfe7eb7
+  checksum: 10/644a17be2dc96c8e2a4f9aa6b8bf8c53e46db6ca234229e6d69008a8ff327472fa56a42e4ef284f5c39d6b8c0c586b35f76868c694dcb7b5dadbdf7278b64cf7
   languageName: node
   linkType: hard
 
