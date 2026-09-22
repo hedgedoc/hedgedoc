@@ -137,7 +137,7 @@
     "url": "https://github.com/hedgedoc/hedgedoc.git"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "3.3.6",
+    "@eslint/eslintrc": "3.3.7",
     "@eslint/js": "9.39.5",
     "@hedgedoc/codemirror-5": "5.65.12",
     "abcjs": "6.7.0",
