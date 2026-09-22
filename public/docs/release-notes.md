@@ -2,6 +2,10 @@
 
 ## <i class="fa fa-tag"></i> UNRELEASED
 
+### Security fixes
+
+- [GHSA-2c27-4x43-jrm6](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-2c27-4x43-jrm6) reports a possible impersonation attack when two auth providers provide the same profile id
+
 ### Enhancements
 
 - Added `CMD_OAUTH2_USER_PROFILE_PHOTO_ATTR` to let OAuth2/OIDC providers supply a profile photo URL, instead of always falling back to a generated avatar
