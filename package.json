@@ -98,7 +98,7 @@
     "scrypt-kdf": "3.0.0",
     "sequelize": "5.22.5",
     "socket.io": "4.8.3",
-    "sqlite3": "5.1.7",
+    "sqlite3": "6.0.1",
     "store": "2.0.12",
     "toobusy-js": "0.5.1",
     "umzug": "3.8.3",
