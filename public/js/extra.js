@@ -573,6 +573,7 @@ export function postProcess (code) {
     const currentLocation = new URL(window.location)
     currentLocation.hash = linkTag.hash
     linkTag.href = currentLocation.toString()
+    linkTag.target = '_self'
   })
   // update continue line numbers
   const linenumberdivs = result.find('.gutter.linenumber').toArray()
