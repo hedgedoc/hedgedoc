@@ -618,13 +618,13 @@ export function rewriteExternalLinks (view) {
     } catch (err) {
       return
     }
-    // only rewrite links that have an absolute http(s) URL on a different origin
-    if (!['http:', 'https:'].includes(parsed.protocol) || parsed.origin === window.location.origin) {
+    // only rewrite links that have an absolute http(s) URL
+    if (!['http:', 'https:'].includes(parsed.protocol)) {
       return
     }
-    // skip rewriting for whitelisted domains while differentiating between wildcard entries and plain host entries
+    // skip rewriting for same origin and whitelisted domains while differentiating between wildcard entries and plain host entries
     const hostname = parsed.hostname.toLowerCase()
-    if (whitelist.some(domain => {
+    if (parsed.origin === window.location.origin || whitelist.some(domain => {
       const lowercaseDomain = domain.toLowerCase()
       if (lowercaseDomain.startsWith('*.')) {
         return hostname.endsWith('.' + lowercaseDomain.slice(2))
