@@ -115,7 +115,7 @@
     "jest": "29.7.0",
     "markdown-it": "13.0.2",
     "ts-jest": "29.4.12",
-    "typescript": "5.9.3"
+    "typescript": "7.0.2"
   },
   "repository": {
     "type": "git",
