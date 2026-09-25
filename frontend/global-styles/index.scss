@@ -6,12 +6,11 @@
 
 @import "variables.module";
 @import "variables.light";
-@import "~bootstrap/scss/bootstrap";
-@import '~react-bootstrap-typeahead/css/Typeahead';
+@import "./hedgedoc-color";
+@import "./bootstrap-theme";
 @import "~@fontsource/source-sans-pro/index.css";
 @import "~twemoji-colr-font/twemoji";
-@import '~firacode/distr/fira_code';
-@import "typeahead";
+@import "~firacode/distr/fira_code";
 @import "./button-inside";
 @import "./highlight-js";
 @import "./github-markdown";
