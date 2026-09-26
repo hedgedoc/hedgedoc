@@ -1562,7 +1562,7 @@ __metadata:
     helmet: "npm:8.3.0"
     highlight.js: "npm:11.12.0"
     html-webpack-plugin: "npm:4.5.2"
-    i18n: "npm:0.15.3"
+    i18n: "npm:0.15.4"
     imports-loader: "npm:1.2.0"
     ionicons: "npm:2.0.1"
     is-svg: "npm:6.1.0"
@@ -8184,9 +8184,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18n@npm:0.15.3":
-  version: 0.15.3
-  resolution: "i18n@npm:0.15.3"
+"i18n@npm:0.15.4":
+  version: 0.15.4
+  resolution: "i18n@npm:0.15.4"
   dependencies:
     "@messageformat/core": "npm:^3.4.0"
     debug: "npm:^4.4.3"
@@ -8194,7 +8194,7 @@ __metadata:
     make-plural: "npm:^7.4.0"
     math-interval-parser: "npm:^2.0.1"
     mustache: "npm:^4.2.0"
-  checksum: 10/cf9ddbfde7694d3e2af60a6e04ec153eba08587127bf11eabbb4b7546e0cee68ace8b4decd5072973fa38ee0f40a83bbf057c51f64096b783edb4f7c6cf96e43
+  checksum: 10/a2fec364829e2ff16b3c8f1428443c2b967094641e09608115098858e6a2b88ffc8e3be2f071ec2370d5e329c6c127d6a6193212ce683f79fe2234459a023896
   languageName: node
   linkType: hard
 
