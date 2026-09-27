@@ -1621,7 +1621,7 @@ __metadata:
     minio: "npm:8.0.7"
     mocha: "npm:11.8.0"
     mock-require: "npm:3.0.3"
-    moment: "npm:2.30.1"
+    moment: "npm:2.31.0"
     morgan: "npm:1.12.1"
     mysql2: "npm:3.23.4"
     nanoid: "npm:3.3.19"
@@ -9247,7 +9247,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:4.3.2":
+"js-yaml@npm:4.3.2, js-yaml@npm:^4.3.2":
   version: 4.3.2
   resolution: "js-yaml@npm:4.3.2"
   dependencies:
@@ -9266,17 +9266,6 @@ __metadata:
   bin:
     js-yaml: bin/js-yaml.js
   checksum: 10/2ce71b5d632abbd77da80447bf860e8a0264e54bffe94840984887d58b023761495b523727547904517a6107a1ef189854b361e0fc44995ee13a84f222d7bd42
-  languageName: node
-  linkType: hard
-
-"js-yaml@npm:^4.3.2":
-  version: 4.3.2
-  resolution: "js-yaml@npm:4.3.2"
-  dependencies:
-    argparse: "npm:^2.0.1"
-  bin:
-    js-yaml: bin/js-yaml.js
-  checksum: 10/05c44b9c73e4901d92703b155e76518df64bf01ac62e4c036b47de4b391e19b72e32656e8954d51b436307f08cc9d0c0d4ec617d061cf2f65fffee9f3114bee7
   languageName: node
   linkType: hard
 
@@ -11033,7 +11022,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment@npm:2.30.1, moment@npm:^2.24.0, moment@npm:^2.29.4":
+"moment@npm:2.31.0":
+  version: 2.31.0
+  resolution: "moment@npm:2.31.0"
+  checksum: 10/fd3708d46f820c64fe1e064a60747533a55ee0aefd944490e18f08b2a83a5b6418bb4f42e1de47ef1f1a29f450c7ac41edd1fa6f940db30ded247c9717301b9f
+  languageName: node
+  linkType: hard
+
+"moment@npm:^2.24.0, moment@npm:^2.29.4":
   version: 2.30.1
   resolution: "moment@npm:2.30.1"
   checksum: 10/ae42d876d4ec831ef66110bdc302c0657c664991e45cf2afffc4b0f6cd6d251dde11375c982a5c0564ccc0fa593fc564576ddceb8c8845e87c15f58aa6baca69
