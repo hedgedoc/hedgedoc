@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { fetchDarkModeFromLocalStorage } from '../../components/application-loader/initializers/load-dark-mode'
 import { DarkModePreference } from '../../redux/dark-mode/types'
 import { useApplicationState } from '../common/use-application-state'
 import useMediaQuery from '@restart/hooks/useMediaQuery'
@@ -25,4 +26,16 @@ export const useDarkModeState = (): boolean => {
 
     return preference === DarkModePreference.DARK || (preference === DarkModePreference.AUTO && isBrowserPreferringDark)
   }, [preference, printModeEnabled, isBrowserPreferringDark])
+}
+
+/**
+ * Uses the user settings and the browser preference to determine if dark mode should be used. Value does not change
+ *
+ * @return The state of the dark mode at time of call.
+ */
+export const darkModeStateSync = (): boolean => {
+  const preference = fetchDarkModeFromLocalStorage()
+  const isBrowserPreferringDark = matchMedia('(prefers-color-scheme: dark)').matches
+
+  return preference === DarkModePreference.DARK || (preference === DarkModePreference.AUTO && isBrowserPreferringDark)
 }
