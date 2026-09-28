@@ -49,6 +49,10 @@ After executing `docker-compose up`, HedgeDoc should be available at [http://loc
 You can now continue to configure your container with environment variables.
 Check out [the configuration docs](../configuration.md) for more details.
 
+## Easypanel
+
+[Easypanel](https://easypanel.io) is a self-hosted Docker deployment platform, and HedgeDoc has a one-click deployment template there: https://easypanel.io/templates/hedgedoc - it deploys HedgeDoc alongside a Postgres database with persistent volumes automatically.
+
 ## File Permissions
 
 By default, HedgeDoc will change the permissions of the uploads directory to
