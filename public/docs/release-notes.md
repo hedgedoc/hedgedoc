@@ -8,6 +8,7 @@
 - Tell the user about an impending data loss immediately after the reconnect.
 - Fixed hashtag links opening in new tabs when external link warning is disabled
 - Fixed links with the same origin not opening in new tabs when external link warning is enabled
+- Fixed crash when importing history entries that already exist
 
 ## <i class="fa fa-tag"></i> 1.12.0 <i class="fa fa-calendar-o"></i> 2026-08-21
 
