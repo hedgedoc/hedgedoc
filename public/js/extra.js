@@ -273,9 +273,10 @@ export function finishView (view) {
     li.innerHTML = html
     let disabled = 'disabled'
     if (typeof editor !== 'undefined' && window.havePermission()) { disabled = '' }
-    if (/^\s*\[[xX ]]\s*/.test(html)) {
-      li.innerHTML = html.replace(/^\s*\[ ]\s*/, `<input type="checkbox" class="task-list-item-checkbox" ${disabled}><label></label>`)
-        .replace(/^\s*\[[xX]]\s*/, `<input type="checkbox" class="task-list-item-checkbox" checked ${disabled}><label></label>`)
+    const taskListItem = html.match(/^\s*\[([xX ])]\s*/)
+    if (taskListItem) {
+      const checked = taskListItem[1].toLowerCase() === 'x'
+      li.innerHTML = `<label><input type="checkbox" class="task-list-item-checkbox" ${checked ? 'checked ' : ''}${disabled}>${html.slice(taskListItem[0].length)}</label>`
       if (li.tagName.toLowerCase() !== 'li') {
         li.parentElement.setAttribute('class', 'task-list-item')
       } else {

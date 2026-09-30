@@ -12,6 +12,7 @@
 - Fixed text not rendering when placed following a `<br>` HTML tag
 - In "free URL" mode, there is no "409 conflict" anymore when trying to create a note with an alias that parses also as a valid note ID 
 - Fixed a missing uniqueness constraint in the database for email addresses of local accounts
+- Fixed invalid HTML for task lists with checkboxes, clicking the label should now trigger the checkbox as well
 
 ## <i class="fa fa-tag"></i> 1.12.0 <i class="fa fa-calendar-o"></i> 2026-08-21
 
