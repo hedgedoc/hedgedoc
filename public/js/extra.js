@@ -1025,7 +1025,7 @@ export function scrollToHash () {
   location.hash = hash
 }
 
-function highlightRender (code, lang) {
+function highlightRender (code, lang, wrap = false) {
   if (!lang || /no(-?)highlight|plain|text/.test(lang)) { return }
   code = escapeHtml(code)
   if (lang === 'sequence') {
@@ -1050,11 +1050,13 @@ function highlightRender (code, lang) {
     const lines = result.value.split('\n')
     const linenumbers = []
     for (let i = 0; i < lines.length - 1; i++) {
-      linenumbers[i] = `<span data-linenumber='${startnumber + i}'></span>`
+      const line = wrap ? ` data-code="${lines[i].replace(/"/g, '&quot;')}" style="grid-row: ${i + 1}"` : ''
+      linenumbers[i] = `<span data-linenumber='${startnumber + i}'${line}></span>`
     }
     const continuelinenumber = /=\+$/.test(lang)
     const linegutter = `<div class='gutter linenumber${continuelinenumber ? ' continue' : ''}'>${linenumbers.join('\n')}</div>`
-    result.value = `<div class='wrapper'>${linegutter}<div class='code'>${result.value}</div></div>`
+    const rows = wrap ? ` style="grid-template-rows: repeat(${lines.length - 1}, auto)"` : ''
+    result.value = `<div class='wrapper'${rows}>${linegutter}<div class='code'>${result.value}</div></div>`
   }
   return result.value
 }
@@ -1144,7 +1146,7 @@ md.renderer.rules.fence = (tokens, idx, options, env, self) => {
   }
 
   if (options.highlight) {
-    highlighted = options.highlight(token.content, langName) || md.utils.escapeHtml(token.content)
+    highlighted = options.highlight(token.content, langName, /!$/.test(info)) || md.utils.escapeHtml(token.content)
   } else {
     highlighted = md.utils.escapeHtml(token.content)
   }
