@@ -10,6 +10,7 @@
 - Fixed links with the same origin not opening in new tabs when external link warning is enabled
 - Fixed crash when importing history entries that already exist
 - Fixed text not rendering when placed following a `<br>` HTML tag
+- In "free URL" mode, there is no "409 conflict" anymore when trying to create a note with an alias that parses also as a valid note ID 
 
 ## <i class="fa fa-tag"></i> 1.12.0 <i class="fa fa-calendar-o"></i> 2026-08-21
 
