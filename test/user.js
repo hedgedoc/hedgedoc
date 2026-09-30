@@ -24,6 +24,16 @@ describe('User Sequelize model', function () {
     })
   })
 
+  it('enforces unique email addresses', function () {
+    const email = 'duplicate@example.com'
+    return User.create({ email, password: 'test123' }).then(() => {
+      return User.create({ email, password: 'test123' }).then(
+        () => assert.fail('A second user with the same email should not be created'),
+        error => assert.strictEqual(error.name, 'SequelizeUniqueConstraintError')
+      )
+    })
+  })
+
   it('can cope with password stored in standard scrypt header format', function () {
     const testKey = '736372797074000e00000008000000018c7b8c1ac273fd339badde759b3efc418bc61b776debd02dfe95989383cf9980ad21d2403dce33f4b551f5e98ce84edb792aee62600b1303ab8d4e6f0a53b0746e73193dbf557b888efc83a2d6a055a9'
     const validPassword = 'test'
