@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['20', '22', '24']
+        node: ['20', '22', '24', '26']
     name: Node ${{ matrix.node }}
     steps:
       - name: Checkout repository
@@ -34,9 +34,9 @@ jobs:
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v7.0.1
-        if: github.ref == 'refs/heads/master' && matrix.node-version == '22'
+        if: github.ref == 'refs/heads/master' && matrix.node == '24'
         with:
-          name: Prebuild with Node.js ${{ matrix.node-version }}
+          name: Prebuild with Node.js ${{ matrix.node }}
           path: |
             **
             !.git
