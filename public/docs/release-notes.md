@@ -10,6 +10,7 @@
 - Fixed permission check accessing invalid properties on realtime socket vs HTTP API
 - Fixed the first slide being printed as an empty page in Firefox
 - Fixed a crash on startup when `DATABASE_URL` is set and the config file has no section for the current environment, and `CMD_DB_URL` now takes precedence over the legacy `DATABASE_URL`
+- Fixed a missing/non-working redirect back to the note when logging in from a note
 
 ## <i class="fa fa-tag"></i> 1.12.2 <i class="fa fa-calendar-o"></i> 2026-11-04
 
