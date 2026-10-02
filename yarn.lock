@@ -432,6 +432,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hedgedoc/codemirror-5@patch:@hedgedoc/codemirror-5@npm%3A5.65.12#~/.yarn/patches/codemirror-display-math.patch":
+  version: 5.65.12
+  resolution: "@hedgedoc/codemirror-5@patch:@hedgedoc/codemirror-5@npm%3A5.65.12#~/.yarn/patches/codemirror-display-math.patch::version=5.65.12&hash=f9ec50"
+  checksum: 10/ca4528ccaaba1c27c9dc86658f42a6a69498283470fcbc0d043d27c95180a295047aa63e4da3f1a155597848ee37aa89aa0946f7e871e9410e19400d4470a9e6
+  languageName: node
+  linkType: hard
+
 "@humanfs/core@npm:^0.19.2":
   version: 0.19.2
   resolution: "@humanfs/core@npm:0.19.2"
@@ -1519,7 +1526,7 @@ __metadata:
   dependencies:
     "@eslint/eslintrc": "npm:3.3.7"
     "@eslint/js": "npm:9.39.5"
-    "@hedgedoc/codemirror-5": "npm:5.65.12"
+    "@hedgedoc/codemirror-5": "patch:@hedgedoc/codemirror-5@npm%3A5.65.12#~/.yarn/patches/codemirror-display-math.patch"
     "@node-saml/passport-saml": "npm:5.1.0"
     "@passport-next/passport-openid": "npm:1.0.0"
     Idle.Js: "git+https://github.com/shawnmclean/Idle.js#commit=2b57cc6e49d177b7ddce0cca00ef5cbe07453541"
