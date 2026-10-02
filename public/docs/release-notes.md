@@ -2,6 +2,10 @@
 
 ## <i class="fa fa-tag"></i> UNRELEASED
 
+### Enhancements
+
+- Added `CMD_OAUTH2_USER_PROFILE_PHOTO_ATTR` to let OAuth2/OIDC providers supply a profile photo URL, instead of always falling back to a generated avatar
+
 ### Bugfixes
 
 - Fixed opening links in new tabs did not work for published and slideshow views. This was forgotten with the last fix in 1.12.0.

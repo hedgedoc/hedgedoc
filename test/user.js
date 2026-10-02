@@ -70,3 +70,39 @@ describe('User Sequelize model', function () {
     })).catch(e => assert.fail(e))
   })
 })
+
+describe('User.parsePhotoByProfile() oauth2 provider', function () {
+  it('uses the photo URL from the profile when present', function () {
+    const profile = {
+      provider: 'oauth2',
+      username: 'alice',
+      emails: ['alice@example.com'],
+      photo: 'https://example.com/avatar.png'
+    }
+    assert.strictEqual(User.parsePhotoByProfile(profile), 'https://example.com/avatar.png')
+    assert.strictEqual(User.parsePhotoByProfile(profile, true), 'https://example.com/avatar.png')
+  })
+
+  it('falls back to a generated avatar matching other providers when no photo is present', function () {
+    const profileWithoutPhoto = {
+      provider: 'oauth2',
+      username: 'alice',
+      emails: ['alice@example.com']
+    }
+    const equivalentLdapProfile = {
+      provider: 'ldap',
+      username: 'alice',
+      emails: ['alice@example.com']
+    }
+    assert.strictEqual(User.parsePhotoByProfile(profileWithoutPhoto), User.parsePhotoByProfile(equivalentLdapProfile))
+    assert.strictEqual(User.parsePhotoByProfile(profileWithoutPhoto, true), User.parsePhotoByProfile(equivalentLdapProfile, true))
+  })
+
+  it('falls back to a generated avatar when the profile has no emails', function () {
+    const profile = {
+      provider: 'oauth2',
+      username: 'alice'
+    }
+    assert.ok(User.parsePhotoByProfile(profile))
+  })
+})
