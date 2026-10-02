@@ -15,6 +15,10 @@
 - Fixed invalid HTML for task lists with checkboxes, clicking the label should now trigger the checkbox as well
 - Fixed line numbers in wrapped code blocks being attached to the wrong lines
 
+### Node compatability
+
+- Node 26 support was tested and is now supported officially.
+
 ## <i class="fa fa-tag"></i> 1.12.0 <i class="fa fa-calendar-o"></i> 2026-08-21
 
 ### Important changes
