@@ -1,0 +1,8 @@
+diff --git a/mode/markdown/markdown_math.js b/mode/markdown/markdown_math.js
+--- a/mode/markdown/markdown_math.js
++++ b/mode/markdown/markdown_math.js
+@@ -99,3 +99,3 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
+   ,   expandedTab = "    " // CommonMark specifies tab as 4 spaces
+-  ,   fencedMathRE = /^(\$\$)[ \t]*([\w\/+#-]*)[^\n`]*$/
++  ,   fencedMathRE = /^(\$\$)(?!.*\$\$)[ \t]*([\w\/+#-]*)[^\n`]*$/
+ 
