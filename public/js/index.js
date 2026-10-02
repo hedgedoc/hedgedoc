@@ -3533,7 +3533,7 @@ function updateViewInner () {
     if (result && lastResult && result.length !== lastResult.length) {
       updateDataAttrs(result, getRenderableContents(ui.area.markdown))
     }
-    lastResult = $(result).clone()
+    lastResult = $(result).clone().toArray()
   }
   removeDOMEvents(ui.area.markdown)
   finishView(ui.area.markdown)
