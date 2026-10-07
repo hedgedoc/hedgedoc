@@ -590,17 +590,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@node-saml/passport-saml@npm:5.1.0":
-  version: 5.1.0
-  resolution: "@node-saml/passport-saml@npm:5.1.0"
+"@node-saml/passport-saml@npm:5.1.1":
+  version: 5.1.1
+  resolution: "@node-saml/passport-saml@npm:5.1.1"
   dependencies:
     "@node-saml/node-saml": "npm:^5.1.0"
-    "@types/express": "npm:^4.17.23"
+    "@types/express": "npm:^4.17.25"
     "@types/passport": "npm:^1.0.17"
     "@types/passport-strategy": "npm:^0.2.38"
     passport: "npm:^0.7.0"
     passport-strategy: "npm:^1.0.0"
-  checksum: 10/11b6ffd988e7f6a4c8119963eed280280799a5396c5499920518e5a3980e3222f54402244caa3e3f72ab3a759c11b8d2d3d5f1b6d2282b7090f6b05337382d11
+  checksum: 10/3c4656ab615e1edffb843ef70fa5e91024013a61a9d8ac4248bdf490ebeacd8e4752d7b4ff6a3719176b4e4f0260b8494fb18d1ae2b658eb582d7d6e19f7bb13
   languageName: node
   linkType: hard
 
@@ -958,7 +958,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express@npm:^4.17.23":
+"@types/express@npm:^4.17.25":
   version: 4.17.25
   resolution: "@types/express@npm:4.17.25"
   dependencies:
@@ -1527,7 +1527,7 @@ __metadata:
     "@eslint/eslintrc": "npm:3.3.7"
     "@eslint/js": "npm:9.39.5"
     "@hedgedoc/codemirror-5": "patch:@hedgedoc/codemirror-5@npm%3A5.65.12#~/.yarn/patches/codemirror-display-math.patch"
-    "@node-saml/passport-saml": "npm:5.1.0"
+    "@node-saml/passport-saml": "npm:5.1.1"
     "@passport-next/passport-openid": "npm:1.0.0"
     Idle.Js: "git+https://github.com/shawnmclean/Idle.js#commit=2b57cc6e49d177b7ddce0cca00ef5cbe07453541"
     abcjs: "npm:6.7.0"
