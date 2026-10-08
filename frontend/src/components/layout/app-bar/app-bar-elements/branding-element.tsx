@@ -5,7 +5,7 @@
  */
 import { useDarkModeState } from '../../../../hooks/dark-mode/use-dark-mode-state'
 import { CustomBranding } from '../../../common/custom-branding/custom-branding'
-import { HedgeDocLogoHorizontalGrey } from '../../../common/hedge-doc-logo/hedge-doc-logo-horizontal-grey'
+import { HedgeDocLogoHorizontal } from '../../../common/hedge-doc-logo/hedge-doc-logo-horizontal'
 import { LogoSize } from '../../../common/hedge-doc-logo/logo-size'
 import { BrandingSeparatorDash } from './branding-separator-dash'
 import Link from 'next/link'
@@ -21,10 +21,11 @@ export const BrandingElement: React.FC = () => {
   return (
     <Navbar.Brand>
       <Link href='/explore/my' className='text-secondary text-decoration-none d-flex align-items-center'>
-        <HedgeDocLogoHorizontalGrey
+        <HedgeDocLogoHorizontal
           size={LogoSize.SMALL}
           className={'w-auto'}
-          color={darkModeActivated ? 'dark' : 'light'}
+          color={true}
+          variant={darkModeActivated ? 'dark' : 'light'}
         />
         <BrandingSeparatorDash />
         <CustomBranding inline={true} />
