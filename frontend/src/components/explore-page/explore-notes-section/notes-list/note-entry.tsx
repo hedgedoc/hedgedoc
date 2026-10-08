@@ -84,12 +84,12 @@ export const NoteListEntry: React.FC<NoteListEntryProps> = ({
   return (
     <div className={'border-top border-bottom py-3 d-flex align-items-center'}>
       <span className={'mx-2'}>
-        <Link href={`/n/${primaryAlias}`}>
+        <Link href={`/n/${primaryAlias}`} className={styles['note-link']}>
           <NoteTypeIcon noteType={type} size={3} />
         </Link>
       </span>
       <div className={'flex-grow-1'}>
-        <Link href={`/n/${primaryAlias}`} className={'text-decoration-none'}>
+        <Link href={`/n/${primaryAlias}`} className={`text-decoration-none ${styles['note-link']}`}>
           {title !== '' ? title : <i className={'fst-italic'}>{fallbackUntitled}</i>}
         </Link>
         {tags.length > 0 && <br />}

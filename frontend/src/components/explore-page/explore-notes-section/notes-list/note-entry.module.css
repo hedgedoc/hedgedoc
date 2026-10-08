@@ -8,3 +8,7 @@
   width: 12rem;
   margin-inline-end: 1rem;
 }
+
+.note-link {
+    color: var(--hd-link)
+}

@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import fontStyles from '../../../../global-styles/variables.module.scss'
 import { AsyncLoadingBoundary } from '../../../components/common/async-loading-boundary/async-loading-boundary'
 import type { CodeProps } from '../../../components/markdown-renderer/replace-components/code-block-component-replacer'
 import { useDarkModeState } from '../../../hooks/dark-mode/use-dark-mode-state'
@@ -54,8 +53,7 @@ export const FlowChart: React.FC<CodeProps> = ({ code }) => {
         'font-size': 16,
         'line-color': darkModeActivated ? '#ffffff' : '#000000',
         'element-color': darkModeActivated ? '#ffffff' : '#000000',
-        'font-color': darkModeActivated ? '#ffffff' : '#000000',
-        'font-family': fontStyles['font-family-base']
+        'font-color': darkModeActivated ? '#ffffff' : '#000000'
       })
       setSyntaxError(false)
     } catch (error) {
