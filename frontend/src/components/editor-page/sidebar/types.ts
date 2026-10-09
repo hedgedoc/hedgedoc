@@ -30,6 +30,7 @@ export enum DocumentSidebarMenuSelection {
   NONE,
   USERS_ONLINE,
   NOTE_INFO,
+  PERMISSIONS,
   MEDIA_BROWSER,
   IMPORT,
   EXPORT

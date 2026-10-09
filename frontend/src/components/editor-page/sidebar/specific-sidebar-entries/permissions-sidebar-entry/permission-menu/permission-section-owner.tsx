@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -10,9 +10,11 @@ import { useUiNotifications } from '../../../../../notifications/ui-notification
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionOwnerChange } from './permission-owner-change'
 import { PermissionOwnerInfo } from './permission-owner-info'
-import React, { Fragment, useCallback, useState } from 'react'
-import { Trans } from 'react-i18next'
+import React, { useCallback, useState } from 'react'
 import { cypressId } from '../../../../../../utils/cypress-attribute'
+import { SidebarMenuInfoEntry } from '../../../sidebar-menu-info-entry/sidebar-menu-info-entry'
+import { PersonBadge as IconPersonBadge } from 'react-bootstrap-icons'
+import { UserAvatarForUsername } from '../../../../../common/user-avatar/user-avatar-for-username'
 
 /**
  * Section in the permissions modal for managing the owner of a note.
@@ -20,6 +22,7 @@ import { cypressId } from '../../../../../../utils/cypress-attribute'
  * @param disabled If the user is not the owner, functionality is disabled.
  */
 export const PermissionSectionOwner: React.FC<PermissionDisabledProps> = ({ disabled }) => {
+  const noteOwner = useApplicationState((state) => state.noteDetails?.permissions.owner)
   const noteAlias = useApplicationState((state) => state.noteDetails?.primaryAlias)
   const [changeOwner, setChangeOwner] = useState(false)
   const { showErrorNotificationBuilder } = useUiNotifications()
@@ -37,30 +40,33 @@ export const PermissionSectionOwner: React.FC<PermissionDisabledProps> = ({ disa
         .then((updatedPermissions) => {
           setNotePermissionsFromServer(updatedPermissions)
         })
-        .catch(showErrorNotificationBuilder('editor.modal.permissions.ownerChange.error'))
+        .catch(showErrorNotificationBuilder('editor.permissions.ownerChange.error'))
         .finally(() => {
           setChangeOwner(false)
         })
     },
     [noteAlias, showErrorNotificationBuilder]
   )
+  const onCancel = useCallback(() => setChangeOwner(false), [])
 
   return (
-    <Fragment>
-      <h5 className={'mb-3'}>
-        <Trans i18nKey={'editor.modal.permissions.owner'} />
-      </h5>
-      <ul className={'list-group'}>
-        <li
-          className={'list-group-item d-flex flex-row align-items-center justify-content-between'}
-          {...cypressId('permission-owner-name')}>
-          {changeOwner ? (
-            <PermissionOwnerChange onConfirmOwnerChange={onOwnerChange} />
-          ) : (
-            <PermissionOwnerInfo onEditOwner={onSetChangeOwner} disabled={disabled} />
-          )}
-        </li>
-      </ul>
-    </Fragment>
+    <SidebarMenuInfoEntry
+      className={'py-2'}
+      titleI18nKey={'editor.permissions.owner'}
+      icon={IconPersonBadge}
+      prefixComponent={
+        !changeOwner ? (
+          <UserAvatarForUsername username={noteOwner} showName={false} additionalClasses={'mx-2'} />
+        ) : undefined
+      }
+      {...cypressId('permission-owner-name')}>
+      <div className={'d-flex flex-row align-items-center justify-content-between'}>
+        {changeOwner ? (
+          <PermissionOwnerChange onConfirmOwnerChange={onOwnerChange} onCancelOwnerChange={onCancel} />
+        ) : (
+          <PermissionOwnerInfo onEditOwner={onSetChangeOwner} disabled={disabled} noteOwner={noteOwner} />
+        )}
+      </div>
+    </SidebarMenuInfoEntry>
   )
 }
