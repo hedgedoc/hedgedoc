@@ -1,15 +1,15 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
-import { UiIcon } from '../../../../../common/icons/ui-icon'
+import { useTranslatedText } from '../../../../../hooks/common/use-translated-text'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionLevel } from '@hedgedoc/commons'
 import React, { useMemo } from 'react'
-import { Button, ToggleButtonGroup } from 'react-bootstrap'
+import { ToggleButtonGroup } from 'react-bootstrap'
 import { Eye as IconEye, Pencil as IconPencil, X as IconX } from 'react-bootstrap-icons'
+import { IconButton } from '../../../../common/icon-button/icon-button'
 
 interface PermissionEntryButtonI18nKeys {
   remove: string
@@ -55,15 +55,15 @@ export const PermissionEntryButtons: React.FC<PermissionEntryButtonsProps & Perm
     switch (type) {
       case PermissionType.USER:
         return {
-          remove: 'editor.modal.permissions.removeUser',
-          setReadOnly: 'editor.modal.permissions.viewOnlyUser',
-          setWriteable: 'editor.modal.permissions.editUser'
+          remove: 'editor.permissions.removeUser',
+          setReadOnly: 'editor.permissions.viewOnlyUser',
+          setWriteable: 'editor.permissions.editUser'
         }
       case PermissionType.GROUP:
         return {
-          remove: 'editor.modal.permissions.removeGroup',
-          setReadOnly: 'editor.modal.permissions.viewOnlyGroup',
-          setWriteable: 'editor.modal.permissions.editGroup'
+          remove: 'editor.permissions.removeGroup',
+          setReadOnly: 'editor.permissions.viewOnlyGroup',
+          setWriteable: 'editor.permissions.editGroup'
         }
     }
   }, [type])
@@ -76,24 +76,31 @@ export const PermissionEntryButtons: React.FC<PermissionEntryButtonsProps & Perm
   return (
     <div>
       <ToggleButtonGroup className={'me-2'} type='radio' name='edit-mode' value={currentSetting}>
-        <Button
-          disabled={disabled}
+        <IconButton
+          icon={IconEye}
           title={setReadOnlyTitle}
-          variant={currentSetting === PermissionLevel.READ ? 'secondary' : 'outline-secondary'}
-          onClick={onSetReadOnly}>
-          <UiIcon icon={IconEye} />
-        </Button>
-        <Button
+          variant={currentSetting === PermissionLevel.READ ? 'primary' : 'outline-primary'}
+          onClick={onSetReadOnly}
           disabled={disabled}
+          className={'p-1'}
+        />
+        <IconButton
+          icon={IconPencil}
           title={setWritableTitle}
-          variant={currentSetting === PermissionLevel.WRITE ? 'secondary' : 'outline-secondary'}
-          onClick={onSetWriteable}>
-          <UiIcon icon={IconPencil} />
-        </Button>
+          variant={currentSetting === PermissionLevel.WRITE ? 'primary' : 'outline-primary'}
+          onClick={onSetWriteable}
+          disabled={disabled}
+          className={'p-1'}
+        />
       </ToggleButtonGroup>
-      <Button variant='danger' disabled={disabled} title={removeTitle} onClick={onRemove}>
-        <UiIcon icon={IconX} />
-      </Button>
+      <IconButton
+        icon={IconX}
+        variant={'danger'}
+        disabled={disabled}
+        title={removeTitle}
+        onClick={onRemove}
+        className={'p-1'}
+      />
     </div>
   )
 }

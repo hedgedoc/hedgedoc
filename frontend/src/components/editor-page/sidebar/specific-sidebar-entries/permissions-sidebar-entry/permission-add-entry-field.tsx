@@ -1,20 +1,20 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
-import { UiIcon } from '../../../../../common/icons/ui-icon'
+import { useTranslatedText } from '../../../../../hooks/common/use-translated-text'
+import { UiIcon } from '../../../../common/icons/ui-icon'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import React, { useCallback, useState } from 'react'
 import { Button, FormControl, InputGroup } from 'react-bootstrap'
 import { PlusLg as IconPlus } from 'react-bootstrap-icons'
-import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
-import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
-import { setUserPermission } from '../../../../../../api/permissions'
-import { setNotePermissionsFromServer } from '../../../../../../redux/note-details/methods'
-import { ErrorToI18nKeyMapper } from '../../../../../../api/common/error-to-i18n-key-mapper'
-import { useOnInputChange } from '../../../../../../hooks/common/use-on-input-change'
+import { useApplicationState } from '../../../../../hooks/common/use-application-state'
+import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
+import { setUserPermission } from '../../../../../api/permissions'
+import { setNotePermissionsFromServer } from '../../../../../redux/note-details/methods'
+import { ErrorToI18nKeyMapper } from '../../../../../api/common/error-to-i18n-key-mapper'
+import { useOnInputChange } from '../../../../../hooks/common/use-on-input-change'
 
 export interface PermissionAddEntryFieldProps {
   i18nKey: string
@@ -45,7 +45,7 @@ export const PermissionAddEntryField: React.FC<PermissionAddEntryFieldProps & Pe
         setNewEntryIdentifier('')
       })
       .catch((error) => {
-        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.modal.permissions.error')
+        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.permissions.error')
           .withHttpCode(404, 'missingUser')
           .withHttpCode(403, 'missingPermissions')
           .orFallbackI18nKey('other')
@@ -56,18 +56,16 @@ export const PermissionAddEntryField: React.FC<PermissionAddEntryFieldProps & Pe
   const placeholderText = useTranslatedText(i18nKey)
 
   return (
-    <li className={'list-group-item'}>
-      <InputGroup className={'me-1 mb-1'}>
-        <FormControl value={newEntryIdentifier} placeholder={placeholderText} onChange={onChange} disabled={disabled} />
-        <Button
-          variant='primary'
-          className={'text-ms-2'}
-          title={placeholderText}
-          onClick={onAddEntry}
-          disabled={disabled}>
-          <UiIcon icon={IconPlus} />
-        </Button>
-      </InputGroup>
-    </li>
+    <InputGroup className={'mb-1'}>
+      <FormControl value={newEntryIdentifier} placeholder={placeholderText} onChange={onChange} disabled={disabled} />
+      <Button
+        variant='primary'
+        className={'text-ms-2'}
+        title={placeholderText}
+        onClick={onAddEntry}
+        disabled={disabled}>
+        <UiIcon icon={IconPlus} />
+      </Button>
+    </InputGroup>
   )
 }

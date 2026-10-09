@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../../../../hooks/common/use-application-state'
+import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
 import { useMemo } from 'react'
 import { SpecialGroup } from '@hedgedoc/commons'
 

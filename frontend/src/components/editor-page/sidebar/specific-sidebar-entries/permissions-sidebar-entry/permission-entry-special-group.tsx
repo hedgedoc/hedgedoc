@@ -1,14 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { removeGroupPermission, setGroupPermission } from '../../../../../../api/permissions'
-import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
-import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
-import { setNotePermissionsFromServer } from '../../../../../../redux/note-details/methods'
-import { IconButton } from '../../../../../common/icon-button/icon-button'
-import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
+import { removeGroupPermission, setGroupPermission } from '../../../../../api/permissions'
+import { useApplicationState } from '../../../../../hooks/common/use-application-state'
+import { useTranslatedText } from '../../../../../hooks/common/use-translated-text'
+import { setNotePermissionsFromServer } from '../../../../../redux/note-details/methods'
+import { IconButton } from '../../../../common/icon-button/icon-button'
+import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionLevel, SpecialGroup } from '@hedgedoc/commons'
 import React, { useCallback, useMemo } from 'react'
@@ -16,8 +16,8 @@ import { ToggleButtonGroup } from 'react-bootstrap'
 import { Eye as IconEye, Pencil as IconPencil, SlashCircle as IconSlashCircle } from 'react-bootstrap-icons'
 import { useTranslation } from 'react-i18next'
 import { PermissionInconsistentAlert } from './permission-inconsistent-alert'
-import { cypressId } from '../../../../../../utils/cypress-attribute'
-import { ErrorToI18nKeyMapper } from '../../../../../../api/common/error-to-i18n-key-mapper'
+import { cypressId } from '../../../../../utils/cypress-attribute'
+import { ErrorToI18nKeyMapper } from '../../../../../api/common/error-to-i18n-key-mapper'
 
 export interface PermissionEntrySpecialGroupProps {
   level: PermissionLevel
@@ -52,7 +52,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch((error) => {
-        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.modal.permissions.error')
+        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.permissions.error')
           .withHttpCode(404, 'missingUser')
           .withHttpCode(403, 'missingPermissions')
           .orFallbackI18nKey('other')
@@ -69,7 +69,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch((error) => {
-        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.modal.permissions.error')
+        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.permissions.error')
           .withHttpCode(404, 'missingUser')
           .withHttpCode(403, 'missingPermissions')
           .orFallbackI18nKey('other')
@@ -86,7 +86,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch((error) => {
-        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.modal.permissions.error')
+        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.permissions.error')
           .withHttpCode(404, 'missingUser')
           .withHttpCode(403, 'missingPermissions')
           .orFallbackI18nKey('other')
@@ -97,19 +97,19 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
   const name = useMemo(() => {
     switch (type) {
       case SpecialGroup.LOGGED_IN:
-        return t('editor.modal.permissions.allLoggedInUser')
+        return t('editor.permissions.allLoggedInUser')
       case SpecialGroup.EVERYONE:
-        return t('editor.modal.permissions.allUser')
+        return t('editor.permissions.allUser')
     }
   }, [type, t])
 
   const translateOptions = useMemo(() => ({ name }), [name])
-  const denyGroupText = useTranslatedText('editor.modal.permissions.denyGroup', translateOptions)
-  const viewOnlyGroupText = useTranslatedText('editor.modal.permissions.viewOnlyGroup', translateOptions)
-  const editGroupText = useTranslatedText('editor.modal.permissions.editGroup', translateOptions)
+  const denyGroupText = useTranslatedText('editor.permissions.denyGroup', translateOptions)
+  const viewOnlyGroupText = useTranslatedText('editor.permissions.viewOnlyGroup', translateOptions)
+  const editGroupText = useTranslatedText('editor.permissions.editGroup', translateOptions)
 
   return (
-    <li className={'list-group-item d-flex flex-row justify-content-between align-items-center'}>
+    <div className={'d-flex flex-row justify-content-between align-items-center my-1'}>
       <span>{name}</span>
       <div>
         <PermissionInconsistentAlert show={inconsistent ?? false} />
@@ -117,7 +117,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
           <IconButton
             icon={IconSlashCircle}
             title={denyGroupText}
-            variant={level === PermissionLevel.DENY ? 'secondary' : 'outline-secondary'}
+            variant={level === PermissionLevel.DENY ? 'primary' : 'outline-primary'}
             onClick={onSetEntryDenied}
             disabled={disabled}
             className={'p-1'}
@@ -126,7 +126,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
           <IconButton
             icon={IconEye}
             title={viewOnlyGroupText}
-            variant={level === PermissionLevel.READ ? 'secondary' : 'outline-secondary'}
+            variant={level === PermissionLevel.READ ? 'primary' : 'outline-primary'}
             onClick={onSetEntryReadOnly}
             disabled={disabled}
             className={'p-1'}
@@ -135,7 +135,7 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
           <IconButton
             icon={IconPencil}
             title={editGroupText}
-            variant={level === PermissionLevel.WRITE ? 'secondary' : 'outline-secondary'}
+            variant={level === PermissionLevel.WRITE ? 'primary' : 'outline-primary'}
             onClick={onSetEntryWriteable}
             disabled={disabled}
             className={'p-1'}
@@ -143,6 +143,6 @@ export const PermissionEntrySpecialGroup: React.FC<PermissionEntrySpecialGroupPr
           />
         </ToggleButtonGroup>
       </div>
-    </li>
+    </div>
   )
 }
