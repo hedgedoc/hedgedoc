@@ -12,3 +12,7 @@
   font-size: 0.75em;
   color: var(--bs-secondary);
 }
+
+.container {
+  width: 100%;
+}
