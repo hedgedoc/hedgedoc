@@ -1,13 +1,13 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { removeUserPermission, setUserPermission } from '../../../../../../api/permissions'
-import { getUserInfo } from '../../../../../../api/users'
-import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
-import { setNotePermissionsFromServer } from '../../../../../../redux/note-details/methods'
-import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
+import { removeUserPermission, setUserPermission } from '../../../../../api/permissions'
+import { getUserInfo } from '../../../../../api/users'
+import { useApplicationState } from '../../../../../hooks/common/use-application-state'
+import { setNotePermissionsFromServer } from '../../../../../redux/note-details/methods'
+import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionEntryButtons, PermissionType } from './permission-entry-buttons'
 import type { NoteUserPermissionEntryInterface } from '@hedgedoc/commons'
@@ -16,9 +16,9 @@ import React, { useCallback, useMemo } from 'react'
 import { useAsync } from 'react-use'
 import { PermissionInconsistentAlert } from './permission-inconsistent-alert'
 import { useGetSpecialPermissions } from './hooks/use-get-special-permissions'
-import { AsyncLoadingBoundary } from '../../../../../common/async-loading-boundary/async-loading-boundary'
-import { UserAvatar } from '../../../../../common/user-avatar/user-avatar'
-import { ErrorToI18nKeyMapper } from '../../../../../../api/common/error-to-i18n-key-mapper'
+import { AsyncLoadingBoundary } from '../../../../common/async-loading-boundary/async-loading-boundary'
+import { UserAvatar } from '../../../../common/user-avatar/user-avatar'
+import { ErrorToI18nKeyMapper } from '../../../../../api/common/error-to-i18n-key-mapper'
 
 export interface PermissionEntryUserProps {
   entry: NoteUserPermissionEntryInterface
@@ -55,7 +55,7 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch((error) => {
-        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.modal.permissions.error')
+        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.permissions.error')
           .withHttpCode(400, 'missingUser')
           .withHttpCode(403, 'missingPermissions')
           .orFallbackI18nKey('other')
@@ -72,7 +72,7 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch((error) => {
-        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.modal.permissions.error')
+        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.permissions.error')
           .withHttpCode(404, 'missingUser')
           .withHttpCode(403, 'missingPermissions')
           .orFallbackI18nKey('other')
@@ -89,7 +89,7 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
         setNotePermissionsFromServer(updatedPermissions)
       })
       .catch((error) => {
-        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.modal.permissions.error')
+        const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.permissions.error')
           .withHttpCode(404, 'missingUser')
           .withHttpCode(403, 'missingPermissions')
           .orFallbackI18nKey('other')
@@ -107,7 +107,7 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
 
   return (
     <AsyncLoadingBoundary loading={loading} error={error} componentName={'PermissionEntryUser'}>
-      <li className={'list-group-item d-flex flex-row justify-content-between align-items-center'}>
+      <div className={'d-flex flex-row justify-content-between align-items-center my-2'}>
         <UserAvatar user={value} />
         <div className={'d-flex flex-row align-items-center'}>
           <PermissionInconsistentAlert show={permissionInconsistent ?? false} />
@@ -121,7 +121,7 @@ export const PermissionEntryUser: React.FC<PermissionEntryUserProps & Permission
             disabled={disabled}
           />
         </div>
-      </li>
+      </div>
     </AsyncLoadingBoundary>
   )
 }

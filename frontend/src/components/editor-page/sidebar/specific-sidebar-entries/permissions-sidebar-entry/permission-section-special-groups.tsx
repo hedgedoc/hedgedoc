@@ -1,15 +1,17 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useIsOwner } from '../../../../../../hooks/common/use-is-owner'
+import { useIsOwner } from '../../../../../hooks/common/use-is-owner'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionEntrySpecialGroup } from './permission-entry-special-group'
 import { PermissionLevel, SpecialGroup } from '@hedgedoc/commons'
-import React, { Fragment, useMemo } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useGetSpecialPermissions } from './hooks/use-get-special-permissions'
+import { SidebarMenuInfoEntry } from '../../sidebar-menu-info-entry/sidebar-menu-info-entry'
+import { PeopleFill as IconPeopleFill } from 'react-bootstrap-icons'
 
 /**
  * Section of the permission modal for managing special group access to the note.
@@ -38,23 +40,18 @@ export const PermissionSectionSpecialGroups: React.FC<PermissionDisabledProps> =
   }, [groupEveryone, groupLoggedIn])
 
   return (
-    <Fragment>
-      <h5 className={'my-3'}>
-        <Trans i18nKey={'editor.modal.permissions.sharedWithGroups'} />
-      </h5>
-      <ul className={'list-group'}>
-        <PermissionEntrySpecialGroup
-          level={specialGroupEntries.loggedInLevel}
-          type={SpecialGroup.LOGGED_IN}
-          disabled={!isOwner}
-          inconsistent={specialGroupEntries.loggedInInconsistentAlert}
-        />
-        <PermissionEntrySpecialGroup
-          level={specialGroupEntries.everyoneLevel}
-          type={SpecialGroup.EVERYONE}
-          disabled={disabled}
-        />
-      </ul>
-    </Fragment>
+    <SidebarMenuInfoEntry titleI18nKey={'editor.permissions.sharedWithGroups'} icon={IconPeopleFill}>
+      <PermissionEntrySpecialGroup
+        level={specialGroupEntries.loggedInLevel}
+        type={SpecialGroup.LOGGED_IN}
+        disabled={!isOwner}
+        inconsistent={specialGroupEntries.loggedInInconsistentAlert}
+      />
+      <PermissionEntrySpecialGroup
+        level={specialGroupEntries.everyoneLevel}
+        type={SpecialGroup.EVERYONE}
+        disabled={disabled}
+      />
+    </SidebarMenuInfoEntry>
   )
 }

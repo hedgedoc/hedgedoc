@@ -3,14 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useBooleanState } from '../../../../../hooks/common/use-boolean-state'
 import { SidebarButton } from '../../sidebar-button/sidebar-button'
-import type { SpecificSidebarEntryProps } from '../../types'
-import { PermissionModal } from './permissions-modal/permission-modal'
-import React, { Fragment } from 'react'
+import { DocumentSidebarMenuSelection, type SpecificSidebarMenuProps } from '../../types'
+import React, { Fragment, useCallback } from 'react'
 import { Lock as IconLock } from 'react-bootstrap-icons'
-import { Trans, useTranslation } from 'react-i18next'
+import { Trans } from 'react-i18next'
 import { cypressId } from '../../../../../utils/cypress-attribute'
+import { SidebarMenu } from '../../sidebar-menu/sidebar-menu'
+import { PermissionSectionOwner } from './permission-section-owner'
+import { PermissionSectionUsers } from './permission-section-users'
+import { PermissionSectionSpecialGroups } from './permission-section-special-groups'
+import { PermissionSectionVisibility } from './permission-section-visibility'
+import { useIsOwner } from '../../../../../hooks/common/use-is-owner'
 
 /**
  * Renders a button to open the permission modal for the sidebar.
@@ -18,9 +22,18 @@ import { cypressId } from '../../../../../utils/cypress-attribute'
  * @param className Additional classes directly given to the button
  * @param hide If the button should be hidden
  */
-export const PermissionsSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
-  const [modalVisibility, showModal, closeModal] = useBooleanState()
-  useTranslation()
+export const PermissionsSidebarEntry: React.FC<SpecificSidebarMenuProps> = ({
+  className,
+  menuId,
+  onClick,
+  selectedMenuId
+}) => {
+  const isOwner = useIsOwner()
+  const hide = selectedMenuId !== DocumentSidebarMenuSelection.NONE && selectedMenuId !== menuId
+  const expand = selectedMenuId === menuId
+  const onClickHandler = useCallback(() => {
+    onClick(menuId)
+  }, [menuId, onClick])
 
   return (
     <Fragment>
@@ -28,11 +41,16 @@ export const PermissionsSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ c
         hide={hide}
         className={className}
         icon={IconLock}
-        onClick={showModal}
+        onClick={onClickHandler}
         {...cypressId('sidebar-permission-btn')}>
-        <Trans i18nKey={'editor.modal.permissions.title'} />
+        <Trans i18nKey={'editor.permissions.title'} />
       </SidebarButton>
-      <PermissionModal show={modalVisibility} onHide={closeModal} />
+      <SidebarMenu expand={expand}>
+        <PermissionSectionOwner disabled={!isOwner} />
+        <PermissionSectionUsers disabled={!isOwner} />
+        <PermissionSectionSpecialGroups disabled={!isOwner} />
+        <PermissionSectionVisibility disabled={!isOwner} />
+      </SidebarMenu>
     </Fragment>
   )
 }

@@ -1,14 +1,16 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
+import { useApplicationState } from '../../../../../hooks/common/use-application-state'
 import { PermissionAddEntryField } from './permission-add-entry-field'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
 import { PermissionEntryUser } from './permission-entry-user'
-import React, { Fragment, useMemo } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { SidebarMenuInfoEntry } from '../../sidebar-menu-info-entry/sidebar-menu-info-entry'
+import { PersonFill as IconPersonFill } from 'react-bootstrap-icons'
 
 /**
  * Section of the permission modal for managing user access to the note.
@@ -29,14 +31,11 @@ export const PermissionSectionUsers: React.FC<PermissionDisabledProps> = ({ disa
   }, [userPermissions, disabled])
 
   return (
-    <Fragment>
-      <h5 className={'my-3'}>
-        <Trans i18nKey={'editor.modal.permissions.sharedWithUsers'} />
-      </h5>
-      <ul className={'list-group'}>
+    <SidebarMenuInfoEntry titleI18nKey={'editor.permissions.sharedWithUsers'} icon={IconPersonFill}>
+      <div className={'d-flex flex-column'}>
         {userEntries}
-        <PermissionAddEntryField i18nKey={'editor.modal.permissions.addUser'} disabled={disabled} />
-      </ul>
-    </Fragment>
+        <PermissionAddEntryField i18nKey={'editor.permissions.addUser'} disabled={disabled} />
+      </div>
+    </SidebarMenuInfoEntry>
   )
 }

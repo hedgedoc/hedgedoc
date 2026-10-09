@@ -56,7 +56,11 @@ export const Sidebar: React.FC = () => {
           onClick={toggleValue}
         />
         <RevisionSidebarEntry hide={selectionIsNotNone} />
-        <PermissionsSidebarEntry hide={selectionIsNotNone} />
+        <PermissionsSidebarEntry
+          menuId={DocumentSidebarMenuSelection.PERMISSIONS}
+          selectedMenuId={selectedMenu}
+          onClick={toggleValue}
+        />
         <AliasesSidebarEntry hide={selectionIsNotNone} />
         <MediaBrowserSidebarMenu
           onClick={toggleValue}
