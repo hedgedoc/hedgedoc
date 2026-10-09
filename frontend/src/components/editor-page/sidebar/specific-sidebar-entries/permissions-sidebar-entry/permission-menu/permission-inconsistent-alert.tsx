@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -15,7 +15,7 @@ import { useTranslatedText } from '../../../../../../hooks/common/use-translated
  * @param show true to show the alert, false otherwise.
  */
 export const PermissionInconsistentAlert: React.FC<SimpleAlertProps> = ({ show }) => {
-  const message = useTranslatedText('editor.modal.permissions.inconsistent')
+  const message = useTranslatedText('editor.permissions.inconsistent')
 
   if (!show) {
     return null
