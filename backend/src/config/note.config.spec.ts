@@ -17,7 +17,7 @@ describe('noteConfig', () => {
   const negativeMaxDocumentLength = -123;
   const floatMaxDocumentLength = 2.71;
   const invalidMaxDocumentLength = 'not-a-max-document-length';
-  const guestAccess = PermissionLevel.FULL;
+  const guestAccess = PermissionLevel.WRITE;
   const wrongDefaultPermission = 'wrong';
   const retentionDays = 30;
   const persistInteval = 15;
@@ -227,7 +227,25 @@ describe('noteConfig', () => {
       expect(config.permissions.default.everyone).toEqual(PermissionLevel.WRITE);
       expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.WRITE);
       expect(config.permissions.default.publiclyVisible).toEqual(false);
-      expect(config.permissions.maxGuestLevel).toEqual(PermissionLevel.FULL);
+      expect(config.permissions.maxGuestLevel).toEqual(PermissionLevel.WRITE);
+      restore();
+    });
+
+    it('when no permission variables are set', () => {
+      const restore = mockedEnv(
+        {
+          HD_NOTE_FORBIDDEN_ALIASES: forbiddenAliases.join(','),
+          HD_NOTE_MAX_LENGTH: maxLength.toString(),
+        },
+        {
+          clear: true,
+        },
+      );
+      const config = noteConfig();
+      expect(config.permissions.default.everyone).toEqual(PermissionLevel.READ);
+      expect(config.permissions.default.loggedIn).toEqual(PermissionLevel.WRITE);
+      expect(config.permissions.default.publiclyVisible).toEqual(false);
+      expect(config.permissions.maxGuestLevel).toEqual(PermissionLevel.WRITE);
       restore();
     });
 

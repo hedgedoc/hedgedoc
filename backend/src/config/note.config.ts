@@ -33,7 +33,7 @@ const schema = z
       maxGuestLevel: z
         .enum(PermissionLevelNames)
         .optional()
-        .default(PermissionLevelNames[PermissionLevel.FULL])
+        .default(PermissionLevelNames[PermissionLevel.WRITE])
         .describe('HD_NOTE_PERMISSIONS_MAX_GUEST_LEVEL')
         .transform((value) => PermissionLevelValues[value]),
       default: z.object({
