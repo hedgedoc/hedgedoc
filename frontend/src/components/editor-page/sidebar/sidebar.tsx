@@ -61,7 +61,11 @@ export const Sidebar: React.FC = () => {
           selectedMenuId={selectedMenu}
           onClick={toggleValue}
         />
-        <AliasesSidebarEntry hide={selectionIsNotNone} />
+        <AliasesSidebarEntry
+          menuId={DocumentSidebarMenuSelection.ALIASES}
+          selectedMenuId={selectedMenu}
+          onClick={toggleValue}
+        />
         <MediaBrowserSidebarMenu
           onClick={toggleValue}
           selectedMenuId={selectedMenu}

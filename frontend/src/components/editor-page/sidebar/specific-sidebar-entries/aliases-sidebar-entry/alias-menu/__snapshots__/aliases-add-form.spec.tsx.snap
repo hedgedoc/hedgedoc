@@ -9,7 +9,7 @@ exports[`AliasesAddForm renders the input form 1`] = `
       <input
         class="form-control"
         data-testid="addAliasInput"
-        placeholder="editor.modal.aliases.addAlias"
+        placeholder="editor.aliases.addAlias"
         required=""
         value=""
       />
@@ -17,7 +17,7 @@ exports[`AliasesAddForm renders the input form 1`] = `
         class="ms-2 btn btn-primary"
         data-testid="addAliasButton"
         disabled=""
-        title="editor.modal.aliases.addAlias"
+        title="editor.aliases.addAlias"
         type="submit"
       >
         BootstrapIconMock_PlusLg

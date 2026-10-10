@@ -3,13 +3,15 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useBooleanState } from '../../../../../hooks/common/use-boolean-state'
 import { SidebarButton } from '../../sidebar-button/sidebar-button'
-import type { SpecificSidebarEntryProps } from '../../types'
-import { AliasesModal } from './aliases-modal/aliases-modal'
-import React, { Fragment } from 'react'
-import { Tags as IconTags } from 'react-bootstrap-icons'
+import { DocumentSidebarMenuSelection, type SpecificSidebarMenuProps } from '../../types'
+import React, { Fragment, useCallback } from 'react'
+import { ArrowLeft as IconArrowLeft, Tags as IconTags } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
+import { SidebarMenu } from '../../sidebar-menu/sidebar-menu'
+import { AliasesList } from './alias-menu/aliases-list'
+import { AliasesAddForm } from './alias-menu/aliases-add-form'
+import { SidebarMenuInfoEntry } from '../../sidebar-menu-info-entry/sidebar-menu-info-entry'
 
 /**
  * Component that shows a button in the editor sidebar for opening the aliases modal.
@@ -17,16 +19,39 @@ import { Trans, useTranslation } from 'react-i18next'
  * @param className Additional CSS classes that should be added to the sidebar button.
  * @param hide True when the sidebar button should be hidden, False otherwise.
  */
-export const AliasesSidebarEntry: React.FC<SpecificSidebarEntryProps> = ({ className, hide }) => {
+export const AliasesSidebarEntry: React.FC<SpecificSidebarMenuProps> = ({
+  className,
+  menuId,
+  onClick,
+  selectedMenuId
+}) => {
   useTranslation()
-  const [showModal, setShowModal, setHideModal] = useBooleanState(false)
+  const hide = selectedMenuId !== DocumentSidebarMenuSelection.NONE && selectedMenuId !== menuId
+  const expand = selectedMenuId === menuId
+  const onClickHandler = useCallback(() => {
+    onClick(menuId)
+  }, [menuId, onClick])
 
   return (
     <Fragment>
-      <SidebarButton hide={hide} className={className} icon={IconTags} onClick={setShowModal}>
-        <Trans i18nKey={'editor.modal.aliases.title'} />
+      <SidebarButton
+        hide={hide}
+        className={className}
+        icon={expand ? IconArrowLeft : IconTags}
+        onClick={onClickHandler}>
+        <Trans i18nKey={'editor.aliases.title'} />
       </SidebarButton>
-      <AliasesModal show={showModal} onHide={setHideModal} />
+      <SidebarMenu expand={expand}>
+        <SidebarMenuInfoEntry className={'py-2'} titleI18nKey={'editor.aliases.explanation.title'}>
+          <small className={'text-muted'}>
+            <Trans i18nKey={'editor.aliases.explanation.text'} />
+          </small>
+        </SidebarMenuInfoEntry>
+        <SidebarMenuInfoEntry className={'py-2'} titleI18nKey={'editor.aliases.title'}>
+          <AliasesList />
+          <AliasesAddForm />
+        </SidebarMenuInfoEntry>
+      </SidebarMenu>
     </Fragment>
   )
 }
