@@ -10,9 +10,9 @@ exports[`AliasesListEntry allows primary alias not to be deleted 1`] = `
       <span
         class="ms-2 badge bg-secondary"
         data-testid="aliasPrimaryBadge"
-        title="editor.modal.aliases.isPrimary"
+        title="editor.aliases.isPrimary"
       >
-        editor.modal.aliases.primaryLabel
+        editor.aliases.primaryLabel
       </span>
     </div>
     <div>
@@ -20,7 +20,7 @@ exports[`AliasesListEntry allows primary alias not to be deleted 1`] = `
         class="btn btn-danger"
         data-testid="aliasButtonRemove"
         disabled=""
-        title="editor.modal.aliases.removeAlias"
+        title="editor.aliases.removeAlias"
         type="button"
       >
         BootstrapIconMock_X
@@ -40,9 +40,9 @@ exports[`AliasesListEntry disables remove button if not owner 1`] = `
       <span
         class="ms-2 badge bg-secondary"
         data-testid="aliasPrimaryBadge"
-        title="editor.modal.aliases.isPrimary"
+        title="editor.aliases.isPrimary"
       >
-        editor.modal.aliases.primaryLabel
+        editor.aliases.primaryLabel
       </span>
     </div>
     <div>
@@ -50,7 +50,7 @@ exports[`AliasesListEntry disables remove button if not owner 1`] = `
         class="btn btn-danger"
         data-testid="aliasButtonRemove"
         disabled=""
-        title="editor.modal.aliases.removeAlias"
+        title="editor.aliases.removeAlias"
         type="button"
       >
         BootstrapIconMock_X
@@ -72,7 +72,7 @@ exports[`AliasesListEntry marks alias as primary if non-primary 1`] = `
       <button
         class="me-2 btn btn-secondary"
         data-testid="aliasButtonMakePrimary"
-        title="editor.modal.aliases.makePrimary"
+        title="editor.aliases.makePrimary"
         type="button"
       >
         BootstrapIconMock_Star
@@ -80,7 +80,7 @@ exports[`AliasesListEntry marks alias as primary if non-primary 1`] = `
       <button
         class="btn btn-danger"
         data-testid="aliasButtonRemove"
-        title="editor.modal.aliases.removeAlias"
+        title="editor.aliases.removeAlias"
         type="button"
       >
         BootstrapIconMock_X
@@ -102,7 +102,7 @@ exports[`AliasesListEntry removes alias if non-primary 1`] = `
       <button
         class="me-2 btn btn-secondary"
         data-testid="aliasButtonMakePrimary"
-        title="editor.modal.aliases.makePrimary"
+        title="editor.aliases.makePrimary"
         type="button"
       >
         BootstrapIconMock_Star
@@ -110,7 +110,7 @@ exports[`AliasesListEntry removes alias if non-primary 1`] = `
       <button
         class="btn btn-danger"
         data-testid="aliasButtonRemove"
-        title="editor.modal.aliases.removeAlias"
+        title="editor.aliases.removeAlias"
         type="button"
       >
         BootstrapIconMock_X
@@ -132,7 +132,7 @@ exports[`AliasesListEntry renders an AliasesListEntry that is not primary 1`] = 
       <button
         class="me-2 btn btn-secondary"
         data-testid="aliasButtonMakePrimary"
-        title="editor.modal.aliases.makePrimary"
+        title="editor.aliases.makePrimary"
         type="button"
       >
         BootstrapIconMock_Star
@@ -140,7 +140,7 @@ exports[`AliasesListEntry renders an AliasesListEntry that is not primary 1`] = 
       <button
         class="btn btn-danger"
         data-testid="aliasButtonRemove"
-        title="editor.modal.aliases.removeAlias"
+        title="editor.aliases.removeAlias"
         type="button"
       >
         BootstrapIconMock_X
@@ -160,9 +160,9 @@ exports[`AliasesListEntry renders an AliasesListEntry that is primary 1`] = `
       <span
         class="ms-2 badge bg-secondary"
         data-testid="aliasPrimaryBadge"
-        title="editor.modal.aliases.isPrimary"
+        title="editor.aliases.isPrimary"
       >
-        editor.modal.aliases.primaryLabel
+        editor.aliases.primaryLabel
       </span>
     </div>
     <div>
@@ -170,7 +170,7 @@ exports[`AliasesListEntry renders an AliasesListEntry that is primary 1`] = `
         class="btn btn-danger"
         data-testid="aliasButtonRemove"
         disabled=""
-        title="editor.modal.aliases.removeAlias"
+        title="editor.aliases.removeAlias"
         type="button"
       >
         BootstrapIconMock_X

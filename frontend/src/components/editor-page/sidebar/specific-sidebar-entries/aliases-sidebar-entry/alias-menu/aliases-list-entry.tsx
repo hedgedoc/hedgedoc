@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2025 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,14 +8,15 @@ import { useIsOwner } from '../../../../../../hooks/common/use-is-owner'
 import { useTranslatedText } from '../../../../../../hooks/common/use-translated-text'
 import { updateMetadata } from '../../../../../../redux/note-details/methods'
 import { testId } from '../../../../../../utils/test-id'
-import { UiIcon } from '../../../../../common/icons/ui-icon'
 import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
 import React, { useCallback } from 'react'
-import { Badge } from 'react-bootstrap'
-import { Button } from 'react-bootstrap'
-import { Star as IconStar, X as IconX } from 'react-bootstrap-icons'
-import { useTranslation, Trans } from 'react-i18next'
+import { Star as IconStar, StarFill as IconStarFill, X as IconX } from 'react-bootstrap-icons'
+import { useTranslation } from 'react-i18next'
 import { useApplicationState } from '../../../../../../hooks/common/use-application-state'
+import { IconButton } from '../../../../../common/icon-button/icon-button'
+import styles from './aliases-list-entry.module.css'
+import { UiIcon } from '../../../../../common/icons/ui-icon'
+import { AliasesListAliasEntry } from './aliases-list-alias-entry'
 
 export interface AliasesListEntryProps {
   alias: string
@@ -35,49 +36,49 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
   const onRemoveClick = useCallback(() => {
     deleteAlias(alias)
       .then(updateMetadata)
-      .catch(showErrorNotificationBuilder(t('editor.modal.aliases.errorRemovingAlias')))
+      .catch(showErrorNotificationBuilder(t('editor.aliases.errorRemovingAlias')))
   }, [alias, t, showErrorNotificationBuilder])
 
   const onMakePrimaryClick = useCallback(() => {
     markAliasAsPrimary(alias)
       .then(updateMetadata)
-      .catch(showErrorNotificationBuilder(t('editor.modal.aliases.errorMakingPrimary')))
+      .catch(showErrorNotificationBuilder(t('editor.aliases.errorMakingPrimary')))
   }, [alias, t, showErrorNotificationBuilder])
 
-  const isPrimaryText = useTranslatedText('editor.modal.aliases.isPrimary')
-  const makePrimaryText = useTranslatedText('editor.modal.aliases.makePrimary')
-  const removeAliasText = useTranslatedText('editor.modal.aliases.removeAlias')
+  const isPrimaryText = useTranslatedText('editor.aliases.isPrimary')
+  const makePrimaryText = useTranslatedText('editor.aliases.makePrimary')
+  const removeAliasText = useTranslatedText('editor.aliases.removeAlias')
 
   return (
-    <li className={'list-group-item d-flex flex-row justify-content-between align-items-center'}>
+    <li className={'d-flex flex-row justify-content-between align-items-center my-1'}>
+      <AliasesListAliasEntry alias={alias}/>
       <div>
-        {alias}
-        {alias === primaryAlias && (
-          <Badge bg='secondary' className={'ms-2'} title={isPrimaryText} {...testId('aliasPrimaryBadge')}>
-            <Trans i18nKey={'editor.modal.aliases.primaryLabel'}></Trans>
-          </Badge>
-        )}
-      </div>
-      <div>
-        {alias !== primaryAlias && (
-          <Button
-            className={'me-2'}
+        {alias === primaryAlias ? (
+          <UiIcon
+            className={`p-1 mx-1 ${styles['primary']}`}
+            size={'24px'}
+            icon={IconStarFill}
+            title={isPrimaryText} />
+        ) : (
+          <IconButton
+            className={'p-1 mx-1'}
             variant='secondary'
             disabled={!isOwner}
             title={makePrimaryText}
             onClick={onMakePrimaryClick}
-            {...testId('aliasButtonMakePrimary')}>
-            <UiIcon icon={IconStar} />
-          </Button>
+            {...testId('aliasButtonMakePrimary')}
+            icon={IconStar}
+          />
         )}
-        <Button
+        <IconButton
+          className={'p-1'}
           variant='danger'
           disabled={!isOwner || alias === primaryAlias}
           title={removeAliasText}
           onClick={onRemoveClick}
-          {...testId('aliasButtonRemove')}>
-          <UiIcon icon={IconX} />
-        </Button>
+          {...testId('aliasButtonRemove')}
+          icon={IconX}
+        />
       </div>
     </li>
   )
