@@ -137,65 +137,141 @@
       "poweredBy": "Powered by <0></0>"
     }
   },
-  "profile": {
-    "userProfile": "User profile",
-    "displayName": "Display name",
-    "displayNameInfo": "This name will be shown publicly on notes you created or edited.",
-    "changePassword": {
-      "title": "Change password",
-      "old": "Old password",
-      "new": "New password",
-      "newAgain": "New password again",
-      "info": "Your new password should contain at least 6 characters.",
-      "failed": "Changing your password failed. Check your old password and try again.",
-      "successTitle": "Password changed",
-      "successText": "Your password has been changed successfully.",
-      "error": {
-        "wrongPassword": "Your old password is wrong",
-        "other": "There was an unexpected error logging you in."
+  "preferences": {
+    "title": "Preferences",
+    "notLoggedIn": "You need to be logged-in to see and change these preferences.",
+    "tabs": {
+      "appearance": "Appearance",
+      "editor": "Editor",
+      "profile": "Profile",
+      "account": "Account & Auth",
+      "api": "API"
+    },
+    "account": {
+      "usernameInfo": "This is just informative. Your username is persistent and can't be changed.",
+      "changePassword": {
+        "title": "Change password",
+        "old": "Old password",
+        "new": "New password",
+        "newAgain": "New password again",
+        "info": "Your new password should contain at least 6 characters.",
+        "failed": "Changing your password failed. Check your old password and try again.",
+        "successTitle": "Password changed",
+        "successText": "Your password has been changed successfully.",
+        "error": {
+          "wrongPassword": "Your old password is wrong",
+          "other": "There was an unexpected error logging you in."
+        },
+        "localLoginRequired": "You need to be logged-in using a local account (username and password) in order to change your password here."
+      },
+      "actions": {
+        "title": "Account management",
+        "exportUserData": "Export userdata",
+        "deleteUser": {
+          "title": "Delete user",
+          "message": "Do you really want to delete your user account?",
+          "subMessage": "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.",
+          "failed": "There was an error deleting your account. Please try it again or contact your instance's administrator.",
+          "notificationTitle": "Account deleted",
+          "notificationText": "Your account has been successfully deleted."
+        }
       }
     },
-    "selectProfilePicture": {
-      "title": "Select profile picture",
-      "info": "Your profile picture is publicly visible. Depending on your auth provider, you might have more or less choices here."
+    "api": {
+      "title": "API",
+      "info": "The API lets you use the CLI and third-party applications. Authentication uses access tokens which can be managed below. Since these grant access to your account, protect them as much as your password.",
+      "documentation": "You can find the OpenAPI documentation here.",
+      "accessTokens": {
+        "active": "Active access tokens",
+        "noTokens": "You don't have any access tokens generated yet.",
+        "createToken": "Create",
+        "create": "Create an access token",
+        "label": "Token label",
+        "created": "created {{time}}",
+        "lastUsed": "last used {{time}}",
+        "neverUsed": "never used",
+        "loadingFailed": "Fetching your access tokens has failed. Try reloading this page.",
+        "creationFailed": "Creating the access token failed.",
+        "createdTooMany": "You reached the limit of active access tokens, so you can't create new ones.",
+        "expiry": "Expiry date",
+        "addedAccessToken": {
+          "title": "Token added",
+          "message": "The access token '{{label}}' was created. Copy it from the field below now, as you won't be able to view it again."
+        },
+        "deleteAccessToken": {
+          "title": "Really delete token?",
+          "message": "When deleting the access token '{{label}}', the applications that used it won't have access to your account anymore. You eventually need a new token to continue using those applications.",
+          "notificationTitle": "Access token deleted",
+          "notificationText": "The access token '{{label}}' has been deleted.",
+          "failed": "There was an error deleting the access token. Please try it again or contact your instance's administrator."
+        }
+      }
     },
-    "changeDisplayNameFailed": "There was an error changing your display name.",
-    "accountManagement": "Account management",
-    "deleteUser": "Delete user",
-    "exportUserData": "Export user data",
-    "accessTokens": {
-      "title": "Access tokens",
-      "info": "Access tokens are an password-less authentication method for the CLI or third-party applications.",
-      "infoDev": "Developers can use these to access the public API.",
-      "noTokens": "You don't have any tokens generated yet.",
-      "createToken": "Create token",
-      "label": "Token label",
-      "created": "created {{time}}",
-      "lastUsed": "last used {{time}}",
-      "neverUsed": "never used",
-      "loadingFailed": "Fetching your access tokens has failed. Try reloading this page.",
-      "creationFailed": "Creating the access token failed.",
-      "expiry": "Expiry date"
+    "profile": {
+      "title": "User profile",
+      "info": "Your user profile defines how you're displayed to other users of this HedgeDoc instance, for example on notes you edited or created. When updating your information, keep in mind that your profile is public.",
+      "displayName": {
+        "title": "Display name",
+        "updateFailed": "There was an error changing your display name."
+      },
+      "avatar": {
+        "title": "Avatar",
+        "change": "Change avatar"
+      }
     },
-    "modal": {
-      "deleteUser": {
-        "title": "Delete user",
-        "message": "Do you really want to delete your user account?",
-        "subMessage": "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.",
-        "failed": "There was an error deleting your account. Please try it again or contact your instance's administrator.",
-        "notificationTitle": "Account deleted",
-        "notificationText": "Your account has been successfully deleted."
+    "editor": {
+      "title": "Editor",
+      "ligatures": {
+        "label": "Ligatures",
+        "help": "Renders special character sequences as one symbol."
       },
-      "addedAccessToken": {
-        "title": "Token added",
-        "message": "The access token '{{label}}' was created. Copy it from the field below now, as you won't be able to view it again."
+      "smartPaste": {
+        "label": "Smart Paste",
+        "help": "Smart paste detects common formats (like tables) when pasting content into the editor and formats them as markdown."
       },
-      "deleteAccessToken": {
-        "title": "Really delete token?",
-        "message": "When deleting the access token '{{label}}', the applications that used it won't have access to your account anymore. You eventually need a new token to continue using those applications.",
-        "notificationTitle": "Access token deleted",
-        "notificationText": "The access token '{{label}}' has been deleted.",
-        "failed": "There was an error deleting the access token. Please try it again or contact your instance's administrator."
+      "syncScroll": {
+        "label": "Sync Scrolling",
+        "help": "Synchronizes the scroll state of editor and rendering view."
+      },
+      "lineWrapping": {
+        "label": "Line Wrapping",
+        "help": "Breaks long lines so they're visible without scrolling."
+      },
+      "spellCheck": {
+        "label": "Spell checking",
+        "help": "Enables browser spell checking."
+      },
+      "indentWithTabs": {
+        "label": "Indentation character",
+        "help": "Sets which characters should be used for indentation",
+        "tabs": "Tabs",
+        "spaces": "Spaces"
+      },
+      "indentSpaces": {
+        "label": "Indentation size",
+        "help": "Sets the amount of spaces for indentation."
+      }
+    },
+    "appearance": {
+      "darkMode": {
+        "label": "Dark mode",
+        "help": "Enforces the use of the dark mode for the app or lets the browser decide.",
+        "dark": {
+          "tooltip": "Switch to dark mode",
+          "label": "Dark"
+        },
+        "light": {
+          "tooltip": "Switch to light mode",
+          "label": "Light"
+        },
+        "browser": {
+          "tooltip": "Let browser decide",
+          "label": "Auto"
+        }
+      },
+      "language": {
+        "label": "Language",
+        "help": "The primary user interface language"
       }
     }
   },
@@ -608,7 +684,11 @@
       "titleFallback": "Welcome!",
       "description": "It seems this is the first time you logged in to this instance. Please confirm your information to continue and login. This needs to be done only once.",
       "error": "There was an error creating your user account. Please try again.",
-      "cancelError": "There was an error with the process. If this persists, try to clear your cookies, reload and try again."
+      "cancelError": "There was an error with the process. If this persists, try to clear your cookies, reload and try again.",
+      "selectProfilePicture": {
+        "title": "Select your profile picture",
+        "info": "You may have more or less options here depending on your auth provider."
+      }
     }
   },
   "motd": {
@@ -646,65 +726,6 @@
   },
   "realtime": {
     "connecting": "Connecting to realtime collaboration server…"
-  },
-  "settings": {
-    "title": "Settings",
-    "editor": {
-      "label": "Editor",
-      "ligatures": {
-        "label": "Ligatures",
-        "help": "Renders special character sequences as one symbol."
-      },
-      "smartPaste": {
-        "label": "Smart Paste",
-        "help": "Smart paste detects common formats (like tables) when pasting content into the editor and formats them as markdown."
-      },
-      "syncScroll": {
-        "label": "Sync Scrolling",
-        "help": "Synchronizes the scroll state of editor and rendering view."
-      },
-      "lineWrapping": {
-        "label": "Line Wrapping",
-        "help": "Breaks long lines so they're visible without scrolling."
-      },
-      "spellCheck": {
-        "label": "Spell checking",
-        "help": "Enables browser spell checking."
-      },
-      "indentWithTabs": {
-        "label": "Indentation character",
-        "help": "Sets which characters should be used for indentation",
-        "tabs": "Tabs",
-        "spaces": "Spaces"
-      },
-      "indentSpaces": {
-        "label": "Indentation size",
-        "help": "Sets the amount of spaces for indentation."
-      }
-    },
-    "global": {
-      "label": "Global",
-      "darkMode": {
-        "label": "Dark mode",
-        "help": "Enforces the use of the dark mode for the app or lets the browser decide.",
-        "dark": {
-          "tooltip": "Switch to dark mode",
-          "label": "Dark"
-        },
-        "light": {
-          "tooltip": "Switch to light mode",
-          "label": "Light"
-        },
-        "browser": {
-          "tooltip": "Let browser decide",
-          "label": "Auto"
-        }
-      },
-      "language": {
-        "label": "Language",
-        "help": "The primary user interface language"
-      }
-    }
   },
   "shortcuts": {
     "title": "Shortcuts",

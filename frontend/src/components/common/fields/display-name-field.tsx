@@ -3,11 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useTranslatedText } from '../../../hooks/common/use-translated-text'
 import type { CommonFieldProps } from './fields'
 import React, { useEffect, useMemo } from 'react'
 import { Form } from 'react-bootstrap'
-import { Trans } from 'react-i18next'
 import { useFrontendConfig } from '../frontend-config-context/use-frontend-config'
 
 interface DisplayNameFieldProps extends CommonFieldProps {
@@ -30,7 +28,6 @@ export const DisplayNameField: React.FC<DisplayNameFieldProps> = ({
   onValidityChange
 }) => {
   const isValid = useMemo(() => value.trim() !== '' && value !== initialValue, [value, initialValue])
-  const placeholderText = useTranslatedText('profile.displayName')
   const profileEditsAllowed = useFrontendConfig().allowProfileEdits
 
   useEffect(() => {
@@ -39,23 +36,16 @@ export const DisplayNameField: React.FC<DisplayNameFieldProps> = ({
 
   return (
     <Form.Group>
-      <Form.Label>
-        <Trans i18nKey='profile.displayName' />
-      </Form.Label>
       <Form.Control
         type='text'
         size='sm'
         value={value}
         isValid={isValid}
         onChange={onChange}
-        placeholder={placeholderText}
         autoComplete='name'
         disabled={!profileEditsAllowed}
-        required
+        required={true}
       />
-      <Form.Text>
-        <Trans i18nKey='profile.displayNameInfo' />
-      </Form.Text>
     </Form.Group>
   )
 }

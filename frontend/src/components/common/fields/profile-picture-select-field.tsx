@@ -62,7 +62,7 @@ export const ProfilePictureSelectField: React.FC<ProfilePictureSelectFieldProps>
   return (
     <Form.Group>
       <Form.Label>
-        <Trans i18nKey='profile.selectProfilePicture.title' />
+        <Trans i18nKey='login.welcome.selectProfilePicture.title' />
       </Form.Label>
       {photoUrl && (
         <Form.Check className={'d-flex gap-2 align-items-center mb-3'} type='radio'>
@@ -89,7 +89,7 @@ export const ProfilePictureSelectField: React.FC<ProfilePictureSelectFieldProps>
         </Form.Check.Label>
       </Form.Check>
       <Form.Text>
-        <Trans i18nKey='profile.selectProfilePicture.info' />
+        <Trans i18nKey='login.welcome.selectProfilePicture.info' />
       </Form.Text>
     </Form.Group>
   )

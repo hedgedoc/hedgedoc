@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { NewNoteButton } from '../../common/new-note-button/new-note-button'
-import { SettingsButton } from '../../global-dialogs/settings-dialog/settings-button'
 import { BrandingElement } from './app-bar-elements/branding-element'
 import { HelpDropdown } from './app-bar-elements/help-dropdown/help-dropdown'
 import { UserElement } from './app-bar-elements/user-element'
@@ -15,6 +14,8 @@ import type { PropsWithChildren } from 'react'
 import React from 'react'
 import { Nav, Navbar } from 'react-bootstrap'
 import { cypressId } from '../../../utils/cypress-attribute'
+import { SettingsButton } from '../../landing-layout/navigation/settings-button'
+import { useIsLoggedIn } from '../../../hooks/common/use-is-logged-in'
 
 export interface BaseAppBarProps {
   additionalContentLeft?: React.ReactNode
@@ -24,6 +25,8 @@ export interface BaseAppBarProps {
  * Renders the base app bar with branding, help, settings user elements.
  */
 export const BaseAppBar: React.FC<PropsWithChildren<BaseAppBarProps>> = ({ children, additionalContentLeft }) => {
+  const loggedIn = useIsLoggedIn()
+
   return (
     <Navbar
       expand={true}
@@ -37,7 +40,7 @@ export const BaseAppBar: React.FC<PropsWithChildren<BaseAppBarProps>> = ({ child
       <Nav className={`align-items-stretch justify-content-end flex-grow-1 ${styles.side} h-100 py-1`}>
         <div className={'d-flex gap-2'}>
           <HelpDropdown />
-          <SettingsButton />
+          {!loggedIn && <SettingsButton />}
           <NewNoteButton />
           <UserElement />
         </div>
