@@ -39,7 +39,7 @@ export const UserDropdown: React.FC = () => {
 
       <Dropdown.Menu className='text-start'>
         <Link href={'/about'} passHref={true} legacyBehavior={true}>
-          <Dropdown.Item dir='auto' {...cypressId('user-dropdown-profile-button')}>
+          <Dropdown.Item dir='auto' {...cypressId('user-dropdown-about-button')}>
             <UiIcon icon={IconInfoCircle} className='mx-2' />
             <Trans i18nKey='about.title' />
           </Dropdown.Item>
