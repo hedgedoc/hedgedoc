@@ -31,6 +31,9 @@ export const setUpI18n = async (): Promise<void> => {
     .init({
       fallbackLng: 'en',
       debug: isDevMode,
+      detection: {
+        lookupLocalStorage: 'hedgedoc-language'
+      },
       interpolation: {
         escapeValue: false
       }

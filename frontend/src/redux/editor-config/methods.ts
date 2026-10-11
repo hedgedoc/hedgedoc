@@ -63,7 +63,7 @@ export const setEditorIndentSpaces = (indentSpaces: number): void => {
 export const loadFromLocalStorage = (): void => {
   try {
     const config = { ...initialState }
-    const stored = window.localStorage.getItem('editorConfig')
+    const stored = window.localStorage.getItem('hedgedoc-editor-preferences')
     const parsed = stored ? (JSON.parse(stored) as Partial<EditorConfig>) : null
     updateObject(config, parsed)
     const action = editorConfigActionsCreator.setEditorConfig(config)
@@ -76,7 +76,7 @@ export const loadFromLocalStorage = (): void => {
 const saveToLocalStorage = (): void => {
   try {
     const state = store.getState()
-    window.localStorage.setItem('editorConfig', JSON.stringify(state.editorConfig))
+    window.localStorage.setItem('hedgedoc-editor-preferences', JSON.stringify(state.editorConfig))
   } catch (error) {
     log.error('Failed to save editor config to local storage', error)
   }

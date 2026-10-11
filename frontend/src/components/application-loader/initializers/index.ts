@@ -30,7 +30,7 @@ const isCustomDelayActive = (): boolean => {
     return (
       typeof window !== 'undefined' &&
       typeof window.localStorage !== 'undefined' &&
-      window.localStorage.getItem('customDelay') !== null
+      window.localStorage.getItem('hedgedoc-custom-delay') !== null
     )
   } catch {
     return false

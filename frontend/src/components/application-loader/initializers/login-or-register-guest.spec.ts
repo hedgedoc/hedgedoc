@@ -61,7 +61,7 @@ describe('loginOrRegisterGuest', () => {
   it('stores guest users into the application state and localStorage', async () => {
     await loginOrRegisterGuest()
 
-    expect(window.localStorage.getItem('guestUuid')).toBe('guest-xyz')
+    expect(window.localStorage.getItem('hedgedoc-guest-uuid')).toBe('guest-xyz')
     expect(store.getState().user).toStrictEqual({
       username: null,
       displayName: 'Guest XYZ',

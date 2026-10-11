@@ -27,11 +27,11 @@ export const loginOrRegisterGuest = async (ignoreSavedUuid?: boolean): Promise<v
   if (userState !== null) {
     return
   }
-  const guestUuid = ignoreSavedUuid ? null : window.localStorage.getItem('guestUuid')
+  const guestUuid = ignoreSavedUuid ? null : window.localStorage.getItem('hedgedoc-guest-uuid')
   if (guestUuid === null) {
     try {
       const { uuid } = await registerGuest()
-      window.localStorage.setItem('guestUuid', uuid)
+      window.localStorage.setItem('hedgedoc-guest-uuid', uuid)
       await fetchAndSetUser()
     } catch (error: unknown) {
       if (error instanceof RateLimitError) {
