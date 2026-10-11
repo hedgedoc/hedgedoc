@@ -86,7 +86,7 @@ describe('Logger', () => {
     it('will enable debug logging in production mode but with local storage setting', () => {
       dateShift = 1
 
-      window.localStorage.setItem('debugLogging', 'ACTIVATED!')
+      window.localStorage.setItem('hedgedoc-debug-logging', 'ACTIVATED!')
 
       new Logger('prefix').debug('muffin')
 

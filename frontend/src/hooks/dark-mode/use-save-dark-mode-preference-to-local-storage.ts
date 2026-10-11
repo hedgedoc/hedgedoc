@@ -10,7 +10,7 @@ import { useEffect } from 'react'
 
 const logger = new Logger('useSaveDarkModeToLocalStorage')
 
-export const DARK_MODE_LOCAL_STORAGE_KEY = 'forcedDarkMode'
+export const DARK_MODE_LOCAL_STORAGE_KEY = 'hedgedoc-darkmode'
 
 /**
  * Saves the dark mode preference of the user in the browser's local storage.

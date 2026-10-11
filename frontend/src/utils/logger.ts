@@ -21,7 +21,7 @@ export class Logger {
 
   private isDebugLoggingEnabled() {
     try {
-      return !!window?.localStorage?.getItem('debugLogging')
+      return !!window?.localStorage?.getItem('hedgedoc-debug-logging')
     } catch {
       return false
     }
