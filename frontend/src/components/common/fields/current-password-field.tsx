@@ -18,9 +18,9 @@ export const CurrentPasswordField: React.FC<CommonFieldProps> = ({ onChange }) =
   const placeholderText = useTranslatedText('login.auth.password')
 
   return (
-    <Form.Group>
+    <Form.Group className={'mb-2'}>
       <Form.Label>
-        <Trans i18nKey='profile.changePassword.old' />
+        <Trans i18nKey='preferences.account.changePassword.old' />
       </Form.Label>
       <Form.Control
         type='password'
@@ -28,7 +28,7 @@ export const CurrentPasswordField: React.FC<CommonFieldProps> = ({ onChange }) =
         onChange={onChange}
         placeholder={placeholderText}
         autoComplete='current-password'
-        required
+        required={true}
       />
     </Form.Group>
   )

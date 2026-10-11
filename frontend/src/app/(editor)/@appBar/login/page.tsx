@@ -9,8 +9,8 @@ import React from 'react'
 import { Nav, Navbar } from 'react-bootstrap'
 import styles from '../../../../components/layout/app-bar/navbar.module.scss'
 import { HelpDropdown } from '../../../../components/layout/app-bar/app-bar-elements/help-dropdown/help-dropdown'
-import { SettingsButton } from '../../../../components/global-dialogs/settings-dialog/settings-button'
 import { BrandingElement } from '../../../../components/layout/app-bar/app-bar-elements/branding-element'
+import { SettingsButton } from '../../../../components/landing-layout/navigation/settings-button'
 
 export default function AppBar() {
   return (
