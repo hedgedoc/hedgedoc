@@ -5,6 +5,7 @@
  */
 import { fetchMotd } from './fetch-motd'
 import { Mock } from 'ts-mockery'
+import { LocalStorageKey } from '../../../utils/local-storage-key'
 
 describe('fetch motd', () => {
   const baseUrl = 'https://example.org/'
@@ -97,7 +98,7 @@ describe('fetch motd', () => {
 
   it('can detect that the motd has been updated', async () => {
     mockFetch('mocked motd', 'yesterday')
-    window.localStorage.setItem('hedgedoc-motd-last-modified', 'the day before yesterday')
+    window.localStorage.setItem(LocalStorageKey.MOTD_LAST_MODIFIED, 'the day before yesterday')
     const result = fetchMotd(baseUrl)
     await expect(result).resolves.toStrictEqual({
       motdText: 'mocked motd',
@@ -113,7 +114,7 @@ describe('fetch motd', () => {
 
   it("won't fetch a motd update if no file was found", async () => {
     mockFileNotFoundFetch()
-    window.localStorage.setItem('hedgedoc-motd-last-modified', 'the day before yesterday')
+    window.localStorage.setItem(LocalStorageKey.MOTD_LAST_MODIFIED, 'the day before yesterday')
     const result = fetchMotd(baseUrl)
     await expect(result).resolves.toStrictEqual(undefined)
   })

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { isDevMode, isTestMode } from './test-modes'
+import { LocalStorageKey } from './local-storage-key'
 import { DateTime } from 'luxon'
 import pico from 'picocolors'
 
@@ -21,7 +22,7 @@ export class Logger {
 
   private isDebugLoggingEnabled() {
     try {
-      return !!window?.localStorage?.getItem('hedgedoc-debug-logging')
+      return !!window?.localStorage?.getItem(LocalStorageKey.DEBUG_LOGGING)
     } catch {
       return false
     }

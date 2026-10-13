@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Logger } from '../../../utils/logger'
+import { LocalStorageKey } from '../../../utils/local-storage-key'
 import { isDevMode, isTestMode } from '../../../utils/test-modes'
 import { loadDarkMode } from './load-dark-mode'
 import { setUpI18n } from './setupI18n'
@@ -30,7 +31,7 @@ const isCustomDelayActive = (): boolean => {
     return (
       typeof window !== 'undefined' &&
       typeof window.localStorage !== 'undefined' &&
-      window.localStorage.getItem('hedgedoc-custom-delay') !== null
+      window.localStorage.getItem(LocalStorageKey.CUSTOM_DELAY) !== null
     )
   } catch {
     return false

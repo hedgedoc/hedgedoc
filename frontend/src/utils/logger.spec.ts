@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { Logger } from './logger'
+import { LocalStorageKey } from './local-storage-key'
 import { Settings } from 'luxon'
 import { Mock } from 'ts-mockery'
 
@@ -86,7 +87,7 @@ describe('Logger', () => {
     it('will enable debug logging in production mode but with local storage setting', () => {
       dateShift = 1
 
-      window.localStorage.setItem('hedgedoc-debug-logging', 'ACTIVATED!')
+      window.localStorage.setItem(LocalStorageKey.DEBUG_LOGGING, 'ACTIVATED!')
 
       new Logger('prefix').debug('muffin')
 

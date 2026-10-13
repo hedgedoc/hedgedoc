@@ -8,6 +8,7 @@ import { logInGuest, registerGuest } from '../../../api/auth/guest'
 import { store } from '../../../redux'
 import { fetchAndSetUser } from '../../login-page/utils/fetch-and-set-user'
 import { Logger } from '../../../utils/logger'
+import { LocalStorageKey } from '../../../utils/local-storage-key'
 import { RateLimitError } from '../../../api/common/api-error'
 
 const logger = new Logger('LoginOrRegisterGuest')
@@ -27,11 +28,11 @@ export const loginOrRegisterGuest = async (ignoreSavedUuid?: boolean): Promise<v
   if (userState !== null) {
     return
   }
-  const guestUuid = ignoreSavedUuid ? null : window.localStorage.getItem('hedgedoc-guest-uuid')
+  const guestUuid = ignoreSavedUuid ? null : window.localStorage.getItem(LocalStorageKey.GUEST_UUID)
   if (guestUuid === null) {
     try {
       const { uuid } = await registerGuest()
-      window.localStorage.setItem('hedgedoc-guest-uuid', uuid)
+      window.localStorage.setItem(LocalStorageKey.GUEST_UUID, uuid)
       await fetchAndSetUser()
     } catch (error: unknown) {
       if (error instanceof RateLimitError) {
