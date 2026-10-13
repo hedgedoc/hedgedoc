@@ -10,6 +10,7 @@ import { store } from '../../../redux'
 import { clearUser } from '../../../redux/user/methods'
 import { loginOrRegisterGuest } from './login-or-register-guest'
 import { Mock } from 'ts-mockery'
+import { LocalStorageKey } from '../../../utils/local-storage-key'
 
 const mockResponses = {
   '/api/private/csrf/token': Mock.of<Response>({
@@ -61,7 +62,7 @@ describe('loginOrRegisterGuest', () => {
   it('stores guest users into the application state and localStorage', async () => {
     await loginOrRegisterGuest()
 
-    expect(window.localStorage.getItem('hedgedoc-guest-uuid')).toBe('guest-xyz')
+    expect(window.localStorage.getItem(LocalStorageKey.GUEST_UUID)).toBe('guest-xyz')
     expect(store.getState().user).toStrictEqual({
       username: null,
       displayName: 'Guest XYZ',

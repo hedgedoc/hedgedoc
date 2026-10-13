@@ -11,7 +11,8 @@ import { useLocalStorage } from 'react-use'
 import { MotdModal } from './motd-modal'
 import { testId } from '../../../utils/test-id'
 import { isTestMode } from '../../../utils/test-modes'
-import { IGNORE_MOTD, MOTD_LOCAL_STORAGE_KEY } from './local-storage-keys'
+import { IGNORE_MOTD } from './local-storage-keys'
+import { LocalStorageKey } from '../../../utils/local-storage-key'
 
 /**
  * Reads the motd from the context and shows it in a modal.
@@ -20,9 +21,13 @@ import { IGNORE_MOTD, MOTD_LOCAL_STORAGE_KEY } from './local-storage-keys'
  */
 export const CachedMotdModal: React.FC = () => {
   const contextValue = useMotdContextValue()
-  const [cachedLastModified, saveLocalStorage] = useLocalStorage<string>(MOTD_LOCAL_STORAGE_KEY, undefined, {
-    raw: true
-  })
+  const [cachedLastModified, saveLocalStorage] = useLocalStorage<string>(
+    LocalStorageKey.MOTD_LAST_MODIFIED,
+    undefined,
+    {
+      raw: true
+    }
+  )
 
   const [dismissed, setDismissed] = useState(false)
 

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { DARK_MODE_LOCAL_STORAGE_KEY } from '../../../hooks/dark-mode/use-save-dark-mode-preference-to-local-storage'
+import { LocalStorageKey } from '../../../utils/local-storage-key'
 import { setDarkModePreference } from '../../../redux/dark-mode/methods'
 import { DarkModePreference } from '../../../redux/dark-mode/types'
 import { Logger } from '../../../utils/logger'
@@ -29,7 +29,7 @@ export const loadDarkMode = (): Promise<void> => {
  */
 const fetchDarkModeFromLocalStorage = (): DarkModePreference => {
   try {
-    const colorScheme = window.localStorage.getItem(DARK_MODE_LOCAL_STORAGE_KEY)
+    const colorScheme = window.localStorage.getItem(LocalStorageKey.DARK_MODE)
     if (colorScheme === 'dark') {
       return DarkModePreference.DARK
     } else if (colorScheme === 'light') {
