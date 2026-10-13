@@ -93,7 +93,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
 import knex, { Knex } from 'knex';
-import { KnexModule } from 'nest-knexjs';
+import { getConnectionToken, KnexModule } from 'nest-knexjs';
 import { ZodSerializerInterceptor, ZodValidationPipe } from 'nestjs-zod';
 import { types as pgTypes } from 'pg';
 import { v4 as uuidv4 } from 'uuid';
@@ -347,6 +347,7 @@ export class TestSetupBuilder {
 
     this.testSetup.moduleRef = await this.testingModuleBuilder.compile();
 
+    this.testSetup.knexInstance = this.testSetup.moduleRef.get<Knex>(getConnectionToken());
     this.testSetup.usersService = this.testSetup.moduleRef.get<UsersService>(UsersService);
     this.testSetup.groupService = this.testSetup.moduleRef.get<GroupsService>(GroupsService);
     this.testSetup.configService = this.testSetup.moduleRef.get<ConfigService>(ConfigService);

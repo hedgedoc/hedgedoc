@@ -21,6 +21,7 @@ import { LoggerModule } from '../logger/logger.module';
 import { dateTimeToDB, getCurrentDateTime } from '../utils/datetime';
 import { UsersService } from './users.service';
 import { UserInfoDto } from '../dtos/user-info.dto';
+import { AuthProviderType } from '@hedgedoc/commons';
 
 jest.mock('uuid');
 
@@ -31,6 +32,17 @@ describe('UsersService', () => {
   const photoUrl = 'https://example.com/photo.png';
   const userId = 123;
   const guestUuid = 'a5fdd770-4bff-4baa-bdd7-704bff7baa3c';
+  const registeredUser: User = {
+    [FieldNameUser.id]: userId,
+    [FieldNameUser.username]: username,
+    [FieldNameUser.guestUuid]: null,
+    [FieldNameUser.displayName]: displayName,
+    [FieldNameUser.createdAt]: '2026-10-14 12:00:00.000',
+    [FieldNameUser.photoUrl]: photoUrl,
+    [FieldNameUser.email]: email,
+    [FieldNameUser.authorStyle]: 1,
+    [FieldNameUser.admin]: false,
+  };
 
   let service: UsersService;
   let tracker: Tracker;
@@ -73,6 +85,7 @@ describe('UsersService', () => {
         tracker,
         TableUser,
         [
+          FieldNameUser.admin,
           FieldNameUser.authorStyle,
           FieldNameUser.createdAt,
           FieldNameUser.displayName,
@@ -87,7 +100,16 @@ describe('UsersService', () => {
       expect(result).toBe(userId);
       expectBindings(tracker, 'select', [[username.toLowerCase()]]);
       expectBindings(tracker, 'insert', [
-        [expect.any(Number), dateTimeToDB(now), displayName, email, null, photoUrl, username],
+        [
+          false,
+          expect.any(Number),
+          dateTimeToDB(now),
+          displayName,
+          email,
+          null,
+          photoUrl,
+          username,
+        ],
       ]);
       jest.useRealTimers();
     });
@@ -98,7 +120,9 @@ describe('UsersService', () => {
         tracker,
         TableUser,
         [
+          FieldNameUser.admin,
           FieldNameUser.authorStyle,
+          FieldNameUser.createdAt,
           FieldNameUser.displayName,
           FieldNameUser.email,
           FieldNameUser.guestUuid,
@@ -124,6 +148,7 @@ describe('UsersService', () => {
         tracker,
         TableUser,
         [
+          FieldNameUser.admin,
           FieldNameUser.authorStyle,
           FieldNameUser.createdAt,
           FieldNameUser.displayName,
@@ -139,6 +164,7 @@ describe('UsersService', () => {
       expect(id).toBe(userId);
       expectBindings(tracker, 'insert', [
         [
+          false,
           expect.any(Number),
           dateTimeToDB(now),
           expect.stringContaining('Guest '),
@@ -156,6 +182,7 @@ describe('UsersService', () => {
         tracker,
         TableUser,
         [
+          FieldNameUser.admin,
           FieldNameUser.authorStyle,
           FieldNameUser.createdAt,
           FieldNameUser.displayName,
@@ -317,11 +344,26 @@ describe('UsersService', () => {
   });
 
   describe('getUserById', () => {
-    it('returns User if user does exists', async () => {
-      jest.useFakeTimers({ doNotFake: ['setTimeout'] });
-      const now = getCurrentDateTime();
-      mockSelect(tracker, [], TableUser, FieldNameUser.id, [
-        {
+    it.each([false, true, 0, 1])(
+      'returns a user with database admin value %s normalized',
+      async (admin) => {
+        jest.useFakeTimers({ doNotFake: ['setTimeout'] });
+        const now = getCurrentDateTime();
+        mockSelect(tracker, [], TableUser, FieldNameUser.id, [
+          {
+            [FieldNameUser.id]: userId,
+            [FieldNameUser.username]: username,
+            [FieldNameUser.guestUuid]: null,
+            [FieldNameUser.displayName]: displayName,
+            [FieldNameUser.createdAt]: dateTimeToDB(now),
+            [FieldNameUser.photoUrl]: photoUrl,
+            [FieldNameUser.email]: email,
+            [FieldNameUser.authorStyle]: 1,
+            [FieldNameUser.admin]: admin,
+          },
+        ]);
+        const result = await service.getUserById(userId);
+        expect(result).toEqual({
           [FieldNameUser.id]: userId,
           [FieldNameUser.username]: username,
           [FieldNameUser.guestUuid]: null,
@@ -330,25 +372,63 @@ describe('UsersService', () => {
           [FieldNameUser.photoUrl]: photoUrl,
           [FieldNameUser.email]: email,
           [FieldNameUser.authorStyle]: 1,
-        },
-      ]);
-      const result = await service.getUserById(userId);
-      expect(result).toEqual({
-        [FieldNameUser.id]: userId,
-        [FieldNameUser.username]: username,
-        [FieldNameUser.guestUuid]: null,
-        [FieldNameUser.displayName]: displayName,
-        [FieldNameUser.createdAt]: dateTimeToDB(now),
-        [FieldNameUser.photoUrl]: photoUrl,
-        [FieldNameUser.email]: email,
-        [FieldNameUser.authorStyle]: 1,
-      } as User);
-      expectBindings(tracker, 'select', [[userId, IS_FIRST]]);
-    });
+          [FieldNameUser.admin]: Boolean(admin),
+        } as User);
+        expectBindings(tracker, 'select', [[userId, IS_FIRST]]);
+        jest.useRealTimers();
+      },
+    );
     it('throws NotInDBError if user does not exists', async () => {
       mockSelect(tracker, [], TableUser, FieldNameUser.id, []);
       await expect(service.getUserById(userId)).rejects.toThrow(NotInDBError);
       expectBindings(tracker, 'select', [[userId, IS_FIRST]]);
+    });
+  });
+
+  describe('isAdmin', () => {
+    it.each([false, true])('returns %s for a registered user with that admin flag', (admin) => {
+      expect(service.isAdmin({ ...registeredUser, [FieldNameUser.admin]: admin })).toBe(admin);
+    });
+
+    it('rejects a guest even if its admin flag is set', () => {
+      expect(
+        service.isAdmin({
+          ...registeredUser,
+          [FieldNameUser.username]: null,
+          [FieldNameUser.guestUuid]: guestUuid,
+          [FieldNameUser.admin]: true,
+        }),
+      ).toBe(false);
+    });
+  });
+
+  describe('toLoginUserInfoDto', () => {
+    it.each([false, true])('includes registered user admin eligibility %s', (admin) => {
+      const result = service.toLoginUserInfoDto(
+        { ...registeredUser, [FieldNameUser.admin]: admin },
+        AuthProviderType.LOCAL,
+      );
+      expect(result).toEqual({
+        username,
+        displayName,
+        photoUrl,
+        email,
+        authProvider: AuthProviderType.LOCAL,
+        admin,
+      });
+    });
+
+    it('never exposes admin eligibility for a guest', () => {
+      const result = service.toLoginUserInfoDto(
+        {
+          ...registeredUser,
+          [FieldNameUser.username]: null,
+          [FieldNameUser.guestUuid]: guestUuid,
+          [FieldNameUser.admin]: true,
+        },
+        AuthProviderType.GUEST,
+      );
+      expect(result.admin).toBe(false);
     });
   });
 });

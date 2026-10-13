@@ -136,6 +136,7 @@ describe('Websocket gateway', () => {
           [FieldNameUser.username]: mockUsername,
           [FieldNameUser.displayName]: mockDisplayName,
           [FieldNameUser.authorStyle]: mockAuthorStyle,
+          [FieldNameUser.admin]: false,
           [FieldNameUser.email]: null,
           [FieldNameUser.photoUrl]: null,
           [FieldNameUser.guestUuid]: null,

@@ -71,6 +71,7 @@ export class UsersService {
           [FieldNameUser.username]: username,
           [FieldNameUser.displayName]: displayName,
           [FieldNameUser.email]: email ?? null,
+          [FieldNameUser.admin]: false,
           [FieldNameUser.photoUrl]: this.generatePhotoUrl(username, email, photoUrl),
           // TODO Use generatePhotoUrl method to generate a random avatar image
           [FieldNameUser.guestUuid]: null,
@@ -108,6 +109,7 @@ export class UsersService {
         [FieldNameUser.username]: null,
         [FieldNameUser.displayName]: `Guest ${randomName}`,
         [FieldNameUser.email]: null,
+        [FieldNameUser.admin]: false,
         [FieldNameUser.photoUrl]: null,
         [FieldNameUser.guestUuid]: uuid,
         [FieldNameUser.authorStyle]: this.generateAuthorStyleIndex(uuid),
@@ -305,7 +307,20 @@ export class UsersService {
     if (!user) {
       throw new NotInDBError(`User with id "${userId}" does not exist`);
     }
-    return user;
+    return {
+      ...user,
+      [FieldNameUser.admin]: Boolean(user[FieldNameUser.admin]),
+    };
+  }
+
+  /**
+   * Checks whether a registered user is eligible to start an admin session.
+   *
+   * @param user The user loaded from the database
+   * @returns true if the user is registered and has the admin flag
+   */
+  isAdmin(user: User): boolean {
+    return user[FieldNameUser.username] !== null && Boolean(user[FieldNameUser.admin]);
   }
 
   /**
@@ -364,6 +379,7 @@ export class UsersService {
       photoUrl: user[FieldNameUser.photoUrl],
       email: user[FieldNameUser.email] ?? null,
       authProvider,
+      admin: this.isAdmin(user),
     });
   }
 }

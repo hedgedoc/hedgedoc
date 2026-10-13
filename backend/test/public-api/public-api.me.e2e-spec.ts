@@ -51,6 +51,7 @@ describe('Me', () => {
           'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdj+L+E8T8ABu4CpDyuE+YAAAAASUVORK5CYII=',
         authProvider: AuthProviderType.TOKEN,
         email: null,
+        admin: false,
       });
     });
     it('errors if no token is provided', async () => {

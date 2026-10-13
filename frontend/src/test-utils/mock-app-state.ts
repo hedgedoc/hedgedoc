@@ -62,7 +62,8 @@ export const mockAppState = (state?: DeepPartial<ApplicationState>) => {
             email: state.user.email ?? null,
             displayName: state.user.displayName ?? '',
             photoUrl: state.user.photoUrl ?? null,
-            authProvider: state.user.authProvider ?? AuthProviderType.LOCAL
+            authProvider: state.user.authProvider ?? AuthProviderType.LOCAL,
+            admin: state.user.admin ?? false
           }
         : null
     })

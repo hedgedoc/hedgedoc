@@ -14,6 +14,7 @@ export const LoginUserInfoSchema = UserInfoSchema.merge(
       .nativeEnum(AuthProviderType)
       .describe('The type of login provider used for the current session'),
     email: z.string().email().nullable().describe('The email address of the user if known'),
+    admin: z.boolean().describe('Whether the user is eligible to start an admin session'),
   }),
 ).describe('Information about the user and their auth method for the current session')
 

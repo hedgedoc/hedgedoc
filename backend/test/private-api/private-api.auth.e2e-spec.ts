@@ -58,6 +58,7 @@ describe('Auth', () => {
       expect(newUserId).toBeDefined();
       const newUser = await testSetup.usersService.getUserById(newUserId);
       expect(newUser[FieldNameUser.displayName]).toEqual(displayName);
+      expect(newUser[FieldNameUser.admin]).toBe(false);
       const newUserIdentity = await testSetup.identityService.getIdentityFromUserIdAndProviderType(
         username,
         AuthProviderType.LOCAL,

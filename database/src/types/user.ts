@@ -37,6 +37,9 @@ export interface User {
   /** The user's email address if present */
   [FieldNameUser.email]: string | null
 
+  /** Whether the registered user is eligible to start an admin session */
+  [FieldNameUser.admin]: boolean
+
   /** The index which author style (e.g. color) should be used for this user */
   [FieldNameUser.authorStyle]: number
 }
@@ -49,12 +52,14 @@ export const enum FieldNameUser {
   createdAt = 'created_at',
   photoUrl = 'photo_url',
   email = 'email',
+  admin = 'admin',
   authorStyle = 'author_style',
 }
 
 export const TableUser = 'user'
 
-export type TypeInsertUser = Omit<User, FieldNameUser.id>
+export type TypeInsertUser = Omit<User, FieldNameUser.id | FieldNameUser.admin> &
+  Partial<Pick<User, FieldNameUser.admin>>
 export type TypeUpdateUser = Pick<
   User,
   | FieldNameUser.displayName

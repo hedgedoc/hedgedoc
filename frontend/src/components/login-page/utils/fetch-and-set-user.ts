@@ -17,6 +17,7 @@ export const fetchAndSetUser: () => Promise<void> = async () => {
     displayName: me.displayName,
     photoUrl: me.photoUrl,
     authProvider: me.authProvider,
-    email: me.email
+    email: me.email,
+    admin: me.admin
   })
 }

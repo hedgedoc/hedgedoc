@@ -54,6 +54,7 @@ const up = async function (knex) {
     table.string(FieldNameUser.displayName).notNullable();
     table.string(FieldNameUser.photoUrl).nullable();
     table.string(FieldNameUser.email).nullable();
+    table.boolean(FieldNameUser.admin).notNullable().defaultTo(false);
     table.integer(FieldNameUser.authorStyle).notNullable();
     table.uuid(FieldNameUser.guestUuid).nullable().unique();
     table.timestamp(FieldNameUser.createdAt, { useTz: false, precision: 3 });

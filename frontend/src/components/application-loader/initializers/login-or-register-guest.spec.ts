@@ -31,7 +31,8 @@ const mockResponses = {
         displayName: 'Guest XYZ',
         photoUrl: null,
         authProvider: AuthProviderType.GUEST,
-        email: null
+        email: null,
+        admin: false
       })
   })
 }
@@ -67,7 +68,8 @@ describe('loginOrRegisterGuest', () => {
       displayName: 'Guest XYZ',
       photoUrl: null,
       authProvider: AuthProviderType.GUEST,
-      email: null
+      email: null,
+      admin: false
     })
     const fetchCalls = jest.mocked(global.fetch).mock.calls.map(([url]) => url)
     expect(fetchCalls).toStrictEqual(['/api/private/csrf/token', '/api/private/auth/guest/register', '/api/private/me'])

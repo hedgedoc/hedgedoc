@@ -17,6 +17,7 @@ import { setupAgent } from './utils/setup-agent';
  */
 import { promises as fs } from 'fs';
 import request from 'supertest';
+import { FieldNameUser, TableUser, User } from '@hedgedoc/database';
 
 describe('Me', () => {
   let testSetup: TestSetup;
@@ -52,6 +53,7 @@ describe('Me', () => {
       expect(user1.displayName).toEqual(displayName1);
       expect(user1.email).toEqual(null);
       expect(user1.username).toEqual(username1);
+      expect(user1.admin).toBe(false);
 
       const responseUser2 = await agentUser2
         .get(`${PRIVATE_API_PREFIX}/me`)
@@ -62,13 +64,28 @@ describe('Me', () => {
       expect(user2.displayName).toEqual(displayName2);
       expect(user2.email).toEqual(null);
       expect(user2.username).toEqual(username2);
+      expect(user2.admin).toBe(false);
     });
+
     it('correctly returns info for a guest user', async () => {
-      await agentGuestUser
+      const response = await agentGuestUser
         .get(`${PRIVATE_API_PREFIX}/me`)
         .expect('Content-Type', /json/)
         .expect(200);
+      expect(response.body.admin).toBe(false);
     });
+
+    it('reflects database changes to admin eligibility', async () => {
+      for (const admin of [true, false]) {
+        await testSetup
+          .knexInstance<User>(TableUser)
+          .where(FieldNameUser.id, testSetup.userIds[0])
+          .update({ [FieldNameUser.admin]: admin });
+        const response = await agentUser1.get(`${PRIVATE_API_PREFIX}/me`).expect(200);
+        expect(response.body.admin).toBe(admin);
+      }
+    });
+
     it('does not return info if not logged in', async () => {
       await agentNotLoggedIn
         .get(`${PRIVATE_API_PREFIX}/me`)
