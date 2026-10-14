@@ -12,11 +12,14 @@ import React, { useCallback } from 'react'
 import { FileText as IconFileText } from 'react-bootstrap-icons'
 import { Trans } from 'react-i18next'
 import { useNoteFilename } from '../../../../../../hooks/common/use-note-filename'
+import type { ExportButtonProps } from '../types'
+import { ExportMenuSelection } from '../types'
 
 /**
  * Editor sidebar entry for exporting the markdown content into a local file.
  */
-export const ExportMarkdownSidebarEntry: React.FC = () => {
+export const ExportMarkdownSidebarEntry: React.FC<ExportButtonProps> = ({ selectedMenuId }) => {
+  const hide = selectedMenuId !== ExportMenuSelection.NONE
   const markdownContent = useNoteMarkdownContent()
   const fileName = useNoteFilename()
   const onClick = useCallback(() => {
@@ -28,7 +31,7 @@ export const ExportMarkdownSidebarEntry: React.FC = () => {
   }, [markdownContent, fileName])
 
   return (
-    <SidebarButton {...cypressId('menu-export-markdown')} onClick={onClick} icon={IconFileText}>
+    <SidebarButton {...cypressId('menu-export-markdown')} hide={hide} onClick={onClick} icon={IconFileText}>
       <Trans i18nKey={'editor.importExport.service.markdown'} />
     </SidebarButton>
   )

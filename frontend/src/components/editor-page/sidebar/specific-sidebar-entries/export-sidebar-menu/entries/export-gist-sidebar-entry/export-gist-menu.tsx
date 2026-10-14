@@ -3,10 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useCallback, useMemo, useState } from 'react'
-import type { ModalVisibilityProps } from '../../../../../../common/modals/common-modal'
-import { CommonModal } from '../../../../../../common/modals/common-modal'
-import { Button, FormCheck, FormControl, FormGroup, FormLabel, FormText, Modal } from 'react-bootstrap'
+import React, { Fragment, useCallback, useMemo, useState } from 'react'
+import { Button, FormCheck, FormControl, FormGroup, FormText } from 'react-bootstrap'
 import { useNoteMarkdownContent } from '../../../../../../../hooks/common/use-note-markdown-content'
 import { useNoteFilename } from '../../../../../../../hooks/common/use-note-filename'
 import { useOnInputChange } from '../../../../../../../hooks/common/use-on-input-change'
@@ -17,14 +15,18 @@ import { Trans, useTranslation } from 'react-i18next'
 import { ExternalLink } from '../../../../../../common/links/external-link'
 import { createGist } from './create-gist'
 import { validateToken } from './validate-token'
+import { SidebarMenuInfoEntry } from '../../../../sidebar-menu-info-entry/sidebar-menu-info-entry'
+
+export interface ExportGistMenuProps {
+  onExportFinished: () => void
+}
 
 /**
- * Renders the modal for exporting the note content to a GitHub Gist.
+ * Renders the menu for exporting the note content to a GitHub Gist.
  *
- * @param show true to show the modal, false otherwise.
- * @param onHide Callback that is fired when the modal is about to be closed.
+ * @param onExportFinished The callback to call after the export has finished
  */
-export const ExportGistModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
+export const ExportGistMenu: React.FC<ExportGistMenuProps> = ({ onExportFinished }) => {
   useTranslation()
 
   const noteContent = useNoteMarkdownContent()
@@ -34,7 +36,6 @@ export const ExportGistModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
 
   const textService = useTranslatedText('editor.importExport.service.gist.name')
   const textShortName = useTranslatedText('editor.importExport.service.gist.shortName')
-  const textModalTitle = useTranslatedText('editor.importExport.export.title', { replace: { service: textService } })
   const textCreateButton = useTranslatedText('editor.importExport.export.createButton', {
     replace: { shortName: textShortName }
   })
@@ -74,7 +75,7 @@ export const ExportGistModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
             }
           }
         )
-        onHide?.()
+        onExportFinished?.()
       })
       .catch(
         showErrorNotificationBuilder(
@@ -94,43 +95,29 @@ export const ExportGistModal: React.FC<ModalVisibilityProps> = ({ show, onHide }
     dispatchUiNotification,
     textNotificationButton,
     textService,
-    onHide
+    onExportFinished
   ])
 
   return (
-    <CommonModal show={show} onHide={onHide} title={textModalTitle} showCloseButton={true} titleIcon={Github}>
-      <Modal.Body>
-        <h5 className={'mb-2'}>
-          <Trans i18nKey={'editor.importExport.common.authentication'} />
-        </h5>
+    <Fragment>
+      <SidebarMenuInfoEntry className={'py-2'} titleI18nKey={'editor.importExport.common.accessToken'} border={false}>
         <FormGroup className={'my-2'}>
-          <FormLabel>
-            <Trans i18nKey={'editor.importExport.common.accessToken'} />
-          </FormLabel>
           <FormControl value={ghToken} onChange={onGhTokenChange} type={'password'} isInvalid={!ghTokenFormatValid} />
           <FormText muted={true}>
             <Trans i18nKey={'editor.importExport.service.gist.infoToken'} />{' '}
             <ExternalLink text={textTokenLink} href={'https://github.com/settings/personal-access-tokens/new'} />
           </FormText>
         </FormGroup>
-        <h5 className={'mb-2 mt-4'}>
-          <Trans i18nKey={'editor.importExport.export.settings'} />
-        </h5>
-        <FormGroup className={'my-2'}>
-          <FormLabel>
-            <Trans i18nKey={'editor.importExport.common.description'} />
-          </FormLabel>
-          <FormControl value={gistDescription} onChange={onGistDescriptionChange} type={'text'} />
-        </FormGroup>
-        <FormGroup className={'mt-2'}>
-          <FormCheck checked={gistPublic} onChange={onGistPublicChange} type={'checkbox'} label={textFieldPublic} />
-        </FormGroup>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant={'success'} onClick={onCreateGist} disabled={!ghTokenFormatValid}>
-          {textCreateButton}
-        </Button>
-      </Modal.Footer>
-    </CommonModal>
+      </SidebarMenuInfoEntry>
+      <SidebarMenuInfoEntry className={'py-2'} titleI18nKey={'editor.importExport.common.description'} border={false}>
+        <FormControl value={gistDescription} onChange={onGistDescriptionChange} type={'text'} />
+      </SidebarMenuInfoEntry>
+      <SidebarMenuInfoEntry className={'mt-2'} titleI18nKey={'editor.importExport.service.gist.makePublic'}>
+        <FormCheck checked={gistPublic} onChange={onGistPublicChange} type={'checkbox'} label={textFieldPublic} />
+      </SidebarMenuInfoEntry>
+      <Button variant={'success'} onClick={onCreateGist} disabled={!ghTokenFormatValid} className={'mx-2 mt-2'}>
+        {textCreateButton}
+      </Button>
+    </Fragment>
   )
 }

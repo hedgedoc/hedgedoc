@@ -9,7 +9,7 @@ import { SidebarMenu } from '../../sidebar-menu/sidebar-menu'
 import type { SpecificSidebarMenuProps } from '../../types'
 import { DocumentSidebarMenuSelection } from '../../types'
 import { ExportMarkdownSidebarEntry } from './entries/export-markdown-sidebar-entry'
-import React, { Fragment, useCallback } from 'react'
+import React, { Fragment, useCallback, useState } from 'react'
 import { ArrowLeft as IconArrowLeft, CloudDownload as IconCloudDownload } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
 import { concatCssClasses } from '../../../../../utils/concat-css-classes'
@@ -18,6 +18,7 @@ import { ExportGistSidebarEntry } from './entries/export-gist-sidebar-entry/expo
 import { ExportGitlabSnippetSidebarEntry } from './entries/export-gitlab-snippet-sidebar-entry/export-gitlab-snippet-sidebar-entry'
 import { ExportPrintSidebarEntry } from './entries/export-print-sidebar-entry'
 import { ExportHtmlSidebarEntries } from './entries/export-html-sidebar-entries/export-html-sidebar-entries'
+import { ExportMenuSelection } from './types'
 
 /**
  * Renders the export menu for the sidebar.
@@ -40,6 +41,17 @@ export const ExportSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
   const onClickHandler = useCallback(() => {
     onClick(menuId)
   }, [menuId, onClick])
+
+  const [selectedSubMenu, setSelectedSubMenu] = useState<ExportMenuSelection>(ExportMenuSelection.NONE)
+
+  const toggleValue = useCallback(
+    (toggleValue: ExportMenuSelection): void => {
+      const newValue = selectedSubMenu === toggleValue ? ExportMenuSelection.NONE : toggleValue
+      setSelectedSubMenu(newValue)
+    },
+    [selectedSubMenu]
+  )
+
   return (
     <Fragment>
       <SidebarButton
@@ -47,15 +59,31 @@ export const ExportSidebarMenu: React.FC<SpecificSidebarMenuProps> = ({
         hide={hide}
         icon={expand ? IconArrowLeft : IconCloudDownload}
         className={concatCssClasses(className, { [styles.main]: expand })}
-        onClick={onClickHandler}>
+        onClick={
+          selectedSubMenu === ExportMenuSelection.NONE ? onClickHandler : () => toggleValue(ExportMenuSelection.NONE)
+        }>
         <Trans i18nKey={'editor.importExport.export.button'} />
+        {selectedSubMenu !== ExportMenuSelection.NONE && (
+          <Fragment>
+            <span className={'mx-1 d-block'}>/</span>
+            <Trans i18nKey={`editor.importExport.service.${selectedSubMenu}.name`} />
+          </Fragment>
+        )}
       </SidebarButton>
       <SidebarMenu expand={expand}>
-        <ExportPrintSidebarEntry />
-        <ExportMarkdownSidebarEntry />
-        <ExportHtmlSidebarEntries />
-        <ExportGistSidebarEntry />
-        <ExportGitlabSnippetSidebarEntry />
+        <ExportPrintSidebarEntry selectedMenuId={selectedSubMenu} />
+        <ExportMarkdownSidebarEntry selectedMenuId={selectedSubMenu} />
+        <ExportHtmlSidebarEntries selectedMenuId={selectedSubMenu} />
+        <ExportGistSidebarEntry
+          menuId={ExportMenuSelection.GIST}
+          selectedMenuId={selectedSubMenu}
+          onClick={toggleValue}
+        />
+        <ExportGitlabSnippetSidebarEntry
+          menuId={ExportMenuSelection.SNIPPET}
+          selectedMenuId={selectedSubMenu}
+          onClick={toggleValue}
+        />
       </SidebarMenu>
     </Fragment>
   )

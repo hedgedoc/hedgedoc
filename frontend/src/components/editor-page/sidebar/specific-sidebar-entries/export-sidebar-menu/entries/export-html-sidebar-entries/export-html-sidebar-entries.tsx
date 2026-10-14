@@ -11,8 +11,9 @@ import { useEditorReceiveHandler } from '../../../../../../render-page/window-po
 import { CommunicationMessageType } from '../../../../../../render-page/window-post-message-communicator/rendering-message'
 import { download } from '../../../../../../common/download/download'
 import { useNoteFilename } from '../../../../../../../hooks/common/use-note-filename'
+import type { ExportButtonProps } from '../../types'
 
-export const ExportHtmlSidebarEntries: React.FC = () => {
+export const ExportHtmlSidebarEntries: React.FC<ExportButtonProps> = ({ selectedMenuId }) => {
   const fileName = useNoteFilename('html')
 
   useEditorReceiveHandler(
@@ -27,8 +28,8 @@ export const ExportHtmlSidebarEntries: React.FC = () => {
   )
   return (
     <Fragment>
-      <ExportStyledHtmlSidebarEntry />
-      <ExportUnstyledHtmlSidebarEntry />
+      <ExportStyledHtmlSidebarEntry selectedMenuId={selectedMenuId} />
+      <ExportUnstyledHtmlSidebarEntry selectedMenuId={selectedMenuId} />
     </Fragment>
   )
 }

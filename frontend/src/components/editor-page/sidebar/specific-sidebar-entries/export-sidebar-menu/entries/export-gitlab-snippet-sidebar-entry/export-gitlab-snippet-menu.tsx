@@ -3,14 +3,11 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useCallback, useMemo, useState } from 'react'
-import type { ModalVisibilityProps } from '../../../../../../common/modals/common-modal'
-import { CommonModal } from '../../../../../../common/modals/common-modal'
+import React, { Fragment, useCallback, useMemo, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { useTranslatedText } from '../../../../../../../hooks/common/use-translated-text'
-import { IconGitlab } from '../../../../../../common/icons/additional/icon-gitlab'
 import { useOnInputChange } from '../../../../../../../hooks/common/use-on-input-change'
-import { Button, FormControl, FormGroup, FormLabel, FormText, Modal } from 'react-bootstrap'
+import { Button, FormControl, FormGroup, FormText } from 'react-bootstrap'
 import { ExternalLink } from '../../../../../../common/links/external-link'
 import { useNoteMarkdownContent } from '../../../../../../../hooks/common/use-note-markdown-content'
 import { useNoteFilename } from '../../../../../../../hooks/common/use-note-filename'
@@ -18,14 +15,18 @@ import { useUiNotifications } from '../../../../../../notifications/ui-notificat
 import { createSnippet, GitlabSnippetVisibility } from './create-snippet'
 import { Github } from 'react-bootstrap-icons'
 import { useNoteTitle } from '../../../../../../../hooks/common/use-note-title'
+import { SidebarMenuInfoEntry } from '../../../../sidebar-menu-info-entry/sidebar-menu-info-entry'
+
+export interface ExportGistMenuProps {
+  onExportFinished: () => void
+}
 
 /**
- * Renders the modal for exporting the note content to a GitLab snippet.
+ * Renders the menu for exporting the note content to a GitLab snippet.
  *
- * @param show true to show the modal, false otherwise.
- * @param onHide Callback that is fired when the modal is about to be closed.
+ * @param onExportFinished The callback to call after the export has finished
  */
-export const ExportGitlabSnippetModal: React.FC<ModalVisibilityProps> = ({ show, onHide }) => {
+export const ExportGitlabSnippetMenu: React.FC<ExportGistMenuProps> = ({ onExportFinished }) => {
   useTranslation()
 
   const noteContent = useNoteMarkdownContent()
@@ -41,7 +42,6 @@ export const ExportGitlabSnippetModal: React.FC<ModalVisibilityProps> = ({ show,
 
   const textService = useTranslatedText('editor.importExport.service.gitlab.name')
   const textShortName = useTranslatedText('editor.importExport.service.gitlab.shortName')
-  const textModalTitle = useTranslatedText('editor.importExport.export.title', { replace: { service: textService } })
   const textTokenLink = useTranslatedText('editor.importExport.service.gitlab.tokenLink')
   const textCreateButton = useTranslatedText('editor.importExport.export.createButton', {
     replace: { shortName: textShortName }
@@ -81,7 +81,7 @@ export const ExportGitlabSnippetModal: React.FC<ModalVisibilityProps> = ({ show,
             }
           }
         )
-        onHide?.()
+        onExportFinished?.()
       })
       .catch(
         showErrorNotificationBuilder(
@@ -103,25 +103,16 @@ export const ExportGitlabSnippetModal: React.FC<ModalVisibilityProps> = ({ show,
     dispatchUiNotification,
     textNotificationButton,
     textService,
-    onHide
+    onExportFinished
   ])
 
   return (
-    <CommonModal show={show} onHide={onHide} title={textModalTitle} showCloseButton={true} titleIcon={IconGitlab}>
-      <Modal.Body>
-        <h5 className={'mb-2'}>
-          <Trans i18nKey={'editor.importExport.common.authentication'} />
-        </h5>
+    <Fragment>
+      <SidebarMenuInfoEntry titleI18nKey={'editor.importExport.service.gitlab.instanceUrl'} border={false}>
+        <FormControl value={gitlabUrl} onChange={changeGitlabUrl} type={'url'} placeholder={'https://gitlab.com'} />
+      </SidebarMenuInfoEntry>
+      <SidebarMenuInfoEntry titleI18nKey={'editor.importExport.common.accessToken'} border={false}>
         <FormGroup className={'my-2'}>
-          <FormLabel>
-            <Trans i18nKey={'editor.importExport.service.gitlab.instanceUrl'} />
-          </FormLabel>
-          <FormControl value={gitlabUrl} onChange={changeGitlabUrl} type={'url'} placeholder={'https://gitlab.com'} />
-        </FormGroup>
-        <FormGroup className={'my-2'}>
-          <FormLabel>
-            <Trans i18nKey={'editor.importExport.common.accessToken'} />
-          </FormLabel>
           <FormControl
             value={gitlabToken}
             onChange={changeGitlabToken}
@@ -136,37 +127,26 @@ export const ExportGitlabSnippetModal: React.FC<ModalVisibilityProps> = ({ show,
             />
           </FormText>
         </FormGroup>
-        <h5 className={'mb-2 mt-4'}>
-          <Trans i18nKey={'editor.importExport.export.settings'} />
-        </h5>
-        <FormGroup className={'my-2'}>
-          <FormLabel>
-            <Trans i18nKey={'editor.importExport.common.description'} />
-          </FormLabel>
-          <FormControl value={snippetDescription} onChange={changeSnippetDescription} type={'text'} />
-        </FormGroup>
-        <FormGroup className={'mt-2'}>
-          <FormLabel>
-            <Trans i18nKey={'editor.importExport.service.gitlab.setVisibility'} />
-          </FormLabel>
-          <FormControl as={'select'} value={snippetVisibility} onChange={changeSnippetVisibility}>
-            <option value={GitlabSnippetVisibility.PRIVATE}>
-              <Trans i18nKey={'editor.importExport.service.gitlab.visibility.private'} />
-            </option>
-            <option value={GitlabSnippetVisibility.INTERNAL}>
-              <Trans i18nKey={'editor.importExport.service.gitlab.visibility.internal'} />
-            </option>
-            <option value={GitlabSnippetVisibility.PUBLIC}>
-              <Trans i18nKey={'editor.importExport.service.gitlab.visibility.public'} />
-            </option>
-          </FormControl>
-        </FormGroup>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant={'success'} onClick={onCreateSnippet} disabled={!creationPossible}>
-          {textCreateButton}
-        </Button>
-      </Modal.Footer>
-    </CommonModal>
+      </SidebarMenuInfoEntry>
+      <SidebarMenuInfoEntry titleI18nKey={'editor.importExport.common.description'} border={false}>
+        <FormControl value={snippetDescription} onChange={changeSnippetDescription} type={'text'} />
+      </SidebarMenuInfoEntry>
+      <SidebarMenuInfoEntry titleI18nKey={'editor.importExport.service.gitlab.setVisibility'} border={false}>
+        <FormControl as={'select'} value={snippetVisibility} onChange={changeSnippetVisibility}>
+          <option value={GitlabSnippetVisibility.PRIVATE}>
+            <Trans i18nKey={'editor.importExport.service.gitlab.visibility.private'} />
+          </option>
+          <option value={GitlabSnippetVisibility.INTERNAL}>
+            <Trans i18nKey={'editor.importExport.service.gitlab.visibility.internal'} />
+          </option>
+          <option value={GitlabSnippetVisibility.PUBLIC}>
+            <Trans i18nKey={'editor.importExport.service.gitlab.visibility.public'} />
+          </option>
+        </FormControl>
+      </SidebarMenuInfoEntry>
+      <Button variant={'success'} onClick={onCreateSnippet} disabled={!creationPossible} className={'mx-2 mt-2'}>
+        {textCreateButton}
+      </Button>
+    </Fragment>
   )
 }
