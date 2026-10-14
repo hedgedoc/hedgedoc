@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next'
 export interface CopyableFieldProps {
   content: string
   shareOriginUrl?: string
+  className?: string
 }
 
 const log = new Logger('CopyableField')
@@ -23,8 +24,9 @@ const log = new Logger('CopyableField')
  *
  * @param content The content to present
  * @param shareOriginUrl The URL of the page to which the shared content should be linked. If this value is omitted then the share button won't be shown.
+ * @param className An optional className for the top {@Link InputGroup}
  */
-export const CopyableField: React.FC<CopyableFieldProps> = ({ content, shareOriginUrl }) => {
+export const CopyableField: React.FC<CopyableFieldProps> = ({ content, shareOriginUrl, className }) => {
   useTranslation()
 
   const sharingSupported = useMemo(
@@ -48,7 +50,7 @@ export const CopyableField: React.FC<CopyableFieldProps> = ({ content, shareOrig
   }, [content, shareOriginUrl, sharingSupported])
 
   return (
-    <InputGroup className='my-3'>
+    <InputGroup className={className}>
       <FormControl readOnly={true} className={'text-center'} value={content} />
       <InputGroup.Text>
         <CopyToClipboardButton variant={'outline-secondary'} content={content} />

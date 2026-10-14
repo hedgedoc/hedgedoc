@@ -12,21 +12,18 @@ export interface AliasesListAliasEntryInterface {
   alias: string
 }
 
-export const AliasesListAliasEntry: React.FC<AliasesListAliasEntryInterface> = ({
-  alias
-}) => {
+export const AliasesListAliasEntry: React.FC<AliasesListAliasEntryInterface> = ({ alias }) => {
   const div = useRef<HTMLDivElement>(null)
   const [copyToClipboard, overlayElement] = useCopyOverlay(div, alias)
 
   return (
     <Fragment>
       <div
-        role="listitem"
+        role='listitem'
         className={styles['alias-container']}
         ref={div}
         onClick={copyToClipboard}
-        onKeyDown={copyToClipboard}
-      >
+        onKeyDown={copyToClipboard}>
         <div className={styles['alias-text']} title={alias}>
           {alias}
         </div>

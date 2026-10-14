@@ -246,6 +246,21 @@
       "publiclyVisible": "Public explore page",
       "publiclyVisibleExplanation": "Activating this does not circumvent any permissions set.\nSo only users that are otherwise allowed to view this note, can find it on the public explore page."
     },
+    "shareLink": {
+      "title": "Share link",
+      "editor": {
+        "title": "Editor Link",
+        "description": "This link points to this note in the editor as you currently see it."
+      },
+      "viewOnly": {
+        "title": "Read-only Link",
+        "description": "This link points to a read-only version of this note. You can use this e.g. for feedback from friends and colleagues."
+      },
+      "slides": {
+        "title": "Slides Link",
+        "description": "This link points to the presentation view of the slides."
+      }
+    },
     "linter": {
       "defaultAction": "Fix",
       "sequence": "The use of 'sequence' as code block language is deprecated and will be removed in a future release.",
@@ -494,12 +509,6 @@
         "deleteButtonKeepMedia": "Delete note but keep uploads",
         "keepMedia": "Keep uploads?",
         "error": "There was an error deleting the note."
-      },
-      "shareLink": {
-        "title": "Share link",
-        "editorDescription": "This link points to this note in the editor as you currently see it.",
-        "viewOnlyDescription": "This link points to a read-only version of this note. You can use this e.g. for feedback from friends and colleagues.",
-        "slidesDescription": "This link points to the presentation view of the slides."
       }
     },
     "embeddings": {

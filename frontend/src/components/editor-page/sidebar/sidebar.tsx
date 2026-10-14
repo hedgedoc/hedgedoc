@@ -81,7 +81,11 @@ export const Sidebar: React.FC = () => {
           selectedMenuId={selectedMenu}
           onClick={toggleValue}
         />
-        <ShareNoteSidebarEntry hide={selectionIsNotNone} />
+        <ShareNoteSidebarEntry
+          menuId={DocumentSidebarMenuSelection.SHARE_NOTE}
+          selectedMenuId={selectedMenu}
+          onClick={toggleValue}
+        />
         {isOwner && <DeleteNoteSidebarEntry hide={selectionIsNotNone} />}
         <PinNoteSidebarEntry hide={selectionIsNotNone} />
       </div>

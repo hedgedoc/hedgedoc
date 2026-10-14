@@ -42,7 +42,7 @@ export const AccessTokenCreatedModal: React.FC<AccessTokenCreatedModalProps> = (
           }}
         />
         <br />
-        <CopyableField content={tokenWithSecret.secret} />
+        <CopyableField className={'my-3'} content={tokenWithSecret.secret} />
       </Modal.Body>
       <Modal.Footer>
         <Button variant='primary' onClick={onHide}>

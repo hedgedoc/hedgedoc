@@ -34,7 +34,8 @@ export enum DocumentSidebarMenuSelection {
   ALIASES,
   MEDIA_BROWSER,
   IMPORT,
-  EXPORT
+  EXPORT,
+  SHARE_NOTE
 }
 
 export interface SpecificSidebarMenuProps {

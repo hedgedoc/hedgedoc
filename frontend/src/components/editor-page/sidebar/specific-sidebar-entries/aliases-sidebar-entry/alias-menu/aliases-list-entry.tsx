@@ -51,14 +51,10 @@ export const AliasesListEntry: React.FC<AliasesListEntryProps> = ({ alias }) => 
 
   return (
     <li className={'d-flex flex-row justify-content-between align-items-center my-1'}>
-      <AliasesListAliasEntry alias={alias}/>
+      <AliasesListAliasEntry alias={alias} />
       <div>
         {alias === primaryAlias ? (
-          <UiIcon
-            className={`p-1 mx-1 ${styles['primary']}`}
-            size={'24px'}
-            icon={IconStarFill}
-            title={isPrimaryText} />
+          <UiIcon className={`p-1 mx-1 ${styles['primary']}`} size={'24px'} icon={IconStarFill} title={isPrimaryText} />
         ) : (
           <IconButton
             className={'p-1 mx-1'}

@@ -36,7 +36,7 @@ export const InstanceVersion: React.FC = () => {
         <Card.Title>
           <Trans i18nKey='about.versionInfo.title' />
         </Card.Title>
-        <CopyableField content={version} />
+        <CopyableField content={version} className={'my-3'} />
       </Card.Body>
     </Card>
   )
