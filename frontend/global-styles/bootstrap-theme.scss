@@ -1,0 +1,11 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "./hedgedoc-color";
+
+// merge with existing $theme-colors map
+$theme-colors: map-merge($theme-colors, (
+        "primary": $hd-primary
+));
+
+// set changes
+@import "~bootstrap/scss/bootstrap";
