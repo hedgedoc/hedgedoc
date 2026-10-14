@@ -75,7 +75,7 @@ using the button below. This will run the official Docker image from [quay.io](h
 
 [Pethost](https://pethost.dev/) offers managed Docker hosting with one-click templates. Deploy HedgeDoc with PostgreSQL using the button below: it runs the official image from [quay.io](https://quay.io/repository/hedgedoc/hedgedoc), and your account is created from the email and password you enter, with sign-ups left closed.
 
-[![Deploy on Pethost](https://pethost.dev/button.svg)](https://console.pethost.dev/?template=hedgedoc)
+[![Deploy on Pethost](https://pethost.dev/button.svg)](https://pethost.dev/templates/hedgedoc/)
 
 ### SelfPrivacy
 
