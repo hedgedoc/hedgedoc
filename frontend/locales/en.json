@@ -276,6 +276,52 @@
     }
   },
   "editor": {
+    "aliases": {
+      "title": "Aliases",
+      "explanation": {
+        "title": "Explanation",
+        "text": "Aliases are alternative names for this note. You may access this note under all the listed names below."
+      },
+      "addAlias": "Add alias",
+      "makePrimary": "Mark this alias as primary",
+      "isPrimary": "This is the primary alias",
+      "primaryLabel": "Primary Alias",
+      "removeAlias": "Remove this alias",
+      "errorAddingAlias": "The chosen alias can not be added to this note",
+      "errorRemovingAlias": "There was an error removing the alias",
+      "errorMakingPrimary": "There was an error marking the alias as primary"
+    },
+    "permissions": {
+      "title": "Permissions",
+      "owner": "Owner",
+      "sharedWithUsers": "Shared with users",
+      "sharedWithGroups": "Shared with groups",
+      "editUser": "Change {{name}}'s permissions to view and edit",
+      "viewOnlyUser": "Change {{name}}'s permissions to view only",
+      "removeUser": "Remove {{name}}'s permissions",
+      "addUser": "Add user",
+      "editGroup": "Change permissions of group \"{{name}}\" to view & edit",
+      "viewOnlyGroup": "Change permissions of group \"{{name}}\" to view only",
+      "removeGroup": "Remove permissions of group \"{{name}}\"",
+      "denyGroup": "Deny access to group \"{{name}}\"",
+      "addGroup": "Add group",
+      "allUser": "Everyone",
+      "allLoggedInUser": "All logged-in users",
+      "error": {
+        "missingUser": "This user does not exist",
+        "missingPermissions": "You're not allowed to give permissions",
+        "other": "An error occurred while updating the permissions of this note."
+      },
+      "ownerChange": {
+        "error": "There was an error changing the owner of this note.",
+        "placeholder": "New note owner",
+        "button": "Change the owner of this note"
+      },
+      "inconsistent": "This permission is overridden by another permission",
+      "visibility": "Visibility",
+      "publiclyVisible": "Public explore page",
+      "publiclyVisibleExplanation": "Activating this does not circumvent any permissions set.\nSo only users that are otherwise allowed to view this note, can find it on the public explore page."
+    },
     "linter": {
       "defaultAction": "Fix",
       "sequence": "The use of 'sequence' as code block language is deprecated and will be removed in a future release.",
@@ -525,54 +571,11 @@
         "keepMedia": "Keep uploads?",
         "error": "There was an error deleting the note."
       },
-      "permissions": {
-        "title": "Permissions",
-        "owner": "Owner",
-        "sharedWithUsers": "Shared with users",
-        "sharedWithGroups": "Shared with groups",
-        "editUser": "Change {{name}}'s permissions to view and edit",
-        "viewOnlyUser": "Change {{name}}'s permissions to view only",
-        "removeUser": "Remove {{name}}'s permissions",
-        "addUser": "Add user",
-        "editGroup": "Change permissions of group \"{{name}}\" to view & edit",
-        "viewOnlyGroup": "Change permissions of group \"{{name}}\" to view only",
-        "removeGroup": "Remove permissions of group \"{{name}}\"",
-        "denyGroup": "Deny access to group \"{{name}}\"",
-        "addGroup": "Add group",
-        "allUser": "Everyone",
-        "allLoggedInUser": "All logged-in users",
-        "error": {
-          "missingUser": "This user does not exist",
-          "missingPermissions": "You're not allowed to give permissions",
-          "other": "An error occurred while updating the permissions of this note."
-        },
-        "ownerChange": {
-          "error": "There was an error changing the owner of this note.",
-          "placeholder": "Enter username of new note owner",
-          "button": "Change the owner of this note"
-        },
-        "inconsistent": "This permission is overridden by another permission",
-        "visibility": "Visibility",
-        "publiclyVisible": "Show on the public explore page",
-        "publiclyVisibleExplanation": "Activating this does not circumvent any permissions set.\nSo only users that are otherwise allowed to view this note, can find it on the public explore page."
-      },
       "shareLink": {
         "title": "Share link",
         "editorDescription": "This link points to this note in the editor as you currently see it.",
         "viewOnlyDescription": "This link points to a read-only version of this note. You can use this e.g. for feedback from friends and colleagues.",
         "slidesDescription": "This link points to the presentation view of the slides."
-      },
-      "aliases": {
-        "title": "Aliases",
-        "explanation": "Aliases are alternative names for this note. You may access this note under all the listed names below.",
-        "addAlias": "Add alias",
-        "makePrimary": "Mark this alias as primary",
-        "isPrimary": "This is the primary alias",
-        "primaryLabel": "Primary Alias",
-        "removeAlias": "Remove this alias",
-        "errorAddingAlias": "The chosen alias can not be added to this note",
-        "errorRemovingAlias": "There was an error removing the alias",
-        "errorMakingPrimary": "There was an error marking the alias as primary"
       }
     },
     "embeddings": {

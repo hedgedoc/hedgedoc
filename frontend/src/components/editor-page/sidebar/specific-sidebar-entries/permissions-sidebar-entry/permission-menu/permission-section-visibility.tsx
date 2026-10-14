@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The HedgeDoc developers (see AUTHORS file)
+ * SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
@@ -8,10 +8,12 @@ import { useApplicationState } from '../../../../../../hooks/common/use-applicat
 import { setNotePermissionsFromServer } from '../../../../../../redux/note-details/methods'
 import { useUiNotifications } from '../../../../../notifications/ui-notification-boundary'
 import type { PermissionDisabledProps } from './permission-disabled.prop'
-import React, { type ChangeEvent, Fragment, useCallback } from 'react'
+import React, { type ChangeEvent, useCallback } from 'react'
 import { Trans } from 'react-i18next'
 import { Form, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { ErrorToI18nKeyMapper } from '../../../../../../api/common/error-to-i18n-key-mapper'
+import { SidebarMenuInfoEntry } from '../../../sidebar-menu-info-entry/sidebar-menu-info-entry'
+import { Eye as IconEye } from 'react-bootstrap-icons'
 
 /**
  * Section in the permissions modal for managing whether the note should be visible on the explore page.
@@ -34,7 +36,7 @@ export const PermissionSectionVisibility: React.FC<PermissionDisabledProps> = ({
           setNotePermissionsFromServer(updatedPermissions)
         })
         .catch((error) => {
-          const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.modal.permissions.error')
+          const errorI18nKey = new ErrorToI18nKeyMapper(error, 'editor.permissions.error')
             .withHttpCode(403, 'missingPermissions')
             .orFallbackI18nKey('other')
           showErrorNotificationBuilder(errorI18nKey)(error)
@@ -44,41 +46,34 @@ export const PermissionSectionVisibility: React.FC<PermissionDisabledProps> = ({
   )
 
   return (
-    <Fragment>
-      <h5 className={'my-3'}>
-        <Trans i18nKey={'editor.modal.permissions.visibility'} />
-      </h5>
-      <ul className={'list-group'}>
-        <li className={'list-group-item'}>
-          <OverlayTrigger
-            placement='bottom'
-            delay={{ show: 250, hide: 400 }}
-            overlay={
-              <Tooltip id='publiclyVisibleExplanation'>
-                <Trans i18nKey={'editor.modal.permissions.publiclyVisibleExplanation'} />
-              </Tooltip>
-            }>
-            {({ ref, ...triggerHandler }) => (
-              <Form.Check
-                disabled={disabled}
-                reverse={true}
-                type={'switch'}
-                className={'d-flex flex-row align-items-center justify-content-between'}>
-                <Form.Check.Label>
-                  <Trans i18nKey={'editor.modal.permissions.publiclyVisible'} />
-                </Form.Check.Label>
-                <Form.Check.Input
-                  disabled={disabled}
-                  onChange={onSetChangeVisibility}
-                  checked={currentVisibility}
-                  ref={ref}
-                  {...triggerHandler}
-                />
-              </Form.Check>
-            )}
-          </OverlayTrigger>
-        </li>
-      </ul>
-    </Fragment>
+    <SidebarMenuInfoEntry className={'py-2'} titleI18nKey={'editor.permissions.visibility'} icon={IconEye}>
+      <OverlayTrigger
+        placement='bottom'
+        delay={{ show: 250, hide: 400 }}
+        overlay={
+          <Tooltip id='publiclyVisibleExplanation'>
+            <Trans i18nKey={'editor.permissions.publiclyVisibleExplanation'} />
+          </Tooltip>
+        }>
+        {({ ref, ...triggerHandler }) => (
+          <Form.Check
+            disabled={disabled}
+            reverse={true}
+            type={'switch'}
+            className={'d-flex flex-row align-items-center justify-content-between'}>
+            <Form.Check.Label>
+              <Trans i18nKey={'editor.permissions.publiclyVisible'} />
+            </Form.Check.Label>
+            <Form.Check.Input
+              disabled={disabled}
+              onChange={onSetChangeVisibility}
+              checked={currentVisibility}
+              ref={ref}
+              {...triggerHandler}
+            />
+          </Form.Check>
+        )}
+      </OverlayTrigger>
+    </SidebarMenuInfoEntry>
   )
 }
