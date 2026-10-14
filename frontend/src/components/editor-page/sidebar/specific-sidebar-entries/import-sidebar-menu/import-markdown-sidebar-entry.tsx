@@ -12,12 +12,18 @@ import { buildAppendContentFormatter } from '../build-append-content-formatter'
 import React, { Fragment, useCallback, useRef } from 'react'
 import { FileText as IconFileText } from 'react-bootstrap-icons'
 import { Trans, useTranslation } from 'react-i18next'
+import { ImportMenuSelection } from './types'
+
+export interface ImportMarkdownSidebarEntryProps {
+  selectedMenuId: ImportMenuSelection
+}
 
 /**
  * Renders a sidebar entry that allows to import the content of markdown files into the currently opened note.
  */
-export const ImportMarkdownSidebarEntry: React.FC = () => {
+export const ImportMarkdownSidebarEntry: React.FC<ImportMarkdownSidebarEntryProps> = ({ selectedMenuId }) => {
   useTranslation()
+  const hide = selectedMenuId !== ImportMenuSelection.NONE
   const changeEditorContent = useChangeEditorContentCallback()
 
   const onImportMarkdown = useCallback(
@@ -37,6 +43,7 @@ export const ImportMarkdownSidebarEntry: React.FC = () => {
     <Fragment>
       <SidebarButton
         {...cypressId('menu-import-markdown-button')}
+        hide={hide}
         icon={IconFileText}
         onClick={buttonClick}
         disabled={!changeEditorContent}>

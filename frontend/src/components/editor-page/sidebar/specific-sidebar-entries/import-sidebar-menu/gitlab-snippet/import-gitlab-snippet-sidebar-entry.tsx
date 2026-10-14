@@ -3,13 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useBooleanState } from '../../../../../../hooks/common/use-boolean-state'
 import { IconGitlab } from '../../../../../common/icons/additional/icon-gitlab'
 import { SidebarButton } from '../../../sidebar-button/sidebar-button'
-import React, { Fragment } from 'react'
+import React, { Fragment, useCallback } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { fetchGitlabSnippet } from './fetch-gitlab-snippet'
-import { ImportFromRemoteModal } from '../import-from-remote-modal'
+import { ImportFromRemoteMenu } from '../import-from-remote-menu'
+import { cypressId } from '../../../../../../utils/cypress-attribute'
+import { SidebarMenu } from '../../../sidebar-menu/sidebar-menu'
+import type { ImportMenuProps } from '../types'
+import { ImportMenuSelection } from '../types'
 
 const buildGitlabTokenProvisioningUrl = (snippetUrl: string): string => {
   let instanceOrigin = 'https://gitlab.com'
@@ -27,25 +30,35 @@ const buildGitlabTokenProvisioningUrl = (snippetUrl: string): string => {
 /**
  * Renders the sidebar entry for importing a GitLab snippet.
  */
-export const ImportGitlabSnippetSidebarEntry: React.FC = () => {
+export const ImportGitlabSnippetSidebarEntry: React.FC<ImportMenuProps> = ({ selectedMenuId, menuId, onClick }) => {
   useTranslation()
-  const [showModal, setShowModal, setHideModal] = useBooleanState(false)
+  const hide = selectedMenuId !== ImportMenuSelection.NONE
+  const expand = selectedMenuId === menuId
+  const onClickHandler = useCallback(() => {
+    onClick(menuId)
+  }, [menuId, onClick])
 
   return (
     <Fragment>
-      <SidebarButton icon={IconGitlab} onClick={setShowModal}>
+      <SidebarButton
+        {...cypressId('menu-import')}
+        hide={hide}
+        icon={IconGitlab}
+        className={''}
+        onClick={onClickHandler}>
         <Trans i18nKey={'editor.importExport.service.gitlab.name'} />
       </SidebarButton>
-      <ImportFromRemoteModal
-        show={showModal}
-        onHide={setHideModal}
-        icon={IconGitlab}
-        serviceI18nKey={'editor.importExport.service.gitlab.shortName'}
-        urlPlaceholder={'https://gitlab.com/-/snippets/123'}
-        tokenProvisioningUrlI18nKey={'editor.importExport.service.gitlab.tokenLink'}
-        buildTokenProvisioningUrl={buildGitlabTokenProvisioningUrl}
-        fetchContent={fetchGitlabSnippet}
-      />
+      <SidebarMenu expand={expand}>
+        <ImportFromRemoteMenu
+          onImportFinished={onClickHandler}
+          icon={IconGitlab}
+          serviceI18nKey={'editor.importExport.service.gitlab.shortName'}
+          urlPlaceholder={'https://gitlab.com/-/snippets/123'}
+          tokenProvisioningUrlI18nKey={'editor.importExport.service.gitlab.tokenLink'}
+          buildTokenProvisioningUrl={buildGitlabTokenProvisioningUrl}
+          fetchContent={fetchGitlabSnippet}
+        />
+      </SidebarMenu>
     </Fragment>
   )
 }

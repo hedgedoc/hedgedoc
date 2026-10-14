@@ -4,40 +4,39 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { useUiNotifications } from '../../../../notifications/ui-notification-boundary'
-import { CommonModal, type ModalVisibilityProps } from '../../../../common/modals/common-modal'
 import { ExternalLink } from '../../../../common/links/external-link'
 import { useChangeEditorContentCallback } from '../../../change-content-context/use-change-editor-content-callback'
 import { buildAppendContentFormatter } from '../build-append-content-formatter'
 import { useOnInputChange } from '../../../../../hooks/common/use-on-input-change'
-import React, { useCallback, useState } from 'react'
-import { Button, FormControl, FormGroup, FormLabel, FormText, Modal } from 'react-bootstrap'
+import React, { Fragment, useCallback, useState } from 'react'
+import { Button, FormControl, FormGroup, FormText } from 'react-bootstrap'
 import type { Icon } from 'react-bootstrap-icons'
-import { Trans, useTranslation } from 'react-i18next'
+import { Trans } from 'react-i18next'
 import { useTranslatedText } from '../../../../../hooks/common/use-translated-text'
+import { SidebarMenuInfoEntry } from '../../sidebar-menu-info-entry/sidebar-menu-info-entry'
 
-interface ImportFromRemoteModalProps extends ModalVisibilityProps {
+interface ImportFromRemoteMenuProps {
   icon: Icon
   serviceI18nKey: string
   urlPlaceholder: string
   tokenProvisioningUrlI18nKey: string
   buildTokenProvisioningUrl: (url: string) => string
   fetchContent: (url: string, token: string) => Promise<string>
+  onImportFinished: () => void
 }
 
 /**
- * Renders a modal for importing content from a remote code snippet service.
+ * Renders a menu for importing content from a remote code snippet service.
  */
-export const ImportFromRemoteModal: React.FC<ImportFromRemoteModalProps> = ({
-  show,
-  onHide,
+export const ImportFromRemoteMenu: React.FC<ImportFromRemoteMenuProps> = ({
   icon,
   serviceI18nKey,
   urlPlaceholder,
   tokenProvisioningUrlI18nKey,
   buildTokenProvisioningUrl,
-  fetchContent
+  fetchContent,
+  onImportFinished
 }) => {
-  const { t } = useTranslation()
   const changeEditorContent = useChangeEditorContentCallback()
   const { dispatchUiNotification, showErrorNotificationBuilder } = useUiNotifications()
 
@@ -66,7 +65,7 @@ export const ImportFromRemoteModal: React.FC<ImportFromRemoteModalProps> = ({
         )
         setUrl('')
         setToken('')
-        onHide?.()
+        onImportFinished?.()
       })
       .catch(showErrorNotificationBuilder('editor.importExport.import.notificationError', { service }, true))
       .finally(() => setImporting(false))
@@ -75,7 +74,7 @@ export const ImportFromRemoteModal: React.FC<ImportFromRemoteModalProps> = ({
     dispatchUiNotification,
     fetchContent,
     icon,
-    onHide,
+    onImportFinished,
     service,
     showErrorNotificationBuilder,
     token,
@@ -83,35 +82,26 @@ export const ImportFromRemoteModal: React.FC<ImportFromRemoteModalProps> = ({
   ])
 
   return (
-    <CommonModal
-      show={show}
-      onHide={onHide}
-      title={t('editor.importExport.import.title', { service })}
-      showCloseButton={true}
-      titleIcon={icon}>
-      <Modal.Body>
-        <FormGroup className={'my-2'}>
-          <FormLabel>
-            <Trans i18nKey={'editor.importExport.import.url'} />
-          </FormLabel>
-          <FormControl value={url} onChange={changeUrl} type={'url'} placeholder={urlPlaceholder} />
-        </FormGroup>
-        <FormGroup className={'my-2'}>
-          <FormLabel>
-            <Trans i18nKey={'editor.importExport.common.accessToken'} />
-          </FormLabel>
+    <Fragment>
+      <SidebarMenuInfoEntry className={'py-2'} titleI18nKey={'editor.importExport.import.url'} border={false}>
+        <FormControl value={url} onChange={changeUrl} type={'url'} placeholder={urlPlaceholder} />
+      </SidebarMenuInfoEntry>
+      <SidebarMenuInfoEntry className={'py-2'} titleI18nKey={'editor.importExport.common.accessToken'} border={false}>
+        <FormGroup>
           <FormControl value={token} onChange={changeToken} type={'password'} />
           <FormText muted={true}>
             <Trans i18nKey={'editor.importExport.import.anonymousImport'} />{' '}
             <ExternalLink text={tokenProvisioningUrlText} href={buildTokenProvisioningUrl(url)} />
           </FormText>
         </FormGroup>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant={'success'} onClick={importSnippet} disabled={url === '' || importing || !changeEditorContent}>
-          <Trans i18nKey={'editor.importExport.import.button'} />
-        </Button>
-      </Modal.Footer>
-    </CommonModal>
+      </SidebarMenuInfoEntry>
+      <Button
+        variant={'success'}
+        onClick={importSnippet}
+        disabled={url === '' || importing || !changeEditorContent}
+        className={'mx-2 mt-2'}>
+        <Trans i18nKey={'editor.importExport.import.button'} />
+      </Button>
+    </Fragment>
   )
 }
