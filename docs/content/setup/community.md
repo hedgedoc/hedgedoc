@@ -71,6 +71,12 @@ using the button below. This will run the official Docker image from [quay.io](h
 
 [![Deploy with Zenith](https://cdn.zenith.hosting/buttons/deploy-with-zenith.svg)](https://zenith.hosting/host/hedgedoc)
 
+### Pethost
+
+[Pethost](https://pethost.dev/) offers managed Docker hosting with one-click templates. Deploy HedgeDoc with PostgreSQL using the button below: it runs the official image from [quay.io](https://quay.io/repository/hedgedoc/hedgedoc), and your account is created from the email and password you enter, with sign-ups left closed.
+
+[![Deploy on Pethost](https://pethost.dev/button.svg)](https://pethost.dev/templates/hedgedoc/)
+
 ### SelfPrivacy
 
 HedgeDoc is available as a 1-click install on [SelfPrivacy](https://selfprivacy.org/). SelfPrivacy app allows you to set up self-hosted services on your automatically configured and managed NixOS-based server. Because HedgeDoc is officialy supported by SelfPrivacy, all you need to do is add it from the Services catalog on the Services page.
