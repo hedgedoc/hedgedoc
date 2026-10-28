@@ -314,7 +314,12 @@ module.exports = {
     rules: [
       {
         test: /\.mjs$/,
-        type: 'javascript/auto'
+        type: 'javascript/auto',
+        loader: 'esbuild-loader',
+        options: {
+          // JavaScript version to compile to
+          target: 'es2015'
+        }
       },
       {
         test: require.resolve(path.join(__dirname, 'public/vendor/codemirror-spell-checker/spell-checker.min.js')),
