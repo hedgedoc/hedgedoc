@@ -1578,7 +1578,7 @@ __metadata:
     file-loader: "npm:6.2.0"
     file-saver: "npm:2.0.5"
     file-type: "npm:21.3.4"
-    flowchart.js: "npm:1.18.0"
+    flowchart.js: "npm:1.18.1"
     fork-awesome: "npm:1.2.0"
     formidable: "npm:3.5.4"
     globals: "npm:17.13.0"
@@ -7283,12 +7283,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flowchart.js@npm:1.18.0":
-  version: 1.18.0
-  resolution: "flowchart.js@npm:1.18.0"
+"flowchart.js@npm:1.18.1":
+  version: 1.18.1
+  resolution: "flowchart.js@npm:1.18.1"
   dependencies:
     raphael: "npm:2.3.0"
-  checksum: 10/48f806e2422a290d736cbc89df93b2125e013129e71bb5d08055f2f1422aa666ebecbf144f9e9efe5422c68d1a1c32530f76a42cbb0bedaf65ca4579609b4ee0
+  checksum: 10/9da91806b999e1a4bcf3a65cfe330cf1763a944be2d8fa6d8683d225861634914142f15de63f304c6f379f9b7b7b84796ff58edba6ab3927269244b9ecb48099
   languageName: node
   linkType: hard
 
