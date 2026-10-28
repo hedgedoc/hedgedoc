@@ -164,7 +164,7 @@
     "expose-loader": "1.0.3",
     "file-loader": "6.2.0",
     "file-saver": "2.0.5",
-    "flowchart.js": "1.18.0",
+    "flowchart.js": "1.18.1",
     "fork-awesome": "1.2.0",
     "globals": "17.13.0",
     "highlight.js": "11.12.0",
