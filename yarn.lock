@@ -1681,7 +1681,7 @@ __metadata:
     webpack-cli: "npm:4.10.0"
     webpack-merge: "npm:5.10.0"
     winston: "npm:3.19.0"
-    xss: "npm:1.0.15"
+    xss: "npm:1.0.17"
   dependenciesMeta:
     bufferutil:
       optional: true
@@ -17570,15 +17570,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xss@npm:1.0.15":
-  version: 1.0.15
-  resolution: "xss@npm:1.0.15"
+"xss@npm:1.0.17":
+  version: 1.0.17
+  resolution: "xss@npm:1.0.17"
   dependencies:
     commander: "npm:^2.20.3"
     cssfilter: "npm:0.0.10"
   bin:
     xss: bin/xss
-  checksum: 10/074ad54babac9dd5107466dbf30d3b871dbedae1f8e7b8f4e3b76d60da8b92bd0f66f18ccd26b8524545444ef784b78c526cee089a907aa904f83c8b8d7958f6
+  checksum: 10/b3c0f0964e92bb18cfc6697d556cfa12993ff2b8fdc5f36e4a2d4ef7e8ea6052d12655d776ee3c3a68a731c9184c536c0270e69786d7f0513a88d809861c226f
   languageName: node
   linkType: hard
 
