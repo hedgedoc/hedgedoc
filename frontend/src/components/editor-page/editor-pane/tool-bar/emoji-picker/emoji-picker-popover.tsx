@@ -20,7 +20,7 @@ const emojiPickerConfig: PickerConstructorOptions = {
 
 const twemojiStyle = (): HTMLStyleElement => {
   const style = document.createElement('style')
-  style.textContent = `section.picker { --font-family: ${fontStyles['font-family-emojis']} !important; }`
+  style.textContent = `section.picker { --emoji-font-family: ${fontStyles['font-family-emojis']} !important; }`
   return style
 }
 
