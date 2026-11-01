@@ -3745,7 +3745,7 @@ function cloneAndRemoveDataAttr (el) {
   if (!el) return
   const rawEl = $(el).clone()
   rawEl.removeAttr('data-startline data-endline')
-  rawEl.find('[data-startline]').removeAttr('data-startline data-endline')
+  // Keep descendant line numbers so moved task items are rendered with current source positions.
   return rawEl[0]
 }
 
