@@ -19,6 +19,7 @@
 - Fixed invalid HTML for task lists with checkboxes, clicking the label should now trigger the checkbox as well
 - Fixed line numbers in wrapped code blocks being attached to the wrong lines
 - Fixed an issue with syntax highlighting in the editor when using `$$` math blocks
+- Fixed a rendering issue, resulting in wrong checkboxes being toggled sometimes
 
 ### Node compatability
 
