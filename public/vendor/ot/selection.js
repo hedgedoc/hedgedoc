@@ -71,8 +71,15 @@ ot.Selection = (function (global) {
 
   Selection.fromJSON = function (obj) {
     var objRanges = obj.ranges || obj;
+    if (!objRanges || !Array.isArray(objRanges) || typeof objRanges.length !== 'number') {
+      throw new Error('Invalid Selection: obj.ranges needs to be an array of ranges');
+    }
     for (var i = 0, ranges = []; i < objRanges.length; i++) {
-      ranges[i] = Range.fromJSON(objRanges[i]);
+      if (!objRanges[i]) {
+        // We ignore missing ranges and apply everything else
+        continue;
+      }
+      ranges.push(Range.fromJSON(objRanges[i]));
     }
     return new Selection(ranges);
   };
