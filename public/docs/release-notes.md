@@ -8,6 +8,7 @@
 - [GHSA-g5g7-gfr5-f89m](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-g5g7-gfr5-f89m) reports a possible crash of the realtime code via an invalid selection.
 - [GHSA-7p6g-mhrh-286p](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-7p6g-mhrh-286p) reports the ability to include unescaped iframes in slides view.
 - [GHSA-cqg6-86p6-77jm](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-cqg6-86p6-77jm) reports a possible timing attack which allows to check whether an email address is registered at the instance.
+- [GHSA-q9v8-vwgh-x2mc](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-q9v8-vwgh-x2mc) reports missing permissions enforcement for invalid permissions. See [GHSA-93w7-49m2-cqwg](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-93w7-49m2-cqwg).
 
 ### Enhancements
 
