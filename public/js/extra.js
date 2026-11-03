@@ -388,22 +388,21 @@ export function finishView (view) {
     const $value = $(value)
     const $ele = $(value).closest('pre')
     require.ensure([], function (require) {
-      try {
-        const mermaid = require('mermaid').default
-        mermaid.startOnLoad = false
-        mermaid.mermaidAPI.parse($value.text())
+      const mermaid = require('mermaid').default
+      mermaid.initialize({ startOnLoad: false })
+      mermaid.parse($value.text()).then(() => {
         $ele.addClass('mermaid')
         $ele.text($value.text())
-        mermaid.init(undefined, $ele)
-      } catch (err) {
+        return mermaid.run({ nodes: [$ele[0]] })
+      }).catch(err => {
         let errormessage = err
         if (err.str) {
           errormessage = err.str
         }
-        $value.unwrap()
+        $ele.removeClass('mermaid').removeAttr('data-processed').empty().append($value)
         $value.parent().append(`<div class="alert alert-warning">${escapeHtml(errormessage)}</div>`)
         console.warn(errormessage)
-      }
+      })
     })
   })
   // abc.js

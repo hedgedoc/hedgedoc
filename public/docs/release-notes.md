@@ -5,6 +5,7 @@
 ### Enhancements
 
 - Added `CMD_OAUTH2_USER_PROFILE_PHOTO_ATTR` to let OAuth2/OIDC providers supply a profile photo URL, instead of always falling back to a generated avatar
+- Updated mermaid to 11.17 which includes many new diagram types
 
 ### Bugfixes
 

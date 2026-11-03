@@ -328,10 +328,10 @@ gantt
   Another task: 24d
 ```
 
-More information about **mermaid** syntax [here](https://mermaid-js.github.io/mermaid/)
+More information about **Mermaid** syntax [here](https://mermaid.js.org/intro/syntax-reference.html).
 
-This version of HedgeDoc bundles Mermaid 9.1.7. The documentation for this version can
-be found [here](https://github.com/mermaid-js/mermaid/blob/v9.1.7/docs/n00b-gettingStarted.md).
+This version of HedgeDoc bundles Mermaid 11.17.2. The documentation for this version can
+be found [here](https://github.com/mermaid-js/mermaid/tree/mermaid%4011.17.2/docs).
 
 #### Abc Music Notation
 
