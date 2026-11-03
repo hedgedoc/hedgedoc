@@ -296,6 +296,8 @@ module.exports = {
     modules: ['node_modules'],
     extensions: ['.js'],
     alias: {
+      // Use bundled dependencies: webpack 4 cannot resolve some modern package exports.
+      mermaid$: require.resolve('mermaid/dist/mermaid.esm.mjs'),
       'bootstrap-tooltip': path.join(__dirname, 'public/vendor/bootstrap/tooltip.min.js'),
       'reveal-markdown': path.join(__dirname, 'public/js/reveal-markdown.js'),
       raphael: path.join(__dirname, 'node_modules/raphael/raphael.no-deps.js')
