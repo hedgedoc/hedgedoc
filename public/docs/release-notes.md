@@ -10,6 +10,7 @@
 - [GHSA-cqg6-86p6-77jm](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-cqg6-86p6-77jm) reports a possible timing attack which allows to check whether an email address is registered at the instance.
 - [GHSA-q9v8-vwgh-x2mc](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-q9v8-vwgh-x2mc) reports missing permissions enforcement for invalid permissions. See [GHSA-93w7-49m2-cqwg](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-93w7-49m2-cqwg).
 - [GHSA-jxrf-wfc5-w77h](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-jxrf-wfc5-w77h) reports a HTML injection possibility using specially crafted user display names
+- [GHSA-3fwm-h59w-j268](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-3fwm-h59w-j268) reports a denial-of-service attack where authenticated users can crash a HedgeDoc instance using a specific note alias
 - Several other HTML injection possibilities were fixed
 
 ### Enhancements
