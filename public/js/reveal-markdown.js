@@ -238,7 +238,7 @@ import { md } from './extra'
   /**
    * Check if a node value has the attributes pattern.
    * If yes, extract it and add that value as one or several attributes
-   * the the terget element.
+   * to the target element.
    *
    * You need Cache Killer on Chrome to see the effect on any FOM transformation
    * directly on refresh (F5)
@@ -257,7 +257,9 @@ import { md } from './extra'
       while ((matchesClass = mardownClassRegex.exec(classes))) {
         const name = matchesClass[1]
         const value = matchesClass[2]
-        if (name.substr(0, 5) === 'data-' || window.whiteListAttr.indexOf(name) !== -1) { elementTarget.setAttribute(name, escapeAttrValue(value)) }
+        if (name.slice(0, 5) === 'data-' || window.whiteListAttr.indexOf(name) !== -1) {
+          elementTarget.setAttribute(name, escapeAttrValue(value))
+        }
       }
       return true
     }

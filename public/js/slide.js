@@ -169,17 +169,15 @@ window.viewAjaxCallback = () => {
 }
 
 function renderSlide (event) {
+  finishView($('.container'))
   if (window.location.search.match(/print-pdf/gi)) {
-    const slides = $('.slides')
     const title = document.title
-    finishView(slides)
     document.title = title
     Reveal.layout()
   } else {
     const markdown = $(event.currentSlide)
     if (!markdown.attr('data-rendered')) {
       const title = document.title
-      finishView(markdown)
       markdown.attr('data-rendered', 'true')
       document.title = title
       Reveal.layout()
