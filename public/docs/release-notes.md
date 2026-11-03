@@ -6,6 +6,7 @@
 
 - [GHSA-2c27-4x43-jrm6](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-2c27-4x43-jrm6) reports a possible impersonation attack when two auth providers provide the same profile id
 - [GHSA-g5g7-gfr5-f89m](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-g5g7-gfr5-f89m) reports a possible crash of the realtime code via an invalid selection.
+- [GHSA-7p6g-mhrh-286p](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-7p6g-mhrh-286p) reports the ability to include unescaped iframes in slides view.
 
 ### Enhancements
 
