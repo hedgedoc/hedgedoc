@@ -313,11 +313,16 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.mjs$/,
+        // Overrides for files that should be parsed using esbuild-loader instead of the default pipeline
+        test: [
+          // webpack 4 understands no module syntax
+          /\.mjs$/,
+          // mermaid uses modern syntax not supported by webpack 4
+          /[\\/]node_modules[\\/]mermaid[\\/].*\.js$/],
         type: 'javascript/auto',
         loader: 'esbuild-loader',
         options: {
-          // JavaScript version to compile to
+          // Compile down for our babel tooling
           target: 'es2015'
         }
       },
