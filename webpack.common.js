@@ -317,8 +317,10 @@ module.exports = {
         test: [
           // webpack 4 understands no module syntax
           /\.mjs$/,
-          // mermaid uses modern syntax not supported by webpack 4
-          /[\\/]node_modules[\\/]mermaid[\\/].*\.js$/],
+          // mermaid and markdown-it use modern syntax not supported by webpack 4
+          /[\\/]node_modules[\\/]mermaid[\\/].*\.js$/,
+          /[\\/]node_modules[\\/]markdown-it[\\/].*\.js$/
+        ],
         type: 'javascript/auto',
         loader: 'esbuild-loader',
         options: {
