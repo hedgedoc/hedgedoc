@@ -79,8 +79,12 @@ Use this tar ball to test the following things:
 
 ### Config
 
-- [ ] Setting `"allowAnonymous": false,` disables guest note creation
+- [ ] Setting `"allowAnonymous": false` disables guest note creation
+  - [ ] "New guest note" button is missing
+  - [ ] http://localhost:3000/new does not work
 - [ ] Setting `"enableStatsApi": false` disables /metrics and /status endpoint
+  - [ ] http://localhost:3000/status redirects to the homepage
+  - [ ] http://localhost:3000/metrics shows a 404 page
 
 
 ### Account system
