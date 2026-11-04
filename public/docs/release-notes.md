@@ -1,5 +1,11 @@
 # Release Notes
 
+## <i class="fa fa-tag"></i> 1.12.2 <i class="fa fa-calendar-o"></i> 2026-11-04
+
+### Bugfixes
+
+- Fixed the profile provider migration failing on PostgreSQL
+
 ## <i class="fa fa-tag"></i> 1.12.1 <i class="fa fa-calendar-o"></i> 2026-11-04
 
 ### Security fixes
