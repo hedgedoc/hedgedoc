@@ -732,7 +732,7 @@ export function exportToHTML (view) {
   // generate html via template
   $.get(`${serverurl}/build/htmlexport.html`, template => {
     let html = template.replace('{{{url}}}', serverurl)
-    html = html.replace('{{title}}', title)
+    html = html.replace('{{title}}', () => escapeHtml(title))
     html = html.replace('{{{html}}}', src[0].outerHTML)
     html = html.replace('{{{ui-toc}}}', toc.html())
     html = html.replace('{{{ui-toc-affix}}}', tocAffix.html())
