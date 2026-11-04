@@ -2,7 +2,7 @@
 
 !!! info "Requirements on your server"
     - [Git](https://git-scm.com/)
-    - [Docker](https://docs.docker.com/get-docker/) 17.03.1 or higher
+    - [Docker](https://docs.docker.com/get-docker/)
     - [Docker Compose](https://docs.docker.com/compose/install/)
 
 The official docker images are [available on quay.io](https://quay.io/repository/hedgedoc/hedgedoc).
@@ -29,7 +29,7 @@ services:
     restart: always
   app:
     # Make sure to use the latest release from https://hedgedoc.org/latest-release
-    image: quay.io/hedgedoc/hedgedoc:1.12.0
+    image: quay.io/hedgedoc/hedgedoc:1.12.1
     environment:
       - CMD_DB_URL=postgres://hedgedoc:password@database:5432/hedgedoc
       - CMD_DOMAIN=localhost
