@@ -1674,7 +1674,7 @@ __metadata:
     store: "npm:2.0.12"
     string-loader: "npm:0.0.1"
     toobusy-js: "npm:0.5.1"
-    turndown: "npm:7.2.4"
+    turndown: "npm:7.2.5"
     uglify-js: "npm:3.19.3"
     umzug: "npm:3.8.3"
     url-loader: "npm:4.1.1"
@@ -16007,12 +16007,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turndown@npm:7.2.4":
-  version: 7.2.4
-  resolution: "turndown@npm:7.2.4"
+"turndown@npm:7.2.5":
+  version: 7.2.5
+  resolution: "turndown@npm:7.2.5"
   dependencies:
     "@mixmark-io/domino": "npm:^2.2.0"
-  checksum: 10/90e3e0370a26aba34e61f354c1faec5346f0a943dd794f13300b1656aa393ded8c0e384dee63887e80509c788a26aa90c19bb17362c032d5b779f99ccb65105d
+  checksum: 10/ced901acea28f8d77cba0932fc4a36bb47d1a4cb21ebfebd0a57547dc4c5f8b7566c4477748c726294c7de77086d932337741b315bbbee10d8e3440f660c3f40
   languageName: node
   linkType: hard
 
