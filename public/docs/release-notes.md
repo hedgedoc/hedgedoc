@@ -1,6 +1,6 @@
 # Release Notes
 
-## <i class="fa fa-tag"></i> UNRELEASED
+## <i class="fa fa-tag"></i> 1.12.1 <i class="fa fa-calendar-o"></i> 2026-11-04
 
 ### Security fixes
 
@@ -36,6 +36,13 @@
 ### Node compatability
 
 - Node 26 support was tested and is now supported officially.
+
+### Contributors
+
+- [Anant Kumar](https://github.com/AnantKumarTyagi)
+- [Chris Ellrich](https://github.com/chrellrich)
+- [Stephan](https://github.com/sadfu)
+- [Vaibhav Srivastav](https://github.com/vaibhav8a)
 
 ## <i class="fa fa-tag"></i> 1.12.0 <i class="fa fa-calendar-o"></i> 2026-08-21
 
