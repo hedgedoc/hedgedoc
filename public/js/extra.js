@@ -5,6 +5,7 @@ import Prism from 'prismjs'
 import PDFObject from 'pdfobject'
 import { saveAs } from 'file-saver'
 import filterXSS from 'xss'
+import DOMPurify from 'dompurify'
 
 import getUIElements from './lib/editor/ui-elements'
 import { escapeHtml, unescapeHtml } from './utils'
@@ -371,7 +372,9 @@ export function finishView (view) {
         const Viz = require('viz.js')
         const graphviz = Viz($value.text())
         if (!graphviz) throw Error('viz.js output empty graph')
-        $value.html(graphviz)
+        $value.html(DOMPurify.sanitize(graphviz, {
+          USE_PROFILES: { svg: true, svgFilters: true }
+        }))
 
         $ele.addClass('graphviz')
         $value.children().unwrap().unwrap()
