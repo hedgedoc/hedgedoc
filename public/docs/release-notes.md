@@ -13,6 +13,11 @@
 - [GHSA-3fwm-h59w-j268](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-3fwm-h59w-j268) reports a denial-of-service attack where authenticated users can crash a HedgeDoc instance using a specific note alias
 - Several other HTML injection possibilities were fixed
 
+### Security Fixes
+
+- [GHSA-jxrf-wfc5-w77h](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-jxrf-wfc5-w77h) reports a HTML injection possibility using specially crafted user display names
+- Several other HTML injection possibilities were fixed
+
 ### Enhancements
 
 - Added `CMD_OAUTH2_USER_PROFILE_PHOTO_ATTR` to let OAuth2/OIDC providers supply a profile photo URL, instead of always falling back to a generated avatar
