@@ -120,6 +120,7 @@ export class KnexSessionStore implements SessionStore {
       .onConflict(FieldNameSession.id)
       .merge([
         FieldNameSession.userId,
+        FieldNameSession.csrfToken,
         FieldNameSession.pendingUserData,
         FieldNameSession.loginAuthProviderType,
         FieldNameSession.loginAuthProviderIdentifier,
