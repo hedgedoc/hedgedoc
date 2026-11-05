@@ -751,8 +751,8 @@ importers:
         specifier: 1.11.6
         version: 1.11.6(react@18.3.1)
       react-bootstrap-typeahead:
-        specifier: 6.4.1
-        version: 6.4.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 6.4.2
+        version: 6.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-diff-viewer:
         specifier: 3.1.1
         version: 3.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(supports-color@8.1.1)
@@ -7354,8 +7354,8 @@ packages:
     peerDependencies:
       react: '>=16.8.6'
 
-  react-bootstrap-typeahead@6.4.1:
-    resolution: {integrity: sha512-Uw3vB4H5WGmnOHdQvqVKkOyzzxZ5NUrsd/HKhGnbta5+bEI99xyghr9Y0tVLcMoQZ9Wxpe4g/LJl75L/FsHq/A==}
+  react-bootstrap-typeahead@6.4.2:
+    resolution: {integrity: sha512-UW4FUrtJa5cn0ujpl7n6cR8ldE8tmgPeJcLvfFuVqpt/nU6VKX57jzlyI/tIYc/K9/cYpT0G7WRyJnUtYWZFdA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: '>=16.8.0'
@@ -16249,7 +16249,7 @@ snapshots:
       prop-types: 15.8.1
       react: 18.3.1
 
-  react-bootstrap-typeahead@6.4.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-bootstrap-typeahead@6.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.29.10
       '@floating-ui/react-dom': 2.1.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
