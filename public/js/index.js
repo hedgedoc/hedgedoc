@@ -1461,6 +1461,21 @@ function parseRevisions (_revisions) {
         '<i class="fa fa-file-text"></i> Length: ' + revision.length
       )
       item.append(itemHeading).append(itemText)
+      const revisionAuthors = (revision.authors || []).slice()
+      if (revision.guest) revisionAuthors.push('Guest')
+      if (revisionAuthors.length > 0) {
+        // use .text() so a display name can never inject markup
+        const maxShown = 3
+        let label = revisionAuthors.slice(0, maxShown).join(', ')
+        if (revisionAuthors.length > maxShown) {
+          label += ' +' + (revisionAuthors.length - maxShown)
+        }
+        const itemUser = $('<p class="list-group-item-text ui-revision-user"></p>')
+        itemUser.append($('<i class="fa fa-user"></i>'))
+        itemUser.append(document.createTextNode(' '))
+        itemUser.append($('<span></span>').text(label).attr('title', revisionAuthors.join(', ')))
+        item.append(itemUser)
+      }
       item.click(function (e) {
         const time = $(this).attr('data-revision-time')
         selectRevision(time)
