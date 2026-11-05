@@ -77,6 +77,12 @@ using the button below. This will run the official Docker image from [quay.io](h
 
 [![Deploy on Pethost](https://pethost.dev/button.svg)](https://pethost.dev/templates/hedgedoc/)
 
+### ZopDay
+
+[ZopDay](https://zop.dev/) lets you deploy Docker-based applications to managed infrastructure or to your own AWS/GCP account. Deploy HedgeDoc using the button below.
+
+[![Deploy to ZopDay](https://zop.dev/deploytozopday-inkhard.svg)](https://zop.dev/zopday/app/deploy?image=quay.io/hedgedoc/hedgedoc&port=3000&name=hedgedoc&utm_source=github&utm_medium=one_click&utm_content=hedgedoc)
+
 ### SelfPrivacy
 
 HedgeDoc is available as a 1-click install on [SelfPrivacy](https://selfprivacy.org/). SelfPrivacy app allows you to set up self-hosted services on your automatically configured and managed NixOS-based server. Because HedgeDoc is officialy supported by SelfPrivacy, all you need to do is add it from the Services catalog on the Services page.
