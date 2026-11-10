@@ -77,6 +77,12 @@ using the button below. This will run the official Docker image from [quay.io](h
 
 [![Deploy on Pethost](https://pethost.dev/button.svg)](https://pethost.dev/templates/hedgedoc/)
 
+### Hostim
+
+[Hostim](https://hostim.dev/) is a managed container hosting platform in the EU. Deploy HedgeDoc with PostgreSQL using the button below: it runs the official image from [quay.io](https://quay.io/repository/hedgedoc/hedgedoc) with uploads on a persistent volume, and creates your first account from the email and password in the app's environment variables, with sign-ups left closed. See the [setup guide](https://hostim.dev/docs/templates/hedgedoc/) for details.
+
+[![Deploy on Hostim](https://hostim.dev/img/deploy-button.svg)](https://console.hostim.dev/dashboard?preview=1&modal=1&template=hedgedoc)
+
 ### SelfPrivacy
 
 HedgeDoc is available as a 1-click install on [SelfPrivacy](https://selfprivacy.org/). SelfPrivacy app allows you to set up self-hosted services on your automatically configured and managed NixOS-based server. Because HedgeDoc is officialy supported by SelfPrivacy, all you need to do is add it from the Services catalog on the Services page.
