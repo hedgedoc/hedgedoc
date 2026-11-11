@@ -50,7 +50,7 @@
     "zod": "4.6.6"
   },
   "devDependencies": {
-    "@jest/types": "29.6.3",
+    "@jest/types": "30.5.1",
     "@mrdrogdrog/optional": "1.2.1",
     "@types/node": "24.10.7",
     "@types/ws": "8.18.1",
