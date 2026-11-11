@@ -25,7 +25,7 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=hedgedoc
     volumes:
-      - database:/var/lib/postgresql/data
+      - database:/var/lib/postgresql
     restart: always
   app:
     # Make sure to use the latest release from https://hedgedoc.org/latest-release
