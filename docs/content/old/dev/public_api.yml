@@ -662,7 +662,7 @@ components:
       properties:
         src:
           type: string
-          description: The url of the provied version of the image.
+          description: The url of the provided version of the image.
     Note:
       type: object
       properties:

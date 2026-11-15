@@ -802,7 +802,7 @@ describe('Notes', () => {
           canEdit: canEdit,
         });
       });
-      it(`with canEdit ${canEdit} with uper case username`, async () => {
+      it(`with canEdit ${canEdit} with upper case username`, async () => {
         await agentUser1
           .put(
             `${PRIVATE_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2.toUpperCase()}`,

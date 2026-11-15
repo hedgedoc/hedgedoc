@@ -80,18 +80,18 @@ The described annotations must appear in this order: `@param`, `@return`, `@thro
 Example:
 ```typescript=
 /**
- * Calculates the divison of the given divisor and divident.
+ * Calculates the divison of the given divisor and dividend.
  *
  * @param divisor The divisor for the calculation
- * @param divident The divident for the calculation
+ * @param dividend The dividend for the calculation
  * @return The calculated division.
- * @throws Error if the divident is zero.
+ * @throws Error if the dividend is zero.
  */
-const divide = (divisor: number, divident: number): number => {
-    if (divident === 0) {
+const divide = (divisor: number, dividend: number): number => {
+    if (dividend === 0) {
         throw new Error("Can not divide by zero")
     }
-    return divisor / divident
+    return divisor / dividend
 }
 ```
 
