@@ -1,6 +1,12 @@
+# SPDX-FileCopyrightText: 2026 The HedgeDoc developers (see AUTHORS file)
+#
+# SPDX-License-Identifier: CC0-1.0
+
 [codespell]
 # Ref: https://github.com/codespell-project/codespell#using-a-config-file
-skip = .git,.gitignore,.gitattributes,*.svg,*-lock.yaml,*.css,.codespellrc
+skip = .git,.git-meta,.gitignore,.gitattributes,.*cache,.turbo,.next,node_modules,dist,*.svg,*-lock.yaml,*.css,.codespellrc,.mailmap,AUTHORS
 check-hidden = true
-# ignore-regex = 
-# ignore-words-list =
+# ignore-regex =
+ignore-words-list =
+  # jest's afterAll() hook (matching is case-insensitive)
+  afterall
