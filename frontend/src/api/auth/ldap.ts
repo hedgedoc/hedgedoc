@@ -12,7 +12,7 @@ import type { LdapLoginInterface, LdapLoginResponseInterface } from '@hedgedoc/c
  * @param provider The identifier of the LDAP provider with which to login.
  * @param username The username with which to try the login.
  * @param password The password of the user.
- * @throws {Error} when the api request wasn't successfull
+ * @throws {Error} when the api request wasn't successful
  */
 export const doLdapLogin = async (
   provider: string,

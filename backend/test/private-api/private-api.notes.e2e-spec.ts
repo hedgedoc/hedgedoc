@@ -323,7 +323,7 @@ describe('Notes', () => {
         });
       },
     );
-    it("the note can't be created if the alias is forbiden", async () => {
+    it("the note can't be created if the alias is forbidden", async () => {
       await agentUser1
         .post(`${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}`)
         .set('Content-Type', 'text/markdown')

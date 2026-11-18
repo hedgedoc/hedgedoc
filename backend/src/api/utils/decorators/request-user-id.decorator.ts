@@ -14,7 +14,7 @@ type RequestUserIdParameter = {
 };
 
 /**
- * Trys to extract the {@link User.id} object from a request
+ * Tries to extract the {@link User.id} object from a request
  *
  * If a user is present in the request, returns the user object.
  * If no user is present and guests are allowed, returns `null`.

@@ -6,7 +6,7 @@
 import { useEffect, useState } from 'react'
 
 /**
- * Uses the browsers visiblity API to determine if the tab is active or not.
+ * Uses the browsers visibility API to determine if the tab is active or not.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
  */

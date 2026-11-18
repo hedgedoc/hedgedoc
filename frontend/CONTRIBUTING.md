@@ -66,11 +66,11 @@ const clcX = (x: number): number => x + 2
 
 To make the code as clear as possible to everyone, who will try to understand it, every function must have an [ESDoc](https://esdoc.org/).
 
-Please make sure that your documenation can be read in a standard text editor (hard line breaks at ~120 characters, etc.).
+Please make sure that your documentation can be read in a standard text editor (hard line breaks at ~120 characters, etc.).
 
 The documentation must
 - explain what the function does. If the explanation is longer than one line, then write a short introdoctory first line, followed by a break and then the longer explanation.
-- contain every parameter with the `@param name explaination` annotation, that explains the purpose of the parameter.
+- contain every parameter with the `@param name explanation` annotation, that explains the purpose of the parameter.
 - contain a `@return description` annotation if the return type isn't `void`, that explains the meaning of the value.
 - contain `@throws ErrorClass description` annotations if the function throws runtime errors or doesn't catch errors from other method calls.
 - contain a blank line between the description and the annotation block.
@@ -80,7 +80,7 @@ The described annotations must appear in this order: `@param`, `@return`, `@thro
 Example:
 ```typescript=
 /**
- * Calculates the divison of the given divisor and dividend.
+ * Calculates the division of the given divisor and dividend.
  *
  * @param divisor The divisor for the calculation
  * @param dividend The dividend for the calculation

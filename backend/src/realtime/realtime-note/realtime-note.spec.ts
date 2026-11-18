@@ -186,7 +186,7 @@ describe('realtime note', () => {
       expect(docDestroy).toHaveBeenCalledTimes(1);
     });
 
-    it("doesn't destory when a client reconnects quickly", () => {
+    it("doesn't destroy when a client reconnects quickly", () => {
       const sut = new RealtimeNote(mockedNoteId, 'nothing');
       const client1 = new MockConnectionBuilder(sut).withLoggedInUser(mockUserId).build();
       const docDestroy = jest.spyOn(sut, 'destroy');

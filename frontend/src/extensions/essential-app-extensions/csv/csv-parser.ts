@@ -9,7 +9,7 @@
  *
  * @param csvText The raw csv text
  * @param csvColumnDelimiter The delimiter for the columns
- * @return the values splitted by rows and columns
+ * @return the values split by rows and columns
  */
 export const parseCsv = (csvText: string, csvColumnDelimiter: string): string[][] => {
   const rows = csvText.split('\n')

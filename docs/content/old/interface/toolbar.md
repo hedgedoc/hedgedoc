@@ -77,8 +77,8 @@ is a link, or as the alt text.
    In the modal you can specify the exact dimension of your table.
 2. **Horizontal Line**  
    This button adds `---` at the current position of your cursor in the note.
-3. **Collapsable Block**  
-   This button adds a template for a Collapsable Block like this:
+3. **Collapsible Block**  
+   This button adds a template for a Collapsible Block like this:
 
    ```markdown
    :::spoiler Toggle label

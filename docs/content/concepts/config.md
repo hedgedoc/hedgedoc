@@ -84,7 +84,7 @@ Therefore, we have two big extra steps in the default export:
 2. The error messages are piped into the util method `replaceAuthErrorsWithEnvironmentVariables`.
    This replaces the error messages of the form `gitlab[0].providerName`
    with `HD_AUTH_GITLAB_<nameOfFirstGitlab>_PROVIDER_NAME`. For this the util function gets
-   the error, the name of the config option (e.g `'gitlab'`), the approriate prefix
+   the error, the name of the config option (e.g `'gitlab'`), the appropriate prefix
    (e.g. `'HD_AUTH_GITLAB_'`), and an array of the user defined names.
 
 ## Default permission config

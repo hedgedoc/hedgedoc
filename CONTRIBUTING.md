@@ -137,7 +137,7 @@ You are welcome to add a `(by [@your_username](https://github.com/your_username)
 
   These are inspired by https://chris.beams.io/posts/git-commit/
 - Split your change into small, atomic commits. This helps reviewing the changes and enables the use of `git bisect`.
-- Ensure the commit history is easy to follow. Use `git rebase -i` to sort and squash your commits if neccessary.
+- Ensure the commit history is easy to follow. Use `git rebase -i` to sort and squash your commits if necessary.
 - If your branch includes fixup commits (like "Fix typo...", "Fix tests..."), use `git rebase -i` to clean them up
   before submitting a pull request.
 - When refactoring something, take care to not include any functional changes into the same commit. Mixing refactoring
