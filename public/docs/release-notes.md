@@ -1,5 +1,14 @@
 # Release Notes
 
+## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
+
+### Bugfixes
+
+- Fixed the failing migrations of 1.12.1 and 1.12.2
+- Fixed registration breaking due to missing default values
+- Fixed login breaking due to a circular dependency import
+- Fixed permission check accessing invalid properties on realtime socket vs HTTP API
+
 ## <i class="fa fa-tag"></i> 1.12.2 <i class="fa fa-calendar-o"></i> 2026-11-04
 
 ### Bugfixes
