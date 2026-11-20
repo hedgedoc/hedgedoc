@@ -39,7 +39,11 @@ When your findings are accepted as a security issue, we'll work on a fix or
 at least a workaround for the next release. With the release that contained
 the fix, we want to encourage you to publish your findings as you like.
 
-We'll also credit you in the release notes.
+Due to the high volume of AI generated security findings, we will only credit
+human researched security issues. AI generated security findings will be fixed,
+but no credit will be assigned to discourage promotional security research.
+We assume, since you use your AI for the good of HedgeDoc and not for promotional
+stunts, that you are okay with this.
 
 When your findings are not accepted as a security issue, feel free to write
 a fix yourself and contribute it to HedgeDoc, as well as publish them as you
