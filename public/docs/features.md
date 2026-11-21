@@ -150,7 +150,7 @@ Use the syntax `[TOC]` to embed a table of contents into your note.
 
 You can type any emoji like this :smile: :smiley: :cry: :wink:
 
-> See full emoji list [here](https://www.webfx.com/tools/emoji-cheat-sheet/).
+> See full emoji list [here](https://github-emoji-picker.rickstaa.dev).
 
 ### ToDo List
 
