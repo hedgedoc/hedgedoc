@@ -18,22 +18,32 @@ export function convertInlineStyleToMap(inlineStyle = ''): Record<string, string
   const statements: string[] = []
   let i = -1
   let offset = 0
+  let parentheses = 0
+  const isEscaped = (index: number): boolean => {
+    let backslashes = 0
+    while (inlineStyle[index - backslashes - 1] === '\\') backslashes++
+    return backslashes % 2 === 1
+  }
   do {
     i++
     let curr = inlineStyle[i]
-    let prev = inlineStyle[i - 1]
 
-    if ((curr === "'" || curr === '"') && prev !== '\\') {
+    if ((curr === "'" || curr === '"') && !isEscaped(i)) {
       const quote = curr
       do {
         i++
         curr = inlineStyle[i]
-        prev = inlineStyle[i - 1]
-      } while (!(curr === quote && prev !== '\\') && i < inlineStyle.length)
+      } while (!(curr === quote && !isEscaped(i)) && i < inlineStyle.length)
       continue
     }
 
-    if (curr === ';' && prev !== '\\') {
+    if (curr === '(' && !isEscaped(i)) {
+      parentheses++
+    } else if (curr === ')' && !isEscaped(i) && parentheses > 0) {
+      parentheses--
+    }
+
+    if (curr === ';' && !isEscaped(i) && parentheses === 0) {
       statements.push(inlineStyle.slice(offset, i))
       offset = i + 1
       continue
