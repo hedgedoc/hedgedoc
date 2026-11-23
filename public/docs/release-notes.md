@@ -9,6 +9,7 @@
 - Fixed login breaking due to a circular dependency import
 - Fixed permission check accessing invalid properties on realtime socket vs HTTP API
 - Fixed the first slide being printed as an empty page in Firefox
+- Fixed a crash on startup when `DATABASE_URL` is set and the config file has no section for the current environment, and `CMD_DB_URL` now takes precedence over the legacy `DATABASE_URL`
 
 ## <i class="fa fa-tag"></i> 1.12.2 <i class="fa fa-calendar-o"></i> 2026-11-04
 
@@ -51,7 +52,6 @@
 - Fixed a missing uniqueness constraint in the database for email addresses of local accounts
 - Fixed invalid HTML for task lists with checkboxes, clicking the label should now trigger the checkbox as well
 - Fixed line numbers in wrapped code blocks being attached to the wrong lines
-- Fixed a crash on startup when `DATABASE_URL` is set and the config file has no section for the current environment, and `CMD_DB_URL` now takes precedence over the legacy `DATABASE_URL`
 - Fixed an issue with syntax highlighting in the editor when using `$$` math blocks
 - Fixed a rendering issue, resulting in wrong checkboxes being toggled sometimes
 
