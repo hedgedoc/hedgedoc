@@ -11,6 +11,12 @@
 - Fixed the first slide being printed as an empty page in Firefox
 - Fixed a crash on startup when `DATABASE_URL` is set and the config file has no section for the current environment, and `CMD_DB_URL` now takes precedence over the legacy `DATABASE_URL`
 
+## <i class="fa fa-tag"></i> UNRELEASED
+
+### Security fixes
+
+- [GHSA-5q59-fhxv-4r9x](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-5q59-fhxv-4r9x) reports a possible authorization check bypass when validating OAuth2 role claims.
+
 ## <i class="fa fa-tag"></i> 1.12.2 <i class="fa fa-calendar-o"></i> 2026-11-04
 
 ### Bugfixes
