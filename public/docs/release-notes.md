@@ -9,6 +9,12 @@
 - Fixed login breaking due to a circular dependency import
 - Fixed permission check accessing invalid properties on realtime socket vs HTTP API
 
+## <i class="fa fa-tag"></i> UNRELEASED
+
+### Security fixes
+
+- [GHSA-5q59-fhxv-4r9x](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-5q59-fhxv-4r9x) reports a possible authorization check bypass when validating OAuth2 role claims.
+
 ## <i class="fa fa-tag"></i> 1.12.2 <i class="fa fa-calendar-o"></i> 2026-11-04
 
 ### Bugfixes
