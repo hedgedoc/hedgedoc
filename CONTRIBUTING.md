@@ -9,47 +9,64 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 Thanks for your help in improving the HedgeDoc project!
 
 Please note we have a [code of conduct][code-of-conduct], please follow it in all your interactions with the project.
+Please also review our information regarding the state of HedgeDoc 1.x and 2.0 in the README as well as our [security notice][security].
+
+## Do you have questions about the project?
+
+Feel free to post your question on our [community forum][community-forum] or join our [matrix community chat][matrix-support].
+
+If you need help with your contribution, or have some open questions, feel free to ask them in the [dedicated matrix room for development][matrix-dev].
 
 ## Ways of contributing
 
-### Do you have questions about the project?
+Contributions can be more than only code. We're happy about:
 
-* Feel free to post your question on our [community forum][community-forum] or join
-  our [matrix community chat][matrix-support].
+- [improving our translations](#translations),
+- [reporting of bugs or feature requests](#bug-reports-and-feature-requests),
+- [extending and improving our documentation](#documentation) as well as
+- [code contributions](#code-contributions).
 
-### Did you find a bug?
+### Translations
 
-* **Ensure the bug wasn't already reported** by searching on GitHub under [Issues][issues].
+* If you want to improve a translation or add a new translation altogether, we handle those for HedgeDoc 1.x via [POEditor][poeditor].
+* Please do not open pull requests or issues for translation updates or fixes.
+
+### Bug reports and feature requests
+
+* **Ensure the bug or feature request wasn't already reported** by searching on GitHub under [Issues][issues].
 
 * If you're unable to find an open issue addressing the problem, [open a new one][new_issue]. Be sure to use one of the
-  templates we provide if your request applies to them.
+  templates we provide and fill them out with all required information.
+* It might be useful for us if you can provide a minimal reproducible example of the bug. For feature requests it might be helpful if you can provide some example usecases.
+* Please understand that we might reject feature requests or non-severe bug reports.
+* Please do not open pull requests directly without an issue.
 
-### Did you write a patch that fixes a bug?
+### Documentation
 
-* Open a new GitHub pull request with the patch. See the section [submitting a pull request](#submitting-a-pull-request)
-  for details on this.
+* If you encounter issues or missing content in our documentation, review our [issues][issues] and open a new one in case there is none matching yet.
+* For contributing to the documentation you can search for [open issues with the type "documentation"][docs-issues]. Please inform in the issue that you'd like to work on it in order to avoid duplicate work being done.
 
-* Ensure the PR description is precise about the problem and your solution. Just fill out our template. That should
-  cover the most important information.
+### Code contributions
 
-* Please note that we only accept PRs for the 1.x releases if they fix critical issues. If you are unsure if your fix is
-  critical, it's best to ask us before you start coding.
-
+* **Always open an issue before submitting a pull request.** In case of new features, we might first need to discuss how this fits in, possible problems, and so on. So in order to avoid spending time and efforts in a pull request that can't get merged, again please only submit a pull request after confirmation in a matching issue.
+* **Review our [policy regarding LLM-generated code](#llm-policy)**, the section about [signing-off the DCO](#certificate-of-origin), and the [commit and code conventions](#commit-and-code-conventions).
+* Open a new GitHub pull request with the patch.
+* Ensure the PR description is precise about the problem and your solution. Fill out our template. Pull requests that do not use the template description will get closed.
+* Please note that we only accept PRs for the 1.x releases if they fix critical issues.
 * **Choose the correct base branch:**  
-  The code for 1.x lives in the `master` branch. docs.hedgedoc.org is also deployed from there until 2.0 is released.  
+  The code for 1.x lives in the `master` branch. The documentation under docs.hedgedoc.org is also deployed from there until 2.0 is released.  
   HedgeDoc 2.x is developed in the `develop` branch.
+* Please respect that we reserve the right to reject contributions without further reasons if they seem to violate our contribution guidelines.
 
-### Do you intend to add a new feature or change an existing one?
+## LLM policy
 
-* Suggest your idea via a new GitHub issue. After a confirmation about your idea, you can start writing code. Our
-  maintainers and other project developers can provide useful details about the architecture and show you relevant
-  issues and discussions.
+LLMs and other AI-based tools can be supportive tools in the development process but they do not replace a human developer.
+We do not want to spend time for reviewing AI-generated "slop" contributions, neither discuss things with an AI bot.
+We're furthermore under the impression that the use of LLMs for more than simple refactorings does not comply with the legally binding [certificate of origin](#certificate-of-origin), that is mandatory to sign off for contributions to HedgeDoc.
 
-### Do you want to work on translations?
+For this reason, we will close pull requests created by or with extensive help of AI agents such as Claude, Codex, Copilot and others.
 
-* If you want to improve a translation or add a new translation altogether, we handle those via [POEditor][poeditor].
-
-HedgeDoc is a volunteer effort. We encourage you to pitch in and help us to make this project even better.
+Repeated violations of this policy can result in you being excluded from being able to provide contributions to HedgeDoc.
 
 ## Certificate of Origin
 
@@ -62,7 +79,7 @@ please [read it carefully](developer-certificate-of-origin.txt).
 If you can certify it, then just add a line to every git commit message:
 
 ```
-  Signed-off-by: Random J Developer <random@developer.example.org>
+Signed-off-by: Random J Developer <random@developer.example.org>
 ```
 
 Use your real name (sorry, no pseudonyms or anonymous contributions).
@@ -73,13 +90,10 @@ The sign-off message can either be added by hand to your commit message or autom
 
 This is accomplished by using the `-s` or `--signoff` option on your regular commit command.
 
-e.g.
+Example:
+
 ```bash
-git commit -s
-```
-or
-```bash
-git commit --signoff
+git commit -s # or --signoff instead of -s
 ```
 
 This will use the name and email you configured in git.
@@ -94,63 +108,66 @@ The last commit on any given branch can be amended to include the sign-off messa
 git commit --amend --signoff
 ```
 
-#### Amend a sign-off to multiple commits 
+#### Amend a sign-off to multiple commits
 
 Assuming you have the upstream hedgedoc repo as `upstream`:
 
-Run `git fetch upstream` to get the latest content from the upstream repository
-and then use `git rebase --signoff upstream/master` or `git rebase --signoff upstream/develop`
-to rebase all commits in your current branch, that are different from upstream you try to merge with, and sign them off.
+```bash
+# get the latest content from the upstream repository
+git fetch upstream
 
-If you've already pushed these commits to GitHub, you'll need to force push your branch after this with `git push --force-with-lease`.
+# rebase and sign-off all commits in your current branch, that are different from upstream
+git rebase --signoff upstream/master # replace master with develop for 2.0
 
-## Changelog snippets
+# If you've already pushed these commits to GitHub, you'll need to force push your branch after this
+git push --force-with-lease
+```
 
-PRs that fix a bug or add a new feature or enhancement should add a corresponding changelog entry.
-The changelog can be found at `public/docs/release-notes.md`. If there is no section for the next release yet, just add
-one using `## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED`. The version and date will
-be filled later by the maintainers.  
-Add a short description for your change in the `Features`, `Enhancements` or `Bugfixes` section, creating the section
-if needed. Have a look at previous entries for inspiration.
-You are welcome to add a `(by [@your_username](https://github.com/your_username))` note to your entry.
+## Commit and code conventions
 
-## Submitting a Pull Request
+### Codestyle, linting and tests
 
-1. Submit an issue describing your proposed change. We will try to respond to your issue promptly.
-2. Fork this repo, develop and test your code changes. Ensure you follow the commit guidelines (see below)
-   and signed all your commits (see above for details).
-3. Submit a pull request against this repo's `develop` branch for 2.x or the `master` branch for 1.x.
-4. Your branch may be merged once all configured checks pass.
+* We use code quality tools like linters and formatters to ensure the codebase stays in a good maintainable shape. Before creating a commit, please ensure that the linting and formatting tasks pass. You can inspect the `package.json` for the available scripts.
+* Contributions to HedgeDoc 2.0 should include tests for the added (or modified) functionality. Tests should ensure functionality works as expected, but we don't need to test that external library methods work, or that the language itself works.
 
-### Commit guidelines
+### Changelog snippets
 
-- Follow these rules when writing a commit message:
-  1. Separate subject from body with a blank line
-  2. Limit the subject line to 50 characters
-  3. If you worked on a specific part of the application, you can prefix your commit message with that Example: "
-     MediaService: Get media backend from configuration"
-  3. Capitalize the subject line
-  4. Do not end the subject line with a period
-  5. Use the imperative mood in the subject line
-  6. Wrap the body at 72 characters
-  7. Use the body to explain what and why vs. how
+* Code contributions to HedgeDoc 1.x should be noted as a changelog entry in `public/docs/release-notes.md`.
+* Code contributions to HedgeDoc 2.0 don't require a changelog entry prior the release.
+* Add your entries under `## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED` or create that section if it does not exist yet.
+* Changelog entries should be sorted into a section **Features**, **Enhancements** or **Bugfixes**. If the section does not exist yet, add it.
+* Add a short description for your change. Have a look at previous entries for inspiration.
+* You are welcome to add yourself to the contributors section, otherwise this will be done by the maintainers.
 
-  These are inspired by https://chris.beams.io/posts/git-commit/
-- Split your change into small, atomic commits. This helps reviewing the changes and enables the use of `git bisect`.
-- Ensure the commit history is easy to follow. Use `git rebase -i` to sort and squash your commits if neccessary.
-- If your branch includes fixup commits (like "Fix typo...", "Fix tests..."), use `git rebase -i` to clean them up
-  before submitting a pull request.
-- When refactoring something, take care to not include any functional changes into the same commit. Mixing refactoring
-  and functional changes makes it hard to find the cause of regressions.
+### Clean git history
+
+* We avoid merge commits in the repository, so please **use rebase instead of merge** when updating your branch.
+* Separate different features or fixes into separate commits where it makes sense. This makes it easier to find bugs or regressions with tools like `git bisect`.
+* Sort fixes and additions into the right commits. This can be done using the `--fixup` commit flag in git as well as the `git rebase --autosquash ...` command.
+
+### Commit messages
+
+* **We use [conventional commits][conventional-commits]**, please format your commit messages accordingly.
+* Use one of the following types: `feat` for features, `fix` for fixes, `docs` for documentation, `test` for tests, `refactor` for refactorings, `chore` for maintenance work like dependency updates and `ci` for work on the CI pipeline.
+* Use the body of the commit message to explain your change in a few sentences. This can help use understand your commit better a few months or years later when revisiting it for whatever reason.
+* You can get some inspiration about writing good commit messages here: <https://chris.beams.io/posts/git-commit/>.
 
 [code-of-conduct]: ./CODE_OF_CONDUCT.md
 
 [community-forum]: https://community.hedgedoc.org
 
-[matrix-support]: https://matrix.to/#/#hedgedoc:matrix.org
+[matrix-support]: https://chat.hedgedoc.org
+
+[matrix-dev]: https://chat.hedgedoc.org/dev
 
 [issues]: https://github.com/hedgedoc/hedgedoc/issues
 
 [new_issue]: https://github.com/hedgedoc/hedgedoc/issues/new/choose
 
 [poeditor]: https://translate.hedgedoc.org
+
+[security]: ./SECURITY.md
+
+[docs-issues]: https://github.com/hedgedoc/hedgedoc/issues?q=is%3Aissue+state%3Aopen+type%3ADocumentation
+
+[conventional-commits]: https://www.conventionalcommits.org/en/v1.0.0/
