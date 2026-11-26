@@ -1,6 +1,22 @@
 # Release Notes
 
-## <i class="fa fa-tag"></i> 1.x.x <i class="fa fa-calendar-o"></i> UNRELEASED
+## <i class="fa fa-tag"></i> 1.12.3 <i class="fa fa-calendar-o"></i> 2026-11-26
+
+This release should fix the bugs in the withdrawn releases 1.12.1 and 1.12.2 by repairing the database.
+Therefore, please inspect the release notes for 1.12.1 and 1.12.2 as well.
+
+**Note:** This release changes the local database to enforce uniqueness on the email column for local accounts.
+In theory your instance should not have duplicate email addresses. However, it might be good to ensure this is
+true for your database as well and remove duplicate user entries otherwise.
+
+The repair migrations - especially for SQLite - are a bit overcautious in order to not destroy any data.
+In case your database has some weird situation which the repair does not recognize, it might abort and print a
+message to the log. So, please check your log on the first start of your instance after this update.
+Also remember to create a backup before updating.
+
+### Security fixes
+
+- [GHSA-5q59-fhxv-4r9x](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-5q59-fhxv-4r9x) reports a possible authorization check bypass when validating OAuth2 role claims.
 
 ### Bugfixes
 
@@ -8,12 +24,6 @@
 - Fixed registration breaking due to missing default values
 - Fixed login breaking due to a circular dependency import
 - Fixed permission check accessing invalid properties on realtime socket vs HTTP API
-
-## <i class="fa fa-tag"></i> UNRELEASED
-
-### Security fixes
-
-- [GHSA-5q59-fhxv-4r9x](https://github.com/hedgedoc/hedgedoc/security/advisories/GHSA-5q59-fhxv-4r9x) reports a possible authorization check bypass when validating OAuth2 role claims.
 
 ## <i class="fa fa-tag"></i> 1.12.2 <i class="fa fa-calendar-o"></i> 2026-11-04
 
