@@ -351,3 +351,11 @@ html, body {
 .print-pdf .footer {
     display: none;
 }
+
+/* In print mode, reveal.js moves every slide background into the corresponding
+   page, leaving this container empty. Because of a known issue, Firefox then
+   paints the empty container as an opaque layer over the first page when
+   printing. Work around this by hiding this container. */
+.print-pdf .reveal .backgrounds {
+    display: none;
+}
