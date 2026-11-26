@@ -20,6 +20,35 @@ describe('convertInlineStyleToMap', () => {
     expect(Object.keys(styleObject)).toHaveLength(1)
     expect(styleObject.backgroundImage).toEqual("url('data:image/svg+xml;base64,...')")
   })
+  it('should preserve semicolons inside unquoted urls', () => {
+    const styleObject = convertInlineStyleToMap(
+      'background-image: url(data:image/png;base64,iVBORw0KGgo=); color: red',
+    )
+    expect(styleObject).toEqual({
+      backgroundImage: 'url(data:image/png;base64,iVBORw0KGgo=)',
+      color: 'red',
+    })
+  })
+  it('should preserve semicolons in nested functions and quoted parentheses', () => {
+    const styleObject = convertInlineStyleToMap(
+      'background: image-set(url("data:image/png;name=).png") 1x, url(data:image/png;base64,abc) 2x); color: red',
+    )
+    expect(styleObject).toEqual({
+      background:
+        'image-set(url("data:image/png;name=).png") 1x, url(data:image/png;base64,abc) 2x)',
+      color: 'red',
+    })
+  })
+  it('should distinguish escaped closing parentheses from escaped backslashes', () => {
+    expect(convertInlineStyleToMap(String.raw`background: url(a\);b); color: red`)).toEqual({
+      background: String.raw`url(a\);b)`,
+      color: 'red',
+    })
+    expect(convertInlineStyleToMap(String.raw`background: url(a\\); color: red`)).toEqual({
+      background: String.raw`url(a\\)`,
+      color: 'red',
+    })
+  })
   it('should not split on an escaped ;', () => {
     const styleObject = convertInlineStyleToMap('content: \\;;')
     expect(Object.keys(styleObject)).toHaveLength(1)

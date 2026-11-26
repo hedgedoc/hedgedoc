@@ -71,6 +71,12 @@ describe('Integration tests', () => {
     expectSameHtml('<div style="border-radius:1px;background:red">test</div>')
   })
 
+  it('should preserve unquoted data URLs in inline styles', () => {
+    expectSameHtml(
+      '<div style="background-image:url(data:image/png;base64,iVBORw0KGgo=);color:red">test</div>',
+    )
+  })
+
   it('should ignore inline styles that are empty strings', () => {
     expectOtherHtml('<div style="">test</div>', '<div>test</div>')
   })
