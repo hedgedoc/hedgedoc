@@ -6,18 +6,20 @@
 import { PermissionLevel } from '@hedgedoc/commons';
 import { FieldNameRevision } from '@hedgedoc/database';
 import { Optional } from '@mrdrogdrog/optional';
-import { BeforeApplicationShutdown, Inject, Injectable } from '@nestjs/common';
+import type { BeforeApplicationShutdown} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { SchedulerRegistry } from '@nestjs/schedule';
+import type { SchedulerRegistry } from '@nestjs/schedule';
 
-import noteConfiguration, { NoteConfig } from '../../config/note.config';
+import type { NoteConfig } from '../../config/note.config';
+import noteConfiguration from '../../config/note.config';
 import { NoteEvent } from '../../events';
-import { ConsoleLoggerService } from '../../logger/console-logger.service';
-import { PermissionService } from '../../permissions/permission.service';
-import { RevisionsService } from '../../revisions/revisions.service';
-import { RealtimeConnection } from './realtime-connection';
-import { RealtimeNote } from './realtime-note';
-import { RealtimeNoteStore } from './realtime-note-store';
+import type { ConsoleLoggerService } from '../../logger/console-logger.service';
+import type { PermissionService } from '../../permissions/permission.service';
+import type { RevisionsService } from '../../revisions/revisions.service';
+import type { RealtimeConnection } from './realtime-connection';
+import type { RealtimeNote } from './realtime-note';
+import type { RealtimeNoteStore } from './realtime-note-store';
 
 @Injectable()
 export class RealtimeNoteService implements BeforeApplicationShutdown {
@@ -130,9 +132,23 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
       return;
     }
 
-    realtimeNote.announcePermissionsUpdate();
-    const allConnections = realtimeNote.getConnections();
-    await this.updateOrCloseConnection(allConnections, noteId);
+    const connectionsToClose: RealtimeConnection[] = [];
+    for (const connection of realtimeNote.getConnections()) {
+      const permission = await this.permissionService.determinePermission(
+        connection.getUserId(),
+        noteId,
+      );
+      connection.acceptEdits = permission > PermissionLevel.READ;
+      if (permission === PermissionLevel.DENY) {
+        connectionsToClose.push(connection);
+      }
+    }
+
+    try {
+      realtimeNote.announcePermissionsUpdate();
+    } finally {
+      connectionsToClose.forEach((connection) => connection.getTransporter().disconnect());
+    }
   }
 
   /**
@@ -149,31 +165,6 @@ export class RealtimeNoteService implements BeforeApplicationShutdown {
     }
 
     realtimeNote.announceAliasesUpdate(primaryAlias);
-  }
-
-  /**
-   * Updates the connections of the given note based on the current permissions of the user.
-   * If the user has no permission to edit the note, the connection is closed.
-   * Otherwise, it updates the acceptEdits property of the connection.
-   *
-   * @param connections The connections to update
-   * @param noteId The id of the note for which the connections should be updated
-   */
-  private async updateOrCloseConnection(
-    connections: RealtimeConnection[],
-    noteId: number,
-  ): Promise<void> {
-    for (const connection of connections) {
-      const userPermissionLevel = await this.permissionService.determinePermission(
-        connection.getUserId(),
-        noteId,
-      );
-      if (userPermissionLevel === PermissionLevel.DENY) {
-        connection.getTransporter().disconnect();
-      } else {
-        connection.acceptEdits = userPermissionLevel > PermissionLevel.READ;
-      }
-    }
   }
 
   /**

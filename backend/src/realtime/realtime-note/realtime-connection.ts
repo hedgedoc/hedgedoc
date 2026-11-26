@@ -3,10 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { MessageTransporter, YDocSyncServerAdapter } from '@hedgedoc/commons';
+import { YDocSyncServerAdapter, type MessageTransporter } from '@hedgedoc/commons';
 import { Logger } from '@nestjs/common';
 
-import { RealtimeNote } from './realtime-note';
+import type { RealtimeNote } from './realtime-note';
 import { RealtimeUserStatusAdapter } from './realtime-user-status-adapter';
 
 /**
@@ -47,7 +47,7 @@ export class RealtimeConnection {
     this.yDocSyncAdapter = new YDocSyncServerAdapter(
       this.transporter,
       realtimeNote.getRealtimeDoc(),
-      () => acceptEdits,
+      () => this.acceptEdits,
     );
     this.realtimeUserStateAdapter = new RealtimeUserStatusAdapter(
       this.username ?? null,
@@ -58,7 +58,7 @@ export class RealtimeConnection {
           .getConnections()
           .map((connection) => connection.getRealtimeUserStateAdapter()),
       this.getTransporter(),
-      () => acceptEdits,
+      () => this.acceptEdits,
     );
   }
 

@@ -164,8 +164,15 @@ describe('RealtimeNoteService', () => {
     });
 
     it('should change acceptEdits to true', async () => {
+      clientWithReadWrite.acceptEdits = false;
+      const announcePermissionsUpdate = jest
+        .spyOn(realtimeNote, 'announcePermissionsUpdate')
+        .mockImplementation(() => {
+          expect(clientWithReadWrite.acceptEdits).toBe(true);
+        });
+
       await realtimeNoteService.handleNotePermissionChanged(mockedNoteId);
-      expect(clientWithReadWrite.acceptEdits).toBeTruthy();
+      expect(announcePermissionsUpdate).toHaveBeenCalledTimes(1);
     });
     it('should change acceptEdits to false', async () => {
       clientWithRead.acceptEdits = true;
