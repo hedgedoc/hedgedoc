@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 ## Supported Versions
 
 Only the latest release of HedgeDoc is supported. We don't have the
-ressources to maintain multiple versions.
+resources to maintain multiple versions.
 
 We currently do not accept vulnerability reports for preview releases
 of the upcoming HedgeDoc 2.0. This version is still work-in-progress

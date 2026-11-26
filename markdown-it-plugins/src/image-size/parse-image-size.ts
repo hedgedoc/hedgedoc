@@ -79,7 +79,7 @@ export function parseImageSize(
   const width = parseNextNumber(imageSize, currentCharacterPosition, maximalCharacterPosition)
   currentCharacterPosition = width.position
 
-  // next charactor must be 'x'
+  // next character must be 'x'
   const code = imageSize.charCodeAt(currentCharacterPosition)
   if (code !== (SpecialCharacters.LOWER_CASE_X as number)) {
     return

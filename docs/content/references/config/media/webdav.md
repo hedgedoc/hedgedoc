@@ -19,7 +19,7 @@ The `<CONNECTION_STRING>` should include the username and password (if needed)
 in the familiar way of `schema://user:password@url`.
 
 With `<UPLOAD_DIR>` you can specify a folder you want to upload to,
-but you can also omit this (just don't spcify this value at all),
+but you can also omit this (just don't specify this value at all),
 if you prefer to upload directly to the root of the WebDAV server.
 
 Finally, `<PUBLIC_URL>` specifies with which url HedgeDoc can access the upload. For this purpose

@@ -25,7 +25,7 @@ Each note in HedgeDoc 2 contains the following information:
 The `publicId` is the default possibility of identifying a note. It will be a randomly generated
 128-bit value encoded with [base32-encode][base32-encode] using the crockford variant and converted
 to lowercase. This variant of base32 is used, because that results in ids that only use one case of
-alpha-numeric characters and other url safe characters. We convert the id to lowercase, because we
+alphanumeric characters and other url safe characters. We convert the id to lowercase, because we
 want to minimize case confusion.
 
 `aliases` are the other way of identifying a note. There can be any number of them, and the owner

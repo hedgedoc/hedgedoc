@@ -28,5 +28,5 @@ constructor is a separate `create` method. These methods should adhere to these 
 - Only require the non-optional properties of the corresponding entity
 - Have no optional parameters
 - Have no lists which can be empty (so probably most of them)
-- Should either return a complete and fully useable instance or return a Pick/Omit type.
+- Should either return a complete and fully usable instance or return a Pick/Omit type.
 - Exceptions to these rules are allowed, if they are mentioned in the method documentation

@@ -45,7 +45,7 @@ export const addAlias = async (noteAlias: string, newAlias: string): Promise<voi
  *
  * @param alias The alias to mark as primary for its corresponding note.
  * @return The updated information about the alias.
- * @throws {Error} when the api request wasn't successfull
+ * @throws {Error} when the api request wasn't successful
  */
 export const markAliasAsPrimary = async (alias: string): Promise<void> => {
   await new PutApiRequestBuilder<void, AliasUpdateInterface>('alias/' + alias)

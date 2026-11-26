@@ -30,7 +30,7 @@ These tables tell you what exactly we support in HedgeDoc 1.x (HFM 1) and HedgeD
 | name tag (`[name=...]`)                     |    (☑️)[^in-bq-list]     |            ☑️            |            |     |
 | time tag (`[time=...]`)                     |    (☑️)[^in-bq-list]     |            ☑️            |            |     |
 | color tag (`[color=...]`)                   |    (☑️)[^in-bq-list]     |            ☑️            |            |     |
-| unorderd list                               |            ☑️            |            ☑️            |     ☑️     | ☑️  |
+| unordered list                              |            ☑️            |            ☑️            |     ☑️     | ☑️  |
 | ordered list                                |            ☑️            |            ☑️            |     ☑️     | ☑️  |
 | task list                                   |            ☑️            |            ☑️            |            | ☑️  |
 | definition list                             |            ☑️            |            ☑️            |            |     |
@@ -65,7 +65,7 @@ These tables tell you what exactly we support in HedgeDoc 1.x (HFM 1) and HedgeD
 | ----------------- | :-------------------: | :---: | :-------------------: | :-------------------: |
 | table             |          ☑️           |  ☑️   |  (☑️ with `<table>`)  |          ☑️           |
 | horizontal line   |          ☑️           |  ☑️   |          ☑️           |          ☑️           |
-| collapsable block | (☑️ with `<details>`) |  ☑️   | (☑️ with `<details>`) | (☑️ with `<details>`) |
+| collapsible block | (☑️ with `<details>`) |  ☑️   | (☑️ with `<details>`) | (☑️ with `<details>`) |
 | Alerts            |          ☑️           |  ☑️   |                       |                       |
 
 ## Embeddings

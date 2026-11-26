@@ -323,7 +323,7 @@ describe('Notes', () => {
         });
       },
     );
-    it("the note can't be created if the alias is forbiden", async () => {
+    it("the note can't be created if the alias is forbidden", async () => {
       await agentUser1
         .post(`${PRIVATE_API_PREFIX}/notes/${forbiddenAlias}`)
         .set('Content-Type', 'text/markdown')
@@ -802,7 +802,7 @@ describe('Notes', () => {
           canEdit: canEdit,
         });
       });
-      it(`with canEdit ${canEdit} with uper case username`, async () => {
+      it(`with canEdit ${canEdit} with upper case username`, async () => {
         await agentUser1
           .put(
             `${PRIVATE_API_PREFIX}/notes/${noteAlias1}/metadata/permissions/users/${username2.toUpperCase()}`,

@@ -21,7 +21,7 @@ jest.mock('../hooks/common/use-application-state')
 
 /**
  * Mocks the {@link ApplicationState} for a test.
- * When not overriden, it uses the initial state of the reducers.
+ * When not overridden, it uses the initial state of the reducers.
  *
  * @param state Overrides for the mocked state
  */
