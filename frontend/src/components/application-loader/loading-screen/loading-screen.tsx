@@ -8,6 +8,7 @@ import { LoadingAnimation } from './loading-animation'
 import type { ReactElement } from 'react'
 import React from 'react'
 import { Alert } from 'react-bootstrap'
+import { darkModeStateSync } from '../../../hooks/dark-mode/use-dark-mode-state'
 
 export interface LoadingScreenProps {
   errorMessage?: string | ReactElement | null
@@ -19,9 +20,12 @@ export interface LoadingScreenProps {
  * @param failedTaskName Should be set if a task failed to load. The name will be shown on screen.
  */
 export const LoadingScreen: React.FC<LoadingScreenProps> = ({ errorMessage }) => {
+  let darkMode = darkModeStateSync()
+  console.log(darkMode)
+
   return (
-    <div className={`${styles.loader} text-light bg-dark`}>
-      <div className='mb-3 text-light'>
+    <div className={`${styles.loader} ${darkMode ? 'text-light' : 'text-dark'} ${darkMode ? 'bg-dark' : 'bg-light'}`}>
+      <div className='mb-3'>
         <span className={`d-block`}>
           <LoadingAnimation error={!!errorMessage} />
         </span>
