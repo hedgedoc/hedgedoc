@@ -7,7 +7,7 @@ logger.transports.forEach((transport) => transport.level = 'warning')
 const models = require('../lib/models/')
 const readline = require('readline-sync')
 const minimist = require('minimist')
-const { ValidationError } = require('sequelize')
+const { ValidationError, Op } = require('sequelize')
 
 function showUsage (tips) {
   console.log(`${tips}
@@ -35,7 +35,18 @@ function getPass (argv, action) {
 
 // Using an async function to be able to use await inside
 async function createUser (argv) {
-  const existing_user = await models.User.findOne({ where: { email: argv['add'] } })
+  const existing_user = await models.User.findOne({
+    where: {
+      [Op.and]: [
+        {
+          email: argv['add'],
+        },
+        {
+          profileProvider: 'email'
+        }
+      ]
+    }
+  })
   // Cannot create already-existing users
   if (existing_user) {
     console.log(`User with e-mail ${existing_user.email} already exists! Aborting ...`)
@@ -50,7 +61,7 @@ async function createUser (argv) {
 
   // Lets try to create, and check success
   try {
-    const ref = await models.User.create({ email: argv['add'], password: pass })
+    const ref = await models.User.create({ email: argv['add'], password: pass, profileProvider: 'email' })
     if (ref === undefined) {
       console.log(`Could not create user with email ${argv['add']}`)
       process.exit(1)
@@ -70,7 +81,18 @@ async function createUser (argv) {
 // Using an async function to be able to use await inside
 async function deleteUser (argv) {
   // Cannot delete non-existing users
-  const existing_user = await models.User.findOne({ where: { email: argv['del'] } })
+  const existing_user = await models.User.findOne({
+    where: {
+      [Op.and]: [
+        {
+          email: argv['del'],
+        },
+        {
+          profileProvider: 'email'
+        }
+      ]
+    }
+  })
   if (!existing_user) {
     console.log(`User with e-mail ${argv['del']} does not exist, cannot delete`)
     process.exit(1)
@@ -84,7 +106,18 @@ async function deleteUser (argv) {
 
 // Using an async function to be able to use await inside
 async function resetUser (argv) {
-  const existing_user = await models.User.findOne({ where: { email: argv['reset'] } })
+  const existing_user = await models.User.findOne({
+    where: {
+      [Op.and]: [
+        {
+          email: argv['reset'],
+        },
+        {
+          profileProvider: 'email'
+        }
+      ]
+    }
+  })
   // Cannot reset non-existing users
   if (!existing_user) {
     console.log(`User with e-mail ${argv['reset']} does not exist, cannot reset`)
