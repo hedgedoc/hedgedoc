@@ -37,7 +37,7 @@ async function parseVersionFromPackageJson(): Promise<ServerVersionDto> {
   const packageInfo = JSON.parse(rawFileContent) as { version: string };
   const versionParts = Optional.ofNullable(packageInfo.version)
     .orThrow(() => new Error('No version found in root package.json'))
-    .map((version) => /^(\d+).(\d+).(\d+)(?:-([\w.]+))?$/g.exec(version))
+    .map((version) => /^(\d+)\.(\d+)\.(\d+)(?:-([\w.]+))?$/.exec(version))
     .orElseThrow(
       () => new Error(`Version from package.json is malformed. Got ${packageInfo.version}`),
     );

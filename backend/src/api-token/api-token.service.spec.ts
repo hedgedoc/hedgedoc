@@ -17,6 +17,7 @@ import { mockDelete, mockInsert, mockSelect, mockUpdate } from '../database/mock
 import { mockKnexDb } from '../database/mock/provider';
 import { ApiTokenWithSecretDto } from '../dtos/api-token-with-secret.dto';
 import { NotInDBError, TokenNotValidError, TooManyTokensError } from '../errors/errors';
+import { ConsoleLoggerService } from '../logger/console-logger.service';
 import { LoggerModule } from '../logger/logger.module';
 import { dateTimeToDB, getCurrentDateTime, isoStringToDateTime } from '../utils/datetime';
 import * as passwordUtils from '../utils/password';
@@ -254,6 +255,7 @@ describe('ApiTokenService', () => {
       it('validUntil is in the past', () => {
         expect(() =>
           service.ensureTokenIsValid(
+            validKeyId,
             validSecret,
             '',
             getCurrentDateTime().minus({
@@ -266,6 +268,7 @@ describe('ApiTokenService', () => {
         jest.spyOn(passwordUtils, 'checkTokenEquality').mockReturnValue(false);
         expect(() =>
           service.ensureTokenIsValid(
+            validKeyId,
             validSecret,
             '',
             getCurrentDateTime().minus({
@@ -276,10 +279,29 @@ describe('ApiTokenService', () => {
       });
     });
 
+    it('logs the keyId and not the secret hash of an expired token', () => {
+      const tokenHash = 'secret-hash-that-must-not-be-logged';
+      const debug = jest.spyOn(ConsoleLoggerService.prototype, 'debug');
+      expect(() =>
+        service.ensureTokenIsValid(
+          validKeyId,
+          validSecret,
+          tokenHash,
+          getCurrentDateTime().minus({
+            day: 1,
+          }),
+        ),
+      ).toThrow(TokenNotValidError);
+      const logged = debug.mock.calls.map(([message]) => String(message)).join('\n');
+      expect(logged).toContain(`Token ${validKeyId} is not valid anymore`);
+      expect(logged).not.toContain(tokenHash);
+    });
+
     it('works', () => {
       jest.spyOn(passwordUtils, 'checkTokenEquality').mockReturnValue(true);
       expect(() =>
         service.ensureTokenIsValid(
+          validKeyId,
           validSecret,
           '',
           getCurrentDateTime().plus({

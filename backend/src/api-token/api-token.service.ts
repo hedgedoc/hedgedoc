@@ -77,7 +77,7 @@ export class ApiTokenService {
         'getUserIdForToken',
       );
       const validUntil = dbToDateTime(token[FieldNameApiToken.validUntil]);
-      this.ensureTokenIsValid(secret, tokenHash, validUntil);
+      this.ensureTokenIsValid(keyId, secret, tokenHash, validUntil);
 
       await transaction(TableApiToken)
         .update(FieldNameApiToken.lastUsedAt, this.knex.fn.now())
@@ -157,17 +157,18 @@ export class ApiTokenService {
    * Ensures that a token is valid by evaluating the expiry date as well as comparing secret and stored hash
    * This method does not return any value but throws an error if the token is not valid
    *
+   * @param keyId The id of the token, which is public and the only part of the token that is logged
    * @param secret The secret to compare against the hash from the database
    * @param tokenHash The hash from the database
    * @param validUntil Expiry of the API token
    * @throws TokenNotValidError if the token is invalid
    */
-  ensureTokenIsValid(secret: string, tokenHash: string, validUntil: DateTime): void {
+  ensureTokenIsValid(keyId: string, secret: string, tokenHash: string, validUntil: DateTime): void {
     const now = getCurrentDateTime();
     // First, verify token expiry is not in the past (cheap operation)
     if (validUntil.toMillis() < now.toMillis()) {
       this.logger.debug(
-        `Token ${tokenHash} is not valid anymore ${validUntil.toMillis()} > ${now.toMillis()}`,
+        `Token ${keyId} is not valid anymore ${validUntil.toMillis()} > ${now.toMillis()}`,
         'ensureTokenIsValid',
       );
       throw new TokenNotValidError(MESSAGE_TOKEN_INVALID);
