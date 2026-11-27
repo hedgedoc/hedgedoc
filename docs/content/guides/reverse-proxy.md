@@ -64,7 +64,7 @@ server {
         server_name hedgedoc.example.com;
 
         location / {
-                proxy_pass http://127.0.0.1:3000;
+                proxy_pass http://127.0.0.1:3000/;
                 proxy_set_header Host $host; 
                 proxy_set_header X-Real-IP $remote_addr; 
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; 
@@ -72,7 +72,7 @@ server {
         }
 
         location /socket.io/ {
-                proxy_pass http://127.0.0.1:3000;
+                proxy_pass http://127.0.0.1:3000/socket.io/;
                 proxy_set_header Host $host; 
                 proxy_set_header X-Real-IP $remote_addr; 
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; 
@@ -93,10 +93,11 @@ server {
 
 !!! warning
 
-    NGINX `proxy_pass` directives must NOT have trailing slashes. If the trailing
-    slashes are present, the browser will not be able to establish a WebSocket
-    connection to the server, and the editor interface will display an endless loading
-    animation.
+    NGINX `proxy_pass` directives must have trailing slashes. If the trailing
+    slashes are not present, clients will get stuck in a redirect loop.
+    If `/socket.io/` is not present in the second `proxy_pass` line, the
+    browser will not be able to establish a WebSocket connection to the server,
+    and the editor interface will display an endless loading animation.
 
 
 
